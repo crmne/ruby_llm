@@ -61,6 +61,7 @@ def configure_from_env
     config.vertexai_project_id = ENV.fetch('GOOGLE_CLOUD_PROJECT', nil)
     config.vertexai_service_account_key = ENV.fetch('VERTEXAI_SERVICE_ACCOUNT_KEY', nil)
     config.xai_api_key = ENV.fetch('XAI_API_KEY', nil)
+    config.zai_api_key = ENV.fetch('ZAI_API_KEY', nil)
     configure_bedrock(config)
     config.request_timeout = 30
   end

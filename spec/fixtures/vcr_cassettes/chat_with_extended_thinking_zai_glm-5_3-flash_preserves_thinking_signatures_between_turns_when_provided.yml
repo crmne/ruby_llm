@@ -1,0 +1,112 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.z.ai/api/paas/v4/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"glm-5.3-flash","messages":[{"role":"user","content":"What
+        is 5 + 3?"}],"stream":false,"reasoning_effort":"low","thinking":{"type":"enabled"}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 15:40:26 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '421'
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - e4732924df8e227a029591216eb392a9
+      Vary:
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 202610202340255ebce3328526421c
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"5
+        + 3 = 8","role":"assistant"}}],"created":1792510826,"id":"202610202340255ebce3328526421c","model":"glm-5.3-flash","object":"chat.completion","request_id":"202610202340255ebce3328526421c","usage":{"completion_tokens":9,"completion_tokens_details":{"reasoning_tokens":0},"prompt_tokens":20,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":29}}'
+  recorded_at: Tue, 20 Oct 2026 15:40:26 GMT
+- request:
+    method: post
+    uri: https://api.z.ai/api/paas/v4/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"glm-5.3-flash","messages":[{"role":"user","content":"What
+        is 5 + 3?"},{"role":"assistant","content":"5 + 3 = 8"},{"role":"user","content":"Now
+        multiply that by 2"}],"stream":false,"reasoning_effort":"low","thinking":{"type":"enabled"}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 15:40:27 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '462'
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - 4e63060f99fd822d5efabb2bc3109980
+      Vary:
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 20261020234026b6bd20996cef47d1
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiI4IMOXIDIgPSAqKjE2KioiLCJyZWFzb25pbmdfY29udGVudCI6Ijggw5cgMiA9IDE2Iiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3OTI1MTA4MjcsImlkIjoiMjAyNjEwMjAyMzQwMjZiNmJkMjA5OTZjZWY0N2QxIiwibW9kZWwiOiJnbG0tNS4zLWZsYXNoIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicmVxdWVzdF9pZCI6IjIwMjYxMDIwMjM0MDI2YjZiZDIwOTk2Y2VmNDdkMSIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjoxNywiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjo3fSwicHJvbXB0X3Rva2VucyI6MzcsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwidG90YWxfdG9rZW5zIjo1NH19
+  recorded_at: Tue, 20 Oct 2026 15:40:27 GMT
+recorded_with: VCR 6.4.0

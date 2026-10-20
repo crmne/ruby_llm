@@ -1,0 +1,302 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.z.ai/api/paas/v4/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"glm-5.3-flash","messages":[{"role":"user","content":"Generate
+        a person named Bob"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 15:33:29 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '5282'
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - 6c95d137245318c254328fa45d4dfc8e
+      Vary:
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 20261020233311cdd835fb9a694d94
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"{  \"name\":
+        \"Bob\",  \"age\": 52}","reasoning_content":"The user has asked me to \"Generate
+        a person named Bob.\" This is a creative writing task where I need to create
+        a fictional character named Bob. Let me think about what makes a good character
+        generation.\n\nThe request is quite open-ended. They want me to \"generate\"
+        a person named Bob - which suggests creating a character profile. I should
+        think about what elements make up a well-rounded fictional character:\n\n1.
+        Basic demographics (name, age, occupation, location)\n2. Physical description\n3.
+        Personality traits\n4. Background/history\n5. Interests/hobbies\n6. Quirks
+        or distinctive features\n7. Relationships\n8. Goals/motivations\n\nThe name
+        \"Bob\" is interesting - it''s an archetypally ordinary name, often used as
+        a placeholder name (like \"Bob\" from office examples). I could lean into
+        that ordinariness and make Bob interesting through his very ordinariness,
+        or I could subvert it and make Bob someone surprising and unusual.\n\nLet
+        me think about what would be most engaging. I think creating a character with
+        depth and some interesting contradictions would be most satisfying. Maybe
+        Bob who seems ordinary on the surface but has unexpected depths or quirks.\n\nLet
+        me draft a character:\n\n**Bob** - full name Robert \"Bob\" something\n- Age:
+        maybe mid-40s to 50s feels right for a \"Bob\"\n- Occupation: Something interesting
+        - maybe an actuary who''s secretly a jazz musician? Or a plumber who writes
+        poetry? Or an accountant who is a competitive birdwatcher?\n\nLet me think
+        of a fun, coherent character:\n\nBob Hendricks, 47, works as an insurance
+        adjuster in a mid-sized Midwestern town. He''s unremarkable in appearance
+        - medium height, slightly balding, wears wire-rimmed glasses. But he has a
+        passion: competitive duck calling, or maybe he''s a master of some obscure
+        skill.\n\nOr I could go with:\n- Bob who collects vintage typewriters\n- Bob
+        who was once a backup singer for a one-hit-wonder band\n- Bob who makes artisanal
+        pickles\n- Bob who is a retired lion tamer now working at a hardware store\n\nI
+        think a good format would be a character profile with some narrative flair.
+        Let me structure it:\n\n1. Name and basic info\n2. Appearance\n3. Personality\n4.
+        Background\n5. Quirks/details that bring him to life\n6. Maybe a fun fact
+        or signature item\n\nFormat considerations: This is a creative task. A structured
+        profile with headers could work well, or flowing prose. Given it''s \"generate
+        a person,\" a profile format seems apt - like a character sheet. I''ll use
+        some structure (maybe bold headers or a clean layout) but include enough narrative
+        color to make Bob feel alive. Medium length - not too short (that would feel
+        lazy) but not overwhelming. Maybe 200-350 words.\n\nLet me write it:\n\n---\n\n**Bob
+        Whitaker, 52**\n\nOccupation: Postal carrier (retired) turned small-town hardware
+        store owner\n\nAppearance: Five-foot-ten, built like a comfortable armchair.
+        Gray hair kept in the same short cut since 1987. Almost always wearing a faded
+        maroon windbreaker and a watch that''s slightly too big.\n\nPersonality: Unfailingly
+        polite, dry sense of humor that catches people off guard. Remembers everyone''s
+        name and their dog''s name. Never raises his voice, except at football referees
+        on TV.\n\nBackstory: Bob grew up in Cedar Falls, Iowa. He spent two years
+        in the Navy, where he learned to fix anything with an engine. Married his
+        high school sweetheart, Linda, in 1996. They have one daughter, Amy, who lives
+        in Denver and calls every Sunday.\n\nQuirks:\n- Makes the world''s best chili
+        but refuses to share the recipe (it''s mostly just... following the instructions
+        on the packet plus one secret ingredient)\n- Has kept a crossword streak going
+        for 1,247 days\n- Talks to squirrels in his backyard like they''re coworkers\n\nSignature
+        item: A battered thermos with \"World''s Okayest Fisherman\" printed on the
+        side.\n\nFun fact: Bob once won a regional accordion competition in 1998.
+        He doesn''t talk about it. Linda does, though, every chance she gets.\n\n---\n\nThat''s
+        a nice character. Warm, specific, with humor. Let me refine the details and
+        think about whether this is the right approach.\n\nActually, I like this.
+        It''s evocative and fun without being too long. The details are specific enough
+        to be memorable (the accordion competition, the thermos, the crossword streak)
+        and there''s warmth in the relationships (Linda, Amy, the Sunday calls).\n\nI
+        could offer at the end to generate a different kind of Bob or expand on him
+        - that seems like a helpful touch but shouldn''t be heavy-handed. A brief
+        closing line inviting variations could be nice.\n\nFormat: Headers with bold,
+        some bullet points for quirks. This fits a \"character generation\" request
+        nicely. Length feels right - substantial enough to be a real character, short
+        enough to be a quick read.\n","role":"assistant"}}],"created":1792510409,"id":"20261020233311cdd835fb9a694d94","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261020233311cdd835fb9a694d94","usage":{"completion_tokens":1073,"completion_tokens_details":{"reasoning_tokens":1056},"prompt_tokens":17,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":1090}}'
+  recorded_at: Tue, 20 Oct 2026 15:33:29 GMT
+- request:
+    method: post
+    uri: https://api.z.ai/api/paas/v4/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"glm-5.3-flash","messages":[{"role":"user","content":"Generate
+        a person named Bob"},{"role":"assistant","content":"{  \"name\": \"Bob\",  \"age\":
+        52}","reasoning_content":"The user has asked me to \"Generate a person named
+        Bob.\" This is a creative writing task where I need to create a fictional
+        character named Bob. Let me think about what makes a good character generation.\n\nThe
+        request is quite open-ended. They want me to \"generate\" a person named Bob
+        - which suggests creating a character profile. I should think about what elements
+        make up a well-rounded fictional character:\n\n1. Basic demographics (name,
+        age, occupation, location)\n2. Physical description\n3. Personality traits\n4.
+        Background/history\n5. Interests/hobbies\n6. Quirks or distinctive features\n7.
+        Relationships\n8. Goals/motivations\n\nThe name \"Bob\" is interesting - it''s
+        an archetypally ordinary name, often used as a placeholder name (like \"Bob\"
+        from office examples). I could lean into that ordinariness and make Bob interesting
+        through his very ordinariness, or I could subvert it and make Bob someone
+        surprising and unusual.\n\nLet me think about what would be most engaging.
+        I think creating a character with depth and some interesting contradictions
+        would be most satisfying. Maybe Bob who seems ordinary on the surface but
+        has unexpected depths or quirks.\n\nLet me draft a character:\n\n**Bob** -
+        full name Robert \"Bob\" something\n- Age: maybe mid-40s to 50s feels right
+        for a \"Bob\"\n- Occupation: Something interesting - maybe an actuary who''s
+        secretly a jazz musician? Or a plumber who writes poetry? Or an accountant
+        who is a competitive birdwatcher?\n\nLet me think of a fun, coherent character:\n\nBob
+        Hendricks, 47, works as an insurance adjuster in a mid-sized Midwestern town.
+        He''s unremarkable in appearance - medium height, slightly balding, wears
+        wire-rimmed glasses. But he has a passion: competitive duck calling, or maybe
+        he''s a master of some obscure skill.\n\nOr I could go with:\n- Bob who collects
+        vintage typewriters\n- Bob who was once a backup singer for a one-hit-wonder
+        band\n- Bob who makes artisanal pickles\n- Bob who is a retired lion tamer
+        now working at a hardware store\n\nI think a good format would be a character
+        profile with some narrative flair. Let me structure it:\n\n1. Name and basic
+        info\n2. Appearance\n3. Personality\n4. Background\n5. Quirks/details that
+        bring him to life\n6. Maybe a fun fact or signature item\n\nFormat considerations:
+        This is a creative task. A structured profile with headers could work well,
+        or flowing prose. Given it''s \"generate a person,\" a profile format seems
+        apt - like a character sheet. I''ll use some structure (maybe bold headers
+        or a clean layout) but include enough narrative color to make Bob feel alive.
+        Medium length - not too short (that would feel lazy) but not overwhelming.
+        Maybe 200-350 words.\n\nLet me write it:\n\n---\n\n**Bob Whitaker, 52**\n\nOccupation:
+        Postal carrier (retired) turned small-town hardware store owner\n\nAppearance:
+        Five-foot-ten, built like a comfortable armchair. Gray hair kept in the same
+        short cut since 1987. Almost always wearing a faded maroon windbreaker and
+        a watch that''s slightly too big.\n\nPersonality: Unfailingly polite, dry
+        sense of humor that catches people off guard. Remembers everyone''s name and
+        their dog''s name. Never raises his voice, except at football referees on
+        TV.\n\nBackstory: Bob grew up in Cedar Falls, Iowa. He spent two years in
+        the Navy, where he learned to fix anything with an engine. Married his high
+        school sweetheart, Linda, in 1996. They have one daughter, Amy, who lives
+        in Denver and calls every Sunday.\n\nQuirks:\n- Makes the world''s best chili
+        but refuses to share the recipe (it''s mostly just... following the instructions
+        on the packet plus one secret ingredient)\n- Has kept a crossword streak going
+        for 1,247 days\n- Talks to squirrels in his backyard like they''re coworkers\n\nSignature
+        item: A battered thermos with \"World''s Okayest Fisherman\" printed on the
+        side.\n\nFun fact: Bob once won a regional accordion competition in 1998.
+        He doesn''t talk about it. Linda does, though, every chance she gets.\n\n---\n\nThat''s
+        a nice character. Warm, specific, with humor. Let me refine the details and
+        think about whether this is the right approach.\n\nActually, I like this.
+        It''s evocative and fun without being too long. The details are specific enough
+        to be memorable (the accordion competition, the thermos, the crossword streak)
+        and there''s warmth in the relationships (Linda, Amy, the Sunday calls).\n\nI
+        could offer at the end to generate a different kind of Bob or expand on him
+        - that seems like a helpful touch but shouldn''t be heavy-handed. A brief
+        closing line inviting variations could be nice.\n\nFormat: Headers with bold,
+        some bullet points for quirks. This fits a \"character generation\" request
+        nicely. Length feels right - substantial enough to be a real character, short
+        enough to be a quick read.\n"},{"role":"user","content":"Now just tell me
+        about Ruby"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 15:33:45 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '5456'
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - ca1f26db70d3e3c1b1596f9b9ddc16ed
+      Vary:
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 202610202333296673e256a0814200
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"Ruby
+        is a 38-year-old freelance photographer based in Savannah, Georgia. She''s
+        warm and talkative, with a contagious laugh that people remember long after
+        meeting her. Ruby spends her weekends exploring old cemeteries and historic
+        districts with her camera, drawn to weathered textures and golden-hour light.
+        She has a mischievous streak, a tendency to talk to strangers, and a deeply
+        held belief that the best stories are found in the overlooked corners of a
+        city. She''s also a devoted dog mom to a scruffy terrier mix named Biscuit.","reasoning_content":"The
+        user asked me to \"Generate a person named Bob\" and I responded with a JSON
+        format. Now they''re asking \"Now just tell me about Ruby.\"\n\nThis is interesting
+        - the context suggests Ruby might be:\n1. Another person to generate (continuing
+        the pattern from Bob)\n2. The Ruby programming language\n\nThe word \"just\"
+        in \"just tell me about Ruby\" suggests they might want a narrative/descriptive
+        response rather than the JSON format. Or they could be pivoting to the programming
+        language.\n\nGiven the ambiguity, I should consider the most likely interpretation.
+        The phrase \"Now just tell me about\" with \"just\" suggests they want me
+        to talk about Ruby in prose form. If they wanted another JSON person, they''d
+        probably say \"Generate a person named Ruby.\"\n\nHowever, \"Ruby\" without
+        more context after generating \"Bob\" - it could go either way:\n1. They want
+        me to describe Bob''s friend/wife Ruby in narrative form\n2. They want to
+        know about Ruby the programming language\n\nThe \"just\" is key here. It implies
+        a shift from the structured format to just telling them about Ruby. This could
+        mean:\n- \"just tell me about Ruby [the person, in prose instead of JSON]\"\n-
+        \"just tell me about Ruby [the programming language, switching topics]\"\n\nHmm,
+        actually, I think the most natural reading given the conversational flow is
+        that they want me to describe Ruby as a person, but in narrative/prose form
+        rather than JSON. The \"just\" suggests dropping the JSON format and just
+        talking.\n\nAlternatively, they could be asking about the Ruby programming
+        language, which is a common topic. But without any programming context in
+        the conversation, that seems less likely than continuing the person-generation
+        theme.\n\nLet me go with Ruby as a person, described in prose. I could make
+        her connected to Bob (like his wife, daughter, friend) or standalone. Since
+        they said \"just tell me about Ruby\" (not \"generate a person named Ruby\"),
+        I''ll describe her in narrative form.\n\nActually, wait - let me reconsider.
+        Could they be testing whether I''ll interpret \"Ruby\" as the programming
+        language? The word \"just\" might mean \"just tell me about Ruby [without
+        the JSON formatting]\" or it could be a completely new topic.\n\nI think the
+        safest interpretation that follows conversational flow is Ruby as a person,
+        in prose format. If they wanted the programming language, they''d likely say
+        \"the Ruby programming language\" or \"Ruby on Rails\" or have some programming
+        context.\n\nLet me write a nice narrative description of Ruby as a person.
+        I could optionally connect her to Bob to maintain continuity, or keep her
+        standalone. Connecting her might be presumptuous; standalone is safer but
+        maybe less fun. I''ll make her standalone but could mention if they want her
+        connected to Bob they can ask... actually no, I shouldn''t add unnecessary
+        caveats. Let me just describe Ruby.\n\nHmm, but actually there''s ambiguity.
+        Let me think about what response would be most helpful. If I describe Ruby
+        as a person and they meant the programming language, they''ll clarify. If
+        I describe the programming language and they meant a person, they''ll clarify.
+        Either way there''s a potential mismatch.\n\nGiven the immediate prior context
+        was generating a person, the momentum strongly suggests Ruby is a person too.
+        The \"just tell me about\" phrasing suggests prose rather than JSON.\n\nI''ll
+        write a paragraph or two about Ruby as a person - maybe with some personality,
+        interests, backstory. Format: prose, conversational, a few sentences to a
+        short paragraph. Not too long since it''s a casual creative request.\n\nLet
+        me draft:\n\n\"Ruby is a 34-year-old graphic designer living in Portland,
+        Oregon. She''s known for her dry sense of humor...\"\n\nOr maybe tie it to
+        Bob? \"Ruby is Bob''s daughter...\" Hmm, that could be fun continuity but
+        might be presumptuous. Actually, creative continuity could be delightful here.
+        But it also risks being wrong if they just wanted an independent person.\n\nI''ll
+        go standalone but keep it natural. Actually, you know, let me think about
+        what makes the best response. The user is doing a creative exercise. The \"just
+        tell me\" suggests they want narrative prose. A standalone Ruby with rich
+        detail works well. Or I could make her related to Bob for narrative cohesion
+        - like Bob''s neighbor or coworker. That adds fun. But standalone is safer.\n\nI''ll
+        do standalone prose, maybe 3-5 sentences with personality details. Keep it
+        moderately short.","role":"assistant"}}],"created":1792510425,"id":"202610202333296673e256a0814200","model":"glm-5.3-flash","object":"chat.completion","request_id":"202610202333296673e256a0814200","usage":{"completion_tokens":1041,"completion_tokens_details":{"reasoning_tokens":925},"prompt_tokens":42,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":1083}}'
+  recorded_at: Tue, 20 Oct 2026 15:33:45 GMT
+recorded_with: VCR 6.4.0

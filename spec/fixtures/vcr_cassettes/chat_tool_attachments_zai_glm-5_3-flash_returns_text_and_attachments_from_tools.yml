@@ -1,0 +1,121 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.z.ai/api/paas/v4/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"glm-5.3-flash","messages":[{"role":"user","content":"Call
+        file_fetch to get ruby.txt, then repeat the contents of the attached file."}],"stream":false,"tools":[{"type":"function","function":{"name":"file_fetch","description":"Fetches
+        a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 15:38:07 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '705'
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - 5a3e2175714d16b59ce22cf6d5c2b2c2
+      Vary:
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 20261020233803cfa36bebc4c4489e
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":"","reasoning_content":"The
+        user wants me to call file_fetch to get ruby.txt, then repeat the contents
+        of the attached file. Let me call the function first.","role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"file_fetch"},"id":"call_-7148593767040148940","index":0,"type":"function"}]}}],"created":1792510687,"id":"20261020233803cfa36bebc4c4489e","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261020233803cfa36bebc4c4489e","usage":{"completion_tokens":35,"completion_tokens_details":{"reasoning_tokens":29},"prompt_tokens":174,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":209}}'
+  recorded_at: Tue, 20 Oct 2026 15:38:07 GMT
+- request:
+    method: post
+    uri: https://api.z.ai/api/paas/v4/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"glm-5.3-flash","messages":[{"role":"user","content":"Call
+        file_fetch to get ruby.txt, then repeat the contents of the attached file."},{"role":"assistant","content":"","tool_calls":[{"id":"call_-7148593767040148940","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning_content":"The
+        user wants me to call file_fetch to get ruby.txt, then repeat the contents
+        of the attached file. Let me call the function first."},{"role":"tool","content":"Fetched
+        the file.","tool_call_id":"call_-7148593767040148940"},{"role":"user","content":[{"type":"text","text":"Attachments
+        from tool call call_-7148593767040148940:"},{"type":"text","text":"<file name=''ruby.txt''
+        mime_type=''text/plain''>Ruby is the best.</file>"}]}],"stream":false,"tools":[{"type":"function","function":{"name":"file_fetch","description":"Fetches
+        a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 15:38:19 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '594'
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - 39bd78bfe784455a3fd6cca049b447b2
+      Vary:
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 20261020233807a059070385894a3b
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"The
+        contents of ruby.txt are:\n\n**Ruby is the best.**","reasoning_content":"The
+        user asked me to fetch ruby.txt and repeat its contents. The file contains:
+        \"Ruby is the best.\"","role":"assistant"}}],"created":1792510699,"id":"20261020233807a059070385894a3b","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261020233807a059070385894a3b","usage":{"completion_tokens":39,"completion_tokens_details":{"reasoning_tokens":23},"prompt_tokens":258,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":297}}'
+  recorded_at: Tue, 20 Oct 2026 15:38:19 GMT
+recorded_with: VCR 6.4.0

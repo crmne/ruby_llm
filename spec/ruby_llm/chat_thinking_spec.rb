@@ -168,7 +168,7 @@ RSpec.describe RubyLLM::Chat do
       case provider
       when :anthropic, :bedrock
         { budget: 1024 }
-      when :gemini
+      when :gemini, :zai
         { effort: :low }
       when :mistral
         { effort: :high }

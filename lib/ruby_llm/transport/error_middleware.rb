@@ -81,7 +81,8 @@ module RubyLLM
           /reduce the length of messages/i,
           /prompt is too long/i,
           /context limit/i,
-          /exceeded model token limit/i
+          /exceeded model token limit/i,
+          /prompt exceeds max length/i
         ].freeze
 
         RATE_LIMIT_PATTERNS = [

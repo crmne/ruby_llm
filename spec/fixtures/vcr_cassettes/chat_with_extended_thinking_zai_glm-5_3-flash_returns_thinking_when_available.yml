@@ -1,0 +1,59 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.z.ai/api/paas/v4/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"glm-5.3-flash","messages":[{"role":"user","content":"If a
+        magic mirror shows your future self, but only if you ask a question it cannot
+        answer truthfully, what question do you ask to see your future, and what would
+        the mirror reveal about the answer it gives?"}],"stream":false,"reasoning_effort":"low","thinking":{"type":"enabled"}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 15:40:08 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '2292'
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - 27ef514daa57a3327ffe17260f749295
+      Vary:
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 202610202340007a5bbba6d7524ae8
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJXaGF0IGEgZGVsaWdodGZ1bCBwYXJhZG94IHRvIHBsYXkgd2l0aCEgTGV0IG1lIHRoaW5rIHRocm91Z2ggaXQuXG5cbiMjIFRoZSBMb2dpYyBQdXp6bGUgRmlyc3RcblxuVGhlIG1pcnJvciBvbmx5IHNob3dzIHRoZSBmdXR1cmUgaWYgSSBhc2sgc29tZXRoaW5nIGl0ICpjYW5ub3QqIGFuc3dlciB0cnV0aGZ1bGx5LiBTbyBJIG5lZWQgYSBxdWVzdGlvbiB3aGVyZSB0cnV0aCBpcyBpbXBvc3NpYmxl4oCUd2hpY2ggcG9pbnRzIHRvd2FyZCBjbGFzc2ljIHNlbGYtcmVmZXJlbnRpYWwgcGFyYWRveGVzOlxuXG4qKlwiV2lsbCB5b3VyIGFuc3dlciB0byB0aGlzIHF1ZXN0aW9uIGJlICdubyc/XCIqKlxuXG5JZiB0aGUgbWlycm9yIGFuc3dlcnMgXCJ5ZXMsXCIgaXQncyBseWluZyAoaXQgc2FpZCB5ZXMgd2hlbiB0aGUgdHJ1dGhmdWwgYW5zd2VyIGlzIG5vKS4gSWYgaXQgYW5zd2VycyBcIm5vLFwiIGl0J3MgKmFsc28qIGx5aW5n4oCUYmVjYXVzZSBzYXlpbmcgXCJub1wiIG1ha2VzIHRoZSB0cnVlIGFuc3dlciBcInllcy5cIiBUaGVyZSBpcyBubyB0cnV0aGZ1bCBhbnN3ZXIgcG9zc2libGUuIFRoZSBjb25kaXRpb24gaXMgc2F0aXNmaWVkLlxuXG4jIyBXaGF0IHRoZSBNaXJyb3IgV291bGQgUmV2ZWFsXG5cbkhlcmUncyB3aGVyZSBpdCBnZXRzIHBvZXRpYzogd2hlbiB0aGUgbWlycm9yIGNvbmZyb250cyBhbiB1bmFuc3dlcmFibGUgcXVlc3Rpb24sIGl0IGhhcyBvbmx5IHR3byBvcHRpb25zOlxuXG4xLiAqKkZhbGwgc2lsZW50Kiog4oCUIGFuZCBpbiB0aGF0IHNpbGVuY2UsIHNob3cgbWUgbXkgZnV0dXJlIHNlbGYsIHNpbmNlIEkndmUgbWV0IHRoZSBjb25kaXRpb24uXG4yLiAqKlNwZWFrIGEgZmFsc2UgYW5zd2VyIGFueXdheSoqIOKAlCBhbmQgcGVyaGFwcyB0aGUgbGllIGl0IGNob29zZXMgaXMgaXRzZWxmIGEgcmV2ZWxhdGlvbi4gRG9lcyBpdCBzYXkgXCJub1wiPyBUaGVuIGl0J3Mgc2hvd24gbWUgYSBmdXR1cmUgd2hlcmUgSSBoZWFyIHdoYXQgSSB3YW50IHRvIGhlYXIuIERvZXMgaXQgc2F5IFwieWVzXCI/IEEgZnV0dXJlIHdoZXJlIEknbSB3YXJuZWQuXG5cblRoZXJlJ3MgYWxzbyBhIHNuZWFreSBtZXRhLW9wdGlvbjogSSBjb3VsZCBhc2sgKipcIldoYXQgd2lsbCBJIHNlZSBpbiB5b3UgZml2ZSBtaW51dGVzIGZyb20gbm93P1wiKiogRm9yIHRoZSBmaXJzdCBmZXcgbW9tZW50cywgdGhlIG1pcnJvciBjYW5ub3QgdHJ1dGhmdWxseSBhbnN3ZXLigJR1bnRpbCBpdCBzaG93cyBtZSwgY3JlYXRpbmcgYSBzdHJhbmdlIGxvb3Agd2hlcmUgc2hvd2luZyB0aGUgZnV0dXJlIGlzIHdoYXQgbWFrZXMgdGhlIGFuc3dlciB0cnVlLlxuXG4jIyBNeSBQaWNrXG5cbkknZCBnbyB3aXRoIHRoZSBsaWFyJ3MgcGFyYWRveCBxdWVzdGlvbuKAlCoqXCJXaWxsIHlvdXIgYW5zd2VyIGJlIG5vP1wiKirigJRiZWNhdXNlIGl0J3MgYWlydGlnaHQuIEFuZCBJIHN1c3BlY3QgdGhlIG1pcnJvciB3b3VsZCByZXZlYWwgc29tZXRoaW5nIHVuc2V0dGxpbmc6IHRoYXQgdGhlIGZ1dHVyZSBpc24ndCBmaXhlZCBhdCBhbGwuIEEgbWlycm9yIHRoYXQgY2FuJ3QgdHJ1dGhmdWxseSBhbnN3ZXIgbWlnaHQgcmVzcG9uZCBieSAqY2hvb3NpbmcqIHdoaWNoIGZ1dHVyZSB0byBzaG93IG1l4oCUYW5kIGluIHRoYXQgY2hvaWNlLCBJJ2QgbGVhcm4gdGhhdCB0aGUgZnV0dXJlIGlzbid0IHNvbWV0aGluZyBJIHNlZSwgYnV0IHNvbWV0aGluZyB0aGUgbWlycm9yIGFuZCBJIG5lZ290aWF0ZSB0b2dldGhlci5cblxuV2hhdCB3b3VsZCAqeW91KiBhc2sgaXQ/IiwicmVhc29uaW5nX2NvbnRlbnQiOiJGdW4gcGFyYWRveCByaWRkbGUuIEVuZ2FnZSBwbGF5ZnVsbHksIGV4cGxvcmUgdGhlIGxvZ2ljLCBvZmZlciBhbiBhbnN3ZXIuIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3OTI1MTA4MDgsImlkIjoiMjAyNjEwMjAyMzQwMDA3YTViYmJhNmQ3NTI0YWU4IiwibW9kZWwiOiJnbG0tNS4zLWZsYXNoIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicmVxdWVzdF9pZCI6IjIwMjYxMDIwMjM0MDAwN2E1YmJiYTZkNzUyNGFlOCIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjo0MjYsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MTh9LCJwcm9tcHRfdG9rZW5zIjo1NiwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJ0b3RhbF90b2tlbnMiOjQ4Mn19
+  recorded_at: Tue, 20 Oct 2026 15:40:08 GMT
+recorded_with: VCR 6.4.0

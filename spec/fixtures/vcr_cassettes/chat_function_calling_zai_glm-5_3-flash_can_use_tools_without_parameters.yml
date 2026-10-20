@@ -1,0 +1,114 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.z.ai/api/paas/v4/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"glm-5.3-flash","messages":[{"role":"user","content":"Use
+        the best_language_to_learn tool to tell me which language to learn."}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 15:36:40 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '659'
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - a7ecedc2a59e14fe1e89f2c93df370f2
+      Vary:
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 20261020233635ead2d5d88f1e4c1f
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":"","reasoning_content":"The
+        user wants me to call the best_language_to_learn tool. Let me do that.","role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call_-7148593526521982013","index":0,"type":"function"}]}}],"created":1792510600,"id":"20261020233635ead2d5d88f1e4c1f","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261020233635ead2d5d88f1e4c1f","usage":{"completion_tokens":26,"completion_tokens_details":{"reasoning_tokens":18},"prompt_tokens":171,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":197}}'
+  recorded_at: Tue, 20 Oct 2026 15:36:40 GMT
+- request:
+    method: post
+    uri: https://api.z.ai/api/paas/v4/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"glm-5.3-flash","messages":[{"role":"user","content":"Use
+        the best_language_to_learn tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"call_-7148593526521982013","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
+        user wants me to call the best_language_to_learn tool. Let me do that."},{"role":"tool","content":"Ruby","tool_call_id":"call_-7148593526521982013"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 15:36:48 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '985'
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - 1fbadfc898d04805d55c8053d240985f
+      Vary:
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 202610202336407de64b9b11ff43bb
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJBY2NvcmRpbmcgdG8gdGhlIHRvb2wsIHRoZSBiZXN0IGxhbmd1YWdlIGZvciB5b3UgdG8gbGVhcm4gaXMgKipSdWJ5KiohIFxuXG5SdWJ5IGlzIGEgZ3JlYXQgY2hvaWNlIOKAlCBpdCdzIGtub3duIGZvciBpdHMgY2xlYW4sIGVsZWdhbnQgc3ludGF4IGFuZCBkZXZlbG9wZXItZnJpZW5kbHkgZGVzaWduLiBJdCdzIHdpZGVseSB1c2VkIGZvciB3ZWIgZGV2ZWxvcG1lbnQgKGVzcGVjaWFsbHkgd2l0aCB0aGUgUnVieSBvbiBSYWlscyBmcmFtZXdvcmspLCBzY3JpcHRpbmcsIGFuZCBhdXRvbWF0aW9uLiBJdHMgcmVhZGFibGUgY29kZSBtYWtlcyBpdCBhbiBleGNlbGxlbnQgbGFuZ3VhZ2UgZm9yIGJlZ2lubmVycyB3aGlsZSBzdGlsbCBiZWluZyBwb3dlcmZ1bCBlbm91Z2ggZm9yIHByb2Zlc3Npb25hbHMuXG5cbldvdWxkIHlvdSBsaWtlIGFueSB0aXBzIG9uIGdldHRpbmcgc3RhcnRlZCB3aXRoIFJ1Ynk/IiwicmVhc29uaW5nX2NvbnRlbnQiOiJUaGUgdG9vbCByZXR1cm5lZCBcIlJ1YnlcIiBhcyB0aGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybi4gTGV0IG1lIHJlbGF5IHRoaXMgdG8gdGhlIHVzZXIuIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3OTI1MTA2MDgsImlkIjoiMjAyNjEwMjAyMzM2NDA3ZGU2NGI5YjExZmY0M2JiIiwibW9kZWwiOiJnbG0tNS4zLWZsYXNoIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicmVxdWVzdF9pZCI6IjIwMjYxMDIwMjMzNjQwN2RlNjRiOWIxMWZmNDNiYiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjoxMTEsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MjF9LCJwcm9tcHRfdG9rZW5zIjoyMDIsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwidG90YWxfdG9rZW5zIjozMTN9fQ==
+  recorded_at: Tue, 20 Oct 2026 15:36:48 GMT
+recorded_with: VCR 6.4.0

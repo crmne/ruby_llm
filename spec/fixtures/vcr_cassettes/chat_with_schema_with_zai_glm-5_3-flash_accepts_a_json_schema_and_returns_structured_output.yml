@@ -1,0 +1,81 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.z.ai/api/paas/v4/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"glm-5.3-flash","messages":[{"role":"user","content":"Generate
+        a person named John who is 30 years old"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 15:33:11 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '2373'
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - b2795ca8454c59aac255c05715242b1d
+      Vary:
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 202610202333045221d4a5df6846b6
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"{\"name\":
+        \"John\", \"age\": 30}","reasoning_content":"The user wants me to generate
+        a person named John who is 30 years old. This is a simple creative request
+        - they want me to create a fictional character profile. This is harmless and
+        straightforward. I should create a character with the name John and age 30,
+        and flesh out some details to make the person feel real and complete.\n\nLet
+        me think about what makes a good character profile:\n- Name: John (given)\n-
+        Age: 30 (given)\n- I can add: occupation, location, personality traits, hobbies,
+        background, physical description, etc.\n\nI should make this a nice, fleshed-out
+        character. The format could be a profile-style layout with headers or a bulleted
+        list, or a paragraph description. Given the request is to \"generate a person,\"
+        a structured profile format seems appropriate - it''s like creating a character
+        sheet. I could use headers or bold labels with details.\n\nLet me create something
+        with reasonable depth but not overwhelming. A character profile with key categories
+        would be ideal:\n\n- Basic info (name, age, maybe birthday)\n- Occupation\n-
+        Location\n- Appearance\n- Personality\n- Hobbies/interests\n- Background\n\nLet
+        me draft this:\n\n**John**\n- Age: 30\n- Occupation: Software engineer (or
+        something else - let me pick something interesting, maybe a graphic designer
+        or teacher or something)\n- Location: Portland, Oregon or somewhere\n- Birthday:
+        March 15 (making him a Pisces, or I could pick another)\n\nPersonality: friendly,
+        a bit introverted but warm with close friends, curious\nHobbies: hiking, cooking,
+        board games, photography\nBackground: grew up in a small town, went to college,
+        etc.\n\nLet me write it out nicely. I''ll use markdown formatting since this
+        is a conversational AI context where markdown renders. A profile format with
+        bold labels and a few sections works well. Length should be moderate - enough
+        detail to be a fleshed-out character but not a novel.","role":"assistant"}}],"created":1792510391,"id":"202610202333045221d4a5df6846b6","model":"glm-5.3-flash","object":"chat.completion","request_id":"202610202333045221d4a5df6846b6","usage":{"completion_tokens":418,"completion_tokens_details":{"reasoning_tokens":404},"prompt_tokens":23,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":441}}'
+  recorded_at: Tue, 20 Oct 2026 15:33:11 GMT
+recorded_with: VCR 6.4.0

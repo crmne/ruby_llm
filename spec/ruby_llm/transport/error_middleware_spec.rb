@@ -282,6 +282,16 @@ RSpec.describe RubyLLM::Transport::ErrorMiddleware do
       end.to raise_error(RubyLLM::ContextLengthExceededError, msg)
     end
 
+    it "maps Z.ai's prompt exceeds max length to ContextLengthExceededError" do
+      msg = 'Prompt exceeds max length'
+      response = Faraday::Env.from(status: 400)
+      provider = instance_double(RubyLLM::Provider, parse_error: msg)
+
+      expect do
+        described_class.parse_error(provider: provider, response: response)
+      end.to raise_error(RubyLLM::ContextLengthExceededError, msg)
+    end
+
     it 'keeps an invalid context-size setting as BadRequestError' do
       msg = 'Invalid context size: must be a positive integer'
       response = Faraday::Env.from(status: 400)

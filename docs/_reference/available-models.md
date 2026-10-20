@@ -2,7 +2,7 @@
 layout: models
 title: Models
 llms: false
-description: Browse 1900 AI models across 19 remote providers, with capabilities, context limits, and pricing.
+description: Browse 1918 AI models across 20 remote providers, with capabilities, context limits, and pricing.
 canonical_url: https://rubyllm.com/available-models/
 redirect_from:
   - /guides/available-models
@@ -12,7 +12,7 @@ redirect_from:
   <header class="catalog-header">
     <div>
       <h1>Models</h1>
-      <p class="catalog-description"><strong>1,900 models</strong> across <strong>19 providers</strong>. Find the capabilities you need and compare what they cost.</p>
+      <p class="catalog-description"><strong>1,918 models</strong> across <strong>20 providers</strong>. Find the capabilities you need and compare what they cost.</p>
       <p class="catalog-updated">Updated <time datetime="2026-10-20">2026-10-20</time></p>
     </div>
     <div class="catalog-usage">
@@ -39,7 +39,7 @@ redirect_from:
 
   <div class="catalog-results-header">
     <h2 data-catalog-heading>All providers</h2>
-    <p data-catalog-count role="status">1,900 models</p>
+    <p data-catalog-count role="status">1,918 models</p>
   </div>
   <p class="catalog-pricing-note">Prices are USD per million text tokens at standard rates. Cache rates appear below input prices when listed. A dash means the value is not listed.</p>
 
@@ -19058,6 +19058,186 @@ redirect_from:
           <td class="catalog-numeric">—</td>
           <td class="catalog-numeric">—</td>
           <td class="catalog-numeric">—</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;glm-4.5&quot;,&quot;name&quot;:&quot;GLM-4.5&quot;,&quot;provider&quot;:&quot;ZAI&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:131072,&quot;output&quot;:98304,&quot;input_price&quot;:0.6,&quot;output_price&quot;:2.2&#125;">
+          <th scope="row"><span class="catalog-model-name">GLM-4.5</span><code>glm-4.5</code></th>
+          <td>ZAI</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span></div></td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">98,304</td>
+          <td class="catalog-numeric">$0.6<small>Cache read $0.11</small><small>Cache write $0</small></td>
+          <td class="catalog-numeric">$2.2</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;glm-4.5-air&quot;,&quot;name&quot;:&quot;GLM-4.5-Air&quot;,&quot;provider&quot;:&quot;ZAI&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:131072,&quot;output&quot;:98304,&quot;input_price&quot;:0.2,&quot;output_price&quot;:1.1&#125;">
+          <th scope="row"><span class="catalog-model-name">GLM-4.5-Air</span><code>glm-4.5-air</code></th>
+          <td>ZAI</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span></div></td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">98,304</td>
+          <td class="catalog-numeric">$0.2<small>Cache read $0.03</small><small>Cache write $0</small></td>
+          <td class="catalog-numeric">$1.1</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;glm-4.5-flash&quot;,&quot;name&quot;:&quot;GLM-4.5-Flash&quot;,&quot;provider&quot;:&quot;ZAI&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:131072,&quot;output&quot;:98304,&quot;input_price&quot;:0,&quot;output_price&quot;:0&#125;">
+          <th scope="row"><span class="catalog-model-name">GLM-4.5-Flash</span><code>glm-4.5-flash</code></th>
+          <td>ZAI</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span></div></td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">98,304</td>
+          <td class="catalog-numeric">$0<small>Cache read $0</small><small>Cache write $0</small></td>
+          <td class="catalog-numeric">$0</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;glm-4.5v&quot;,&quot;name&quot;:&quot;GLM-4.5V&quot;,&quot;provider&quot;:&quot;ZAI&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Video input&quot;,&quot;Text output&quot;],&quot;context&quot;:64000,&quot;output&quot;:16384,&quot;input_price&quot;:0.6,&quot;output_price&quot;:1.8&#125;">
+          <th scope="row"><span class="catalog-model-name">GLM-4.5V</span><code>glm-4.5v</code></th>
+          <td>ZAI</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, video</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span><span>Video</span></div></td>
+          <td class="catalog-numeric">64,000</td>
+          <td class="catalog-numeric">16,384</td>
+          <td class="catalog-numeric">$0.6<small>Cache read $0.11</small><small>Cache write $0</small></td>
+          <td class="catalog-numeric">$1.8</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;glm-4.6&quot;,&quot;name&quot;:&quot;GLM-4.6&quot;,&quot;provider&quot;:&quot;ZAI&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:204800,&quot;output&quot;:131072,&quot;input_price&quot;:0.6,&quot;output_price&quot;:2.2&#125;">
+          <th scope="row"><span class="catalog-model-name">GLM-4.6</span><code>glm-4.6</code></th>
+          <td>ZAI</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span></div></td>
+          <td class="catalog-numeric">204,800</td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">$0.6<small>Cache read $0.11</small><small>Cache write $0</small></td>
+          <td class="catalog-numeric">$2.2</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;glm-4.6v&quot;,&quot;name&quot;:&quot;GLM-4.6V&quot;,&quot;provider&quot;:&quot;ZAI&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Video input&quot;,&quot;Text output&quot;],&quot;context&quot;:128000,&quot;output&quot;:32768,&quot;input_price&quot;:0.3,&quot;output_price&quot;:0.9&#125;">
+          <th scope="row"><span class="catalog-model-name">GLM-4.6V</span><code>glm-4.6v</code></th>
+          <td>ZAI</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, video</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span><span>Video</span></div></td>
+          <td class="catalog-numeric">128,000</td>
+          <td class="catalog-numeric">32,768</td>
+          <td class="catalog-numeric">$0.3<small>Cache read $0.05</small><small>Cache write $0</small></td>
+          <td class="catalog-numeric">$0.9</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;glm-4.6v-flash&quot;,&quot;name&quot;:&quot;GLM-4.6V-Flash&quot;,&quot;provider&quot;:&quot;ZAI&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Video input&quot;,&quot;Text output&quot;],&quot;context&quot;:128000,&quot;output&quot;:32768,&quot;input_price&quot;:0,&quot;output_price&quot;:0&#125;">
+          <th scope="row"><span class="catalog-model-name">GLM-4.6V-Flash</span><code>glm-4.6v-flash</code></th>
+          <td>ZAI</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, video</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span><span>Video</span></div></td>
+          <td class="catalog-numeric">128,000</td>
+          <td class="catalog-numeric">32,768</td>
+          <td class="catalog-numeric">$0<small>Cache read $0</small><small>Cache write $0</small></td>
+          <td class="catalog-numeric">$0</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;glm-4.7&quot;,&quot;name&quot;:&quot;GLM-4.7&quot;,&quot;provider&quot;:&quot;ZAI&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:204800,&quot;output&quot;:131072,&quot;input_price&quot;:0.6,&quot;output_price&quot;:2.2&#125;">
+          <th scope="row"><span class="catalog-model-name">GLM-4.7</span><code>glm-4.7</code></th>
+          <td>ZAI</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span></div></td>
+          <td class="catalog-numeric">204,800</td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">$0.6<small>Cache read $0.11</small><small>Cache write $0</small></td>
+          <td class="catalog-numeric">$2.2</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;glm-4.7-flash&quot;,&quot;name&quot;:&quot;GLM-4.7-Flash&quot;,&quot;provider&quot;:&quot;ZAI&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:200000,&quot;output&quot;:131072,&quot;input_price&quot;:0,&quot;output_price&quot;:0&#125;">
+          <th scope="row"><span class="catalog-model-name">GLM-4.7-Flash</span><code>glm-4.7-flash</code></th>
+          <td>ZAI</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span></div></td>
+          <td class="catalog-numeric">200,000</td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">$0<small>Cache read $0</small><small>Cache write $0</small></td>
+          <td class="catalog-numeric">$0</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;glm-4.7-flashx&quot;,&quot;name&quot;:&quot;GLM-4.7-FlashX&quot;,&quot;provider&quot;:&quot;ZAI&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:200000,&quot;output&quot;:131072,&quot;input_price&quot;:0.07,&quot;output_price&quot;:0.4&#125;">
+          <th scope="row"><span class="catalog-model-name">GLM-4.7-FlashX</span><code>glm-4.7-flashx</code></th>
+          <td>ZAI</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span></div></td>
+          <td class="catalog-numeric">200,000</td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">$0.07<small>Cache read $0.01</small><small>Cache write $0</small></td>
+          <td class="catalog-numeric">$0.4</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;glm-5&quot;,&quot;name&quot;:&quot;GLM-5&quot;,&quot;provider&quot;:&quot;ZAI&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:204800,&quot;output&quot;:131072,&quot;input_price&quot;:1,&quot;output_price&quot;:3.2&#125;">
+          <th scope="row"><span class="catalog-model-name">GLM-5</span><code>glm-5</code></th>
+          <td>ZAI</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span></div></td>
+          <td class="catalog-numeric">204,800</td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">$1<small>Cache read $0.2</small><small>Cache write $0</small></td>
+          <td class="catalog-numeric">$3.2</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;glm-5-turbo&quot;,&quot;name&quot;:&quot;GLM-5-Turbo&quot;,&quot;provider&quot;:&quot;ZAI&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:200000,&quot;output&quot;:131072,&quot;input_price&quot;:1.2,&quot;output_price&quot;:4&#125;">
+          <th scope="row"><span class="catalog-model-name">GLM-5-Turbo</span><code>glm-5-turbo</code></th>
+          <td>ZAI</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span></div></td>
+          <td class="catalog-numeric">200,000</td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">$1.2<small>Cache read $0.24</small><small>Cache write $0</small></td>
+          <td class="catalog-numeric">$4</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;glm-5.1&quot;,&quot;name&quot;:&quot;GLM-5.1&quot;,&quot;provider&quot;:&quot;ZAI&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:200000,&quot;output&quot;:131072,&quot;input_price&quot;:1.4,&quot;output_price&quot;:4.4&#125;">
+          <th scope="row"><span class="catalog-model-name">GLM-5.1</span><code>glm-5.1</code></th>
+          <td>ZAI</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span></div></td>
+          <td class="catalog-numeric">200,000</td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">$1.4<small>Cache read $0.26</small><small>Cache write $0</small></td>
+          <td class="catalog-numeric">$4.4</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;glm-5.2&quot;,&quot;name&quot;:&quot;GLM-5.2&quot;,&quot;provider&quot;:&quot;ZAI&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:131072,&quot;input_price&quot;:1.4,&quot;output_price&quot;:4.4&#125;">
+          <th scope="row"><span class="catalog-model-name">GLM-5.2</span><code>glm-5.2</code></th>
+          <td>ZAI</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span></div></td>
+          <td class="catalog-numeric">1,000,000</td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">$1.4<small>Cache read $0.26</small><small>Cache write $0</small></td>
+          <td class="catalog-numeric">$4.4</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;glm-5.3&quot;,&quot;name&quot;:&quot;GLM-5.3&quot;,&quot;provider&quot;:&quot;ZAI&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:131072,&quot;input_price&quot;:1.4,&quot;output_price&quot;:4.4&#125;">
+          <th scope="row"><span class="catalog-model-name">GLM-5.3</span><code>glm-5.3</code></th>
+          <td>ZAI</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span></div></td>
+          <td class="catalog-numeric">1,000,000</td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">$1.4<small>Cache read $0.26</small><small>Cache write $0</small></td>
+          <td class="catalog-numeric">$4.4</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;glm-5.3-flash&quot;,&quot;name&quot;:&quot;GLM-5.3-Flash&quot;,&quot;provider&quot;:&quot;ZAI&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Video input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:131072,&quot;input_price&quot;:0.15,&quot;output_price&quot;:0.5&#125;">
+          <th scope="row"><span class="catalog-model-name">GLM-5.3-Flash</span><code>glm-5.3-flash</code></th>
+          <td>ZAI</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, video, pdf</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Video</span></div></td>
+          <td class="catalog-numeric">1,000,000</td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">$0.15<small>Cache read $0.03</small><small>Cache write $0</small></td>
+          <td class="catalog-numeric">$0.5</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;glm-5.3-flashx&quot;,&quot;name&quot;:&quot;GLM-5.3-FlashX&quot;,&quot;provider&quot;:&quot;ZAI&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Video input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:131072,&quot;input_price&quot;:0.37,&quot;output_price&quot;:1.25&#125;">
+          <th scope="row"><span class="catalog-model-name">GLM-5.3-FlashX</span><code>glm-5.3-flashx</code></th>
+          <td>ZAI</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, video, pdf</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Video</span></div></td>
+          <td class="catalog-numeric">1,000,000</td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">$0.37<small>Cache read $0.075</small><small>Cache write $0</small></td>
+          <td class="catalog-numeric">$1.25</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;glm-5v-turbo&quot;,&quot;name&quot;:&quot;GLM-5V-Turbo&quot;,&quot;provider&quot;:&quot;ZAI&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Video input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:200000,&quot;output&quot;:131072,&quot;input_price&quot;:1.2,&quot;output_price&quot;:4&#125;">
+          <th scope="row"><span class="catalog-model-name">GLM-5V-Turbo</span><code>glm-5v-turbo</code></th>
+          <td>ZAI</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, video, pdf</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span><span>Video</span></div></td>
+          <td class="catalog-numeric">200,000</td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">$1.2<small>Cache read $0.24</small><small>Cache write $0</small></td>
+          <td class="catalog-numeric">$4</td>
         </tr>
       </tbody>
     </table>

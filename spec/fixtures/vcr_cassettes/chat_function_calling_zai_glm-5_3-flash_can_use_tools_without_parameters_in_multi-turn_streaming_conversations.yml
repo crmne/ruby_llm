@@ -1,0 +1,421 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.z.ai/api/paas/v4/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"glm-5.3-flash","messages":[{"role":"system","content":"You
+        must use tools whenever possible."},{"role":"user","content":"Call best_language_to_learn
+        and repeat the programming language it returns."}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"stream_options":{"include_usage":true}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 15:36:53 GMT
+      Content-Type:
+      - text/event-stream;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - eacc592175dbb399ae43d358428d8427
+      Vary:
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 202610202336486c7a53c044434926
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"id":"202610202336486c7a53c044434926","created":1792510608,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":"The"}}]}
+
+        data: {"id":"202610202336486c7a53c044434926","created":1792510608,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" user"}}]}
+
+        data: {"id":"202610202336486c7a53c044434926","created":1792510608,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" wants"}}]}
+
+        data: {"id":"202610202336486c7a53c044434926","created":1792510608,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" me"}}]}
+
+        data: {"id":"202610202336486c7a53c044434926","created":1792510608,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" to"}}]}
+
+        data: {"id":"202610202336486c7a53c044434926","created":1792510608,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" call"}}]}
+
+        data: {"id":"202610202336486c7a53c044434926","created":1792510608,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" the"}}]}
+
+        data: {"id":"202610202336486c7a53c044434926","created":1792510608,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" best"}}]}
+
+        data: {"id":"202610202336486c7a53c044434926","created":1792510608,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":"_language"}}]}
+
+        data: {"id":"202610202336486c7a53c044434926","created":1792510608,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":"_to"}}]}
+
+        data: {"id":"202610202336486c7a53c044434926","created":1792510608,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":"_learn"}}]}
+
+        data: {"id":"202610202336486c7a53c044434926","created":1792510608,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" function"}}]}
+
+        data: {"id":"202610202336486c7a53c044434926","created":1792510608,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" and"}}]}
+
+        data: {"id":"202610202336486c7a53c044434926","created":1792510608,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" repeat"}}]}
+
+        data: {"id":"202610202336486c7a53c044434926","created":1792510608,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" the"}}]}
+
+        data: {"id":"202610202336486c7a53c044434926","created":1792510608,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" programming"}}]}
+
+        data: {"id":"202610202336486c7a53c044434926","created":1792510608,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" language"}}]}
+
+        data: {"id":"202610202336486c7a53c044434926","created":1792510608,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" it"}}]}
+
+        data: {"id":"202610202336486c7a53c044434926","created":1792510608,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" returns"}}]}
+
+        data: {"id":"202610202336486c7a53c044434926","created":1792510608,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":"."}}]}
+
+        data: {"id":"202610202336486c7a53c044434926","created":1792510608,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" Let"}}]}
+
+        data: {"id":"202610202336486c7a53c044434926","created":1792510608,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" me"}}]}
+
+        data: {"id":"202610202336486c7a53c044434926","created":1792510608,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" call"}}]}
+
+        data: {"id":"202610202336486c7a53c044434926","created":1792510608,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" it"}}]}
+
+        data: {"id":"202610202336486c7a53c044434926","created":1792510608,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":"."}}]}
+
+        data: {"id":"202610202336486c7a53c044434926","created":1792510608,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"tool_calls":[{"id":"call_80a36f2e215441e9934c4bfc","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]}}]}
+
+        data: {"id":"202610202336486c7a53c044434926","created":1792510608,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"finish_reason":"tool_calls","delta":{"role":"assistant","content":""}}],"usage":{"prompt_tokens":177,"completion_tokens":33,"total_tokens":210,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":25}}}
+
+        data: [DONE]
+
+  recorded_at: Tue, 20 Oct 2026 15:36:53 GMT
+- request:
+    method: post
+    uri: https://api.z.ai/api/paas/v4/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"glm-5.3-flash","messages":[{"role":"system","content":"You
+        must use tools whenever possible."},{"role":"user","content":"Call best_language_to_learn
+        and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"call_80a36f2e215441e9934c4bfc","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
+        user wants me to call the best_language_to_learn function and repeat the programming
+        language it returns. Let me call it."},{"role":"tool","content":"Ruby","tool_call_id":"call_80a36f2e215441e9934c4bfc"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"stream_options":{"include_usage":true}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 15:37:01 GMT
+      Content-Type:
+      - text/event-stream;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - d6c48b05d12f8b1251fd5be769836a30
+      Vary:
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 202610202336536eaf504a5a454650
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"id":"202610202336536eaf504a5a454650","created":1792510613,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":"The"}}]}
+
+        data: {"id":"202610202336536eaf504a5a454650","created":1792510613,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" function"}}]}
+
+        data: {"id":"202610202336536eaf504a5a454650","created":1792510613,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" returned"}}]}
+
+        data: {"id":"202610202336536eaf504a5a454650","created":1792510613,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" \""}}]}
+
+        data: {"id":"202610202336536eaf504a5a454650","created":1792510613,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":"Ruby"}}]}
+
+        data: {"id":"202610202336536eaf504a5a454650","created":1792510613,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":"\"."}}]}
+
+        data: {"id":"202610202336536eaf504a5a454650","created":1792510613,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" I"}}]}
+
+        data: {"id":"202610202336536eaf504a5a454650","created":1792510613,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" should"}}]}
+
+        data: {"id":"202610202336536eaf504a5a454650","created":1792510613,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" repeat"}}]}
+
+        data: {"id":"202610202336536eaf504a5a454650","created":1792510613,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" this"}}]}
+
+        data: {"id":"202610202336536eaf504a5a454650","created":1792510613,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" back"}}]}
+
+        data: {"id":"202610202336536eaf504a5a454650","created":1792510613,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" to"}}]}
+
+        data: {"id":"202610202336536eaf504a5a454650","created":1792510613,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" the"}}]}
+
+        data: {"id":"202610202336536eaf504a5a454650","created":1792510613,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" user"}}]}
+
+        data: {"id":"202610202336536eaf504a5a454650","created":1792510613,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":"."}}]}
+
+        data: {"id":"202610202336536eaf504a5a454650","created":1792510613,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","content":"The"}}]}
+
+        data: {"id":"202610202336536eaf504a5a454650","created":1792510613,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","content":" best"}}]}
+
+        data: {"id":"202610202336536eaf504a5a454650","created":1792510613,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","content":" language"}}]}
+
+        data: {"id":"202610202336536eaf504a5a454650","created":1792510613,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","content":" to"}}]}
+
+        data: {"id":"202610202336536eaf504a5a454650","created":1792510613,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","content":" learn"}}]}
+
+        data: {"id":"202610202336536eaf504a5a454650","created":1792510613,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","content":" is"}}]}
+
+        data: {"id":"202610202336536eaf504a5a454650","created":1792510613,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","content":":"}}]}
+
+        data: {"id":"202610202336536eaf504a5a454650","created":1792510613,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","content":" **"}}]}
+
+        data: {"id":"202610202336536eaf504a5a454650","created":1792510613,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","content":"Ruby"}}]}
+
+        data: {"id":"202610202336536eaf504a5a454650","created":1792510613,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","content":"**"}}]}
+
+        data: {"id":"202610202336536eaf504a5a454650","created":1792510613,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"finish_reason":"stop","delta":{"role":"assistant","content":""}}],"usage":{"prompt_tokens":215,"completion_tokens":27,"total_tokens":242,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":15}}}
+
+        data: [DONE]
+
+  recorded_at: Tue, 20 Oct 2026 15:37:01 GMT
+- request:
+    method: post
+    uri: https://api.z.ai/api/paas/v4/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"glm-5.3-flash","messages":[{"role":"system","content":"You
+        must use tools whenever possible."},{"role":"user","content":"Call best_language_to_learn
+        and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"call_80a36f2e215441e9934c4bfc","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
+        user wants me to call the best_language_to_learn function and repeat the programming
+        language it returns. Let me call it."},{"role":"tool","content":"Ruby","tool_call_id":"call_80a36f2e215441e9934c4bfc"},{"role":"assistant","content":"The
+        best language to learn is: **Ruby**","reasoning_content":"The function returned
+        \"Ruby\". I should repeat this back to the user."},{"role":"user","content":"Call
+        best_language_to_learn again and repeat the programming language it returns."}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"stream_options":{"include_usage":true}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 15:37:06 GMT
+      Content-Type:
+      - text/event-stream;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - 582d2ad0b3e4348e8c913f9780ebd6b8
+      Vary:
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 20261020233701df412fface0a479e
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"id":"20261020233701df412fface0a479e","created":1792510621,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":"The"}}]}
+
+        data: {"id":"20261020233701df412fface0a479e","created":1792510621,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" user"}}]}
+
+        data: {"id":"20261020233701df412fface0a479e","created":1792510621,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" wants"}}]}
+
+        data: {"id":"20261020233701df412fface0a479e","created":1792510621,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" me"}}]}
+
+        data: {"id":"20261020233701df412fface0a479e","created":1792510621,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" to"}}]}
+
+        data: {"id":"20261020233701df412fface0a479e","created":1792510621,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" call"}}]}
+
+        data: {"id":"20261020233701df412fface0a479e","created":1792510621,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" the"}}]}
+
+        data: {"id":"20261020233701df412fface0a479e","created":1792510621,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" function"}}]}
+
+        data: {"id":"20261020233701df412fface0a479e","created":1792510621,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" again"}}]}
+
+        data: {"id":"20261020233701df412fface0a479e","created":1792510621,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" and"}}]}
+
+        data: {"id":"20261020233701df412fface0a479e","created":1792510621,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" repeat"}}]}
+
+        data: {"id":"20261020233701df412fface0a479e","created":1792510621,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" the"}}]}
+
+        data: {"id":"20261020233701df412fface0a479e","created":1792510621,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" result"}}]}
+
+        data: {"id":"20261020233701df412fface0a479e","created":1792510621,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":"."}}]}
+
+        data: {"id":"20261020233701df412fface0a479e","created":1792510621,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"tool_calls":[{"id":"call_dcfbfd80eed043edba18971e","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]}}]}
+
+        data: {"id":"20261020233701df412fface0a479e","created":1792510621,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"finish_reason":"tool_calls","delta":{"role":"assistant","content":""}}],"usage":{"prompt_tokens":258,"completion_tokens":22,"total_tokens":280,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":14}}}
+
+        data: [DONE]
+
+  recorded_at: Tue, 20 Oct 2026 15:37:06 GMT
+- request:
+    method: post
+    uri: https://api.z.ai/api/paas/v4/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"glm-5.3-flash","messages":[{"role":"system","content":"You
+        must use tools whenever possible."},{"role":"user","content":"Call best_language_to_learn
+        and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"call_80a36f2e215441e9934c4bfc","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
+        user wants me to call the best_language_to_learn function and repeat the programming
+        language it returns. Let me call it."},{"role":"tool","content":"Ruby","tool_call_id":"call_80a36f2e215441e9934c4bfc"},{"role":"assistant","content":"The
+        best language to learn is: **Ruby**","reasoning_content":"The function returned
+        \"Ruby\". I should repeat this back to the user."},{"role":"user","content":"Call
+        best_language_to_learn again and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"call_dcfbfd80eed043edba18971e","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
+        user wants me to call the function again and repeat the result."},{"role":"tool","content":"Ruby","tool_call_id":"call_dcfbfd80eed043edba18971e"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"stream_options":{"include_usage":true}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 15:37:10 GMT
+      Content-Type:
+      - text/event-stream;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - 179a4c17d4491d26e4a70b51b3517269
+      Vary:
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 20261020233706c72b64a083b54aca
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"id":"20261020233706c72b64a083b54aca","created":1792510626,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":"The"}}]}
+
+        data: {"id":"20261020233706c72b64a083b54aca","created":1792510626,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" function"}}]}
+
+        data: {"id":"20261020233706c72b64a083b54aca","created":1792510626,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" returned"}}]}
+
+        data: {"id":"20261020233706c72b64a083b54aca","created":1792510626,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" \""}}]}
+
+        data: {"id":"20261020233706c72b64a083b54aca","created":1792510626,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":"Ruby"}}]}
+
+        data: {"id":"20261020233706c72b64a083b54aca","created":1792510626,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":"\""}}]}
+
+        data: {"id":"20261020233706c72b64a083b54aca","created":1792510626,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":" again"}}]}
+
+        data: {"id":"20261020233706c72b64a083b54aca","created":1792510626,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","reasoning_content":"."}}]}
+
+        data: {"id":"20261020233706c72b64a083b54aca","created":1792510626,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","content":"The"}}]}
+
+        data: {"id":"20261020233706c72b64a083b54aca","created":1792510626,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","content":" best"}}]}
+
+        data: {"id":"20261020233706c72b64a083b54aca","created":1792510626,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","content":" language"}}]}
+
+        data: {"id":"20261020233706c72b64a083b54aca","created":1792510626,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","content":" to"}}]}
+
+        data: {"id":"20261020233706c72b64a083b54aca","created":1792510626,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","content":" learn"}}]}
+
+        data: {"id":"20261020233706c72b64a083b54aca","created":1792510626,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","content":" is"}}]}
+
+        data: {"id":"20261020233706c72b64a083b54aca","created":1792510626,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","content":":"}}]}
+
+        data: {"id":"20261020233706c72b64a083b54aca","created":1792510626,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","content":" **"}}]}
+
+        data: {"id":"20261020233706c72b64a083b54aca","created":1792510626,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","content":"Ruby"}}]}
+
+        data: {"id":"20261020233706c72b64a083b54aca","created":1792510626,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"delta":{"role":"assistant","content":"**"}}]}
+
+        data: {"id":"20261020233706c72b64a083b54aca","created":1792510626,"object":"chat.completion.chunk","model":"glm-5.3-flash","choices":[{"index":0,"finish_reason":"stop","delta":{"role":"assistant","content":""}}],"usage":{"prompt_tokens":285,"completion_tokens":20,"total_tokens":305,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":8}}}
+
+        data: [DONE]
+
+  recorded_at: Tue, 20 Oct 2026 15:37:11 GMT
+recorded_with: VCR 6.4.0
+...

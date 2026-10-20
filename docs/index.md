@@ -2,7 +2,7 @@
 layout: home
 title: RubyLLM
 nav_order: 1
-description: 'The Ruby AI framework: models, tools, agents, sandboxed code, evaluations, and Rails conventions across 21 providers.'
+description: 'The Ruby AI framework: models, tools, agents, sandboxed code, evaluations, and Rails conventions across 22 providers.'
 permalink: /
 redirect_from:
   - /guides/
@@ -33,7 +33,7 @@ hero:
 
 <section class="home-section home-band home-models-section">
   <div class="home-section-inner">
-    <h2 class="home-heading">21 providers. One API.</h2>
+    <h2 class="home-heading">22 providers. One API.</h2>
     <p class="home-lead">
       Build with the models you want. Move between hosted and local providers without rewriting your application, or connect an OpenAI-compatible endpoint.
     </p>
@@ -71,6 +71,7 @@ chat.ask "Hello!"
       <a href="https://typesafe.ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/typesafe.svg' | relative_url }}" alt="" class="logo-mark logo-mono"><span class="logo-wordmark">TypeSafe AI</span></a>
       <a href="https://cloud.google.com/vertex-ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/vertexai-color.svg' | relative_url }}" alt="Vertex AI" class="logo-mark"><img src="{{ '/assets/images/providers/vertexai-text.svg' | relative_url }}" alt="" class="logo-text"></a>
       <a href="https://x.ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/xai.svg' | relative_url }}" alt="xAI" class="logo-mark logo-mono"><img src="{{ '/assets/images/providers/xai-text.svg' | relative_url }}" alt="" class="logo-text"></a>
+      <a href="https://z.ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/zai.svg' | relative_url }}" alt="Z.ai" class="logo-mark logo-mono"><img src="{{ '/assets/images/providers/zai-text.svg' | relative_url }}" alt="" class="logo-text"></a>
     </div>
 
 

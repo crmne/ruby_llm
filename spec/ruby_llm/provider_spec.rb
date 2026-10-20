@@ -127,6 +127,12 @@ RSpec.describe RubyLLM::Provider do
         key: :xai_api_base,
         custom: 'https://xai-proxy.example.com/v1',
         default: 'https://api.x.ai/v1'
+      },
+      zai: {
+        provider: RubyLLM::Providers::ZAI,
+        key: :zai_api_base,
+        custom: 'https://open.bigmodel.cn/api/paas/v4',
+        default: 'https://api.z.ai/api/paas/v4'
       }
     }
   end
@@ -182,6 +188,8 @@ RSpec.describe RubyLLM::Provider do
         config.vertexai_location = 'us-east1'
       when :xai
         config.xai_api_key = 'xai-key'
+      when :zai
+        config.zai_api_key = 'zai-key'
       end
     end
   end

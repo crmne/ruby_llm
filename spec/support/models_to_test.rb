@@ -60,7 +60,8 @@ chat_models = [
   { provider: :openrouter, model: 'claude-haiku-4-5' },
   { provider: :perplexity, model: 'openai/gpt-5-mini' },
   { provider: :vertexai, model: 'gemini-2.5-flash' },
-  { provider: :xai, model: 'grok-4-1-fast-non-reasoning' }
+  { provider: :xai, model: 'grok-4-1-fast-non-reasoning' },
+  { provider: :zai, model: 'glm-5.3-flash' }
 ].freeze
 CHAT_MODELS = filter_local_providers(chat_models).freeze
 
@@ -75,7 +76,8 @@ structured_output_models = [
   { provider: :openai, model: 'gpt-5-nano' },
   { provider: :openrouter, model: 'claude-haiku-4-5' },
   { provider: :vertexai, model: 'gemini-3-flash-preview' },
-  { provider: :xai, model: 'grok-4-1-fast-non-reasoning' }
+  { provider: :xai, model: 'grok-4-1-fast-non-reasoning' },
+  { provider: :zai, model: 'glm-5.3-flash' }
 ]
 STRUCTURED_OUTPUT_MODELS = filter_local_providers(structured_output_models).freeze
 
@@ -93,7 +95,8 @@ thinking_models = [
   { provider: :openai, model: 'gpt-5.4' },
   { provider: :openrouter, model: 'claude-haiku-4-5' },
   { provider: :vertexai, model: 'gemini-3-flash-preview' },
-  { provider: :xai, model: 'grok-3-mini' }
+  { provider: :xai, model: 'grok-3-mini' },
+  { provider: :zai, model: 'glm-5.3-flash' }
 ].freeze
 THINKING_MODELS = filter_local_providers(thinking_models).freeze
 
@@ -152,7 +155,8 @@ vision_models = [
   { provider: :openai, model: 'gpt-5-nano' },
   { provider: :openrouter, model: 'claude-haiku-4-5' },
   { provider: :vertexai, model: 'gemini-2.5-flash' },
-  { provider: :xai, model: 'grok-4-1-fast-non-reasoning' }
+  { provider: :xai, model: 'grok-4-1-fast-non-reasoning' },
+  { provider: :zai, model: 'glm-5.3-flash' }
 ].freeze
 VISION_MODELS = filter_local_providers(vision_models).freeze
 
