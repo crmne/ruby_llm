@@ -8,15 +8,21 @@ module RubyLLM
 
         def parse_judgment_response(response, questions:)
           body = response.body
+          usage = body['usage'] || {}
           answers = questions.values.to_h do |question|
             [question.name, parse_answer(body.fetch('answers').fetch(question.name.to_s), question)]
           end
           RubyLLM::Judgment.new(
             answers:, model: body['model'], raw: response, model_info: @model,
-            tokens: Tokens.new(input: body.dig('usage', 'input_tokens'), output: body.dig('usage', 'output_tokens'))
+            tokens: Tokens.new(input: usage['input_tokens'], output: usage['output_tokens'],
+                               reported_cost: reported_cost(usage))
           )
         rescue KeyError, NoMethodError, TypeError => e
           raise Error.new("System One returned an invalid judgment: #{e.message}", response:)
+        end
+
+        def reported_cost(_usage)
+          nil
         end
 
         def parse_answer(answer, question)

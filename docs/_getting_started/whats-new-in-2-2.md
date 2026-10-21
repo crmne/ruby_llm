@@ -228,6 +228,19 @@ RubyLLM.chat(model: "muse-spark-1.3").ask("Hello from Muse")
 
 Set `meta_api_key` to a key from dev.meta.ai. See [Provider Setup]({% link _getting_started/configuration-providers.md %}#meta).
 
+## Judgments on OpenRouter
+
+OpenRouter's decision models now answer [judgments]({% link _core_features/judgments.md %}): Jev, Clef, and every other model it lists under decisions. Each judgment reports the exact cost OpenRouter charged:
+
+```ruby
+judgment = RubyLLM.judge("Please refund the duplicate charge today.",
+                         model: "{{ site.models.openrouter_judgment }}", provider: :openrouter,
+                         questions: { urgent: { type: :probability, instructions: "Does this need attention today?" } })
+judgment.cost.total # => what OpenRouter charged, in US dollars
+```
+
+Clef Omni also judges audio and video passed with `with:`.
+
 ## Upgrades
 
 `bin/rails generate ruby_llm:upgrade` in 2.2 adds the columns chats and tool calls use for their claims, the tables for queued messages and chat files, and any of the conventional `app/` folders your application lacks, such as `app/skills` and `app/sandboxes`. Applications on 2.0 upgrade to 2.1 first. See [Upgrading]({% link _reference/upgrading.md %}).
