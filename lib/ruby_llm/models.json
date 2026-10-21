@@ -62139,6 +62139,169 @@
     }
   },
   {
+    "id": "cloudflare/clef",
+    "name": "Cloudflare: Clef",
+    "provider": "openrouter",
+    "family": "cloudflare",
+    "created_at": "2026-10-01 16:09:32 UTC",
+    "context_window": 65537,
+    "max_output_tokens": 58982,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "judgment"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.24
+        }
+      }
+    },
+    "metadata": {
+      "description": "Clef is Cloudflare's open-source 27B multimodal decision model, a fine-tune of Qwen3.8-27B served on Workers AI. It turns a state (text or structured JSON) plus a schema of typed questions...",
+      "architecture": {
+        "modality": "text+image->decisions",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Qwen",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 65536,
+        "max_completion_tokens": 58982,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
+    }
+  },
+  {
+    "id": "cloudflare/clef-flash",
+    "name": "Cloudflare: Clef Flash",
+    "provider": "openrouter",
+    "family": "cloudflare",
+    "created_at": "2026-10-01 16:09:33 UTC",
+    "context_window": 24576,
+    "max_output_tokens": 22118,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "judgment"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.038000000000000006
+        }
+      }
+    },
+    "metadata": {
+      "description": "Clef-flash is the fast 9B member of Cloudflare's open-source Clef decision model family, a fine-tune of Qwen3.5-9B served on Workers AI. It turns a state (text or structured JSON) plus...",
+      "architecture": {
+        "modality": "text+image->decisions",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Qwen",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 24576,
+        "max_completion_tokens": 22118,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
+    }
+  },
+  {
+    "id": "cloudflare/clef-omni",
+    "name": "Cloudflare: Clef Omni",
+    "provider": "openrouter",
+    "family": "cloudflare",
+    "created_at": "2026-10-09 20:17:58 UTC",
+    "context_window": 65536,
+    "max_output_tokens": 58982,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "audio",
+        "video"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "judgment"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.15
+        }
+      }
+    },
+    "metadata": {
+      "description": "Clef Omni is the mixture-of-experts member of Cloudflare's open-source Clef decision model family, a fine-tune of Qwen3-Omni-30B-A3B (30B total, 3B active parameters) served on Workers AI. It turns a state...",
+      "architecture": {
+        "modality": "text+image+audio+video->decisions",
+        "input_modalities": [
+          "text",
+          "image",
+          "audio",
+          "video"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Qwen",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 65536,
+        "max_completion_tokens": 58982,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
+    }
+  },
+  {
     "id": "cognitivecomputations/dolphin-mistral-24b-venice-edition",
     "name": "Uncensored",
     "provider": "openrouter",
@@ -70999,6 +71162,106 @@
     }
   },
   {
+    "id": "inception/mercury-decide",
+    "name": "Inception: Mercury Decide",
+    "provider": "openrouter",
+    "family": "inception",
+    "created_at": "2026-09-30 17:28:54 UTC",
+    "context_window": 65536,
+    "max_output_tokens": 58982,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "judgment"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.02
+        }
+      }
+    },
+    "metadata": {
+      "description": "Mercury Decide is Inception's structured decision model, served as a System One endpoint. Send a state along with typed questions, and it returns a choice, a score, or a yes/no...",
+      "architecture": {
+        "modality": "text+image->decisions",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 65536,
+        "max_completion_tokens": 58982,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
+    }
+  },
+  {
+    "id": "inception/mercury-decide:free",
+    "name": "Inception: Mercury Decide (free)",
+    "provider": "openrouter",
+    "family": "inception",
+    "created_at": "2026-09-30 17:28:54 UTC",
+    "context_window": 65536,
+    "max_output_tokens": 58982,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "judgment"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Mercury Decide is Inception's structured decision model, served as a System One endpoint. Send a state along with typed questions, and it returns a choice, a score, or a yes/no...",
+      "architecture": {
+        "modality": "text+image->decisions",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 65536,
+        "max_completion_tokens": 58982,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
+    }
+  },
+  {
     "id": "inclusionai/ling-3.0-flash",
     "name": "Ling 3.0 Flash",
     "provider": "openrouter",
@@ -71623,6 +71886,57 @@
     }
   },
   {
+    "id": "jaredpalmer/kev-4b",
+    "name": "Jared Palmer: Kev 4B",
+    "provider": "openrouter",
+    "family": "jaredpalmer",
+    "created_at": "2026-09-25 16:37:13 UTC",
+    "context_window": 8192,
+    "max_output_tokens": 7372,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "judgment"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.041999999999999996
+        }
+      }
+    },
+    "metadata": {
+      "description": "Kev 4B is a small open-weight decision model from Jared Palmer, built as a LoRA adapter and pointer head on Qwen3.5-4B-Base and served over the same /v1/systemone contract as TypeSafe's...",
+      "architecture": {
+        "modality": "text->decisions",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 8192,
+        "max_completion_tokens": 7372,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
+    }
+  },
+  {
     "id": "krea/k3-edit",
     "name": "Krea: K3 Edit",
     "provider": "openrouter",
@@ -71888,6 +72202,114 @@
           "type": "boolean"
         }
       },
+      "expiration_date": null
+    }
+  },
+  {
+    "id": "liquid/d1",
+    "name": "LiquidAI: d1",
+    "provider": "openrouter",
+    "family": "liquid",
+    "created_at": "2026-10-01 18:18:31 UTC",
+    "context_window": 65536,
+    "max_output_tokens": 58982,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "judgment"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.02,
+          "cache_read_input_per_million": 0.02
+        }
+      }
+    },
+    "metadata": {
+      "description": "d1 is Liquid AI's structured decision model, served as a System One endpoint. Send a state along with typed questions, and it returns a choice, a score, or a yes/no...",
+      "architecture": {
+        "modality": "text+image->decisions",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 65536,
+        "max_completion_tokens": 58982,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
+    }
+  },
+  {
+    "id": "liquid/d1-ultra",
+    "name": "LiquidAI: d1-ultra",
+    "provider": "openrouter",
+    "family": "liquid",
+    "created_at": "2026-10-15 23:52:34 UTC",
+    "context_window": 32768,
+    "max_output_tokens": 29491,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "judgment"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.041999999999999996,
+          "cache_read_input_per_million": 0.041999999999999996
+        }
+      }
+    },
+    "metadata": {
+      "description": "d1-ultra is Liquid AI's largest decision model, served as a System One endpoint. Send a state of text and images along with typed questions, and it returns a choice, a...",
+      "architecture": {
+        "modality": "text+image->decisions",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 32768,
+        "max_completion_tokens": 29491,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
       "expiration_date": null
     }
   },
@@ -74538,6 +74960,57 @@
       "top_provider": {
         "context_length": 0,
         "max_completion_tokens": 0,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
+    }
+  },
+  {
+    "id": "microsoft/microsoft-decision-1",
+    "name": "Microsoft: Microsoft-Decision-1",
+    "provider": "openrouter",
+    "family": "microsoft",
+    "created_at": "2026-10-09 22:29:38 UTC",
+    "context_window": 32768,
+    "max_output_tokens": 29491,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "judgment"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.041999999999999996
+        }
+      }
+    },
+    "metadata": {
+      "description": "Microsoft-Decision-1 is a small model built for fast decision-making. Instead of generating text, it reads the provided content and returns a calibrated probability for each fixed answer option, so the...",
+      "architecture": {
+        "modality": "text->decisions",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 32768,
+        "max_completion_tokens": 29491,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -79357,6 +79830,108 @@
         "context": 262144,
         "output": 131072
       }
+    }
+  },
+  {
+    "id": "nace-ai/drex-v1.5",
+    "name": "Nace.AI: Drex v1.5",
+    "provider": "openrouter",
+    "family": "nace-ai",
+    "created_at": "2026-10-09 22:06:16 UTC",
+    "context_window": 131072,
+    "max_output_tokens": 117964,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "judgment"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.04
+        }
+      }
+    },
+    "metadata": {
+      "description": "Drex v1.5 is a 9B decision model from Nace.AI. Given a state (text or JSON) and typed questions (yes/no, multiple choice, or ordinal score), it returns a calibrated probability for...",
+      "architecture": {
+        "modality": "text->decisions",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 131072,
+        "max_completion_tokens": 117964,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
+    }
+  },
+  {
+    "id": "nace-ai/drex-v2.0",
+    "name": "Nace.AI: Drex v2.0",
+    "provider": "openrouter",
+    "family": "nace-ai",
+    "created_at": "2026-10-12 17:44:26 UTC",
+    "context_window": 131072,
+    "max_output_tokens": 117964,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "judgment"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.06
+        }
+      }
+    },
+    "metadata": {
+      "description": "Drex v2.0 is a 35B mixture-of-experts decision model (3B active) from Nace.AI, the larger successor to [Drex v1.5](https://openrouter.ai/nace-ai/drex-v1.5). Given a state (text or JSON) and typed questions (yes/no, multiple choice,...",
+      "architecture": {
+        "modality": "text->decisions",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 131072,
+        "max_completion_tokens": 117964,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
     }
   },
   {
@@ -88202,6 +88777,59 @@
     }
   },
   {
+    "id": "openai/gpt-6-luna-decisions",
+    "name": "OpenAI: GPT-6 Luna Decisions",
+    "provider": "openrouter",
+    "family": "openai",
+    "created_at": "2026-10-06 21:19:18 UTC",
+    "context_window": 1050000,
+    "max_output_tokens": 945000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "judgment"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.09999999999999999
+        }
+      }
+    },
+    "metadata": {
+      "description": "GPT-6 Luna Decisions is [GPT-6 Luna](/openai/gpt-6-luna) served through OpenAI's Decisions API. Instead of generating text, it reads the content passed as `state` (text, JSON, or images) and returns typed, probabilistic...",
+      "architecture": {
+        "modality": "text+image->decisions",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "GPT",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 1050000,
+        "max_completion_tokens": 945000,
+        "is_moderated": true
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
+    }
+  },
+  {
     "id": "openai/gpt-6-luna-pro",
     "name": "GPT-6 Luna Pro",
     "provider": "openrouter",
@@ -92416,6 +93044,112 @@
         "context": 36864,
         "output": 8192
       }
+    }
+  },
+  {
+    "id": "perplexity/pplx-decider-flash-v1.2",
+    "name": "Perplexity: Decider Flash V1.2",
+    "provider": "openrouter",
+    "family": "perplexity",
+    "created_at": "2026-10-16 20:44:56 UTC",
+    "context_window": 262144,
+    "max_output_tokens": 235929,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "judgment"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.01
+        }
+      }
+    },
+    "metadata": {
+      "description": "Decider Flash V1.2 is a 4B-parameter decision model from Perplexity, a smaller, lower-cost sibling of [Decider V1.2](/perplexity/pplx-decider-v1.2) with the same API contract. Instead of generating text, it reads content passed...",
+      "architecture": {
+        "modality": "text+image->decisions",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 262144,
+        "max_completion_tokens": 235929,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
+    }
+  },
+  {
+    "id": "perplexity/pplx-decider-v1.2",
+    "name": "Perplexity: Decider V1.2",
+    "provider": "openrouter",
+    "family": "perplexity",
+    "created_at": "2026-10-16 20:44:55 UTC",
+    "context_window": 262144,
+    "max_output_tokens": 235929,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "judgment"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.02
+        }
+      }
+    },
+    "metadata": {
+      "description": "Decider V1.2 is a new 27B checkpoint of Perplexity's decision model, succeeding [Decider V1.1 27B](/perplexity/pplx-decider-v1.1-27b) with the same API contract. Instead of generating text, it reads content passed as `state`...",
+      "architecture": {
+        "modality": "text+image->decisions",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 262144,
+        "max_completion_tokens": 235929,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
     }
   },
   {
@@ -99903,6 +100637,200 @@
     }
   },
   {
+    "id": "respan/span-01",
+    "name": "Respan: Span-01",
+    "provider": "openrouter",
+    "family": "respan",
+    "created_at": "2026-09-26 01:52:30 UTC",
+    "context_window": 0,
+    "max_output_tokens": 0,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "judgment"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.02
+        }
+      }
+    },
+    "metadata": {
+      "description": "Span-01 is a behavior scoring model from Respan. It reads a conversation span and returns, for each plain-language behavior you define, the probability that the behavior is present. It is...",
+      "architecture": {
+        "modality": "text->decisions",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 0,
+        "max_completion_tokens": 0,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
+    }
+  },
+  {
+    "id": "respan/span-01-lite",
+    "name": "Respan: Span-01 Lite",
+    "provider": "openrouter",
+    "family": "respan",
+    "created_at": "2026-09-26 01:52:22 UTC",
+    "context_window": 0,
+    "max_output_tokens": 0,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "judgment"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Span-01 Lite is the free, lighter tier of Span-01, a behavior scoring model from Respan. It returns, for each plain-language behavior you define, the probability that the behavior is present...",
+      "architecture": {
+        "modality": "text->decisions",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 0,
+        "max_completion_tokens": 0,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
+    }
+  },
+  {
+    "id": "respan/span-01-lite:free",
+    "name": "Respan: Span-01 Lite (free)",
+    "provider": "openrouter",
+    "family": "respan",
+    "created_at": "2026-09-26 01:52:22 UTC",
+    "context_window": 0,
+    "max_output_tokens": 0,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "judgment"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Span-01 Lite is the free, lighter tier of Span-01, a behavior scoring model from Respan. It returns, for each plain-language behavior you define, the probability that the behavior is present...",
+      "architecture": {
+        "modality": "text->decisions",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 0,
+        "max_completion_tokens": 0,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
+    }
+  },
+  {
+    "id": "respan/span-02",
+    "name": "Respan: Span-02",
+    "provider": "openrouter",
+    "family": "respan",
+    "created_at": "2026-10-16 00:02:53 UTC",
+    "context_window": 131072,
+    "max_output_tokens": 117964,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "judgment"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.01
+        }
+      }
+    },
+    "metadata": {
+      "description": "Span-02 is an open-weight decision model from Respan. It reads a state of text and images and answers the questions you define about it: picking one of several options, a...",
+      "architecture": {
+        "modality": "text+image->decisions",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 131072,
+        "max_completion_tokens": 117964,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
+    }
+  },
+  {
     "id": "sakana/fugu-max",
     "name": "Fugu Max",
     "provider": "openrouter",
@@ -100501,6 +101429,61 @@
         "output": 16384
       },
       "knowledge": "2023-12-31"
+    }
+  },
+  {
+    "id": "scaledown/classify-1",
+    "name": "ScaleDown: Classify-1",
+    "provider": "openrouter",
+    "family": "scaledown",
+    "created_at": "2026-10-13 12:08:54 UTC",
+    "context_window": 1000000,
+    "max_output_tokens": 900000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "judgment"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.04
+        }
+      }
+    },
+    "metadata": {
+      "description": "Classify-1 is a structured decision model from ScaleDown, served through OpenRouter's Decisions API. It scores text or a document against caller-defined choice, yes/no, and ordered-scale questions and returns calibrated probabilities...",
+      "architecture": {
+        "modality": "text+image+file->decisions",
+        "input_modalities": [
+          "text",
+          "image",
+          "file"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 1000000,
+        "max_completion_tokens": 900000,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
     }
   },
   {
@@ -103061,6 +104044,163 @@
     }
   },
   {
+    "id": "togethercomputer/tev1-4b-experimental",
+    "name": "Together: Tev1 4B Experimental",
+    "provider": "openrouter",
+    "family": "togethercomputer",
+    "created_at": "2026-09-30 19:10:29 UTC",
+    "context_window": 32768,
+    "max_output_tokens": 8,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "judgment"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.041999999999999996
+        }
+      }
+    },
+    "metadata": {
+      "description": "Tev1 4B Experimental is an experimental decision model from Together AI, a supervised fine-tune of Qwen3.5-4B trained to choose one option from a structured state, question, and list of 2-24...",
+      "architecture": {
+        "modality": "text->decisions",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Qwen3",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 32768,
+        "max_completion_tokens": 8,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
+    }
+  },
+  {
+    "id": "typesafe/jev-1.13",
+    "name": "TypeSafe: Jev 1.13",
+    "provider": "openrouter",
+    "family": "typesafe",
+    "created_at": "2026-09-18 00:01:24 UTC",
+    "context_window": 262144,
+    "max_output_tokens": 235929,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "judgment"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.041999999999999996
+        }
+      }
+    },
+    "metadata": {
+      "description": "Jev is a structured decision model from TypeSafe, and the first of its System One models. System One models make fast, structured decisions for software, returning a typed choice rather...",
+      "architecture": {
+        "modality": "text+image->decisions",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 262144,
+        "max_completion_tokens": 235929,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
+    }
+  },
+  {
+    "id": "typesafe/jev-1.14",
+    "name": "TypeSafe: Jev 1.14",
+    "provider": "openrouter",
+    "family": "typesafe",
+    "created_at": "2026-10-14 23:43:37 UTC",
+    "context_window": 262144,
+    "max_output_tokens": 235929,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "judgment"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.041999999999999996
+        }
+      }
+    },
+    "metadata": {
+      "description": "Jev 1.14 is the latest version of Jev, TypeSafe's structured decision model and the first of its System One models. System One models make fast, structured decisions for software, returning...",
+      "architecture": {
+        "modality": "text+image->decisions",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 262144,
+        "max_completion_tokens": 235929,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
+    }
+  },
+  {
     "id": "typesafe/jev-router",
     "name": "TypeSafe: Jev Router",
     "provider": "openrouter",
@@ -103391,6 +104531,110 @@
         "output": 5529
       },
       "knowledge": "2023-06-30"
+    }
+  },
+  {
+    "id": "upstage/solar-decide",
+    "name": "Upstage: Solar Decide",
+    "provider": "openrouter",
+    "family": "upstage",
+    "created_at": "2026-09-28 10:50:57 UTC",
+    "context_window": 524288,
+    "max_output_tokens": 471859,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "judgment"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.049999999999999996,
+          "cache_read_input_per_million": 0.049999999999999996
+        }
+      }
+    },
+    "metadata": {
+      "description": "Solar Decide is Upstage's structured decision model, served as a System One endpoint on Solar Mini 4. Send a state along with typed questions, and it returns a choice, a...",
+      "architecture": {
+        "modality": "text->decisions",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 524288,
+        "max_completion_tokens": 471859,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
+    }
+  },
+  {
+    "id": "upstage/solar-decide-flash",
+    "name": "Upstage: Solar Decide Flash",
+    "provider": "openrouter",
+    "family": "upstage",
+    "created_at": "2026-10-08 00:39:43 UTC",
+    "context_window": 524288,
+    "max_output_tokens": 471859,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "judgment"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.049999999999999996,
+          "cache_read_input_per_million": 0.049999999999999996
+        }
+      }
+    },
+    "metadata": {
+      "description": "Solar Decide Flash is Upstage's low-latency structured decision model, a faster variant of [Solar Decide](/upstage/solar-decide) built on Solar Mini 4 and served through the System One (`/v1/systemone`) API. Instead of...",
+      "architecture": {
+        "modality": "text->decisions",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 524288,
+        "max_completion_tokens": 471859,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
     }
   },
   {
@@ -108496,7 +109740,7 @@
       },
       "top_provider": {
         "context_length": 1048576,
-        "max_completion_tokens": 131072,
+        "max_completion_tokens": 943718,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -109542,6 +110786,165 @@
         "output": 128000
       },
       "knowledge": "2026-02-16"
+    }
+  },
+  {
+    "id": "~perplexity/pplx-decider-flash-latest",
+    "name": "Perplexity: Decider Flash Latest",
+    "provider": "openrouter",
+    "family": "~perplexity",
+    "created_at": "2026-10-16 18:03:11 UTC",
+    "context_window": 262144,
+    "max_output_tokens": 235929,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "judgment"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.01
+        }
+      }
+    },
+    "metadata": {
+      "description": "This model always redirects to the latest model in the Decider Flash family.",
+      "architecture": {
+        "modality": "text+image->decisions",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Router",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 262144,
+        "max_completion_tokens": 235929,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
+    }
+  },
+  {
+    "id": "~perplexity/pplx-decider-latest",
+    "name": "Perplexity: Decider Latest",
+    "provider": "openrouter",
+    "family": "~perplexity",
+    "created_at": "2026-10-14 18:42:57 UTC",
+    "context_window": 262144,
+    "max_output_tokens": 235929,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "judgment"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.02
+        }
+      }
+    },
+    "metadata": {
+      "description": "This model always redirects to the latest model in the Decider family.",
+      "architecture": {
+        "modality": "text+image->decisions",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Router",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 262144,
+        "max_completion_tokens": 235929,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
+    }
+  },
+  {
+    "id": "~typesafe/jev-latest",
+    "name": "TypeSafe: Jev Latest",
+    "provider": "openrouter",
+    "family": "~typesafe",
+    "created_at": "2026-09-18 00:01:25 UTC",
+    "context_window": 262144,
+    "max_output_tokens": 235929,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "judgment"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.041999999999999996
+        }
+      }
+    },
+    "metadata": {
+      "description": "This model always redirects to the latest model in the Jev family.",
+      "architecture": {
+        "modality": "text+image->decisions",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Router",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 262144,
+        "max_completion_tokens": 235929,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
     }
   },
   {
