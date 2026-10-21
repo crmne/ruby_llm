@@ -7,6 +7,7 @@ require 'ruby_llm/active_record/chat_approvals'
 require 'ruby_llm/active_record/chat_cancellation'
 require 'ruby_llm/active_record/system_instructions'
 require 'ruby_llm/active_record/chat_queue'
+require 'ruby_llm/active_record/chat_serialization'
 
 module RubyLLM
   module ActiveRecord
@@ -24,7 +25,7 @@ module RubyLLM
     #
     module ChatMethods
       extend ActiveSupport::Concern
-      include Enumerable
+      include ChatSerialization
       include AttachmentHelpers
       include RunClaims
       include ChatApprovals
