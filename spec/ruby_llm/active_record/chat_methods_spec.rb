@@ -498,6 +498,82 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     end
   end
 
+  describe '#as_json' do
+    let(:chat) { Chat.create!(model: model_id) }
+
+    it 'serializes an empty chat as a record' do
+      expect(chat.as_json).to eq(chat.serializable_hash.as_json)
+    end
+
+    it 'serializes a populated chat without traversing its runtime state' do
+      chat.add_message(role: :user, content: 'Hello')
+      chat.add_message(role: :assistant, content: 'Hi!')
+
+      expect(chat.as_json).to eq(chat.serializable_hash.as_json)
+    end
+
+    it 'encodes the record with to_json' do
+      chat.add_message(role: :user, content: 'Hello')
+
+      expect(JSON.parse(chat.to_json)).to eq(chat.serializable_hash.as_json)
+    end
+
+    it 'honors attribute and method options' do
+      expect(chat.as_json(only: :id, methods: :model_id)).to eq('id' => chat.id, 'model_id' => model_id)
+      expect(chat.as_json(except: :id)).to eq(chat.serializable_hash.except('id').as_json)
+    end
+
+    it 'includes associated message records when requested' do
+      chat.add_message(role: :user, content: 'Hello')
+
+      expect(chat.as_json(only: :id, include: { messages: { only: %i[role content] } })).to eq(
+        'id' => chat.id, 'messages' => [{ 'role' => 'user', 'content' => 'Hello' }]
+      )
+    end
+
+    it 'honors root options' do
+      expect(chat.as_json(only: :id, root: true)).to eq('chat' => { 'id' => chat.id })
+      expect(chat.as_json(only: :id, root: 'conversation')).to eq('conversation' => { 'id' => chat.id })
+    end
+
+    it 'honors the model root setting and allows overriding it' do
+      allow(Chat).to receive(:include_root_in_json).and_return(true)
+
+      expect(chat.as_json(only: :id)).to eq('chat' => { 'id' => chat.id })
+      expect(chat.as_json(only: :id, root: false)).to eq('id' => chat.id)
+    end
+
+    it 'preserves application serializable_hash overrides' do
+      chat.define_singleton_method(:serializable_hash) do |options = nil|
+        super(options).merge('custom' => true)
+      end
+
+      expect(chat.as_json(only: :id)).to eq('id' => chat.id, 'custom' => true)
+    end
+
+    it 'allows application as_json overrides to call super' do
+      chat.define_singleton_method(:as_json) do |options = nil|
+        super(options).merge('custom' => true)
+      end
+
+      expect(chat.as_json(only: :id)).to eq('id' => chat.id, 'custom' => true)
+    end
+
+    it 'allows as_json overrides on the chat model to call super' do
+      stub_const('SerializedChat', Class.new(ApplicationRecord) do
+        self.table_name = 'chats'
+        acts_as_chat message_class: 'Message', messages_foreign_key: :chat_id
+
+        def as_json(options = nil)
+          super.merge('custom' => true)
+        end
+      end)
+      record = SerializedChat.create!(model: model_id)
+
+      expect(record.as_json(only: :id)).to eq('id' => record.id, 'custom' => true)
+    end
+  end
+
   describe 'message serialization' do
     it 'reads the cache boundary column without marking a boundary' do
       chat = Chat.create!(model: model_id)
@@ -839,6 +915,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       chat.add_message(role: :user, content: 'First')
       chat.add_message(role: :assistant, content: 'Second')
 
+      expect(chat.each).to be_an(Enumerator)
       expect(chat.map(&:content)).to eq(%w[First Second])
     end
 
