@@ -105,8 +105,9 @@ module RubyLLM
         def parse_completion_body(data, raw:, model: data['model'] || @model&.id, cost: nil)
           unless %w[completed requires_action incomplete].include?(data['status'])
             message = Array(data['errors']).filter_map { |error| error['message'] }.join('; ')
-            raise Error.new(message.empty? ? "Gemini interaction ended with status #{data['status']}" : message,
-                            response: raw)
+            raise Error.new("Gemini interaction ended with status #{data['status']}", response: raw) if message.empty?
+
+            raise Error.new(provider_message: message, response: raw)
           end
 
           steps = data.fetch('steps', [])

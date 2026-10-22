@@ -270,8 +270,9 @@ module RubyLLM
         when 403 then ForbiddenError.new("#{@url.host} refused the request", response: response_for(response))
         else
           error = stream.replies.first&.fetch('error', nil) || {}
-          Error.new(error['message'] || "#{@url.host} answered HTTP #{response[:status]}",
-                    code: error['code'], data: error['data'], response: response_for(response))
+          fallback = "#{@url.host} answered HTTP #{response[:status]}" unless error['message']
+          Error.new(fallback, provider_message: error['message'], provider: @url.host,
+                              code: error['code'], data: error['data'], response: response_for(response))
         end
       end
 

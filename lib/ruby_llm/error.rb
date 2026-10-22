@@ -20,6 +20,11 @@ module RubyLLM
   #     puts e.response&.status
   #   end
   #
+  # Providers often quote the request back in their error, so with
+  # Configuration#redact_error_messages the message carries only the HTTP
+  # status, the provider, and the provider's error code. What the provider
+  # wrote stays on #provider_message and its raw body on #response_body.
+  #
   # Local setup and programming errors, such as ConfigurationError and
   # ModelNotFoundError, inherit from StandardError directly and are not
   # caught by rescuing Error.
@@ -27,6 +32,15 @@ module RubyLLM
     # The HTTP response that caused the error, or +nil+ when none is
     # available. Its +status+ and +body+ carry the provider's reply.
     attr_reader :response
+
+    # The slug of the provider that answered, such as <tt>"openai"</tt>, or
+    # +nil+ when it is not known.
+    attr_reader :provider
+
+    # What the provider wrote about the error, or +nil+ when it wrote
+    # nothing RubyLLM could read. It can quote the request, so
+    # Configuration#redact_error_messages keeps it out of #message.
+    attr_reader :provider_message
 
     # The Protocol that rendered the request the error answered, which
     # reads its payload back for #request_shape.
@@ -39,11 +53,25 @@ module RubyLLM
       nil
     end
 
+    ERROR_CODE = /\A[A-Za-z][\w.:-]{0,63}\z/ # :nodoc:
+
     # Creates an error with +message+. Pass +response:+ to attach the HTTP
-    # response; its body supplies the message when +message+ is +nil+.
-    def initialize(message = nil, response: nil)
+    # response, +provider:+ to name the provider's slug, and
+    # +provider_message:+ for what the provider wrote, which follows
+    # +message+, or stands in for it when +message+ is +nil+. Without
+    # either, the response body supplies the message.
+    def initialize(message = nil, response: nil, provider: nil, provider_message: nil)
       @response = response
-      super(message || response_body_message || self.class.default_message)
+      @provider = provider
+      @provider_message = provider_message
+      super(full_message_for(message) || self.class.default_message)
+    end
+
+    # Returns the body of #response, or +nil+ without one. It can quote the
+    # request, so Configuration#redact_error_messages keeps it out of
+    # #message.
+    def response_body
+      response&.body
     end
 
     # Returns a RequestShape describing the conversation request the error
@@ -66,8 +94,61 @@ module RubyLLM
 
     private
 
+    def full_message_for(message)
+      return message || (redacted_message if remote?) if RubyLLM.config.redact_error_messages
+      return "#{message}: #{provider_message}" if message && provider_message
+
+      message || provider_message || response_body_message
+    end
+
+    def remote?
+      !response.nil? || !provider_message.nil?
+    end
+
+    def redacted_message
+      status = response.status if response.respond_to?(:status)
+      text = "#{provider || redacted_source} returned #{status ? "HTTP #{status}" : 'an error'}"
+      code = error_code
+      code ? "#{text} (#{code})" : text
+    end
+
+    def redacted_source
+      'The provider'
+    end
+
+    def error_code
+      body = parsed_response_body
+      body = body.find { |part| part.is_a?(Hash) } if body.is_a?(Array)
+      code_candidates(body).find { |candidate| candidate.is_a?(String) && candidate.match?(ERROR_CODE) } ||
+        header_error_code
+    end
+
+    def code_candidates(body)
+      return [] unless body.is_a?(Hash)
+
+      error = body['error']
+      candidates = error.is_a?(Hash) ? error.values_at('code', 'status', 'type') : [error]
+      candidates += body.values_at('code', '__type')
+      body['type'] == 'error' ? candidates : candidates << body['type']
+    end
+
+    def header_error_code
+      headers = response.headers if response.respond_to?(:headers)
+      code = headers && headers['x-amzn-errortype'].to_s.split(':').first
+      code if code&.match?(ERROR_CODE)
+    end
+
+    def parsed_response_body
+      body = response_body
+      return body unless body.is_a?(String)
+
+      JSON.parse(body)
+    rescue JSON::ParserError
+      nil
+    end
+
     def response_body_message
-      body = response&.body
+      body = response_body
       body unless body.respond_to?(:empty?) && body.empty?
     end
   end

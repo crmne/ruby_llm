@@ -34,7 +34,7 @@ module RubyLLM
           RubyLLM::Judgment.new(answers:, model: body.fetch('model'), raw: response, model_info: @model,
                                 tokens: parse_tokens(body['usage']))
         rescue KeyError, NoMethodError, TypeError => e
-          raise Error.new("OpenAI Decisions returned an invalid judgment: #{e.message}", response:)
+          raise Error.new('OpenAI Decisions returned an invalid judgment', provider_message: e.message, response:)
         end
 
         private

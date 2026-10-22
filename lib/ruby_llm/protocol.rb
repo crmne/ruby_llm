@@ -518,6 +518,10 @@ module RubyLLM
       @provider.parse_error(response)
     end
 
+    def slug # :nodoc:
+      @provider.slug
+    end
+
     # Returns a RequestShape describing +payload+, a conversation request
     # this protocol rendered, as JSON parsed back with String keys.
     # Error#request_shape asks for it when the request fails. The default

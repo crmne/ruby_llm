@@ -616,8 +616,8 @@ module RubyLLM
           {}
         end
         details = {} unless details.is_a?(Hash)
-        Error.new("#{URI(url).host} refused the request: #{details['error_description'] || details['error']}",
-                  data: details, response:)
+        Error.new("#{URI(url).host} refused the request",
+                  provider_message: details['error_description'] || details['error'], data: details, response:)
       end
 
       def parse(response)
