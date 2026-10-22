@@ -160,6 +160,64 @@ RSpec.describe RubyLLM::OpenTelemetry do
     expect(RubyLLM.logger).to have_received(:warn).with('OpenTelemetry instrumentation failed (StandardError)')
   end
 
+  describe 'transcription spans' do
+    let(:audio) { File.expand_path('../fixtures/ruby.wav', __dir__) }
+
+    def stub_transcription_stream
+      events = [
+        { type: 'transcript.text.delta', delta: 'private transcript' },
+        { type: 'transcript.text.done', text: 'private transcript', usage: { input_tokens: 3, output_tokens: 1 } }
+      ].map { |event| "data: #{event.to_json}\n\n" }.join
+      stub_request(:post, 'https://api.openai.com/v1/audio/transcriptions')
+        .to_return(body: events, headers: { 'Content-Type' => 'text/event-stream' })
+    end
+
+    it 'marks a streamed transcription and keeps the span active through its callbacks' do
+      stub_transcription_stream
+      chunks = []
+      result = RubyLLM.transcribe(
+        audio, model: model_for(:openai, :streaming_transcription), provider: :openai
+      ) do |chunk|
+        chunks << chunk
+        expect(spans).to be_empty
+        expect(OpenTelemetry::Trace.current_span.recording?).to be(true)
+      end
+
+      expect(result.text).to eq('private transcript')
+      expect(chunks.last).to be_done
+      expect(spans.sole.attributes).to include(
+        'gen_ai.operation.name' => 'transcription', 'gen_ai.request.stream' => true
+      )
+      expect(spans.sole.attributes.to_s).not_to include('private')
+    end
+
+    it 'keeps the streaming flag when the transcription callback raises' do
+      stub_transcription_stream
+      previous = OpenTelemetry::Context.current
+
+      expect do
+        RubyLLM.transcribe(audio, model: model_for(:openai, :streaming_transcription), provider: :openai) do
+          raise 'private callback error'
+        end
+      end.to raise_error(RuntimeError, 'private callback error')
+
+      expect(OpenTelemetry::Context.current).to equal(previous)
+      expect(spans.sole.status.code).to eq(OpenTelemetry::Trace::Status::ERROR)
+      expect(spans.sole.attributes).to include('gen_ai.request.stream' => true, 'error.type' => 'RuntimeError')
+      expect(spans.sole.attributes.to_s).not_to include('private')
+    end
+
+    it 'omits the streaming flag from a buffered transcription' do
+      stub_request(:post, 'https://api.openai.com/v1/audio/transcriptions')
+        .to_return_json(body: { text: 'private transcript', usage: { input_tokens: 3, output_tokens: 1 } })
+
+      result = RubyLLM.transcribe(audio, model: model_for(:openai, :streaming_transcription), provider: :openai)
+
+      expect(result.text).to eq('private transcript')
+      expect(spans.sole.attributes).not_to have_key('gen_ai.request.stream')
+    end
+  end
+
   it 'traces embeddings without exporting inputs or vectors' do
     embedding_model = model_for(:openai, :embedding)
     embedding = RubyLLM::Embedding.new(vectors: [0.1, 0.2], model: embedding_model, input_tokens: 8)
