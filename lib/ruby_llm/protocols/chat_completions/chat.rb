@@ -194,6 +194,7 @@ module RubyLLM
           return if usage.empty?
 
           usage.dig('prompt_tokens_details', 'cache_write_tokens') ||
+            usage.dig('prompt_tokens_details', 'created_cache_tokens') ||
             usage.dig('input_tokens_details', 'cache_write_tokens') ||
             0
         end
