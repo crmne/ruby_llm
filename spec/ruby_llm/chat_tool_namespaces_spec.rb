@@ -175,14 +175,11 @@ RSpec.describe RubyLLM::Chat do
   end
 
   it 'holds later members behind a member paused on input while other calls proceed' do
-    request = RubyLLM::MCP::InputRequest.new('unlock', { 'message' => 'Unlock the display?' })
-    paused = local_tool('left_click', namespace: 'computer') do
-      executed << :click
-      raise RubyLLM::MCP::InputRequiredError.new('desktop', 'requests' => [request])
-    end
+    paused = local_tool('left_click', namespace: 'computer')
     log = executed
-    paused.define_singleton_method(:resume) do |_input, _arguments|
-      log << :resumed
+    paused.define_singleton_method(:execute) do
+      answer = ask('Unlock the display?', unlock: { type: 'boolean', required: true })
+      log << :click if answer.accepted?
       'OK'
     end
     later = local_tool('screenshot', namespace: 'computer') { executed << :screenshot }
@@ -192,14 +189,14 @@ RSpec.describe RubyLLM::Chat do
                 call('third', 'lookup'), call('fourth', 'publish')], finish)
 
     enable_computer.with_tools(paused, later, lookup, publish).ask('Inspect')
-    expect(executed).to eq(%i[click lookup])
+    expect(executed).to eq(%i[lookup])
 
     chat.approve(chat.pending_approvals.first).complete
-    expect(executed).to eq(%i[click lookup publish])
+    expect(executed).to eq(%i[lookup publish])
     expect(chat).to be_awaiting_input
 
-    chat.answer(chat.pending_inputs.first).complete
-    expect(executed).to eq(%i[click lookup publish resumed screenshot])
+    chat.answer(chat.pending_inputs.first, unlock: true).complete
+    expect(executed).to eq(%i[lookup publish click screenshot])
     expect(requests.size).to eq(2)
   end
 
@@ -425,5 +422,65 @@ RSpec.describe RubyLLM::Chat do
     enable_computer.with_tools(native).ask('Inspect')
 
     expect(executed).to be_empty
+  end
+
+  it 'restores and resumes a namespaced task through its own executor' do
+    task_class = Class.new(RubyLLM::Task)
+    log = executed
+    native = local_tool('screenshot', namespace: 'computer') do
+      RubyLLM::Task.new(status: :input_required, data: { run_id: 7 })
+    end
+    native.define_singleton_method(:task) do |state, tool_call:|
+      task_class.load(state, tool_call:)
+    end
+    native.define_singleton_method(:resume) do |task, **|
+      log << task.data
+      'Screenshot ready'
+    end
+    ordinary = local_tool('screenshot')
+    ordinary.define_singleton_method(:task) { |*| raise 'Wrong task executor' }
+    stub_turns([call('native', 'screenshot', namespace: 'computer')], finish)
+
+    enable_computer.with_tools(native, ordinary).ask('Inspect')
+
+    task = chat.pending_tasks.sole
+    expect(task).to be_an_instance_of(task_class)
+    expect(task.tool_call.namespace).to eq('computer')
+    expect(chat.complete.content).to eq('Done')
+    expect(executed).to eq([{ 'run_id' => 7 }])
+    expect(chat.messages.find(&:tool_result?).content).to eq('Screenshot ready')
+  end
+
+  it 'restores a generic task after its namespaced executor is removed' do
+    native = local_tool('screenshot', namespace: 'computer') do
+      RubyLLM::Task.new(status: :input_required, data: { run_id: 7 })
+    end
+    stub_turns([call('native', 'screenshot', namespace: 'computer')])
+    enable_computer.with_tools(native).ask('Inspect')
+    chat.with_tools(nil)
+
+    task = chat.pending_tasks.sole
+
+    expect(task).to be_an_instance_of(RubyLLM::Task)
+    expect(task).to have_attributes(status: :input_required, data: { 'run_id' => 7 })
+    expect(task.tool_call.namespace).to eq('computer')
+  end
+
+  it 'preserves an MCP task after its namespaced executor is removed' do
+    native = local_tool('screenshot', namespace: 'computer') do
+      RubyLLM::MCP::Task.new(nil, { 'taskId' => 'remote-task', 'status' => 'input_required' })
+    end
+    native.define_singleton_method(:task) do |state, tool_call:|
+      RubyLLM::MCP::Task.load(nil, state, tool_call:)
+    end
+    stub_turns([call('native', 'screenshot', namespace: 'computer')])
+    enable_computer.with_tools(native).ask('Inspect')
+    chat.with_tools(nil)
+
+    task = chat.pending_tasks.sole
+
+    expect(task).to be_an_instance_of(RubyLLM::MCP::Task)
+    expect(task).to have_attributes(id: 'remote-task', status: :input_required)
+    expect(task.tool_call.namespace).to eq('computer')
   end
 end

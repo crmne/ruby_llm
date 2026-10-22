@@ -104,4 +104,33 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(executed).to be_empty
     expect(requests.last['messages'][2]['content'].last).to include('is_error' => true, 'toolset_name' => 'computer')
   end
+
+  it 'reloads and resumes a native task without selecting a same-name ordinary executor' do
+    task_class = Class.new(RubyLLM::Task)
+    calls = executed
+    native = tool('screenshot')
+    native.define_singleton_method(:execute) do
+      RubyLLM::Task.new(status: :input_required, data: { run_id: 7 })
+    end
+    native.define_singleton_method(:task) do |state, tool_call:|
+      task_class.load(state, tool_call:)
+    end
+    native.define_singleton_method(:resume) do |task, **|
+      calls << task.data
+      'Screenshot ready'
+    end
+    ordinary = tool('screenshot', namespace: nil)
+    ordinary.define_singleton_method(:task) { |*| raise 'Wrong task executor' }
+    stub_turns([native_call('native', 'screenshot')], done)
+    configured(chat, native, ordinary).ask('Inspect')
+
+    restored = configured(Chat.find(chat.id), native, ordinary)
+    task = restored.pending_tasks.sole
+
+    expect(task).to be_an_instance_of(task_class)
+    expect(task.tool_call.namespace).to eq('computer')
+    expect(restored.complete.content).to eq('Done')
+    expect(executed).to eq([{ 'run_id' => 7 }])
+    expect(restored.messages.find_by(role: 'tool').content).to eq('Screenshot ready')
+  end
 end
