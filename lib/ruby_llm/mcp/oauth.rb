@@ -336,7 +336,10 @@ module RubyLLM
         check_issuer(pending, value(params, :iss))
         check_state(pending, value(params, :state).to_s)
         error = value(params, :error)
-        raise Error, "Authorization failed: #{value(params, :error_description) || error}" if error
+        return unless error
+
+        raise Error.new('Authorization failed', provider_message: value(params, :error_description) || error,
+                                                error_code: error)
       end
 
       def check_issuer(pending, issuer)
@@ -617,7 +620,8 @@ module RubyLLM
         end
         details = {} unless details.is_a?(Hash)
         Error.new("#{URI(url).host} refused the request",
-                  provider_message: details['error_description'] || details['error'], data: details, response:)
+                  provider_message: details['error_description'] || details['error'], error_code: details['error'],
+                  data: details, response:)
       end
 
       def parse(response)

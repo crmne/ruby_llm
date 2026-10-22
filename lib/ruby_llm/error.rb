@@ -37,6 +37,11 @@ module RubyLLM
     # +nil+ when it is not known.
     attr_reader :provider
 
+    # The provider's code for the error, such as
+    # <tt>"invalid_request_error"</tt> or <tt>"INVALID_ARGUMENT"</tt>, or
+    # +nil+ when it gave none that reads like a code.
+    attr_reader :error_code
+
     # What the provider wrote about the error, or +nil+ when it wrote
     # nothing RubyLLM could read. It can quote the request, so
     # Configuration#redact_error_messages keeps it out of #message.
@@ -56,14 +61,16 @@ module RubyLLM
     ERROR_CODE = /\A[A-Za-z][\w.:-]{0,63}\z/ # :nodoc:
 
     # Creates an error with +message+. Pass +response:+ to attach the HTTP
-    # response, +provider:+ to name the provider's slug, and
+    # response, +provider:+ to name the provider's slug, +error_code:+ for
+    # the provider's code, kept only when it reads like one, and
     # +provider_message:+ for what the provider wrote, which follows
     # +message+, or stands in for it when +message+ is +nil+. Without
     # either, the response body supplies the message.
-    def initialize(message = nil, response: nil, provider: nil, provider_message: nil)
+    def initialize(message = nil, response: nil, provider: nil, provider_message: nil, error_code: nil)
       @response = response
       @provider = provider
       @provider_message = provider_message
+      @error_code = error_code if error_code.is_a?(Integer) || error_code.to_s.match?(ERROR_CODE)
       super(full_message_for(message) || self.class.default_message)
     end
 
@@ -108,43 +115,11 @@ module RubyLLM
     def redacted_message
       status = response.status if response.respond_to?(:status)
       text = "#{provider || redacted_source} returned #{status ? "HTTP #{status}" : 'an error'}"
-      code = error_code
-      code ? "#{text} (#{code})" : text
+      error_code ? "#{text} (#{error_code})" : text
     end
 
     def redacted_source
       'The provider'
-    end
-
-    def error_code
-      body = parsed_response_body
-      body = body.find { |part| part.is_a?(Hash) } if body.is_a?(Array)
-      code_candidates(body).find { |candidate| candidate.is_a?(String) && candidate.match?(ERROR_CODE) } ||
-        header_error_code
-    end
-
-    def code_candidates(body)
-      return [] unless body.is_a?(Hash)
-
-      error = body['error']
-      candidates = error.is_a?(Hash) ? error.values_at('code', 'status', 'type') : [error]
-      candidates += body.values_at('code', '__type')
-      body['type'] == 'error' ? candidates : candidates << body['type']
-    end
-
-    def header_error_code
-      headers = response.headers if response.respond_to?(:headers)
-      code = headers && headers['x-amzn-errortype'].to_s.split(':').first
-      code if code&.match?(ERROR_CODE)
-    end
-
-    def parsed_response_body
-      body = response_body
-      return body unless body.is_a?(String)
-
-      JSON.parse(body)
-    rescue JSON::ParserError
-      nil
     end
 
     def response_body_message

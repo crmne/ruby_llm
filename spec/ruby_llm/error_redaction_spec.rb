@@ -121,14 +121,32 @@ RSpec.describe RubyLLM::Error do
       expect(error.message).to eq('openai returned HTTP 502')
     end
 
-    it "reads Bedrock's error type from its header" do
-      response = Faraday::Response.new(status: 400, body: { 'message' => prompt },
-                                       response_headers: { 'X-Amzn-ErrorType' =>
-                                         'ValidationException:http://internal.amazon.com/coral/com.amazon.bedrock/' })
+    it "reads Bedrock's error type from its header or body" do
+      provider = RubyLLM::Providers::Bedrock.new(RubyLLM.config)
+      header = Faraday::Response.new(status: 400, body: { 'message' => prompt }, response_headers: {
+                                       'X-Amzn-ErrorType' => 'ValidationException:http://internal.amazon.com/coral/'
+                                     })
+      body = Faraday::Response.new(status: 400, body: { '__type' => 'com.amazon.coral#ThrottlingException' })
 
-      error = described_class.new(response:, provider: 'bedrock', provider_message: prompt)
+      expect(provider.parse_error_code(header)).to eq('ValidationException')
+      expect(provider.parse_error_code(body)).to eq('ThrottlingException')
+    end
 
-      expect(error.message).to eq('bedrock returned HTTP 400 (ValidationException)')
+    it 'never takes a bare error string for a code' do
+      refuse(status: 400, body: { error: 'secret123' })
+
+      error = raised_by { RubyLLM.chat(model: model_for(:openai), provider: :openai).ask(prompt) }
+
+      expect(error.message).to eq('openai returned HTTP 400')
+      expect(error.error_code).to be_nil
+    end
+
+    it 'names the OAuth error code of an authorization server that refuses' do
+      error = RubyLLM::MCP::Error.new('auth.example.com refused the request', provider_message: prompt,
+                                                                              error_code: 'invalid_client')
+
+      expect(error.message).to eq('auth.example.com refused the request')
+      expect(error.error_code).to eq('invalid_client')
     end
 
     it 'keeps a message RubyLLM wrote and drops what the provider wrote after it' do

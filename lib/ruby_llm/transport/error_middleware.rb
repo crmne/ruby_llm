@@ -112,11 +112,18 @@ module RubyLLM
           return if (200..399).cover?(response.status)
 
           message = provider&.parse_error(response)
-          slug = provider.slug if provider.respond_to?(:slug)
-          raise error_class(message, response.status).new(response:, provider: slug, provider_message: message)
+          raise error_class(message, response.status).new(response:, provider_message: message,
+                                                          **provider_details(provider, response))
         end
 
         private
+
+        def provider_details(provider, response)
+          {
+            provider: (provider.slug if provider.respond_to?(:slug)),
+            error_code: (provider.parse_error_code(response) if provider.respond_to?(:parse_error_code))
+          }
+        end
 
         def error_class(message, status)
           case status

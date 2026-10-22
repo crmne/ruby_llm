@@ -22,7 +22,10 @@ module RubyLLM
 
         def parse_moderation_response(response, model:)
           data = response.body
-          raise Error.new(provider_message: data.dig('error', 'message'), response:) if data.dig('error', 'message')
+          if data.dig('error', 'message')
+            raise Error.new(provider_message: data.dig('error', 'message'), error_code: data.dig('error', 'code'),
+                            response:)
+          end
 
           RubyLLM::Moderation.new(
             id: data['id'],

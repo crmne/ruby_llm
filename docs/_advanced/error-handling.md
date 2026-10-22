@@ -140,12 +140,13 @@ begin
 rescue RubyLLM::BadRequestError => e
   e.message          # => "openai returned HTTP 400 (invalid_request_error)"
   e.provider         # => "openai"
+  e.error_code       # => "invalid_request_error"
   e.provider_message # => what the provider wrote, quotes and all
   e.response_body    # => the raw body
 end
 ```
 
-The error code comes from the body's own fields, such as OpenAI's `code` or `type`, Gemini's `status`, or Bedrock's error type, and only when it reads like a code: a word of letters, digits, `_`, `.`, `:`, or `-`, at most 64 characters. RubyLLM still picks the error class from what the provider wrote, so a context window error is still a `ContextLengthExceededError`. Messages RubyLLM writes itself, such as `Provider returned no completion message`, stay as they are, and an MCP server's errors read like `The MCP server returned an error (-32602)`.
+The error code comes from the fields providers keep it in, such as OpenAI's `code` or `type`, Gemini's `status`, or Bedrock's error type, and only when it reads like a code: a word of letters, digits, `_`, `.`, `:`, or `-`, at most 64 characters. RubyLLM still picks the error class from what the provider wrote, so a context window error is still a `ContextLengthExceededError`. Messages RubyLLM writes itself, such as `Provider returned no completion message`, stay as they are, and an MCP server's errors read like `The MCP server returned an error (-32602)`.
 
 `provider_message` and `response_body` are there when you want the provider's words, so reading them is a choice your code makes. The setting is off by default. Set it on the global configuration: every context follows it.
 

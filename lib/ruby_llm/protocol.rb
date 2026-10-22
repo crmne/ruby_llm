@@ -522,6 +522,10 @@ module RubyLLM
       @provider.slug
     end
 
+    def parse_error_code(response) # :nodoc:
+      @provider.parse_error_code(response)
+    end
+
     # Returns a RequestShape describing +payload+, a conversation request
     # this protocol rendered, as JSON parsed back with String keys.
     # Error#request_shape asks for it when the request fails. The default

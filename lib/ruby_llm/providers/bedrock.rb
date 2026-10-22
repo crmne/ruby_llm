@@ -146,6 +146,13 @@ module RubyLLM
         body['message'] || body['Message'] || nested_error_message(body) || body['__type'] || super
       end
 
+      def parse_error_code(response)
+        type = response.headers['x-amzn-errortype'] if response.respond_to?(:headers) && response.headers
+        type ||= parse_error_body(response).then { |body| body['__type'] if body.is_a?(Hash) }
+        code = type.to_s.split(':').first.to_s.split('#').last
+        code if code&.match?(Error::ERROR_CODE)
+      end
+
       # bedrock-mantle nests code, message, and type under "error" rather
       # than answering with a bare string.
       def nested_error_message(body)

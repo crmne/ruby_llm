@@ -17,20 +17,16 @@ module RubyLLM
       # Additional information the server attached to the error, or +nil+.
       attr_reader :data
 
-      def initialize(message = nil, code: nil, data: nil, response: nil, **) # :nodoc:
+      def initialize(message = nil, code: nil, data: nil, response: nil, error_code: code, **) # :nodoc:
         @code = code
         @data = data
-        super(message, response:, **)
+        super(message, response:, error_code:, **)
       end
 
       private
 
       def redacted_source
         'The MCP server'
-      end
-
-      def error_code
-        code.is_a?(Integer) ? code.to_s : super
       end
     end
   end

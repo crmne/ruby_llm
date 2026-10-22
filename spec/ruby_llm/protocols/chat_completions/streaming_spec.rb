@@ -156,7 +156,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Streaming do
   end
 
   it 'surfaces the provider message for a failed streaming response with a string error value' do
-    provider = instance_double(RubyLLM::Providers::OpenAI, slug: 'openai')
+    provider = instance_double(RubyLLM::Providers::OpenAI, slug: 'openai', parse_error_code: nil)
     allow(provider).to receive(:parse_error) { |response| response.body['error'] }
     protocol.instance_variable_set(:@provider, provider)
     failed_env = Faraday::Env.from(status: 404)
