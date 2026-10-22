@@ -103,6 +103,7 @@ module RubyLLM
           provider_instance.rerank(query, documents, model:, top_n:, provider_options:)
         end
         event[:result] = result
+        event[:response_model] = result.model
         event[:tokens] = result.tokens
         event[:cost] = result.cost
         result
