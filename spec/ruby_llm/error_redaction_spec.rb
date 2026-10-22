@@ -121,15 +121,17 @@ RSpec.describe RubyLLM::Error do
       expect(error.message).to eq('openai returned HTTP 502')
     end
 
-    it "reads Bedrock's error type from its header or body" do
+    it "reads Bedrock's error type from its header or body, and Mantle's error code" do
       provider = RubyLLM::Providers::Bedrock.new(RubyLLM.config)
       header = Faraday::Response.new(status: 400, body: { 'message' => prompt }, response_headers: {
                                        'X-Amzn-ErrorType' => 'ValidationException:http://internal.amazon.com/coral/'
                                      })
       body = Faraday::Response.new(status: 400, body: { '__type' => 'com.amazon.coral#ThrottlingException' })
+      mantle = Faraday::Response.new(status: 400, body: { 'error' => { 'code' => 'invalid_request_error' } })
 
       expect(provider.parse_error_code(header)).to eq('ValidationException')
       expect(provider.parse_error_code(body)).to eq('ThrottlingException')
+      expect(provider.parse_error_code(mantle)).to eq('invalid_request_error')
     end
 
     it 'never takes a bare error string for a code' do

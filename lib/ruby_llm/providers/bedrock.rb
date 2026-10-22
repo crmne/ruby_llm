@@ -150,7 +150,7 @@ module RubyLLM
         type = response.headers['x-amzn-errortype'] if response.respond_to?(:headers) && response.headers
         type ||= parse_error_body(response).then { |body| body['__type'] if body.is_a?(Hash) }
         code = type.to_s.split(':').first.to_s.split('#').last
-        code if code&.match?(Error::ERROR_CODE)
+        code&.match?(Error::ERROR_CODE) ? code : super
       end
 
       # bedrock-mantle nests code, message, and type under "error" rather
