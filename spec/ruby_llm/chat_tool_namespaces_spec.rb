@@ -315,6 +315,28 @@ RSpec.describe RubyLLM::Chat do
     expect { chat.with_tools(grouped).render }.to raise_error(RubyLLM::Error, /crm/)
   end
 
+  it 'rejects forcing a native member on Anthropic, which cannot name one in a tool choice' do
+    native = local_tool('screenshot', namespace: 'computer')
+    enable_computer.with_tools(native).with_tool_options(choice: native.class)
+
+    expect { chat.render }.to raise_error(RubyLLM::Error, /computer\.screenshot/)
+  end
+
+  it 'rejects forcing a namespaced function on Responses, which cannot name one in a tool choice' do
+    grouped = local_tool('lookup', namespace: 'crm')
+    other = RubyLLM.chat(model: model_for(:openai), provider: :openai, protocol: :responses)
+    other.with_tools(grouped).with_tool_options(choice: grouped.class)
+
+    expect { other.render }.to raise_error(RubyLLM::Error, /crm\.lookup/)
+  end
+
+  it 'still forces an ordinary tool next to namespaced members' do
+    plain = local_tool('screenshot')
+    enable_computer.with_tools(plain, local_tool('screenshot', namespace: 'computer'))
+
+    expect(chat.with_tool_options(choice: plain.class).render[:tool_choice]).to include(type: :tool, name: :screenshot)
+  end
+
   it 'rejects namespaced history on an incompatible protocol after the tools are removed' do
     other = RubyLLM.chat(model: model_for(:gemini), provider: :gemini)
     member = RubyLLM::ToolCall.new(id: 'native', name: 'screenshot', namespace: 'computer')

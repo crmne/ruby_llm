@@ -105,7 +105,7 @@ chat.tools[:"crm.customer_lookup"]
 
 `namespace` is inherited. Pass `nil` to remove an inherited namespace. The member name stays `customer_lookup`; `tool_call.namespace` identifies its group. RubyLLM routes calls and remembers approvals by both values, including after a Rails reload.
 
-The Responses protocol sends these groups as function namespaces. Anthropic has no namespaces for your own functions: it accepts only `computer` and `browser`, the members of its [native client toolsets]({% link _core_features/provider-tools.md %}#native-client-toolsets), and raises for any other namespace. A protocol that cannot carry namespaces raises before sending the request, including when namespaced calls remain in the history.
+The Responses protocol sends these groups as function namespaces. Anthropic has no namespaces for your own functions: it accepts only `computer` and `browser`, the members of its [native client toolsets]({% link _core_features/provider-tools.md %}#native-client-toolsets), and raises for any other namespace. A protocol that cannot carry namespaces raises before sending the request, including when namespaced calls remain in the history. Neither protocol can force one namespaced tool, so `with_tool_options(choice: CustomerLookup)` raises; use `choice: :required` instead.
 
 ## Declaring Parameters
 

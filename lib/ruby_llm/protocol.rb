@@ -135,7 +135,7 @@ module RubyLLM
     def render(messages, tools:, temperature:, provider_options: {}, schema: nil, thinking: nil,
                max_output_tokens: nil, citations: false, caching: nil, tool_prefs: nil, before_request: [],
                stream: false, provider_tools: [], compaction: nil, end_user: nil)
-      validate_tool_namespaces(messages, tools)
+      validate_tool_namespaces(messages, tools, tool_prefs)
       payload = render_payload(
         messages,
         tools: tools,
@@ -163,13 +163,22 @@ module RubyLLM
       false
     end
 
-    def validate_tool_namespaces(messages, tools) # :nodoc:
+    def validate_tool_namespaces(messages, tools, tool_prefs = nil) # :nodoc:
+      validate_tool_choice_namespace(tools, tool_prefs&.dig(:choice))
       return if tool_namespaces?
 
       calls = messages.flat_map { |message| (message.tool_calls || {}).values }
       return unless (tools.values + calls).any?(&:namespace)
 
       raise Error, "#{@provider.name} cannot express tool namespaces with this protocol"
+    end
+
+    # Neither Anthropic nor Responses can name a namespaced tool in a forced
+    # tool choice; both reject the request.
+    def validate_tool_choice_namespace(tools, choice) # :nodoc:
+      return unless tools[choice]&.namespace
+
+      raise Error, "#{@provider.name} cannot force the namespaced tool #{choice}; use choice: :required instead"
     end
 
     # Writes the chat's safety identifier into the request payload and
