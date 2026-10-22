@@ -253,6 +253,7 @@ RubyLLM.configure do |config|
   config.logger = Logger
   config.instrumenter = Object # Responds to instrument(name, payload) { ... }
   config.deprecation_behavior = :warn # :warn, :silence, or :raise
+  config.redact_error_messages = false # true leaves what providers wrote out of error messages
   config.log_file = String
   config.log_level = Symbol
   config.log_stream_debug = Boolean

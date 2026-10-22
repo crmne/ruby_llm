@@ -97,8 +97,9 @@ module RubyLLM
 
       def error # :nodoc:
         details = data['error'] || {}
-        Error.new(details['message'] || status_message || "Task #{id} was #{status}",
-                  code: details['code'], data: details['data'])
+        reported = details['message'] || status_message
+        Error.new(("Task #{id} was #{status}" unless reported), provider_message: reported,
+                                                                code: details['code'], data: details['data'])
       end
 
       def record_answers(keys) # :nodoc:

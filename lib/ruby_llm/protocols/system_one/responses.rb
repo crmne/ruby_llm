@@ -16,7 +16,7 @@ module RubyLLM
             tokens: Tokens.new(input: body.dig('usage', 'input_tokens'), output: body.dig('usage', 'output_tokens'))
           )
         rescue KeyError, NoMethodError, TypeError => e
-          raise Error.new("System One returned an invalid judgment: #{e.message}", response:)
+          raise Error.new('System One returned an invalid judgment', provider_message: e.message, response:)
         end
 
         def parse_answer(answer, question)

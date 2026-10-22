@@ -470,6 +470,22 @@ module RubyLLM
       end
     end
 
+    # Returns the provider's code for an error +response+, such as
+    # <tt>"invalid_request_error"</tt>, from the body's +code+, +status+,
+    # or +type+ under +error+, or its +code+ or +type+, or +nil+. Override
+    # when the provider names its errors elsewhere.
+    def parse_error_code(response)
+      body = parse_error_body(response)
+      body = body.find { |part| part.is_a?(Hash) } if body.is_a?(Array)
+      return unless body.is_a?(Hash)
+
+      error = body['error']
+      candidates = error.is_a?(Hash) ? error.values_at('code', 'status', 'type') : []
+      candidates << body['code']
+      candidates << body['type'] unless body['type'] == 'error'
+      candidates.find { |candidate| candidate.is_a?(String) && candidate.match?(Error::ERROR_CODE) }
+    end
+
     class << self
       attr_reader :default_protocol # :nodoc:
       attr_writer :slug # :nodoc:

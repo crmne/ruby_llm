@@ -17,6 +17,7 @@ After reading this guide, you will know:
 *   RubyLLM's error hierarchy.
 *   How to rescue specific types of errors.
 *   How to access details from the original API response.
+*   How to keep what providers quote back out of error messages.
 *   How to see the shape of a request a provider rejected.
 *   How errors are handled during streaming.
 *   How to fall back to another model when a provider has a transient failure.
@@ -124,6 +125,30 @@ rescue RubyLLM::ForbiddenError => e
   # puts "Full Response Body: #{e.response&.body}" # For deep debugging
 end
 ```
+
+## Keeping Prompts Out of Error Messages
+
+Providers often quote the request back when they refuse it: a fragment of the prompt, a file name, or a tool argument ends up in `e.message`, and from there in your logs and your error tracker. Turn on `redact_error_messages` and the message names the provider, the HTTP status, and the provider's error code, and nothing the provider wrote:
+
+```ruby
+RubyLLM.configure do |config|
+  config.redact_error_messages = true
+end
+
+begin
+  chat.ask "Summarize the attached contract"
+rescue RubyLLM::BadRequestError => e
+  e.message          # => "openai returned HTTP 400 (invalid_request_error)"
+  e.provider         # => "openai"
+  e.error_code       # => "invalid_request_error"
+  e.provider_message # => what the provider wrote, quotes and all
+  e.response_body    # => the raw body
+end
+```
+
+The error code comes from the fields providers keep it in, such as OpenAI's `code` or `type`, Gemini's `status`, or Bedrock's error type, and only when it reads like a code: a word of letters, digits, `_`, `.`, `:`, or `-`, at most 64 characters. RubyLLM still picks the error class from what the provider wrote, so a context window error is still a `ContextLengthExceededError`. Messages RubyLLM writes itself, such as `Provider returned no completion message`, stay as they are, and an MCP server's errors read like `The MCP server returned an error (-32602)`.
+
+`provider_message` and `response_body` are there when you want the provider's words, so reading them is a choice your code makes. The setting is off by default. Set it on the global configuration: every context follows it.
 
 ## Describing a Rejected Request
 
