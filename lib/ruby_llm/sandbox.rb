@@ -48,8 +48,11 @@ module RubyLLM
   # need. +timeout+ is the sandbox's own, or 120 seconds when it answers
   # +timeout+ with +nil+ or not at all. +network+ is +nil+ for the
   # sandbox's own access; RubyLLM passes <tt>{ allow: [...] }</tt> only to
-  # install declared packages from their registries. The result may also
-  # answer +blocked+, the hosts the network policy refused. A sandbox may
+  # install declared packages from their registries. With a block, +run+
+  # may yield the output as it arrives, as objects answering +content+,
+  # which code execution reports as progress; a sandbox may ignore the
+  # block. The result may also answer +blocked+, the hosts the network
+  # policy refused. A sandbox may
   # answer +reason+, which RubyLLM adds to the error it raises when
   # #supported? is false, and +readable+, +writable+, +network+,
   # +directory+, and +timeout+, which describe it to the model and to the

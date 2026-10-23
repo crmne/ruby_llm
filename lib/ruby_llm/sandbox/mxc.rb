@@ -53,13 +53,13 @@ module RubyLLM
         self.class.new(::MXC::Sandbox.new(backend: sandbox.backend), backend: @backend)
       end
 
-      def run(*command, timeout:, readable: [], writable: [], denied: [], directory: nil, env: {}, network: nil)
+      def run(*command, timeout:, readable: [], writable: [], denied: [], directory: nil, env: {}, network: nil, &)
         run = sandbox.with_readable(*readable).with_writable(*writable).with_denied(*denied).with_timeout(timeout)
         run.with_directory(directory) if run.directory.nil? && directory
         run.with_env(env.reject { |name, _| run.env.key?(name) })
         apply_network(run, network)
         run = Landlock.policy(run) if run.backend == :landlock
-        run.run(*command)
+        run.run(*command, &)
       end
 
       def inspect

@@ -125,6 +125,45 @@ RSpec.describe RubyLLM::Chat do
   end
 
   describe 'the run_code tool' do
+    def progress_of(sandbox, code: 'puts 1')
+      reported = []
+      chat = RubyLLM.context { |config| config.sandbox = sandbox }.chat(model: model_for(:openai), provider: :openai)
+      tool = chat.with_code_execution.tools[:run_code]
+      RubyLLM::Support::ProgressReporter.listen(->(progress) { reported << progress.message }) do
+        tool.call(language: 'ruby', code:)
+      end
+      reported
+    end
+
+    it 'reports the latest line of its output as progress while the code runs' do
+      sandbox = FakeSandbox.new(output: ["Downloading\n", "Converting page 1\nConverting pa", "ge 2\n"])
+
+      expect(progress_of(sandbox)).to eq(['Downloading'])
+      expect(sandbox.code_runs.last[:streamed]).to be(true)
+    end
+
+    it 'joins a line split across chunks, and skips blank ones' do
+      stub_const('RubyLLM::CodeExecution::PROGRESS_INTERVAL', 0)
+      sandbox = FakeSandbox.new(output: ['Down', "loading\n", "\n  \n", "Done\n"])
+
+      expect(progress_of(sandbox)).to eq(%w[Downloading Done])
+    end
+
+    it 'reports at most once per PROGRESS_INTERVAL' do
+      stub_const('RubyLLM::CodeExecution::PROGRESS_INTERVAL', 60)
+      sandbox = FakeSandbox.new(output: %W[one\n two\n three\n])
+
+      expect(progress_of(sandbox)).to eq(%w[one])
+    end
+
+    it 'does not stream the output when nothing listens for progress' do
+      sandbox = FakeSandbox.new(output: ["Downloading\n"])
+      chat = RubyLLM.context { |config| config.sandbox = sandbox }.chat(model: model_for(:openai), provider: :openai)
+      chat.with_code_execution.tools[:run_code].call(language: 'ruby', code: 'puts 1')
+
+      expect(sandbox.code_runs.last[:streamed]).to be(false)
+    end
+
     it 'lists only the languages the sandbox can run' do
       sandbox = FakeSandbox.new(missing: ['python3'])
       chat = RubyLLM.context { |config| config.sandbox = sandbox }.chat(model: model_for(:openai), provider: :openai)

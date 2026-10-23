@@ -2,7 +2,11 @@
 
 # A sandbox that records each run and answers with a block, so specs can
 # check what code execution asks a sandbox to do without starting one.
+# Given +output+, it yields those pieces, one by one, to a run that asks
+# for its output as it arrives.
 class FakeSandbox
+  Chunk = Struct.new(:content)
+
   Result = Struct.new(:stdout, :stderr, :exit_code, :timed_out, :blocked, :cpu_time, :limit_exceeded,
                       keyword_init: true) do
     def timed_out?
@@ -18,7 +22,7 @@ class FakeSandbox
   end
 
   def initialize(supported: true, missing: [], timeout: nil, network: false, directory: nil, readable: [],
-                 writable: [], limits: {}, &handler)
+                 writable: [], limits: {}, output: [], &handler)
     @supported = supported
     @missing = missing
     @timeout = timeout
@@ -28,6 +32,7 @@ class FakeSandbox
     @writable = writable
     @limits = limits
     @handler = handler
+    @output = output
     @runs = []
     @lock = Mutex.new
   end
@@ -37,8 +42,9 @@ class FakeSandbox
   end
 
   def run(*command, timeout:, readable: [], writable: [], denied: [], directory: nil, env: {}, network: nil)
-    run = { command:, readable:, writable:, denied:, network:, timeout:, directory:, env: }
+    run = { command:, readable:, writable:, denied:, network:, timeout:, directory:, env:, streamed: block_given? }
     @lock.synchronize { @runs << run }
+    @output.each { |content| yield Chunk.new(content) } if block_given? && !check?(command)
     return self.class.result(stderr: "#{command.first}: not found", exit_code: 127) if @missing.include?(command.first)
 
     @handler && !check?(command) ? @handler.call(run) : self.class.result

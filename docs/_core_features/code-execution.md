@@ -84,6 +84,22 @@ Each run stops when its sandbox's timeout passes, after 120 seconds when the san
 
 Both belong to the sandbox, so a chat that needs longer runs or a package registry uses a sandbox that allows them, as its default or [one call at a time](#asking-for-a-wider-sandbox).
 
+### Following a Run
+
+A run that builds a report or installs packages can take a while. While it runs, `run_code` reports the latest line of its output as [progress]({% link _core_features/tool-execution.md %}#reporting-progress), at most four times a second:
+
+```ruby
+chat.with_code_execution.after_tool_progress do |tool_call, progress|
+  puts "#{tool_call.name}: #{progress.message}"
+end
+chat.ask "Count to five, one number a second"
+# run_code: 1
+# run_code: 2
+# ...
+```
+
+Output streams only when something listens for progress, and the model still receives all of it when the run ends. A [sandbox of your own]({% link _core_features/sandboxes.md %}#writing-your-own-sandbox) reports progress when its `run` yields the output as it arrives.
+
 ## What the Code Can See
 
 Each call gets a new, empty run directory, which RubyLLM removes when the call ends. The code starts there unless its sandbox sets a [directory of its own]({% link _core_features/sandboxes.md %}#building-a-coding-agent), and `RUN_DIR` holds its path either way. Nothing carries over from one call to the next, except files, which work like this:

@@ -46,6 +46,9 @@ module RubyLLM
     # starts in a sandbox's own directory.
     RUN_DIR = 'RUN_DIR'
 
+    # Seconds between progress reports of a run's latest output line.
+    PROGRESS_INTERVAL = 0.25
+
     ESCALATION_NAME = /\A[a-z][a-z0-9_]*\z/
     LIMIT_ERRORS = {
       cpu_time: 'The code used up its CPU time and was stopped',
@@ -506,7 +509,25 @@ module RubyLLM
                  denied: @packages.denied,
                  writable: [directory, workspace.home, workspace.tmp],
                  timeout: timeout_for(runner), directory: (directory unless setting(runner, :directory)),
-                 env: @packages.env(workspace.home, workspace.tmp).merge(RUN_DIR => directory))
+                 env: @packages.env(workspace.home, workspace.tmp).merge(RUN_DIR => directory),
+                 &output_progress)
+    end
+
+    def output_progress
+      return unless Support::ProgressReporter.listener
+
+      pending = +''
+      reported_at = nil
+      lambda do |chunk|
+        pending << chunk.content.to_s
+        *lines, pending = pending.split("\n", -1)
+        line = lines.reverse.find { |candidate| !candidate.strip.empty? }
+        now = ::Process.clock_gettime(::Process::CLOCK_MONOTONIC)
+        next if line.nil? || (reported_at && now - reported_at < PROGRESS_INTERVAL)
+
+        reported_at = now
+        progress(line.strip)
+      end
     end
 
     def setting(runner, name)
