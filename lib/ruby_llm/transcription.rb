@@ -142,6 +142,7 @@ module RubyLLM
         model: model.id,
         model_info: model,
         language: language,
+        temperature: temperature,
         provider_options: provider_options,
         metadata: metadata,
         tokens: empty_tokens,
