@@ -1,0 +1,59 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.meta.ai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"muse-spark-1.3-contributor","input":[{"role":"user","content":"Call
+        the any-of params tool for task \"Review PR\" with status \"pending\" and
+        report the result."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"any_of_params","description":"Uses
+        params DSL any_of support","parameters":{"type":"object","properties":{"task":{"type":"string","description":"Task
+        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      X-Ratelimit-Limit-Requests:
+      - '150'
+      X-Ratelimit-Remaining-Requests:
+      - '133'
+      X-Ratelimit-Limit-Tokens:
+      - '3000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '2985306'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Fri, 23 Oct 2026 08:17:00 GMT
+      X-Route:
+      - model-api-rust
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '4442'
+    body:
+      encoding: UTF-8
+      string: '{"top_logprobs":0,"temperature":1.0,"top_p":1.0,"service_tier":"auto","model":"muse-spark-1.3-contributor","reasoning":{"effort":"high"},"background":false,"tools":[{"type":"function","name":"any_of_params","description":"Uses
+        params DSL any_of support","parameters":{"properties":{"status":{"anyOf":[{"enum":["pending","done"],"type":"string"},{"type":"null"}],"description":"Optional
+        task status"},"task":{"description":"Task description","type":"string"}},"additionalProperties":false,"type":"object","required":["task","status"]},"strict":false}],"tool_choice":"auto","truncation":"disabled","id":"resp_6adb17fce6b90f58d2d04322","object":"response","status":"completed","created_at":1792743420.0,"completed_at":1792743420.0,"error":null,"incomplete_details":null,"output":[{"type":"reasoning","id":"rs_6adb17fce6b90f58d2d04322:rs_fc02a976-564d-4585-a7cd-c1ed2ad7d8f8","encrypted_content":"Q-PaDgFDYmDA0Y-zcwHNh3vUFxf8-zJW6GJv0IgVJXmEaYkek-AbBEsUXo-Sp5BsVwW6sPvFstaH1m3yN8beyg-xGAMlwsSsnlSgO_XJ8pikD_TGbrfhHLh8Zo9gWZqYB5FG6uSrk0PlfzSqGNytFHpi9Tj1mGly5W-nsUZ56skZu0jo0Q9Ww95PE3a8E7B3NZOydpeMKosljODTsbpCmVjo6DaRPjm6fmKhF4yEPQGFC0FYyarcU8PlkqCFaw4aS1CVIKekY-JWxS6fSRLSD-XGJdbP7JtGmoAzr7EXNZMWWOzwExnZPAxVR0z2kqKk0D1RzvzFmbk0ZYV7DW5bdWFnqvmUVoRk-9wW1Pq4PKOc9Qoju7S_ESfC9owsDNybl7K4An-7-aiuC_SiP7AQ370AJp7tWt-jDEmkCCdp9IHyAbuTfvy8CbviW8a9zP3C3Xh2uKXo1RsdbAXRfKqIr5ikcf4R_q4sRaWyOkxLXYjvgs5JvSc6JxYonSb3LCRYkhZ_O8injor6N8OAROuw682OJoPCIq7-ZZ59tINx6t7ux5MnWo7SnY4gl1dfXotCV9Oy63TWzrfPnHu-ip3RlN7itv06LrV93ZCjJVU4lnfDHQV9nSsobP2HQPuf_NpOq84k58AX8-F8QzT-Mjof7JVQAH9znZtgZhEO9bpIgSzYloB4cjXcg5m0pE3KEwIveb-BCUqKEA160WTC9QHDXRdUPQVWutJ01tldg7VnH4qrCZ0PdEiVvH5kDAKzGGby9o3LclgFpnDO3WQ-JG-xTpbD2rKdgUMUlO5zKtbH7NS8SV7WA10JLvhm81RTEBLsRq4HquX_YgpgC1mXJCP9UTEuBeqcB4AiL6nYYpyv8RIYYLZqnPMPoR4J8Bjvl9xoExLIZaGfz9pye6uNIe53EMIU9a0CBlIf6c-AjI4nmyjYOcN-crF5Gh1z7W_W92nDLBA55QT1x8CJXwkWh7tg378v5c503V14Gy8PgXb0Eva3YXI42Bl6ECwBwBNN72eoNKLHwPilzjB11WT44vHkZCWacARfDujkv8KHxnpCKAf-wZNfT2rEE89X83A33NfZQwxSH2S8OW5_zqqNN0vawnwnRXFThkFnUv-hFu9WcfFfzWYKI6tI7PpIAGlm43WkKImBD4vCZoOS3QOHGFIoXyf1V3gAXVB95Vlrq31M1-nvUmLRXzJtOOhkm-fLOsu99zmPxkFFR0KlDYKIBdWt4d_4L7XfttcFJ6NACh4KWMHB3sk3yUvrRPdBHQQgbGC5ac8fXGbkU3WoNTMzcUzLb_kPve0QjHgSgmEpu-h8LunyabVuKjPdJNZDrTnKI-gBnta9XQOZgdlwSU0mlWt2LFvtwzgsUFf_9QCW2XmyigaaUd3Klcn1xuTEFBsLn6lXFu97LvuZhuuYqg17Z-P4WSJfn_wkqCavpkfvg_KbcYGx_wJfAjAgDzyBRflgvRU_11Gn2I6FR3e44HHKCSfOW4o9XSBtPlP3EwEQcK54t8bUgVBZxSFXHSemu3ArEZXrxBXGMFobVhjwo88-yNosK6AtrnBHU5g0Ikqrlxoj3OraPLVjyG4iBx8JRH8NGEShU7gU_hsogQVz_znyq79zuEwn4wZS8qUuUKo7XDuQ4QZt7q-eAKt9QXd_TYsih8REautPZVdnBT8d-BzydW2Gg3D_j5kuf7mQn6dmzyyT_NH0vlK2Opkj4WB570dESQman0ehByQlDHSdECknjNa0xUH5YhAG1j_ZenZ88Y95dy5ecFx3gnZ8ipUfKEFH3dheZTxI90tRk8OCfPOjr8B1O3Tis9bNmt5mfHys_AUgC2dd9FXWjnw4p1rnZw69NG9nH4Scr66M634TGkCSjNS3tbLAIlpZooTP8mftRGp_6LYNIFpbtnbNG0TzZpat-5lpK5mQ5CWiW5BxhO8axS4mzArQ31wBu5An9tCcCDQDIRCSJ52oFRlVswa5iRirr4X4ErUBcaIpryNGsS7iSduTyYF0SF-6BQnkCd8iBzTByPbvCpLA3VjNc1rxM414PKdc5jh9s2-bgugdCXD-mD3CU5ahGzyMuSufgcP5WESEKFGOCYx4mTYN14f-Ul6WPaGpkX43k5-zeWuc8OXttkPle2d7bGAOlGoWnQno1pdWNbBBDkj_iNjR4KRgsNHvpic7wOzOLsJ9LIQiYIGLvAlUdyHP2c1yoyM7FdqaPjubAastm3-Yd_10-HNNcDryEx_YFQ-ET_KF1IU3wc5zfGQhu5mmNpVjUErYqEAkuw6uWv0T6RevaXununIbfXoMxQg-QSPViOK0C7p7gdBwcSUohtcSIRYA1YHQ-YFDvRPUTTaU_wO4pAacCobm8IkFqVuZZGjvZVXVrrTmOYCI1L6rUMwNQ8MEAkew8m-PxF1I0bezZDNJGcFg95EFjzEM_K-pJ81gMfAbix14JAPclstpWT4-eOm094IFtv4DL5pZbJgmf5IzzXq3Pjt5eNSVDJ6dsha8KA208bKy9o0Gu_MASj8NzkMfpI8LDHvqIQefI2E6FyXtrvl5R9It5Gw2xVmqjsWkTISLBLJndK_fGdaNTe7_HGDVpP9hT4BQKJD8gu_5p9dZvRU069mlkQTPGCs-49jW1PAG_CgswALd8FfhIiX-Z0IzfJFVeBinzVfJOVTchTM3ELLHrSw8cSsGDQ7VvC4S-zyjwWMORL3Z2M4jCmy05y_mpH7j7_2K8QqClrfHj-JjTr0nCLXasyt6vPz7Ckjfws6O3DYrUoo7mFIR4TqUn_mhjx6006N2CwM","summary":[],"status":"completed"},{"type":"message","id":"rs_e86b0a7d-aa81-48d1-96b5-1af2bfa2d7d1","role":"assistant","content":[{"type":"output_text","text":"I''ll
+        call the task tool for \"Review PR\" with pending status.","annotations":[],"logprobs":[]}],"phase":"commentary","status":"completed"},{"type":"function_call","id":"fc_009be8d8-34d9-45dd-84bb-77bd4369c933","call_id":"call_009be8d8-34d9-45dd-84bb-77bd4369c933","name":"any_of_params","arguments":"{\"task\":\"Review
+        PR\",\"status\":\"pending\"}","status":"completed"}],"instructions":null,"usage":{"input_tokens":605,"input_tokens_details":{"cached_tokens":113},"output_tokens":364,"output_tokens_details":{"reasoning_tokens":275},"total_tokens":969},"parallel_tool_calls":true,"store":false}'
+  recorded_at: Fri, 23 Oct 2026 08:17:00 GMT
+recorded_with: VCR 6.4.0

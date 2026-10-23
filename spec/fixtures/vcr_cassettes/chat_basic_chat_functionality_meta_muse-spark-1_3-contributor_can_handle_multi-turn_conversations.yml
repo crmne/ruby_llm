@@ -1,0 +1,110 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.meta.ai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"muse-spark-1.3-contributor","input":[{"role":"user","content":"Who
+        is the creator of the programming language Ruby?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      X-Ratelimit-Limit-Requests:
+      - '150'
+      X-Ratelimit-Remaining-Requests:
+      - '143'
+      X-Ratelimit-Limit-Tokens:
+      - '3000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '2996036'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Fri, 23 Oct 2026 08:13:20 GMT
+      X-Route:
+      - model-api-rust
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '6666'
+    body:
+      encoding: UTF-8
+      string: '{"top_logprobs":0,"temperature":1.0,"top_p":1.0,"service_tier":"auto","model":"muse-spark-1.3-contributor","reasoning":{"effort":"high"},"background":false,"tools":[],"tool_choice":"auto","truncation":"disabled","id":"resp_6adb1720dca02e078d784a61","object":"response","status":"completed","created_at":1792743199.0,"completed_at":1792743200.0,"error":null,"incomplete_details":null,"output":[{"type":"reasoning","id":"rs_6adb1720dca02e078d784a61:rs_405f508d-f040-4c21-8483-4b4d78c037b2","encrypted_content":"Q-PaDgGHGYosLg4Wk4YELCE_ZSVfsnfaFhRUumk-WmSPTMVtM4NwjUkHftMTy9lcd3vABwqyCMJj6MAbEKC-XnQveFT6qkcLyRtiaVIiSvAFC0nD7l3WumT0UFQiiMEJR6eOajIwfUIjSpADub3zc3C20527DylVouzvb6R1w6oN91BUhcnmjh0g4DIGz2cH8Gu9UvpjSoNCyDH6pgsVHv6XKDvvZIW_OkbY6Ay1xV0Sc_asQjq4T07dZXnc7NuD-MWMXQGRtQfnN19wfH25jDmJouJBC3omig4Cr6mpQZ_FtWsUI2o1PuprxN0pmv8Uf6GUE1sU7E3U0rY-EazLo4nixKKKzTwFVkJSv09R3FT-l8MZFXpSUSm9nSA6-nBUwUrJRhqNXoW0Sx57w0TozRSt8J-PlW9Mv9-2doCjvidqIqnN4loXFzr99-QYEaT5ckUyRUGcQUqJd11Cw01dIWdVTt0jxiM2DCHQ5LAbnmzcT-4TDaIJyvDSfaFbr7-8pKsdKbbY7GDnfYL90npFBsgv_SLbuGHnJNbEC6WCkIeCG_horCV71BunVWKUcPDtqaEfWHx6K5n1dHbqxjG3XXRGrf-Lo5vGp5W_enSfrGyH62VxK8Skij5VFm03Il8Qf8OvaK7rqMobUhAdLuMqhAOghjJ_9CBtzzyAzKqb1td5lgz-03qRJO1OriMxtZiDu7aaILVTLALcEB6XIOxWRxFBnzwL1zaQDxreaHGIpY5LCq67RfL-e7woGzyrW2xqfff4-NHrGp_fBSxF_vxG67SX0gpKbZzUGL6pEmky7KxlreUSSHlt7mJVzASUz1SeBwDv2johoTC-8y0roKBya53LWENc0qwqjbSvRKrckG6UiPBLleadXLJ1JNCDRm8G8tqvfupXZ-BMOoihLVRTTmtk6MAneVQ6mdJ7_t1E3VIDN3INynu8BjWsUgdAWAW7DREIumiHMipNwJCxuU7gAeDV7JUoGWfd3Z4T0_cybHIP4yp2UIT6m0reSxsKZImuA4xaRUbC0ette-OKzRrCWc_YS-KShzRDeeqa_ESeWm8eGNHqNAldwt6UKVGdhsTBKzKZUackPdGy_uXiA0tyhhTnQk72jrkF1plIxRkk-ZBjLaF8Jlf51xeP5i-x5yOixVBjorVbomGnSIFB6iGdRUfe43i_aeWEq8D6JM6ououSP53ZqHT2MsJFv6Tep-vwwIdmSGosJDbM5brG5q8vTOQ0HdZ-5Wx5IaT8-fxOPIVXQrGA-pWOVi1KSgOY3I5xRpr8MRwE6ulPZgJXC-l34SLEXYCyjzXhA34CPM-5oSwwABNj-50rRfYw0SprRnIKHX2xacuL6ZMQ66MF1_nCbOCZpmuXZdtIy093BvqWwtKW3r0wNCZ6SuuXgS4uNRN4xnf4Ufz85i5oeY7zzQHmdHgudOlbHSiz_q4QvuykidQ-rzG7GU1IDzRg9wU-t3ncwmeQ2v2avpVMuOKJ7K1R9paHlSJsblPol_LVHaPdYBpDaSAgboKRGLQmuMzulnVIJDQFFYfL60fWQqi-RdZ8PP4t508P_Nd0Qku2fwcz6ioqf80LyPI5XJNSfmjB3Kry5keyQATpMEO5M_6rgOKmIw4ZGlslpaRfEqRmJNM3wa3m8S8MSGsaOuFpcegXcKeSJNulQ0ZzMs6-S8yH25_CnL_1CeicPr0wPaJAMfWtAiiD1SI6ig4nt131aHF0M9Gb0puT9jzrPDR-cj-mevrrt9LAzCF7xCFGEj80Yk8VKgLGUlvNSSMKdhBIkybXMvCdXkaxJCnVkAmWXUixGdAdwW579B5wDVRAWXs_W1ovsB8PfPdeJvVsy4sXFxhFF_CCY0TRwRoK_AtZ0u-Rt32qPs0GFl4JSB-8FH-dIPtgFUq6Y5IXQEgjm-avgyhqoW3nZwu17N0ggDWfUuMabGgsw1E0mRfDBGb8cxoyMN8W2Vp7d4x0P-DBepJs2DO-LdMx6i2QXbrtUz-4m4DBTxZyPr8w_E4qGrA2xSdGJWstQBubrTzBMoWT9pIh4Ruiicjgla21Ig6ISAn_OQ15HPjVjImovUCcy34V0BQ1BwHPhk_RWLIMhDaJdgl3ilH63oQoVWGLAz5I3oJh5fL2WIuMPtdkhSdpbUcuQz6CVkv9_Tbln-HvK_eQdDxPG1drjVP-IDkQ_U79mGl2RMeu2T9Ogxjp3SrmvOpBNEvOgZUicIiYMj2X6p83cVhwFG8DZwRl8dlmz63wAhj_P0Nxc-Do5lBv9Evq4yquXim_EKV-t4SDMIP8drG5BghxTG69e5UY-Sy3umw1iu8_ZYcUlUFgEDaOQpMQfeqerzu7qKeW8geviILnCpkzmfCZaobSWbFLFRPcyEnN6A5jzqvjzFPESOo0QLdakg0UhRfHgHC4oGqLWl6jskdjX8TraqZgsn9j9EZpUXiftYLmuzbma1qbRYWNCy8sm9jbyXawtxtPjKaHcLww5QgDPeQdpXpWnAUmz5Y87ybNXgIbPXrFZaCpZiN76-j8VEEwhsV30AdShusuoDEuM2RY9pWuDRShYvWSad6ycRxO1iBC3fB3qh9Qf15vTe2iha8L5U4figlVlcyL4Q69Y5iiEyQTaDjnkqR3QWNmzvTNjCQIL235-fS8uKqzm-Yc-vG9NKL4Yq1tPA6H4fz699jjo94N59Ks5gf-pkCiST0dizqmEoSNM1X897zETOU3gnW6JWzAF_KJ2q38f2QDx46u-ndhj0ViT0AtPYts4xhJkOx02aWC5HPSkvUWcqS8F9IwCdCnqCX1tKnwHvAWk12-LpDsCztICCby7ptOGcWmK1uMlj3qMRtIS7FN_4Mwmp9VY-yNGCitsrW0yKsz7MqRvreWOWHUhLQvjDa2XGkA46F5ZSJe6yFtJMo1vK46Q-j-4rzI3WEOSNtUp31sAQRsR7c7EmD_Bee_uRxpBca35OqwNC0dq6WbkTbBijfQIYYHaWt-jrxCgzJ3Ny_S5y9Mjjy39N4POqijwE8zHgv2I4Q-Rimtz7B-yrFuwOrAkhDAPJJ53L1JRsqWYTCqXW0yew51MYHyov_mCfd15dbGogISCTlkK_xkCiSUpNtfra93-wmlr_1sXBTFCgRL1IJtiVDCq1X0kPcaE8ixooNDOKycyk-SzU5gHdH89NlafefApDt_lVtJGlxyaRsAZsBc5vykkzqdqvJAGFAC1bv0GdL8xa8I9xjGucTvekykJKbkL3-rAYq-8tseDm2s66YPYlMgtvehSD---XIPyU95o3kob7ApmAFVEJ2lOQ5Fp2eM1DKVjQqPDw2s3s_OsTSDSVsqcrcDbt5-ZYUdTsG4mwTqAl8VI8uZiwnx4FjY7x8iYlEZb-QNxjMCGM8TfF65QRbKij5d5u6BangxSw917cLd3J9DKpGA0ZK7wv6crN9uLjyIGtUCfKJFBmEhQUbMeyMlSkM8jTnEJRb--QMBSEJPmgFanwVmzn44RmoXgkfa4T5joUAbuhebUbAiqjaAoordycXi0ubka7gUYg_bRJLhX6qh5H7QaBIoMYsIWRMb24aRMcy8-UDQJeCudD0n_bTnrkxqnJUKiSgTLxAGGw2AuMwXq4MM16unRT6MwaT16AwnK2aVJjPUuqm-nuyEw_oENL9L8osfVlf1OHjS_MP2Br7ZFS5DAAN9cAWgGcKMsrHMJsyvYrdB93l69SPxM9LtysUz2j_cnEZAd3DZLvCJ8RmosGd0cDCVDXhtHGdKZL6Vz6_3nW_4ussTcaKOI2mVbQW7UoOp4slvA3m1kkjbkHQgNx_vD1d8k8CW0QxXuuiTDDoTXpA_xhy1TaGZBUtOXDGXLsU9hsUd15S8TmM-cnt7JiAZKgVBZVhQFn_j5zwLr7Ed84xOss4OEjRNDE6hWkAtLzixyhIiFmf5q7-rVYXxlj2vGOyd7z4eFkGpFQJphH6qdxEemA44jSmJa3iOoZzKcpHeP7l0dFs038JPLbtntv6P9h9Dxo499cvWJhZpcZo493pLIYi1SjPoDQhYtvWIMuAlf86ftF4Th-YjSnckpV64ZcBP1DwD5uui4bR_QGg6zy9nLsrctKxOOGcaC4qgbgphkKhOxgatRFoSPFSzdk1kN7wgPWmUhiQmbReNDppCaueD8uQ1exWXQ_bESWHCjsnyqduvcKRy1piwfFsVJIfn0QJWcoV2iQjCDiXlvBk1bwzg1Sl_izxKHTyOH0dUOCj8sn0G2aDBAdBqzY1A0KC5qFXxlz_5fHjPVzLZnfsAlnZXkBCmwwmS4-toml_N1-dOh4ac7BNxXHIT_9igbXq2-DOwVRRndpy6q7WNT2oGRPsuBk5Dt7UtFQOj6UzLL9s4oTEA8LrWN4s58ys69Xm-DI35HaTijMZPtu5eH-bXMb82SmptogGJAOy9F59JN_U8tRjlHmLJjge71dVwpJ7wq3CfX_lZ7B-xUKD-_fSSAWbQR45NV6Pp5y8VM7C-NT5A4fHdcoWV1e6GT7wS5t31aUJBlkTcO1K7sZOPhhEnfcOP3swUxTf5FnHBnU-2H2r5qeBfCNCar2M43sCc14xcCVRW_4-mNpp2tUQbKerxIW-UtE4OaT3QIstBeuqoY8OH3xXTtBY3qQqsQn1fLWxYChE4efYxaQJmUjB4TCQMemwkLqZ2qqix-mlizvo0NTwR21_WSY9_Hl8Q-s5QXGL9mUzbuZgP_nO-o5NecrfERPKUcoG5H0mtPX2S7eB1qje_CfcJk_L0tM9MASLyes_awEB7_zshejy0yshptBi_kDKA0c5DNcFNOFLjnA6At39vkqslhX3ebCJBubpX7IRtdjGqZCutmxt1-2jxOgv1jZgHbd5iqWlJpPJHft975bzOnFtQeUUNluO8lCn7PRGJI7UCVcewAqrpmPboGD9BGIYBWDpmTKQDwR2vuDhhJvUvEwyqRh-O0lpueshW5-W1CRIPXtuzee4f3KRT3d5wJ0GWyL5z7W2uIqBupu0b8D-RT9WnaNaQ1UTVHMOV33xZEpyt-yZ66n1e_vWi6E5ZlK302ByNich26A1gs30zWE5HJ1ayvigaUS8jh91DHDYwDGtGkHysR9Bb4Gcm36-ZlPeqIn-v4PgeaznEOkuFqODYodf9mkZZUFP1U_Li7GNtRqCB0hsneuGItOV4fb-Ak6q13pP3UMVihL4E_MxyTRom73r6mfRXW_z1ToxPYgMMyorJgcJWmPyGXa1wA2F2ZCoroH9IdP2rzQ4Yyw91Dx-nE2hDhANTuWZoWm4x97fwJrDB3Z63l3KalhRzWNq4vaweW0e5FHP6-dNPf293ONtIMV6-qiqwVwFsjk3jIZoaJI0tEp0O0JV2fO7eKiSiWi2v1lBXRYYLCZgvezNjPFx0vPM90kMOxbdYG4m2HHIPjLhSSBU0XFTvJ1Pw0gCvy-t270X_TVdF1gltx91UgAC6X_b2sY7b0zogJWYKW6oRL2dnuWzSj0Y3gnUUuNEsUB19QhQ7iBib5697WSZLh83BJaPPltlV2tvj5B4bWQ","summary":[],"status":"completed"},{"type":"message","id":"msg_782df42f-aec3-4f56-8c5e-9408e4844845","role":"assistant","content":[{"type":"output_text","text":"The
+        programming language **Ruby** was created by **Yukihiro Matsumoto**, commonly
+        known as **Matz**.\n\nHe started developing it in Japan in the mid-1990s,
+        with the first public release in 1995.","annotations":[],"logprobs":[]}],"status":"completed"}],"instructions":null,"usage":{"input_tokens":18,"input_tokens_details":{"cached_tokens":0},"output_tokens":456,"output_tokens_details":{"reasoning_tokens":398},"total_tokens":474},"parallel_tool_calls":true,"store":false}'
+  recorded_at: Fri, 23 Oct 2026 08:13:20 GMT
+- request:
+    method: post
+    uri: https://api.meta.ai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"muse-spark-1.3-contributor","input":[{"role":"user","content":"Who
+        is the creator of the programming language Ruby?"},{"type":"reasoning","summary":[],"encrypted_content":"Q-PaDgGHGYosLg4Wk4YELCE_ZSVfsnfaFhRUumk-WmSPTMVtM4NwjUkHftMTy9lcd3vABwqyCMJj6MAbEKC-XnQveFT6qkcLyRtiaVIiSvAFC0nD7l3WumT0UFQiiMEJR6eOajIwfUIjSpADub3zc3C20527DylVouzvb6R1w6oN91BUhcnmjh0g4DIGz2cH8Gu9UvpjSoNCyDH6pgsVHv6XKDvvZIW_OkbY6Ay1xV0Sc_asQjq4T07dZXnc7NuD-MWMXQGRtQfnN19wfH25jDmJouJBC3omig4Cr6mpQZ_FtWsUI2o1PuprxN0pmv8Uf6GUE1sU7E3U0rY-EazLo4nixKKKzTwFVkJSv09R3FT-l8MZFXpSUSm9nSA6-nBUwUrJRhqNXoW0Sx57w0TozRSt8J-PlW9Mv9-2doCjvidqIqnN4loXFzr99-QYEaT5ckUyRUGcQUqJd11Cw01dIWdVTt0jxiM2DCHQ5LAbnmzcT-4TDaIJyvDSfaFbr7-8pKsdKbbY7GDnfYL90npFBsgv_SLbuGHnJNbEC6WCkIeCG_horCV71BunVWKUcPDtqaEfWHx6K5n1dHbqxjG3XXRGrf-Lo5vGp5W_enSfrGyH62VxK8Skij5VFm03Il8Qf8OvaK7rqMobUhAdLuMqhAOghjJ_9CBtzzyAzKqb1td5lgz-03qRJO1OriMxtZiDu7aaILVTLALcEB6XIOxWRxFBnzwL1zaQDxreaHGIpY5LCq67RfL-e7woGzyrW2xqfff4-NHrGp_fBSxF_vxG67SX0gpKbZzUGL6pEmky7KxlreUSSHlt7mJVzASUz1SeBwDv2johoTC-8y0roKBya53LWENc0qwqjbSvRKrckG6UiPBLleadXLJ1JNCDRm8G8tqvfupXZ-BMOoihLVRTTmtk6MAneVQ6mdJ7_t1E3VIDN3INynu8BjWsUgdAWAW7DREIumiHMipNwJCxuU7gAeDV7JUoGWfd3Z4T0_cybHIP4yp2UIT6m0reSxsKZImuA4xaRUbC0ette-OKzRrCWc_YS-KShzRDeeqa_ESeWm8eGNHqNAldwt6UKVGdhsTBKzKZUackPdGy_uXiA0tyhhTnQk72jrkF1plIxRkk-ZBjLaF8Jlf51xeP5i-x5yOixVBjorVbomGnSIFB6iGdRUfe43i_aeWEq8D6JM6ououSP53ZqHT2MsJFv6Tep-vwwIdmSGosJDbM5brG5q8vTOQ0HdZ-5Wx5IaT8-fxOPIVXQrGA-pWOVi1KSgOY3I5xRpr8MRwE6ulPZgJXC-l34SLEXYCyjzXhA34CPM-5oSwwABNj-50rRfYw0SprRnIKHX2xacuL6ZMQ66MF1_nCbOCZpmuXZdtIy093BvqWwtKW3r0wNCZ6SuuXgS4uNRN4xnf4Ufz85i5oeY7zzQHmdHgudOlbHSiz_q4QvuykidQ-rzG7GU1IDzRg9wU-t3ncwmeQ2v2avpVMuOKJ7K1R9paHlSJsblPol_LVHaPdYBpDaSAgboKRGLQmuMzulnVIJDQFFYfL60fWQqi-RdZ8PP4t508P_Nd0Qku2fwcz6ioqf80LyPI5XJNSfmjB3Kry5keyQATpMEO5M_6rgOKmIw4ZGlslpaRfEqRmJNM3wa3m8S8MSGsaOuFpcegXcKeSJNulQ0ZzMs6-S8yH25_CnL_1CeicPr0wPaJAMfWtAiiD1SI6ig4nt131aHF0M9Gb0puT9jzrPDR-cj-mevrrt9LAzCF7xCFGEj80Yk8VKgLGUlvNSSMKdhBIkybXMvCdXkaxJCnVkAmWXUixGdAdwW579B5wDVRAWXs_W1ovsB8PfPdeJvVsy4sXFxhFF_CCY0TRwRoK_AtZ0u-Rt32qPs0GFl4JSB-8FH-dIPtgFUq6Y5IXQEgjm-avgyhqoW3nZwu17N0ggDWfUuMabGgsw1E0mRfDBGb8cxoyMN8W2Vp7d4x0P-DBepJs2DO-LdMx6i2QXbrtUz-4m4DBTxZyPr8w_E4qGrA2xSdGJWstQBubrTzBMoWT9pIh4Ruiicjgla21Ig6ISAn_OQ15HPjVjImovUCcy34V0BQ1BwHPhk_RWLIMhDaJdgl3ilH63oQoVWGLAz5I3oJh5fL2WIuMPtdkhSdpbUcuQz6CVkv9_Tbln-HvK_eQdDxPG1drjVP-IDkQ_U79mGl2RMeu2T9Ogxjp3SrmvOpBNEvOgZUicIiYMj2X6p83cVhwFG8DZwRl8dlmz63wAhj_P0Nxc-Do5lBv9Evq4yquXim_EKV-t4SDMIP8drG5BghxTG69e5UY-Sy3umw1iu8_ZYcUlUFgEDaOQpMQfeqerzu7qKeW8geviILnCpkzmfCZaobSWbFLFRPcyEnN6A5jzqvjzFPESOo0QLdakg0UhRfHgHC4oGqLWl6jskdjX8TraqZgsn9j9EZpUXiftYLmuzbma1qbRYWNCy8sm9jbyXawtxtPjKaHcLww5QgDPeQdpXpWnAUmz5Y87ybNXgIbPXrFZaCpZiN76-j8VEEwhsV30AdShusuoDEuM2RY9pWuDRShYvWSad6ycRxO1iBC3fB3qh9Qf15vTe2iha8L5U4figlVlcyL4Q69Y5iiEyQTaDjnkqR3QWNmzvTNjCQIL235-fS8uKqzm-Yc-vG9NKL4Yq1tPA6H4fz699jjo94N59Ks5gf-pkCiST0dizqmEoSNM1X897zETOU3gnW6JWzAF_KJ2q38f2QDx46u-ndhj0ViT0AtPYts4xhJkOx02aWC5HPSkvUWcqS8F9IwCdCnqCX1tKnwHvAWk12-LpDsCztICCby7ptOGcWmK1uMlj3qMRtIS7FN_4Mwmp9VY-yNGCitsrW0yKsz7MqRvreWOWHUhLQvjDa2XGkA46F5ZSJe6yFtJMo1vK46Q-j-4rzI3WEOSNtUp31sAQRsR7c7EmD_Bee_uRxpBca35OqwNC0dq6WbkTbBijfQIYYHaWt-jrxCgzJ3Ny_S5y9Mjjy39N4POqijwE8zHgv2I4Q-Rimtz7B-yrFuwOrAkhDAPJJ53L1JRsqWYTCqXW0yew51MYHyov_mCfd15dbGogISCTlkK_xkCiSUpNtfra93-wmlr_1sXBTFCgRL1IJtiVDCq1X0kPcaE8ixooNDOKycyk-SzU5gHdH89NlafefApDt_lVtJGlxyaRsAZsBc5vykkzqdqvJAGFAC1bv0GdL8xa8I9xjGucTvekykJKbkL3-rAYq-8tseDm2s66YPYlMgtvehSD---XIPyU95o3kob7ApmAFVEJ2lOQ5Fp2eM1DKVjQqPDw2s3s_OsTSDSVsqcrcDbt5-ZYUdTsG4mwTqAl8VI8uZiwnx4FjY7x8iYlEZb-QNxjMCGM8TfF65QRbKij5d5u6BangxSw917cLd3J9DKpGA0ZK7wv6crN9uLjyIGtUCfKJFBmEhQUbMeyMlSkM8jTnEJRb--QMBSEJPmgFanwVmzn44RmoXgkfa4T5joUAbuhebUbAiqjaAoordycXi0ubka7gUYg_bRJLhX6qh5H7QaBIoMYsIWRMb24aRMcy8-UDQJeCudD0n_bTnrkxqnJUKiSgTLxAGGw2AuMwXq4MM16unRT6MwaT16AwnK2aVJjPUuqm-nuyEw_oENL9L8osfVlf1OHjS_MP2Br7ZFS5DAAN9cAWgGcKMsrHMJsyvYrdB93l69SPxM9LtysUz2j_cnEZAd3DZLvCJ8RmosGd0cDCVDXhtHGdKZL6Vz6_3nW_4ussTcaKOI2mVbQW7UoOp4slvA3m1kkjbkHQgNx_vD1d8k8CW0QxXuuiTDDoTXpA_xhy1TaGZBUtOXDGXLsU9hsUd15S8TmM-cnt7JiAZKgVBZVhQFn_j5zwLr7Ed84xOss4OEjRNDE6hWkAtLzixyhIiFmf5q7-rVYXxlj2vGOyd7z4eFkGpFQJphH6qdxEemA44jSmJa3iOoZzKcpHeP7l0dFs038JPLbtntv6P9h9Dxo499cvWJhZpcZo493pLIYi1SjPoDQhYtvWIMuAlf86ftF4Th-YjSnckpV64ZcBP1DwD5uui4bR_QGg6zy9nLsrctKxOOGcaC4qgbgphkKhOxgatRFoSPFSzdk1kN7wgPWmUhiQmbReNDppCaueD8uQ1exWXQ_bESWHCjsnyqduvcKRy1piwfFsVJIfn0QJWcoV2iQjCDiXlvBk1bwzg1Sl_izxKHTyOH0dUOCj8sn0G2aDBAdBqzY1A0KC5qFXxlz_5fHjPVzLZnfsAlnZXkBCmwwmS4-toml_N1-dOh4ac7BNxXHIT_9igbXq2-DOwVRRndpy6q7WNT2oGRPsuBk5Dt7UtFQOj6UzLL9s4oTEA8LrWN4s58ys69Xm-DI35HaTijMZPtu5eH-bXMb82SmptogGJAOy9F59JN_U8tRjlHmLJjge71dVwpJ7wq3CfX_lZ7B-xUKD-_fSSAWbQR45NV6Pp5y8VM7C-NT5A4fHdcoWV1e6GT7wS5t31aUJBlkTcO1K7sZOPhhEnfcOP3swUxTf5FnHBnU-2H2r5qeBfCNCar2M43sCc14xcCVRW_4-mNpp2tUQbKerxIW-UtE4OaT3QIstBeuqoY8OH3xXTtBY3qQqsQn1fLWxYChE4efYxaQJmUjB4TCQMemwkLqZ2qqix-mlizvo0NTwR21_WSY9_Hl8Q-s5QXGL9mUzbuZgP_nO-o5NecrfERPKUcoG5H0mtPX2S7eB1qje_CfcJk_L0tM9MASLyes_awEB7_zshejy0yshptBi_kDKA0c5DNcFNOFLjnA6At39vkqslhX3ebCJBubpX7IRtdjGqZCutmxt1-2jxOgv1jZgHbd5iqWlJpPJHft975bzOnFtQeUUNluO8lCn7PRGJI7UCVcewAqrpmPboGD9BGIYBWDpmTKQDwR2vuDhhJvUvEwyqRh-O0lpueshW5-W1CRIPXtuzee4f3KRT3d5wJ0GWyL5z7W2uIqBupu0b8D-RT9WnaNaQ1UTVHMOV33xZEpyt-yZ66n1e_vWi6E5ZlK302ByNich26A1gs30zWE5HJ1ayvigaUS8jh91DHDYwDGtGkHysR9Bb4Gcm36-ZlPeqIn-v4PgeaznEOkuFqODYodf9mkZZUFP1U_Li7GNtRqCB0hsneuGItOV4fb-Ak6q13pP3UMVihL4E_MxyTRom73r6mfRXW_z1ToxPYgMMyorJgcJWmPyGXa1wA2F2ZCoroH9IdP2rzQ4Yyw91Dx-nE2hDhANTuWZoWm4x97fwJrDB3Z63l3KalhRzWNq4vaweW0e5FHP6-dNPf293ONtIMV6-qiqwVwFsjk3jIZoaJI0tEp0O0JV2fO7eKiSiWi2v1lBXRYYLCZgvezNjPFx0vPM90kMOxbdYG4m2HHIPjLhSSBU0XFTvJ1Pw0gCvy-t270X_TVdF1gltx91UgAC6X_b2sY7b0zogJWYKW6oRL2dnuWzSj0Y3gnUUuNEsUB19QhQ7iBib5697WSZLh83BJaPPltlV2tvj5B4bWQ"},{"role":"assistant","content":[{"type":"output_text","text":"The
+        programming language **Ruby** was created by **Yukihiro Matsumoto**, commonly
+        known as **Matz**.\n\nHe started developing it in Japan in the mid-1990s,
+        with the first public release in 1995."}]},{"role":"user","content":"What
+        year did he create Ruby?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      X-Ratelimit-Limit-Requests:
+      - '150'
+      X-Ratelimit-Remaining-Requests:
+      - '142'
+      X-Ratelimit-Limit-Tokens:
+      - '3000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '2995562'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Fri, 23 Oct 2026 08:13:25 GMT
+      X-Route:
+      - model-api-rust
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '6625'
+    body:
+      encoding: UTF-8
+      string: '{"top_logprobs":0,"temperature":1.0,"top_p":1.0,"service_tier":"auto","model":"muse-spark-1.3-contributor","reasoning":{"effort":"high"},"background":false,"tools":[],"tool_choice":"auto","truncation":"disabled","id":"resp_6adb1725f36c597ad002403f","object":"response","status":"completed","created_at":1792743205.0,"completed_at":1792743205.0,"error":null,"incomplete_details":null,"output":[{"type":"reasoning","id":"rs_6adb1725f36c597ad002403f:rs_0effa954-9bba-404e-84af-997f0f6543ff","encrypted_content":"Q-PaDgEKmMjxKmlsUagsvkq_wP2oxExrPTj_QxsLIZ87GogTynvwvaCrcvtVim36HW6Wtmjur7vbiKuvqcBT6EAGv7BJRE5m9XBxozvfOaCtXY_PHfZIjC-mL543W9U4S-lGXqO0Q96hO8HjRJAO699qhPHTcp_Hx7AwACkwrAwWDZPhWN7IfqZ20BXZ0iBlCT1y8uBdB2vtah4hV_DW72bm_wg66KLf11NT6TQe_N-EGeOE2YCpu7CfUfAullKN3vSp0UPBgY_kH6J8a60dqrAwt9tBiNQNGJC0m5c94UzZNrBrzF_qAfWr_IEw1YXL1SB69Qu9vIehNa-HBCKQ3LAI_NwRY4W-T3PmJU8y3Lgt30x9-bxj94NorY--HP3XlHwGOpCruTgHnCqMGrUK8oAIcCgWpROzRurZifMTlOi5dy3puHcSLFJODNY66Apo3ZiUKFN8-Jpwf3zxoSPPGK0pyOl80_1LWB_Su4GOnpWN5ErZnsTA4xyjbYS_yVMZnhq4pH_cLLkccFzlt9MFQRKF07Jeivs-CmQ7L1kuS0PecD4MwSjZVsqfzr7Ejswa8P9gwCwxD6E4xQCLAsnZfw7HRYbWDGorgUFMgWk9S486EnEG9IJUvnJqhEHIjFHfj-ynfLZkVYpirWErQsmQS6u2JmAIovMGdkdLbCPRglzTgGdLrTJMbbmr0UKlbRHz8kef1JFs-fxLMJRts9EBRmu4pDtwcF1fnC87heWLWLs8AuRDDigoxmtTvQak_Y6KPNLNpCdEeGCFuVVhPaQzUd4kY6bP16LWLLLwFrEfpZ03eUT46rfxwWItrJdZd1MuvMFr6Q5AhO_xpVyQaD5Ia8CakHIYrmgzj_mdaNrZtqSc3XuDBbZsu-nEJrD_QR8au00-ifJv_32vXafQbT14l1-oQNoj-PTMImlYHi9V2J4YhIb7Gsid4XLqRZM_xEhoOLfgPpHL0SchdiSfY-mvyLPM-4Pq0HYU6HwzeiB5MekEO4qTsjnqtb6eOFjqF9PgAYewHthd4_rQaq5xb_OUo2b_HbgA0VGcMP_Vz_cErTOUUaiDqBi5ftyaU0Q3uhP8nB7SKXWe4RJgADNnq2qXkvd3Vn5Yhe-yhwRKuP9GjsLTUAt2MH0SGkH8VQ7lGO_PMkXLVL3y-mlz1NzB-Cc8E2K-5olkQJnxBnWnsoYc89uFhETiFYGv_0f38pg3i-x4LVJeZ8V7ldNKsJDA-vPSDQvkGYokae2HdeYGy2i-jXF_MB4rIi7eXZMI3BDgD1lOdewZX0SQdggkRSU3TOb4_k4TYYZQAox-UxFJ319JG8wCFLhVAfzrwI7Af1O4FJZrnve41Va97oGqt8r2NIqyTlpcWlXU7km_eGE4AxgOlrID0C02-YQejPJ0h8D2Vz7K_7Bq6p9vAezc1e-jiOxK7LjvnKnm8cye8m9gg7c7-K1hGJZ-uXQ4DU6rTz-MMI_52PyPN7OUFZp5OM9kXKSgMjQkIQNjbl5I-Qk3jGLyur41WaSZCbkb3E3mAwlpBesW13JUik-BTGm34BEvEWAhRkSwF4uFPOmjlC5igFkuUxKoa2pR71q5fOBqhoOi3xtIm99XjsfCKozwHmDT6oQZ3vXNfUSi_O12bhg92mPB28zP4puaIb0MfqHl0PZoNl-xZNB6zTtnTDaMPdgGsk0x-mCCjYCxG8HMT7cJOWQYsU6mS7Si-xXcO1r87TKkwrFJVqBqUCmCgeRYacmUteozP_v6NOgDx50F1OI7TBTk9oxBFmpO0jGi4gCVzdKggotkrArX6MANRGWrmtui8afAGGUhlhGjQk-uxv_Z-YC_agHDCH27O2lN39Kut6WWb5sRN6td_3un-abh1pR6upCzqmfS-7v2JQJgtHPAX41k9E91VwsIK4Jkt_5sFc8_7PQ06Rrr9jcEeVE232O0cJbXRQFyMG-ICH1I333ES_ABVOdqEv7rnWzEpPsj35rJop36ZLzcuGLiQClxW6ZFJudwoMHPp7A0nrCCZG1xoi8DRUlZQ7ecCJQvqhXWcQG4zYyylnsin3mdg4-9dZzhEC6FlictSodPzYptf97bO-tK34HpqtmJ8BslI40qRz8vPwazjh22sFwTFlNdcLcWuM9ismwTKDY9ipvSghXBBqUGoiERkCdg1kXk8oAeONDxGYZGJQe2gqLrWMS2ogUYL6rNgsp70GxWftZO5RerUVmgn89kg6Duv66h-Z5lhkbv4LB1UmgaQTFflk9j0GGjUad7AoXHiZGLVIH0fRAu7iDPFsQkhcg2_IkqwW_-0Ad7FLbeoukj3zzPzRlFQxXaq8pm-LSoDfPvys1rjI3mw04MyWL-eXWDz3H3biBJvRexcbfGDnSKDifRB5jhtDspDjVCmOaV1LjtTvgc1248me9YUgY1tWl86cC9eK5K02zbRycRt35E3dwElpDCnDAud7IkPYF0lLhnDrcZRJIePTKgt8Lwp9YrONSALZD34015ftnzgd5b5aJMlLf-zwOQEbPM8XRqfrNUyALna8B8GJ4ylW2trf2LhgEOQRsE3gnHG2FRn_ecVSHyimwxWJ9y0Grl9ZsEddt_C48vvRf4Ni7JHvGLXal6R388wnlH_Qiq0JO7QUmzkmZg-13WVZrtWw8h8P0YNZSmPdUGPIEz7ge364OqKSdZngJTE9uWIlMxkCHH4OjkNh7FwdK4fA6OrWGTI3fEuzwaQqy941P0SpAEJwPwkNWVEtZJIy0h5LAqkjVl9MLj7KYyJ9eJ9S_ijCAhKi0pQqylN-6RdgEIj_ytDHF8tr8yjK4bNR1BWtCVdZ7cOSU9veNobYtiGU9FiIfEwWS1hpoNc9GsKa2z0jaY-GGOV42m3etJ6_-zY9iU9LcZ0SvF-2DZVTbYTsfR_ysqoXhO2I3LOHF2h9oEKOxpmPfoihiMl67PQmQ2jfttkeTQDsMMZ9ysE84dJik9l_EFqW9inYg_X7yvmwNUJUGG0JA9BncAodlmZFImU7lagVXgy3AmCSXvsoIAF6sTJ30UAui8XD-3IZJskxjDN7yGy30Mk_DtHHMzrNj6sNReJuFZU0vWVY9ACfWRdILNqbuEWwaR2Lbe6rr1gn94abQ8LCf9rKfThdwzS4YZ4YBHs87pkYicr6ZBkVQRiWPhLU3XNfRUgEV_cP--qCCCBQqib5CIbdtYNpv3LlmvNb0mdXpX3syvBqnnaOjqReVKdw4DM7rjQsxpLDBcY-1UH12bBbTyctcCxRhv_iTYewdNZqp0-UZ_UHNvy8WyNbO2DgVuisnQy6kUQJKq19D9jjtgQZ9DnldHBStnBcLVA42jGFR8yP8lApa3N9AV5uuapi6vf-BeJR_q0w1OoUJ-UGYwH2euAnYbyd8MSSwYpCIrCWCdHh3Tcc9SEF_Sl4ujhlewtnw6iJmCjEBRgDMq2GMJAXHOMckK6XWjlHKMTULu3p0KzrnZT_1-WfhMwqL9ONBDm32QAUCS7f4bbAlOU91IJcf3IlHzmpeO3fMxnW0JUisurAJHIvBiXWGCAzSqztmAjsF8Bbdl8wOPcKg5L-YG-8qXf5Je_Joh1OsgEJLDg5Yu_L-_pSbbsScoug6gvvsHGW5tl4oGpUSVyTqumK1JSZY7kcjGYxbLt7WOk9NhQUV5xlF6FQLHvbMc8eaBvEk48sUPGLyOAlbyfyAtWxrWkPjBRopCp3NNthdPxaQyxGS3FdrUmTiMwHyzcACj91lwIPKipQwW4GLjBGT70IHJpZXH7S8EUUw88J-XjZh8xecxlsx86_qn3AI62dqoUJLbVyOhNZ5UMXrZKtd_Ee6HrQXfzADTSMNdT3nQjrnWXThSaCUmrNElNCoxT5361g6o8sbERdPymA_x5JKnOaxRTsTAPLdCJdIeyzkAPP44T2eMcE7srI6lHoG7sjXIWt2xhWQXAIl8dd4jKjtg3ztzqXgqtU8FLGiubuXinkTyXt6WEogfSqG7bpwsj7kxZOq8HNq7HFgNPbx6EG4v5PcLrbL6uBg6tf9Tm7Vsx54UiabpI8bYTDZEmDZDSQ-c-98fmKjMlqFQd2tfWaQoza-Hkn4ynpCUjoJCTzLk8tCpc9D1kVof0Lkr2f1KucAWcUaaN9IYDLeOk7l19ymW2S6phuu2Ip9Hd2LeeGWYCfVxxbLCaH6fu1CFas8sLFx2jdwk3wX2o6RTcIDqfBsxeIyDY1c8O-k98dk3c2012_RxOBK_YWlIzONdm9bjashweMInqD9TcwyayHMYtOz9YK-SbCdO08r69QqRy5nsA_jkuyQPfK-P6PprRDiZrNPL_4AMSXfTctRs1xh_XDL2TYRGlSmoWUA4SLVFjciMhFYabTe6liUsdkRbzE-taEA2AYgcWq4fbJaC3iXiGF62i-Rmf8f9ldSkeUNWrsWevmg2qHHShJueSdPyl-8n8uiRBsO7yv3dYSXhIfhBmLgAkeuexShFDTwCgryJwSIzkJIM1b0Druf8tngYaMzEi-JRCLjPUFfw4q4QtnQRrdJgVEhnJYJfL5xefIAua7POrbE7zUfHYKC72j_udPDn9aQA6fkJLfXyIP6mpaySH5UXic7w39zpuHB24UcPIjmBh93fmjxQga69-vl7rwPG7a4rDC4-LEX9UGmXlAJXcPUI7PSRgeOPRf4fOYyhSRMe1VcbS2CAqYGsJZ2vv9Tj0qgEnQAhA7b2y1Ul4cYaikoYh57oozKgWUAPKrnVuTYgHdrIQgBNGqfZwJE_99XyoHaFHZMbIgaGvF41b9a0sdrgPvWQaA-1Sl_VenGvLJinVTZXP7rBBFxkXlsWXcPOxKY6RosUuyLk9i0QDsLdf5I8AAzOv4F9IdkNbp_LFeYrMISMoOedipuCVG-iuoGUdz45tPqZwkLlHJa1sRU_d30n-hXB895ZinYqobjtM-VCtuqS82pR4CRUIz7DShX9d_8EpIuHNXdgQ7WwUxEBXJSGSAJPxgFWx6iJ70kmG9LDU3i1Iw23Jef31_zXgAX6zKOPmdOg59Z6MHGc2aTTrfj9Cm5_XubpdjH4axxIwNk8Mp9Zg9kYkp4PC9BNH28QBzF9GSAuQNWBIj82fUoN3ZEv508uogfKxQO5zRXR5edtxXe37TBzRRo2mUgTRyas6zeqVxy70sBPDNM-Y0vD97cc_Ds80_IsabxWsu8ormABWldRnGhQyBZAMQprvM41fv8tzklDDW8xHTXg6rAGRwakpC9T59sWiGqcb8-daAwAAkAx1hVeBUDJaUZ6XtnNX0nfCyMRecTQwouRGZr6hzIeaeXdo6WqxNI3hEOueZ-7fBX7Pvw7CEfIRIbSA7UcT72Ndr5gBZSLrbG4aSnMcd_DX43N4prN2xGbRNvFtjEBoOkN7dhNBRAgnSIv9CNBq4cUEH2An86S3JLmGSM3dBxZyPfWSHMYyXR47DLdyo5W0Q2k8GVChuqogKZ9OxLeCrhUEfq2LuclbvKYcW9j6pLzOj0FiClzEVkbKwDB3mLGwqmr1SjwsY-wu-LyXk97q2rWPg","summary":[],"status":"completed"},{"type":"message","id":"msg_5f579ff1-ee31-4e2a-ade2-318ebb3e725b","role":"assistant","content":[{"type":"output_text","text":"He
+        started working on it in **1993**, and released the first public version in
+        **1995**.\n\nSo Ruby is generally said to have been created in **1995**.","annotations":[],"logprobs":[]}],"status":"completed"}],"instructions":null,"usage":{"input_tokens":488,"input_tokens_details":{"cached_tokens":0},"output_tokens":664,"output_tokens_details":{"reasoning_tokens":620},"total_tokens":1152},"parallel_tool_calls":true,"store":false}'
+  recorded_at: Fri, 23 Oct 2026 08:13:25 GMT
+recorded_with: VCR 6.4.0

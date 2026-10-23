@@ -225,6 +225,8 @@ RubyLLM talks to Meta through its Responses API, which carries the model's encry
 
 Meta won't fetch many remote images, so RubyLLM downloads them and sends them inline.
 
+Model ids ending in `-contributor`, like `muse-spark-1.3-contributor`, run the same model in Meta's Contributor mode: much cheaper tokens, in exchange for letting Meta train future models on everything you send and get back. Use them for synthetic test and evaluation prompts, never for your users' data or anything you can't share. See Meta's [pricing and rate limits](https://dev.meta.ai/docs/pricing-rate-limits) for the terms and the lower request limits.
+
 ## MiniMax
 
 MiniMax serves its M3 models through an Anthropic-compatible API. Create a key on the MiniMax platform and set `minimax_api_key`:

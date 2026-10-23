@@ -42,6 +42,11 @@ def skip_without_cassette_or_key(env_key)
   skip "Set #{env_key} to record this cassette"
 end
 
+# Contributor mode costs a fraction of Standard mode because Meta may train
+# on what it is sent. The specs send only synthetic prompts, so they use it;
+# never point it at user data.
+META_TEST_MODEL = 'muse-spark-1.3-contributor'
+
 chat_models = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
   { provider: :azure, model: 'grok-4-1-fast-non-reasoning' },
@@ -51,7 +56,7 @@ chat_models = [
   { provider: :gemini, model: 'gemini-2.5-flash' },
   { provider: :gpustack, model: 'qwen3', backend: :llama_cpp },
   { provider: :hetzner, model: 'Qwen3.8-27B' },
-  { provider: :meta, model: 'muse-spark-1.3' },
+  { provider: :meta, model: META_TEST_MODEL },
   { provider: :minimax, model: 'MiniMax-M3.1-Flash' },
   { provider: :mistral, model: 'mistral-small-latest' },
   { provider: :moonshot, model: 'kimi-k2.6' },
@@ -72,7 +77,7 @@ structured_output_models = [
   { provider: :bedrock, model: 'claude-haiku-4-5' },
   { provider: :cohere, model: 'command-a-03-2025' },
   { provider: :gemini, model: 'gemini-3-flash-preview' },
-  { provider: :meta, model: 'muse-spark-1.3' },
+  { provider: :meta, model: META_TEST_MODEL },
   { provider: :mistral, model: 'mistral-small-latest' },
   { provider: :moonshot, model: 'kimi-k3' },
   { provider: :openai, model: 'gpt-5-nano' },
@@ -90,7 +95,7 @@ thinking_models = [
   { provider: :cohere, model: 'command-a-reasoning-08-2025' },
   { provider: :gemini, model: 'gemini-3-flash-preview' },
   { provider: :gpustack, model: 'qwen3' },
-  { provider: :meta, model: 'muse-spark-1.3' },
+  { provider: :meta, model: META_TEST_MODEL },
   { provider: :minimax, model: 'MiniMax-M3.1-Flash' },
   { provider: :mistral, model: 'mistral-small-latest' },
   { provider: :moonshot, model: 'kimi-k2.6' },
@@ -151,7 +156,7 @@ vision_models = [
   { provider: :deepseek, model: 'deepseek-flash' },
   { provider: :gemini, model: 'gemini-2.5-flash' },
   { provider: :hetzner, model: 'Qwen3.8-27B' },
-  { provider: :meta, model: 'muse-spark-1.3' },
+  { provider: :meta, model: META_TEST_MODEL },
   { provider: :minimax, model: 'MiniMax-M3.1-Flash' },
   { provider: :mistral, model: 'pixtral-12b' },
   { provider: :moonshot, model: 'kimi-k2.6' },
