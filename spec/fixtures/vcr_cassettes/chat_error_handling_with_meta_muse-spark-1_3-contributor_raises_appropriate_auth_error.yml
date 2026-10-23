@@ -5,10 +5,10 @@ http_interactions:
     uri: https://api.meta.ai/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"muse-spark-1.3","input":[{"role":"user","content":"Hello"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
+      string: '{"model":"muse-spark-1.3-contributor","input":[{"role":"user","content":"Hello"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.15.0
+      - Faraday v2.14.4
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -29,7 +29,7 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       Date:
-      - Tue, 20 Oct 2026 16:01:06 GMT
+      - Fri, 23 Oct 2026 08:08:52 GMT
       X-Route:
       - model-api-rust
       Proxy-Status:
@@ -41,5 +41,5 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"error":{"code":"invalid_api_key","message":"Unauthorized","param":null,"type":"authentication_error"}}'
-  recorded_at: Tue, 20 Oct 2026 16:01:06 GMT
+  recorded_at: Fri, 23 Oct 2026 08:08:52 GMT
 recorded_with: VCR 6.4.0

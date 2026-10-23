@@ -1,0 +1,53 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.meta.ai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"muse-spark-1.3-contributor","input":[{"role":"user","content":"What
+        is the capital of France?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      X-Ratelimit-Limit-Requests:
+      - '150'
+      X-Ratelimit-Remaining-Requests:
+      - '144'
+      X-Ratelimit-Limit-Tokens:
+      - '3000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '2996427'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Fri, 23 Oct 2026 08:13:14 GMT
+      X-Route:
+      - model-api-rust
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '6503'
+    body:
+      encoding: UTF-8
+      string: '{"top_logprobs":0,"temperature":1.0,"top_p":1.0,"service_tier":"auto","model":"muse-spark-1.3-contributor","reasoning":{"effort":"high"},"background":false,"tools":[],"tool_choice":"auto","truncation":"disabled","id":"resp_6adb171a455ee36ee70548c2","object":"response","status":"completed","created_at":1792743194.0,"completed_at":1792743194.0,"error":null,"incomplete_details":null,"output":[{"type":"reasoning","id":"rs_6adb171a455ee36ee70548c2:rs_61cd9bff-7e19-4f23-befa-cec1638c6574","encrypted_content":"Q-PaDgHe0zN4XvsNAQS4Pe3C7prB97mMWPnHjdewhZP3PQNo4W_RVyOj4A98bl-bAvmbD4Ymspjnm7MHkbhteHiDWLdgbuVHcB5WbMpBxbV23rzLg4ljTgzjdvZCFHPgzfRtb67BcLWTdp6I7irubrp2TFmE0hkouUMG39R0IIDIvtXQkJTXds3CA5Isidf4syUIBmV33yWe8ezPhtigCvWe0jLHafdpPUy2Nzu5wy_VOvLv-j-zjFQvzucMy2l0JowJ_UZLigPlkpIeb6A2uCJEHxf_hun_8nRSdgh1EGgSfe1ViAMnhpKpSiWJmyN2bRlMTpugXMQQXVMoV8LomSV2DIrXOEmvUL0twjd7QVO6wZvSFgkQRD7BZtMtD052F9bEY904cOMEzkkeGRncANkcoCs_xxqN-PQfQoERMOHMUu9540IQwIpXTuvhMTxvEUUqgPz8smhi23_yYdnJVNDFYmmZSvFsUcvrfPqKJqIJQI4ixi17ntGtokuYZdkDU9EzyCmq2vULqSNn9BLdlgTrGJcAtbkCfkqS_hQaHbL4DWeqn05bgrJ-CZ-m4eA2Hprw0PmWElAV6z8Wc4Tab7fwaJWRTVLqLyjo0UUs7vkcGEONk6P8p0ySQWq70v0mgMmjF1zb_CjhMaGOyOR0oaeaY_brD7jJj43ni8pO0u9AMnz71wAYqkheXDIcb8zx5sISavmRdDgr1UlY5yX_6995T6gtRAxXx0ATQDGgrgullEux6rwskvl9MSP9ffLzuFUORWuQJCbwtV-gxkkDBZ5TCapsz8p2E76h9U_Dw-OyssoCfwb2PYLggNPQvWCvtPwuytu8WxTTDgl_HW3iyaENts-TeMICAVahdvw8clDmbZsu2gzX7SOWiQ_rZkqP5J362wgwZID4iBQBdNGNryvY-c8hrOA9dmdagSgSbwOjS7zzwaVDXZcLyqakmPRDUVOkH3YRGT0zreuyf5LVJTQl6rFcW-_Uw9UgsiKAPtxqfmjtTWBC4HjDplRunA9lHLga0zQ1-2N9sIE0q0bKW9ZtlF5MS6bg207mGvaM_R37vsTNX8wmZljVXonjbPXvB_x8n0sVhoeFbJ3AiEeRf6QsWb7PdFIS68g8690FOODG1V3EFg2gg3kOV_rRSekA87mC91ABZ2V12fyoTvOtyGffv6qcXUb1jEX5RmD7O13DlWuF9ToCAH48Z79-sBYxoTh0_Fao1iEy3Jzf-Gnm5_mme4fj5wxTb6ssm52xJIBitBujSdjnUZoCv6IT02rf9ghe7ghuhKs8ZPnuRu9qbNabNCcy5ghL3AwtMadopucwI4YUA1uPUt02mMrfJstcij5ttHiPemmJgT3658kpyJZ0Y1s6urAGkcAJY_RgUCUdF41rBWGvqTJICPf_4D7LCs_63j9fJsJBiB6R5T9ujrX_usPNoBaPbSL8BeRDBEaLGs49KVadaNuWOa0ZpK9pme_sAbTyOhx8GaNO7BZil7VBLCJawxoQMrhMdBaFc-tmA8jiNKIsSWhs0Q7cxqe3qX3NV6upRZZR6F0dTXWyb07VGQS_7gVqt08Ry4nfLkhNH0ThcxpD3Xw1dIM_yVh_-MPV1KkmHajyqF1Yx6SSU1zREvJ2Pj3gMJngif-VsPrYB5WTocuy03OnItfBnJ93F08EgvlYnKLMA0yxfspGZmEJoaTs1D6giCO_04E1V3KgOazp1TuipWrAqOSXSeLdh5TxyDf65W2-Dsmi9fTaBmEpXhRXndUvZ7KXRIssLPXxIM70P1dz6Cls0lIFLZVaAWz6D4azr9iauR4yp3rTHYTKG7PxhX5GJJLNpwQBxq3dM3NmS4bcaVi265I7aREQDNRmAyt29avVcO6V5Aum479nbEO9CUBWt4M2sqUygQ1rqAM7i87zYlCsNmDYdEb6H_lUVOfk0xVoc34lId7__tZuxo8xLAvQLVUhsTIYoo5kjzFACrbbX-3qJvw5uby8unbSoixoJIlO4OptlVflpuLX3ZHsL9Woi7cvpoFuIpR7EV-Lb7N7J3yuGDxvX2CQ97UcvP9lLhVCWhnIJB0M0kdqL-KFc95div1TE_LFr8ZgZBa10g0wB0Xm0rCETi4EREsBJATMBeas-feK6bdONgcuVY4_1hGMUwmy4bBvht6SfaJONxtJ8bv30eS9O_IzleZXCC8cMuQCaRZ5-CuFezE2ydFLd_z_0mE7HPa7QdGgLTwu0dfQaxMSvunchValnC0TjSWf57xCzTsYpwMgcURCQJO9UjKmCIgEkAxCNROXl73EcSXCzlHr3z6w5EpeImr7RsdJnEjRw0_-WAj29nyWN4alFqu9uCkg6HWG86GPC15auLzGyv_hKftOeUZxPRFQKPbHJMDM8-t_06u-W45h31Ec815MTFoC2bxIhpqeas443WOJI61RYzFvRTP6j1FBLJedc2WQcn21yHe79ZuZ19kTAnDVLe3-8nWreYq_IQt_iwAIsSfzwdKlWMhGEYdQn34nNPOEUeeJ9g4gq7Htj5SfRvnVuv4Btl68dPqmQxSSBKoSLWzNiKcyiHLEgPy2COotShkNxkeQtVH2LnOwK2_LtaOJJW5dWKLFLqcoj3sH_XFdTT1epD6cb1ApeeJG8JZqoRaLb_V_gntb8RRYWwFGefheqx_6gkPQOLoTdXbMAHc1bXNvKTJAgnnF33ZllgA8EjRGRkpR0GYzDeRiKCJYktnLTAd3cyDW9EBxkCiy6z7pzHsDGy8ZIRTUUr2LZb5S3bV2I0ZCi3tOgnWQwP4I-Qld842R2-K48ARCugordJLUK1tqFRrobvZyAjjfWgNH8oyth24Q8TpXmj-ovesifmHIKHHTidrfRz5GDk5LuTADCRUJgfI5Hf1Lm2IIaVJfNq_qjuo805N0QEj8QFPgbHWcXWYbbHH0-Lpvs1fo44CTCkTgFJyYB9Fvr7n4uPa3q3kgSVHnIN85JLsJTb1jnxoFk8EW6DcAEI8jdwzcQoIGGiYtNUXo-zgR9CUV6jl6k1yhhTC4eENrNcBjqMucNu3Fkwjryn2KmUPta7mpND7nEtedxLAso_0brTAuPSX7BLJg1EAVDPFEElQNP7zIQc1WCEjs3A89PUcKtaFxShpk5t8cwoVPLyw_j46ayPntVMab3j7WcU9FjKAtuDm2cJQvYQzLbYgvillYmsAd0t8zqOqYNSO2uSZFuyufbQIKTeHEdMUsb3a-Sj4iebmYzlr29Y2GucI21O3P3cIF2GlXfvSXPw7CZZ_x1OO-6DW4F5mlPgYx_rTEr_jHTBUNqPnlBV3av9Iz2G-Vjj_KIxi2lR1o5SNZRbFo-XkabT-Cy-dT5OjPHNbNnqJ2cra9jLjKTTKg5AOi3L9HuikqJR7fjXbFmknWRcbUKBX8UOeYKhHvr3jfZMJllO0dAuPxdoqT7kk-DB0ZSM4NwB8HBO8jqLce6YKiUBARTRqdwj94Scp8CCw16rxSr_BCGaSxEvCSlsfw7xLC9mk8WJKGeZW3zYrFvvklwBPbsfC57lFQGxAQHTsgQzDuhcs77Yt7T9JOFf1xP-U8cUmMDmVXJZuOV4o-mbcI6QZE1os2ZfaIpByaud7QQY7Fx6odcanly_IjK6exUqnVHUebqJgu8y-b63dgKiPcFCLvJJ_C5wqylISFoJGpBTUaYxyGAcueNpKdIqfA0x5YEkbwEYxTGzB5jBz5ZeefLEGVypXF7HiphByRr4IieZ1N8S1NlRT0U2ys6fnWzfi7ImOBkxQjjY6eaX3PG_nqlyaojFwTbZUlbReDIX7OFiuR9H8l4jRvjjL4QQCZfovTD7PT3u6Cir40mGIXYDDfpU2UmfmGZCsKbtQ2bLs00RrkZ5QFlLhaQwTM-CXwUj-z9c7qpzfgCpAQFvJuyk6WM2t4agnoeM3ejStWqB3Moy5G3OEcJsXm8g43u6ZH2lap0VfFicwb7PCr7vAx5iUYjih0ZeAK_Ic7SCXaCrOuTLtedV88dyjLV1kowhN_KZUGX7yejr0ajx1OcfzxFKDP6Cmgn6IpVwP9LQiJo3gvwLGhapOF8jmtLNsJ9goc52-zdMDVDMN4DfGK7wYqE05FXCU4l3aRaljeHlEITB89AysX89IlAzi1tBxkw2vkt2BeDNjJtAnf-mPdyK9e1gPfQai4E0tC19PIHTju7G5iOUgP6eHqpCQNSUU17vwVni6m_yfU7Gc-VlOCi6wF3KvbaLlnHTyHRABTCiIk0QJYi0sthGQRReA-89tkDy-sEah_6Un5LB4Fd0or3-fB0jfpBYnST3nKxEGhOAXAw30uJZtvIN6QOb2TIbhBnjsdSE4VbVAi5a_iOYiIaqbiqLVx5tUtKbxUC-RKAQWhIk_PbNURYRIxAUJFdjTzZVyTprAu9MsoGIEbSr8f1G0lkXBczOcpND7wLuz4WQOf_rBRH6u_gegqPgKNyV6DEOFmsjhBZoPH37l1VgueV3QP7WCbjiMtQ3Tb4Y8LzHv65kwCdSDA_BZpqaEcFokQ73prxPbQKsfsEjzuKeDf0l3WfBl0Cwh5OElhKpYVWC0Ztc9vf7kAFPeR1TgJ3boIgns1p1lT5w66AAhm0okFMR28xWIki2A5iyVbWELbg2o1L5H4_txFyD66lrzcHSoFNBYeGDAfGlPx16e1b9AWkuYFA4EW-7rWC9f8vtLiAGHU5_65Jtd1LpgjA3M4Cq0692cpJ-QpI_jrY_uiYW5wc1YdkPTj1A-Z8BCXoFX2nlJ1CyLq9fZ15j43n2PmfIEksgQ91yxIfBrX6z6NtEZXLha9ruG30_Ekw0-aEyAVME-e0L_5rP5ZFoaGfoti1nW6v_puYDhrcidJd4cB_TXAYQ7aut9ZuaH_vHWgarWdpWiulmOT2fmpcIqx_7lyx_c776UEurn-1u1gmrORe1xvPvf2KKaV_S4gXGpXhJlhoE1Y0nVeYYx3f1iqZ6bQW_chhkhNm25VXJmgdgs48-kydZ1kY1alfDxnejPJP3jQqxdfZdPfScnYfWSz7S0DEr4mKQhOPgqh6rbrDZdmDIzfaZ3TG_pRI93mlyWA-xtn2jCQwHOozBAPaYkGUXnRUAHfPOByi2X4ol5BgVSpKODX2tQJUNpnQ2FM88OzkDPq5KJ7kQXRiCXgP3WQf5KTY1z8In2u1IhRlHwpPtnr-5JsxXoWFOh9yWvRE9kxjVSWsai_Y6an5Pg2L-W4mCMw--Z2D3c61_ORt0bT-AqoD8F84eFlNMj6aU8KSJC4rNMHGCps1xfaX3Lffda74-a2Iqxlga9WwaSXmbRhKtIv38HV_MnHUhyqR4uhh2nnXrvJB-I2mvr6KcLXNZxtaHeVsE4CSQOcdqNiC9PmgrRW3NlsxFiNqKQfKaDltoZxECPYxoCofiQpxJswaCVuccdCKInlsTA6UjIQB1RyCw5t9IfdEqgGSW3wPsEIb4PLJw7CKF_TRhDvnOmCuTFfODa6EMtYnfZfJXW_y0EPVoQwHdrJu0CymWQe2DsR8pqx2fqXHpfgoTecUg","summary":[],"status":"completed"},{"type":"message","id":"msg_c21fcf30-d728-4a9e-a72f-cf93b34b8ded","role":"assistant","content":[{"type":"output_text","text":"The
+        capital of France is Paris.","annotations":[],"logprobs":[]}],"status":"completed"}],"instructions":null,"usage":{"input_tokens":15,"input_tokens_details":{"cached_tokens":0},"output_tokens":376,"output_tokens_details":{"reasoning_tokens":360},"total_tokens":391},"parallel_tool_calls":true,"store":false}'
+  recorded_at: Fri, 23 Oct 2026 08:13:14 GMT
+recorded_with: VCR 6.4.0
