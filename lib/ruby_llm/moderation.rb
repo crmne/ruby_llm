@@ -123,6 +123,7 @@ module RubyLLM
           provider_instance.moderate(input, model:, with: attachments, provider_options:)
         end
         event[:result] = result
+        event[:response_model] = result.model
         event[:flagged] = result.flagged?
         event[:tokens] = result.tokens
         event[:cost] = result.cost
