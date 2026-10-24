@@ -6,7 +6,7 @@ module RubyLLM
       # Chat methods for the Gemini API implementation
       module Chat
         FINISH_REASONS = {
-          'STOP' => :stop, 'MAX_TOKENS' => :max_tokens,
+          'STOP' => :stop, 'MAX_TOKENS' => :max_tokens, 'CONTINUATION' => :continuation,
           'SAFETY' => :content_filter, 'RECITATION' => :content_filter, 'BLOCKLIST' => :content_filter,
           'PROHIBITED_CONTENT' => :content_filter, 'SPII' => :content_filter, 'IMAGE_SAFETY' => :content_filter,
           'IMAGE_RECITATION' => :content_filter, 'IMAGE_PROHIBITED_CONTENT' => :content_filter,
