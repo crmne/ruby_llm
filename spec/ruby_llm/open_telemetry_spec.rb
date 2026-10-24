@@ -227,6 +227,21 @@ RSpec.describe RubyLLM::OpenTelemetry do
     expect(spans.first.attributes).not_to have_key('gen_ai.usage.output_tokens')
   end
 
+  it 'records the requested transcription temperature, including an explicit zero' do
+    stub_request(:post, 'https://api.openai.com/v1/audio/transcriptions')
+      .to_return_json(body: { text: 'private transcript', usage: { input_tokens: 3, output_tokens: 1 } })
+    audio = File.expand_path('../fixtures/ruby.wav', __dir__)
+    transcription_model = model_for(:openai, :transcription)
+
+    [0.2, 0, nil].each do |temperature|
+      RubyLLM.transcribe(audio, model: transcription_model, provider: :openai, temperature: temperature)
+    end
+
+    expect(spans.map { |span| span.attributes['gen_ai.request.temperature'] }).to eq([0.2, 0, nil])
+    expect(spans.last.attributes).not_to have_key('gen_ai.request.temperature')
+    expect(spans.map(&:attributes).to_s).not_to include('private')
+  end
+
   it 'uses conventional provider names and output types without copying arbitrary metadata' do
     RubyLLM.instrument('image.ruby_llm', provider: 'vertexai', model: model,
                                          prompt: 'private prompt', metadata: { secret: 'private metadata' }) { :ok }
