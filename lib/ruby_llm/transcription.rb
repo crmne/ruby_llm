@@ -141,6 +141,7 @@ module RubyLLM
         provider_class: provider_instance.name,
         model: model.id,
         model_info: model,
+        streaming: !block.nil?,
         language: language,
         provider_options: provider_options,
         metadata: metadata,
