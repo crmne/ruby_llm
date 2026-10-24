@@ -91,7 +91,10 @@ RSpec.describe RubyLLM::Protocols::Perplexity::Agent do
   end
 
   it 'caps Anthropic models the registry has no output limit for' do
-    expect(anthropic_chat('anthropic/claude-sonnet-5').render).to include(max_output_tokens: 4096)
+    claude = anthropic_chat('anthropic/claude-sonnet-5')
+    allow(claude.model).to receive(:max_output_tokens).and_return(nil)
+
+    expect(claude.render).to include(max_output_tokens: 4096)
   end
 
   it 'keeps an explicit output cap for Anthropic models' do

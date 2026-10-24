@@ -2,7 +2,7 @@
 layout: models
 title: Models
 llms: false
-description: Browse 1924 AI models across 21 remote providers, with capabilities, context limits, and pricing.
+description: Browse 1955 AI models across 21 remote providers, with capabilities, context limits, and pricing.
 canonical_url: https://rubyllm.com/available-models/
 redirect_from:
   - /guides/available-models
@@ -12,8 +12,8 @@ redirect_from:
   <header class="catalog-header">
     <div>
       <h1>Models</h1>
-      <p class="catalog-description"><strong>1,924 models</strong> across <strong>21 providers</strong>. Find the capabilities you need and compare what they cost.</p>
-      <p class="catalog-updated">Updated <time datetime="2026-10-20">2026-10-20</time></p>
+      <p class="catalog-description"><strong>1,955 models</strong> across <strong>21 providers</strong>. Find the capabilities you need and compare what they cost.</p>
+      <p class="catalog-updated">Updated <time datetime="2026-10-21">2026-10-21</time></p>
     </div>
     <div class="catalog-usage">
       <div class="catalog-command">
@@ -39,7 +39,7 @@ redirect_from:
 
   <div class="catalog-results-header">
     <h2 data-catalog-heading>All providers</h2>
-    <p data-catalog-count role="status">1,924 models</p>
+    <p data-catalog-count role="status">1,955 models</p>
   </div>
   <p class="catalog-pricing-note">Prices are USD per million text tokens at standard rates. Cache rates appear below input prices when listed. A dash means the value is not listed.</p>
 
@@ -3209,71 +3209,71 @@ redirect_from:
           <td class="catalog-numeric">$3.3<small>Cache read $0.33</small><small>Cache write $4.125</small></td>
           <td class="catalog-numeric">$16.5</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic.claude-fable-5&quot;,&quot;name&quot;:&quot;Claude Fable 5&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:10,&quot;output_price&quot;:50&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic.claude-fable-5&quot;,&quot;name&quot;:&quot;Claude Fable 5&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:10,&quot;output_price&quot;:50&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Fable 5</span><code>anthropic.claude-fable-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$10<small>Cache read $1</small><small>Cache write $12.5</small></td>
           <td class="catalog-numeric">$50</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;eu.anthropic.claude-fable-5&quot;,&quot;name&quot;:&quot;Claude Fable 5 (EU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:11,&quot;output_price&quot;:55&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;eu.anthropic.claude-fable-5&quot;,&quot;name&quot;:&quot;Claude Fable 5 (EU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:11,&quot;output_price&quot;:55&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Fable 5 (EU)</span><code>eu.anthropic.claude-fable-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$11<small>Cache read $1.1</small><small>Cache write $13.75</small></td>
           <td class="catalog-numeric">$55</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;global.anthropic.claude-fable-5&quot;,&quot;name&quot;:&quot;Claude Fable 5 (Global)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:10,&quot;output_price&quot;:50&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;global.anthropic.claude-fable-5&quot;,&quot;name&quot;:&quot;Claude Fable 5 (Global)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:10,&quot;output_price&quot;:50&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Fable 5 (Global)</span><code>global.anthropic.claude-fable-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$10<small>Cache read $1</small><small>Cache write $12.5</small></td>
           <td class="catalog-numeric">$50</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;us.anthropic.claude-fable-5&quot;,&quot;name&quot;:&quot;Claude Fable 5 (US)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:11,&quot;output_price&quot;:55&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;us.anthropic.claude-fable-5&quot;,&quot;name&quot;:&quot;Claude Fable 5 (US)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:11,&quot;output_price&quot;:55&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Fable 5 (US)</span><code>us.anthropic.claude-fable-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span><span>Streaming</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Streaming</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$11<small>Cache read $1.1</small><small>Cache write $13.75</small></td>
           <td class="catalog-numeric">$55</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic.claude-fable-5-1&quot;,&quot;name&quot;:&quot;Claude Fable 5.1&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:10,&quot;output_price&quot;:50&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic.claude-fable-5-1&quot;,&quot;name&quot;:&quot;Claude Fable 5.1&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:10,&quot;output_price&quot;:50&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Fable 5.1</span><code>anthropic.claude-fable-5-1</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$10<small>Cache read $0.25</small><small>Cache write $12.5</small></td>
           <td class="catalog-numeric">$50</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;global.anthropic.claude-fable-5-1&quot;,&quot;name&quot;:&quot;Claude Fable 5.1 (Global)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:10,&quot;output_price&quot;:50&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;global.anthropic.claude-fable-5-1&quot;,&quot;name&quot;:&quot;Claude Fable 5.1 (Global)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:10,&quot;output_price&quot;:50&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Fable 5.1 (Global)</span><code>global.anthropic.claude-fable-5-1</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$10<small>Cache read $0.25</small><small>Cache write $12.5</small></td>
           <td class="catalog-numeric">$50</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;us.anthropic.claude-fable-5-1&quot;,&quot;name&quot;:&quot;Claude Fable 5.1 (US)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:11,&quot;output_price&quot;:55&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;us.anthropic.claude-fable-5-1&quot;,&quot;name&quot;:&quot;Claude Fable 5.1 (US)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:11,&quot;output_price&quot;:55&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Fable 5.1 (US)</span><code>us.anthropic.claude-fable-5-1</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span><span>Streaming</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Streaming</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$11<small>Cache read $0.275</small><small>Cache write $13.75</small></td>
@@ -3349,61 +3349,61 @@ redirect_from:
           <td class="catalog-numeric">$1.1<small>Cache read $0.11</small><small>Cache write $1.375</small></td>
           <td class="catalog-numeric">$5.5</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic.claude-haiku-5-5&quot;,&quot;name&quot;:&quot;Claude Haiku 5.5&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:0.1,&quot;output_price&quot;:0.5&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic.claude-haiku-5-5&quot;,&quot;name&quot;:&quot;Claude Haiku 5.5&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:0.1,&quot;output_price&quot;:0.5&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Haiku 5.5</span><code>anthropic.claude-haiku-5-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$0.1<small>Cache read $0.01</small><small>Cache write $0.125</small></td>
           <td class="catalog-numeric">$0.5</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;au.anthropic.claude-haiku-5-5&quot;,&quot;name&quot;:&quot;Claude Haiku 5.5 (AU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:0.11,&quot;output_price&quot;:0.55&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;au.anthropic.claude-haiku-5-5&quot;,&quot;name&quot;:&quot;Claude Haiku 5.5 (AU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:0.11,&quot;output_price&quot;:0.55&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Haiku 5.5 (AU)</span><code>au.anthropic.claude-haiku-5-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$0.11<small>Cache read $0.011</small><small>Cache write $0.1375</small></td>
           <td class="catalog-numeric">$0.55</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;eu.anthropic.claude-haiku-5-5&quot;,&quot;name&quot;:&quot;Claude Haiku 5.5 (EU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:0.11,&quot;output_price&quot;:0.55&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;eu.anthropic.claude-haiku-5-5&quot;,&quot;name&quot;:&quot;Claude Haiku 5.5 (EU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:0.11,&quot;output_price&quot;:0.55&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Haiku 5.5 (EU)</span><code>eu.anthropic.claude-haiku-5-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$0.11<small>Cache read $0.011</small><small>Cache write $0.1375</small></td>
           <td class="catalog-numeric">$0.55</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;global.anthropic.claude-haiku-5-5&quot;,&quot;name&quot;:&quot;Claude Haiku 5.5 (Global)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:0.1,&quot;output_price&quot;:0.5&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;global.anthropic.claude-haiku-5-5&quot;,&quot;name&quot;:&quot;Claude Haiku 5.5 (Global)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:0.1,&quot;output_price&quot;:0.5&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Haiku 5.5 (Global)</span><code>global.anthropic.claude-haiku-5-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$0.1<small>Cache read $0.01</small><small>Cache write $0.125</small></td>
           <td class="catalog-numeric">$0.5</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;jp.anthropic.claude-haiku-5-5&quot;,&quot;name&quot;:&quot;Claude Haiku 5.5 (JP)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:0.11,&quot;output_price&quot;:0.55&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;jp.anthropic.claude-haiku-5-5&quot;,&quot;name&quot;:&quot;Claude Haiku 5.5 (JP)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:0.11,&quot;output_price&quot;:0.55&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Haiku 5.5 (JP)</span><code>jp.anthropic.claude-haiku-5-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$0.11<small>Cache read $0.011</small><small>Cache write $0.1375</small></td>
           <td class="catalog-numeric">$0.55</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;us.anthropic.claude-haiku-5-5&quot;,&quot;name&quot;:&quot;Claude Haiku 5.5 (US)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:0.11,&quot;output_price&quot;:0.55&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;us.anthropic.claude-haiku-5-5&quot;,&quot;name&quot;:&quot;Claude Haiku 5.5 (US)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:0.11,&quot;output_price&quot;:0.55&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Haiku 5.5 (US)</span><code>us.anthropic.claude-haiku-5-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span><span>Streaming</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Streaming</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$0.11<small>Cache read $0.011</small><small>Cache write $0.1375</small></td>
@@ -3509,161 +3509,161 @@ redirect_from:
           <td class="catalog-numeric">$5.5<small>Cache read $0.55</small><small>Cache write $6.875</small></td>
           <td class="catalog-numeric">$27.5</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic.claude-opus-4-7&quot;,&quot;name&quot;:&quot;Claude Opus 4.7&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5,&quot;output_price&quot;:25&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic.claude-opus-4-7&quot;,&quot;name&quot;:&quot;Claude Opus 4.7&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5,&quot;output_price&quot;:25&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Opus 4.7</span><code>anthropic.claude-opus-4-7</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$5<small>Cache read $0.5</small><small>Cache write $6.25</small></td>
           <td class="catalog-numeric">$25</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;au.anthropic.claude-opus-4-7&quot;,&quot;name&quot;:&quot;Claude Opus 4.7 (AU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5.5,&quot;output_price&quot;:27.5&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;au.anthropic.claude-opus-4-7&quot;,&quot;name&quot;:&quot;Claude Opus 4.7 (AU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5.5,&quot;output_price&quot;:27.5&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Opus 4.7 (AU)</span><code>au.anthropic.claude-opus-4-7</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$5.5<small>Cache read $0.55</small><small>Cache write $6.875</small></td>
           <td class="catalog-numeric">$27.5</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;eu.anthropic.claude-opus-4-7&quot;,&quot;name&quot;:&quot;Claude Opus 4.7 (EU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5.5,&quot;output_price&quot;:27.5&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;eu.anthropic.claude-opus-4-7&quot;,&quot;name&quot;:&quot;Claude Opus 4.7 (EU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5.5,&quot;output_price&quot;:27.5&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Opus 4.7 (EU)</span><code>eu.anthropic.claude-opus-4-7</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$5.5<small>Cache read $0.55</small><small>Cache write $6.875</small></td>
           <td class="catalog-numeric">$27.5</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;global.anthropic.claude-opus-4-7&quot;,&quot;name&quot;:&quot;Claude Opus 4.7 (Global)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5,&quot;output_price&quot;:25&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;global.anthropic.claude-opus-4-7&quot;,&quot;name&quot;:&quot;Claude Opus 4.7 (Global)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5,&quot;output_price&quot;:25&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Opus 4.7 (Global)</span><code>global.anthropic.claude-opus-4-7</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$5<small>Cache read $0.5</small><small>Cache write $6.25</small></td>
           <td class="catalog-numeric">$25</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;jp.anthropic.claude-opus-4-7&quot;,&quot;name&quot;:&quot;Claude Opus 4.7 (JP)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5.5,&quot;output_price&quot;:27.5&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;jp.anthropic.claude-opus-4-7&quot;,&quot;name&quot;:&quot;Claude Opus 4.7 (JP)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5.5,&quot;output_price&quot;:27.5&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Opus 4.7 (JP)</span><code>jp.anthropic.claude-opus-4-7</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$5.5<small>Cache read $0.55</small><small>Cache write $6.875</small></td>
           <td class="catalog-numeric">$27.5</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;us.anthropic.claude-opus-4-7&quot;,&quot;name&quot;:&quot;Claude Opus 4.7 (US)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5.5,&quot;output_price&quot;:27.5&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;us.anthropic.claude-opus-4-7&quot;,&quot;name&quot;:&quot;Claude Opus 4.7 (US)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5.5,&quot;output_price&quot;:27.5&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Opus 4.7 (US)</span><code>us.anthropic.claude-opus-4-7</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span><span>Streaming</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Streaming</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$5.5<small>Cache read $0.55</small><small>Cache write $6.875</small></td>
           <td class="catalog-numeric">$27.5</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic.claude-opus-4-8&quot;,&quot;name&quot;:&quot;Claude Opus 4.8&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5,&quot;output_price&quot;:25&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic.claude-opus-4-8&quot;,&quot;name&quot;:&quot;Claude Opus 4.8&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5,&quot;output_price&quot;:25&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Opus 4.8</span><code>anthropic.claude-opus-4-8</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$5<small>Cache read $0.5</small><small>Cache write $6.25</small></td>
           <td class="catalog-numeric">$25</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;au.anthropic.claude-opus-4-8&quot;,&quot;name&quot;:&quot;Claude Opus 4.8 (AU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5.5,&quot;output_price&quot;:27.5&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;au.anthropic.claude-opus-4-8&quot;,&quot;name&quot;:&quot;Claude Opus 4.8 (AU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5.5,&quot;output_price&quot;:27.5&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Opus 4.8 (AU)</span><code>au.anthropic.claude-opus-4-8</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$5.5<small>Cache read $0.55</small><small>Cache write $6.875</small></td>
           <td class="catalog-numeric">$27.5</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;eu.anthropic.claude-opus-4-8&quot;,&quot;name&quot;:&quot;Claude Opus 4.8 (EU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5.5,&quot;output_price&quot;:27.5&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;eu.anthropic.claude-opus-4-8&quot;,&quot;name&quot;:&quot;Claude Opus 4.8 (EU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5.5,&quot;output_price&quot;:27.5&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Opus 4.8 (EU)</span><code>eu.anthropic.claude-opus-4-8</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$5.5<small>Cache read $0.55</small><small>Cache write $6.875</small></td>
           <td class="catalog-numeric">$27.5</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;global.anthropic.claude-opus-4-8&quot;,&quot;name&quot;:&quot;Claude Opus 4.8 (Global)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5,&quot;output_price&quot;:25&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;global.anthropic.claude-opus-4-8&quot;,&quot;name&quot;:&quot;Claude Opus 4.8 (Global)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5,&quot;output_price&quot;:25&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Opus 4.8 (Global)</span><code>global.anthropic.claude-opus-4-8</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$5<small>Cache read $0.5</small><small>Cache write $6.25</small></td>
           <td class="catalog-numeric">$25</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;jp.anthropic.claude-opus-4-8&quot;,&quot;name&quot;:&quot;Claude Opus 4.8 (JP)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5.5,&quot;output_price&quot;:27.5&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;jp.anthropic.claude-opus-4-8&quot;,&quot;name&quot;:&quot;Claude Opus 4.8 (JP)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5.5,&quot;output_price&quot;:27.5&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Opus 4.8 (JP)</span><code>jp.anthropic.claude-opus-4-8</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$5.5<small>Cache read $0.55</small><small>Cache write $6.875</small></td>
           <td class="catalog-numeric">$27.5</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;us.anthropic.claude-opus-4-8&quot;,&quot;name&quot;:&quot;Claude Opus 4.8 (US)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5.5,&quot;output_price&quot;:27.5&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;us.anthropic.claude-opus-4-8&quot;,&quot;name&quot;:&quot;Claude Opus 4.8 (US)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5.5,&quot;output_price&quot;:27.5&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Opus 4.8 (US)</span><code>us.anthropic.claude-opus-4-8</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span><span>Streaming</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Streaming</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$5.5<small>Cache read $0.55</small><small>Cache write $6.875</small></td>
           <td class="catalog-numeric">$27.5</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic.claude-opus-5&quot;,&quot;name&quot;:&quot;Claude Opus 5&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5,&quot;output_price&quot;:25&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic.claude-opus-5&quot;,&quot;name&quot;:&quot;Claude Opus 5&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5,&quot;output_price&quot;:25&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Opus 5</span><code>anthropic.claude-opus-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$5<small>Cache read $0.5</small><small>Cache write $6.25</small></td>
           <td class="catalog-numeric">$25</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;au.anthropic.claude-opus-5&quot;,&quot;name&quot;:&quot;Claude Opus 5 (AU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5.5,&quot;output_price&quot;:27.5&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;au.anthropic.claude-opus-5&quot;,&quot;name&quot;:&quot;Claude Opus 5 (AU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5.5,&quot;output_price&quot;:27.5&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Opus 5 (AU)</span><code>au.anthropic.claude-opus-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$5.5<small>Cache read $0.55</small><small>Cache write $6.875</small></td>
           <td class="catalog-numeric">$27.5</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;eu.anthropic.claude-opus-5&quot;,&quot;name&quot;:&quot;Claude Opus 5 (EU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5.5,&quot;output_price&quot;:27.5&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;eu.anthropic.claude-opus-5&quot;,&quot;name&quot;:&quot;Claude Opus 5 (EU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5.5,&quot;output_price&quot;:27.5&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Opus 5 (EU)</span><code>eu.anthropic.claude-opus-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$5.5<small>Cache read $0.55</small><small>Cache write $6.875</small></td>
           <td class="catalog-numeric">$27.5</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;global.anthropic.claude-opus-5&quot;,&quot;name&quot;:&quot;Claude Opus 5 (Global)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5,&quot;output_price&quot;:25&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;global.anthropic.claude-opus-5&quot;,&quot;name&quot;:&quot;Claude Opus 5 (Global)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5,&quot;output_price&quot;:25&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Opus 5 (Global)</span><code>global.anthropic.claude-opus-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$5<small>Cache read $0.5</small><small>Cache write $6.25</small></td>
@@ -3679,81 +3679,81 @@ redirect_from:
           <td class="catalog-numeric">$5.5<small>Cache read $0.55</small><small>Cache write $6.875</small></td>
           <td class="catalog-numeric">$27.5</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;jp.anthropic.claude-opus-5&quot;,&quot;name&quot;:&quot;Claude Opus 5 (JP)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5.5,&quot;output_price&quot;:27.5&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;jp.anthropic.claude-opus-5&quot;,&quot;name&quot;:&quot;Claude Opus 5 (JP)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5.5,&quot;output_price&quot;:27.5&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Opus 5 (JP)</span><code>jp.anthropic.claude-opus-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$5.5<small>Cache read $0.55</small><small>Cache write $6.875</small></td>
           <td class="catalog-numeric">$27.5</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;us.anthropic.claude-opus-5&quot;,&quot;name&quot;:&quot;Claude Opus 5 (US)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5.5,&quot;output_price&quot;:27.5&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;us.anthropic.claude-opus-5&quot;,&quot;name&quot;:&quot;Claude Opus 5 (US)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5.5,&quot;output_price&quot;:27.5&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Opus 5 (US)</span><code>us.anthropic.claude-opus-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span><span>Streaming</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Streaming</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$5.5<small>Cache read $0.55</small><small>Cache write $6.875</small></td>
           <td class="catalog-numeric">$27.5</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic.claude-opus-5-5&quot;,&quot;name&quot;:&quot;Claude Opus 5.5&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:4,&quot;output_price&quot;:20&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic.claude-opus-5-5&quot;,&quot;name&quot;:&quot;Claude Opus 5.5&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:4,&quot;output_price&quot;:20&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Opus 5.5</span><code>anthropic.claude-opus-5-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$4<small>Cache read $0.2</small><small>Cache write $5</small></td>
           <td class="catalog-numeric">$20</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;au.anthropic.claude-opus-5-5&quot;,&quot;name&quot;:&quot;Claude Opus 5.5 (AU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:4.4,&quot;output_price&quot;:22&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;au.anthropic.claude-opus-5-5&quot;,&quot;name&quot;:&quot;Claude Opus 5.5 (AU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:4.4,&quot;output_price&quot;:22&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Opus 5.5 (AU)</span><code>au.anthropic.claude-opus-5-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$4.4<small>Cache read $0.22</small><small>Cache write $5.5</small></td>
           <td class="catalog-numeric">$22</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;eu.anthropic.claude-opus-5-5&quot;,&quot;name&quot;:&quot;Claude Opus 5.5 (EU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:4.4,&quot;output_price&quot;:22&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;eu.anthropic.claude-opus-5-5&quot;,&quot;name&quot;:&quot;Claude Opus 5.5 (EU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:4.4,&quot;output_price&quot;:22&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Opus 5.5 (EU)</span><code>eu.anthropic.claude-opus-5-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$4.4<small>Cache read $0.22</small><small>Cache write $5.5</small></td>
           <td class="catalog-numeric">$22</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;global.anthropic.claude-opus-5-5&quot;,&quot;name&quot;:&quot;Claude Opus 5.5 (Global)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:4,&quot;output_price&quot;:20&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;global.anthropic.claude-opus-5-5&quot;,&quot;name&quot;:&quot;Claude Opus 5.5 (Global)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:4,&quot;output_price&quot;:20&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Opus 5.5 (Global)</span><code>global.anthropic.claude-opus-5-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$4<small>Cache read $0.2</small><small>Cache write $5</small></td>
           <td class="catalog-numeric">$20</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;jp.anthropic.claude-opus-5-5&quot;,&quot;name&quot;:&quot;Claude Opus 5.5 (JP)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:4.4,&quot;output_price&quot;:22&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;jp.anthropic.claude-opus-5-5&quot;,&quot;name&quot;:&quot;Claude Opus 5.5 (JP)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:4.4,&quot;output_price&quot;:22&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Opus 5.5 (JP)</span><code>jp.anthropic.claude-opus-5-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$4.4<small>Cache read $0.22</small><small>Cache write $5.5</small></td>
           <td class="catalog-numeric">$22</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;us.anthropic.claude-opus-5-5&quot;,&quot;name&quot;:&quot;Claude Opus 5.5 (US)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:4.4,&quot;output_price&quot;:22&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;us.anthropic.claude-opus-5-5&quot;,&quot;name&quot;:&quot;Claude Opus 5.5 (US)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:4.4,&quot;output_price&quot;:22&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Opus 5.5 (US)</span><code>us.anthropic.claude-opus-5-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span><span>Streaming</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Streaming</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$4.4<small>Cache read $0.22</small><small>Cache write $5.5</small></td>
@@ -3909,41 +3909,41 @@ redirect_from:
           <td class="catalog-numeric">$3.3<small>Cache read $0.33</small><small>Cache write $4.125</small></td>
           <td class="catalog-numeric">$16.5</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic.claude-sonnet-5&quot;,&quot;name&quot;:&quot;Claude Sonnet 5&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:2,&quot;output_price&quot;:10&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic.claude-sonnet-5&quot;,&quot;name&quot;:&quot;Claude Sonnet 5&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:2,&quot;output_price&quot;:10&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Sonnet 5</span><code>anthropic.claude-sonnet-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$2<small>Cache read $0.2</small><small>Cache write $2.5</small></td>
           <td class="catalog-numeric">$10</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;au.anthropic.claude-sonnet-5&quot;,&quot;name&quot;:&quot;Claude Sonnet 5 (AU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:2.2,&quot;output_price&quot;:11&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;au.anthropic.claude-sonnet-5&quot;,&quot;name&quot;:&quot;Claude Sonnet 5 (AU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:2.2,&quot;output_price&quot;:11&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Sonnet 5 (AU)</span><code>au.anthropic.claude-sonnet-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$2.2<small>Cache read $0.22</small><small>Cache write $2.75</small></td>
           <td class="catalog-numeric">$11</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;eu.anthropic.claude-sonnet-5&quot;,&quot;name&quot;:&quot;Claude Sonnet 5 (EU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:2.2,&quot;output_price&quot;:11&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;eu.anthropic.claude-sonnet-5&quot;,&quot;name&quot;:&quot;Claude Sonnet 5 (EU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:2.2,&quot;output_price&quot;:11&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Sonnet 5 (EU)</span><code>eu.anthropic.claude-sonnet-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$2.2<small>Cache read $0.22</small><small>Cache write $2.75</small></td>
           <td class="catalog-numeric">$11</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;global.anthropic.claude-sonnet-5&quot;,&quot;name&quot;:&quot;Claude Sonnet 5 (Global)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:2,&quot;output_price&quot;:10&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;global.anthropic.claude-sonnet-5&quot;,&quot;name&quot;:&quot;Claude Sonnet 5 (Global)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:2,&quot;output_price&quot;:10&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Sonnet 5 (Global)</span><code>global.anthropic.claude-sonnet-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$2<small>Cache read $0.2</small><small>Cache write $2.5</small></td>
@@ -3959,61 +3959,61 @@ redirect_from:
           <td class="catalog-numeric">$2.2<small>Cache read $0.22</small><small>Cache write $2.75</small></td>
           <td class="catalog-numeric">$11</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;jp.anthropic.claude-sonnet-5&quot;,&quot;name&quot;:&quot;Claude Sonnet 5 (JP)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:2.2,&quot;output_price&quot;:11&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;jp.anthropic.claude-sonnet-5&quot;,&quot;name&quot;:&quot;Claude Sonnet 5 (JP)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:2.2,&quot;output_price&quot;:11&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Sonnet 5 (JP)</span><code>jp.anthropic.claude-sonnet-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$2.2<small>Cache read $0.22</small><small>Cache write $2.75</small></td>
           <td class="catalog-numeric">$11</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;us.anthropic.claude-sonnet-5&quot;,&quot;name&quot;:&quot;Claude Sonnet 5 (US)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:2.2,&quot;output_price&quot;:11&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;us.anthropic.claude-sonnet-5&quot;,&quot;name&quot;:&quot;Claude Sonnet 5 (US)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:2.2,&quot;output_price&quot;:11&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Sonnet 5 (US)</span><code>us.anthropic.claude-sonnet-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span><span>Streaming</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Streaming</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$2.2<small>Cache read $0.22</small><small>Cache write $2.75</small></td>
           <td class="catalog-numeric">$11</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic.claude-sonnet-5-5&quot;,&quot;name&quot;:&quot;Claude Sonnet 5.5&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:2,&quot;output_price&quot;:10&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic.claude-sonnet-5-5&quot;,&quot;name&quot;:&quot;Claude Sonnet 5.5&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:2,&quot;output_price&quot;:10&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Sonnet 5.5</span><code>anthropic.claude-sonnet-5-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$2<small>Cache read $0.1</small><small>Cache write $2.5</small></td>
           <td class="catalog-numeric">$10</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;eu.anthropic.claude-sonnet-5-5&quot;,&quot;name&quot;:&quot;Claude Sonnet 5.5 (EU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:2.2,&quot;output_price&quot;:11&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;eu.anthropic.claude-sonnet-5-5&quot;,&quot;name&quot;:&quot;Claude Sonnet 5.5 (EU)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:2.2,&quot;output_price&quot;:11&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Sonnet 5.5 (EU)</span><code>eu.anthropic.claude-sonnet-5-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$2.2<small>Cache read $0.11</small><small>Cache write $2.75</small></td>
           <td class="catalog-numeric">$11</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;global.anthropic.claude-sonnet-5-5&quot;,&quot;name&quot;:&quot;Claude Sonnet 5.5 (Global)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:2,&quot;output_price&quot;:10&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;global.anthropic.claude-sonnet-5-5&quot;,&quot;name&quot;:&quot;Claude Sonnet 5.5 (Global)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:2,&quot;output_price&quot;:10&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Sonnet 5.5 (Global)</span><code>global.anthropic.claude-sonnet-5-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$2<small>Cache read $0.1</small><small>Cache write $2.5</small></td>
           <td class="catalog-numeric">$10</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;us.anthropic.claude-sonnet-5-5&quot;,&quot;name&quot;:&quot;Claude Sonnet 5.5 (US)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:2.2,&quot;output_price&quot;:11&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;us.anthropic.claude-sonnet-5-5&quot;,&quot;name&quot;:&quot;Claude Sonnet 5.5 (US)&quot;,&quot;provider&quot;:&quot;Bedrock&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:2.2,&quot;output_price&quot;:11&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Sonnet 5.5 (US)</span><code>us.anthropic.claude-sonnet-5-5</code></th>
           <td>Bedrock</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span><span>Streaming</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Streaming</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">128,000</td>
           <td class="catalog-numeric">$2.2<small>Cache read $0.11</small><small>Cache write $2.75</small></td>
@@ -8119,15 +8119,15 @@ redirect_from:
           <td class="catalog-numeric">$1.5</td>
           <td class="catalog-numeric">$17.5</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;gemini-pro-latest&quot;,&quot;name&quot;:&quot;Gemini Pro Latest&quot;,&quot;provider&quot;:&quot;Gemini&quot;,&quot;capabilities&quot;:[&quot;Batch processing&quot;,&quot;Caching&quot;],&quot;modalities&quot;:[],&quot;context&quot;:1048576,&quot;output&quot;:65536,&quot;input_price&quot;:null,&quot;output_price&quot;:null&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;gemini-pro-latest&quot;,&quot;name&quot;:&quot;Gemini Pro Latest&quot;,&quot;provider&quot;:&quot;Gemini&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;,&quot;Tool choice&quot;,&quot;Transcription&quot;,&quot;Batch processing&quot;,&quot;Caching&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Video input&quot;,&quot;Audio input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:65536,&quot;input_price&quot;:2,&quot;output_price&quot;:12&#125;">
           <th scope="row"><span class="catalog-model-name">Gemini Pro Latest</span><code>gemini-pro-latest</code></th>
           <td>Gemini</td>
-          <td class="catalog-modalities"><span><b>In</b> </span><span><b>Out</b> </span></td>
-          <td><div class="catalog-capabilities"><span>Batch processing</span><span>Caching</span></div></td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, video, audio, pdf</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Video</span><span>Tool choice</span><span>Transcription</span><span>Batch processing</span><span>Caching</span></div></td>
           <td class="catalog-numeric">1,048,576</td>
           <td class="catalog-numeric">65,536</td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">—</td>
+          <td class="catalog-numeric">$2<small>Cache read $0.2</small></td>
+          <td class="catalog-numeric">$12</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;gemini-robotics-er-2-preview&quot;,&quot;name&quot;:&quot;Gemini Robotics-ER 2 Preview&quot;,&quot;provider&quot;:&quot;Gemini&quot;,&quot;capabilities&quot;:[&quot;Batch processing&quot;,&quot;Caching&quot;],&quot;modalities&quot;:[],&quot;context&quot;:131072,&quot;output&quot;:65536,&quot;input_price&quot;:null,&quot;output_price&quot;:null&#125;">
           <th scope="row"><span class="catalog-model-name">Gemini Robotics-ER 2 Preview</span><code>gemini-robotics-er-2-preview</code></th>
@@ -9309,41 +9309,51 @@ redirect_from:
           <td class="catalog-numeric">$3<small>Cache read $0.3</small><small>Cache write $3</small></td>
           <td class="catalog-numeric">$15</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;deepseek-v4-flash:0731&quot;,&quot;name&quot;:&quot;DeepSeek V4 Flash 0731&quot;,&quot;provider&quot;:&quot;OllamaCloud&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:1048576,&quot;input_price&quot;:0.22,&quot;output_price&quot;:0.66&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;beam&quot;,&quot;name&quot;:&quot;Beam 1.0 501B A23B&quot;,&quot;provider&quot;:&quot;OllamaCloud&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:131072,&quot;input_price&quot;:null,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">Beam 1.0 501B A23B</span><code>beam</code></th>
+          <td>OllamaCloud</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span></div></td>
+          <td class="catalog-numeric">1,048,576</td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">—</td>
+          <td class="catalog-numeric">—</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;deepseek-v4-flash:0731&quot;,&quot;name&quot;:&quot;DeepSeek V4 Flash 0731&quot;,&quot;provider&quot;:&quot;OllamaCloud&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:1048576,&quot;input_price&quot;:0.22,&quot;output_price&quot;:0.66&#125;">
           <th scope="row"><span class="catalog-model-name">DeepSeek V4 Flash 0731</span><code>deepseek-v4-flash:0731</code></th>
           <td>OllamaCloud</td>
           <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span></div></td>
           <td class="catalog-numeric">1,048,576</td>
           <td class="catalog-numeric">1,048,576</td>
           <td class="catalog-numeric">$0.22<small>Cache read $0.007</small></td>
           <td class="catalog-numeric">$0.66</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;deepseek-v4-pro:0813&quot;,&quot;name&quot;:&quot;DeepSeek V4 Pro 0813&quot;,&quot;provider&quot;:&quot;OllamaCloud&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:1048576,&quot;input_price&quot;:0.66,&quot;output_price&quot;:1.98&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;deepseek-v4-pro:0813&quot;,&quot;name&quot;:&quot;DeepSeek V4 Pro 0813&quot;,&quot;provider&quot;:&quot;OllamaCloud&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:1048576,&quot;input_price&quot;:0.66,&quot;output_price&quot;:1.98&#125;">
           <th scope="row"><span class="catalog-model-name">DeepSeek V4 Pro 0813</span><code>deepseek-v4-pro:0813</code></th>
           <td>OllamaCloud</td>
           <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Streaming</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Streaming</span></div></td>
           <td class="catalog-numeric">1,048,576</td>
           <td class="catalog-numeric">1,048,576</td>
           <td class="catalog-numeric">$0.66<small>Cache read $0.022</small></td>
           <td class="catalog-numeric">$1.98</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;deepseek-v4.1-flash&quot;,&quot;name&quot;:&quot;DeepSeek V4.1 Flash&quot;,&quot;provider&quot;:&quot;OllamaCloud&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:384000,&quot;input_price&quot;:0.15,&quot;output_price&quot;:0.6&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;deepseek-v4.1-flash&quot;,&quot;name&quot;:&quot;DeepSeek V4.1 Flash&quot;,&quot;provider&quot;:&quot;OllamaCloud&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:384000,&quot;input_price&quot;:0.15,&quot;output_price&quot;:0.6&#125;">
           <th scope="row"><span class="catalog-model-name">DeepSeek V4.1 Flash</span><code>deepseek-v4.1-flash</code></th>
           <td>OllamaCloud</td>
           <td class="catalog-modalities"><span><b>In</b> text, image</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Streaming</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span><span>Streaming</span></div></td>
           <td class="catalog-numeric">1,048,576</td>
           <td class="catalog-numeric">384,000</td>
           <td class="catalog-numeric">$0.15<small>Cache read $0.003</small></td>
           <td class="catalog-numeric">$0.6</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;deepseek-v4.1-flash:1017&quot;,&quot;name&quot;:&quot;DeepSeek V4.1 Flash 1017&quot;,&quot;provider&quot;:&quot;OllamaCloud&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:384000,&quot;input_price&quot;:0.15,&quot;output_price&quot;:0.6&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;deepseek-v4.1-flash:1017&quot;,&quot;name&quot;:&quot;DeepSeek V4.1 Flash 1017&quot;,&quot;provider&quot;:&quot;OllamaCloud&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:384000,&quot;input_price&quot;:0.15,&quot;output_price&quot;:0.6&#125;">
           <th scope="row"><span class="catalog-model-name">DeepSeek V4.1 Flash 1017</span><code>deepseek-v4.1-flash:1017</code></th>
           <td>OllamaCloud</td>
           <td class="catalog-modalities"><span><b>In</b> text, image</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,048,576</td>
           <td class="catalog-numeric">384,000</td>
           <td class="catalog-numeric">$0.15<small>Cache read $0.003</small></td>
@@ -9389,31 +9399,31 @@ redirect_from:
           <td class="catalog-numeric">$1<small>Cache read $0.2</small></td>
           <td class="catalog-numeric">$3.2</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;glm-5.2&quot;,&quot;name&quot;:&quot;GLM-5.2&quot;,&quot;provider&quot;:&quot;OllamaCloud&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:976000,&quot;output&quot;:131072,&quot;input_price&quot;:1.4,&quot;output_price&quot;:4.4&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;glm-5.2&quot;,&quot;name&quot;:&quot;GLM-5.2&quot;,&quot;provider&quot;:&quot;OllamaCloud&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:976000,&quot;output&quot;:131072,&quot;input_price&quot;:1.4,&quot;output_price&quot;:4.4&#125;">
           <th scope="row"><span class="catalog-model-name">GLM-5.2</span><code>glm-5.2</code></th>
           <td>OllamaCloud</td>
           <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Streaming</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Streaming</span></div></td>
           <td class="catalog-numeric">976,000</td>
           <td class="catalog-numeric">131,072</td>
           <td class="catalog-numeric">$1.4<small>Cache read $0.26</small></td>
           <td class="catalog-numeric">$4.4</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;glm-5.3&quot;,&quot;name&quot;:&quot;GLM-5.3&quot;,&quot;provider&quot;:&quot;OllamaCloud&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:131072,&quot;input_price&quot;:1.4,&quot;output_price&quot;:4.4&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;glm-5.3&quot;,&quot;name&quot;:&quot;GLM-5.3&quot;,&quot;provider&quot;:&quot;OllamaCloud&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:131072,&quot;input_price&quot;:1.4,&quot;output_price&quot;:4.4&#125;">
           <th scope="row"><span class="catalog-model-name">GLM-5.3</span><code>glm-5.3</code></th>
           <td>OllamaCloud</td>
           <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Streaming</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Streaming</span></div></td>
           <td class="catalog-numeric">1,048,576</td>
           <td class="catalog-numeric">131,072</td>
           <td class="catalog-numeric">$1.4<small>Cache read $0.26</small></td>
           <td class="catalog-numeric">$4.4</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;glm-5.3-flash&quot;,&quot;name&quot;:&quot;GLM-5.3-Flash&quot;,&quot;provider&quot;:&quot;OllamaCloud&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Video input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:131072,&quot;input_price&quot;:0.15,&quot;output_price&quot;:0.5&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;glm-5.3-flash&quot;,&quot;name&quot;:&quot;GLM-5.3-Flash&quot;,&quot;provider&quot;:&quot;OllamaCloud&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Video input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:131072,&quot;input_price&quot;:0.15,&quot;output_price&quot;:0.5&#125;">
           <th scope="row"><span class="catalog-model-name">GLM-5.3-Flash</span><code>glm-5.3-flash</code></th>
           <td>OllamaCloud</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, video, pdf</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Video</span><span>Streaming</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span><span>Video</span><span>Streaming</span></div></td>
           <td class="catalog-numeric">1,000,000</td>
           <td class="catalog-numeric">131,072</td>
           <td class="catalog-numeric">$0.15<small>Cache read $0.03</small></td>
@@ -9459,21 +9469,21 @@ redirect_from:
           <td class="catalog-numeric">$0.95<small>Cache read $0.16</small></td>
           <td class="catalog-numeric">$4</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;kimi-k2.7-code&quot;,&quot;name&quot;:&quot;kimi-k2.7-code&quot;,&quot;provider&quot;:&quot;OllamaCloud&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Text output&quot;],&quot;context&quot;:262144,&quot;output&quot;:262144,&quot;input_price&quot;:0.95,&quot;output_price&quot;:4&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;kimi-k2.7-code&quot;,&quot;name&quot;:&quot;kimi-k2.7-code&quot;,&quot;provider&quot;:&quot;OllamaCloud&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Text output&quot;],&quot;context&quot;:262144,&quot;output&quot;:262144,&quot;input_price&quot;:0.95,&quot;output_price&quot;:4&#125;">
           <th scope="row"><span class="catalog-model-name">kimi-k2.7-code</span><code>kimi-k2.7-code</code></th>
           <td>OllamaCloud</td>
           <td class="catalog-modalities"><span><b>In</b> text, image</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Streaming</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span><span>Streaming</span></div></td>
           <td class="catalog-numeric">262,144</td>
           <td class="catalog-numeric">262,144</td>
           <td class="catalog-numeric">$0.95<small>Cache read $0.19</small></td>
           <td class="catalog-numeric">$4</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;kimi-k3&quot;,&quot;name&quot;:&quot;kimi-k3&quot;,&quot;provider&quot;:&quot;OllamaCloud&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:131072,&quot;input_price&quot;:3,&quot;output_price&quot;:15&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;kimi-k3&quot;,&quot;name&quot;:&quot;kimi-k3&quot;,&quot;provider&quot;:&quot;OllamaCloud&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:131072,&quot;input_price&quot;:3,&quot;output_price&quot;:15&#125;">
           <th scope="row"><span class="catalog-model-name">kimi-k3</span><code>kimi-k3</code></th>
           <td>OllamaCloud</td>
           <td class="catalog-modalities"><span><b>In</b> text, image</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Streaming</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span><span>Streaming</span></div></td>
           <td class="catalog-numeric">1,048,576</td>
           <td class="catalog-numeric">131,072</td>
           <td class="catalog-numeric">$3<small>Cache read $0.3</small></td>
@@ -9519,15 +9529,15 @@ redirect_from:
           <td class="catalog-numeric">$0.15<small>Cache read $0.015</small></td>
           <td class="catalog-numeric">$0.6</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;mistral-large-4&quot;,&quot;name&quot;:&quot;Mistral Large 4&quot;,&quot;provider&quot;:&quot;OllamaCloud&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:262144,&quot;input_price&quot;:1.36,&quot;output_price&quot;:4.18&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;mistral-large-4&quot;,&quot;name&quot;:&quot;Mistral Large 4&quot;,&quot;provider&quot;:&quot;OllamaCloud&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:262144,&quot;input_price&quot;:0.68,&quot;output_price&quot;:2.09&#125;">
           <th scope="row"><span class="catalog-model-name">Mistral Large 4</span><code>mistral-large-4</code></th>
           <td>OllamaCloud</td>
           <td class="catalog-modalities"><span><b>In</b> text, image</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Streaming</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span><span>Streaming</span></div></td>
           <td class="catalog-numeric">1,048,576</td>
           <td class="catalog-numeric">262,144</td>
-          <td class="catalog-numeric">$1.36<small>Cache read $0.14</small></td>
-          <td class="catalog-numeric">$4.18</td>
+          <td class="catalog-numeric">$0.68<small>Cache read $0.07</small></td>
+          <td class="catalog-numeric">$2.09</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;mistral-large-3:675b&quot;,&quot;name&quot;:&quot;mistral-large-3:675b&quot;,&quot;provider&quot;:&quot;OllamaCloud&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Vision&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Text output&quot;],&quot;context&quot;:262144,&quot;output&quot;:262144,&quot;input_price&quot;:0.5,&quot;output_price&quot;:1.5&#125;">
           <th scope="row"><span class="catalog-model-name">mistral-large-3:675b</span><code>mistral-large-3:675b</code></th>
@@ -9539,11 +9549,11 @@ redirect_from:
           <td class="catalog-numeric">$0.5</td>
           <td class="catalog-numeric">$1.5</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;muse-spark-open&quot;,&quot;name&quot;:&quot;Muse Spark Open&quot;,&quot;provider&quot;:&quot;OllamaCloud&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:131072,&quot;input_price&quot;:1.25,&quot;output_price&quot;:4.25&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;muse-spark-open&quot;,&quot;name&quot;:&quot;Muse Spark Open&quot;,&quot;provider&quot;:&quot;OllamaCloud&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:131072,&quot;input_price&quot;:1.25,&quot;output_price&quot;:4.25&#125;">
           <th scope="row"><span class="catalog-model-name">Muse Spark Open</span><code>muse-spark-open</code></th>
           <td>OllamaCloud</td>
           <td class="catalog-modalities"><span><b>In</b> text, image</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Vision</span></div></td>
           <td class="catalog-numeric">1,048,576</td>
           <td class="catalog-numeric">131,072</td>
           <td class="catalog-numeric">$1.25<small>Cache read $0.15</small></td>
@@ -11629,6 +11639,36 @@ redirect_from:
           <td class="catalog-numeric">$2<small>Cache read $0.1</small><small>Cache write $2.5</small></td>
           <td class="catalog-numeric">$10</td>
         </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;cloudflare/clef&quot;,&quot;name&quot;:&quot;Cloudflare: Clef&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Judgment&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Judgment output&quot;],&quot;context&quot;:65537,&quot;output&quot;:58982,&quot;input_price&quot;:0.24,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">Cloudflare: Clef</span><code>cloudflare/clef</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image</span><span><b>Out</b> judgment</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Judgment</span></div></td>
+          <td class="catalog-numeric">65,537</td>
+          <td class="catalog-numeric">58,982</td>
+          <td class="catalog-numeric">$0.24</td>
+          <td class="catalog-numeric">—</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;cloudflare/clef-flash&quot;,&quot;name&quot;:&quot;Cloudflare: Clef Flash&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Judgment&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Judgment output&quot;],&quot;context&quot;:24576,&quot;output&quot;:22118,&quot;input_price&quot;:0.038000000000000006,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">Cloudflare: Clef Flash</span><code>cloudflare/clef-flash</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image</span><span><b>Out</b> judgment</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Judgment</span></div></td>
+          <td class="catalog-numeric">24,576</td>
+          <td class="catalog-numeric">22,118</td>
+          <td class="catalog-numeric">$0.038</td>
+          <td class="catalog-numeric">—</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;cloudflare/clef-omni&quot;,&quot;name&quot;:&quot;Cloudflare: Clef Omni&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Judgment&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Audio input&quot;,&quot;Video input&quot;,&quot;Judgment output&quot;],&quot;context&quot;:65536,&quot;output&quot;:58982,&quot;input_price&quot;:0.15,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">Cloudflare: Clef Omni</span><code>cloudflare/clef-omni</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, audio, video</span><span><b>Out</b> judgment</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Judgment</span></div></td>
+          <td class="catalog-numeric">65,536</td>
+          <td class="catalog-numeric">58,982</td>
+          <td class="catalog-numeric">$0.15</td>
+          <td class="catalog-numeric">—</td>
+        </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;mistralai/codestral-2508&quot;,&quot;name&quot;:&quot;Codestral 25.08&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Vision&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:256000,&quot;output&quot;:204800,&quot;input_price&quot;:0.3,&quot;output_price&quot;:0.9&#125;">
           <th scope="row"><span class="catalog-model-name">Codestral 25.08</span><code>mistralai/codestral-2508</code></th>
           <td>OpenRouter</td>
@@ -11669,11 +11709,11 @@ redirect_from:
           <td class="catalog-numeric">—</td>
           <td class="catalog-numeric">—</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;cohere/command-a&quot;,&quot;name&quot;:&quot;Command A&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:256000,&quot;output&quot;:8192,&quot;input_price&quot;:2.5,&quot;output_price&quot;:10&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;cohere/command-a&quot;,&quot;name&quot;:&quot;Command A&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Structured output&quot;,&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:256000,&quot;output&quot;:8192,&quot;input_price&quot;:2.5,&quot;output_price&quot;:10&#125;">
           <th scope="row"><span class="catalog-model-name">Command A</span><code>cohere/command-a</code></th>
           <td>OpenRouter</td>
           <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
-          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Streaming</span></div></td>
+          <td><div class="catalog-capabilities"><span>Structured output</span><span>Streaming</span></div></td>
           <td class="catalog-numeric">256,000</td>
           <td class="catalog-numeric">8,192</td>
           <td class="catalog-numeric">$2.5</td>
@@ -11769,25 +11809,25 @@ redirect_from:
           <td class="catalog-numeric">$0.2574</td>
           <td class="catalog-numeric">$1.0287</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;~deepseek/deepseek-flash-latest&quot;,&quot;name&quot;:&quot;DeepSeek Flash Latest&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Parallel tools&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:943718,&quot;input_price&quot;:0.07,&quot;output_price&quot;:0.5&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;~deepseek/deepseek-flash-latest&quot;,&quot;name&quot;:&quot;DeepSeek Flash Latest&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Parallel tools&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:943718,&quot;input_price&quot;:0.049,&quot;output_price&quot;:0.375&#125;">
           <th scope="row"><span class="catalog-model-name">DeepSeek Flash Latest</span><code>~deepseek/deepseek-flash-latest</code></th>
           <td>OpenRouter</td>
           <td class="catalog-modalities"><span><b>In</b> text, image</span><span><b>Out</b> text</span></td>
           <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Streaming</span><span>Tool choice</span><span>Parallel tools</span><span>Predicted outputs</span></div></td>
           <td class="catalog-numeric">1,048,576</td>
           <td class="catalog-numeric">943,718</td>
-          <td class="catalog-numeric">$0.07<small>Cache read $0.008</small></td>
-          <td class="catalog-numeric">$0.5</td>
+          <td class="catalog-numeric">$0.049<small>Cache read $0.001176</small></td>
+          <td class="catalog-numeric">$0.375</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;~deepseek/deepseek-pro-latest&quot;,&quot;name&quot;:&quot;DeepSeek Pro Latest&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:393216,&quot;input_price&quot;:0.16236,&quot;output_price&quot;:0.48708&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;~deepseek/deepseek-pro-latest&quot;,&quot;name&quot;:&quot;DeepSeek Pro Latest&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:393216,&quot;input_price&quot;:0.20196,&quot;output_price&quot;:0.60588&#125;">
           <th scope="row"><span class="catalog-model-name">DeepSeek Pro Latest</span><code>~deepseek/deepseek-pro-latest</code></th>
           <td>OpenRouter</td>
           <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
           <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Streaming</span><span>Tool choice</span><span>Predicted outputs</span></div></td>
           <td class="catalog-numeric">1,048,576</td>
           <td class="catalog-numeric">393,216</td>
-          <td class="catalog-numeric">$0.16236<small>Cache read $0.005166</small></td>
-          <td class="catalog-numeric">$0.48708</td>
+          <td class="catalog-numeric">$0.20196<small>Cache read $0.006426</small></td>
+          <td class="catalog-numeric">$0.60588</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;deepseek/deepseek-r1-0528&quot;,&quot;name&quot;:&quot;DeepSeek R1 0528&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:163840,&quot;output&quot;:32768,&quot;input_price&quot;:0.5,&quot;output_price&quot;:2.15&#125;">
           <th scope="row"><span class="catalog-model-name">DeepSeek R1 0528</span><code>deepseek/deepseek-r1-0528</code></th>
@@ -11869,15 +11909,15 @@ redirect_from:
           <td class="catalog-numeric">$0.44<small>Cache read $0.014</small></td>
           <td class="catalog-numeric">$1.32</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;~deepseek/deepseek-v4-flash-latest&quot;,&quot;name&quot;:&quot;DeepSeek V4 Flash Latest&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Parallel tools&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:943718,&quot;input_price&quot;:0.0052,&quot;output_price&quot;:0.12&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;~deepseek/deepseek-v4-flash-latest&quot;,&quot;name&quot;:&quot;DeepSeek V4 Flash Latest&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Parallel tools&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:943718,&quot;input_price&quot;:0.0475,&quot;output_price&quot;:0.1568&#125;">
           <th scope="row"><span class="catalog-model-name">DeepSeek V4 Flash Latest</span><code>~deepseek/deepseek-v4-flash-latest</code></th>
           <td>OpenRouter</td>
           <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
           <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Streaming</span><span>Tool choice</span><span>Parallel tools</span><span>Predicted outputs</span></div></td>
           <td class="catalog-numeric">1,048,576</td>
           <td class="catalog-numeric">943,718</td>
-          <td class="catalog-numeric">$0.0052<small>Cache read $0.00336</small></td>
-          <td class="catalog-numeric">$0.12</td>
+          <td class="catalog-numeric">$0.0475<small>Cache read $0.028</small></td>
+          <td class="catalog-numeric">$0.1568</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;deepseek/deepseek-v4-flash-vision-exp&quot;,&quot;name&quot;:&quot;DeepSeek V4 Flash Vision Exp&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:262144,&quot;input_price&quot;:0.2156,&quot;output_price&quot;:0.6468&#125;">
           <th scope="row"><span class="catalog-model-name">DeepSeek V4 Flash Vision Exp</span><code>deepseek/deepseek-v4-flash-vision-exp</code></th>
@@ -11889,35 +11929,35 @@ redirect_from:
           <td class="catalog-numeric">$0.2156<small>Cache read $0.00686</small></td>
           <td class="catalog-numeric">$0.6468</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;deepseek/deepseek-v4-pro&quot;,&quot;name&quot;:&quot;DeepSeek V4 Pro&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:384000,&quot;input_price&quot;:0.43935,&quot;output_price&quot;:0.8787&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;deepseek/deepseek-v4-pro&quot;,&quot;name&quot;:&quot;DeepSeek V4 Pro&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:384000,&quot;input_price&quot;:0.446136,&quot;output_price&quot;:0.892272&#125;">
           <th scope="row"><span class="catalog-model-name">DeepSeek V4 Pro</span><code>deepseek/deepseek-v4-pro</code></th>
           <td>OpenRouter</td>
           <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
           <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Streaming</span><span>Tool choice</span><span>Predicted outputs</span></div></td>
           <td class="catalog-numeric">1,048,576</td>
           <td class="catalog-numeric">384,000</td>
-          <td class="catalog-numeric">$0.43935<small>Cache read $0.036613</small></td>
-          <td class="catalog-numeric">$0.8787</td>
+          <td class="catalog-numeric">$0.446136<small>Cache read $0.037178</small></td>
+          <td class="catalog-numeric">$0.892272</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;deepseek/deepseek-v4-pro-0813&quot;,&quot;name&quot;:&quot;DeepSeek V4 Pro 0813&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:384000,&quot;input_price&quot;:0.66,&quot;output_price&quot;:1.98&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;deepseek/deepseek-v4-pro-0813&quot;,&quot;name&quot;:&quot;DeepSeek V4 Pro 0813&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:393216,&quot;input_price&quot;:0.66,&quot;output_price&quot;:1.98&#125;">
           <th scope="row"><span class="catalog-model-name">DeepSeek V4 Pro 0813</span><code>deepseek/deepseek-v4-pro-0813</code></th>
           <td>OpenRouter</td>
           <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
           <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Streaming</span><span>Tool choice</span><span>Predicted outputs</span></div></td>
           <td class="catalog-numeric">1,048,576</td>
-          <td class="catalog-numeric">384,000</td>
+          <td class="catalog-numeric">393,216</td>
           <td class="catalog-numeric">$0.66<small>Cache read $0.022</small></td>
           <td class="catalog-numeric">$1.98</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;deepseek/deepseek-v4.1-flash&quot;,&quot;name&quot;:&quot;DeepSeek V4.1 Flash&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:943718,&quot;input_price&quot;:0.03552,&quot;output_price&quot;:0.12&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;deepseek/deepseek-v4.1-flash&quot;,&quot;name&quot;:&quot;DeepSeek V4.1 Flash&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:943718,&quot;input_price&quot;:0.03423,&quot;output_price&quot;:0.375&#125;">
           <th scope="row"><span class="catalog-model-name">DeepSeek V4.1 Flash</span><code>deepseek/deepseek-v4.1-flash</code></th>
           <td>OpenRouter</td>
           <td class="catalog-modalities"><span><b>In</b> text, image</span><span><b>Out</b> text</span></td>
           <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Streaming</span><span>Tool choice</span><span>Predicted outputs</span></div></td>
           <td class="catalog-numeric">1,048,576</td>
           <td class="catalog-numeric">943,718</td>
-          <td class="catalog-numeric">$0.03552<small>Cache read $0.00071</small></td>
-          <td class="catalog-numeric">$0.12</td>
+          <td class="catalog-numeric">$0.03423<small>Cache read $0.000489</small></td>
+          <td class="catalog-numeric">$0.375</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;deepseek/deepseek-v4.1-flash-1017&quot;,&quot;name&quot;:&quot;DeepSeek V4.1 Flash 1017&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Parallel tools&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:393216,&quot;input_price&quot;:0.15,&quot;output_price&quot;:0.6&#125;">
           <th scope="row"><span class="catalog-model-name">DeepSeek V4.1 Flash 1017</span><code>deepseek/deepseek-v4.1-flash-1017</code></th>
@@ -12489,15 +12529,15 @@ redirect_from:
           <td class="catalog-numeric">$2.8<small>Cache read $0.56</small></td>
           <td class="catalog-numeric">$8.8</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;~z-ai/glm-flash-latest&quot;,&quot;name&quot;:&quot;GLM Flash Latest&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Parallel tools&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Video input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:943718,&quot;input_price&quot;:0.047076,&quot;output_price&quot;:0.16&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;~z-ai/glm-flash-latest&quot;,&quot;name&quot;:&quot;GLM Flash Latest&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Parallel tools&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Video input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:943718,&quot;input_price&quot;:0.051691,&quot;output_price&quot;:0.12&#125;">
           <th scope="row"><span class="catalog-model-name">GLM Flash Latest</span><code>~z-ai/glm-flash-latest</code></th>
           <td>OpenRouter</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, video</span><span><b>Out</b> text</span></td>
           <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Video</span><span>Streaming</span><span>Tool choice</span><span>Parallel tools</span><span>Predicted outputs</span></div></td>
           <td class="catalog-numeric">1,048,576</td>
           <td class="catalog-numeric">943,718</td>
-          <td class="catalog-numeric">$0.047076<small>Cache read $0.006</small></td>
-          <td class="catalog-numeric">$0.16</td>
+          <td class="catalog-numeric">$0.051691<small>Cache read $0.00375</small></td>
+          <td class="catalog-numeric">$0.12</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;~z-ai/glm-latest&quot;,&quot;name&quot;:&quot;GLM Latest&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Parallel tools&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:943718,&quot;input_price&quot;:0.079,&quot;output_price&quot;:1.4&#125;">
           <th scope="row"><span class="catalog-model-name">GLM Latest</span><code>~z-ai/glm-latest</code></th>
@@ -12506,7 +12546,7 @@ redirect_from:
           <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Streaming</span><span>Tool choice</span><span>Parallel tools</span><span>Predicted outputs</span></div></td>
           <td class="catalog-numeric">1,048,576</td>
           <td class="catalog-numeric">943,718</td>
-          <td class="catalog-numeric">$0.079<small>Cache read $0.055</small></td>
+          <td class="catalog-numeric">$0.079<small>Cache read $0.078</small></td>
           <td class="catalog-numeric">$1.4</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;z-ai/glm-4.5&quot;,&quot;name&quot;:&quot;GLM-4.5&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:131072,&quot;output&quot;:98304,&quot;input_price&quot;:0.6,&quot;output_price&quot;:2.2&#125;">
@@ -12599,25 +12639,25 @@ redirect_from:
           <td class="catalog-numeric">$1.2<small>Cache read $0.24</small></td>
           <td class="catalog-numeric">$4</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;z-ai/glm-5.1&quot;,&quot;name&quot;:&quot;GLM-5.1&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:204800,&quot;output&quot;:128000,&quot;input_price&quot;:0.966,&quot;output_price&quot;:3.036&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;z-ai/glm-5.1&quot;,&quot;name&quot;:&quot;GLM-5.1&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:204800,&quot;output&quot;:131072,&quot;input_price&quot;:1.4,&quot;output_price&quot;:4.4&#125;">
           <th scope="row"><span class="catalog-model-name">GLM-5.1</span><code>z-ai/glm-5.1</code></th>
           <td>OpenRouter</td>
           <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
           <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Streaming</span><span>Tool choice</span><span>Predicted outputs</span></div></td>
           <td class="catalog-numeric">204,800</td>
-          <td class="catalog-numeric">128,000</td>
-          <td class="catalog-numeric">$0.966<small>Cache read $0.1794</small></td>
-          <td class="catalog-numeric">$3.036</td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">$1.4<small>Cache read $0.26</small></td>
+          <td class="catalog-numeric">$4.4</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;z-ai/glm-5.2&quot;,&quot;name&quot;:&quot;GLM-5.2&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Parallel tools&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:943718,&quot;input_price&quot;:0.62,&quot;output_price&quot;:2.42&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;z-ai/glm-5.2&quot;,&quot;name&quot;:&quot;GLM-5.2&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Parallel tools&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:943718,&quot;input_price&quot;:0.0341,&quot;output_price&quot;:7&#125;">
           <th scope="row"><span class="catalog-model-name">GLM-5.2</span><code>z-ai/glm-5.2</code></th>
           <td>OpenRouter</td>
           <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
           <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Streaming</span><span>Tool choice</span><span>Parallel tools</span><span>Predicted outputs</span></div></td>
           <td class="catalog-numeric">1,048,576</td>
           <td class="catalog-numeric">943,718</td>
-          <td class="catalog-numeric">$0.62<small>Cache read $0.14</small></td>
-          <td class="catalog-numeric">$2.42</td>
+          <td class="catalog-numeric">$0.0341<small>Cache read $0.033</small></td>
+          <td class="catalog-numeric">$7</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;z-ai/glm-5.3&quot;,&quot;name&quot;:&quot;GLM-5.3&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Parallel tools&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:943718,&quot;input_price&quot;:0.079,&quot;output_price&quot;:1.4&#125;">
           <th scope="row"><span class="catalog-model-name">GLM-5.3</span><code>z-ai/glm-5.3</code></th>
@@ -12626,18 +12666,18 @@ redirect_from:
           <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Streaming</span><span>Tool choice</span><span>Parallel tools</span><span>Predicted outputs</span></div></td>
           <td class="catalog-numeric">1,048,576</td>
           <td class="catalog-numeric">943,718</td>
-          <td class="catalog-numeric">$0.079<small>Cache read $0.055</small></td>
+          <td class="catalog-numeric">$0.079<small>Cache read $0.078</small></td>
           <td class="catalog-numeric">$1.4</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;z-ai/glm-5.3-flash&quot;,&quot;name&quot;:&quot;GLM-5.3-Flash&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Parallel tools&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Video input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:943718,&quot;input_price&quot;:0.047076,&quot;output_price&quot;:0.16&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;z-ai/glm-5.3-flash&quot;,&quot;name&quot;:&quot;GLM-5.3-Flash&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Parallel tools&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Video input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:943717,&quot;input_price&quot;:0.15,&quot;output_price&quot;:0.5&#125;">
           <th scope="row"><span class="catalog-model-name">GLM-5.3-Flash</span><code>z-ai/glm-5.3-flash</code></th>
           <td>OpenRouter</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, video</span><span><b>Out</b> text</span></td>
           <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Video</span><span>Streaming</span><span>Tool choice</span><span>Parallel tools</span><span>Predicted outputs</span></div></td>
           <td class="catalog-numeric">1,048,576</td>
-          <td class="catalog-numeric">943,718</td>
-          <td class="catalog-numeric">$0.047076<small>Cache read $0.006</small></td>
-          <td class="catalog-numeric">$0.16</td>
+          <td class="catalog-numeric">943,717</td>
+          <td class="catalog-numeric">$0.15<small>Cache read $0.03</small></td>
+          <td class="catalog-numeric">$0.5</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;z-ai/glm-5v-turbo&quot;,&quot;name&quot;:&quot;GLM-5V-Turbo&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;],&quot;modalities&quot;:[&quot;Image input&quot;,&quot;Text input&quot;,&quot;Video input&quot;,&quot;Text output&quot;],&quot;context&quot;:202752,&quot;output&quot;:131072,&quot;input_price&quot;:1.2,&quot;output_price&quot;:4&#125;">
           <th scope="row"><span class="catalog-model-name">GLM-5V-Turbo</span><code>z-ai/glm-5v-turbo</code></th>
@@ -13679,6 +13719,26 @@ redirect_from:
           <td class="catalog-numeric">$0.834<small>Cache read $0.042</small></td>
           <td class="catalog-numeric">$2.501</td>
         </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;inception/mercury-decide&quot;,&quot;name&quot;:&quot;Inception: Mercury Decide&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Judgment&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Judgment output&quot;],&quot;context&quot;:65536,&quot;output&quot;:58982,&quot;input_price&quot;:0.02,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">Inception: Mercury Decide</span><code>inception/mercury-decide</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image</span><span><b>Out</b> judgment</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Judgment</span></div></td>
+          <td class="catalog-numeric">65,536</td>
+          <td class="catalog-numeric">58,982</td>
+          <td class="catalog-numeric">$0.02</td>
+          <td class="catalog-numeric">—</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;inception/mercury-decide:free&quot;,&quot;name&quot;:&quot;Inception: Mercury Decide (free)&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Judgment&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Judgment output&quot;],&quot;context&quot;:65536,&quot;output&quot;:58982,&quot;input_price&quot;:null,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">Inception: Mercury Decide (free)</span><code>inception/mercury-decide:free</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image</span><span><b>Out</b> judgment</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Judgment</span></div></td>
+          <td class="catalog-numeric">65,536</td>
+          <td class="catalog-numeric">58,982</td>
+          <td class="catalog-numeric">—</td>
+          <td class="catalog-numeric">—</td>
+        </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;thinkingmachines/inkling&quot;,&quot;name&quot;:&quot;Inkling&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Audio input&quot;,&quot;Text output&quot;],&quot;context&quot;:524288,&quot;output&quot;:471859,&quot;input_price&quot;:1,&quot;output_price&quot;:4.05&#125;">
           <th scope="row"><span class="catalog-model-name">Inkling</span><code>thinkingmachines/inkling</code></th>
           <td>OpenRouter</td>
@@ -13747,6 +13807,16 @@ redirect_from:
           <td class="catalog-numeric">512</td>
           <td class="catalog-numeric">—</td>
           <td class="catalog-numeric">$0.01</td>
+          <td class="catalog-numeric">—</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;jaredpalmer/kev-4b&quot;,&quot;name&quot;:&quot;Jared Palmer: Kev 4B&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Judgment&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Judgment output&quot;],&quot;context&quot;:8192,&quot;output&quot;:7372,&quot;input_price&quot;:0.041999999999999996,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">Jared Palmer: Kev 4B</span><code>jaredpalmer/kev-4b</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> judgment</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Judgment</span></div></td>
+          <td class="catalog-numeric">8,192</td>
+          <td class="catalog-numeric">7,372</td>
+          <td class="catalog-numeric">$0.042</td>
           <td class="catalog-numeric">—</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;moonshotai/kimi-k2&quot;,&quot;name&quot;:&quot;Kimi K2 0711&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:131072,&quot;output&quot;:98304,&quot;input_price&quot;:0.57,&quot;output_price&quot;:2.3&#125;">
@@ -13958,6 +14028,26 @@ redirect_from:
           <td class="catalog-numeric">235,929</td>
           <td class="catalog-numeric">$0.075<small>Cache read $0.015</small></td>
           <td class="catalog-numeric">$0.225</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;liquid/d1&quot;,&quot;name&quot;:&quot;LiquidAI: d1&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Judgment&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Judgment output&quot;],&quot;context&quot;:65536,&quot;output&quot;:58982,&quot;input_price&quot;:0.02,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">LiquidAI: d1</span><code>liquid/d1</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image</span><span><b>Out</b> judgment</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Judgment</span></div></td>
+          <td class="catalog-numeric">65,536</td>
+          <td class="catalog-numeric">58,982</td>
+          <td class="catalog-numeric">$0.02<small>Cache read $0.02</small></td>
+          <td class="catalog-numeric">—</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;liquid/d1-ultra&quot;,&quot;name&quot;:&quot;LiquidAI: d1-ultra&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Judgment&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Judgment output&quot;],&quot;context&quot;:32768,&quot;output&quot;:29491,&quot;input_price&quot;:0.041999999999999996,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">LiquidAI: d1-ultra</span><code>liquid/d1-ultra</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image</span><span><b>Out</b> judgment</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Judgment</span></div></td>
+          <td class="catalog-numeric">32,768</td>
+          <td class="catalog-numeric">29,491</td>
+          <td class="catalog-numeric">$0.042<small>Cache read $0.042</small></td>
+          <td class="catalog-numeric">—</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;liquid/lfm-2.5-embedding-350m:free&quot;,&quot;name&quot;:&quot;LiquidAI: LFM2.5-Embedding-350M (free)&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Embeddings&quot;],&quot;context&quot;:512,&quot;output&quot;:null,&quot;input_price&quot;:null,&quot;output_price&quot;:null&#125;">
           <th scope="row"><span class="catalog-model-name">LiquidAI: LFM2.5-Embedding-350M (free)</span><code>liquid/lfm-2.5-embedding-350m:free</code></th>
@@ -14259,25 +14349,35 @@ redirect_from:
           <td class="catalog-numeric">$15</td>
           <td class="catalog-numeric">—</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;xiaomi/mimo-v2.5&quot;,&quot;name&quot;:&quot;MiMo-V2.5&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Audio input&quot;,&quot;Video input&quot;,&quot;Text output&quot;],&quot;context&quot;:1050000,&quot;output&quot;:131072,&quot;input_price&quot;:0.14,&quot;output_price&quot;:0.28&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;microsoft/microsoft-decision-1&quot;,&quot;name&quot;:&quot;Microsoft: Microsoft-Decision-1&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Judgment&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Judgment output&quot;],&quot;context&quot;:32768,&quot;output&quot;:29491,&quot;input_price&quot;:0.041999999999999996,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">Microsoft: Microsoft-Decision-1</span><code>microsoft/microsoft-decision-1</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> judgment</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Judgment</span></div></td>
+          <td class="catalog-numeric">32,768</td>
+          <td class="catalog-numeric">29,491</td>
+          <td class="catalog-numeric">$0.042</td>
+          <td class="catalog-numeric">—</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;xiaomi/mimo-v2.5&quot;,&quot;name&quot;:&quot;MiMo-V2.5&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Audio input&quot;,&quot;Video input&quot;,&quot;Text output&quot;],&quot;context&quot;:1050000,&quot;output&quot;:945000,&quot;input_price&quot;:0.119,&quot;output_price&quot;:0.238&#125;">
           <th scope="row"><span class="catalog-model-name">MiMo-V2.5</span><code>xiaomi/mimo-v2.5</code></th>
           <td>OpenRouter</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, audio, video</span><span><b>Out</b> text</span></td>
           <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Video</span><span>Streaming</span><span>Tool choice</span></div></td>
           <td class="catalog-numeric">1,050,000</td>
-          <td class="catalog-numeric">131,072</td>
-          <td class="catalog-numeric">$0.14<small>Cache read $0.0028</small></td>
-          <td class="catalog-numeric">$0.28</td>
+          <td class="catalog-numeric">945,000</td>
+          <td class="catalog-numeric">$0.119<small>Cache read $0.00255</small></td>
+          <td class="catalog-numeric">$0.238</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;xiaomi/mimo-v2.5-pro&quot;,&quot;name&quot;:&quot;MiMo-V2.5-Pro&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1050000,&quot;output&quot;:131072,&quot;input_price&quot;:0.435,&quot;output_price&quot;:0.87&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;xiaomi/mimo-v2.5-pro&quot;,&quot;name&quot;:&quot;MiMo-V2.5-Pro&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1050000,&quot;output&quot;:945000,&quot;input_price&quot;:0.3045,&quot;output_price&quot;:0.609&#125;">
           <th scope="row"><span class="catalog-model-name">MiMo-V2.5-Pro</span><code>xiaomi/mimo-v2.5-pro</code></th>
           <td>OpenRouter</td>
           <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
           <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Streaming</span><span>Tool choice</span></div></td>
           <td class="catalog-numeric">1,050,000</td>
-          <td class="catalog-numeric">131,072</td>
-          <td class="catalog-numeric">$0.435<small>Cache read $0.0036</small></td>
-          <td class="catalog-numeric">$0.87</td>
+          <td class="catalog-numeric">945,000</td>
+          <td class="catalog-numeric">$0.3045<small>Cache read $0.0028</small></td>
+          <td class="catalog-numeric">$0.609</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;xiaomi/mimo-v2.6-flash&quot;,&quot;name&quot;:&quot;MiMo-V2.6-Flash&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Audio input&quot;,&quot;Video input&quot;,&quot;Text output&quot;],&quot;context&quot;:1050000,&quot;output&quot;:131072,&quot;input_price&quot;:0.14,&quot;output_price&quot;:0.28&#125;">
           <th scope="row"><span class="catalog-model-name">MiMo-V2.6-Flash</span><code>xiaomi/mimo-v2.6-flash</code></th>
@@ -14479,15 +14579,15 @@ redirect_from:
           <td class="catalog-numeric">$0.5<small>Cache read $0.05</small></td>
           <td class="catalog-numeric">$1.5</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;mistralai/mistral-large-4-0&quot;,&quot;name&quot;:&quot;Mistral Large 4&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:262144,&quot;input_price&quot;:0.68,&quot;output_price&quot;:2.09&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;mistralai/mistral-large-4-0&quot;,&quot;name&quot;:&quot;Mistral Large 4&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:262144,&quot;input_price&quot;:1.36,&quot;output_price&quot;:4.18&#125;">
           <th scope="row"><span class="catalog-model-name">Mistral Large 4</span><code>mistralai/mistral-large-4-0</code></th>
           <td>OpenRouter</td>
           <td class="catalog-modalities"><span><b>In</b> text, image</span><span><b>Out</b> text</span></td>
           <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Streaming</span><span>Tool choice</span></div></td>
           <td class="catalog-numeric">1,048,576</td>
           <td class="catalog-numeric">262,144</td>
-          <td class="catalog-numeric">$0.68<small>Cache read $0.07</small></td>
-          <td class="catalog-numeric">$2.09</td>
+          <td class="catalog-numeric">$1.36<small>Cache read $0.14</small></td>
+          <td class="catalog-numeric">$4.18</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;mistralai/mistral-medium-3&quot;,&quot;name&quot;:&quot;Mistral Medium 3&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Vision&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:131072,&quot;output&quot;:104857,&quot;input_price&quot;:0.4,&quot;output_price&quot;:2&#125;">
           <th scope="row"><span class="catalog-model-name">Mistral Medium 3</span><code>mistralai/mistral-medium-3</code></th>
@@ -14669,6 +14769,16 @@ redirect_from:
           <td class="catalog-numeric">$50</td>
           <td class="catalog-numeric">—</td>
         </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;mistralai/voxtral-mini-transcribe-3-0&quot;,&quot;name&quot;:&quot;Mistral: Voxtral Mini Transcribe 3&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Transcription&quot;],&quot;modalities&quot;:[&quot;Audio input&quot;,&quot;Text output&quot;],&quot;context&quot;:65536,&quot;output&quot;:52428,&quot;input_price&quot;:58.3333,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">Mistral: Voxtral Mini Transcribe 3</span><code>mistralai/voxtral-mini-transcribe-3-0</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> audio</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Transcription</span></div></td>
+          <td class="catalog-numeric">65,536</td>
+          <td class="catalog-numeric">52,428</td>
+          <td class="catalog-numeric">$58.3333</td>
+          <td class="catalog-numeric">—</td>
+        </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;mistralai/voxtral-mini-tts-2603&quot;,&quot;name&quot;:&quot;Mistral: Voxtral Mini TTS&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Speech generation&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Audio output&quot;],&quot;context&quot;:4096,&quot;output&quot;:3276,&quot;input_price&quot;:16.0,&quot;output_price&quot;:null&#125;">
           <th scope="row"><span class="catalog-model-name">Mistral: Voxtral Mini TTS</span><code>mistralai/voxtral-mini-tts-2603</code></th>
           <td>OpenRouter</td>
@@ -14687,6 +14797,26 @@ redirect_from:
           <td class="catalog-numeric">0</td>
           <td class="catalog-numeric">0</td>
           <td class="catalog-numeric">$50</td>
+          <td class="catalog-numeric">—</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;mistralai/voxtral-small-transcribe-3-0&quot;,&quot;name&quot;:&quot;Mistral: Voxtral Small Transcribe 3&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Transcription&quot;],&quot;modalities&quot;:[&quot;Audio input&quot;,&quot;Text output&quot;],&quot;context&quot;:65536,&quot;output&quot;:52428,&quot;input_price&quot;:66.66669999999999,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">Mistral: Voxtral Small Transcribe 3</span><code>mistralai/voxtral-small-transcribe-3-0</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> audio</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Transcription</span></div></td>
+          <td class="catalog-numeric">65,536</td>
+          <td class="catalog-numeric">52,428</td>
+          <td class="catalog-numeric">$66.6667</td>
+          <td class="catalog-numeric">—</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;mistralai/voxtral-mini-tts-3-0&quot;,&quot;name&quot;:&quot;Mistral: Voxtral TTS 3&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Speech generation&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Audio output&quot;],&quot;context&quot;:4096,&quot;output&quot;:3276,&quot;input_price&quot;:13.0,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">Mistral: Voxtral TTS 3</span><code>mistralai/voxtral-mini-tts-3-0</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> audio</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Speech generation</span></div></td>
+          <td class="catalog-numeric">4,096</td>
+          <td class="catalog-numeric">3,276</td>
+          <td class="catalog-numeric">$13</td>
           <td class="catalog-numeric">—</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;mistralai/mixtral-8x22b-instruct&quot;,&quot;name&quot;:&quot;Mixtral 8x22B Instruct&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Vision&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:65536,&quot;output&quot;:52428,&quot;input_price&quot;:2,&quot;output_price&quot;:6&#125;">
@@ -14838,6 +14968,26 @@ redirect_from:
           <td class="catalog-numeric">3,686</td>
           <td class="catalog-numeric">$0.08</td>
           <td class="catalog-numeric">$0.11</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;nace-ai/drex-v1.5&quot;,&quot;name&quot;:&quot;Nace.AI: Drex v1.5&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Judgment&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Judgment output&quot;],&quot;context&quot;:131072,&quot;output&quot;:117964,&quot;input_price&quot;:0.04,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">Nace.AI: Drex v1.5</span><code>nace-ai/drex-v1.5</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> judgment</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Judgment</span></div></td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">117,964</td>
+          <td class="catalog-numeric">$0.04</td>
+          <td class="catalog-numeric">—</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;nace-ai/drex-v2.0&quot;,&quot;name&quot;:&quot;Nace.AI: Drex v2.0&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Judgment&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Judgment output&quot;],&quot;context&quot;:131072,&quot;output&quot;:117964,&quot;input_price&quot;:0.06,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">Nace.AI: Drex v2.0</span><code>nace-ai/drex-v2.0</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> judgment</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Judgment</span></div></td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">117,964</td>
+          <td class="catalog-numeric">$0.06</td>
+          <td class="catalog-numeric">—</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;google/gemini-2.5-flash-image&quot;,&quot;name&quot;:&quot;Nano Banana&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Structured output&quot;,&quot;Vision&quot;,&quot;Streaming&quot;,&quot;Image generation&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Text output&quot;,&quot;Image output&quot;],&quot;context&quot;:32768,&quot;output&quot;:8192,&quot;input_price&quot;:0.3,&quot;output_price&quot;:2.5&#125;">
           <th scope="row"><span class="catalog-model-name">Nano Banana</span><code>google/gemini-2.5-flash-image</code></th>
@@ -15619,6 +15769,16 @@ redirect_from:
           <td class="catalog-numeric">$0.05<small>Cache read $0.005</small><small>Cache write $0.0625</small></td>
           <td class="catalog-numeric">$0.25</td>
         </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;openai/gpt-6-luna-decisions&quot;,&quot;name&quot;:&quot;OpenAI: GPT-6 Luna Decisions&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Judgment&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Judgment output&quot;],&quot;context&quot;:1050000,&quot;output&quot;:945000,&quot;input_price&quot;:0.09999999999999999,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">OpenAI: GPT-6 Luna Decisions</span><code>openai/gpt-6-luna-decisions</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image</span><span><b>Out</b> judgment</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Judgment</span></div></td>
+          <td class="catalog-numeric">1,050,000</td>
+          <td class="catalog-numeric">945,000</td>
+          <td class="catalog-numeric">$0.1</td>
+          <td class="catalog-numeric">—</td>
+        </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;openai/gpt-6-luna-pro:batch&quot;,&quot;name&quot;:&quot;OpenAI: GPT-6 Luna Pro (batch)&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Tools&quot;,&quot;Tool choice&quot;,&quot;Structured output&quot;],&quot;modalities&quot;:[&quot;File input&quot;,&quot;Image input&quot;,&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1050000,&quot;output&quot;:128000,&quot;input_price&quot;:0.049999999999999996,&quot;output_price&quot;:0.25&#125;">
           <th scope="row"><span class="catalog-model-name">OpenAI: GPT-6 Luna Pro (batch)</span><code>openai/gpt-6-luna-pro:batch</code></th>
           <td>OpenRouter</td>
@@ -15849,6 +16009,46 @@ redirect_from:
           <td class="catalog-numeric">$0.15</td>
           <td class="catalog-numeric">$1.5</td>
         </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;~perplexity/pplx-decider-flash-latest&quot;,&quot;name&quot;:&quot;Perplexity: Decider Flash Latest&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Judgment&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Judgment output&quot;],&quot;context&quot;:262144,&quot;output&quot;:235929,&quot;input_price&quot;:0.01,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">Perplexity: Decider Flash Latest</span><code>~perplexity/pplx-decider-flash-latest</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image</span><span><b>Out</b> judgment</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Judgment</span></div></td>
+          <td class="catalog-numeric">262,144</td>
+          <td class="catalog-numeric">235,929</td>
+          <td class="catalog-numeric">$0.01</td>
+          <td class="catalog-numeric">—</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;perplexity/pplx-decider-flash-v1.2&quot;,&quot;name&quot;:&quot;Perplexity: Decider Flash V1.2&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Judgment&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Judgment output&quot;],&quot;context&quot;:262144,&quot;output&quot;:235929,&quot;input_price&quot;:0.01,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">Perplexity: Decider Flash V1.2</span><code>perplexity/pplx-decider-flash-v1.2</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image</span><span><b>Out</b> judgment</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Judgment</span></div></td>
+          <td class="catalog-numeric">262,144</td>
+          <td class="catalog-numeric">235,929</td>
+          <td class="catalog-numeric">$0.01</td>
+          <td class="catalog-numeric">—</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;~perplexity/pplx-decider-latest&quot;,&quot;name&quot;:&quot;Perplexity: Decider Latest&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Judgment&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Judgment output&quot;],&quot;context&quot;:262144,&quot;output&quot;:235929,&quot;input_price&quot;:0.02,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">Perplexity: Decider Latest</span><code>~perplexity/pplx-decider-latest</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image</span><span><b>Out</b> judgment</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Judgment</span></div></td>
+          <td class="catalog-numeric">262,144</td>
+          <td class="catalog-numeric">235,929</td>
+          <td class="catalog-numeric">$0.02</td>
+          <td class="catalog-numeric">—</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;perplexity/pplx-decider-v1.2&quot;,&quot;name&quot;:&quot;Perplexity: Decider V1.2&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Judgment&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Judgment output&quot;],&quot;context&quot;:262144,&quot;output&quot;:235929,&quot;input_price&quot;:0.02,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">Perplexity: Decider V1.2</span><code>perplexity/pplx-decider-v1.2</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image</span><span><b>Out</b> judgment</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Judgment</span></div></td>
+          <td class="catalog-numeric">262,144</td>
+          <td class="catalog-numeric">235,929</td>
+          <td class="catalog-numeric">$0.02</td>
+          <td class="catalog-numeric">—</td>
+        </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;perplexity/pplx-embed-v1-0.6b&quot;,&quot;name&quot;:&quot;Perplexity: Embed V1 0.6B&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Embeddings&quot;],&quot;context&quot;:32000,&quot;output&quot;:null,&quot;input_price&quot;:0.004,&quot;output_price&quot;:null&#125;">
           <th scope="row"><span class="catalog-model-name">Perplexity: Embed V1 0.6B</span><code>perplexity/pplx-embed-v1-0.6b</code></th>
           <td>OpenRouter</td>
@@ -15959,8 +16159,8 @@ redirect_from:
           <td class="catalog-numeric">$0.09</td>
           <td class="catalog-numeric">$0.55</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;qwen/qwen3-235b-a22b-thinking-2507&quot;,&quot;name&quot;:&quot;Qwen3 235B A22B Thinking 2507&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:128000,&quot;output&quot;:16384,&quot;input_price&quot;:0.45,&quot;output_price&quot;:3.5&#125;">
-          <th scope="row"><span class="catalog-model-name">Qwen3 235B A22B Thinking 2507</span><code>qwen/qwen3-235b-a22b-thinking-2507</code></th>
+        <tr data-model="&#123;&quot;id&quot;:&quot;qwen/qwen3-235b-a22b-thinking-2507&quot;,&quot;name&quot;:&quot;Qwen3 235B-A22B Thinking 2507&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:128000,&quot;output&quot;:16384,&quot;input_price&quot;:0.45,&quot;output_price&quot;:3.5&#125;">
+          <th scope="row"><span class="catalog-model-name">Qwen3 235B-A22B Thinking 2507</span><code>qwen/qwen3-235b-a22b-thinking-2507</code></th>
           <td>OpenRouter</td>
           <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
           <td><div class="catalog-capabilities"><span>Tools</span><span>Thinking</span><span>Streaming</span><span>Tool choice</span></div></td>
@@ -15979,8 +16179,8 @@ redirect_from:
           <td class="catalog-numeric">$0.12</td>
           <td class="catalog-numeric">$0.5</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;qwen/qwen3-30b-a3b-instruct-2507&quot;,&quot;name&quot;:&quot;Qwen3 30B A3B Instruct 2507&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:262144,&quot;output&quot;:235929,&quot;input_price&quot;:0.09,&quot;output_price&quot;:0.3&#125;">
-          <th scope="row"><span class="catalog-model-name">Qwen3 30B A3B Instruct 2507</span><code>qwen/qwen3-30b-a3b-instruct-2507</code></th>
+        <tr data-model="&#123;&quot;id&quot;:&quot;qwen/qwen3-30b-a3b-instruct-2507&quot;,&quot;name&quot;:&quot;Qwen3 30B-A3B Instruct 2507&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:262144,&quot;output&quot;:235929,&quot;input_price&quot;:0.09,&quot;output_price&quot;:0.3&#125;">
+          <th scope="row"><span class="catalog-model-name">Qwen3 30B-A3B Instruct 2507</span><code>qwen/qwen3-30b-a3b-instruct-2507</code></th>
           <td>OpenRouter</td>
           <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
           <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Streaming</span><span>Tool choice</span><span>Predicted outputs</span></div></td>
@@ -16129,14 +16329,14 @@ redirect_from:
           <td class="catalog-numeric">$0.27<small>Cache read $0.27</small></td>
           <td class="catalog-numeric">$2.16</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;qwen/qwen3.5-35b-a3b&quot;,&quot;name&quot;:&quot;Qwen3.5 35B-A3B&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Video input&quot;,&quot;Text output&quot;],&quot;context&quot;:262144,&quot;output&quot;:235929,&quot;input_price&quot;:0.15,&quot;output_price&quot;:1&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;qwen/qwen3.5-35b-a3b&quot;,&quot;name&quot;:&quot;Qwen3.5 35B-A3B&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Video input&quot;,&quot;Text output&quot;],&quot;context&quot;:262144,&quot;output&quot;:81920,&quot;input_price&quot;:0.14,&quot;output_price&quot;:1&#125;">
           <th scope="row"><span class="catalog-model-name">Qwen3.5 35B-A3B</span><code>qwen/qwen3.5-35b-a3b</code></th>
           <td>OpenRouter</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, video</span><span><b>Out</b> text</span></td>
           <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Video</span><span>Streaming</span><span>Tool choice</span><span>Predicted outputs</span></div></td>
           <td class="catalog-numeric">262,144</td>
-          <td class="catalog-numeric">235,929</td>
-          <td class="catalog-numeric">$0.15<small>Cache read $0.05</small></td>
+          <td class="catalog-numeric">81,920</td>
+          <td class="catalog-numeric">$0.14<small>Cache read $0.05</small></td>
           <td class="catalog-numeric">$1</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;qwen/qwen3.5-397b-a17b&quot;,&quot;name&quot;:&quot;Qwen3.5 397B-A17B&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Video input&quot;,&quot;Text output&quot;],&quot;context&quot;:262144,&quot;output&quot;:65536,&quot;input_price&quot;:0.39,&quot;output_price&quot;:2.34&#125;">
@@ -16149,15 +16349,15 @@ redirect_from:
           <td class="catalog-numeric">$0.39</td>
           <td class="catalog-numeric">$2.34</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;qwen/qwen3.5-9b&quot;,&quot;name&quot;:&quot;Qwen3.5 9B&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Video input&quot;,&quot;Text output&quot;],&quot;context&quot;:262144,&quot;output&quot;:32768,&quot;input_price&quot;:0.1,&quot;output_price&quot;:0.15&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;qwen/qwen3.5-9b&quot;,&quot;name&quot;:&quot;Qwen3.5 9B&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Video input&quot;,&quot;Text output&quot;],&quot;context&quot;:262144,&quot;output&quot;:65536,&quot;input_price&quot;:0.08,&quot;output_price&quot;:0.13&#125;">
           <th scope="row"><span class="catalog-model-name">Qwen3.5 9B</span><code>qwen/qwen3.5-9b</code></th>
           <td>OpenRouter</td>
           <td class="catalog-modalities"><span><b>In</b> text, image, video</span><span><b>Out</b> text</span></td>
           <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Video</span><span>Streaming</span><span>Tool choice</span><span>Predicted outputs</span></div></td>
           <td class="catalog-numeric">262,144</td>
-          <td class="catalog-numeric">32,768</td>
-          <td class="catalog-numeric">$0.1</td>
-          <td class="catalog-numeric">$0.15</td>
+          <td class="catalog-numeric">65,536</td>
+          <td class="catalog-numeric">$0.08<small>Cache read $0.04</small></td>
+          <td class="catalog-numeric">$0.13</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;qwen/qwen3.5-plus-02-15&quot;,&quot;name&quot;:&quot;Qwen3.5 Plus 2026-02-15&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Video input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:65536,&quot;input_price&quot;:0.26,&quot;output_price&quot;:1.56&#125;">
           <th scope="row"><span class="catalog-model-name">Qwen3.5 Plus 2026-02-15</span><code>qwen/qwen3.5-plus-02-15</code></th>
@@ -16259,13 +16459,13 @@ redirect_from:
           <td class="catalog-numeric">$0.32<small>Cache read $0.064</small><small>Cache write $0.4</small></td>
           <td class="catalog-numeric">$1.28</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;qwen/qwen3.8-2.4t-a95b&quot;,&quot;name&quot;:&quot;Qwen3.8 2.4T A95B&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:131072,&quot;input_price&quot;:2,&quot;output_price&quot;:6&#125;">
+        <tr data-model="&#123;&quot;id&quot;:&quot;qwen/qwen3.8-2.4t-a95b&quot;,&quot;name&quot;:&quot;Qwen3.8 2.4T A95B&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:909000,&quot;input_price&quot;:2,&quot;output_price&quot;:6&#125;">
           <th scope="row"><span class="catalog-model-name">Qwen3.8 2.4T A95B</span><code>qwen/qwen3.8-2.4t-a95b</code></th>
           <td>OpenRouter</td>
           <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
           <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Streaming</span><span>Tool choice</span><span>Predicted outputs</span></div></td>
           <td class="catalog-numeric">1,048,576</td>
-          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">909,000</td>
           <td class="catalog-numeric">$2<small>Cache read $0.25</small></td>
           <td class="catalog-numeric">$6</td>
         </tr>
@@ -16629,6 +16829,46 @@ redirect_from:
           <td class="catalog-numeric">$0.35</td>
           <td class="catalog-numeric">$0.65</td>
         </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;respan/span-01&quot;,&quot;name&quot;:&quot;Respan: Span-01&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Judgment&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Judgment output&quot;],&quot;context&quot;:0,&quot;output&quot;:0,&quot;input_price&quot;:0.02,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">Respan: Span-01</span><code>respan/span-01</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> judgment</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Judgment</span></div></td>
+          <td class="catalog-numeric">0</td>
+          <td class="catalog-numeric">0</td>
+          <td class="catalog-numeric">$0.02</td>
+          <td class="catalog-numeric">—</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;respan/span-01-lite&quot;,&quot;name&quot;:&quot;Respan: Span-01 Lite&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Judgment&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Judgment output&quot;],&quot;context&quot;:0,&quot;output&quot;:0,&quot;input_price&quot;:null,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">Respan: Span-01 Lite</span><code>respan/span-01-lite</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> judgment</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Judgment</span></div></td>
+          <td class="catalog-numeric">0</td>
+          <td class="catalog-numeric">0</td>
+          <td class="catalog-numeric">—</td>
+          <td class="catalog-numeric">—</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;respan/span-01-lite:free&quot;,&quot;name&quot;:&quot;Respan: Span-01 Lite (free)&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Judgment&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Judgment output&quot;],&quot;context&quot;:0,&quot;output&quot;:0,&quot;input_price&quot;:null,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">Respan: Span-01 Lite (free)</span><code>respan/span-01-lite:free</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> judgment</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Judgment</span></div></td>
+          <td class="catalog-numeric">0</td>
+          <td class="catalog-numeric">0</td>
+          <td class="catalog-numeric">—</td>
+          <td class="catalog-numeric">—</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;respan/span-02&quot;,&quot;name&quot;:&quot;Respan: Span-02&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Judgment&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Judgment output&quot;],&quot;context&quot;:131072,&quot;output&quot;:117964,&quot;input_price&quot;:0.01,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">Respan: Span-02</span><code>respan/span-02</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image</span><span><b>Out</b> judgment</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Judgment</span></div></td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">117,964</td>
+          <td class="catalog-numeric">$0.01</td>
+          <td class="catalog-numeric">—</td>
+        </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;mistralai/mistral-saba&quot;,&quot;name&quot;:&quot;Saba&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Vision&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:32768,&quot;output&quot;:26214,&quot;input_price&quot;:0.2,&quot;output_price&quot;:0.6&#125;">
           <th scope="row"><span class="catalog-model-name">Saba</span><code>mistralai/mistral-saba</code></th>
           <td>OpenRouter</td>
@@ -16648,6 +16888,16 @@ redirect_from:
           <td class="catalog-numeric">65,536</td>
           <td class="catalog-numeric">$0.95<small>Cache read $0.15</small></td>
           <td class="catalog-numeric">$4</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;scaledown/classify-1&quot;,&quot;name&quot;:&quot;ScaleDown: Classify-1&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Judgment&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;File input&quot;,&quot;Judgment output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:900000,&quot;input_price&quot;:0.04,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">ScaleDown: Classify-1</span><code>scaledown/classify-1</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, file</span><span><b>Out</b> judgment</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Judgment</span></div></td>
+          <td class="catalog-numeric">1,000,000</td>
+          <td class="catalog-numeric">900,000</td>
+          <td class="catalog-numeric">$0.04</td>
+          <td class="catalog-numeric">—</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;inference-net/schematron-v2-small&quot;,&quot;name&quot;:&quot;Schematron V2 Small&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Structured output&quot;,&quot;Streaming&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:128000,&quot;output&quot;:4096,&quot;input_price&quot;:0.05,&quot;output_price&quot;:0.23&#125;">
           <th scope="row"><span class="catalog-model-name">Schematron V2 Small</span><code>inference-net/schematron-v2-small</code></th>
@@ -17039,6 +17289,16 @@ redirect_from:
           <td class="catalog-numeric">$0.01</td>
           <td class="catalog-numeric">—</td>
         </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;togethercomputer/tev1-4b-experimental&quot;,&quot;name&quot;:&quot;Together: Tev1 4B Experimental&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Judgment&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Judgment output&quot;],&quot;context&quot;:32768,&quot;output&quot;:8,&quot;input_price&quot;:0.041999999999999996,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">Together: Tev1 4B Experimental</span><code>togethercomputer/tev1-4b-experimental</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> judgment</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Judgment</span></div></td>
+          <td class="catalog-numeric">32,768</td>
+          <td class="catalog-numeric">8</td>
+          <td class="catalog-numeric">$0.042</td>
+          <td class="catalog-numeric">—</td>
+        </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;arcee-ai/trinity-large-thinking&quot;,&quot;name&quot;:&quot;Trinity Large Thinking&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:262144,&quot;output&quot;:80000,&quot;input_price&quot;:0.25,&quot;output_price&quot;:0.8&#125;">
           <th scope="row"><span class="catalog-model-name">Trinity Large Thinking</span><code>arcee-ai/trinity-large-thinking</code></th>
           <td>OpenRouter</td>
@@ -17048,6 +17308,36 @@ redirect_from:
           <td class="catalog-numeric">80,000</td>
           <td class="catalog-numeric">$0.25<small>Cache read $0.06</small></td>
           <td class="catalog-numeric">$0.8</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;typesafe/jev-1.13&quot;,&quot;name&quot;:&quot;TypeSafe: Jev 1.13&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Judgment&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Judgment output&quot;],&quot;context&quot;:262144,&quot;output&quot;:235929,&quot;input_price&quot;:0.041999999999999996,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">TypeSafe: Jev 1.13</span><code>typesafe/jev-1.13</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image</span><span><b>Out</b> judgment</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Judgment</span></div></td>
+          <td class="catalog-numeric">262,144</td>
+          <td class="catalog-numeric">235,929</td>
+          <td class="catalog-numeric">$0.042</td>
+          <td class="catalog-numeric">—</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;typesafe/jev-1.14&quot;,&quot;name&quot;:&quot;TypeSafe: Jev 1.14&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Judgment&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Judgment output&quot;],&quot;context&quot;:262144,&quot;output&quot;:235929,&quot;input_price&quot;:0.041999999999999996,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">TypeSafe: Jev 1.14</span><code>typesafe/jev-1.14</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image</span><span><b>Out</b> judgment</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Judgment</span></div></td>
+          <td class="catalog-numeric">262,144</td>
+          <td class="catalog-numeric">235,929</td>
+          <td class="catalog-numeric">$0.042</td>
+          <td class="catalog-numeric">—</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;~typesafe/jev-latest&quot;,&quot;name&quot;:&quot;TypeSafe: Jev Latest&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Judgment&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Judgment output&quot;],&quot;context&quot;:262144,&quot;output&quot;:235929,&quot;input_price&quot;:0.041999999999999996,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">TypeSafe: Jev Latest</span><code>~typesafe/jev-latest</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image</span><span><b>Out</b> judgment</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Judgment</span></div></td>
+          <td class="catalog-numeric">262,144</td>
+          <td class="catalog-numeric">235,929</td>
+          <td class="catalog-numeric">$0.042</td>
+          <td class="catalog-numeric">—</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;typesafe/jev-router&quot;,&quot;name&quot;:&quot;TypeSafe: Jev Router&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Tools&quot;,&quot;Tool choice&quot;,&quot;Parallel tools&quot;,&quot;Structured output&quot;,&quot;Predicted outputs&quot;],&quot;modalities&quot;:[&quot;Audio input&quot;,&quot;File input&quot;,&quot;Image input&quot;,&quot;Text input&quot;,&quot;Video input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:null,&quot;input_price&quot;:null,&quot;output_price&quot;:null&#125;">
           <th scope="row"><span class="catalog-model-name">TypeSafe: Jev Router</span><code>typesafe/jev-router</code></th>
@@ -17088,6 +17378,26 @@ redirect_from:
           <td class="catalog-numeric">819,200</td>
           <td class="catalog-numeric">$0.4</td>
           <td class="catalog-numeric">$0.4</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;upstage/solar-decide&quot;,&quot;name&quot;:&quot;Upstage: Solar Decide&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Judgment&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Judgment output&quot;],&quot;context&quot;:524288,&quot;output&quot;:471859,&quot;input_price&quot;:0.049999999999999996,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">Upstage: Solar Decide</span><code>upstage/solar-decide</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> judgment</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Judgment</span></div></td>
+          <td class="catalog-numeric">524,288</td>
+          <td class="catalog-numeric">471,859</td>
+          <td class="catalog-numeric">$0.05<small>Cache read $0.05</small></td>
+          <td class="catalog-numeric">—</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;upstage/solar-decide-flash&quot;,&quot;name&quot;:&quot;Upstage: Solar Decide Flash&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Judgment&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Judgment output&quot;],&quot;context&quot;:524288,&quot;output&quot;:471859,&quot;input_price&quot;:0.049999999999999996,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">Upstage: Solar Decide Flash</span><code>upstage/solar-decide-flash</code></th>
+          <td>OpenRouter</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> judgment</span></td>
+          <td><div class="catalog-capabilities"><span>Streaming</span><span>Judgment</span></div></td>
+          <td class="catalog-numeric">524,288</td>
+          <td class="catalog-numeric">471,859</td>
+          <td class="catalog-numeric">$0.05<small>Cache read $0.05</small></td>
+          <td class="catalog-numeric">—</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;mistralai/voxtral-small-24b-2507&quot;,&quot;name&quot;:&quot;Voxtral Small 24B 2507&quot;,&quot;provider&quot;:&quot;OpenRouter&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Vision&quot;,&quot;Streaming&quot;,&quot;Tool choice&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Audio input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:32768,&quot;output&quot;:26214,&quot;input_price&quot;:0.1,&quot;output_price&quot;:0.3&#125;">
           <th scope="row"><span class="catalog-model-name">Voxtral Small 24B 2507</span><code>mistralai/voxtral-small-24b-2507</code></th>
@@ -17239,36 +17549,6 @@ redirect_from:
           <td class="catalog-numeric">$0.05<small>Cache read $0.01</small></td>
           <td class="catalog-numeric">$0.18</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic/claude-fable-5&quot;,&quot;name&quot;:&quot;anthropic/claude-fable-5&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:10,&quot;output_price&quot;:50&#125;">
-          <th scope="row"><span class="catalog-model-name">anthropic/claude-fable-5</span><code>anthropic/claude-fable-5</code></th>
-          <td>Perplexity</td>
-          <td class="catalog-modalities"><span><b>In</b> </span><span><b>Out</b> </span></td>
-          <td><div class="catalog-capabilities">—</div></td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">$10<small>Cache read $1</small><small>Cache write $12.5</small></td>
-          <td class="catalog-numeric">$50</td>
-        </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic/claude-fable-5-1&quot;,&quot;name&quot;:&quot;anthropic/claude-fable-5-1&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:10,&quot;output_price&quot;:50&#125;">
-          <th scope="row"><span class="catalog-model-name">anthropic/claude-fable-5-1</span><code>anthropic/claude-fable-5-1</code></th>
-          <td>Perplexity</td>
-          <td class="catalog-modalities"><span><b>In</b> </span><span><b>Out</b> </span></td>
-          <td><div class="catalog-capabilities">—</div></td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">$10<small>Cache read $0.25</small><small>Cache write $12.5</small></td>
-          <td class="catalog-numeric">$50</td>
-        </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic/claude-haiku-5-5&quot;,&quot;name&quot;:&quot;anthropic/claude-haiku-5-5&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:0.1,&quot;output_price&quot;:0.5&#125;">
-          <th scope="row"><span class="catalog-model-name">anthropic/claude-haiku-5-5</span><code>anthropic/claude-haiku-5-5</code></th>
-          <td>Perplexity</td>
-          <td class="catalog-modalities"><span><b>In</b> </span><span><b>Out</b> </span></td>
-          <td><div class="catalog-capabilities">—</div></td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">$0.1<small>Cache read $0.01</small><small>Cache write $0.125</small></td>
-          <td class="catalog-numeric">$0.5</td>
-        </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;anthropic/claude-opus-4-8&quot;,&quot;name&quot;:&quot;anthropic/claude-opus-4-8&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:5,&quot;output_price&quot;:25&#125;">
           <th scope="row"><span class="catalog-model-name">anthropic/claude-opus-4-8</span><code>anthropic/claude-opus-4-8</code></th>
           <td>Perplexity</td>
@@ -17279,45 +17559,25 @@ redirect_from:
           <td class="catalog-numeric">$5<small>Cache read $0.5</small><small>Cache write $6.25</small></td>
           <td class="catalog-numeric">$25</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic/claude-opus-5&quot;,&quot;name&quot;:&quot;anthropic/claude-opus-5&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:5,&quot;output_price&quot;:25&#125;">
-          <th scope="row"><span class="catalog-model-name">anthropic/claude-opus-5</span><code>anthropic/claude-opus-5</code></th>
+        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic/claude-fable-5&quot;,&quot;name&quot;:&quot;Claude Fable 5&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:10,&quot;output_price&quot;:50&#125;">
+          <th scope="row"><span class="catalog-model-name">Claude Fable 5</span><code>anthropic/claude-fable-5</code></th>
           <td>Perplexity</td>
-          <td class="catalog-modalities"><span><b>In</b> </span><span><b>Out</b> </span></td>
-          <td><div class="catalog-capabilities">—</div></td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">$5<small>Cache read $0.5</small><small>Cache write $6.25</small></td>
-          <td class="catalog-numeric">$25</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
+          <td class="catalog-numeric">1,000,000</td>
+          <td class="catalog-numeric">128,000</td>
+          <td class="catalog-numeric">$10<small>Cache read $1</small><small>Cache write $12.5</small></td>
+          <td class="catalog-numeric">$50</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic/claude-opus-5-5&quot;,&quot;name&quot;:&quot;anthropic/claude-opus-5-5&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:4,&quot;output_price&quot;:20&#125;">
-          <th scope="row"><span class="catalog-model-name">anthropic/claude-opus-5-5</span><code>anthropic/claude-opus-5-5</code></th>
+        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic/claude-fable-5-1&quot;,&quot;name&quot;:&quot;Claude Fable 5.1&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:10,&quot;output_price&quot;:50&#125;">
+          <th scope="row"><span class="catalog-model-name">Claude Fable 5.1</span><code>anthropic/claude-fable-5-1</code></th>
           <td>Perplexity</td>
-          <td class="catalog-modalities"><span><b>In</b> </span><span><b>Out</b> </span></td>
-          <td><div class="catalog-capabilities">—</div></td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">$4<small>Cache read $0.2</small><small>Cache write $5</small></td>
-          <td class="catalog-numeric">$20</td>
-        </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic/claude-sonnet-5&quot;,&quot;name&quot;:&quot;anthropic/claude-sonnet-5&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:2,&quot;output_price&quot;:10&#125;">
-          <th scope="row"><span class="catalog-model-name">anthropic/claude-sonnet-5</span><code>anthropic/claude-sonnet-5</code></th>
-          <td>Perplexity</td>
-          <td class="catalog-modalities"><span><b>In</b> </span><span><b>Out</b> </span></td>
-          <td><div class="catalog-capabilities">—</div></td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">$2<small>Cache read $0.2</small><small>Cache write $2.5</small></td>
-          <td class="catalog-numeric">$10</td>
-        </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic/claude-sonnet-5-5&quot;,&quot;name&quot;:&quot;anthropic/claude-sonnet-5-5&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:2,&quot;output_price&quot;:10&#125;">
-          <th scope="row"><span class="catalog-model-name">anthropic/claude-sonnet-5-5</span><code>anthropic/claude-sonnet-5-5</code></th>
-          <td>Perplexity</td>
-          <td class="catalog-modalities"><span><b>In</b> </span><span><b>Out</b> </span></td>
-          <td><div class="catalog-capabilities">—</div></td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">$2<small>Cache read $0.1</small><small>Cache write $2.5</small></td>
-          <td class="catalog-numeric">$10</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
+          <td class="catalog-numeric">1,000,000</td>
+          <td class="catalog-numeric">128,000</td>
+          <td class="catalog-numeric">$10<small>Cache read $0.25</small><small>Cache write $12.5</small></td>
+          <td class="catalog-numeric">$50</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;anthropic/claude-haiku-4-5&quot;,&quot;name&quot;:&quot;Claude Haiku 4.5&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:200000,&quot;output&quot;:64000,&quot;input_price&quot;:1,&quot;output_price&quot;:5&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Haiku 4.5</span><code>anthropic/claude-haiku-4-5</code></th>
@@ -17328,6 +17588,16 @@ redirect_from:
           <td class="catalog-numeric">64,000</td>
           <td class="catalog-numeric">$1<small>Cache read $0.1</small><small>Cache write $1.25</small></td>
           <td class="catalog-numeric">$5</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic/claude-haiku-5-5&quot;,&quot;name&quot;:&quot;Claude Haiku 5.5&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:0.1,&quot;output_price&quot;:0.5&#125;">
+          <th scope="row"><span class="catalog-model-name">Claude Haiku 5.5</span><code>anthropic/claude-haiku-5-5</code></th>
+          <td>Perplexity</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
+          <td class="catalog-numeric">1,000,000</td>
+          <td class="catalog-numeric">128,000</td>
+          <td class="catalog-numeric">$0.1<small>Cache read $0.01</small><small>Cache write $0.125</small></td>
+          <td class="catalog-numeric">$0.5</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;anthropic/claude-opus-4-5&quot;,&quot;name&quot;:&quot;Claude Opus 4.5&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:200000,&quot;output&quot;:64000,&quot;input_price&quot;:5,&quot;output_price&quot;:25&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Opus 4.5</span><code>anthropic/claude-opus-4-5</code></th>
@@ -17359,6 +17629,26 @@ redirect_from:
           <td class="catalog-numeric">$5<small>Cache read $0.5</small><small>Cache write $6.25</small></td>
           <td class="catalog-numeric">$25</td>
         </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic/claude-opus-5&quot;,&quot;name&quot;:&quot;Claude Opus 5&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:5,&quot;output_price&quot;:25&#125;">
+          <th scope="row"><span class="catalog-model-name">Claude Opus 5</span><code>anthropic/claude-opus-5</code></th>
+          <td>Perplexity</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
+          <td class="catalog-numeric">1,000,000</td>
+          <td class="catalog-numeric">128,000</td>
+          <td class="catalog-numeric">$5<small>Cache read $0.5</small><small>Cache write $6.25</small></td>
+          <td class="catalog-numeric">$25</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic/claude-opus-5-5&quot;,&quot;name&quot;:&quot;Claude Opus 5.5&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:4,&quot;output_price&quot;:20&#125;">
+          <th scope="row"><span class="catalog-model-name">Claude Opus 5.5</span><code>anthropic/claude-opus-5-5</code></th>
+          <td>Perplexity</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
+          <td class="catalog-numeric">1,000,000</td>
+          <td class="catalog-numeric">128,000</td>
+          <td class="catalog-numeric">$4<small>Cache read $0.2</small><small>Cache write $5</small></td>
+          <td class="catalog-numeric">$20</td>
+        </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;anthropic/claude-sonnet-4-5&quot;,&quot;name&quot;:&quot;Claude Sonnet 4.5&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:200000,&quot;output&quot;:64000,&quot;input_price&quot;:3,&quot;output_price&quot;:15&#125;">
           <th scope="row"><span class="catalog-model-name">Claude Sonnet 4.5</span><code>anthropic/claude-sonnet-4-5</code></th>
           <td>Perplexity</td>
@@ -17379,6 +17669,26 @@ redirect_from:
           <td class="catalog-numeric">$3<small>Cache read $0.3</small><small>Cache write $3.75</small></td>
           <td class="catalog-numeric">$15</td>
         </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic/claude-sonnet-5&quot;,&quot;name&quot;:&quot;Claude Sonnet 5&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:2,&quot;output_price&quot;:10&#125;">
+          <th scope="row"><span class="catalog-model-name">Claude Sonnet 5</span><code>anthropic/claude-sonnet-5</code></th>
+          <td>Perplexity</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
+          <td class="catalog-numeric">1,000,000</td>
+          <td class="catalog-numeric">128,000</td>
+          <td class="catalog-numeric">$2<small>Cache read $0.2</small><small>Cache write $2.5</small></td>
+          <td class="catalog-numeric">$10</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;anthropic/claude-sonnet-5-5&quot;,&quot;name&quot;:&quot;Claude Sonnet 5.5&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:128000,&quot;input_price&quot;:2,&quot;output_price&quot;:10&#125;">
+          <th scope="row"><span class="catalog-model-name">Claude Sonnet 5.5</span><code>anthropic/claude-sonnet-5-5</code></th>
+          <td>Perplexity</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
+          <td class="catalog-numeric">1,000,000</td>
+          <td class="catalog-numeric">128,000</td>
+          <td class="catalog-numeric">$2<small>Cache read $0.1</small><small>Cache write $2.5</small></td>
+          <td class="catalog-numeric">$10</td>
+        </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;deepseek/deepseek-v4-flash-0731&quot;,&quot;name&quot;:&quot;DeepSeek V4 Flash 0731&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:384000,&quot;input_price&quot;:0.13,&quot;output_price&quot;:0.26&#125;">
           <th scope="row"><span class="catalog-model-name">DeepSeek V4 Flash 0731</span><code>deepseek/deepseek-v4-flash-0731</code></th>
           <td>Perplexity</td>
@@ -17388,6 +17698,16 @@ redirect_from:
           <td class="catalog-numeric">384,000</td>
           <td class="catalog-numeric">$0.13<small>Cache read $0.028</small></td>
           <td class="catalog-numeric">$0.26</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;perplexity/deepseek-v4-pro-0813&quot;,&quot;name&quot;:&quot;DeepSeek V4 Pro 0813&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:384000,&quot;input_price&quot;:1.32,&quot;output_price&quot;:3.96&#125;">
+          <th scope="row"><span class="catalog-model-name">DeepSeek V4 Pro 0813</span><code>perplexity/deepseek-v4-pro-0813</code></th>
+          <td>Perplexity</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span></div></td>
+          <td class="catalog-numeric">1,000,000</td>
+          <td class="catalog-numeric">384,000</td>
+          <td class="catalog-numeric">$1.32<small>Cache read $0.044</small></td>
+          <td class="catalog-numeric">$3.96</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;fast&quot;,&quot;name&quot;:&quot;fast&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Structured output&quot;,&quot;Citations&quot;,&quot;Tools&quot;],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:null,&quot;output_price&quot;:null&#125;">
           <th scope="row"><span class="catalog-model-name">fast</span><code>fast</code></th>
@@ -17439,6 +17759,66 @@ redirect_from:
           <td class="catalog-numeric">$2<small>Cache read $0.2</small></td>
           <td class="catalog-numeric">$12</td>
         </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;google/gemini-3.6-flash&quot;,&quot;name&quot;:&quot;Gemini 3.6 Flash&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:65536,&quot;input_price&quot;:1.5,&quot;output_price&quot;:7.5&#125;">
+          <th scope="row"><span class="catalog-model-name">Gemini 3.6 Flash</span><code>google/gemini-3.6-flash</code></th>
+          <td>Perplexity</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
+          <td class="catalog-numeric">1,048,576</td>
+          <td class="catalog-numeric">65,536</td>
+          <td class="catalog-numeric">$1.5<small>Cache read $0.15</small></td>
+          <td class="catalog-numeric">$7.5</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;google/gemini-3.7-flash&quot;,&quot;name&quot;:&quot;Gemini 3.7 Flash&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:65536,&quot;input_price&quot;:0.75,&quot;output_price&quot;:3.75&#125;">
+          <th scope="row"><span class="catalog-model-name">Gemini 3.7 Flash</span><code>google/gemini-3.7-flash</code></th>
+          <td>Perplexity</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
+          <td class="catalog-numeric">1,048,576</td>
+          <td class="catalog-numeric">65,536</td>
+          <td class="catalog-numeric">$0.75<small>Cache read $0.075</small></td>
+          <td class="catalog-numeric">$3.75</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;google/gemini-3.8-flash&quot;,&quot;name&quot;:&quot;Gemini 3.8 Flash&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:65536,&quot;input_price&quot;:0.75,&quot;output_price&quot;:3.75&#125;">
+          <th scope="row"><span class="catalog-model-name">Gemini 3.8 Flash</span><code>google/gemini-3.8-flash</code></th>
+          <td>Perplexity</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
+          <td class="catalog-numeric">1,048,576</td>
+          <td class="catalog-numeric">65,536</td>
+          <td class="catalog-numeric">$0.75<small>Cache read $0.075</small></td>
+          <td class="catalog-numeric">$3.75</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;google/gemini-4-argon&quot;,&quot;name&quot;:&quot;Gemini 4 Argon&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:65536,&quot;input_price&quot;:2,&quot;output_price&quot;:10&#125;">
+          <th scope="row"><span class="catalog-model-name">Gemini 4 Argon</span><code>google/gemini-4-argon</code></th>
+          <td>Perplexity</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
+          <td class="catalog-numeric">1,048,576</td>
+          <td class="catalog-numeric">65,536</td>
+          <td class="catalog-numeric">$2<small>Cache read $0.1</small></td>
+          <td class="catalog-numeric">$10</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;perplexity/glm-5.3&quot;,&quot;name&quot;:&quot;GLM-5.3&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:131072,&quot;input_price&quot;:1.4,&quot;output_price&quot;:4.4&#125;">
+          <th scope="row"><span class="catalog-model-name">GLM-5.3</span><code>perplexity/glm-5.3</code></th>
+          <td>Perplexity</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span></div></td>
+          <td class="catalog-numeric">1,000,000</td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">$1.4<small>Cache read $0.26</small></td>
+          <td class="catalog-numeric">$4.4</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;perplexity/glm-5.3-flash&quot;,&quot;name&quot;:&quot;GLM-5.3-Flash&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1000000,&quot;output&quot;:131072,&quot;input_price&quot;:0.15,&quot;output_price&quot;:0.5&#125;">
+          <th scope="row"><span class="catalog-model-name">GLM-5.3-Flash</span><code>perplexity/glm-5.3-flash</code></th>
+          <td>Perplexity</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
+          <td class="catalog-numeric">1,000,000</td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">$0.15<small>Cache read $0.03</small></td>
+          <td class="catalog-numeric">$0.5</td>
+        </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;google/gemini-3.1-flash-lite&quot;,&quot;name&quot;:&quot;google/gemini-3.1-flash-lite&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:0.25,&quot;output_price&quot;:1.5&#125;">
           <th scope="row"><span class="catalog-model-name">google/gemini-3.1-flash-lite</span><code>google/gemini-3.1-flash-lite</code></th>
           <td>Perplexity</td>
@@ -17468,46 +17848,6 @@ redirect_from:
           <td class="catalog-numeric">—</td>
           <td class="catalog-numeric">$0.3<small>Cache read $0.03</small></td>
           <td class="catalog-numeric">$2.5</td>
-        </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;google/gemini-3.6-flash&quot;,&quot;name&quot;:&quot;google/gemini-3.6-flash&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:1.5,&quot;output_price&quot;:7.5&#125;">
-          <th scope="row"><span class="catalog-model-name">google/gemini-3.6-flash</span><code>google/gemini-3.6-flash</code></th>
-          <td>Perplexity</td>
-          <td class="catalog-modalities"><span><b>In</b> </span><span><b>Out</b> </span></td>
-          <td><div class="catalog-capabilities">—</div></td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">$1.5<small>Cache read $0.15</small></td>
-          <td class="catalog-numeric">$7.5</td>
-        </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;google/gemini-3.7-flash&quot;,&quot;name&quot;:&quot;google/gemini-3.7-flash&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:0.75,&quot;output_price&quot;:3.75&#125;">
-          <th scope="row"><span class="catalog-model-name">google/gemini-3.7-flash</span><code>google/gemini-3.7-flash</code></th>
-          <td>Perplexity</td>
-          <td class="catalog-modalities"><span><b>In</b> </span><span><b>Out</b> </span></td>
-          <td><div class="catalog-capabilities">—</div></td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">$0.75<small>Cache read $0.075</small></td>
-          <td class="catalog-numeric">$3.75</td>
-        </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;google/gemini-3.8-flash&quot;,&quot;name&quot;:&quot;google/gemini-3.8-flash&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:0.75,&quot;output_price&quot;:3.75&#125;">
-          <th scope="row"><span class="catalog-model-name">google/gemini-3.8-flash</span><code>google/gemini-3.8-flash</code></th>
-          <td>Perplexity</td>
-          <td class="catalog-modalities"><span><b>In</b> </span><span><b>Out</b> </span></td>
-          <td><div class="catalog-capabilities">—</div></td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">$0.75<small>Cache read $0.075</small></td>
-          <td class="catalog-numeric">$3.75</td>
-        </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;google/gemini-4-argon&quot;,&quot;name&quot;:&quot;google/gemini-4-argon&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:2,&quot;output_price&quot;:10&#125;">
-          <th scope="row"><span class="catalog-model-name">google/gemini-4-argon</span><code>google/gemini-4-argon</code></th>
-          <td>Perplexity</td>
-          <td class="catalog-modalities"><span><b>In</b> </span><span><b>Out</b> </span></td>
-          <td><div class="catalog-capabilities">—</div></td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">$2<small>Cache read $0.1</small></td>
-          <td class="catalog-numeric">$10</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;openai/gpt-5-mini&quot;,&quot;name&quot;:&quot;GPT-5 Mini&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Text output&quot;],&quot;context&quot;:400000,&quot;output&quot;:128000,&quot;input_price&quot;:0.25,&quot;output_price&quot;:2&#125;">
           <th scope="row"><span class="catalog-model-name">GPT-5 Mini</span><code>openai/gpt-5-mini</code></th>
@@ -17559,6 +17899,76 @@ redirect_from:
           <td class="catalog-numeric">$5<small>Cache read $0.5</small></td>
           <td class="catalog-numeric">$30</td>
         </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;openai/gpt-5.6-luna&quot;,&quot;name&quot;:&quot;GPT-5.6 Luna&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1050000,&quot;output&quot;:128000,&quot;input_price&quot;:0.2,&quot;output_price&quot;:1.2&#125;">
+          <th scope="row"><span class="catalog-model-name">GPT-5.6 Luna</span><code>openai/gpt-5.6-luna</code></th>
+          <td>Perplexity</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
+          <td class="catalog-numeric">1,050,000</td>
+          <td class="catalog-numeric">128,000</td>
+          <td class="catalog-numeric">$0.2<small>Cache read $0.02</small><small>Cache write $0.25</small></td>
+          <td class="catalog-numeric">$1.2</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;openai/gpt-5.6-sol&quot;,&quot;name&quot;:&quot;GPT-5.6 Sol&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1050000,&quot;output&quot;:128000,&quot;input_price&quot;:4,&quot;output_price&quot;:20&#125;">
+          <th scope="row"><span class="catalog-model-name">GPT-5.6 Sol</span><code>openai/gpt-5.6-sol</code></th>
+          <td>Perplexity</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
+          <td class="catalog-numeric">1,050,000</td>
+          <td class="catalog-numeric">128,000</td>
+          <td class="catalog-numeric">$4<small>Cache read $0.4</small><small>Cache write $5</small></td>
+          <td class="catalog-numeric">$20</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;openai/gpt-5.6-terra&quot;,&quot;name&quot;:&quot;GPT-5.6 Terra&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1050000,&quot;output&quot;:128000,&quot;input_price&quot;:2,&quot;output_price&quot;:12&#125;">
+          <th scope="row"><span class="catalog-model-name">GPT-5.6 Terra</span><code>openai/gpt-5.6-terra</code></th>
+          <td>Perplexity</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
+          <td class="catalog-numeric">1,050,000</td>
+          <td class="catalog-numeric">128,000</td>
+          <td class="catalog-numeric">$2<small>Cache read $0.2</small><small>Cache write $2.5</small></td>
+          <td class="catalog-numeric">$12</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;openai/gpt-6-astra&quot;,&quot;name&quot;:&quot;GPT-6 Astra&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1050000,&quot;output&quot;:128000,&quot;input_price&quot;:10,&quot;output_price&quot;:50&#125;">
+          <th scope="row"><span class="catalog-model-name">GPT-6 Astra</span><code>openai/gpt-6-astra</code></th>
+          <td>Perplexity</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
+          <td class="catalog-numeric">1,050,000</td>
+          <td class="catalog-numeric">128,000</td>
+          <td class="catalog-numeric">$10<small>Cache read $1</small><small>Cache write $12.5</small></td>
+          <td class="catalog-numeric">$50</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;openai/gpt-6-luna&quot;,&quot;name&quot;:&quot;GPT-6 Luna&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1050000,&quot;output&quot;:128000,&quot;input_price&quot;:0.1,&quot;output_price&quot;:0.5&#125;">
+          <th scope="row"><span class="catalog-model-name">GPT-6 Luna</span><code>openai/gpt-6-luna</code></th>
+          <td>Perplexity</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
+          <td class="catalog-numeric">1,050,000</td>
+          <td class="catalog-numeric">128,000</td>
+          <td class="catalog-numeric">$0.1<small>Cache read $0.01</small><small>Cache write $0.125</small></td>
+          <td class="catalog-numeric">$0.5</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;openai/gpt-6-sol&quot;,&quot;name&quot;:&quot;GPT-6 Sol&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1050000,&quot;output&quot;:128000,&quot;input_price&quot;:2,&quot;output_price&quot;:10&#125;">
+          <th scope="row"><span class="catalog-model-name">GPT-6 Sol</span><code>openai/gpt-6-sol</code></th>
+          <td>Perplexity</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
+          <td class="catalog-numeric">1,050,000</td>
+          <td class="catalog-numeric">128,000</td>
+          <td class="catalog-numeric">$2<small>Cache read $0.2</small><small>Cache write $2.5</small></td>
+          <td class="catalog-numeric">$10</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;openai/gpt-6.1-sol&quot;,&quot;name&quot;:&quot;GPT-6.1 Sol&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:1050000,&quot;output&quot;:128000,&quot;input_price&quot;:2,&quot;output_price&quot;:10&#125;">
+          <th scope="row"><span class="catalog-model-name">GPT-6.1 Sol</span><code>openai/gpt-6.1-sol</code></th>
+          <td>Perplexity</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
+          <td class="catalog-numeric">1,050,000</td>
+          <td class="catalog-numeric">128,000</td>
+          <td class="catalog-numeric">$2<small>Cache read $0.1</small><small>Cache write $2.5</small></td>
+          <td class="catalog-numeric">$10</td>
+        </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;xai/grok-4-1-fast-non-reasoning&quot;,&quot;name&quot;:&quot;Grok 4.1 Fast (Non-Reasoning)&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Text output&quot;],&quot;context&quot;:2000000,&quot;output&quot;:30000,&quot;input_price&quot;:0.2,&quot;output_price&quot;:0.5&#125;">
           <th scope="row"><span class="catalog-model-name">Grok 4.1 Fast (Non-Reasoning)</span><code>xai/grok-4-1-fast-non-reasoning</code></th>
           <td>Perplexity</td>
@@ -17569,6 +17979,16 @@ redirect_from:
           <td class="catalog-numeric">$0.2<small>Cache read $0.05</small></td>
           <td class="catalog-numeric">$0.5</td>
         </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;xai/grok-4.5&quot;,&quot;name&quot;:&quot;Grok 4.5&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Text output&quot;],&quot;context&quot;:500000,&quot;output&quot;:500000,&quot;input_price&quot;:2,&quot;output_price&quot;:6&#125;">
+          <th scope="row"><span class="catalog-model-name">Grok 4.5</span><code>xai/grok-4.5</code></th>
+          <td>Perplexity</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
+          <td class="catalog-numeric">500,000</td>
+          <td class="catalog-numeric">500,000</td>
+          <td class="catalog-numeric">$2<small>Cache read $0.3</small></td>
+          <td class="catalog-numeric">$6</td>
+        </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;xai/grok-4.6&quot;,&quot;name&quot;:&quot;Grok 4.6&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Text output&quot;],&quot;context&quot;:500000,&quot;output&quot;:500000,&quot;input_price&quot;:2,&quot;output_price&quot;:6&#125;">
           <th scope="row"><span class="catalog-model-name">Grok 4.6</span><code>xai/grok-4.6</code></th>
           <td>Perplexity</td>
@@ -17577,6 +17997,16 @@ redirect_from:
           <td class="catalog-numeric">500,000</td>
           <td class="catalog-numeric">500,000</td>
           <td class="catalog-numeric">$2<small>Cache read $0.5</small></td>
+          <td class="catalog-numeric">$6</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;xai/grok-4.7&quot;,&quot;name&quot;:&quot;Grok 4.7&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Text output&quot;],&quot;context&quot;:500000,&quot;output&quot;:500000,&quot;input_price&quot;:2,&quot;output_price&quot;:6&#125;">
+          <th scope="row"><span class="catalog-model-name">Grok 4.7</span><code>xai/grok-4.7</code></th>
+          <td>Perplexity</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, pdf</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span></div></td>
+          <td class="catalog-numeric">500,000</td>
+          <td class="catalog-numeric">500,000</td>
+          <td class="catalog-numeric">$2<small>Cache read $0.5</small><small>Cache write $2</small></td>
           <td class="catalog-numeric">$6</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;high&quot;,&quot;name&quot;:&quot;high&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Structured output&quot;,&quot;Citations&quot;,&quot;Tools&quot;],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:null,&quot;output_price&quot;:null&#125;">
@@ -17639,6 +18069,16 @@ redirect_from:
           <td class="catalog-numeric">$0.25</td>
           <td class="catalog-numeric">$2.5</td>
         </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;perplexity/nemotron-3.5-super-120b-a12b&quot;,&quot;name&quot;:&quot;Nemotron 3.5 Super 120B A12B&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:131072,&quot;input_price&quot;:0.2,&quot;output_price&quot;:0.5&#125;">
+          <th scope="row"><span class="catalog-model-name">Nemotron 3.5 Super 120B A12B</span><code>perplexity/nemotron-3.5-super-120b-a12b</code></th>
+          <td>Perplexity</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span></div></td>
+          <td class="catalog-numeric">1,048,576</td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">$0.2<small>Cache read $0.04</small></td>
+          <td class="catalog-numeric">$0.5</td>
+        </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;openai/gpt-5&quot;,&quot;name&quot;:&quot;openai/gpt-5&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:1.25,&quot;output_price&quot;:10&#125;">
           <th scope="row"><span class="catalog-model-name">openai/gpt-5</span><code>openai/gpt-5</code></th>
           <td>Perplexity</td>
@@ -17689,76 +18129,6 @@ redirect_from:
           <td class="catalog-numeric">$0.2<small>Cache read $0.02</small></td>
           <td class="catalog-numeric">$1.25</td>
         </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;openai/gpt-5.6-luna&quot;,&quot;name&quot;:&quot;openai/gpt-5.6-luna&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:0.2,&quot;output_price&quot;:1.2&#125;">
-          <th scope="row"><span class="catalog-model-name">openai/gpt-5.6-luna</span><code>openai/gpt-5.6-luna</code></th>
-          <td>Perplexity</td>
-          <td class="catalog-modalities"><span><b>In</b> </span><span><b>Out</b> </span></td>
-          <td><div class="catalog-capabilities">—</div></td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">$0.2<small>Cache read $0.02</small><small>Cache write $0.25</small></td>
-          <td class="catalog-numeric">$1.2</td>
-        </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;openai/gpt-5.6-sol&quot;,&quot;name&quot;:&quot;openai/gpt-5.6-sol&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:4,&quot;output_price&quot;:20&#125;">
-          <th scope="row"><span class="catalog-model-name">openai/gpt-5.6-sol</span><code>openai/gpt-5.6-sol</code></th>
-          <td>Perplexity</td>
-          <td class="catalog-modalities"><span><b>In</b> </span><span><b>Out</b> </span></td>
-          <td><div class="catalog-capabilities">—</div></td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">$4<small>Cache read $0.4</small><small>Cache write $5</small></td>
-          <td class="catalog-numeric">$20</td>
-        </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;openai/gpt-5.6-terra&quot;,&quot;name&quot;:&quot;openai/gpt-5.6-terra&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:2,&quot;output_price&quot;:12&#125;">
-          <th scope="row"><span class="catalog-model-name">openai/gpt-5.6-terra</span><code>openai/gpt-5.6-terra</code></th>
-          <td>Perplexity</td>
-          <td class="catalog-modalities"><span><b>In</b> </span><span><b>Out</b> </span></td>
-          <td><div class="catalog-capabilities">—</div></td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">$2<small>Cache read $0.2</small><small>Cache write $2.5</small></td>
-          <td class="catalog-numeric">$12</td>
-        </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;openai/gpt-6-astra&quot;,&quot;name&quot;:&quot;openai/gpt-6-astra&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:10,&quot;output_price&quot;:50&#125;">
-          <th scope="row"><span class="catalog-model-name">openai/gpt-6-astra</span><code>openai/gpt-6-astra</code></th>
-          <td>Perplexity</td>
-          <td class="catalog-modalities"><span><b>In</b> </span><span><b>Out</b> </span></td>
-          <td><div class="catalog-capabilities">—</div></td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">$10<small>Cache read $1</small><small>Cache write $12.5</small></td>
-          <td class="catalog-numeric">$50</td>
-        </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;openai/gpt-6-luna&quot;,&quot;name&quot;:&quot;openai/gpt-6-luna&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:0.1,&quot;output_price&quot;:0.5&#125;">
-          <th scope="row"><span class="catalog-model-name">openai/gpt-6-luna</span><code>openai/gpt-6-luna</code></th>
-          <td>Perplexity</td>
-          <td class="catalog-modalities"><span><b>In</b> </span><span><b>Out</b> </span></td>
-          <td><div class="catalog-capabilities">—</div></td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">$0.1<small>Cache read $0.01</small><small>Cache write $0.125</small></td>
-          <td class="catalog-numeric">$0.5</td>
-        </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;openai/gpt-6-sol&quot;,&quot;name&quot;:&quot;openai/gpt-6-sol&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:2,&quot;output_price&quot;:10&#125;">
-          <th scope="row"><span class="catalog-model-name">openai/gpt-6-sol</span><code>openai/gpt-6-sol</code></th>
-          <td>Perplexity</td>
-          <td class="catalog-modalities"><span><b>In</b> </span><span><b>Out</b> </span></td>
-          <td><div class="catalog-capabilities">—</div></td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">$2<small>Cache read $0.2</small><small>Cache write $2.5</small></td>
-          <td class="catalog-numeric">$10</td>
-        </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;openai/gpt-6.1-sol&quot;,&quot;name&quot;:&quot;openai/gpt-6.1-sol&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:2,&quot;output_price&quot;:10&#125;">
-          <th scope="row"><span class="catalog-model-name">openai/gpt-6.1-sol</span><code>openai/gpt-6.1-sol</code></th>
-          <td>Perplexity</td>
-          <td class="catalog-modalities"><span><b>In</b> </span><span><b>Out</b> </span></td>
-          <td><div class="catalog-capabilities">—</div></td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">$2<small>Cache read $0.1</small><small>Cache write $2.5</small></td>
-          <td class="catalog-numeric">$10</td>
-        </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;sonar-deep-research&quot;,&quot;name&quot;:&quot;Perplexity Sonar Deep Research&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Thinking&quot;,&quot;Streaming&quot;,&quot;Structured output&quot;,&quot;Citations&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:128000,&quot;output&quot;:32768,&quot;input_price&quot;:2,&quot;output_price&quot;:8&#125;">
           <th scope="row"><span class="catalog-model-name">Perplexity Sonar Deep Research</span><code>sonar-deep-research</code></th>
           <td>Perplexity</td>
@@ -17768,36 +18138,6 @@ redirect_from:
           <td class="catalog-numeric">32,768</td>
           <td class="catalog-numeric">$2</td>
           <td class="catalog-numeric">$8</td>
-        </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;perplexity/deepseek-v4-pro-0813&quot;,&quot;name&quot;:&quot;perplexity/deepseek-v4-pro-0813&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:1.32,&quot;output_price&quot;:3.96&#125;">
-          <th scope="row"><span class="catalog-model-name">perplexity/deepseek-v4-pro-0813</span><code>perplexity/deepseek-v4-pro-0813</code></th>
-          <td>Perplexity</td>
-          <td class="catalog-modalities"><span><b>In</b> </span><span><b>Out</b> </span></td>
-          <td><div class="catalog-capabilities">—</div></td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">$1.32<small>Cache read $0.044</small></td>
-          <td class="catalog-numeric">$3.96</td>
-        </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;perplexity/glm-5.3&quot;,&quot;name&quot;:&quot;perplexity/glm-5.3&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:1.4,&quot;output_price&quot;:4.4&#125;">
-          <th scope="row"><span class="catalog-model-name">perplexity/glm-5.3</span><code>perplexity/glm-5.3</code></th>
-          <td>Perplexity</td>
-          <td class="catalog-modalities"><span><b>In</b> </span><span><b>Out</b> </span></td>
-          <td><div class="catalog-capabilities">—</div></td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">$1.4<small>Cache read $0.26</small></td>
-          <td class="catalog-numeric">$4.4</td>
-        </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;perplexity/glm-5.3-flash&quot;,&quot;name&quot;:&quot;perplexity/glm-5.3-flash&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:0.15,&quot;output_price&quot;:0.5&#125;">
-          <th scope="row"><span class="catalog-model-name">perplexity/glm-5.3-flash</span><code>perplexity/glm-5.3-flash</code></th>
-          <td>Perplexity</td>
-          <td class="catalog-modalities"><span><b>In</b> </span><span><b>Out</b> </span></td>
-          <td><div class="catalog-capabilities">—</div></td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">$0.15<small>Cache read $0.03</small></td>
-          <td class="catalog-numeric">$0.5</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;perplexity/kimi-k3&quot;,&quot;name&quot;:&quot;perplexity/kimi-k3&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:3,&quot;output_price&quot;:15&#125;">
           <th scope="row"><span class="catalog-model-name">perplexity/kimi-k3</span><code>perplexity/kimi-k3</code></th>
@@ -17818,16 +18158,6 @@ redirect_from:
           <td class="catalog-numeric">—</td>
           <td class="catalog-numeric">$0.25<small>Cache read $0.25</small></td>
           <td class="catalog-numeric">$2.5</td>
-        </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;perplexity/nemotron-3.5-super-120b-a12b&quot;,&quot;name&quot;:&quot;perplexity/nemotron-3.5-super-120b-a12b&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:0.2,&quot;output_price&quot;:0.5&#125;">
-          <th scope="row"><span class="catalog-model-name">perplexity/nemotron-3.5-super-120b-a12b</span><code>perplexity/nemotron-3.5-super-120b-a12b</code></th>
-          <td>Perplexity</td>
-          <td class="catalog-modalities"><span><b>In</b> </span><span><b>Out</b> </span></td>
-          <td><div class="catalog-capabilities">—</div></td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">$0.2<small>Cache read $0.04</small></td>
-          <td class="catalog-numeric">$0.5</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;pplx-embed-v1-0.6b&quot;,&quot;name&quot;:&quot;pplx-embed-v1-0.6b&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Embeddings&quot;],&quot;context&quot;:32768,&quot;output&quot;:null,&quot;input_price&quot;:0.004,&quot;output_price&quot;:null&#125;">
           <th scope="row"><span class="catalog-model-name">pplx-embed-v1-0.6b</span><code>pplx-embed-v1-0.6b</code></th>
@@ -17938,26 +18268,6 @@ redirect_from:
           <td class="catalog-numeric">—</td>
           <td class="catalog-numeric">$1.25<small>Cache read $0.2</small></td>
           <td class="catalog-numeric">$2.5</td>
-        </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;xai/grok-4.5&quot;,&quot;name&quot;:&quot;xai/grok-4.5&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:2,&quot;output_price&quot;:6&#125;">
-          <th scope="row"><span class="catalog-model-name">xai/grok-4.5</span><code>xai/grok-4.5</code></th>
-          <td>Perplexity</td>
-          <td class="catalog-modalities"><span><b>In</b> </span><span><b>Out</b> </span></td>
-          <td><div class="catalog-capabilities">—</div></td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">$2<small>Cache read $0.3</small></td>
-          <td class="catalog-numeric">$6</td>
-        </tr>
-        <tr data-model="&#123;&quot;id&quot;:&quot;xai/grok-4.7&quot;,&quot;name&quot;:&quot;xai/grok-4.7&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:2,&quot;output_price&quot;:6&#125;">
-          <th scope="row"><span class="catalog-model-name">xai/grok-4.7</span><code>xai/grok-4.7</code></th>
-          <td>Perplexity</td>
-          <td class="catalog-modalities"><span><b>In</b> </span><span><b>Out</b> </span></td>
-          <td><div class="catalog-capabilities">—</div></td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">—</td>
-          <td class="catalog-numeric">$2<small>Cache read $0.5</small><small>Cache write $2</small></td>
-          <td class="catalog-numeric">$6</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;xhigh&quot;,&quot;name&quot;:&quot;xhigh&quot;,&quot;provider&quot;:&quot;Perplexity&quot;,&quot;capabilities&quot;:[&quot;Streaming&quot;,&quot;Structured output&quot;,&quot;Citations&quot;,&quot;Tools&quot;],&quot;modalities&quot;:[],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:null,&quot;output_price&quot;:null&#125;">
           <th scope="row"><span class="catalog-model-name">xhigh</span><code>xhigh</code></th>

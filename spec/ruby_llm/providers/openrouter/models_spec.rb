@@ -132,6 +132,19 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Models do
       expect(model.modalities.to_h).to eq(input: ['text'], output: ['rerank'])
       expect(model.type).to eq(:rerank)
     end
+
+    it 'reads decision models as judgment models' do
+      response = response_for(
+        'id' => 'typesafe/jev-1.14', 'supported_parameters' => [],
+        'architecture' => { 'input_modalities' => %w[text image], 'output_modalities' => ['decisions'] }
+      )
+
+      model = parser.parse_list_models_response(response, 'openrouter').first
+
+      expect(model.modalities.to_h).to eq(input: %w[text image], output: ['judgment'])
+      expect(model.type).to eq(:judgment)
+      expect(model.supports?(:judgment)).to be(true)
+    end
   end
 
   describe '#supported_parameters_to_capabilities' do

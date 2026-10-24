@@ -30,13 +30,18 @@ module RubyLLM
         end
       end
 
+      # OpenRouter's dialect of the System One API for decision models such as Jev and Clef.
+      class SystemOne < Protocols::SystemOne
+        include OpenRouter::Judgments
+      end
+
       protocol :chat_completions, ChatCompletions, batches: Protocols::OpenRouter::Batches
       protocol :responses, Protocols::OpenRouter::Responses
       protocol :files, Protocols::OpenRouter::Files
+      protocol :system_one, SystemOne
 
-      def resolve_protocol(name, model, **request)
-        return fetch_protocol(:chat_completions) if !name && request[:operation]
-
+      def resolve_protocol(name, model, operation: nil, **options)
+        name ||= (operation == :judge ? :system_one : :chat_completions) if operation
         super
       end
 
