@@ -135,6 +135,7 @@ module RubyLLM
             server_tool_use: server_tool_use(usage),
             reported_cost: reported_cost(usage),
             finish_reason: finish_reason,
+            content_filters: ContentFilters.parse_content_filters(data),
             model: data['model'],
             raw: raw
           )

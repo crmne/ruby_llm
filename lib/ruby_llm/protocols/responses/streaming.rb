@@ -89,6 +89,7 @@ module RubyLLM
           chunk model: response['model'],
                 tool_calls: parse_tool_approvals(output, finish_reason: parse_finish_reason(response)),
                 finish_reason: parse_finish_reason(response),
+                content_filters: ChatCompletions::ContentFilters.parse_content_filters(response),
                 citations: parse_citations(response, output, nil),
                 server_tool_calls: server_tool_calls,
                 raw_content: keep_raw_output?(output, server_tool_calls) ? output : nil,
