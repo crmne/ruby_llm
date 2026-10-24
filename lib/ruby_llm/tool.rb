@@ -344,6 +344,14 @@ module RubyLLM
       self.class.provider_options
     end
 
+    # Returns whether this tool waits to be found by tool search: whether
+    # its class was declared with ::defer. A subclass may override it to
+    # decide per instance. Chat#with_tools and Chat#with_mcp take +defer:+
+    # to decide for every tool they register.
+    def deferred?
+      self.class.deferred?
+    end
+
     class Deferred < SimpleDelegator # :nodoc:
     end
 

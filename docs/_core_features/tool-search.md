@@ -33,7 +33,7 @@ After reading this guide, you will know:
 
 Every tool a chat registers sends its name, description, and schema with every request. An MCP server like GitHub's offers dozens of tools, and connecting a few servers puts hundreds of definitions in front of the model before it reads your question. That costs input tokens on every turn, and models pick the right tool less often when they have to choose from a long list.
 
-A deferred tool stays out of the model's context. The provider gives the model a search tool instead, and the model searches for what it needs: "weather" finds `weather_lookup`. The provider then loads the matching definitions, and the model calls them like any other tool. Your tools run the same way they always do.
+A deferred tool stays out of the model's context. The model gets a search tool instead, and searches for what it needs: "weather" finds `weather_lookup`. The matching definitions are then loaded, and the model calls them like any other tool. Your tools run the same way they always do.
 
 ## Deferring an MCP Server's Tools
 
@@ -90,6 +90,19 @@ chat.with_tools(DeepResearch, defer: false)
 
 The second call registers it as an ordinary tool for that chat.
 
+To decide per instance, override `deferred?`:
+
+```ruby
+class ConnectorTool < RubyLLM::Tool
+  def initialize(defer: false)
+    super()
+    @defer = defer
+  end
+
+  def deferred? = @defer
+end
+```
+
 ## Agents and Rails
 
 Agents pass `defer:` from their `tools` and `mcp` macros:
@@ -99,6 +112,15 @@ class SupportAgent < RubyLLM::Agent
   model "{{ site.models.anthropic_current }}"
   tools LookupAccount
   mcp Zendesk, Stripe, defer: true
+end
+```
+
+A lambda decides when the chat is built, so a chat with few tools can keep them all in front of the model:
+
+```ruby
+class SupportAgent < RubyLLM::Agent
+  inputs :account
+  mcp(defer: -> { account.connectors.many? }) { account.connectors.map(&:server) }
 end
 ```
 
@@ -135,11 +157,20 @@ See [Provider Tools]({% link _core_features/provider-tools.md %}) for how raw to
 
 ## Provider Support
 
-RubyLLM defers tools wherever it speaks Anthropic's Messages API or OpenAI's Responses API, including Claude on Vertex AI. It does not check the model first: a model without tool search answers with the provider's error. Check the provider's documentation for the models that support it.
+RubyLLM uses the provider's own tool search wherever it speaks Anthropic's Messages API or OpenAI's Responses API, including Claude on Vertex AI and GPT on Azure. It does not check the model first: a model without tool search answers with the provider's error. Check the provider's documentation for the models that support it.
 
-Other providers and protocols, such as Gemini and OpenAI's Chat Completions API, receive deferred tools as ordinary tools. The same code runs everywhere, and only the token savings depend on the provider.
+Every other provider and protocol, such as Gemini, Bedrock's Converse API, and OpenAI's Chat Completions API, gets a `tool_search` tool from RubyLLM instead. Its description lists the deferred tools by name, and the model calls it with a few words, or with `select:` and tool names:
 
-When a chat switches to another model of the same provider, the tools the earlier model found stay found. Switching to another provider starts over: a model with tool search searches again, and one without it receives every tool.
+```ruby
+chat = RubyLLM.chat(model: "{{ site.models.gemini_current }}")
+chat.with_tools(CurrentTime).with_tools(*Catalog.tools, defer: true)
+
+chat.tools.keys  # => [:current_time, :search_issues, ..., :tool_search]
+```
+
+The tools it finds are sent with every request after that, after the tools that are not deferred, in the order the conversation first loaded or called them. A deferred tool the conversation called stays loaded too. Each request repeats the one before it and adds to its end, so a prompt cache that covers the tools keeps hitting until the model loads another one. The search and its result are an ordinary tool call in `messages`, so a persisted chat keeps what it loaded.
+
+When a chat switches to another model of the same provider, the tools the earlier model found stay found. Switching to another provider starts over: a model with tool search searches again with the provider's search, and one without it loads tools with `tool_search`.
 
 ## Next Steps
 

@@ -158,6 +158,12 @@ module RubyLLM
       raise Error, "#{@provider.name} doesn't support chat"
     end
 
+    # Returns whether the API searches deferred tools itself. Chat gives a
+    # model on any other API a +tool_search+ tool of its own instead.
+    def tool_search?
+      false
+    end
+
     # Writes the chat's safety identifier into the request payload and
     # returns it. The default drops the value with a debug log, so
     # providers with no equivalent field simply omit it. Protocols whose
