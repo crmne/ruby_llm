@@ -203,6 +203,7 @@ module RubyLLM
       @provider_options = Support::Utils.deep_dup(@provider_options)
       @callbacks = @callbacks.dup.transform_values!(&:dup)
       @skill_loader = build_skill_loader
+      @tool_search_tool = nil
       with_code_execution(**@code_execution) if @code_execution
       with_file_store(file_store, spill_to_file: @file_references.spill_to_file) if @file_references
       @message_queue = build_message_queue(@message_queue.to_a) if @message_queue.is_a?(MessageQueue)

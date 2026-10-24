@@ -65,7 +65,7 @@ module RubyLLM
       private
 
       def matches(tools, query, limit)
-        return selected(tools, query.delete_prefix(SELECT)) if query.start_with?(SELECT)
+        return selected(tools, query.delete_prefix(SELECT)).first(limit) if query.start_with?(SELECT)
 
         terms = words(query)
         ranked = tools.values.each_with_index.filter_map do |tool, index|

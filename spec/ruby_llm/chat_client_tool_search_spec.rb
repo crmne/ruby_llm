@@ -101,6 +101,15 @@ RSpec.describe RubyLLM::Chat do
       expect(declared(chat)).to eq(%w[current_time tool_search])
     end
 
+    it "searches a copy's own deferred tools" do
+      bond_price = Class.new(StockPrice) { def self.tool_name = 'bond_price' }
+      chat.tools
+      copy = chat.dup.with_tools(bond_price.new.defer)
+
+      expect(copy.tools[:tool_search].description).to include('bond_price')
+      expect(chat.tools[:tool_search].description).not_to include('bond_price')
+    end
+
     it 'offers no search tool when nothing is deferred' do
       plain = RubyLLM.chat(model: model_for(:gemini), provider: :gemini).with_tools(CurrentTime)
 
@@ -143,6 +152,11 @@ RSpec.describe RubyLLM::Chat do
         .to_h { |found| [found.name.to_sym, found] }
     end
     let(:search) { described_class.new(-> { tools }) }
+
+    it 'loads no more than the limit by name either' do
+      expect(search.call(query: 'select:news_search,clip_save,stock_price', limit: 2)[:loaded])
+        .to eq(%w[news_search clip_save])
+    end
 
     it 'ranks a word of the name over part of it, and that over the description' do
       expect(search.call(query: 'news')[:loaded]).to eq(%w[news_search newsletter_send clip_save])
