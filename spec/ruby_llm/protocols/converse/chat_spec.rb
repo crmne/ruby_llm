@@ -643,6 +643,38 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       expect(payload[:messages].first).not_to have_key(:finishReason)
       expect(payload[:messages].first[:content]).to eq([{ text: 'Done' }])
     end
+
+    it 'makes the documents a tool returns citable only when citations are on' do
+      pdf_path = File.expand_path('../../../fixtures/sample.pdf', __dir__)
+      facts = RubyLLM::Attachment.new(StringIO.new('Matz created Ruby.'), filename: 'facts.txt')
+      message = RubyLLM::Message.new(role: :tool, content: 'Found it', tool_call_id: 'call_a',
+                                     attachments: [pdf_path, facts])
+      attachment_blocks = lambda do |**options|
+        tool_result = render_payload([message], **options)[:messages].first[:content].first[:toolResult]
+        tool_result[:content].drop(1).map { |block| block[:document]&.except(:source) || block.keys }
+      end
+
+      expect(attachment_blocks.call(citations: true)).to eq(
+        [{ format: 'pdf', name: 'sample', citations: { enabled: true } },
+         { format: 'txt', name: 'facts', citations: { enabled: true } }]
+      )
+      expect(attachment_blocks.call).to eq([{ format: 'pdf', name: 'sample' }, [:text]])
+    end
+
+    it 'names a citable document a tool returns apart from the documents the user attached' do
+      facts = RubyLLM::Attachment.new(StringIO.new('Matz created Ruby.'), filename: 'facts.txt')
+      messages = [
+        RubyLLM::Message.new(role: :user, content: 'Who created Ruby?', attachments: [facts]),
+        RubyLLM::Message.new(role: :tool, content: 'Found it', tool_call_id: 'call_a', attachments: [facts])
+      ]
+
+      tool_result = render_payload(messages, citations: true)[:messages].last[:content].first[:toolResult]
+
+      expect(tool_result[:content].last).to eq(
+        document: { format: 'txt', name: 'facts_2', source: { text: 'Matz created Ruby.' },
+                    citations: { enabled: true } }
+      )
+    end
   end
 
   describe '.render_tool_config' do
