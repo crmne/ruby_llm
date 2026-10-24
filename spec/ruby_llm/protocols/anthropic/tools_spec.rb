@@ -329,6 +329,14 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
         ]
       )
     end
+
+    it 'labels a search result with its source_id in place of its url' do
+      results = RubyLLM::SearchResults.new(title: 'Guide', url: 'https://example.com/guide',
+                                           source_id: 'gid://app/Document/42', text: 'Ruby is fun.')
+      message = RubyLLM::Message.new(role: :tool, content: results.to_json, tool_call_id: 'tool_1')
+
+      expect(described_class.render_tool_result_content(message).first[:source]).to eq('gid://app/Document/42')
+    end
   end
 
   describe '.apply_tool_search' do

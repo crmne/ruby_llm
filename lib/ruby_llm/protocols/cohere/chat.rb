@@ -193,6 +193,7 @@ module RubyLLM
             text: data['text'],
             start_index: start_index,
             end_index: end_index,
+            source_id: tool_output_id(source),
             source_index: source_index(source)
           )
         end
@@ -220,6 +221,12 @@ module RubyLLM
         def citation_url(document)
           url = document['url']
           url if url.is_a?(String) && url.match?(%r{\Ahttps?://}i)
+        end
+
+        # Cohere cites a tool output by the id its document was sent with,
+        # so a search result comes back with its source_id or URL.
+        def tool_output_id(source)
+          source['id'] if source && source['type'] == 'tool'
         end
 
         # Documents RubyLLM sends, and those Cohere numbers itself, are

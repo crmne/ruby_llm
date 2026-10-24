@@ -13,12 +13,16 @@ module RubyLLM
   #     )
   #   end
   #
-  # Cited passages come back on the response as Message#citations.
+  # Cited passages come back on the response as Message#citations. Give a
+  # result a +:source_id+ String, such as a Global ID, to identify it to
+  # your app; its citations return it as Citation#source_id.
+  #
+  #   RubyLLM::SearchResults.new(title: doc.name, source_id: doc.to_global_id.to_s, text: doc.body)
   class SearchResults
     KEY = 'search_results' # :nodoc:
 
     # The normalized results, as an array of hashes with +:title+, +:text+,
-    # and optional +:url+ keys.
+    # and optional +:url+ and +:source_id+ keys.
     attr_reader :results
 
     # Returns a new SearchResults built from one or more result hashes, or
@@ -27,7 +31,8 @@ module RubyLLM
     #   RubyLLM::SearchResults.new(title: 'Q4 Report', url: report_url, text: report_text)
     #   RubyLLM::SearchResults.new({ title: 'A', text: '...' }, { title: 'B', text: '...' })
     #
-    # Each result is reduced to its +:title+, +:url+, and +:text+ entries.
+    # Each result is reduced to its +:title+, +:url+, +:source_id+, and
+    # +:text+ entries.
     # Raises ArgumentError if no results are given or a result is missing
     # +:title+ or +:text+.
     def initialize(*results, **result)
@@ -62,7 +67,7 @@ module RubyLLM
       entry = Support::Utils.deep_symbolize_keys(entry.to_h)
       raise ArgumentError, 'Search results require :title and :text' unless entry[:title] && entry[:text]
 
-      entry.slice(:title, :url, :text)
+      entry.slice(:title, :url, :source_id, :text)
     end
   end
 end
