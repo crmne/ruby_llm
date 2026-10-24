@@ -61,7 +61,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Schemas do
       rendered = described_class.render_schema(schema)
 
       expect(described_class.nesting(rendered)).to be <= described_class::MAX_DEPTH
-      expect(rendered.to_s).to include('"additionalProperties" => false')
+      expect(JSON.generate(rendered)).to include('"additionalProperties":false')
     end
 
     it 'moves the subschemas of a schema that references other documents' do
