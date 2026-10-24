@@ -96,6 +96,25 @@ RSpec.describe RubyLLM::Protocols::Gemini::Schemas do
       expect(rendered.keys).to include('properties', '$defs')
     end
 
+    it 'leaves a schema alone when a reference points inside a definition' do
+      schema = { 'type' => 'object', 'properties' => { 'leaf' => { '$ref' => '#/$defs/Tree/properties/child' } },
+                 '$defs' => { 'Tree' => nested(20) } }
+
+      expect(described_class.render_schema(schema)).to eq(schema)
+    end
+
+    it 'leaves a schema alone when a subschema starts a resource of its own' do
+      schema = nested(20, { '$id' => 'https://example.com/leaf.json', 'type' => 'string' })
+
+      expect(described_class.render_schema(schema)).to eq(schema)
+    end
+
+    it 'moves the subschemas of a schema that names itself' do
+      schema = nested(20).merge('$id' => 'https://example.com/tree.json')
+
+      expect(described_class.nesting(described_class.render_schema(schema))).to be <= described_class::MAX_DEPTH
+    end
+
     it 'leaves a schema alone when moving its subschemas would break a reference into it' do
       properties = nested(20)['properties'].merge('copy' => { '$ref' => '#/properties/child' })
       schema = nested(20).merge('properties' => properties)

@@ -23,9 +23,11 @@ module RubyLLM
           return schema unless schema.is_a?(Hash) && nesting(schema) > MAX_DEPTH
 
           schema = Support::Utils.deep_stringify_keys(schema)
-          return schema unless references_only_definitions?(schema)
+          movable?(schema) ? Hoisting.new(schema).schema : schema
+        end
 
-          Hoisting.new(schema).schema
+        def movable?(schema)
+          references_only_definitions?(schema) && !identified?(schema.except('$id'))
         end
 
         def nesting(value)
@@ -49,9 +51,21 @@ module RubyLLM
           end
         end
 
+        # Only a whole definition, since a pointer into one could pass
+        # through a subschema that moved.
         def definition_reference?(reference)
           !reference.is_a?(String) || !reference.start_with?('#') ||
-            DEFINITION_KEYS.any? { |key| reference.start_with?("#/#{key}/") }
+            DEFINITION_KEYS.any? { |key| reference.match?(%r{\A#/#{Regexp.escape(key)}/[^/]+\z}) }
+        end
+
+        # A nested $id starts a resource of its own, whose references
+        # resolve against it rather than the root.
+        def identified?(value)
+          case value
+          when Hash then value.key?('$id') || value.values.any? { |child| identified?(child) }
+          when Array then value.any? { |child| identified?(child) }
+          else false
+          end
         end
 
         # Rewrites one schema, moving each subschema at HOIST_DEPTH or
