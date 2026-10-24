@@ -48,6 +48,8 @@ module MutationTesting
         def survivor_json(survivor) = survivor.transform_keys(&:to_sym)
 
         def per_source_json(_file, entry) = entry.transform_keys(&:to_sym)
+
+        def ignored_json(ignored) = ignored.entry.transform_keys(&:to_sym)
       end
     end
 
@@ -76,5 +78,11 @@ module MutationTesting
     def surviving_mutants = @document.fetch('survivors')
 
     def by_source = @document.fetch('per_source').map { |entry| [entry['file'], entry] }
+
+    def results = @document.fetch('ignored', []).map { |entry| Ignored.new(entry) }
+
+    Ignored = Data.define(:entry) do
+      def ignored? = true
+    end
   end
 end
