@@ -2,6 +2,7 @@
 
 require 'digest'
 require 'fileutils'
+require 'open3'
 require 'rbconfig'
 require 'tmpdir'
 
@@ -13,6 +14,8 @@ module RubyLLM
     # application uses hidden entirely. RubyGems lists the plugins
     # directory on every +gem+ command, so only the application's plugins
     # are hidden, not the directory: macOS refuses to list a hidden one.
+    # The libraries its extensions link outside the installation, such as
+    # Homebrew's OpenSSL and libyaml on macOS, are mounted read-only too.
     class RubyInstallation # :nodoc:
       HIDDEN_DIRECTORIES = %w[cache doc].freeze
       BUILD_MARKER = 'gem.build_complete'
@@ -21,14 +24,17 @@ module RubyLLM
         @current ||= new
       end
 
-      def initialize(prefix: RbConfig::CONFIG['prefix'], gem_dir: Gem.default_dir, gem_path: Gem.path)
+      def initialize(prefix: RbConfig::CONFIG['prefix'], gem_dir: Gem.default_dir, gem_path: Gem.path,
+                     archdir: RbConfig::CONFIG['rubyarchdir'])
         @prefix = prefix
         @gem_dir = gem_dir
         @gem_path = gem_path
+        @archdir = archdir
       end
 
       def readable
-        @gem_dir.start_with?(File.join(@prefix, '')) ? [@prefix] : [@prefix, @gem_dir]
+        installation = @gem_dir.start_with?(File.join(@prefix, '')) ? [@prefix] : [@prefix, @gem_dir]
+        installation + library_directories
       end
 
       def denied
@@ -64,6 +70,37 @@ module RubyLLM
       end
 
       private
+
+      def library_directories
+        @library_directories ||= linked_libraries.filter_map do |library|
+          path = File.realpath(library)
+          next if path.start_with?(File.join(File.realpath(@prefix), ''))
+
+          File.dirname(path)
+        rescue SystemCallError
+          nil
+        end.uniq
+      end
+
+      def linked_libraries
+        return [] unless @archdir && RUBY_PLATFORM.include?('darwin')
+
+        bundles = Dir.glob(File.join(@archdir, '**', '*.bundle'))
+        return [] if bundles.empty? || !developer_tools?
+
+        output, status = Open3.capture2('otool', '-L', *bundles, err: File::NULL)
+        return [] unless status.success?
+
+        output.lines.filter_map { |line| line[/\A\s+(.+) \(compatibility version /, 1] }
+      rescue SystemCallError
+        []
+      end
+
+      # Without the Command Line Tools, macOS answers +otool+ with a dialog
+      # offering to install them.
+      def developer_tools?
+        Kernel.system('xcode-select', '-p', out: File::NULL, err: File::NULL)
+      end
 
       def application_gems
         installed_stubs.reject { |stub| ruby_gem?(stub.name) }

@@ -241,7 +241,7 @@ RSpec.describe RubyLLM::CodeExecution::Packages do
   it 'gives runs without packages only the Ruby installation' do
     none = packages
 
-    expect(none.readable).to all(start_with(RbConfig::CONFIG['prefix']).or(eq(Gem.default_dir)))
+    expect(none.readable).to eq(RubyLLM::CodeExecution::RubyInstallation.current.readable)
     expect(none.env('/home', '/tmp/run')).to include('HOME' => '/home', 'XDG_CACHE_HOME' => '/home/.cache',
                                                      'TMPDIR' => '/tmp/run')
     expect(none.env('/home').keys).to contain_exactly('PATH', 'HOME', 'XDG_CACHE_HOME', 'TMPDIR', 'LANG')
