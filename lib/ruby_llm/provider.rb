@@ -159,6 +159,10 @@ module RubyLLM
       )
     end
 
+    def tool_search?(model, protocol: nil) # :nodoc:
+      preprocessing_protocol(protocol, model).tool_search?
+    end
+
     def tool_approval_response(tool_call, approved:, model:, protocol: nil) # :nodoc:
       resolve_protocol(protocol, model).new(self, model).tool_approval_response(tool_call, approved:)
     end

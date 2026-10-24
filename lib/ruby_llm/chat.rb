@@ -203,6 +203,7 @@ module RubyLLM
       @provider_options = Support::Utils.deep_dup(@provider_options)
       @callbacks = @callbacks.dup.transform_values!(&:dup)
       @skill_loader = build_skill_loader
+      @tool_search_tool = nil
       with_code_execution(**@code_execution) if @code_execution
       with_file_store(file_store, spill_to_file: @file_references.spill_to_file) if @file_references
       @message_queue = build_message_queue(@message_queue.to_a) if @message_queue.is_a?(MessageQueue)
@@ -623,7 +624,7 @@ module RubyLLM
         tool = tool.new if tool.is_a?(Class)
         name = tool.name.to_sym
         @tools[name] = tool
-        @tool_deferrals[name] = defer.nil? ? tool.class.deferred? : defer
+        @tool_deferrals[name] = defer.nil? ? tool.deferred? : defer
       end
       self
     end
@@ -636,7 +637,7 @@ module RubyLLM
     # Raises ArgumentError when two tools share a name.
     def tools
       offered = @tools.reject { |_, tool| hidden_from_model?(tool) }
-      built_in = [@code_execution_tool, (@skill_loader if skills.any?), *@file_tools]
+      built_in = [@code_execution_tool, (@skill_loader if skills.any?), *@file_tools, tool_search_tool]
       [*built_in, *mcp.flat_map(&:tools)].compact.each_with_object(offered) do |tool, tools|
         next if hidden_from_model?(tool)
 

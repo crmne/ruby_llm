@@ -233,6 +233,18 @@ RSpec.describe RubyLLM::Agent do
     it 'inherits the setting' do
       expect(Class.new(agent_with_tools(echo_tool, defer: true)).chat.deferred_tools.keys).to eq([:echo])
     end
+
+    it 'decides when the chat is built from a lambda' do
+      tool = echo_tool
+      agent = Class.new(described_class) do
+        model model_for(:openai, :temperature), provider: :openai
+        inputs :many
+        tools tool, defer: -> { many }
+      end
+
+      expect(agent.chat(many: true).deferred_tools.keys).to eq([:echo])
+      expect(agent.chat(many: false).deferred_tools).to be_empty
+    end
   end
 
   describe 'deferred configuration blocks' do

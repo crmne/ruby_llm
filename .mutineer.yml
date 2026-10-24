@@ -6,6 +6,9 @@ capture_timeout: 1200
 # Equivalent mutants. An id changes when its method changes, so recheck
 # the entry when you edit one of these methods.
 ignore:
+  # Tools::Search#initialize: Tool defines no initialize, so super() sets
+  # nothing up.
+  - da765b7a56dc
   # RunClaims#release_run_claim: no claim token is true either.
   - 47b0cc41573b
   # RunClaims#run_claims?: only an unsaved chat tells them apart, and it

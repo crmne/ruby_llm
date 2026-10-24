@@ -522,6 +522,17 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.with_mcp(files).deferred_tools.keys).to eq([:echo])
     end
 
+    it 'defers a tool class added to a server that defers itself' do
+      deferred = Class.new(RubyLLM::Tool) do
+        defer
+        def self.tool_name = 'lookup'
+        def execute = 'found'
+      end
+      files_class.tool deferred
+
+      expect(chat.with_mcp(files).deferred_tools.keys).to eq([:lookup])
+    end
+
     it 'offers declared tools up front with defer: false' do
       files_class.defer
 

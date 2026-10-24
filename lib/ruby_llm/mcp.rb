@@ -638,9 +638,9 @@ module RubyLLM
     end
 
     # Returns whether +tool+, one of this MCP's tools, is deferred
-    # according to ::defer or a Tool class's own Tool.defer.
+    # according to ::defer or the tool's own Tool#deferred?.
     def defers?(tool) # :nodoc:
-      return true if tool.class.deferred?
+      return true if tool.deferred?
 
       self.class.deferrals.any? do |names|
         names.empty? || (tool.respond_to?(:server_name) && names.include?(tool.server_name))
