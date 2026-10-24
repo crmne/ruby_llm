@@ -90,17 +90,10 @@ chat.with_tools(DeepResearch, defer: false)
 
 The second call registers it as an ordinary tool for that chat.
 
-To decide per instance, override `deferred?`:
+To defer one tool and not others of its class, call `defer` on it:
 
 ```ruby
-class ConnectorTool < RubyLLM::Tool
-  def initialize(defer: false)
-    super()
-    @defer = defer
-  end
-
-  def deferred? = @defer
-end
+chat.with_tools(CurrentTime.new, *connector_tools.map(&:defer))
 ```
 
 ## Agents and Rails

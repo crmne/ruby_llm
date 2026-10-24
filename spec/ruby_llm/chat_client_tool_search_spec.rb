@@ -118,12 +118,13 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
-  it 'defers a tool whose instance says so' do
-    tool = WeatherLookup.new
-    tool.define_singleton_method(:deferred?) { true }
+  it 'defers one instance of a tool class' do
+    chat = RubyLLM.chat(model: model_for(:gemini), provider: :gemini)
 
-    expect(RubyLLM.chat(model: model_for(:gemini), provider: :gemini).with_tools(tool).deferred_tools.keys)
-      .to eq(%i[weather_lookup])
+    chat.with_tools(WeatherLookup.new.defer, StockPrice.new)
+
+    expect(chat.deferred_tools.keys).to eq(%i[weather_lookup])
+    expect(WeatherLookup.new).not_to be_deferred
   end
 
   describe RubyLLM::Tools::Search do

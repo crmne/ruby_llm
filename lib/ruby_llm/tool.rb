@@ -344,12 +344,22 @@ module RubyLLM
       self.class.provider_options
     end
 
+    # Keeps this tool, and no other of its class, out of the model's
+    # context until tool search loads it, as ::defer does for the class.
+    # Returns +self+. Chat#with_tools and Chat#with_mcp take +defer:+ to
+    # decide for every tool they register instead.
+    #
+    #   chat.with_tools(CurrentTime.new, *connector_tools.map(&:defer))
+    #
+    def defer
+      @deferred = true
+      self
+    end
+
     # Returns whether this tool waits to be found by tool search: whether
-    # its class was declared with ::defer. A subclass may override it to
-    # decide per instance. Chat#with_tools and Chat#with_mcp take +defer:+
-    # to decide for every tool they register.
+    # it was deferred with #defer, or its class with ::defer.
     def deferred?
-      self.class.deferred?
+      @deferred || self.class.deferred?
     end
 
     class Deferred < SimpleDelegator # :nodoc:
