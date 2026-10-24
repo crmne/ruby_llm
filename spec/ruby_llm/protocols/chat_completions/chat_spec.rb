@@ -46,32 +46,34 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       expect(message.tokens.to_h).to be_empty
     end
 
-    it 'captures cache write tokens for models that bill cache writes' do
-      response_body = {
-        'model' => 'gpt-5.6',
-        'choices' => [
-          {
-            'message' => {
-              'role' => 'assistant',
-              'content' => 'Hello!'
+    %w[cache_write_tokens created_cache_tokens].each do |key|
+      it "captures #{key} as cache write tokens" do
+        response_body = {
+          'model' => 'gpt-5.6',
+          'choices' => [
+            {
+              'message' => {
+                'role' => 'assistant',
+                'content' => 'Hello!'
+              }
             }
+          ],
+          'usage' => {
+            'prompt_tokens' => 2048,
+            'completion_tokens' => 4,
+            'prompt_tokens_details' => { 'cached_tokens' => 1920, key => 100 }
           }
-        ],
-        'usage' => {
-          'prompt_tokens' => 2048,
-          'completion_tokens' => 4,
-          'prompt_tokens_details' => { 'cached_tokens' => 1920, 'cache_write_tokens' => 100 }
         }
-      }
 
-      response = instance_double(Faraday::Response, body: response_body)
-      allow(described_class).to receive(:parse_tool_calls).and_return(nil)
+        response = instance_double(Faraday::Response, body: response_body)
+        allow(described_class).to receive(:parse_tool_calls).and_return(nil)
 
-      message = described_class.parse_completion_body(response_body, raw: response)
+        message = described_class.parse_completion_body(response_body, raw: response)
 
-      expect(message.tokens.cache_read).to eq(1920)
-      expect(message.tokens.cache_write).to eq(100)
-      expect(message.tokens.input).to eq(28)
+        expect(message.tokens.cache_read).to eq(1920)
+        expect(message.tokens.cache_write).to eq(100)
+        expect(message.tokens.input).to eq(28)
+      end
     end
 
     it 'surfaces a refusal as content' do
