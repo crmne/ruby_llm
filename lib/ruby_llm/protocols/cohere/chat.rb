@@ -145,7 +145,8 @@ module RubyLLM
 
           {
             input_tokens: billed['input_tokens'] || tokens['input_tokens'],
-            output_tokens: billed['output_tokens'] || tokens['output_tokens']
+            output_tokens: billed['output_tokens'] || tokens['output_tokens'],
+            thinking_tokens: tokens['reasoning_tokens']
           }
         end
 
