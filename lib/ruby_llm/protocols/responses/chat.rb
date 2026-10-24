@@ -5,6 +5,8 @@ module RubyLLM
     class Responses
       # Chat methods of the OpenAI Responses API
       module Chat
+        def tool_namespaces? = true
+
         def completion_url
           'responses'
         end
@@ -34,7 +36,7 @@ module RubyLLM
           payload[:max_output_tokens] = max_output_tokens unless max_output_tokens.nil?
 
           if tools.any?
-            payload[:tools] = tools.map { |_, tool| tool_for(tool) }
+            payload[:tools] = render_tools(tools)
             payload[:tool_choice] = build_tool_choice(tool_prefs[:choice]) unless tool_prefs[:choice].nil?
             payload[:parallel_tool_calls] = tool_prefs[:calls] == :many unless tool_prefs[:calls].nil?
           end
@@ -427,8 +429,9 @@ module RubyLLM
               type: 'function_call',
               call_id: tc.provider_call_id,
               name: tc.name,
+              namespace: tc.namespace,
               arguments: JSON.generate(tc.arguments)
-            }
+            }.compact
           end
         end
 
@@ -480,6 +483,7 @@ module RubyLLM
             ToolCall.new(
               provider_call_id: call['call_id'],
               name: call['name'],
+              namespace: call['namespace'],
               arguments: parse_function_call_arguments(arguments, response: response, finish_reason: finish_reason)
             )
           end, by: :provider_call_id)

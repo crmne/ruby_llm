@@ -275,7 +275,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
 
     describe 'tool_choice' do
       let(:tool) do
-        instance_double(RubyLLM::Tool, name: 'weather', description: 'Weather', parameters_schema: nil,
+        instance_double(RubyLLM::Tool, name: 'weather', namespace: nil, description: 'Weather', parameters_schema: nil,
                                        declared_parameters: {}, provider_options: {})
       end
 

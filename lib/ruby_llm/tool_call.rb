@@ -31,6 +31,17 @@ module RubyLLM
     # The name of the tool the model wants to invoke.
     attr_reader :name
 
+    # The namespace that owns this member, or +nil+ for an ordinary call.
+    attr_reader :namespace
+
+    # Returns whether the provider requires calls in this namespace to run
+    # in order within the response, stopping after a recoverable failure.
+    def sequential? = @sequential
+
+    def qualified_name # :nodoc:
+      namespace ? "#{namespace}.#{name}" : name
+    end
+
     # The arguments the model supplied for the invocation, as a Hash. Keys
     # are ordered the way PostgreSQL +jsonb+ and MySQL +json+ store them,
     # shorter keys first, so a call reloaded from the database renders the
@@ -46,10 +57,12 @@ module RubyLLM
     attr_accessor :thought_signature
 
     def initialize(name:, id: nil, provider_call_id: nil, arguments: {}, thought_signature: nil,
-                   remote: false) # :nodoc:
+                   remote: false, namespace: nil, sequential: false) # :nodoc:
       @id = id
       @provider_call_id = provider_call_id
       @name = name
+      @namespace = namespace&.to_s
+      @sequential = sequential
       @arguments = canonical_arguments(arguments)
       @thought_signature = thought_signature
       @remote = remote
@@ -65,7 +78,7 @@ module RubyLLM
     end
 
     def inspect_attributes # :nodoc:
-      { id: id, name: name, arguments: arguments, remote: remote? || nil }.compact
+      { id: id, name: name, namespace: namespace, arguments: arguments, remote: remote? || nil }.compact
     end
 
     # Returns the call as a Hash, omitting +nil+ values.
@@ -74,6 +87,8 @@ module RubyLLM
         id: @id,
         provider_call_id: @provider_call_id,
         name: @name,
+        namespace: @namespace,
+        sequential: sequential? || nil,
         arguments: @arguments,
         remote: remote? || nil,
         thought_signature: @thought_signature

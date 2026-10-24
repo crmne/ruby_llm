@@ -49,6 +49,7 @@ module RubyLLM
     }.freeze
     COPIED_INHERITED_CONFIG = %i[
       @description
+      @namespace
       @parameters_schema_definition
       @requires_approval
       @approval_resolver
@@ -104,6 +105,18 @@ module RubyLLM
         return @description unless text
 
         @description = text
+      end
+
+      # Sets the namespace that owns this tool, or returns its current
+      # namespace. Pass +nil+ to remove an inherited namespace.
+      #
+      #   class Screenshot < RubyLLM::Tool
+      #     namespace "computer"
+      #   end
+      def namespace(value = (get = true))
+        return @namespace if get
+
+        @namespace = value&.to_s
       end
 
       # Declares a parameter for the tool. +options+ accepts +type:+
@@ -305,6 +318,16 @@ module RubyLLM
     #
     def name
       self.class.tool_name
+    end
+
+    # Returns the namespace that owns this tool, or +nil+ for an ordinary
+    # function tool. See ::namespace.
+    def namespace
+      self.class.namespace
+    end
+
+    def qualified_name # :nodoc:
+      namespace ? "#{namespace}.#{name}" : name
     end
 
     # Returns the tool description declared on the class with ::description.

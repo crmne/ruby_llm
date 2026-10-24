@@ -8,6 +8,11 @@ class <%= 'upgrade_ruby_llm_to_2_2'.camelize %> < ActiveRecord::Migration<%= mig
       end
     end
 
+    add_column :ruby_llm_tool_calls, :namespace, :string unless column_exists?(:ruby_llm_tool_calls, :namespace)
+    unless column_exists?(:ruby_llm_tool_calls, :sequential)
+      add_column :ruby_llm_tool_calls, :sequential, :boolean, default: false, null: false
+    end
+
     unless column_exists?(:<%= chat_table_name %>, :claim_token)
       add_column :<%= chat_table_name %>, :claim_token, :string
     end
@@ -58,6 +63,8 @@ class <%= 'upgrade_ruby_llm_to_2_2'.camelize %> < ActiveRecord::Migration<%= mig
     drop_table :ruby_llm_chat_files, if_exists: true
     drop_table :ruby_llm_queued_messages, if_exists: true
     remove_column :<%= message_table_name %>, :phase
+    remove_column :ruby_llm_tool_calls, :namespace
+    remove_column :ruby_llm_tool_calls, :sequential
     remove_column :ruby_llm_tool_calls, :claimed_until
     remove_column :<%= chat_table_name %>, :claimed_until
     remove_column :<%= chat_table_name %>, :claim_token
