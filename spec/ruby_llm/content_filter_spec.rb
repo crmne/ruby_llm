@@ -69,6 +69,24 @@ RSpec.describe RubyLLM::ContentFilter do
     expect(verdicts(chunk)).to eq(expected.last(2))
   end
 
+  it "reads each custom blocklist's verdict" do
+    results = { 'custom_blocklists' => [{ 'id' => 'names', 'filtered' => true },
+                                        { 'id' => 'words', 'filtered' => false }] }
+    body = { 'content_filters' => [{ 'source_type' => 'completion', 'content_filter_results' => results }] }
+
+    filters = RubyLLM::Protocols::ChatCompletions::ContentFilters.parse_content_filters(body)
+
+    expect(filters.map { |filter| [filter.category, filter.filtered?] })
+      .to eq([['custom_blocklists', true], ['custom_blocklists', false]])
+  end
+
+  it 'leaves out what carries no verdict' do
+    results = { 'custom_blocklists' => [{ 'id' => 'names' }, 'names'], 'profanity' => { 'details' => [] } }
+    body = { 'content_filters' => [{ 'source_type' => 'completion', 'content_filter_results' => results }] }
+
+    expect(RubyLLM::Protocols::ChatCompletions::ContentFilters.parse_content_filters(body)).to eq([])
+  end
+
   it 'leaves out sources it does not know' do
     body = { 'content_filters' => [{ 'source_type' => 'tool', 'content_filter_results' => completion_filters }] }
 

@@ -25,12 +25,19 @@ module RubyLLM
         def parse_filter_results(results, source)
           return [] unless results.is_a?(Hash) && ContentFilter::SOURCES.include?(source&.to_sym)
 
-          results.filter_map do |category, verdict|
-            next unless verdict.is_a?(Hash) && verdict.key?('filtered')
-
-            ContentFilter.new(source:, category:, severity: verdict['severity'], filtered: verdict['filtered'],
-                              detected: verdict['detected'])
+          results.flat_map do |category, verdicts|
+            (verdicts.is_a?(Array) ? verdicts : [verdicts]).filter_map do |verdict|
+              parse_verdict(verdict, category, source)
+            end
           end
+        end
+
+        # Custom blocklists come as a list, one verdict for each blocklist.
+        def parse_verdict(verdict, category, source)
+          return unless verdict.is_a?(Hash) && verdict.key?('filtered')
+
+          ContentFilter.new(source:, category:, severity: verdict['severity'], filtered: verdict['filtered'],
+                            detected: verdict['detected'])
         end
       end
     end

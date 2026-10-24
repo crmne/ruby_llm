@@ -202,7 +202,7 @@ Providers that filter content, such as Azure, also say what their filters found,
 
 ```ruby
 if response.content_filtered?
-  response.content_filters.select(&:filtered?).map { [it.source, it.category, it.severity] }
+  response.content_filters.select(&:filtered?).map { |filter| [filter.source, filter.category, filter.severity] }
   # => [[:completion, "hate", "medium"]]
 end
 ```
