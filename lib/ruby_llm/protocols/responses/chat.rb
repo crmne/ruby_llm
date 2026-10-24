@@ -76,6 +76,7 @@ module RubyLLM
             model: data['model'],
             raw: raw,
             finish_reason: finish_reason,
+            content_filters: ChatCompletions::ContentFilters.parse_content_filters(data),
             **parse_usage(data['usage'] || {}),
             server_tool_use: parse_server_tool_use(data)
           )

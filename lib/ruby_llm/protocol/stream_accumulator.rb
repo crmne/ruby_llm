@@ -21,6 +21,7 @@ module RubyLLM
         @raw_content = nil
         @raw_reasoning = nil
         @finish_reason = nil
+        @content_filters = {}
         @latest_provider_call_id = nil
         @provider_call_ids_by_index = {}
       end
@@ -38,6 +39,7 @@ module RubyLLM
         @raw_reasoning = chunk.raw_reasoning if chunk.raw_reasoning
         @phase = chunk.phase if chunk.phase
         @finish_reason = chunk.finish_reason if chunk.finish_reason
+        accumulate_content_filters(chunk.content_filters)
         count_tokens chunk
         RubyLLM.logger.debug { inspect } if RubyLLM.config.log_stream_debug
       end
@@ -58,6 +60,7 @@ module RubyLLM
           raw_reasoning: @raw_reasoning,
           phase: @phase,
           finish_reason: @finish_reason,
+          content_filters: @content_filters.values,
           model: model,
           tool_calls: tool_calls_from_stream(response),
           raw: response
@@ -65,6 +68,15 @@ module RubyLLM
       end
 
       private
+
+      # A stream can judge the same category again as it goes; a verdict
+      # that filtered stays, and otherwise the latest one does.
+      def accumulate_content_filters(filters)
+        filters.each do |filter|
+          key = [filter.source, filter.category]
+          @content_filters[key] = filter unless @content_filters[key]&.filtered?
+        end
+      end
 
       # Providers like Perplexity repeat the full citation list on every chunk.
       def accumulate_citations(new_citations)
