@@ -232,6 +232,53 @@ RSpec.describe RubyLLM::OpenTelemetry do
     expect(spans.first.attributes.to_s).not_to include('private', '0.1', 'output_tokens')
   end
 
+  describe 'standalone operation response models' do
+    def complete_standalone_operation(operation, reported: true)
+      provider_slug = { moderate: :openai, rerank: :cohere, judge: :typesafe }.fetch(operation)
+      requested_model = case operation
+                        when :moderate then RubyLLM.config.default_moderation_model
+                        when :rerank then model_for(:cohere, :rerank)
+                        when :judge then model_for(:typesafe, :judgment)
+                        end
+      response_model = requested_model if reported
+      response = case operation
+                 when :moderate then RubyLLM::Moderation.new(id: 'modr-telemetry', model: response_model, results: [])
+                 when :rerank then RubyLLM::Rerank.new(model: response_model, results: [])
+                 when :judge then RubyLLM::Judgment.new(model: response_model, answers: {})
+                 end
+      model_info, adapter = RubyLLM::Models.resolve(requested_model, provider: provider_slug, config: RubyLLM.config)
+      allow(RubyLLM::Models).to receive(:resolve).and_return([model_info, adapter])
+      allow(adapter).to receive(operation).and_return(response)
+      arguments = operation == :rerank ? ['private query', ['private document']] : ['private input']
+      options = { model: requested_model, provider: provider_slug }
+      options[:questions] = { urgent: { type: :probability, instructions: 'private question' } } if operation == :judge
+
+      result = RubyLLM.public_send(operation, *arguments, **options)
+      expect(result).to equal(response)
+      [result, requested_model]
+    end
+
+    %i[moderate rerank judge].each do |operation|
+      it "records the returned model on #{operation} spans without exporting content" do
+        result, requested_model = complete_standalone_operation(operation)
+
+        expect(result.model).to eq(requested_model)
+        expect(spans.sole.attributes).to include(
+          'gen_ai.request.model' => requested_model, 'gen_ai.response.model' => result.model
+        )
+        expect(spans.sole.attributes.to_s).not_to include('private')
+      end
+
+      it "keeps an unknown response model unknown on #{operation} spans" do
+        result, requested_model = complete_standalone_operation(operation, reported: false)
+
+        expect(result.model).to be_nil
+        expect(spans.sole.attributes['gen_ai.request.model']).to eq(requested_model)
+        expect(spans.sole.attributes).not_to have_key('gen_ai.response.model')
+      end
+    end
+  end
+
   it 'keeps transport retries inside a single model span' do
     context = RubyLLM.context do |config|
       config.max_retries = 1
