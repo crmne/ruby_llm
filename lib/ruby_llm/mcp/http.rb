@@ -277,8 +277,8 @@ module RubyLLM
       end
 
       def forbidden(response)
-        challenge = OAuth.challenge(response[:headers]&.[]('WWW-Authenticate'))
-                         .each_value.find { |parameters| parameters[:error] } || {}
+        challenges = OAuth.challenge(response[:headers]&.[]('WWW-Authenticate')).values.select { |c| c[:error] }
+        challenge = challenges.find { |c| c[:error] == 'insufficient_scope' } || challenges.first || {}
         details = { response: response_for(response), provider: @url.host, error_code: challenge[:error],
                     provider_message: challenge[:error_description] || challenge[:error] }
         message = "#{@url.host} refused the request"

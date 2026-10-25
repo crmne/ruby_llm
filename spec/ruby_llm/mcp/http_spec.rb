@@ -222,6 +222,16 @@ RSpec.describe RubyLLM::MCP::HTTP do
       }
   end
 
+  it 'finds the scope challenge among challenges for other schemes' do
+    stub_method('server/discover', result: discover_result)
+    stub_method('tools/call', status: 403, body: '', headers: {
+                  'WWW-Authenticate' => 'DPoP error="invalid_token", Bearer error="insufficient_scope", scope="repo"'
+                })
+
+    expect { client.request('tools/call', { name: 'list_issues' }) }
+      .to raise_error(RubyLLM::MCP::InsufficientScopeError) { |error| expect(error.scopes).to eq(['repo']) }
+  end
+
   it 'raises a plain forbidden error for a 403 without a scope challenge' do
     stub_method('server/discover', result: discover_result)
     stub_method('tools/call', status: 403, body: '',
