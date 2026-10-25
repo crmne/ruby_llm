@@ -18,6 +18,10 @@ RSpec.describe RubyLLM::Provider, '.capability augmenters' do
     expect(augment(RubyLLM::Providers::DeepSeek, ['function_calling'])).to contain_exactly(
       'function_calling', 'tool_choice'
     )
+    expect(augment(RubyLLM::Providers::Moonshot, ['function_calling'])).to contain_exactly(
+      'function_calling', 'tool_choice'
+    )
+    expect(augment(RubyLLM::Providers::Moonshot, [])).to be_empty
     expect(augment(RubyLLM::Providers::Anthropic, ['function_calling'])).to contain_exactly(
       'function_calling', 'tool_choice', 'parallel_tool_calls'
     )

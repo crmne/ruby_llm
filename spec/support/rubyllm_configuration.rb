@@ -32,8 +32,11 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.hetzner_api_key = ENV.fetch('HETZNER_API_KEY', 'test')
       # Disable retries in tests for deterministic, fast failures.
       config.max_retries = 0
+      config.meta_api_key = ENV.fetch('META_API_KEY', 'test')
+      config.minimax_api_key = ENV.fetch('MINIMAX_API_KEY', 'test')
       config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', 'test')
       config.ollama_api_base = ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1')
+      config.moonshot_api_key = ENV.fetch('MOONSHOT_API_KEY', 'test')
       config.ollama_api_key = ENV.fetch('OLLAMA_API_KEY', nil)
       config.ollama_cloud_api_key = ENV.fetch('OLLAMA_CLOUD_API_KEY', 'test')
       config.openai_api_key = ENV.fetch('OPENAI_API_KEY', 'test')
@@ -49,6 +52,7 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.vertexai_project_id = ENV.fetch('GOOGLE_CLOUD_PROJECT', 'test-project')
       config.vertexai_service_account_key = ENV.fetch('VERTEXAI_SERVICE_ACCOUNT_KEY', nil)
       config.xai_api_key = ENV.fetch('XAI_API_KEY', 'test')
+      config.zai_api_key = ENV.fetch('ZAI_API_KEY', 'test')
     end
   end
 end

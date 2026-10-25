@@ -184,7 +184,7 @@ module RubyLLM
 
       def answer(response)
         error = response['error']
-        raise Error.new(error['message'], code: error['code'], data: error['data']) if error
+        raise Error.new(provider_message: error['message'], code: error['code'], data: error['data']) if error
 
         response['result']
       end

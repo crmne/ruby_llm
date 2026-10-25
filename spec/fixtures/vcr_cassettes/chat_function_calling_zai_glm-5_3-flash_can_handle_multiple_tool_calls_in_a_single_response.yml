@@ -1,0 +1,122 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.z.ai/api/paas/v4/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"glm-5.3-flash","messages":[{"role":"system","content":"You
+        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
+        the dice 3 times"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 15:37:38 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '1005'
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - 73539b9bc3a5fcdff70886a730938488
+      Vary:
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 20261020233733aa72858c41b14573
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":"I''ll
+        roll the dice 3 times for you:","reasoning_content":"The user wants me to
+        roll the dice 3 times. Since each dice roll is independent, I should make
+        all three calls in the same block since there are no dependencies between
+        them.","role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"dice_roll"},"id":"call_-7148589850029977934","index":0,"type":"function"},{"function":{"arguments":"{}","name":"dice_roll"},"id":"call_-7148589850029977933","index":1,"type":"function"},{"function":{"arguments":"{}","name":"dice_roll"},"id":"call_-7148589850029977932","index":2,"type":"function"}]}}],"created":1792510658,"id":"20261020233733aa72858c41b14573","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261020233733aa72858c41b14573","usage":{"completion_tokens":62,"completion_tokens_details":{"reasoning_tokens":37},"prompt_tokens":186,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":248}}'
+  recorded_at: Tue, 20 Oct 2026 15:37:38 GMT
+- request:
+    method: post
+    uri: https://api.z.ai/api/paas/v4/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"glm-5.3-flash","messages":[{"role":"system","content":"You
+        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
+        the dice 3 times"},{"role":"assistant","content":"I''ll roll the dice 3 times
+        for you:","tool_calls":[{"id":"call_-7148589850029977934","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_-7148589850029977933","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_-7148589850029977932","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning_content":"The
+        user wants me to roll the dice 3 times. Since each dice roll is independent,
+        I should make all three calls in the same block since there are no dependencies
+        between them."},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"call_-7148589850029977934"},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"call_-7148589850029977933"},{"role":"tool","content":"{\"roll\":3}","tool_call_id":"call_-7148589850029977932"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 15:37:44 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '663'
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - a5d5b5eb892d18ef2c46612085d7b8e4
+      Vary:
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 2026102023373807f719c82ddb46c3
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJIZXJlIGFyZSB5b3VyIDMgZGljZSByb2xsczpcblxuMS4gKipSb2xsIDE6Kiog8J+OsiAxXG4yLiAqKlJvbGwgMjoqKiDwn46yIDJcbjMuICoqUm9sbCAzOioqIPCfjrIgM1xuXG5Zb3Ugcm9sbGVkIGEgcGVyZmVjdCBzZXF1ZW5jZSDigJQgMSwgMiwgMyEgVGhlIHRvdGFsIGlzICoqNioqLiIsInJlYXNvbmluZ19jb250ZW50IjoiVGhlIHJlc3VsdHMgYXJlIDEsIDIsIGFuZCAzLiBMZXQgbWUgcmVwb3J0IHRoZW0gdG8gdGhlIHVzZXIuIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3OTI1MTA2NjQsImlkIjoiMjAyNjEwMjAyMzM3MzgwN2Y3MTljODJkZGI0NmMzIiwibW9kZWwiOiJnbG0tNS4zLWZsYXNoIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicmVxdWVzdF9pZCI6IjIwMjYxMDIwMjMzNzM4MDdmNzE5YzgyZGRiNDZjMyIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjo5MiwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjoyMX0sInByb21wdF90b2tlbnMiOjI3MSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJ0b3RhbF90b2tlbnMiOjM2M319
+  recorded_at: Tue, 20 Oct 2026 15:37:44 GMT
+recorded_with: VCR 6.4.0

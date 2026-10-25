@@ -46,11 +46,19 @@ module RubyLLM
         # spreadsheets as well as PDFs, so every document attachment rides
         # along as a native input_file.
         def render_document(document)
+          return { type: 'input_file', file_url: document.source.to_s } if document.url? && document_urls?
+
           {
             type: 'input_file',
             filename: document.filename,
             file_data: document.for_llm
           }
+        end
+
+        # The provider fetches the URL itself. Dialects opt in once a live
+        # request shows their endpoint downloads input_file URLs.
+        def document_urls?
+          false
         end
 
         def render_provider_file(file)

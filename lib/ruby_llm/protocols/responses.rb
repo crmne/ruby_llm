@@ -31,6 +31,10 @@ module RubyLLM
       def server_tool_aliases
         SERVER_TOOL_ALIASES
       end
+
+      def tool_search?
+        true
+      end
     end
   end
 end

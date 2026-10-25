@@ -151,7 +151,7 @@ RSpec.describe RubyLLM::Generators::Provider::Scaffold do
       )
       expect(result.updated).to include(
         'lib/ruby_llm.rb',
-        '.env.example',
+        '.env',
         'spec/support/rubyllm_configuration.rb',
         'spec/support/vcr_configuration.rb',
         'lib/ruby_llm/models.rb'
@@ -174,7 +174,7 @@ RSpec.describe RubyLLM::Generators::Provider::Scaffold do
 
     it 'keeps core wiring valid and sorted' do
       create_core_fixture
-      FileUtils.cp(File.expand_path('../../../../.env.example', __dir__), File.join(dir, '.env.example'))
+      FileUtils.cp(File.expand_path('../../../../.env', __dir__), File.join(dir, '.env'))
 
       %w[Hetzner Zeta].each do |name|
         described_class.new(name, mode: :core, destination: dir, api_base: "https://#{name.downcase}.example/v1",
@@ -186,8 +186,9 @@ RSpec.describe RubyLLM::Generators::Provider::Scaffold do
         expect(status.success?).to be(true), "#{path} does not parse"
       end
 
-      env = File.readlines(File.join(dir, '.env.example'), chomp: true).grep(/\A[A-Z]/)
+      env = File.readlines(File.join(dir, '.env'), chomp: true).grep(/\A[A-Z]/)
       expect(env).to eq(env.sort)
+      expect(env).to include('ZETA_API_KEY=$(op-cache read "op://RubyLLM/Zeta/credential")')
 
       configuration = File.read(File.join(dir, 'spec/support/rubyllm_configuration.rb'))
       expect(configuration).to match(
@@ -196,18 +197,18 @@ RSpec.describe RubyLLM::Generators::Provider::Scaffold do
     end
 
     it 'resolves a shipped provider model without an explicit provider' do
-      described_class.new('MiniMax', mode: :gem, destination: dir).generate
-      models = [RubyLLM::Model.new(id: 'MiniMax-M3', name: 'MiniMax M3', provider: 'mini_max')]
+      described_class.new('AcmeLabs', mode: :gem, destination: dir).generate
+      models = [RubyLLM::Model.new(id: 'AcmeLabs-M1', name: 'AcmeLabs M1', provider: 'acme_labs')]
       File.write(File.join(dir, 'models.json'), RubyLLM::Models::Registry.pretty_json(models))
 
       script = <<~RUBY
-        require 'ruby_llm/providers/mini_max'
+        require 'ruby_llm/providers/acme_labs'
 
-        RubyLLM.configure { |config| config.mini_max_api_key = 'test' }
-        model, provider = RubyLLM::Models.resolve('MiniMax-M3')
+        RubyLLM.configure { |config| config.acme_labs_api_key = 'test' }
+        model, provider = RubyLLM::Models.resolve('AcmeLabs-M1')
 
-        raise "bad model: \#{model.inspect}" unless model.provider == 'mini_max'
-        raise "bad provider: \#{provider.inspect}" unless provider.is_a?(RubyLLM::Providers::MiniMax)
+        raise "bad model: \#{model.inspect}" unless model.provider == 'acme_labs'
+        raise "bad provider: \#{provider.inspect}" unless provider.is_a?(RubyLLM::Providers::AcmeLabs)
       RUBY
 
       output, status = run_generated_ruby(script)
@@ -238,7 +239,7 @@ RSpec.describe RubyLLM::Generators::Provider::Scaffold do
       File.expand_path('../../../support/vcr_configuration.rb', __dir__),
       File.join(dir, 'spec/support/vcr_configuration.rb')
     )
-    File.write(File.join(dir, '.env.example'), "OPENAI_API_KEY=test\n")
+    File.write(File.join(dir, '.env'), "OPENAI_API_KEY=test\n")
   end
 
   def assert_generated_gem_boots

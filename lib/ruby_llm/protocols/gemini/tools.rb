@@ -139,7 +139,7 @@ module RubyLLM
             description: tool.description
           }
 
-          declaration[:parametersJsonSchema] = parameters_schema if parameters_schema
+          declaration[:parametersJsonSchema] = Schemas.render_schema(parameters_schema) if parameters_schema
 
           return declaration if tool.provider_options.empty?
 

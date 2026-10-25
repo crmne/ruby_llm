@@ -347,6 +347,17 @@ module RubyLLM
     option :deprecation_behavior, :warn
 
     ##
+    # :attr_accessor: redact_error_messages
+    #
+    # Whether Error#message leaves out what the provider wrote. When
+    # +true+, a provider's error reads as its HTTP status, provider, and
+    # error code only, such as <tt>openai returned HTTP 400
+    # (invalid_request_error)</tt>, because providers often quote the
+    # request back. The text stays on Error#provider_message and the raw
+    # body on Error#response_body. Default: +false+.
+    option :redact_error_messages, false
+
+    ##
     # :attr_accessor: faraday_adapter
     #
     # Faraday adapter used for HTTP requests. Default: +:net_http+.

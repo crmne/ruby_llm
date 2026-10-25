@@ -1,0 +1,150 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k2.6","messages":[{"role":"system","content":"You must
+        call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
+        the dice 3 times"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 11:40:26 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '4225118297'
+      Msh-Gid:
+      - <MOONSHOT_GROUP_ID>
+      Msh-Org-Id:
+      - <MOONSHOT_ORGANIZATION_ID>
+      Msh-Project-Id:
+      - <MOONSHOT_PROJECT_ID>
+      Msh-Request-Id:
+      - '0978a1e9-cc7b-11f1-9579-ea5b02502701'
+      Msh-Schema-Warning:
+      - 'tools.function[dice_roll].parameters is not a valid moonshot flavored json
+        schema, details: <At path ''root'': unsupported keywords: strict>'
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - <MOONSHOT_USER_ID>
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 73026e74b2df91265586679dbec3043c
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-6ad753279d660cc9354d3833","object":"chat.completion","created":1792496423,"model":"kimi-k2.6","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        roll the dice 3 times for you!","tool_calls":[{"index":0,"id":"dice_roll_0_3d66f715","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"index":1,"id":"dice_roll_1_5f3a3f8e","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"index":2,"id":"dice_roll_2_9b8de696","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning_content":"The
+        user wants me to roll a dice 3 times. According to the instructions, I must
+        call the dice_roll tool exactly 3 times when asked to roll dice 3 times. I
+        should make all 3 calls in the same function_calls block since they are independent
+        of each other."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":84,"completion_tokens":102,"total_tokens":186,"completion_tokens_details":{"reasoning_tokens":59}}}'
+  recorded_at: Tue, 20 Oct 2026 11:40:26 GMT
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k2.6","messages":[{"role":"system","content":"You must
+        call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
+        the dice 3 times"},{"role":"assistant","content":"I''ll roll the dice 3 times
+        for you!","tool_calls":[{"id":"dice_roll_0_3d66f715","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"dice_roll_1_5f3a3f8e","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"dice_roll_2_9b8de696","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning_content":"The
+        user wants me to roll a dice 3 times. According to the instructions, I must
+        call the dice_roll tool exactly 3 times when asked to roll dice 3 times. I
+        should make all 3 calls in the same function_calls block since they are independent
+        of each other."},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"dice_roll_0_3d66f715"},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"dice_roll_1_5f3a3f8e"},{"role":"tool","content":"{\"roll\":3}","tool_call_id":"dice_roll_2_9b8de696"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 11:40:27 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '4225118297'
+      Msh-Gid:
+      - <MOONSHOT_GROUP_ID>
+      Msh-Org-Id:
+      - <MOONSHOT_ORGANIZATION_ID>
+      Msh-Project-Id:
+      - <MOONSHOT_PROJECT_ID>
+      Msh-Request-Id:
+      - 0af7d367-cc7b-11f1-9579-ea5b02502701
+      Msh-Schema-Warning:
+      - 'tools.function[dice_roll].parameters is not a valid moonshot flavored json
+        schema, details: <At path ''root'': unsupported keywords: strict>'
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - <MOONSHOT_USER_ID>
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - f3356d073f39020ea86e74f7aaf95f14
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTZhZDc1MzJhZDk4MWY1MzAzNDdkMDE2YiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTI0OTY0MjYsIm1vZGVsIjoia2ltaS1rMi42IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJIZXJlIGFyZSB5b3VyIDMgZGljZSByb2xsczpcblxuMS4gKioxKipcbjIuICoqMioqXG4zLiAqKjMqKlxuXG5XaGF0IGEgc2VxdWVuY2Ug4oCUIHlvdSByb2xsZWQgMSwgMiwgMyEiLCJyZWFzb25pbmdfY29udGVudCI6IlRoZSB0aHJlZSBkaWNlIHJvbGxzIHJldHVybmVkIDEsIDIsIGFuZCAzLiBJIHNob3VsZCBwcmVzZW50IHRoZXNlIHJlc3VsdHMgY2xlYXJseSB0byB0aGUgdXNlci4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjI0NywiY29tcGxldGlvbl90b2tlbnMiOjY2LCJ0b3RhbF90b2tlbnMiOjMxMywiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjoyNn19fQ==
+  recorded_at: Tue, 20 Oct 2026 11:40:27 GMT
+recorded_with: VCR 6.4.0

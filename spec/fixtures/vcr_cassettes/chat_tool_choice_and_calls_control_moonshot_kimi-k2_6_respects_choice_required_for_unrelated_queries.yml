@@ -1,0 +1,158 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k2.6","messages":[{"role":"system","content":"Your location
+        is Berlin, at latitude 52.5200 and longitude 13.4050."},{"role":"user","content":"When
+        was the fall of Rome?"}],"stream":false,"max_completion_tokens":4096,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":"required","thinking":{"type":"disabled"}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 12:01:28 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '4225118297'
+      Msh-Gid:
+      - <MOONSHOT_GROUP_ID>
+      Msh-Org-Id:
+      - <MOONSHOT_ORGANIZATION_ID>
+      Msh-Project-Id:
+      - <MOONSHOT_PROJECT_ID>
+      Msh-Request-Id:
+      - fa7805f9-cc7d-11f1-8aea-72ccf2e9daa1
+      Msh-Schema-Warning:
+      - 'tools.function[weather].parameters is not a valid moonshot flavored json
+        schema, details: <At path ''root'': unsupported keywords: strict>'
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - <MOONSHOT_USER_ID>
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 040b2987018194dc7b5b023d3a35d293
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-6ad758171e1ee5c84fd55223","object":"chat.completion","created":1792497687,"model":"kimi-k2.6","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"weather_0_e7cbaae7","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
+        \"52.5200\", \"longitude\": \"13.4050\"}"}}],"reasoning_content":""},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":117,"completion_tokens":30,"total_tokens":147,"completion_tokens_details":{"reasoning_tokens":1}}}'
+  recorded_at: Tue, 20 Oct 2026 12:01:28 GMT
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k2.6","messages":[{"role":"system","content":"Your location
+        is Berlin, at latitude 52.5200 and longitude 13.4050."},{"role":"user","content":"When
+        was the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"weather_0_e7cbaae7","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"weather_0_e7cbaae7"}],"stream":false,"max_completion_tokens":4096,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"thinking":{"type":"disabled"}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 12:01:33 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Internal-Adhoc-Canary:
+      - '4225118297'
+      Msh-Gid:
+      - <MOONSHOT_GROUP_ID>
+      Msh-Org-Id:
+      - <MOONSHOT_ORGANIZATION_ID>
+      Msh-Project-Id:
+      - <MOONSHOT_PROJECT_ID>
+      Msh-Request-Id:
+      - fb3b300b-cc7d-11f1-8aea-72ccf2e9daa1
+      Msh-Schema-Warning:
+      - 'tools.function[weather].parameters is not a valid moonshot flavored json
+        schema, details: <At path ''root'': unsupported keywords: strict>'
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - <MOONSHOT_USER_ID>
+      X-Msh-Trace-Id:
+      - ab6d5dff9529b1ce98d4cb9541d9527e
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-6ad758187396b9a5174c10ad","object":"chat.completion","created":1792497688,"model":"kimi-k2.6","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        fall of Rome is traditionally dated to **476 AD**, when the Germanic chieftain
+        Odoacer deposed the last Western Roman Emperor, Romulus Augustulus. This marked
+        the end of the Western Roman Empire.\n\nHowever, the fall was a gradual process
+        rather than a single event. Some key points:\n\n- **395 AD**: The empire permanently
+        split into Western and Eastern halves\n- **410 AD**: Visigoths sacked Rome
+        under Alaric\n- **455 AD**: Vandals sacked Rome again\n- **476 AD**: Odoacer
+        deposed Romulus Augustulus, the traditional \"fall\" date\n\nThe **Eastern
+        Roman Empire** (Byzantine Empire) continued for nearly another thousand years
+        until the fall of Constantinople in **1453 AD**.\n\nHistorians debate whether
+        476 AD truly represents \"the fall,\" as Roman institutions, culture, and
+        law continued to influence Europe long after. Some scholars prefer to speak
+        of a transformation rather than a sudden collapse.","reasoning_content":""},"finish_reason":"stop"}],"usage":{"prompt_tokens":186,"completion_tokens":205,"total_tokens":391,"completion_tokens_details":{"reasoning_tokens":1}}}'
+  recorded_at: Tue, 20 Oct 2026 12:01:33 GMT
+recorded_with: VCR 6.4.0

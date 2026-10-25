@@ -336,7 +336,10 @@ module RubyLLM
         check_issuer(pending, value(params, :iss))
         check_state(pending, value(params, :state).to_s)
         error = value(params, :error)
-        raise Error, "Authorization failed: #{value(params, :error_description) || error}" if error
+        return unless error
+
+        raise Error.new('Authorization failed', provider_message: value(params, :error_description) || error,
+                                                error_code: error)
       end
 
       def check_issuer(pending, issuer)
@@ -373,11 +376,19 @@ module RubyLLM
         headers = { 'Content-Type' => 'application/x-www-form-urlencoded', 'Accept' => 'application/json' }
         authenticate(client, server, form, headers, key)
         headers['DPoP'] = proofs.sign(client['dpop_key'], url) if client['dpop_key']
-        post(url, URI.encode_www_form(form.compact), headers)
+        tokens = post(url, URI.encode_www_form(form.compact), headers)
+        return tokens if granted?(tokens)
+
+        # Keep only the error fields: a partial response may still carry a refresh or ID token.
+        raise rejection(url, tokens.is_a?(Hash) ? tokens.slice('error', 'error_description', 'error_uri') : tokens)
       rescue Error => e
         raise if retried || !client['dpop_key'] || oauth_error(e) != 'use_dpop_nonce'
 
         send_token_request(server, client, key, params, retried: true)
+      end
+
+      def granted?(tokens)
+        tokens.is_a?(Hash) && tokens['access_token'] && !tokens['error']
       end
 
       def oauth_error(error)
@@ -615,8 +626,13 @@ module RubyLLM
         rescue JSON::ParserError
           {}
         end
+        rejection(url, details, response)
+      end
+
+      def rejection(url, details, response = nil)
         details = {} unless details.is_a?(Hash)
-        Error.new("#{URI(url).host} refused the request: #{details['error_description'] || details['error']}",
+        Error.new("#{URI(url).host} refused the request",
+                  provider_message: details['error_description'] || details['error'], error_code: details['error'],
                   data: details, response:)
       end
 

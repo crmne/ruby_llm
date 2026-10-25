@@ -1,0 +1,125 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.z.ai/api/paas/v4/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"glm-5.3-flash","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 15:32:07 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '1247'
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - 1535c7a62b65ced19a472f0b6e56fe93
+      Vary:
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 20261020233202a96f2dd83a14431d
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJUaGUgZmlsZSBgcnVieS50eHRgIGNvbnRhaW5zIGEgc2luZ2xlIGxpbmUgb2YgdGV4dDpcblxuPiBSdWJ5IGlzIHRoZSBiZXN0LlxuXG5UaGF0J3MgYWxsIOKAlCBqdXN0IHRoYXQgb25lIHNlbnRlbmNlIGRlY2xhcmluZyBSdWJ5J3Mgc3VwZXJpb3JpdHkgYXMgYSBwcm9ncmFtbWluZyBsYW5ndWFnZS4iLCJyZWFzb25pbmdfY29udGVudCI6IlRoZSB1c2VyIGlzIHNob3dpbmcgbWUgYSBmaWxlIGFuZCBhc2tpbmcgd2hhdCdzIGluIGl0LiBMZXQgbWUgbG9vayBhdCB0aGUgY29udGVudHMuXG5cblRoZSBmaWxlIGlzIG5hbWVkIGBydWJ5LnR4dGAsIGl0J3MgYSB0ZXh0L3BsYWluIGZpbGUsIGFuZCBpdHMgY29udGVudHMgYXJlOiBcIlJ1YnkgaXMgdGhlIGJlc3QuXCJcblxuVGhhdCdzIGEgc2ltcGxlIHF1ZXN0aW9uIHdpdGggYSBzaW1wbGUgYW5zd2VyLiBUaGUgdXNlciB3YW50cyB0byBrbm93IHdoYXQncyBpbiB0aGUgZmlsZS4gSSBzaG91bGQganVzdCB0ZWxsIHRoZW0gd2hhdCdzIGluIGl0LlxuXG5UaGUgZm9ybWF0IHNob3VsZCBiZSB2ZXJ5IHNob3J0IOKAlCB0aGlzIGlzIGEgdHJpdmlhbCBxdWVzdGlvbi4gSSBjb3VsZCBqdXN0IHN0YXRlIHRoZSBjb250ZW50LiBNYXliZSBhIGJyaWVmIHNlbnRlbmNlLiBObyBuZWVkIGZvciBoZWFkZXJzLCBidWxsZXRzLCBvciBhbnl0aGluZyBlbGFib3JhdGUuXG5cblNvbWV0aGluZyBsaWtlOiBcIlRoZSBmaWxlIGBydWJ5LnR4dGAgY29udGFpbnMgYSBzaW5nbGUgbGluZSBvZiB0ZXh0OiBcIlJ1YnkgaXMgdGhlIGJlc3QuXCJcIlxuXG5UaGF0J3MgYWNjdXJhdGUgYW5kIGNvbXBsZXRlLiBLZWVwIGl0IHNob3J0LiIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzkyNTEwMzI3LCJpZCI6IjIwMjYxMDIwMjMzMjAyYTk2ZjJkZDgzYTE0NDMxZCIsIm1vZGVsIjoiZ2xtLTUuMy1mbGFzaCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInJlcXVlc3RfaWQiOiIyMDI2MTAyMDIzMzIwMmE5NmYyZGQ4M2ExNDQzMWQiLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6MTg2LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjE0OH0sInByb21wdF90b2tlbnMiOjM3LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInRvdGFsX3Rva2VucyI6MjIzfX0=
+  recorded_at: Tue, 20 Oct 2026 15:32:07 GMT
+- request:
+    method: post
+    uri: https://api.z.ai/api/paas/v4/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"glm-5.3-flash","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]},{"role":"assistant","content":"The file `ruby.txt`
+        contains a single line of text:\n\n> Ruby is the best.\n\nThat''s all — just
+        that one sentence declaring Ruby''s superiority as a programming language.","reasoning_content":"The
+        user is showing me a file and asking what''s in it. Let me look at the contents.\n\nThe
+        file is named `ruby.txt`, it''s a text/plain file, and its contents are: \"Ruby
+        is the best.\"\n\nThat''s a simple question with a simple answer. The user
+        wants to know what''s in the file. I should just tell them what''s in it.\n\nThe
+        format should be very short — this is a trivial question. I could just state
+        the content. Maybe a brief sentence. No need for headers, bullets, or anything
+        elaborate.\n\nSomething like: \"The file `ruby.txt` contains a single line
+        of text: \"Ruby is the best.\"\"\n\nThat''s accurate and complete. Keep it
+        short."},{"role":"user","content":[{"type":"text","text":"and in this one?"},{"type":"text","text":"<file
+        name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby is the best</truism></file>"}]}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 15:32:12 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '1075'
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - 58ae2a6116b132c5937ab97554478740
+      Vary:
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 2026102023320708cad22ac1c841ac
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJUaGUgZmlsZSBgcnVieS54bWxgIGNvbnRhaW5zIHRoZSBzYW1lIHNlbnRpbWVudCwgYnV0IHRoaXMgdGltZSBzdHJ1Y3R1cmVkIGFzIFhNTDpcblxuYGBgeG1sXG48dHJ1aXNtPlJ1YnkgaXMgdGhlIGJlc3Q8L3RydWlzbT5cbmBgYFxuXG5JdCBoYXMgYSBzaW5nbGUgcm9vdCBlbGVtZW50IGA8dHJ1aXNtPmAgd3JhcHBpbmcgdGhlIHRleHQgXCJSdWJ5IGlzIHRoZSBiZXN0XCIuIFNvIGJvdGggZmlsZXMgZXhwcmVzcyB0aGUgc2FtZSBjbGFpbSDigJQgb25lIGFzIHBsYWluIHRleHQsIG9uZSBhcyAoc2VsZi1wcm9jbGFpbWVkKSBzdHJ1Y3R1cmVkIGRhdGEuIPCfmIQiLCJyZWFzb25pbmdfY29udGVudCI6IlRoZSB1c2VyIGlzIGFza2luZyB3aGF0J3MgaW4gdGhlIHNlY29uZCBmaWxlLCBydWJ5LnhtbC4gSXQncyBhbiBYTUwgZmlsZSB3aXRoIGNvbnRlbnQ6XG5cbmA8dHJ1aXNtPlJ1YnkgaXMgdGhlIGJlc3Q8L3RydWlzbT5gXG5cblRoaXMgaXMgYW4gWE1MIGZpbGUgY29udGFpbmluZyBhIHJvb3QgZWxlbWVudCBgPHRydWlzbT5gIHdpdGggdGhlIHRleHQgXCJSdWJ5IGlzIHRoZSBiZXN0XCIgaW5zaWRlIGl0LiBJIHNob3VsZCBkZXNjcmliZSB0aGUgc3RydWN0dXJlIHNpbmNlIGl0J3MgWE1MLCB1bmxpa2UgdGhlIHBsYWluIHRleHQgZmlsZSBiZWZvcmUuIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3OTI1MTAzMzEsImlkIjoiMjAyNjEwMjAyMzMyMDcwOGNhZDIyYWMxYzg0MWFjIiwibW9kZWwiOiJnbG0tNS4zLWZsYXNoIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicmVxdWVzdF9pZCI6IjIwMjYxMDIwMjMzMjA3MDhjYWQyMmFjMWM4NDFhYyIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjoxNTksImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6NzZ9LCJwcm9tcHRfdG9rZW5zIjoxMDcsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwidG90YWxfdG9rZW5zIjoyNjZ9fQ==
+  recorded_at: Tue, 20 Oct 2026 15:32:12 GMT
+recorded_with: VCR 6.4.0

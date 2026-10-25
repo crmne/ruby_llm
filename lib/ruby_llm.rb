@@ -28,6 +28,7 @@ loader.inflector.inflect(
   'http' => 'HTTP',
   'llm' => 'LLM',
   'mcp' => 'MCP',
+  'minimax' => 'MiniMax',
   'oauth' => 'OAuth',
   'mistral' => 'Mistral',
   'mxc' => 'MXC',
@@ -41,7 +42,8 @@ loader.inflector.inflect(
   'ruby_llm' => 'RubyLLM',
   'typesafe' => 'TypeSafe',
   'vertexai' => 'VertexAI',
-  'xai' => 'XAI'
+  'xai' => 'XAI',
+  'zai' => 'ZAI'
 )
 loader.ignore("#{__dir__}/tasks")
 loader.ignore("#{__dir__}/generators")
@@ -83,7 +85,8 @@ loader.setup
 # Subclass Tool and implement +execute+ to give the model an application
 # action. Tool.requires_approval pauses execution for a human decision;
 # Chat#approve and Chat#deny record it. Tool#progress reports what a
-# running tool is doing to Chat#after_tool_progress as a Progress.
+# running tool is doing to Chat#after_tool_progress as a Progress. A tool
+# that returns a Task pauses its call until Tool#resume finishes it.
 # Chat#with_provider_tools enables provider-executed tools such as web
 # search, code execution, and remote MCP.
 # Their calls appear as ServerToolCall values, with Citation values for sources.
@@ -618,7 +621,10 @@ RubyLLM::Provider.register :elevenlabs, RubyLLM::Providers::ElevenLabs
 RubyLLM::Provider.register :gemini, RubyLLM::Providers::Gemini
 RubyLLM::Provider.register :gpustack, RubyLLM::Providers::GPUStack
 RubyLLM::Provider.register :hetzner, RubyLLM::Providers::Hetzner
+RubyLLM::Provider.register :meta, RubyLLM::Providers::Meta
+RubyLLM::Provider.register :minimax, RubyLLM::Providers::MiniMax
 RubyLLM::Provider.register :mistral, RubyLLM::Providers::Mistral
+RubyLLM::Provider.register :moonshot, RubyLLM::Providers::Moonshot
 RubyLLM::Provider.register :ollama, RubyLLM::Providers::Ollama
 RubyLLM::Provider.register :ollama_cloud, RubyLLM::Providers::OllamaCloud
 RubyLLM::Provider.register :openai, RubyLLM::Providers::OpenAI
@@ -627,5 +633,6 @@ RubyLLM::Provider.register :perplexity, RubyLLM::Providers::Perplexity
 RubyLLM::Provider.register :typesafe, RubyLLM::Providers::TypeSafe
 RubyLLM::Provider.register :vertexai, RubyLLM::Providers::VertexAI
 RubyLLM::Provider.register :xai, RubyLLM::Providers::XAI
+RubyLLM::Provider.register :zai, RubyLLM::Providers::ZAI
 
 require 'ruby_llm/railtie' if defined?(Rails::Railtie)

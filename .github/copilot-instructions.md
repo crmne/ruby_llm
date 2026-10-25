@@ -83,9 +83,10 @@ Look for these, in this order, and treat the first four as blockers:
 
 Give concrete findings tied to changed lines, with the rule from `AGENTS.md`
 that applies. Do not spend comments on formatting RuboCop enforces. CI passing
-is necessary, not proof of correctness. Copilot may request changes and name
-blockers, but must never approve, recommend approval in prose, close, or merge
-a pull request.
+is necessary, not proof of correctness. Reviewing someone else's pull request,
+Copilot may request changes and name blockers, but must never approve,
+recommend approval in prose, close, or merge it. It merges only its own pull
+requests, as "Writing code in this repository" describes.
 
 ## Triaging an issue
 
@@ -136,6 +137,9 @@ bundle exec rspec --tag ~live
 overcommit --run
 ```
 
-Never push and never post to GitHub. Commit locally with a plain subject of at
-most 60 characters and a body wrapped at 72 that says why, with no generated
-footers or co-author tags.
+Commit with a plain subject of at most 60 characters and a body wrapped at 72
+that says why, with no generated footers or co-author tags. You may push
+straight to `main`, but prefer a pull request for anything beyond a small fix,
+so CodeRabbit and GitHub code scanning review it first. Merge your own pull
+request (squash) once CI is green and those reviews are in, with every finding
+fixed or answered.

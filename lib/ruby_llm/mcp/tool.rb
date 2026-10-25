@@ -100,15 +100,18 @@ module RubyLLM
         @mcp.run(self, arguments.except(:tool_call))
       end
 
-      # Resumes a call that paused on input requests, now answered, or on a
-      # task, which it checks on once.
-      def resume(input, arguments) # :nodoc:
-        @mcp.run(self, arguments, input:)
+      # Resumes a call that paused on +task+, which it checks on once.
+      def resume(task, **arguments)
+        @mcp.run(self, arguments, input: task.to_h)
       end
 
       # Returns the MCP::Task a call paused on, from its saved state.
-      def task(state, tool_call: nil) # :nodoc:
+      def task(state, tool_call: nil)
         Task.load(@mcp, state, tool_call:)
+      end
+
+      def resume_call(state, arguments, **) # :nodoc:
+        @mcp.run(self, arguments, input: state)
       end
 
       private

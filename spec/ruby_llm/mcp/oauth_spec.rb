@@ -292,6 +292,45 @@ RSpec.describe RubyLLM::MCP::OAuth do
     end
   end
 
+  describe 'a token response that grants no token' do
+    def store = RubyLLM.config.mcp_credential_store
+    def key = "ada@#{server_url}"
+
+    def token_endpoint_answers(body)
+      stub_request(:post, 'https://auth.example.com/token').to_return(body: body.to_json)
+    end
+
+    it 'fails the refresh and keeps the stored credential' do
+      linear.authorize(callback(linear.authorization_url(redirect_uri:)))
+      store.write(key, store.read(key).merge('expires_at' => 0))
+      stored = store.read(key)
+      token_endpoint_answers(error: 'bad_refresh_token', error_description: 'The refresh token is expired')
+
+      expect(linear_class.new(user: 'ada').send(:oauth).refresh).to be(false)
+      expect(store.read(key)).to eq(stored)
+    end
+
+    it "raises the authorization server's reason from the code exchange" do
+      url = linear.authorization_url(redirect_uri:)
+      token_endpoint_answers(error: 'bad_verification_code', error_description: 'The code is incorrect or expired')
+
+      expect { linear.authorize(callback(url)) }.to raise_error(RubyLLM::MCP::Error) { |error|
+        expect([error.message, error.error_code, error.provider_message])
+          .to eq(['auth.example.com refused the request: The code is incorrect or expired', 'bad_verification_code',
+                  'The code is incorrect or expired'])
+      }
+      expect(linear).not_to be_authorized
+    end
+
+    it 'raises when the response has no access token' do
+      url = linear.authorization_url(redirect_uri:)
+      token_endpoint_answers(token_type: 'bearer')
+
+      expect { linear.authorize(callback(url)) }
+        .to raise_error(RubyLLM::MCP::Error, 'auth.example.com refused the request')
+    end
+  end
+
   it 'refuses a callback with the wrong state' do
     url = linear.authorization_url(redirect_uri:)
 

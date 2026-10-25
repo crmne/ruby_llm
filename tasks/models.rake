@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-require 'dotenv/load'
+require 'dotenv'
+# .env holds 1Password lookups; CI passes its secrets as environment variables.
+Dotenv.load unless ENV['CI']
 require 'ruby_llm'
 require 'json'
 require 'json_schemer'
@@ -47,7 +49,10 @@ def configure_from_env
     config.elevenlabs_api_key = ENV.fetch('ELEVENLABS_API_KEY', nil)
     config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
     config.hetzner_api_key = ENV.fetch('HETZNER_API_KEY', nil)
+    config.meta_api_key = ENV.fetch('META_API_KEY', nil)
+    config.minimax_api_key = ENV.fetch('MINIMAX_API_KEY', nil)
     config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', nil)
+    config.moonshot_api_key = ENV.fetch('MOONSHOT_API_KEY', nil)
     config.ollama_cloud_api_key = ENV.fetch('OLLAMA_CLOUD_API_KEY', nil)
     config.openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
     config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', nil)
@@ -57,6 +62,7 @@ def configure_from_env
     config.vertexai_project_id = ENV.fetch('GOOGLE_CLOUD_PROJECT', nil)
     config.vertexai_service_account_key = ENV.fetch('VERTEXAI_SERVICE_ACCOUNT_KEY', nil)
     config.xai_api_key = ENV.fetch('XAI_API_KEY', nil)
+    config.zai_api_key = ENV.fetch('ZAI_API_KEY', nil)
     configure_bedrock(config)
     config.request_timeout = 30
   end
@@ -273,7 +279,9 @@ def generate_aliases # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComple
     openrouter_model = openrouter_variants.find { |v| models['openrouter'].include?(v) }
     vertexai_model = models['vertexai'].include?(model) ? model : nil
 
-    next unless openrouter_model || vertexai_model
+    # Gemini's -latest models keep their short alias (gemini-flash) even
+    # when no other provider serves them.
+    next unless openrouter_model || vertexai_model || model.end_with?('-latest')
 
     alias_key = model.gsub('-latest', '')
     aliases[alias_key] = { 'gemini' => model }

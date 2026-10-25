@@ -62,6 +62,12 @@ module RubyLLM
     # spelled it, such as Anthropic's +:pause_turn+.
     attr_reader :finish_reason
 
+    # The ContentFilter verdicts the provider reported on the request and
+    # this response, or an empty Array. Read them to see which filter ended
+    # a response that is #content_filtered?. Only the live response carries
+    # them: #to_h leaves them out, so a persisted chat never stores them.
+    attr_reader :content_filters
+
     # The provider-executed tool steps in this response, as an array of
     # ServerToolCall objects. Empty unless the chat enabled tools with
     # Chat#with_provider_tools and the model used one.
@@ -120,6 +126,7 @@ module RubyLLM
       @phase = options[:phase]
       @mcp_result = coerce_mcp_result(options[:mcp_result])
       @finish_reason = options[:finish_reason]&.to_sym
+      @content_filters = coerce_list(options[:content_filters], ContentFilter)
       self.ruby_llm_usage_entries = options[:usage_entries] if options[:usage_entries]
       @cache_until_here = options.fetch(:cache_until_here, false)
       @cache_ttl = options[:cache_ttl] if @cache_until_here
@@ -361,6 +368,10 @@ module RubyLLM
 
     def coerce_value(value, klass)
       value.is_a?(Hash) ? klass.from_h(value) : value
+    end
+
+    def coerce_list(values, klass)
+      Array(values).map { |value| coerce_value(value, klass) }
     end
 
     def coerce_mcp_result(value)

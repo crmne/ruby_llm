@@ -97,6 +97,7 @@ module RubyLLM
           provider_instance.judge(input, questions:, model:, with: attachments, provider_options:)
         end
         event[:result] = result
+        event[:response_model] = result.model
         event[:tokens] = result.tokens
         event[:cost] = result.cost
         result

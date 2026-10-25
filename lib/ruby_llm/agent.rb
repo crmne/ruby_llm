@@ -144,9 +144,11 @@ module RubyLLM
       #   tools SearchDocs, LookupAccount
       #   tools { [TodoTool.new(chat: chat)] }
       #
-      # Pass +defer:+ as Chat#with_tools takes it:
+      # Pass +defer:+ as Chat#with_tools takes it, or a lambda that decides
+      # when the chat is built:
       #
       #   tools SearchDocs, LookupAccount, defer: true
+      #   tools(defer: -> { many_tools? }) { connected_tools }
       #
       def tools(*tools, defer: nil, &block)
         return @tools || [] if tools.empty? && !block_given?
@@ -163,7 +165,8 @@ module RubyLLM
       #   mcp Files
       #   mcp { [Linear.new(user: user), Files] }
       #
-      # Pass +defer:+ as Chat#with_mcp takes it:
+      # Pass +defer:+ as Chat#with_mcp takes it, or a lambda that decides
+      # when the chat is built:
       #
       #   mcp GitHub, defer: true
       #
@@ -824,10 +827,10 @@ module RubyLLM
 
       def apply_tools(chat, runtime)
         tools_to_apply = Array(evaluate(tools, runtime)).compact
-        chat.with_tools(*tools_to_apply, defer: @tools_defer) if tools_to_apply.any?
+        chat.with_tools(*tools_to_apply, defer: evaluate(@tools_defer, runtime)) if tools_to_apply.any?
 
         servers = Array(evaluate(mcp, runtime)).compact
-        chat.with_mcp(*servers, defer: @mcp_defer) if servers.any?
+        chat.with_mcp(*servers, defer: evaluate(@mcp_defer, runtime)) if servers.any?
 
         provider_tools_to_apply = Array(evaluate(provider_tools, runtime)).compact
         chat.with_provider_tools(*provider_tools_to_apply) if provider_tools_to_apply.any?

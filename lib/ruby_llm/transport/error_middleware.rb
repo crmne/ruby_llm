@@ -80,7 +80,9 @@ module RubyLLM
           /input or output tokens? must be reduced/i,
           /reduce the length of messages/i,
           /prompt is too long/i,
-          /context limit/i
+          /context limit/i,
+          /exceeded model token limit/i,
+          /prompt exceeds max length/i
         ].freeze
 
         RATE_LIMIT_PATTERNS = [
@@ -110,56 +112,49 @@ module RubyLLM
           return if (200..399).cover?(response.status)
 
           message = provider&.parse_error(response)
-
-          case response.status
-          when 400
-            raise_bad_request(message, response)
-          when 401
-            raise UnauthorizedError.new(message, response:)
-          when 402
-            raise PaymentRequiredError.new(message, response:)
-          when 403
-            raise_forbidden(message, response)
-          when 413
-            raise_too_large(message, response)
-          when 429
-            raise RateLimitError.new(message, response:) if rate_limited?(message)
-            raise ContextLengthExceededError.new(message, response:) if context_length_exceeded?(message)
-
-            raise RateLimitError.new(message, response:)
-          when 500
-            raise ServerError.new(message, response:)
-          when 502..504
-            raise ServiceUnavailableError.new(message, response:)
-          when 529
-            raise OverloadedError.new(message, response:)
-          else
-            raise Error.new(message, response:)
-          end
+          raise error_class(message, response.status).new(response:, provider_message: message,
+                                                          **provider_details(provider, response))
         end
 
         private
 
-        def raise_bad_request(message, response)
-          raise UnauthorizedError.new(message, response:) if authentication_failed?(message)
-          raise ContextLengthExceededError.new(message, response:) if context_length_exceeded?(message)
-          raise RateLimitError.new(message, response:) if rate_limited?(message)
-          raise OverloadedError.new(message, response:) if overloaded?(message)
-          raise PaymentRequiredError.new(message, response:) if payment_required?(message)
-
-          raise BadRequestError.new(message, response:)
+        def provider_details(provider, response)
+          {
+            provider: (provider.slug if provider.respond_to?(:slug)),
+            error_code: (provider.parse_error_code(response) if provider.respond_to?(:parse_error_code))
+          }
         end
 
-        def raise_forbidden(message, response)
-          raise UnauthorizedError.new(message, response:) if authentication_failed?(message)
-
-          raise ForbiddenError.new(message, response:)
+        def error_class(message, status)
+          case status
+          when 400 then bad_request_class(message)
+          when 401 then UnauthorizedError
+          when 402 then PaymentRequiredError
+          when 403 then authentication_failed?(message) ? UnauthorizedError : ForbiddenError
+          when 413 then context_length_exceeded?(message) ? ContextLengthExceededError : Error
+          when 429 then rate_limit_class(message)
+          when 500 then ServerError
+          when 502..504 then ServiceUnavailableError
+          when 529 then OverloadedError
+          else Error
+          end
         end
 
-        def raise_too_large(message, response)
-          raise ContextLengthExceededError.new(message, response:) if context_length_exceeded?(message)
+        def bad_request_class(message)
+          if authentication_failed?(message) then UnauthorizedError
+          elsif context_length_exceeded?(message) then ContextLengthExceededError
+          elsif rate_limited?(message) then RateLimitError
+          elsif overloaded?(message) then OverloadedError
+          elsif payment_required?(message) then PaymentRequiredError
+          else BadRequestError
+          end
+        end
 
-          raise Error.new(message, response:)
+        def rate_limit_class(message)
+          return RateLimitError if rate_limited?(message)
+          return ContextLengthExceededError if context_length_exceeded?(message)
+
+          RateLimitError
         end
 
         def context_length_exceeded?(message)

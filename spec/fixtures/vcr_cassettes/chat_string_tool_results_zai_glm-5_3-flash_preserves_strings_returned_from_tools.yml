@@ -1,0 +1,121 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.z.ai/api/paas/v4/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"glm-5.3-flash","messages":[{"role":"user","content":"Process
+        this query: test data"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
+        to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 15:38:24 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '703'
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - 472a194f5811a7332c4905c2b3b7d282
+      Vary:
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 20261020233819cd8cb7b922174a22
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":"","reasoning_content":"The
+        user wants me to process a query \"test data\" using the content_returning
+        tool. Let me call it.","role":"assistant","tool_calls":[{"function":{"arguments":"{\"query\":\"test
+        data\"}","name":"content_returning"},"id":"call_-7148593492162247614","index":0,"type":"function"}]}}],"created":1792510704,"id":"20261020233819cd8cb7b922174a22","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261020233819cd8cb7b922174a22","usage":{"completion_tokens":38,"completion_tokens_details":{"reasoning_tokens":24},"prompt_tokens":179,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":217}}'
+  recorded_at: Tue, 20 Oct 2026 15:38:24 GMT
+- request:
+    method: post
+    uri: https://api.z.ai/api/paas/v4/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"glm-5.3-flash","messages":[{"role":"user","content":"Process
+        this query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"call_-7148593492162247614","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}],"reasoning_content":"The user wants me to process a query \"test
+        data\" using the content_returning tool. Let me call it."},{"role":"tool","content":"Processed:
+        test data","tool_call_id":"call_-7148593492162247614"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
+        to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 15:38:30 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '563'
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - dd4be92e4754603a479270841a32ac54
+      Vary:
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 20261020233824a40422a449f24706
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"The
+        query \"test data\" has been processed successfully. The result is: **Processed:
+        test data**\n\nIs there anything else you''d like me to process?","role":"assistant"}}],"created":1792510710,"id":"20261020233824a40422a449f24706","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261020233824a40422a449f24706","usage":{"completion_tokens":34,"completion_tokens_details":{"reasoning_tokens":0},"prompt_tokens":225,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":259}}'
+  recorded_at: Tue, 20 Oct 2026 15:38:30 GMT
+recorded_with: VCR 6.4.0

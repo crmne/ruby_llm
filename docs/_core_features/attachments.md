@@ -126,6 +126,22 @@ puts response.content
 Documents still have to fit the model's context limit, even when uploaded separately.
 {: .note }
 
+### Letting the Provider Fetch Document URLs
+
+RubyLLM usually downloads a URL attachment and sends its bytes. Through the Responses API on OpenAI, Azure, xAI, OpenRouter, and Meta, it sends the URL of a PDF or Office document instead, and the provider downloads the file itself. The file never passes through your application, and the request stays small:
+
+```ruby
+chat = RubyLLM.chat(model: '{{ site.models.openai_current }}')
+
+url = report.file.url(expires_in: 10.minutes)
+response = chat.ask "Summarize this report.", with: RubyLLM::Attachment.new(url, filename: "report.pdf")
+```
+
+Pass `filename:` when the URL has no file extension, so RubyLLM knows the attachment is a document.
+
+The provider must be able to reach the URL. A URL on a private network, or one that needs your application's session, fails there. Attach a local path, an IO, or an Active Storage attachment to send the bytes instead.
+{: .note }
+
 ### Working with Office Documents
 
 Word documents, presentations, and spreadsheets attach the same way when the selected model and provider support them:

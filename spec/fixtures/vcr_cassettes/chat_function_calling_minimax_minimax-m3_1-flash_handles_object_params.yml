@@ -1,0 +1,65 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.minimax.io/anthropic/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"Call
+        the object params tool with window start 2025-01-01 and end 2025-01-02 and
+        include the result."}]}],"stream":false,"max_tokens":524288,"tools":[{"name":"object_params","description":"Uses
+        params DSL object support","input_schema":{"type":"object","properties":{"window":{"type":"object","properties":{"start":{"type":"string","description":"ISO
+        start"},"end":{"type":"string","description":"ISO end"}},"required":["start","end"],"additionalProperties":false,"description":"Time
+        window to schedule"}},"required":["window"],"additionalProperties":false}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '525'
+      Trace-Id:
+      - '0726687207e545bae277ccdaad07829c'
+      X-Session-Id:
+      - d7795d70f5ff0932a7eb31218cd29dc6
+      X-Mm-Request-Id:
+      - 2092934004998157135_1792488818q8ans0
+      Minimax-Request-Id:
+      - 6353e330ab02c5d4ece55192f38c85e0
+      Alb-Receive-Time:
+      - '1792488818.053'
+      Alb-Request-Id:
+      - f767738d632ee87fb30d86f5d8b5f1f7229fe4e9
+      Expires:
+      - Tue, 20 Oct 2026 09:33:38 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Tue, 20 Oct 2026 09:33:38 GMT
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-From:
+      - ak
+    body:
+      encoding: UTF-8
+      string: '{"id":"0726687207e545bae277ccdaad07829c","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"I''ll
+        call the object_params tool with the specified window.","type":"text"},{"type":"tool_use","id":"call_01a158a8c87d7150bbbf0f10","name":"object_params","input":{"window":{"end":"2025-01-02","start":"2025-01-01"}}}],"usage":{"input_tokens":289,"output_tokens":66,"cache_creation_input_tokens":0,"cache_read_input_tokens":232},"stop_reason":"tool_use","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Tue, 20 Oct 2026 09:33:38 GMT
+recorded_with: VCR 6.4.0

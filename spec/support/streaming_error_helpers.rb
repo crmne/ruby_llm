@@ -126,6 +126,57 @@ module StreamingErrorHelpers
       chunk_status: 500,
       expected_error: RubyLLM::ServerError
     },
+    meta: {
+      url: 'https://api.meta.ai/v1/responses',
+      error_response: {
+        error: {
+          message: 'Service overloaded - please try again later',
+          type: 'server_error',
+          param: nil,
+          code: nil
+        }
+      },
+      chunk_status: 500,
+      expected_error: RubyLLM::ServerError
+    },
+    moonshot: {
+      url: 'https://api.moonshot.ai/v1/chat/completions',
+      error_response: {
+        error: {
+          message: 'Service overloaded - please try again later',
+          type: 'server_error',
+          param: nil,
+          code: nil
+        }
+      },
+      chunk_status: 500,
+      expected_error: RubyLLM::ServerError
+    },
+    minimax: {
+      url: 'https://api.minimax.io/anthropic/v1/messages',
+      error_response: {
+        type: 'error',
+        error: {
+          type: 'overloaded_error',
+          message: 'Overloaded'
+        }
+      },
+      chunk_status: 529,
+      expected_error: RubyLLM::OverloadedError
+    },
+    zai: {
+      url: 'https://api.z.ai/api/paas/v4/chat/completions',
+      error_response: {
+        error: {
+          message: 'Service overloaded - please try again later',
+          type: 'server_error',
+          param: nil,
+          code: nil
+        }
+      },
+      chunk_status: 500,
+      expected_error: RubyLLM::ServerError
+    },
     bedrock: {
       url: %r{\Ahttps://bedrock-runtime\.us-west-2\.amazonaws\.com/model/.+/converse-stream\z},
       error_response: {

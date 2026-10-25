@@ -63,11 +63,29 @@ RSpec.describe RubyLLM::Provider do
         custom: 'https://hetzner-proxy.example.com/api/v1',
         default: 'https://inference.hetzner.com/api/v1'
       },
+      meta: {
+        provider: RubyLLM::Providers::Meta,
+        key: :meta_api_base,
+        custom: 'https://meta-proxy.example.com/v1',
+        default: 'https://api.meta.ai/v1'
+      },
+      minimax: {
+        provider: RubyLLM::Providers::MiniMax,
+        key: :minimax_api_base,
+        custom: 'https://api.minimax.cn/anthropic',
+        default: 'https://api.minimax.io/anthropic'
+      },
       mistral: {
         provider: RubyLLM::Providers::Mistral,
         key: :mistral_api_base,
         custom: 'https://mistral-proxy.example.com/v1',
         default: 'https://api.mistral.ai/v1'
+      },
+      moonshot: {
+        provider: RubyLLM::Providers::Moonshot,
+        key: :moonshot_api_base,
+        custom: 'https://api.moonshot.cn/v1',
+        default: 'https://api.moonshot.ai/v1'
       },
       ollama: {
         provider: RubyLLM::Providers::Ollama,
@@ -115,6 +133,12 @@ RSpec.describe RubyLLM::Provider do
         key: :xai_api_base,
         custom: 'https://xai-proxy.example.com/v1',
         default: 'https://api.x.ai/v1'
+      },
+      zai: {
+        provider: RubyLLM::Providers::ZAI,
+        key: :zai_api_base,
+        custom: 'https://open.bigmodel.cn/api/paas/v4',
+        default: 'https://api.z.ai/api/paas/v4'
       }
     }
   end
@@ -146,8 +170,14 @@ RSpec.describe RubyLLM::Provider do
         config.gpustack_api_key = 'gpustack-key'
       when :hetzner
         config.hetzner_api_key = 'hetzner-key'
+      when :meta
+        config.meta_api_key = 'meta-key'
+      when :minimax
+        config.minimax_api_key = 'minimax-key'
       when :mistral
         config.mistral_api_key = 'mistral-key'
+      when :moonshot
+        config.moonshot_api_key = 'moonshot-key'
       when :ollama
         config.ollama_api_base = 'https://ollama.example.com/v1'
         config.ollama_api_key = 'ollama-key'
@@ -166,6 +196,8 @@ RSpec.describe RubyLLM::Provider do
         config.vertexai_location = 'us-east1'
       when :xai
         config.xai_api_key = 'xai-key'
+      when :zai
+        config.zai_api_key = 'zai-key'
       end
     end
   end

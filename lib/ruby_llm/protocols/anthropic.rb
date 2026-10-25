@@ -58,6 +58,10 @@ module RubyLLM
         SERVER_TOOL_ALIASES
       end
 
+      def tool_search?
+        true
+      end
+
       # Server tools can pause a long turn with stop_reason pause_turn; the
       # API expects the conversation back verbatim to continue it. Segments
       # are merged into the single Message the caller sees.

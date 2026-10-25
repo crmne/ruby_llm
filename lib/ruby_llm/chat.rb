@@ -203,6 +203,7 @@ module RubyLLM
       @provider_options = Support::Utils.deep_dup(@provider_options)
       @callbacks = @callbacks.dup.transform_values!(&:dup)
       @skill_loader = build_skill_loader
+      @tool_search_tool = nil
       with_code_execution(**@code_execution) if @code_execution
       with_file_store(file_store, spill_to_file: @file_references.spill_to_file) if @file_references
       @message_queue = build_message_queue(@message_queue.to_a) if @message_queue.is_a?(MessageQueue)
@@ -282,7 +283,7 @@ module RubyLLM
     # was declared with Tool.requires_approval only execute once #approve
     # records a decision; denied calls receive a structured denial result,
     # and undecided calls stay pending. Does nothing when no tool calls
-    # are pending. Calls paused on an MCP::Task check on it once. The chat
+    # are pending. Calls paused on a Task resume once. The chat
     # is then ready for the next #generate, or the next batch round.
     # Returns +self+.
     def run_tools
@@ -318,9 +319,10 @@ module RubyLLM
     # When a pending tool call requires approval and no decision has been
     # recorded, or waits on input for an MCP server, the loop pauses.
     # Record #approve, #deny, #answer, or #decline decisions, then call
-    # #complete again to continue. A tool call that waits on an MCP::Task
-    # pauses the loop too, and each #complete checks on the task once,
-    # without waiting, and continues once it is done.
+    # #complete again to continue. A tool call that returns a Task pauses
+    # the loop too, and each #complete resumes it once with Tool#resume,
+    # without waiting, and continues once it has a result. For an MCP tool,
+    # that checks on its MCP::Task.
     #
     # The first time the loop could ask the model, every message in the
     # queue joins the conversation, in order. After that, only messages
@@ -442,7 +444,7 @@ module RubyLLM
 
     # Returns whether the conversation can't continue until something
     # outside it happens: every remaining pending tool call waits on an
-    # approval decision, an answer to an MCP input request, an MCP task, or
+    # approval decision, an answer to an MCP input request, a Task, or
     # a run in another process. #complete stops here, and
     # #awaiting_approval?, #awaiting_input?, and #awaiting_tasks? tell what
     # it waits on. Stop a loop you drive with #step here too:
@@ -512,10 +514,10 @@ module RubyLLM
       end
     end
 
-    # Returns whether the conversation can make no progress until MCP
-    # servers finish tasks: every remaining pending tool call waits on a
-    # task, input, or an approval decision, and at least one waits on a
-    # task. #complete checks on the tasks again.
+    # Returns whether the conversation can make no progress until tasks
+    # finish: every remaining pending tool call waits on a Task, input, or
+    # an approval decision, and at least one waits on a Task. #complete
+    # resumes the calls again.
     #
     #   chat.ask "Render the quarterly report"
     #   chat.awaiting_tasks?  # => true
@@ -526,10 +528,12 @@ module RubyLLM
       waiting? && pending_tasks.any?
     end
 
-    # Returns the MCP::Task objects that MCP tool calls wait on, as they
-    # were when the chat last checked. MCP::Task#refresh checks on one
-    # without resuming the chat; #complete checks on all of them and
-    # resumes their calls once they are done.
+    # Returns the Task objects that tool calls wait on, as they were when
+    # the chat last checked, with an MCP::Task for each MCP tool call.
+    # Task#refresh checks on one without resuming the chat; #complete
+    # resumes every call with Tool#resume. A task that is
+    # Task#input_required? waits on a person, so there is no point in
+    # checking on it before they act.
     #
     #   chat.pending_tasks.each { |task| puts "#{task.tool_call.name}: #{task.status_message}" }
     #
@@ -560,8 +564,8 @@ module RubyLLM
     # Cancels the current in-flight chat operation. Every cancellation
     # checkpoint raises CancelledError until the operation ends, so tool
     # calls running concurrently all stop, and the flag is cleared then so
-    # the chat can be reused. The MCP tasks that pending tool calls wait on
-    # are cancelled then too; see #pending_tasks.
+    # the chat can be reused. The tasks that pending tool calls wait on are
+    # cancelled then too; see #pending_tasks.
     def cancel
       @cancelled = true
       self
@@ -620,7 +624,7 @@ module RubyLLM
         tool = tool.new if tool.is_a?(Class)
         name = tool.name.to_sym
         @tools[name] = tool
-        @tool_deferrals[name] = defer.nil? ? tool.class.deferred? : defer
+        @tool_deferrals[name] = defer.nil? ? tool.deferred? : defer
       end
       self
     end
@@ -633,7 +637,7 @@ module RubyLLM
     # Raises ArgumentError when two tools share a name.
     def tools
       offered = @tools.reject { |_, tool| hidden_from_model?(tool) }
-      built_in = [@code_execution_tool, (@skill_loader if skills.any?), *@file_tools]
+      built_in = [@code_execution_tool, (@skill_loader if skills.any?), *@file_tools, tool_search_tool]
       [*built_in, *mcp.flat_map(&:tools)].compact.each_with_object(offered) do |tool, tools|
         next if hidden_from_model?(tool)
 
@@ -2185,12 +2189,12 @@ module RubyLLM
 
     def invoke_tool(tool, tool_call, arguments)
       input = tool_call_input(tool_call)
-      result = input ? tool.resume(input, arguments) : tool.call(**arguments, tool_call:)
-      return pause_tool_call(tool_call, result.to_h) if result.is_a?(MCP::Task)
+      result = input ? tool.resume_call(input, arguments, tool_call:) : tool.call(**arguments, tool_call:)
+      return pause_tool_call(tool_call, result.to_h) if result.is_a?(Task)
 
       record_tool_call_input(tool_call, nil) if input
       result
-    rescue MCP::InputRequiredError => e
+    rescue InputRequiredError => e
       pause_tool_call(tool_call, e.to_h)
     end
 
@@ -2214,7 +2218,10 @@ module RubyLLM
 
     def task_for(tool_call, state)
       tool = tools[tool_call.name.to_sym]
-      tool.respond_to?(:task) ? tool.task(state, tool_call:) : MCP::Task.load(nil, state, tool_call:)
+      return tool.task(state, tool_call:) if tool
+      return MCP::Task.load(nil, state, tool_call:) if state['task'].key?('taskId')
+
+      Task.load(state, tool_call:)
     end
 
     def cancel_tasks
@@ -2233,7 +2240,7 @@ module RubyLLM
     def cancel_task(task)
       task.cancel
     rescue Error, ConfigurationError, Faraday::Error => e
-      RubyLLM.logger.debug { "RubyLLM could not cancel task #{task.id}: #{e.message}" }
+      RubyLLM.logger.debug { "RubyLLM could not cancel the task of tool call #{task.tool_call&.id}: #{e.message}" }
     end
 
     def tool_call_input(tool_call)

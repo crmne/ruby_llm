@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
-require 'dotenv/load'
+require 'dotenv'
+# .env holds 1Password lookups for recording; CI has neither, and replays.
+Dotenv.load unless ENV['CI']
+require_relative 'support/blank_keys'
 require 'simplecov'
 require 'simplecov-cobertura'
 require_relative 'support/simplecov_configuration'

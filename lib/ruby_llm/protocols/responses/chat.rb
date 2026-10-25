@@ -50,7 +50,10 @@ module RubyLLM
         end
 
         def parse_completion_body(data, raw:)
-          raise Error.new(data.dig('error', 'message'), response: raw) if data.dig('error', 'message')
+          if data.dig('error', 'message')
+            raise Error.new(provider_message: data.dig('error', 'message'), error_code: data.dig('error', 'code'),
+                            response: raw)
+          end
 
           output = data['output'] || []
           content = parse_output_text(output)
@@ -73,6 +76,7 @@ module RubyLLM
             model: data['model'],
             raw: raw,
             finish_reason: finish_reason,
+            content_filters: ChatCompletions::ContentFilters.parse_content_filters(data),
             **parse_usage(data['usage'] || {}),
             server_tool_use: parse_server_tool_use(data)
           )

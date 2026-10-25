@@ -249,6 +249,18 @@ RSpec.describe RubyLLM::Chat, :live do # rubocop:disable RSpec/MultipleMemoizedH
     end
   end
 
+  describe 'document URL models' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+    each_model(DOCUMENT_URL_MODELS) do |provider, model, info|
+      it "#{provider}/#{model} reads PDFs the provider fetches from their URL" do
+        chat = RubyLLM.chat(model: model, provider: provider, protocol: info[:protocol])
+        response = chat.ask('Summarize this document in one sentence.', with: pdf_url)
+
+        expect(response.content).to match(/pdf|document|lorem|sample/i)
+        expect(a_request(:get, pdf_url)).not_to have_been_made
+      end
+    end
+  end
+
   describe 'document models' do # rubocop:disable RSpec/MultipleMemoizedHelpers
     each_model(DOCUMENT_MODELS) do |provider, model|
       it "#{provider}/#{model} understands DOCX documents" do

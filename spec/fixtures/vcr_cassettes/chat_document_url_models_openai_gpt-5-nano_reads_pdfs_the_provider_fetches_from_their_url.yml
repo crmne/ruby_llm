@@ -1,0 +1,179 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":[{"type":"input_text","text":"Summarize
+        this document in one sentence."},{"type":"input_file","file_url":"https://pdfobject.com/pdf/sample.pdf"}]}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 25 Oct 2026 18:57:06 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID, Server-Timing-Total
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '2255'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '2000000'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_07b2942675f7d0ae016ade51009d8887d2943fab8f23298184",
+          "object": "response",
+          "created_at": 1792954625,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1792954626,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano-2025-08-07",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_07b2942675f7d0ae016ade5101d9a487d2a4f8ea6ecb1b75ba",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABq3lEChM_l73A1GQ9ZI8PQnuQfFIm9XCK-5L721yD7sp6PJI4_2QkOhZIEynV8_qUMwNLa4EX2AdIJcv0j_JN3WwM9YSwo7X6zPnHx6pYg7lBXVX6RTzDwq3YHSeUFNC0H6y-Qhb-oEgzL-uAsgRFY8s9SzC6eNxWvFgeCKH0WUVZH2MeXBtGQzGBWRu05QbJfaebzBLJ2gqDnR74xEldmdQwUQVzj4AhCUGfuNZpWRL3g9PpmTSO3s8Q9ITyR0B8G41Otnathk9qZ2CaFIMMp8libVFT06ot7ufE6CQJ205TDgnABA3J9pX4zgMNomb9ZrSmalcOrsWEUwwFsQIvfhGCCxmSRuGSj-Q2PkrwXk6h4j7K4drKM9N4Wxrfch1mXYZZNw5irtjyfMELsWUcQ4dKLrRHcGi2OZlKatoFcp0i8VjSiKooMadGDO2wgXGahs_k0Ray1UShb92lvBW2BKycS2Fii8q54iPc3ZFAkWBIuqYW22Kfq0OTyqcm5PLbJhdeCkDv1R4_Up0tJFVpGUIDKpTQrnzVF_qosk1fSPP4i0UXBmk8UPhGLZJOjjr86Pt3EVVbfNsyT4GlvIhqyCMpTdGItf2_gVjHD32lkXTIrDnyeWNZvZXb0dc19d9IPMRlhCKqPi95oP0V102nNjU3UnZMKubNFiQfFE-IzlPf9QqbKsvvjX0vDGrmw5WMeX81CETxmENh5K4c0gVw9ud3WA8w0gVKXoNotYzBrQ_wEkG2XOtIuIZF1zshbOnud0yTXT3jA7NR4TN2hhI_Y1VYS1S3RrrlbY59g60kswNRSpvRjkSqesfa1CWcKSc7nOiz47hYdvxRoRXrM0j-3a2fwN-f46aYLN2wjjOrGkXTP1-TfsNwOd6ium_4NrA-T2k8ofO5zFECygTv8Jhgc3EbmyIoZY99rnX5-LsmzmOQlD_p4QvPaxE0yT0Sp8vt1nU1lGqWDo9XSsCXIO7dEUM5psPU42drZQmD7kegsYYAO1JHtfengx_vssBFlFj9ZGggM-P8YSjsnDmz6b0h_95Xh5qBCPcrNtPq7R9WrRERh-rexXoEtJ64JZXxAgvB-5upWVLNyUgUIaIrujn8fTyBDNpmFqDySWo1gkqDlde43UD-N5KDFBA8gbw1d8vcZmyJ1KBcGYjzOXvp_UUEcS6C_58laDWfBPwFJxufqlMzNOQHxUW9GZDsg46k1KWlxrbgk-P5atmLwX5DaD3YhFkiCd6CBBP1gklE9vbPQRAZR1c9H-eruKzXHCY4sEP7AHT8q33jqh1YomKJ7CLF3buDedExwejw-1fUsID6ef3jPsBKczuNYXF6Rdt7ed3vAWFKyRbAQ6axXaUO6TvfR4LmTyoZN4fgXoGvZ8d_tyYSpVfSci_qhgiudQNrhwYbpNpjoqnj3X_y1gPpqJZWp3ZGgrlvleDB-L2Nwk2HTrLjcfpuPwx3kviCdovcgE3vgc1TIqNb5yThf_0kePcCm3vuaHklUXn0EYrwLz1SiQL1XStPN7TYPfIzkdI1JspbBqWsxzqEdlcKbyE8Mp2IReR9Evg6MbcAZCLF1VtP5Oyc9tJjZTnEbhq_attfuBUy8YmwzPbfv_ev2r-ixg7fIKi5N3NUU4aul2OKGLrCInAS7P8UF7y0QqQ2_40GccDsD8-l-XumH5tlq0hpsue_MCE3vO2RyvonmaYGB9Z_vDJbpDlSHGaKnQ4BxD9Z6GVvjzM3iOO96h2GEqLmYG6UxLaI0LJlvirln2IYyivSL1Fz7EFr6x9Rlox4kEzv-E3onGQ2A2VqdzuWkVQmOvL69xJ6aGJZCEpuvf3BYKVhMguxocToSdhwaWZYiQqfhCf-gOdXPn_u3E_Svyym5AR1soHRktY23kOUcdd8KbiuuSh6BjQbcvuxCY1Wlx3-eiaruo6ec_R7Bv1_LpuBz760ePN_5YcWeiYuLjqyWq4sL3FWDJACXLbeeCH68VHshsZkJgHuZV7Nad-7guru_b2ELE-FBIIO_ueQIjP1PI9RNV05gTj0hQ8Xqe6ilV1WjI6QwUSiebPvWP2uzamYav1Ip8VA8fEq72qcNQ5PT1EHbI-6eSfEM8HqFN03ZTJTLJMLQ-dQtfL1qF9kWHg7rJmMy1OWGx4cvifJOC34cQ3SDb-Yd8nWOA1TIzjvpnO92HgkwIYqw633ccoq-zTzXPY5XM2B8Ze-KEH3V7hIqKKVHUzYGwCgDjh2QFjqt2do2-zz72h0I4fq0X4qbv6YBMrgxAXKd_JSCTF385r8zLfZkS8cHyzrhaWa2P9jooyLbZR8nbIpMlUy22pOn4oaPY2an1audh552z-BNAQ3lOwhqx1O1_BH8s3pTjm7Vpo1cyxRsnMRJaUGrp4AiCcSKjE3B2WmZ3rwopVIg7sJWkqnKUoIe3mme1QODc4vr3wqonpq-Co-XDexwSkU_zVy9cmM1jmx66Q0Nh0S8BoIcuLATeLhD1OhiuIXWiJ-oSz7ifBwhClHfYI3b4ZSOWUXCSOrAr1HlqU3qpzvM1DRaPMpzSpRe94tvBnioCq73pOUXHHJMKuTHw5VrFpgTsOaWS3sdzWOkb1al_FPlhBpx4s0hQFom-NPj2CPD2Kkow_h0VxB7hRbk_tKZKfhJ67KgkVUXnwkVRrd1HcgsRKykGPGo0b_zItBpwZcBxdrrmK6hokRPk7VqHS6BGoGu5SWG9vHfjZscbkNIJYPiL3f5UtDubEcUqiKcbrtylZuYLkaJGJEdnrvT2jRAyis41pKh2BL356FtzYdnJEl0Mx5OSkphwcMUzOFQoD8V-gaQyMbdGoIwE1pPi1nucqlkreuttxyHg7XVQ18lu-IViYl0y38Ryizi93jLblO5ARmFt6ywlDVz_YehRT2_nHcRcUAYssvp63mER-agFpIFZcNrSA2OsfVSd8Wvp17p2xVaUSebrhCLWeBzwqzVMxpPv00YllNRk1klzS2N3syFHLj_4empRB-Gq9jFa3XrI-0Ttjx5NP1fakKSq4Aa01fe_G7vc6Ll1U0y-n0iyZ9hwd7TVX8Y-1Ceoec67bzoO5j5atPmVGAjALddlVPZTQwNiLV2fqN6cXsJuv08R_WIkYdG4KMvCM3htU4TY5jVWdc4F7IN3-1xqJZjf1UfvfLv2xtDTew042_Hol6VMvAR1VW8iRUngsxuqdo=",
+              "summary": []
+            },
+            {
+              "id": "msg_07b2942675f7d0ae016ade5102ad8887d29bcb3f401a42f1aa",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "A simple PDF filled with lorem ipsum placeholder text and no meaningful content."
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 757,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 145,
+            "output_tokens_details": {
+              "reasoning_tokens": 64
+            },
+            "total_tokens": 902
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Sun, 25 Oct 2026 18:57:06 GMT
+recorded_with: VCR 6.4.0

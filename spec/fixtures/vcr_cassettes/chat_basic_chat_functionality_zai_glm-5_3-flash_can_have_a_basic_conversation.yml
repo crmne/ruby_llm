@@ -1,0 +1,57 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.z.ai/api/paas/v4/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"glm-5.3-flash","messages":[{"role":"user","content":"What''s
+        2 + 2?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 15:34:30 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '1054'
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - 1a7d1a0408203c492a66d916559a40a5
+      Vary:
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 20261020233427b9ba2364db7c4f32
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiIyICsgMiA9IDQiLCJyZWFzb25pbmdfY29udGVudCI6IlRoaXMgaXMgdGhlIHNpbXBsZXN0IG1hdGggcXVlc3Rpb24gcG9zc2libGUuIFRoZSB1c2VyIGlzIGFza2luZyB3aGF0IDIgKyAyIGVxdWFscy4gVGhlIGFuc3dlciBpcyA0LlxuXG5UaGlzIGlzIGEgdHJpdmlhbCBhcml0aG1ldGljIHF1ZXN0aW9uIHdpdGggYSBzaW5nbGUgY29ycmVjdCBhbnN3ZXIuIFRoZXJlJ3Mgbm8gYW1iaWd1aXR5LCBubyBudWFuY2UsIG5vIG5lZWQgZm9yIGV4dGVuc2l2ZSBmb3JtYXR0aW5nIG9yIGV4cGxhbmF0aW9uLlxuXG5UaGUgcmVzcG9uc2Ugc2hvdWxkIGJlIGV4dHJlbWVseSBicmllZiDigJQganVzdCB0aGUgYW5zd2VyLCBwb3NzaWJseSB3aXRoIGEgdGlueSBiaXQgb2YgY29udGV4dCBidXQgaG9uZXN0bHkgZXZlbiB0aGF0J3MgdW5uZWNlc3NhcnkuIEEgc2ltcGxlIFwiNFwiIG9yIFwiMiArIDIgPSA0XCIgaXMgdGhlIHBlcmZlY3QgcmVzcG9uc2UgaGVyZS4gQWRkaW5nIGFueXRoaW5nIG1vcmUgd291bGQgYmUgcGFkZGluZy5cblxuRm9ybWF0IGNvbnNpZGVyYXRpb25zOiBObyBtYXJrZG93biBuZWVkZWQsIG5vIGhlYWRlcnMsIG5vIGJ1bGxldHMuIEp1c3QgcGxhaW4gdGV4dCwgb25lIHNob3J0IHNlbnRlbmNlIGF0IG1vc3QuIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3OTI1MTA0NzAsImlkIjoiMjAyNjEwMjAyMzM0MjdiOWJhMjM2NGRiN2M0ZjMyIiwibW9kZWwiOiJnbG0tNS4zLWZsYXNoIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicmVxdWVzdF9pZCI6IjIwMjYxMDIwMjMzNDI3YjliYTIzNjRkYjdjNGYzMiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjoxNDAsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MTMxfSwicHJvbXB0X3Rva2VucyI6MjAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwidG90YWxfdG9rZW5zIjoxNjB9fQ==
+  recorded_at: Tue, 20 Oct 2026 15:34:30 GMT
+recorded_with: VCR 6.4.0

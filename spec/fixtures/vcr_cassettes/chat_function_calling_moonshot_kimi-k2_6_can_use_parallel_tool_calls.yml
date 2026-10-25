@@ -1,0 +1,166 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k2.6","messages":[{"role":"user","content":"What''s
+        the weather in Berlin (52.5200, 13.4050) and what''s the best language to
+        learn?"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 11:39:56 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Internal-Adhoc-Canary:
+      - '4225118297'
+      Msh-Gid:
+      - <MOONSHOT_GROUP_ID>
+      Msh-Org-Id:
+      - <MOONSHOT_ORGANIZATION_ID>
+      Msh-Project-Id:
+      - <MOONSHOT_PROJECT_ID>
+      Msh-Request-Id:
+      - f7424b29-cc7a-11f1-8aea-72ccf2e9daa1
+      Msh-Schema-Warning:
+      - 'tools.function[weather].parameters is not a valid moonshot flavored json
+        schema, details: <At path ''root'': unsupported keywords: strict>; tools.function[best_language_to_learn].parameters
+        is not a valid moonshot flavored json schema, details: <At path ''roo...'
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - <MOONSHOT_USER_ID>
+      X-Msh-Trace-Id:
+      - a90ceb2269ab57dcd29276b4d86f8532
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-6ad75309a2c589b90524039b","object":"chat.completion","created":1792496393,"model":"kimi-k2.6","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        look up the current weather in Berlin and the best language to learn for you.","tool_calls":[{"index":0,"id":"weather_0_7c3f05bf","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"index":1,"id":"best_language_to_learn_1_9b6d18fd","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
+        user is asking two things:\n1. The weather in Berlin with coordinates 52.5200,
+        13.4050\n2. The best language to learn\n\nI have two functions available:\n-
+        `weather` which takes latitude and longitude as strings\n- `best_language_to_learn`
+        which takes no arguments\n\nBoth of these are independent of each other, so
+        I can call them in the same function_calls block. Let me prepare the parameters:\n-
+        For weather: latitude = \"52.5200\", longitude = \"13.4050\"\n- For best_language_to_learn:
+        no parameters needed (empty object {})\n\nLet me make both calls."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":141,"completion_tokens":190,"total_tokens":331,"completion_tokens_details":{"reasoning_tokens":135}}}'
+  recorded_at: Tue, 20 Oct 2026 11:39:56 GMT
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k2.6","messages":[{"role":"user","content":"What''s
+        the weather in Berlin (52.5200, 13.4050) and what''s the best language to
+        learn?"},{"role":"assistant","content":"I''ll look up the current weather
+        in Berlin and the best language to learn for you.","tool_calls":[{"id":"weather_0_7c3f05bf","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"best_language_to_learn_1_9b6d18fd","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
+        user is asking two things:\n1. The weather in Berlin with coordinates 52.5200,
+        13.4050\n2. The best language to learn\n\nI have two functions available:\n-
+        `weather` which takes latitude and longitude as strings\n- `best_language_to_learn`
+        which takes no arguments\n\nBoth of these are independent of each other, so
+        I can call them in the same function_calls block. Let me prepare the parameters:\n-
+        For weather: latitude = \"52.5200\", longitude = \"13.4050\"\n- For best_language_to_learn:
+        no parameters needed (empty object {})\n\nLet me make both calls."},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"weather_0_7c3f05bf"},{"role":"tool","content":"Ruby","tool_call_id":"best_language_to_learn_1_9b6d18fd"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 11:39:59 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '4225118297'
+      Msh-Gid:
+      - <MOONSHOT_GROUP_ID>
+      Msh-Org-Id:
+      - <MOONSHOT_ORGANIZATION_ID>
+      Msh-Project-Id:
+      - <MOONSHOT_PROJECT_ID>
+      Msh-Request-Id:
+      - f97143a2-cc7a-11f1-8aea-72ccf2e9daa1
+      Msh-Schema-Warning:
+      - 'tools.function[weather].parameters is not a valid moonshot flavored json
+        schema, details: <At path ''root'': unsupported keywords: strict>; tools.function[best_language_to_learn].parameters
+        is not a valid moonshot flavored json schema, details: <At path ''roo...'
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - <MOONSHOT_USER_ID>
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - c4356d457c493269c2cab0a0032ef926
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTZhZDc1MzBjZmM3YjA3MzAxYzk1YTc5NSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTI0OTYzOTYsIm1vZGVsIjoia2ltaS1rMi42IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJIZXJlIGFyZSB0aGUgYW5zd2VycyB0byB5b3VyIHF1ZXN0aW9uczpcblxuKipXZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCk6Kipcbi0gKipUZW1wZXJhdHVyZToqKiAxNcKwQ1xuLSAqKldpbmQ6KiogMTAga20vaFxuXG4qKkJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm46Kipcbi0gKipSdWJ5KioiLCJyZWFzb25pbmdfY29udGVudCI6IlRoZSB1c2VyIGFza2VkIHR3byBxdWVzdGlvbnMgYW5kIEkgZ290IGJvdGggcmVzdWx0cy4gTGV0IG1lIHN1bW1hcml6ZSB0aGVtIGNsZWFybHkuXG5cbjEuIFdlYXRoZXIgaW4gQmVybGluOiAxNcKwQywgV2luZDogMTAga20vaFxuMi4gQmVzdCBsYW5ndWFnZSB0byBsZWFybjogUnVieVxuXG5JIHNob3VsZCBwcmVzZW50IGJvdGggYW5zd2VycyBjbGVhcmx5LiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MzkwLCJjb21wbGV0aW9uX3Rva2VucyI6MTA1LCJ0b3RhbF90b2tlbnMiOjQ5NSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjo1MX19fQ==
+  recorded_at: Tue, 20 Oct 2026 11:39:59 GMT
+recorded_with: VCR 6.4.0

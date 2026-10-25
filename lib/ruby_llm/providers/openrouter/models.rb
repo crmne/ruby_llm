@@ -27,6 +27,11 @@ module RubyLLM
           'image' => 'image_generation'
         }.freeze
 
+        CAPABILITIES_BY_INPUT_MODALITY = {
+          'image' => %w[vision],
+          'video' => %w[vision video]
+        }.freeze
+
         CAPABILITY_PARAMETERS = {
           'function_calling' => %w[tools tool_choice],
           'tool_choice' => %w[tool_choice],
@@ -71,6 +76,7 @@ module RubyLLM
             end
 
             capabilities = supported_parameters_to_capabilities(model_data['supported_parameters']) |
+                           input_modality_capabilities(modalities[:input]) |
                            output_modalities.filter_map { |modality| CAPABILITY_BY_OUTPUT_MODALITY[modality] }
 
             Model.new(
@@ -95,6 +101,10 @@ module RubyLLM
               }
             )
           end
+        end
+
+        def input_modality_capabilities(input_modalities)
+          input_modalities.flat_map { |modality| CAPABILITIES_BY_INPUT_MODALITY.fetch(modality, []) }.uniq
         end
 
         def supported_parameters_to_capabilities(params)

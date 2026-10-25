@@ -18,30 +18,22 @@ module RubyLLM
     #   task.poll_interval  # => 5.0
     #
     # MCP#call waits for the task of a tool you call directly.
-    class Task
-      include Support::Inspectable
-
-      DONE = %i[completed failed cancelled].freeze
-      private_constant :DONE
-
+    class Task < RubyLLM::Task
       # The task's id on its server.
       attr_reader :id
 
-      # The ToolCall paused on the task, when it came from a chat.
-      attr_reader :tool_call
-
-      attr_reader :data, :answered # :nodoc:
+      attr_reader :answered # :nodoc:
 
       def self.load(mcp, state, tool_call: nil) # :nodoc:
         new(mcp, state['task'], answered: state['answered'], tool_call:)
       end
 
       def initialize(mcp, data, answered: nil, tool_call: nil) # :nodoc:
+        super(tool_call:)
         @mcp = mcp
         @data = data
         @id = data['taskId']
         @answered = Array(answered)
-        @tool_call = tool_call
       end
 
       # The task's state: +:working+, +:input_required+, +:completed+,
@@ -66,26 +58,6 @@ module RubyLLM
       # keeps the task for good.
       def expires_at
         Time.iso8601(data['createdAt']) + (data['ttlMs'] / 1000.0) if data['ttlMs'] && data['createdAt']
-      end
-
-      # Returns +true+ once the task completed, failed, or was cancelled.
-      def done?
-        DONE.include?(status)
-      end
-
-      # Returns +true+ when the task finished with a #result.
-      def completed?
-        status == :completed
-      end
-
-      # Returns +true+ when the task failed with an error.
-      def failed?
-        status == :failed
-      end
-
-      # Returns +true+ when the task was cancelled before it finished.
-      def cancelled?
-        status == :cancelled
       end
 
       # Returns the MCP::Result once the task #completed?, and +nil+ until
@@ -125,8 +97,9 @@ module RubyLLM
 
       def error # :nodoc:
         details = data['error'] || {}
-        Error.new(details['message'] || status_message || "Task #{id} was #{status}",
-                  code: details['code'], data: details['data'])
+        reported = details['message'] || status_message
+        Error.new(("Task #{id} was #{status}" unless reported), provider_message: reported,
+                                                                code: details['code'], data: details['data'])
       end
 
       def record_answers(keys) # :nodoc:

@@ -1,0 +1,156 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k2.6","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 11:32:48 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '4225118297'
+      Msh-Gid:
+      - <MOONSHOT_GROUP_ID>
+      Msh-Org-Id:
+      - <MOONSHOT_ORGANIZATION_ID>
+      Msh-Project-Id:
+      - <MOONSHOT_PROJECT_ID>
+      Msh-Request-Id:
+      - f8c330db-cc79-11f1-8aea-72ccf2e9daa1
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - <MOONSHOT_USER_ID>
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - e7b28d866c9a90972a0d96827a3ce20c
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-6ad7515ecde1e70eedddc7f9","object":"chat.completion","created":1792495966,"model":"kimi-k2.6","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file `ruby.txt` contains the following text:\n\n**Ruby is the best.**","reasoning_content":"The
+        user is asking \"What''s in this file?\" and has provided a file named ''ruby.txt''
+        with mime_type ''text/plain'' and content ''Ruby is the best.''\n\nI need
+        to tell them what is in the file. The content is simply the text \"Ruby is
+        the best.\"\n\nI should be straightforward and direct. There''s no trick here
+        - just describe the contents of the provided file."},"finish_reason":"stop"}],"usage":{"prompt_tokens":31,"completion_tokens":100,"total_tokens":131,"completion_tokens_details":{"reasoning_tokens":81}}}'
+  recorded_at: Tue, 20 Oct 2026 11:32:48 GMT
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k2.6","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]},{"role":"assistant","content":"The file `ruby.txt`
+        contains the following text:\n\n**Ruby is the best.**","reasoning_content":"The
+        user is asking \"What''s in this file?\" and has provided a file named ''ruby.txt''
+        with mime_type ''text/plain'' and content ''Ruby is the best.''\n\nI need
+        to tell them what is in the file. The content is simply the text \"Ruby is
+        the best.\"\n\nI should be straightforward and direct. There''s no trick here
+        - just describe the contents of the provided file."},{"role":"user","content":[{"type":"text","text":"and
+        in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
+        is the best</truism></file>"}]}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 11:32:52 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Internal-Adhoc-Canary:
+      - '4225118297'
+      Msh-Gid:
+      - <MOONSHOT_GROUP_ID>
+      Msh-Org-Id:
+      - <MOONSHOT_ORGANIZATION_ID>
+      Msh-Project-Id:
+      - <MOONSHOT_PROJECT_ID>
+      Msh-Request-Id:
+      - fa6d7649-cc79-11f1-8aea-72ccf2e9daa1
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - <MOONSHOT_USER_ID>
+      X-Msh-Trace-Id:
+      - 4160c6de15263c69eb2b568527ab205c
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-6ad751610c8d49bdec9408ef","object":"chat.completion","created":1792495969,"model":"kimi-k2.6","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file `ruby.xml` contains the following XML:\n\n```xml\n\u003ctruism\u003eRuby
+        is the best\u003c/truism\u003e\n```","reasoning_content":"The user is asking
+        what''s in the file named `ruby.xml`. The file content is provided as:\n```\n\u003ctruism\u003eRuby
+        is the best\u003c/truism\u003e\n```\n\nI should describe the content. It''s
+        an XML file containing a `\u003ctruism\u003e` element with the text \"Ruby
+        is the best\". I should be clear and concise.\n\nWait, looking at the previous
+        interaction, the first file was `ruby.txt` with \"Ruby is the best.\" (with
+        a period), and this one is `ruby.xml` with `\u003ctruism\u003eRuby is the
+        best\u003c/truism\u003e` (no period). I should note the XML structure.\n\nI
+        should just answer directly what is in the file."},"finish_reason":"stop"}],"usage":{"prompt_tokens":88,"completion_tokens":168,"total_tokens":256,"completion_tokens_details":{"reasoning_tokens":139}}}'
+  recorded_at: Tue, 20 Oct 2026 11:32:52 GMT
+recorded_with: VCR 6.4.0

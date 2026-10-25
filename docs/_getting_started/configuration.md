@@ -155,9 +155,20 @@ RubyLLM.configure do |config|
   config.hetzner_api_key = String
   config.hetzner_api_base = String
 
+  # Meta
+  config.meta_api_key = String
+  config.meta_api_base = String
+  # MiniMax
+  config.minimax_api_key = String
+  config.minimax_api_base = String
+
   # Mistral
   config.mistral_api_key = String
   config.mistral_api_base = String
+
+  # Moonshot AI
+  config.moonshot_api_key = String
+  config.moonshot_api_base = String
 
   # Ollama
   config.ollama_api_base = String
@@ -197,6 +208,10 @@ RubyLLM.configure do |config|
   # xAI
   config.xai_api_key = String
   config.xai_api_base = String
+
+  # Z.ai
+  config.zai_api_key = String
+  config.zai_api_base = String
 
   # Default Models
   config.default_model = String
@@ -238,6 +253,7 @@ RubyLLM.configure do |config|
   config.logger = Logger
   config.instrumenter = Object # Responds to instrument(name, payload) { ... }
   config.deprecation_behavior = :warn # :warn, :silence, or :raise
+  config.redact_error_messages = false # true leaves what providers wrote out of error messages
   config.log_file = String
   config.log_level = Symbol
   config.log_stream_debug = Boolean

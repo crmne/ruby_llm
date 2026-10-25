@@ -142,6 +142,16 @@ RSpec.describe RubyLLM::Chat, :live do
       end
     end
 
+    context "with bedrock/#{model_for(:bedrock)}" do
+      it 'answers from tool results returned as search results' do
+        chat = RubyLLM.chat(model: model_for(:bedrock), provider: :bedrock).with_tools(KnowledgeBase)
+
+        response = chat.ask('Who created Ruby? Search the knowledge base first.')
+
+        expect(response.content).to include('Matsumoto')
+      end
+    end
+
     context "with perplexity/#{model_for(:perplexity, :citations)}" do
       let(:chat) { RubyLLM.chat(model: model_for(:perplexity, :citations), provider: :perplexity) }
 

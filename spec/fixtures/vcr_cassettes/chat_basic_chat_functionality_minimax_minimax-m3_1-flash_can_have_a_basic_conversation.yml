@@ -1,0 +1,60 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.minimax.io/anthropic/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        2 + 2?"}]}],"stream":false,"max_tokens":524288}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '324'
+      Trace-Id:
+      - 072667700f4bb97a346cf8da987cde40
+      X-Session-Id:
+      - 81d6ff1324767c884061a36e80294eed
+      X-Mm-Request-Id:
+      - 2092934004998157135_1792488560f1e7ce
+      Minimax-Request-Id:
+      - 997f13541f4ac673292005eed2325e03
+      Alb-Receive-Time:
+      - '1792488560.484'
+      Alb-Request-Id:
+      - 1541f3b6c82a75dffdd1c5252332b44aa16f2dda
+      Expires:
+      - Tue, 20 Oct 2026 09:29:23 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Tue, 20 Oct 2026 09:29:23 GMT
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-From:
+      - ak
+    body:
+      encoding: UTF-8
+      string: '{"id":"072667700f4bb97a346cf8da987cde40","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"4","type":"text"}],"usage":{"input_tokens":12,"output_tokens":3,"cache_creation_input_tokens":0,"cache_read_input_tokens":197},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Tue, 20 Oct 2026 09:29:23 GMT
+recorded_with: VCR 6.4.0

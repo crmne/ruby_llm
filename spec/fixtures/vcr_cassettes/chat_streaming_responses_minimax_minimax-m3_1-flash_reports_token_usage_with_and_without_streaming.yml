@@ -1,0 +1,171 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.minimax.io/anthropic/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"Reply
+        with exactly: 1, 2, 3"}]}],"stream":true,"max_tokens":524288,"temperature":0.0}'
+    headers:
+      Accept-Encoding:
+      - identity
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/event-stream; charset=utf-8
+      Vary:
+      - Accept-Encoding
+      Trace-Id:
+      - '07266798f9e2096057de29c8065e918f'
+      X-Session-Id:
+      - 6e1177fb8882217923c9bbd113dbe3d6
+      X-Mm-Request-Id:
+      - 2092934004998157135_1792488600g3qswg
+      Minimax-Request-Id:
+      - c0e81428cf5fc4c89272f189f0a175a5
+      Alb-Receive-Time:
+      - '1792488600.203'
+      Alb-Request-Id:
+      - 2476c9c4386cbc4a6803fe2aee0caef7a908d427
+      Expires:
+      - Tue, 20 Oct 2026 09:30:01 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Tue, 20 Oct 2026 09:30:01 GMT
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - Transfer-Encoding
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-From:
+      - ak
+    body:
+      encoding: UTF-8
+      string: |+
+        event: message_start
+        data: {"type":"message_start","message":{"id":"07266798f9e2096057de29c8065e918f","type":"message","role":"assistant","content":[],"model":"MiniMax-M3.1-Flash","stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":0,"output_tokens":0}}}
+
+        event: ping
+        data: {"type":"ping"}
+
+        event: content_block_start
+        data: {"type":"content_block_start","index":0,"content_block":{"type":"thinking","thinking":""}}
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"We"}}
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" need answer"}}
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" exactly \"1, 2, "}}
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"3\". Need"}}
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" no"}}
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" extra."}}
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"signature_delta","signature":"c036a12f66920af0d4bb726ab64a5200ee52025df8db882292fe18d2b55c0cb2"}}
+
+        event: content_block_stop
+        data: {"type":"content_block_stop","index":0}
+
+        event: content_block_start
+        data: {"type":"content_block_start","index":1,"content_block":{"type":"text","text":""}}
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"text_delta","text":"1, 2, 3"}}
+
+        event: content_block_stop
+        data: {"type":"content_block_stop","index":1}
+
+        event: message_delta
+        data: {"type":"message_delta","delta":{"stop_reason":"end_turn"},"usage":{"input_tokens":17,"output_tokens":27,"cache_read_input_tokens":197,"output_tokens_details":{"thinking_tokens":17}}}
+
+        event: message_stop
+        data: {"type":"message_stop"}
+
+  recorded_at: Tue, 20 Oct 2026 09:30:03 GMT
+- request:
+    method: post
+    uri: https://api.minimax.io/anthropic/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"Reply
+        with exactly: 1, 2, 3"}]}],"stream":false,"max_tokens":524288,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '554'
+      Trace-Id:
+      - '0726679b5e62fab28a714b82e703dbcd'
+      X-Session-Id:
+      - 6e1177fb8882217923c9bbd113dbe3d6
+      X-Mm-Request-Id:
+      - 2092934004998157135_1792488603pdx1pp
+      Minimax-Request-Id:
+      - 84e9abd515e00bcc1e7c565c230b8b9d
+      Alb-Receive-Time:
+      - '1792488603.516'
+      Alb-Request-Id:
+      - 2c50cd19f17c4423a3fe5beaf62b9fdff5f7b271
+      Expires:
+      - Tue, 20 Oct 2026 09:30:06 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Tue, 20 Oct 2026 09:30:06 GMT
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-From:
+      - ak
+    body:
+      encoding: UTF-8
+      string: '{"id":"0726679b5e62fab28a714b82e703dbcd","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"thinking":"We
+        need answer exactly \"1, 2, 3\" likely no extra. Need comply.","signature":"2c81321ab0cec5a3cf9ae8c12ac728a1d2ac12dc5a248d3355e59c2882161776","type":"thinking"},{"text":"1,
+        2, 3","type":"text"}],"usage":{"input_tokens":1,"output_tokens":30,"cache_creation_input_tokens":0,"cache_read_input_tokens":213,"output_tokens_details":{"thinking_tokens":20}},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Tue, 20 Oct 2026 09:30:06 GMT
+recorded_with: VCR 6.4.0
+...

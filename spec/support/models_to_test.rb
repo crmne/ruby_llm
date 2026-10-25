@@ -42,6 +42,11 @@ def skip_without_cassette_or_key(env_key)
   skip "Set #{env_key} to record this cassette"
 end
 
+# Contributor mode costs a fraction of Standard mode because Meta may train
+# on what it is sent. The specs send only synthetic prompts, so they use it;
+# never point it at user data.
+META_TEST_MODEL = 'muse-spark-1.3-contributor'
+
 chat_models = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
   { provider: :azure, model: 'grok-4-1-fast-non-reasoning' },
@@ -51,14 +56,18 @@ chat_models = [
   { provider: :gemini, model: 'gemini-2.5-flash' },
   { provider: :gpustack, model: 'qwen3', backend: :llama_cpp },
   { provider: :hetzner, model: 'Qwen3.8-27B' },
+  { provider: :meta, model: META_TEST_MODEL },
+  { provider: :minimax, model: 'MiniMax-M3.1-Flash' },
   { provider: :mistral, model: 'mistral-small-latest' },
+  { provider: :moonshot, model: 'kimi-k2.6' },
   { provider: :ollama, model: 'qwen3' },
   { provider: :ollama_cloud, model: 'gpt-oss:120b' },
   { provider: :openai, model: 'gpt-5-nano' },
   { provider: :openrouter, model: 'claude-haiku-4-5' },
   { provider: :perplexity, model: 'openai/gpt-5-mini' },
   { provider: :vertexai, model: 'gemini-2.5-flash' },
-  { provider: :xai, model: 'grok-4-1-fast-non-reasoning' }
+  { provider: :xai, model: 'grok-4-1-fast-non-reasoning' },
+  { provider: :zai, model: 'glm-5.3-flash' }
 ].freeze
 CHAT_MODELS = filter_local_providers(chat_models).freeze
 
@@ -68,11 +77,14 @@ structured_output_models = [
   { provider: :bedrock, model: 'claude-haiku-4-5' },
   { provider: :cohere, model: 'command-a-03-2025' },
   { provider: :gemini, model: 'gemini-3-flash-preview' },
+  { provider: :meta, model: META_TEST_MODEL },
   { provider: :mistral, model: 'mistral-small-latest' },
+  { provider: :moonshot, model: 'kimi-k3' },
   { provider: :openai, model: 'gpt-5-nano' },
   { provider: :openrouter, model: 'claude-haiku-4-5' },
   { provider: :vertexai, model: 'gemini-3-flash-preview' },
-  { provider: :xai, model: 'grok-4-1-fast-non-reasoning' }
+  { provider: :xai, model: 'grok-4-1-fast-non-reasoning' },
+  { provider: :zai, model: 'glm-5.3-flash' }
 ]
 STRUCTURED_OUTPUT_MODELS = filter_local_providers(structured_output_models).freeze
 
@@ -83,12 +95,16 @@ thinking_models = [
   { provider: :cohere, model: 'command-a-reasoning-08-2025' },
   { provider: :gemini, model: 'gemini-3-flash-preview' },
   { provider: :gpustack, model: 'qwen3' },
+  { provider: :meta, model: META_TEST_MODEL },
+  { provider: :minimax, model: 'MiniMax-M3.1-Flash' },
   { provider: :mistral, model: 'mistral-small-latest' },
+  { provider: :moonshot, model: 'kimi-k2.6' },
   { provider: :ollama, model: 'qwen3' },
   { provider: :openai, model: 'gpt-5.4' },
   { provider: :openrouter, model: 'claude-haiku-4-5' },
   { provider: :vertexai, model: 'gemini-3-flash-preview' },
-  { provider: :xai, model: 'grok-3-mini' }
+  { provider: :xai, model: 'grok-3-mini' },
+  { provider: :zai, model: 'glm-5.3-flash' }
 ].freeze
 THINKING_MODELS = filter_local_providers(thinking_models).freeze
 
@@ -121,6 +137,14 @@ PDF_MODELS = [
   { provider: :vertexai, model: 'gemini-2.5-flash' }
 ].freeze
 
+DOCUMENT_URL_MODELS = [
+  { provider: :azure, model: 'gpt-5-nano', protocol: :responses },
+  { provider: :meta, model: META_TEST_MODEL },
+  { provider: :openai, model: 'gpt-5-nano' },
+  { provider: :openrouter, model: 'gemini-2.5-flash', protocol: :responses },
+  { provider: :xai, model: 'grok-4-1-fast-non-reasoning' }
+].freeze
+
 DOCUMENT_MODELS = [
   { provider: :bedrock, model: 'claude-sonnet-4-5' },
   { provider: :mistral, model: 'mistral-small-latest' },
@@ -140,12 +164,16 @@ vision_models = [
   { provider: :deepseek, model: 'deepseek-flash' },
   { provider: :gemini, model: 'gemini-2.5-flash' },
   { provider: :hetzner, model: 'Qwen3.8-27B' },
+  { provider: :meta, model: META_TEST_MODEL },
+  { provider: :minimax, model: 'MiniMax-M3.1-Flash' },
   { provider: :mistral, model: 'pixtral-12b' },
+  { provider: :moonshot, model: 'kimi-k2.6' },
   { provider: :ollama, model: 'gemma4' },
   { provider: :openai, model: 'gpt-5-nano' },
   { provider: :openrouter, model: 'claude-haiku-4-5' },
   { provider: :vertexai, model: 'gemini-2.5-flash' },
-  { provider: :xai, model: 'grok-4-1-fast-non-reasoning' }
+  { provider: :xai, model: 'grok-4-1-fast-non-reasoning' },
+  { provider: :zai, model: 'glm-5.3-flash' }
 ].freeze
 VISION_MODELS = filter_local_providers(vision_models).freeze
 
@@ -271,7 +299,7 @@ TEST_MODELS = {
     { provider: :azure, model: 'gpt-5-nano', protocol: :responses, approval: true },
     { provider: :gemini, model: 'gemini-3.8-flash', protocol: :interactions, approval: false }
   ],
-  always_thinking: [{ provider: :mistral, model: 'magistral-medium-latest' }],
+  always_thinking: [{ provider: :minimax, model: 'MiniMax-M2.7' }],
   thinking_signatures: [
     { provider: :gemini, model: 'gemini-3.1-pro-preview' },
     { provider: :vertexai, model: 'gemini-3.1-pro-preview' }

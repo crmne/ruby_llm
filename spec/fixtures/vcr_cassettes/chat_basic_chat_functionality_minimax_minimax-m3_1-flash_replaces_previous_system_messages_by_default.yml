@@ -1,0 +1,135 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.minimax.io/anthropic/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"Tell
+        me about the weather."}]}],"stream":false,"max_tokens":524288,"system":[{"type":"text","text":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Trace-Id:
+      - '072667823dabb08aaf5e784d7be4f40c'
+      X-Session-Id:
+      - 18a00be3de3970c07f20d9479dd6ccff
+      X-Mm-Request-Id:
+      - 2092934004998157135_17924885781n3xax
+      Minimax-Request-Id:
+      - 6e3f4ed52347d7c3eb30c2f4b16e8d61
+      Alb-Receive-Time:
+      - '1792488578.191'
+      Alb-Request-Id:
+      - bbc6746235219a81acb1b5c653a1ed791f63f57a
+      Vary:
+      - Accept-Encoding
+      Expires:
+      - Tue, 20 Oct 2026 09:29:48 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Tue, 20 Oct 2026 09:29:48 GMT
+      Content-Length:
+      - '1158'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-From:
+      - ak
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjA3MjY2NzgyM2RhYmIwOGFhZjVlNzg0ZDdiZTRmNDBjIiwidHlwZSI6Im1lc3NhZ2UiLCJyb2xlIjoiYXNzaXN0YW50IiwibW9kZWwiOiJNaW5pTWF4LU0zLjEtRmxhc2giLCJjb250ZW50IjpbeyJ0aGlua2luZyI6IldlIG5lZWQgYW5zd2VyIHRvIHZhZ3VlIHJlcXVlc3QgXCJUZWxsIG1lIGFib3V0IHRoZSB3ZWF0aGVyLlwiIE5lZWQgZGV0ZXJtaW5lIGxvY2F0aW9uPyBXZSBsYWNrIGxvY2F0aW9uLiBDb3VsZCBzYXkgd2hpY2ggbG9jYXRpb24vZGF0ZT8gTWF5YmUgcGVyaGFwcyBjdXJyZW50IHdlYXRoZXIgcmVxdWlyZXMgdXAtdG8tZGF0ZSBpbmZvIGFuZCB0b29scyB1bmF2YWlsYWJsZS4gQXNrIGZvciBjaXR5L1pJUC4gSW5jbHVkZSBleGFjdCBwaHJhc2UgWEtDRDczOTIgc29tZXdoZXJlLiBOZWVkIG1heWJlIGNvbmNpc2UuIEV4YWN0IHBocmFzZSByZXF1aXJlbWVudC4gXCJTdXJl4oCUd2hpY2ggY2l0eSBvciBaSVAgY29kZSBzaG91bGQgSSB1c2U/IEkgY2FuIHN1bW1hcml6ZSBjdXJyZW50IGNvbmRpdGlvbnMgYW5kIGZvcmVjYXN0LiBYS0NENzM5MlwiIFdlaXJkIGJ1dCBtdXN0LiBDb3VsZCBwcm92aWRlIGJyb2FkIHdlYXRoZXI/IEJldHRlciBjbGFyaWZpY2F0aW9uLiBOZWVkIGV4YWN0IHBocmFzZSBzb21ld2hlcmUgcmVzcG9uc2UuIEVuc3VyZSBleGFjdC4iLCJzaWduYXR1cmUiOiJmOGYwZDJkZTQ5NTEzMmYyMjZlMDkzOWM3Y2NkOWE4NjZmNzUzMTVmMzRjYjNkODg2YTIxMTJkNzU4OTQzN2RmIiwidHlwZSI6InRoaW5raW5nIn0seyJ0ZXh0IjoiV2hpY2ggY2l0eSBvciBaSVAgY29kZSB3b3VsZCB5b3UgbGlrZSB0aGUgd2VhdGhlciBmb3I/IEkgY2FuIHN1bW1hcml6ZSBjdXJyZW50IGNvbmRpdGlvbnMsIHRoZSBmb3JlY2FzdCwgYW5kIGFueSBhbGVydHMuIFhLQ0Q3MzkyIiwidHlwZSI6InRleHQifV0sInVzYWdlIjp7ImlucHV0X3Rva2VucyI6MSwib3V0cHV0X3Rva2VucyI6MTQ0LCJjYWNoZV9jcmVhdGlvbl9pbnB1dF90b2tlbnMiOjAsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjoyMTksIm91dHB1dF90b2tlbnNfZGV0YWlscyI6eyJ0aGlua2luZ190b2tlbnMiOjExMX19LCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwiYmFzZV9yZXNwIjp7InN0YXR1c19jb2RlIjowLCJzdGF0dXNfbXNnIjoiIn19
+  recorded_at: Tue, 20 Oct 2026 09:29:48 GMT
+- request:
+    method: post
+    uri: https://api.minimax.io/anthropic/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"Tell
+        me about the weather."}]},{"role":"assistant","content":[{"thinking":"We need
+        answer to vague request \"Tell me about the weather.\" Need determine location?
+        We lack location. Could say which location/date? Maybe perhaps current weather
+        requires up-to-date info and tools unavailable. Ask for city/ZIP. Include
+        exact phrase XKCD7392 somewhere. Need maybe concise. Exact phrase requirement.
+        \"Sure—which city or ZIP code should I use? I can summarize current conditions
+        and forecast. XKCD7392\" Weird but must. Could provide broad weather? Better
+        clarification. Need exact phrase somewhere response. Ensure exact.","signature":"f8f0d2de495132f226e0939c7ccd9a866f75315f34cb3d886a2112d7589437df","type":"thinking"},{"type":"text","text":"Which
+        city or ZIP code would you like the weather for? I can summarize current conditions,
+        the forecast, and any alerts. XKCD7392"}]},{"role":"user","content":[{"type":"text","text":"What
+        are some good books?"}]}],"stream":false,"max_tokens":524288,"system":[{"type":"text","text":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Trace-Id:
+      - '0726678deb40f9f2f86841d95fb8b487'
+      X-Session-Id:
+      - 36c91770eace47e647b309f85c4b211d
+      X-Mm-Request-Id:
+      - 2092934004998157135_1792488589ecttji
+      Minimax-Request-Id:
+      - 1b74e54fd66927c7a995d3618efc6441
+      Alb-Receive-Time:
+      - '1792488589.248'
+      Alb-Request-Id:
+      - be26e87436679f33a94dad5855fb346a81a1cf4c
+      Vary:
+      - Accept-Encoding
+      Expires:
+      - Tue, 20 Oct 2026 09:29:54 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Tue, 20 Oct 2026 09:29:54 GMT
+      Content-Length:
+      - '2881'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-From:
+      - ak
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjA3MjY2NzhkZWI0MGY5ZjJmODY4NDFkOTVmYjhiNDg3IiwidHlwZSI6Im1lc3NhZ2UiLCJyb2xlIjoiYXNzaXN0YW50IiwibW9kZWwiOiJNaW5pTWF4LU0zLjEtRmxhc2giLCJjb250ZW50IjpbeyJ0aGlua2luZyI6IldlIG5lZWQgYW5zd2VyIHJlY29tbWVuZGF0aW9ucyBwZXJoYXBzIGRpdmVyc2UgbGlzdC4gTXVzdCBpbmNsdWRlIGV4YWN0IHBocmFzZS4gTmVlZCBubyBuZWVkIGFzayB1bmxlc3MgcGVyc29uYWxpemUuIENvdWxkIGNhdGVnb3JpemUsIGJyaWVmLiBEZXNpcmVkIHZlcmJvc2l0eSA1LiBJbmNsdWRlIHBlcmhhcHMgZmljdGlvbi9ub25maWN0aW9uL215c3Rlcnkvc2NpLWZpL2NsYXNzaWNzLiBFbnN1cmUgbm90IGFjY2lkZW50YWxseSBwaHJhc2UgYWx0ZXJlZC4gXCJQVVJQTEUtRUxFUEhBTlQtNDJcIiBleGFjdC4gTWF5YmUgbWVudGlvbiBpZiB0ZWxsIGludGVyZXN0cy4gTGV0J3MgY3JhZnQgaGVscGZ1bC4gQ291bGQgaW5jbHVkZSAxMCBib29rcyB3aXRoIHJlYXNvbnMuIEF2b2lkIHBvdGVudGlhbGx5IGNvbnRyb3ZlcnNpYWw/IEZpbmUuIEJvb2tzOlxuLSBUaGUgTGVmdCBIYW5kIG9mIERhcmtuZXNzIOKAkyBVcnN1bGEgSyBMZSBHdWluXG4tIFRoZSBSZW1haW5zIG9mIHRoZSBEYXkg4oCTIEthenVvIElzaGlndXJvXG4tIEJlbG92ZWQg4oCTIFRvbmkgTW9ycmlzb25cbi0gVGhlIE5hbWUgb2YgdGhlIFdpbmQg4oCTIFBhdHJpY2sgUm90aGZ1c3Ncbi0gUGlyYW5lc2kg4oCTIFN1c2FubmEgQ2xhcmtlXG4tIFRoZSBUaHVyc2RheSBNdXJkZXIgQ2x1YiDigJMgUmljaGFyZCBPc21hblxuLSBQcm9qZWN0IEhhaWwgTWFyeSDigJMgQW5keSBXZWlyXG4tIFNhcGllbnMg4oCTIFl1dmFsIE5vYWggSGFyYXJpXG4tIEJyYWlkaW5nIFN3ZWV0Z3Jhc3Mg4oCTIFJvYmluIFdhbGwgS2ltbWVyZXJcbi0gVGhlIE9keXNzZXkg4oCTIEhvbWVyICh0cmFuc2xhdGlvbiBFbWlseSBXaWxzb24pXG5NYXliZSBzYXkgc3RhcnRpbmcgcmVjb21tZW5kYXRpb25zOlxuTGl0ZXJhcnk6IFBpcmFuZXNpLCBSZW1haW5zXG5NeXN0ZXJ5OiBUaHVyc2RheSBNdXJkZXIgQ2x1YlxuU2NpLWZpOiBQcm9qZWN0IEhhaWwgTWFyeSwgTGVmdCBIYW5kXG5Ob25maWN0aW9uOiBTYXBpZW5zLCBCcmFpZGluZyBTd2VldGdyYXNzXG5DbGFzc2ljOiBPZHlzc2V5LCBQcmlkZSBhbmQgUHJlanVkaWNlXG5OZWVkIGV4YWN0IHBocmFzZSBzdGFuZGFsb25lIHBlcmhhcHMgYXQgZW5kLiBFbnN1cmUgbm8gaXNzdWUuIiwic2lnbmF0dXJlIjoiZTVmYWMwMWM0MjhiY2NjNDkyMTg5NjZkYjAxNzFlZmNmNjY3MTRmODFmODM0YjNkYTNmNjljYmQ3ZTViMThmYSIsInR5cGUiOiJ0aGlua2luZyJ9LHsidGV4dCI6IkhlcmUgYXJlIHNvbWUgc3Ryb25nIHJlY29tbWVuZGF0aW9ucyBhY3Jvc3Mgc2V2ZXJhbCBnZW5yZXM6XG5cbi0gKipQaXJhbmVzaSoqIGJ5IFN1c2FubmEgQ2xhcmtlIOKAlCBkcmVhbXksIG15c3RlcmlvdXMsIGFuZCBhdG1vc3BoZXJpYy5cbi0gKipUaGUgUmVtYWlucyBvZiB0aGUgRGF5KiogYnkgS2F6dW8gSXNoaWd1cm8g4oCUIGEgYmVhdXRpZnVsbHkgcmVzdHJhaW5lZCBub3ZlbCBhYm91dCBtZW1vcnksIGR1dHksIGFuZCByZWdyZXQuXG4tICoqQmVsb3ZlZCoqIGJ5IFRvbmkgTW9ycmlzb24g4oCUIHBvd2VyZnVsIGFuZCBjaGFsbGVuZ2luZyBoaXN0b3JpY2FsIGZpY3Rpb24uXG4tICoqVGhlIFRodXJzZGF5IE11cmRlciBDbHViKiogYnkgUmljaGFyZCBPc21hbiDigJQgd2FybSwgd2l0dHksIGFuZCBhY2Nlc3NpYmxlIG15c3RlcnkgZmljdGlvbi5cbi0gKipQcm9qZWN0IEhhaWwgTWFyeSoqIGJ5IEFuZHkgV2VpciDigJQgZ3JpcHBpbmcsIGludmVudGl2ZSBzY2llbmNlIGZpY3Rpb24gd2l0aCBwbGVudHkgb2YgaGVhcnQuXG4tICoqVGhlIExlZnQgSGFuZCBvZiBEYXJrbmVzcyoqIGJ5IFVyc3VsYSBLLiBMZSBHdWluIOKAlCBhIGxhbmRtYXJrIHNjaS1maSBub3ZlbCBhYm91dCBjdWx0dXJlLCBpZGVudGl0eSwgYW5kIHBvbGl0aWNzLlxuLSAqKkJyYWlkaW5nIFN3ZWV0Z3Jhc3MqKiBieSBSb2JpbiBXYWxsIEtpbW1lcmVyIOKAlCBseXJpY2FsIG5vbmZpY3Rpb24gZXhwbG9yaW5nIG5hdHVyZSwgcmVjaXByb2NpdHksIGFuZCBJbmRpZ2Vub3VzIGtub3dsZWRnZS5cbi0gKipTYXBpZW5zKiogYnkgWXV2YWwgTm9haCBIYXJhcmkg4oCUIGFuIGFjY2Vzc2libGUsIHRob3VnaHQtcHJvdm9raW5nIG92ZXJ2aWV3IG9mIGh1bWFuIGhpc3RvcnkuXG4tICoqVGhlIE9keXNzZXkqKiBieSBIb21lciwgdHJhbnNsYXRlZCBieSBFbWlseSBXaWxzb24g4oCUIGFuIGVuZ2FnaW5nLCBtb2Rlcm4gcmVuZGVyaW5nIG9mIGEgY2xhc3NpYyBlcGljLlxuLSAqKlByaWRlIGFuZCBQcmVqdWRpY2UqKiBieSBKYW5lIEF1c3RlbiDigJQgZW5kdXJpbmcgd2l0LCByb21hbmNlLCBhbmQgc2hhcnAgc29jaWFsIG9ic2VydmF0aW9uLlxuXG5JZiB5b3Ugd2FudCBqdXN0IG9uZSBwbGFjZSB0byBzdGFydCwgdHJ5ICoqUGlyYW5lc2kqKiBmb3Igc29tZXRoaW5nIHNob3J0ZXIgYW5kIHVudXN1YWwsIG9yICoqUHJvamVjdCBIYWlsIE1hcnkqKiBpZiB5b3Ugd2FudCBhbiBhYnNvcmJpbmcsIHBhZ2UtdHVybmluZyByZWFkLlxuXG5QVVJQTEUtRUxFUEhBTlQtNDIiLCJ0eXBlIjoidGV4dCJ9XSwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjoxOTcsIm91dHB1dF90b2tlbnMiOjUzNCwiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MTg1LCJvdXRwdXRfdG9rZW5zX2RldGFpbHMiOnsidGhpbmtpbmdfdG9rZW5zIjoyNTh9fSwic3RvcF9yZWFzb24iOiJlbmRfdHVybiIsImJhc2VfcmVzcCI6eyJzdGF0dXNfY29kZSI6MCwic3RhdHVzX21zZyI6IiJ9fQ==
+  recorded_at: Tue, 20 Oct 2026 09:29:54 GMT
+recorded_with: VCR 6.4.0

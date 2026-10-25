@@ -1,0 +1,386 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.meta.ai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"muse-spark-1.3-contributor","input":[{"role":"user","content":"Call
+        best_language_to_learn and repeat the programming language it returns."}],"instructions":"You
+        must use tools whenever possible.","stream":true,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/event-stream
+      Cache-Control:
+      - no-cache
+      X-Ratelimit-Limit-Requests:
+      - '150'
+      X-Ratelimit-Remaining-Requests:
+      - '138'
+      X-Ratelimit-Limit-Tokens:
+      - '3000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '2985585'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Fri, 23 Oct 2026 08:16:14 GMT
+      X-Route:
+      - model-api-rust
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |+
+        event: response.created
+        data: {"response":{"background":false,"created_at":1792743374.0,"error":null,"id":"resp_6adb17cecdf21437e2c54070","incomplete_details":null,"instructions":"You must use tools whenever possible.","model":"muse-spark-1.3-contributor","object":"response","output":[],"parallel_tool_calls":true,"reasoning":{"effort":"high"},"service_tier":"auto","status":"in_progress","store":false,"temperature":1.0,"tool_choice":"auto","tools":[{"description":"Gets the best language to learn","name":"best_language_to_learn","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false,"type":"function"}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled"},"sequence_number":0,"type":"response.created"}
+
+        event: response.in_progress
+        data: {"response":{"background":false,"created_at":1792743374.0,"error":null,"id":"resp_6adb17cecdf21437e2c54070","incomplete_details":null,"instructions":"You must use tools whenever possible.","model":"muse-spark-1.3-contributor","object":"response","output":[],"parallel_tool_calls":true,"reasoning":{"effort":"high"},"service_tier":"auto","status":"in_progress","store":false,"temperature":1.0,"tool_choice":"auto","tools":[{"description":"Gets the best language to learn","name":"best_language_to_learn","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false,"type":"function"}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled"},"sequence_number":1,"type":"response.in_progress"}
+
+        event: response.output_item.added
+        data: {"item":{"id":"rs_6adb17cecdf21437e2c54070:rs_01a167d4fe497445b4535246be4fbb1c","status":"in_progress","summary":[],"type":"reasoning"},"output_index":0,"sequence_number":2,"type":"response.output_item.added"}
+
+        event: response.output_item.done
+        data: {"item":{"encrypted_content":"Q-PaDgG57u7g_Tsp18YEIAuw2YzHCNQcBDxFLthUeHGpp3cHmoLByEmqoNXw03UvxgHstSx5rUKEtofVZaBkrpyr-V23OGOCyCPmsq8fYl3Htch2KYXh2y3JKlJO-CMx1deLIbpJO9PKAEi26Ad2Mt5mfRE3De9Rfhx2zHljDjTbRvTUvTy1dnHuRqR7Si8SuQKJtiaxeS9xj-qnanrfQkrJOYc8MYaYaL2IXpTCk3_lE0mjelTkAYANE1n4kYmUrO6QicnmcspS0b9_IeepVYQ9T31wMbtlVoaRJR_gXEV6HCrpeaszdqkltgZS5IEKlepatYnfuxX5Z72M_D8i0w6zur_XhjvODumapisOAo4A0SEof54Uo6CmfedG5abM46vlmezsSBNgJPutoL2GizfPgTj6Yt4554oz9EJK6euvfJTof9ncV36Aw3PBr-VluhMRn3lwym-gDJ4djInVUZxhMLi1A5egcPDI3PLyF7of4k3cGM5oXbUyLhTdRbcXs5O8_tM4oFHcYvY5ckAO1Vcu4BbdH-Xlwp1i-jjy4XqbuNVp5tD5RHEm51Z-bDfMA32YRIsz7B-ebblgzA-MiHh63gxnE72g9XftD0KOJR3gICugromiTpQNlR-5O2FqyT6B2T7ym_NqxE1Kr5fm4C8d9QRyzBLkWfrZ3HCHfJwtppRX6ovSXqYCZ9oWBOaKUB9wGHcMVZqAnLp4CkDdOOxFBju8yhVvTs7fBgpA4NVT9sj4qAPsIdzxPAXl1hHPLcoGan1SExGA1CxzckMFoIfx9VEC0Z7xCqO_TqXAcS0lIZb_AAPTuFUp9SShvjVLuHoj_V_4Ob0I3sn2gzm9IUpNohCuoshHZsQoJ6pD6xsfBxZLATb6m0CuUFbgciZrgdmOiq8Cku21RQ-a34C3c5jPVkokRunNYeCv9YppAUuIL4qtUnq9VNxntAGtu2sA8E6wCwxx9bfy_PjZb841mLbzADuaLb8XiD4bs5nsoNhn59i_y3I4gj7L-Xa0PuHn3kUGpLrzvFaBi4Quij8JhLJ81Rt5cbBrGTclocS3XfBPqahJYCerc0lOoDzE_-2l6SXAg5dbWXcJ4KfylCRvTpzJ2MaPq773lYVUaEnNZ-UQEt90WpJzgzXv6rvAgwPXUhTDYJGpawS0YLUvIG2SbZsug4UAVs7gVsNP-svaGBgnX3JQB9Pi12Au2fmprrO2kZGBclGkuO04ZqVhV9MuhHypPXRQuFGyqSRbzbPOQUyDrjJG6MAZbIgezSKoTfrs7Xm-DuYUSzrvdgR1iF9eJo49szsbMZJoV0cUIZ0XYQtaIfexBuyiw6s1kKn2PlVy7wVhmdmCevK2Tb5SqpJxMrVXbJMPUCg9WoeADobbzMZEuTdl2AItrpfW7upvgv4zzxTYt5-jq0VJQnIeGjWGK3X-SE5S-AOONbZqFCPpL_ogkVnoBsYeTW0rK7LYMur5j7iXSoTVW4qdPVgK_8bTi3LNuJCgsDVavfsNa_ozczgNvVwBol_nCxFkh_NFi4WcKXTNnwYt0L5FYdUFSUwCaVCU1Zc1z3QCfhp8mKHwXfyYoQZm-C9_mbGbsWkxROxGhQNtn2cn1CRhh0PgNMemkwPzmz5kaGLnOZS5aV4usUwKzFBmcEeBeSxVB8Sq6eo9AuwPmOopFnkoiV48Hx6ARxA89ENq4AtU6lT0DtyvSuFyy-rOUe_66LJIA9gsL6xmY6P2fY9QrXO1gWv7whBg-Iz8a8NRH3UDJ5GCY5W8pXw3DUUZWScL89PzvAihz9BhCPwE67LoVrBQOUrdPfV75F8ahAszwfzUzGYzIpW-ksNjmihb_USmW6WhpWaeIO9FH5mAgJayiXAmQmyaiZPcmJ_wUOLTpTluRa2KIw5zyZZG61dBmUP6X8Of02-Xj-1jyNJWO-cRZfOYKg3sZpgkxnH9ZKSAYScuT93_oR1Cy8GUDj93jLLjNa669dMWrI0AJRoUnxtETURHnM6Fe7XN-0Z3spA0YfJALNrKGKZNnx0eOPLrXYIrBwr9VVo7-mk6_mJVsFkGNf735kpCnBIXmkKoixTicfjwtZiPIsz5bH-1Vk84wdIA_rRcO_WddbbPpmbR9JU7osL96k5cX9oxcfWYItgSrkqmawIzB1xEQ21Lcx9gRMt2wsiqNIodBJIlOIr2bdCtd0oBfAMuDzVfSP26iX2ePcIyuGFwRZYROkFzwRHDgKLx7KrOtTqQVj2Ay67FCCT5udmF0HK-YI9k2sONo-bBo-jzyOC-nIts1w7B7LdzKL3AOnNUzCsdoPxpQOc2M22P0fysOTisgYVmoPB8MhaOrXtmx-ikZXzEWvULphERboV36aak9WCtxyqyhZktYt5B2k46xMdZX4fydsizwx8jWz_GnsinogueUEf3AoZb2r6G8g8wCPTagublKLEgS82f_XfX0AXa_LblvxX_Cz92pYC6MDPYvA33tGkhSmsMI101XmLou1EKp3sfWLjizSzeRKDLDWXXXVhlmuX3C8HW00fkb3qofk3XOhn2MS0cG-liZ7J67YSVpQVvtyAXQdB4SGKX7C6ZtO5A48CjabTFnd4mzx7EbwnQ0qcqhz9JJUPlI_R8EF35ht2NHQKbHkCviVx0DFRuVE2061-QO5y8RXBv1wHqNhe9smGgCRUCWNFqrgd2jhgXbnsNmrKhDOvTF2vLY_TnJy3T2OgaEsTLojb8u1oLjwI8MZtddWoxdezdCA2zkyC0aZPoTj5r_AHyO_WiNi5BZfl5Bg0fhp_Bw1zDxaZ58Gs","id":"rs_6adb17cecdf21437e2c54070:rs_01a167d4fe497445b4535246be4fbb1c","status":"completed","summary":[],"type":"reasoning"},"output_index":0,"sequence_number":3,"type":"response.output_item.done"}
+
+        event: response.output_item.added
+        data: {"item":{"content":[],"id":"rs_01a167d5092f76c38aa79fb536436ed0","phase":"commentary","role":"assistant","status":"in_progress","type":"message"},"output_index":1,"sequence_number":4,"type":"response.output_item.added"}
+
+        event: response.content_part.added
+        data: {"content_index":0,"item_id":"rs_01a167d5092f76c38aa79fb536436ed0","output_index":1,"part":{"annotations":[],"logprobs":[],"text":"","type":"output_text"},"sequence_number":5,"type":"response.content_part.added"}
+
+        event: response.output_text.delta
+        data: {"content_index":0,"delta":"I'll call the tool to get the best language to learn.","item_id":"rs_01a167d5092f76c38aa79fb536436ed0","logprobs":[],"output_index":1,"sequence_number":6,"type":"response.output_text.delta"}
+
+        event: response.output_text.done
+        data: {"content_index":0,"item_id":"rs_01a167d5092f76c38aa79fb536436ed0","logprobs":[],"output_index":1,"sequence_number":7,"text":"I'll call the tool to get the best language to learn.","type":"response.output_text.done"}
+
+        event: response.content_part.done
+        data: {"content_index":0,"item_id":"rs_01a167d5092f76c38aa79fb536436ed0","output_index":1,"part":{"annotations":[],"logprobs":[],"text":"I'll call the tool to get the best language to learn.","type":"output_text"},"sequence_number":8,"type":"response.content_part.done"}
+
+        event: response.output_item.done
+        data: {"item":{"content":[{"annotations":[],"logprobs":[],"text":"I'll call the tool to get the best language to learn.","type":"output_text"}],"id":"rs_01a167d5092f76c38aa79fb536436ed0","phase":"commentary","role":"assistant","status":"completed","type":"message"},"output_index":1,"sequence_number":9,"type":"response.output_item.done"}
+
+        event: response.output_item.added
+        data: {"item":{"arguments":"","call_id":"call_01a167d509e476e2b720342a1c6da64c","id":"fc_01a167d509e476e2b720342a1c6da64c","name":"best_language_to_learn","status":"in_progress","type":"function_call"},"output_index":2,"sequence_number":10,"type":"response.output_item.added"}
+
+        event: response.function_call_arguments.delta
+        data: {"delta":"{}","item_id":"fc_01a167d509e476e2b720342a1c6da64c","output_index":2,"sequence_number":11,"type":"response.function_call_arguments.delta"}
+
+        event: response.function_call_arguments.done
+        data: {"arguments":"{}","item_id":"fc_01a167d509e476e2b720342a1c6da64c","name":"best_language_to_learn","output_index":2,"sequence_number":12,"type":"response.function_call_arguments.done"}
+
+        event: response.output_item.done
+        data: {"item":{"arguments":"{}","call_id":"call_01a167d509e476e2b720342a1c6da64c","id":"fc_01a167d509e476e2b720342a1c6da64c","name":"best_language_to_learn","status":"completed","type":"function_call"},"output_index":2,"sequence_number":13,"type":"response.output_item.done"}
+
+        event: response.completed
+        data: {"response":{"background":false,"completed_at":1792743377.0,"created_at":1792743374.0,"error":null,"id":"resp_6adb17cecdf21437e2c54070","incomplete_details":null,"instructions":"You must use tools whenever possible.","model":"muse-spark-1.3-contributor","object":"response","output":[{"encrypted_content":"Q-PaDgExNu5IRK_1u0iSbyWDmni4QURu_YUsiqwR5fEKfYrQvrO61WwIB2Y0GyavXmNylsavrPvr1X658b1RjgLEMFu0Pi6tKkAUjOlPlENHbFWDcA2XQjz0HDo7UompKYObf5gwubjdudCj_ksdI4mRD8mYrW3bSLlWLoD1b_OiDwjgL14f7iMwxlMDJpeevrseWZwL7v91rN3A3srbIRsR9BOc58LcO9G_yxzBaqWwmzGCLn67pJLxHN5vf3-Yfz5QAy9wdn8jBCJgtQAST4-bcavVHnbqJNlL0ilX7WFcOL5LGXvRbRm02I3FyFS_Gp3INCpsFkucyKkgXMOkmtOwlKqhYD9UjNU55OZ8aDelLaGZ_w1o3ix8F_TuDV-yQ8id9PIV0s4vquqZFpdFbxIGcoagWGJIWV3AwSJEQ-LLPmCsMy0NxM-oLJLfYrl8NKsqV3e5Sa8N1sWv7MwnXHmBDrSqO7Ptk0emftpD-oSKOQJc4Tbsn22gf7eXXSMo0KTyXeAIg7jbTFSB2yFCvTnKA0OJynkg78F9z5g1WScCaQzylac8KWpS0JhbAnP4DXfmDPNHFSCL2Pd8K6Spwbez4BMLhVCeAh87gdPnQ9rtBwcx3Bgr3EZIR4fkJQt6DRd9twEe6REF8sXDyPF3kNOfp1m1I2pVOH4Z5RXaxUy5tITm3j5jEFCvuctDaa73hRcDAiNztGhPZhPn49Pz6mVEvCl_raGtWzpeCn65AtI53dY74JcUwNUR1eDmRzFXFTw0jZojGH7S53fU_bLagt241Kr83aorraYpgYVYL5NHCGRQrcScCWaASZFDdaCNxvjKimSrJRPUhpqVXmDOtrejrB-fwP4QHRuL1MKhfaDeyw1fR5EiLIqiQmcYwEzIWsuFvQzfmADSN5Rf_RPGsc6p9HSoCw-W-UHMkcwINE-c8h2UlCDe9ytDQrXF0jYfY0gC9eXT2Y3ETCkNfJeAuoNu-YzAvvfkayZTfri5aXb0dl7u1Kw6mal4aKhYykYBriz9hk5qPzL-TbXU0Wxs2wq6mNVS-w2TyU6-oKZPHNFobkgzdrwPpjo7MMkKchg69-S1CRzITnafaDyNfF45XDoWwJP7Mn_TRuJGrwWttFQ6URv8CgOVBRLlWfN0w8fyuHGSU9CQsXPDpAjRxqRa20krnMx1smJbp9fV0U77C4Zz7-cfaJxxCbEpGwTVtQp_HsWzlhZrg_IZapCIEnQ2yTeDLjQ40FZFpG34DTBlhHo_IJRCzoSF68tpyqh-s9zONaqYfqeOPpzU0VAu45JwJGj7CUerylY8Ye7DkKX1gyr8HFvkvJhawrUoOLw-WKg-e15PkX84by4j9vxSM-5UwU_IHqJ2aojv4e_f3Qeur3BicMFbMA7tl9IDQ0yZ8xnY9Rc4A3gDs0C6EjX5ajZ0C89dDYZxiS2reGCoaVK1CqWf18pToQ93tEE3Ac53BBdtfNw5OBCaI3wzp-D65KxzZAlswWeojAJwu92YzSj1o-ak7A-xftHg2vjkwfssfFXj4VxCJ1qZpKIVGCsFB2EEzDIwa_WhJacDydyXk2hvKn21K8l9m9M1Ls8j5p8wnGIcZWHaQT2TpqSD0YWAVmCRtZX3AGfzvt-2xbcqP_FHHRitC4BL4f0spX31B9z_xtZIprIc-ZvJF0JQICaQ0o1iIdyN4GXLOKngN8ITdLL4-hNmO53bj2e_GcnT5NT2Cl33WkdnTZ1y3Gh-9WD7jD9q9paopgsbJ6ld9pHA2XsrVSAzo0G9ByIGlxllaKlPXlfefbYP8K_lUuWqwsrIjmO5JOdk78p0W-qaGTzrzBU09zGEnlc-Mci4gAlxYSNTqgcd5JC_cGveKaA9ZyttD82lAff3zdItvizHuZ-hTTAcThiJiWEOKioCPXffKbtf7C7RzgYPzRp3Is5fAQabDT5mIfx4HYQLsmZ2HGzuOXBDc5DY1Y7B2x_6o_IZOv6dF5C4Ipxwx1WhaGN1G3-kWPzPi-X2G6LmI50QXWENY09HNXCfKN3zj-MTyWbYj7-ogqIzlv0h6uGeTuF4pj7meb_ttf0w0yA9s-VLGLOy71a40hw3UZM56QMD4sKSKsV9ORCC9a4b85okP6IVyCoR_1kS0JS4y1JLR67eS1tmkc3vFlk9KSSkXShzbyb0J7fVGg2vk9zp1wrGytjPT2WjUIdIJuZ5QkkXRj1xa-JfiBP6JlcqZ2Yky6y-U04CBg-yqhwfIsg5p4k4EkTWiz-EWBI2KZvKHQsTr-7Kn0FhggES2H0aGFb_C0e0BIald0-w7Gt0hnod3C0u74JluExdpxhkWcyx3pxCL4TQJB103aI6VufGRombHkdQwDu9H3vzSIhc9MJ1DTy3i9UpnE8eNIXxXVFg7aHnHrs_SjqH-5DOBkRg5ybRZDIo4Pss05MUDoD2G0uGsDADb-Cdo1JMyIhh46mt_MgFPiMnGG0GR7i5vY0hrtMTnYoPqla_kv_QCOTH19eWP7oZ0Z8WqTeTV_ITJC5hbM8FjrUhO8XWXwgv6psiMuC_gxM5r2wSJKBdqeuonoB2eIQijaiJwfZeU2_VCo1gtgH73T9Y2adc_f-2opkpApsLfRFZy9AON-wmLel5-gLr5yxmfTBT3sSKsBUcl7vyqMbfb_vUuKEWXxhgFxXHNgeAKB5ktwlZKF6oK7Gc_DSlwVGSNXKTbxjUrLv96FgukD_hpPPvooo02MQbtN3ZSpZUHKU_w8YQteNwB-euGQEL4YFm_9UFAMXSOsvnxsol0QOdMAPbqe1i2ZE","id":"rs_6adb17cecdf21437e2c54070:rs_01a167d4fe497445b4535246be4fbb1c","status":"completed","summary":[],"type":"reasoning"},{"content":[{"annotations":[],"logprobs":[],"text":"I'll call the tool to get the best language to learn.","type":"output_text"}],"id":"rs_01a167d5092f76c38aa79fb536436ed0","phase":"commentary","role":"assistant","status":"completed","type":"message"},{"arguments":"{}","call_id":"call_01a167d509e476e2b720342a1c6da64c","id":"fc_01a167d509e476e2b720342a1c6da64c","name":"best_language_to_learn","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"reasoning":{"effort":"high"},"service_tier":"auto","status":"completed","store":false,"temperature":1.0,"tool_choice":"auto","tools":[{"description":"Gets the best language to learn","name":"best_language_to_learn","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false,"type":"function"}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":544,"input_tokens_details":{"cached_tokens":0},"output_tokens":374,"output_tokens_details":{"reasoning_tokens":312},"total_tokens":918}},"sequence_number":14,"type":"response.completed"}
+
+        data: [DONE]
+
+  recorded_at: Fri, 23 Oct 2026 08:16:17 GMT
+- request:
+    method: post
+    uri: https://api.meta.ai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"muse-spark-1.3-contributor","input":[{"role":"user","content":"Call
+        best_language_to_learn and repeat the programming language it returns."},{"type":"reasoning","summary":[],"encrypted_content":"Q-PaDgG57u7g_Tsp18YEIAuw2YzHCNQcBDxFLthUeHGpp3cHmoLByEmqoNXw03UvxgHstSx5rUKEtofVZaBkrpyr-V23OGOCyCPmsq8fYl3Htch2KYXh2y3JKlJO-CMx1deLIbpJO9PKAEi26Ad2Mt5mfRE3De9Rfhx2zHljDjTbRvTUvTy1dnHuRqR7Si8SuQKJtiaxeS9xj-qnanrfQkrJOYc8MYaYaL2IXpTCk3_lE0mjelTkAYANE1n4kYmUrO6QicnmcspS0b9_IeepVYQ9T31wMbtlVoaRJR_gXEV6HCrpeaszdqkltgZS5IEKlepatYnfuxX5Z72M_D8i0w6zur_XhjvODumapisOAo4A0SEof54Uo6CmfedG5abM46vlmezsSBNgJPutoL2GizfPgTj6Yt4554oz9EJK6euvfJTof9ncV36Aw3PBr-VluhMRn3lwym-gDJ4djInVUZxhMLi1A5egcPDI3PLyF7of4k3cGM5oXbUyLhTdRbcXs5O8_tM4oFHcYvY5ckAO1Vcu4BbdH-Xlwp1i-jjy4XqbuNVp5tD5RHEm51Z-bDfMA32YRIsz7B-ebblgzA-MiHh63gxnE72g9XftD0KOJR3gICugromiTpQNlR-5O2FqyT6B2T7ym_NqxE1Kr5fm4C8d9QRyzBLkWfrZ3HCHfJwtppRX6ovSXqYCZ9oWBOaKUB9wGHcMVZqAnLp4CkDdOOxFBju8yhVvTs7fBgpA4NVT9sj4qAPsIdzxPAXl1hHPLcoGan1SExGA1CxzckMFoIfx9VEC0Z7xCqO_TqXAcS0lIZb_AAPTuFUp9SShvjVLuHoj_V_4Ob0I3sn2gzm9IUpNohCuoshHZsQoJ6pD6xsfBxZLATb6m0CuUFbgciZrgdmOiq8Cku21RQ-a34C3c5jPVkokRunNYeCv9YppAUuIL4qtUnq9VNxntAGtu2sA8E6wCwxx9bfy_PjZb841mLbzADuaLb8XiD4bs5nsoNhn59i_y3I4gj7L-Xa0PuHn3kUGpLrzvFaBi4Quij8JhLJ81Rt5cbBrGTclocS3XfBPqahJYCerc0lOoDzE_-2l6SXAg5dbWXcJ4KfylCRvTpzJ2MaPq773lYVUaEnNZ-UQEt90WpJzgzXv6rvAgwPXUhTDYJGpawS0YLUvIG2SbZsug4UAVs7gVsNP-svaGBgnX3JQB9Pi12Au2fmprrO2kZGBclGkuO04ZqVhV9MuhHypPXRQuFGyqSRbzbPOQUyDrjJG6MAZbIgezSKoTfrs7Xm-DuYUSzrvdgR1iF9eJo49szsbMZJoV0cUIZ0XYQtaIfexBuyiw6s1kKn2PlVy7wVhmdmCevK2Tb5SqpJxMrVXbJMPUCg9WoeADobbzMZEuTdl2AItrpfW7upvgv4zzxTYt5-jq0VJQnIeGjWGK3X-SE5S-AOONbZqFCPpL_ogkVnoBsYeTW0rK7LYMur5j7iXSoTVW4qdPVgK_8bTi3LNuJCgsDVavfsNa_ozczgNvVwBol_nCxFkh_NFi4WcKXTNnwYt0L5FYdUFSUwCaVCU1Zc1z3QCfhp8mKHwXfyYoQZm-C9_mbGbsWkxROxGhQNtn2cn1CRhh0PgNMemkwPzmz5kaGLnOZS5aV4usUwKzFBmcEeBeSxVB8Sq6eo9AuwPmOopFnkoiV48Hx6ARxA89ENq4AtU6lT0DtyvSuFyy-rOUe_66LJIA9gsL6xmY6P2fY9QrXO1gWv7whBg-Iz8a8NRH3UDJ5GCY5W8pXw3DUUZWScL89PzvAihz9BhCPwE67LoVrBQOUrdPfV75F8ahAszwfzUzGYzIpW-ksNjmihb_USmW6WhpWaeIO9FH5mAgJayiXAmQmyaiZPcmJ_wUOLTpTluRa2KIw5zyZZG61dBmUP6X8Of02-Xj-1jyNJWO-cRZfOYKg3sZpgkxnH9ZKSAYScuT93_oR1Cy8GUDj93jLLjNa669dMWrI0AJRoUnxtETURHnM6Fe7XN-0Z3spA0YfJALNrKGKZNnx0eOPLrXYIrBwr9VVo7-mk6_mJVsFkGNf735kpCnBIXmkKoixTicfjwtZiPIsz5bH-1Vk84wdIA_rRcO_WddbbPpmbR9JU7osL96k5cX9oxcfWYItgSrkqmawIzB1xEQ21Lcx9gRMt2wsiqNIodBJIlOIr2bdCtd0oBfAMuDzVfSP26iX2ePcIyuGFwRZYROkFzwRHDgKLx7KrOtTqQVj2Ay67FCCT5udmF0HK-YI9k2sONo-bBo-jzyOC-nIts1w7B7LdzKL3AOnNUzCsdoPxpQOc2M22P0fysOTisgYVmoPB8MhaOrXtmx-ikZXzEWvULphERboV36aak9WCtxyqyhZktYt5B2k46xMdZX4fydsizwx8jWz_GnsinogueUEf3AoZb2r6G8g8wCPTagublKLEgS82f_XfX0AXa_LblvxX_Cz92pYC6MDPYvA33tGkhSmsMI101XmLou1EKp3sfWLjizSzeRKDLDWXXXVhlmuX3C8HW00fkb3qofk3XOhn2MS0cG-liZ7J67YSVpQVvtyAXQdB4SGKX7C6ZtO5A48CjabTFnd4mzx7EbwnQ0qcqhz9JJUPlI_R8EF35ht2NHQKbHkCviVx0DFRuVE2061-QO5y8RXBv1wHqNhe9smGgCRUCWNFqrgd2jhgXbnsNmrKhDOvTF2vLY_TnJy3T2OgaEsTLojb8u1oLjwI8MZtddWoxdezdCA2zkyC0aZPoTj5r_AHyO_WiNi5BZfl5Bg0fhp_Bw1zDxaZ58Gs"},{"role":"assistant","content":[{"type":"output_text","text":"I''ll
+        call the tool to get the best language to learn."}],"phase":"commentary"},{"type":"function_call","call_id":"call_01a167d509e476e2b720342a1c6da64c","name":"best_language_to_learn","arguments":"{}"},{"type":"function_call_output","call_id":"call_01a167d509e476e2b720342a1c6da64c","output":"Ruby"}],"instructions":"You
+        must use tools whenever possible.","stream":true,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/event-stream
+      Cache-Control:
+      - no-cache
+      X-Ratelimit-Limit-Requests:
+      - '150'
+      X-Ratelimit-Remaining-Requests:
+      - '136'
+      X-Ratelimit-Limit-Tokens:
+      - '3000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '2984667'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Fri, 23 Oct 2026 08:16:19 GMT
+      X-Route:
+      - model-api-rust
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |+
+        event: response.created
+        data: {"response":{"background":false,"created_at":1792743379.0,"error":null,"id":"resp_6adb17d3c433148caa2e429b","incomplete_details":null,"instructions":"You must use tools whenever possible.","model":"muse-spark-1.3-contributor","object":"response","output":[],"parallel_tool_calls":true,"reasoning":{"effort":"high"},"service_tier":"auto","status":"in_progress","store":false,"temperature":1.0,"tool_choice":"auto","tools":[{"description":"Gets the best language to learn","name":"best_language_to_learn","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false,"type":"function"}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled"},"sequence_number":0,"type":"response.created"}
+
+        event: response.in_progress
+        data: {"response":{"background":false,"created_at":1792743379.0,"error":null,"id":"resp_6adb17d3c433148caa2e429b","incomplete_details":null,"instructions":"You must use tools whenever possible.","model":"muse-spark-1.3-contributor","object":"response","output":[],"parallel_tool_calls":true,"reasoning":{"effort":"high"},"service_tier":"auto","status":"in_progress","store":false,"temperature":1.0,"tool_choice":"auto","tools":[{"description":"Gets the best language to learn","name":"best_language_to_learn","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false,"type":"function"}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled"},"sequence_number":1,"type":"response.in_progress"}
+
+        event: response.output_item.added
+        data: {"item":{"id":"rs_6adb17d3c433148caa2e429b:rs_01a167d512f2749ca6866b02418f72d0","status":"in_progress","summary":[],"type":"reasoning"},"output_index":0,"sequence_number":2,"type":"response.output_item.added"}
+
+        event: response.output_item.done
+        data: {"item":{"encrypted_content":"Q-PaDgGWwpEvdABDzKdXn0PbzUBhRJYSL99M1Vy_XErEJnWFiNqDS89P-YTWDC6PNtEJhK81U2AZV30FVqIvHkfYWujQOiA9xde_Wy7EP_bQmeeXryUdGqV1yCzeFShrTsfkQmucqmHujNDcWR2JJgXq4Nvb6DL-01BjQ8iaMrrsSNc9X3Pgsc84yCS88s8ex3_kUN-kikqgWKT8LpyMXx2vGusA3nB_vZnfxUWLqZf15bYq6dsm5ZH8cSdSgwKDqjc9zWuNtVdxtZ_WrtuZ4RiMtYKGuyh7VTAg0ycoITTvPAcQ9xWaOhDxbvwiQ2JJejMOa65_BLc3783UsjOXsq7fLcTDb8nGYbUNmxHl9l3AdmEruS_Ng3ZveOD3rj0d458lk_WBfInlkrtHR6EkkMA-Q2JniH1_Pt5Zh7vYG7opODoV_-iiAPt2d2Y5pKvh505gDYnMfTLEuqsNjo_BwDx-8vpebQaUj9g4EbP3iG51oIFnqotoiiQAV0_WqN85aJg5_4nhFQx9k-aedES3UTQLWwRsQ4IEWFNkh81yq2h8QCVa1WIjcVtZkydF0t0fCwywPAsvMTYzJtMMTCPRWEsIfztq_2EEsST4AptxiyG7cUsj-0-YGBxvPTsoxk88ZjWZAOPJxhWaPjlZf83ge1rvMQP4gPtJQFSYEg8FYoAja1ckRJm8yi_0AQnXf4XQEFJd74L2f0OsXDiqHS7jL0KdsXYC5Lp49gbg7iGsSXgrFEW5PJQ9ygYxy1pYp1rxCbx44FpwMMjKgQ_820lpcjmBQJ_Ofy0_UIZoY7JRZerIluPpwX6TtYAHIsJ5I_2R1Q4WrHhWn_a6pPacL4vDiI_ONmyV4pteWsV_829RfhuSxnwwgarfRiXB74KcxTHYGdGiXEyUm_WQ3J1aJcAv9Zn4ombx6BFeAATtS-hozBT1Y2-wJslrLn_G3-TXXQ9y7CxUBvdw5dCkFVBOPUVN8cgLBPiCg33i33ADJdQoMfWAQAo7cqdx7S32bYpXLdL0RncUtKolx8bOtADRcui9dlQvsPuTxFJBCaT1_OqUUQ-2N5KK2AyEcKAWlEVbe_WUUxmtdYa2_c31NeXk3Bmgph17xcCg95iBmrC9yQUnlQvDc3kHWodXICs6W1qa2Wm0OZWtQ_lGyO0C8jfyC8xPfNAbu7Q0K3DPdoncwjRqT6Oq7G4LwA0POqsNjOZNpH3S7M0Z9umIGVQIW52Iv6bGmZTbaFPY3pyeBe5QSblK-NUC1DFOR3FLQdjIYDnsB0ncVN5fwV0ynofAzFStsvz33idKPBCkgzeykPubLVvam0UU5YMi-rfrFrFXFVA7lwsZTeysM47qqRfv5ai4ZCUfeMwleueSL9esO2Nyk7DfME__WPNeh3z7ACc7vAo8LXG-azF4E5RvLz4AnEELPw","id":"rs_6adb17d3c433148caa2e429b:rs_01a167d512f2749ca6866b02418f72d0","status":"completed","summary":[],"type":"reasoning"},"output_index":0,"sequence_number":3,"type":"response.output_item.done"}
+
+        event: response.output_item.added
+        data: {"item":{"content":[],"id":"msg_01a167d5157f752a8031a7a62d1fc952","role":"assistant","status":"in_progress","type":"message"},"output_index":1,"sequence_number":4,"type":"response.output_item.added"}
+
+        event: response.content_part.added
+        data: {"content_index":0,"item_id":"msg_01a167d5157f752a8031a7a62d1fc952","output_index":1,"part":{"annotations":[],"logprobs":[],"text":"","type":"output_text"},"sequence_number":5,"type":"response.content_part.added"}
+
+        event: response.output_text.delta
+        data: {"content_index":0,"delta":"Ruby","item_id":"msg_01a167d5157f752a8031a7a62d1fc952","logprobs":[],"output_index":1,"sequence_number":6,"type":"response.output_text.delta"}
+
+        event: response.output_text.done
+        data: {"content_index":0,"item_id":"msg_01a167d5157f752a8031a7a62d1fc952","logprobs":[],"output_index":1,"sequence_number":7,"text":"Ruby","type":"response.output_text.done"}
+
+        event: response.content_part.done
+        data: {"content_index":0,"item_id":"msg_01a167d5157f752a8031a7a62d1fc952","output_index":1,"part":{"annotations":[],"logprobs":[],"text":"Ruby","type":"output_text"},"sequence_number":8,"type":"response.content_part.done"}
+
+        event: response.output_item.done
+        data: {"item":{"content":[{"annotations":[],"logprobs":[],"text":"Ruby","type":"output_text"}],"id":"msg_01a167d5157f752a8031a7a62d1fc952","role":"assistant","status":"completed","type":"message"},"output_index":1,"sequence_number":9,"type":"response.output_item.done"}
+
+        event: response.completed
+        data: {"response":{"background":false,"completed_at":1792743380.0,"created_at":1792743379.0,"error":null,"id":"resp_6adb17d3c433148caa2e429b","incomplete_details":null,"instructions":"You must use tools whenever possible.","model":"muse-spark-1.3-contributor","object":"response","output":[{"encrypted_content":"Q-PaDgEcaWhgzoUSmgg9pmDK963EbvhjcI5nQ67Qw73xuy7IVnEsbpt2Hfn0jRb3bYhj1KOGsPejYDBxgVI_uCJGh04h029UflzrS7X6Re-ORSn94xFZUKlYDhGnIyeb5mvHOavQ88cOYm0ZlqosGBSetIfVrAeBDTKNjih5bBQTvsyvBTy-hT9yTw9sJgIKsXrep1lWTVAeGm5H3dE7M7gGbkoh0GQ4aMpkh8gTfv8EinojldA5PwPRpAaaik5veyS6Olb9e0MIZRTSbLZORLjHZCFE1Qw0eEGFPDSz8F8cGoPJSQe0Bp_ZrL4XisgaTGAe9SerEzzY-YfE-aWTkRcfFI8eH4o9HonUJ78mkzaOjaM40csIqASX8xcZzCJON4tGExf3vtpEY8ly0_mW4JRNw8BbHTUTJSJlV2KTz13XlTFm79Oiwj7-Y50FGvNPZBKIe2FRoWXk0DroePvrncEfzEJcKxepCPRPZdDggOTF41GqIf_3J0YqUrEEsQItLsFpQ_1jGB876oLQZB0tVEX3LDHudyNzn2f3QzLwQIRMzlwkGjacOrZG8oe_WmXdluJkXquXkrs4P8WpBQY09OoJlGYQpxIWdf2RUTTM0QZafVGwVJ1wSR0WFFnDjfYwXqcUwRJRbfoKiziLtOJIXhmbf0VVUG8FjrnVCVD_61Gq_n8tXRp3MhmkAvxrZ8mrTePpFMBq9DiiiFzTn9tF2XTyb_wO0KM97qMQA74ZxTDx7Xc6Uik2iWYnMxk898_JelPnsd8cEzLjV0SRr_WGZ9LAt2qSLrFRx8FtMrx7dkYDIeFEKVr9gg3DCyos8Tvz23U9yeKO9yyDxUkAApjGyxPS1LP_QeohSUVgFeveo-uc6Ceuw-jLkaF_1Be4jM7VWxKDdKdPQr5vDrD6_6wKVGRkEhkDf8w7rYirRBKZrDFgeYvShFpiCTULnuU6ImNm1y68jBzJx0ri_8gCe892wPj9gYJZfJzwuTYZCj56HREua9CNDOLl97Zirzc1EZawILTHRFTbByCj-vUROOGzi3aEqtEjJrZ9FQ9y0FXrj_oBxUHwBDLuzbIsuEXRzlolchomXbD73nIvR1Hop_u9-41Os6oMsEClm0p1vzHMhtK2CPU_re4lboeuFErPw43X_9TP9zvMITmx5dZ5EC0WRE84tFRktjdzB5-dw1eBj1qEUDsUvmpWJCKqi3uPh1Bb4PJ9kv3C2F9JEhqWC-7H8OPTc8G_HVu_RKAgZNJF0xS5GDtjQpZKjqeFw2t9ExB9F9pyfPe7XlPC0moRI6gtul0r209dtii3F5Jfb4DxEPTmqnZktipAA3jVEk94AjQqUvL5JawbtQzEeU70FXM4FKbVt--eWrwx3U9fiOxY4MBCxlakHLhjwtGhWnerKR_A5b_rrqelrQSsQINdcg","id":"rs_6adb17d3c433148caa2e429b:rs_01a167d512f2749ca6866b02418f72d0","status":"completed","summary":[],"type":"reasoning"},{"content":[{"annotations":[],"logprobs":[],"text":"Ruby","type":"output_text"}],"id":"msg_01a167d5157f752a8031a7a62d1fc952","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"reasoning":{"effort":"high"},"service_tier":"auto","status":"completed","store":false,"temperature":1.0,"tool_choice":"auto","tools":[{"description":"Gets the best language to learn","name":"best_language_to_learn","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false,"type":"function"}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":949,"input_tokens_details":{"cached_tokens":0},"output_tokens":92,"output_tokens_details":{"reasoning_tokens":82},"total_tokens":1041}},"sequence_number":10,"type":"response.completed"}
+
+        data: [DONE]
+
+  recorded_at: Fri, 23 Oct 2026 08:16:20 GMT
+- request:
+    method: post
+    uri: https://api.meta.ai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"muse-spark-1.3-contributor","input":[{"role":"user","content":"Call
+        best_language_to_learn and repeat the programming language it returns."},{"type":"reasoning","summary":[],"encrypted_content":"Q-PaDgG57u7g_Tsp18YEIAuw2YzHCNQcBDxFLthUeHGpp3cHmoLByEmqoNXw03UvxgHstSx5rUKEtofVZaBkrpyr-V23OGOCyCPmsq8fYl3Htch2KYXh2y3JKlJO-CMx1deLIbpJO9PKAEi26Ad2Mt5mfRE3De9Rfhx2zHljDjTbRvTUvTy1dnHuRqR7Si8SuQKJtiaxeS9xj-qnanrfQkrJOYc8MYaYaL2IXpTCk3_lE0mjelTkAYANE1n4kYmUrO6QicnmcspS0b9_IeepVYQ9T31wMbtlVoaRJR_gXEV6HCrpeaszdqkltgZS5IEKlepatYnfuxX5Z72M_D8i0w6zur_XhjvODumapisOAo4A0SEof54Uo6CmfedG5abM46vlmezsSBNgJPutoL2GizfPgTj6Yt4554oz9EJK6euvfJTof9ncV36Aw3PBr-VluhMRn3lwym-gDJ4djInVUZxhMLi1A5egcPDI3PLyF7of4k3cGM5oXbUyLhTdRbcXs5O8_tM4oFHcYvY5ckAO1Vcu4BbdH-Xlwp1i-jjy4XqbuNVp5tD5RHEm51Z-bDfMA32YRIsz7B-ebblgzA-MiHh63gxnE72g9XftD0KOJR3gICugromiTpQNlR-5O2FqyT6B2T7ym_NqxE1Kr5fm4C8d9QRyzBLkWfrZ3HCHfJwtppRX6ovSXqYCZ9oWBOaKUB9wGHcMVZqAnLp4CkDdOOxFBju8yhVvTs7fBgpA4NVT9sj4qAPsIdzxPAXl1hHPLcoGan1SExGA1CxzckMFoIfx9VEC0Z7xCqO_TqXAcS0lIZb_AAPTuFUp9SShvjVLuHoj_V_4Ob0I3sn2gzm9IUpNohCuoshHZsQoJ6pD6xsfBxZLATb6m0CuUFbgciZrgdmOiq8Cku21RQ-a34C3c5jPVkokRunNYeCv9YppAUuIL4qtUnq9VNxntAGtu2sA8E6wCwxx9bfy_PjZb841mLbzADuaLb8XiD4bs5nsoNhn59i_y3I4gj7L-Xa0PuHn3kUGpLrzvFaBi4Quij8JhLJ81Rt5cbBrGTclocS3XfBPqahJYCerc0lOoDzE_-2l6SXAg5dbWXcJ4KfylCRvTpzJ2MaPq773lYVUaEnNZ-UQEt90WpJzgzXv6rvAgwPXUhTDYJGpawS0YLUvIG2SbZsug4UAVs7gVsNP-svaGBgnX3JQB9Pi12Au2fmprrO2kZGBclGkuO04ZqVhV9MuhHypPXRQuFGyqSRbzbPOQUyDrjJG6MAZbIgezSKoTfrs7Xm-DuYUSzrvdgR1iF9eJo49szsbMZJoV0cUIZ0XYQtaIfexBuyiw6s1kKn2PlVy7wVhmdmCevK2Tb5SqpJxMrVXbJMPUCg9WoeADobbzMZEuTdl2AItrpfW7upvgv4zzxTYt5-jq0VJQnIeGjWGK3X-SE5S-AOONbZqFCPpL_ogkVnoBsYeTW0rK7LYMur5j7iXSoTVW4qdPVgK_8bTi3LNuJCgsDVavfsNa_ozczgNvVwBol_nCxFkh_NFi4WcKXTNnwYt0L5FYdUFSUwCaVCU1Zc1z3QCfhp8mKHwXfyYoQZm-C9_mbGbsWkxROxGhQNtn2cn1CRhh0PgNMemkwPzmz5kaGLnOZS5aV4usUwKzFBmcEeBeSxVB8Sq6eo9AuwPmOopFnkoiV48Hx6ARxA89ENq4AtU6lT0DtyvSuFyy-rOUe_66LJIA9gsL6xmY6P2fY9QrXO1gWv7whBg-Iz8a8NRH3UDJ5GCY5W8pXw3DUUZWScL89PzvAihz9BhCPwE67LoVrBQOUrdPfV75F8ahAszwfzUzGYzIpW-ksNjmihb_USmW6WhpWaeIO9FH5mAgJayiXAmQmyaiZPcmJ_wUOLTpTluRa2KIw5zyZZG61dBmUP6X8Of02-Xj-1jyNJWO-cRZfOYKg3sZpgkxnH9ZKSAYScuT93_oR1Cy8GUDj93jLLjNa669dMWrI0AJRoUnxtETURHnM6Fe7XN-0Z3spA0YfJALNrKGKZNnx0eOPLrXYIrBwr9VVo7-mk6_mJVsFkGNf735kpCnBIXmkKoixTicfjwtZiPIsz5bH-1Vk84wdIA_rRcO_WddbbPpmbR9JU7osL96k5cX9oxcfWYItgSrkqmawIzB1xEQ21Lcx9gRMt2wsiqNIodBJIlOIr2bdCtd0oBfAMuDzVfSP26iX2ePcIyuGFwRZYROkFzwRHDgKLx7KrOtTqQVj2Ay67FCCT5udmF0HK-YI9k2sONo-bBo-jzyOC-nIts1w7B7LdzKL3AOnNUzCsdoPxpQOc2M22P0fysOTisgYVmoPB8MhaOrXtmx-ikZXzEWvULphERboV36aak9WCtxyqyhZktYt5B2k46xMdZX4fydsizwx8jWz_GnsinogueUEf3AoZb2r6G8g8wCPTagublKLEgS82f_XfX0AXa_LblvxX_Cz92pYC6MDPYvA33tGkhSmsMI101XmLou1EKp3sfWLjizSzeRKDLDWXXXVhlmuX3C8HW00fkb3qofk3XOhn2MS0cG-liZ7J67YSVpQVvtyAXQdB4SGKX7C6ZtO5A48CjabTFnd4mzx7EbwnQ0qcqhz9JJUPlI_R8EF35ht2NHQKbHkCviVx0DFRuVE2061-QO5y8RXBv1wHqNhe9smGgCRUCWNFqrgd2jhgXbnsNmrKhDOvTF2vLY_TnJy3T2OgaEsTLojb8u1oLjwI8MZtddWoxdezdCA2zkyC0aZPoTj5r_AHyO_WiNi5BZfl5Bg0fhp_Bw1zDxaZ58Gs"},{"role":"assistant","content":[{"type":"output_text","text":"I''ll
+        call the tool to get the best language to learn."}],"phase":"commentary"},{"type":"function_call","call_id":"call_01a167d509e476e2b720342a1c6da64c","name":"best_language_to_learn","arguments":"{}"},{"type":"function_call_output","call_id":"call_01a167d509e476e2b720342a1c6da64c","output":"Ruby"},{"type":"reasoning","summary":[],"encrypted_content":"Q-PaDgGWwpEvdABDzKdXn0PbzUBhRJYSL99M1Vy_XErEJnWFiNqDS89P-YTWDC6PNtEJhK81U2AZV30FVqIvHkfYWujQOiA9xde_Wy7EP_bQmeeXryUdGqV1yCzeFShrTsfkQmucqmHujNDcWR2JJgXq4Nvb6DL-01BjQ8iaMrrsSNc9X3Pgsc84yCS88s8ex3_kUN-kikqgWKT8LpyMXx2vGusA3nB_vZnfxUWLqZf15bYq6dsm5ZH8cSdSgwKDqjc9zWuNtVdxtZ_WrtuZ4RiMtYKGuyh7VTAg0ycoITTvPAcQ9xWaOhDxbvwiQ2JJejMOa65_BLc3783UsjOXsq7fLcTDb8nGYbUNmxHl9l3AdmEruS_Ng3ZveOD3rj0d458lk_WBfInlkrtHR6EkkMA-Q2JniH1_Pt5Zh7vYG7opODoV_-iiAPt2d2Y5pKvh505gDYnMfTLEuqsNjo_BwDx-8vpebQaUj9g4EbP3iG51oIFnqotoiiQAV0_WqN85aJg5_4nhFQx9k-aedES3UTQLWwRsQ4IEWFNkh81yq2h8QCVa1WIjcVtZkydF0t0fCwywPAsvMTYzJtMMTCPRWEsIfztq_2EEsST4AptxiyG7cUsj-0-YGBxvPTsoxk88ZjWZAOPJxhWaPjlZf83ge1rvMQP4gPtJQFSYEg8FYoAja1ckRJm8yi_0AQnXf4XQEFJd74L2f0OsXDiqHS7jL0KdsXYC5Lp49gbg7iGsSXgrFEW5PJQ9ygYxy1pYp1rxCbx44FpwMMjKgQ_820lpcjmBQJ_Ofy0_UIZoY7JRZerIluPpwX6TtYAHIsJ5I_2R1Q4WrHhWn_a6pPacL4vDiI_ONmyV4pteWsV_829RfhuSxnwwgarfRiXB74KcxTHYGdGiXEyUm_WQ3J1aJcAv9Zn4ombx6BFeAATtS-hozBT1Y2-wJslrLn_G3-TXXQ9y7CxUBvdw5dCkFVBOPUVN8cgLBPiCg33i33ADJdQoMfWAQAo7cqdx7S32bYpXLdL0RncUtKolx8bOtADRcui9dlQvsPuTxFJBCaT1_OqUUQ-2N5KK2AyEcKAWlEVbe_WUUxmtdYa2_c31NeXk3Bmgph17xcCg95iBmrC9yQUnlQvDc3kHWodXICs6W1qa2Wm0OZWtQ_lGyO0C8jfyC8xPfNAbu7Q0K3DPdoncwjRqT6Oq7G4LwA0POqsNjOZNpH3S7M0Z9umIGVQIW52Iv6bGmZTbaFPY3pyeBe5QSblK-NUC1DFOR3FLQdjIYDnsB0ncVN5fwV0ynofAzFStsvz33idKPBCkgzeykPubLVvam0UU5YMi-rfrFrFXFVA7lwsZTeysM47qqRfv5ai4ZCUfeMwleueSL9esO2Nyk7DfME__WPNeh3z7ACc7vAo8LXG-azF4E5RvLz4AnEELPw"},{"role":"assistant","content":[{"type":"output_text","text":"Ruby"}]},{"role":"user","content":"Call
+        best_language_to_learn again and repeat the programming language it returns."}],"instructions":"You
+        must use tools whenever possible.","stream":true,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/event-stream
+      Cache-Control:
+      - no-cache
+      X-Ratelimit-Limit-Requests:
+      - '150'
+      X-Ratelimit-Remaining-Requests:
+      - '136'
+      X-Ratelimit-Limit-Tokens:
+      - '3000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '2984667'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Fri, 23 Oct 2026 08:16:21 GMT
+      X-Route:
+      - model-api-rust
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |+
+        event: response.created
+        data: {"response":{"background":false,"created_at":1792743381.0,"error":null,"id":"resp_6adb17d53f44048d6e2d4246","incomplete_details":null,"instructions":"You must use tools whenever possible.","model":"muse-spark-1.3-contributor","object":"response","output":[],"parallel_tool_calls":true,"reasoning":{"effort":"high"},"service_tier":"auto","status":"in_progress","store":false,"temperature":1.0,"tool_choice":"auto","tools":[{"description":"Gets the best language to learn","name":"best_language_to_learn","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false,"type":"function"}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled"},"sequence_number":0,"type":"response.created"}
+
+        event: response.in_progress
+        data: {"response":{"background":false,"created_at":1792743381.0,"error":null,"id":"resp_6adb17d53f44048d6e2d4246","incomplete_details":null,"instructions":"You must use tools whenever possible.","model":"muse-spark-1.3-contributor","object":"response","output":[],"parallel_tool_calls":true,"reasoning":{"effort":"high"},"service_tier":"auto","status":"in_progress","store":false,"temperature":1.0,"tool_choice":"auto","tools":[{"description":"Gets the best language to learn","name":"best_language_to_learn","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false,"type":"function"}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled"},"sequence_number":1,"type":"response.in_progress"}
+
+        event: response.output_item.added
+        data: {"item":{"id":"rs_6adb17d53f44048d6e2d4246:rs_01a167d5190b719887065d34fdf75720","status":"in_progress","summary":[],"type":"reasoning"},"output_index":0,"sequence_number":2,"type":"response.output_item.added"}
+
+        event: response.output_item.done
+        data: {"item":{"encrypted_content":"Q-PaDgGCD5uRgls5cFvbnWPinV-EIsRA25WklI-TQPaLxj55Nd-WItXkyPBnyfuOjzuz8LnrDYUO26vyKffMuqf-YHfu2deYpQ8Vpm7v3cKmMOFsbO-B_oXPCmjBjQ06KHekl7YjKYpaj_cV0v1GiqMHDLoonK7aO7doch-xPVUDe5Gi1X_7xGwz3JvovoLd57oZ9NUfu5X8osmEpFnkOoW-defXfg0m3MipzONnWwslzJ5fBTJkQpnzPfLTu0XEZmeh5se_7BXAYlN8exWFTSP7AwUrLCYUmETucX-kcdylDO3cX9ObH0dAyi0sAb88lFG_SpkUNt9RjZuOXx69el-un9hkYH5d0rMk2zAxF7K2TSaZFJ5XUmVjibcQl7Nr1hZQRJSEVPR6206NGEaoYppMAu1BEP4RfoVcri_yq_fTFK-fxwbyZVT7LFntZ-unmSD2lyqIq3XHV2zvXrqZ1DqstwI5D8N83hoMO5z5lm6bTc7HBw8-TGpqZg2GBqNaXgt5KNkQIQY_ytgTyKTJWXj3RfvC4THt-uPFs3i3DXn8xYw4otPmibh0HcxiSj_3GAxYAjUhrmhsAZn77ZZt9VXHWzyEia2akwmaMExndv790TtwHvsxoQr_530CFbpDfbJEoC7oANR672IZEQfkdtycl1l8IsqVHLP0Eyoqv3udE0QLzMiE1b8yJGmT8mSnE_xf9aKTr7o5nquVOAUAweo0KEbQHGv8nm93iuunrOtsKbCMHudfCkR6-8p0e_j4FI20L1nK_qsXrjCxGOCAFM-m-Qb_4opPyp5H0rhplyRhqaUgpEtU-WqmDFTcwu0FhlqzJOlIXZpJM7n_mgSiM9q80GLklpvzEFGhPsX6JpWn3_yCzYy6I0SgaxhsTp7Zl9Vii9Pxsmy9ILChYB-Y1pCUKmzyaplLctOsMjgeyy1mbBrX6mSKIOweL6UNaZkDkp_4D-JGrC4CT7xBC02kn-V6EnKtg_cd31AO7F9cWPRNXhvGBvw0Mn3IazshYFa2jvSQyaj0qYmYeVj1j0HT-RSPm2w0VMSdzQjjM4LwsK17enSoxueQuDzDxy5Zldi76MFxlVdqFp-8pieicj8vMp3kKzDbrqP6cWFnStXRU2dUZGfQRElAai5f1QHDOU4XHZzj41-nJ-zKg69fLU0rzFKEIiw0nBkpzstKY3m6v2o85opJ_C1QKttL_lFIm5eTTfEvlpBmLgrcCUNgSTgN56pEs6GDudnpWJpcWgdQsJNlR6lzy5V7p8Cdq9v_KTgGVFMiixdLcx161tK02EJSD5UkMIKGf4uo4_A8Kq0gFsxBD5rAwTR_dEP11LzikOFt6v4GRRFNYTBFwFWPgNnpKNkuoV94ViiAXDMRDkn-ei7d207609_--8hiagvbZDlF5yPwey60Wa-aiLthzg","id":"rs_6adb17d53f44048d6e2d4246:rs_01a167d5190b719887065d34fdf75720","status":"completed","summary":[],"type":"reasoning"},"output_index":0,"sequence_number":3,"type":"response.output_item.done"}
+
+        event: response.output_item.added
+        data: {"item":{"content":[],"id":"rs_01a167d519de7328990fac8d2f99377c","phase":"commentary","role":"assistant","status":"in_progress","type":"message"},"output_index":1,"sequence_number":4,"type":"response.output_item.added"}
+
+        event: response.content_part.added
+        data: {"content_index":0,"item_id":"rs_01a167d519de7328990fac8d2f99377c","output_index":1,"part":{"annotations":[],"logprobs":[],"text":"","type":"output_text"},"sequence_number":5,"type":"response.content_part.added"}
+
+        event: response.output_text.delta
+        data: {"content_index":0,"delta":"I'll call the tool again to check the best language.","item_id":"rs_01a167d519de7328990fac8d2f99377c","logprobs":[],"output_index":1,"sequence_number":6,"type":"response.output_text.delta"}
+
+        event: response.output_text.done
+        data: {"content_index":0,"item_id":"rs_01a167d519de7328990fac8d2f99377c","logprobs":[],"output_index":1,"sequence_number":7,"text":"I'll call the tool again to check the best language.","type":"response.output_text.done"}
+
+        event: response.content_part.done
+        data: {"content_index":0,"item_id":"rs_01a167d519de7328990fac8d2f99377c","output_index":1,"part":{"annotations":[],"logprobs":[],"text":"I'll call the tool again to check the best language.","type":"output_text"},"sequence_number":8,"type":"response.content_part.done"}
+
+        event: response.output_item.done
+        data: {"item":{"content":[{"annotations":[],"logprobs":[],"text":"I'll call the tool again to check the best language.","type":"output_text"}],"id":"rs_01a167d519de7328990fac8d2f99377c","phase":"commentary","role":"assistant","status":"completed","type":"message"},"output_index":1,"sequence_number":9,"type":"response.output_item.done"}
+
+        event: response.output_item.added
+        data: {"item":{"arguments":"","call_id":"call_01a167d51a6d72218a596fddee229e17","id":"fc_01a167d51a6d72218a596fddee229e17","name":"best_language_to_learn","status":"in_progress","type":"function_call"},"output_index":2,"sequence_number":10,"type":"response.output_item.added"}
+
+        event: response.function_call_arguments.delta
+        data: {"delta":"{}","item_id":"fc_01a167d51a6d72218a596fddee229e17","output_index":2,"sequence_number":11,"type":"response.function_call_arguments.delta"}
+
+        event: response.function_call_arguments.done
+        data: {"arguments":"{}","item_id":"fc_01a167d51a6d72218a596fddee229e17","name":"best_language_to_learn","output_index":2,"sequence_number":12,"type":"response.function_call_arguments.done"}
+
+        event: response.output_item.done
+        data: {"item":{"arguments":"{}","call_id":"call_01a167d51a6d72218a596fddee229e17","id":"fc_01a167d51a6d72218a596fddee229e17","name":"best_language_to_learn","status":"completed","type":"function_call"},"output_index":2,"sequence_number":13,"type":"response.output_item.done"}
+
+        event: response.completed
+        data: {"response":{"background":false,"completed_at":1792743381.0,"created_at":1792743381.0,"error":null,"id":"resp_6adb17d53f44048d6e2d4246","incomplete_details":null,"instructions":"You must use tools whenever possible.","model":"muse-spark-1.3-contributor","object":"response","output":[{"encrypted_content":"Q-PaDgHfuJam0DZg5Yosu2B82cWLeCKoDAXDA14WMBagF6iTUVCBcNT1vfknmK157P7vOg1k2xzGCZKMsOXhjHS54LNRp4vIqI3GtOQviZciEfnsar8dE5tdal6P1K2ibZ_hHx3DjSKtFSNsujBvdVYECZIfg2NiYICnCNrzChrL2BFsc8dpQHVJJ-lD8IkeMGCw7te49_itlaa_efkrlSI9LFzqkJTmRKYXeH601c805t9sQ-WbnTH5WLPqZpB3uRIfK6D_YMHT8fkZBmQxIb8XUPx90CE_qAmEk9Di6AmV5Wa9EknThUubTqqDVDWmzgSxoUbp1zdow2yeydsImBgZO8PNjeZkn4T3lVMo0Gx9fVK-55qouKeaWsUqkE88a5zlCGm6ZhHDt3QRGpDc0WCV2ikHHAk-v7pjyyPXGdR0ys0RLSlIF5IzZnxfl8tMiu-8XoSjhqLGzKYvelbfeu4dMtitlFu7XfDbEwJoqaK1zGKigDudiBvtFoOBsGBp72jmlGam5kfx6xaOxzPMQk77NF9kwMWlrDQX0Ye8-Gw9HBmej2hY6VwEjd9A_bnJO7tJV_KucHyQ-01aO-T7H4dLkJNALicdL_MR_FiiR4rU_Egi757xsQWJyOWaCUwhJrfp5s8-vLYPrJJAz-RsfINpmG_0lmNiU3tosLBDqe0fpGvQzGppVZlBej2XasHGPWpIV2VFhZ16CutSs_d35ZhYz0Os5FjX8rKhBZqF0BRhwi94P0gr0ZtBQ9mXhBy-IihRP-PxhYNRlMh0nKo9dq1KaAKnb3DUP1hhvTD3FPrr8vBhaB9WWAAc_lbKp5BoqWmZlyDfoQ_qM_0qZ42dPDkb23YZ-O0F83dtI188hvaZkcaSk-uFZaLqkXnfZOkr8JxnMPoDmA4nlDwfhNN6O5mRyruk6zeAaZ4PgFXRRLUMnVAhlaHIFMqw0tfT7Yv-5EewktsJIZ-4JbdOxSjgJX2NQQFF3Hb9RqYlEjuojZ8jGfAPeTwDW5g7ZKa92yuoK38e9QJucHX8F4_Um_C03RW61h5qRhv1f_H7fO8W5j0Btuo22ovYpHxkgDDOMXsNQTfxVtsgqdwg4rFHtsQwR8JTlbodzzCLmxose90Nyx8GTeVKRI03C4Db94P4qD31NYlWFotEJP7Xc3M5TvoIeLQNs8Gv19ITVGwZppigpMbZy316LmH6D5JGJdpEmaM7mOKE1RcZ79uqLQ_AEh-v3XRnx6OqfEQWQqgfYIfOcgHbr2aFosY_EK-YE1i-5KtCCbrXm9gTZoJMoy9i3RvS4ubL0RI0vWRXTUeW_b64iJi7Wov3xHp2vBmjmGJV0D9T6UnZ06ZG5CejZuWb3-i39gf6zs2XsPy_B3CNljTuSUQKuZkP0HUhAGkf29V0pxN8j49rO3smbUcaha2I0w","id":"rs_6adb17d53f44048d6e2d4246:rs_01a167d5190b719887065d34fdf75720","status":"completed","summary":[],"type":"reasoning"},{"content":[{"annotations":[],"logprobs":[],"text":"I'll call the tool again to check the best language.","type":"output_text"}],"id":"rs_01a167d519de7328990fac8d2f99377c","phase":"commentary","role":"assistant","status":"completed","type":"message"},{"arguments":"{}","call_id":"call_01a167d51a6d72218a596fddee229e17","id":"fc_01a167d51a6d72218a596fddee229e17","name":"best_language_to_learn","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"reasoning":{"effort":"high"},"service_tier":"auto","status":"completed","store":false,"temperature":1.0,"tool_choice":"auto","tools":[{"description":"Gets the best language to learn","name":"best_language_to_learn","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false,"type":"function"}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":1063,"input_tokens_details":{"cached_tokens":497},"output_tokens":92,"output_tokens_details":{"reasoning_tokens":31},"total_tokens":1155}},"sequence_number":14,"type":"response.completed"}
+
+        data: [DONE]
+
+  recorded_at: Fri, 23 Oct 2026 08:16:21 GMT
+- request:
+    method: post
+    uri: https://api.meta.ai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"muse-spark-1.3-contributor","input":[{"role":"user","content":"Call
+        best_language_to_learn and repeat the programming language it returns."},{"type":"reasoning","summary":[],"encrypted_content":"Q-PaDgG57u7g_Tsp18YEIAuw2YzHCNQcBDxFLthUeHGpp3cHmoLByEmqoNXw03UvxgHstSx5rUKEtofVZaBkrpyr-V23OGOCyCPmsq8fYl3Htch2KYXh2y3JKlJO-CMx1deLIbpJO9PKAEi26Ad2Mt5mfRE3De9Rfhx2zHljDjTbRvTUvTy1dnHuRqR7Si8SuQKJtiaxeS9xj-qnanrfQkrJOYc8MYaYaL2IXpTCk3_lE0mjelTkAYANE1n4kYmUrO6QicnmcspS0b9_IeepVYQ9T31wMbtlVoaRJR_gXEV6HCrpeaszdqkltgZS5IEKlepatYnfuxX5Z72M_D8i0w6zur_XhjvODumapisOAo4A0SEof54Uo6CmfedG5abM46vlmezsSBNgJPutoL2GizfPgTj6Yt4554oz9EJK6euvfJTof9ncV36Aw3PBr-VluhMRn3lwym-gDJ4djInVUZxhMLi1A5egcPDI3PLyF7of4k3cGM5oXbUyLhTdRbcXs5O8_tM4oFHcYvY5ckAO1Vcu4BbdH-Xlwp1i-jjy4XqbuNVp5tD5RHEm51Z-bDfMA32YRIsz7B-ebblgzA-MiHh63gxnE72g9XftD0KOJR3gICugromiTpQNlR-5O2FqyT6B2T7ym_NqxE1Kr5fm4C8d9QRyzBLkWfrZ3HCHfJwtppRX6ovSXqYCZ9oWBOaKUB9wGHcMVZqAnLp4CkDdOOxFBju8yhVvTs7fBgpA4NVT9sj4qAPsIdzxPAXl1hHPLcoGan1SExGA1CxzckMFoIfx9VEC0Z7xCqO_TqXAcS0lIZb_AAPTuFUp9SShvjVLuHoj_V_4Ob0I3sn2gzm9IUpNohCuoshHZsQoJ6pD6xsfBxZLATb6m0CuUFbgciZrgdmOiq8Cku21RQ-a34C3c5jPVkokRunNYeCv9YppAUuIL4qtUnq9VNxntAGtu2sA8E6wCwxx9bfy_PjZb841mLbzADuaLb8XiD4bs5nsoNhn59i_y3I4gj7L-Xa0PuHn3kUGpLrzvFaBi4Quij8JhLJ81Rt5cbBrGTclocS3XfBPqahJYCerc0lOoDzE_-2l6SXAg5dbWXcJ4KfylCRvTpzJ2MaPq773lYVUaEnNZ-UQEt90WpJzgzXv6rvAgwPXUhTDYJGpawS0YLUvIG2SbZsug4UAVs7gVsNP-svaGBgnX3JQB9Pi12Au2fmprrO2kZGBclGkuO04ZqVhV9MuhHypPXRQuFGyqSRbzbPOQUyDrjJG6MAZbIgezSKoTfrs7Xm-DuYUSzrvdgR1iF9eJo49szsbMZJoV0cUIZ0XYQtaIfexBuyiw6s1kKn2PlVy7wVhmdmCevK2Tb5SqpJxMrVXbJMPUCg9WoeADobbzMZEuTdl2AItrpfW7upvgv4zzxTYt5-jq0VJQnIeGjWGK3X-SE5S-AOONbZqFCPpL_ogkVnoBsYeTW0rK7LYMur5j7iXSoTVW4qdPVgK_8bTi3LNuJCgsDVavfsNa_ozczgNvVwBol_nCxFkh_NFi4WcKXTNnwYt0L5FYdUFSUwCaVCU1Zc1z3QCfhp8mKHwXfyYoQZm-C9_mbGbsWkxROxGhQNtn2cn1CRhh0PgNMemkwPzmz5kaGLnOZS5aV4usUwKzFBmcEeBeSxVB8Sq6eo9AuwPmOopFnkoiV48Hx6ARxA89ENq4AtU6lT0DtyvSuFyy-rOUe_66LJIA9gsL6xmY6P2fY9QrXO1gWv7whBg-Iz8a8NRH3UDJ5GCY5W8pXw3DUUZWScL89PzvAihz9BhCPwE67LoVrBQOUrdPfV75F8ahAszwfzUzGYzIpW-ksNjmihb_USmW6WhpWaeIO9FH5mAgJayiXAmQmyaiZPcmJ_wUOLTpTluRa2KIw5zyZZG61dBmUP6X8Of02-Xj-1jyNJWO-cRZfOYKg3sZpgkxnH9ZKSAYScuT93_oR1Cy8GUDj93jLLjNa669dMWrI0AJRoUnxtETURHnM6Fe7XN-0Z3spA0YfJALNrKGKZNnx0eOPLrXYIrBwr9VVo7-mk6_mJVsFkGNf735kpCnBIXmkKoixTicfjwtZiPIsz5bH-1Vk84wdIA_rRcO_WddbbPpmbR9JU7osL96k5cX9oxcfWYItgSrkqmawIzB1xEQ21Lcx9gRMt2wsiqNIodBJIlOIr2bdCtd0oBfAMuDzVfSP26iX2ePcIyuGFwRZYROkFzwRHDgKLx7KrOtTqQVj2Ay67FCCT5udmF0HK-YI9k2sONo-bBo-jzyOC-nIts1w7B7LdzKL3AOnNUzCsdoPxpQOc2M22P0fysOTisgYVmoPB8MhaOrXtmx-ikZXzEWvULphERboV36aak9WCtxyqyhZktYt5B2k46xMdZX4fydsizwx8jWz_GnsinogueUEf3AoZb2r6G8g8wCPTagublKLEgS82f_XfX0AXa_LblvxX_Cz92pYC6MDPYvA33tGkhSmsMI101XmLou1EKp3sfWLjizSzeRKDLDWXXXVhlmuX3C8HW00fkb3qofk3XOhn2MS0cG-liZ7J67YSVpQVvtyAXQdB4SGKX7C6ZtO5A48CjabTFnd4mzx7EbwnQ0qcqhz9JJUPlI_R8EF35ht2NHQKbHkCviVx0DFRuVE2061-QO5y8RXBv1wHqNhe9smGgCRUCWNFqrgd2jhgXbnsNmrKhDOvTF2vLY_TnJy3T2OgaEsTLojb8u1oLjwI8MZtddWoxdezdCA2zkyC0aZPoTj5r_AHyO_WiNi5BZfl5Bg0fhp_Bw1zDxaZ58Gs"},{"role":"assistant","content":[{"type":"output_text","text":"I''ll
+        call the tool to get the best language to learn."}],"phase":"commentary"},{"type":"function_call","call_id":"call_01a167d509e476e2b720342a1c6da64c","name":"best_language_to_learn","arguments":"{}"},{"type":"function_call_output","call_id":"call_01a167d509e476e2b720342a1c6da64c","output":"Ruby"},{"type":"reasoning","summary":[],"encrypted_content":"Q-PaDgGWwpEvdABDzKdXn0PbzUBhRJYSL99M1Vy_XErEJnWFiNqDS89P-YTWDC6PNtEJhK81U2AZV30FVqIvHkfYWujQOiA9xde_Wy7EP_bQmeeXryUdGqV1yCzeFShrTsfkQmucqmHujNDcWR2JJgXq4Nvb6DL-01BjQ8iaMrrsSNc9X3Pgsc84yCS88s8ex3_kUN-kikqgWKT8LpyMXx2vGusA3nB_vZnfxUWLqZf15bYq6dsm5ZH8cSdSgwKDqjc9zWuNtVdxtZ_WrtuZ4RiMtYKGuyh7VTAg0ycoITTvPAcQ9xWaOhDxbvwiQ2JJejMOa65_BLc3783UsjOXsq7fLcTDb8nGYbUNmxHl9l3AdmEruS_Ng3ZveOD3rj0d458lk_WBfInlkrtHR6EkkMA-Q2JniH1_Pt5Zh7vYG7opODoV_-iiAPt2d2Y5pKvh505gDYnMfTLEuqsNjo_BwDx-8vpebQaUj9g4EbP3iG51oIFnqotoiiQAV0_WqN85aJg5_4nhFQx9k-aedES3UTQLWwRsQ4IEWFNkh81yq2h8QCVa1WIjcVtZkydF0t0fCwywPAsvMTYzJtMMTCPRWEsIfztq_2EEsST4AptxiyG7cUsj-0-YGBxvPTsoxk88ZjWZAOPJxhWaPjlZf83ge1rvMQP4gPtJQFSYEg8FYoAja1ckRJm8yi_0AQnXf4XQEFJd74L2f0OsXDiqHS7jL0KdsXYC5Lp49gbg7iGsSXgrFEW5PJQ9ygYxy1pYp1rxCbx44FpwMMjKgQ_820lpcjmBQJ_Ofy0_UIZoY7JRZerIluPpwX6TtYAHIsJ5I_2R1Q4WrHhWn_a6pPacL4vDiI_ONmyV4pteWsV_829RfhuSxnwwgarfRiXB74KcxTHYGdGiXEyUm_WQ3J1aJcAv9Zn4ombx6BFeAATtS-hozBT1Y2-wJslrLn_G3-TXXQ9y7CxUBvdw5dCkFVBOPUVN8cgLBPiCg33i33ADJdQoMfWAQAo7cqdx7S32bYpXLdL0RncUtKolx8bOtADRcui9dlQvsPuTxFJBCaT1_OqUUQ-2N5KK2AyEcKAWlEVbe_WUUxmtdYa2_c31NeXk3Bmgph17xcCg95iBmrC9yQUnlQvDc3kHWodXICs6W1qa2Wm0OZWtQ_lGyO0C8jfyC8xPfNAbu7Q0K3DPdoncwjRqT6Oq7G4LwA0POqsNjOZNpH3S7M0Z9umIGVQIW52Iv6bGmZTbaFPY3pyeBe5QSblK-NUC1DFOR3FLQdjIYDnsB0ncVN5fwV0ynofAzFStsvz33idKPBCkgzeykPubLVvam0UU5YMi-rfrFrFXFVA7lwsZTeysM47qqRfv5ai4ZCUfeMwleueSL9esO2Nyk7DfME__WPNeh3z7ACc7vAo8LXG-azF4E5RvLz4AnEELPw"},{"role":"assistant","content":[{"type":"output_text","text":"Ruby"}]},{"role":"user","content":"Call
+        best_language_to_learn again and repeat the programming language it returns."},{"type":"reasoning","summary":[],"encrypted_content":"Q-PaDgGCD5uRgls5cFvbnWPinV-EIsRA25WklI-TQPaLxj55Nd-WItXkyPBnyfuOjzuz8LnrDYUO26vyKffMuqf-YHfu2deYpQ8Vpm7v3cKmMOFsbO-B_oXPCmjBjQ06KHekl7YjKYpaj_cV0v1GiqMHDLoonK7aO7doch-xPVUDe5Gi1X_7xGwz3JvovoLd57oZ9NUfu5X8osmEpFnkOoW-defXfg0m3MipzONnWwslzJ5fBTJkQpnzPfLTu0XEZmeh5se_7BXAYlN8exWFTSP7AwUrLCYUmETucX-kcdylDO3cX9ObH0dAyi0sAb88lFG_SpkUNt9RjZuOXx69el-un9hkYH5d0rMk2zAxF7K2TSaZFJ5XUmVjibcQl7Nr1hZQRJSEVPR6206NGEaoYppMAu1BEP4RfoVcri_yq_fTFK-fxwbyZVT7LFntZ-unmSD2lyqIq3XHV2zvXrqZ1DqstwI5D8N83hoMO5z5lm6bTc7HBw8-TGpqZg2GBqNaXgt5KNkQIQY_ytgTyKTJWXj3RfvC4THt-uPFs3i3DXn8xYw4otPmibh0HcxiSj_3GAxYAjUhrmhsAZn77ZZt9VXHWzyEia2akwmaMExndv790TtwHvsxoQr_530CFbpDfbJEoC7oANR672IZEQfkdtycl1l8IsqVHLP0Eyoqv3udE0QLzMiE1b8yJGmT8mSnE_xf9aKTr7o5nquVOAUAweo0KEbQHGv8nm93iuunrOtsKbCMHudfCkR6-8p0e_j4FI20L1nK_qsXrjCxGOCAFM-m-Qb_4opPyp5H0rhplyRhqaUgpEtU-WqmDFTcwu0FhlqzJOlIXZpJM7n_mgSiM9q80GLklpvzEFGhPsX6JpWn3_yCzYy6I0SgaxhsTp7Zl9Vii9Pxsmy9ILChYB-Y1pCUKmzyaplLctOsMjgeyy1mbBrX6mSKIOweL6UNaZkDkp_4D-JGrC4CT7xBC02kn-V6EnKtg_cd31AO7F9cWPRNXhvGBvw0Mn3IazshYFa2jvSQyaj0qYmYeVj1j0HT-RSPm2w0VMSdzQjjM4LwsK17enSoxueQuDzDxy5Zldi76MFxlVdqFp-8pieicj8vMp3kKzDbrqP6cWFnStXRU2dUZGfQRElAai5f1QHDOU4XHZzj41-nJ-zKg69fLU0rzFKEIiw0nBkpzstKY3m6v2o85opJ_C1QKttL_lFIm5eTTfEvlpBmLgrcCUNgSTgN56pEs6GDudnpWJpcWgdQsJNlR6lzy5V7p8Cdq9v_KTgGVFMiixdLcx161tK02EJSD5UkMIKGf4uo4_A8Kq0gFsxBD5rAwTR_dEP11LzikOFt6v4GRRFNYTBFwFWPgNnpKNkuoV94ViiAXDMRDkn-ei7d207609_--8hiagvbZDlF5yPwey60Wa-aiLthzg"},{"role":"assistant","content":[{"type":"output_text","text":"I''ll
+        call the tool again to check the best language."}],"phase":"commentary"},{"type":"function_call","call_id":"call_01a167d51a6d72218a596fddee229e17","name":"best_language_to_learn","arguments":"{}"},{"type":"function_call_output","call_id":"call_01a167d51a6d72218a596fddee229e17","output":"Ruby"}],"instructions":"You
+        must use tools whenever possible.","stream":true,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/event-stream
+      Cache-Control:
+      - no-cache
+      X-Ratelimit-Limit-Requests:
+      - '150'
+      X-Ratelimit-Remaining-Requests:
+      - '135'
+      X-Ratelimit-Limit-Tokens:
+      - '3000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '2982968'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Fri, 23 Oct 2026 08:16:23 GMT
+      X-Route:
+      - model-api-rust
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |+
+        event: response.created
+        data: {"response":{"background":false,"created_at":1792743382.0,"error":null,"id":"resp_6adb17d7a6fc2b6704504036","incomplete_details":null,"instructions":"You must use tools whenever possible.","model":"muse-spark-1.3-contributor","object":"response","output":[],"parallel_tool_calls":true,"reasoning":{"effort":"high"},"service_tier":"auto","status":"in_progress","store":false,"temperature":1.0,"tool_choice":"auto","tools":[{"description":"Gets the best language to learn","name":"best_language_to_learn","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false,"type":"function"}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled"},"sequence_number":0,"type":"response.created"}
+
+        event: response.in_progress
+        data: {"response":{"background":false,"created_at":1792743382.0,"error":null,"id":"resp_6adb17d7a6fc2b6704504036","incomplete_details":null,"instructions":"You must use tools whenever possible.","model":"muse-spark-1.3-contributor","object":"response","output":[],"parallel_tool_calls":true,"reasoning":{"effort":"high"},"service_tier":"auto","status":"in_progress","store":false,"temperature":1.0,"tool_choice":"auto","tools":[{"description":"Gets the best language to learn","name":"best_language_to_learn","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false,"type":"function"}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled"},"sequence_number":1,"type":"response.in_progress"}
+
+        event: response.output_item.added
+        data: {"item":{"id":"rs_6adb17d7a6fc2b6704504036:rs_01a167d51fd275c7833a1c83781c0c18","status":"in_progress","summary":[],"type":"reasoning"},"output_index":0,"sequence_number":2,"type":"response.output_item.added"}
+
+        event: response.output_item.done
+        data: {"item":{"encrypted_content":"Q-PaDgHL9ICDGdmkO9f51hSDVbyjLRaEYnnT4JYP74XWPq_mBi20-R8w3NlD7ouQpU44LlHYfQekkRY7ey4Fy3xO3zoQDYLcmUatH1SspN4XM0leYDQmSuCloPPSDRU_FOhABo-zBNERbr2dSrXujNnpIMdPBWP2ND_sv82BiITi9WyWdb-TDAP9DBTsVLEbTRexbcSxhTesNaWWAI3Yeo5-4zjXNNvTnnKUYWDhy1AxZWHlr7OZ7MXfGAw7GIAGcZphalROFUIO0kYPOPwp7ntiittUYI0-b88rO4xvLBJZBW2IgSczbwE0VH6T7dN_Z5K7z3pjuj3fjhd_OWOpDxpQmCT3gVsW07-ouVAOdvsY7JGoQ2o0nRws7MHENTJEfIKQzfVIzmZjIDBTYrruSEC6UklfhKhfwHfHcVuVgBE28xwRi0wdfW1kM-Qq97vI7GN99ET-gOrfTWdPIkEByInIikqgAB4fKWPzR9Glc3P7nbypkc0RbFizhMVcL34ah7j6W_aOfDMp_L2FC43esIYZnC0j1O7Pj1euoeXwoGM8-Sa0Xjo5455Q79jFWjfxaTwtHGzwFSbIYE2fqGmg9C_L8o3RCsH_oah1CEwYa1Wr4xWby2dDZigBdoWHuB9bO7KpCXqAxvMOX6SMeOPwKNwBU0_DcAkR5sCjEM9LEyZbX4bJxkkSTnhHZLxBieUTicOJm3XPNLdjDZ4Uhjg_yWvwgjd7tf2GPwnNLzUIAnfREdU-wAGZssIc3TEvytQuJ0mCjafhG3N1PUHhe-VHFZu25wx5a-Am6YheQLopB7X5YNeR0E3RhP_xTzMTMgiUXtQkt6FiVhZL3DOubWgrlnlG7AfP3x7yNxThkjA5f4Av-xg6szVj3EBl4pNL0-E4L-dK1A3domlJsa1OP0me8DSXiPxV8rRtAEACw5GCx67fjOJuK9tHeOiU2FQwPXUHgzluHzPUukPGIF0Wckt9aas4ul1NsaXbJJv6qxHQaOCYIsexsSCjeLr-yVHDhIw5LkTImhYEit1Q5PUgU2HL61Q6xMjGBYDUMMIRnmkWil2wGstJcfqut2tYTe8HTebkeYXxU0ImvdhMEE6J3tTUfeA9Zd_QoBvGeTMKZc0sovq09PNJMLYcWgFNg5EdlNV7ZO-Va9bGMn8P5QN784AJQdZy4SM32P-53cBTwnZA3mlynGDAwIgT0Zcu9pUBToYad7L1cPURnJez8JOzwO2xHWu40CPOAR1Gbd5AVRhJY7fDt4scYbxui5j8mswI17KjBSPC0mxCC1BmfYbiNCELs4peCCQLOiyfsLWd9JeZcWKgBLtmU8pIRKQNDm8S2WJxDCTx49KPjj_x76Nah2I9Z0wUtEbTWjUkkeph0aHmejjHMrmQoKyc_tQVhXRXIejgSd78OSZn_QYIqzElXA","id":"rs_6adb17d7a6fc2b6704504036:rs_01a167d51fd275c7833a1c83781c0c18","status":"completed","summary":[],"type":"reasoning"},"output_index":0,"sequence_number":3,"type":"response.output_item.done"}
+
+        event: response.output_item.added
+        data: {"item":{"content":[],"id":"msg_01a167d52069738da0eff8ff369cca93","role":"assistant","status":"in_progress","type":"message"},"output_index":1,"sequence_number":4,"type":"response.output_item.added"}
+
+        event: response.content_part.added
+        data: {"content_index":0,"item_id":"msg_01a167d52069738da0eff8ff369cca93","output_index":1,"part":{"annotations":[],"logprobs":[],"text":"","type":"output_text"},"sequence_number":5,"type":"response.content_part.added"}
+
+        event: response.output_text.delta
+        data: {"content_index":0,"delta":"Ruby","item_id":"msg_01a167d52069738da0eff8ff369cca93","logprobs":[],"output_index":1,"sequence_number":6,"type":"response.output_text.delta"}
+
+        event: response.output_text.done
+        data: {"content_index":0,"item_id":"msg_01a167d52069738da0eff8ff369cca93","logprobs":[],"output_index":1,"sequence_number":7,"text":"Ruby","type":"response.output_text.done"}
+
+        event: response.content_part.done
+        data: {"content_index":0,"item_id":"msg_01a167d52069738da0eff8ff369cca93","output_index":1,"part":{"annotations":[],"logprobs":[],"text":"Ruby","type":"output_text"},"sequence_number":8,"type":"response.content_part.done"}
+
+        event: response.output_item.done
+        data: {"item":{"content":[{"annotations":[],"logprobs":[],"text":"Ruby","type":"output_text"}],"id":"msg_01a167d52069738da0eff8ff369cca93","role":"assistant","status":"completed","type":"message"},"output_index":1,"sequence_number":9,"type":"response.output_item.done"}
+
+        event: response.completed
+        data: {"response":{"background":false,"completed_at":1792743383.0,"created_at":1792743382.0,"error":null,"id":"resp_6adb17d7a6fc2b6704504036","incomplete_details":null,"instructions":"You must use tools whenever possible.","model":"muse-spark-1.3-contributor","object":"response","output":[{"encrypted_content":"Q-PaDgFFOtjNOvVJxfmS1GM658Vn_zB2Xa30okcEU7iQ4UJFbu5SG6Cxced27yQj_c9uTyeVF1RBgaVv3hZcNF44dIDTVWyq2BdDuRhmO8FYZqdluGmlYZ2z-df2aiK2ZrlS21x5f2TBaf6CyHi_EREaXFv2VjpvgAjm9UGZjBI8Q6riQ6d6EwFefR1j8e_oHWujl8qqsVySL051wQNpiLSL7c1CuhJD5FxyJ5d3iqQYhQShXvCszUNJxR_k-BFEZpoUpTMwAQHab5KTPfvYP1gmXnoIQMbY3CzEd-4TckdQlO07ADENQuH7wugDLBkL6NlKbe6zMi-d4o7AccC_oRF92HK35-I2hzEutd4eBwAA8hQXg27ArdwE_NXYcfLEC9brqQOlrOP1vp0mbVnlfrYOPWXdriXvbUa8TEVFesYiL4qf91qudOsfdD1S0InY1QOzEw4spV2usi5zD53mfx4S7b0WzjGyGuimMiQeOyn9i2tRVkiBur8nd_AnJgb0UR3evkwlQQT5pAjkQra7FfizvtTOrX0PQdZ0V3I90TN4oejT9bozg9Wql1YwxG5Sxj-i2KtLOK3on-xX2zigMAi1rFVAkI_f2S5LAzGJGJdgXV4X36BiGd_2AxkySleXovFDuVAW_AZ7Jxxfd-ntRedw-eEvtkZLj2wvLaP3ridgjoFQFnt4cvup1nGOqq2_5pWcQzCyiiw7tI1a-5kQMsuoF4Msxq3FibigoYx6hFiKk63q0xeqsL-OnBV_ZqaHVNNBTmGUvSWXgGYJkMOtz8Qs0Lv08O8AN-aStnkt9n0g7e3imbwAJphEprQNkUsurYJ-0PCWlC-n1oJdsH7NHW2L378RejJDoyVSpvicU_b5lK-PQ2TFZaVD-JL2NyzqQySRvLqYr89OgMBdoqijJxkAz8nBPAqGJZtzCR_avP6q_JrkBW_t7GQoYs6ZCvcEkEwWGHapzpzEhBNocAmsOlDywHkqt0EuO-ZDL6bh8fxtb4U_YcMIvPD6iqRmteCWS6szRfNxRED0BdnD4aNt-LI8bPwmk4Dx7lAKHQwnudtgQHO87bbFeAE53UWIsUmiHCepTpXvt05HqiN0Y5eoVAkcRWeUN60DDXSYJD0nKshWMuTIrU7XIHkcXjUsNESpj2I9uh64BtNmqYTTnJrhkOsUCNOswq3beCPTUO-LiqnHtnRcxFbxDzOoyknGXTjT_57oMx-PzQPVRz0Q8tJrDNAMM-ioA9hSf-eDCBPpn1ZNnrMqNMpZ-N5aJQ6tCsKlf2vmDcixTp0oGNR48s5b17bepnaYWR4ifO5w9Y-W0J-GLp-1pxappP2fBdBaAr3zAYWkfd3-3KcMzfLHu4fLwMj_wsvO6lmDoyDxh5DVStnEe0CQtdU7u3LPFdvtv_csjPJipm6C9Rn1899fJQ","id":"rs_6adb17d7a6fc2b6704504036:rs_01a167d51fd275c7833a1c83781c0c18","status":"completed","summary":[],"type":"reasoning"},{"content":[{"annotations":[],"logprobs":[],"text":"Ruby","type":"output_text"}],"id":"msg_01a167d52069738da0eff8ff369cca93","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"reasoning":{"effort":"high"},"service_tier":"auto","status":"completed","store":false,"temperature":1.0,"tool_choice":"auto","tools":[{"description":"Gets the best language to learn","name":"best_language_to_learn","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false,"type":"function"}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":1186,"input_tokens_details":{"cached_tokens":1009},"output_tokens":27,"output_tokens_details":{"reasoning_tokens":17},"total_tokens":1213}},"sequence_number":10,"type":"response.completed"}
+
+        data: [DONE]
+
+  recorded_at: Fri, 23 Oct 2026 08:16:23 GMT
+recorded_with: VCR 6.4.0
+...

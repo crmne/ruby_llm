@@ -1,0 +1,114 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.meta.ai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"muse-spark-1.3-contributor","input":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      X-Ratelimit-Limit-Requests:
+      - '150'
+      X-Ratelimit-Remaining-Requests:
+      - '147'
+      X-Ratelimit-Limit-Tokens:
+      - '3000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '2992641'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Fri, 23 Oct 2026 08:15:46 GMT
+      X-Route:
+      - model-api-rust
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '3038'
+    body:
+      encoding: UTF-8
+      string: '{"top_logprobs":0,"temperature":1.0,"top_p":1.0,"service_tier":"auto","model":"muse-spark-1.3-contributor","reasoning":{"effort":"high"},"background":false,"tools":[{"type":"function","name":"weather","description":"Gets
+        current weather for a location","parameters":{"strict":true,"properties":{"latitude":{"description":"Latitude
+        (e.g., 52.5200)","type":"string"},"longitude":{"description":"Longitude (e.g.,
+        13.4050)","type":"string"}},"type":"object","required":["latitude","longitude"],"additionalProperties":false},"strict":false}],"tool_choice":"auto","truncation":"disabled","id":"resp_6adb17b2fe010053ea0e4775","object":"response","status":"completed","created_at":1792743346.0,"completed_at":1792743346.0,"error":null,"incomplete_details":null,"output":[{"type":"reasoning","id":"rs_6adb17b2fe010053ea0e4775:rs_651ca382-2145-486c-8b27-c00b3bfe2b52","encrypted_content":"Q-PaDgHNryTGwrGHh3zdM6Uibp2vfowlnd7KQWlAMKe7Fe1b8TDGiabJNAzR4dnT_9sXCCHSVG5jJb26SP-3miZhnciGcSXxBlWgkLHAV15O07xKeFi6tzKGDAYZfwRZjBnYPBYkG34Wim3hUdV6lzNpXa4pLExvAB8s1aDACNOEFiFMVOzkuV_QiIzxja0bogidV5b2sYsQ8ZHd1paftteVyvLsg4icKDPl6idt4-YCuYGaVUaJGLksFrKSPoegDwznJ3vQ3NsfP3j1n7_-spPS0nCHtc7Lp4M-ghzHv7OHxFAX_0ltvFCrV2zmF6R6jtg-weJZ6r0WPBRZrWXsMj3TvroKdzgrrfobhcaEsbC-ei3u3a7B2vyfJhQUodhjo5C8phyD7kyXDVSqZL1a8bz1meH3tgLT1JCFLZggz5eL2_h7jQV1r1gwaYH3mXiZsfslh52yXDhx80KpJH6cOnZnda0hTIsGq2HopbVV6UoVREj270U08hk6p6fU55l-7j2CoQ9qvuU1vqLDrv88s-FmJVhNamn-4LbkrsfD1A6syO_oLQ3ZXPs_DzN7MWSq5LX2__TPHM9PuS5nZPCF4MdtRceC8GfueKIrQPtST1Md4GedUfha_6eeUHxK3d-aG7YvnuppP0wJPFodGTRya7uFx4G7KUWTeW3-Jc8b9lZ_MCo1l-RctRGJpEb8K1eQsFAQsVQ8G7wLUZLynVEAif9EGr0JmtwJ-2aTpt7rhLW3PlyjY3oe6UOvN_0DqW4evWnPCXcIdsuE6cl67MoiieRUBMUEohBZldTKU3NXcFCzYUg2PgDvhfPfFdq3pI9HBgiQm8hC-aSbk42vtEa0uMpTUx1Viwlw4DxhVVr8loDt6SWYZzlzU400GwDzOTNxC_LqZygHZC6oJgonlPJ5YJKmzi5WgidkdgPNTkWMHIyEOmrY-qLPbcHlgeu3hxFdEA9m4H1jCQ-vDLDgofi5nzMQGKScWqxq_oWprSeLtY4oW53uyBd-bMR4VZ_jKPj92zpGGpyJEZWbNj18QueGITOC_BvytpyWFmbaXCcShgUhi3Tv_qo93vtdIxokPBa8kDkHgeQLpg0yuam5l__WTdKI95VTHnv7TFCbn8AyTqs_CJJSXKQeGGk9dyPzvr8brSog3UtXvbV2EV2J9YzdFVP8thGat-uRDiKN6SASVyrKZbM-xl_0IGYVHijAgbkPIjGHDx5onDEiFPF_ngHscPUvbBL3N9y11xwC_nIWPLxnZoyHp28mDCduhfYp9Co7rKcU4JnyuwETbE6lYtBzqg37-7IKJcwfOHjkVi3gaP4WYiApFV5EebLCYOUI8aDWFewHUsmDa4zFT1nPtRk4vHj8vhTcU9Ss2IrcGsIf_9Ux4_BvHHMAWiFc1fTXoyWDTBbI8b3VNJ-a3yy48A","summary":[],"status":"completed"},{"type":"message","id":"rs_790771df-2e3a-48a6-933c-022cb30c33b3","role":"assistant","content":[{"type":"output_text","text":"I''ll
+        pull the current weather for Berlin.","annotations":[],"logprobs":[]}],"phase":"commentary","status":"completed"},{"type":"function_call","id":"fc_03510e12-309b-4526-8986-6cc59732f47e","call_id":"call_03510e12-309b-4526-8986-6cc59732f47e","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","status":"completed"}],"instructions":null,"usage":{"input_tokens":600,"input_tokens_details":{"cached_tokens":0},"output_tokens":148,"output_tokens_details":{"reasoning_tokens":64},"total_tokens":748},"parallel_tool_calls":true,"store":false}'
+  recorded_at: Fri, 23 Oct 2026 08:15:46 GMT
+- request:
+    method: post
+    uri: https://api.meta.ai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"muse-spark-1.3-contributor","input":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"type":"reasoning","summary":[],"encrypted_content":"Q-PaDgHNryTGwrGHh3zdM6Uibp2vfowlnd7KQWlAMKe7Fe1b8TDGiabJNAzR4dnT_9sXCCHSVG5jJb26SP-3miZhnciGcSXxBlWgkLHAV15O07xKeFi6tzKGDAYZfwRZjBnYPBYkG34Wim3hUdV6lzNpXa4pLExvAB8s1aDACNOEFiFMVOzkuV_QiIzxja0bogidV5b2sYsQ8ZHd1paftteVyvLsg4icKDPl6idt4-YCuYGaVUaJGLksFrKSPoegDwznJ3vQ3NsfP3j1n7_-spPS0nCHtc7Lp4M-ghzHv7OHxFAX_0ltvFCrV2zmF6R6jtg-weJZ6r0WPBRZrWXsMj3TvroKdzgrrfobhcaEsbC-ei3u3a7B2vyfJhQUodhjo5C8phyD7kyXDVSqZL1a8bz1meH3tgLT1JCFLZggz5eL2_h7jQV1r1gwaYH3mXiZsfslh52yXDhx80KpJH6cOnZnda0hTIsGq2HopbVV6UoVREj270U08hk6p6fU55l-7j2CoQ9qvuU1vqLDrv88s-FmJVhNamn-4LbkrsfD1A6syO_oLQ3ZXPs_DzN7MWSq5LX2__TPHM9PuS5nZPCF4MdtRceC8GfueKIrQPtST1Md4GedUfha_6eeUHxK3d-aG7YvnuppP0wJPFodGTRya7uFx4G7KUWTeW3-Jc8b9lZ_MCo1l-RctRGJpEb8K1eQsFAQsVQ8G7wLUZLynVEAif9EGr0JmtwJ-2aTpt7rhLW3PlyjY3oe6UOvN_0DqW4evWnPCXcIdsuE6cl67MoiieRUBMUEohBZldTKU3NXcFCzYUg2PgDvhfPfFdq3pI9HBgiQm8hC-aSbk42vtEa0uMpTUx1Viwlw4DxhVVr8loDt6SWYZzlzU400GwDzOTNxC_LqZygHZC6oJgonlPJ5YJKmzi5WgidkdgPNTkWMHIyEOmrY-qLPbcHlgeu3hxFdEA9m4H1jCQ-vDLDgofi5nzMQGKScWqxq_oWprSeLtY4oW53uyBd-bMR4VZ_jKPj92zpGGpyJEZWbNj18QueGITOC_BvytpyWFmbaXCcShgUhi3Tv_qo93vtdIxokPBa8kDkHgeQLpg0yuam5l__WTdKI95VTHnv7TFCbn8AyTqs_CJJSXKQeGGk9dyPzvr8brSog3UtXvbV2EV2J9YzdFVP8thGat-uRDiKN6SASVyrKZbM-xl_0IGYVHijAgbkPIjGHDx5onDEiFPF_ngHscPUvbBL3N9y11xwC_nIWPLxnZoyHp28mDCduhfYp9Co7rKcU4JnyuwETbE6lYtBzqg37-7IKJcwfOHjkVi3gaP4WYiApFV5EebLCYOUI8aDWFewHUsmDa4zFT1nPtRk4vHj8vhTcU9Ss2IrcGsIf_9Ux4_BvHHMAWiFc1fTXoyWDTBbI8b3VNJ-a3yy48A"},{"role":"assistant","content":[{"type":"output_text","text":"I''ll
+        pull the current weather for Berlin."}],"phase":"commentary"},{"type":"function_call","call_id":"call_03510e12-309b-4526-8986-6cc59732f47e","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call_03510e12-309b-4526-8986-6cc59732f47e","output":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      X-Ratelimit-Limit-Requests:
+      - '150'
+      X-Ratelimit-Remaining-Requests:
+      - '146'
+      X-Ratelimit-Limit-Tokens:
+      - '3000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '2992042'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Fri, 23 Oct 2026 08:15:48 GMT
+      X-Route:
+      - model-api-rust
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2836'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJ0b3BfbG9ncHJvYnMiOjAsInRlbXBlcmF0dXJlIjoxLjAsInRvcF9wIjoxLjAsInNlcnZpY2VfdGllciI6ImF1dG8iLCJtb2RlbCI6Im11c2Utc3BhcmstMS4zLWNvbnRyaWJ1dG9yIiwicmVhc29uaW5nIjp7ImVmZm9ydCI6ImhpZ2gifSwiYmFja2dyb3VuZCI6ZmFsc2UsInRvb2xzIjpbeyJ0eXBlIjoiZnVuY3Rpb24iLCJuYW1lIjoid2VhdGhlciIsImRlc2NyaXB0aW9uIjoiR2V0cyBjdXJyZW50IHdlYXRoZXIgZm9yIGEgbG9jYXRpb24iLCJwYXJhbWV0ZXJzIjp7InN0cmljdCI6dHJ1ZSwiYWRkaXRpb25hbFByb3BlcnRpZXMiOmZhbHNlLCJ0eXBlIjoib2JqZWN0IiwicHJvcGVydGllcyI6eyJsYXRpdHVkZSI6eyJkZXNjcmlwdGlvbiI6IkxhdGl0dWRlIChlLmcuLCA1Mi41MjAwKSIsInR5cGUiOiJzdHJpbmcifSwibG9uZ2l0dWRlIjp7ImRlc2NyaXB0aW9uIjoiTG9uZ2l0dWRlIChlLmcuLCAxMy40MDUwKSIsInR5cGUiOiJzdHJpbmcifX0sInJlcXVpcmVkIjpbImxhdGl0dWRlIiwibG9uZ2l0dWRlIl19LCJzdHJpY3QiOmZhbHNlfV0sInRvb2xfY2hvaWNlIjoiYXV0byIsInRydW5jYXRpb24iOiJkaXNhYmxlZCIsImlkIjoicmVzcF82YWRiMTdiNDgxYjAzZjE2ODM2NjRlM2YiLCJvYmplY3QiOiJyZXNwb25zZSIsInN0YXR1cyI6ImNvbXBsZXRlZCIsImNyZWF0ZWRfYXQiOjE3OTI3NDMzNDguMCwiY29tcGxldGVkX2F0IjoxNzkyNzQzMzQ4LjAsImVycm9yIjpudWxsLCJpbmNvbXBsZXRlX2RldGFpbHMiOm51bGwsIm91dHB1dCI6W3sidHlwZSI6InJlYXNvbmluZyIsImlkIjoicnNfNmFkYjE3YjQ4MWIwM2YxNjgzNjY0ZTNmOnJzXzJlNjM5MjcyLTQ2NzEtNGRhMi1hMTAwLTg3ZWVkMTRmZDA1NiIsImVuY3J5cHRlZF9jb250ZW50IjoiUS1QYURnR1B2NElNU05ENERVU1BxUzNjZGJIUFJhdlJCQ2xubGFKaUFJT0pyS0RrT2Nsc2ZSYlhKRjBqXzZGcWcxZkFETTBkcm81SVk2OTFyTjV0M0JNanpUUzlBZWJLTmowZmpoOE1NNEszalVpLUxZcE5XdEUyV0tCYnQtMEkyLUE2eVE4T0FpWmRJLVJYMVBNTU1RYTVJUWVnLVpPR0p6a0dQejM5cXlwcWxwdU5yRXVpUzJGaHNra0JEZHlBbkVqTjFlRERXV29FN3VRYXZpYmlaS2xDeEhsR1JJOUZ6cmNRZnJ4c1k0Y1pvS1BTdHc4eE5kbkI1Ti12NTFuaXg1UFRIYTNtMC1jOUtkVlVxZ0w4cFJOc3hYcVBheUJPSWxlZ0FDSlBjeHVlc3I5VGhWeGstZXI1VG9RMkpWMHpmelg2T2t1UUdZZGIxeThyV2c3UkRTRTRWcXRabXFYZk1ZSFhrVUIwUXo3RndKaUVObk45eE5JTktEZ3RuZHhIQ2xvb3ZXWGNYRjJzM29zRklmOHZjeDdhZndKazI4SkZidlVpcHpFdFR3Z2tPd2EyaDZQNXhOQVBCQ1dxU2NTSGNCQU9CcExucmhRU3hpdkFxRmc2M204bHlEUmExTXlCM1BfaUM5blBuckJUbHhOd1RxZ2RBVEZ2eEhZVjE0WVVrbGUyNmlYU2I2b3FMdFotRWcwQ3JWTHI1aTlnWXNlOFlqWVZyYnk4NDVQNFRKQl9DdWRGNnRkcVoxR2x0VmVVMThTbGRxb0ppNUFoWVFtcmdyUjEzbmVaOVNyT3BfMmwzUGNEZUZ4ZzNyMWY2RHVwOUJ5MXE1bXl6STgyWUw1cTRKNHE1MF9uN3dDVURKNExYNHF6NGR5WXhlYWxBYjQyR0E5Vmp2MWc1NlljdlBZS2xscktyRDV2cGJGdTV5MmE0ZTAyZkF0cWVERVVEaTcwYjBJRXB6a0RjTWRHWkcweDRpZVE4MUNoc2JsOHd6c1FlUExiY2ZxZU9qVTVYN1FmZW5wTTFvc0RSZWZ0YnhlWTdjZWU1VXFkY0dERnF2dXlJZlVDWWhtcEJRWXNJdW9SWGx6STZZMzU3d3BzYnp4REtUdkJfTmptRWdFWTJ2WC1LLVV4a0xNYXRGdHU0X2hsVUw3NlZEQWZaU2hwcFhfeklBT1NTR2hGTmEtWV81NVJjcWNlQXpIc0d4Vk5KZTczcUMxdWdPYjhGemM2OFJpQkk1MGppNzdRSVJoRXpwS1E3cnFfdFdJM2huZ1NmaGxHUVVBMWoxQ3FNWWwxcE5vZVNvblExLXVGa1A4LWJfTG9WQUhpN2dPMGstRHpKNVRhMDBjYVkyYVZqNUg5RTlyRmZ4YTJfRE9aajZoMlJ0SFN3NWdDRE5UaTVaV3hPREVKNVZaQU54ckhyeFpkMXNPV3lXRHkwNXNlUHJBbWZoY0RpMjNyS0VZUjJ4bVh1MnF1dUUxVlVBZGJWLUp0cUdEczBLTkdENHNYNk5kZkJLRUNMVjNGeXpLWExGeHBYMmR3RUlrYVktMkVVVnhjSmJvcndOUHpTeWp1Zm9BT2VscHMxelloNUdISGlBOWw5S1lialVlVDUzU3hvdF9EMzRrSUZsbFYtb1pkZlJWLTZZTjJEb29fMjUwaVV3ZlBPQ1h3UE55cXM0TW00QUdJdlMwTEF4eF85NnY2QlBmaHdWbEFXVmxQQnZDdFAyNWpJbTE1dXMtel83WTFuV2JhSjhaeWN0aWZEM0s5OS1RWGhXSzV1U2M0eEYyUHlJdlh0M2dJVEpJc090RHJOOTQyR2VLaFJBOElHSDh0QlBFMENQcUY0LWV4cVRRREM0Q0NWcmRRM3FNRFk0OGxsNHRwX2t4NWJrd1ZyVDh4ZkdiakhlSnA0dyIsInN1bW1hcnkiOltdLCJzdGF0dXMiOiJjb21wbGV0ZWQifSx7InR5cGUiOiJtZXNzYWdlIiwiaWQiOiJtc2dfYjczN2RhOTMtOTg5Ni00ZTY1LWEyNGMtZTExZGMxOWI3YjMyIiwicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJvdXRwdXRfdGV4dCIsInRleHQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCkgaXMgKioxNcKwQyoqIHdpdGggd2luZCBhdCAqKjEwIGttL2gqKi5cbiIsImFubm90YXRpb25zIjpbXSwibG9ncHJvYnMiOltdfV0sInN0YXR1cyI6ImNvbXBsZXRlZCJ9XSwiaW5zdHJ1Y3Rpb25zIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjc5NSwiaW5wdXRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sIm91dHB1dF90b2tlbnMiOjE0Miwib3V0cHV0X3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjEwM30sInRvdGFsX3Rva2VucyI6OTM3fSwicGFyYWxsZWxfdG9vbF9jYWxscyI6dHJ1ZSwic3RvcmUiOmZhbHNlfQ==
+  recorded_at: Fri, 23 Oct 2026 08:15:48 GMT
+recorded_with: VCR 6.4.0

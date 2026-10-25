@@ -379,7 +379,7 @@ module RubyLLM
           normalized = RubyLLM::Support::Utils.deep_dup(schema[:schema])
           normalized.delete(:strict)
           normalized.delete('strict')
-          RubyLLM::Support::Utils.deep_stringify_keys(normalized)
+          Schemas.render_schema(RubyLLM::Support::Utils.deep_stringify_keys(normalized))
         end
 
         def structured_output_config(schema)

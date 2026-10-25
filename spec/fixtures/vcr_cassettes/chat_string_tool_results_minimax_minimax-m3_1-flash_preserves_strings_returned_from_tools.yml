@@ -1,0 +1,131 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.minimax.io/anthropic/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"Process
+        this query: test data"}]}],"stream":false,"max_tokens":524288,"tools":[{"name":"content_returning","description":"Returns
+        a processed string result","input_schema":{"type":"object","properties":{"query":{"type":"string","description":"Query
+        to process"}},"required":["query"],"additionalProperties":false,"strict":true}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '733'
+      Trace-Id:
+      - '0726688021a3c8b9b9096f90d444cff3'
+      X-Session-Id:
+      - 3432a588321cfbca2858a09fe80c6d0c
+      X-Mm-Request-Id:
+      - 2092934004998157135_1792488832zb5q4e
+      Minimax-Request-Id:
+      - ae26308a1c6beabbcdba93a45f83fb53
+      Alb-Receive-Time:
+      - '1792488832.327'
+      Alb-Request-Id:
+      - 7871a33afe3ff3cf0c6a85c86cbcec4fa9df97d8
+      Expires:
+      - Tue, 20 Oct 2026 09:33:53 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Tue, 20 Oct 2026 09:33:53 GMT
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-From:
+      - ak
+    body:
+      encoding: UTF-8
+      string: '{"id":"0726688021a3c8b9b9096f90d444cff3","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"thinking":"The
+        user wants me to process the query \"test data\" using the content_returning
+        tool. Let me call it.","signature":"92b412590f077737666e0d28fa211363d7347a1b9ce1b5b0c1f9cbee3e87f3f4","type":"thinking"},{"text":"I''ll
+        process that query for you.","type":"text"},{"type":"tool_use","id":"call_01a158a9001d76bab74fdfb4","name":"content_returning","input":{"query":"test
+        data"}}],"usage":{"input_tokens":223,"output_tokens":62,"cache_creation_input_tokens":0,"cache_read_input_tokens":229,"output_tokens_details":{"thinking_tokens":24}},"stop_reason":"tool_use","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Tue, 20 Oct 2026 09:33:53 GMT
+- request:
+    method: post
+    uri: https://api.minimax.io/anthropic/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"Process
+        this query: test data"}]},{"role":"assistant","content":[{"thinking":"The
+        user wants me to process the query \"test data\" using the content_returning
+        tool. Let me call it.","signature":"92b412590f077737666e0d28fa211363d7347a1b9ce1b5b0c1f9cbee3e87f3f4","type":"thinking"},{"type":"text","text":"I''ll
+        process that query for you."},{"type":"tool_use","id":"call_01a158a9001d76bab74fdfb4","name":"content_returning","input":{"query":"test
+        data"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"call_01a158a9001d76bab74fdfb4","content":[{"type":"text","text":"Processed:
+        test data"}]}]}],"stream":false,"max_tokens":524288,"tools":[{"name":"content_returning","description":"Returns
+        a processed string result","input_schema":{"type":"object","properties":{"query":{"type":"string","description":"Query
+        to process"}},"required":["query"],"additionalProperties":false,"strict":true}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '568'
+      Trace-Id:
+      - '07266881c8a17d94ac808107af649339'
+      X-Session-Id:
+      - 3432a588321cfbca2858a09fe80c6d0c
+      X-Mm-Request-Id:
+      - 2092934004998157135_1792488833q1ngwj
+      Minimax-Request-Id:
+      - 9f61a17688d3e1ed7ce4584beb6a0f3a
+      Alb-Receive-Time:
+      - '1792488833.35'
+      Alb-Request-Id:
+      - b50ec16d0c169339139017e6f9506412abad65d0
+      Expires:
+      - Tue, 20 Oct 2026 09:33:54 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Tue, 20 Oct 2026 09:33:54 GMT
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-From:
+      - ak
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjA3MjY2ODgxYzhhMTdkOTRhYzgwODEwN2FmNjQ5MzM5IiwidHlwZSI6Im1lc3NhZ2UiLCJyb2xlIjoiYXNzaXN0YW50IiwibW9kZWwiOiJNaW5pTWF4LU0zLjEtRmxhc2giLCJjb250ZW50IjpbeyJ0ZXh0IjoiRG9uZSDigJQgdGhlIHF1ZXJ5IHdhcyBwcm9jZXNzZWQgc3VjY2Vzc2Z1bGx5LlxuXG4qKlJlc3VsdDoqKiBgUHJvY2Vzc2VkOiB0ZXN0IGRhdGFgXG5cblRoZSB0b29sIHJldHVybmVkIGEgY29uZmlybWF0aW9uIHRoYXQgXCJ0ZXN0IGRhdGFcIiB3YXMgaGFuZGxlZC4gTGV0IG1lIGtub3cgaWYgeW91J2QgbGlrZSB0byBydW4gYW5vdGhlciBxdWVyeSBvciBuZWVkIGFueSBhZGRpdGlvbmFsIGRldGFpbCBvbiB0aGUgb3V0cHV0LiIsInR5cGUiOiJ0ZXh0In1dLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjgxLCJvdXRwdXRfdG9rZW5zIjo1MSwiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6NDUyfSwic3RvcF9yZWFzb24iOiJlbmRfdHVybiIsImJhc2VfcmVzcCI6eyJzdGF0dXNfY29kZSI6MCwic3RhdHVzX21zZyI6IiJ9fQ==
+  recorded_at: Tue, 20 Oct 2026 09:33:54 GMT
+recorded_with: VCR 6.4.0

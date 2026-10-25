@@ -17,6 +17,10 @@ module RubyLLM
           "#{@provider.azure_openai_v1_base}/responses"
         end
 
+        def document_urls?
+          true
+        end
+
         def provider_file_upload_options(_attachment)
           { purpose: 'assistants' }
         end

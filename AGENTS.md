@@ -4,7 +4,7 @@ How RubyLLM is built. For coding agents first, humans welcome. Read [CONTRIBUTIN
 
 ## What this is
 
-RubyLLM is a Ruby AI framework: chat, tools, agents, structured output, embeddings, reranking, images, video, audio, OCR, moderation, and Rails integration behind one API, with nineteen providers in the box. Plain Ruby (>= 3.2), a handful of small dependencies, no heavyweight abstractions.
+RubyLLM is a Ruby AI framework: chat, tools, agents, structured output, embeddings, reranking, images, video, audio, OCR, moderation, and Rails integration behind one API, with twenty-three providers in the box. Plain Ruby (>= 3.2), a handful of small dependencies, no heavyweight abstractions.
 
 ## Framework structure
 
@@ -50,7 +50,7 @@ The pitch is the public API. Every change is judged against four things, in this
 - Never invent model ids. Every model name in code, specs, and docs must be a real, callable model. Check with `RubyLLM.models.find`.
 - Keep diffs small and focused. No drive-by refactors, no style sweeps outside the lines you touch.
 - Plain commit messages that describe the change: a subject of at most 60 characters, a body wrapped at 72 that says why. No "Generated with" footers, no Co-Authored-By tags.
-- Never push and never post to GitHub on a maintainer's behalf. Commit locally and leave the rest to the maintainer.
+- Agents may push straight to `main`, but prefer a pull request for anything beyond a small fix, so CodeRabbit and GitHub code scanning review it first. They merge their own pull requests (squash, for linear history) once CI is green and those reviews are in, with every finding fixed or answered.
 - Gem publication starts when a maintainer publishes a GitHub release. A branch or tag push does not publish the gem. Keep the release tag, gem version, and prerelease setting consistent; see CONTRIBUTING.md for the release commands.
 
 ## Setup
@@ -80,7 +80,7 @@ overcommit --install   # required: installs the git hooks that gate every commit
 
 - **Chain setters, read state.** Every `Chat#with_x` returns `self`, accepts `nil` to reset, and has a bare `x` reader (instructions are the one exception: they live in the transcript, so read `chat.messages`). Every `with_x` also has a bare `x` class macro on `Agent` and appears in the delegate lists in `Agent` and `ActiveRecord::ChatMethods`; the delegation specs fail when the three drift.
 - **Feature switches share one shape.** `with_thinking`, `with_citations`, `with_caching`, and `with_compaction` take nothing or `true` to enable, `false` to disable, and options as keywords or a Hash. They reject `nil`.
-- **One name per concept, everywhere.** `max_output_tokens` not `max_tokens`, `thinking` not `reasoning`, `cache_read` and `cache_write`, `provider_options` for the provider's own vocabulary, `provider:` as a keyword. The registry's capability names come from models.dev and stay as they are (`supports?(:reasoning)`).
+- **One name per concept, everywhere.** `instructions` not `system_prompt`, `max_output_tokens` not `max_tokens`, `thinking` not `reasoning`, `cache_read` and `cache_write`, `provider_options` for the provider's own vocabulary, `provider:` as a keyword. The registry's capability names come from models.dev and stay as they are (`supports?(:reasoning)`).
 - **One interface over every provider.** RubyLLM is the Ruby-native AI framework, and one consistent API across every provider is a big part of why it exists. When two or more providers can do the same thing, design one RubyLLM name for it and translate it in each protocol: `pages:` on `ocr`, `uri:` and `content_type:` on `upload`, `thinking` across five different reasoning APIs. `provider_options` is for the one thing only one provider does, never a shortcut past designing the shared name. Study what each provider offers, find the concept they share, and give it a Ruby name a Rails developer would guess.
 - **Capabilities are one query**, `supports?(:vision)`, never a `supports_vision?` predicate.
 - **RubyLLM's own enumerations are Symbols.** `finish_reason` is `:stop`, a usage entry's status is `:succeeded`, thinking effort is `:medium`, `Model#type` is `:chat`. Values that come from a provider or from models.dev (slugs, model ids, MIME types, reasoning option values) stay Strings, and protocols turn Symbols into Strings only at the wire.
@@ -123,7 +123,7 @@ When you find provider vocabulary in the wrong layer, move it and add the rule t
 
 - Specs tagged `:live` talk to provider APIs through VCR cassettes in `spec/fixtures/vcr_cassettes`. Everything else is a plain unit test. Every bug fix ships with a unit spec that fails before the fix.
 - Cassette names derive from the example's full description. A failing `:live` example deletes its cassette on purpose, so the next run hits the real API instead of replaying a recording that may be hiding the bug.
-- Re-record cassettes with `rake vcr:record[openai,anthropic]` or `rake vcr:record[all]` (needs real API keys in `.env`). Check cassettes for leaked keys before committing. `bin/gitleaks-staged` runs in the pre-commit hook and CI runs gitleaks again.
+- Re-record cassettes with `rake vcr:record[openai,anthropic]` or `rake vcr:record[all]` (needs real API keys: `.env` is committed and holds only `op-cache read` 1Password lookups, never values; there is no `.env.example`). An empty key counts as unset (`spec/support/blank_keys.rb`), so a failed lookup replays cassettes instead of deleting them. Check cassettes for leaked keys before committing. `bin/gitleaks-staged` runs in the pre-commit hook and CI runs gitleaks again.
 - Protocol chat modules use `module_function`. To unit-test a render or parse method, extend the module (plus `Tools` and `Media` when the method needs them) onto a bare Object, the way the existing protocol specs do.
 - `spec/support/models_to_test.rb` defines the provider and model matrix the live specs iterate over.
 - Select models with `model_for(:openai)` or a named purpose such as `model_for(:openai, :temperature)` from that file. Keep literal IDs only when the exact name is the behavior under test, such as aliases, catalog matching, or wire fixtures.

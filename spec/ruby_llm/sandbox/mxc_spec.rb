@@ -75,19 +75,25 @@ RSpec.describe RubyLLM::Sandbox::MXC do
     expect(Dir.children(rspec)).not_to be_empty
   end
 
+  # Mounting Ruby, or hiding the application's gems, makes the sandbox create
+  # empty directories down to those paths, so their first directory under home
+  # shows by name. In CI the gems sit in the project's vendor/bundle.
   it 'cannot read the project or the home directory' do
-    project = File.expand_path('../../../Gemfile', __dir__)
+    root = File.expand_path('../../..', __dir__)
+    project = File.join(root, 'Gemfile')
     home = Dir.home
-    mounted = RbConfig::CONFIG['prefix'].delete_prefix(File.join(home, '')).split('/').first
+    shown = [RbConfig::CONFIG['prefix'], *Gem.loaded_specs.values.map(&:full_gem_path)]
+            .filter_map { |path| path.delete_prefix(File.join(home, '')).split('/').first if path.start_with?(home) }
     code = <<~RUBY
       puts((File.read(#{project.inspect}) rescue 'unreadable'))
+      puts((Dir.children(#{root.inspect}).include?('Gemfile') rescue false))
       puts((Dir.children(#{home.inspect}) rescue []))
     RUBY
-    output = report(run_code(code))
+    output = report(run_code(code)).fetch('stdout').lines.map(&:chomp)
 
     expect(File.exist?(project)).to be(true)
-    expect(output['stdout'].lines.first).to eq("unreadable\n")
-    expect(output['stdout'].lines.drop(1).map(&:chomp) - [mounted]).to be_empty
+    expect(output.take(2)).to eq(%w[unreadable false])
+    expect(output.drop(2) - shown).to be_empty
   end
 
   it 'has no network' do

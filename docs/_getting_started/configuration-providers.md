@@ -76,9 +76,20 @@ RubyLLM.configure do |config|
   config.hetzner_api_key = ENV['HETZNER_API_KEY'] # Token from the Hetzner Console
   config.hetzner_api_base = ENV['HETZNER_API_BASE'] # Optional, defaults to https://inference.hetzner.com/api/v1
 
+  # Meta
+  config.meta_api_key = ENV['META_API_KEY'] # Key from dev.meta.ai
+  config.meta_api_base = ENV['META_API_BASE'] # Optional, defaults to https://api.meta.ai/v1
+  # MiniMax
+  config.minimax_api_key = ENV['MINIMAX_API_KEY']
+  config.minimax_api_base = ENV['MINIMAX_API_BASE'] # Optional, defaults to https://api.minimax.io/anthropic
+
   # Mistral
   config.mistral_api_key = ENV['MISTRAL_API_KEY']
   config.mistral_api_base = ENV['MISTRAL_API_BASE'] # optional custom Mistral endpoint
+
+  # Moonshot AI
+  config.moonshot_api_key = ENV['MOONSHOT_API_KEY']
+  config.moonshot_api_base = ENV['MOONSHOT_API_BASE'] # Optional, defaults to https://api.moonshot.ai/v1
 
   # Ollama
   config.ollama_api_base = 'http://localhost:11434/v1'
@@ -118,6 +129,10 @@ RubyLLM.configure do |config|
   # xAI
   config.xai_api_key = ENV['XAI_API_KEY']
   config.xai_api_base = ENV['XAI_API_BASE'] # optional custom xAI endpoint
+
+  # Z.ai
+  config.zai_api_key = ENV['ZAI_API_KEY']
+  config.zai_api_base = ENV['ZAI_API_BASE'] # Optional, defaults to https://api.z.ai/api/paas/v4
 end
 ```
 
@@ -193,6 +208,95 @@ RubyLLM.models.by_provider(:hetzner).map(&:id)
 ```
 
 Hetzner models accept text and images. Other attachments raise `RubyLLM::UnsupportedAttachmentError` before the request is sent.
+
+## Meta
+
+Meta's Model API serves the Muse models. Create an API key at dev.meta.ai and set `meta_api_key`:
+
+```ruby
+RubyLLM.configure do |config|
+  config.meta_api_key = ENV['META_API_KEY']
+end
+
+RubyLLM.chat(model: 'muse-spark-1.3').ask('Hello from Muse')
+```
+
+RubyLLM talks to Meta through its Responses API, which carries the model's encrypted reasoning from one turn to the next, so tool loops keep their chain of thought. Meta runs web search as a provider tool, `with_provider_tools(:web_search)`, and caches prompts by itself. `with_caching` takes `key:` and a `ttl:` of `"in_memory"` or `"24h"`.
+
+Meta won't fetch many remote images, so RubyLLM downloads them and sends them inline.
+
+Model ids ending in `-contributor`, like `muse-spark-1.3-contributor`, run the same model in Meta's Contributor mode: much cheaper tokens, in exchange for letting Meta train future models on everything you send and get back. Use them for synthetic test and evaluation prompts, never for your users' data or anything you can't share. See Meta's [pricing and rate limits](https://dev.meta.ai/docs/pricing-rate-limits) for the terms and the lower request limits.
+
+## MiniMax
+
+MiniMax serves its M3 models through an Anthropic-compatible API. Create a key on the MiniMax platform and set `minimax_api_key`:
+
+```ruby
+RubyLLM.configure do |config|
+  config.minimax_api_key = ENV['MINIMAX_API_KEY']
+end
+
+RubyLLM.chat(model: 'MiniMax-M3.1-Flash').ask('Hello from MiniMax')
+```
+
+Keys from MiniMax's China platform only work on its own endpoint. Point `minimax_api_base` at it:
+
+```ruby
+RubyLLM.configure do |config|
+  config.minimax_api_key = ENV['MINIMAX_API_KEY']
+  config.minimax_api_base = 'https://api.minimax.cn/anthropic'
+end
+```
+
+MiniMax decides on its own when to call your tools: it accepts no `with_tool_options(choice:)` other than `:auto`. Of the [provider tools]({% link _core_features/provider-tools.md %}), it runs only `with_provider_tools(:web_search)`, a beta on MiniMax's side; the others raise `RubyLLM::UnsupportedServerToolError`.
+
+## Moonshot AI
+
+Moonshot AI serves the Kimi models. Create an API key on the Kimi platform and set `moonshot_api_key`:
+
+```ruby
+RubyLLM.configure do |config|
+  config.moonshot_api_key = ENV['MOONSHOT_API_KEY']
+end
+
+RubyLLM.chat(model: 'kimi-k3').ask('Hello from Kimi')
+```
+
+Keys from Moonshot's China platform only work on its own endpoint. Point `moonshot_api_base` at it:
+
+```ruby
+RubyLLM.configure do |config|
+  config.moonshot_api_key = ENV['MOONSHOT_API_KEY']
+  config.moonshot_api_base = 'https://api.moonshot.cn/v1'
+end
+```
+
+Kimi models read images only from the request itself, so RubyLLM sends remote images inline. Documents and audio raise `RubyLLM::UnsupportedAttachmentError` before the request is sent. Kimi models fix their own temperature and reject any other, so leave `with_temperature` unset. Kimi K2.6 ignores a schema while it thinks, so turn thinking off with `with_thinking(false)` to get structured output from it; Kimi K3 follows a schema either way.
+
+## Z.ai
+
+Z.ai serves Zhipu's GLM models. Create an API key on the Z.ai platform and set `zai_api_key`:
+
+```ruby
+RubyLLM.configure do |config|
+  config.zai_api_key = ENV['ZAI_API_KEY']
+end
+
+RubyLLM.chat(model: 'glm-5.3').ask('Hello from Z.ai')
+```
+
+BigModel, Zhipu's platform in China, serves the same API with its own keys. Point `zai_api_base` at it:
+
+```ruby
+RubyLLM.configure do |config|
+  config.zai_api_key = ENV['BIGMODEL_API_KEY']
+  config.zai_api_base = 'https://open.bigmodel.cn/api/paas/v4'
+end
+```
+
+GLM-5.3 Flash and FlashX and the vision models, whose names carry a `v`, accept images alongside text; the other GLM models take text only. Other attachments raise `RubyLLM::UnsupportedAttachmentError` before the request is sent. Z.ai caches repeated prompts by itself, so `with_caching` sends nothing, and it accepts no `with_tool_options(choice:)` other than `:auto`.
+
+GLM-5.3 Flash always thinks, so `with_thinking(false)` raises, and it takes only the efforts `:low`, `:high`, and `:max`: Z.ai rejects any other.
 
 ## Bedrock Credential Providers
 

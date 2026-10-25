@@ -77,8 +77,8 @@ RSpec.describe RubyLLM::Chat, :live do
             # Create a huge conversation (matching <MASSIVE_TEXT> in spec_helper)
             massive_text = 'a' * 1_000_000
 
-            # Create a few copies in the conversation
-            turns = provider == :openrouter ? 3 : 5
+            # Create enough copies to overflow the model's context window
+            turns = { openrouter: 3, minimax: 10, meta: 10 }.fetch(provider, 5)
             turns.times do
               chat.add_message(role: :user, content: massive_text)
               chat.add_message(role: :assistant, content: massive_text)
