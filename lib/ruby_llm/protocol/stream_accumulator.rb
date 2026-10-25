@@ -129,6 +129,8 @@ module RubyLLM
             id: tc.id,
             provider_call_id: tc.provider_call_id,
             name: tc.name,
+            namespace: tc.namespace,
+            sequential: tc.sequential?,
             arguments: arguments,
             thought_signature: tc.thought_signature,
             remote: tc.remote?
@@ -180,6 +182,8 @@ module RubyLLM
           id: tool_call.id,
           provider_call_id:,
           name: tool_call.name,
+          namespace: tool_call.namespace,
+          sequential: tool_call.sequential?,
           arguments: initial_tool_call_arguments(tool_call),
           thought_signature: tool_call.thought_signature,
           remote: tool_call.remote?

@@ -67,6 +67,28 @@ RSpec.describe RubyLLM::Message do
     end
   end
 
+  describe '#tool_error_message' do
+    it 'returns the error of a failed tool result' do
+      message = described_class.new(role: :tool, content: '{"error":"Display locked"}', tool_call_id: 'call_1')
+
+      expect(message.tool_error_message).to eq('Display locked')
+    end
+
+    it 'returns nil for successful, plain-text, and non-object tool results' do
+      results = ['{"status":"ok"}', 'Screen captured', '["error"]'].map do |content|
+        described_class.new(role: :tool, content:, tool_call_id: 'call_1').tool_error_message
+      end
+
+      expect(results).to eq([nil, nil, nil])
+    end
+
+    it 'returns nil for a message that is not a tool result' do
+      message = described_class.new(role: :assistant, content: '{"error":"quoted by the model"}')
+
+      expect(message.tool_error_message).to be_nil
+    end
+  end
+
   describe '.new from #to_h attributes' do
     it 'restores earlier provider ID keys while serializing the current names' do
       message = described_class.new(

@@ -1092,7 +1092,7 @@ module RubyLLM
           consume_persisted_cancellation_request
         end
         chat.approval_checker = proc { |tool_call| persisted_tool_call_approval(tool_call) }
-        chat.remembered_checker = proc { |name| persisted_remembered_tool?(name) }
+        chat.remembered_checker = proc { |call| persisted_remembered_tool?(call) }
         chat.input_checker = proc { |tool_call| persisted_tool_call_input(tool_call) }
         chat.input_recorder = proc { |tool_call, input| persist_tool_call_input(tool_call, input) }
         chat.message_queue = ChatQueue.new(self)

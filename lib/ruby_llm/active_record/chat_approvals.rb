@@ -13,9 +13,13 @@ module RubyLLM
       private
 
       def persisted_pending_approvals
-        chat_tool_calls.where(approval: 'pending', result_id: nil)
-                       .where.not(name: chat_tool_calls.where(approval: 'remembered').select(:name))
-                       .order(:created_at, :id)
+        pending = chat_tool_calls.where(approval: 'pending', result_id: nil)
+        remembered = RubyLLM::ActiveRecord::ToolCall.uncached do
+          chat_tool_calls.where(approval: 'remembered').distinct.pluck(:namespace, :name)
+        end
+        remembered.reduce(pending) do |calls, (namespace, name)|
+          calls.where.not(id: pending.where(namespace:, name:).select(:id))
+        end.order(:created_at, :id)
       end
 
       def chat_tool_calls
@@ -50,10 +54,12 @@ module RubyLLM
         end
       end
 
-      def persisted_remembered_tool?(name)
+      def persisted_remembered_tool?(call)
         return false unless persisted? && row_supports_approval?
 
-        RubyLLM::ActiveRecord::ToolCall.uncached { chat_tool_calls.where(name:, approval: 'remembered').exists? }
+        RubyLLM::ActiveRecord::ToolCall.uncached do
+          chat_tool_calls.where(name: call.name, namespace: call.namespace, approval: 'remembered').exists?
+        end
       end
     end
   end

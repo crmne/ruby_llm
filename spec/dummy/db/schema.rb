@@ -153,6 +153,8 @@ ActiveRecord::Schema[7.1].define(version: 20_261_018_120_000) do
     t.string 'tool_call_id', null: false
     t.string 'provider_call_id'
     t.string 'name', null: false
+    t.string 'namespace'
+    t.boolean 'sequential', default: false, null: false
     t.text 'thought_signature'
     t.string 'approval'
     t.boolean 'remote', default: false, null: false

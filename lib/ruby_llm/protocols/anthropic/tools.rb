@@ -29,12 +29,22 @@ module RubyLLM
           }
         end
 
-        def render_tool_result_block(msg, citations: false)
-          {
+        def render_tool_result_block(msg, citations: false, tool_call: nil)
+          block = {
             type: 'tool_result',
             tool_use_id: msg.provider_call_id,
             content: render_tool_result_content(msg, citations:)
           }
+          return block unless tool_call&.namespace
+
+          block[:toolset_name] = tool_call.namespace
+          if (error = msg.tool_error_message)
+            block[:is_error] = true
+            error = 'Not executed: an earlier computer action in this turn failed.' if msg.tool_result_skipped? &&
+                                                                                       tool_call.namespace == 'computer'
+            block[:content] = [{ type: 'text', text: error.to_s }]
+          end
+          block
         end
 
         def render_tool_result_content(msg, citations: false)
@@ -56,6 +66,21 @@ module RubyLLM
             content: [{ type: 'text', text: result[:text] }],
             citations: { enabled: true }
           }
+        end
+
+        # Anthropic declares the members of its client toolsets itself and has
+        # no namespaces for application-defined functions.
+        CLIENT_TOOLSETS = %w[computer browser].freeze
+
+        def render_tools(tools)
+          members, functions = tools.values.partition(&:namespace)
+          unknown = members.map(&:namespace).uniq - CLIENT_TOOLSETS
+          if unknown.any?
+            raise RubyLLM::Error, "The Anthropic protocol cannot express the #{unknown.join(', ')} tool namespace; " \
+                                  "only its #{CLIENT_TOOLSETS.join(' and ')} client toolsets take namespaced tools"
+          end
+
+          functions.map { |tool| function_for(tool) }
         end
 
         def function_for(tool)
@@ -137,6 +162,8 @@ module RubyLLM
             ToolCall.new(
               provider_call_id: block['id'],
               name: block['name'],
+              namespace: block['toolset_name'],
+              sequential: !block['toolset_name'].nil?,
               arguments: block['input']
             )
           end
