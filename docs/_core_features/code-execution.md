@@ -98,7 +98,7 @@ chat.ask "Count to five, one number a second"
 # ...
 ```
 
-Output streams only when something listens for progress, and the model still receives all of it when the run ends. A [sandbox of your own]({% link _core_features/sandboxes.md %}#writing-your-own-sandbox) reports progress when its `run` yields the output as it arrives.
+Output streams only when something listens for progress, and the model still receives it when the run ends, within the usual [limits](#limits). A [sandbox of your own]({% link _core_features/sandboxes.md %}#writing-your-own-sandbox) reports progress when its `run` yields the output as it arrives.
 
 ## What the Code Can See
 

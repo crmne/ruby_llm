@@ -49,6 +49,9 @@ module RubyLLM
     # Seconds between progress reports of a run's latest output line.
     PROGRESS_INTERVAL = 0.25
 
+    # Bytes of an unfinished output line kept for progress, per stream.
+    MAX_PROGRESS_LINE = 1024
+
     ESCALATION_NAME = /\A[a-z][a-z0-9_]*\z/
     LIMIT_ERRORS = {
       cpu_time: 'The code used up its CPU time and was stopped',
@@ -516,18 +519,32 @@ module RubyLLM
     def output_progress
       return unless Support::ProgressReporter.listener
 
-      pending = +''
+      pending = Hash.new { |buffers, stream| buffers[stream] = String.new(encoding: Encoding::BINARY) }
       reported_at = nil
       lambda do |chunk|
-        pending << chunk.content.to_s
-        *lines, pending = pending.split("\n", -1)
-        line = lines.reverse.find { |candidate| !candidate.strip.empty? }
+        line = latest_line(pending[chunk.respond_to?(:stream) ? chunk.stream : :stdout], chunk.content.to_s)
         now = ::Process.clock_gettime(::Process::CLOCK_MONOTONIC)
         next if line.nil? || (reported_at && now - reported_at < PROGRESS_INTERVAL)
 
         reported_at = now
-        progress(line.strip)
+        progress(line)
       end
+    end
+
+    # Adds output to a stream's unfinished line and answers the latest
+    # nonblank line it completes. It works on bytes, because a chunk can
+    # end inside a character, and keeps at most MAX_PROGRESS_LINE of the
+    # unfinished line.
+    def latest_line(pending, content)
+      return if content.empty?
+
+      *lines, rest = (pending << content.b).split("\n", -1)
+      pending.replace(rest.byteslice(-MAX_PROGRESS_LINE, MAX_PROGRESS_LINE) || rest)
+      lines.reverse_each do |line|
+        text = line.force_encoding(Encoding.default_external).scrub.strip
+        return text unless text.empty?
+      end
+      nil
     end
 
     def setting(runner, name)

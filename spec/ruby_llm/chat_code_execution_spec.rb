@@ -156,6 +156,32 @@ RSpec.describe RubyLLM::Chat do
       expect(progress_of(sandbox)).to eq(%w[one])
     end
 
+    it 'joins a character split across chunks' do
+      sandbox = FakeSandbox.new(output: ["caf\xC3".b, "\xA9\n".b])
+
+      expect(progress_of(sandbox)).to eq(['café'])
+    end
+
+    it 'reports output that is not valid text without failing the run' do
+      sandbox = FakeSandbox.new(output: ["\xFFok\n".b])
+
+      expect(progress_of(sandbox)).to eq(["\uFFFDok"])
+    end
+
+    it 'keeps standard output and standard error lines apart' do
+      stub_const('RubyLLM::CodeExecution::PROGRESS_INTERVAL', 0)
+      sandbox = FakeSandbox.new(output: ['Converting pa', { stderr: "warning\n" }, "ge 2\n"])
+
+      expect(progress_of(sandbox)).to eq(['warning', 'Converting page 2'])
+    end
+
+    it 'keeps only the end of a long unfinished line' do
+      stub_const('RubyLLM::CodeExecution::MAX_PROGRESS_LINE', 4)
+      sandbox = FakeSandbox.new(output: %W[abcdefgh ij\n])
+
+      expect(progress_of(sandbox)).to eq(['efghij'])
+    end
+
     it 'does not stream the output when nothing listens for progress' do
       sandbox = FakeSandbox.new(output: ["Downloading\n"])
       chat = RubyLLM.context { |config| config.sandbox = sandbox }.chat(model: model_for(:openai), provider: :openai)
