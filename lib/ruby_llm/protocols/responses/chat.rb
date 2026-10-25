@@ -73,6 +73,7 @@ module RubyLLM
             server_tool_calls: server_tool_calls,
             raw_content: keep_raw_output?(output, server_tool_calls) ? output : nil,
             phase: parse_phase(output),
+            answer: parse_answer_text(output),
             model: data['model'],
             raw: raw,
             finish_reason: finish_reason,
@@ -124,6 +125,15 @@ module RubyLLM
 
         def parse_phase(output)
           message_phases(output).compact.last
+        end
+
+        ANSWER_PHASES = [nil, 'final_answer'].freeze
+
+        # Structured output lives in final_answer items, or in every item
+        # when none carries a phase. Commentary and phases OpenAI adds later
+        # are not the answer, as in OpenAI's SDKs.
+        def parse_answer_text(output)
+          parse_output_text(output.select { |item| ANSWER_PHASES.include?(item['phase']) }) || ''
         end
 
         def message_phases(output)

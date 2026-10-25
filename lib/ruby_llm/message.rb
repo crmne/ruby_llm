@@ -93,6 +93,11 @@ module RubyLLM
     # send it back. +nil+ when the provider gave none.
     attr_reader :phase # :nodoc:
 
+    # The part of #content that holds the answer, for providers that mark
+    # other parts of the turn as intermediate. #parsed reads it instead of
+    # #content. +nil+ when the provider makes no such distinction.
+    attr_reader :answer # :nodoc:
+
     # The Chat this message belongs to, set when it is added to a
     # conversation. Backs #tool_results.
     attr_accessor :conversation # :nodoc:
@@ -124,6 +129,7 @@ module RubyLLM
       @raw_content = options[:raw_content]
       @raw_reasoning = options[:raw_reasoning]
       @phase = options[:phase]
+      @answer = options[:answer]
       @mcp_result = coerce_mcp_result(options[:mcp_result])
       @finish_reason = options[:finish_reason]&.to_sym
       @content_filters = coerce_list(options[:content_filters], ContentFilter)
@@ -135,15 +141,18 @@ module RubyLLM
     end
 
     # Returns #content parsed as JSON, memoized after the first call.
-    # Useful for reading structured output responses.
+    # Useful for reading structured output responses. When the provider
+    # marks part of the turn as commentary before the final answer, only
+    # the final answer is parsed.
     #
     #   response = chat.with_schema(PersonSchema).ask "Generate a person"
     #   response.parsed # => {"name" => "Alice", "age" => 30}
     #
     def parsed
-      return if content.nil? || content.empty?
+      text = answer || content
+      return if text.nil? || text.empty?
 
-      @parsed ||= JSON.parse(content)
+      @parsed ||= JSON.parse(text)
     end
 
     def with_attachments(attachments) # :nodoc:

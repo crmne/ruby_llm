@@ -600,6 +600,36 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
         expect(message.raw_content).to eq(phased)
         expect(message.phase).to eq('final_answer')
       end
+
+      it 'parses structured output from the final answer only, keeping the commentary in content' do
+        output.last['content'].first['text'] = '{"total":12.1}'
+        commentary = output.last.merge('id' => 'msg_0', 'phase' => 'commentary',
+                                       'content' => [{ 'type' => 'output_text', 'text' => 'Reading the total.' }])
+
+        message = protocol.send(:parse_completion_response, response_with(output.insert(1, commentary)))
+
+        expect(message.content).to eq('Reading the total.{"total":12.1}')
+        expect(message.parsed).to eq('total' => 12.1)
+      end
+
+      it 'parses nothing when no message is a final answer' do
+        output.last['phase'] = 'commentary'
+
+        message = protocol.send(:parse_completion_response, response_with(output))
+
+        expect(message.content).to eq('Done.')
+        expect(message.parsed).to be_nil
+      end
+
+      it 'parses every message when none carries a phase' do
+        output.last['phase'] = nil
+        output.last['content'].first['text'] = '{"total":'
+        output << output.last.merge('id' => 'msg_2', 'content' => [{ 'type' => 'output_text', 'text' => '12.1}' }])
+
+        message = protocol.send(:parse_completion_response, response_with(output))
+
+        expect(message.parsed).to eq('total' => 12.1)
+      end
     end
 
     it 'preserves incomplete_details reason as finish_reason when present' do
