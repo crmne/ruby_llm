@@ -28,6 +28,14 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
       expect(chat.instance_variable_get(:@context)).to eq(context)
     end
+
+    it 'stores the configured provider that carries the model' do
+      context = RubyLLM.context { |config| config.openrouter_api_key = 'test' }
+
+      chat = Chat.create!(model: 'openai/gpt-5-nano', context: context)
+
+      expect(chat.model.provider).to eq('openrouter')
+    end
   end
 
   describe 'with global configuration present' do

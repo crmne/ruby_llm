@@ -594,6 +594,21 @@ RSpec.describe RubyLLM::Models do
       expect(provider_instance).to be_a(RubyLLM::Provider)
     end
 
+    it 'resolves to a configured provider when a preferred one is not configured' do
+      config = RubyLLM::Configuration.new
+      config.openrouter_api_key = 'test'
+
+      model_info, provider_instance = described_class.resolve('openai/gpt-5-nano', config:)
+
+      expect(model_info.provider).to eq('openrouter')
+      expect(provider_instance).to be_a(RubyLLM::Providers::OpenRouter)
+    end
+
+    it 'names the preferred provider when no configured provider carries the model' do
+      expect { described_class.resolve('openai/gpt-5-nano', config: RubyLLM::Configuration.new) }
+        .to raise_error(RubyLLM::ConfigurationError, /Perplexity provider is not configured/)
+    end
+
     it 'resolves with assume_model_exists option' do
       model_id = 'custom-model'
       provider = 'openai'

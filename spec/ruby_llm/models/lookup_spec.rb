@@ -167,4 +167,42 @@ RSpec.describe RubyLLM::Models::Lookup do
       expect { registry.find(retired.id) }.to raise_error(RubyLLM::ModelNotFoundError)
     end
   end
+
+  describe '#find_configured' do
+    let(:config) { RubyLLM::Configuration.new.tap { |config| config.openrouter_api_key = 'test' } }
+
+    def aggregated = @aggregated ||= RubyLLM::Model.new(id: 'openai/gpt-5-nano', provider: 'openrouter')
+    def first_party = @first_party ||= RubyLLM::Model.new(id: aggregated.id, provider: 'perplexity')
+    def models = RubyLLM::Models.new([aggregated, first_party])
+
+    it 'prefers a configured provider over a more preferred unconfigured one' do
+      expect(models.find_configured(aggregated.id, config:)).to equal(aggregated)
+      expect(models.find(aggregated.id, config:)).to equal(first_party)
+    end
+
+    it 'keeps provider preference among configured providers' do
+      config.perplexity_api_key = 'test'
+
+      expect(models.find_configured(aggregated.id, config:)).to equal(first_party)
+    end
+
+    it 'falls back to the preferred provider when no configured provider carries the model' do
+      expect(models.find_configured(aggregated.id, config: RubyLLM::Configuration.new)).to equal(first_party)
+    end
+
+    it 'counts a local provider as configured once its endpoint is set' do
+      local = RubyLLM::Model.new(id: 'gpt-oss:20b', provider: 'ollama')
+      hosted = RubyLLM::Model.new(id: local.id, provider: 'ollama_cloud')
+      registry = RubyLLM::Models.new([local, hosted])
+
+      expect(registry.find_configured(local.id, config:)).to equal(hosted)
+
+      config.ollama_api_base = 'http://localhost:11434/v1'
+      expect(registry.find_configured(local.id, config:)).to equal(local)
+    end
+
+    it 'scopes to the named provider' do
+      expect(models.find_configured(aggregated.id, provider: :perplexity, config:)).to equal(first_party)
+    end
+  end
 end

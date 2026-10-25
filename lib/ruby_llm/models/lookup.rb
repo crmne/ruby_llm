@@ -47,13 +47,13 @@ module RubyLLM
       # A name can be one provider's exact id and another's alias:
       # claude-opus-4 is exact on vertexai, an alias on anthropic.
       # Provider preference settles it, not the kind of match.
-      def find_without_provider(model_id)
+      def find_without_provider(model_id, config = nil)
         resolved_id = Aliases.resolve(model_id)
-        index = models_by_id
-        matches = Array(index[model_id])
+        matches = Array(models_by_id[model_id])
         matches += aliased_matches(model_id, resolved_id) unless resolved_id == model_id
+        configured = config ? matches.select { |model| Provider.resolve(model.provider)&.configured?(config) } : []
 
-        preferred_match(matches) || raise_model_not_found(model_id)
+        preferred_match(configured) || preferred_match(matches) || raise_model_not_found(model_id)
       end
 
       def aliased_matches(model_id, resolved_id)

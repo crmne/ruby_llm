@@ -50,6 +50,7 @@ module RubyLLM
       all
       each
       find
+      find_configured
       listed
       unlisted
       chat_models
@@ -218,7 +219,7 @@ module RubyLLM
 
           model ||= Model.default(model_id, provider_class.slug)
         else
-          model = Models.find model_id, provider: provider, config: config
+          model = Models.find_configured model_id, provider: provider, config: config
           provider_class = Provider.resolve!(model.provider)
         end
         [model, provider_class.new(config)]
@@ -620,6 +621,15 @@ module RubyLLM
       else
         find_without_provider(model_id)
       end
+    end
+
+    # Returns the Model that resolution uses for +model_id+. Without
+    # +provider+, it prefers providers configured in +config+, falling back
+    # to #find's choice when none of them carries the model.
+    def find_configured(model_id, provider: nil, config: nil) # :nodoc:
+      return find_with_provider(model_id, provider, config) if provider
+
+      find_without_provider(model_id, config || RubyLLM.config)
     end
 
     # Returns a new Models registry containing only chat models.
