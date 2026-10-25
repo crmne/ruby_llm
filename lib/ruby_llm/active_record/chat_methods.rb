@@ -40,6 +40,13 @@ module RubyLLM
         before_save :resolve_model
       end
 
+      # Returns the record's attributes as a Hash, accepting the same options
+      # as any Active Record model, rather than the message list Enumerable
+      # would serialize.
+      def as_json(options = nil)
+        ActiveModel::Serializers::JSON.instance_method(:as_json).bind_call(self, options)
+      end
+
       # When +true+, skips the model registry lookup so unregistered model ids
       # are accepted. Not persisted; set it again after reloading the record.
       attr_accessor :assume_model_exists
