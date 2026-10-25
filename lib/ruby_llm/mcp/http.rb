@@ -277,8 +277,7 @@ module RubyLLM
       end
 
       def forbidden(response)
-        headers = response[:headers] || {}
-        challenge = OAuth.challenge(headers['www-authenticate'] || headers['WWW-Authenticate'])
+        challenge = OAuth.challenge(response[:headers]&.[]('WWW-Authenticate'))
                          .each_value.find { |parameters| parameters[:error] } || {}
         details = { response: response_for(response), provider: @url.host, error_code: challenge[:error],
                     provider_message: challenge[:error_description] || challenge[:error] }
