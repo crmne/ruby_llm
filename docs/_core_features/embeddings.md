@@ -43,6 +43,8 @@ embeddings.vectors.length # => 3
 texts.zip(embeddings.vectors)
 ```
 
+You always get one vector per text, in the order you passed them. If the provider returns a different number of embeddings, for example a gateway in front of a model that takes one input per request, `embed` raises `RubyLLM::Error` instead of returning a partial result.
+
 ## Choosing Models
 
 Pass `model:` to choose an embedding model:
