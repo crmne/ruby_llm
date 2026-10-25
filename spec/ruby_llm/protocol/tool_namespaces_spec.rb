@@ -25,4 +25,18 @@ RSpec.describe RubyLLM::Protocol::ToolNamespaces do
       .to eq('Not executed: an earlier action in this turn failed.')
     expect(protocol.skipped_tool_call_error(call(nil))).to be_nil
   end
+
+  it 'leaves a forced namespaced choice to a protocol that can name one' do
+    protocol_class = Class.new(RubyLLM::Protocol) do
+      def tool_namespaces? = true
+      def render_payload(_messages, tool_prefs:, **) = { tool_choice: tool_prefs[:choice] }
+    end
+    tool = Class.new(RubyLLM::Tool) { namespace 'crm' }.new
+    protocol = protocol_class.new(RubyLLM::Providers::OpenAI.new(RubyLLM.config))
+
+    payload = protocol.render([], tools: { 'crm.lookup': tool }, temperature: nil,
+                                  tool_prefs: { choice: :'crm.lookup' })
+
+    expect(payload[:tool_choice]).to eq(:'crm.lookup')
+  end
 end

@@ -138,6 +138,7 @@ module RubyLLM
           if tools.any?
             payload[:tools] = Tools.render_tools(tools)
             unless tool_prefs[:choice].nil? && tool_prefs[:calls].nil?
+              Protocol::ToolNamespaces.validate_tool_choice(tools, tool_prefs[:choice])
               payload[:tool_choice] = Tools.build_tool_choice(tool_prefs)
             end
           end

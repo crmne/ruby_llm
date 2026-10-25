@@ -136,7 +136,7 @@ module RubyLLM
     def render(messages, tools:, temperature:, provider_options: {}, schema: nil, thinking: nil,
                max_output_tokens: nil, citations: false, caching: nil, tool_prefs: nil, before_request: [],
                stream: false, provider_tools: [], compaction: nil, end_user: nil)
-      validate_tool_namespaces(messages, tools, tool_prefs)
+      validate_tool_namespaces(messages, tools)
       payload = render_payload(
         messages,
         tools: tools,
