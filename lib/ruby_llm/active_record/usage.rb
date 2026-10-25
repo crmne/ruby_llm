@@ -6,6 +6,8 @@ module RubyLLM
     class Usage < Record # :nodoc:
       self.table_name = 'ruby_llm_usages'
 
+      WORKFLOW_COLUMNS = %i[workflow_id workflow_name workflow_step_id workflow_step_name].freeze
+
       belongs_to :chat, polymorphic: true, optional: true
       belongs_to :message, polymorphic: true, optional: true
       belongs_to :owner, polymorphic: true, optional: true
@@ -61,7 +63,12 @@ module RubyLLM
         }
         attributes[:server_tool_use] = tokens.server_tool_use if column_names.include?('server_tool_use')
         attributes[:owner] = entry.owner if entry.owner.is_a?(::ActiveRecord::Base) && column_names.include?('owner_id')
+        attributes.merge!(workflow_attributes(entry.workflow)) if column_names.include?('workflow_id')
         attributes
+      end
+
+      def self.workflow_attributes(workflow)
+        workflow.to_h.slice(*WORKFLOW_COLUMNS)
       end
 
       def tokens

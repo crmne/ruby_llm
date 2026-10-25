@@ -211,6 +211,56 @@ RSpec.describe RubyLLM::ActiveRecord::Usage do
       .to eq([['chat', nil], ['embedding', nil]])
   end
 
+  it 'records the workflow and step of chat and one-shot rows so a workflow can be summed' do
+    stub_chat_reply
+    stub_embedding
+    chat = Chat.create!(model: model_for(:anthropic))
+
+    RubyLLM.workflow('Support reply', id: "chat-#{chat.id}") do |workflow|
+      workflow.step('Retrieve', id: 'step-1') { embed }
+      workflow.step('Answer', id: 'step-2') { chat.ask('Hello') }
+    end
+    embed
+
+    rows = described_class.where(workflow_id: "chat-#{chat.id}").order(:id)
+    expect(rows.map { |row| [row.operation, row.chat_id, row.workflow_name, row.workflow_step_id] })
+      .to eq([['embedding', nil, 'Support reply', 'step-1'], ['chat', chat.id, 'Support reply', 'step-2']])
+    expect(rows.group(:workflow_step_name).sum(:input_tokens)).to eq('Retrieve' => 3, 'Answer' => 9)
+    expect(described_class.order(:id).last).to have_attributes(workflow_id: nil, workflow_name: nil,
+                                                               workflow_step_name: nil)
+  end
+
+  it 'records the workflow a video or research job was submitted in when it finishes outside it' do
+    provider = instance_double(RubyLLM::Providers::Gemini, slug: 'gemini')
+    video_protocol = instance_double(RubyLLM::Protocols::Gemini, config: RubyLLM.config, provider:)
+    research_protocol = instance_double(RubyLLM::Protocols::VertexAI::Research, config: RubyLLM.config)
+    allow(video_protocol).to receive(:refresh_video_job).and_return({ status: :completed })
+    allow(research_protocol).to receive(:refresh_research_job).and_return(status: :completed)
+    jobs = RubyLLM.workflow('Launch', id: 'launch-1') do |workflow|
+      workflow.step('Render') do
+        [RubyLLM::VideoJob.new(id: 'operations/op-1', protocol: video_protocol, model: 'veo-3.1-fast-generate-preview'),
+         RubyLLM::ResearchJob.new(id: 'job-1', provider: :vertexai, agent: 'agent-id', protocol: research_protocol,
+                                  status: :pending)]
+      end
+    end
+
+    jobs.each(&:refresh)
+
+    rows = described_class.where(workflow_id: 'launch-1').order(:id)
+    expect(rows.map { |row| [row.operation, row.workflow_step_name] })
+      .to eq([%w[video Render], %w[research Render]])
+  end
+
+  it 'writes rows without a workflow to a ledger that has no workflow columns yet' do
+    stub_embedding
+    allow(described_class).to receive(:column_names)
+      .and_return(described_class.column_names - described_class::WORKFLOW_COLUMNS.map(&:to_s))
+
+    RubyLLM.workflow('Search', id: 'search-1') { embed(owner:) }
+
+    expect(rows_for(owner).sole).to have_attributes(operation: 'embedding', workflow_id: nil)
+  end
+
   it 'logs a failed chat row write and returns the reply' do
     stub_chat_reply
     chat = Chat.create!(model: model_for(:anthropic))

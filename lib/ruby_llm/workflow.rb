@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  # Adds workflow and step context to RubyLLM instrumentation while leaving
-  # orchestration in ordinary Ruby code.
+  # Adds workflow and step context to RubyLLM instrumentation and usage
+  # records while leaving orchestration in ordinary Ruby code.
   #
   # Create workflows through RubyLLM.workflow rather than constructing this
   # class directly:

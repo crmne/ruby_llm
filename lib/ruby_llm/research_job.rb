@@ -128,6 +128,7 @@ module RubyLLM
       @agent = agent
       @protocol = protocol
       @usage_owner = Accounting::Usage.owner
+      @usage_workflow = Accounting::Usage.workflow
       apply_state(state)
     end
 
@@ -236,7 +237,8 @@ module RubyLLM
     def record_usage
       status = { completed: :succeeded, incomplete: :succeeded, cancelled: :cancelled }.fetch(@status, :failed)
       entry = Accounting::Usage::Entry.new(operation: :research, provider:, model: agent, status:, tokens:, cost:,
-                                           owner: @usage_owner)
+                                           owner: @usage_owner,
+                                           workflow: @usage_workflow)
       Accounting::Usage.report(entry, config: @protocol.config)
     end
 

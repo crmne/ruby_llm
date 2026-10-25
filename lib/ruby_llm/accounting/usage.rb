@@ -31,6 +31,10 @@ module RubyLLM
           owner.nil? ? yield : with_owner(owner, &)
         end
 
+        def workflow
+          Support::Instrumentation.current_workflow
+        end
+
         def record(entry)
           ledger&.record(entry)
         end
@@ -40,20 +44,24 @@ module RubyLLM
           instrument(entry, config:)
         end
 
+        # An attempt reports the workflow it started in, even when it
+        # finishes outside that block, such as a polled video job.
         def instrument(entry, config:)
-          RubyLLM.instrument(
-            'usage.ruby_llm',
-            {
-              operation: entry.operation,
-              provider: entry.provider,
-              model: entry.model,
-              status: entry.status,
-              tokens: entry.tokens,
-              cost: entry.cost,
-              owner: entry.owner
-            },
-            config:
-          )
+          Support::Instrumentation.with_workflow(entry.workflow || workflow) do
+            RubyLLM.instrument(
+              'usage.ruby_llm',
+              {
+                operation: entry.operation,
+                provider: entry.provider,
+                model: entry.model,
+                status: entry.status,
+                tokens: entry.tokens,
+                cost: entry.cost,
+                owner: entry.owner
+              },
+              config:
+            )
+          end
         end
       end
 
@@ -87,7 +95,7 @@ module RubyLLM
         OPERATIONS = %i[chat embedding moderation image speech transcription ocr rerank judgment video research].freeze
         STATUSES = %i[pending succeeded failed cancelled].freeze
 
-        attr_reader :operation, :provider, :model, :status, :tokens, :owner
+        attr_reader :operation, :provider, :model, :status, :tokens, :owner, :workflow
         attr_accessor :message
 
         include Support::Inspectable
@@ -97,7 +105,7 @@ module RubyLLM
         end
 
         def initialize(operation:, provider:, model:, status: :pending, tokens: nil, cost: nil, message: nil,
-                       owner: nil)
+                       owner: nil, workflow: nil)
           @operation = operation.to_sym
           @provider = provider.to_s
           @model = model&.to_s
@@ -106,6 +114,7 @@ module RubyLLM
           @cost = cost
           @message = message
           @owner = owner
+          @workflow = workflow
           validate!
         end
 
@@ -181,7 +190,7 @@ module RubyLLM
 
         def start
           entry = Entry.new(operation: @operation, provider: @provider.slug, model: @model_id || @model_info&.id,
-                            owner: Usage.owner)
+                            owner: Usage.owner, workflow: Usage.workflow)
           @entries << entry
           @pending << entry
           entry
