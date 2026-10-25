@@ -72,6 +72,21 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Judgments do
     expect(render('Help', provider_options: { session_id: 'ticket-1' })[:session_id]).to eq('ticket-1')
   end
 
+  it 'inlines remote images and videos, which Decisions models accept only as data URLs' do
+    png = File.binread(File.join(fixtures, 'ruby.png'))
+    mp4 = File.binread(File.join(fixtures, 'ruby_clip.mp4'))
+    stub_request(:get, 'https://example.com/ruby.png').to_return(body: png, headers: { 'Content-Type' => 'image/png' })
+    stub_request(:get, 'https://example.com/clip.mp4').to_return(body: mp4, headers: { 'Content-Type' => 'video/mp4' })
+
+    state = render('Look', with: [RubyLLM::Attachment.new('https://example.com/ruby.png'),
+                                  RubyLLM::Attachment.new('https://example.com/clip.mp4')])[:state]
+
+    expect(state).to eq(
+      ['Look', { type: 'image_url', image_url: { url: "data:image/png;base64,#{Base64.strict_encode64(png)}" } },
+       { type: 'video_url', video_url: { url: "data:video/mp4;base64,#{Base64.strict_encode64(mp4)}" } }]
+    )
+  end
+
   it 'rejects uploaded files and attachments Decisions cannot carry' do
     uploaded = RubyLLM::Attachment.new(
       RubyLLM::UploadedFile.new(id: 'file-123', filename: 'receipt.png', mime_type: 'image/png')
@@ -136,6 +151,17 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Judgments do
 
       expect(result.logo.probability).to be_between(0, 1)
       expect(result.color.choice).to be_in(%i[red blue green])
+      expect(result.tokens.input).to be_positive
+    end
+
+    it 'judges a remote image by its URL' do
+      result = RubyLLM.judge(with: 'https://raw.githubusercontent.com/crmne/ruby_llm/main/spec/fixtures/ruby.png',
+                             model: model_for(:openrouter, :judgment_multimodal), provider: :openrouter,
+                             assume_model_exists: true, questions: {
+                               red: { type: :probability, instructions: 'Is the image mostly red?' }
+                             })
+
+      expect(result.red.probability).to be_between(0, 1)
       expect(result.tokens.input).to be_positive
     end
 
