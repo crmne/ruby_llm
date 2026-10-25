@@ -96,23 +96,47 @@ RSpec.describe RubyLLM::Protocols::Gemini::LongDecode do
     expect(reply.cost.total).to eq(reply.ruby_llm_usage_entries.sum { |entry| entry.cost.total })
   end
 
-  it 'keeps partial output out of the transcript when a later hop fails and retains its billed attempts' do
+  it 'keeps the unfinished answer when a later hop fails and resumes it on complete' do
+    first = hop('Partial ', reason: 'CONTINUATION', token: 'next')
+    stub_request(:post, "https://generativelanguage.googleapis.com/v1beta/models/#{model}:generateContent")
+      .to_return_json(body: first).then.to_return(status: 503, body: '{}')
+      .then.to_return do |request|
+        requests << JSON.parse(request.body)
+        { body: JSON.generate(hop('answer')), headers: { 'Content-Type' => 'application/json' } }
+      end
+    completed = []
+    chat.after_message { |message| completed << message }
+
+    expect { chat.ask('Think') }.to raise_error(RubyLLM::ServiceUnavailableError)
+    expect(chat.messages.map(&:role)).to eq(%i[user assistant])
+    expect(chat.messages.last.content).to eq('Partial ')
+    expect(chat.messages.last.finish_reason).to be_nil
+    expect(chat).not_to be_complete
+    expect(completed).to be_empty
+
+    reply = chat.complete
+
+    expect(reply.content).to eq('Partial answer')
+    expect(reply.finish_reason).to eq(:stop)
+    expect(reply.continuation).to be_nil
+    expect(chat.messages.map(&:role)).to eq(%i[user assistant])
+    expect(completed).to eq([reply])
+    expect(requests.last['continuationToken']).to eq('next')
+    expect(requests.last['contents'].map { |content| content['role'] }).to eq(['user'])
+    expect(chat.usage_entries.map(&:status)).to eq(%i[succeeded failed succeeded])
+    expect(reply.ruby_llm_usage_entries.map(&:status)).to eq(%i[succeeded succeeded])
+    expect(reply.tokens.input).to eq(20)
+  end
+
+  it 'does not fall back to another model once an answer is unfinished' do
     first = hop('Partial', reason: 'CONTINUATION', token: 'next')
     stub_request(:post, "https://generativelanguage.googleapis.com/v1beta/models/#{model}:generateContent")
       .to_return_json(body: first).then.to_return(status: 503, body: '{}')
+    chat.with_fallbacks(model_for(:openai))
 
     expect { chat.ask('Think') }.to raise_error(RubyLLM::ServiceUnavailableError)
-    expect(chat.messages.map(&:role)).to eq([:user])
-    expect(chat.usage_entries.map(&:status)).to eq(%i[succeeded failed])
-    expect(chat.usage_entries.first.tokens.input).to eq(10)
-  end
-
-  it 'rejects a continuation without a token rather than returning an unfinished answer' do
-    stub_hops(hop('Partial', reason: 'CONTINUATION'))
-
-    expect { chat.ask('Think') }.to raise_error(RubyLLM::Error, /continuation token/i)
-    expect(chat.usage_entries.first).to be_succeeded
-    expect(chat.messages.map(&:role)).to eq([:user])
+    expect(chat.model.id).to eq(model)
+    expect(chat.messages.last.continuation).to eq('next')
   end
 
   it 'rejects a repeated token instead of requesting the same progress forever' do
@@ -286,8 +310,77 @@ RSpec.describe RubyLLM::Protocols::Gemini::LongDecode do
 
     expect { chat.ask('Think') { |chunk| chunks << chunk } }.to raise_error(RubyLLM::ServiceUnavailableError)
     expect(chunks.filter_map(&:content).join).to eq('One')
+    expect(chunks.map(&:finish_reason)).to all(be_nil)
     expect(chat.usage_entries.map(&:status)).to eq(%i[succeeded failed])
-    expect(chat.messages.map(&:role)).to eq([:user])
+    expect(chat.messages.map(&:role)).to eq(%i[user assistant])
+    expect(chat.messages.last.continuation).to eq('next')
     expect(requests.size).to eq(2)
+  end
+
+  it 'announces one message and reports each unfinished answer to the progress recorder' do
+    first = hop(reason: 'CONTINUATION', token: 'first', parts: [{ text: 'One ', thoughtSignature: 'signature' }])
+    stub_hops(first, hop('two ', reason: 'CONTINUATION', token: 'second'), hop('three'))
+    announced = 0
+    progress = []
+    chat.before_message { announced += 1 }
+    chat.progress_recorder = proc { |partial| progress << [partial, chat.messages.last] }
+
+    reply = chat.ask('Count')
+
+    expect(announced).to eq(1)
+    expect(progress.map { |partial, last| [partial.content, partial.continuation, last.equal?(partial)] })
+      .to eq([['One ', 'first', true], ['One two ', 'second', true]])
+    expect(progress.map { |partial, _| partial.finish_reason }).to all(be_nil)
+    expect(progress.first.first.raw_content).to eq([{ 'text' => 'One ', 'thoughtSignature' => 'signature' }])
+    expect(reply.raw_content).to be_nil
+    expect(reply.thinking.signature).to eq('signature')
+  end
+
+  it 'does not request another hop after cancellation without streaming' do
+    stub_hops(hop('Partial', reason: 'CONTINUATION', token: 'next'))
+    chat.before_message { chat.cancel }
+
+    expect { chat.ask('Think') }.to raise_error(RubyLLM::CancelledError)
+    expect(requests.size).to eq(1)
+    expect(chat.messages.last.continuation).to eq('next')
+  end
+
+  it 'replays each signed part of a streamed answer once' do
+    first = hop(reason: 'CONTINUATION', token: 'next', parts: [{ text: 'One', thoughtSignature: 'first' }])
+    final = hop(parts: [{ text: 'Two', thoughtSignature: 'second' }])
+    stub_hops(stream(first), stream(final), stream: true)
+
+    reply = chat.ask('Think') { |_chunk| nil }
+
+    expect(reply.raw_content).to eq([{ 'text' => 'One', 'thoughtSignature' => 'first' },
+                                     { 'text' => 'Two', 'thoughtSignature' => 'second' }])
+  end
+
+  context 'with an unfinished answer in the transcript' do
+    def unfinished_by(model_id)
+      entry = RubyLLM::Accounting::Usage::Entry.new(operation: :chat, provider: 'gemini', model: model_id,
+                                                    status: :succeeded)
+      RubyLLM::Message.new(role: :assistant, content: 'Partial', continuation: 'next', usage_entries: [entry])
+    end
+
+    it 'continues it with the model that paused it' do
+      chat.add_message(role: :user, content: 'Think')
+      chat.add_message(unfinished_by(model))
+
+      payload = chat.render
+
+      expect(payload[:continuationToken]).to eq('next')
+      expect(payload[:contents].size).to eq(1)
+    end
+
+    it 'sends it as an ordinary answer to another model' do
+      chat.add_message(role: :user, content: 'Think')
+      chat.add_message(unfinished_by(model_for(:gemini, :structured_output)))
+
+      payload = chat.render
+
+      expect(payload).not_to have_key(:continuationToken)
+      expect(payload[:contents].last[:parts]).to eq([{ text: 'Partial' }])
+    end
   end
 end

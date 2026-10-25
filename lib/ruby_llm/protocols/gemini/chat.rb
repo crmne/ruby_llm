@@ -6,7 +6,7 @@ module RubyLLM
       # Chat methods for the Gemini API implementation
       module Chat
         FINISH_REASONS = {
-          'STOP' => :stop, 'MAX_TOKENS' => :max_tokens, 'CONTINUATION' => :continuation,
+          'STOP' => :stop, 'MAX_TOKENS' => :max_tokens, 'CONTINUATION' => nil,
           'SAFETY' => :content_filter, 'RECITATION' => :content_filter, 'BLOCKLIST' => :content_filter,
           'PROHIBITED_CONTENT' => :content_filter, 'SPII' => :content_filter, 'IMAGE_SAFETY' => :content_filter,
           'IMAGE_RECITATION' => :content_filter, 'IMAGE_PROHIBITED_CONTENT' => :content_filter,
@@ -35,10 +35,12 @@ module RubyLLM
                            thinking: nil, citations: false, caching: nil, tool_prefs: nil)
           warn_unsupported_citations(model) if citations && !model.supports?(:citations)
           tool_prefs ||= {}
+          unfinished = messages.last if messages.last&.continuation
           payload = {
-            contents: render_messages(messages.reject { |msg| msg.role == :system }),
+            contents: render_messages(messages.reject { |msg| msg.role == :system || msg.equal?(unfinished) }),
             generationConfig: {}
           }
+          payload[:continuationToken] = unfinished.continuation if unfinished
           system_instruction = render_system_instruction(messages)
           payload[:systemInstruction] = system_instruction if system_instruction
 
@@ -187,6 +189,7 @@ module RubyLLM
           parts = data.dig('candidates', 0, 'content', 'parts') || []
           tool_calls = parse_tool_calls(data)
           content, attachments = parse_content(data)
+          continuation = parse_continuation(data)
 
           Message.new(
             role: :assistant,
@@ -199,7 +202,8 @@ module RubyLLM
             ),
             tool_calls: tool_calls,
             server_tool_calls: parse_server_tool_calls(data, parts),
-            raw_content: parts.any? { |part| server_tool_part?(part) } ? without_search_suggestions(parts) : nil,
+            raw_content: (without_search_suggestions(parts) if continuation || parts.any? { |p| server_tool_part?(p) }),
+            continuation: continuation,
             input_tokens: input_tokens(data),
             output_tokens: calculate_output_tokens(data),
             cache_read_tokens: data.dig('usageMetadata', 'cachedContentTokenCount'),
@@ -211,6 +215,14 @@ module RubyLLM
             model: data['modelVersion'] || @model&.id,
             raw: raw
           )
+        end
+
+        # Long decode hands back a token whenever it pauses, including at
+        # stream checkpoints and on MAX_TOKENS; only CONTINUATION leaves the
+        # response unfinished.
+        def parse_continuation(data)
+          candidate = data.dig('candidates', 0) || {}
+          candidate['continuationToken'] if candidate['finishReason'] == 'CONTINUATION'
         end
 
         # Gemini 3 bills each distinct, non-empty query a grounding ran.

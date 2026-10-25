@@ -43,6 +43,7 @@ module RubyLLM
           raw_content: optional_column(:raw_content),
           raw_reasoning: optional_column(:raw_reasoning),
           phase: optional_column(:phase),
+          continuation: optional_column(:continuation),
           usage_entries: entries,
           cost: (cost if entries.any?),
           tool_calls: tool_calls,

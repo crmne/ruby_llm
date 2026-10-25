@@ -28,7 +28,7 @@ RSpec.describe RubyLLM::Agent do
       approval_checker= cancellation_checker= continue_turn fallback_errors input_checker= input_recorder=
       interruptions= message_queue= messages= prepare_message raise_if_pending_tool_calls! remembered_checker=
       running_checker= take_queued_messages tool_call_claimer= tool_call_releaser= tool_prefs usage_entries
-      usage_entries= usage_recorder=
+      usage_entries= usage_recorder= progress_recorder=
     ]
 
     missing_methods = RubyLLM::Chat.public_instance_methods(false) - described_class.public_instance_methods(false)

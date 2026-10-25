@@ -20,6 +20,7 @@ class <%= create_migration_class_name(message_table_name) %> < ActiveRecord::Mig
       t.json :raw_reasoning
 <% end %>
       t.string :phase
+      t.text :continuation<%= ', size: :long' if mysql? %>
       t.string :finish_reason
       t.timestamps
     end

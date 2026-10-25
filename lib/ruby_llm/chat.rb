@@ -1368,8 +1368,8 @@ module RubyLLM
     end
 
     # Hooks installed by the Rails integration.
-    attr_writer :cancellation_checker, :usage_recorder, :approval_checker, :input_checker, :input_recorder,
-                :tool_call_claimer, :tool_call_releaser, :running_checker, :remembered_checker,
+    attr_writer :cancellation_checker, :usage_recorder, :progress_recorder, :approval_checker, :input_checker,
+                :input_recorder, :tool_call_claimer, :tool_call_releaser, :running_checker, :remembered_checker,
                 :interruptions, :message_queue # :nodoc:
 
     # Appends a message to the conversation and returns it as a Message.
@@ -1595,7 +1595,7 @@ module RubyLLM
       case last&.role
       when nil then true
       when :user, :tool then false
-      else !last.tool_call?
+      else !last.tool_call? && !unfinished?(last)
       end
     end
 
@@ -1606,12 +1606,20 @@ module RubyLLM
       entries_before = usage_entries.length
       usage_start ||= entries_before
       payload = instrumentation_payload(streaming: block_given?)
+      announced = block_given?
+      resumed = messages.last if unfinished?(messages.last)
+      progress = proc do |partial|
+        run_callbacks(:before_message) unless announced
+        announced = true
+        record_progress(partial)
+      end
 
       RubyLLM.instrument('chat.ruby_llm', payload, config: @config) do |event|
-        result = provider_completion(usage_recorder: method(:record_usage_entry), stream_tracker:, &block)
+        result = provider_completion(usage_recorder: method(:record_usage_entry), progress_recorder: progress,
+                                     stream_tracker:, &block)
         event[:response_tokens] = result.tokens
         record_out_of_band_usage(result) if usage_entries.length == entries_before
-        record_generated_message(result, usage_start, streaming: block_given?)
+        record_generated_message(result, usage_start, announce: !announced, resumed:)
         record_completion_event(event, result)
       ensure
         event[:response_tokens] ||= Tokens.aggregate(usage_entries[entries_before..].map(&:tokens))
@@ -1619,12 +1627,29 @@ module RubyLLM
       result
     end
 
-    def record_generated_message(result, usage_start, streaming: false)
+    def record_generated_message(result, usage_start, announce: true, resumed: nil)
       raise_if_cancelled!
-      link_completion_usage(result, usage_start)
-      run_callbacks(:before_message) unless streaming
-      add_message result
+      link_completion_usage(result, usage_start, resumed)
+      run_callbacks(:before_message) if announce
+      replace_unfinished(result)
       run_callbacks(:after_message, result)
+    end
+
+    # An unfinished response stands in the transcript while it continues,
+    # so a later #complete resumes it when the run stops early.
+    def record_progress(partial)
+      replace_unfinished(partial)
+      raise_if_cancelled!
+      @progress_recorder&.call(partial)
+    end
+
+    def replace_unfinished(message)
+      messages.pop if unfinished?(messages.last)
+      add_message(message)
+    end
+
+    def unfinished?(message)
+      message&.role == :assistant && !message.continuation.nil?
     end
 
     def instrumentation_payload(streaming:)
@@ -1690,7 +1715,7 @@ module RubyLLM
           return result
         rescue StandardError => e
           finish_fallback(active_fallback, fallback_error: e)
-          raise e if block_failed || !fallback_error?(e)
+          raise e if block_failed || unfinished?(messages.last) || !fallback_error?(e)
 
           active_fallback, attempt = fallback_to_next_model!(
             fallback_queue,
@@ -1835,7 +1860,7 @@ module RubyLLM
       nil
     end
 
-    def provider_completion(usage_recorder:, stream_tracker: nil, &)
+    def provider_completion(usage_recorder:, progress_recorder: nil, stream_tracker: nil, &)
       raise_if_cancelled!
 
       request_messages = preprocessed_messages
@@ -1867,6 +1892,7 @@ module RubyLLM
           protocol: @protocol,
           before_request: @callbacks[:before_request],
           usage_recorder: usage_recorder,
+          progress_recorder: progress_recorder,
           &on_chunk
         )
       end
@@ -1908,8 +1934,9 @@ module RubyLLM
       entry
     end
 
-    def link_completion_usage(response, usage_start)
-      response.ruby_llm_usage_entries = usage_entries.drop(usage_start)
+    def link_completion_usage(response, usage_start, resumed = nil)
+      earlier = resumed ? resumed.ruby_llm_usage_entries : []
+      response.ruby_llm_usage_entries = earlier + usage_entries.drop(usage_start)
     end
 
     def record_out_of_band_usage(response)

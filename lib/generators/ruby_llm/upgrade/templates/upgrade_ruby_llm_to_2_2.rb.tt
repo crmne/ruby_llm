@@ -24,6 +24,10 @@ class <%= 'upgrade_ruby_llm_to_2_2'.camelize %> < ActiveRecord::Migration<%= mig
       add_column :<%= message_table_name %>, :phase, :string
     end
 
+    unless column_exists?(:<%= message_table_name %>, :continuation)
+      add_column :<%= message_table_name %>, :continuation, :text<%= ', size: :long' if mysql? %>
+    end
+
     unless table_exists?(:ruby_llm_queued_messages)
       create_table :ruby_llm_queued_messages, id: :<%= reference_type %> do |t|
         t.references :chat, polymorphic: true, null: false, type: :<%= reference_type %>, index: false
@@ -57,6 +61,7 @@ class <%= 'upgrade_ruby_llm_to_2_2'.camelize %> < ActiveRecord::Migration<%= mig
   def down
     drop_table :ruby_llm_chat_files, if_exists: true
     drop_table :ruby_llm_queued_messages, if_exists: true
+    remove_column :<%= message_table_name %>, :continuation
     remove_column :<%= message_table_name %>, :phase
     remove_column :ruby_llm_tool_calls, :claimed_until
     remove_column :<%= chat_table_name %>, :claimed_until

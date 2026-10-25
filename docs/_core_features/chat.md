@@ -213,7 +213,7 @@ When a token limit cuts the response off while the model writes a tool call, the
 
 ## Long Responses
 
-Set a total output budget for a Gemini model that supports long decode:
+Gemini models that support long decode can write more than one response holds. Set a total output budget above 65,536 tokens and stream the answer:
 
 ```ruby
 response = chat.with_max_output_tokens(262_144).ask("Work through this proof in full") do |chunk|
@@ -221,11 +221,21 @@ response = chat.with_max_output_tokens(262_144).ask("Work through this proof in 
 end
 ```
 
-When Gemini returns a continuation token, RubyLLM requests the remaining output and returns one assembled message. Without a block, RubyLLM continues the same way. Thinking-only intermediate responses do not create blank messages in the conversation. Each request keeps its own usage entry, and the response's tokens and cost include them all.
+Gemini pauses at its per-response limit and hands back a continuation token. RubyLLM sends the same request again with the newest token, streams the rest, and returns one message. The budget covers every request. Each request has its own usage entry, and the message's tokens and cost add them up. A paused response that only thought produces no blank message.
 
-RubyLLM keeps the original request unchanged between continuations, including changes from your `before_request` hooks, which run once for the generation. The continuation token belongs to that generation and is not reused for the next question. The local transcript receives the completed turn, with the signed parts needed for later questions.
+Stream long responses. Without a block, each response holds at most 32,768 tokens, and the Gemini API rejects a larger budget. Vertex AI accepts it and continues in 32,768-token responses.
 
-The provider validates the output budget and decides when to stop. Reaching the requested budget still returns `:max_tokens`. A missing or repeated continuation token raises `RubyLLM::Error`. A stream that disconnects after delivering chunks raises instead of restarting and duplicating output. Checkpoint recovery and hosted background jobs are separate from this continuation loop.
+While RubyLLM continues, the unfinished answer stands at the end of `chat.messages`. If a request fails, it stays there with its token, and `complete` picks the answer up where Gemini paused instead of starting again:
+
+```ruby
+begin
+  chat.ask("Work through this proof in full") { |chunk| print chunk.content }
+rescue RubyLLM::ServiceUnavailableError
+  chat.complete { |chunk| print chunk.content }
+end
+```
+
+Gemini rejects the token if the conversation or the model changed, and each continuation bills the earlier output again as input. Chunks from the request that failed stream again, because the answer resumes from the last pause. A persisted chat keeps the unfinished answer and its token in the `continuation` column, so a job that runs `chat.complete` again resumes it after a restart. See [Rails Integration]({% link _advanced/rails-persistence.md %}#resuming-long-responses).
 
 ## Advanced: Replacing the LLM Transcript
 

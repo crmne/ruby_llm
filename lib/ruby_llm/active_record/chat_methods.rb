@@ -5,6 +5,7 @@ require 'ruby_llm/active_record/attachment_helpers'
 require 'ruby_llm/active_record/run_claims'
 require 'ruby_llm/active_record/chat_approvals'
 require 'ruby_llm/active_record/chat_cancellation'
+require 'ruby_llm/active_record/chat_placeholders'
 require 'ruby_llm/active_record/system_instructions'
 require 'ruby_llm/active_record/chat_queue'
 
@@ -29,6 +30,7 @@ module RubyLLM
       include RunClaims
       include ChatApprovals
       include ChatCancellation
+      include ChatPlaceholders
       include SystemInstructions
 
       CANCELLATION_POLL_INTERVAL = 1.0 # :nodoc:
@@ -1127,6 +1129,7 @@ module RubyLLM
       def install_persistence_callbacks(chat)
         chat.before_message { persist_new_message }
         chat.usage_recorder = method(:persist_usage_entry)
+        chat.progress_recorder = method(:persist_message_progress)
         chat.after_message { |msg| persist_message_completion(msg) }
         chat
       end
@@ -1203,23 +1206,6 @@ module RubyLLM
         end
       end
 
-      def persist_new_message
-        @message.destroy if blank_placeholder?
-
-        attrs = { role: :assistant, content: '' }
-        @message = messages_association.create!(attrs)
-        @last_message_id = @message.id
-        @message
-      end
-
-      def blank_placeholder?
-        return false unless @message&.persisted? && @message.content.blank?
-        return false unless @message.role.to_s == 'assistant'
-        return false if @message.respond_to?(:attachments) && @message.attachments.attached?
-
-        !@message.ruby_llm_tool_calls.exists?
-      end
-
       def persist_message_completion(message)
         return unless message
 
@@ -1249,6 +1235,7 @@ module RubyLLM
         assign_supported_attribute(attrs, :raw_content, message.raw_content)
         assign_supported_attribute(attrs, :raw_reasoning, message.raw_reasoning)
         assign_supported_attribute(attrs, :phase, message.phase)
+        assign_supported_attribute(attrs, :continuation, message.continuation)
         assign_supported_attribute(attrs, :finish_reason, message.finish_reason)
         assign_supported_attribute(attrs, :cache_until_here, message.cache_until_here?)
         assign_supported_attribute(attrs, :cache_ttl, message.cache_ttl)

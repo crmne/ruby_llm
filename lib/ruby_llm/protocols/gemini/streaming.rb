@@ -14,7 +14,6 @@ module RubyLLM
         def build_chunk(data)
           parts = data.dig('candidates', 0, 'content', 'parts') || []
           track_stream_parts(data, parts)
-          @continuation_token = data.dig('candidates', 0, 'continuationToken') || @continuation_token
 
           Chunk.new(
             role: :assistant,
@@ -35,6 +34,7 @@ module RubyLLM
               data.dig('candidates', 0, 'finishReason') || data.dig('promptFeedback', 'blockReason')
             ),
             tool_calls: parse_tool_calls(data),
+            continuation: parse_continuation(data),
             **stream_end_fields(data)
           )
         end
@@ -62,12 +62,9 @@ module RubyLLM
             )
           end
           calls = part_calls + @stream_metadata_calls.to_a
-          return {} if calls.empty?
-
-          {
-            server_tool_calls: calls,
-            raw_content: @saw_server_part ? without_search_suggestions(@stream_parts) : nil
-          }
+          replay = @saw_server_part || parse_continuation(data)
+          fields = { server_tool_calls: calls, raw_content: (without_search_suggestions(@stream_parts) if replay) }
+          fields.compact.reject { |_, value| value.empty? }
         end
 
         def parse_stream_citations(data)

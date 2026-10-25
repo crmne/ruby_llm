@@ -101,7 +101,7 @@ module RubyLLM
 
     def complete(messages, tools:, temperature:, provider_options: {}, headers: {}, schema: nil, thinking: nil,
                  max_output_tokens: nil, citations: false, caching: nil, tool_prefs: nil, before_request: [],
-                 usage_recorder: nil, provider_tools: [], compaction: nil, end_user: nil, &)
+                 usage_recorder: nil, progress_recorder: nil, provider_tools: [], compaction: nil, end_user: nil, &)
       resolution = resolve_provider_tools_for_request(provider_tools)
       headers = resolution.headers.merge(headers) if resolution
       headers = apply_compaction_headers(headers, compaction) if compaction
@@ -111,12 +111,12 @@ module RubyLLM
                   stream: block_given?
       )
 
-      complete_request(payload, headers, usage_recorder:, &)
+      complete_request(payload, headers, usage_recorder:, progress_recorder:, &)
     rescue NotImplementedError
       raise Error, "#{@provider.name} doesn't support chat"
     end
 
-    def complete_request(payload, headers, usage_recorder: nil) # :nodoc:
+    def complete_request(payload, headers, usage_recorder: nil, **) # :nodoc:
       # The caller's block can raise the error of another operation it ran.
       yielding = false
       track_usage(:chat, on_finish: usage_recorder) do
@@ -638,6 +638,7 @@ module RubyLLM
 
     def carries_native_content?(message)
       return true if message.thinking || message.raw_reasoning || message.raw_content || message.phase
+      return true if message.continuation
 
       message.tool_call? && message.tool_calls.each_value.any?(&:thought_signature)
     end

@@ -93,6 +93,11 @@ module RubyLLM
     # send it back. +nil+ when the provider gave none.
     attr_reader :phase # :nodoc:
 
+    # The provider's opaque state for an assistant message it has not
+    # finished, which a later request sends back to continue it. +nil+ once
+    # the message is complete.
+    attr_reader :continuation # :nodoc:
+
     # The Chat this message belongs to, set when it is added to a
     # conversation. Backs #tool_results.
     attr_accessor :conversation # :nodoc:
@@ -124,6 +129,7 @@ module RubyLLM
       @raw_content = options[:raw_content]
       @raw_reasoning = options[:raw_reasoning]
       @phase = options[:phase]
+      @continuation = options[:continuation]
       @mcp_result = coerce_mcp_result(options[:mcp_result])
       @finish_reason = options[:finish_reason]&.to_sym
       @content_filters = coerce_list(options[:content_filters], ContentFilter)
@@ -164,6 +170,7 @@ module RubyLLM
         message.instance_variable_set(:@thinking, nil)
         message.instance_variable_set(:@raw_reasoning, nil)
         message.instance_variable_set(:@phase, nil)
+        message.instance_variable_set(:@continuation, nil)
         message.instance_variable_set(:@raw_content, raw_content)
         message.instance_variable_set(:@tool_calls, tool_calls_without_thought_signatures)
       end
@@ -307,6 +314,7 @@ module RubyLLM
         raw_content: raw_content,
         raw_reasoning: raw_reasoning,
         phase: phase,
+        continuation: continuation,
         mcp_result: mcp_result&.dump,
         finish_reason: finish_reason,
         cache_until_here: cache_until_here? || nil,
