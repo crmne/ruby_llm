@@ -101,6 +101,30 @@ RSpec.describe RubyLLM::CodeExecution::RubyInstallation do
     expect(installation.ruby_gem?('matrix')).to be(true)
   end
 
+  it 'keeps only the gems the running Ruby bundles, without its source' do
+    allow(installation).to receive(:bundled_gems).and_call_original
+    allow(RbConfig::CONFIG).to receive(:[]).and_call_original
+    allow(RbConfig::CONFIG).to receive(:[]).with('srcdir').and_return(nil)
+    allow(installation).to receive(:bundled_gems_constant).and_return([])
+    stub_const('RUBY_VERSION', '3.3.5')
+    install('repl_type_completor', '0.1.9')
+
+    expect(installation.ruby_gem?('repl_type_completor')).to be(false)
+    expect(installation.ruby_gem?('prime')).to be(true)
+    expect(installation.denied).to include(File.join(gem_dir, 'gems', 'repl_type_completor-0.1.9'))
+  end
+
+  it 'keeps the gems a Ruby version bundles from its first release' do
+    allow(installation).to receive(:bundled_gems).and_call_original
+    allow(RbConfig::CONFIG).to receive(:[]).and_call_original
+    allow(RbConfig::CONFIG).to receive(:[]).with('srcdir').and_return(nil)
+    allow(installation).to receive(:bundled_gems_constant).and_return([])
+    stub_const('RUBY_VERSION', '3.4.0')
+
+    expect(installation.ruby_gem?('repl_type_completor')).to be(true)
+    expect(installation.ruby_gem?('readline')).to be(false)
+  end
+
   it 'falls back to the gems Ruby moved from default to bundled' do
     allow(installation).to receive(:bundled_gems).and_call_original
     allow(RbConfig::CONFIG).to receive(:[]).and_call_original
