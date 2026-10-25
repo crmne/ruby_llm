@@ -143,6 +143,7 @@ module RubyLLM
         model_info: model,
         streaming: !block.nil?,
         language: language,
+        temperature: temperature,
         provider_options: provider_options,
         metadata: metadata,
         tokens: empty_tokens,
