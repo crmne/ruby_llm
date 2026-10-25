@@ -141,9 +141,10 @@ end
 
 In 2.1, `pending_approvals` on a persisted chat built the chat's tools to find the calls that need a decision, which connected to every MCP server the chat uses, starting stdio servers in the web process. In 2.2, the process that saves a call records whether it waits for approval on the call's record, and `pending_approvals` reads only the database. The schema does not change.
 
-Calls that were already waiting for approval when you deploy have no such record, so `pending_approvals` leaves them out. List them the 2.1 way, which still connects to the chat's servers, and decide them by ID:
+Calls that were already waiting for approval when you deploy have no such record, so `pending_approvals` leaves them out. Load the chat through its agent class, so its tools and MCP servers are registered, list those calls the 2.1 way, which still connects to the chat's servers, and decide them by ID:
 
 ```ruby
+chat = ChatAgent.find(chat_id)
 chat.to_llm.pending_approvals.map(&:id) # => ["call_1a2b3c"]
 chat.approve("call_1a2b3c")
 ```
