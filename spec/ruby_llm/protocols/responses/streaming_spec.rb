@@ -29,7 +29,6 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
     call = accumulator.to_message(nil).tool_calls.values.first
     expect(call.namespace).to eq('crm')
     expect(call.arguments).to eq({})
-    expect(call).not_to be_sequential
   end
 
   it 'keeps the raw output when a streamed response holds several reasoning items' do

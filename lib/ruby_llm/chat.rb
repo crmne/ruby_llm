@@ -494,7 +494,7 @@ module RubyLLM
     # Returns whether +tool_call+ requires approval and has no recorded
     # decision.
     def approval_pending?(tool_call) # :nodoc:
-      return false if sequence_failed?(tool_call)
+      return false if skipped_result(tool_call)
       return approval_decision(nil, tool_call).nil? if tool_call.remote?
 
       tool = tool_for(tool_call)
@@ -640,11 +640,6 @@ module RubyLLM
       tools.flatten.compact.each do |tool|
         tool = tool.new if tool.is_a?(Class)
         name = tool.qualified_name.to_sym
-        existing = @tools[name]
-        if existing && [existing.namespace, existing.name.to_s] != [tool.namespace, tool.name.to_s]
-          raise ArgumentError, "Ambiguous tool name: #{name}"
-        end
-
         @tools[name] = tool
         @tool_deferrals[name] = defer.nil? ? tool.deferred? : defer
       end
@@ -1990,7 +1985,7 @@ module RubyLLM
     def answer_claimed_tool_calls(claimed, server_calls, decisions, executable, denied)
       respond_to_tool_approvals(server_calls.slice(*claimed), decisions)
       deny_tool_calls(denied.slice(*claimed))
-      if concurrency && executable.values.none?(&:sequential?)
+      if concurrency && executable.values.none? { |tool_call| ordered?(tool_call) }
         handle_concurrent_tool_calls(executable.slice(*claimed))
       else
         handle_sequential_tool_calls(executable.slice(*claimed))
@@ -2117,11 +2112,7 @@ module RubyLLM
         next if sequence_blocked?(tool_call)
 
         raise_if_cancelled!
-        result = if sequence_failed?(tool_call)
-                   { error: 'Not executed: an earlier action in this turn failed.', skipped: true }
-                 else
-                   execute_tool_with_callbacks(tool_call)
-                 end
+        result = skipped_result(tool_call) || execute_tool_with_callbacks(tool_call)
         next if result.equal?(PAUSED)
 
         run_callbacks(:before_message)

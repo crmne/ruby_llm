@@ -27,7 +27,6 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
       connection.remove_column(:ruby_llm_tool_calls, :provider_call_id)
       connection.remove_column(:messages, :phase)
       connection.remove_column(:ruby_llm_tool_calls, :namespace)
-      connection.remove_column(:ruby_llm_tool_calls, :sequential)
 
       ActiveRecord::Migration.suppress_messages { upgrade.migrate(:up) }
 
@@ -37,9 +36,6 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
       expect(connection.column_exists?(:ruby_llm_tool_calls, :provider_call_id, :string)).to be(true)
       expect(connection.column_exists?(:messages, :phase, :string)).to be(true)
       expect(connection.column_exists?(:ruby_llm_tool_calls, :namespace, :string)).to be(true)
-      column = connection.columns(:ruby_llm_tool_calls).find { |candidate| candidate.name == 'sequential' }
-      expect(column.null).to be(false)
-      expect(ActiveModel::Type::Boolean.new.cast(column.default)).to be(false)
       raise ActiveRecord::Rollback
     end
   ensure
@@ -58,7 +54,6 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
       expect(connection.column_exists?(:ruby_llm_tool_calls, :provider_call_id)).to be(false)
       expect(connection.column_exists?(:messages, :phase)).to be(false)
       expect(connection.column_exists?(:ruby_llm_tool_calls, :namespace)).to be(false)
-      expect(connection.column_exists?(:ruby_llm_tool_calls, :sequential)).to be(false)
       expect(connection.table_exists?(:ruby_llm_queued_messages)).to be(false)
       expect(connection.table_exists?(:ruby_llm_chat_files)).to be(false)
       raise ActiveRecord::Rollback

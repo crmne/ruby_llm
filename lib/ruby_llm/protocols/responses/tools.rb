@@ -28,8 +28,8 @@ module RubyLLM
         def render_tools(tools)
           ordinary, namespaced = tools.values.partition { |tool| tool.namespace.nil? }
           groups = namespaced.group_by(&:namespace).map do |namespace, members|
-            { type: 'namespace', name: namespace, description: "#{namespace} tools",
-              tools: members.map { |tool| tool_for(tool) } }
+            { type: 'namespace', name: namespace, description: members.filter_map(&:namespace_description).first,
+              tools: members.map { |tool| tool_for(tool) } }.compact
           end
           ordinary.map { |tool| tool_for(tool) } + groups
         end

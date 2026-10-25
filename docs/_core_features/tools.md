@@ -87,11 +87,11 @@ If the model requests an unavailable tool, RubyLLM returns an error listing the 
 
 ## Tool Namespaces
 
-Use a namespace when different groups contain tools with the same name:
+A namespace groups related tools, and lets tools in different groups share a name. Give it a description so the model knows what the group is for:
 
 ```ruby
 class CustomerLookup < RubyLLM::Tool
-  namespace "crm"
+  namespace "crm", description: "Customer records and orders"
   description "Finds a customer by email"
 
   def execute(email:)
@@ -103,9 +103,9 @@ chat.with_tools(CustomerLookup)
 chat.tools[:"crm.customer_lookup"]
 ```
 
-`namespace` is inherited. Pass `nil` to remove an inherited namespace. The member name stays `customer_lookup`; `tool_call.namespace` identifies its group. RubyLLM routes calls and remembers approvals by both values, including after a Rails reload.
+`namespace` is inherited. Pass `nil` to remove an inherited namespace. The tool's name stays `customer_lookup`, and `tool_call.namespace` names its group. RubyLLM routes calls and remembers approvals by both, including after a Rails reload. Namespaced tools can be [deferred for tool search]({% link _core_features/tool-search.md %}) like any other.
 
-The Responses protocol sends these groups as function namespaces. Anthropic has no namespaces for your own functions: it accepts only `computer` and `browser`, the members of its [native client toolsets]({% link _core_features/provider-tools.md %}#native-client-toolsets), and raises for any other namespace. A protocol that cannot carry namespaces raises before sending the request, including when namespaced calls remain in the history. Neither protocol can force one namespaced tool, so `with_tool_options(choice: CustomerLookup)` raises; use `choice: :required` instead.
+The Responses protocol sends each group as a function namespace, which needs a description. Anthropic has no namespaces for your own functions: it accepts only `computer` and `browser`, the members of its [native client toolsets]({% link _core_features/provider-tools.md %}#native-client-toolsets), and raises for any other namespace. A protocol that cannot carry namespaces raises before sending the request, including when namespaced calls remain in the history. Neither protocol can force one namespaced tool, so `with_tool_options(choice: CustomerLookup)` raises; use `choice: :required` instead.
 
 ## Declaring Parameters
 

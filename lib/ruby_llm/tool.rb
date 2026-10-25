@@ -50,6 +50,7 @@ module RubyLLM
     COPIED_INHERITED_CONFIG = %i[
       @description
       @namespace
+      @namespace_description
       @parameters_schema_definition
       @requires_approval
       @approval_resolver
@@ -60,7 +61,7 @@ module RubyLLM
     private_constant :DUPED_INHERITED_CONFIG, :COPIED_INHERITED_CONFIG
 
     class << self
-      attr_reader :parameters_schema_definition, :approval_resolver # :nodoc:
+      attr_reader :parameters_schema_definition, :approval_resolver, :namespace_description # :nodoc:
 
       def inherited(subclass) # :nodoc:
         super
@@ -107,16 +108,27 @@ module RubyLLM
         @description = text
       end
 
-      # Sets the namespace that owns this tool, or returns its current
-      # namespace. Pass +nil+ to remove an inherited namespace.
+      # Puts the tool in a namespace, or returns its namespace. Tools in
+      # different namespaces can share a name. +description:+ tells the
+      # model what the namespace's tools are for, on APIs that describe
+      # namespaces. Pass +nil+ to remove an inherited namespace.
+      #
+      #   class CustomerLookup < RubyLLM::Tool
+      #     namespace "crm", description: "Customer records and orders"
+      #   end
+      #
+      # A native client toolset, such as Anthropic's computer toolset, calls
+      # the tools in its own namespace:
       #
       #   class Screenshot < RubyLLM::Tool
       #     namespace "computer"
       #   end
-      def namespace(value = (get = true))
+      def namespace(value = (get = true), description: nil)
         return @namespace if get
 
         @namespace = value&.to_s
+        @namespace_description = description
+        @namespace
       end
 
       # Declares a parameter for the tool. +options+ accepts +type:+
@@ -320,10 +332,14 @@ module RubyLLM
       self.class.tool_name
     end
 
-    # Returns the namespace that owns this tool, or +nil+ for an ordinary
-    # function tool. See ::namespace.
+    # Returns the tool's namespace, or +nil+ when it has none. See
+    # ::namespace.
     def namespace
       self.class.namespace
+    end
+
+    def namespace_description # :nodoc:
+      self.class.namespace_description
     end
 
     def qualified_name # :nodoc:

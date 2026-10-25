@@ -215,10 +215,6 @@ module RubyLLM
       tool_result_payload&.[]('error')
     end
 
-    def tool_result_skipped? # :nodoc:
-      tool_result_payload&.[]('skipped') == true
-    end
-
     # Returns +true+ if the response was cut off by a token limit,
     # +false+ otherwise.
     def max_tokens?
@@ -365,7 +361,7 @@ module RubyLLM
         [id, ToolCall.new(id: attributes[:id] || id, name: attributes[:name],
                           provider_call_id: attributes[:provider_call_id] || attributes[:provider_id],
                           arguments: attributes[:arguments] || {},
-                          namespace: attributes[:namespace], sequential: attributes.fetch(:sequential, false),
+                          namespace: attributes[:namespace],
                           thought_signature: attributes[:thought_signature], remote: attributes.fetch(:remote, false))]
       end
     end

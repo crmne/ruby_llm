@@ -53,7 +53,6 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     call_record = chat.messages.where(role: 'assistant').sole.ruby_llm_tool_calls.sole
 
     expect(call_record.namespace).to eq('computer')
-    expect(call_record).to be_sequential
     expect(call_record.to_llm.namespace).to eq('computer')
     expect(executed).to be_empty
     Chat.find(chat.id).approve(call_record.to_llm)

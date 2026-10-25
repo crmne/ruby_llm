@@ -21,7 +21,6 @@ module RubyLLM
           provider_call_id: self[:provider_call_id],
           name: name,
           namespace: self[:namespace],
-          sequential: self[:sequential],
           arguments: arguments || {},
           thought_signature: thought_signature,
           remote: self[:remote]

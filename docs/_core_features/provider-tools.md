@@ -105,7 +105,7 @@ response = chat.ask "Describe the screen."
 
 The namespace must match the native toolset and the tool name must match its member. A separate custom `screenshot` tool can coexist with `computer.screenshot`. Member calls are local: `tool_call.remote?` is `false`, and normal tool callbacks and approval rules apply.
 
-`tool_call.sequential?` reports an ordered member batch. RubyLLM runs these calls in order even when you enable tool concurrency. A pending approval or a call claimed by another process blocks later members of the same batch. Return `{ error: "The display is unavailable" }` for a recoverable failure. RubyLLM then skips later members and answers them with the protocol's error result. Exceptions retain the usual tool behavior and interrupt the run.
+Anthropic expects a toolset's calls in one response to run in order, and RubyLLM runs them that way even when you enable tool concurrency. A pending approval, or a call another process is running, holds back the calls after it. Return `{ error: "The display is unavailable" }` for a recoverable failure: RubyLLM answers the later calls of the batch as not executed instead of running them. An exception interrupts the run as it does for any tool.
 
 This supports computer text and image results. Browser member identity is preserved too, but browser-specific `browser_state` result blocks are not represented. Browser tab-management workflows need that additional result support.
 

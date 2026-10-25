@@ -31,12 +31,9 @@ module RubyLLM
     # The name of the tool the model wants to invoke.
     attr_reader :name
 
-    # The namespace that owns this member, or +nil+ for an ordinary call.
+    # The namespace of the tool the model wants to invoke, or +nil+ for a
+    # tool without one. See Tool.namespace.
     attr_reader :namespace
-
-    # Returns whether the provider requires calls in this namespace to run
-    # in order within the response, stopping after a recoverable failure.
-    def sequential? = @sequential
 
     def qualified_name # :nodoc:
       namespace ? "#{namespace}.#{name}" : name
@@ -57,12 +54,11 @@ module RubyLLM
     attr_accessor :thought_signature
 
     def initialize(name:, id: nil, provider_call_id: nil, arguments: {}, thought_signature: nil,
-                   remote: false, namespace: nil, sequential: false) # :nodoc:
+                   remote: false, namespace: nil) # :nodoc:
       @id = id
       @provider_call_id = provider_call_id
       @name = name
       @namespace = namespace&.to_s
-      @sequential = sequential
       @arguments = canonical_arguments(arguments)
       @thought_signature = thought_signature
       @remote = remote
@@ -88,7 +84,6 @@ module RubyLLM
         provider_call_id: @provider_call_id,
         name: @name,
         namespace: @namespace,
-        sequential: sequential? || nil,
         arguments: @arguments,
         remote: remote? || nil,
         thought_signature: @thought_signature

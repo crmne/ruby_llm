@@ -171,6 +171,15 @@ RSpec.describe RubyLLM::Chat do
       expect(search.call(query: 'query', limit: 50)[:loaded].size).to eq(4)
     end
 
+    it 'finds and loads namespaced tools by their qualified names' do
+      tools[:'crm.news_search'] = tool('news_search', 'Finds customer notes')
+
+      expect(search.call(query: 'crm')[:loaded]).to eq(%w[crm.news_search])
+      expect(search.call(query: 'select:crm.news_search')[:tools]).to eq(
+        [{ name: 'crm.news_search', description: 'Finds customer notes' }]
+      )
+    end
+
     it 'takes only a query and a limit' do
       expect(search.parameters_schema).to include('required' => %w[query], 'additionalProperties' => false)
     end

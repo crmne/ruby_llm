@@ -37,6 +37,11 @@ RSpec.describe RubyLLM::ToolCall do
     expect(described_class.new(id: 'call_2', name: 'screenshot').inspect).not_to include('namespace')
   end
 
+  it 'marks only a remote call as remote in inspect' do
+    expect(described_class.new(id: 'call_1', name: 'search', remote: true).inspect).to include('remote: true')
+    expect(described_class.new(id: 'call_2', name: 'search').inspect).not_to include('remote')
+  end
+
   %i[anthropic openai].each do |provider|
     it "renders the same #{provider} request before and after a jsonb round trip" do
       context = RubyLLM.context do |config|

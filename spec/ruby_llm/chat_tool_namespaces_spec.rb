@@ -54,7 +54,6 @@ RSpec.describe RubyLLM::Chat do
     restored = RubyLLM::Message.new(JSON.parse(JSON.generate(reply.to_h)).transform_keys(&:to_sym))
 
     expect(tool_call.namespace).to eq('computer')
-    expect(tool_call).to be_sequential
     expect(restored.tool_calls.values.first.to_h).to eq(tool_call.to_h)
     expect(reply.raw_content).to be_nil
   end
@@ -240,7 +239,8 @@ RSpec.describe RubyLLM::Chat do
     restored.run_tools
 
     expect(executed).to be_empty
-    expect(restored.messages.last.tool_error_message).to eq('Not executed: an earlier action in this turn failed.')
+    expect(restored.messages.last.tool_error_message)
+      .to eq('Not executed: an earlier computer action in this turn failed.')
   end
 
   it 'does not reuse remembered approvals in another namespace' do
@@ -359,7 +359,7 @@ RSpec.describe RubyLLM::Chat do
     )
   end
 
-  it 'preserves native identity and ordering metadata while assembling input fragments' do
+  it 'preserves native identity while assembling input fragments' do
     native = local_tool('screenshot', namespace: 'computer') { 'Synthetic screenshot result' }
     events = [
       { type: 'message_start', message: { model: model, usage: { input_tokens: 10 } } },
@@ -378,7 +378,6 @@ RSpec.describe RubyLLM::Chat do
 
     member = reply.tool_calls.values.first
     expect(member.namespace).to eq('computer')
-    expect(member).to be_sequential
     expect(chat.render[:messages][2][:content].first[:toolset_name]).to eq('computer')
   end
 
@@ -413,7 +412,47 @@ RSpec.describe RubyLLM::Chat do
     expect(namespace).to include('name' => 'crm')
     expect(namespace['tools'].map { |definition| definition['name'] }).to eq(['lookup'])
     expect(other.messages[1].tool_calls.values.first.namespace).to eq('crm')
-    expect(other.messages[1].tool_calls.values.first).not_to be_sequential
+  end
+
+  it 'runs every Responses namespace call after an earlier one fails' do
+    failing = local_tool('lookup', namespace: 'crm') { { error: 'Not found' } }
+    later = local_tool('orders', namespace: 'crm') do
+      executed << :orders
+      'Orders'
+    end
+    other = RubyLLM.chat(model: model_for(:openai), provider: :openai, protocol: :responses).with_tools(failing, later)
+    output = [{ type: 'function_call', call_id: 'lookup_1', name: 'lookup', namespace: 'crm', arguments: '{}' },
+              { type: 'function_call', call_id: 'orders_1', name: 'orders', namespace: 'crm', arguments: '{}' }]
+    other.add_message(role: :user, content: 'Find customer')
+    other.add_message(RubyLLM::Message.new(
+                        role: :assistant, content: nil,
+                        tool_calls: output.to_h do |item|
+                          call = RubyLLM::ToolCall.new(provider_call_id: item[:call_id], name: item[:name],
+                                                       namespace: item[:namespace])
+                          [call.id, call]
+                        end
+                      ))
+
+    other.run_tools
+
+    expect(executed).to eq([:orders])
+  end
+
+  it 'describes a Responses namespace with the description its tools declare' do
+    described = local_tool('lookup', namespace: 'crm')
+    described.class.namespace('crm', description: 'Customer records')
+    other = RubyLLM.chat(model: model_for(:openai), provider: :openai, protocol: :responses)
+
+    group = other.with_tools(local_tool('orders', namespace: 'crm'), described).render[:tools].sole
+
+    expect(group).to include(type: 'namespace', name: 'crm', description: 'Customer records')
+    expect(group[:tools].map { |tool| tool[:name] }).to eq(%w[orders lookup])
+  end
+
+  it 'leaves the description out of a Responses namespace none of its tools describe' do
+    other = RubyLLM.chat(model: model_for(:openai), provider: :openai, protocol: :responses)
+
+    expect(other.with_tools(local_tool('lookup', namespace: 'crm')).render[:tools].sole).not_to have_key(:description)
   end
 
   it 'adds tool search when a Responses namespace contains a deferred member' do
@@ -425,13 +464,6 @@ RSpec.describe RubyLLM::Chat do
 
     expect(payload[:tools]).to include(type: 'tool_search')
     expect(payload[:tools].first[:tools].first).to include(defer_loading: true)
-  end
-
-  it 'rejects an ambiguous qualified registration instead of replacing a different tool' do
-    native = local_tool('screenshot', namespace: 'computer')
-    ordinary = local_tool('computer.screenshot')
-
-    expect { chat.with_tools(native, ordinary) }.to raise_error(ArgumentError, /Ambiguous tool name/)
   end
 
   it 'does not use a qualified-looking ordinary call to invoke a native executor' do

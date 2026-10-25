@@ -55,14 +55,13 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator do
     expect(usages).to include('t.index [ :owner_type, :owner_id ]')
   end
 
-  it 'stores client tool namespaces and ordered execution on tool calls' do
+  it 'stores tool namespaces on tool calls' do
     generator = described_class.new([], {}, destination_root: destination, shell: Thor::Shell::Basic.new)
     generator.create_migration_files
     migration = File.read(Dir.glob(File.join(destination, 'db/migrate/*_create_ruby_llm_records.rb')).sole)
     calls = migration[/create_table :ruby_llm_tool_calls.*?^    end$/m]
 
     expect(calls).to include('t.string :namespace')
-    expect(calls).to include('t.boolean :sequential, default: false, null: false')
   end
 
   it 'creates the queued messages table for any chat, with an optional owner' do

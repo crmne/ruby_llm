@@ -38,6 +38,7 @@ module RubyLLM
     include Streaming
     include BinaryStreaming
     include RequestShapes
+    include ToolNamespaces
 
     # The Provider this protocol talks through.
     attr_reader :provider
@@ -163,28 +164,6 @@ module RubyLLM
     # model on any other API a +tool_search+ tool of its own instead.
     def tool_search?
       false
-    end
-
-    def tool_namespaces? # :nodoc:
-      false
-    end
-
-    def validate_tool_namespaces(messages, tools, tool_prefs = nil) # :nodoc:
-      validate_tool_choice_namespace(tools, tool_prefs&.dig(:choice))
-      return if tool_namespaces?
-
-      calls = messages.flat_map { |message| (message.tool_calls || {}).values }
-      return unless (tools.values + calls).any?(&:namespace)
-
-      raise Error, "#{@provider.name} cannot express tool namespaces with this protocol"
-    end
-
-    # Neither Anthropic nor Responses can name a namespaced tool in a forced
-    # tool choice; both reject the request.
-    def validate_tool_choice_namespace(tools, choice) # :nodoc:
-      return unless tools[choice]&.namespace
-
-      raise Error, "#{@provider.name} cannot force the namespaced tool #{choice}; use choice: :required instead"
     end
 
     # Writes the chat's safety identifier into the request payload and
