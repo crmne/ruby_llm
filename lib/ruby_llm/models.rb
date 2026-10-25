@@ -629,7 +629,7 @@ module RubyLLM
     def find_configured(model_id, provider: nil, config: nil) # :nodoc:
       return find_with_provider(model_id, provider, config) if provider
 
-      find_without_provider(model_id, config || RubyLLM.config)
+      find_on_configured_providers(model_id, config || RubyLLM.config) || find_without_provider(model_id)
     end
 
     # Returns a new Models registry containing only chat models.

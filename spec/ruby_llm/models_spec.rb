@@ -604,6 +604,18 @@ RSpec.describe RubyLLM::Models do
       expect(provider_instance).to be_a(RubyLLM::Providers::OpenRouter)
     end
 
+    it 'resolves an alias to the Bedrock model when only Bedrock is configured' do
+      config = RubyLLM::Configuration.new
+      config.bedrock_api_key = 'test'
+      config.bedrock_secret_key = 'test'
+      config.bedrock_region = 'us-east-1'
+
+      model_info, provider_instance = described_class.resolve('claude-haiku-4-5', config:)
+
+      expect(model_info.id).to eq(described_class.find('claude-haiku-4-5', provider: :bedrock, config:).id)
+      expect(provider_instance).to be_a(RubyLLM::Providers::Bedrock)
+    end
+
     it 'names the preferred provider when no configured provider carries the model' do
       expect { described_class.resolve('openai/gpt-5-nano', config: RubyLLM::Configuration.new) }
         .to raise_error(RubyLLM::ConfigurationError, /Perplexity provider is not configured/)

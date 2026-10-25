@@ -201,6 +201,18 @@ RSpec.describe RubyLLM::Models::Lookup do
       expect(registry.find_configured(local.id, config:)).to equal(local)
     end
 
+    it "uses a configured provider's own alias target" do
+      aliased = RubyLLM::Model.new(id: 'anthropic/claude-haiku-4.5', provider: 'openrouter')
+      first_party = RubyLLM::Model.new(id: 'claude-haiku-4-5-20251001', provider: 'anthropic')
+      allow(RubyLLM::Models::Aliases).to receive(:aliases).and_return(
+        'claude-haiku-4-5' => { 'anthropic' => first_party.id, 'openrouter' => aliased.id }
+      )
+      registry = RubyLLM::Models.new([first_party, aliased])
+
+      expect(registry.find_configured('claude-haiku-4-5', config:)).to equal(aliased)
+      expect(registry.find('claude-haiku-4-5')).to equal(first_party)
+    end
+
     it 'scopes to the named provider' do
       expect(models.find_configured(aggregated.id, provider: :perplexity, config:)).to equal(first_party)
     end

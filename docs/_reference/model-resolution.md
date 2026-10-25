@@ -100,7 +100,7 @@ RubyLLM.configure { |config| config.openrouter_api_key = ENV["OPENROUTER_API_KEY
 RubyLLM.chat(model: "openai/gpt-5-nano").model.provider  # => "openrouter"
 ```
 
-A local provider such as Ollama or GPUStack counts as configured once you set its API base. When none of your configured providers carries the model, RubyLLM picks the most preferred provider anyway, so the `RubyLLM::ConfigurationError` names the provider and the settings it needs.
+Each configured provider resolves the name the way it would if you had passed `provider:`, through its own alias and registry ID. With only Bedrock configured, `claude-haiku-4-5` resolves to Bedrock's Claude Haiku 4.5. A local provider such as Ollama or GPUStack counts as configured once you set its API base. When none of your configured providers carries the model, RubyLLM picks the most preferred provider anyway, so the `RubyLLM::ConfigurationError` names the provider and the settings it needs.
 
 > `RubyLLM.models.find` searches the whole registry and ranks every provider, configured or not. Only resolution, the step behind `RubyLLM.chat` and the other `model:` entry points, prefers configured providers.
 {: .note }

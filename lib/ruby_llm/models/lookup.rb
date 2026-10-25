@@ -47,13 +47,28 @@ module RubyLLM
       # A name can be one provider's exact id and another's alias:
       # claude-opus-4 is exact on vertexai, an alias on anthropic.
       # Provider preference settles it, not the kind of match.
-      def find_without_provider(model_id, config = nil)
+      def find_without_provider(model_id)
+        preferred_match(bare_matches(model_id)) || raise_model_not_found(model_id)
+      end
+
+      def bare_matches(model_id)
         resolved_id = Aliases.resolve(model_id)
         matches = Array(models_by_id[model_id])
-        matches += aliased_matches(model_id, resolved_id) unless resolved_id == model_id
-        configured = config ? matches.select { |model| Provider.resolve(model.provider)&.configured?(config) } : []
+        resolved_id == model_id ? matches : matches + aliased_matches(model_id, resolved_id)
+      end
 
-        preferred_match(configured) || preferred_match(matches) || raise_model_not_found(model_id)
+      # Bare-name matches come first so they win ties; each configured
+      # provider then adds what it serves under its own alias or registry
+      # id, as with provider:.
+      def find_on_configured_providers(model_id, config)
+        slugs = Provider.configured_providers(config).map(&:slug)
+        matches = bare_matches(model_id).select { |model| slugs.include?(model.provider) }
+        matches += slugs.filter_map do |slug|
+          find_with_provider(model_id, slug, config)
+        rescue ModelNotFoundError
+          nil
+        end
+        preferred_match(matches)
       end
 
       def aliased_matches(model_id, resolved_id)
