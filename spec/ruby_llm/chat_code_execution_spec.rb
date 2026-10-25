@@ -175,11 +175,28 @@ RSpec.describe RubyLLM::Chat do
       expect(progress_of(sandbox)).to eq(['warning', 'Converting page 2'])
     end
 
+    it 'decodes output as UTF-8 whatever the default external encoding' do
+      default = Encoding.default_external
+      Encoding.default_external = Encoding::US_ASCII
+      sandbox = FakeSandbox.new(output: ["café\n"])
+
+      expect(progress_of(sandbox)).to eq(['café'])
+    ensure
+      Encoding.default_external = default
+    end
+
     it 'keeps only the end of a long unfinished line' do
       stub_const('RubyLLM::CodeExecution::MAX_PROGRESS_LINE', 4)
       sandbox = FakeSandbox.new(output: %W[abcdefgh ij\n])
 
-      expect(progress_of(sandbox)).to eq(['efghij'])
+      expect(progress_of(sandbox)).to eq(['ghij'])
+    end
+
+    it 'keeps only the end of a long line that arrives in one chunk' do
+      stub_const('RubyLLM::CodeExecution::MAX_PROGRESS_LINE', 4)
+      sandbox = FakeSandbox.new(output: ["abcdefgh\n"])
+
+      expect(progress_of(sandbox)).to eq(['efgh'])
     end
 
     it 'does not stream the output when nothing listens for progress' do
