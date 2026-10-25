@@ -53,6 +53,25 @@ RSpec.describe RubyLLM::CodeExecution::RubyInstallation do
     expect(installation.readable).to eq([prefix])
   end
 
+  it 'names Ruby, its shared library, and its extensions for their libraries' do
+    extensions = Dir.glob(File.join(RbConfig::CONFIG['archdir'], '**', "*.#{RbConfig::CONFIG['DLEXT']}"))
+    shared = File.join(RbConfig::CONFIG['libdir'], RbConfig::CONFIG['LIBRUBY_SO'])
+
+    expect(installation.libraries).to include(RbConfig.ruby, *extensions)
+    expect(installation.libraries.include?(shared)).to eq(RbConfig::CONFIG['ENABLE_SHARED'] == 'yes')
+  end
+
+  it 'names the shared library only when Ruby was built with one' do
+    File.write(File.join(root, 'libruby.so'), '')
+    allow(RbConfig::CONFIG).to receive(:[]).and_call_original
+    allow(RbConfig::CONFIG).to receive(:[]).with('libdir').and_return(root)
+    allow(RbConfig::CONFIG).to receive(:[]).with('LIBRUBY_SO').and_return('libruby.so')
+    allow(RbConfig::CONFIG).to receive(:[]).with('ENABLE_SHARED').and_return('yes', 'no')
+
+    expect(described_class.new(prefix:, gem_dir:).libraries).to include(File.join(root, 'libruby.so'))
+    expect(described_class.new(prefix:, gem_dir:).libraries).not_to include(File.join(root, 'libruby.so'))
+  end
+
   it "hides the application's gems, keeping Ruby's default and bundled gems" do
     expect(installation.denied).to contain_exactly(
       File.join(gem_dir, 'gems', 'rspec-core-3.13.0'),

@@ -181,6 +181,50 @@ RSpec.describe RubyLLM::Chat do
       expect { tool.languages }.to raise_error(RubyLLM::ConfigurationError, /cannot run python/)
     end
 
+    it 'says why the sandbox cannot run a language, in the error and the debug log' do
+      sandbox = FakeSandbox.new(missing: ['ruby'])
+      chat = RubyLLM.context { |config| config.sandbox = sandbox }.chat(model: model_for(:openai), provider: :openai)
+      tool = chat.with_code_execution(languages: [:ruby]).tools[:run_code]
+      logged = []
+      allow(RubyLLM.logger).to receive(:debug) { |*, &message| logged << message&.call }
+
+      expect { tool.languages }
+        .to raise_error(RubyLLM::ConfigurationError, 'The sandbox cannot run ruby: ruby: not found')
+      expect(logged).to include('Code execution cannot run Ruby: ruby: not found')
+    end
+
+    it 'says how a language check ended when it printed nothing' do
+      sandbox = FakeSandbox.new { |run| FakeSandbox.result(exit_code: -1) if run }
+      allow(sandbox).to receive(:check?).and_return(false)
+      chat = RubyLLM.context { |config| config.sandbox = sandbox }.chat(model: model_for(:openai), provider: :openai)
+      tool = chat.with_code_execution(languages: %i[ruby shell]).tools[:run_code]
+
+      expect { tool.languages }.to raise_error(
+        RubyLLM::ConfigurationError,
+        'The sandbox cannot run ruby: the check exited with -1; shell: the check exited with -1'
+      )
+    end
+
+    it 'says when a language check ran out of time' do
+      sandbox = FakeSandbox.new { |run| FakeSandbox.result(timed_out: true, exit_code: 0) if run }
+      allow(sandbox).to receive(:check?).and_return(false)
+      chat = RubyLLM.context { |config| config.sandbox = sandbox }.chat(model: model_for(:openai), provider: :openai)
+      tool = chat.with_code_execution(languages: [:ruby]).tools[:run_code]
+
+      expect { tool.languages }
+        .to raise_error(RubyLLM::ConfigurationError, 'The sandbox cannot run ruby: the check timed out')
+    end
+
+    it "lets the code and the language checks load the libraries Ruby's extensions link" do
+      sandbox = FakeSandbox.new
+      chat = RubyLLM.context { |config| config.sandbox = sandbox }.chat(model: model_for(:openai), provider: :openai)
+      chat.with_code_execution.tools[:run_code].call(language: 'ruby', code: 'puts 1')
+      libraries = RubyLLM::CodeExecution::RubyInstallation.current.libraries
+
+      expect(sandbox.runs.map { |run| run[:libraries] }.uniq).to eq([libraries])
+      expect(libraries).to include(RbConfig.ruby)
+    end
+
     it 'checks what a sandbox can run once, however many chats use it' do
       chats = Array.new(2) { context.chat(model: model_for(:openai), provider: :openai).with_code_execution }
 

@@ -54,9 +54,12 @@ module RubyLLM
   # lines as progress; a sandbox may ignore the block. The result may also
   # answer +blocked+, the hosts the network policy refused. A sandbox may
   # answer +reason+, which RubyLLM adds to the error it raises when
-  # #supported? is false, and +readable+, +writable+, +network+,
-  # +directory+, and +timeout+, which describe it to the model and to the
-  # person approving an escalation.
+  # #supported? is false, and +with_libraries_of+, taking paths and
+  # returning a sandbox whose runs may load the libraries those files
+  # link, which RubyLLM calls with Ruby and its extensions. It may also
+  # answer +readable+, +writable+, +network+, +directory+, and +timeout+,
+  # which describe it to the model and to the person approving an
+  # escalation.
   module Sandbox
     # Seconds a run may take when the sandbox sets no timeout.
     DEFAULT_TIMEOUT = 120
