@@ -7,6 +7,10 @@ module RubyLLM
       class Responses < Protocols::Responses
         include Protocols::Responses::TokenCounting
         include Protocols::Responses::Compaction
+
+        def document_urls?
+          true
+        end
       end
     end
   end

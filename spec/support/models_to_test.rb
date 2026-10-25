@@ -137,6 +137,14 @@ PDF_MODELS = [
   { provider: :vertexai, model: 'gemini-2.5-flash' }
 ].freeze
 
+DOCUMENT_URL_MODELS = [
+  { provider: :azure, model: 'gpt-5-nano', protocol: :responses },
+  { provider: :meta, model: META_TEST_MODEL },
+  { provider: :openai, model: 'gpt-5-nano' },
+  { provider: :openrouter, model: 'gemini-2.5-flash', protocol: :responses },
+  { provider: :xai, model: 'grok-4-1-fast-non-reasoning' }
+].freeze
+
 DOCUMENT_MODELS = [
   { provider: :bedrock, model: 'claude-sonnet-4-5' },
   { provider: :mistral, model: 'mistral-small-latest' },

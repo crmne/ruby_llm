@@ -18,7 +18,7 @@ After reading this guide, you will know:
 * How RubyLLM upgrades move from one release to the next.
 * How to upgrade a 2.1 application and its Rails schema to 2.2.
 * How persisted chats now run in one process at a time.
-* What changes for a crashed job, a denial, an MCP input error, and a deploy that mixes versions.
+* What changes for a crashed job, a denial, an MCP input error, a document URL, and a deploy that mixes versions.
 
 This guide covers **2.1 to 2.2**. Coming from 2.0? Follow the [2.1 upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.1.1/docs/_reference/upgrading.md) with RubyLLM 2.1 first.
 
@@ -150,6 +150,10 @@ end
 ```
 
 `RubyLLM::MCP::InputRequest` is now `RubyLLM::InputRequest`, the same class under its old name.
+
+## Providers Fetch Document URLs
+
+In 2.1, RubyLLM downloaded every URL attachment and sent its bytes. In 2.2, PDF and Office document URLs sent through the Responses API on OpenAI, Azure, xAI, OpenRouter, and Meta go to the provider as URLs, and the provider downloads them. A URL that only your servers can reach, such as one on a private network or behind your application's login, worked in 2.1 and fails in 2.2. Attach the file as a local path, an IO, or an Active Storage attachment instead, so RubyLLM sends its bytes. See [Letting the Provider Fetch Document URLs]({% link _core_features/attachments.md %}#letting-the-provider-fetch-document-urls).
 
 ## Responses Keep No Request Headers
 
