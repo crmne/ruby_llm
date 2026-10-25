@@ -17,6 +17,12 @@ module RubyLLM
       HIDDEN_DIRECTORIES = %w[cache doc].freeze
       BUILD_MARKER = 'gem.build_complete'
 
+      # Ruby's bundled gems that Gem::BUNDLED_GEMS::SINCE may leave out. It
+      # lists only the gems that recently stopped being default gems, and
+      # an installed Ruby keeps no other list of them.
+      BUNDLED_GEMS = %w[minitest power_assert rake test-unit rexml rss net-ftp net-imap net-pop net-smtp matrix prime
+                        rbs typeprof debug repl_type_completor readline].freeze
+
       def self.current
         @current ||= new
       end
@@ -117,7 +123,7 @@ module RubyLLM
       end
 
       def bundled_gems
-        @bundled_gems ||= bundled_gems_file || bundled_gems_constant
+        @bundled_gems ||= bundled_gems_file || (BUNDLED_GEMS | bundled_gems_constant)
       end
 
       def bundled_gems_file

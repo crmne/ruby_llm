@@ -87,6 +87,20 @@ RSpec.describe RubyLLM::CodeExecution::RubyInstallation do
     expect(installation.ruby_gem?('rspec-core')).to be(false)
   end
 
+  it "keeps the gems Ruby bundled before Gem::BUNDLED_GEMS lists them, without Ruby's source" do
+    allow(installation).to receive(:bundled_gems).and_call_original
+    allow(RbConfig::CONFIG).to receive(:[]).and_call_original
+    allow(RbConfig::CONFIG).to receive(:[]).with('srcdir').and_return(nil)
+    stub_const('Gem::BUNDLED_GEMS::SINCE', { 'csv' => '3.4.0' }) if bundled_gems_constant?
+    install('prime', '0.1.4')
+    install('minitest', '5.25.4')
+
+    expect(installation.denied).not_to include(File.join(gem_dir, 'gems', 'prime-0.1.4'),
+                                               File.join(gem_dir, 'gems', 'minitest-5.25.4'))
+    expect(installation.denied).to include(File.join(gem_dir, 'gems', 'rspec-core-3.13.0'))
+    expect(installation.ruby_gem?('matrix')).to be(true)
+  end
+
   it 'falls back to the gems Ruby moved from default to bundled' do
     allow(installation).to receive(:bundled_gems).and_call_original
     allow(RbConfig::CONFIG).to receive(:[]).and_call_original
