@@ -91,7 +91,7 @@ RSpec.describe RubyLLM::CodeExecution::RubyInstallation do
     allow(installation).to receive(:bundled_gems).and_call_original
     allow(RbConfig::CONFIG).to receive(:[]).and_call_original
     allow(RbConfig::CONFIG).to receive(:[]).with('srcdir').and_return(nil)
-    stub_const('Gem::BUNDLED_GEMS::SINCE', { 'csv' => '3.4.0' }) if bundled_gems_constant?
+    allow(installation).to receive(:bundled_gems_constant).and_return(%w[csv])
     install('prime', '0.1.4')
     install('minitest', '5.25.4')
 
