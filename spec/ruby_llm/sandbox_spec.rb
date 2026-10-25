@@ -40,6 +40,21 @@ RSpec.describe RubyLLM::Sandbox do
       expect(result.exit_code).to eq(0)
     end
 
+    it 'yields every line a chunk completes as soon as it arrives' do
+      chunks = [[:stdout, 'abc'], [:stdout, "\nd\n"], [:stderr, "e\n"]]
+      streaming = Class.new(MXC::Sandbox) do
+        define_method(:run) do |*, &block|
+          chunks.each { |stream, content| block.call(MXC::Chunk.new(stream:, content:)) }
+          FakeSandbox.result
+        end
+      end
+      lines = []
+
+      described_class.resolve(streaming).run('ruby', timeout: 10) { |line| lines << line }
+
+      expect(lines).to eq(%W[abc\n d\n e\n])
+    end
+
     it 'runs an MXC::Sandbox on the configured backend unless it names its own' do
       skip 'mxc runs on MRI' unless RUBY_ENGINE == 'ruby'
       require 'mxc'

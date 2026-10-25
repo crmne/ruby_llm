@@ -71,9 +71,12 @@ module RubyLLM
       def run_by_line(run, command)
         pending = Hash.new { |buffers, stream| buffers[stream] = String.new(encoding: Encoding::BINARY) }
         result = run.run(*command) do |chunk|
-          buffer = pending[chunk.stream] << chunk.content.b
-          while (newline = buffer.index("\n"))
+          buffer = pending[chunk.stream]
+          scanned = buffer.bytesize
+          buffer << chunk.content.b
+          while (newline = buffer.index("\n", scanned))
             yield text(buffer.slice!(0..newline))
+            scanned = 0
           end
         end
         pending.each_value { |rest| yield text(rest) unless rest.empty? }
