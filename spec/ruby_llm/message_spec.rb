@@ -67,6 +67,44 @@ RSpec.describe RubyLLM::Message do
     end
   end
 
+  describe '#parsed with commentary before the final answer' do
+    let(:model) { model_for(:openai) }
+    let(:schema) do
+      { type: 'object', properties: { total: { type: 'number' } }, required: ['total'], additionalProperties: false }
+    end
+
+    def item(phase, text)
+      { type: 'message', id: "msg_#{phase}", role: 'assistant', status: 'completed', phase:,
+        content: [{ type: 'output_text', text:, annotations: [] }] }
+    end
+
+    before do
+      output = [item('commentary', 'We read the total from the invoice.'), item('final_answer', '{"total":12.1}')]
+      body = { id: 'resp_1', object: 'response', status: 'completed', model:, output:,
+               usage: { input_tokens: 5, output_tokens: 20, total_tokens: 25 } }
+      stub_request(:post, 'https://api.openai.com/v1/responses').to_return_json(body:)
+    end
+
+    def ask
+      RubyLLM.context { |config| config.openai_api_key = 'test' }
+             .chat(model:, provider: :openai).with_schema(schema).ask('What is the total?')
+    end
+
+    it 'parses only the final answer' do
+      response = ask
+
+      expect(response.content).to eq('We read the total from the invoice.{"total":12.1}')
+      expect(response.parsed).to eq('total' => 12.1)
+    end
+
+    it 'parses only the final answer after a JSON round trip' do
+      restored = described_class.new(ask.to_h)
+      restored.ruby_llm_usage_entries = ask.ruby_llm_usage_entries
+
+      expect(restored.parsed).to eq('total' => 12.1)
+    end
+  end
+
   describe '.new from #to_h attributes' do
     it 'restores earlier provider ID keys while serializing the current names' do
       message = described_class.new(

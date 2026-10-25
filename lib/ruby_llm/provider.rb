@@ -604,6 +604,13 @@ module RubyLLM
         @protocols ||= {}
       end
 
+      # Returns the part of +message+ that holds its answer, as the first of
+      # the provider's protocols that recognizes the message reads it, or
+      # +nil+ when none does.
+      def answer_text(message) # :nodoc:
+        protocols.each_value.lazy.filter_map { |protocol| protocol.parse_answer_text(message) }.first
+      end
+
       # Registers +provider_class+ under the slug +name+, making it
       # available to RubyLLM.chat and the other top-level helpers.
       # Stamps the class's slug, adds it to ::providers, and defines a

@@ -35,7 +35,9 @@ module RubyLLM
         accumulate_citations(chunk.citations)
         append_thinking_from_chunk(chunk)
         accumulate_server_tool_calls(chunk.server_tool_calls)
-        keep_latest_turn_details(chunk)
+        @raw_content = chunk.raw_content if chunk.raw_content
+        @raw_reasoning = chunk.raw_reasoning if chunk.raw_reasoning
+        @phase = chunk.phase if chunk.phase
         @finish_reason = chunk.finish_reason if chunk.finish_reason
         accumulate_content_filters(chunk.content_filters)
         count_tokens chunk
@@ -57,7 +59,6 @@ module RubyLLM
           raw_content: @raw_content,
           raw_reasoning: @raw_reasoning,
           phase: @phase,
-          answer: @answer,
           finish_reason: @finish_reason,
           content_filters: @content_filters.values,
           model: model,
@@ -67,13 +68,6 @@ module RubyLLM
       end
 
       private
-
-      def keep_latest_turn_details(chunk)
-        @raw_content = chunk.raw_content if chunk.raw_content
-        @raw_reasoning = chunk.raw_reasoning if chunk.raw_reasoning
-        @phase = chunk.phase if chunk.phase
-        @answer = chunk.answer if chunk.answer
-      end
 
       # A stream can judge the same category again as it goes; a verdict
       # that filtered stays, and otherwise the latest one does.

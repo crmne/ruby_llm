@@ -66,6 +66,14 @@ module RubyLLM
       end
     end
 
+    # Returns the text of +message+ that holds its answer when this wire
+    # format marks other parts of the turn as intermediate, or +nil+ when
+    # all of its content is the answer. Reads only what the message keeps,
+    # so a restored message answers the same.
+    def self.parse_answer_text(_message)
+      nil
+    end
+
     abstract :render_payload, :completion_url, :parse_completion_body
     abstract :render_tool_approval_response
     abstract :models_url, :parse_list_models_response

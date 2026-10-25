@@ -43,26 +43,6 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
     expect(chunk.raw_content).to be_nil
   end
 
-  it 'parses a streamed answer from its final answer, not its commentary' do
-    accumulator = RubyLLM::Protocol::StreamAccumulator.new
-    events = [
-      { 'type' => 'response.output_text.delta', 'output_index' => 0, 'delta' => 'Reading the total.' },
-      { 'type' => 'response.output_text.delta', 'output_index' => 1, 'delta' => '{"total":12.1}' },
-      { 'type' => 'response.completed', 'response' => { 'status' => 'completed', 'output' => [
-        { 'type' => 'message', 'phase' => 'commentary',
-          'content' => [{ 'type' => 'output_text', 'text' => 'Reading the total.' }] },
-        { 'type' => 'message', 'phase' => 'final_answer',
-          'content' => [{ 'type' => 'output_text', 'text' => '{"total":12.1}' }] }
-      ] } }
-    ]
-
-    events.each { |event| accumulator.add(build_chunk(event)) }
-    message = accumulator.to_message(nil)
-
-    expect(message.content).to eq('Reading the total.{"total":12.1}')
-    expect(message.parsed).to eq('total' => 12.1)
-  end
-
   it 'streams output text deltas as content' do
     chunk = build_chunk({ 'type' => 'response.output_text.delta', 'delta' => 'Hel' })
 

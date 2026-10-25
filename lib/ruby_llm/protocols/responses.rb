@@ -28,6 +28,10 @@ module RubyLLM
         end
       }.freeze
 
+      def self.parse_answer_text(message)
+        Chat.parse_answer_text(message)
+      end
+
       def server_tool_aliases
         SERVER_TOOL_ALIASES
       end

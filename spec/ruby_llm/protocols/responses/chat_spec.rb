@@ -601,7 +601,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
         expect(message.phase).to eq('final_answer')
       end
 
-      it 'parses structured output from the final answer only, keeping the commentary in content' do
+      it 'reads the answer from the final answer items, keeping the commentary in content' do
         output.last['content'].first['text'] = '{"total":12.1}'
         commentary = output.last.merge('id' => 'msg_0', 'phase' => 'commentary',
                                        'content' => [{ 'type' => 'output_text', 'text' => 'Reading the total.' }])
@@ -609,26 +609,31 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
         message = protocol.send(:parse_completion_response, response_with(output.insert(1, commentary)))
 
         expect(message.content).to eq('Reading the total.{"total":12.1}')
-        expect(message.parsed).to eq('total' => 12.1)
+        expect(RubyLLM::Protocols::Responses.parse_answer_text(message)).to eq('{"total":12.1}')
       end
 
-      it 'parses nothing when no message is a final answer' do
+      it 'reads no answer from a turn that is only commentary' do
         output.last['phase'] = 'commentary'
 
         message = protocol.send(:parse_completion_response, response_with(output))
 
-        expect(message.content).to eq('Done.')
-        expect(message.parsed).to be_nil
+        expect(RubyLLM::Protocols::Responses.parse_answer_text(message)).to eq('')
       end
 
-      it 'parses every message when none carries a phase' do
+      it 'leaves the answer to the content when no message carries a phase' do
         output.last['phase'] = nil
-        output.last['content'].first['text'] = '{"total":'
-        output << output.last.merge('id' => 'msg_2', 'content' => [{ 'type' => 'output_text', 'text' => '12.1}' }])
+        output << output.last.merge('id' => 'msg_2')
 
         message = protocol.send(:parse_completion_response, response_with(output))
 
-        expect(message.parsed).to eq('total' => 12.1)
+        expect(RubyLLM::Protocols::Responses.parse_answer_text(message)).to be_nil
+      end
+
+      it 'reads no answer from a message other protocols produced' do
+        message = RubyLLM::Message.new(role: :assistant, content: 'Hi',
+                                       raw_content: [{ 'type' => 'text', 'text' => 'Hi' }])
+
+        expect(RubyLLM::Protocols::Responses.parse_answer_text(message)).to be_nil
       end
     end
 

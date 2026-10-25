@@ -94,7 +94,6 @@ module RubyLLM
                 server_tool_calls: server_tool_calls,
                 raw_content: keep_raw_output?(output, server_tool_calls) ? output : nil,
                 phase: parse_phase(output),
-                answer: parse_answer_text(output),
                 **parse_usage(response['usage'] || {}),
                 server_tool_use: parse_server_tool_use(response)
         end

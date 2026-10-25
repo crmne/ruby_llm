@@ -73,7 +73,6 @@ module RubyLLM
             server_tool_calls: server_tool_calls,
             raw_content: keep_raw_output?(output, server_tool_calls) ? output : nil,
             phase: parse_phase(output),
-            answer: parse_answer_text(output),
             model: data['model'],
             raw: raw,
             finish_reason: finish_reason,
@@ -131,9 +130,16 @@ module RubyLLM
 
         # Structured output lives in final_answer items, or in every item
         # when none carries a phase. Commentary and phases OpenAI adds later
-        # are not the answer, as in OpenAI's SDKs.
-        def parse_answer_text(output)
-          parse_output_text(output.select { |item| ANSWER_PHASES.include?(item['phase']) }) || ''
+        # are not the answer, as in OpenAI's SDKs. A turn whose items carry
+        # different phases keeps them in raw_content; otherwise its one
+        # phase tells.
+        def parse_answer_text(message)
+          output = message.raw_content
+          if output.is_a?(Array) && !message_phases(output).empty?
+            parse_output_text(output.select { |item| ANSWER_PHASES.include?(item['phase']) }) || ''
+          elsif !ANSWER_PHASES.include?(message.phase)
+            ''
+          end
         end
 
         def message_phases(output)
