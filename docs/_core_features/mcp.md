@@ -766,6 +766,24 @@ An app belongs to the authorization server you registered it with. RubyLLM remem
 
 Pass `scopes:` to ask for specific scopes instead of the ones the server suggests.
 
+A server that needs a scope the token lacks raises `RubyLLM::MCP::InsufficientScopeError`, a `RubyLLM::ForbiddenError` whose message carries the server's reason and whose `scopes` lists what it asked for. RubyLLM never asks for wider access by itself, so a model's tool call cannot grant itself more permissions. Decide which scopes your app needs, add them to `scopes:`, and send the user through `authorization_url` again:
+
+```ruby
+class GitHub < RubyLLM::MCP
+  url "https://api.githubcopilot.com/mcp/"
+  inputs :user
+  oauth owner: :user, client_id: ENV["GITHUB_CLIENT_ID"], client_secret: ENV["GITHUB_CLIENT_SECRET"],
+        scopes: %w[read:user repo]
+end
+
+begin
+  chat.ask "List the open issues in crmne/ruby_llm"
+rescue RubyLLM::MCP::InsufficientScopeError => e
+  e.message # => "api.githubcopilot.com refused the request: Additional scopes required: repo"
+  e.scopes  # => ["repo"]
+end
+```
+
 ### Without a User
 
 Background jobs and services often connect as your app rather than on behalf of a user. When the authorization server issued your app its own credentials, use the client credentials grant:
@@ -879,7 +897,7 @@ class Linear < RubyLLM::MCP
 end
 ```
 
-A server that answers with a protocol error raises `RubyLLM::MCP::Error`, whose `code` is the JSON-RPC error code. A server that wants credentials raises `RubyLLM::UnauthorizedError`.
+A server that answers with a protocol error raises `RubyLLM::MCP::Error`, whose `code` is the JSON-RPC error code. A server that wants credentials raises `RubyLLM::UnauthorizedError`. A server that refuses a request raises `RubyLLM::ForbiddenError`, or `RubyLLM::MCP::InsufficientScopeError` when the token lacks a scope.
 
 ## Next Steps
 
