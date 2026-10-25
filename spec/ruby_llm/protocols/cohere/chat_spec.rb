@@ -324,6 +324,13 @@ RSpec.describe RubyLLM::Protocols::Cohere::Chat do
       )
     end
 
+    it 'leaves source_id unset for cited documents' do
+      citation = protocol.send(:parse_completion_body, body, raw: nil).citations.first
+
+      expect(citation.source_id).to be_nil
+      expect(citation.source_index).to eq(1)
+    end
+
     it 'offsets spans by the text blocks that came before' do
       body['message']['content'].unshift({ 'type' => 'text', 'text' => 'Answer: ' })
       body['message']['citations'].first['content_index'] = 1
