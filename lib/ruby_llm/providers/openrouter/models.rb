@@ -81,6 +81,7 @@ module RubyLLM
             capabilities = supported_parameters_to_capabilities(model_data['supported_parameters']) |
                            input_modality_capabilities(modalities[:input]) |
                            output_modalities.filter_map { |modality| CAPABILITY_BY_OUTPUT_MODALITY[modality] }
+            capabilities -= ['streaming'] if output_modalities.include?('decisions')
 
             Model.new(
               id: model_data['id'],

@@ -160,6 +160,7 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Models do
       expect(model.modalities.to_h).to eq(input: %w[text image], output: ['judgment'])
       expect(model.type).to eq(:judgment)
       expect(model.supports?(:judgment)).to be(true)
+      expect(model.supports?(:streaming)).to be(false)
     end
   end
 
