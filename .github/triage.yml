@@ -88,3 +88,11 @@ instructions: |
   names, point the author to the existing name and cite AGENTS.md's "One name
   per concept, everywhere": instructions, not system_prompt; max_output_tokens,
   not max_tokens; thinking, not reasoning.
+  Requests that make RubyLLM compatible with a provider capability are welcome:
+  recap what the provider offers and leave the decision to the maintainer.
+  Sandbox problems a dependency can fix generally belong upstream in mxc, and
+  model metadata in models.dev. Never suggest automatic re-authorization with a
+  wider MCP scope; the fix is a clear error naming the scope. Changes that
+  depend on a provider's behavior need a recorded cassette or a maintainer's
+  live check. An alpha provider endpoint is worth noting, not a blocker. Pull
+  requests must not include the generated models.json or available-models.md.
