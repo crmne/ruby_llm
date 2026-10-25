@@ -1921,7 +1921,8 @@ module RubyLLM
         tokens: response.tokens,
         cost: response.cost,
         message: response,
-        owner: Accounting::Usage.owner
+        owner: Accounting::Usage.owner,
+        workflow: Accounting::Usage.workflow
       )
       response.ruby_llm_usage_entries = [entry]
       Accounting::Usage.instrument(entry, config: @config)

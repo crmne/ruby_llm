@@ -230,6 +230,19 @@ RSpec.describe RubyLLM::ActiveRecord::Usage do
                                                                workflow_step_name: nil)
   end
 
+  it 'records the workflow of a completion added out of band' do
+    chat = Chat.create!(model: model_for(:anthropic))
+    response = RubyLLM::Message.new(role: :assistant, content: 'Batch response', model_id: model_for(:anthropic),
+                                    tokens: RubyLLM::Tokens.new(input: 4, output: 2))
+
+    RubyLLM.workflow('Nightly summaries', id: 'nightly-1') do |workflow|
+      workflow.step('Collect results') { chat.add_completion(response) }
+    end
+
+    expect(chat.reload.ruby_llm_usages.sole).to have_attributes(workflow_id: 'nightly-1',
+                                                                workflow_step_name: 'Collect results')
+  end
+
   it 'records the workflow a video or research job was submitted in when it finishes outside it' do
     provider = instance_double(RubyLLM::Providers::Gemini, slug: 'gemini')
     video_protocol = instance_double(RubyLLM::Protocols::Gemini, config: RubyLLM.config, provider:)
