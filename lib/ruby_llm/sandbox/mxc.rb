@@ -59,7 +59,7 @@ module RubyLLM
         run.with_env(env.reject { |name, _| run.env.key?(name) })
         apply_network(run, network)
         run = Landlock.policy(run) if run.backend == :landlock
-        run.run(*command, &)
+        block_given? ? run_by_line(run, command, &) : run.run(*command)
       end
 
       def inspect
@@ -67,6 +67,22 @@ module RubyLLM
       end
 
       private
+
+      def run_by_line(run, command)
+        pending = Hash.new { |buffers, stream| buffers[stream] = String.new(encoding: Encoding::BINARY) }
+        result = run.run(*command) do |chunk|
+          buffer = pending[chunk.stream] << chunk.content.b
+          while (newline = buffer.index("\n"))
+            yield text(buffer.slice!(0..newline))
+          end
+        end
+        pending.each_value { |rest| yield text(rest) unless rest.empty? }
+        result
+      end
+
+      def text(bytes)
+        bytes.force_encoding(Encoding::UTF_8).scrub
+      end
 
       def sandbox
         sandbox = @policy.is_a?(Class) ? @policy.new : @policy.dup

@@ -135,68 +135,23 @@ RSpec.describe RubyLLM::Chat do
       reported
     end
 
-    it 'reports the latest line of its output as progress while the code runs' do
-      sandbox = FakeSandbox.new(output: ["Downloading\n", "Converting page 1\nConverting pa", "ge 2\n"])
+    it 'reports each line of its output as progress while the code runs' do
+      sandbox = FakeSandbox.new(output: ["Downloading\n", "Converting page 1\n", 'Converting page 2'])
 
-      expect(progress_of(sandbox)).to eq(['Downloading'])
+      expect(progress_of(sandbox)).to eq(['Downloading', 'Converting page 1', 'Converting page 2'])
       expect(sandbox.code_runs.last[:streamed]).to be(true)
     end
 
-    it 'joins a line split across chunks, and skips blank ones' do
-      stub_const('RubyLLM::CodeExecution::PROGRESS_INTERVAL', 0)
-      sandbox = FakeSandbox.new(output: ['Down', "loading\n", "\n  \n", "Done\n"])
+    it 'strips the lines it reports and skips blank ones' do
+      sandbox = FakeSandbox.new(output: ["  Done  \n", "\n", "  \t\n"])
 
-      expect(progress_of(sandbox)).to eq(%w[Downloading Done])
+      expect(progress_of(sandbox)).to eq(['Done'])
     end
 
-    it 'reports at most once per PROGRESS_INTERVAL' do
-      stub_const('RubyLLM::CodeExecution::PROGRESS_INTERVAL', 60)
-      sandbox = FakeSandbox.new(output: %W[one\n two\n three\n])
+    it 'reports only the start of a long line' do
+      sandbox = FakeSandbox.new(output: ["#{'a' * 500}\n"])
 
-      expect(progress_of(sandbox)).to eq(%w[one])
-    end
-
-    it 'joins a character split across chunks' do
-      sandbox = FakeSandbox.new(output: ["caf\xC3".b, "\xA9\n".b])
-
-      expect(progress_of(sandbox)).to eq(['café'])
-    end
-
-    it 'reports output that is not valid text without failing the run' do
-      sandbox = FakeSandbox.new(output: ["\xFFok\n".b])
-
-      expect(progress_of(sandbox)).to eq(["\uFFFDok"])
-    end
-
-    it 'keeps standard output and standard error lines apart' do
-      stub_const('RubyLLM::CodeExecution::PROGRESS_INTERVAL', 0)
-      sandbox = FakeSandbox.new(output: ['Converting pa', { stderr: "warning\n" }, "ge 2\n"])
-
-      expect(progress_of(sandbox)).to eq(['warning', 'Converting page 2'])
-    end
-
-    it 'decodes output as UTF-8 whatever the default external encoding' do
-      default = Encoding.default_external
-      Encoding.default_external = Encoding::US_ASCII
-      sandbox = FakeSandbox.new(output: ["café\n"])
-
-      expect(progress_of(sandbox)).to eq(['café'])
-    ensure
-      Encoding.default_external = default
-    end
-
-    it 'keeps only the end of a long unfinished line' do
-      stub_const('RubyLLM::CodeExecution::MAX_PROGRESS_LINE', 4)
-      sandbox = FakeSandbox.new(output: %W[abcdefgh ij\n])
-
-      expect(progress_of(sandbox)).to eq(['ghij'])
-    end
-
-    it 'keeps only the end of a long line that arrives in one chunk' do
-      stub_const('RubyLLM::CodeExecution::MAX_PROGRESS_LINE', 4)
-      sandbox = FakeSandbox.new(output: ["abcdefgh\n"])
-
-      expect(progress_of(sandbox)).to eq(['efgh'])
+      expect(progress_of(sandbox)).to eq(['a' * 200])
     end
 
     it 'does not stream the output when nothing listens for progress' do

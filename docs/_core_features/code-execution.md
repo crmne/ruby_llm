@@ -86,7 +86,7 @@ Both belong to the sandbox, so a chat that needs longer runs or a package regist
 
 ### Following a Run
 
-A run that builds a report or installs packages can take a while. While it runs, `run_code` reports the latest line of its output as [progress]({% link _core_features/tool-execution.md %}#reporting-progress), at most four times a second:
+A run that builds a report or installs packages can take a while. While it runs, `run_code` reports each line of its output as [progress]({% link _core_features/tool-execution.md %}#reporting-progress):
 
 ```ruby
 chat.with_code_execution.after_tool_progress do |tool_call, progress|
@@ -98,7 +98,7 @@ chat.ask "Count to five, one number a second"
 # ...
 ```
 
-Output streams only when something listens for progress, and the model still receives it when the run ends, within the usual [limits](#limits). A [sandbox of your own]({% link _core_features/sandboxes.md %}#writing-your-own-sandbox) reports progress when its `run` yields the output as it arrives.
+Output streams only when something listens for progress, and the model still receives it when the run ends, within the usual [limits](#limits). A [sandbox of your own]({% link _core_features/sandboxes.md %}#writing-your-own-sandbox) reports progress when its `run` yields each line of output as it arrives.
 
 ## What the Code Can See
 

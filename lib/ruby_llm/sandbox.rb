@@ -49,11 +49,10 @@ module RubyLLM
   # +timeout+ with +nil+ or not at all. +network+ is +nil+ for the
   # sandbox's own access; RubyLLM passes <tt>{ allow: [...] }</tt> only to
   # install declared packages from their registries. With a block, +run+
-  # may yield the output as it arrives, as objects answering +content+
-  # and, optionally, +stream+ (<tt>:stdout</tt> or <tt>:stderr</tt>),
-  # which code execution reports as progress; a sandbox may ignore the
-  # block. The result may also answer +blocked+, the hosts the network
-  # policy refused. A sandbox may
+  # may yield each line of output as it arrives, from standard output and
+  # standard error, like IO#each_line, and code execution reports the
+  # lines as progress; a sandbox may ignore the block. The result may also
+  # answer +blocked+, the hosts the network policy refused. A sandbox may
   # answer +reason+, which RubyLLM adds to the error it raises when
   # #supported? is false, and +readable+, +writable+, +network+,
   # +directory+, and +timeout+, which describe it to the model and to the

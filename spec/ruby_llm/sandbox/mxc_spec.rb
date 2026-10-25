@@ -42,13 +42,14 @@ RSpec.describe RubyLLM::Sandbox::MXC do
     end
   end
 
-  it 'yields the output as it arrives, and still returns all of it' do
-    chunks = []
-    result = sandbox.run('echo one; sleep 0.3; echo two', timeout: 10) { |chunk| chunks << chunk.content }
+  it 'yields each line of output as it arrives, and still returns all of it' do
+    lines = []
+    command = 'printf "one\\ntw"; sleep 0.3; printf "o\\n"; echo oops >&2; printf end'
+    result = sandbox.run(command, timeout: 10) { |line| lines << line }
 
-    expect(chunks.join).to eq("one\ntwo\n")
-    expect(chunks.size).to be >= 2
-    expect(result.stdout).to eq("one\ntwo\n")
+    expect(lines).to contain_exactly("one\n", "two\n", "oops\n", 'end')
+    expect(lines.first).to eq("one\n")
+    expect(result.stdout).to eq("one\ntwo\nend")
     expect(result.exit_code).to eq(0)
   end
 
