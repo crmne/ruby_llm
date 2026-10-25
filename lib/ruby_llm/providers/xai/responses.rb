@@ -33,6 +33,10 @@ module RubyLLM
           SERVER_TOOL_ALIASES
         end
 
+        def document_urls?
+          true
+        end
+
         def parse_usage(usage)
           super.merge(reported_cost: reported_cost(usage))
         end

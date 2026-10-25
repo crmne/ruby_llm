@@ -1,0 +1,252 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/openai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":[{"type":"input_text","text":"Summarize
+        this document in one sentence."},{"type":"input_file","file_url":"https://pdfobject.com/pdf/sample.pdf"}]}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '6091'
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 25 Oct 2026 18:56:51 GMT
+      Server:
+      - istio-envoy
+      Vary:
+      - Origin
+      X-Ms-Aoai-Configured-Data-Retention-Days:
+      - '30'
+      Skip-Error-Remapping:
+      - 'true'
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - gpt-5-nano
+      X-Ratelimit-Remaining-Requests:
+      - '249'
+      X-Ratelimit-Reset-Requests:
+      - '0'
+      X-Ratelimit-Limit-Requests:
+      - '250'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '249263'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '250000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
+      X-Ms-Served-Model:
+      - gpt-5-nano-2025-08-07
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Apim-Request-Id:
+      - 85f34614-e7d5-4f27-8cc5-8f0653d3f5c5
+      X-Http2-Stream-Id:
+      - '925'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "resp_0a2fbdbc17d26787016ade50f41638819388815a0c104c9a66",
+          "object": "response",
+          "created_at": 1792954612,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "completed_at": 1792954613,
+          "content_filters": [
+            {
+              "blocked": false,
+              "source_type": "prompt",
+              "content_filter_raw": [],
+              "content_filter_results": {
+                "hate": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "sexual": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "violence": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "self_harm": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "jailbreak": {
+                  "detected": false,
+                  "filtered": false
+                }
+              },
+              "content_filter_offsets": {
+                "start_offset": 0,
+                "end_offset": 4152,
+                "check_offset": 0
+              }
+            },
+            {
+              "blocked": false,
+              "source_type": "completion",
+              "content_filter_raw": [],
+              "content_filter_results": {
+                "protected_material_code": {
+                  "detected": false,
+                  "filtered": false
+                },
+                "protected_material_text": {
+                  "detected": false,
+                  "filtered": false
+                },
+                "hate": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "sexual": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "violence": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "self_harm": {
+                  "filtered": false,
+                  "severity": "safe"
+                }
+              },
+              "content_filter_offsets": {
+                "start_offset": 0,
+                "end_offset": 916,
+                "check_offset": 0
+              }
+            }
+          ],
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_0a2fbdbc17d26787016ade50f4d69881938e1295b6fb2542bc",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABq3lD1oIherxZBN0cHINKgQ3xpzPFVmOaryflqZeWoqX3o4AIWqU2Gzf_RR_e5p9MCJKa9MoSrjFAHznrlV2nOZd5fSPVCkfbrfkZ9ct03YUlvWAtlB5GS89z7i5wyLBmbk3VNMbOJCjvKUfDMDqOuSzgZTcOYuhRPNugOSpeEUAM5qSohUKAMHJx_nnzsYtrTZvUfC_bx9KWtHD4dcK4WAbxmeVlpgHF4aU01cBJYFdTXzVWBtmac6VUhRadoLERqd-7oP9b4nZgQbVH-SjiCruoBsWpfIyR2Ema74sZglm-NC-A3p7dH2VZKQ9Zec3iubg9I1xvGbBo09B6dSsXCIHbk6rsX9BsrP4Qm52u5cK2GNbb4u4Ogfy4yR8ZYzJht7e1vM4QuxBSdWR_cmL1lyoUqGOm5RQ1LyyJsQ18MIIIfQreCkCavVCxvXwEpSBwTXzYa2aKstQNLEMkwFCT7OwW3uEc7YeebkqmfdQnXqQsApwFrUI_7tvVb6bcWLPA741x8MvkL1j0YZKxkedi31Q9UyyeDOsxd44gUQ6j23TmhBEW0HsUIyOMYwzkGMlJ6vMlAd89pMrPl0d1gtwVnMRQKria4zF7sASvXmJER01wzq3hUZBeUHdzBE9jhioeJZu0Gm4UCBuerAMDI5Vw8scNFUnky1ADtOnU8QUOH-Qkz2opSCOWenPL0QlyhRnD3c7GmMqXknFGg6N5t-vvcP1T5D2UbCeUo8LZH7Fh3yYyOBl55xjaNzFXvV5NvufBlKswz-hYjp-IL_j4dOqyu_BMiHaz0ThnB-edA_UepL51Nwe_Nx3L2lI-CeWl3ZVHJL5NnUMyGIr_cw0hDvrRajW1MHdIrmAeikIp8XIMRt8VC9h6YfaVMsdecCrvcs-V9gRb5kzHWMIA6XxhKGJdQZHmESFxj5YciZU7_chZW-mfYj4CSMvCcSsInOm9JHFP1lKWBy905QV2Cqzk130cWdi150I_xFan5Qp18sn3KYztw861r_J4S4mUk5Ycuu6lcs2J-knoTslZEhAAaksDaFl9oclE-A9GeGamCxx5I1vLP1mZKSqMQn8HMuB9meSfX36WI4XI7lQ58Y0USioSttm9uToqkbxX5d0bMMqtZXOXU3vylqNHrAmbnQjKPwmWWGHHY3IXnQjd7LywXH7a2SmfJbLPSFNNgee6R-ZN_USTNv4IIIMmk0JlVG5xXqRTeZBi-k66Br18p2XTXe9qiOQxBkjcscUENK9qi-Rh3pVZddrMe1QDtx5rvGI5zS1qyzh1ctC-xSeofs_jVQi81ZdMRpbb4u5QUsjRG3EecXayF8WvX4nFT2LiE_rXGs6jAmJbom5xS3hwV-DdyHMm6uCt7kalw4heoPKGjMpGliEISJhJgBIlZ6HOCfmbemE8o3J8bfPRtSNaeOtVV7zzQP5Os6ioblqZVP-LL63Z_RK8_oBmH7neDfDXam502wfscjwZpfQyH4KkJwuI0DBdg_uFilmoFEOsM6AvLEyCOmXbe0HsM7bYVzPsoE00o7gW_RLuuEdnTsVP2J7yRdDjyzgnKvJJOOqlVZyrhKZf9t7YLZ12rKbWOG6Q6i2zHkrenjZZlURqllHcV_LLbsfTzQT7Xp5IW3DD12vWVmFTvlJqNobBtDyfYjkP0tXvRraAQ7uDvnP4n5YikDOeW4NV0yx_5iHqJ_QTHgyUJeZCjiGIF9hyuYAG2t79SRhwmpxCk6N0wrNGQwCFtnZrJn9sr2DBNwhPMyvo4BoZo-_ZWC3MvXBX2lb-KRvTAma4Ol34XR1wToY3P_h5TTBvebQt4ts_1q3rRYTF9Dv3_4as8DnU03Q2FNmwNE1l4KuyzLqG93JCkYEt8ACq1R8pHFnra2kjGxR0RReg4BgQFc9ROeP5IRY2f2bkfUKuIPVYTAjb22qBvm1gzmFot5VAcvrCksnkT26cqnxvdnnKQnn18Ara8lK4LAyRCkSlo7izeTdk5oo4kwAuJwOHXGnau_nh1PQwUUnnOTXfuXcvRmkM3wxIQ417blrKPMZurIjLFtLlnAvxOlQ8VonSPoBY2_IhBDrtg84-DsK9uwt6AykOWPALjH3SSEc3sEREoE7ExNtlNS8B1NFTVEzVnQPLPnrhj7jx_Ay86CQfw-Ku2JHl4XdsgcmYwmsb0JAfMJDtJLOf4ie_6Yt062aHL8OmNag3kMI2eYvVOs2CIu3pUZwTV4GATAt59uO80gzmjiVuQ7hZct8yT",
+              "summary": []
+            },
+            {
+              "id": "msg_0a2fbdbc17d26787016ade50f56db4819388d5bf9227c2e23a",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "This document is a sample PDF filled with placeholder text (Lorem ipsum) to demonstrate layout."
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 769,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 199,
+            "output_tokens_details": {
+              "reasoning_tokens": 128
+            },
+            "total_tokens": 968
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Sun, 25 Oct 2026 18:56:53 GMT
+recorded_with: VCR 6.4.0
