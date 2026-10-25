@@ -625,8 +625,9 @@ module RubyLLM
     #
     #   chat.with_tools(*Catalog.tools, defer: true)
     #
-    # Tool.namespace keeps same-named members separate. The tools Hash
-    # keys use <tt>namespace.member</tt> for namespaced tools.
+    # A namespaced tool is registered under its namespace and name joined,
+    # as in <tt>:crm_customer_lookup</tt>. Raises ArgumentError when that
+    # key belongs to another tool.
     #
     # To replace the registered tools, clear them first:
     #
@@ -640,6 +641,11 @@ module RubyLLM
       tools.flatten.compact.each do |tool|
         tool = tool.new if tool.is_a?(Class)
         name = tool.qualified_name.to_sym
+        existing = @tools[name]
+        if existing && [existing.namespace, existing.name.to_s] != [tool.namespace, tool.name.to_s]
+          raise ArgumentError, "Two tools are named #{name}. Rename one with `tool :#{name}, as:`"
+        end
+
         @tools[name] = tool
         @tool_deferrals[name] = defer.nil? ? tool.deferred? : defer
       end
@@ -651,8 +657,9 @@ module RubyLLM
     # MCP servers connected with #with_mcp. MCP tools that only the UI of
     # an MCP App may call are left out; see MCP::Tool#visibility.
     #
-    # Namespaced tools use <tt>namespace.member</tt> keys. Raises
-    # ArgumentError when two tools share a qualified name.
+    # A namespaced tool's key joins its namespace and name, as in
+    # <tt>:crm_customer_lookup</tt>. Raises ArgumentError when two tools
+    # share a key.
     def tools
       offered = @tools.reject { |_, tool| hidden_from_model?(tool) }
       built_in = [@code_execution_tool, (@skill_loader if skills.any?), *@file_tools, tool_search_tool]

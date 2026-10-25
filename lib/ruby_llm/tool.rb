@@ -343,7 +343,7 @@ module RubyLLM
     end
 
     def qualified_name # :nodoc:
-      namespace ? "#{namespace}.#{name}" : name
+      namespace ? "#{namespace}_#{name}" : name
     end
 
     # Returns the tool description declared on the class with ::description.
@@ -402,6 +402,18 @@ module RubyLLM
     end
 
     class Deferred < SimpleDelegator # :nodoc:
+    end
+
+    class Flattened < SimpleDelegator # :nodoc:
+      def self.wrap(tool)
+        return Deferred.new(new(tool.__getobj__)) if tool.is_a?(Deferred)
+
+        new(tool)
+      end
+
+      def name = __getobj__.qualified_name
+      def namespace = nil
+      def qualified_name = name
     end
 
     # Returns the JSON Schema for the tool's arguments, whether declared

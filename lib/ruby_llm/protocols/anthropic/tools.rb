@@ -71,14 +71,7 @@ module RubyLLM
         }.freeze
 
         def render_tools(tools)
-          members, functions = tools.values.partition(&:namespace)
-          unknown = members.map(&:namespace).uniq - CLIENT_TOOLSETS.keys
-          if unknown.any?
-            raise RubyLLM::Error, "The Anthropic protocol cannot express the #{unknown.join(', ')} tool namespace; " \
-                                  "only its #{CLIENT_TOOLSETS.keys.join(' and ')} client toolsets take namespaced tools"
-          end
-
-          functions.map { |tool| function_for(tool) }
+          tools.values.reject(&:namespace).map { |tool| function_for(tool) }
         end
 
         def function_for(tool)

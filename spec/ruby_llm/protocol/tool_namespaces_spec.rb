@@ -28,15 +28,15 @@ RSpec.describe RubyLLM::Protocol::ToolNamespaces do
 
   it 'leaves a forced namespaced choice to a protocol that can name one' do
     protocol_class = Class.new(RubyLLM::Protocol) do
-      def tool_namespaces? = true
+      def native_tool_namespace?(_namespace) = true
       def render_payload(_messages, tool_prefs:, **) = { tool_choice: tool_prefs[:choice] }
     end
     tool = Class.new(RubyLLM::Tool) { namespace 'crm' }.new
     protocol = protocol_class.new(RubyLLM::Providers::OpenAI.new(RubyLLM.config))
 
-    payload = protocol.render([], tools: { 'crm.lookup': tool }, temperature: nil,
-                                  tool_prefs: { choice: :'crm.lookup' })
+    payload = protocol.render([], tools: { crm_lookup: tool }, temperature: nil,
+                                  tool_prefs: { choice: :crm_lookup })
 
-    expect(payload[:tool_choice]).to eq(:'crm.lookup')
+    expect(payload[:tool_choice]).to eq(:crm_lookup)
   end
 end

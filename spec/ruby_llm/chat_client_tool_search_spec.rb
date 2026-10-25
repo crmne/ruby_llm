@@ -110,6 +110,20 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.tools[:tool_search].description).not_to include('bond_price')
     end
 
+    it 'loads a deferred namespaced tool by its joined name' do
+      lookup = Class.new(RubyLLM::Tool) do
+        namespace 'crm'
+        description 'Finds a customer by email'
+        def self.tool_name = 'customer_lookup'
+        def execute = 'Ada'
+      end
+      chat.with_tools(lookup, defer: true)
+      chat.add_message(role: :user, content: 'Find Ada')
+      searched(chat, 'customer')
+
+      expect(declared(chat)).to eq(%w[current_time tool_search crm_customer_lookup])
+    end
+
     it 'offers no search tool when nothing is deferred' do
       plain = RubyLLM.chat(model: model_for(:gemini), provider: :gemini).with_tools(CurrentTime)
 
@@ -172,11 +186,11 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'finds and loads namespaced tools by their qualified names' do
-      tools[:'crm.news_search'] = tool('news_search', 'Finds customer notes')
+      tools[:crm_news_search] = tool('news_search', 'Finds customer notes')
 
-      expect(search.call(query: 'crm')[:loaded]).to eq(%w[crm.news_search])
-      expect(search.call(query: 'select:crm.news_search')[:tools]).to eq(
-        [{ name: 'crm.news_search', description: 'Finds customer notes' }]
+      expect(search.call(query: 'crm')[:loaded]).to eq(%w[crm_news_search])
+      expect(search.call(query: 'select:crm_news_search')[:tools]).to eq(
+        [{ name: 'crm_news_search', description: 'Finds customer notes' }]
       )
     end
 

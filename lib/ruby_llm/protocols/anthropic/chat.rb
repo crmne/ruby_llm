@@ -24,7 +24,7 @@ module RubyLLM
 
         def finish_reasons = FINISH_REASONS
 
-        def tool_namespaces? = true
+        def native_tool_namespace?(namespace) = Tools::CLIENT_TOOLSETS.key?(namespace)
 
         def normalize_finish_reason(reason)
           return nil if reason.nil?

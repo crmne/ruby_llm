@@ -5,7 +5,7 @@ module RubyLLM
     class Responses
       # Chat methods of the OpenAI Responses API
       module Chat
-        def tool_namespaces? = true
+        def native_tool_namespace?(_namespace) = true
 
         def completion_url
           'responses'

@@ -72,7 +72,7 @@ RSpec.describe RubyLLM::Chat do
     enable_computer.with_tools(native, ordinary).ask('Inspect')
 
     expect(executed).to eq(%i[native ordinary])
-    expect(chat.tools.keys).to contain_exactly(:'computer.screenshot', :screenshot)
+    expect(chat.tools.keys).to contain_exactly(:computer_screenshot, :screenshot)
     definitions = requests.first['tools']
     expect(definitions.count { |tool| tool['name'] == 'screenshot' }).to eq(1)
     expect(definitions).to include('type' => 'computer_toolset_20260801')
@@ -265,9 +265,9 @@ RSpec.describe RubyLLM::Chat do
 
   it 'does not remember an approval for a qualified-looking ordinary tool registered later' do
     native = local_tool('screenshot', namespace: 'computer', approval: true)
-    ordinary = local_tool('computer.screenshot', approval: true) { executed << :ordinary }
+    ordinary = local_tool('computer_screenshot', approval: true) { executed << :ordinary }
     stub_turns([call('first', 'screenshot', namespace: 'computer')], finish,
-               [call('second', 'computer.screenshot')])
+               [call('second', 'computer_screenshot')])
     enable_computer.with_tools(native).ask('Inspect')
     chat.approve(chat.pending_approvals.first, remember: true).complete
     chat.with_tools(nil).with_tools(ordinary)
@@ -275,7 +275,7 @@ RSpec.describe RubyLLM::Chat do
     chat.ask('Use the other tool')
 
     expect(executed).to be_empty
-    expect(chat.pending_approvals.map(&:name)).to eq(['computer.screenshot'])
+    expect(chat.pending_approvals.map(&:name)).to eq(['computer_screenshot'])
   end
 
   it 'routes the same member name independently in two native groups' do
@@ -302,24 +302,46 @@ RSpec.describe RubyLLM::Chat do
     expect(parent.namespace).to eq('computer')
   end
 
-  it 'rejects a namespace before a request when the selected protocol cannot express it' do
-    native = local_tool('screenshot', namespace: 'computer')
-    other = RubyLLM.chat(model: model_for(:gemini), provider: :gemini).with_tools(native)
+  it 'joins a namespace into the function name on a protocol without namespaces' do
+    grouped = local_tool('lookup', namespace: 'crm')
+    other = RubyLLM.chat(model: model_for(:gemini), provider: :gemini).with_tools(grouped)
 
-    expect { other.render }.to raise_error(RubyLLM::Error, /namespace/i)
+    declarations = other.render[:tools].flat_map { |tool| tool[:functionDeclarations] }
+
+    expect(declarations.map { |declaration| declaration[:name] }).to eq(['crm_lookup'])
   end
 
-  it 'rejects an Anthropic namespace that is not a native client toolset instead of dropping the tool' do
+  it 'calls a namespaced Anthropic function by its joined name and keeps its namespace' do
+    grouped = local_tool('lookup', namespace: 'crm') do
+      executed << :crm
+      'CRM answer'
+    end
+    stub_turns([call('crm', 'crm_lookup')], finish)
+
+    chat.with_tools(grouped).ask('Find customer')
+
+    expect(executed).to eq([:crm])
+    expect(requests.first['tools'].map { |tool| tool['name'] }).to eq(['crm_lookup'])
+    expect(chat.messages[1].tool_calls.values.first).to have_attributes(name: 'lookup', namespace: 'crm')
+    replayed = requests.last['messages'][1]['content'].first
+    expect(replayed).to include('name' => 'crm_lookup')
+    expect(replayed).not_to have_key('toolset_name')
+    expect(requests.last['messages'][2]['content'].first).not_to have_key('toolset_name')
+  end
+
+  it 'forces a namespaced function by its joined name where the namespace is joined' do
     grouped = local_tool('lookup', namespace: 'crm')
 
-    expect { chat.with_tools(grouped).render }.to raise_error(RubyLLM::Error, /crm/)
+    payload = chat.with_tools(grouped).with_tool_options(choice: grouped.class).render
+
+    expect(payload[:tool_choice]).to include(type: :tool, name: :crm_lookup)
   end
 
   it 'rejects forcing a native member on Anthropic, which cannot name one in a tool choice' do
     native = local_tool('screenshot', namespace: 'computer')
     enable_computer.with_tools(native).with_tool_options(choice: native.class)
 
-    expect { chat.render }.to raise_error(RubyLLM::Error, /computer\.screenshot/)
+    expect { chat.render }.to raise_error(RubyLLM::Error, /computer_screenshot/)
   end
 
   it 'rejects forcing a namespaced function on Responses, which cannot name one in a tool choice' do
@@ -327,7 +349,44 @@ RSpec.describe RubyLLM::Chat do
     other = RubyLLM.chat(model: model_for(:openai), provider: :openai, protocol: :responses)
     other.with_tools(grouped).with_tool_options(choice: grouped.class)
 
-    expect { other.render }.to raise_error(RubyLLM::Error, /crm\.lookup/)
+    expect { other.render }.to raise_error(RubyLLM::Error, /crm_lookup/)
+  end
+
+  it 'keeps a joined-name function deferred for tool search' do
+    chat.with_tools(local_tool('lookup', namespace: 'crm'), defer: true)
+
+    expect(chat.render[:tools].first).to include(name: 'crm_lookup', defer_loading: true)
+  end
+
+  it 'joins only the namespaces Anthropic has no native form for in a replayed turn' do
+    member = RubyLLM::ToolCall.new(id: 'native', name: 'screenshot', namespace: 'computer')
+    grouped = RubyLLM::ToolCall.new(id: 'crm', name: 'lookup', namespace: 'crm')
+    chat.add_message(role: :user, content: 'Inspect')
+    chat.add_message(role: :assistant, content: nil, tool_calls: { member.id => member, grouped.id => grouped })
+
+    blocks = chat.render[:messages].last[:content]
+
+    expect(blocks.map { |block| block.slice(:name, :toolset_name) })
+      .to eq([{ name: 'screenshot', toolset_name: 'computer' }, { name: 'crm_lookup' }])
+  end
+
+  it 'counts tokens with namespaced tools under their joined names' do
+    bodies = []
+    stub_request(:post, 'https://api.anthropic.com/v1/messages/count_tokens').to_return do |request|
+      bodies << JSON.parse(request.body)
+      { body: JSON.generate(input_tokens: 12), headers: { 'Content-Type' => 'application/json' } }
+    end
+    protocol = RubyLLM::Protocols::Anthropic.new(RubyLLM::Providers::Anthropic.new(RubyLLM.config), chat.model)
+    tools = { crm_lookup: local_tool('lookup', namespace: 'crm') }
+
+    protocol.count_tokens([RubyLLM::Message.new(role: :user, content: 'Hi')], tools:)
+
+    expect(bodies.first['tools'].map { |tool| tool['name'] }).to eq(['crm_lookup'])
+  end
+
+  it 'refuses a namespaced tool whose joined name another tool already has' do
+    expect { chat.with_tools(local_tool('crm_lookup'), local_tool('lookup', namespace: 'crm')) }
+      .to raise_error(ArgumentError, /Two tools are named crm_lookup/)
   end
 
   it 'still forces an ordinary tool next to namespaced members' do
@@ -337,12 +396,18 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.with_tool_options(choice: plain.class).render[:tool_choice]).to include(type: :tool, name: :screenshot)
   end
 
-  it 'rejects namespaced history on an incompatible protocol after the tools are removed' do
+  it 'replays namespaced history by joined names on a protocol without namespaces' do
     other = RubyLLM.chat(model: model_for(:gemini), provider: :gemini)
     member = RubyLLM::ToolCall.new(id: 'native', name: 'screenshot', namespace: 'computer')
+    other.add_message(role: :user, content: 'Inspect')
     other.add_message(role: :assistant, content: nil, tool_calls: { member.id => member })
+    other.add_message(role: :tool, content: 'OK', tool_call_id: member.id)
 
-    expect { other.render }.to raise_error(RubyLLM::Error, /namespace/i)
+    parts = other.render[:contents].flat_map { |content| content[:parts] }
+
+    expect(parts.filter_map { |part| part.dig(:functionCall, :name) }).to eq(['computer_screenshot'])
+    expect(parts.filter_map { |part| part.dig(:functionResponse, :name) }).to eq(['computer_screenshot'])
+    expect(member.name).to eq('screenshot')
   end
 
   it 'uses the browser halt text for a skipped member without invoking it' do
@@ -471,7 +536,7 @@ RSpec.describe RubyLLM::Chat do
       executed << :native
       'Wrong executor'
     end
-    stub_turns([call('ordinary', 'computer.screenshot')], finish)
+    stub_turns([call('ordinary', 'computer_screenshot')], finish)
 
     enable_computer.with_tools(native).ask('Inspect')
 

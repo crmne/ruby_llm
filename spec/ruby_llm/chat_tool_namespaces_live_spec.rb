@@ -77,6 +77,36 @@ RSpec.describe RubyLLM::Chat, :live do
     end
   end
 
+  describe 'Anthropic namespaced functions' do
+    let(:model) { model_for(:anthropic, :client_toolset) }
+    let(:chat) { RubyLLM.chat(model:, provider: :anthropic) }
+
+    it 'calls a namespaced function by its joined name' do
+      record_requests(chat.with_tools(CustomerLookup))
+
+      response = chat.ask('Which plan is the customer ada@example.com on? Use your tools.')
+
+      call = chat.messages.find(&:tool_call?).tool_calls.values.first
+      expect(call).to have_attributes(name: 'customer_lookup', namespace: 'crm')
+      expect(requests.first['tools'].map { |tool| tool['name'] }).to eq(['crm_customer_lookup'])
+      expect(response.content).to include('Pro')
+    end
+  end
+
+  describe 'Chat Completions namespaced functions' do
+    let(:chat) do
+      RubyLLM.chat(model: model_for(:openai, :tool_namespace), provider: :openai, protocol: :chat_completions)
+    end
+
+    it 'calls a namespaced function by its joined name' do
+      response = chat.with_tools(CustomerLookup).ask('Which plan is the customer ada@example.com on? Use your tools.')
+
+      call = chat.messages.find(&:tool_call?).tool_calls.values.first
+      expect(call).to have_attributes(name: 'customer_lookup', namespace: 'crm')
+      expect(response.content).to include('Pro')
+    end
+  end
+
   describe 'Responses namespaces' do
     let(:model) { model_for(:openai, :tool_namespace) }
     let(:chat) { RubyLLM.chat(model:, provider: :openai, protocol: :responses) }

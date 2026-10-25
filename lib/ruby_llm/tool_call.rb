@@ -36,7 +36,7 @@ module RubyLLM
     attr_reader :namespace
 
     def qualified_name # :nodoc:
-      namespace ? "#{namespace}.#{name}" : name
+      namespace ? "#{namespace}_#{name}" : name
     end
 
     # The arguments the model supplied for the invocation, as a Hash. Keys

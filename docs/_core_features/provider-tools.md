@@ -103,7 +103,7 @@ response = chat.ask "Describe the screen."
 
 `Desktop.capture_screenshot` is your application's executor and returns a path or IO. Your application owns the environment, actions, and screenshot sizing. RubyLLM sends the native toolset declaration, retains each member's identity, and returns text and image results with that identity. It does not send an ordinary function definition for the member.
 
-The namespace must match the native toolset and the tool name must match its member. A separate custom `screenshot` tool can coexist with `computer.screenshot`. Member calls are local: `tool_call.remote?` is `false`, and normal tool callbacks and approval rules apply.
+The namespace must match the native toolset and the tool name must match its member. A separate custom `screenshot` tool can coexist with the member, which the chat keys as `:computer_screenshot`. Member calls are local: `tool_call.remote?` is `false`, and normal tool callbacks and approval rules apply.
 
 Anthropic expects a toolset's calls in one response to run in order, and RubyLLM runs them that way even when you enable tool concurrency. A pending approval, or a call another process is running, holds back the calls after it. Return `{ error: "The display is unavailable" }` for a recoverable failure: RubyLLM answers the later calls of the batch as not executed instead of running them. An exception interrupts the run as it does for any tool.
 
