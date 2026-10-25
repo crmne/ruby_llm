@@ -150,12 +150,13 @@ module RubyLLM
       #
       #   chat.pending_approvals.each { |record| render record }
       #
+      # Whether a call requires approval is decided when it is saved, by
+      # the process that received it, so reading this queries the database
+      # only and connects to no MCP server. A call whose tool decides with
+      # a Tool.requires_approval block stays listed until the chat runs
+      # again.
       def pending_approvals
-        ids = to_llm.pending_approvals.map(&:id)
-        RubyLLM::ActiveRecord::ToolCall.where(
-          message_type: messages_association.klass.polymorphic_name,
-          message_id: messages_association.select(:id)
-        ).in_order_of(:tool_call_id, ids)
+        persisted_pending_approvals
       end
 
       def messages_association # :nodoc:
@@ -1263,6 +1264,7 @@ module RubyLLM
         tool_calls.each_value do |tool_call|
           attributes = tool_call.to_h
           attributes[:tool_call_id] = attributes.delete(:id)
+          attributes[:approval] = 'pending' if to_llm.approval_pending?(tool_call)
           message_record.ruby_llm_tool_calls.create!(**attributes)
         end
       end
