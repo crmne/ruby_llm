@@ -388,7 +388,7 @@ module RubyLLM
       end
 
       def granted?(tokens)
-        tokens.is_a?(Hash) && tokens['access_token'] && !tokens['error']
+        tokens.is_a?(Hash) && tokens['access_token'].is_a?(String) && !tokens['access_token'].empty? && !tokens['error']
       end
 
       def oauth_error(error)

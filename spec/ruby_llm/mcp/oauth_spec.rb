@@ -329,6 +329,15 @@ RSpec.describe RubyLLM::MCP::OAuth do
       expect { linear.authorize(callback(url)) }
         .to raise_error(RubyLLM::MCP::Error, 'auth.example.com refused the request')
     end
+
+    it 'raises when the access token is empty' do
+      url = linear.authorization_url(redirect_uri:)
+      token_endpoint_answers(access_token: '', token_type: 'bearer')
+
+      expect { linear.authorize(callback(url)) }
+        .to raise_error(RubyLLM::MCP::Error, 'auth.example.com refused the request')
+      expect(linear).not_to be_authorized
+    end
   end
 
   it 'refuses a callback with the wrong state' do
