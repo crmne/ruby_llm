@@ -96,3 +96,6 @@ instructions: |
   depend on a provider's behavior need a recorded cassette or a maintainer's
   live check. An alpha provider endpoint is worth noting, not a blocker. Pull
   requests must not include the generated models.json or available-models.md.
+  Requests to make internals public so another runtime or agent loop can drive
+  RubyLLM's chats are declined: talking to another service is a provider's
+  job, and only a specific gap in the provider contract is worth an issue.
