@@ -41,7 +41,7 @@ jobs:
             rails-version: "rails-7.2"
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -101,7 +101,7 @@ jobs:
       RUBYLLM_REQUIRE_SANDBOX: "true"
       SKIP_COVERAGE: true
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -133,7 +133,7 @@ jobs:
     name: MCP conformance
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
