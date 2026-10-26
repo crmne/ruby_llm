@@ -206,6 +206,43 @@ RSpec.describe RubyLLM::MCP::HTTP do
     expect(a_request(:post, url).with { |request| request.body.include?('initialize') }).not_to have_been_made
   end
 
+  it "raises the scopes and reason of a server's insufficient scope challenge" do
+    stub_method('server/discover', result: discover_result)
+    stub_method('tools/call', status: 403, body: '', headers: {
+                  'WWW-Authenticate' => 'Bearer error="insufficient_scope", scope="repo read:org", ' \
+                                        'error_description="Additional scopes required: repo"'
+                })
+
+    expect { client.request('tools/call', { name: 'list_issues' }) }
+      .to raise_error(RubyLLM::MCP::InsufficientScopeError) { |error|
+        expect([error.message, error.provider_message, error.error_code, error.scopes])
+          .to eq(['mcp.example.com refused the request: Additional scopes required: repo',
+                  'Additional scopes required: repo', 'insufficient_scope', %w[repo read:org]])
+        expect(error).to be_a(RubyLLM::ForbiddenError)
+      }
+  end
+
+  it 'finds the scope challenge among challenges for other schemes' do
+    stub_method('server/discover', result: discover_result)
+    stub_method('tools/call', status: 403, body: '', headers: {
+                  'WWW-Authenticate' => 'DPoP error="invalid_token", Bearer error="insufficient_scope", scope="repo"'
+                })
+
+    expect { client.request('tools/call', { name: 'list_issues' }) }
+      .to raise_error(RubyLLM::MCP::InsufficientScopeError) { |error| expect(error.scopes).to eq(['repo']) }
+  end
+
+  it 'raises a plain forbidden error for a 403 without a scope challenge' do
+    stub_method('server/discover', result: discover_result)
+    stub_method('tools/call', status: 403, body: '',
+                              headers: { 'WWW-Authenticate' => 'Bearer error="invalid_token"' })
+
+    expect { client.request('tools/call', { name: 'list_issues' }) }
+      .to raise_error(RubyLLM::ForbiddenError, 'mcp.example.com refused the request: invalid_token') { |error|
+        expect(error).not_to be_a(RubyLLM::MCP::InsufficientScopeError)
+      }
+  end
+
   describe 'cancellation' do
     let(:cancel) { -> { raise RubyLLM::CancelledError } }
 

@@ -193,10 +193,15 @@ ActiveRecord::Schema[7.1].define(version: 20_261_025_120_000) do
     t.datetime 'updated_at', null: false
     t.string 'owner_type'
     t.integer 'owner_id'
+    t.string 'workflow_id'
+    t.string 'workflow_name'
+    t.string 'workflow_step_id'
+    t.string 'workflow_step_name'
     t.index %w[chat_type chat_id], name: 'index_ruby_llm_usages_on_chat'
     t.index %w[message_type message_id], name: 'index_ruby_llm_usages_on_message'
     t.index %w[owner_type owner_id], name: 'index_ruby_llm_usages_on_owner'
     t.index ['status'], name: 'index_ruby_llm_usages_on_status'
+    t.index ['workflow_id'], name: 'index_ruby_llm_usages_on_workflow_id'
   end
 
   create_table 'ruby_llm_batches', force: :cascade do |t|

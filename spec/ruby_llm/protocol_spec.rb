@@ -103,6 +103,39 @@ RSpec.describe RubyLLM::Protocol do
     end
   end
 
+  describe '#embed' do
+    let(:context) { RubyLLM.context { |config| config.openai_api_key = 'test' } }
+    let(:model) { model_for(:openai, :embedding) }
+
+    def stub_embeddings(rows)
+      stub_request(:post, 'https://api.openai.com/v1/embeddings')
+        .to_return_json(body: { data: rows, usage: { prompt_tokens: 3 } })
+    end
+
+    def embed(text)
+      RubyLLM.embed(text, model:, provider: :openai, context:)
+    end
+
+    it 'raises when the provider returns fewer embeddings than texts' do
+      stub_embeddings([{ index: 0, embedding: [0.1] }])
+
+      expect { embed(%w[Ruby Python JavaScript]) }
+        .to raise_error(RubyLLM::Error, 'Expected 3 embeddings, got 1')
+    end
+
+    it 'returns one embedding per text' do
+      stub_embeddings([{ index: 0, embedding: [0.1] }, { index: 1, embedding: [0.2] }])
+
+      expect(embed(%w[Ruby Python]).vectors).to eq([[0.1], [0.2]])
+    end
+
+    it 'returns the single vector for a single text' do
+      stub_embeddings([{ index: 0, embedding: [0.1] }])
+
+      expect(embed('Ruby').vectors).to eq([0.1])
+    end
+  end
+
   describe 'provider file defaults' do
     let(:protocol) do
       config = RubyLLM::Configuration.new.tap { |c| c.openai_api_key = 'test' }

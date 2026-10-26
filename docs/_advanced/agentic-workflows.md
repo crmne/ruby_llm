@@ -24,7 +24,7 @@ After reading this guide, you will know:
 
 A workflow is orchestration code that coordinates one or more agents. In practice, this is often a small Ruby class with a single public method, plus a loop you control. Before you build a multi-agent workflow, it helps to understand how a single agent's turn-by-turn loop runs, so you can pause it, persist it, and resume it on demand.
 
-When you want to see the whole operation as one unit in your observability stack, wrap that Ruby code with `RubyLLM.workflow` and mark meaningful regions with `workflow.step`. These wrappers only add correlation to [instrumentation]({% link _advanced/instrumentation.md %}#workflows-and-steps); they do not introduce a workflow DSL or take over execution.
+When you want to see the whole operation as one unit in your observability stack, wrap that Ruby code with `RubyLLM.workflow` and mark meaningful regions with `workflow.step`. These wrappers only add correlation to [instrumentation]({% link _advanced/instrumentation.md %}#workflows-and-steps) and to the [usage ledger]({% link _core_features/cost-and-usage-tracking.md %}#usage-by-workflow), so you can total what a workflow cost; they do not introduce a workflow DSL or take over execution.
 
 ## Driving the Loop Yourself
 
@@ -378,7 +378,15 @@ RubyLLM.workflow("Summarize recording") do |workflow|
 end
 ```
 
-Each step returns its block's value. `RubyLLM.workflow` adds correlation to the [instrumentation events]({% link _advanced/instrumentation.md %}#workflows-and-steps), so you can follow the three calls as one operation.
+Each step returns its block's value. `RubyLLM.workflow` adds correlation to the [instrumentation events]({% link _advanced/instrumentation.md %}#workflows-and-steps), so you can follow the three calls as one operation. In Rails, the usage ledger records the workflow too, so you can read what the three calls cost together:
+
+```ruby
+RubyLLM.workflow("Summarize recording", id: "recording-#{recording.id}") do |workflow|
+  # ...
+end
+
+RubyLLM::ActiveRecord::Usage.where(workflow_id: "recording-#{recording.id}").sum(:total_cost)
+```
 
 ## Retrieval-Augmented Generation
 
