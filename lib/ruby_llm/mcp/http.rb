@@ -267,13 +267,24 @@ module RubyLLM
       def failure(response, stream)
         case response[:status]
         when 401 then UnauthorizedError.new("#{@url.host} requires authorization", response: response_for(response))
-        when 403 then ForbiddenError.new("#{@url.host} refused the request", response: response_for(response))
+        when 403 then forbidden(response)
         else
           error = stream.replies.first&.fetch('error', nil) || {}
           fallback = "#{@url.host} answered HTTP #{response[:status]}" unless error['message']
           Error.new(fallback, provider_message: error['message'], provider: @url.host,
                               code: error['code'], data: error['data'], response: response_for(response))
         end
+      end
+
+      def forbidden(response)
+        challenges = OAuth.challenge(response[:headers]&.[]('WWW-Authenticate')).values.select { |c| c[:error] }
+        challenge = challenges.find { |c| c[:error] == 'insufficient_scope' } || challenges.first || {}
+        details = { response: response_for(response), provider: @url.host, error_code: challenge[:error],
+                    provider_message: challenge[:error_description] || challenge[:error] }
+        message = "#{@url.host} refused the request"
+        return ForbiddenError.new(message, **details) unless challenge[:error] == 'insufficient_scope'
+
+        InsufficientScopeError.new(message, scopes: challenge[:scope].to_s.split, **details)
       end
 
       def response_for(response)
