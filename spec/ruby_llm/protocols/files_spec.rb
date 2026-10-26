@@ -20,6 +20,17 @@ RSpec.describe RubyLLM::Protocols::Files do
       expect(payload).not_to have_key(:expires_after)
     end
 
+    it 'sends the fields before the file part' do
+      request = stub_request(:post, 'https://api.openai.com/v1/files').with do |req|
+        req.body.index('name="purpose"') < req.body.index('name="file"')
+      end.to_return_json(body: { id: 'file-abc123', object: 'file', purpose: 'user_data' })
+
+      RubyLLM.upload(fixture_path, provider: :openai, purpose: 'user_data',
+                                   context: RubyLLM.context { |config| config.openai_api_key = 'test' })
+
+      expect(request).to have_been_requested
+    end
+
     it 'translates expires_in to the anchored expires_after shape' do
       payload = protocol.send(:render_upload_payload, RubyLLM::Attachment.new(fixture_path),
                               purpose: 'batch', expires_in: 3600)
