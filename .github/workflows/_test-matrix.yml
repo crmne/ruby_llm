@@ -77,7 +77,7 @@ jobs:
 
       - name: Upload coverage to Codecov
         if: matrix.ruby-version == '4.0' && matrix.rails-version == 'rails-8.1'
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
