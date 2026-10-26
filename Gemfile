@@ -17,7 +17,7 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'faraday-net_http_persistent'
   gem 'ferrum'
   gem 'flay'
-  gem 'image_processing', '~> 1.2'
+  gem 'image_processing', '~> 2.0'
   gem 'irb'
   # Older Rails versions need JSON 2; the Rails 8.1 appraisal also tests JSON 3.
   gem 'json', '< 3'
