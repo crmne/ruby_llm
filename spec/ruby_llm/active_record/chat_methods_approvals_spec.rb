@@ -59,6 +59,19 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(later.pending_approvals).to be_empty
   end
 
+  it 'stops listing parallel calls to a tool once another process remembers it' do
+    chat = process(Chat.create!(model: model_for(:openai)))
+    first = call('refund')
+    second = call('refund')
+    tool_calls = { first.id => first, second.id => second }
+    chat.add_message(RubyLLM::Message.new(role: :assistant, content: '', tool_calls:))
+    expect(Chat.find(chat.id).pending_approvals.map(&:tool_call_id)).to eq([first.id, second.id])
+
+    Chat.find(chat.id).approve(first.id, remember: true)
+
+    expect(Chat.find(chat.id).pending_approvals).to be_empty
+  end
+
   it 'approves an escalated run in one process and runs it once in another' do
     chat = process(Chat.create!(model: model_for(:openai)))
     escalated = park(chat, call('run_code', 'language' => 'shell', 'code' => 'curl example.com',
@@ -67,7 +80,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
     expect { Chat.find(chat.id).approve(escalated.id, remember: true) }
       .to raise_error(ArgumentError, /cannot be remembered/)
-    expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: escalated.id).approval).to be_nil
+    expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: escalated.id).approval).to eq('pending')
 
     Chat.find(chat.id).approve(escalated.id)
     process(chat).complete

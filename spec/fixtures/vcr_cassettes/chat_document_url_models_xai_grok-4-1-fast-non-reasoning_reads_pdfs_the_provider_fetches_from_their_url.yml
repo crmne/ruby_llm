@@ -1,0 +1,81 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4.3","input":[{"role":"user","content":[{"type":"input_text","text":"Summarize
+        this document in one sentence."},{"type":"input_file","file_url":"https://pdfobject.com/pdf/sample.pdf"}]}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 25 Oct 2026 18:57:16 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Watermark:
+      - 'false'
+      X-Ratelimit-Limit-Tokens:
+      - '10000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '10000000'
+      X-Ratelimit-Limit-Requests:
+      - '1800'
+      X-Ratelimit-Remaining-Requests:
+      - '1800'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
+      X-Metrics-Ttft-Ms:
+      - '251.5'
+      X-Metrics-E2e-Ms:
+      - '4633.2'
+      Traceparent:
+      - 00-cd8186c00d31db1d16731b5b909d370e-2f02e279000ba2e8-01
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"created_at":1792954632,"completed_at":1792954636,"id":"7bf21935-b3aa-999b-a793-e5dd1e4e04a5","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_7bf21935-b3aa-999b-a793-e5dd1e4e04a5","summary":[{"text":"I
+        need to summarize the document in one sentence.\n\nThe document is a sample
+        PDF containing placeholder text and an image of the same text.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"jYes37sUr/MKWRfPxqZ8qGEDLP7c4mck7EtDnJvTKNjjl580XPFqVqd82n5MJHw1mZzxMLWOyOXEQbB3m7hKR6NJhEEOfKQuAaTnt89rnQCmt5dbY2v3Kyv3pEx/LE+Gb2ks8eOQi0UL7vXX2/PN8pCYAcurFwY196bDxRPHSUgIi/TqUnv/RT5rUoNJsMPZQIw36rKo59y31wjWV6soQ4riqYy9evN1v2TOzEAh2Mfk9FJKTS7HrKttutIwuQfR5FC+lbfawWT8Dmh0xmJ+2s6H2/sLPGDhyQOAPYDg0Zv8wmCovVvgukJlCT1cs8WuR2WvBVjHfl+YB5W6FFnsKzm3MPMkC2/VrVZHQgzpvcwpV2hsgpiOstBxjRowrXy1sBEE/ni56qJM11wTFNLUmADqfzXX3uTVQHJwVVVq9IsKJ1511y7P4UcFDDNnQLX8Gn/8nIB2ZI53TIA60x6x1lP0V++HgOCG2p6c1g3ghzOc+0LY6Fobncf5jdhjaqhabKZFez/H9VfHzug4t+zEHZwXLivpsGfycDXnxHmqW/ghfRuLDge0LkAiLUCSHov6A+Eho1rXbQhlL+NhPDAqDC96faK5MKVgP9h72pA/aF0cTbs2wyXN/FW3HpqQ023e3pB2OODQy53TboH2Y+dlm+2WzZQmcnuHzkNQZBGq+w1EKuGsbnVFTkCVzlGUeDOBf5CP4P3y4CltufmkXYLsvf7p1TZcFTSIFxJX2i6TzHQMyBZqfJOuWevANs0EZ23xGbucCU7IVtaYkz4filZqcsNYu9lq1qCsXaaZlbV7eIC3PR5GyF26Y6VUUsf17tal2BTENAvGFH6EMlDlFAi8hILXvZXimwlLFVQX/2SfNwYzSkAJZfwIvVoYsm9PW1aeSiVKPR4ai2UGe1wCvpYxtBeXuQMBZZfm06vOKfnWJHLpgJT4F7L1M5ccYOeY+RkVawLZ+jdKEAaJOTkFcJazvvPZwuZMAwfDx4EQJqtYGwgQxy/pKZ5XvOzRiazDEFCRDxROGSbPQMgWDVFWXF5ocUhhpReqSROUoh1g6KYkRedmFB0DrIsazjdAdNA4fSpDxh/0KzxK7RCfk+xL/NyfZmUjE0dPzonrjhoc5OrTNzUBIO1iuRfpomqADpdudZCZW/YsvJDr6COFiCq2WBVVijI3hnX8OR/rEIh3t21rCn/uGjMGS4T9JIfzKItnTEcUlBGzs1CRTfDSPQzkDyQFQr/OOFVMhpVxcUSpQ+wEKDHw+8gdzSSJ6WYKnJwjt3hsmZxORCL+jVOrlgnodBJSTIbKf7BaCvEe3qQCB4Vjf8/WIMF/1Dc0cE7V6E1sQLBkc0UNUKCcY8GV9feQgzAHCohXrN4"},{"content":[{"type":"output_text","text":"This
+        sample PDF is a short document consisting of the title \"Sample PDF,\" the
+        sentence \"This is a simple PDF file. Fun fun fun.,\" and several paragraphs
+        of standard lorem ipsum-style placeholder text.","logprobs":[],"annotations":[]}],"id":"msg_7bf21935-b3aa-999b-a793-e5dd1e4e04a5","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":1931,"input_tokens_details":{"cached_tokens":128},"output_tokens":249,"output_tokens_details":{"reasoning_tokens":208},"total_tokens":2180,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":29018500,"context_details":{"input_tokens":1931,"output_tokens":256}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Sun, 25 Oct 2026 18:57:16 GMT
+recorded_with: VCR 6.4.0

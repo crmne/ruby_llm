@@ -22,22 +22,22 @@ module RubyLLM
           block['type'] == 'server_tool_use' && block['name'].to_s.start_with?('tool_search_tool_')
         end
 
-        def render_tool_result(msg)
+        def render_tool_result(msg, citations: false)
           {
             role: 'user',
-            content: [render_tool_result_block(msg)]
+            content: [render_tool_result_block(msg, citations:)]
           }
         end
 
-        def render_tool_result_block(msg)
+        def render_tool_result_block(msg, citations: false)
           {
             type: 'tool_result',
             tool_use_id: msg.provider_call_id,
-            content: render_tool_result_content(msg)
+            content: render_tool_result_content(msg, citations:)
           }
         end
 
-        def render_tool_result_content(msg)
+        def render_tool_result_content(msg, citations: false)
           search_results = RubyLLM::SearchResults.from_content(msg.content)
           return search_results.results.map { |result| search_result_block(result) } if search_results
 
@@ -45,13 +45,13 @@ module RubyLLM
           content = nil if content&.strip&.empty?
           content = '(no output)' if content.nil? && msg.attachments.empty?
 
-          Media.render_content(content, msg.attachments)
+          Media.render_content(content, msg.attachments, citations:)
         end
 
         def search_result_block(result)
           {
             type: 'search_result',
-            source: result[:url] || result[:title],
+            source: result[:source_id] || result[:url] || result[:title],
             title: result[:title],
             content: [{ type: 'text', text: result[:text] }],
             citations: { enabled: true }

@@ -41,7 +41,8 @@ module RubyLLM
     # content, or +nil+.
     attr_reader :end_index
 
-    # The provider's identifier for the cited source, or +nil+.
+    # The provider's identifier for the cited source, or +nil+. For a cited
+    # SearchResults result, this is its +:source_id+ when it has one.
     attr_reader :source_id
 
     # The 0-indexed position of the source document or search result,

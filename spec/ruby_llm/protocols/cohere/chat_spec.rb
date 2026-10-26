@@ -148,6 +148,27 @@ RSpec.describe RubyLLM::Protocols::Cohere::Chat do
 
       expect(message.tokens.input).to eq(5)
       expect(message.tokens.output).to eq(418)
+      expect(message.tokens.thinking).to be_nil
+    end
+
+    it 'reports reasoning tokens without changing the billed units or cost' do
+      body['usage'] = {
+        'billed_units' => { 'input_tokens' => 26, 'output_tokens' => 165 },
+        'tokens' => { 'input_tokens' => 1431, 'output_tokens' => 170, 'reasoning_tokens' => 143 },
+        'cached_tokens' => 1344
+      }
+      billed_cost = model.cost_for(RubyLLM::Tokens.new(input: 26, output: 165))
+
+      message = protocol.send(:parse_completion_body, body, raw: nil)
+
+      expect(message.tokens).to have_attributes(input: 26, output: 165, thinking: 143, cache_read: nil)
+      expect(message.cost.to_h).to eq(billed_cost.to_h)
+    end
+
+    it 'preserves an explicitly reported zero reasoning count' do
+      body['usage']['tokens']['reasoning_tokens'] = 0
+
+      expect(protocol.send(:parse_completion_body, body, raw: nil).tokens.thinking).to eq(0)
     end
 
     it 'names the requested model, which the response body omits' do
@@ -288,6 +309,26 @@ RSpec.describe RubyLLM::Protocols::Cohere::Chat do
       citation = protocol.send(:parse_completion_body, body, raw: nil).citations.first
 
       expect(citation.url).to eq('HTTPS://example.com/source')
+    end
+
+    it 'keeps the id of a cited tool output as its source_id' do
+      body['message']['citations'].first['sources'] = [
+        { 'type' => 'tool', 'id' => 'gid://app/Document/42',
+          'tool_output' => { 'title' => 'Q4 Report', 'text' => 'Revenue grew 12%.', 'url' => 'https://example.com/q4' } }
+      ]
+
+      citation = protocol.send(:parse_completion_body, body, raw: nil).citations.first
+
+      expect(citation).to have_attributes(
+        url: 'https://example.com/q4', source_id: 'gid://app/Document/42', title: 'Q4 Report'
+      )
+    end
+
+    it 'leaves source_id unset for cited documents' do
+      citation = protocol.send(:parse_completion_body, body, raw: nil).citations.first
+
+      expect(citation.source_id).to be_nil
+      expect(citation.source_index).to eq(1)
     end
 
     it 'offsets spans by the text blocks that came before' do

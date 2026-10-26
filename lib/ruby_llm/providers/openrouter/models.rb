@@ -4,8 +4,8 @@ module RubyLLM
   module Providers
     class OpenRouter
       # Models methods of the OpenRouter API integration. Chat models come
-      # from the main catalog; embedding, speech, transcription, and image
-      # models live in separate catalogs that are merged in.
+      # from the main catalog; embedding, speech, transcription, image, and
+      # decision models live in separate catalogs that are merged in.
       module Models
         CATALOG_URLS = [
           'models',
@@ -13,18 +13,26 @@ module RubyLLM
           'models?output_modalities=speech',
           'models?output_modalities=transcription',
           'models?output_modalities=rerank',
+          'models?output_modalities=decisions',
           'images/models'
         ].freeze
 
         OUTPUT_MODALITY_MAP = {
           'speech' => 'audio',
-          'transcription' => 'text'
+          'transcription' => 'text',
+          'decisions' => 'judgment'
         }.freeze
 
         CAPABILITY_BY_OUTPUT_MODALITY = {
           'speech' => 'speech_generation',
           'transcription' => 'transcription',
-          'image' => 'image_generation'
+          'image' => 'image_generation',
+          'decisions' => 'judgment'
+        }.freeze
+
+        CAPABILITIES_BY_INPUT_MODALITY = {
+          'image' => %w[vision],
+          'video' => %w[vision video]
         }.freeze
 
         CAPABILITY_PARAMETERS = {
@@ -71,7 +79,9 @@ module RubyLLM
             end
 
             capabilities = supported_parameters_to_capabilities(model_data['supported_parameters']) |
+                           input_modality_capabilities(modalities[:input]) |
                            output_modalities.filter_map { |modality| CAPABILITY_BY_OUTPUT_MODALITY[modality] }
+            capabilities -= ['streaming'] if output_modalities.include?('decisions')
 
             Model.new(
               id: model_data['id'],
@@ -95,6 +105,10 @@ module RubyLLM
               }
             )
           end
+        end
+
+        def input_modality_capabilities(input_modalities)
+          input_modalities.flat_map { |modality| CAPABILITIES_BY_INPUT_MODALITY.fetch(modality, []) }.uniq
         end
 
         def supported_parameters_to_capabilities(params)

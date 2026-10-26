@@ -160,6 +160,64 @@ RSpec.describe RubyLLM::OpenTelemetry do
     expect(RubyLLM.logger).to have_received(:warn).with('OpenTelemetry instrumentation failed (StandardError)')
   end
 
+  describe 'transcription spans' do
+    let(:audio) { File.expand_path('../fixtures/ruby.wav', __dir__) }
+
+    def stub_transcription_stream
+      events = [
+        { type: 'transcript.text.delta', delta: 'private transcript' },
+        { type: 'transcript.text.done', text: 'private transcript', usage: { input_tokens: 3, output_tokens: 1 } }
+      ].map { |event| "data: #{event.to_json}\n\n" }.join
+      stub_request(:post, 'https://api.openai.com/v1/audio/transcriptions')
+        .to_return(body: events, headers: { 'Content-Type' => 'text/event-stream' })
+    end
+
+    it 'marks a streamed transcription and keeps the span active through its callbacks' do
+      stub_transcription_stream
+      chunks = []
+      result = RubyLLM.transcribe(
+        audio, model: model_for(:openai, :streaming_transcription), provider: :openai
+      ) do |chunk|
+        chunks << chunk
+        expect(spans).to be_empty
+        expect(OpenTelemetry::Trace.current_span.recording?).to be(true)
+      end
+
+      expect(result.text).to eq('private transcript')
+      expect(chunks.last).to be_done
+      expect(spans.sole.attributes).to include(
+        'gen_ai.operation.name' => 'transcription', 'gen_ai.request.stream' => true
+      )
+      expect(spans.sole.attributes.to_s).not_to include('private')
+    end
+
+    it 'keeps the streaming flag when the transcription callback raises' do
+      stub_transcription_stream
+      previous = OpenTelemetry::Context.current
+
+      expect do
+        RubyLLM.transcribe(audio, model: model_for(:openai, :streaming_transcription), provider: :openai) do
+          raise 'private callback error'
+        end
+      end.to raise_error(RuntimeError, 'private callback error')
+
+      expect(OpenTelemetry::Context.current).to equal(previous)
+      expect(spans.sole.status.code).to eq(OpenTelemetry::Trace::Status::ERROR)
+      expect(spans.sole.attributes).to include('gen_ai.request.stream' => true, 'error.type' => 'RuntimeError')
+      expect(spans.sole.attributes.to_s).not_to include('private')
+    end
+
+    it 'omits the streaming flag from a buffered transcription' do
+      stub_request(:post, 'https://api.openai.com/v1/audio/transcriptions')
+        .to_return_json(body: { text: 'private transcript', usage: { input_tokens: 3, output_tokens: 1 } })
+
+      result = RubyLLM.transcribe(audio, model: model_for(:openai, :streaming_transcription), provider: :openai)
+
+      expect(result.text).to eq('private transcript')
+      expect(spans.sole.attributes).not_to have_key('gen_ai.request.stream')
+    end
+  end
+
   it 'traces embeddings without exporting inputs or vectors' do
     embedding_model = model_for(:openai, :embedding)
     embedding = RubyLLM::Embedding.new(vectors: [0.1, 0.2], model: embedding_model, input_tokens: 8)
@@ -172,6 +230,53 @@ RSpec.describe RubyLLM::OpenTelemetry do
     expect(spans.first.attributes).to include('gen_ai.embeddings.dimension.count' => 2,
                                               'gen_ai.usage.input_tokens' => 8)
     expect(spans.first.attributes.to_s).not_to include('private', '0.1', 'output_tokens')
+  end
+
+  describe 'standalone operation response models' do
+    def complete_standalone_operation(operation, reported: true)
+      provider_slug = { moderate: :openai, rerank: :cohere, judge: :typesafe }.fetch(operation)
+      requested_model = case operation
+                        when :moderate then RubyLLM.config.default_moderation_model
+                        when :rerank then model_for(:cohere, :rerank)
+                        when :judge then model_for(:typesafe, :judgment)
+                        end
+      response_model = requested_model if reported
+      response = case operation
+                 when :moderate then RubyLLM::Moderation.new(id: 'modr-telemetry', model: response_model, results: [])
+                 when :rerank then RubyLLM::Rerank.new(model: response_model, results: [])
+                 when :judge then RubyLLM::Judgment.new(model: response_model, answers: {})
+                 end
+      model_info, adapter = RubyLLM::Models.resolve(requested_model, provider: provider_slug, config: RubyLLM.config)
+      allow(RubyLLM::Models).to receive(:resolve).and_return([model_info, adapter])
+      allow(adapter).to receive(operation).and_return(response)
+      arguments = operation == :rerank ? ['private query', ['private document']] : ['private input']
+      options = { model: requested_model, provider: provider_slug }
+      options[:questions] = { urgent: { type: :probability, instructions: 'private question' } } if operation == :judge
+
+      result = RubyLLM.public_send(operation, *arguments, **options)
+      expect(result).to equal(response)
+      [result, requested_model]
+    end
+
+    %i[moderate rerank judge].each do |operation|
+      it "records the returned model on #{operation} spans without exporting content" do
+        result, requested_model = complete_standalone_operation(operation)
+
+        expect(result.model).to eq(requested_model)
+        expect(spans.sole.attributes).to include(
+          'gen_ai.request.model' => requested_model, 'gen_ai.response.model' => result.model
+        )
+        expect(spans.sole.attributes.to_s).not_to include('private')
+      end
+
+      it "keeps an unknown response model unknown on #{operation} spans" do
+        result, requested_model = complete_standalone_operation(operation, reported: false)
+
+        expect(result.model).to be_nil
+        expect(spans.sole.attributes['gen_ai.request.model']).to eq(requested_model)
+        expect(spans.sole.attributes).not_to have_key('gen_ai.response.model')
+      end
+    end
   end
 
   it 'keeps transport retries inside a single model span' do
@@ -225,6 +330,21 @@ RSpec.describe RubyLLM::OpenTelemetry do
 
     expect(spans.first.attributes).to include('gen_ai.usage.input_tokens' => 0)
     expect(spans.first.attributes).not_to have_key('gen_ai.usage.output_tokens')
+  end
+
+  it 'records the requested transcription temperature, including an explicit zero' do
+    stub_request(:post, 'https://api.openai.com/v1/audio/transcriptions')
+      .to_return_json(body: { text: 'private transcript', usage: { input_tokens: 3, output_tokens: 1 } })
+    audio = File.expand_path('../fixtures/ruby.wav', __dir__)
+    transcription_model = model_for(:openai, :transcription)
+
+    [0.2, 0, nil].each do |temperature|
+      RubyLLM.transcribe(audio, model: transcription_model, provider: :openai, temperature: temperature)
+    end
+
+    expect(spans.map { |span| span.attributes['gen_ai.request.temperature'] }).to eq([0.2, 0, nil])
+    expect(spans.last.attributes).not_to have_key('gen_ai.request.temperature')
+    expect(spans.map(&:attributes).to_s).not_to include('private')
   end
 
   it 'uses conventional provider names and output types without copying arbitrary metadata' do

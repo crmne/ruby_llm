@@ -489,6 +489,17 @@ module RubyLLM
       pending_tool_calls(response).values.select { |tool_call| approval_pending?(tool_call) }
     end
 
+    # Returns whether +tool_call+ requires approval and has no recorded
+    # decision.
+    def approval_pending?(tool_call) # :nodoc:
+      return approval_decision(nil, tool_call).nil? if tool_call.remote?
+
+      tool = tools[tool_call.name.to_sym]
+      return false unless tool&.requires_approval?(tool_call)
+
+      approval_decision(tool, tool_call).nil?
+    end
+
     # Returns whether the conversation can make no progress until the user
     # answers an MCP server: every remaining pending tool call waits on
     # input or an approval decision, and at least one waits on input.
@@ -1921,7 +1932,8 @@ module RubyLLM
         tokens: response.tokens,
         cost: response.cost,
         message: response,
-        owner: Accounting::Usage.owner
+        owner: Accounting::Usage.owner,
+        workflow: Accounting::Usage.workflow
       )
       response.ruby_llm_usage_entries = [entry]
       Accounting::Usage.instrument(entry, config: @config)
@@ -2039,15 +2051,6 @@ module RubyLLM
       id = tool_call.respond_to?(:id) ? tool_call.id : tool_call
       @tool_call_decisions[id] = decision
       self
-    end
-
-    def approval_pending?(tool_call)
-      return approval_decision(nil, tool_call).nil? if tool_call.remote?
-
-      tool = tools[tool_call.name.to_sym]
-      return false unless tool&.requires_approval?(tool_call)
-
-      approval_decision(tool, tool_call).nil?
     end
 
     def approval_decision(tool, tool_call)

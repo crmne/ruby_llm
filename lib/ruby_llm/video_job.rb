@@ -91,6 +91,7 @@ module RubyLLM
       @duration = duration
       @resolution = resolution
       @usage_owner = Accounting::Usage.owner
+      @usage_workflow = Accounting::Usage.workflow
       record_usage
     end
 
@@ -178,7 +179,8 @@ module RubyLLM
 
       @usage_recorded = true
       entry = Accounting::Usage::Entry.new(operation: :video, provider: @protocol.provider.slug, model:,
-                                           status: completed? ? :succeeded : :failed, cost:, owner: @usage_owner)
+                                           status: completed? ? :succeeded : :failed, cost:, owner: @usage_owner,
+                                           workflow: @usage_workflow)
       Accounting::Usage.report(entry, config: @protocol.config)
     end
 

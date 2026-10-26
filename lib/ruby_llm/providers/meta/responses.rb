@@ -19,6 +19,10 @@ module RubyLLM
           SERVER_TOOL_ALIASES
         end
 
+        def document_urls?
+          true
+        end
+
         def apply_end_user(payload, identifier)
           payload.merge(safety_identifier: identifier)
         end

@@ -93,6 +93,22 @@ RSpec.describe RubyLLM::Protocols::Cohere::Streaming do
   end
 
   describe 'end to end' do
+    it 'keeps reasoning usage on the chunks and completed response without changing the bill' do
+      response, chunks = stream(
+        sse(
+          '{"delta":{"message":{"role":"assistant"}},"id":"29f14a5a","type":"message-start"}',
+          '{"delta":{"message":{"content":{"text":"Hello"}}},"index":0,"type":"content-delta"}',
+          '{"delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":26,"output_tokens":165},' \
+          '"tokens":{"input_tokens":1431,"output_tokens":170,"reasoning_tokens":143},"cached_tokens":1344}},' \
+          '"type":"message-end"}'
+        )
+      )
+
+      expect(response.tokens).to have_attributes(input: 26, output: 165, thinking: 143, cache_read: nil)
+      expect(chunks.last.tokens).to have_attributes(input: 26, output: 165, thinking: 143)
+      expect(response.cost.to_h).to eq(model.cost_for(RubyLLM::Tokens.new(input: 26, output: 165)).to_h)
+    end
+
     it 'accumulates a streamed answer' do
       response, chunks = stream(
         sse(

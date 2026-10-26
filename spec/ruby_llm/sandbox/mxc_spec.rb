@@ -76,6 +76,12 @@ RSpec.describe RubyLLM::Sandbox::MXC do
     expect(output['stdout']).to eq("\"[1,2]\"\n")
   end
 
+  it 'loads the gems Ruby has bundled for longest' do
+    output = report(run_code("require 'prime'; require 'matrix'; p Prime.first(3), Matrix[[1, 2]].column_count"))
+
+    expect(output['stdout']).to eq("[2, 3, 5]\n2\n")
+  end
+
   it "hides the application's gems" do
     rspec = Gem.loaded_specs.fetch('rspec-core').full_gem_path
     code = <<~RUBY

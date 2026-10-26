@@ -272,7 +272,7 @@ module RubyLLM
                     render_embedding_payload(text, model:, dimensions:, task_type:, title:, provider_options:)
                   end
         response = @connection.post(embedding_url(model:), payload, usage: @usage_tracker)
-        parse_embedding_response(response, model:, text:)
+        ensure_embedding_per_text(parse_embedding_response(response, model:, text:), text, attachments, response)
       end
     rescue NotImplementedError
       raise Error, "#{@provider.name} doesn't support embeddings"
@@ -686,6 +686,13 @@ module RubyLLM
 
     def apply_tool_search(payload)
       payload
+    end
+
+    def ensure_embedding_per_text(embedding, text, attachments, response)
+      count = Array(embedding.vectors).size
+      return embedding if attachments.any? || !text.is_a?(Array) || count == text.size
+
+      raise Error.new("Expected #{text.size} embeddings, got #{count}", response:)
     end
 
     def track_usage(operation, on_finish: nil, model_id: nil)

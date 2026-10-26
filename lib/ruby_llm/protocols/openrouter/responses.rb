@@ -17,6 +17,10 @@ module RubyLLM
           SERVER_TOOL_ALIASES
         end
 
+        def document_urls?
+          true
+        end
+
         def merge_server_tool_entries(payload, entries)
           entries.each do |entry|
             tool = Support::Utils.deep_symbolize_keys(entry)
