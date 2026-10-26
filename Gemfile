@@ -40,7 +40,7 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'rubocop-performance'
   gem 'rubocop-rake', '>= 0.6'
   gem 'rubocop-rspec'
-  gem 'simplecov', '>= 0.21', '< 1.0'
+  gem 'simplecov', '>= 0.21', '< 1.3.3'
   gem 'simplecov-cobertura'
   gem 'test-queue'
 
