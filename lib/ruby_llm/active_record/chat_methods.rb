@@ -702,7 +702,7 @@ module RubyLLM
         self.assume_model_exists = assume_model_exists
         resolve_model
         save!
-        to_llm.with_model(model_id, provider: provider&.to_sym, protocol:, assume_model_exists:)
+        to_llm
         self
       end
 

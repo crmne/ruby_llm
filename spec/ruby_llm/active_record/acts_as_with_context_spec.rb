@@ -29,6 +29,28 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(chat.instance_variable_get(:@context)).to eq(context)
     end
 
+    it 'runs on the provider it stores when switching models' do
+      context = RubyLLM.context do |config|
+        config.openrouter_api_key = 'test'
+        config.perplexity_api_key = 'test'
+      end
+      chat = Chat.create!(model: model_for(:openrouter), provider: :openrouter, context: context)
+      chat.to_llm
+
+      chat.with_model('gpt-5-nano')
+
+      expect(chat.model).to have_attributes(model_id: 'openai/gpt-5-nano', provider: 'openrouter')
+      expect(chat.to_llm.model).to have_attributes(id: 'openai/gpt-5-nano', provider: 'openrouter')
+    end
+
+    it 'switches the live chat when switching models' do
+      context = RubyLLM.context { |config| config.openrouter_api_key = 'test' }
+      chat = Chat.create!(model: model_for(:openrouter), provider: :openrouter, context: context)
+
+      expect { chat.with_model('openai/gpt-5-nano', provider: :perplexity) }
+        .to raise_error(RubyLLM::ConfigurationError, /Perplexity provider is not configured/)
+    end
+
     it 'stores the configured provider that carries the model' do
       context = RubyLLM.context { |config| config.openrouter_api_key = 'test' }
 
