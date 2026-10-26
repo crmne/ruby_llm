@@ -17,13 +17,11 @@ module RubyLLM
         denied = sandbox.denied.map { |path| File.expand_path(path) }
         refuse_writable(sandbox.writable, denied)
         granted = [*sandbox.readable, *sandbox.writable].map { |path| File.expand_path(path) }
-        options = {
-          readable: around(sandbox.readable, denied), writable: around(sandbox.writable, denied),
-          denied: denied.reject { |path| granted.any? { |root| inside?(path, root) } },
-          network: sandbox.network, env: sandbox.env, directory: sandbox.directory, timeout: sandbox.timeout,
-          limits: sandbox.limits, priority: sandbox.priority, backend: :landlock
-        }
-        ::MXC::Sandbox.new(**options.compact)
+        sandbox.dup
+               .with_readable(nil).with_readable(*around(sandbox.readable, denied))
+               .with_writable(nil).with_writable(*around(sandbox.writable, denied))
+               .with_denied(nil).with_denied(*denied.reject { |path| granted.any? { |root| inside?(path, root) } })
+               .with_backend(:landlock)
       end
 
       def refuse_writable(writable, denied)
