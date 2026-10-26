@@ -3,7 +3,8 @@
 # A sandbox that records each run and answers with a block, so specs can
 # check what code execution asks a sandbox to do without starting one.
 # Given +output+, it yields those lines, one by one, to a run that asks
-# for its output as it arrives.
+# for its output as it arrives. Each run records the binaries
+# #with_libraries_of named.
 class FakeSandbox
   Result = Struct.new(:stdout, :stderr, :exit_code, :timed_out, :blocked, :cpu_time, :limit_exceeded,
                       keyword_init: true) do
@@ -12,7 +13,7 @@ class FakeSandbox
     end
   end
 
-  attr_reader :runs, :timeout, :network, :directory, :readable, :writable, :limits
+  attr_reader :runs, :timeout, :network, :directory, :readable, :writable, :limits, :libraries
 
   def self.result(stdout: '', stderr: '', exit_code: 0, timed_out: false, blocked: [], cpu_time: nil,
                   limit_exceeded: nil)
@@ -32,7 +33,13 @@ class FakeSandbox
     @handler = handler
     @output = output
     @runs = []
+    @libraries = []
     @lock = Mutex.new
+  end
+
+  def with_libraries_of(*binaries)
+    @libraries = binaries
+    self
   end
 
   def supported?
@@ -40,7 +47,8 @@ class FakeSandbox
   end
 
   def run(*command, timeout:, readable: [], writable: [], denied: [], directory: nil, env: {}, network: nil, &)
-    run = { command:, readable:, writable:, denied:, network:, timeout:, directory:, env:, streamed: block_given? }
+    run = { command:, readable:, writable:, denied:, network:, timeout:, directory:, env:, streamed: block_given?,
+            libraries: }
     @lock.synchronize { @runs << run }
     @output.each(&) if block_given? && !check?(command)
     return self.class.result(stderr: "#{command.first}: not found", exit_code: 127) if @missing.include?(command.first)

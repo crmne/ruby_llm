@@ -48,14 +48,16 @@ module RubyLLM
 
     ESCALATION_NAME = /\A[a-z][a-z0-9_]*\z/
     PROGRESS_LINE = 200
+    MAX_CHECK_ERROR = 2000
     LIMIT_ERRORS = {
       cpu_time: 'The code used up its CPU time and was stopped',
       memory: 'The code used more memory than it may and was stopped',
       processes: 'The code started more processes than it may and was stopped'
     }.freeze
 
-    # A WeakMap holds its values weakly too, so each check is kept as true
-    # or false, which are never collected.
+    # A WeakMap holds its values weakly too. A language that runs is kept
+    # as true, which is never collected; the reason one cannot may be, and
+    # the language is checked again.
     CHECKS = Hash.new { |checks, language| checks[language] = ObjectSpace::WeakMap.new }
     CHECKS_LOCK = Mutex.new
     FILES_PROPERTY = {
@@ -63,7 +65,8 @@ module RubyLLM
       'description' => "Paths of this chat's files (see list_files) the code reads, copied into the run directory " \
                        'at the same paths; a folder copies everything in it. null copies nothing'
     }.freeze
-    private_constant :CHECKS, :CHECKS_LOCK, :ESCALATION_NAME, :PROGRESS_LINE, :LIMIT_ERRORS, :FILES_PROPERTY
+    private_constant :CHECKS, :CHECKS_LOCK, :ESCALATION_NAME, :PROGRESS_LINE, :MAX_CHECK_ERROR, :LIMIT_ERRORS,
+                     :FILES_PROPERTY
 
     class << self
       def tool_name # :nodoc:
@@ -118,12 +121,13 @@ module RubyLLM
         Attachment.new(StringIO.new(text), filename: "#{name}.txt")
       end
 
-      def available?(key, sandbox, language, **) # :nodoc:
+      # Returns +true+ when +sandbox+ runs +language+, or why it cannot.
+      def check(key, sandbox, language, **) # :nodoc:
         CHECKS_LOCK.synchronize do
           checks = CHECKS[[language.name, (sandbox.backend if sandbox.respond_to?(:backend))]]
           return checks[key] if checks.key?(key)
 
-          checks[key] = runs?(sandbox, language, **)
+          checks[key] = failure(sandbox, language, **) || true
         end
       end
 
@@ -139,12 +143,20 @@ module RubyLLM
 
       private
 
-      def runs?(sandbox, language, **)
-        result = sandbox.run(*language.check_command, timeout: 30, **)
-        result.exit_code&.zero? && !result.timed_out? ? true : false
+      def failure(sandbox, language, **)
+        reason = check_failure(sandbox.run(*language.check_command, timeout: 30, **))
       rescue StandardError => e
-        RubyLLM.logger.debug { "Code execution cannot run #{language.label}: #{e.class}: #{e.message}" }
-        false
+        reason = "#{e.class}: #{e.message}"
+      ensure
+        RubyLLM.logger.debug { "Code execution cannot run #{language.label}: #{reason}" } if reason
+      end
+
+      def check_failure(result)
+        return 'the check timed out' if result.timed_out?
+        return if result.exit_code&.zero?
+
+        stderr = result.stderr.to_s.strip
+        stderr.empty? ? "the check exited with #{result.exit_code.inspect}" : stderr[0, MAX_CHECK_ERROR]
       end
 
       def named_sandboxes(escalate_to)
@@ -296,10 +308,12 @@ module RubyLLM
       (@languages ||= {}.compare_by_identity)[sandbox_key] ||= begin
         options = { env: @packages.base_env(Dir.tmpdir), readable: @packages.runtimes,
                     denied: @packages.denied }
-        available = @requested_languages.select do |name|
-          self.class.available?(sandbox_key, sandbox, Language[name], **options)
+        runner = @packages.with_libraries(sandbox)
+        checks = @requested_languages.to_h do |name|
+          [name, self.class.check(sandbox_key, runner, Language[name], **options)]
         end
-        raise ConfigurationError, "The sandbox cannot run #{@requested_languages.join(', ')}" if available.empty?
+        available = checks.select { |_, check| check == true }.keys
+        raise ConfigurationError, "The sandbox cannot run #{failed_checks(checks)}" if available.empty?
 
         available
       end
@@ -398,6 +412,10 @@ module RubyLLM
     def sandbox_key
       value = @sandbox.is_a?(Proc) ? @sandbox.call : @sandbox
       value.is_a?(String) ? Sandbox.constant(value) : value
+    end
+
+    def failed_checks(checks)
+      checks.map { |name, reason| "#{name}: #{reason}" }.join('; ')
     end
 
     def isolated(runner)
@@ -501,14 +519,15 @@ module RubyLLM
     end
 
     def run_in_sandbox(runner, command, workspace, readable:, directory: workspace.directory)
-      runner.run(*command,
-                 readable: [*@packages.readable, *@packages.resolver_config(setting(runner, :network)), *readable,
-                            workspace.source, workspace.inputs],
-                 denied: @packages.denied,
-                 writable: [directory, workspace.home, workspace.tmp],
-                 timeout: timeout_for(runner), directory: (directory unless setting(runner, :directory)),
-                 env: @packages.env(workspace.home, workspace.tmp).merge(RUN_DIR => directory),
-                 &progress_listener)
+      sandbox = @packages.with_libraries(runner)
+      sandbox.run(*command,
+                  readable: [*@packages.readable, *@packages.resolver_config(setting(runner, :network)), *readable,
+                             workspace.source, workspace.inputs],
+                  denied: @packages.denied,
+                  writable: [directory, workspace.home, workspace.tmp],
+                  timeout: timeout_for(runner), directory: (directory unless setting(runner, :directory)),
+                  env: @packages.env(workspace.home, workspace.tmp).merge(RUN_DIR => directory),
+                  &progress_listener)
     end
 
     def progress_listener

@@ -42,6 +42,15 @@ module RubyLLM
         @gem_dir.start_with?(File.join(@prefix, '')) ? [@prefix] : [@prefix, @gem_dir]
       end
 
+      # Returns Ruby, its shared library, and its extensions: the files
+      # whose own libraries, such as Homebrew's libyaml and OpenSSL on
+      # macOS, a sandbox lets Ruby load.
+      def libraries
+        @libraries ||= [RbConfig.ruby, *shared_library,
+                        *Dir.glob(File.join(RbConfig::CONFIG['archdir'], '**', "*.#{RbConfig::CONFIG['DLEXT']}"))]
+                       .select { |path| File.file?(path) }.freeze
+      end
+
       def denied
         @denied ||= [
           *application_gems.flat_map { |stub| gem_paths(stub) },
@@ -75,6 +84,12 @@ module RubyLLM
       end
 
       private
+
+      def shared_library
+        return unless RbConfig::CONFIG['ENABLE_SHARED'] == 'yes'
+
+        File.join(RbConfig::CONFIG['libdir'], RbConfig::CONFIG['LIBRUBY_SO'])
+      end
 
       def application_gems
         installed_stubs.reject { |stub| ruby_gem?(stub.name) }

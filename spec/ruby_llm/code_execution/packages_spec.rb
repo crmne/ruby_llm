@@ -41,6 +41,12 @@ RSpec.describe RubyLLM::CodeExecution::Packages do
       expect(File.exist?("#{directory}.ready")).to be(true)
     end
 
+    it "lets the installer load the libraries Ruby's extensions link" do
+      packages(gems: %w[prawn]).gem_home
+
+      expect(sandbox.runs.last[:libraries]).to eq(RubyLLM::CodeExecution::RubyInstallation.current.libraries)
+    end
+
     it 'lets the installer read the resolver configuration' do
       allow(File).to receive(:exist?).and_call_original
       allow(File).to receive(:exist?).with('/etc/resolv.conf').and_return(true)

@@ -20,11 +20,12 @@ module RubyLLM
       LANDLOCK_OPT_IN = 'Or set config.sandbox_backend = :landlock to run on Landlock, which isolates less ' \
                         "and has no network access: #{DOCS}".freeze
 
-      attr_reader :policy
+      attr_reader :policy, :libraries
 
-      def initialize(policy, backend: :bubblewrap)
+      def initialize(policy, backend: :bubblewrap, libraries: [])
         @policy = policy
         @backend = backend
+        @libraries = libraries
       end
 
       def supported?
@@ -50,7 +51,13 @@ module RubyLLM
       # Returns a runner for a sandbox with none of this one's access, on
       # the same backend, for RubyLLM's own package installs.
       def isolated
-        self.class.new(::MXC::Sandbox.new(backend: sandbox.backend), backend: @backend)
+        self.class.new(::MXC::Sandbox.new(backend: sandbox.backend), backend: @backend, libraries: @libraries)
+      end
+
+      # Returns a runner whose commands may load the libraries +binaries+
+      # link, such as an interpreter's extensions.
+      def with_libraries_of(*binaries)
+        self.class.new(@policy, backend: @backend, libraries: [*@libraries, *binaries])
       end
 
       def run(*command, timeout:, readable: [], writable: [], denied: [], directory: nil, env: {}, network: nil, &)
@@ -58,6 +65,7 @@ module RubyLLM
         run.with_directory(directory) if run.directory.nil? && directory
         run.with_env(env.reject { |name, _| run.env.key?(name) })
         apply_network(run, network)
+        run.with_libraries_of(*@libraries)
         run = Landlock.policy(run) if run.backend == :landlock
         block_given? ? run_by_line(run, command, &) : run.run(*command)
       end

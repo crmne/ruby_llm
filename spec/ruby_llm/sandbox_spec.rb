@@ -55,6 +55,24 @@ RSpec.describe RubyLLM::Sandbox do
       expect(lines).to eq(%W[abc\n d\n e\n])
     end
 
+    it 'lets the runs of an MXC::Sandbox load the libraries of the binaries it is given' do
+      granting = Class.new(MXC::Sandbox) do
+        def with_libraries_of(*paths)
+          (@granted ||= []).concat(paths)
+          self
+        end
+
+        def run(*)
+          FakeSandbox.result(stdout: Array(@granted).join(' '))
+        end
+      end
+      runner = described_class.resolve(granting).with_libraries_of('psych.bundle').with_libraries_of('libruby.dylib')
+
+      expect(runner.run('ruby', timeout: 10).stdout).to eq('psych.bundle libruby.dylib')
+      expect(described_class.resolve(granting).run('ruby', timeout: 10).stdout).to eq('')
+      expect(runner.isolated.libraries).to eq(%w[psych.bundle libruby.dylib])
+    end
+
     it 'runs an MXC::Sandbox on the configured backend unless it names its own' do
       skip 'mxc runs on MRI' unless RUBY_ENGINE == 'ruby'
       require 'mxc'

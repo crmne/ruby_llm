@@ -76,7 +76,7 @@ The model writes Ruby or shell scripts by default. Choose from `:ruby`, `:python
 chat.with_code_execution(languages: [:python, :javascript])
 ```
 
-Ruby is the one your application runs, without your application's gems or Bundler environment: Ruby's default and bundled gems load, and every other gem installed with it is hidden. JavaScript runs on the Node.js your application's `PATH` finds, wherever it is installed, including a version manager such as mise or nvm, and RubyLLM lets the sandbox read that installation. Python is whatever `python3` the sandbox finds on the system. The tool's description lists only the languages the sandbox can actually run, so the model never tries Python on a server without it.
+Ruby is the one your application runs, without your application's gems or Bundler environment: Ruby's default and bundled gems load, and every other gem installed with it is hidden. On macOS, the sandbox also reads the libraries Ruby and its extensions link outside the system, such as Homebrew's GMP, OpenSSL, and libyaml, with mxc 0.4 or later and the Command Line Tools installed. JavaScript runs on the Node.js your application's `PATH` finds, wherever it is installed, including a version manager such as mise or nvm, and RubyLLM lets the sandbox read that installation. Python is whatever `python3` the sandbox finds on the system. The tool's description lists only the languages the sandbox can actually run, so the model never tries Python on a server without it. RubyLLM's debug log says why a language was left out, and when the sandbox can run none of them, the `RubyLLM::ConfigurationError` includes what each check printed, such as `The sandbox cannot run ruby: dyld[...]: Library not loaded: ...`.
 
 ### Timeouts and Network
 

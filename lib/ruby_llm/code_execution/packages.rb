@@ -75,6 +75,12 @@ module RubyLLM
         [*@installation.readable, *@node&.readable]
       end
 
+      # Returns +runner+ able to load the libraries Ruby links, when it can
+      # grant them.
+      def with_libraries(runner)
+        runner.respond_to?(:with_libraries_of) ? runner.with_libraries_of(*@installation.libraries) : runner
+      end
+
       def denied
         @installation.denied - [@gem_home]
       end
@@ -131,7 +137,7 @@ module RubyLLM
       end
 
       def run(*command, home:, readable: [], writable: [], network: false, env: {})
-        sandbox = @sandbox.is_a?(Proc) ? @sandbox.call : @sandbox
+        sandbox = with_libraries(@sandbox.is_a?(Proc) ? @sandbox.call : @sandbox)
         sandbox.run(*command, readable: [*runtimes, *resolver_config(network),
                                          *readable], denied:,
                               writable: [*writable, home], network:,
