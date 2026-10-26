@@ -42,6 +42,7 @@ class <%= create_migration_class_name('ruby_llm_records') %> < ActiveRecord::Mig
       t.references :result, polymorphic: true, type: :<%= reference_type %>, index: false
       t.string :tool_call_id, null: false
       t.string :provider_call_id
+      t.string :namespace
       t.string :name, null: false
       t.text :thought_signature
       t.string :approval

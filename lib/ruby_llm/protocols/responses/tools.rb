@@ -25,6 +25,15 @@ module RubyLLM
           RubyLLM::Support::Utils.deep_merge(definition, tool.provider_options)
         end
 
+        def render_tools(tools)
+          ordinary, namespaced = tools.values.partition { |tool| tool.namespace.nil? }
+          groups = namespaced.group_by(&:namespace).map do |namespace, members|
+            { type: 'namespace', name: namespace, description: members.filter_map(&:namespace_description).first,
+              tools: members.map { |tool| tool_for(tool) } }.compact
+          end
+          ordinary.map { |tool| tool_for(tool) } + groups
+        end
+
         def deferred?(tool)
           tool.is_a?(RubyLLM::Tool::Deferred)
         end
@@ -42,7 +51,9 @@ module RubyLLM
         end
 
         def defers_loading?(tools)
-          tools.any? { |tool| tool[:defer_loading] || tool['defer_loading'] }
+          tools.any? do |tool|
+            tool[:defer_loading] || tool['defer_loading'] || defers_loading?(Array(tool[:tools] || tool['tools']))
+          end
         end
 
         def search_tool?(tool)

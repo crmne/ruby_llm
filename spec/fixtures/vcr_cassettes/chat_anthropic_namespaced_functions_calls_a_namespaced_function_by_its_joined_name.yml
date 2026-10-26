@@ -1,0 +1,179 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-sonnet-5","messages":[{"role":"user","content":[{"type":"text","text":"Which
+        plan is the customer ada@example.com on? Use your tools."}]}],"stream":false,"max_tokens":128000,"tools":[{"name":"crm_customer_lookup","description":"Finds
+        a customer by email","input_schema":{"type":"object","properties":{"email":{"type":"string","description":"Customer
+        email"}},"required":["email"],"additionalProperties":false,"strict":true}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 25 Oct 2026 23:34:24 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '10000000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '10000000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2026-10-25T23:34:24Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2026-10-25T23:34:24Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '9999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2026-10-25T23:34:23Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '12000000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '12000000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2026-10-25T23:34:24Z'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Request-Id:
+      - "<REQUEST_ID>"
+      Traceresponse:
+      - 00-79b83e3e444d7ba82c6b80263b8b4cb1-ba24ffd802db809a-01
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Anthropic-Workspace-Id:
+      - "<ANTHROPIC_WORKSPACE_ID>"
+      Vary:
+      - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Server:
+      - cloudflare
+      Server-Timing:
+      - x-originResponse;dur=772
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"claude-sonnet-5","id":"msg_011CgPq9nVwDoT2D6pUJD8e4","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01XW4v1e2TJ8LMNqfvPEpPYr","name":"crm_customer_lookup","input":{"email":"ada@example.com"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":482,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":58,"output_tokens_details":{"thinking_tokens":0},"service_tier":"standard","inference_geo":"<GOOGLE_CLOUD_LOCATION>","speed":"standard"},"diagnostics":null}'
+  recorded_at: Sun, 25 Oct 2026 23:34:24 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-sonnet-5","messages":[{"role":"user","content":[{"type":"text","text":"Which
+        plan is the customer ada@example.com on? Use your tools."}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01XW4v1e2TJ8LMNqfvPEpPYr","name":"crm_customer_lookup","input":{"email":"ada@example.com"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01XW4v1e2TJ8LMNqfvPEpPYr","content":[{"type":"text","text":"{\"email\":\"ada@example.com\",\"name\":\"Ada
+        Lovelace\",\"plan\":\"Pro\"}"}]}]}],"stream":false,"max_tokens":128000,"tools":[{"name":"crm_customer_lookup","description":"Finds
+        a customer by email","input_schema":{"type":"object","properties":{"email":{"type":"string","description":"Customer
+        email"}},"required":["email"],"additionalProperties":false,"strict":true}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 25 Oct 2026 23:34:25 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '10000000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '10000000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2026-10-25T23:34:24Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2026-10-25T23:34:25Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '9999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2026-10-25T23:34:24Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '12000000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '12000000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2026-10-25T23:34:24Z'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Request-Id:
+      - "<REQUEST_ID>"
+      Traceresponse:
+      - 00-041311dbd4b075a1d5554be18f438037-74aa969631b2f827-01
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Anthropic-Workspace-Id:
+      - "<ANTHROPIC_WORKSPACE_ID>"
+      Vary:
+      - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Server:
+      - cloudflare
+      Server-Timing:
+      - x-originResponse;dur=425
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"claude-sonnet-5","id":"msg_011CgPq9r1HWt1kAvaYjfdDY","type":"message","role":"assistant","content":[{"type":"text","text":"Ada
+        Lovelace (ada@example.com) is currently on the **Pro** plan."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":578,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":31,"output_tokens_details":{"thinking_tokens":0},"service_tier":"standard","inference_geo":"<GOOGLE_CLOUD_LOCATION>","speed":"standard"},"diagnostics":null}'
+  recorded_at: Sun, 25 Oct 2026 23:34:25 GMT
+recorded_with: VCR 6.4.0

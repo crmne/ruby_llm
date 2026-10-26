@@ -21,7 +21,7 @@ RSpec.describe RubyLLM::Providers::OpenAI::Responses do
   end
 
   it 'counts instructions, function tools, schemas and reasoning without generation-only options' do
-    tool = instance_double(RubyLLM::Tool, name: 'weather', description: 'Looks up weather',
+    tool = instance_double(RubyLLM::Tool, name: 'weather', namespace: nil, description: 'Looks up weather',
                                           parameters_schema: { type: 'object' }, provider_options: {})
     schema = { name: 'answer', schema: { type: 'object', properties: { answer: { type: 'string' } } }, strict: true }
     messages = [RubyLLM::Message.new(role: :system, content: 'Be concise.'),

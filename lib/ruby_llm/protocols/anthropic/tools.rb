@@ -29,12 +29,19 @@ module RubyLLM
           }
         end
 
-        def render_tool_result_block(msg, citations: false)
-          {
+        def render_tool_result_block(msg, citations: false, tool_call: nil)
+          block = {
             type: 'tool_result',
             tool_use_id: msg.provider_call_id,
             content: render_tool_result_content(msg, citations:)
           }
+          return block unless tool_call&.namespace
+
+          block[:toolset_name] = tool_call.namespace
+          error = msg.tool_error_message
+          return block unless error
+
+          block.merge(is_error: true, content: [{ type: 'text', text: error.to_s }])
         end
 
         def render_tool_result_content(msg, citations: false)
@@ -56,6 +63,15 @@ module RubyLLM
             content: [{ type: 'text', text: result[:text] }],
             citations: { enabled: true }
           }
+        end
+
+        CLIENT_TOOLSETS = {
+          'computer' => 'Not executed: an earlier computer action in this turn failed.',
+          'browser' => 'Not executed: an earlier action in this turn failed.'
+        }.freeze
+
+        def render_tools(tools)
+          tools.values.reject(&:namespace).map { |tool| function_for(tool) }
         end
 
         def function_for(tool)
@@ -137,6 +153,7 @@ module RubyLLM
             ToolCall.new(
               provider_call_id: block['id'],
               name: block['name'],
+              namespace: block['toolset_name'],
               arguments: block['input']
             )
           end

@@ -52,7 +52,7 @@ module RubyLLM
       end
 
       def names_loaded_by(tool_call, results)
-        return [tool_call.name.to_sym] unless tool_call.name == Tools::Search.tool_name
+        return [tool_call.qualified_name.to_sym] unless tool_call.qualified_name == Tools::Search.tool_name
 
         Tools::Search.loaded_names(results[tool_call.id]).map(&:to_sym)
       end

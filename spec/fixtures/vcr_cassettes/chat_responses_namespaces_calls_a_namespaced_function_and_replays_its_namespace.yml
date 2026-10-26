@@ -1,0 +1,402 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5.4","input":[{"role":"user","content":"Which plan is
+        the customer ada@example.com on? Use your tools."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"namespace","name":"crm","description":"Customer
+        records","tools":[{"type":"function","name":"customer_lookup","description":"Finds
+        a customer by email","parameters":{"type":"object","properties":{"email":{"type":"string","description":"Customer
+        email"}},"required":["email"],"additionalProperties":false,"strict":true},"strict":false}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 25 Oct 2026 18:59:52 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID, Server-Timing-Total
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '745'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '1000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '1000000'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_0b5aa41dcd7ba4e5016ade51a7796487d292b58e7a87a85923",
+          "object": "response",
+          "created_at": 1792954791,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1792954792,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5.4-2026-03-05",
+          "moderation": null,
+          "output": [
+            {
+              "id": "fc_0b5aa41dcd7ba4e5016ade51a8107c87d2a91554dec0b97007",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{\"email\":\"ada@example.com\"}",
+              "call_id": "call_sxffLRrjTMY5X2MvHQjGPNAu",
+              "name": "customer_lookup",
+              "namespace": "crm"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "24h",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "none",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "namespace",
+              "description": "Customer records",
+              "name": "crm",
+              "tools": [
+                {
+                  "type": "function",
+                  "description": "Finds a customer by email",
+                  "name": "customer_lookup",
+                  "output_schema": null,
+                  "parameters": {
+                    "type": "object",
+                    "properties": {
+                      "email": {
+                        "type": "string",
+                        "description": "Customer email"
+                      }
+                    },
+                    "required": [
+                      "email"
+                    ],
+                    "additionalProperties": false,
+                    "strict": true
+                  },
+                  "strict": false
+                }
+              ]
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 0.98,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 60,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 20,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 80
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Sun, 25 Oct 2026 18:59:52 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5.4","input":[{"role":"user","content":"Which plan is
+        the customer ada@example.com on? Use your tools."},{"id":"fc_0b5aa41dcd7ba4e5016ade51a8107c87d2a91554dec0b97007","type":"function_call","status":"completed","arguments":"{\"email\":\"ada@example.com\"}","call_id":"call_sxffLRrjTMY5X2MvHQjGPNAu","name":"customer_lookup","namespace":"crm"},{"type":"function_call_output","call_id":"call_sxffLRrjTMY5X2MvHQjGPNAu","output":"{\"email\":\"ada@example.com\",\"name\":\"Ada
+        Lovelace\",\"plan\":\"Pro\"}"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"namespace","name":"crm","description":"Customer
+        records","tools":[{"type":"function","name":"customer_lookup","description":"Finds
+        a customer by email","parameters":{"type":"object","properties":{"email":{"type":"string","description":"Customer
+        email"}},"required":["email"],"additionalProperties":false,"strict":true},"strict":false}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 25 Oct 2026 18:59:53 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID, Server-Timing-Total
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '821'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '1000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '1000000'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_0b5aa41dcd7ba4e5016ade51a8715087d28aedfe6b18240a17",
+          "object": "response",
+          "created_at": 1792954792,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1792954793,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5.4-2026-03-05",
+          "moderation": null,
+          "output": [
+            {
+              "id": "msg_0b5aa41dcd7ba4e5016ade51a90ebc87d290f823124b1e54f5",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "ada@example.com is on the Pro plan."
+                }
+              ],
+              "phase": "final_answer",
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "24h",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "none",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "namespace",
+              "description": "Customer records",
+              "name": "crm",
+              "tools": [
+                {
+                  "type": "function",
+                  "description": "Finds a customer by email",
+                  "name": "customer_lookup",
+                  "output_schema": null,
+                  "parameters": {
+                    "type": "object",
+                    "properties": {
+                      "email": {
+                        "type": "string",
+                        "description": "Customer email"
+                      }
+                    },
+                    "required": [
+                      "email"
+                    ],
+                    "additionalProperties": false,
+                    "strict": true
+                  },
+                  "strict": false
+                }
+              ]
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 0.98,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 109,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 13,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 122
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Sun, 25 Oct 2026 18:59:53 GMT
+recorded_with: VCR 6.4.0

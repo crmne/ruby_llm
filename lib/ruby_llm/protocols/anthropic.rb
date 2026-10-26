@@ -62,6 +62,10 @@ module RubyLLM
         true
       end
 
+      def skipped_tool_call_error(tool_call)
+        Tools::CLIENT_TOOLSETS[tool_call.namespace]
+      end
+
       # Server tools can pause a long turn with stop_reason pause_turn; the
       # API expects the conversation back verbatim to continue it. Segments
       # are merged into the single Message the caller sees.

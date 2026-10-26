@@ -85,6 +85,30 @@ end
 
 If the model requests an unavailable tool, RubyLLM returns an error listing the available tools and lets the conversation continue.
 
+## Tool Namespaces
+
+A namespace groups related tools, and lets tools in different groups share a name. Give it a description so the model knows what the group is for:
+
+```ruby
+class CustomerLookup < RubyLLM::Tool
+  namespace "crm", description: "Customer records and orders"
+  description "Finds a customer by email"
+
+  def execute(email:)
+    Customer.find_by(email:)&.attributes
+  end
+end
+
+chat.with_tools(CustomerLookup)
+chat.tools[:crm_customer_lookup]
+```
+
+The chat keys the tool by its namespace and name joined, `:crm_customer_lookup`, and raises an `ArgumentError` when another tool already has that name. The tool's own name stays `customer_lookup`, and `tool_call.namespace` names its group. RubyLLM routes calls and remembers approvals by both, including after a Rails reload. `namespace` is inherited; pass `nil` to remove an inherited namespace. Namespaced tools can be [deferred for tool search]({% link _core_features/tool-search.md %}) like any other.
+
+The Responses protocol sends each group as a function namespace, which needs a description. Every other protocol sends the tool under its joined name, `crm_customer_lookup`, and maps the model's calls back to the namespace. Anthropic's `computer` and `browser` namespaces are the members of its [native client toolsets]({% link _core_features/provider-tools.md %}#native-client-toolsets) instead.
+
+You can force a namespaced tool with `with_tool_options(choice: CustomerLookup)` where it travels under its joined name. Responses namespaces and Anthropic's toolset members cannot be forced, so RubyLLM raises there; use `choice: :required` instead.
+
 ## Declaring Parameters
 
 The simplest case needs nothing extra. When a tool has no `parameter` or `parameters` declaration, RubyLLM builds a JSON Schema from the `execute` keyword arguments:
