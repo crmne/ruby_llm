@@ -80,6 +80,24 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     end
   end
 
+  it 'leaves no truncated answer behind when the messages table has no continuation column' do
+    stub_request(:post, "https://generativelanguage.googleapis.com/v1beta/models/#{model}:generateContent")
+      .to_return_json(body: body('One ', reason: 'CONTINUATION', token: 'next'))
+      .then.to_return(status: 503, body: '{}')
+    connection = ActiveRecord::Base.connection
+
+    ActiveRecord::Base.transaction do
+      connection.remove_column(:messages, :continuation)
+      Message.reset_column_information
+
+      expect { chat.with_max_output_tokens(262_144).ask('Think') }.to raise_error(RubyLLM::ServiceUnavailableError)
+      expect(chat.messages.reload.pluck(:role)).to eq(%w[user])
+      raise ActiveRecord::Rollback
+    end
+  ensure
+    Message.reset_column_information
+  end
+
   it 'keeps an unfinished answer that has only thought so far' do
     thought = body(nil, reason: 'CONTINUATION', token: 'next')
     thought[:candidates][0][:content][:parts] = [{ text: 'Planning', thought: true }]

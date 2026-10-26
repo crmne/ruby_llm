@@ -30,6 +30,8 @@ module RubyLLM
       end
 
       def persist_message_progress(message)
+        return unless @message.has_attribute?(:continuation)
+
         transaction do
           @message.update!(message_attributes(message))
           link_usage_entries(message)
