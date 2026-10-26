@@ -702,7 +702,7 @@ module RubyLLM
         self.assume_model_exists = assume_model_exists
         resolve_model
         save!
-        to_llm.with_model(model_id, provider: provider&.to_sym, protocol:, assume_model_exists:)
+        to_llm
         self
       end
 
@@ -992,7 +992,7 @@ module RubyLLM
       end
 
       def find_registered_model
-        RubyLLM.models.find(model_id, provider: @pending_provider, config: context&.config)
+        RubyLLM.models.find_configured(model_id, provider: @pending_provider, config: context&.config)
       end
 
       # An empty store would otherwise hold only this chat's model on the next

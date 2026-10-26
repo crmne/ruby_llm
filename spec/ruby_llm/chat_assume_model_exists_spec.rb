@@ -46,7 +46,9 @@ RSpec.describe RubyLLM::Chat, :live do
 
     it 'works with models not in registry but available in API' do
       # Simulate model missing from registry
-      filtered_models = original_models.reject { |m| m.id == real_model }
+      filtered_models = original_models.reject do |m|
+        [real_model, RubyLLM::Models::Aliases.resolve(real_model, m.provider)].include?(m.id)
+      end
       RubyLLM::Models.instance.instance_variable_set(:@models, filtered_models)
 
       # Should raise error when not assuming existence

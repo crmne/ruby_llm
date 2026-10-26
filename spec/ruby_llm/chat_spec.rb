@@ -144,7 +144,8 @@ RSpec.describe RubyLLM::Chat, :live do
 
     it 'prices a response against a given model when its own model id cannot be resolved' do
       allow(RubyLLM.models).to receive(:find).and_call_original
-      allow(RubyLLM.models).to receive(:find).with('priced-model', provider: nil, config: anything).and_return(model)
+      allow(RubyLLM.models).to receive(:find_configured).with('priced-model', provider: nil, config: anything)
+                                                        .and_return(model)
       allow(RubyLLM.models).to receive(:find).with('provider-backend-version').and_raise(RubyLLM::ModelNotFoundError)
 
       chat = RubyLLM.chat(model: 'priced-model')

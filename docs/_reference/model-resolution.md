@@ -35,7 +35,7 @@ You gave a name; RubyLLM resolved it to a concrete model and chose a provider. T
 
 Resolution takes a name and an optional provider, and runs in this order:
 
-1. **Did you name a provider?** If you passed `provider:`, resolution is scoped to that provider. If not, RubyLLM searches every provider and chooses one by preference.
+1. **Did you name a provider?** If you passed `provider:`, resolution is scoped to that provider. If not, RubyLLM searches every provider and chooses one by preference, ranking the providers you have configured first.
 2. **Resolve aliases.** The name is looked up in the alias table and rewritten to the provider's versioned ID when a match exists.
 3. **Look up the registry.** RubyLLM finds the model whose ID (or pre-alias name) matches in the [model registry]({% link _reference/models.md %}).
 4. **Bypass the registry for unlisted models.** With `assume_model_exists: true` (or a local provider), RubyLLM skips the lookup and trusts the name you gave.
@@ -92,7 +92,17 @@ To pin a different provider, name it:
 RubyLLM.chat(model: "claude-opus-4", provider: :vertexai)
 ```
 
-> Provider preference only breaks ties between providers that both carry the model. It never makes RubyLLM use a provider you haven't configured a key for, because a chat still needs that provider's credentials to run.
+Preference only ranks the providers you have configured. With only an OpenRouter key, `openai/gpt-5-nano` resolves to OpenRouter, even though Perplexity, which outranks it, carries the same ID:
+
+```ruby
+RubyLLM.configure { |config| config.openrouter_api_key = ENV["OPENROUTER_API_KEY"] }
+
+RubyLLM.chat(model: "openai/gpt-5-nano").model.provider  # => "openrouter"
+```
+
+Each configured provider resolves the name the way it would if you had passed `provider:`, through its own alias and registry ID. With only Bedrock configured, `claude-haiku-4-5` resolves to Bedrock's Claude Haiku 4.5. A local provider such as Ollama or GPUStack counts as configured once you set its API base. When none of your configured providers carries the model, RubyLLM picks the most preferred provider anyway, so the `RubyLLM::ConfigurationError` names the provider and the settings it needs.
+
+> `RubyLLM.models.find` searches the whole registry and ranks every provider, configured or not. Only resolution, the step behind `RubyLLM.chat` and the other `model:` entry points, prefers configured providers.
 {: .note }
 
 ## Resolving With a Provider
