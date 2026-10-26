@@ -213,6 +213,24 @@ RSpec.describe RubyLLM::Models::Lookup do
       expect(registry.find('claude-haiku-4-5')).to equal(first_party)
     end
 
+    it 'resolves through another configured provider when an Azure deployment is stale' do
+      config.azure_api_base = 'https://example.services.ai.azure.com'
+      config.azure_api_key = 'test'
+      config.azure_deployments = { aggregated.id => 'retired-model' }
+
+      expect(models.find_configured(aggregated.id, config:)).to equal(aggregated)
+    end
+
+    it 'raises the stale Azure deployment error when nothing else serves the name' do
+      config.openrouter_api_key = nil
+      config.azure_api_base = 'https://example.services.ai.azure.com'
+      config.azure_api_key = 'test'
+      config.azure_deployments = { 'invoice-reader' => 'retired-model' }
+
+      expect { models.find_configured('invoice-reader', config:) }
+        .to raise_error(RubyLLM::ConfigurationError, /Deployment "invoice-reader" points to unknown model/)
+    end
+
     it 'scopes to the named provider' do
       expect(models.find_configured(aggregated.id, provider: :perplexity, config:)).to equal(first_party)
     end

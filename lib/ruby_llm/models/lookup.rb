@@ -57,18 +57,30 @@ module RubyLLM
         resolved_id == model_id ? matches : matches + aliased_matches(model_id, resolved_id)
       end
 
+      # One provider's configuration problem, such as a stale Azure
+      # deployment, must not hide another provider that serves the name,
+      # so it is raised only when nothing else resolves it.
+      def find_on_configured_providers(model_id, config)
+        errors = []
+        preferred_match(configured_candidates(model_id, config, errors)) || find_without_provider(model_id)
+      rescue ModelNotFoundError => e
+        raise errors.first || e
+      end
+
       # Bare-name matches come first so they win ties; each configured
       # provider then adds what it serves under its own alias or registry
       # id, as with provider:.
-      def find_on_configured_providers(model_id, config)
+      def configured_candidates(model_id, config, errors)
         slugs = Provider.configured_providers(config).map(&:slug)
         matches = bare_matches(model_id).select { |model| slugs.include?(model.provider) }
-        matches += slugs.filter_map do |slug|
+        matches + slugs.filter_map do |slug|
           find_with_provider(model_id, slug, config)
         rescue ModelNotFoundError
           nil
+        rescue ConfigurationError => e
+          errors << e
+          nil
         end
-        preferred_match(matches)
       end
 
       def aliased_matches(model_id, resolved_id)
