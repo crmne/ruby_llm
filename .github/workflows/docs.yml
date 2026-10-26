@@ -43,7 +43,7 @@ jobs:
       deploy: ${{ steps.registry.outputs.deploy }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
           fetch-depth: 0 # Build release tags alongside main, including on release events.

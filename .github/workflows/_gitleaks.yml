@@ -37,7 +37,7 @@ jobs:
     name: Gitleaks (Current Tree)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         if: inputs.preserve-base-config == true
         with:
           path: base
@@ -49,13 +49,13 @@ jobs:
           cp base/.gitleaks.toml /tmp/base.gitleaks.toml
           if [ -f base/.gitleaksignore ]; then cp base/.gitleaksignore /tmp/base.gitleaksignore; fi
 
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         if: inputs.preserve-base-config == false && inputs.checkout-repository == ''
         with:
           path: repo
           fetch-depth: 1
 
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         if: inputs.preserve-base-config == false && inputs.checkout-repository != ''
         with:
           repository: ${{ inputs.checkout-repository }}
@@ -64,7 +64,7 @@ jobs:
           fetch-depth: 1
           persist-credentials: false
 
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         if: inputs.preserve-base-config == true
         with:
           repository: ${{ inputs.checkout-repository }}
