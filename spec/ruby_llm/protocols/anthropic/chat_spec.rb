@@ -38,6 +38,23 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
 
       expect([citation.start_page, citation.end_page]).to eq([2, 3])
     end
+
+    it 'keeps the source of a search result that is not a web URL as its source_id' do
+      citation = described_class.parse_citation(
+        { 'type' => 'search_result_location', 'source' => 'gid://app/Document/42', 'title' => 'Q4 Report',
+          'cited_text' => 'Revenue grew 12%.', 'search_result_index' => 0 }
+      )
+
+      expect(citation).to have_attributes(url: nil, source_id: 'gid://app/Document/42', source_index: 0)
+    end
+
+    it 'reports a web URL search result source as both url and source_id' do
+      citation = described_class.parse_citation(
+        { 'type' => 'search_result_location', 'source' => 'https://example.com/q4', 'title' => 'Q4 Report' }
+      )
+
+      expect(citation).to have_attributes(url: 'https://example.com/q4', source_id: 'https://example.com/q4')
+    end
   end
 
   describe '.build_system_content' do
