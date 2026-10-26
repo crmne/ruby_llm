@@ -37,6 +37,51 @@ RSpec.describe RubyLLM::Protocols::Responses::Media do
       end
     end
 
+    [
+      RubyLLM::Providers::OpenAI, RubyLLM::Providers::Azure, RubyLLM::Providers::XAI,
+      RubyLLM::Providers::OpenRouter, RubyLLM::Providers::Meta
+    ].each do |provider_class|
+      it "passes document URLs through as input_file file_url parts for #{provider_class}" do
+        protocol = provider_class.protocols.fetch(:responses).new(provider_class.allocate)
+        url = 'https://files.example/signed/report.pdf?signature=abc'
+        document = RubyLLM::Attachment.new(url, filename: 'report.pdf')
+
+        formatted = protocol.send(:render_content, 'Summarize this file', [document])
+
+        expect(formatted.second).to eq(type: 'input_file', file_url: url)
+        expect(a_request(:get, url)).not_to have_been_made
+      end
+    end
+
+    it 'downloads document URLs into file_data where the provider does not fetch them' do
+      url = 'https://files.example/report.pdf'
+      stub_request(:get, url).to_return(status: 200, body: '%PDF-1.4', headers: { 'Content-Type' => 'application/pdf' })
+      protocol = RubyLLM::Providers::Bedrock::Mantle::Responses.allocate
+
+      formatted = protocol.send(:render_content, 'Summarize this file', [RubyLLM::Attachment.new(url)])
+
+      expect(formatted.second).to eq(type: 'input_file', filename: 'report.pdf',
+                                     file_data: "data:application/pdf;base64,#{Base64.strict_encode64('%PDF-1.4')}")
+    end
+
+    it 'keeps local documents inline where the provider fetches document URLs' do
+      protocol = RubyLLM::Providers::OpenAI::Responses.new(RubyLLM::Providers::OpenAI.allocate)
+      pdf = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/sample.pdf', __dir__))
+
+      formatted = protocol.send(:render_content, 'Summarize this file', [pdf])
+
+      expect(formatted.second.keys).to eq(%i[type filename file_data])
+    end
+
+    it 'keeps image URLs as input_image parts where the provider fetches document URLs' do
+      protocol = RubyLLM::Providers::OpenAI::Responses.new(RubyLLM::Providers::OpenAI.allocate)
+      image = RubyLLM::Attachment.new('https://files.example/ruby.png')
+
+      formatted = protocol.send(:render_content, 'Describe this', [image])
+
+      expect(formatted.second).to eq(type: 'input_image', image_url: 'https://files.example/ruby.png')
+    end
+
     it 'keeps text files inline' do
       text = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.txt', __dir__))
 

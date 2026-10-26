@@ -101,12 +101,17 @@ class <%= create_migration_class_name('ruby_llm_records') %> < ActiveRecord::Mig
       t.decimal :cache_write_cost, precision: 16, scale: 10
       t.decimal :thinking_cost, precision: 16, scale: 10
       t.decimal :total_cost, precision: 16, scale: 10
+      t.string :workflow_id
+      t.string :workflow_name
+      t.string :workflow_step_id
+      t.string :workflow_step_name
       t.timestamps
 
       t.index [ :chat_type, :chat_id ]
       t.index [ :message_type, :message_id ]
       t.index [ :owner_type, :owner_id ]
       t.index :status
+      t.index :workflow_id
       t.check_constraint "operation<%= '::text' if postgresql? %> IN (<%= usage_operations_sql %>)"
       t.check_constraint "status<%= '::text' if postgresql? %> IN (<%= usage_statuses_sql %>)"
     end

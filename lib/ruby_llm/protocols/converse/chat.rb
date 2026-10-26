@@ -170,7 +170,7 @@ module RubyLLM
 
           messages.each do |msg|
             if msg.tool_result?
-              tool_result_blocks.concat(render_tool_result_blocks(msg, caching:, search_results:))
+              tool_result_blocks.concat(render_tool_result_blocks(msg, caching:, citations:, search_results:))
               next
             end
 
@@ -242,34 +242,34 @@ module RubyLLM
           [render_thinking_block(msg.thinking)].compact
         end
 
-        def render_tool_result_blocks(msg, caching: nil, search_results: false)
-          blocks = [render_tool_result_block(msg, search_results:)]
+        def render_tool_result_blocks(msg, caching: nil, citations: false, search_results: false)
+          blocks = [render_tool_result_block(msg, citations:, search_results:)]
           blocks << converse_cache_block_for(caching, ttl: msg.cache_ttl) if cache_boundary?(msg, caching:)
           blocks
         end
 
-        def render_tool_result_block(msg, search_results: false)
+        def render_tool_result_block(msg, citations: false, search_results: false)
           {
             toolResult: {
               toolUseId: msg.provider_call_id,
-              content: render_tool_result_content(msg, search_results:)
+              content: render_tool_result_content(msg, citations:, search_results:)
             }
           }
         end
 
-        def render_tool_result_content(msg, search_results: false)
+        def render_tool_result_content(msg, citations: false, search_results: false)
           results = RubyLLM::SearchResults.from_content(msg.content) if search_results
           return results.results.map { |result| search_result_block(result) } if results
 
           content = msg.content unless msg.content&.strip&.empty?
-          blocks = Media.render_content(content, msg.attachments, used_document_names: @used_document_names)
+          blocks = Media.render_content(content, msg.attachments, used_document_names: @used_document_names, citations:)
           blocks.empty? ? [text_tool_result_block(nil)] : blocks
         end
 
         def search_result_block(result)
           {
             searchResult: {
-              source: result[:url] || result[:title],
+              source: result[:source_id] || result[:url] || result[:title],
               title: result[:title],
               content: [{ text: result[:text] }],
               citations: { enabled: true }
@@ -550,6 +550,7 @@ module RubyLLM
             text: text,
             start_index: start_index,
             end_index: end_index,
+            source_id: data['source'],
             source_index: citation_source_index(location),
             start_page: page['start'],
             end_page: end_page && (end_page - 1)

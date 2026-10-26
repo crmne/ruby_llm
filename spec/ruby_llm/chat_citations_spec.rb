@@ -15,6 +15,14 @@ class KnowledgeBase < RubyLLM::Tool
   end
 end
 
+class RubyFactSheet < RubyLLM::Tool
+  description 'Loads the fact sheet about the Ruby programming language'
+
+  def execute
+    ['Loaded the fact sheet', [RubyLLM::Attachment.new(File.expand_path('../fixtures/facts.txt', __dir__))]]
+  end
+end
+
 RSpec.describe RubyLLM::Chat, :live do
   let(:facts_path) { File.expand_path('../fixtures/facts.txt', __dir__) }
   let(:pdf_path) { File.expand_path('../fixtures/sample.pdf', __dir__) }
@@ -77,6 +85,18 @@ RSpec.describe RubyLLM::Chat, :live do
         expect(response.content[citation.start_index...citation.end_index]).to eq(citation.text)
       end
 
+      it 'cites documents a tool returns' do
+        skip_without_cassette_or_key('ANTHROPIC_API_KEY')
+
+        response = chat.with_tools(RubyFactSheet).ask('Who created Ruby and when? Load the fact sheet first.')
+
+        expect(response.citations).not_to be_empty
+        citation = response.citations.first
+        expect(citation.title).to eq('facts.txt')
+        expect(citation.cited_text).to be_present
+        expect(response.content[citation.start_index...citation.end_index]).to eq(citation.text)
+      end
+
       it 'streams citations' do
         chunks = []
         response = chat.ask('Who created Ruby? Use the document.', with: facts_path) do |chunk|
@@ -124,6 +144,18 @@ RSpec.describe RubyLLM::Chat, :live do
         citation = response.citations.first
         expect(citation.url).to eq('https://example.com/ruby-facts')
         expect(citation.title).to eq('Ruby Facts')
+        expect(citation.cited_text).to be_present
+        expect(response.content[citation.start_index...citation.end_index]).to eq(citation.text)
+      end
+
+      it 'cites documents a tool returns' do
+        skip_without_cassette_or_key('AWS_ACCESS_KEY_ID')
+
+        response = chat.with_tools(RubyFactSheet).ask('Who created Ruby and when? Load the fact sheet first.')
+
+        expect(response.citations).not_to be_empty
+        citation = response.citations.first
+        expect(citation.title).to eq('facts')
         expect(citation.cited_text).to be_present
         expect(response.content[citation.start_index...citation.end_index]).to eq(citation.text)
       end

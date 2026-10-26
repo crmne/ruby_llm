@@ -137,6 +137,14 @@ PDF_MODELS = [
   { provider: :vertexai, model: 'gemini-2.5-flash' }
 ].freeze
 
+DOCUMENT_URL_MODELS = [
+  { provider: :azure, model: 'gpt-5-nano', protocol: :responses },
+  { provider: :meta, model: META_TEST_MODEL },
+  { provider: :openai, model: 'gpt-5-nano' },
+  { provider: :openrouter, model: 'gemini-2.5-flash', protocol: :responses },
+  { provider: :xai, model: 'grok-4-1-fast-non-reasoning' }
+].freeze
+
 DOCUMENT_MODELS = [
   { provider: :bedrock, model: 'claude-sonnet-4-5' },
   { provider: :mistral, model: 'mistral-small-latest' },
@@ -244,7 +252,9 @@ IMAGE_GENERATION_MODELS = filter_local_providers(image_generation_models).freeze
 # alternatives cover features that need a different model from the default.
 # Use the unfiltered rows so unit specs also work with local providers disabled.
 TEST_MODELS = {
-  judgment: [{ provider: :typesafe, model: 'jev-latest' }, { provider: :openai, model: 'gpt-6-luna' }],
+  judgment: [{ provider: :typesafe, model: 'jev-latest' }, { provider: :openai, model: 'gpt-6-luna' },
+             { provider: :openrouter, model: 'typesafe/jev-1.14' }],
+  judgment_multimodal: [{ provider: :openrouter, model: 'cloudflare/clef-omni' }],
   azure_cohere_embedding: [{ provider: :azure, model: 'embed-v-4-0' }],
   azure_cohere_rerank: [{ provider: :azure, model: 'Cohere-rerank-v4.0-fast' }],
   titan_multimodal_embedding: [{ provider: :bedrock, model: 'amazon.titan-embed-image-v1' }],

@@ -16,7 +16,7 @@ redirect_from:
 After reading this guide, you will know:
 
 * How to enable document citations with `with_citations`
-* How to make tool results citable with `RubyLLM::SearchResults`
+* How to make tool results citable with `RubyLLM::SearchResults` or by returning files
 * How to read normalized citations from responses and streams
 * Which citation fields your application can use
 * How to persist citations with ActiveRecord
@@ -92,7 +92,39 @@ response.citations.first.cited_text # => the quoted passage
 
 For a single result, pass keywords directly: `RubyLLM::SearchResults.new(title: "Q4 Report", url: report_url, text: report_text)`.
 
-`SearchResults` gives Claude citable passages, on Anthropic and on Bedrock, including after a Rails conversation is reloaded. Other providers, other models on Bedrock, and Bedrock application inference profiles, which don't name their model, receive the results as JSON text.
+To find the record a citation points to, give each result a `source_id` string, such as a Global ID. Its citations return the same `source_id`:
+
+```ruby
+RubyLLM::SearchResults.new(title: doc.name, source_id: doc.to_global_id.to_s, text: doc.body)
+
+citation.source_id # => "gid://app/Document/42"
+GlobalID::Locator.locate(citation.source_id, only: Document) # => the Document
+```
+
+RubyLLM sends `source_id` in place of `url`, so `citation.url` can be `nil`; look the link up through the record. The model sees the `source_id` as the result's label and may quote it in its answer.
+
+`SearchResults` gives citable passages to Cohere and to Claude, on Anthropic and on Bedrock, including after a Rails conversation is reloaded. Other providers, other models on Bedrock, and Bedrock application inference profiles, which don't name their model, receive the results as JSON text.
+
+Tools can also return whole files as [attachments]({% link _core_features/tool-parameters.md %}#returning-attachments-from-tools). With `with_citations` on, the model cites them the same way it cites files you attach yourself:
+
+```ruby
+class PolicyLookup < RubyLLM::Tool
+  description "Fetches a company policy"
+  parameter :policy, description: "The policy to fetch"
+
+  def execute(policy:)
+    found = Policy.find_by!(name: policy)
+    return "Found the #{found.name} policy", [RubyLLM::Attachment.new(found.file_path)]
+  end
+end
+
+response = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
+  .with_tools(PolicyLookup)
+  .with_citations
+  .ask "How many vacation days do I get?"
+
+response.citations.first.start_page # => 3
+```
 
 ## Citing the Web
 
@@ -137,7 +169,7 @@ Each citation exposes a normalized set of fields. Fields a provider doesn't repo
 | `cited_text` | The quoted snippet from the source |
 | `text` | The span of the response this citation supports |
 | `start_index` / `end_index` | Character range of that span in `response.content` |
-| `source_id` | Provider identifier for the source, such as a file ID |
+| `source_id` | Provider identifier for the source, such as a file ID or a search result's `source_id` |
 | `source_index` | 0-indexed position of the source document or search result |
 | `start_page` / `end_page` | Page range for PDF citations (1-indexed, inclusive) |
 
