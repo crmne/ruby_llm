@@ -80,6 +80,15 @@ RSpec.describe RubyLLM::Protocol do
       Class.new(described_class).new(RubyLLM::Providers::OpenAI.new(config))
     end
 
+    it 'names the provider when a protocol renders chat but cannot send it' do
+      config = RubyLLM::Configuration.new.tap { |c| c.openai_api_key = 'test' }
+      renders_only = Class.new(described_class) { def render_payload(*, **) = {} }
+      renders = renders_only.new(RubyLLM::Providers::OpenAI.new(config))
+
+      expect { renders.complete([], tools: {}, temperature: nil) }
+        .to raise_error(RubyLLM::Error, "OpenAI doesn't support chat")
+    end
+
     it 'names the provider and the operation instead of leaking NotImplementedError' do
       expect { protocol.render([], tools: {}, temperature: nil) }
         .to raise_error(RubyLLM::Error, "OpenAI doesn't support chat")

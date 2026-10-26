@@ -211,6 +211,32 @@ A verdict never holds the text it judged, so you can log it. Only the live respo
 
 When a token limit cuts the response off while the model writes a tool call, the call's arguments are incomplete, and the chat raises `RubyLLM::ToolCallTruncatedError`, a kind of `RubyLLM::ToolCallParseError`. Unless you call `with_max_output_tokens`, RubyLLM asks providers that need a number for the model's whole output limit, so this only happens when the model writes more than it can.
 
+## Long Responses
+
+Gemini models that support long decode can write more than one response holds. Set a total output budget above 65,536 tokens and stream the answer:
+
+```ruby
+response = chat.with_max_output_tokens(262_144).ask("Work through this proof in full") do |chunk|
+  print chunk.content
+end
+```
+
+Gemini pauses at its per-response limit and hands back a continuation token. RubyLLM sends the same request again with the newest token, streams the rest, and returns one message. The budget covers every request. Each request has its own usage entry, and the message's tokens and cost add them up. A paused response that only thought produces no blank message.
+
+Stream long responses. Without a block, each response holds at most 32,768 tokens, and the Gemini API rejects a larger budget. Vertex AI accepts it and continues in 32,768-token responses.
+
+While RubyLLM continues, the unfinished answer stands at the end of `chat.messages`. If a request fails, it stays there with its token, and `complete` picks the answer up where Gemini paused instead of starting again:
+
+```ruby
+begin
+  chat.ask("Work through this proof in full") { |chunk| print chunk.content }
+rescue RubyLLM::ServiceUnavailableError
+  chat.complete { |chunk| print chunk.content }
+end
+```
+
+Gemini rejects the token if the conversation or the model changed, and each continuation bills the earlier output again as input. Chunks from the request that failed stream again, because the answer resumes from the last pause. A persisted chat keeps the unfinished answer and its token in the `continuation` column, so a job that runs `chat.complete` again resumes it after a restart. See [Rails Integration]({% link _advanced/rails-persistence.md %}#resuming-long-responses).
+
 ## Advanced: Replacing the LLM Transcript
 
 For advanced context management, `chat.messages` is whatever you show the LLM. Your application can keep and render a different user-visible transcript if needed. This is useful for chat compaction, moderation, redaction, or any workflow where the LLM should see a different transcript from the user.

@@ -101,6 +101,22 @@ chat.with_temperature(0.2)
 chat.ask("Summarize this conversation.")
 ```
 
+### Resuming Long Responses
+
+A [long response]({% link _core_features/chat.md %}#long-responses) saves its progress each time Gemini pauses: the assistant record holds the answer so far, its usage rows, and the newest token in `continuation`. If the process dies before the answer finishes, run the chat again and it continues from that point:
+
+```ruby
+class ChatResponseJob < ApplicationJob
+  retry_on RubyLLM::ServiceUnavailableError
+
+  def perform(chat_id)
+    Chat.find(chat_id).with_max_output_tokens(262_144).complete(&:broadcast)
+  end
+end
+```
+
+The finished answer replaces the record's content and clears `continuation`. Reapply the same output budget and runtime settings, because Gemini rejects a token when the request changes.
+
 ## Model Storage
 
 The chat belongs to a model record in RubyLLM's internal registry. The familiar readers still expose the provider-facing identity:

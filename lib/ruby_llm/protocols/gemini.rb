@@ -16,6 +16,7 @@ module RubyLLM
       include Gemini::Tools
       include Gemini::Speech
       include Gemini::Transcription
+      include Gemini::LongDecode
 
       # Gemini nests each tool's options inside its key, so aliases are
       # lambdas placing the options there.
