@@ -24,6 +24,11 @@ class <%= 'upgrade_ruby_llm_to_2_2'.camelize %> < ActiveRecord::Migration<%= mig
       add_column :<%= message_table_name %>, :phase, :string
     end
 
+    %i[workflow_id workflow_name workflow_step_id workflow_step_name].each do |column|
+      add_column :ruby_llm_usages, column, :string unless column_exists?(:ruby_llm_usages, column)
+    end
+    add_index :ruby_llm_usages, :workflow_id unless index_exists?(:ruby_llm_usages, :workflow_id)
+
     unless table_exists?(:ruby_llm_queued_messages)
       create_table :ruby_llm_queued_messages, id: :<%= reference_type %> do |t|
         t.references :chat, polymorphic: true, null: false, type: :<%= reference_type %>, index: false
@@ -57,6 +62,11 @@ class <%= 'upgrade_ruby_llm_to_2_2'.camelize %> < ActiveRecord::Migration<%= mig
   def down
     drop_table :ruby_llm_chat_files, if_exists: true
     drop_table :ruby_llm_queued_messages, if_exists: true
+    remove_index :ruby_llm_usages, :workflow_id, if_exists: true
+    remove_column :ruby_llm_usages, :workflow_step_name
+    remove_column :ruby_llm_usages, :workflow_step_id
+    remove_column :ruby_llm_usages, :workflow_name
+    remove_column :ruby_llm_usages, :workflow_id
     remove_column :<%= message_table_name %>, :phase
     remove_column :ruby_llm_tool_calls, :claimed_until
     remove_column :<%= chat_table_name %>, :claimed_until

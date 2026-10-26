@@ -59,7 +59,7 @@ bin/rails db:migrate
 
 If your chat model is not `Chat`, name it the way you did for the install generator, for example `bin/rails generate ruby_llm:upgrade chat:Conversation`.
 
-It adds `claim_token` and `claimed_until` columns to your chats table and a `claimed_until` column to `ruby_llm_tool_calls`. They record which process runs a chat and its tool calls. It also adds a nullable `provider_call_id` column to tool calls so RubyLLM can distinguish invocations when a provider reuses an ID, a nullable `phase` column to your messages table, which keeps the label OpenAI's Responses API gives each answer so later requests send it back, and creates the `ruby_llm_queued_messages` table, which holds [queued messages]({% link _advanced/rails-persistence.md %}#queued-messages) until a chat takes them, and the `ruby_llm_chat_files` table, which holds the [files]({% link _core_features/chat-files.md %}#files-in-rails) of chats that use `with_file_store`. The migration changes no existing data. The generator also creates any of RubyLLM's conventional directories your application lacks, such as `app/skills` and `app/sandboxes`, and an `app/agents/application_agent.rb` that points at your chat model, unless you already have one. New agents from `ruby_llm:agent` inherit from it.
+It adds `claim_token` and `claimed_until` columns to your chats table and a `claimed_until` column to `ruby_llm_tool_calls`. They record which process runs a chat and its tool calls. It also adds a nullable `provider_call_id` column to tool calls so RubyLLM can distinguish invocations when a provider reuses an ID, a nullable `phase` column to your messages table, which keeps the label OpenAI's Responses API gives each answer so later requests send it back, and creates the `ruby_llm_queued_messages` table, which holds [queued messages]({% link _advanced/rails-persistence.md %}#queued-messages) until a chat takes them, and the `ruby_llm_chat_files` table, which holds the [files]({% link _core_features/chat-files.md %}#files-in-rails) of chats that use `with_file_store`. It adds nullable `workflow_id`, `workflow_name`, `workflow_step_id`, and `workflow_step_name` columns to `ruby_llm_usages`, which record the workflow each attempt ran in (see [Usage Rows Record Their Workflow](#usage-rows-record-their-workflow)). The migration changes no existing data. The generator also creates any of RubyLLM's conventional directories your application lacks, such as `app/skills` and `app/sandboxes`, and an `app/agents/application_agent.rb` that points at your chat model, unless you already have one. New agents from `ruby_llm:agent` inherit from it.
 
 The generator also removes the broadcasting code and the `has_many_attached :attachments` line that `ruby_llm:chat_ui` wrote into your message model, because `acts_as_message` now provides both, and turns on `config.broadcast_messages` when it removes that broadcasting code. It installs Active Storage if your application lacks it. Broadcasting code you wrote yourself stays untouched.
 
@@ -96,6 +96,21 @@ end
 With it on, and turbo-rails and Action Cable loaded, `acts_as_message` broadcasts a chat's messages to the chat record's stream, `turbo_stream_from @chat`. It appends an empty assistant reply when it is created, replaces a message when it is saved, removes it when it is destroyed, and refreshes the chat's page after every change and at the end of each run. Streamed chunks know their record, so a job streams with `chat.complete(&:broadcast)`. See [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}).
 
 Broadcasting renders each message with its partial, chosen by `to_partial_path`, so an application that turns it on needs `messages/_user`, `messages/_assistant`, `messages/_tool`, and `messages/_tool_calls`. A model's `broadcasts:` option overrides the configuration.
+
+## Usage Rows Record Their Workflow
+
+Usage rows written inside `RubyLLM.workflow` store the workflow and step, so you can total the cost of a piece of work, including guardrails, embeddings, and other calls outside its chat:
+
+```ruby
+RubyLLM.workflow("Support reply", id: "chat-#{chat.id}") do |workflow|
+  workflow.step("Retrieve") { RubyLLM.embed(question) }
+  workflow.step("Answer") { chat.ask(question) }
+end
+
+RubyLLM::ActiveRecord::Usage.where(workflow_id: "chat-#{chat.id}").sum(:total_cost)
+```
+
+Rows written before the upgrade have no workflow. Until you run the migration, RubyLLM writes rows without one. See [Usage by Workflow]({% link _core_features/cost-and-usage-tracking.md %}#usage-by-workflow).
 
 ## Messages Declare Their Attachments
 

@@ -95,6 +95,28 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
     RubyLLM::ActiveRecord::ChatFile.reset_column_information
   end
 
+  it 'adds the workflow columns 2.2 records on usage rows' do
+    upgrade = migration_class
+    columns = %i[workflow_id workflow_name workflow_step_id workflow_step_name]
+
+    ActiveRecord::Base.transaction do
+      connection.remove_index(:ruby_llm_usages, :workflow_id)
+      columns.each { |column| connection.remove_column(:ruby_llm_usages, column) }
+
+      ActiveRecord::Migration.suppress_messages { upgrade.migrate(:up) }
+
+      columns.each { |column| expect(connection.column_exists?(:ruby_llm_usages, column, :string)).to be(true) }
+      expect(connection.index_exists?(:ruby_llm_usages, :workflow_id)).to be(true)
+
+      ActiveRecord::Migration.suppress_messages { upgrade.migrate(:down) }
+
+      columns.each { |column| expect(connection.column_exists?(:ruby_llm_usages, column)).to be(false) }
+      raise ActiveRecord::Rollback
+    end
+  ensure
+    RubyLLM::ActiveRecord::Usage.reset_column_information
+  end
+
   it 'adds the run claims to a mapped chat table' do
     described_class.new(['chat:Conversation'], {}, destination_root: destination, shell: Thor::Shell::Basic.new)
                    .create_migration_file
