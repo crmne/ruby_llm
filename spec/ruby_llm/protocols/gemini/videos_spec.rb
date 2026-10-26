@@ -91,10 +91,10 @@ RSpec.describe RubyLLM::Protocols::Gemini::Videos do
       config.video_generation_poll_interval = VCR.current_cassette&.recording? ? 5 : 0
     end
     model = model_for(:gemini, :video_extension)
-    original = context.animate('A calm ocean wave at sunset', model:, provider: :gemini,
+    original = context.animate('A calm ocean wave at sunset', model:, provider: :gemini, assume_model_exists: true,
                                                               provider_options: { parameters: { durationSeconds: 4 } })
     job = context.animate_later('The wave gently reaches the sandy shore', model:, provider: :gemini,
-                                                                           extend: original)
+                                                                           assume_model_exists: true, extend: original)
 
     expect(job.wait(timeout: 240)).to be_completed
     expect(job.video.mime_type).to eq('video/mp4')

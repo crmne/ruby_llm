@@ -25,8 +25,8 @@ RSpec.describe RubyLLM::Video, :live do
   describe 'basic functionality' do
     each_model(VIDEO_GENERATION_MODELS) do |provider, model, model_info|
       it "#{provider}/#{model} can animate videos" do
-        video = RubyLLM.animate('a calm ocean wave at sunset', model: model, provider: provider,
-                                                               provider_options: model_info[:provider_options])
+        options = model_info.slice(:assume_model_exists, :provider_options)
+        video = RubyLLM.animate('a calm ocean wave at sunset', model: model, provider: provider, **options)
 
         expect(video.mime_type).to include('video')
         expect(video.url || video.data).to be_present

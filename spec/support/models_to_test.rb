@@ -233,7 +233,7 @@ transcription_models = [
 TRANSCRIPTION_MODELS = filter_unrecorded_providers(transcription_models).freeze
 
 VIDEO_GENERATION_MODELS = [
-  { provider: :gemini, model: 'veo-3.1-lite-generate-preview',
+  { provider: :gemini, model: 'veo-3.1-lite-generate-preview', assume_model_exists: true,
     provider_options: { parameters: { durationSeconds: 4 } } },
   { provider: :xai, model: 'grok-imagine-video',
     provider_options: { duration: 1, resolution: '480p' } }
@@ -273,7 +273,7 @@ TEST_MODELS = {
   video: VIDEO_GENERATION_MODELS,
   video_extension: [
     { provider: :xai, model: 'grok-imagine-video' },
-    { provider: :gemini, model: 'veo-3.1-fast-generate-preview' }
+    { provider: :gemini, model: 'veo-3.1-fast-generate-preview', assume_model_exists: true }
   ],
   elevenlabs_image: [{ provider: :elevenlabs, model: 'gemini-3.1-flash-lite-image', assume_model_exists: true }],
   elevenlabs_video: [{ provider: :elevenlabs, model: 'veo-3.1-fast-generate-001', assume_model_exists: true }],
