@@ -133,6 +133,14 @@ end
 
 Every event inside the workflow receives `workflow_id` and `workflow_name`. Events inside a step also receive `workflow_step_id` and `workflow_step_name`. Nested steps include `workflow_step_parent_id`, allowing an instrumentation adapter to render the observed execution tree.
 
+The `usage.ruby_llm` event of every provider attempt carries the same identity, and in Rails each usage row stores it, so you can total the cost of a workflow and each of its steps, including calls outside any chat:
+
+```ruby
+RubyLLM::ActiveRecord::Usage.where(workflow_id: "meeting-42").group(:workflow_step_name).sum(:total_cost)
+```
+
+See [Usage by Workflow]({% link _core_features/cost-and-usage-tracking.md %}#usage-by-workflow).
+
 The wrappers also emit `workflow.ruby_llm` and `workflow_step.ruby_llm` events around their blocks. Their timings and exception behavior therefore come from the configured instrumenter in exactly the same way as other RubyLLM block events.
 
 Branches, loops, fan-out, and fan-in stay as normal Ruby. For concurrent application code, start the step inside each task so the task establishes its own context:
@@ -186,7 +194,7 @@ RubyLLM emits these events:
 *   `evaluation.ruby_llm` - one evaluation run, its progress counts, and completed report
 *   `evaluation_trial.ruby_llm` - one completed evaluation case and repetition, including its trial result
 *   `request.ruby_llm` - HTTP request metadata such as provider, method, URL, and status
-*   `usage.ruby_llm` - one finished provider attempt, including retries and cancellations, with status, tokens, cost, and owner
+*   `usage.ruby_llm` - one finished provider attempt, including retries and cancellations, with status, tokens, cost, owner, and workflow
 *   `batch.ruby_llm` - one batch submission operation
 *   `chat.ruby_llm` - chat completion metadata including model, provider, messages, response, and token usage
 *   `tool_call.ruby_llm` - tool name, arguments, and result

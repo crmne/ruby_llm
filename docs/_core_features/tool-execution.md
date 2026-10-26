@@ -155,6 +155,8 @@ Providers can also request approval for a tool running on an MCP server. These r
 
 With `acts_as_chat`, decisions persist on tool-call records. One process can request approval and another can resume execution. Use `chat.pending_approvals` to render each call's name and arguments in your approval UI.
 
+The process that receives a call decides whether it needs approval and records the answer on its tool-call record, so `pending_approvals` only reads the database. Rendering approval cards never builds the chat's tools or connects to its MCP servers. A call whose resolver decides it elsewhere stays in `pending_approvals` until the chat runs again.
+
 The [chat UI generator]({% link _advanced/rails-generators.md %}#approvals-and-attachments) builds this interface for you: an approval card for each pending call, with Approve and Deny buttons that record the decision and continue the conversation in a job. To write your own, follow the same pattern.
 
 After recording a decision, enqueue the job again. Load the chat through its agent class to restore the tools and approval rules:

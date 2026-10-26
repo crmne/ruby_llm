@@ -25,6 +25,7 @@ After reading this guide, you will know:
 * How to price provider tools billed per use, such as web search.
 * How costs are recorded in Rails and how to keep registry pricing fresh.
 * How to attribute chat and one-shot usage to a user or account.
+* How to total the usage of a workflow, including calls outside its chat.
 
 ## Reading Tokens and Costs
 
@@ -230,6 +231,34 @@ current_user.ruby_llm_usages.sum(:total_cost)
 current_user.ruby_llm_usages.where(created_at: Time.current.all_month).group(:operation).sum(:total_cost)
 ```
 
+### Usage by Workflow
+
+One piece of work often makes calls outside its chat: a guardrail check, an embedding for retrieval, a reranking pass. Those rows have no chat, so `chat.cost` leaves them out. Wrap the work in a [workflow]({% link _advanced/instrumentation.md %}#workflows-and-steps) and every row records it, the chat's own rows included:
+
+```ruby
+RubyLLM.workflow("Support reply", id: "chat-#{chat.id}") do |workflow|
+  articles = workflow.step("Retrieve") do
+    Article.closest_to(RubyLLM.embed(question).vectors).limit(5)
+  end
+
+  workflow.step("Answer") do
+    chat.ask("#{question}\n\nArticles:\n#{articles.map(&:body).join("\n\n")}")
+  end
+end
+```
+
+Each row stores `workflow_id`, `workflow_name`, `workflow_step_id`, and `workflow_step_name`, so ordinary queries sum the work:
+
+```ruby
+usages = RubyLLM::ActiveRecord::Usage.where(workflow_id: "chat-#{chat.id}")
+
+usages.sum(:total_cost)
+usages.group(:workflow_step_name).sum(:total_cost)
+usages.where(created_at: Time.current.all_month).group(:operation).sum(:input_tokens)
+```
+
+Reuse the same ID on every turn, as above, to total a conversation across requests. A video or research job records the workflow it was submitted in, even when it finishes in a later job. A row records the innermost workflow it ran in, so the rows of a [nested workflow]({% link _advanced/instrumentation.md %}#workflows-and-steps) carry the nested workflow's ID. Workflows and owners are independent: a row can have both.
+
 Writing a row never breaks the operation that billed it. If the insert fails, RubyLLM logs a warning and returns the result. Every row names what the provider ran and billed in its `model` column: the model ID, or for an operation without one, the provider's own resource, such as the hosted agent of a research task or the ID and version of a Bedrock guardrail (`my-guardrail:1`).
 
 ## Keeping Registry Pricing Fresh
@@ -269,7 +298,7 @@ ActiveSupport::Notifications.subscribe("usage.ruby_llm") do |event|
 end
 ```
 
-The payload contains `operation`, `provider`, `model`, `status`, `tokens`, `cost`, and `owner`, the record given as [`owner:` or through `RubyLLM.with_usage_owner`](#one-shot-operations). It does not expose RubyLLM's internal persistence record. Without Active Record, subscribe to this event to attribute spend yourself:
+The payload contains `operation`, `provider`, `model`, `status`, `tokens`, `cost`, and `owner`, the record given as [`owner:` or through `RubyLLM.with_usage_owner`](#one-shot-operations). Inside a [workflow](#usage-by-workflow), it also carries `workflow_id`, `workflow_name`, and the step's `workflow_step_id` and `workflow_step_name`, from the workflow the attempt started in. It does not expose RubyLLM's internal persistence record. Without Active Record, subscribe to this event to attribute spend yourself:
 
 ```ruby
 ActiveSupport::Notifications.subscribe("usage.ruby_llm") do |event|

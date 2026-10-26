@@ -85,6 +85,17 @@ RSpec.describe RubyLLM::Protocols::Cohere::Tools do
         }]
       )
     end
+
+    it 'identifies a search result document by its source_id in place of its url' do
+      results = RubyLLM::SearchResults.new(title: 'Ruby Facts', url: 'https://example.com/ruby',
+                                           source_id: 'gid://app/Document/42', text: 'Matz, 1993.')
+      message = RubyLLM::Message.new(role: :tool, content: results.to_json, tool_call_id: 'abc')
+
+      expect(described_class.render_tool_result(message)[:content].first[:document]).to eq(
+        id: 'gid://app/Document/42',
+        data: { title: 'Ruby Facts', text: 'Matz, 1993.', url: 'https://example.com/ruby' }
+      )
+    end
   end
 
   describe '.parse_tool_calls' do

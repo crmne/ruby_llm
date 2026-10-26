@@ -140,7 +140,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
     end
 
     it 'uses flat non-strict function definitions' do
-      tool = instance_double(RubyLLM::Tool, name: 'weather', description: 'Looks up weather',
+      tool = instance_double(RubyLLM::Tool, namespace: nil, name: 'weather', description: 'Looks up weather',
                                             parameters_schema: { 'type' => 'object' }, provider_options: {})
 
       payload = render_payload([RubyLLM::Message.new(role: :user, content: 'hi')], tools: { weather: tool })
@@ -155,7 +155,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
     end
 
     it 'lets tools opt into strict mode via provider_options' do
-      tool = instance_double(RubyLLM::Tool, name: 'weather', description: 'Looks up weather',
+      tool = instance_double(RubyLLM::Tool, namespace: nil, name: 'weather', description: 'Looks up weather',
                                             parameters_schema: { 'type' => 'object' },
                                             provider_options: { strict: true })
 

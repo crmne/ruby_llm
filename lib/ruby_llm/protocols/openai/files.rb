@@ -13,6 +13,12 @@ module RubyLLM
           multipart_payload(attachment, purpose:, expires_after: expires_after(expires_in))
         end
 
+        # OpenAI can misread a field sent after a large file part, rejecting
+        # a valid purpose as "user_data\r", so the fields go first.
+        def multipart_payload(attachment, **fields)
+          fields.compact.merge(file: file_part(attachment))
+        end
+
         def expires_after(expires_in)
           { anchor: 'created_at', seconds: expires_in } if expires_in
         end

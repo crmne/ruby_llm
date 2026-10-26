@@ -388,7 +388,8 @@ module RubyLLM
         tokens: result.tokens,
         cost: @provider.batch_cost(result.tokens, model:, category:),
         message: result.is_a?(Message) ? result : nil,
-        owner: Accounting::Usage.owner
+        owner: Accounting::Usage.owner,
+        workflow: Accounting::Usage.workflow
       )
       result.ruby_llm_usage_entries = [entry]
       return unless instrument

@@ -252,7 +252,9 @@ IMAGE_GENERATION_MODELS = filter_local_providers(image_generation_models).freeze
 # alternatives cover features that need a different model from the default.
 # Use the unfiltered rows so unit specs also work with local providers disabled.
 TEST_MODELS = {
-  judgment: [{ provider: :typesafe, model: 'jev-latest' }, { provider: :openai, model: 'gpt-6-luna' }],
+  judgment: [{ provider: :typesafe, model: 'jev-latest' }, { provider: :openai, model: 'gpt-6-luna' },
+             { provider: :openrouter, model: 'typesafe/jev-1.14' }],
+  judgment_multimodal: [{ provider: :openrouter, model: 'cloudflare/clef-omni' }],
   azure_cohere_embedding: [{ provider: :azure, model: 'embed-v-4-0' }],
   azure_cohere_rerank: [{ provider: :azure, model: 'Cohere-rerank-v4.0-fast' }],
   titan_multimodal_embedding: [{ provider: :bedrock, model: 'amazon.titan-embed-image-v1' }],
@@ -352,6 +354,8 @@ TEST_MODELS = {
   ],
   search: [{ provider: :openai, model: 'gpt-5-search-api' }],
   agentic_video: [{ provider: :gemini, model: 'gemini-3.5-flash-lite' }],
+  client_toolset: [{ provider: :anthropic, model: 'claude-sonnet-5' }],
+  tool_namespace: [{ provider: :openai, model: 'gpt-5.4' }],
   provider_tools: [
     { provider: :gemini, model: 'gemini-3.5-flash' },
     { provider: :openrouter, model: 'openai/gpt-5.2' },

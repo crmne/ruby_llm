@@ -53,13 +53,13 @@ module RubyLLM
         self.class.new(::MXC::Sandbox.new(backend: sandbox.backend), backend: @backend)
       end
 
-      def run(*command, timeout:, readable: [], writable: [], denied: [], directory: nil, env: {}, network: nil)
+      def run(*command, timeout:, readable: [], writable: [], denied: [], directory: nil, env: {}, network: nil, &)
         run = sandbox.with_readable(*readable).with_writable(*writable).with_denied(*denied).with_timeout(timeout)
         run.with_directory(directory) if run.directory.nil? && directory
         run.with_env(env.reject { |name, _| run.env.key?(name) })
         apply_network(run, network)
         run = Landlock.policy(run) if run.backend == :landlock
-        run.run(*command)
+        block_given? ? run_by_line(run, command, &) : run.run(*command)
       end
 
       def inspect
@@ -67,6 +67,25 @@ module RubyLLM
       end
 
       private
+
+      def run_by_line(run, command)
+        pending = Hash.new { |buffers, stream| buffers[stream] = String.new(encoding: Encoding::BINARY) }
+        result = run.run(*command) do |chunk|
+          buffer = pending[chunk.stream]
+          scanned = buffer.bytesize
+          buffer << chunk.content.b
+          while (newline = buffer.index("\n", scanned))
+            yield text(buffer.slice!(0..newline))
+            scanned = 0
+          end
+        end
+        pending.each_value { |rest| yield text(rest) unless rest.empty? }
+        result
+      end
+
+      def text(bytes)
+        bytes.force_encoding(Encoding::UTF_8).scrub
+      end
 
       def sandbox
         sandbox = @policy.is_a?(Class) ? @policy.new : @policy.dup

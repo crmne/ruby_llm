@@ -38,6 +38,23 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
 
       expect([citation.start_page, citation.end_page]).to eq([2, 3])
     end
+
+    it 'keeps the source of a search result that is not a web URL as its source_id' do
+      citation = described_class.parse_citation(
+        { 'type' => 'search_result_location', 'source' => 'gid://app/Document/42', 'title' => 'Q4 Report',
+          'cited_text' => 'Revenue grew 12%.', 'search_result_index' => 0 }
+      )
+
+      expect(citation).to have_attributes(url: nil, source_id: 'gid://app/Document/42', source_index: 0)
+    end
+
+    it 'reports a web URL search result source as both url and source_id' do
+      citation = described_class.parse_citation(
+        { 'type' => 'search_result_location', 'source' => 'https://example.com/q4', 'title' => 'Q4 Report' }
+      )
+
+      expect(citation).to have_attributes(url: 'https://example.com/q4', source_id: 'https://example.com/q4')
+    end
   end
 
   describe '.build_system_content' do
@@ -127,6 +144,21 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       rendered = described_class.render_messages([message], caching: { ttl: '1h' })
 
       expect(rendered.first[:content].last[:cache_control]).to eq(type: 'ephemeral', ttl: '1h')
+    end
+
+    it 'makes the documents a tool returns citable only when citations are on' do
+      files = %w[sample.pdf ruby.txt].map { |name| File.expand_path("../../../fixtures/#{name}", __dir__) }
+      message = RubyLLM::Message.new(role: :tool, content: 'Found it', tool_call_id: 'tool_1', attachments: files)
+      attachment_blocks = lambda do |**options|
+        tool_result = described_class.render_messages([message], **options).first[:content].first
+        tool_result[:content].drop(1).map { |block| block.slice(:type, :title, :citations) }
+      end
+
+      expect(attachment_blocks.call(citations: true)).to eq(
+        [{ type: 'document', title: 'sample.pdf', citations: { enabled: true } },
+         { type: 'document', title: 'ruby.txt', citations: { enabled: true } }]
+      )
+      expect(attachment_blocks.call).to eq([{ type: 'document' }, { type: 'text' }])
     end
   end
 
@@ -219,6 +251,15 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       expect(formatted[:content].last).not_to have_key(:cache_control)
     end
 
+    it 'makes a document in a tool result citable when citations are on' do
+      pdf_path = File.expand_path('../../../fixtures/sample.pdf', __dir__)
+      message = RubyLLM::Message.new(role: :tool, content: 'Found it', tool_call_id: 'tool_1', attachments: [pdf_path])
+
+      formatted = described_class.render_message(message, citations: true)
+
+      expect(formatted[:content].first[:content].last[:citations]).to eq(enabled: true)
+    end
+
     it 'adds cache_control to the last tool call of a turn marked as a cache boundary' do
       tool_calls = { 'tool_1' => RubyLLM::ToolCall.new(id: 'tool_1', name: 'lookup', arguments: {}) }
       message = claude_answer(RubyLLM::Thinking.new(text: 'Look it up', signature: 'sig'), tool_calls:)
@@ -275,7 +316,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
 
     describe 'tool_choice' do
       let(:tool) do
-        instance_double(RubyLLM::Tool, name: 'weather', description: 'Weather', parameters_schema: nil,
+        instance_double(RubyLLM::Tool, name: 'weather', namespace: nil, description: 'Weather', parameters_schema: nil,
                                        declared_parameters: {}, provider_options: {})
       end
 

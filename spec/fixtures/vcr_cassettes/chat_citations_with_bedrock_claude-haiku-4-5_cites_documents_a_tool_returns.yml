@@ -1,0 +1,96 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"Who created Ruby and
+        when? Load the fact sheet first."}]}],"inferenceConfig":{"maxTokens":64000},"toolConfig":{"tools":[{"toolSpec":{"name":"ruby_fact_sheet","description":"Loads
+        the fact sheet about the Ruby programming language","inputSchema":{"json":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}}]}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Content-Type:
+      - application/json
+      X-Amz-Date:
+      - 20261025T193112Z
+      X-Amz-Content-Sha256:
+      - 28b64eaab969f313db793fb0078cb1f68d9ce0227cf71d2fb7fff42fa91f7a1e
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 25 Oct 2026 19:31:13 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '415'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - e1ae1cfb-b641-4401-8294-ee22e510bb55
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":674},"output":{"message":{"content":[{"toolUse":{"input":{},"name":"ruby_fact_sheet","toolUseId":"tooluse_Vbsb17pqaZLwlJ4voJgEGy","type":"tool_use"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":577,"outputTokens":39,"serverToolUsage":{},"totalTokens":616}}'
+  recorded_at: Sun, 25 Oct 2026 19:31:13 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"Who created Ruby and
+        when? Load the fact sheet first."}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_Vbsb17pqaZLwlJ4voJgEGy","name":"ruby_fact_sheet","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_Vbsb17pqaZLwlJ4voJgEGy","content":[{"text":"Loaded
+        the fact sheet"},{"document":{"format":"txt","name":"facts","source":{"text":"The
+        Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby
+        was designed to make programmers happy and productive. Ruby on Rails is a
+        popular web framework built with Ruby. RubyLLM is a Ruby library for working
+        with large language models.\n"},"citations":{"enabled":true}}}]}}]}],"inferenceConfig":{"maxTokens":64000},"toolConfig":{"tools":[{"toolSpec":{"name":"ruby_fact_sheet","description":"Loads
+        the fact sheet about the Ruby programming language","inputSchema":{"json":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}}]}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Content-Type:
+      - application/json
+      X-Amz-Date:
+      - 20261025T193113Z
+      X-Amz-Content-Sha256:
+      - d7059d0fbefbcad2587a656a8c7b15b4583db94e8ccf4a76db8813beddaef869
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 25 Oct 2026 19:31:15 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '625'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 8624e118-a225-4713-827d-8fe5ac49e6ab
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":734},"output":{"message":{"content":[{"citationsContent":{"citations":[{"location":{"documentChar":{"documentIndex":0,"end":73,"start":0}},"sourceContent":[{"text":"The
+        Ruby programming language was created by Yukihiro Matsumoto in 1993. "}],"title":"facts"}],"content":[{"text":"The
+        Ruby programming language was created by Yukihiro Matsumoto in 1993."}]}}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":1307,"outputTokens":39,"serverToolUsage":{},"totalTokens":1346}}'
+  recorded_at: Sun, 25 Oct 2026 19:31:15 GMT
+recorded_with: VCR 6.4.0

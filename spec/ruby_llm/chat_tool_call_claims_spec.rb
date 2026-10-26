@@ -74,4 +74,30 @@ RSpec.describe RubyLLM::Chat do
     expect(leases).to eq([{ 'call_1' => RubyLLM.config.max_run_time }])
     expect(executions).to be_empty
   end
+
+  it "leases an approved call for its tool's own run time" do
+    charge_tool.max_run_time 90
+    chat = approved_chat
+    leases = []
+    chat.tool_call_claimer = proc do |requested, **|
+      leases << requested.transform_keys(&:id)
+      requested.keys.map(&:id)
+    end
+
+    chat.run_tools
+
+    expect(leases).to eq([{ 'call_1' => 90 }])
+  end
+
+  it 'runs a call whose tool another process remembered as approved' do
+    chat = RubyLLM.chat(model: model_for(:openai)).with_tools(charge_tool)
+    chat.remembered_checker = proc { |call| call.name == 'charge_card' }
+    chat.add_message(role: :user, content: 'Charge the card')
+    tool_calls = { 'call_1' => RubyLLM::ToolCall.new(id: 'call_1', name: 'charge_card', arguments: {}) }
+    chat.add_message(RubyLLM::Message.new(role: :assistant, content: '', tool_calls:))
+
+    chat.run_tools
+
+    expect(executions).to eq([:charged])
+  end
 end

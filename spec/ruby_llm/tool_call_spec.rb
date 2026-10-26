@@ -29,6 +29,19 @@ RSpec.describe RubyLLM::ToolCall do
     expect(tool_call.arguments).to eq('{"q":"ruby"}')
   end
 
+  it 'shows the namespace of a namespaced call in inspect' do
+    tool_call = described_class.new(id: 'call_1', name: 'screenshot', namespace: :computer)
+
+    expect(tool_call.namespace).to eq('computer')
+    expect(tool_call.inspect).to include('namespace: "computer"')
+    expect(described_class.new(id: 'call_2', name: 'screenshot').inspect).not_to include('namespace')
+  end
+
+  it 'marks only a remote call as remote in inspect' do
+    expect(described_class.new(id: 'call_1', name: 'search', remote: true).inspect).to include('remote: true')
+    expect(described_class.new(id: 'call_2', name: 'search').inspect).not_to include('remote')
+  end
+
   %i[anthropic openai].each do |provider|
     it "renders the same #{provider} request before and after a jsonb round trip" do
       context = RubyLLM.context do |config|

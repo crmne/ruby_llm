@@ -47,6 +47,7 @@ module RubyLLM
     RUN_DIR = 'RUN_DIR'
 
     ESCALATION_NAME = /\A[a-z][a-z0-9_]*\z/
+    PROGRESS_LINE = 200
     LIMIT_ERRORS = {
       cpu_time: 'The code used up its CPU time and was stopped',
       memory: 'The code used more memory than it may and was stopped',
@@ -62,7 +63,7 @@ module RubyLLM
       'description' => "Paths of this chat's files (see list_files) the code reads, copied into the run directory " \
                        'at the same paths; a folder copies everything in it. null copies nothing'
     }.freeze
-    private_constant :CHECKS, :CHECKS_LOCK, :ESCALATION_NAME, :LIMIT_ERRORS, :FILES_PROPERTY
+    private_constant :CHECKS, :CHECKS_LOCK, :ESCALATION_NAME, :PROGRESS_LINE, :LIMIT_ERRORS, :FILES_PROPERTY
 
     class << self
       def tool_name # :nodoc:
@@ -506,7 +507,17 @@ module RubyLLM
                  denied: @packages.denied,
                  writable: [directory, workspace.home, workspace.tmp],
                  timeout: timeout_for(runner), directory: (directory unless setting(runner, :directory)),
-                 env: @packages.env(workspace.home, workspace.tmp).merge(RUN_DIR => directory))
+                 env: @packages.env(workspace.home, workspace.tmp).merge(RUN_DIR => directory),
+                 &progress_listener)
+    end
+
+    def progress_listener
+      method(:report_line) if Support::ProgressReporter.listener
+    end
+
+    def report_line(line)
+      text = line.strip
+      progress(text[0, PROGRESS_LINE]) unless text.empty?
     end
 
     def setting(runner, name)

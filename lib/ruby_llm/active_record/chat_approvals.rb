@@ -6,8 +6,28 @@ module RubyLLM
     # cache, so every process decides tool calls the same way. A call
     # approved with <tt>remember: true</tt> is recorded as +remembered+,
     # and later calls to the same tool in the chat run without asking.
+    # A call saved while it requires approval is recorded as +pending+, so
+    # pending approvals are read from the rows without building the chat's
+    # tools.
     module ChatApprovals # :nodoc:
       private
+
+      def persisted_pending_approvals
+        pending = chat_tool_calls.where(approval: 'pending', result_id: nil)
+        remembered = RubyLLM::ActiveRecord::ToolCall.uncached do
+          chat_tool_calls.where(approval: 'remembered').distinct.pluck(:namespace, :name)
+        end
+        remembered.reduce(pending) do |calls, (namespace, name)|
+          calls.where.not(id: pending.where(namespace:, name:).select(:id))
+        end.order(:created_at, :id)
+      end
+
+      def chat_tool_calls
+        RubyLLM::ActiveRecord::ToolCall.where(
+          message_type: messages_association.klass.polymorphic_name,
+          message_id: messages_association.select(:id)
+        )
+      end
 
       def record_tool_call_decision(tool_call, decision)
         record = tool_call_record(tool_call)
@@ -34,15 +54,11 @@ module RubyLLM
         end
       end
 
-      def persisted_remembered_tool?(name)
+      def persisted_remembered_tool?(call)
         return false unless persisted? && row_supports_approval?
 
         RubyLLM::ActiveRecord::ToolCall.uncached do
-          RubyLLM::ActiveRecord::ToolCall.where(
-            name:, approval: 'remembered',
-            message_type: messages_association.klass.polymorphic_name,
-            message_id: messages_association.select(:id)
-          ).exists?
+          chat_tool_calls.where(name: call.name, namespace: call.namespace, approval: 'remembered').exists?
         end
       end
     end

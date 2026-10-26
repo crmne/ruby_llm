@@ -161,6 +161,8 @@ Vision-capable models see the files: search tools can hand back the documents th
 
 RubyLLM renders tool attachments in each provider's shape. Anthropic and Bedrock Converse take them as native tool-result blocks; Gemini 3 models take media inside the function response itself, while earlier Gemini models get it as parts alongside the response; OpenAI tool results are text-only on the wire, so the files ride a user message spliced in right after the result. Providers that cannot take a file type at all (for example, PDFs on DeepSeek) raise `UnsupportedAttachmentError` rather than silently dropping files.
 
+To let the model cite the files a tool returns on providers with document citations, turn on `with_citations`; see [Citing Tool Results]({% link _core_features/citations.md %}#citing-tool-results-rag).
+
 ## Custom Initialization
 
 Tools can have custom initialization:

@@ -70,7 +70,8 @@ module RubyLLM
           return chunk unless item['type'] == 'function_call'
 
           chunk tool_calls: {
-            data['output_index'] => ToolCall.new(provider_call_id: item['call_id'], name: item['name'], arguments: +'')
+            data['output_index'] => ToolCall.new(provider_call_id: item['call_id'], name: item['name'],
+                                                 namespace: item['namespace'], arguments: +'')
           }
         end
 

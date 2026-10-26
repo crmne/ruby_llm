@@ -1,0 +1,178 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-sonnet-5","messages":[{"role":"user","content":[{"type":"text","text":"In
+        one turn, without waiting for results, call left_click at [10, 10] and then
+        screenshot."}]}],"stream":false,"max_tokens":128000,"tools":[{"type":"computer_toolset_20260801"}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 25 Oct 2026 18:59:48 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '10000000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '9998000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2026-10-25T18:59:47Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2026-10-25T18:59:48Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '9999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2026-10-25T18:59:47Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '12000000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '11998000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2026-10-25T18:59:47Z'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Request-Id:
+      - "<REQUEST_ID>"
+      Traceresponse:
+      - 00-0cd0b831fb8d23b2062d29c3ddc57e66-97f126d650ee19ea-01
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Anthropic-Workspace-Id:
+      - "<ANTHROPIC_WORKSPACE_ID>"
+      Vary:
+      - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Server:
+      - cloudflare
+      Server-Timing:
+      - x-originResponse;dur=1141
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"claude-sonnet-5","id":"msg_011CgPUDDE7odZz3shwDkAPV","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01P3tBMXH8udwzzFegBiL3BC","name":"left_click","input":{"coordinate":[10,10]},"toolset_name":"computer","caller":{"type":"direct"}},{"type":"tool_use","id":"toolu_01LpugLFv7y47awrPXTwcEfN","name":"screenshot","input":{},"toolset_name":"computer","caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":4622,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":82,"output_tokens_details":{"thinking_tokens":0},"service_tier":"standard","inference_geo":"<GOOGLE_CLOUD_LOCATION>","speed":"standard"},"diagnostics":null}'
+  recorded_at: Sun, 25 Oct 2026 18:59:48 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-sonnet-5","messages":[{"role":"user","content":[{"type":"text","text":"In
+        one turn, without waiting for results, call left_click at [10, 10] and then
+        screenshot."}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01P3tBMXH8udwzzFegBiL3BC","name":"left_click","input":{"coordinate":[10,10]},"toolset_name":"computer"},{"type":"tool_use","id":"toolu_01LpugLFv7y47awrPXTwcEfN","name":"screenshot","input":{},"toolset_name":"computer"}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01P3tBMXH8udwzzFegBiL3BC","content":[{"type":"text","text":"The
+        display is locked"}],"toolset_name":"computer","is_error":true},{"type":"tool_result","tool_use_id":"toolu_01LpugLFv7y47awrPXTwcEfN","content":[{"type":"text","text":"Not
+        executed: an earlier computer action in this turn failed."}],"toolset_name":"computer","is_error":true}]}],"stream":false,"max_tokens":128000,"tools":[{"type":"computer_toolset_20260801"}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 25 Oct 2026 18:59:51 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '10000000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '9997000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2026-10-25T18:59:48Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2026-10-25T18:59:51Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '9999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2026-10-25T18:59:48Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '12000000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '11997000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2026-10-25T18:59:48Z'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Request-Id:
+      - "<REQUEST_ID>"
+      Traceresponse:
+      - 00-26157c51941188bd1f4510bcf8d8d9ee-9bfbaa12dc8d9c97-01
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Anthropic-Workspace-Id:
+      - "<ANTHROPIC_WORKSPACE_ID>"
+      Vary:
+      - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Server:
+      - cloudflare
+      Server-Timing:
+      - x-originResponse;dur=2766
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtb2RlbCI6ImNsYXVkZS1zb25uZXQtNSIsImlkIjoibXNnXzAxMUNnUFVESnR2WXRORUhwc3R2RzhUcCIsInR5cGUiOiJtZXNzYWdlIiwicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0aGlua2luZyIsInRoaW5raW5nIjoiIiwic2lnbmF0dXJlIjoiRXZ3REN0WUNDQk1ZQWlwQWZ1N1hVRTlPcEdkVzRBV1dzb1VPTVdtZzFZRUJkMU5YRHpPM25qRHdtQ3FzTWE1d1NNOHo2Q2FhWDM1RlZXL2NBK29UbkNCRUxxcUZMcmo4b0xGVUhqSVBZMnhoZFdSbExYTnZibTVsZEMwMU9BQkNDSFJvYVc1cmFXNW5XaVF3TVRNM1lqRTFZeTB4Tm1KbUxUUTVNR1F0T1dZNU1DMDRZMlprTjJVek1qVmxZekNhQVJFS0QyTnNZWFZrWlMxemIyNXVaWFF0TmFnQnBhUDUxZ2JDQVV3SUNoQUFHaDRDazlZRFR6Y0ZvUmNFSnEwS2ZQOEtQU1VEVHpjTFZzZ0w3STBFSnEwZ0FUSUVFbkhQSlRvRU9ETWppa0lFdy9jZFowb0VUSG5XbVZBQldnVFpCZUZXWUFSb0FYQUEyZ0ZnQ2had2NtVm1hWGhmWW1WbWIzSmxYMkpzYjJOclgzWXhFaUJrWkVWVlowSHBOdlpEOGZtVHVjVGdtTEoyN0t1YVJHTmp5clBOa0NtUEJTSUFNaURDd0JQSWFweVM0aStXYnoyR0YzYVBpM3BFeVFLdHpBbDcraDRKaXZ0T0gwZ0RFZ3pPb0psZ3lJWitDaXR3NDRzYURKejJIeGk3NTBSRk56WEJ1Q0l3a1lBV3VZREFZN0EzL1ovVW9GeEk4RUNBMjFEQXR3TldVRlVLdmhMOUNvaHF0anNMZld2ZnkzY0R6b0hyelptSUtsTm9Mcm83Tkt2WXVReVZRL1gzS3RzR0VrNmN0RkRYMXNuNTJrclhqMjZIemJCdW1zaGg2UVpLTGkrMXhkSFBsTWZZaEhqalVSeWcrUi9tbDh3QTFvc1l4aTNmbUs4bzdpTVhVOVo1UWQ0bHZwMnRJeGdCIn0seyJ0eXBlIjoidGV4dCIsInRleHQiOiJJIGF0dGVtcHRlZCB0byBwZXJmb3JtIHRoZSByZXF1ZXN0ZWQgYWN0aW9ucyBpbiBhIHNpbmdsZSBiYXRjaCwgYnV0IHRoZSBmaXJzdCBhY3Rpb24gZmFpbGVkIHdpdGggYW4gZXJyb3I6XG5cbioqRXJyb3I6KiogYGxlZnRfY2xpY2tgIGF0IFsxMCwgMTBdIGZhaWxlZCDigJQgXCJUaGUgZGlzcGxheSBpcyBsb2NrZWRcIlxuXG5CZWNhdXNlIHRoZSBjbGljayBhY3Rpb24gZmFpbGVkLCB0aGUgYmF0Y2ggc3RvcHBlZCB0aGVyZSBhbmQgdGhlIHN1YnNlcXVlbnQgYHNjcmVlbnNob3RgIGFjdGlvbiB3YXMgbm90IGV4ZWN1dGVkIChubyBzY3JlZW5zaG90IHdhcyByZXR1cm5lZCkuXG5cblRvIHByb2NlZWQsIHRoZSBkaXNwbGF5IGxpa2VseSBuZWVkcyB0byBiZSB1bmxvY2tlZCBmaXJzdCAoZS5nLiwgYnkgY2xpY2tpbmcgc29tZXdoZXJlIHRvIHdha2UgaXQsIGVudGVyaW5nIGEgcGFzc3dvcmQsIG9yIHdhaXRpbmcgZm9yIGEgbG9jayBzY3JlZW4gdGltZW91dCkuIExldCBtZSBrbm93IGlmIHlvdSdkIGxpa2UgbWUgdG8gYXR0ZW1wdCBhbiBhY3Rpb24gdG8gdW5sb2NrIHRoZSBzY3JlZW4gb3IgdHJ5IGFnYWluLiJ9XSwiY29udGFpbmVyIjpudWxsLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwic3RvcF9kZXRhaWxzIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjQ3MzMsImNhY2hlX2NyZWF0aW9uX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfcmVhZF9pbnB1dF90b2tlbnMiOjAsImNhY2hlX2NyZWF0aW9uIjp7ImVwaGVtZXJhbF81bV9pbnB1dF90b2tlbnMiOjAsImVwaGVtZXJhbF8xaF9pbnB1dF90b2tlbnMiOjB9LCJvdXRwdXRfdG9rZW5zIjoyMDQsIm91dHB1dF90b2tlbnNfZGV0YWlscyI6eyJ0aGlua2luZ190b2tlbnMiOjE5fSwic2VydmljZV90aWVyIjoic3RhbmRhcmQiLCJpbmZlcmVuY2VfZ2VvIjoiPEdPT0dMRV9DTE9VRF9MT0NBVElPTj4iLCJzcGVlZCI6InN0YW5kYXJkIn0sImRpYWdub3N0aWNzIjpudWxsfQ==
+  recorded_at: Sun, 25 Oct 2026 18:59:51 GMT
+recorded_with: VCR 6.4.0

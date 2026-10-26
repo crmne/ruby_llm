@@ -1,0 +1,70 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://openrouter.ai/api/alpha/decisions
+    body:
+      encoding: UTF-8
+      string: '{"model":"typesafe/jev-1.14","state":{"message":"I was charged twice.
+        Please refund the duplicate charge today."},"questions":{"urgent":{"type":"noul","instructions":"Does
+        the customer explicitly need action today?","criteria":{"true":"Explicitly
+        asks for action today","false":"No deadline or a later deadline"}},"department":{"type":"choice","instructions":"Which
+        team should handle this message?","criteria":{"billing":"Payments and refunds","technical":"Bugs
+        and integrations","other":null}},"frustration":{"type":"score","instructions":"How
+        frustrated is the customer?","criteria":["Calm and polite","Expresses frustration","Angry
+        or hostile"]}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Http-Referer:
+      - https://rubyllm.com
+      X-Openrouter-Title:
+      - RubyLLM
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 21 Oct 2026 10:41:07 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - X-Generation-Id,X-Provider-Name,request-id,cf-ray
+      X-Generation-Id:
+      - gen-dec-1792579266-vpaqYfwmfBOZwCXLQ6pF
+      X-Provider-Name:
+      - TypeSafe
+      Set-Cookie:
+      - "<COOKIE>"
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"typesafe/jev-1.14-20261014","answers":{"urgent":{"type":"noul","noul":0.97},"department":{"type":"choice","choice":"billing","probabilities":{"billing":1,"technical":0,"other":0},"confidence":1},"frustration":{"type":"score","score":0.36,"legend":{"0":"Calm
+        and polite","1":"Expresses frustration","2":"Angry or hostile"},"probabilities":{"0":0.64,"1":0.36,"2":0},"confidence":0.46}},"usage":{"input_tokens":428,"output_tokens":70,"cost":0.000017976},"id":"gen-dec-1792579266-vpaqYfwmfBOZwCXLQ6pF","provider":"TypeSafe"}'
+  recorded_at: Wed, 21 Oct 2026 10:41:07 GMT
+recorded_with: VCR 6.4.0

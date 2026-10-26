@@ -22,22 +22,29 @@ module RubyLLM
           block['type'] == 'server_tool_use' && block['name'].to_s.start_with?('tool_search_tool_')
         end
 
-        def render_tool_result(msg)
+        def render_tool_result(msg, citations: false)
           {
             role: 'user',
-            content: [render_tool_result_block(msg)]
+            content: [render_tool_result_block(msg, citations:)]
           }
         end
 
-        def render_tool_result_block(msg)
-          {
+        def render_tool_result_block(msg, citations: false, tool_call: nil)
+          block = {
             type: 'tool_result',
             tool_use_id: msg.provider_call_id,
-            content: render_tool_result_content(msg)
+            content: render_tool_result_content(msg, citations:)
           }
+          return block unless tool_call&.namespace
+
+          block[:toolset_name] = tool_call.namespace
+          error = msg.tool_error_message
+          return block unless error
+
+          block.merge(is_error: true, content: [{ type: 'text', text: error.to_s }])
         end
 
-        def render_tool_result_content(msg)
+        def render_tool_result_content(msg, citations: false)
           search_results = RubyLLM::SearchResults.from_content(msg.content)
           return search_results.results.map { |result| search_result_block(result) } if search_results
 
@@ -45,17 +52,26 @@ module RubyLLM
           content = nil if content&.strip&.empty?
           content = '(no output)' if content.nil? && msg.attachments.empty?
 
-          Media.render_content(content, msg.attachments)
+          Media.render_content(content, msg.attachments, citations:)
         end
 
         def search_result_block(result)
           {
             type: 'search_result',
-            source: result[:url] || result[:title],
+            source: result[:source_id] || result[:url] || result[:title],
             title: result[:title],
             content: [{ type: 'text', text: result[:text] }],
             citations: { enabled: true }
           }
+        end
+
+        CLIENT_TOOLSETS = {
+          'computer' => 'Not executed: an earlier computer action in this turn failed.',
+          'browser' => 'Not executed: an earlier action in this turn failed.'
+        }.freeze
+
+        def render_tools(tools)
+          tools.values.reject(&:namespace).map { |tool| function_for(tool) }
         end
 
         def function_for(tool)
@@ -137,6 +153,7 @@ module RubyLLM
             ToolCall.new(
               provider_call_id: block['id'],
               name: block['name'],
+              namespace: block['toolset_name'],
               arguments: block['input']
             )
           end

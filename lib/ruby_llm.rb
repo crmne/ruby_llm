@@ -204,8 +204,8 @@ loader.setup
 # OpenTelemetry.enable enables optional tracing alongside existing subscribers.
 # Your application configures the OpenTelemetry SDK and exporters.
 #
-# RubyLLM.workflow groups instrumentation from ordinary Ruby code into
-# named Workflow steps.
+# RubyLLM.workflow groups instrumentation and usage from ordinary Ruby code
+# into named Workflow steps.
 #
 # RubyLLM.configure sets global Configuration; RubyLLM.context creates
 # isolated settings for a request or tenant. Models finds, filters, and
@@ -266,8 +266,9 @@ module RubyLLM
     # If +id:+ is omitted, RubyLLM generates one. Pass +metadata:+ to attach
     # application data to every nested event as +workflow_metadata+. Workflows
     # may nest; an inner workflow keeps its own identity and records its
-    # parent as +workflow_parent_id+. The block's return value is returned
-    # unchanged.
+    # parent as +workflow_parent_id+. In Rails, the usage ledger stores the
+    # workflow and step of every attempt inside the block. The block's return
+    # value is returned unchanged.
     def workflow(name, id: nil, metadata: nil, &)
       Workflow.new(name, id:, metadata:, config: config).run(&)
     end

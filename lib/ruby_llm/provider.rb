@@ -163,6 +163,10 @@ module RubyLLM
       preprocessing_protocol(protocol, model).tool_search?
     end
 
+    def skipped_tool_call_error(tool_call, model:, protocol: nil) # :nodoc:
+      resolve_protocol(protocol, model).new(self, model).skipped_tool_call_error(tool_call)
+    end
+
     def tool_approval_response(tool_call, approved:, model:, protocol: nil) # :nodoc:
       resolve_protocol(protocol, model).new(self, model).tool_approval_response(tool_call, approved:)
     end

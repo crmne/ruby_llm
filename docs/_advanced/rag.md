@@ -91,7 +91,9 @@ class DocumentSearch < RubyLLM::Tool
     ).limit(3)
 
     RubyLLM::SearchResults.new(
-      *documents.map { |doc| { title: doc.title, text: doc.content.truncate(500) } }
+      *documents.map do |doc|
+        { title: doc.title, source_id: doc.to_global_id.to_s, text: doc.content.truncate(500) }
+      end
     )
   end
 end

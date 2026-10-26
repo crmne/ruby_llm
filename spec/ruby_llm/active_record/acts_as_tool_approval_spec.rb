@@ -97,16 +97,56 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       )
     )
 
-    reloaded = reading_rows_in_reverse do
-      Chat.find(chat.id).with_tools(approval_tool).pending_approvals.map(&:tool_call_id)
-    end
+    reloaded = reading_rows_in_reverse { Chat.find(chat.id).pending_approvals.map(&:tool_call_id) }
+
     expect(reloaded).to eq(ids)
+  end
 
-    RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: ids.first).update_columns(created_at: 1.minute.from_now)
+  describe 'with an MCP server whose tools decide approval' do
+    let(:server_class) do
+      command = [RbConfig.ruby, File.expand_path('../../fixtures/mcp/server.rb', __dir__)]
+      Class.new(RubyLLM::MCP) do
+        command(*command)
+        requires_approval if: :destructive?
+      end
+    end
+    let(:server) { server_class.new }
+    let(:agent) do
+      mcp_server = server_class
+      Class.new(RubyLLM::Agent) do
+        chat_model Chat
+        model 'gpt-4.1-nano'
+        mcp { [mcp_server] }
+      end
+    end
 
-    pending = reading_rows_in_reverse { chat.pending_approvals.map(&:tool_call_id) }
+    after { server.close }
 
-    expect(pending).to eq(ids)
+    def park_mcp_calls
+      chat = Chat.create!(model: 'gpt-4.1-nano').with_mcp(server)
+      calls = { "#{call_id}_1" => 'delete_everything', "#{call_id}_2" => 'echo' }
+      tool_calls = calls.to_h { |id, name| [id, RubyLLM::ToolCall.new(id:, name:, arguments: {})] }
+      chat.add_message(RubyLLM::Message.new(role: :assistant, content: '', tool_calls:))
+      chat
+    end
+
+    it 'reads pending approvals from the database without connecting to the server' do
+      chat = park_mcp_calls
+      allow(RubyLLM::MCP::Stdio).to receive(:new).and_call_original
+
+      pending = agent.find(chat.id).pending_approvals.map(&:tool_call_id)
+
+      expect(pending).to eq(["#{call_id}_1"])
+      expect(RubyLLM::MCP::Stdio).not_to have_received(:new)
+    end
+
+    it 'records the decision the live tool made when the call was persisted' do
+      park_mcp_calls
+
+      approvals = RubyLLM::ActiveRecord::ToolCall.where(tool_call_id: ["#{call_id}_1", "#{call_id}_2"])
+                                                 .order(:tool_call_id).pluck(:approval)
+      expect(approvals).to eq(['pending', nil])
+    end
   end
 
   # SQLite returns the rows of a query without ORDER BY in reverse under

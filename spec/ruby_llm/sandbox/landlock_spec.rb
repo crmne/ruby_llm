@@ -56,6 +56,17 @@ RSpec.describe RubyLLM::Sandbox::Landlock do
       .to raise_error(RubyLLM::ConfigurationError, /Landlock cannot hide .*secret inside the writable .*work/)
   end
 
+  it 'keeps the sandbox, changing only a copy' do
+    sandbox_class = Class.new(MXC::Sandbox) { readable '/srv' }
+    sandbox = sandbox_class.new.with_denied(path('ruby/gems/rspec'))
+
+    policy = described_class.policy(sandbox)
+
+    expect(policy).to be_an_instance_of(sandbox_class)
+    expect(policy).not_to be(sandbox)
+    expect([sandbox.backend, sandbox.denied]).to eq([MXC.config.backend, [path('ruby/gems/rspec')]])
+  end
+
   it 'keeps the rest of the policy' do
     sandbox = MXC::Sandbox.new(readable: [path], env: { 'LANG' => 'C.UTF-8' }, directory: path, timeout: 30,
                                limits: { cpu_time: 60 }, priority: :low)
