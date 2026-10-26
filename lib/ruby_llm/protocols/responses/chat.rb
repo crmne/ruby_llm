@@ -131,18 +131,17 @@ module RubyLLM
           message_phases(output).compact.last
         end
 
-        ANSWER_PHASES = [nil, 'final_answer'].freeze
-
-        # Structured output lives in final_answer items, or in every item
-        # when none carries a phase. Commentary and phases OpenAI adds later
-        # are not the answer, as in OpenAI's SDKs. A turn whose items carry
-        # different phases keeps them in raw_content; otherwise its one
-        # phase tells.
+        # Structured output lives in the final_answer items, and a turn is
+        # read whole only when none of its items carries a phase, as in
+        # OpenAI's SDKs. Commentary, unphased text beside a final answer,
+        # and phases OpenAI adds later are not the answer. A turn whose
+        # items carry different phases keeps them in raw_content; otherwise
+        # its one phase tells.
         def parse_answer_text(message)
           output = message.raw_content
-          if output.is_a?(Array) && !message_phases(output).empty?
-            parse_output_text(output.select { |item| ANSWER_PHASES.include?(item['phase']) }) || ''
-          elsif !ANSWER_PHASES.include?(message.phase)
+          if output.is_a?(Array) && message_phases(output).any?
+            parse_output_text(output.select { |item| item['phase'] == 'final_answer' }) || ''
+          elsif !message.phase.nil? && message.phase != 'final_answer'
             ''
           end
         end

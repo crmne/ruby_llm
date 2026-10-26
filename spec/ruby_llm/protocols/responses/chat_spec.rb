@@ -612,6 +612,16 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
         expect(RubyLLM::Protocols::Responses.parse_answer_text(message)).to eq('{"total":12.1}')
       end
 
+      it 'reads the answer from the final answer items only, leaving unphased text out' do
+        output.last['content'].first['text'] = '{"total":12.1}'
+        unphased = output.last.merge('id' => 'msg_0', 'phase' => nil,
+                                     'content' => [{ 'type' => 'output_text', 'text' => 'Reading the total.' }])
+
+        message = protocol.send(:parse_completion_response, response_with(output.insert(1, unphased)))
+
+        expect(RubyLLM::Protocols::Responses.parse_answer_text(message)).to eq('{"total":12.1}')
+      end
+
       it 'reads no answer from a turn that is only commentary' do
         output.last['phase'] = 'commentary'
 
