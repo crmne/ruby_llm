@@ -28,6 +28,14 @@ module RubyLLM
         end
       }.freeze
 
+      # Returns the text of +message+ that holds its answer when its turn
+      # marks other items as intermediate, or +nil+ when all of its content
+      # is the answer. Reads only what the message keeps, so a restored
+      # message answers the same.
+      def self.parse_answer_text(message)
+        Chat.parse_answer_text(message)
+      end
+
       def server_tool_aliases
         SERVER_TOOL_ALIASES
       end

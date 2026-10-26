@@ -58,7 +58,8 @@ module RubyLLM
         if found.empty?
           { loaded: [], error: "No tools match #{query}. Tools you can load: #{tools.keys.join(', ')}" }
         else
-          { loaded: found.map(&:name), tools: found.map { |tool| { name: tool.name, description: summary(tool) } } }
+          { loaded: found.map(&:first),
+            tools: found.map { |name, tool| { name:, description: summary(tool) } } }
         end
       end
 
@@ -68,21 +69,22 @@ module RubyLLM
         return selected(tools, query.delete_prefix(SELECT)).first(limit) if query.start_with?(SELECT)
 
         terms = words(query)
-        ranked = tools.values.each_with_index.filter_map do |tool, index|
-          score = terms.sum { |term| score(tool, term) }
-          [-score, index, tool] if score.positive?
+        ranked = tools.each_with_index.filter_map do |(name, tool), index|
+          score = terms.sum { |term| score(name.to_s, tool, term) }
+          [-score, index, name] if score.positive?
         end
-        ranked.sort.first(limit).map(&:last)
+        ranked.sort.first(limit).map { |*, name| [name.to_s, tools[name]] }
       end
 
       def selected(tools, names)
-        names.split(',').filter_map { |name| tools[name.strip.to_sym] }.uniq
+        names.split(',').map { |name| name.strip.to_sym }.uniq.filter_map do |name|
+          [name.to_s, tools[name]] if tools.key?(name)
+        end
       end
 
-      def score(tool, term)
-        name_words = words(tool.name)
-        return 4 if name_words.include?(term)
-        return 2 if tool.name.downcase.include?(term)
+      def score(name, tool, term)
+        return 4 if words(name).include?(term)
+        return 2 if name.downcase.include?(term)
         return 1 if words("#{tool.description} #{parameter_names(tool)}").any? { |word| word.start_with?(term) }
 
         0

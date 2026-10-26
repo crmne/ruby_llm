@@ -26,6 +26,7 @@ module RubyLLM
     include Enumerable
     include Support::Inspectable
     include ToolSearch
+    include ToolSequences
 
     # The provider-neutral options #with_compaction accepts.
     COMPACTION_OPTIONS = %i[at instructions pause_after].freeze
@@ -427,7 +428,7 @@ module RubyLLM
     # at a time: passing <tt>remember: true</tt> for it raises
     # ArgumentError, and the approval never applies to another call.
     def approve(tool_call, remember: false)
-      name = remembered_tool_name(tool_call) if remember
+      name = remembered_tool_identity(tool_call) if remember
       record_tool_call_decision(tool_call, true)
       @remembered_tools |= [name] if name
       self
@@ -457,7 +458,8 @@ module RubyLLM
 
       pending = pending_tool_calls(response).values
       pending.any? && pending.all? do |tool_call|
-        approval_pending?(tool_call) || paused?(tool_call) || running_elsewhere?(tool_call)
+        approval_pending?(tool_call) || paused?(tool_call) ||
+          running_elsewhere?(tool_call) || sequence_blocked?(tool_call)
       end
     end
 
@@ -492,9 +494,10 @@ module RubyLLM
     # Returns whether +tool_call+ requires approval and has no recorded
     # decision.
     def approval_pending?(tool_call) # :nodoc:
+      return false if skipped_result(tool_call)
       return approval_decision(nil, tool_call).nil? if tool_call.remote?
 
-      tool = tools[tool_call.name.to_sym]
+      tool = tool_for(tool_call)
       return false unless tool&.requires_approval?(tool_call)
 
       approval_decision(tool, tool_call).nil?
@@ -622,6 +625,10 @@ module RubyLLM
     #
     #   chat.with_tools(*Catalog.tools, defer: true)
     #
+    # A namespaced tool is registered under its namespace and name joined,
+    # as in <tt>:crm_customer_lookup</tt>. Raises ArgumentError when that
+    # key belongs to another tool.
+    #
     # To replace the registered tools, clear them first:
     #
     #   chat.with_tools(nil).with_tools(NewTool)
@@ -633,7 +640,12 @@ module RubyLLM
       end
       tools.flatten.compact.each do |tool|
         tool = tool.new if tool.is_a?(Class)
-        name = tool.name.to_sym
+        name = tool.qualified_name.to_sym
+        existing = @tools[name]
+        if existing && [existing.namespace, existing.name.to_s] != [tool.namespace, tool.name.to_s]
+          raise ArgumentError, "Two tools are named #{name}. Rename one with `tool :#{name}, as:`"
+        end
+
         @tools[name] = tool
         @tool_deferrals[name] = defer.nil? ? tool.deferred? : defer
       end
@@ -645,14 +657,16 @@ module RubyLLM
     # MCP servers connected with #with_mcp. MCP tools that only the UI of
     # an MCP App may call are left out; see MCP::Tool#visibility.
     #
-    # Raises ArgumentError when two tools share a name.
+    # A namespaced tool's key joins its namespace and name, as in
+    # <tt>:crm_customer_lookup</tt>. Raises ArgumentError when two tools
+    # share a key.
     def tools
       offered = @tools.reject { |_, tool| hidden_from_model?(tool) }
       built_in = [@code_execution_tool, (@skill_loader if skills.any?), *@file_tools, tool_search_tool]
       [*built_in, *mcp.flat_map(&:tools)].compact.each_with_object(offered) do |tool, tools|
         next if hidden_from_model?(tool)
 
-        name = tool.name.to_sym
+        name = tool.qualified_name.to_sym
         raise ArgumentError, "Two tools are named #{name}. Rename one with `tool :#{name}, as:`" if tools.key?(name)
 
         tools[name] = tool
@@ -715,6 +729,10 @@ module RubyLLM
     #   chat.with_provider_tools(:web_search, :code_execution)
     #   chat.with_provider_tools(web_search: { allowed_domains: ["ruby-lang.org"] })
     #   chat.with_provider_tools({ type: "web_search_20260318", name: "web_search" })
+    #
+    # Raw client-toolset declarations also use this method. Their member
+    # calls run through application tools registered with #with_tools and
+    # Tool.namespace, and appear in Message#tool_calls.
     #
     # The tool steps the model ran come back on
     # Message#server_tool_calls, citations from search tools on
@@ -2001,7 +2019,7 @@ module RubyLLM
     def answer_claimed_tool_calls(claimed, server_calls, decisions, executable, denied)
       respond_to_tool_approvals(server_calls.slice(*claimed), decisions)
       deny_tool_calls(denied.slice(*claimed))
-      if concurrency
+      if concurrency && executable.values.none? { |tool_call| ordered?(tool_call) }
         handle_concurrent_tool_calls(executable.slice(*claimed))
       else
         handle_sequential_tool_calls(executable.slice(*claimed))
@@ -2031,7 +2049,7 @@ module RubyLLM
     end
 
     def max_run_time_for(tool_call)
-      tools[tool_call.name.to_sym]&.max_run_time || @config.max_run_time
+      tool_for(tool_call)&.max_run_time || @config.max_run_time
     end
 
     def running_elsewhere?(tool_call)
@@ -2050,17 +2068,11 @@ module RubyLLM
     end
 
     def partition_pending_tool_calls(pending)
-      executable = {}
-      denied = {}
-      pending.reject { |_, tool_call| input_pending?(tool_call) }.each do |id, tool_call|
-        decision = execution_decision(tool_call)
-        (decision ? executable : denied)[id] = tool_call unless decision.nil?
-      end
-      [executable, denied]
+      partition_tool_sequences(pending)
     end
 
     def execution_decision(tool_call)
-      tool = tools[tool_call.name.to_sym]
+      tool = tool_for(tool_call)
       return approval_decision(tool, tool_call) if tool&.requires_approval?(tool_call)
 
       @tool_call_decisions[tool_call.id] != false
@@ -2085,22 +2097,22 @@ module RubyLLM
       return decision unless decision.nil?
       return if tool.is_a?(CodeExecution)
 
-      true if remembered_tool?(tool_call.name)
+      true if remembered_tool?(tool_call)
     end
 
-    def remembered_tool?(name)
-      @remembered_tools.include?(name) || @remembered_checker&.call(name) || false
+    def remembered_tool?(call)
+      @remembered_tools.include?([call.namespace, call.name.to_s]) || @remembered_checker&.call(call) || false
     end
 
-    def remembered_tool_name(tool_call)
+    def remembered_tool_identity(tool_call)
       id = tool_call.respond_to?(:id) ? tool_call.id : tool_call
       call = tool_call.respond_to?(:name) ? tool_call : find_tool_call(id)
       raise ArgumentError, "Unknown tool call: #{id.inspect}" unless call
-      if call.name == CodeExecution.tool_name
+      if call.name == CodeExecution.tool_name && call.namespace.nil?
         raise ArgumentError, "#{call.name} calls are approved one at a time and cannot be remembered"
       end
 
-      call.name
+      [call.namespace, call.name.to_s]
     end
 
     def find_tool_call(id)
@@ -2131,8 +2143,10 @@ module RubyLLM
 
     def handle_sequential_tool_calls(tool_calls)
       tool_calls.each_value do |tool_call|
+        next if sequence_blocked?(tool_call)
+
         raise_if_cancelled!
-        result = execute_tool_with_callbacks(tool_call)
+        result = skipped_result(tool_call) || execute_tool_with_callbacks(tool_call)
         next if result.equal?(PAUSED)
 
         run_callbacks(:before_message)
@@ -2169,7 +2183,7 @@ module RubyLLM
 
     def add_tool_result_message(tool_call, result)
       content, attachments = Tool.split_result(result)
-      content = @file_references.spill(tools[tool_call.name.to_sym], tool_call, content) if @file_references
+      content = @file_references.spill(tool_for(tool_call), tool_call, content) if @file_references
       mcp_result = result if result.is_a?(MCP::Result) && result.ui_uri
       message = add_message(role: :tool, content:, attachments:, tool_call_id: tool_call.id,
                             provider_call_id: tool_call.provider_call_id, mcp_result:)
@@ -2178,7 +2192,7 @@ module RubyLLM
     end
 
     def execute_tool(tool_call)
-      tool = tools[tool_call.name.to_sym]
+      tool = tool_for(tool_call)
       if tool.nil?
         return {
           error: "Model tried to call unavailable tool `#{tool_call.name}`. " \
@@ -2247,7 +2261,7 @@ module RubyLLM
     end
 
     def task_for(tool_call, state)
-      tool = tools[tool_call.name.to_sym]
+      tool = tool_for(tool_call)
       return tool.task(state, tool_call:) if tool
       return MCP::Task.load(nil, state, tool_call:) if state['task'].key?('taskId')
 

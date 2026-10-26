@@ -69,7 +69,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Tools do
       message = parse([call])
 
       expect(message.raw_content).to eq([call])
-      expect(message.tool_calls['c1'].to_h).not_to have_key(:namespace)
+      expect(message.tool_calls['c1'].namespace).to eq('weather_lookup')
       expect(chat_protocol.render_assistant_items(message)).to eq([call])
     end
 

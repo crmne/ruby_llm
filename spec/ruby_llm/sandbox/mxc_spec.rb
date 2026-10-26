@@ -42,6 +42,27 @@ RSpec.describe RubyLLM::Sandbox::MXC do
     end
   end
 
+  it 'yields each line of output as it arrives, and still returns all of it' do
+    lines = []
+    command = 'printf "one\\ntw"; sleep 0.3; printf "o\\n"; echo oops >&2; printf end'
+    result = sandbox.run(command, timeout: 10) { |line| lines << line }
+
+    expect(lines).to contain_exactly("one\n", "two\n", "oops\n", 'end')
+    expect(lines.first).to eq("one\n")
+    expect(result.stdout).to eq("one\ntwo\nend")
+    expect(result.exit_code).to eq(0)
+  end
+
+  it 'reports the output of running code as progress' do
+    reported = []
+    tool = chat.with_code_execution.tools[:run_code]
+    RubyLLM::Support::ProgressReporter.listen(->(progress) { reported << progress.message }) do
+      tool.call(language: 'shell', code: 'echo first; sleep 0.4; echo second')
+    end
+
+    expect(reported).to eq(%w[first second])
+  end
+
   it "runs Ruby with the app's Ruby, without the app's Bundler environment" do
     output = report(run_code('puts RUBY_VERSION, ENV.keys.grep(/BUNDLE|RUBYOPT|RUBYLIB|GEM_/).inspect'))
 

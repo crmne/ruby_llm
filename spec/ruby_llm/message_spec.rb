@@ -67,6 +67,75 @@ RSpec.describe RubyLLM::Message do
     end
   end
 
+  describe '#parsed with commentary before the final answer' do
+    let(:model) { model_for(:openai) }
+    let(:schema) do
+      { type: 'object', properties: { total: { type: 'number' } }, required: ['total'], additionalProperties: false }
+    end
+
+    def item(phase, text)
+      { type: 'message', id: "msg_#{phase}", role: 'assistant', status: 'completed', phase:,
+        content: [{ type: 'output_text', text:, annotations: [] }] }
+    end
+
+    before do
+      output = [item('commentary', 'We read the total from the invoice.'), item('final_answer', '{"total":12.1}')]
+      body = { id: 'resp_1', object: 'response', status: 'completed', model:, output:,
+               usage: { input_tokens: 5, output_tokens: 20, total_tokens: 25 } }
+      stub_request(:post, 'https://api.openai.com/v1/responses').to_return_json(body:)
+    end
+
+    def ask
+      RubyLLM.context { |config| config.openai_api_key = 'test' }
+             .chat(model:, provider: :openai).with_schema(schema).ask('What is the total?')
+    end
+
+    it 'parses only the final answer' do
+      response = ask
+
+      expect(response.content).to eq('We read the total from the invoice.{"total":12.1}')
+      expect(response.parsed).to eq('total' => 12.1)
+    end
+
+    it 'parses nothing from a turn that is only commentary' do
+      body = { id: 'resp_2', object: 'response', status: 'completed', model:,
+               output: [item('commentary', 'We read the total from the invoice.')],
+               usage: { input_tokens: 5, output_tokens: 10, total_tokens: 15 } }
+      stub_request(:post, 'https://api.openai.com/v1/responses').to_return_json(body:)
+
+      expect(ask.parsed).to be_nil
+    end
+
+    it 'parses only the final answer after a JSON round trip' do
+      restored = described_class.new(ask.to_h)
+      restored.ruby_llm_usage_entries = ask.ruby_llm_usage_entries
+
+      expect(restored.parsed).to eq('total' => 12.1)
+    end
+  end
+
+  describe '#tool_error_message' do
+    it 'returns the error of a failed tool result' do
+      message = described_class.new(role: :tool, content: '{"error":"Display locked"}', tool_call_id: 'call_1')
+
+      expect(message.tool_error_message).to eq('Display locked')
+    end
+
+    it 'returns nil for successful, plain-text, and non-object tool results' do
+      results = ['{"status":"ok"}', 'Screen captured', '["error"]'].map do |content|
+        described_class.new(role: :tool, content:, tool_call_id: 'call_1').tool_error_message
+      end
+
+      expect(results).to eq([nil, nil, nil])
+    end
+
+    it 'returns nil for a message that is not a tool result' do
+      message = described_class.new(role: :assistant, content: '{"error":"quoted by the model"}')
+
+      expect(message.tool_error_message).to be_nil
+    end
+  end
+
   describe '.new from #to_h attributes' do
     it 'restores earlier provider ID keys while serializing the current names' do
       message = described_class.new(

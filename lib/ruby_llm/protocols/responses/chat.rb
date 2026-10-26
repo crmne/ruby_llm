@@ -5,6 +5,8 @@ module RubyLLM
     class Responses
       # Chat methods of the OpenAI Responses API
       module Chat
+        def native_tool_namespace?(_namespace) = true
+
         def completion_url
           'responses'
         end
@@ -34,8 +36,11 @@ module RubyLLM
           payload[:max_output_tokens] = max_output_tokens unless max_output_tokens.nil?
 
           if tools.any?
-            payload[:tools] = tools.map { |_, tool| tool_for(tool) }
-            payload[:tool_choice] = build_tool_choice(tool_prefs[:choice]) unless tool_prefs[:choice].nil?
+            payload[:tools] = render_tools(tools)
+            unless tool_prefs[:choice].nil?
+              Protocol::ToolNamespaces.validate_tool_choice(tools, tool_prefs[:choice])
+              payload[:tool_choice] = build_tool_choice(tool_prefs[:choice])
+            end
             payload[:parallel_tool_calls] = tool_prefs[:calls] == :many unless tool_prefs[:calls].nil?
           end
 
@@ -124,6 +129,21 @@ module RubyLLM
 
         def parse_phase(output)
           message_phases(output).compact.last
+        end
+
+        # Structured output lives in the final_answer items, and a turn is
+        # read whole only when none of its items carries a phase, as in
+        # OpenAI's SDKs. Commentary, unphased text beside a final answer,
+        # and phases OpenAI adds later are not the answer. A turn whose
+        # items carry different phases keeps them in raw_content; otherwise
+        # its one phase tells.
+        def parse_answer_text(message)
+          output = message.raw_content
+          if output.is_a?(Array) && message_phases(output).any?
+            parse_output_text(output.select { |item| item['phase'] == 'final_answer' }) || ''
+          elsif !message.phase.nil? && message.phase != 'final_answer'
+            ''
+          end
         end
 
         def message_phases(output)
@@ -428,8 +448,9 @@ module RubyLLM
               type: 'function_call',
               call_id: tc.provider_call_id,
               name: tc.name,
+              namespace: tc.namespace,
               arguments: JSON.generate(tc.arguments)
-            }
+            }.compact
           end
         end
 
@@ -481,6 +502,7 @@ module RubyLLM
             ToolCall.new(
               provider_call_id: call['call_id'],
               name: call['name'],
+              namespace: call['namespace'],
               arguments: parse_function_call_arguments(arguments, response: response, finish_reason: finish_reason)
             )
           end, by: :provider_call_id)

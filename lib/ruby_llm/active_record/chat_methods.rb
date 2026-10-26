@@ -704,7 +704,7 @@ module RubyLLM
         self.assume_model_exists = assume_model_exists
         resolve_model
         save!
-        to_llm.with_model(model_id, provider: provider&.to_sym, protocol:, assume_model_exists:)
+        to_llm
         self
       end
 
@@ -994,7 +994,7 @@ module RubyLLM
       end
 
       def find_registered_model
-        RubyLLM.models.find(model_id, provider: @pending_provider, config: context&.config)
+        RubyLLM.models.find_configured(model_id, provider: @pending_provider, config: context&.config)
       end
 
       # An empty store would otherwise hold only this chat's model on the next
@@ -1094,7 +1094,7 @@ module RubyLLM
           consume_persisted_cancellation_request
         end
         chat.approval_checker = proc { |tool_call| persisted_tool_call_approval(tool_call) }
-        chat.remembered_checker = proc { |name| persisted_remembered_tool?(name) }
+        chat.remembered_checker = proc { |call| persisted_remembered_tool?(call) }
         chat.input_checker = proc { |tool_call| persisted_tool_call_input(tool_call) }
         chat.input_recorder = proc { |tool_call, input| persist_tool_call_input(tool_call, input) }
         chat.message_queue = ChatQueue.new(self)

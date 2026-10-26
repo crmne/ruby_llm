@@ -140,7 +140,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
     end
 
     it 'uses flat non-strict function definitions' do
-      tool = instance_double(RubyLLM::Tool, name: 'weather', description: 'Looks up weather',
+      tool = instance_double(RubyLLM::Tool, namespace: nil, name: 'weather', description: 'Looks up weather',
                                             parameters_schema: { 'type' => 'object' }, provider_options: {})
 
       payload = render_payload([RubyLLM::Message.new(role: :user, content: 'hi')], tools: { weather: tool })
@@ -155,7 +155,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
     end
 
     it 'lets tools opt into strict mode via provider_options' do
-      tool = instance_double(RubyLLM::Tool, name: 'weather', description: 'Looks up weather',
+      tool = instance_double(RubyLLM::Tool, namespace: nil, name: 'weather', description: 'Looks up weather',
                                             parameters_schema: { 'type' => 'object' },
                                             provider_options: { strict: true })
 
@@ -599,6 +599,51 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
 
         expect(message.raw_content).to eq(phased)
         expect(message.phase).to eq('final_answer')
+      end
+
+      it 'reads the answer from the final answer items, keeping the commentary in content' do
+        output.last['content'].first['text'] = '{"total":12.1}'
+        commentary = output.last.merge('id' => 'msg_0', 'phase' => 'commentary',
+                                       'content' => [{ 'type' => 'output_text', 'text' => 'Reading the total.' }])
+
+        message = protocol.send(:parse_completion_response, response_with(output.insert(1, commentary)))
+
+        expect(message.content).to eq('Reading the total.{"total":12.1}')
+        expect(RubyLLM::Protocols::Responses.parse_answer_text(message)).to eq('{"total":12.1}')
+      end
+
+      it 'reads the answer from the final answer items only, leaving unphased text out' do
+        output.last['content'].first['text'] = '{"total":12.1}'
+        unphased = output.last.merge('id' => 'msg_0', 'phase' => nil,
+                                     'content' => [{ 'type' => 'output_text', 'text' => 'Reading the total.' }])
+
+        message = protocol.send(:parse_completion_response, response_with(output.insert(1, unphased)))
+
+        expect(RubyLLM::Protocols::Responses.parse_answer_text(message)).to eq('{"total":12.1}')
+      end
+
+      it 'reads no answer from a turn that is only commentary' do
+        output.last['phase'] = 'commentary'
+
+        message = protocol.send(:parse_completion_response, response_with(output))
+
+        expect(RubyLLM::Protocols::Responses.parse_answer_text(message)).to eq('')
+      end
+
+      it 'leaves the answer to the content when no message carries a phase' do
+        output.last['phase'] = nil
+        output << output.last.merge('id' => 'msg_2')
+
+        message = protocol.send(:parse_completion_response, response_with(output))
+
+        expect(RubyLLM::Protocols::Responses.parse_answer_text(message)).to be_nil
+      end
+
+      it 'reads no answer from a message other protocols produced' do
+        message = RubyLLM::Message.new(role: :assistant, content: 'Hi',
+                                       raw_content: [{ 'type' => 'text', 'text' => 'Hi' }])
+
+        expect(RubyLLM::Protocols::Responses.parse_answer_text(message)).to be_nil
       end
     end
 
