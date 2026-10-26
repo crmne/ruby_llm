@@ -24,6 +24,8 @@ module RubyLLM
 
         def finish_reasons = FINISH_REASONS
 
+        def native_tool_namespace?(namespace) = Tools::CLIENT_TOOLSETS.key?(namespace)
+
         def normalize_finish_reason(reason)
           return nil if reason.nil?
 
@@ -109,10 +111,12 @@ module RubyLLM
         def render_messages(messages, thinking: nil, citations: false, caching: nil)
           rendered = []
           tool_result_blocks = []
+          calls = {}
 
           messages.each do |msg|
+            calls.merge!(msg.tool_calls || {})
             if msg.tool_result?
-              tool_result_blocks << Tools.render_tool_result_block(msg, citations:)
+              tool_result_blocks << Tools.render_tool_result_block(msg, citations:, tool_call: calls[msg.tool_call_id])
               inject_cache_control(tool_result_blocks, caching:, ttl: msg.cache_ttl) if cache_boundary?(msg, caching:)
               next
             end
@@ -132,8 +136,9 @@ module RubyLLM
 
         def add_optional_fields(payload, system_content:, tools:, tool_prefs:, temperature:, schema: nil)
           if tools.any?
-            payload[:tools] = tools.values.map { |t| Tools.function_for(t) }
+            payload[:tools] = Tools.render_tools(tools)
             unless tool_prefs[:choice].nil? && tool_prefs[:calls].nil?
+              Protocol::ToolNamespaces.validate_tool_choice(tools, tool_prefs[:choice])
               payload[:tool_choice] = Tools.build_tool_choice(tool_prefs)
             end
           end
@@ -387,8 +392,9 @@ module RubyLLM
               type: 'tool_use',
               id: tool_call.provider_call_id,
               name: tool_call.name,
-              input: tool_call.arguments
-            }
+              input: tool_call.arguments,
+              toolset_name: tool_call.namespace
+            }.compact
           end
           inject_cache_control(content_blocks, caching:, ttl: msg.cache_ttl) if cache_boundary?(msg, caching:)
 

@@ -38,6 +38,7 @@ module RubyLLM
     include Streaming
     include BinaryStreaming
     include RequestShapes
+    prepend ToolNamespaces
 
     # The Provider this protocol talks through.
     attr_reader :provider

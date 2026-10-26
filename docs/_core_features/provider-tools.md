@@ -21,6 +21,7 @@ After reading this guide, you will know:
 * How to show Google's search suggestions with a grounded answer.
 * How to connect a search store or MCP server.
 * How to approve remote tool calls and resume them in Rails.
+* How to connect your own executor to a native client toolset.
 
 ## Enabling Provider Tools
 
@@ -80,6 +81,33 @@ response = chat.ask "Run Python to calculate 17 times 23."
 ```
 
 On OpenAI and Azure, `:web_search` also opens pages; a separate `:web_fetch` tool is unnecessary. Bedrock web search requires a Nova 2 model. Mistral's default protocol already supports image generation and configured MCP connectors.
+
+## Native Client Toolsets
+
+Register an application tool for each member your executor implements. A computer screenshot member returns an image through the usual attachment API:
+
+```ruby
+class Screenshot < RubyLLM::Tool
+  namespace "computer"
+
+  def execute
+    RubyLLM::Attachment.new(Desktop.capture_screenshot, filename: "screen.png")
+  end
+end
+
+chat = RubyLLM.chat(model: "{{ site.models.anthropic_provider_tools }}")
+             .with_provider_tools({ type: "computer_toolset_20260801" })
+             .with_tools(Screenshot)
+response = chat.ask "Describe the screen."
+```
+
+`Desktop.capture_screenshot` is your application's executor and returns a path or IO. Your application owns the environment, actions, and screenshot sizing. RubyLLM sends the native toolset declaration, retains each member's identity, and returns text and image results with that identity. It does not send an ordinary function definition for the member.
+
+The namespace must match the native toolset and the tool name must match its member. A separate custom `screenshot` tool can coexist with the member, which the chat keys as `:computer_screenshot`. Member calls are local: `tool_call.remote?` is `false`, and normal tool callbacks and approval rules apply.
+
+Anthropic expects a toolset's calls in one response to run in order, and RubyLLM runs them that way even when you enable tool concurrency. A pending approval, or a call another process is running, holds back the calls after it. Return `{ error: "The display is unavailable" }` for a recoverable failure: RubyLLM answers the later calls of the batch as not executed instead of running them. An exception interrupts the run as it does for any tool.
+
+This supports computer text and image results. Browser member identity is preserved too, but browser-specific `browser_state` result blocks are not represented. Browser tab-management workflows need that additional result support.
 
 ## Tool Options
 

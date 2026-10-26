@@ -210,6 +210,11 @@ module RubyLLM
       finish_reason == :stop && !tool_call?
     end
 
+    # Returns the error text of a failed tool result, or +nil+.
+    def tool_error_message
+      tool_result_payload&.[]('error')
+    end
+
     # Returns +true+ if the response was cut off by a token limit,
     # +false+ otherwise.
     def max_tokens?
@@ -333,6 +338,15 @@ module RubyLLM
 
     private
 
+    def tool_result_payload
+      return unless tool_result? && content
+
+      payload = JSON.parse(content)
+      payload if payload.is_a?(Hash)
+    rescue JSON::ParserError
+      nil
+    end
+
     def list_to_h(list)
       list.empty? ? nil : list.map(&:to_h)
     end
@@ -347,6 +361,7 @@ module RubyLLM
         [id, ToolCall.new(id: attributes[:id] || id, name: attributes[:name],
                           provider_call_id: attributes[:provider_call_id] || attributes[:provider_id],
                           arguments: attributes[:arguments] || {},
+                          namespace: attributes[:namespace],
                           thought_signature: attributes[:thought_signature], remote: attributes.fetch(:remote, false))]
       end
     end
