@@ -112,7 +112,7 @@ module RubyLLM
 
           messages.each do |msg|
             if msg.tool_result?
-              tool_result_blocks << Tools.render_tool_result_block(msg)
+              tool_result_blocks << Tools.render_tool_result_block(msg, citations:)
               inject_cache_control(tool_result_blocks, caching:, ttl: msg.cache_ttl) if cache_boundary?(msg, caching:)
               next
             end
@@ -342,7 +342,7 @@ module RubyLLM
           elsif msg.tool_call?
             render_tool_call_with_thinking(msg, caching:)
           elsif msg.tool_result?
-            Tools.render_tool_result(msg)
+            Tools.render_tool_result(msg, citations:)
           else
             render_basic_message_with_thinking(msg, citations: citations, caching:)
           end
