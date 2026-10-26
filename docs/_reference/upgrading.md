@@ -162,7 +162,11 @@ end
 
 ## Pending Approvals Read the Database
 
-In 2.1, `pending_approvals` on a persisted chat built the chat's tools to find the calls that need a decision, which connected to every MCP server the chat uses, starting stdio servers in the web process. In 2.2, the process that saves a call records whether it waits for approval on the call's record, and `pending_approvals` reads only the database. The schema does not change.
+In 2.1, `pending_approvals` on a persisted chat built the chat's tools to find the calls that need a decision, which connected to every MCP server the chat uses, starting stdio servers in the web process. In 2.2, the process that saves a call records whether it waits for approval on the call's record, and `pending_approvals` reads only the database. The schema does not change, but the `approval` column of `ruby_llm_tool_calls` now holds `pending` for a call that waits for a decision, where 2.1 left it empty. If your code reads that column and treats an empty value as undecided, treat `pending` the same way:
+
+```ruby
+RubyLLM::ActiveRecord::ToolCall.where(approval: [nil, "pending"], result_id: nil)
+```
 
 Calls that were already waiting for approval when you deploy have no such record, so `pending_approvals` leaves them out. Load the chat through its agent class, so its tools and MCP servers are registered, list those calls the 2.1 way, which still connects to the chat's servers, and decide them by ID:
 
