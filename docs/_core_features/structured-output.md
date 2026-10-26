@@ -39,7 +39,7 @@ response.parsed["languages"]
 # => [{"name" => "Ruby", "year" => 1995}, ...]
 ```
 
-RubyLLM sends the schema in the format the provider expects. `response.content` contains the JSON text; `response.parsed` gives you Ruby Hashes and Arrays.
+RubyLLM sends the schema in the format the provider expects. `response.content` contains the JSON text; `response.parsed` gives you Ruby Hashes and Arrays. When a model writes commentary before its final answer in the same turn, as OpenAI's Responses API can, `content` holds both and `parsed` reads only the final answer.
 
 ### Using Schematist
 

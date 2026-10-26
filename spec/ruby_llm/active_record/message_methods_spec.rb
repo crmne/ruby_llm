@@ -24,16 +24,6 @@ RSpec.describe RubyLLM::ActiveRecord::MessageMethods do
     expect(message_instance.tool_error_message).to eq('tool failed')
   end
 
-  it 'parses structured output content' do
-    message_instance.content = '{"name":"Alice","age":30}'
-    expect(message_instance.parsed).to eq({ 'name' => 'Alice', 'age' => 30 })
-  end
-
-  it 'returns nil from parsed when there is no content' do
-    message_instance.content = nil
-    expect(message_instance.parsed).to be_nil
-  end
-
   it 'returns nil for invalid content' do
     message_instance.content = 'not-json'
     expect(message_instance.tool_error_message).to be_nil
@@ -135,6 +125,35 @@ RSpec.describe RubyLLM::ActiveRecord::MessageMethods do
       result = chat.add_message(RubyLLM::Message.new(role: :tool, content: 'done', tool_call_id: call.id))
 
       expect(caller_record.tool_results).to eq([result])
+    end
+
+    it 'parses structured output content' do
+      record = chat.add_message(role: :assistant, content: '{"name":"Alice","age":30}')
+
+      expect(record.parsed).to eq({ 'name' => 'Alice', 'age' => 30 })
+    end
+
+    it 'returns nil from parsed when there is no content' do
+      expect(chat.add_message(role: :assistant, content: nil).parsed).to be_nil
+    end
+
+    it 'parses only the final answer of a saved Responses turn with commentary' do
+      model = model_for(:openai)
+      output = [['commentary', 'We read the total from the invoice.'],
+                ['final_answer', '{"total":12.1}']].map do |phase, text|
+        { type: 'message', role: 'assistant', status: 'completed', phase:,
+          content: [{ type: 'output_text', text:, annotations: [] }] }
+      end
+      body = { id: 'resp_1', object: 'response', status: 'completed', model:, output:,
+               usage: { input_tokens: 5, output_tokens: 20, total_tokens: 25 } }
+      stub_request(:post, 'https://api.openai.com/v1/responses').to_return_json(body:)
+      chat = Chat.create!(model:, provider: :openai)
+
+      chat.ask('What is the total?')
+      record = chat.messages.where(role: 'assistant').last.reload
+
+      expect(record.content).to eq('We read the total from the invoice.{"total":12.1}')
+      expect(record.parsed).to eq('total' => 12.1)
     end
 
     it 'reaches its chat through the declared association' do

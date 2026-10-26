@@ -211,12 +211,10 @@ module RubyLLM
         to_llm.content_filtered?
       end
 
-      # Returns the content parsed as JSON, or +nil+ when the message has no text.
+      # Returns the content parsed as JSON, or +nil+ when the message has no
+      # text. Reads only the final answer, as RubyLLM::Message#parsed does.
       def parsed
-        text = extract_content
-        return if text.nil? || text.empty?
-
-        JSON.parse(text)
+        to_llm.parsed
       end
 
       private

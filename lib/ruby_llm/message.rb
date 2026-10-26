@@ -135,15 +135,18 @@ module RubyLLM
     end
 
     # Returns #content parsed as JSON, memoized after the first call.
-    # Useful for reading structured output responses.
+    # Useful for reading structured output responses. When the provider
+    # marks part of the turn as commentary before the final answer, only
+    # the final answer is parsed.
     #
     #   response = chat.with_schema(PersonSchema).ask "Generate a person"
     #   response.parsed # => {"name" => "Alice", "age" => 30}
     #
     def parsed
-      return if content.nil? || content.empty?
+      text = answer_text
+      return if text.nil? || text.empty?
 
-      @parsed ||= JSON.parse(content)
+      @parsed ||= JSON.parse(text)
     end
 
     def with_attachments(attachments) # :nodoc:
@@ -337,6 +340,11 @@ module RubyLLM
     end
 
     private
+
+    def answer_text
+      slug = ruby_llm_usage_entries.reverse.find(&:succeeded?)&.provider if raw_content || phase
+      (Provider.resolve(slug)&.answer_text(self) if slug) || content
+    end
 
     def tool_result_payload
       return unless tool_result? && content

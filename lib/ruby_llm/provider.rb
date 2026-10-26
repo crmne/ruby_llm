@@ -608,6 +608,16 @@ module RubyLLM
         @protocols ||= {}
       end
 
+      # Returns the part of +message+ that holds its answer, as read by the
+      # first of the provider's protocols that marks parts of a turn as
+      # intermediate, or +nil+ when none does. Such a protocol defines
+      # +parse_answer_text(message)+ as a class method.
+      def answer_text(message) # :nodoc:
+        protocols.each_value.lazy.filter_map do |protocol|
+          protocol.parse_answer_text(message) if protocol.respond_to?(:parse_answer_text)
+        end.first
+      end
+
       # Registers +provider_class+ under the slug +name+, making it
       # available to RubyLLM.chat and the other top-level helpers.
       # Stamps the class's slug, adds it to ::providers, and defines a
