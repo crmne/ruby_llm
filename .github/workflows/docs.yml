@@ -145,7 +145,7 @@ jobs:
       - name: Setup Pages
         if: steps.registry.outputs.deploy == 'true'
         id: pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       - name: Build stable, next, and 1.x documentation
         if: steps.registry.outputs.deploy == 'true'
