@@ -50,4 +50,21 @@ RSpec.describe RubyLLM::Accounting::Usage do
     expect(usage_events.map { |event| event.values_at(:operation, :workflow_id, :workflow_name) })
       .to eq([[:video, 'launch-1', 'Launch'], [:research, 'launch-1', 'Launch']])
   end
+
+  it 'attributes an async child attempt to its creating workflow and step exactly once' do
+    in_reactor do |task|
+      task.with_timeout(2) do
+        context.workflow('Search', id: 'search-1') do |workflow|
+          workflow.step('Embed', id: 'embed-1') do
+            task.async { context.embed('Ruby', model:, provider: :openai) }.wait
+          end
+        end
+        context.embed('Ruby', model:, provider: :openai)
+      end
+    end
+
+    expect(usage_events.size).to eq(2)
+    expect(usage_events.first).to include(workflow_id: 'search-1', workflow_step_id: 'embed-1', status: :succeeded)
+    expect(usage_events.last).not_to have_key(:workflow_id)
+  end
 end

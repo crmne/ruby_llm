@@ -63,15 +63,15 @@ module RubyLLM
       private_class_method :dispatch
 
       def current_workflow
-        Thread.current[WORKFLOW_CONTEXT_KEY]
+        Fiber[WORKFLOW_CONTEXT_KEY]
       end
 
       def with_workflow(context)
         previous_context = current_workflow
-        Thread.current[WORKFLOW_CONTEXT_KEY] = context
+        Fiber[WORKFLOW_CONTEXT_KEY] = context
         yield
       ensure
-        Thread.current[WORKFLOW_CONTEXT_KEY] = previous_context
+        Fiber[WORKFLOW_CONTEXT_KEY] = previous_context
       end
     end
   end
