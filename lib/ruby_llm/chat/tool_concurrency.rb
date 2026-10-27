@@ -70,6 +70,9 @@ module RubyLLM
             end
 
             collect_results(queue, tasks.size, on_result:)
+          rescue Async::Stop
+            tasks&.each(&:stop)
+            raise
           ensure
             tasks&.each(&:wait)
           end
