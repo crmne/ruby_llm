@@ -22,16 +22,14 @@ module RubyLLM
         workflow_context = Support::Instrumentation.current_workflow
         instrumentation_context = Support::Instrumentation.capture_context
         queue = Queue.new
-        threads = tool_calls.each_value.with_index.map do |tool_call, index|
+        threads = []
+        tool_calls.each_value.with_index do |tool_call, index|
           thread = Thread.new do
-            Support::Instrumentation.with_workflow(workflow_context) do
-              Support::Instrumentation.with_context(instrumentation_context) do
-                queue << capture_result(index, tool_call, caller_context, execute)
-              end
-            end
+            queue << capture_result(index, tool_call, caller_context, execute,
+                                    workflow_context:, instrumentation_context:)
           end
           thread.report_on_exception = false
-          thread
+          threads << thread
         end
 
         collect_results(queue, threads.size, on_result:)
@@ -59,13 +57,11 @@ module RubyLLM
         Sync do |task|
           isolated(caller_context) do
             queue = Async::Queue.new
-            tasks = tool_calls.each_value.with_index.map do |tool_call, index|
-              task.async do
-                Support::Instrumentation.with_workflow(workflow_context) do
-                  Support::Instrumentation.with_context(instrumentation_context) do
-                    queue << capture_result(index, tool_call, caller_context, execute)
-                  end
-                end
+            tasks = []
+            tool_calls.each_value.with_index do |tool_call, index|
+              tasks << task.async do
+                queue << capture_result(index, tool_call, caller_context, execute,
+                                        workflow_context:, instrumentation_context:)
               end
             end
 
@@ -95,8 +91,13 @@ module RubyLLM
         results
       end
 
-      def capture_result(index, tool_call, caller_context, execute)
-        value = isolated(caller_context) { execute.call(tool_call) }
+      def capture_result(index, tool_call, caller_context, execute, workflow_context:, instrumentation_context:)
+        value = nil
+        Support::Instrumentation.with_workflow(workflow_context) do
+          Support::Instrumentation.with_context(instrumentation_context) do
+            value = isolated(caller_context) { execute.call(tool_call) }
+          end
+        end
         Result.new(index:, tool_call:, value:)
       rescue Exception => e # rubocop:disable Lint/RescueException
         Result.new(index:, tool_call:, error: e)
