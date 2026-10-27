@@ -259,6 +259,7 @@ TEST_MODELS = {
   azure_cohere_rerank: [{ provider: :azure, model: 'Cohere-rerank-v4.0-fast' }],
   titan_multimodal_embedding: [{ provider: :bedrock, model: 'amazon.titan-embed-image-v1' }],
   bedrock_rerank: [{ provider: :bedrock, model: 'amazon.rerank-v1:0' }],
+  bedrock_claude: [{ provider: :bedrock, model: 'claude-haiku-4-5' }],
   bedrock_video: [{ provider: :bedrock, model: 'luma.ray-v2:0' }],
   vertexai_rerank: [{ provider: :vertexai, model: 'semantic-ranker-default-004', assume_model_exists: true }],
   chat: chat_models,

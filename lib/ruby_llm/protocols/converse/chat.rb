@@ -29,6 +29,7 @@ module RubyLLM
         # Bedrock forwards an S3 source to other models untranslated, and
         # Claude rejects it.
         S3_SOURCE_MODELS = %w[amazon.nova].freeze
+        OFFICE_DOCUMENT_FORMATS = %w[doc docx xls xlsx].freeze
         CACHE_LIFETIME_UNITS = { 's' => 1, 'm' => 60, 'h' => 3600 }.freeze
         COUNT_TOKENS_KEYS = %i[messages system toolConfig additionalModelRequestFields].freeze
 
@@ -320,14 +321,26 @@ module RubyLLM
 
           budget = MAX_CACHE_POINTS - cache_points(payload).size
           automatic_cache_targets(payload, model).each do |blocks|
-            next if cache_point?(blocks.last)
+            index = automatic_cache_point_index(blocks)
+            next unless index
             break if budget <= 0
 
-            blocks << converse_cache_block_for(caching)
-            next blocks.pop unless cache_lifetimes_descend?(payload)
+            blocks.insert(index, converse_cache_block_for(caching))
+            next blocks.delete_at(index) unless cache_lifetimes_descend?(payload)
 
             budget -= 1
           end
+        end
+
+        # Claude refuses a cache point right after an Office document, so the
+        # point goes after the last block that takes one.
+        def automatic_cache_point_index(blocks)
+          last = blocks.rindex { |block| !office_document?(block) }
+          last + 1 if last && !cache_point?(blocks[last])
+        end
+
+        def office_document?(block)
+          block.is_a?(Hash) && OFFICE_DOCUMENT_FORMATS.include?(block.dig(:document, :format))
         end
 
         def search_results?(model)

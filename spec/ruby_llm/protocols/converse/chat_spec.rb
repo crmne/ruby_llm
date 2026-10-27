@@ -268,6 +268,16 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       expect(payload.dig(:messages, 1, :content).last).to eq(cachePoint: { type: 'default', ttl: '1h' })
     end
 
+    it 'puts the automatic cachePoint ahead of Office documents, which Claude refuses one after' do
+      docx = File.expand_path('../../../fixtures/sample.docx', __dir__)
+      xlsx = File.expand_path('../../../fixtures/sample.xlsx', __dir__)
+      message = RubyLLM::Message.new(role: :user, content: 'Summarize these', attachments: [docx, xlsx])
+
+      blocks = render_payload([message], caching: { ttl: '1h' }).dig(:messages, 0, :content)
+
+      expect(blocks.map { |block| block.keys.first }).to eq(%i[text cachePoint document document])
+    end
+
     it 'adds an automatic cachePoint alongside an explicit boundary' do
       first = RubyLLM::Message.new(role: :user, content: 'Stable context').cache_until_here
       second = RubyLLM::Message.new(role: :user, content: 'Latest question')
