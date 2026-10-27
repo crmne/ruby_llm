@@ -22,6 +22,9 @@ ignore:
   - cdd92a72524b
   - a628cf763df0
   - af2acddb01de
+  # ToolConcurrency.capture_result: every context wrapper yields, so the
+  # block always replaces the initial value before it is read.
+  - 1bb7432af156
   # Chat#claim_tool_calls: with nothing to claim, every pending call
   # already waits.
   - 7793f07399ce
