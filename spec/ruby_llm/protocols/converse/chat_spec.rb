@@ -3,6 +3,21 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::Converse::Chat do
+  describe 'large attachment uploads' do
+    def references_files?(model_id)
+      provider = double(config: RubyLLM.config, connection: nil)
+      model = instance_double(RubyLLM::Model, id: model_id)
+      RubyLLM::Protocols::Converse.new(provider, model).send(:provider_file_references?)
+    end
+
+    it 'references S3 files only for models that read them, sending Claude its files inline' do
+      expect(references_files?('eu.amazon.nova-2-lite-v1:0')).to be(true)
+      expect(references_files?('amazon.nova-pro-v1:0')).to be(true)
+      expect(references_files?('eu.anthropic.claude-haiku-5-5')).to be(false)
+      expect(references_files?('anthropic.claude-sonnet-4-5-20250929-v1:0')).to be(false)
+    end
+  end
+
   describe '.parse_completion_body' do
     it 'exposes AWS inputTokens as-is (already non-cached) and keeps cache buckets separate' do
       # Per AWS, inputTokens already excludes cache; a real payload sends the non-cached count

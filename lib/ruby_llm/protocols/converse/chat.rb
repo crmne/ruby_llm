@@ -26,6 +26,9 @@ module RubyLLM
         # Converse refuses searchResult blocks from every model but Claude, so an
         # application inference profile, which doesn't name its model, gets text.
         SEARCH_RESULT_MODELS = %w[anthropic.].freeze
+        # Bedrock forwards an S3 source to other models untranslated, and
+        # Claude rejects it.
+        S3_SOURCE_MODELS = %w[amazon.nova].freeze
         CACHE_LIFETIME_UNITS = { 's' => 1, 'm' => 60, 'h' => 3600 }.freeze
         COUNT_TOKENS_KEYS = %i[messages system toolConfig additionalModelRequestFields].freeze
 
@@ -105,7 +108,7 @@ module RubyLLM
         end
 
         def provider_file_references?
-          true
+          S3_SOURCE_MODELS.any? { |prefix| foundation_model_id(@model&.id).start_with?(prefix) }
         end
 
         def default_large_file_upload_threshold
