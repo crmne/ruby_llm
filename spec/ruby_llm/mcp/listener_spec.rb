@@ -169,6 +169,22 @@ RSpec.describe RubyLLM::MCP::Listener do
     end
   end
 
+  context 'when started inside a workflow' do
+    let(:workflows) { Queue.new }
+    let(:callback) { ->(_notification) { workflows << RubyLLM::Support::Instrumentation.current_workflow } }
+
+    it 'clears the inherited workflow on every start' do
+      RubyLLM.workflow('Request', id: 'request-1') do
+        listener.start(tools)
+        listener.stop
+        listener.start(tools)
+      end
+
+      expect(Array.new(2) { Timeout.timeout(2) { workflows.pop } }).to eq([nil, nil])
+      expect(client.attempts.size).to eq(2)
+    end
+  end
+
   context 'with a server that refuses the subscription' do
     let(:script) { ->(*) { raise RubyLLM::MCP::Error, 'Unauthorized' } }
 

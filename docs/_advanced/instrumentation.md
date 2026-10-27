@@ -160,11 +160,11 @@ RubyLLM.workflow("Review code") do |workflow|
 end
 ```
 
-RubyLLM carries the current workflow and step through its own concurrent tool execution. A dashboard can reconstruct the work that ran from these events. Your application controls scheduling, retries, and persistence.
+Child fibers and threads inherit the workflow and step active when they are created. Each child can enter its own steps without changing its siblings or parent. RubyLLM also carries this context through its concurrent tool execution. A dashboard can reconstruct the work that ran from these events. Your application controls scheduling, retries, and persistence.
 
 Workflows can nest. A `RubyLLM.workflow` call inside another workflow keeps its own identity: its events carry the inner `workflow_id` and `workflow_name`, plus `workflow_parent_id` and, when the nesting happened inside a step, `workflow_parent_step_id`. The outer workflow's context is restored when the inner block returns. A service object that declares its own workflow therefore appears as a sub-tree when a larger workflow calls it, the same way nested spans appear in OpenTelemetry.
 
-Workflow context lasts exactly as long as the block. Work that resumes elsewhere, such as polling a [batch]({% link _advanced/batches.md %}) for results in a later job, is not tagged automatically; re-enter `RubyLLM.workflow` with the persisted ID to correlate it:
+The caller's previous context is restored when the block returns. Children retain the context they inherit, even if they run after that block returns. Context does not propagate automatically to a background job or another process. Work that resumes elsewhere, such as polling a [batch]({% link _advanced/batches.md %}) for results in a later job, is not tagged automatically; re-enter `RubyLLM.workflow` with the persisted ID to correlate it:
 
 ```ruby
 RubyLLM.workflow("Nightly summaries", id: batch_record.workflow_id) do |workflow|

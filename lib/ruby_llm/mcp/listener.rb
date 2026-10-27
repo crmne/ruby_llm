@@ -60,7 +60,9 @@ module RubyLLM
         @state = nil
         @thread = Thread.new do
           Support::Cancellation.watch(nil) do
-            Support::ProgressReporter.listen(nil) { Accounting::Usage.with_owner(nil) { run } }
+            Support::Instrumentation.with_workflow(nil) do
+              Support::ProgressReporter.listen(nil) { Accounting::Usage.with_owner(nil) { run } }
+            end
           end
         end
         @thread.name = 'ruby_llm-mcp-listener'

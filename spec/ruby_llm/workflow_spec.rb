@@ -145,6 +145,90 @@ RSpec.describe RubyLLM::Workflow do
     instrumenter.events.find { |event_name, _payload| event_name == name }.last
   end
 
+  it 'passes workflow and step identity to a child fiber' do
+    child = context.workflow('Search', id: 'search-1') do |workflow|
+      workflow.step('Embed', id: 'embed-1') do
+        Fiber.new { RubyLLM.instrument('child.ruby_llm', config: context.config) }
+      end
+    end
+    child.resume
+
+    expect(event_payload('child.ruby_llm')).to include(workflow_id: 'search-1', workflow_step_id: 'embed-1')
+    expect(RubyLLM::Support::Instrumentation.current_workflow).to be_nil
+  end
+
+  it 'isolates overlapping async steps from their siblings and caller' do
+    in_reactor do |task|
+      task.with_timeout(2) do
+        require 'async/queue'
+        release = Async::Queue.new
+        context.workflow('Search', id: 'search-1') do |workflow|
+          children = %w[first second].map do |id|
+            task.async do
+              workflow.step(id, id:) do
+                release.pop
+                RubyLLM.instrument("#{id}.ruby_llm", config: context.config)
+              end
+            end
+          end
+          2.times { release << true }
+          children.each(&:wait)
+          RubyLLM.instrument('caller.ruby_llm', config: context.config)
+        end
+      end
+    end
+
+    %w[first second].each do |id|
+      expect(event_payload("#{id}.ruby_llm")).to include(workflow_id: 'search-1', workflow_step_id: id)
+      expect(event_payload("#{id}.ruby_llm")).not_to have_key(:workflow_step_parent_id)
+    end
+    expect(event_payload('caller.ruby_llm')).to include(workflow_id: 'search-1')
+    expect(event_payload('caller.ruby_llm')).not_to have_key(:workflow_step_id)
+  end
+
+  it 'links a child fiber workflow to its parent step and restores that step after errors' do
+    context.workflow('Outer', id: 'outer-1') do |workflow|
+      workflow.step('Compose', id: 'compose-1') do
+        Fiber.new do
+          expect do
+            context.workflow('Inner', id: 'inner-1') do |inner|
+              inner.step('Fail') do
+                RubyLLM.instrument('inner.ruby_llm', config: context.config)
+                raise 'failure'
+              end
+            end
+          end.to raise_error(RuntimeError, 'failure')
+          RubyLLM.instrument('resumed.ruby_llm', config: context.config)
+        end.resume
+      end
+    end
+
+    expect(event_payload('inner.ruby_llm')).to include(workflow_parent_id: 'outer-1',
+                                                       workflow_parent_step_id: 'compose-1')
+    expect(event_payload('resumed.ruby_llm')).to include(workflow_id: 'outer-1', workflow_step_id: 'compose-1')
+    expect(RubyLLM::Support::Instrumentation.current_workflow).to be_nil
+  end
+
+  it 'passes the workflow to child threads without leaking it to subsequent work' do
+    context.workflow('Search', id: 'search-1') do |workflow|
+      workflow.step('Embed', id: 'embed-1') do
+        Thread.new { RubyLLM.instrument('child.ruby_llm', config: context.config) }.value
+      end
+    end
+    Thread.new { RubyLLM.instrument('unrelated.ruby_llm', config: context.config) }.value
+
+    expect(event_payload('child.ruby_llm')).to include(workflow_id: 'search-1', workflow_step_id: 'embed-1')
+    expect(event_payload('unrelated.ruby_llm')).not_to have_key(:workflow_id)
+  end
+
+  it 'respects fibers that explicitly disable workflow storage inheritance' do
+    context.workflow('Search', id: 'search-1') do
+      Fiber.new(storage: nil) { RubyLLM.instrument('child.ruby_llm', config: context.config) }.resume
+    end
+
+    expect(event_payload('child.ruby_llm')).not_to have_key(:workflow_id)
+  end
+
   def workflow_event(workflow_id)
     instrumenter.events
                 .filter_map { |name, payload| payload if name == 'workflow.ruby_llm' }
