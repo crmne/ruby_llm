@@ -28,6 +28,13 @@ module RubyLLM
         false
       end
 
+      # Returns whether +call+ came back under a namespace the API's own tool
+      # search put a deferred function in, rather than one +tools+ declare.
+      # Protocols whose tool search does that override this.
+      def searched_tool_namespace?(_call, _tools) # :nodoc:
+        false
+      end
+
       def complete(messages, tools:, **options, &block) # :nodoc:
         restore_tool_namespaces(super, tools)
       end
@@ -49,11 +56,18 @@ module RubyLLM
       def restore_tool_namespaces(message, tools)
         return message unless message.is_a?(Message) && message.tool_call?
 
-        calls = message.tool_calls.transform_values do |call|
-          tool = tools[call.name.to_sym] if call.namespace.nil?
+        message.with_tool_calls(message.tool_calls.transform_values { |call| restore_tool_namespace(call, tools) })
+      end
+
+      def restore_tool_namespace(call, tools)
+        if call.namespace.nil?
+          tool = tools[call.name.to_sym]
           tool && flattened?(tool) ? restore_tool_call(call, tool) : call
+        elsif searched_tool_namespace?(call, tools)
+          rebuild_tool_call(call, name: call.name, namespace: nil)
+        else
+          call
         end
-        message.with_tool_calls(calls)
       end
 
       def flattened?(tool_or_call)

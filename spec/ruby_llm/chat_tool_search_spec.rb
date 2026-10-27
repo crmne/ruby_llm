@@ -37,12 +37,17 @@ RSpec.describe RubyLLM::Chat, :live do
           chat.messages.select(&:tool_call?).flat_map { |message| message.tool_calls.values.map(&:name) }
         end
 
+        def tool_results(chat)
+          chat.messages.select(&:tool_result?).map(&:content)
+        end
+
         it 'loads a deferred tool through tool search and calls it' do
           response = chat.ask('What is the weather in Berlin right now? Use your tools.')
 
           expect(response.content).to include('22')
           expect(searched?(chat)).to be(true)
           expect(called_tools(chat)).to include('weather_lookup')
+          expect(tool_results(chat)).to include('Sunny and 22°C in Berlin')
         end
 
         it 'keeps using a loaded tool on the next turn' do
@@ -52,6 +57,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
           expect(response.content).to include('22')
           expect(called_tools(chat).count('weather_lookup')).to eq(2)
+          expect(tool_results(chat)).to include('Sunny and 22°C in Berlin', 'Sunny and 22°C in Paris')
         end
 
         it 'loads a deferred tool while streaming' do
@@ -62,6 +68,7 @@ RSpec.describe RubyLLM::Chat, :live do
           expect(response.content).to include('22')
           expect(searched?(chat)).to be(true)
           expect(called_tools(chat)).to include('weather_lookup')
+          expect(tool_results(chat)).to include('Sunny and 22°C in Berlin')
         end
       end
     end

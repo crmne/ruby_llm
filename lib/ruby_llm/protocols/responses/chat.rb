@@ -7,6 +7,16 @@ module RubyLLM
       module Chat
         def native_tool_namespace?(_namespace) = true
 
+        # Tool search loads a deferred function declared outside any
+        # namespace as a namespace named after the function, and the model
+        # calls it under that namespace.
+        def searched_tool_namespace?(call, tools) # :nodoc:
+          function = tools[call.name.to_sym]
+          return false if function.nil? || function.namespace || call.namespace != call.name.to_s
+
+          tools.each_value.none? { |tool| tool.namespace == call.namespace }
+        end
+
         def completion_url
           'responses'
         end

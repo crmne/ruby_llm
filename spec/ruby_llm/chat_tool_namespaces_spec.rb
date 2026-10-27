@@ -479,6 +479,78 @@ RSpec.describe RubyLLM::Chat do
     expect(other.messages[1].tool_calls.values.first.namespace).to eq('crm')
   end
 
+  def stub_responses(*outputs)
+    stub_request(:post, 'https://api.openai.com/v1/responses').to_return do |request|
+      requests << JSON.parse(request.body)
+      output = outputs.shift or raise 'Unexpected request'
+      { body: JSON.generate(id: 'resp_fixture', status: 'completed', model: model_for(:openai), output:,
+                            usage: { input_tokens: 10, output_tokens: 2 }),
+        headers: { 'Content-Type' => 'application/json' } }
+    end
+  end
+
+  def responses_answer
+    [{ type: 'message', role: 'assistant', content: [{ type: 'output_text', text: 'Done' }] }]
+  end
+
+  it 'runs a deferred function that Responses tool search calls under a namespace of its own name' do
+    weather = local_tool('weather_lookup') do
+      executed << :weather
+      'Sunny'
+    end
+    other = RubyLLM.chat(model: model_for(:openai), provider: :openai, protocol: :responses)
+                   .with_tools(weather, local_tool('stock_price'), defer: true)
+    search = [{ type: 'tool_search_call', id: 'tsc_1', call_id: nil, execution: 'server', status: 'completed',
+                arguments: { paths: ['weather_lookup'] } },
+              { type: 'tool_search_output', id: 'tso_1', call_id: nil, execution: 'server', status: 'completed',
+                tools: [{ type: 'function', name: 'weather_lookup', parameters: { type: 'object', properties: {} } }] }]
+    stub_responses([*search, { type: 'function_call', id: 'fc_1', call_id: 'weather_1', name: 'weather_lookup',
+                               namespace: 'weather_lookup', arguments: '{}' }], responses_answer)
+
+    other.ask('What is the weather?')
+
+    expect(executed).to eq([:weather])
+    call = other.messages[1].tool_calls.values.first
+    expect([call.name, call.namespace]).to eq(['weather_lookup', nil])
+    replayed = requests.last['input'].find { |item| item['type'] == 'function_call' }
+    expect(replayed).to include('name' => 'weather_lookup', 'namespace' => 'weather_lookup')
+  end
+
+  it 'keeps a Responses namespace that differs from the name of a function outside any namespace' do
+    ordinary = local_tool('lookup') do
+      executed << :ordinary
+      'Wrong executor'
+    end
+    other = RubyLLM.chat(model: model_for(:openai), provider: :openai, protocol: :responses).with_tools(ordinary)
+    stub_responses([{ type: 'function_call', call_id: 'lookup_1', name: 'lookup', namespace: 'crm',
+                      arguments: '{}' }], responses_answer)
+
+    other.ask('Find customer')
+
+    expect(executed).to be_empty
+    expect(other.messages[1].tool_calls.values.first.namespace).to eq('crm')
+  end
+
+  it 'keeps a Responses namespace the request declared, though named like its member' do
+    namespaced = local_tool('lookup', namespace: 'lookup') do
+      executed << :namespaced
+      'Namespaced'
+    end
+    ordinary = local_tool('lookup') do
+      executed << :ordinary
+      'Wrong executor'
+    end
+    other = RubyLLM.chat(model: model_for(:openai), provider: :openai, protocol: :responses)
+                   .with_tools(namespaced, ordinary)
+    stub_responses([{ type: 'function_call', call_id: 'lookup_1', name: 'lookup', namespace: 'lookup',
+                      arguments: '{}' }], responses_answer)
+
+    other.ask('Find customer')
+
+    expect(executed).to eq([:namespaced])
+    expect(other.messages[1].tool_calls.values.first.namespace).to eq('lookup')
+  end
+
   it 'runs every Responses namespace call after an earlier one fails' do
     failing = local_tool('lookup', namespace: 'crm') { { error: 'Not found' } }
     later = local_tool('orders', namespace: 'crm') do
