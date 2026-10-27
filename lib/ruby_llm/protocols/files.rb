@@ -35,6 +35,10 @@ module RubyLLM
         raise Error, "#{@provider.slug} doesn't support file listing"
       end
 
+      # Raises ConfigurationError when an upload without a +uri:+ has
+      # nowhere to go.
+      def ensure_storage!; end
+
       private
 
       def files_url
