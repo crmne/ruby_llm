@@ -23,3 +23,5 @@ jobs:
     with:
       dry_run: ${{ inputs.dry_run || false }}
       triage_workflow: issue-assessment.yml
+      # Copilot reviews only private repositories; CodeRabbit reviews public ones.
+      reviews: private
