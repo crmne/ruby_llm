@@ -68,13 +68,19 @@ module RubyLLM
           uris
         end
 
+        def ensure_storage!
+          raise ConfigurationError, 'Set bedrock_batch_s3_uri to an s3:// bucket prefix' if storage_base.empty?
+        end
+
         private
 
         def storage_uri_for(attachment)
-          base = @config.bedrock_batch_s3_uri.to_s.sub(%r{/+\z}, '')
-          raise ConfigurationError, 'Set bedrock_batch_s3_uri to an s3:// bucket prefix' if base.empty?
+          ensure_storage!
+          "#{storage_base}/ruby_llm_uploads/#{SecureRandom.hex(8)}/#{attachment.filename}"
+        end
 
-          "#{base}/ruby_llm_uploads/#{SecureRandom.hex(8)}/#{attachment.filename}"
+        def storage_base
+          @config.bedrock_batch_s3_uri.to_s.sub(%r{/+\z}, '')
         end
 
         def s3_client

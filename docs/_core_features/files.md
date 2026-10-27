@@ -96,7 +96,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-Automatic uploads require a provider that supports stored attachments. Vertex AI and Bedrock also need a [configured storage bucket]({% link _getting_started/configuration-providers.md %}#batch-processing). Uploading separately does not remove the model's input or context limits.
+Automatic uploads require a provider that supports stored attachments. Vertex AI and Bedrock also need a [configured storage bucket]({% link _getting_started/configuration-providers.md %}#batch-processing). Without one, a chat hands a large attachment to its [attachment converter]({% link _core_features/attachments.md %}#converting-unsupported-attachments) instead. When no converter returns a replacement, the request raises `RubyLLM::ConfigurationError` naming the missing setting before anything is sent. Uploading separately does not remove the model's input or context limits.
 
 A chat uploads each file once and reuses the upload for later requests. In Rails, [persisted chats]({% link _advanced/rails-persistence.md %}#attachments-and-structured-output) also reuse it after they are loaded again, in any process. If the provider deletes an upload, the request that fails over it uploads the file again and runs once more, unless part of the reply already streamed.
 
