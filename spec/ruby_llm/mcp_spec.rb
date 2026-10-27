@@ -1018,6 +1018,17 @@ RSpec.describe RubyLLM::MCP do
       expect { RubyLLM::Support::Cancellation.watch(checkpoint) { mcp.wait } }.to raise_error(RubyLLM::CancelledError)
       expect(mcp.send(:client).request('spec/cancelled')['cancelled'].size).to eq(1)
     end
+
+    it 'keeps the stdio session usable after a cancelled wait' do
+      expect(mcp.echo(text: 'before').text).to eq('before')
+      checkpoint = -> { raise RubyLLM::CancelledError }
+
+      expect { RubyLLM::Support::Cancellation.watch(checkpoint) { mcp.wait } }
+        .to raise_error(RubyLLM::CancelledError)
+
+      expect(mcp.echo(text: 'after').text).to eq('after')
+      expect(mcp.send(:client).request('spec/cancelled')['cancelled'].size).to eq(1)
+    end
   end
 
   it 'exposes every server tool as a method' do

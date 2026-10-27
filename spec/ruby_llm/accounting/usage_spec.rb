@@ -436,6 +436,30 @@ RSpec.describe 'RubyLLM::Accounting::Usage::Tracker' do
     expect(chat.usage_entries.first.tokens.to_h).to be_empty
   end
 
+  it 'records one cancelled usage event when an async task stops during a request' do
+    instrumenter = CaptureInstrumenter.new
+    context = RubyLLM.context { |config| config.instrumenter = instrumenter }
+    chat = context.chat(model: model_for(:openai), provider: :openai)
+
+    in_reactor do |task|
+      task.with_timeout(2) do
+        stub_request(:post, /api\.openai\.com/).to_raise(Async::Stop)
+        child = task.async { chat.ask('Hello') }
+        child.wait
+
+        expect(child).to be_stopped
+      ensure
+        child&.stop
+      end
+    end
+
+    usages = instrumenter.events.filter_map { |name, payload| payload if name == 'usage.ruby_llm' }
+    expect(usages.map { |event| event[:status] }).to eq([:cancelled])
+    expect(chat.usage_entries.map(&:status)).to eq([:cancelled])
+    expect(chat.messages.map(&:role)).to eq([:user])
+    expect(a_request(:post, /api\.openai\.com/)).to have_been_made.once
+  end
+
   it 'ignores a second failure for an attempt that already finished' do
     tracker = build_tracker
     entry = tracker.start

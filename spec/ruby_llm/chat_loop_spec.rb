@@ -154,6 +154,21 @@ RSpec.describe RubyLLM::Chat do
       expect { chat.run_tools }.to raise_error(RubyLLM::CancelledError, 'Chat generation cancelled')
       expect(chat.messages.last).to be_tool_call
     end
+
+    it 'reuses the chat after streaming cancellation without keeping a partial assistant message' do
+      attempts = 0
+      allow(chat.provider).to receive(:complete) do |_messages, **_options, &block|
+        attempts += 1
+        block.call(RubyLLM::Chunk.new(role: :assistant, content: 'partial')) if attempts == 1
+        answer_message
+      end
+
+      expect { chat.ask('First') { chat.cancel } }.to raise_error(RubyLLM::CancelledError)
+      expect(chat.ask('Second').content).to eq('hello')
+      expect(chat.messages.map(&:role)).to eq(%i[user user assistant])
+      expect(attempts).to eq(2)
+      expect(chat).not_to be_cancelled
+    end
   end
 
   describe '#generate' do

@@ -272,6 +272,21 @@ RSpec.describe RubyLLM::MCP::HTTP do
       expect(a_request(:post, url).with { |request| request.body.include?('notifications/cancelled') })
         .to have_been_made
     end
+
+    it 'reuses the client after a stream is cancelled without retrying the cancelled call' do
+      stub_method('server/discover', result: discover_result)
+      client.server
+
+      expect { RubyLLM::Support::Cancellation.watch(cancel) { client.request('tools/call', { name: 'slow' }) } }
+        .to raise_error(RubyLLM::CancelledError)
+      stub_method('tools/call', result: { content: [{ type: 'text', text: 'ready' }] })
+
+      expect(client.request('tools/call', { name: 'echo' }).dig('content', 0, 'text')).to eq('ready')
+      expect(a_request(:post, url).with { |request| JSON.parse(request.body)['method'] == 'tools/call' })
+        .to have_been_made.twice
+    ensure
+      client.close
+    end
   end
 
   describe 'sessions of older servers' do
