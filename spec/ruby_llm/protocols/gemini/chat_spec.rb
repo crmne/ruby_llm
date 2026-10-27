@@ -254,6 +254,12 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
         includeThoughts: true, thinkingBudget: 1024
       )
     end
+
+    it 'turns thoughts off with a zero budget, which Vertex AI requires' do
+      thinking = RubyLLM::Thinking::Config.new(budget: 0)
+
+      expect(test_obj.send(:build_thinking_config, nil, thinking)).to eq(includeThoughts: false, thinkingBudget: 0)
+    end
   end
 
   describe '#render_role' do

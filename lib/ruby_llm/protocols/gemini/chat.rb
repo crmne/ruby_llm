@@ -110,7 +110,8 @@ module RubyLLM
         end
 
         def build_thinking_config(_model, thinking)
-          return { includeThoughts: false, thinkingBudget: 0 } if thinking.enabled == false
+          off = thinking.enabled == false || (thinking.budget.is_a?(Integer) && thinking.budget.zero?)
+          return { includeThoughts: false, thinkingBudget: 0 } if off
 
           config = { includeThoughts: true }
 
