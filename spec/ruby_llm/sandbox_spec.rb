@@ -73,6 +73,19 @@ RSpec.describe RubyLLM::Sandbox do
       expect(runner.isolated.libraries).to eq(%w[psych.bundle libruby.dylib])
     end
 
+    it 'runs an MXC::Sandbox from mxc before 0.4, which cannot grant libraries' do
+      older = Class.new(MXC::Sandbox) do
+        undef_method :with_libraries_of
+
+        def run(*)
+          FakeSandbox.result(stdout: 'ran')
+        end
+      end
+
+      expect(described_class.resolve(older).with_libraries_of('psych.bundle').run('ruby', timeout: 10).stdout)
+        .to eq('ran')
+    end
+
     it 'runs an MXC::Sandbox on the configured backend unless it names its own' do
       skip 'mxc runs on MRI' unless RUBY_ENGINE == 'ruby'
       require 'mxc'

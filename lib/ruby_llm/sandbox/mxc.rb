@@ -55,7 +55,8 @@ module RubyLLM
       end
 
       # Returns a runner whose commands may load the libraries +binaries+
-      # link, such as an interpreter's extensions.
+      # link, such as an interpreter's extensions. mxc before 0.4 cannot
+      # grant them, and runs without.
       def with_libraries_of(*binaries)
         self.class.new(@policy, backend: @backend, libraries: [*@libraries, *binaries])
       end
@@ -65,7 +66,7 @@ module RubyLLM
         run.with_directory(directory) if run.directory.nil? && directory
         run.with_env(env.reject { |name, _| run.env.key?(name) })
         apply_network(run, network)
-        run.with_libraries_of(*@libraries)
+        run.with_libraries_of(*@libraries) if run.respond_to?(:with_libraries_of)
         run = Landlock.policy(run) if run.backend == :landlock
         block_given? ? run_by_line(run, command, &) : run.run(*command)
       end
