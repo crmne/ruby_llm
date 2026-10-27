@@ -106,6 +106,7 @@ cp -a "$workspace/next-out/." "$site/next/"
 cp -a "$workspace/v1-out/." "$site/v1/"
 ruby "$docs/bin/build_version_redirects.rb" "$site" "$BASE"
 cp "$registry" "$site/models.json"
+find "$docs" -maxdepth 1 -regextype posix-extended -regex '.*/[0-9a-f]{32}\.txt' -exec cp {} "$site/" \;
 rm -rf "$workspace"
 trap - EXIT
 

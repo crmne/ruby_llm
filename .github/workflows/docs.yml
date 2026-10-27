@@ -155,6 +155,18 @@ jobs:
           BASE: ${{ steps.pages.outputs.base_path }}
           MODEL_REGISTRY_FILE: ${{ steps.registry.outputs.file }}
 
+      - name: Plan IndexNow submission
+        if: steps.registry.outputs.deploy == 'true'
+        run: ruby .github/scripts/indexnow.rb plan docs/_site "$RUNNER_TEMP/indexnow.json"
+
+      - name: Upload IndexNow plan
+        if: steps.registry.outputs.deploy == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: indexnow
+          path: ${{ runner.temp }}/indexnow.json
+          retention-days: 1
+
       - name: Upload artifact
         if: steps.registry.outputs.deploy == 'true'
         uses: actions/upload-pages-artifact@v5
@@ -172,3 +184,21 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+
+  indexnow:
+    if: needs.build.outputs.deploy == 'true'
+    runs-on: ubuntu-latest
+    needs: [build, deploy]
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          sparse-checkout: .github/scripts
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: indexnow
+
+      - name: Submit changed URLs to IndexNow
+        run: ruby .github/scripts/indexnow.rb submit indexnow.json
