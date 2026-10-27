@@ -121,6 +121,30 @@ RSpec.describe RubyLLM::MCP::Listener do
     end
   end
 
+  context 'when started inside a cancellable operation' do
+    let(:observed) { Queue.new }
+    let(:callback) do
+      lambda do |_notification|
+        RubyLLM::Support::Cancellation.check
+        observed << Fiber[:listener_spec_context]
+        RubyLLM::Support::Cancellation.watch(-> { observed << :local }) do
+          RubyLLM::Support::Cancellation.check
+        end
+      end
+    end
+
+    it 'clears the inherited checkpoint and preserves unrelated storage' do
+      Fiber[:listener_spec_context] = :preserved
+      RubyLLM::Support::Cancellation.watch(-> { observed << :inherited }) { listener.start(tools) }
+      listener.stop
+
+      expect(Array.new(observed.size) { observed.pop }).to eq(%i[preserved local])
+      expect(client.cancelled).to eq([1])
+    ensure
+      Fiber[:listener_spec_context] = nil
+    end
+  end
+
   context 'with Rails loaded' do
     let(:executor) do
       Class.new do

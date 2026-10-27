@@ -13,15 +13,15 @@ module RubyLLM
       module_function
 
       def watch(checkpoint)
-        previous = Thread.current[KEY]
-        Thread.current[KEY] = checkpoint
+        previous = Fiber[KEY]
+        Fiber[KEY] = checkpoint
         yield
       ensure
-        Thread.current[KEY] = previous
+        Fiber[KEY] = previous
       end
 
       def check
-        Thread.current[KEY]&.call
+        Fiber[KEY]&.call
       end
 
       def pause(seconds)
