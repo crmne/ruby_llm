@@ -572,7 +572,7 @@ module RubyLLM
       upload = message.role == :user && auto_upload_large_files?
       prepared = message.attachments.map do |attachment|
         replacement = replace_unsupported_attachment(attachment, unsupported_attachment, message)
-        upload ? preprocess_attachment(replacement, unsupported_attachment, message) : replacement
+        upload ? preprocess_attachment(replacement) : replacement
       end
       return message if prepared == message.attachments
 
@@ -680,24 +680,12 @@ module RubyLLM
       false
     end
 
-    def preprocess_attachment(attachment, handler, message)
+    def preprocess_attachment(attachment)
       return attachment if attachment.provider_file?
       return attachment unless upload_large_attachment?(attachment)
 
-      with_file_storage(attachment, handler, message) do
-        Attachment.new(provider_upload(attachment), resolution: attachment.resolution,
-                                                    processing: attachment.processing, config: @config)
-      end
-    end
-
-    # A large attachment the provider has nowhere to store goes to the
-    # chat's converter instead, and fails with the storage error without one.
-    def with_file_storage(attachment, handler, message)
-      @provider.ensure_file_storage!
-    rescue ConfigurationError
-      convert_attachment(attachment, handler, message) || raise
-    else
-      yield
+      Attachment.new(provider_upload(attachment), resolution: attachment.resolution,
+                                                  processing: attachment.processing, config: @config)
     end
 
     def supported_message_attachment?(_message, attachment)
@@ -707,12 +695,8 @@ module RubyLLM
     def replace_unsupported_attachment(attachment, handler, message)
       return attachment if handler.nil? || supported_message_attachment?(message, attachment)
 
-      convert_attachment(attachment, handler, message) || attachment
-    end
-
-    def convert_attachment(attachment, handler, message)
-      replacement = handler&.call(attachment)
-      return if replacement.nil?
+      replacement = handler.call(attachment)
+      return attachment if replacement.nil?
       unless replacement.is_a?(Attachment)
         raise ArgumentError, 'convert_unsupported_attachments must return a RubyLLM::Attachment or nil'
       end

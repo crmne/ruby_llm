@@ -155,7 +155,7 @@ RSpec.describe RubyLLM::Protocol do
       upload = RubyLLM::UploadedFile.new(id: 'file_123', filename: 'a.pdf', mime_type: 'application/pdf')
       allow(protocol).to receive_messages(upload_large_attachment?: true, provider_upload: upload)
 
-      expect(protocol.send(:preprocess_attachment, attachment, nil, nil).resolution).to eq(:high)
+      expect(protocol.send(:preprocess_attachment, attachment).resolution).to eq(:high)
     end
 
     it 'keeps the processing mode when it uploads a large video' do
@@ -163,96 +163,8 @@ RSpec.describe RubyLLM::Protocol do
       upload = RubyLLM::UploadedFile.new(id: 'file_123', filename: 'a.mp4', mime_type: 'video/mp4')
       allow(protocol).to receive_messages(upload_large_attachment?: true, provider_upload: upload)
 
-      expect(protocol.send(:preprocess_attachment, attachment, nil, nil))
-        .to have_attributes(provider_file_id: 'file_123', processing: :agentic)
-    end
-  end
-
-  describe 'large attachments without file storage' do
-    let(:report) { RubyLLM::Attachment.new(StringIO.new('%PDF-1.4 long enough to upload'), filename: 'report.pdf') }
-    let(:report_text) { RubyLLM::Attachment.new(StringIO.new('Quarterly revenue grew.'), filename: 'report.txt') }
-    let(:bucket) { nil }
-
-    before do
-      upload = RubyLLM::UploadedFile.new(id: 'stored-report', filename: 'report.pdf', mime_type: 'application/pdf')
-      allow(provider).to receive(:upload_file).and_return(upload)
-    end
-
-    def preprocess(&handler)
-      message = RubyLLM::Message.new(role: :user, content: 'Summarize this', attachments: [report])
-      protocol.preprocess_message(message, unsupported_attachment: handler).attachments
-    end
-
-    shared_examples 'storage in a bucket' do |setting, bucket_uri|
-      it 'uses what the handler converts the attachment into' do
-        expect(preprocess { report_text }).to eq([report_text])
-        expect(provider).not_to have_received(:upload_file)
-      end
-
-      it 'raises the storage error before uploading without a handler' do
-        expect { preprocess }.to raise_error(RubyLLM::ConfigurationError, /Set #{setting} to/)
-        expect(provider).not_to have_received(:upload_file)
-      end
-
-      it 'raises the storage error when the handler cannot convert' do
-        expect { preprocess { nil } }.to raise_error(RubyLLM::ConfigurationError, /Set #{setting} to/)
-      end
-
-      it 'refuses a handler result that is not an attachment' do
-        expect { preprocess { 'text' } }.to raise_error(ArgumentError, /must return a RubyLLM::Attachment/)
-      end
-
-      context 'with a bucket' do
-        let(:bucket) { bucket_uri }
-
-        it 'uploads instead of converting' do
-          expect(preprocess { report_text }.map(&:provider_file_id)).to eq(['stored-report'])
-        end
-      end
-    end
-
-    context 'with Bedrock Converse' do
-      let(:provider) do
-        RubyLLM::Providers::Bedrock.new(RubyLLM::Configuration.new.tap do |c|
-          c.bedrock_api_key = 'key'
-          c.bedrock_secret_key = 'secret'
-          c.bedrock_region = 'eu-central-1'
-          c.bedrock_batch_s3_uri = bucket
-        end)
-      end
-      let(:protocol) { RubyLLM::Protocols::Converse.new(provider) }
-
-      before { stub_const('RubyLLM::Protocols::Converse::Chat::BEDROCK_INLINE_DOCUMENT_LIMIT', 16) }
-
-      it_behaves_like 'storage in a bucket', 'bedrock_batch_s3_uri', 's3://ruby-llm-test/uploads'
-    end
-
-    context 'with Gemini on Vertex AI' do
-      let(:provider) do
-        RubyLLM::Providers::VertexAI.new(RubyLLM::Configuration.new.tap do |c|
-          c.vertexai_project_id = 'test-project'
-          c.vertexai_location = 'europe-west4'
-          c.vertexai_batch_gcs_uri = bucket
-        end)
-      end
-      let(:protocol) { RubyLLM::Providers::VertexAI::Gemini.new(provider) }
-
-      before { stub_const('RubyLLM::Protocols::Gemini::Chat::VERTEX_INLINE_FILE_THRESHOLD', 16) }
-
-      it_behaves_like 'storage in a bucket', 'vertexai_batch_gcs_uri', 'gs://ruby-llm-test/uploads'
-    end
-
-    context 'with a provider that keeps its own files' do
-      let(:provider) do
-        RubyLLM::Providers::Anthropic.new(RubyLLM::Configuration.new.tap { |c| c.anthropic_api_key = 'test' })
-      end
-      let(:protocol) { RubyLLM::Protocols::Anthropic.new(provider) }
-
-      before { stub_const('RubyLLM::Protocols::Anthropic::Chat::ANTHROPIC_INLINE_REQUEST_LIMIT', 16) }
-
-      it 'uploads without asking the handler' do
-        expect(preprocess { report_text }.map(&:provider_file_id)).to eq(['stored-report'])
-      end
+      expect(protocol.send(:preprocess_attachment, attachment)).to have_attributes(provider_file_id: 'file_123',
+                                                                                   processing: :agentic)
     end
   end
 

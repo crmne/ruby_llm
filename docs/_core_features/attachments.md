@@ -177,7 +177,7 @@ Callbacks run in registration order until one returns a replacement. A chat conv
 
 If the provider deletes an uploaded replacement, RubyLLM uploads the cached replacement again and retries the request once. It does not call your converter again or retry after streaming has reached your application.
 
-The converter also receives a large attachment that Vertex AI or Bedrock would upload when no [storage bucket]({% link _core_features/files.md %}#large-chat-attachments) is configured. This handles what the protocol cannot send. A model can still reject an attachment the protocol can represent; that API error does not trigger the callback.
+This handles formats the protocol cannot send. A model can still reject an attachment the protocol can represent; that API error does not trigger the callback.
 
 ### Keeping Attachments Out of the Conversation
 

@@ -1286,8 +1286,7 @@ module RubyLLM
     end
 
     # Converts attachments the current protocol cannot render with the
-    # given block, and large attachments its provider has no storage to
-    # upload to. Returns +self+. The block receives an Attachment and
+    # given block. Returns +self+. The block receives an Attachment and
     # returns a replacement Attachment, or +nil+ to keep the existing error.
     # Blocks run in registration order until one returns a replacement.
     # The transcript keeps the original file, even when the model changes.

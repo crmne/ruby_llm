@@ -418,10 +418,6 @@ module RubyLLM
       protocols.fetch(:files).new(self).upload(file, **options)
     end
 
-    def ensure_file_storage! # :nodoc:
-      protocols.fetch(:files).new(self).ensure_storage!
-    end
-
     def cache_content(content, model:, ttl: nil, instructions: nil, with: nil) # :nodoc:
       protocol = resolve_protocol(nil, model, operation: :cache)
       protocol.new(self, model).cache_content(
