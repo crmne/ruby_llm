@@ -18,18 +18,18 @@ releases="$(ruby "$docs/bin/release_tags.rb" "$repo_root")"
 read -r stable_ref onex_ref <<< "$releases"
 
 workspace="$(mktemp -d)"
-trap 'rm -rf "$workspace"' EXIT
+cleanup() {
+  rm -rf "$workspace"
+  git -C "$repo_root" worktree prune
+}
+trap cleanup EXIT
 
+# A worktree, not an archive, so the theme can date each page by its last
+# commit in the sitemap.
 archive_release() {
   local ref="$1" source="$2"
-  shift 2
-  mkdir -p "$source"
-  git -C "$repo_root" archive "$ref" docs/ lib/ "$@" | tar -x -C "$source"
-  if git -C "$repo_root" cat-file -e "$ref:.rdoc_options" 2>/dev/null; then
-    git -C "$repo_root" show "$ref:.rdoc_options" > "$source/.rdoc_options"
-  else
-    cp "$repo_root/.rdoc_options" "$source/.rdoc_options"
-  fi
+  git -C "$repo_root" -c core.hooksPath=/dev/null worktree add --quiet --detach "$source" "$ref"
+  [[ -f "$source/.rdoc_options" ]] || cp "$repo_root/.rdoc_options" "$source/.rdoc_options"
 }
 
 prepare_version() {
@@ -75,7 +75,7 @@ build_version() {
 }
 
 echo "==> Building stable docs ($stable_ref) -> /"
-archive_release "$stable_ref" "$workspace/stable" tasks/
+archive_release "$stable_ref" "$workspace/stable"
 prepare_version "$workspace/stable/docs" stable
 share_home_tour "$workspace/stable/docs"
 share_home_design "$workspace/stable/docs"
@@ -107,7 +107,7 @@ cp -a "$workspace/v1-out/." "$site/v1/"
 ruby "$docs/bin/build_version_redirects.rb" "$site" "$BASE"
 cp "$registry" "$site/models.json"
 find "$docs" -maxdepth 1 -regextype posix-extended -regex '.*/[0-9a-f]{32}\.txt' -exec cp {} "$site/" \;
-rm -rf "$workspace"
+cleanup
 trap - EXIT
 
 echo "Done.  / = $stable_ref   /next/ = main   /v1/ = $onex_ref   /models.json = live registry"
