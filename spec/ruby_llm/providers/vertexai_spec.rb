@@ -36,17 +36,16 @@ RSpec.describe RubyLLM::Providers::VertexAI do
         c.retry_interval_randomness = 0
       end
     end
-    let(:credentials) { instance_double(RubyLLM::Providers::VertexAI::Credentials) }
     let(:token) { +'first' }
+    let(:vertexai) { described_class.new(config) }
 
     before do
-      allow(RubyLLM::Providers::VertexAI::Credentials).to receive(:for).with(config).and_return(credentials)
-      allow(credentials).to receive(:headers) { { 'Authorization' => "Bearer #{token}" } }
+      allow(vertexai).to receive(:headers) { { 'Authorization' => "Bearer #{token}" } }
     end
 
-    def authorizations_across_a_retry(url)
+    def authorizations_across_a_retry(url, method: :post)
       sent = []
-      stub_request(:post, url).to_return do |request|
+      stub_request(method, url).to_return do |request|
         sent << request.headers['Authorization']
         token.replace('refreshed')
         body = sent.one? ? '{"error":{"message":"unavailable"}}' : '{}'
@@ -58,7 +57,7 @@ RSpec.describe RubyLLM::Providers::VertexAI do
 
     it 'signs a retried request with the token current when the retry is sent' do
       sent = authorizations_across_a_retry('https://aiplatform.googleapis.com/v1beta1/models') do
-        provider.connection.post('models', {})
+        vertexai.connection.post('models', {})
       end
 
       expect(sent).to eq(['Bearer first', 'Bearer refreshed'])
@@ -66,7 +65,17 @@ RSpec.describe RubyLLM::Providers::VertexAI do
 
     it 'signs a retried ranking request with the token current when the retry is sent' do
       sent = authorizations_across_a_retry('https://discoveryengine.googleapis.com/v1/rank') do
-        provider.ranking_connection.post('rank', {})
+        vertexai.ranking_connection.post('rank', {})
+      end
+
+      expect(sent).to eq(['Bearer first', 'Bearer refreshed'])
+    end
+
+    it 'signs a retried catalog request in another location with the token current when the retry is sent' do
+      catalog = RubyLLM::Providers::VertexAI::Gemini.new(vertexai)
+      url = 'https://us-central1-aiplatform.googleapis.com/v1beta1/publishers/google/models'
+      sent = authorizations_across_a_retry(url, method: :get) do
+        catalog.send(:connection_for, 'us-central1').get('publishers/google/models')
       end
 
       expect(sent).to eq(['Bearer first', 'Bearer refreshed'])
