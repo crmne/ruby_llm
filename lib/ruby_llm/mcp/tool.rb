@@ -91,7 +91,9 @@ module RubyLLM
 
       # Calls the tool on the server and returns its MCP::Result, what the
       # +wrap:+ method made of it, or <tt>{ error: }</tt> when the tool
-      # failed. A chat sends the model the result's content. When the
+      # failed. A tool with a UI returns its failed MCP::Result instead, so
+      # your app can still render the UI. A chat sends the model the
+      # result's content. When the
       # server runs the call as a task, returns the MCP::Task without
       # waiting, and a chat pauses the tool call until the task is done.
       # Raises MCP::InputRequiredError when the server needs input that no

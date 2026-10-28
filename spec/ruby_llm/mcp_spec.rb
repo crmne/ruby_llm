@@ -841,6 +841,14 @@ RSpec.describe RubyLLM::MCP do
       expect(mcp.call(:echo, text: 'hi').ui_uri).to be_nil
     end
 
+    it 'keeps the result of a failed call to a tool with a UI, so the app can render it' do
+      result = tool('forecast').call(city: 'Atlantis')
+
+      expect(result).to have_attributes(error?: true, ui_uri: 'ui://spec/forecast',
+                                        text: 'Pick a city on the map shown to you; no forecast yet')
+      expect(tool('fail').call).to eq(error: 'Something broke')
+    end
+
     it 'keeps a result with a UI on a message across serialization' do
       result = mcp.call(:forecast, city: 'Rome')
       message = RubyLLM::Message.new(role: :tool, content: result.text, tool_call_id: 'call_1', mcp_result: result)

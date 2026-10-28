@@ -611,7 +611,7 @@ view.meta["ui"] # => { "csp" => { "connectDomains" => ["https://api.weather.exam
 
 Rendering the UI is your app's job. Following the MCP Apps spec, it runs in a sandboxed iframe on an origin separate from your app, inside a second iframe whose content security policy you build from `meta["ui"]["csp"]`, and your page passes it the tool's arguments and result.
 
-In a chat, the model calls a tool with a UI like any other tool, and sees its text. The UI needs more, such as the structured content, so the tool result message keeps the server's whole result as `mcp_result`. In Rails it persists on the tool call, so a UI renders the same after a reload. A controller can give your page everything it needs:
+In a chat, the model calls a tool with a UI like any other tool, and sees its text. That includes a failed call, which a server may answer with an error while its UI asks the user for something, so the UI can render then too. The UI needs more, such as the structured content, so the tool result message keeps the server's whole result as `mcp_result`. In Rails it persists on the tool call, so a UI renders the same after a reload. A controller can give your page everything it needs:
 
 ```ruby
 class Weather::ViewsController < ApplicationController

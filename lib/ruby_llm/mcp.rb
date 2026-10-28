@@ -656,7 +656,7 @@ module RubyLLM
       return outcome if outcome.is_a?(Task)
 
       result = Result.new(outcome, tool.ui_uri)
-      return { error: result.text } if result.error?
+      return result.ui_uri ? result : { error: result.text } if result.error?
 
       tool.wrap ? apply(tool.wrap, result, **arguments) : result
     end

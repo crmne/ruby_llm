@@ -226,6 +226,10 @@ end
 
 def forecast(arguments)
   city = arguments['city'] || 'Rome'
+  if city == 'Atlantis'
+    return { content: [{ type: 'text', text: 'Pick a city on the map shown to you; no forecast yet' }], isError: true }
+  end
+
   { content: [{ type: 'text', text: "Sunny in #{city}" }], structuredContent: { city:, temperature: 24 },
     _meta: { 'com.example/station' => 'spec' } }
 end
