@@ -49,6 +49,11 @@ module RubyLLM
         end
       end
 
+      def initialize(config) # :nodoc:
+        super
+        @connection = signed_connection(api_base)
+      end
+
       # Vertex AI hosts models from several publishers, each speaking its
       # native protocol. Publisher-prefixed ids are MaaS models served
       # through the OpenAI-compatible endpoint.
@@ -140,9 +145,15 @@ module RubyLLM
 
       def ranking_connection # :nodoc:
         base = @config.vertexai_ranking_api_base || 'https://discoveryengine.googleapis.com/v1'
-        @ranking_connection ||= Transport::Connection.new(
-          self, @config, api_base: base, headers: { 'X-Goog-User-Project' => @config.vertexai_project_id }
+        @ranking_connection ||= signed_connection(
+          base, headers: { 'X-Goog-User-Project' => @config.vertexai_project_id }
         )
+      end
+
+      # Signs each attempt as it is sent, so a retry never replays an access
+      # token that expired while the previous attempt waited.
+      def signed_connection(base_url, headers: {}) # :nodoc:
+        Transport::Connection.new(self, @config, api_base: base_url, headers:, signer: ->(_env) { self.headers })
       end
 
       # The rescue can't name Google::Auth::AuthorizationError directly:

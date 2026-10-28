@@ -26,6 +26,62 @@ RSpec.describe RubyLLM::Providers::VertexAI do
 
   let(:vertexai_api_base) { nil }
 
+  describe 'request signing' do
+    let(:config) do
+      RubyLLM::Configuration.new.tap do |c|
+        c.vertexai_project_id = 'test-project'
+        c.vertexai_location = 'global'
+        c.max_retries = 1
+        c.retry_interval = 0
+        c.retry_interval_randomness = 0
+      end
+    end
+    let(:token) { +'first' }
+    let(:vertexai) { described_class.new(config) }
+
+    before do
+      allow(vertexai).to receive(:headers) { { 'Authorization' => "Bearer #{token}" } }
+    end
+
+    def authorizations_across_a_retry(url, method: :post)
+      sent = []
+      stub_request(method, url).to_return do |request|
+        sent << request.headers['Authorization']
+        token.replace('refreshed')
+        body = sent.one? ? '{"error":{"message":"unavailable"}}' : '{}'
+        { status: sent.one? ? 503 : 200, body:, headers: { 'Content-Type' => 'application/json' } }
+      end
+      yield
+      sent
+    end
+
+    it 'signs a retried request with the token current when the retry is sent' do
+      sent = authorizations_across_a_retry('https://aiplatform.googleapis.com/v1beta1/models') do
+        vertexai.connection.post('models', {})
+      end
+
+      expect(sent).to eq(['Bearer first', 'Bearer refreshed'])
+    end
+
+    it 'signs a retried ranking request with the token current when the retry is sent' do
+      sent = authorizations_across_a_retry('https://discoveryengine.googleapis.com/v1/rank') do
+        vertexai.ranking_connection.post('rank', {})
+      end
+
+      expect(sent).to eq(['Bearer first', 'Bearer refreshed'])
+    end
+
+    it 'signs a retried catalog request in another location with the token current when the retry is sent' do
+      catalog = RubyLLM::Providers::VertexAI::Gemini.new(vertexai)
+      url = 'https://us-central1-aiplatform.googleapis.com/v1beta1/publishers/google/models'
+      sent = authorizations_across_a_retry(url, method: :get) do
+        catalog.send(:connection_for, 'us-central1').get('publishers/google/models')
+      end
+
+      expect(sent).to eq(['Bearer first', 'Bearer refreshed'])
+    end
+  end
+
   describe '#api_base' do
     context 'when location is global' do
       let(:location) { 'global' }
