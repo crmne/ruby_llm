@@ -18,7 +18,7 @@ module RubyLLM
       def response(operation, payload)
         case operation
         when 'chat' then chat_response(payload[:response])
-        when 'execute_tool' then { 'gen_ai.tool.call.result' => json(payload[:result]) }
+        when 'execute_tool' then { 'gen_ai.tool.call.result' => tool_result(payload[:result]) }
         else {}
         end.compact
       end
@@ -44,7 +44,7 @@ module RubyLLM
       end
 
       def parts(message)
-        return [tool_response(message)] if message.role == :tool
+        return tool_parts(message) if message.role == :tool
 
         thinking = message.thinking&.text
         [
@@ -55,8 +55,9 @@ module RubyLLM
         ].compact
       end
 
-      def tool_response(message)
-        { type: 'tool_call_response', id: message.tool_call_id, response: message.content }
+      def tool_parts(message)
+        [{ type: 'tool_call_response', id: message.tool_call_id, response: message.content },
+         *message.attachments.map { |attachment| attachment(attachment) }]
       end
 
       def tool_call(call)
@@ -68,10 +69,26 @@ module RubyLLM
         if attachment.provider_file?
           { type: 'file', **described, file_id: attachment.provider_file_id }
         elsif attachment.url?
-          { type: 'uri', **described, uri: attachment.source.to_s }
+          { type: 'uri', **described, uri: uri_without_credentials(attachment.source) }
         else
           { type: 'attachment', **described, filename: attachment.filename }
         end
+      end
+
+      # What the model receives from the tool, with attachments described.
+      def tool_result(result)
+        return if result.nil?
+
+        content, attachments = Tool.split_result(result)
+        return content if attachments.empty?
+
+        json([({ type: 'text', content: } if present?(content)), *attachments.map { |item| attachment(item) }].compact)
+      end
+
+      # Signed URLs carry access credentials in their query string.
+      def uri_without_credentials(source)
+        uri = URI(source.to_s)
+        uri.class.build(host: uri.host, port: uri.port, path: uri.path).to_s
       end
 
       def present?(text)

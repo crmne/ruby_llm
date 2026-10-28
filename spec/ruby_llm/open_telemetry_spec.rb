@@ -121,6 +121,42 @@ RSpec.describe RubyLLM::OpenTelemetry do
       expect(spans.sole.attributes.to_s).not_to include(Base64.strict_encode64(File.binread(image))[0, 40])
     end
 
+    it 'records a signed attachment URL without its credentials' do
+      image = 'https://user:secret@files.example.com/ruby.png?X-Amz-Signature=private#private'
+      stub_request(:get, /files\.example\.com/).to_return(body: 'png', headers: { 'Content-Type' => 'image/png' })
+      stub_chat.ask('Describe this', with: image)
+
+      part = json_attribute(spans.sole, 'gen_ai.input.messages').first['parts'].last
+      expect(part).to include('type' => 'uri', 'uri' => 'https://files.example.com/ruby.png')
+      expect(spans.sole.attributes.to_s).not_to include('X-Amz-Signature', 'secret', '#private')
+    end
+
+    it 'records attachments a tool returned, in its result and on its message' do
+      image = RubyLLM::Attachment.new(File.expand_path('../fixtures/ruby.png', __dir__))
+      RubyLLM.instrument('tool_call.ruby_llm', tool_name: 'chart', tool_call_id: 'call_1') do |event|
+        event[:result] = ['Here is the chart', image]
+      end
+      message = RubyLLM::Message.new(role: :tool, content: 'Here is the chart', tool_call_id: 'call_1',
+                                     attachments: [image])
+      RubyLLM.instrument('chat.ruby_llm', provider: 'openai', model:, input_messages: [message]) { nil }
+
+      described = { 'type' => 'attachment', 'modality' => 'image', 'mime_type' => 'image/png',
+                    'filename' => 'ruby.png' }
+      tool_span, chat_span = spans
+      expect(json_attribute(tool_span, 'gen_ai.tool.call.result'))
+        .to eq([{ 'type' => 'text', 'content' => 'Here is the chart' }, described])
+      expect(json_attribute(chat_span, 'gen_ai.input.messages').first['parts'].last).to eq(described)
+    end
+
+    it 'records an MCP result as the content the model receives' do
+      result = RubyLLM::MCP::Result.new('content' => [{ 'type' => 'text', 'text' => 'From the server' }])
+      RubyLLM.instrument('tool_call.ruby_llm', tool_name: 'lookup', tool_call_id: 'call_1') do |event|
+        event[:result] = result
+      end
+
+      expect(spans.sole.attributes['gen_ai.tool.call.result']).to eq('From the server')
+    end
+
     it 'records tool arguments and results' do
       payload = { tool_name: 'lookup', tool_call_id: 'call_1', tool_arguments: { 'city' => 'Berlin' } }
       RubyLLM.instrument('tool_call.ruby_llm', payload) { |event| event[:result] = { 'forecast' => 'sunny' } }
