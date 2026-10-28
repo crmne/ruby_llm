@@ -82,7 +82,9 @@ module RubyLLM
           /prompt is too long/i,
           /context limit/i,
           /exceeded model token limit/i,
-          /prompt exceeds max length/i
+          /prompt exceeds max length/i,
+          /input is too long/i,
+          /longer than the maximum model length/i
         ].freeze
 
         RATE_LIMIT_PATTERNS = [

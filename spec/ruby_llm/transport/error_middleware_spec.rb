@@ -302,6 +302,20 @@ RSpec.describe RubyLLM::Transport::ErrorMiddleware do
       end.to raise_error(RubyLLM::BadRequestError, msg)
     end
 
+    [
+      ["Bedrock's", 'Input is too long for requested model.'],
+      ["vLLM's", 'The decoder prompt (length 40000) is longer than the maximum model length of 32768.']
+    ].each do |source, msg|
+      it "maps #{source} too-long 400 error to ContextLengthExceededError" do
+        response = Struct.new(:status, :body).new(400, %({"message":"#{msg}"}))
+        provider = instance_double(RubyLLM::Provider, parse_error: msg)
+
+        expect do
+          described_class.parse_error(provider: provider, response: response)
+        end.to raise_error(RubyLLM::ContextLengthExceededError)
+      end
+    end
+
     it "maps Anthropic's 'prompt is too long' 400 error to ContextLengthExceededError" do
       msg = 'prompt is too long: 209025 tokens > 200000 maximum'
       response = Struct.new(:status, :body).new(400, %({"error":{"message":"#{msg}"}}))
