@@ -2193,12 +2193,7 @@ module RubyLLM
 
     def execute_tool(tool_call)
       tool = tool_for(tool_call)
-      if tool.nil?
-        return {
-          error: "Model tried to call unavailable tool `#{tool_call.name}`. " \
-                 "Available tools: #{tools.keys.to_json}."
-        }
-      end
+      return { error: unavailable_tool_error(tool_call.qualified_name) } if tool.nil?
 
       args = tool_call.arguments
       payload = {
@@ -2223,6 +2218,16 @@ module RubyLLM
         event[:result_class] = result.class.name
         result
       end
+    end
+
+    # Names a few close tools rather than every tool, which can run to
+    # thousands of characters in a chat with many.
+    def unavailable_tool_error(name)
+      close = DidYouMean::SpellChecker.new(dictionary: tools.keys.map(&:to_s)).correct(name).first(3)
+      message = "There is no tool named `#{name}`."
+      message += " Did you mean #{close.map { |tool| "`#{tool}`" }.join(', ')}?" if close.any?
+      message += " Find tools with `#{Tools::Search.tool_name}`." if tool_search_tool
+      message
     end
 
     def progress_listener(tool_call)

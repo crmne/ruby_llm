@@ -224,6 +224,29 @@ RSpec.describe RubyLLM::Chat, :live do
     end
   end
 
+  describe 'calls to a tool the chat does not have' do
+    let(:chat) do
+      tool = ->(name) { Class.new(RubyLLM::Tool) { define_method(:name) { name } }.new }
+      RubyLLM.chat(model: model_for(:openai)).with_tools(tool.call('weather_lookup'), tool.call('stock_price'))
+    end
+
+    def error_for(name)
+      chat.send(:execute_tool, RubyLLM::ToolCall.new(id: 'call_1', name:, arguments: {}))[:error]
+    end
+
+    it 'names close tools instead of listing every tool' do
+      expect(error_for('weather_lookups'))
+        .to eq('There is no tool named `weather_lookups`. Did you mean `weather_lookup`?')
+      expect(error_for('translate')).to eq('There is no tool named `translate`.')
+    end
+
+    it 'points to tool search when the chat offers it' do
+      allow(chat).to receive(:tool_search_tool).and_return(RubyLLM::Tools::Search.new({}))
+
+      expect(error_for('translate')).to eq('There is no tool named `translate`. Find tools with `tool_search`.')
+    end
+  end
+
   describe 'function calling' do
     each_model(CHAT_MODELS) do |provider, model|
       it "#{provider}/#{model} can use tools" do
@@ -266,8 +289,7 @@ RSpec.describe RubyLLM::Chat, :live do
         response = chat.ask('What tools do you support?')
         expect(response.content).to eq(final_answer)
         expect(tool_results_received).to eq([
-                                              { error: 'Model tried to call unavailable tool `list_tools`. ' \
-                                                       'Available tools: ["weather"].' }
+                                              { error: 'There is no tool named `list_tools`.' }
                                             ])
       end
     end

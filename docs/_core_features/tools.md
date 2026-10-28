@@ -83,7 +83,7 @@ end
 > `WeatherLookup.tool_name` reads the model-facing name without instantiating the tool, which is useful when you select tool classes by name before building them. The instance method `#name` delegates to it, so overriding `name` on the instance still works.
 {: .note }
 
-If the model requests an unavailable tool, RubyLLM returns an error listing the available tools and lets the conversation continue.
+If the model requests a tool the chat doesn't have, RubyLLM answers with an error naming up to three tools with similar names, and the conversation continues.
 
 ## Tool Namespaces
 
