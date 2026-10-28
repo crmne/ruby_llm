@@ -47,6 +47,7 @@ module RubyLLM
 
           if tools.any?
             payload[:tools] = render_tools(tools)
+            payload[:input] = namespace_searched_calls(payload[:input], tools)
             unless tool_prefs[:choice].nil?
               Protocol::ToolNamespaces.validate_tool_choice(tools, tool_prefs[:choice])
               payload[:tool_choice] = build_tool_choice(tool_prefs[:choice])

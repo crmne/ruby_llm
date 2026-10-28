@@ -38,6 +38,18 @@ module RubyLLM
           tool.is_a?(RubyLLM::Tool::Deferred)
         end
 
+        # Tool search loads a deferred function declared outside any
+        # namespace under a namespace of its own name, and the API refuses a
+        # call to it that lacks the namespace.
+        def namespace_searched_calls(input, tools)
+          searched = tools.each_value.filter_map { |tool| tool.name.to_s if deferred?(tool) && tool.namespace.nil? }
+          input.map { |item| searched_call?(item, searched) ? item.merge(namespace: item[:name]) : item }
+        end
+
+        def searched_call?(item, searched)
+          item.is_a?(Hash) && item[:type] == 'function_call' && item[:namespace].nil? && searched.include?(item[:name])
+        end
+
         # The API requires a search tool next to deferred tools, and rejects
         # search items in the input of a request that declares none.
         def apply_tool_search(payload)

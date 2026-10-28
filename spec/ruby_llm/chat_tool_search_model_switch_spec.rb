@@ -65,7 +65,7 @@ RSpec.describe RubyLLM::Chat do
       replayed = input('gpt-5.4-mini', [{ 'type' => 'web_search_call', 'id' => 'ws_1' }, *search, function_call])
 
       expect(types(replayed)).to eq(%w[function_call function_call_output])
-      expect(replayed.find { |item| item[:type] == 'function_call' }).not_to have_key(:namespace)
+      expect(replayed.find { |item| item[:type] == 'function_call' }).to include(namespace: 'weather_lookup')
     end
   end
 

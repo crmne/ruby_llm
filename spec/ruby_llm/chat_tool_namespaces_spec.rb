@@ -493,6 +493,22 @@ RSpec.describe RubyLLM::Chat do
     [{ type: 'message', role: 'assistant', content: [{ type: 'output_text', text: 'Done' }] }]
   end
 
+  it 'replays a call to a deferred function under the namespace tool search loads it in' do
+    weather = local_tool('weather_lookup')
+    other = RubyLLM.chat(model: model_for(:openai), provider: :openai, protocol: :responses)
+                   .with_tools(weather, defer: true).with_tools(local_tool('stock_price'))
+    calls = %w[weather_lookup stock_price].to_h do |name|
+      [name, RubyLLM::ToolCall.new(id: name, provider_call_id: name, name:, arguments: {})]
+    end
+    other.add_message(role: :user, content: 'Weather and stocks?')
+    other.add_message(role: :assistant, content: '', tool_calls: calls)
+
+    replayed = other.render[:input].select { |item| item[:type] == 'function_call' }
+
+    expect(replayed.map { |item| [item[:name], item[:namespace]] })
+      .to eq([%w[weather_lookup weather_lookup], ['stock_price', nil]])
+  end
+
   it 'runs a deferred function that Responses tool search calls under a namespace of its own name' do
     weather = local_tool('weather_lookup') do
       executed << :weather
