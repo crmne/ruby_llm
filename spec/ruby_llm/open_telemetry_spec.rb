@@ -76,6 +76,90 @@ RSpec.describe RubyLLM::OpenTelemetry do
     expect(chat_span.status.code).to eq(OpenTelemetry::Trace::Status::UNSET)
   end
 
+  describe 'with content' do
+    before { described_class.enable(content: true) }
+
+    def json_attribute(span, name)
+      JSON.parse(span.attributes.fetch(name))
+    end
+
+    it 'records instructions, input messages, and output messages' do
+      stub_chat.with_instructions('Be brief').ask('What is Ruby?')
+
+      span = spans.sole
+      expect(json_attribute(span, 'gen_ai.system_instructions')).to eq([{ 'type' => 'text', 'content' => 'Be brief' }])
+      expect(json_attribute(span, 'gen_ai.input.messages'))
+        .to eq([{ 'role' => 'user', 'parts' => [{ 'type' => 'text', 'content' => 'What is Ruby?' }] }])
+      expect(json_attribute(span, 'gen_ai.output.messages')).to eq(
+        [{ 'role' => 'assistant', 'parts' => [{ 'type' => 'text', 'content' => 'private response' }],
+           'finish_reason' => 'stop' }]
+      )
+    end
+
+    it 'records tool calls and their results in the conversation' do
+      call = RubyLLM::ToolCall.new(id: 'call_1', name: 'lookup', arguments: { 'city' => 'Berlin' })
+      messages = [RubyLLM::Message.new(role: :user, content: 'Weather?'),
+                  RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { 'call_1' => call }),
+                  RubyLLM::Message.new(role: :tool, content: 'Sunny', tool_call_id: 'call_1')]
+      RubyLLM.instrument('chat.ruby_llm', provider: 'openai', model:, input_messages: messages) { nil }
+
+      expect(json_attribute(spans.sole, 'gen_ai.input.messages').drop(1)).to eq(
+        [{ 'role' => 'assistant',
+           'parts' => [{ 'type' => 'tool_call', 'id' => 'call_1', 'name' => 'lookup',
+                         'arguments' => { 'city' => 'Berlin' } }] },
+         { 'role' => 'tool', 'parts' => [{ 'type' => 'tool_call_response', 'id' => 'call_1', 'response' => 'Sunny' }] }]
+      )
+    end
+
+    it 'describes attachments without their bytes' do
+      image = File.expand_path('../fixtures/ruby.png', __dir__)
+      stub_chat.ask('Describe this', with: image)
+
+      parts = json_attribute(spans.sole, 'gen_ai.input.messages').first['parts']
+      expect(parts.last).to eq('type' => 'attachment', 'modality' => 'image', 'mime_type' => 'image/png',
+                               'filename' => 'ruby.png')
+      expect(spans.sole.attributes.to_s).not_to include(Base64.strict_encode64(File.binread(image))[0, 40])
+    end
+
+    it 'records tool arguments and results' do
+      payload = { tool_name: 'lookup', tool_call_id: 'call_1', tool_arguments: { 'city' => 'Berlin' } }
+      RubyLLM.instrument('tool_call.ruby_llm', payload) { |event| event[:result] = { 'forecast' => 'sunny' } }
+
+      span = spans.sole
+      expect(json_attribute(span, 'gen_ai.tool.call.arguments')).to eq('city' => 'Berlin')
+      expect(json_attribute(span, 'gen_ai.tool.call.result')).to eq('forecast' => 'sunny')
+    end
+
+    it 'records a text tool result as it is, and nothing for a call without one' do
+      RubyLLM.instrument('tool_call.ruby_llm', tool_name: 'lookup', tool_call_id: 'call_1') do |event|
+        event[:result] = 'Sunny'
+      end
+      RubyLLM.instrument('tool_call.ruby_llm', tool_name: 'lookup', tool_call_id: 'call_2') { nil }
+
+      answered, unanswered = spans
+      expect(answered.attributes['gen_ai.tool.call.result']).to eq('Sunny')
+      expect(unanswered.attributes.keys).not_to include('gen_ai.tool.call.result', 'gen_ai.tool.call.arguments')
+    end
+
+    it 'records no output for a chat that raises' do
+      chat = stub_chat
+      allow(chat.instance_variable_get(:@provider)).to receive(:complete).and_raise(RubyLLM::Error, 'failed')
+      allow(RubyLLM.logger).to receive(:warn)
+
+      expect { chat.ask('Hello') }.to raise_error(RubyLLM::Error)
+      expect(RubyLLM.logger).not_to have_received(:warn)
+      expect(spans.sole.attributes.keys).to include('gen_ai.input.messages')
+      expect(spans.sole.attributes.keys).not_to include('gen_ai.output.messages')
+    end
+
+    it 'stops recording content when enabled again without it' do
+      described_class.enable
+      stub_chat.ask('private prompt')
+
+      expect(spans.sole.attributes.keys).not_to include('gen_ai.input.messages', 'gen_ai.output.messages')
+    end
+  end
+
   it 'preserves Rails subscribers, their payloads, and event-only notifications' do
     events = []
     subscription = ActiveSupport::Notifications.subscribe(/\.ruby_llm$/) { |event| events << event }

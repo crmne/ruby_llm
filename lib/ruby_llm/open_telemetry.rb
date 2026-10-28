@@ -10,9 +10,16 @@ module RubyLLM
       # Enables tracing without replacing the configured instrumenter.
       # Requires the optional opentelemetry-api gem. Repeated calls are harmless.
       # The application owns the tracer provider, SDK, and exporters.
-      def enable
+      # With <tt>content: true</tt>, spans also carry instructions, messages,
+      # model output, and tool arguments and results.
+      #
+      #   RubyLLM::OpenTelemetry.enable
+      #   RubyLLM::OpenTelemetry.enable(content: true)
+      #
+      def enable(content: false)
         require 'opentelemetry-api'
         @mutex.synchronize do
+          @content = content
           @subscriber ||= new
           Support::Instrumentation.subscribe(@subscriber)
         end
@@ -27,16 +34,21 @@ module RubyLLM
         @mutex.synchronize { Support::Instrumentation.unsubscribe(@subscriber) if @subscriber }
         nil
       end
+
+      def content? # :nodoc:
+        @content == true
+      end
     end
 
     def instrument(name, payload) # :nodoc:
       operation = Attributes::OPERATIONS[name]
       return yield unless operation
 
+      content = self.class.content?
       span = safely do
-        tracer.start_span(Attributes.span_name(operation, payload),
-                          kind: Attributes.span_kind(operation),
-                          attributes: Attributes.request(operation, payload, event: name))
+        attributes = Attributes.request(operation, payload, event: name)
+        attributes.merge!(Content.request(operation, payload)) if content
+        tracer.start_span(Attributes.span_name(operation, payload), kind: Attributes.span_kind(operation), attributes:)
       end
       return yield unless span
 
@@ -47,6 +59,7 @@ module RubyLLM
         raise
       ensure
         safely { span.add_attributes(Attributes.response(payload)) }
+        safely { span.add_attributes(Content.response(operation, payload)) } if content
         safely { span.finish }
       end
     end

@@ -18,6 +18,7 @@ After reading this guide, you will know:
 * How spans are named and which attributes they carry.
 * How trace context follows tools, threads, and jobs.
 * Which data RubyLLM exports and which it keeps out.
+* How to record prompts and responses when you need them.
 
 ## Enable Tracing
 
@@ -143,8 +144,36 @@ RubyLLM carries the trace context into the threads and fibers it starts for [con
 
 ## Exported Data
 
-Traces often go to a third-party service, so RubyLLM exports only the metadata listed above. It never exports prompts, instructions, messages, generated content, embeddings, tool arguments or results, metadata you attach, provider options, credentials, or exception messages and stack traces.
+Traces often go to a third-party service, so by default RubyLLM exports only the metadata listed above. It does not export prompts, instructions, messages, generated content, or tool arguments and results unless you [record content](#recording-content). It never exports embeddings, attachment bytes, metadata you attach, provider options, credentials, or exception messages and stack traces.
 
 Model names, tool names, tool call IDs, and workflow names and IDs are exported. Choose workflow names and IDs that are safe to send to your tracing backend.
 
 The [instrumentation events]({% link _advanced/instrumentation.md %}#payloads) your own subscribers receive still contain the full application data. What you do with it is up to you.
+
+## Recording Content
+
+Sometimes you want to see what the model was asked and what it said: to debug a bad answer in development, or to run evaluations over traces in an observability platform. Turn on content recording:
+
+```ruby
+RubyLLM::OpenTelemetry.enable(content: true)
+```
+
+Chat spans then carry the conversation, and tool spans carry what each tool received and returned:
+
+| Attribute | Contents |
+| --- | --- |
+| `gen_ai.system_instructions` | The chat's instructions |
+| `gen_ai.input.messages` | The messages sent to the model, with their tool calls and results |
+| `gen_ai.output.messages` | The model's reply and why it stopped |
+| `gen_ai.tool.call.arguments` | The arguments a tool was called with |
+| `gen_ai.tool.call.result` | What the tool returned |
+
+Messages follow the GenAI conventions' message format, recorded as JSON strings. Attachments appear as their type, MIME type, and URL, provider file ID, or filename, never as their bytes.
+
+Content often includes personal data, so record it only where your tracing backend may hold it. To decide per environment, pass a setting:
+
+```ruby
+RubyLLM::OpenTelemetry.enable(content: ENV["OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT"] == "true")
+```
+
+Calling `enable` again without `content: true` stops recording content for new spans.
