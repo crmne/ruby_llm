@@ -446,14 +446,29 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
       it "leaves offsets unset when the cited part contains #{part.keys.join(', ')}" do
         data = { 'candidates' => [{ 'groundingMetadata' => {
           'groundingChunks' => [{ 'web' => { 'uri' => 'https://ruby-lang.org' } }],
-          'groundingSupports' => [{ 'segment' => { 'endIndex' => 4 }, 'groundingChunkIndices' => [0] }]
+          'groundingSupports' => [{ 'segment' => { 'partIndex' => 0, 'endIndex' => 4 },
+                                    'groundingChunkIndices' => [0] }]
         } }] }
 
-        citation = test_obj.send(:parse_citations, data, [part]).first
+        citation = test_obj.send(:parse_citations, data, [part, { 'text' => 'Ruby' }]).first
 
         expect(citation.start_index).to be_nil
         expect(citation.end_index).to be_nil
       end
+    end
+
+    it 'measures a segment without a part across the visible text after thinking' do
+      parts = [{ 'text' => 'hidden', 'thought' => true }, { 'text' => '前言。' }, { 'text' => 'Ruby' }]
+      data = { 'candidates' => [{ 'groundingMetadata' => {
+        'groundingChunks' => [{ 'web' => { 'uri' => 'https://ruby-lang.org' } }],
+        'groundingSupports' => [{ 'segment' => { 'startIndex' => '前言。'.bytesize,
+                                                 'endIndex' => '前言。Ruby'.bytesize, 'text' => 'Ruby' },
+                                  'groundingChunkIndices' => [0] }]
+      } }] }
+
+      citation = test_obj.send(:parse_citations, data, parts).first
+
+      expect([citation.start_index, citation.end_index]).to eq([3, 7])
     end
 
     it 'leaves offsets nil when the support carries no segment' do

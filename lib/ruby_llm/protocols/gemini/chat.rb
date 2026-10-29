@@ -345,17 +345,23 @@ module RubyLLM
           indices.all? && indices.first <= indices.last ? indices : [nil, nil]
         end
 
+        # Without a partIndex, offsets count across the visible text, which
+        # keeps thinking parts ahead of the answer from absorbing the span.
         def citation_offset(parts, segment, byte_index)
-          part_index = segment.fetch('partIndex', 0)
+          return byte_to_char_index(visible_text(parts), byte_index) unless segment.key?('partIndex')
+
+          part_index = segment['partIndex']
           return unless part_index.is_a?(Integer) && part_index.between?(0, parts.length - 1)
 
           part = parts[part_index]
           return if part['thought']
 
           index = byte_to_char_index(part['text'], byte_index)
-          return unless index
+          visible_text(parts.take(part_index)).length + index if index
+        end
 
-          parts.take(part_index).sum { |prefix| prefix['thought'] ? 0 : prefix['text'].to_s.length } + index
+        def visible_text(parts)
+          parts.reject { |part| part['thought'] }.sum('') { |part| part['text'].to_s }
         end
 
         def chunk_citations(chunks)
