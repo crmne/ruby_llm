@@ -271,6 +271,54 @@ RSpec.describe RubyLLM::Protocols::Gemini::LongDecode do
     expect(requests.size).to eq(2)
   end
 
+  def grounded_hop(prefix, text, **options)
+    body = hop(parts: [{ text: prefix }, { text: }], **options)
+    body[:candidates].first[:groundingMetadata] = {
+      groundingChunks: [{ web: { uri: 'https://ruby-lang.org' } }],
+      groundingSupports: [{ segment: { partIndex: 1, endIndex: text.bytesize, text: }, groundingChunkIndices: [0] }]
+    }
+    body
+  end
+
+  [false, true].each do |streaming|
+    context "with multipart grounding and streaming #{streaming}" do
+      it 'returns character offsets through Chat and a JSON round trip' do
+        body = grounded_hop('前言。Ruby', '甲😀Ruby')
+        stub_hops(streaming ? stream(body) : body, stream: streaming)
+
+        chunks = []
+        reply = streaming ? chat.ask('Ground this') { |chunk| chunks << chunk } : chat.ask('Ground this')
+        expect(chunks.filter_map(&:content).join).to eq(reply.content) if streaming
+        restored = RubyLLM::Message.new(JSON.parse(JSON.generate(reply.to_h)).transform_keys(&:to_sym))
+
+        [reply, restored].each do |message|
+          citation = message.citations.first
+          expect(message.content).to eq('前言。Ruby甲😀Ruby')
+          expect([citation.start_index, citation.end_index]).to eq([7, 13])
+          expect(message.content[citation.start_index...citation.end_index]).to eq(citation.text)
+        end
+      end
+
+      it 'shifts each hop after locating its part and resets parts on the next request' do
+        bodies = [grounded_hop('前言。', 'Ruby', reason: 'CONTINUATION', token: 'next'),
+                  grounded_hop('次。', '😀Ruby'), grounded_hop('末。', 'End')]
+        stub_hops(*bodies.map { |body| streaming ? stream(body) : body }, stream: streaming)
+
+        chunks = []
+        reply = streaming ? chat.ask('Continue') { |chunk| chunks << chunk } : chat.ask('Continue')
+
+        expect(reply.content).to eq('前言。Ruby次。😀Ruby')
+        expect(reply.citations.map { |citation| [citation.start_index, citation.end_index] }).to eq([[3, 7], [9, 14]])
+        reply.citations.each do |citation|
+          expect(reply.content[citation.start_index...citation.end_index]).to eq(citation.text)
+        end
+        expect(chunks.filter_map(&:content).join).to eq(reply.content) if streaming
+        following = streaming ? chat.ask('Again') { |chunk| chunks << chunk } : chat.ask('Again')
+        expect(following.citations.map { |citation| [citation.start_index, citation.end_index] }).to eq([[2, 5]])
+      end
+    end
+  end
+
   it 'retains downloadable attachments from a later hop' do
     image = { inlineData: { mimeType: 'image/png', data: Base64.strict_encode64('image bytes') } }
     stub_hops(hop('Chart', reason: 'CONTINUATION', token: 'next'), hop(parts: [image]))
