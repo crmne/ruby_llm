@@ -124,9 +124,18 @@ module RubyLLM
         FileUtils.rm_rf(full) if File.directory?(full) || File.symlink?(full)
       end
 
+      def file_content_type(full, path)
+        type = FileStore.content_type_for(path, '')
+        return type unless type == 'application/octet-stream'
+
+        File.open(full, OPEN_FLAGS) { |io| Files::MimeType.for(io, name: path) }
+      rescue SystemCallError
+        type
+      end
+
       def stored_file(full, stat)
         path = full.delete_prefix("#{root}/")
-        StoredFile.new(path:, byte_size: stat.size, content_type: FileStore.content_type_for(path, ''),
+        StoredFile.new(path:, byte_size: stat.size, content_type: file_content_type(full, path),
                        updated_at: stat.mtime)
       end
     end
