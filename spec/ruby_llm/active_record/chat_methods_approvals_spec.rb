@@ -71,6 +71,27 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
         end
       end
     end
+
+    it 'combines with ordinary relations through and and or' do
+      chat = Chat.create!(model: model_for(:openai)).with_tools(refund_tool)
+      pending = park(chat, call('refund'))
+      refunds = RubyLLM::ActiveRecord::ToolCall.order(:created_at, :id).where(name: 'refund')
+      none = RubyLLM::ActiveRecord::ToolCall.order(:created_at, :id).where(name: 'none')
+
+      RubyLLM::ActiveRecord::ToolCall.cache do
+        expect(chat.pending_approvals.and(refunds).map(&:tool_call_id)).to eq([pending.id])
+        expect(chat.pending_approvals.or(none).count).to eq(1)
+
+        Thread.new do
+          RubyLLM::ActiveRecord::ToolCall.connection_pool.with_connection do
+            RubyLLM::ActiveRecord::ToolCall.where(tool_call_id: pending.id).update_all(approval: 'approved')
+          end
+        end.value
+
+        expect(chat.pending_approvals.and(refunds).map(&:tool_call_id)).to eq([])
+        expect(chat.pending_approvals.or(none).count).to eq(0)
+      end
+    end
   end
 
   it 'remembers an approval on the tool call, for every process' do
