@@ -47,6 +47,32 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     RubyLLM::ToolCall.new(id: "call_#{SecureRandom.hex(4)}", name:, arguments:)
   end
 
+  describe 'pending approvals with the query cache enabled' do
+    %w[approved denied result].each do |decision|
+      it "stops listing a call after another connection records #{decision}" do
+        chat = Chat.create!(model: model_for(:openai)).with_tools(refund_tool)
+        pending = park(chat, call('refund'))
+        row = RubyLLM::ActiveRecord::ToolCall.find_by!(tool_call_id: pending.id)
+        result = chat.messages.create!(role: 'tool', content: 'done') if decision == 'result'
+        attributes = result ? { result_id: result.id } : { approval: decision }
+
+        RubyLLM::ActiveRecord::ToolCall.cache do
+          expect(chat.pending_approvals.map(&:tool_call_id)).to eq([pending.id])
+          expect(chat.pending_approvals.where(name: 'refund').limit(1).count).to eq(1)
+
+          Thread.new do
+            RubyLLM::ActiveRecord::ToolCall.connection_pool.with_connection do
+              RubyLLM::ActiveRecord::ToolCall.where(id: row.id).update_all(attributes)
+            end
+          end.value
+
+          expect(chat.pending_approvals.map(&:tool_call_id)).to eq([])
+          expect(chat.pending_approvals.where(name: 'refund').limit(1).count).to eq(0)
+        end
+      end
+    end
+  end
+
   it 'remembers an approval on the tool call, for every process' do
     chat = process(Chat.create!(model: model_for(:openai)))
     first = park(chat, call('refund'))

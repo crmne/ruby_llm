@@ -19,7 +19,7 @@ module RubyLLM
         end
         remembered.reduce(pending) do |calls, identity|
           calls.where.not(id: pending.where(tool_identity.zip(Array(identity)).to_h).select(:id))
-        end.order(:created_at, :id)
+        end.order(:created_at, :id).skip_query_cache!
       end
 
       def tool_identity
