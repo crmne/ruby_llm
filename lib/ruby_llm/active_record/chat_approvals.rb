@@ -13,7 +13,7 @@ module RubyLLM
       # Skips the query cache without setting the skip_query_cache value,
       # which Rails counts as structural and would make the relation
       # incompatible with ordinary relations in +and+ and +or+.
-      module Uncached
+      module Uncached # :nodoc:
         def skip_query_cache_value
           true
         end
