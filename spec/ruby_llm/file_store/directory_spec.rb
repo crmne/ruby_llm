@@ -118,6 +118,19 @@ RSpec.describe RubyLLM::FileStore::Directory do
     outside&.close!
   end
 
+  it 'does not wait on a file replaced by a named pipe before opening it', skip: !File.respond_to?(:mkfifo) do
+    store.write('pipe', 'data')
+    full = File.join(store.root, 'pipe')
+    allow(File).to receive(:open).and_call_original
+    allow(File).to receive(:open).with(full, anything).and_wrap_original do |original, *arguments, &block|
+      File.delete(full)
+      File.mkfifo(full)
+      original.call(*arguments, &block)
+    end
+
+    expect(Timeout.timeout(5) { store.find('pipe').content_type }).to eq('application/octet-stream')
+  end
+
   it 'replaces a link in the way when writing, without touching its target' do
     outside = Dir.mktmpdir('ruby_llm-outside')
     File.symlink(outside, File.join(root, 'folder'))
