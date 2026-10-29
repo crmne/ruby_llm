@@ -44,10 +44,29 @@ module RubyLLM
         # Accumulates streamed parts so code-execution turns can be replayed
         # verbatim, mirroring the non-streaming path.
         def track_stream_parts(data, parts)
+          track_citation_parts(parts)
           @stream_parts = (@stream_parts || []).concat(parts)
           @saw_server_part = true if parts.any? { |part| server_tool_part?(part) }
           metadata_calls = metadata_server_tool_calls(data)
           @stream_metadata_calls = metadata_calls if metadata_calls.any?
+        end
+
+        def track_citation_parts(parts)
+          @stream_citation_parts ||= []
+          previous = @stream_citation_parts.last
+          first = parts.first
+          if continued_text?(previous, first)
+            previous['text'] << first['text']
+            parts = parts.drop(1)
+          end
+          @stream_citation_parts.concat(parts.map do |part|
+            part['text'] ? part.merge('text' => part['text'].dup) : part
+          end)
+        end
+
+        def continued_text?(previous, first)
+          previous && first && previous.key?('text') && first.key?('text') &&
+            previous.fetch('thought', false) == first.fetch('thought', false)
         end
 
         def stream_end_fields(data)
@@ -70,7 +89,7 @@ module RubyLLM
         def parse_stream_citations(data)
           return [] unless data.dig('candidates', 0, 'groundingMetadata')
 
-          parse_citations(data, parse_text_content(@stream_parts))
+          parse_citations(data, @stream_citation_parts)
         end
 
         def parse_text_content(parts)

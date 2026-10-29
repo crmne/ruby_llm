@@ -34,7 +34,7 @@ module RubyLLM
         private
 
         def stream_response(...)
-          @stream_parts = @stream_metadata_calls = nil
+          @stream_parts = @stream_metadata_calls = @stream_citation_parts = nil
           super
         end
 

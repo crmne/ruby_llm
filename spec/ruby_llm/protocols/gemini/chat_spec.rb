@@ -325,7 +325,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
 
   describe '#parse_citations' do
     it 'returns nothing without grounding metadata' do
-      expect(test_obj.send(:parse_citations, {}, 'text')).to eq([])
+      expect(test_obj.send(:parse_citations, {}, [{ 'text' => 'text' }])).to eq([])
     end
 
     it 'cites every grounding chunk when there are no supports' do
@@ -344,7 +344,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
         ]
       }
 
-      citations = test_obj.send(:parse_citations, data, 'text')
+      citations = test_obj.send(:parse_citations, data, [{ 'text' => 'text' }])
 
       expect(citations.map(&:url)).to eq(['https://a.example', 'https://b.example'])
       expect(citations.map(&:source_index)).to eq([0, 1])
@@ -357,18 +357,118 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
             'groundingMetadata' => {
               'groundingChunks' => [{ 'web' => { 'uri' => 'https://a.example', 'title' => 'A' } }],
               'groundingSupports' => [
-                { 'segment' => { 'endIndex' => 4, 'text' => 'Café' }, 'groundingChunkIndices' => [0, 9] }
+                { 'segment' => { 'endIndex' => 'Café'.bytesize, 'text' => 'Café' }, 'groundingChunkIndices' => [0, 9] }
               ]
             }
           }
         ]
       }
 
-      citations = test_obj.send(:parse_citations, data, 'Café is French')
+      citations = test_obj.send(:parse_citations, data, [{ 'text' => 'Café is French' }])
 
       expect(citations.length).to eq(1)
       expect(citations.first.start_index).to eq(0)
       expect(citations.first.end_index).to eq(4)
+    end
+
+    it 'anchors a citation to its own part after Unicode, thinking and media parts' do
+      parts = [{ 'text' => 'hidden', 'thought' => true }, { 'inlineData' => {} },
+               { 'text' => '前言。Ruby' }, { 'text' => '甲😀Ruby' }]
+      data = { 'candidates' => [{
+        'content' => { 'parts' => parts },
+        'groundingMetadata' => {
+          'groundingChunks' => [{ 'web' => { 'uri' => 'https://ruby-lang.org' } }],
+          'groundingSupports' => [{
+            'segment' => { 'partIndex' => 3, 'startIndex' => '甲😀'.bytesize,
+                           'endIndex' => '甲😀Ruby'.bytesize, 'text' => 'Ruby' },
+            'groundingChunkIndices' => [0]
+          }]
+        }
+      }] }
+
+      citation = test_obj.send(:parse_citations, data, parts).first
+
+      expect([citation.start_index, citation.end_index]).to eq([9, 13])
+      expect('前言。Ruby甲😀Ruby'[citation.start_index...citation.end_index]).to eq(citation.text)
+    end
+
+    [-1, 1, 3].each do |part_index|
+      it "leaves offsets unset when part #{part_index} is outside the response" do
+        data = { 'candidates' => [{
+          'content' => { 'parts' => [{ 'text' => 'Ruby' }] },
+          'groundingMetadata' => {
+            'groundingChunks' => [{ 'web' => { 'uri' => 'https://ruby-lang.org' } }],
+            'groundingSupports' => [{ 'segment' => { 'partIndex' => part_index, 'endIndex' => 4 },
+                                      'groundingChunkIndices' => [0] }]
+          }
+        }] }
+
+        citation = test_obj.send(:parse_citations, data, data.dig('candidates', 0, 'content', 'parts')).first
+
+        expect(citation.url).to eq('https://ruby-lang.org')
+        expect(citation.start_index).to be_nil
+        expect(citation.end_index).to be_nil
+      end
+    end
+
+    it 'preserves a reported empty span at the end of a part' do
+      parts = [{ 'text' => 'Ruby' }]
+      data = { 'candidates' => [{ 'groundingMetadata' => {
+        'groundingChunks' => [{ 'web' => { 'uri' => 'https://ruby-lang.org' } }],
+        'groundingSupports' => [{ 'segment' => { 'startIndex' => 4, 'endIndex' => 4, 'text' => '' },
+                                  'groundingChunkIndices' => [0] }]
+      } }] }
+
+      citation = test_obj.send(:parse_citations, data, parts).first
+
+      expect([citation.start_index, citation.end_index]).to eq([4, 4])
+      expect('Ruby'[citation.start_index...citation.end_index]).to eq('')
+    end
+
+    [[0, -1], [0, 6], [0, 4], [5, 0]].each do |start_index, end_index|
+      it "keeps the source without a span for invalid byte range #{start_index}...#{end_index}" do
+        parts = [{ 'text' => 'Café' }]
+        data = { 'candidates' => [{ 'groundingMetadata' => {
+          'groundingChunks' => [{ 'web' => { 'uri' => 'https://ruby-lang.org' } }],
+          'groundingSupports' => [{ 'segment' => { 'startIndex' => start_index, 'endIndex' => end_index },
+                                    'groundingChunkIndices' => [0] }]
+        } }] }
+
+        citation = test_obj.send(:parse_citations, data, parts).first
+
+        expect(citation.url).to eq('https://ruby-lang.org')
+        expect(citation.start_index).to be_nil
+        expect(citation.end_index).to be_nil
+      end
+    end
+
+    [{ 'text' => 'hidden', 'thought' => true }, { 'inlineData' => {} }].each do |part|
+      it "leaves offsets unset when the cited part contains #{part.keys.join(', ')}" do
+        data = { 'candidates' => [{ 'groundingMetadata' => {
+          'groundingChunks' => [{ 'web' => { 'uri' => 'https://ruby-lang.org' } }],
+          'groundingSupports' => [{ 'segment' => { 'partIndex' => 0, 'endIndex' => 4 },
+                                    'groundingChunkIndices' => [0] }]
+        } }] }
+
+        citation = test_obj.send(:parse_citations, data, [part, { 'text' => 'Ruby' }]).first
+
+        expect(citation.start_index).to be_nil
+        expect(citation.end_index).to be_nil
+      end
+    end
+
+    it 'measures a segment without a part across the visible text after thinking' do
+      parts = [{ 'text' => 'hidden', 'thought' => true }, { 'text' => '前言。' }, { 'text' => 'Ruby' }]
+      data = { 'candidates' => [{ 'groundingMetadata' => {
+        'groundingChunks' => [{ 'web' => { 'uri' => 'https://ruby-lang.org' } }],
+        'groundingSupports' => [{ 'segment' => { 'startIndex' => '前言。'.bytesize,
+                                                 'endIndex' => '前言。Ruby'.bytesize, 'text' => 'Ruby' },
+                                  'groundingChunkIndices' => [0] }]
+      } }] }
+
+      citation = test_obj.send(:parse_citations, data, parts).first
+
+      expect([citation.start_index, citation.end_index]).to eq([3, 7])
     end
 
     it 'leaves offsets nil when the support carries no segment' do
@@ -383,7 +483,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
         ]
       }
 
-      citation = test_obj.send(:parse_citations, data, 'text').first
+      citation = test_obj.send(:parse_citations, data, [{ 'text' => 'text' }]).first
 
       expect(citation.start_index).to be_nil
       expect(citation.end_index).to be_nil

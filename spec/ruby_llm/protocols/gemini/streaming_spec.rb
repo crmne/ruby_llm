@@ -82,6 +82,71 @@ RSpec.describe RubyLLM::Protocols::Gemini::Streaming do
     expect(message.content[16...35]).to eq('It dates from 1995.')
   end
 
+  it 'continues the last text part across events without losing earlier part boundaries' do
+    first = { 'candidates' => [{ 'content' => { 'parts' => [{ 'text' => '前言。Ruby' }, { 'text' => '甲😀Ru' }] } }] }
+    final = { 'candidates' => [{
+      'content' => { 'parts' => [{ 'text' => 'by' }] }, 'finishReason' => 'STOP',
+      'groundingMetadata' => {
+        'groundingChunks' => [{ 'web' => { 'uri' => 'https://ruby-lang.org' } }],
+        'groundingSupports' => [{ 'segment' => { 'partIndex' => 1, 'startIndex' => '甲😀'.bytesize,
+                                                 'endIndex' => '甲😀Ruby'.bytesize, 'text' => 'Ruby' },
+                                  'groundingChunkIndices' => [0] }]
+      }
+    }] }
+    accumulator = RubyLLM::Protocol::StreamAccumulator.new
+    [first, final].each { |event| accumulator.add(test_obj.send(:build_chunk, event)) }
+    message = accumulator.to_message(nil)
+    citation = message.citations.first
+
+    expect(message.content).to eq('前言。Ruby甲😀Ruby')
+    expect([citation.start_index, citation.end_index]).to eq([9, 13])
+    expect(message.content[citation.start_index...citation.end_index]).to eq(citation.text)
+    expect(first.dig('candidates', 0, 'content', 'parts', 1, 'text')).to eq('甲😀Ru')
+  end
+
+  it 'keeps thinking and media parts separate from continued visible text' do
+    events = [
+      { 'candidates' => [{ 'content' => { 'parts' => [{ 'text' => 'hidden', 'thought' => true }] } }] },
+      { 'candidates' => [{ 'content' => { 'parts' => [
+        { 'text' => ' thought', 'thought' => true }, { 'text' => '前言。', 'thought' => false },
+        { 'inlineData' => { 'mimeType' => 'image/png', 'data' => Base64.strict_encode64('image') } }, { 'text' => 'Ru' }
+      ] } }] },
+      { 'candidates' => [{ 'content' => { 'parts' => [{ 'text' => 'by', 'thought' => false }] },
+                           'finishReason' => 'STOP', 'groundingMetadata' => {
+                             'groundingChunks' => [{ 'web' => { 'uri' => 'https://ruby-lang.org' } }],
+                             'groundingSupports' => [{ 'segment' => { 'partIndex' => 3, 'endIndex' => 4,
+                                                                      'text' => 'Ruby' },
+                                                       'groundingChunkIndices' => [0] }]
+                           } }] }
+    ]
+    accumulator = RubyLLM::Protocol::StreamAccumulator.new
+    events.each { |event| accumulator.add(test_obj.send(:build_chunk, event)) }
+    message = accumulator.to_message(nil)
+    citation = message.citations.first
+
+    expect(message.content).to eq('前言。Ruby')
+    expect([citation.start_index, citation.end_index]).to eq([3, 7])
+    expect(message.content[citation.start_index...citation.end_index]).to eq('Ruby')
+  end
+
+  it 'starts a visible part when a thinking fragment ends in an earlier event' do
+    test_obj.send(:build_chunk, { 'candidates' => [{
+                    'content' => { 'parts' => [{ 'text' => 'hidden', 'thought' => true }] }
+                  }] })
+    chunk = test_obj.send(:build_chunk, { 'candidates' => [{
+                            'content' => { 'parts' => [{ 'text' => 'Ruby' }] }, 'finishReason' => 'STOP',
+                            'groundingMetadata' => {
+                              'groundingChunks' => [{ 'web' => { 'uri' => 'https://ruby-lang.org' } }],
+                              'groundingSupports' => [{ 'segment' => { 'partIndex' => 1, 'endIndex' => 4,
+                                                                       'text' => 'Ruby' },
+                                                        'groundingChunkIndices' => [0] }]
+                            }
+                          }] })
+
+    expect(chunk.content).to eq('Ruby')
+    expect(chunk.citations.map { |citation| [citation.start_index, citation.end_index] }).to eq([[0, 4]])
+  end
+
   it 'streams the search suggestions on the live search call only' do
     suggestions = '<style>.container { display: flex; }</style><div class="container">Ruby 4.0.7</div>'
     chunk = test_obj.send(:build_chunk, {
