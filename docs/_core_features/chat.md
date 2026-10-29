@@ -196,7 +196,7 @@ end
 response.finish_reason # => :stop, :max_tokens, :tool_calls, or :content_filter
 ```
 
-Anthropic's `end_turn`, Gemini's `MAX_TOKENS`, Cohere's `COMPLETE`, and the Responses API's `completed` all arrive as `:stop`, so the same code reads every provider. A response that carries tool calls answers `tool_call_stop?`, not `stopped?`. A finish reason describes a response the provider completed. A failed request raises an error instead. RubyLLM never sends `finish_reason` back to a provider.
+Anthropic's `end_turn`, Gemini's `STOP`, Cohere's `COMPLETE`, and the Responses API's `completed` all arrive as `:stop`, so the same code reads every provider. A response that carries tool calls answers `tool_call_stop?`, not `stopped?`. A finish reason describes a response the provider completed. A failed request raises an error instead. RubyLLM never sends `finish_reason` back to a provider.
 
 Providers that filter content, such as Azure, also say what their filters found, on the request and on the response, in `content_filters`. Each `RubyLLM::ContentFilter` names its `source` (`:prompt` or `:completion`), its `category` as the provider spells it, and its `severity`, and answers `filtered?` when it blocked or cut the text:
 
