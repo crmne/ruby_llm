@@ -16,7 +16,8 @@ module RubyLLM
     #
     class Directory < FileStore
       OPEN_FLAGS = File::RDONLY | File::BINARY | (defined?(File::NOFOLLOW) ? File::NOFOLLOW : 0)
-      private_constant :OPEN_FLAGS
+      SNIFF_FLAGS = OPEN_FLAGS | (defined?(File::NONBLOCK) ? File::NONBLOCK : 0)
+      private_constant :OPEN_FLAGS, :SNIFF_FLAGS
 
       # The folder holding the files, as an absolute path.
       attr_reader :root
@@ -124,9 +125,18 @@ module RubyLLM
         FileUtils.rm_rf(full) if File.directory?(full) || File.symlink?(full)
       end
 
+      def file_content_type(full, path)
+        type = FileStore.content_type_for(path, '')
+        return type unless type == 'application/octet-stream'
+
+        File.open(full, SNIFF_FLAGS) { |io| io.stat.file? ? Files::MimeType.for(io, name: path) : type }
+      rescue SystemCallError
+        type
+      end
+
       def stored_file(full, stat)
         path = full.delete_prefix("#{root}/")
-        StoredFile.new(path:, byte_size: stat.size, content_type: FileStore.content_type_for(path, ''),
+        StoredFile.new(path:, byte_size: stat.size, content_type: file_content_type(full, path),
                        updated_at: stat.mtime)
       end
     end

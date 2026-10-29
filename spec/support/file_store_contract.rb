@@ -40,6 +40,18 @@ RSpec.shared_examples 'a file store' do
     expect(store.find('images/ruby.png').content_type).to eq('image/png')
   end
 
+  { 'ruby.png' => 'image/png', 'sample.pdf' => 'application/pdf' }.each do |fixture, content_type|
+    it "recognizes extensionless #{content_type} after writing and listing it" do
+      content = File.binread(File.expand_path("../fixtures/#{fixture}", __dir__))
+      file = store.write('media', content, content_type:)
+
+      expect(file.content_type).to eq(content_type)
+      expect(store.find('media').content_type).to eq(content_type)
+      expect(store.list.first.content_type).to eq(content_type)
+      expect(store.attachment('media')).to have_attributes(mime_type: content_type, content: content)
+    end
+  end
+
   it 'lists files by path, or those inside a folder' do
     store.write('b.txt', 'b')
     store.write('docs/a.md', 'a')

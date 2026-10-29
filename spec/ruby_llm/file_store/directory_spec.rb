@@ -42,6 +42,49 @@ RSpec.describe RubyLLM::FileStore::Directory do
     expect(store.list('in/a.txt').map(&:path)).to eq(['in/a.txt'])
   end
 
+  it 'identifies extensionless media put in the folder after reopening the store' do
+    content = File.binread(File.expand_path('../../fixtures/ruby.png', __dir__))
+    File.binwrite(File.join(root, 'logo'), content)
+    reopened = described_class.new(root)
+
+    expect(reopened.find('logo').content_type).to eq('image/png')
+    expect(reopened.list.first.content_type).to eq('image/png')
+    expect(reopened.attachment('logo')).to have_attributes(mime_type: 'image/png', content: content)
+
+    FileUtils.cp(File.expand_path('../../fixtures/sample.pdf', __dir__), File.join(root, 'logo'))
+    expect(reopened.find('logo').content_type).to eq('application/pdf')
+  end
+
+  it 'keeps listing other files when an unknown file cannot be opened' do
+    File.write(File.join(root, 'unreadable'), 'data')
+    File.write(File.join(root, 'notes.txt'), 'notes')
+    allow(File).to receive(:open).and_call_original
+    allow(File).to receive(:open).with(File.join(store.root, 'unreadable'), anything).and_raise(Errno::EACCES)
+
+    expect(store.list.map { |file| [file.path, file.content_type] }).to eq(
+      [['notes.txt', 'text/plain'], ['unreadable', 'application/octet-stream']]
+    )
+    expect(store.find('unreadable').content_type).to eq('application/octet-stream')
+  end
+
+  it 'uses the file name without opening files whose type is known' do
+    store.write('notes.txt', 'notes')
+    allow(File).to receive(:open).and_call_original
+
+    expect(store.find('notes.txt').content_type).to eq('text/plain')
+    expect(store.list.first.content_type).to eq('text/plain')
+    expect(File).not_to have_received(:open)
+  end
+
+  it 'sniffs unknown types without reading the whole file into a string' do
+    content = File.binread(File.expand_path('../../fixtures/ruby.png', __dir__))
+    File.binwrite(File.join(root, 'logo'), content)
+    allow(File).to receive(:binread).and_call_original
+
+    expect(store.find('logo').content_type).to eq('image/png')
+    expect(File).not_to have_received(:binread)
+  end
+
   it 'never follows symbolic links' do
     outside = Dir.mktmpdir('ruby_llm-outside')
     File.write(File.join(outside, 'secret.txt'), 'secret')
@@ -54,6 +97,38 @@ RSpec.describe RubyLLM::FileStore::Directory do
     expect { store.read('folder/secret.txt') }.to raise_error(ArgumentError, /not inside/)
   ensure
     FileUtils.rm_rf(outside)
+  end
+
+  it 'does not sniff a file replaced by a symbolic link before opening it' do
+    outside = Tempfile.new('ruby_llm-outside')
+    outside.binmode
+    outside.write(File.binread(File.expand_path('../../fixtures/ruby.png', __dir__)))
+    outside.flush
+    store.write('logo', 'data')
+    full = File.join(store.root, 'logo')
+    allow(File).to receive(:open).and_call_original
+    allow(File).to receive(:open).with(full, anything).and_wrap_original do |original, *arguments, &block|
+      File.delete(full)
+      File.symlink(outside.path, full)
+      original.call(*arguments, &block)
+    end
+
+    expect(store.find('logo').content_type).to eq('application/octet-stream')
+  ensure
+    outside&.close!
+  end
+
+  it 'does not wait on a file replaced by a named pipe before opening it', skip: !File.respond_to?(:mkfifo) do
+    store.write('pipe', 'data')
+    full = File.join(store.root, 'pipe')
+    allow(File).to receive(:open).and_call_original
+    allow(File).to receive(:open).with(full, anything).and_wrap_original do |original, *arguments, &block|
+      File.delete(full)
+      File.mkfifo(full)
+      original.call(*arguments, &block)
+    end
+
+    expect(Timeout.timeout(5) { store.find('pipe').content_type }).to eq('application/octet-stream')
   end
 
   it 'replaces a link in the way when writing, without touching its target' do

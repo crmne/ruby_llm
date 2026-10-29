@@ -97,6 +97,18 @@ RSpec.describe RubyLLM::FileStore::Tools do
       expect(attachment).to have_attributes(filename: 'logo.png', mime_type: 'image/png')
     end
 
+    it 'returns extensionless directory media as attachments after reopening the store' do
+      Dir.mktmpdir('ruby_llm-files') do |root|
+        store = RubyLLM::FileStore::Directory.new(root)
+        store.write('logo', fixture('ruby.png'))
+        store.write('scan', fixture('sample.pdf'))
+        chat.with_file_store(RubyLLM::FileStore::Directory.new(root))
+
+        expect(call(:read_file, path: 'logo').last).to have_attributes(mime_type: 'image/png')
+        expect(call(:read_file, path: 'scan').last).to have_attributes(mime_type: 'application/pdf')
+      end
+    end
+
     it 'returns a PDF it cannot read as an attachment' do
       files.write('scan.pdf', fixture('sample.pdf'))
 

@@ -167,7 +167,7 @@ A store is any `RubyLLM::FileStore`. RubyLLM ships three:
 
 `RubyLLM.file_store.memory` builds a `RubyLLM::FileStore::Memory`, `RubyLLM.file_store.directory(path)` a `RubyLLM::FileStore::Directory`, creating the folder when it is missing, and `RubyLLM.file_store.active_storage(chat_record)` a `RubyLLM::ActiveRecord::FileStore` for an `acts_as_chat` record. The last needs RubyLLM's Rails integration and Active Storage, and raises `RubyLLM::ConfigurationError` without them.
 
-A `Directory` store reads the files someone else puts in its folder too, and code execution runs in that folder, so give each store a folder of its own. It leaves out hidden files and folders, never follows symbolic links, and refuses paths that would leave the folder. It detects content types from file names.
+A `Directory` store reads the files someone else puts in its folder too, and code execution runs in that folder, so give each store a folder of its own. It leaves out hidden files and folders, never follows symbolic links, and refuses paths that would leave the folder. It detects content types from file names and, when a name does not tell, from file signatures. Images and PDFs do not need a file extension.
 
 ### Writing Your Own Store
 
