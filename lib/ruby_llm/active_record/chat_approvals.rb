@@ -10,6 +10,16 @@ module RubyLLM
     # pending approvals are read from the rows without building the chat's
     # tools.
     module ChatApprovals # :nodoc:
+      # Skips the query cache without setting the skip_query_cache value,
+      # which Rails counts as structural and would make the relation
+      # incompatible with ordinary relations in +and+ and +or+.
+      module Uncached # :nodoc:
+        def skip_query_cache_value
+          true
+        end
+      end
+      private_constant :Uncached
+
       private
 
       def persisted_pending_approvals
@@ -19,7 +29,7 @@ module RubyLLM
         end
         remembered.reduce(pending) do |calls, identity|
           calls.where.not(id: pending.where(tool_identity.zip(Array(identity)).to_h).select(:id))
-        end.order(:created_at, :id)
+        end.order(:created_at, :id).extending(Uncached)
       end
 
       def tool_identity
