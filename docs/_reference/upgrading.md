@@ -198,6 +198,10 @@ In 2.1, RubyLLM downloaded every URL attachment and sent its bytes. In 2.2, PDF 
 
 In 2.1, `message.raw` and `error.response` still carried the request headers, including the API key, and `error.response` also carried the request body, the whole serialized conversation. In 2.2 they keep neither, so logging or reporting them no longer leaks keys or prompts. To see what a chat sends, use `render` or a `before_request` hook, described in [Advanced Request Control]({% link _core_features/chat-request-control.md %}#request-hooks).
 
+## A Malformed Response Raises RubyLLM::Error
+
+In 2.1, a successful response with a body RubyLLM could not parse raised `Faraday::ParsingError`. In 2.2 it raises `RubyLLM::Error`, so `rescue RubyLLM::Error` catches it. Replace any `rescue Faraday::ParsingError` in your application.
+
 ## Rename Chat Columns Named After New Methods
 
 `acts_as_chat` records gain `code_execution`, `skills`, `file_store`, `with_code_execution`, `with_skills`, `with_file_store`, `queue`, `queued_messages`, `unqueue`, `after_queue`, `after_dequeue`, `after_unqueue`, `after_file_write`, and the `ruby_llm_chat_files` association in 2.2. A column of your own with one of those names is hidden behind RubyLLM's method, so reading it returns RubyLLM's setting, usually `nil`, instead of your value. Rename such a column before you upgrade, for example a `code_execution` toggle to `runs_code`:

@@ -42,24 +42,24 @@ RSpec.describe RubyLLM::Transport::JsonResponse do
     expect(response_for(nil, status: 204).body).to be_nil
   end
 
-  it 'wraps malformed JSON in a Faraday parsing error' do
-    expect { response_for('{', preserve_raw: true) }.to raise_error(Faraday::ParsingError) do |error|
-      expect(error.wrapped_exception).to be_a(JSON::ParserError)
+  it 'wraps malformed JSON in a RubyLLM error' do
+    expect { response_for('{', preserve_raw: true) }.to raise_error(RubyLLM::Error) do |error|
+      expect(error.cause).to be_a(JSON::ParserError)
       expect(error.response.body).to eq('{')
       expect(error.response.env[:raw_body]).to eq('{')
     end
   end
 
-  it 'wraps invalid UTF-8 responses in a Faraday parsing error' do
+  it 'wraps invalid UTF-8 responses in a RubyLLM error' do
     body = "\xFF"
 
-    expect { response_for(body) }.to raise_error(Faraday::ParsingError)
+    expect { response_for(body) }.to raise_error(RubyLLM::Error)
   end
 
-  it 'wraps incomplete multibyte responses in a Faraday parsing error' do
+  it 'wraps incomplete multibyte responses in a RubyLLM error' do
     body = '{'.dup.force_encoding(Encoding::UTF_16LE)
 
-    expect { response_for(body) }.to raise_error(Faraday::ParsingError)
+    expect { response_for(body) }.to raise_error(RubyLLM::Error)
   end
 
   it 'leaves already parsed responses untouched' do

@@ -32,6 +32,7 @@ module RubyLLM
 
       def self.basic(config = RubyLLM.config, &)
         Faraday.new do |f|
+          f.use ReleaseRequest
           f.options.timeout = config.request_timeout
           f.proxy = config.http_proxy if config.http_proxy
           f.response :logger,
@@ -161,29 +162,13 @@ module RubyLLM
         }
 
         RubyLLM.instrument('request.ruby_llm', payload, config: @config) do |event|
-          response = release_request(yield)
+          response = ReleaseRequest.release(yield)
           event[:status] = response.status if response.respond_to?(:status)
           response
         rescue RubyLLM::Error => e
-          release_request(e.response)
+          ReleaseRequest.release(e.response)
           raise
         end
-      end
-
-      # The response outlives the call as Message#raw, Error#response, and
-      # other results, which applications log and report. The request holds
-      # the API key in its headers, the whole serialized conversation in its
-      # body, and the provider and signer in its context, and a streaming
-      # callback closes over the payload it was built from.
-      def release_request(response)
-        env = response.respond_to?(:env) ? response.env : response
-        return response unless env.is_a?(Faraday::Env)
-
-        env.request_body = nil
-        env.request_headers = Faraday::Utils::Headers.new
-        env.request.on_data = nil
-        env.request.context = nil
-        response
       end
 
       def settings_for(stream)

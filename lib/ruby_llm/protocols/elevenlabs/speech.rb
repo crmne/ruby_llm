@@ -34,9 +34,9 @@ module RubyLLM
         end
 
         def speech_url(voice: nil, format: nil, streaming: false)
-          path = "v1/text-to-speech/#{voice || DEFAULT_VOICE}"
+          path = "v1/text-to-speech/#{URI.encode_uri_component(voice || DEFAULT_VOICE).gsub('.', '%2E')}"
           path += '/stream' if streaming
-          "#{path}?output_format=#{output_format_for(format)}"
+          "#{path}?output_format=#{URI.encode_uri_component(output_format_for(format))}"
         end
 
         def render_speech_payload(input, model:, voice: nil, format: nil, provider_options: {}) # rubocop:disable Lint/UnusedMethodArgument

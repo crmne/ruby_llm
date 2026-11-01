@@ -61,6 +61,12 @@ RSpec.describe RubyLLM::Configuration do
       expect(config.openai_api_base).to eq('https://openai-compatible.example.com/v1')
     end
 
+    it 'keeps the proxy password out of inspect' do
+      config.http_proxy = 'http://user:hunter2@proxy.example:8080'
+
+      expect(config.inspect).not_to include('hunter2')
+    end
+
     it 'omits credential providers from instance variables' do
       config.bedrock_credential_provider = Object.new
 

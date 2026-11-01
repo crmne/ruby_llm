@@ -19,6 +19,33 @@ RSpec.describe RubyLLM::FileStore::Directory do
     expect(store.root).to eq(File.realpath(folder))
   end
 
+  it 'writes binary content whatever the default encoding' do
+    before = Encoding.default_internal
+    Encoding.default_internal = Encoding::UTF_8
+
+    store.write('logo.png', "\x89PNG".b)
+
+    expect(File.binread(File.join(root, 'logo.png'))).to eq("\x89PNG".b)
+  ensure
+    Encoding.default_internal = before
+  end
+
+  it 'never writes through a link at its temporary name' do
+    outside = File.join(Dir.mktmpdir('ruby_llm-outside'), 'target')
+    File.write(outside, 'safe')
+    allow(SecureRandom).to receive(:hex).and_return('fixed')
+    File.symlink(outside, File.join(root, ".plan.md.#{Process.pid}.#{Thread.current.object_id}.tmp"))
+    File.symlink(outside, File.join(root, '.fixed.tmp'))
+
+    begin
+      store.write('plan.md', 'x')
+    rescue SystemCallError
+      nil
+    end
+
+    expect(File.read(outside)).to eq('safe')
+  end
+
   it 'writes through a hidden temporary file, which listings never show' do
     seen = nil
     allow(File).to receive(:rename).and_wrap_original do |original, from, to|
@@ -28,8 +55,14 @@ RSpec.describe RubyLLM::FileStore::Directory do
 
     store.write('notes/plan.md', 'x')
 
-    expect(seen.first).to start_with('.plan.md.')
+    expect(seen.first).to match(/\A\.\h{32}\.tmp\z/)
     expect(seen.last).to be_empty
+  end
+
+  it 'writes the longest name a filesystem allows' do
+    name = 'a' * 255
+
+    expect(store.write(name, 'x').path).to eq(name)
   end
 
   it 'lists files someone put in the folder, leaving out hidden ones' do
