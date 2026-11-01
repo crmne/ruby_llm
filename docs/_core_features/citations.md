@@ -160,7 +160,7 @@ File-search citations may identify a file without quoting a passage or marking a
 
 ## The Citation Object
 
-Each citation exposes a normalized set of fields. Fields a provider doesn't report are `nil`.
+Each citation exposes a normalized set of fields. Fields a provider doesn't report are `nil`. Character ranges refer to the complete `response.content`, including when an answer arrives in several parts.
 
 | Field | Description |
 | :--- | :--- |

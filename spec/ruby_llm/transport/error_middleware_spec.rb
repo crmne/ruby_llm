@@ -388,7 +388,7 @@ RSpec.describe RubyLLM::Transport::ErrorMiddleware do
 
     it 'leaves a successful response body to the JSON middleware' do
       response = Struct.new(:status, :body).new(200, '{"choices":[]}')
-      provider = instance_double(RubyLLM::Provider)
+      provider = instance_double(RubyLLM::Provider, error_status: nil)
       allow(provider).to receive(:parse_error)
 
       expect(described_class.parse_error(provider: provider, response: response)).to be_nil

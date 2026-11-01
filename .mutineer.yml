@@ -22,6 +22,9 @@ ignore:
   - cdd92a72524b
   - a628cf763df0
   - af2acddb01de
+  # OpenRouter#error_status: the check only spares parsing a body with no
+  # error in it, which answers nil either way.
+  - 756a61f888be
   # ToolConcurrency.capture_result: every context wrapper yields, so the
   # block always replaces the initial value before it is read.
   - 1bb7432af156

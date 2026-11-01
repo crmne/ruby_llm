@@ -4,6 +4,8 @@ module RubyLLM
   module Providers
     # OpenRouter API integration.
     class OpenRouter < Provider
+      BAD_GATEWAY = 502
+
       # OpenRouter's dialect of the Chat Completions API.
       class ChatCompletions < Protocols::ChatCompletions
         include OpenRouter::Chat
@@ -80,6 +82,22 @@ module RubyLLM
         else
           body
         end
+      end
+
+      # OpenRouter answers 200 when an upstream provider fails after routing,
+      # with an error object or an empty body. A stream has no body here.
+      def error_status(response)
+        return if response.stream_response?
+
+        body = response.body.to_s
+        return BAD_GATEWAY if body.strip.empty?
+        return unless body.include?('"error"')
+
+        error = parse_error_body(response).then { |parsed| parsed['error'] if parsed.is_a?(Hash) }
+        return unless error.is_a?(Hash)
+
+        code = error['code']
+        code.is_a?(Integer) && code >= 400 ? code : BAD_GATEWAY
       end
 
       class << self

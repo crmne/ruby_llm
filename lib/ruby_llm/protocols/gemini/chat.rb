@@ -196,7 +196,7 @@ module RubyLLM
             role: :assistant,
             content: content,
             attachments: attachments,
-            citations: parse_citations(data, content),
+            citations: parse_citations(data, parts),
             thinking: Thinking.build(
               text: parse_thought_parts(parts),
               signature: parse_thought_signature(parts)
@@ -308,7 +308,7 @@ module RubyLLM
         end
 
         # Normalizes grounding metadata (Google Search grounding) into citations.
-        def parse_citations(data, content)
+        def parse_citations(data, parts)
           metadata = data.dig('candidates', 0, 'groundingMetadata')
           return [] unless metadata
 
@@ -316,13 +316,12 @@ module RubyLLM
           supports = metadata['groundingSupports'] || []
           return chunk_citations(chunks) if supports.empty?
 
-          supports.flat_map { |support| support_citations(support, chunks, content) }
+          supports.flat_map { |support| support_citations(support, chunks, parts) }
         end
 
-        def support_citations(support, chunks, content)
+        def support_citations(support, chunks, parts)
           segment = support['segment'] || {}
-          end_index = segment['endIndex']
-          start_index = segment['startIndex'] || (0 if end_index)
+          start_index, end_index = citation_indices(parts, segment)
 
           Array(support['groundingChunkIndices']).filter_map do |index|
             source = chunk_source(chunks[index])
@@ -332,11 +331,37 @@ module RubyLLM
               url: source['uri'],
               title: source['title'],
               text: segment['text'],
-              start_index: byte_to_char_index(content, start_index),
-              end_index: byte_to_char_index(content, end_index),
+              start_index: start_index,
+              end_index: end_index,
               source_index: index
             )
           end
+        end
+
+        def citation_indices(parts, segment)
+          indices = [segment.fetch('startIndex', 0), segment['endIndex']].map do |byte_index|
+            citation_offset(parts, segment, byte_index)
+          end
+          indices.all? && indices.first <= indices.last ? indices : [nil, nil]
+        end
+
+        # Without a partIndex, offsets count across the visible text, which
+        # keeps thinking parts ahead of the answer from absorbing the span.
+        def citation_offset(parts, segment, byte_index)
+          return byte_to_char_index(visible_text(parts), byte_index) unless segment.key?('partIndex')
+
+          part_index = segment['partIndex']
+          return unless part_index.is_a?(Integer) && part_index.between?(0, parts.length - 1)
+
+          part = parts[part_index]
+          return if part['thought']
+
+          index = byte_to_char_index(part['text'], byte_index)
+          visible_text(parts.take(part_index)).length + index if index
+        end
+
+        def visible_text(parts)
+          parts.reject { |part| part['thought'] }.sum('') { |part| part['text'].to_s }
         end
 
         def chunk_citations(chunks)
@@ -354,11 +379,13 @@ module RubyLLM
           chunk['web'] || chunk['retrievedContext']
         end
 
-        # Grounding segment indices are byte offsets into the UTF-8 response text.
+        # Grounding segment indices are byte offsets within the selected UTF-8 part.
         def byte_to_char_index(content, byte_index)
-          return nil unless content.is_a?(String) && byte_index
+          return unless content.is_a?(String) && byte_index.is_a?(Integer) &&
+                        byte_index.between?(0, content.bytesize)
 
-          content.byteslice(0, byte_index)&.length
+          prefix = content.byteslice(0, byte_index)
+          prefix.length if prefix.valid_encoding?
         end
 
         def parse_thought_parts(parts)

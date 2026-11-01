@@ -13,6 +13,29 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     RubyLLM::ToolCall.new(id: id, name: name, arguments: arguments)
   end
 
+  it 'keeps multipart citation spans after persisting and reloading a Gemini reply' do
+    model = model_for(:gemini)
+    body = { candidates: [{ content: { role: 'model', parts: [{ text: '前言。Ruby' }, { text: '😀Ruby' }] },
+                            finishReason: 'STOP', groundingMetadata: {
+                              groundingChunks: [{ web: { uri: 'https://ruby-lang.org' } }],
+                              groundingSupports: [{ segment: { partIndex: 1, endIndex: '😀Ruby'.bytesize,
+                                                               text: '😀Ruby' }, groundingChunkIndices: [0] }]
+                            } }], modelVersion: model }
+    stub_request(:post, "https://generativelanguage.googleapis.com/v1beta/models/#{model}:generateContent")
+      .to_return_json(body:)
+    chat = Chat.create!(model:, provider: :gemini)
+
+    chat.ask('Ground this')
+    record = chat.messages.where(role: 'assistant').last.reload
+
+    [record, record.to_llm].each do |message|
+      citation = message.citations.first
+      expect(message.content).to eq('前言。Ruby😀Ruby')
+      expect([citation.start_index, citation.end_index]).to eq([7, 12])
+      expect(message.content[citation.start_index...citation.end_index]).to eq(citation.text)
+    end
+  end
+
   describe '#cancel' do
     it 'persists the request on a saved record' do
       chat = Chat.create!(model: model_id)

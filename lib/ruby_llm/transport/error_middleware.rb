@@ -111,14 +111,21 @@ module RubyLLM
         ].freeze
 
         def parse_error(provider:, response:)
-          return if (200..399).cover?(response.status)
+          status = failure_status(provider, response)
+          return if (200..399).cover?(status)
 
           message = provider&.parse_error(response)
-          raise error_class(message, response.status).new(response:, provider_message: message,
-                                                          **provider_details(provider, response))
+          raise error_class(message, status).new(response:, provider_message: message,
+                                                 **provider_details(provider, response))
         end
 
         private
+
+        def failure_status(provider, response)
+          return response.status unless (200..299).cover?(response.status)
+
+          provider&.error_status(response) || response.status
+        end
 
         def provider_details(provider, response)
           {

@@ -73,6 +73,8 @@ module MutationTesting
 
     COUNTS.each { |method, key| define_method(method) { @document.fetch('summary').fetch(key, 0) } }
 
+    def unrun_count = unplaceable_count + skipped_invalid_count
+
     def mutation_score = @document.dig('summary', 'score')
 
     def surviving_mutants = @document.fetch('survivors')
