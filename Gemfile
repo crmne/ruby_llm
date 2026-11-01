@@ -20,7 +20,7 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'image_processing', '~> 2.0'
   gem 'irb'
   # Older Rails versions need JSON 2; the Rails 8.1 appraisal also tests JSON 3.
-  gem 'json', '< 3'
+  gem 'json', '< 4'
   gem 'json_schemer'
   gem 'minitest', '>= 5', '< 7'
   gem 'mxc', '~> 0.4', platform: :mri
