@@ -162,6 +162,27 @@ RSpec.describe RubyLLM::Chat do
     expect(second_fallback_provider).to have_received(:complete).once
   end
 
+  it 'skips a fallback it cannot use and tries the next one' do
+    allow(RubyLLM::Models).to receive(:resolve).with('missing-model', any_args)
+                                               .and_raise(RubyLLM::ModelNotFoundError, 'Unknown model')
+    chat = described_class.new(model: 'primary-model').with_fallbacks('missing-model', 'second-fallback-model')
+    allow(primary_provider).to receive(:complete).and_raise(RubyLLM::ServerError, 'first down')
+    allow(second_fallback_provider).to receive(:complete)
+      .and_return(RubyLLM::Message.new(role: :assistant, content: 'second answer', model: 'second-fallback-model'))
+
+    expect(chat.ask('Hello').content).to eq('second answer')
+  end
+
+  it 'raises the provider error when no fallback is usable' do
+    allow(RubyLLM::Models).to receive(:resolve).with('unkeyed-model', any_args)
+                                               .and_raise(RubyLLM::ConfigurationError, 'Missing key')
+    chat = described_class.new(model: 'primary-model').with_fallbacks('unkeyed-model')
+    allow(primary_provider).to receive(:complete).and_raise(RubyLLM::ServerError, 'first down')
+
+    expect { chat.ask('Hello') }.to raise_error(RubyLLM::ServerError, 'first down')
+    expect(chat.model.id).to eq('primary-model')
+  end
+
   it 'does not fallback on non-transient errors' do
     chat = described_class.new(model: 'primary-model').with_fallbacks('fallback-model')
     allow(primary_provider).to receive(:complete)

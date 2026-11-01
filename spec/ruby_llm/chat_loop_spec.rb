@@ -44,7 +44,51 @@ RSpec.describe RubyLLM::Chat do
     RubyLLM::Message.new(role: :tool, content: content, tool_call_id: tool_call_id)
   end
 
+  describe 'a blank assistant message' do
+    let(:blank_answer) { RubyLLM::Message.new(role: :assistant, content: '', finish_reason: :stop) }
+
+    before do
+      chat.add_message(role: :user, content: 'Echo')
+      chat.add_message(tool_call_message)
+      chat.add_message(tool_result_message('call_1', 'hello'))
+    end
+
+    it 'counts as a placeholder when a process died before the provider answered' do
+      allow(chat.provider).to receive(:complete).and_return(answer_message)
+      chat.add_message(role: :assistant, content: '')
+
+      expect(chat).not_to be_complete
+      expect(chat.complete.content).to eq('hello')
+      expect(chat.provider).to have_received(:complete).once
+    end
+
+    it 'counts as the answer once the provider finished it' do
+      allow(chat.provider).to receive(:complete)
+      chat.add_message(blank_answer)
+
+      expect(chat).to be_complete
+    end
+
+    it 'stops the loop when the provider itself returns one' do
+      allow(chat.provider).to receive(:complete).and_return(RubyLLM::Message.new(role: :assistant, content: ''))
+
+      chat.complete
+
+      expect(chat.provider).to have_received(:complete).once
+    end
+  end
+
   describe '#ask_later' do
+    it 'refuses attachments for an MCP prompt' do
+      prompt = RubyLLM::MCP::Prompt.allocate
+
+      expect { chat.ask_later(prompt, with: 'notes.txt') }.to raise_error(ArgumentError, /no attachments/)
+    end
+
+    it 'treats an empty attachment list as none for an MCP prompt' do
+      expect { chat.raise_if_prompt_attachments!(RubyLLM::MCP::Prompt.allocate, []) }.not_to raise_error
+    end
+
     it 'stages the question without asking the model' do
       allow(chat.provider).to receive(:complete)
 
@@ -145,14 +189,150 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.cost.total).to be_positive
     end
 
-    it 'raises before executing pending tool calls' do
+    it 'raises before executing pending tool calls and closes them as unfinished' do
       allow(chat.provider).to receive(:complete)
       chat.ask_later('Echo "hello" back to me.')
       chat.add_message tool_call_message
       chat.cancel
 
       expect { chat.run_tools }.to raise_error(RubyLLM::CancelledError, 'Chat generation cancelled')
-      expect(chat.messages.last).to be_tool_call
+      expect(chat.messages.last.tool_call_id).to eq('call_1')
+      expect(chat.messages.last.content).to include('did not finish')
+    end
+
+    context 'when a tool cancels the chat' do
+      let(:runs) { [] }
+      let(:cancelling_tool) do
+        ran = runs
+        owner = -> { chat }
+        Class.new(RubyLLM::Tool) do
+          define_singleton_method(:tool_name) { 'stop' }
+          define_method(:execute) do
+            ran << :stop
+            owner.call.cancel
+            'stopped'
+          end
+        end
+      end
+
+      def stop_call(*ids)
+        calls = ids.to_h { |id| [id, RubyLLM::ToolCall.new(id:, name: 'stop', arguments: {})] }
+        RubyLLM::Message.new(role: :assistant, content: '', tool_calls: calls)
+      end
+
+      def results
+        chat.messages.select(&:tool_result?).map(&:content)
+      end
+
+      before { chat.with_tools(cancelling_tool) }
+
+      it 'keeps the result of a tool that returned, so it never runs twice' do
+        allow(chat.provider).to receive(:complete).and_return(stop_call('call_1'), answer_message)
+
+        expect { chat.ask('Go') }.to raise_error(RubyLLM::CancelledError)
+        chat.ask('Never mind')
+
+        expect(runs).to eq([:stop])
+        expect(results).to eq(['stopped'])
+      end
+
+      it 'closes the calls that never started, so the next ask goes on' do
+        allow(chat.provider).to receive(:complete).and_return(stop_call('call_1', 'call_2'), answer_message)
+
+        expect { chat.ask('Go') }.to raise_error(RubyLLM::CancelledError)
+
+        expect(chat).not_to be_waiting
+        expect(chat.ask('Never mind').content).to eq('hello')
+        expect(runs).to eq([:stop])
+        expect(results.first).to eq('stopped')
+        expect(results.last).to include('did not finish')
+      end
+
+      it 'raises from run_tools when the last tool cancels the chat' do
+        chat.ask_later('Go')
+        chat.add_message stop_call('call_1')
+
+        expect { chat.run_tools }.to raise_error(RubyLLM::CancelledError)
+        expect(chat).not_to be_cancelled
+        expect(results).to eq(['stopped'])
+      end
+
+      it 'keeps the results of tools running concurrently' do
+        chat.with_tool_options(concurrency: :threads)
+        allow(chat.provider).to receive(:complete).and_return(stop_call('call_1', 'call_2'), answer_message)
+
+        begin
+          chat.ask('Go')
+        rescue RubyLLM::CancelledError
+          nil
+        end
+        chat.ask('Never mind')
+
+        expect(runs.size).to eq(results.count('stopped'))
+        expect(results.size).to eq(2)
+      end
+    end
+
+    it 'closes a call another tool round left waiting for approval' do
+      gated = Class.new(RubyLLM::Tool) do
+        requires_approval
+        define_singleton_method(:tool_name) { 'gated' }
+        define_method(:execute) { 'ran' }
+      end
+      chat.with_tools(gated)
+      call = RubyLLM::ToolCall.new(id: 'call_1', name: 'gated', arguments: {})
+      chat.add_message(role: :user, content: 'Go')
+      chat.add_message(RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { 'call_1' => call }))
+      chat.cancel
+
+      expect { chat.step }.to raise_error(RubyLLM::CancelledError)
+
+      expect(chat.pending_approvals).to be_empty
+    end
+
+    context 'with a pending call when the cancel arrives' do
+      before do
+        chat.add_message(role: :user, content: 'Go')
+        chat.add_message(tool_call_message)
+        chat.cancel
+      end
+
+      it 'announces and records the closing message like any other' do
+        events = []
+        chat.before_message { events << :before }
+        chat.after_message { |message| events << message.role }
+
+        expect { chat.step }.to raise_error(RubyLLM::CancelledError)
+
+        expect(events).to eq(%i[before tool])
+      end
+
+      it 'clears the input the call was waiting on' do
+        recorded = []
+        chat.input_checker = ->(_tool_call) { { 'requests' => [] } }
+        chat.input_recorder = ->(_tool_call, input) { recorded << input }
+
+        expect { chat.step }.to raise_error(RubyLLM::CancelledError)
+
+        expect(recorded).to eq([nil])
+      end
+
+      it 'leaves a call another process is running' do
+        chat.instance_variable_set(:@contested_tool_calls, ['call_1'])
+        chat.running_checker = ->(_tool_call) { true }
+
+        expect { chat.step }.to raise_error(RubyLLM::CancelledError)
+
+        expect(chat.messages.last).to be_tool_call
+      end
+    end
+
+    it 'drops a cancel that arrives after the last checkpoint' do
+      allow(chat.provider).to receive(:complete).and_return(answer_message)
+      chat.after_message { chat.cancel }
+
+      expect(chat.ask('First').content).to eq('hello')
+      expect(chat).not_to be_cancelled
     end
 
     it 'reuses the chat after streaming cancellation without keeping a partial assistant message' do

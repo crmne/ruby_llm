@@ -16,6 +16,16 @@ RSpec.describe RubyLLM::Chat do
     stub_request(:post, 'https://api.x.ai/v1/responses/compact').to_return_json(body: response_body)
   end
 
+  it 'keeps an unfinished answer in the transcript' do
+    stub_compaction
+    chat.add_message(role: :user, content: 'The project is Thimble.')
+    partial = chat.add_message(RubyLLM::Message.new(role: :assistant, content: 'Partial', continuation: 'more'))
+
+    result = chat.compact
+
+    expect(chat.messages.last(2)).to eq([partial, result])
+  end
+
   it 'retains history while replacing subsequent wire context and recording usage and callbacks' do
     request = stub_compaction
     events = []

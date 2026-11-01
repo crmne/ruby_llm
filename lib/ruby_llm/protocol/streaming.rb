@@ -25,12 +25,15 @@ module RubyLLM
 
       def stream_response(payload, additional_headers = {}, &block)
         accumulator = StreamAccumulator.new
+        received = false
 
         response = stream_events(stream_url, payload, additional_headers) do |data|
+          received = true
           chunk = build_chunk(data)
           accumulator.add chunk
           block.call chunk
         end
+        raise Error.new('Provider returned no stream events', response:) unless received
 
         message = accumulator.to_message(response)
         RubyLLM.logger.debug { "Stream completed: #{message.content}" }
@@ -50,6 +53,9 @@ module RubyLLM
           req.headers = additional_headers.merge(req.headers) unless additional_headers.empty?
           (req.options.context ||= {})[Transport::Connection::STREAM_PROGRESS_KEY] = progress
           req.options.context[Transport::ErrorMiddleware::STREAM_RESET_KEY] = fallback_state.method(:reset)
+          req.options.context[Transport::ErrorMiddleware::STREAM_FAILURE_KEY] = lambda { |env|
+            raise_buffered_error(fallback_state, env)
+          }
           if faraday_1?
             req.options[:on_data] = on_data
           else
@@ -107,12 +113,18 @@ module RubyLLM
         state.json_body
       end
 
+      # Faraday 1 knows the status only once the response ends, so the error
+      # waits in the buffer until the error middleware reports it.
       def handle_json_body(chunk, state, env)
         if state.buffer.bytesize + chunk.bytesize > MAX_JSON_BODY_BYTES
           raise Error, "Streaming JSON response exceeds #{MAX_JSON_BODY_BYTES} bytes"
         end
 
         state.buffer << chunk
+        raise_buffered_error(state, env) unless faraday_1?
+      end
+
+      def raise_buffered_error(state, env)
         parsed = JSON.parse(state.buffer)
         raise_stream_error(state.buffer, parsed, env) if parsed.is_a?(Hash) && parsed['error']
       rescue JSON::ParserError

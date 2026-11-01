@@ -888,6 +888,34 @@ RSpec.describe RubyLLM::MCP::HTTP do
     end
   end
 
+  context 'when an event stream answers before its headers are known' do
+    let(:stream) { described_class::Stream.new('1') { |_message| nil } }
+    let(:answer) { "data: #{{ jsonrpc: '2.0', id: '1', result: {} }.to_json}\n\n" }
+
+    it 'reads on until the response ends, so its session is not lost' do
+      expect { stream.feed(answer) }.not_to raise_error
+
+      response = Struct.new(:headers).new({ 'mcp-session-id' => 'abc' })
+      expect(stream.read { response }.headers).to eq('mcp-session-id' => 'abc')
+    end
+
+    it 'counts a timeout after the answer as the end of the stream' do
+      stream.feed(answer)
+
+      expect(stream.read { raise Faraday::TimeoutError }).to be(stream)
+    end
+
+    it 'raises a timeout before the answer' do
+      expect { stream.read { raise Faraday::TimeoutError } }.to raise_error(Faraday::TimeoutError)
+    end
+
+    it 'stops at the answer when the headers came with the chunk' do
+      env = Struct.new(:response_headers).new({ 'mcp-session-id' => 'abc' })
+
+      expect { stream.feed(answer, 0, env) }.to raise_error(described_class::Stream::Abandoned)
+    end
+  end
+
   it 'keeps only the answers of a stream, so one that stays open does not grow' do
     stream = described_class::Stream.new('listen-1') { |_message| nil }
     event = "data: #{{ jsonrpc: '2.0', method: 'notifications/tools/list_changed' }.to_json}\n\n"

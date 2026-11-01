@@ -150,6 +150,18 @@ In 2.1, `complete` ran the unfinished tool calls of a crashed job right away. In
 
 Give tools that legitimately run longer than ten minutes their own limit with [`max_run_time`]({% link _core_features/tools.md %}#long-running-tools), and raise `config.max_run_time` above your slowest model request without streaming. A run that outlasts its claim counts as crashed and may run again.
 
+## Cancelled Chats Close Their Tool Calls
+
+In 2.1, a cancelled chat left its unanswered tool calls open: `ask` raised `PendingToolCallsError` and `complete` ran them, which ran a tool a second time if the cancel arrived after it returned. A tool that returned now keeps its result, and `RubyLLM::CancelledError` closes every other pending call as unfinished, including calls waiting for approval or input, so the next `ask` goes on. Code that checks for pending calls after a cancel finds none.
+
+## Empty Streams Raise
+
+A streamed request whose response holds no events, such as an empty body or a plain JSON body from a gateway that ignores `stream: true`, returned a blank assistant message in 2.1. It now raises `RubyLLM::Error` and adds nothing to the transcript.
+
+## MCP Prompts Take No Attachments
+
+`ask(prompt, with: file)` with an `MCP::Prompt` dropped the attachment in 2.1. It now raises `ArgumentError`.
+
 ## Rescue Denials of Running Calls
 
 `deny` on a persisted tool call that has started running now raises `RubyLLM::ToolCallRunningError`; in 2.1 it recorded a denial the running tool never saw. `approve` on a running call and either decision on an answered call change nothing, where 2.1 overwrote the recorded decision. Rescue the error where you record denials:

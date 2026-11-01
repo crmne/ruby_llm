@@ -301,7 +301,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Streaming do
       .with { |req| captured = req.headers['Accept-Encoding'] }
       .to_return(
         status: 200,
-        body: '',
+        body: "data: #{{ type: 'message_stop' }.to_json}\n\n",
         headers: { 'Content-Type' => 'text/event-stream' }
       )
 

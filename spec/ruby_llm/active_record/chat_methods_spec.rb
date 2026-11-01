@@ -946,7 +946,8 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       integration_methods = %i[
         approval_checker= approval_pending? cancellation_checker= continue_turn fallback_errors input_checker=
         input_recorder= interruptions= message_queue= prepare_message raise_if_pending_tool_calls! remembered_checker=
-        running_checker= take_queued_messages tool_call_claimer= tool_call_releaser= tool_prefs
+        raise_if_prompt_attachments! running_checker= take_queued_messages tool_call_claimer= tool_call_releaser=
+        tool_prefs
         usage_entries usage_entries= usage_recorder= progress_recorder=
       ]
 

@@ -8,6 +8,7 @@ module RubyLLM
     class ErrorMiddleware < Faraday::Middleware # :nodoc: all
       PROVIDER_KEY = :ruby_llm_provider
       STREAM_RESET_KEY = :ruby_llm_stream_reset
+      STREAM_FAILURE_KEY = :ruby_llm_stream_failure
 
       def initialize(app, options = {})
         super(app)
@@ -27,6 +28,7 @@ module RubyLLM
         provider = context&.[](PROVIDER_KEY) || @provider
         @app.call(env).on_complete do |response|
           apply_retry_delay(response, provider)
+          context&.[](STREAM_FAILURE_KEY)&.call(response)
           self.class.parse_error(provider:, response: streaming_error_response(response))
         end
       end

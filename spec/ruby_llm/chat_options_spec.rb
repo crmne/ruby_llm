@@ -36,6 +36,26 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.instance_variable_get(:@concurrency)).to eq(:threads)
     end
 
+    it 'follows the configured concurrency into a new context' do
+      threaded = RubyLLM.context { |config| config.tool_concurrency = :threads }
+
+      expect(chat.with_context(threaded).concurrency).to eq(:threads)
+    end
+
+    it 'returns to sequential tools in a context without concurrency' do
+      threaded = RubyLLM.context { |config| config.tool_concurrency = :threads }
+      sequential = RubyLLM.context { |config| config.tool_concurrency = nil }
+
+      expect(chat.with_context(threaded).with_context(sequential).concurrency).to be_nil
+    end
+
+    it 'keeps a chosen concurrency in a new context' do
+      threaded = RubyLLM.context { |config| config.tool_concurrency = :threads }
+      chat.with_tool_options(concurrency: :fibers)
+
+      expect(chat.with_context(threaded).concurrency).to eq(:fibers)
+    end
+
     it 'rejects a concurrency mode it does not know' do
       expect { chat.with_tool_options(concurrency: :processes) }.to raise_error(
         ArgumentError, /Unknown tool concurrency: :processes/
@@ -49,6 +69,18 @@ RSpec.describe RubyLLM::Chat do
         def execute(query:) = query
       end)
       LookupTool
+    end
+
+    it 'names a namespaced tool instance the way the chat does' do
+      namespaced = Class.new(RubyLLM::Tool) do
+        namespace 'crm'
+        define_singleton_method(:tool_name) { 'lookup' }
+      end
+      chat.with_tools(namespaced)
+
+      chat.with_tool_options(choice: chat.tools.values.first)
+
+      expect(chat.tool_options[:choice]).to eq(chat.tools.keys.first)
     end
 
     it 'accepts a tool class' do

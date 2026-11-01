@@ -301,7 +301,8 @@ module RubyLLM
       # a stream that stays open does not grow. A stream that resumes another
       # starts from its last event ID and reconnection time, as an event
       # source keeps both across reconnections. Faraday 2 passes the response
-      # headers with each chunk; Faraday 1 has them only once the response ends.
+      # headers with each chunk; Faraday 1 has them only once the response ends,
+      # so there it reads on, and a stream that stays open ends at the timeout.
       class Stream # :nodoc:
         class Abandoned < StandardError # :nodoc:
         end
@@ -334,6 +335,10 @@ module RubyLLM
           raise unless events?
 
           self
+        rescue Faraday::TimeoutError
+          raise unless answer
+
+          self
         end
 
         def feed(chunk, _size = nil, env = nil)
@@ -351,7 +356,7 @@ module RubyLLM
           return unless @events
 
           @parser.feed(chunk) { |_type, data| receive_event(data) }
-          raise Abandoned if answer
+          abandon_if_answered
         end
 
         def replies
@@ -379,6 +384,10 @@ module RubyLLM
 
         def events?
           @events == true
+        end
+
+        def abandon_if_answered
+          raise Abandoned if answer && !@headers.empty?
         end
 
         def receive_event(data)
