@@ -34,9 +34,8 @@ RSpec.describe RubyLLM::FileStore::Directory do
     outside = File.join(Dir.mktmpdir('ruby_llm-outside'), 'target')
     File.write(outside, 'safe')
     allow(SecureRandom).to receive(:hex).and_return('fixed')
-    [Process.pid.to_s + ".#{Thread.current.object_id}", 'fixed'].each do |suffix|
-      File.symlink(outside, File.join(root, ".plan.md.#{suffix}.tmp"))
-    end
+    File.symlink(outside, File.join(root, ".plan.md.#{Process.pid}.#{Thread.current.object_id}.tmp"))
+    File.symlink(outside, File.join(root, '.fixed.tmp'))
 
     begin
       store.write('plan.md', 'x')
@@ -56,8 +55,14 @@ RSpec.describe RubyLLM::FileStore::Directory do
 
     store.write('notes/plan.md', 'x')
 
-    expect(seen.first).to start_with('.plan.md.')
+    expect(seen.first).to match(/\A\.\h{32}\.tmp\z/)
     expect(seen.last).to be_empty
+  end
+
+  it 'writes the longest name a filesystem allows' do
+    name = 'a' * 255
+
+    expect(store.write(name, 'x').path).to eq(name)
   end
 
   it 'lists files someone put in the folder, leaving out hidden ones' do

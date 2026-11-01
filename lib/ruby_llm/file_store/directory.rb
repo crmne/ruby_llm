@@ -68,7 +68,7 @@ module RubyLLM
         full = full_path(path)
         make_room(full)
         content = FileStore.bytes(content)
-        temporary = File.join(File.dirname(full), ".#{File.basename(full)}.#{SecureRandom.hex(16)}.tmp")
+        temporary = File.join(File.dirname(full), ".#{SecureRandom.hex(16)}.tmp")
         File.open(temporary, WRITE_FLAGS, binmode: true) { |io| io.write(content) }
         File.rename(temporary, full)
         file = stored_file(full, File.lstat(full))
