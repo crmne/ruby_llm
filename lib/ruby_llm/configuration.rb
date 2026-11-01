@@ -412,7 +412,7 @@ module RubyLLM
     end
 
     def instance_variables # :nodoc:
-      super.reject { |ivar| ivar.to_s.match?(/(_id|_key|_secret|_token|_credential_provider)$/) }
+      super.reject { |ivar| ivar.to_s.match?(/(_id|_key|_secret|_token|_credential_provider|_proxy)$/) }
     end
 
     # Object#inspect reads the instance variable table directly, so

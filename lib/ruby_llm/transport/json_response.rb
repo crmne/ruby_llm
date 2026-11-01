@@ -20,8 +20,8 @@ module RubyLLM
 
         env[:raw_body] = body if @preserve_raw
         env[:body] = body.strip.empty? ? nil : JSON.parse(body, **@parser_options)
-      rescue StandardError, SyntaxError => e
-        raise Faraday::ParsingError.new(e, env[:response])
+      rescue StandardError, SyntaxError
+        raise Error.new('The response body is not valid JSON', response: env[:response])
       end
 
       private

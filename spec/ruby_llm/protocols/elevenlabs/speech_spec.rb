@@ -18,6 +18,22 @@ RSpec.describe RubyLLM::Protocols::ElevenLabs::Speech do
       )
     end
 
+    it 'streams from the stream path' do
+      expect(protocol.speech_url(voice: 'abc', streaming: true)).to eq(
+        'v1/text-to-speech/abc/stream?output_format=mp3_44100_128'
+      )
+    end
+
+    it 'keeps a voice inside its path segment' do
+      expect(protocol.speech_url(voice: '../../v1/user?x=1#')).to eq(
+        'v1/text-to-speech/%2E%2E%2F%2E%2E%2Fv1%2Fuser%3Fx%3D1%23?output_format=mp3_44100_128'
+      )
+    end
+
+    it 'keeps a format inside its query value' do
+      expect(protocol.speech_url(format: 'mp3&x=1')).to end_with('output_format=mp3%26x%3D1')
+    end
+
     it 'maps the simple format names onto ElevenLabs output formats' do
       expect(protocol.speech_url(format: 'wav')).to end_with('output_format=wav_44100')
       expect(protocol.speech_url(format: 'opus')).to end_with('output_format=opus_48000_128')

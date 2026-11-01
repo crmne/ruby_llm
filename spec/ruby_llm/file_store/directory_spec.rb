@@ -19,6 +19,34 @@ RSpec.describe RubyLLM::FileStore::Directory do
     expect(store.root).to eq(File.realpath(folder))
   end
 
+  it 'writes binary content whatever the default encoding' do
+    before = Encoding.default_internal
+    Encoding.default_internal = Encoding::UTF_8
+
+    store.write('logo.png', "\x89PNG".b)
+
+    expect(File.binread(File.join(root, 'logo.png'))).to eq("\x89PNG".b)
+  ensure
+    Encoding.default_internal = before
+  end
+
+  it 'never writes through a link at its temporary name' do
+    outside = File.join(Dir.mktmpdir('ruby_llm-outside'), 'target')
+    File.write(outside, 'safe')
+    allow(SecureRandom).to receive(:hex).and_return('fixed')
+    [Process.pid.to_s + ".#{Thread.current.object_id}", 'fixed'].each do |suffix|
+      File.symlink(outside, File.join(root, ".plan.md.#{suffix}.tmp"))
+    end
+
+    begin
+      store.write('plan.md', 'x')
+    rescue SystemCallError
+      nil
+    end
+
+    expect(File.read(outside)).to eq('safe')
+  end
+
   it 'writes through a hidden temporary file, which listings never show' do
     seen = nil
     allow(File).to receive(:rename).and_wrap_original do |original, from, to|

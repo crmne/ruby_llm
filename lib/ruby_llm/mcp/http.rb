@@ -43,9 +43,7 @@ module RubyLLM
 
       def initialize(url, headers: {}, timeout: nil, unauthorized: nil, responded: nil, config: RubyLLM.config)
         @url = URI(url)
-        unless self.class.secure?(@url)
-          raise ArgumentError, "MCP servers must use HTTPS without credentials in the URL: #{url}"
-        end
+        raise ArgumentError, 'MCP servers must use HTTPS without credentials in the URL' unless self.class.secure?(@url)
 
         @headers = headers
         @unauthorized = unauthorized

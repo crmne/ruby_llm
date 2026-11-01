@@ -17,7 +17,8 @@ module RubyLLM
     class Directory < FileStore
       OPEN_FLAGS = File::RDONLY | File::BINARY | (defined?(File::NOFOLLOW) ? File::NOFOLLOW : 0)
       SNIFF_FLAGS = OPEN_FLAGS | (defined?(File::NONBLOCK) ? File::NONBLOCK : 0)
-      private_constant :OPEN_FLAGS, :SNIFF_FLAGS
+      WRITE_FLAGS = File::WRONLY | File::CREAT | File::EXCL | File::BINARY
+      private_constant :OPEN_FLAGS, :SNIFF_FLAGS, :WRITE_FLAGS
 
       # The folder holding the files, as an absolute path.
       attr_reader :root
@@ -67,9 +68,8 @@ module RubyLLM
         full = full_path(path)
         make_room(full)
         content = FileStore.bytes(content)
-        temporary = File.join(File.dirname(full),
-                              ".#{File.basename(full)}.#{Process.pid}.#{Thread.current.object_id}.tmp")
-        File.binwrite(temporary, content)
+        temporary = File.join(File.dirname(full), ".#{File.basename(full)}.#{SecureRandom.hex(16)}.tmp")
+        File.open(temporary, WRITE_FLAGS, binmode: true) { |io| io.write(content) }
         File.rename(temporary, full)
         file = stored_file(full, File.lstat(full))
         return file unless content_type

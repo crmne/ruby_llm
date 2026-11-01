@@ -26,6 +26,11 @@ RSpec.describe RubyLLM::MCP::HTTP do
     expect { described_class.new('http://localhost:3000/mcp') }.not_to raise_error
   end
 
+  it 'keeps the password out of the refusal' do
+    expect { described_class.new('https://user:hunter2@mcp.example.com/mcp') }
+      .to raise_error(ArgumentError) { |error| expect(error.message).not_to include('hunter2') }
+  end
+
   it 'refuses URLs that carry credentials' do
     expect { described_class.new('https://mcp.example.com@attacker.io/mcp') }
       .to raise_error(ArgumentError, /credentials/)
