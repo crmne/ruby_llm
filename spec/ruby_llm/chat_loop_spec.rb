@@ -244,6 +244,15 @@ RSpec.describe RubyLLM::Chat do
         expect(results.last).to include('did not finish')
       end
 
+      it 'raises from run_tools when the last tool cancels the chat' do
+        chat.ask_later('Go')
+        chat.add_message stop_call('call_1')
+
+        expect { chat.run_tools }.to raise_error(RubyLLM::CancelledError)
+        expect(chat).not_to be_cancelled
+        expect(results).to eq(['stopped'])
+      end
+
       it 'keeps the results of tools running concurrently' do
         chat.with_tool_options(concurrency: :threads)
         allow(chat.provider).to receive(:complete).and_return(stop_call('call_1', 'call_2'), answer_message)
