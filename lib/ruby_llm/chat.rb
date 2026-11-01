@@ -1487,7 +1487,7 @@ module RubyLLM
     # Refuses attachments an MCP::Prompt has no place for. Called by
     # #ask_later here and in the Rails integration.
     def raise_if_prompt_attachments!(message, with) # :nodoc:
-      return unless message.is_a?(MCP::Prompt) && with
+      return unless message.is_a?(MCP::Prompt) && with && with != []
 
       raise ArgumentError, 'An MCP::Prompt carries its own messages, so it takes no attachments'
     end

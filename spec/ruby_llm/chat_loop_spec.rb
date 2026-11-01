@@ -85,6 +85,10 @@ RSpec.describe RubyLLM::Chat do
       expect { chat.ask_later(prompt, with: 'notes.txt') }.to raise_error(ArgumentError, /no attachments/)
     end
 
+    it 'treats an empty attachment list as none for an MCP prompt' do
+      expect { chat.raise_if_prompt_attachments!(RubyLLM::MCP::Prompt.allocate, []) }.not_to raise_error
+    end
+
     it 'stages the question without asking the model' do
       allow(chat.provider).to receive(:complete)
 
