@@ -25,6 +25,10 @@ module RubyLLM
           raise Error, "#{@provider.name} doesn't support token counting for Claude models"
         end
 
+        def thinking_block_binding?
+          false
+        end
+
         def provider_file_references?
           false
         end

@@ -74,6 +74,7 @@ module RubyLLM
           payload[:toolConfig] = tool_config if tool_config
 
           additional_fields = render_additional_model_request_fields(thinking, model, max_output_tokens)
+          additional_fields = bind_replayed_thinking(additional_fields, payload[:messages], model)
           payload[:additionalModelRequestFields] = additional_fields if additional_fields
 
           output_config = build_output_config(schema)
@@ -473,6 +474,20 @@ module RubyLLM
           fields = RubyLLM::Support::Utils.deep_merge(fields, reasoning_fields) if reasoning_fields
 
           fields.empty? ? nil : fields
+        end
+
+        def bind_replayed_thinking(fields, messages, model)
+          return fields unless Anthropic::BlockBinding.binds?(foundation_model_id(model&.id))
+          return fields if fields&.key?(:reasoning_config) || !replays_thinking?(messages)
+
+          bound = Anthropic::BlockBinding.apply(fields&.dig(:thinking))
+          bound ? { **fields.to_h, thinking: bound, anthropic_beta: [Anthropic::BlockBinding::BETA] } : fields
+        end
+
+        def replays_thinking?(messages)
+          messages.any? do |message|
+            message[:content].any? { |block| block.key?(:reasoningContent) || block.key?('reasoningContent') }
+          end
         end
 
         def build_output_config(schema)

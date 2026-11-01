@@ -19,6 +19,10 @@ module RubyLLM
             'anthropic/v1/messages/count_tokens'
           end
 
+          def thinking_block_binding?
+            false
+          end
+
           def provider_file_references?
             false
           end

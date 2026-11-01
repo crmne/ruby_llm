@@ -87,11 +87,15 @@ module RubyLLM
       private
 
       def sync_response(payload, additional_headers = {})
-        super(payload, apply_files_beta(additional_headers, payload))
+        super(payload, beta_headers(additional_headers, payload))
       end
 
       def stream_response(payload, additional_headers = {}, &)
-        super(payload, apply_files_beta(additional_headers, payload), &)
+        super(payload, beta_headers(additional_headers, payload), &)
+      end
+
+      def beta_headers(additional_headers, payload)
+        apply_binding_beta(apply_files_beta(additional_headers, payload), payload)
       end
 
       def merge_turn_segments(segments)

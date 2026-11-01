@@ -66,7 +66,9 @@ module RubyLLM
             thinking: thinking,
             citations: citations,
             caching: caching
-          ).then { |payload| Tools.apply_tool_search(payload) }.slice(*COUNT_TOKENS_KEYS)
+          ).then { |payload| Tools.apply_tool_search(payload) }.slice(*COUNT_TOKENS_KEYS).tap do |payload|
+            payload[:thinking]&.delete(:block_binding)
+          end
         end
 
         def parse_count_tokens_response(response)
@@ -104,8 +106,29 @@ module RubyLLM
           }
 
           add_thinking_fields(payload, thinking, model)
+          bind_replayed_thinking(payload, model)
 
           payload
+        end
+
+        def bind_replayed_thinking(payload, model)
+          return unless thinking_block_binding? && BlockBinding.binds?(model.id) && replays_thinking?(payload)
+
+          bound = BlockBinding.apply(payload[:thinking])
+          payload[:thinking] = bound if bound
+        end
+
+        def replays_thinking?(payload)
+          payload[:messages].any? do |message|
+            Array(message[:content]).any? do |block|
+              block.is_a?(Hash) && THINKING_BLOCK_TYPES.include?(block[:type] || block['type'])
+            end
+          end
+        end
+
+        # Hosts that don't take the binding's beta override this.
+        def thinking_block_binding?
+          true
         end
 
         def render_messages(messages, thinking: nil, citations: false, caching: nil)
@@ -169,6 +192,12 @@ module RubyLLM
 
         def apply_compaction_headers(headers, _compaction)
           headers.merge(BETA_HEADER => join_betas(headers[BETA_HEADER], COMPACTION_BETA))
+        end
+
+        def apply_binding_beta(headers, payload)
+          return headers unless payload[:thinking]&.key?(:block_binding)
+
+          headers.merge(BETA_HEADER => join_betas(headers[BETA_HEADER], BlockBinding::BETA))
         end
 
         # The Files API is still a beta, so a request that references an
