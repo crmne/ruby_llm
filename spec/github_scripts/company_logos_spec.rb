@@ -71,6 +71,8 @@ RSpec.describe CompanyLogos do
      '<svg><style>@import url(https://x.test/a.css);</style></svg>',
      '<svg><style><![CDATA[rect { fill: url(https://x.test/a.svg#b) }]]></style></svg>',
      '<svg><rect style="fill: url(\'https://x.test/a.svg#b\')"/></svg>',
+     '<svg><style>@\\69mport "https://x.test/a.css";</style></svg>',
+     '<svg><style>@im<![CDATA[port "https://x.test/a.css";]]></style></svg>',
      '<svg><path></svg>', '<html/>'].each do |svg|
       expect(described_class.safe_logo?(svg, 'svg')).to be(false), svg
     end
