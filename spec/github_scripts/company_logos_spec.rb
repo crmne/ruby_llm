@@ -50,6 +50,8 @@ RSpec.describe CompanyLogos do
 
     expect(described_class.safe_logo?("#{doctype}<svg/>", 'svg')).to be(true)
     expect(described_class.safe_logo?('<svg><animate attributeName="opacity"/></svg>', 'svg')).to be(true)
+    expect(described_class.safe_logo?('<svg><style>.a { fill: url(#b) }</style><path fill="url(#b)"/></svg>',
+                                      'svg')).to be(true)
   end
 
   it 'moves past a logo that fails to download' do
@@ -66,6 +68,9 @@ RSpec.describe CompanyLogos do
      '<svg><set attributeName="href" to="https://x.test"/></svg>',
      '<svg><animate attributeName="xlink:href" to="https://x.test"/></svg>',
      '<!DOCTYPE svg [<!ENTITY x "y">]><svg>&x;</svg>', '<?xml-stylesheet href="x.css"?><svg/>',
+     '<svg><style>@import url(https://x.test/a.css);</style></svg>',
+     '<svg><style><![CDATA[rect { fill: url(https://x.test/a.svg#b) }]]></style></svg>',
+     '<svg><rect style="fill: url(\'https://x.test/a.svg#b\')"/></svg>',
      '<svg><path></svg>', '<html/>'].each do |svg|
       expect(described_class.safe_logo?(svg, 'svg')).to be(false), svg
     end

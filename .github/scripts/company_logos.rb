@@ -22,6 +22,7 @@ class CompanyLogos
   EXTENSIONS = { 'image/svg+xml' => 'svg', 'image/png' => 'png', 'image/jpeg' => 'jpg' }.freeze
   SIGNATURES = { 'png' => "\x89PNG".b, 'jpg' => "\xFF\xD8\xFF".b }.freeze
   ACTIVE_SVG_ELEMENTS = %w[script foreignobject iframe embed object use].freeze
+  EXTERNAL_CSS = /@import|url\(\s*['"]?\s*(?!#)/i
   LEGAL_SUFFIX = /[\s,.]+(?:pte|ltd|llc|inc|gmbh|ag|as|bv|sl|srl|co|corp|limited)\b\.?/
   PLACEHOLDERS = %w[none na tbd freelance].freeze
 
@@ -76,6 +77,7 @@ class CompanyLogos
 
   def self.safe_svg_element?(element)
     return false if ACTIVE_SVG_ELEMENTS.include?(element.name.downcase)
+    return false if element.name.casecmp?('style') && element.texts.any? { |text| text.value.match?(EXTERNAL_CSS) }
 
     element.attributes.each_attribute.none? { |attribute| unsafe_svg_attribute?(attribute) }
   end
@@ -83,7 +85,7 @@ class CompanyLogos
   def self.unsafe_svg_attribute?(attribute)
     name = attribute.name.downcase
     value = attribute.value.strip
-    return true if name.start_with?('on')
+    return true if name.start_with?('on') || value.match?(EXTERNAL_CSS)
     return value.downcase.end_with?('href') if name == 'attributename'
 
     name == 'href' && !value.start_with?('#')
