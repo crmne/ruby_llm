@@ -56,6 +56,8 @@ share_home_design() {
   local source="$1"
   cp "$docs/_includes/home.html" "$source/_includes/"
   cp "$docs/assets/css/rubyllm-overrides.css" "$source/assets/css/"
+  cp "$docs/_data/company_logos_featured.yml" "$source/_data/"
+  cp -R "$docs/assets/images/companies/." "$source/assets/images/companies/"
 }
 
 use_generated_about_card() {
