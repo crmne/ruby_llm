@@ -87,6 +87,19 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Streaming do
       expect(message).to eq('Slow down')
     end
 
+    it 'reads the status from a string code when the type does not carry it' do
+      status, = protocol.send(
+        :parse_streaming_error,
+        { error: { type: 'tokens', code: 'rate_limit_exceeded', message: 'Slow down' } }.to_json
+      )
+      auth_status, = protocol.send(
+        :parse_streaming_error,
+        { error: { type: 'invalid_request_error', code: 'invalid_api_key', message: 'Bad key' } }.to_json
+      )
+
+      expect([status, auth_status]).to eq([429, 401])
+    end
+
     it 'reports a 500 for server errors' do
       status, message = protocol.send(
         :parse_streaming_error,

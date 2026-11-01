@@ -141,7 +141,7 @@ module RubyLLM
       @mcp_deferrals = {}
       @provider_tools = []
       @tool_prefs = { choice: nil, calls: nil }
-      @concurrency = normalize_tool_concurrency(@config.tool_concurrency)
+      apply_tool_concurrency(nil)
       @provider_options = {}
       @headers = {}
       @schema = nil
@@ -215,7 +215,8 @@ module RubyLLM
     # executing tools until the model answers or a call needs approval.
     # Returns the latest assistant Message; check #waiting? before
     # treating it as a final answer. Attach files with +with:+. An
-    # MCP::Prompt adds its messages instead. Messages still in the queue
+    # MCP::Prompt adds its messages instead, and takes no attachments.
+    # Messages still in the queue
     # (see #queue) join the conversation first, in order.
     # A given block receives streamed Chunk objects as they arrive.
     #
@@ -252,6 +253,7 @@ module RubyLLM
     # decisions for calls that require approval.
     def ask_later(message = nil, with: nil)
       raise_if_pending_tool_calls!
+      raise_if_prompt_attachments!(message, with)
       take_queued_messages
       if message.is_a?(MCP::Prompt)
         message.messages.each { |prompt_message| add_message(prompt_message) }
@@ -292,10 +294,10 @@ module RubyLLM
 
       message = pending_tool_response
       execute_pending_tool_calls(message) if message
+      raise_if_cancelled!
       self
     rescue CancelledError
-      @cancelled = false
-      cancel_tasks
+      stop_tool_round
       raise
     end
 
@@ -342,9 +344,12 @@ module RubyLLM
     def continue_turn(steering_only: true, &) # :nodoc:
       until settled?(steering_only) || waiting?
         boundary = !pending_tool_response
-        advance(steering_only:, &)
+        move = advance(steering_only:, &)
+        break if placeholder?(move)
+
         steering_only ||= boundary
       end
+      @cancelled = false
       pending_tool_response || last_non_system_message || messages.last
     end
 
@@ -579,7 +584,9 @@ module RubyLLM
     # checkpoint raises CancelledError until the operation ends, so tool
     # calls running concurrently all stop, and the flag is cleared then so
     # the chat can be reused. The tasks that pending tool calls wait on are
-    # cancelled then too; see #pending_tasks.
+    # cancelled then too; see #pending_tasks. Tool calls left without a
+    # result are closed as unfinished, so the next #ask can go on and no
+    # tool runs twice. A tool that already returned keeps its result.
     def cancel
       @cancelled = true
       self
@@ -770,7 +777,7 @@ module RubyLLM
         case option
         when :choice then apply_tool_choice(value)
         when :calls then @tool_prefs[:calls] = value.nil? ? nil : normalize_calls(value)
-        when :concurrency then @concurrency = normalize_tool_concurrency(value.nil? ? @config.tool_concurrency : value)
+        when :concurrency then apply_tool_concurrency(value)
         else raise ArgumentError, "Unknown tool option: #{option}. Valid options are: choice, calls, concurrency"
         end
       end
@@ -1131,6 +1138,7 @@ module RubyLLM
       @context = context
       @config = context&.config || RubyLLM.config
       with_model(@model.id, provider: @provider.slug, protocol: @protocol, assume_model_exists: true)
+      apply_tool_concurrency(nil) unless @concurrency_chosen
       self
     end
 
@@ -1374,7 +1382,7 @@ module RubyLLM
       RubyLLM.instrument('compaction.ruby_llm', payload, config: @config) do |event|
         result = provider_compaction
         record_out_of_band_usage(result) if usage_entries.length == usage_start
-        record_generated_message(result, usage_start)
+        record_generated_message(result, usage_start, keep_unfinished: true)
         record_completion_event(event, result)
         result
       end
@@ -1474,6 +1482,14 @@ module RubyLLM
         protocol: @protocol,
         before_request: @callbacks[:before_request]
       )
+    end
+
+    # Refuses attachments an MCP::Prompt has no place for. Called by
+    # #ask_later here and in the Rails integration.
+    def raise_if_prompt_attachments!(message, with) # :nodoc:
+      return unless message.is_a?(MCP::Prompt) && with
+
+      raise ArgumentError, 'An MCP::Prompt carries its own messages, so it takes no attachments'
     end
 
     # Refuses to stage a user message onto an unfinished tool round, which
@@ -1608,9 +1624,14 @@ module RubyLLM
       run_tools
       messages.last if messages.length > before
     rescue CancelledError
+      stop_tool_round
+      raise
+    end
+
+    def stop_tool_round
       @cancelled = false
       cancel_tasks
-      raise
+      close_unstarted_tool_calls
     end
 
     def settled?(steering_only)
@@ -1620,7 +1641,7 @@ module RubyLLM
     def answered?
       return false if pending_tool_response
 
-      last = last_non_system_message
+      last = messages.reverse.find { |message| message.role != :system && !placeholder?(message) }
       case last&.role
       when nil then true
       when :user, :tool then false
@@ -1656,11 +1677,11 @@ module RubyLLM
       result
     end
 
-    def record_generated_message(result, usage_start, announce: true, resumed: nil)
+    def record_generated_message(result, usage_start, announce: true, resumed: nil, keep_unfinished: false)
       raise_if_cancelled!
       link_completion_usage(result, usage_start, resumed)
       run_callbacks(:before_message) if announce
-      replace_unfinished(result)
+      keep_unfinished ? add_message(result) : replace_unfinished(result)
       run_callbacks(:after_message, result)
     end
 
@@ -1783,20 +1804,18 @@ module RubyLLM
     end
 
     def with_resolved_model(model)
-      provider_class = Provider.resolve!(model.provider)
+      @provider = Provider.resolve!(model.provider).new(@config)
       @model = model
-      @provider = provider_class.new(@config)
       @connection = @provider.connection
       self
     end
 
     def fallback_to_next_model!(fallback_queue, error:, attempt:, streaming:, chunks_yielded:)
-      fallback = fallback_queue.shift
+      from_model = @model
+      fallback = switch_to_usable_fallback(fallback_queue)
       raise error unless fallback
 
       attempt += 1
-      from_model = @model
-      switch_to_fallback_model(fallback)
       fallback = fallback.with_attempt(
         chat: self,
         error: error,
@@ -1808,6 +1827,17 @@ module RubyLLM
       )
       run_callbacks(:before_fallback, fallback)
       [fallback, attempt]
+    end
+
+    def switch_to_usable_fallback(fallback_queue)
+      while (fallback = fallback_queue.shift)
+        begin
+          switch_to_fallback_model(fallback)
+          return fallback
+        rescue ModelNotFoundError, ConfigurationError => e
+          RubyLLM.logger.warn("RubyLLM skipped fallback #{fallback.id}: #{e.message}")
+        end
+      end
     end
 
     def finish_fallback(fallback, response: nil, fallback_error: nil)
@@ -2158,7 +2188,6 @@ module RubyLLM
       execute_tools_concurrently(tool_calls) do |tool_call, result|
         next if result.equal?(PAUSED)
 
-        raise_if_cancelled!
         run_callbacks(:before_message)
         add_tool_result_message(tool_call, result)
       end
@@ -2176,7 +2205,6 @@ module RubyLLM
       result = execute_tool tool_call
       return result if result.equal?(PAUSED)
 
-      raise_if_cancelled!
       run_callbacks(:after_tool_result, result)
       result
     end
@@ -2286,6 +2314,19 @@ module RubyLLM
       end
     end
 
+    def close_unstarted_tool_calls
+      response = pending_tool_response
+      return unless response
+
+      pending_tool_calls(response).each_value do |tool_call|
+        next if running_elsewhere?(tool_call)
+
+        record_tool_call_input(tool_call, nil) if tool_call_input(tool_call)
+        run_callbacks(:before_message)
+        run_callbacks(:after_message, add_message(unfinished_result(tool_call)))
+      end
+    end
+
     def cancel_task(task)
       task.cancel
     rescue Error, ConfigurationError, Faraday::Error => e
@@ -2329,6 +2370,11 @@ module RubyLLM
       end
     end
 
+    def apply_tool_concurrency(value)
+      @concurrency_chosen = !value.nil?
+      @concurrency = normalize_tool_concurrency(value.nil? ? @config.tool_concurrency : value)
+    end
+
     def normalize_tool_concurrency(concurrency)
       return nil if concurrency.nil? || concurrency == false
       return :threads if concurrency == true
@@ -2355,6 +2401,7 @@ module RubyLLM
     def normalize_tool_choice(choice)
       return choice.to_sym if choice.is_a?(String) || choice.is_a?(Symbol)
       return tool_name_for_choice_class(choice) if choice.is_a?(Class)
+      return tools.key(choice) if tools.value?(choice)
 
       choice.respond_to?(:name) ? choice.name.to_sym : choice.to_sym
     end
@@ -2390,6 +2437,14 @@ module RubyLLM
       list.reverse.find do |message|
         message.role != :system && !message.tool_result? && !blank_response?(message)
       end
+    end
+
+    # What a process leaves behind before the provider answers, unlike a
+    # blank answer, which carries its finish reason or usage.
+    def placeholder?(message)
+      return false unless message && blank_response?(message) && !unfinished?(message)
+
+      message.finish_reason.nil? && message.tokens.input.nil?
     end
 
     def blank_response?(message)

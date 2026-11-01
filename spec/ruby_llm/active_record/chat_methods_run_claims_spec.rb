@@ -369,7 +369,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     travel_back
   end
 
-  it 'releases its claims when the chat is cancelled during a tool call' do
+  it 'releases its claims and keeps the result when the chat is cancelled during a tool call' do
     chat = approved_chat
     job = job_for(chat)
     during_run << -> { job.cancel }
@@ -377,7 +377,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect { job.run_tools }.to raise_error(RubyLLM::CancelledError)
     expect(job).not_to be_running
     expect(tool_call_record.claimed_until).to be_nil
-    expect(tool_call_record.result).to be_nil
+    expect(tool_call_record.result).to be_present
   end
 
   it 'leaves a plain chat free to run the same calls in two chats' do
@@ -628,7 +628,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     end
   end
 
-  it 'releases an unanswered call on a schema that has no claim columns' do
+  it 'keeps a finished call on a schema that has no claim columns' do
     chat = approved_chat
 
     without_claim_columns do
@@ -636,7 +636,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       during_run << -> { job.cancel }
 
       expect { job.run_tools }.to raise_error(RubyLLM::CancelledError)
-      expect(tool_call_record.result).to be_nil
+      expect(tool_call_record.result).to be_present
     end
   end
 end

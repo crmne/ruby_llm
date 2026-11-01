@@ -68,7 +68,7 @@ module RubyLLM
           code = error['code']
           return [code, error['message']] if code.is_a?(Integer) && code.between?(400, 599)
 
-          [ERROR_STATUSES.fetch(error['type'], 400), error['message']]
+          [ERROR_STATUSES[code] || ERROR_STATUSES.fetch(error['type'], 400), error['message']]
         end
       end
     end
