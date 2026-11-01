@@ -8,6 +8,7 @@
 require 'digest'
 require 'json'
 require 'net/http'
+require 'rexml/document'
 require 'uri'
 
 # Turns the survey's replies into new homepage logos.
@@ -20,7 +21,7 @@ class CompanyLogos
   MAX_BYTES = 1_000_000
   EXTENSIONS = { 'image/svg+xml' => 'svg', 'image/png' => 'png', 'image/jpeg' => 'jpg' }.freeze
   SIGNATURES = { 'png' => "\x89PNG".b, 'jpg' => "\xFF\xD8\xFF".b }.freeze
-  UNSAFE_SVG = /<\s*script|<\s*foreignObject|<\s*iframe|<\s*use|\son\w+\s*=|javascript:|(?:xlink:)?href\s*=\s*["']\s*(?!#)/i
+  ACTIVE_SVG_ELEMENTS = %w[script foreignobject iframe embed object use].freeze
   LEGAL_SUFFIX = /[\s,.]+(?:pte|ltd|llc|inc|gmbh|ag|as|bv|sl|srl|co|corp|limited)\b\.?/
   PLACEHOLDERS = %w[none na tbd freelance].freeze
 
@@ -60,7 +61,32 @@ class CompanyLogos
     return bytes.start_with?(SIGNATURES.fetch(extension)) unless extension == 'svg'
 
     text = bytes.dup.force_encoding('UTF-8')
-    text.valid_encoding? && text.match?(/<svg[\s>]/i) && !text.match?(UNSAFE_SVG)
+    text.valid_encoding? && safe_svg?(REXML::Document.new(text))
+  rescue REXML::ParseException
+    false
+  end
+
+  # Names are compared without their prefix, so <x:script> counts as a script.
+  def self.safe_svg?(document)
+    return false unless document.root&.name&.casecmp?('svg')
+    return false if document.doctype&.children&.any? || document.children.grep(REXML::Instruction).any?
+
+    REXML::XPath.match(document, '//*').all? { |element| safe_svg_element?(element) }
+  end
+
+  def self.safe_svg_element?(element)
+    return false if ACTIVE_SVG_ELEMENTS.include?(element.name.downcase)
+
+    element.attributes.each_attribute.none? { |attribute| unsafe_svg_attribute?(attribute) }
+  end
+
+  def self.unsafe_svg_attribute?(attribute)
+    name = attribute.name.downcase
+    value = attribute.value.strip
+    return true if name.start_with?('on')
+    return value.downcase.end_with?('href') if name == 'attributename'
+
+    name == 'href' && !value.start_with?('#')
   end
 
   private
@@ -73,8 +99,8 @@ class CompanyLogos
     extension = EXTENSIONS[company[:logo]['mimeType']]
     return unless extension
 
-    bytes = get(URI(company[:logo]['url']))
-    return unless self.class.safe_logo?(bytes, extension)
+    bytes = download(company[:logo]['url'])
+    return unless bytes && self.class.safe_logo?(bytes, extension)
 
     slug = company[:company].downcase.gsub(/[^a-z0-9]+/, '-').gsub(/\A-|-\z/, '')
     path = File.join(@root, 'docs/assets/images/companies/survey-2026', "#{slug}.#{extension}")
@@ -83,6 +109,14 @@ class CompanyLogos
     File.binwrite(path, bytes)
     File.write(logos_path, entry(company[:company], "#{slug}.#{extension}"), mode: 'a')
     company[:company]
+  end
+
+  # A missing upload must not hold back the other companies, and the error
+  # stays out of the log because it can carry the upload's URL.
+  def download(url)
+    get(URI(url))
+  rescue StandardError
+    nil
   end
 
   def existing_logo?(bytes)

@@ -39,9 +39,35 @@ RSpec.describe CompanyLogos do
     expect(described_class.safe_logo?("\x89PNG rest".b, 'png')).to be(true)
   end
 
+  it 'accepts an SVG that links to its own gradient' do
+    svg = '<svg><linearGradient id="a"/><linearGradient href="#a"/><![CDATA[<script>]]></svg>'
+
+    expect(described_class.safe_logo?(svg, 'svg')).to be(true)
+  end
+
+  it 'accepts what ordinary exports contain' do
+    doctype = '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN" "http://www.w3.org/x.dtd">'
+
+    expect(described_class.safe_logo?("#{doctype}<svg/>", 'svg')).to be(true)
+    expect(described_class.safe_logo?('<svg><animate attributeName="opacity"/></svg>', 'svg')).to be(true)
+  end
+
+  it 'moves past a logo that fails to download' do
+    logos = described_class.new(root: Dir.pwd, token: 'x')
+    allow(Net::HTTP).to receive(:start).and_raise(SocketError)
+
+    expect(logos.send(:download, 'https://x.test/logo.svg')).to be_nil
+  end
+
   it 'refuses active SVG content, forged images, and oversized files' do
-    ['<svg><script>x</script></svg>', '<svg onload="x"/>', '<svg><a href="https://x.test"/></svg>'].each do |svg|
-      expect(described_class.safe_logo?(svg, 'svg')).to be(false)
+    ['<svg><script>x</script></svg>', '<svg onload="x"/>', '<svg><a href="https://x.test"/></svg>',
+     '<svg xmlns:x="http://www.w3.org/2000/svg"><x:script>x</x:script></svg>',
+     '<svg xmlns:l="http://www.w3.org/1999/xlink"><a l:href="https://x.test"/></svg>',
+     '<svg><set attributeName="href" to="https://x.test"/></svg>',
+     '<svg><animate attributeName="xlink:href" to="https://x.test"/></svg>',
+     '<!DOCTYPE svg [<!ENTITY x "y">]><svg>&x;</svg>', '<?xml-stylesheet href="x.css"?><svg/>',
+     '<svg><path></svg>', '<html/>'].each do |svg|
+      expect(described_class.safe_logo?(svg, 'svg')).to be(false), svg
     end
     expect(described_class.safe_logo?('<svg/>', 'png')).to be(false)
     expect(described_class.safe_logo?("\x89PNG".b + ('a' * described_class::MAX_BYTES), 'png')).to be(false)

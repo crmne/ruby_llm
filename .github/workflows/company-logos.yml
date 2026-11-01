@@ -23,7 +23,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       BRANCH: company-logos
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       - name: Wait for the open pull request
         id: open
@@ -43,7 +43,7 @@ jobs:
         if: steps.logos.outputs.added > 0
         run: sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends libvips-tools
 
-      - uses: ruby/setup-ruby@v1
+      - uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94 # v1
         if: steps.logos.outputs.added > 0
         with:
           ruby-version: '4.0'
@@ -65,7 +65,7 @@ jobs:
           sleep 2
           node .github/scripts/company_logos_screenshot.mjs http://127.0.0.1:4000/ "$RUNNER_TEMP"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         id: screenshots
         if: steps.logos.outputs.added > 0
         with:
