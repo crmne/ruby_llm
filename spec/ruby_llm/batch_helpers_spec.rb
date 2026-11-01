@@ -330,4 +330,71 @@ RSpec.describe RubyLLM::Batch do
       expect(batch.inspect).to include('msgbatch_123', 'pending', 'in_progress')
     end
   end
+
+  describe 'delivery' do
+    let(:provider) { RubyLLM::Providers::OpenAI.new(RubyLLM.config) }
+    let(:attributes) { { id: 'b', raw_status: 'completed', completed: true, request_count: 1 } }
+    let(:message) do
+      RubyLLM::Message.new(role: :assistant, content: 'hi', model: model_for(:openai), input_tokens: 5)
+    end
+    let(:embedding) { RubyLLM::Embedding.new(vectors: [0.1], model: model_for(:openai, :embedding), input_tokens: 9) }
+
+    before { allow(RubyLLM::Accounting::Usage).to receive(:report).and_call_original }
+
+    def picked_up(result)
+      allow(provider).to receive(:batch_results) { [[0, result.dup]] }
+      described_class.new(provider:, **attributes, raw_status: 'in_progress', completed: false)
+    end
+
+    it 'reports a chat answer picked up by id once, across polls' do
+      batch = picked_up(message)
+
+      2.times { batch.messages }
+
+      expect(RubyLLM::Accounting::Usage).to have_received(:report).once
+    end
+
+    it 'reports an embedding picked up by id once, across polls' do
+      batch = picked_up(embedding)
+
+      2.times { batch.messages }
+
+      expect(RubyLLM::Accounting::Usage).to have_received(:report).once
+    end
+
+    it 'leaves the ledger row of a chat answer to its chat' do
+      chat = RubyLLM.chat(model: model_for(:openai)).ask_later('Hi')
+      allow(RubyLLM::Accounting::Usage).to receive(:instrument).and_call_original
+      allow(provider).to receive(:batch_results).and_return([[0, message]])
+
+      described_class.new(provider:, chats: [chat], **attributes).messages
+
+      expect(RubyLLM::Accounting::Usage).not_to have_received(:report)
+      expect(RubyLLM::Accounting::Usage).to have_received(:instrument).once
+      expect(chat.tokens.input).to eq(5)
+    end
+
+    it 'keeps a result a store could not deliver for the next poll' do
+      turns = [false, true, true]
+      runs = 0
+      delivery = lambda do |_index, &deliver|
+        runs += 1
+        turns.shift.tap { |turn| deliver.call if turn }
+      end
+      allow(provider).to receive(:batch_results).and_return([[0, message]])
+
+      Array.new(3) { described_class.new(provider:, delivery:, **attributes) }.each(&:messages)
+
+      expect(runs).to eq(3)
+    end
+  end
+
+  describe 'Helpers#parsed_batch_result' do
+    let(:helpers) { Object.new.extend(RubyLLM::Batch::Helpers) }
+
+    it 'turns a RubyLLM error into a failed slot and leaves other errors alone' do
+      expect(helpers.send(:parsed_batch_result, 3, '3') { raise RubyLLM::Error, 'bad' }).to eq([3, nil, :failed])
+      expect { helpers.send(:parsed_batch_result, 3, '3') { raise ArgumentError } }.to raise_error(ArgumentError)
+    end
+  end
 end

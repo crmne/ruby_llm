@@ -120,6 +120,10 @@ module RubyLLM
         self
       end
 
+      def claiming_delivery(&) # :nodoc:
+        exclusively(-> { false }, &)
+      end
+
       # Returns whether a process is running this chat's conversation loop:
       # calling the model or running tools from #complete, #step, #generate,
       # #run_tools, or #compact. Reads the database, so it sees runs in

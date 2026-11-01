@@ -162,6 +162,22 @@ A streamed request whose response holds no events, such as an empty body or a pl
 
 `ask(prompt, with: file)` with an `MCP::Prompt` dropped the attachment in 2.1. It now raises `ArgumentError`.
 
+## Gemini Returns Every Image It Made
+
+`paint` kept the first image of each Gemini candidate in 2.1, and dropped the rest you were billed for. A response with several images now returns an Array of `Image`, as `count:` does, so check the class if a model can answer one prompt with more than one image. Draft images a model marks as thoughts stay out.
+
+## Unreadable Batch Answers Fail Their Own Slot
+
+One answer RubyLLM could not parse, such as a tool call cut off at the token limit, made `batch.messages` raise for the whole batch in 2.1. That answer now counts as failed in `batch.statuses` and the others arrive.
+
+## Batches Picked Up by ID Report Usage
+
+A batch collected through `Batch.find` without its chats or requests now reports its usage, to `usage.ruby_llm` and the ledger, once per `Batch` object. It reported nothing in 2.1. Collecting the same batch that way from two processes reports it twice, so collect each one in one place.
+
+## Same-Named Attachments Both Reach `run_code`
+
+In 2.1, a later attachment overwrote an earlier one with the same name in `attachments/`. The newest still takes the name, and an older one is now `report-2.txt` beside it.
+
 ## Rescue Denials of Running Calls
 
 `deny` on a persisted tool call that has started running now raises `RubyLLM::ToolCallRunningError`; in 2.1 it recorded a denial the running tool never saw. `approve` on a running call and either decision on an answered call change nothing, where 2.1 overwrote the recorded decision. Rescue the error where you record denials:

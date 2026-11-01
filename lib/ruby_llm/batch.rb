@@ -173,13 +173,14 @@ module RubyLLM
     end
 
     def initialize(provider:, chats: nil, requests: nil, batch_protocol: nil, store: nil, delivered: [], # :nodoc:
-                   **attributes)
+                   delivery: nil, **attributes)
       @provider = provider
       @chats = chats
       @requests = requests
       @batch_protocol = protocol_name(batch_protocol)
       @store = store
       @delivered = delivered.to_h { |index| [index, true] }
+      @delivery = delivery
       @statuses = []
       apply(attributes)
     end
@@ -347,36 +348,35 @@ module RubyLLM
     def deliver_embedding(index, embedding)
       request = requests&.[](index)
       delivered = @delivered[index]
-      attach_batch_usage(
-        embedding,
-        operation: :embedding,
-        model: request&.model,
-        category: :embeddings,
-        instrument: !request.nil? && !delivered
-      )
+      entry = attach_batch_usage(embedding, operation: :embedding, model: request&.model, category: :embeddings)
       return if delivered
 
       @delivered[index] = true
+      report_batch_usage(entry) if entry
       request&.result = embedding
     end
 
     def deliver_message(index, message)
       chat = chats&.[](index)
-      delivered = @delivered[index] || (chat && already_in_chat?(chat, message))
-      attach_batch_usage(
-        message,
-        operation: :chat,
-        model: chat&.model,
-        category: :text_tokens,
-        instrument: !chat.nil? && !delivered
-      )
-      return if delivered
+      entry = attach_batch_usage(message, operation: :chat, model: chat&.model, category: :text_tokens)
+      return if @delivered[index] || (chat && already_in_chat?(chat, message))
 
-      @delivered[index] = true
-      chat&.add_completion(message, record_usage: true)
+      @delivered[index] = true if exclusively(index) do
+        report_batch_usage(entry, chat:) if entry
+        chat&.add_completion(message, record_usage: true)
+      end
     end
 
-    def attach_batch_usage(result, operation:, model:, category:, instrument:)
+    # A store may run this in its own turn, returning false when it could
+    # not, so the next poll delivers the result.
+    def exclusively(index, &deliver)
+      return @delivery.call(index, &deliver) if @delivery
+
+      deliver.call
+      true
+    end
+
+    def attach_batch_usage(result, operation:, model:, category:)
       return unless result.ruby_llm_usage_entries.empty?
 
       model ||= result_model(result)
@@ -392,9 +392,13 @@ module RubyLLM
         workflow: Accounting::Usage.workflow
       )
       result.ruby_llm_usage_entries = [entry]
-      return unless instrument
+      entry
+    end
 
-      if operation == :chat
+    # A chat writes its own ledger row when it takes the answer. Anything
+    # else, such as a batch picked up by id, gets a row with no chat.
+    def report_batch_usage(entry, chat: nil)
+      if chat
         Accounting::Usage.instrument(entry, config: @provider.config)
       else
         Accounting::Usage.report(entry, config: @provider.config)
@@ -433,6 +437,13 @@ module RubyLLM
       def batch_failure(custom_id, detail, status: 'failed')
         RubyLLM.logger.warn ["Batch request #{custom_id} #{status}", detail].compact.join(': ')
         status.to_s.match?(/cancel/i) ? :cancelled : :failed
+      end
+
+      # One unreadable answer fails its own slot, so the others still arrive.
+      def parsed_batch_result(index, custom_id)
+        [index, yield]
+      rescue Error => e
+        [index, nil, batch_failure(custom_id, e.message)]
       end
 
       def batch_response_succeeded?(response)

@@ -211,7 +211,15 @@ module RubyLLM
         def provider_file_source?(payload)
           blocks = Array(payload[:messages]).flat_map { |message| Array(message[:content]) }
           blocks.concat(Array(payload[:system]))
-          blocks.any? { |block| block.is_a?(Hash) && block[:source].is_a?(Hash) && block[:source][:type] == 'file' }
+          file_source?(blocks)
+        end
+
+        def file_source?(blocks)
+          blocks.any? do |block|
+            next false unless block.is_a?(Hash)
+
+            (block[:source].is_a?(Hash) && block[:source][:type] == 'file') || file_source?(Array(block[:content]))
+          end
         end
 
         # Anthropic takes several betas as one comma-separated header, so an

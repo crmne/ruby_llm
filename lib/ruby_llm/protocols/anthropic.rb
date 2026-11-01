@@ -94,8 +94,19 @@ module RubyLLM
         super(payload, beta_headers(additional_headers, payload), &)
       end
 
+      def post_count_tokens(payload)
+        @connection.post(count_tokens_url, payload) { |request| request.headers.merge!(beta_headers({}, payload)) }
+      end
+
       def beta_headers(additional_headers, payload)
         apply_binding_beta(apply_files_beta(additional_headers, payload), payload)
+      end
+
+      def merge_tool_headers(tool_headers, headers)
+        merged = super
+        return merged unless tool_headers[BETA_HEADER] && headers[BETA_HEADER]
+
+        merged.merge(BETA_HEADER => join_betas(tool_headers[BETA_HEADER], headers[BETA_HEADER]))
       end
 
       def merge_turn_segments(segments)

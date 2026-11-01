@@ -115,7 +115,7 @@ module RubyLLM
           response = line['response']
 
           if batch_response_succeeded?(response)
-            [index, parse_batch_completion_response(response['body'])]
+            parsed_batch_result(index, line['custom_id']) { parse_batch_completion_response(response['body']) }
           else
             [index, nil, batch_failure(line['custom_id'], batch_error_message(line))]
           end

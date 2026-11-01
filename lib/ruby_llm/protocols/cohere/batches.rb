@@ -86,13 +86,13 @@ module RubyLLM
           body = row.fetch('body')
           return [index, nil, batch_failure(custom_id, 'generation failed')] if body['finish_reason'] == 'ERROR'
 
-          result = if body['embeddings']
-                     parser.send(:parse_embedding_response, Response.new(body), model:,
-                                                                                text: shape == 'array' ? [] : nil)
-                   else
-                     parser.send(:parse_completion_body, body, raw: body)
-                   end
-          [index, result]
+          parsed_batch_result(index, custom_id) do
+            if body['embeddings']
+              parser.send(:parse_embedding_response, Response.new(body), model:, text: shape == 'array' ? [] : nil)
+            else
+              parser.send(:parse_completion_body, body, raw: body)
+            end
+          end
         end
       end
     end

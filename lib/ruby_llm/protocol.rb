@@ -105,7 +105,7 @@ module RubyLLM
                  max_output_tokens: nil, citations: false, caching: nil, tool_prefs: nil, before_request: [],
                  usage_recorder: nil, progress_recorder: nil, provider_tools: [], compaction: nil, end_user: nil, &)
       resolution = resolve_provider_tools_for_request(provider_tools)
-      headers = resolution.headers.merge(headers) if resolution
+      headers = merge_tool_headers(resolution.headers, headers) if resolution
       headers = apply_compaction_headers(headers, compaction) if compaction
       payload = render(
         messages, tools:, tool_prefs:, temperature:, max_output_tokens:, provider_options:, schema:, thinking:,
@@ -617,6 +617,10 @@ module RubyLLM
       end
 
       RubyLLM::Tools::ProviderTools.resolve(entries, aliases: aliases, owner: @provider.name)
+    end
+
+    def merge_tool_headers(tool_headers, headers)
+      tool_headers.merge(headers)
     end
 
     def apply_provider_tools(payload, entries)

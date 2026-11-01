@@ -142,9 +142,9 @@ module RubyLLM
         end
 
         def gemini_image_parts(data)
-          Array(data['candidates']).filter_map do |candidate|
+          Array(data['candidates']).flat_map do |candidate|
             parts = candidate.dig('content', 'parts') || []
-            parts.filter_map { |part| part['inlineData'] }.find do |inline_data|
+            parts.reject { |part| part['thought'] }.filter_map { |part| part['inlineData'] }.select do |inline_data|
               image_mime_type?(inline_data['mimeType']) && inline_data['data']
             end
           end

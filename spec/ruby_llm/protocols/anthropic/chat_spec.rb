@@ -1113,4 +1113,20 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       ).to be(false)
     end
   end
+
+  describe '.provider_file_source?' do
+    it 'finds a file inside a tool result' do
+      document = { type: 'document', source: { type: 'file', file_id: 'f' } }
+      block = { type: 'tool_result', tool_use_id: 't', content: [document] }
+      payload = { messages: [{ role: 'user', content: [block] }] }
+
+      expect(described_class.apply_files_beta({}, payload)).to eq('anthropic-beta' => 'files-api-2025-04-14')
+    end
+
+    it 'ignores a tool result with plain text' do
+      payload = { messages: [{ role: 'user', content: [{ type: 'tool_result', tool_use_id: 't', content: 'ok' }] }] }
+
+      expect(described_class.apply_files_beta({}, payload)).to eq({})
+    end
+  end
 end

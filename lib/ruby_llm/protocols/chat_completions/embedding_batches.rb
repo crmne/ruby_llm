@@ -48,7 +48,7 @@ module RubyLLM
           end
           return super unless batch_response_succeeded?(line['response'])
 
-          [index, parse_batch_completion_response(body, shape:)]
+          parsed_batch_result(index, custom_id) { parse_batch_completion_response(body, shape:) }
         end
       end
     end

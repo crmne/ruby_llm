@@ -41,6 +41,21 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  describe 'files a store refuses' do
+    let(:sandbox) { writing("bad\nname.txt" => 'x', 'kept.txt' => 'y') }
+
+    it 'saves the rest and names the refused file, because the run already happened' do
+      store = RubyLLM::FileStore::Memory.new
+      chat.with_file_store(store).with_code_execution
+
+      result = report(run_code('puts 1'))
+
+      expect(store.list.map(&:path)).to eq(['kept.txt'])
+      expect(result['unsaved_files']).to eq(["bad\nname.txt"])
+      expect(result['files_error']).to include('not a path')
+    end
+  end
+
   describe '#with_code_execution' do
     it 'enables code execution with Ruby and shell by default' do
       expect(chat.with_code_execution).to be(chat)

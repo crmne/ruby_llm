@@ -73,6 +73,7 @@ module RubyLLM
           provider: provider_instance,
           chats: records.map { |chat| chat&.to_llm },
           delivered: records.each_index.select { |index| answered?(records[index]) },
+          delivery: ->(index, &deliver) { deliver_once(records[index], &deliver) },
           id: provider_batch_id,
           raw_status: raw_status,
           completed: completed,
@@ -96,6 +97,17 @@ module RubyLLM
       end
 
       private
+
+      # Two pollers can load a batch before either delivers, so the check
+      # is repeated once this one holds the chat.
+      def deliver_once(chat)
+        return yield.then { true } unless chat
+
+        chat.claiming_delivery do
+          yield unless answered?(chat)
+          true
+        end
+      end
 
       # The chat was awaiting the model when the batch was submitted, so an
       # assistant message newer than the batch answers that turn, whatever

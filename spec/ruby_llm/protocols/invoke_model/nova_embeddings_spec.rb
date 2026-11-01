@@ -56,4 +56,24 @@ RSpec.describe RubyLLM::Protocols::InvokeModel::NovaEmbeddings do
       expect(protocol.send(:parse_embedding, body)).to eq([0.1, 0.2])
     end
   end
+
+  describe 'usage' do
+    it 'reads the input tokens from the header Nova sends them in' do
+      headers = Faraday::Utils::Headers.new('X-Amzn-Bedrock-Input-Token-Count' => '7')
+      response = instance_double(Faraday::Response, headers:, body: { 'embeddings' => [{ 'embedding' => [0.1] }] })
+
+      embedding = protocol.send(:parse_single_embedding_responses, [response], model: 'nova', text: 'Hello')
+
+      expect(embedding.tokens.input).to eq(7)
+    end
+
+    it 'keeps the count unknown when the header is absent' do
+      response = instance_double(Faraday::Response, headers: Faraday::Utils::Headers.new,
+                                                    body: { 'embeddings' => [{ 'embedding' => [0.1] }] })
+
+      embedding = protocol.send(:parse_single_embedding_responses, [response], model: 'nova', text: 'Hello')
+
+      expect(embedding.tokens.input).to be_nil
+    end
+  end
 end

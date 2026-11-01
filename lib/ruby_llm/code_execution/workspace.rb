@@ -113,10 +113,10 @@ module RubyLLM
       end
 
       def copy_in(attachments)
-        attachments.reject(&:provider_file?).each do |attachment|
-          path = File.join(inputs, self.class.filename(attachment.filename))
+        named_inputs(attachments.reject(&:provider_file?)).reverse_each do |name, content|
+          path = File.join(inputs, name)
           make_room(path, inputs)
-          File.binwrite(path, attachment.content)
+          File.binwrite(path, content)
         end
         {}
       end
@@ -138,6 +138,7 @@ module RubyLLM
         skipped = []
         output_paths.each do |path, size|
           name = path.delete_prefix(File.join(directory, ''))
+          next skipped << "#{name.scrub} (name is not valid UTF-8)" unless name.valid_encoding?
           next if unchanged.key?(name) && unchanged[name] == FileStore.digest(read(path))
           next skipped << "#{name} (larger than #{max_size} bytes)" if size > max_size
           next skipped << "#{name} (more than #{max_files} files)" if files.size >= max_files
@@ -175,6 +176,24 @@ module RubyLLM
         make_parents(File.dirname(folder), root)
         Dir.mkdir(folder)
         @placed << [folder, nil]
+      end
+
+      # Names each file, newest first: the newest keeps its name, as it
+      # would on a disk, and an older one stays readable beside it.
+      def named_inputs(attachments)
+        attachments.reverse.each_with_object({}) do |attachment, named|
+          content = attachment.content.b
+          name = numbered_names(self.class.filename(attachment.filename)).find do |candidate|
+            !named.key?(candidate) || named[candidate] == content
+          end
+          named[name] = content
+        end
+      end
+
+      def numbered_names(name)
+        extension = File.extname(name)
+        stem = name.delete_suffix(extension)
+        [name].chain((2..).lazy.map { |number| "#{stem}-#{number}#{extension}" })
       end
 
       def make_room(path, base)

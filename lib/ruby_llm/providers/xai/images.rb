@@ -68,9 +68,14 @@ module RubyLLM
               data: image_data['b64_json'],
               mime_type: image_data['mime_type'] || 'image/png',
               model: model,
-              usage: index.zero? ? (data['usage'] || {}) : {}
+              usage: index.zero? ? image_usage(data) : {}
             )
           end
+        end
+
+        def image_usage(data)
+          usage = data['usage'] || {}
+          usage.merge('cost' => reported_cost(usage)).compact
         end
 
         def validate_paint_inputs!(with:, mask:) # rubocop:disable Lint/UnusedMethodArgument

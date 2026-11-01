@@ -68,4 +68,24 @@ RSpec.describe RubyLLM::Providers::XAI::Images do
       end.to raise_error(RubyLLM::Error, /mask/)
     end
   end
+
+  describe '#parse_image_responses' do
+    let(:protocol) { RubyLLM::Providers::XAI.protocols.fetch(:responses).allocate }
+
+    def images(usage)
+      body = { 'data' => [{ 'url' => 'https://x.test/1.png' }, { 'url' => 'https://x.test/2.png' }], 'usage' => usage }
+      protocol.send(:parse_image_responses, instance_double(Faraday::Response, body:), model: 'grok-imagine-image')
+    end
+
+    it 'reports the cost xAI charged, on the first image only' do
+      first, second = images('cost_in_usd_ticks' => 200_000_000)
+
+      expect(first.tokens.reported_cost).to be_within(1e-9).of(0.02)
+      expect(second.tokens.reported_cost).to be_nil
+    end
+
+    it 'leaves the cost unknown when xAI reports none' do
+      expect(images(nil).first.tokens.reported_cost).to be_nil
+    end
+  end
 end
