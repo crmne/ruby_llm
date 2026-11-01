@@ -479,16 +479,16 @@ module RubyLLM
       end
     end
 
-    # Returns the provider's code for an error +response+, such as
-    # <tt>"invalid_request_error"</tt>, from the body's +code+, +status+,
-    # or +type+ under +error+, or its +code+ or +type+, or +nil+. Override
-    # when the provider names its errors elsewhere.
     # Returns the status a response sent as a success really means, for a
     # provider that reports failures in a 2xx body, or +nil+.
     def error_status(_response) # :nodoc:
       nil
     end
 
+    # Returns the provider's code for an error +response+, such as
+    # <tt>"invalid_request_error"</tt>, from the body's +code+, +status+,
+    # or +type+ under +error+, or its +code+ or +type+, or +nil+. Override
+    # when the provider names its errors elsewhere.
     def parse_error_code(response)
       body = parse_error_body(response)
       body = body.find { |part| part.is_a?(Hash) } if body.is_a?(Array)

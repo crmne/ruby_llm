@@ -87,7 +87,7 @@ module RubyLLM
       # OpenRouter answers 200 when an upstream provider fails after routing,
       # with an error object or an empty body. A stream has no body here.
       def error_status(response)
-        return if response.stream_response?
+        return if response.request.stream_response?
 
         body = response.body.to_s
         return BAD_GATEWAY if body.strip.empty?

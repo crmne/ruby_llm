@@ -49,7 +49,8 @@ RSpec.describe RubyLLM::Providers::OpenRouter do
   it 'keeps a code of exactly 400 and ignores an error that is not an object' do
     bad_request = JSON.generate(error: { code: 400, message: 'Bad' })
     stub_request(:post, chat_url).to_return(status: 200, body: bad_request, headers:)
-    not_an_object = Struct.new(:status, :body, :stream_response?).new(200, JSON.generate(error: 'none'), false)
+    not_an_object = Faraday::Env.from(status: 200, body: JSON.generate(error: 'none'),
+                                      request: Faraday::RequestOptions.new)
 
     expect { chat.ask('Hello') }.to raise_error(RubyLLM::BadRequestError, 'Bad')
     expect(chat.provider.error_status(not_an_object)).to be_nil
