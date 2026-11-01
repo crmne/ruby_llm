@@ -1,0 +1,87 @@
+name: Company logos
+
+on:
+  schedule:
+    - cron: '23 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: company-logos
+  cancel-in-progress: false
+
+jobs:
+  propose:
+    runs-on: ubuntu-latest
+    # The Tally key reads every form on the account, so it lives in an
+    # environment only main can use.
+    environment: company-logos
+    env:
+      GH_TOKEN: ${{ github.token }}
+      BRANCH: company-logos
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Wait for the open pull request
+        id: open
+        run: echo "count=$(gh pr list --head "$BRANCH" --state open --json number --jq length)" >> "$GITHUB_OUTPUT"
+
+      - name: Add new logos
+        id: logos
+        if: steps.open.outputs.count == '0'
+        env:
+          TALLY_API_KEY: ${{ secrets.TALLY_API_KEY }}
+        run: |
+          ruby .github/scripts/company_logos.rb > "$RUNNER_TEMP/companies.txt"
+          cat "$RUNNER_TEMP/companies.txt"
+          echo "added=$(wc -l < "$RUNNER_TEMP/companies.txt")" >> "$GITHUB_OUTPUT"
+
+      - name: Install libvips for social cards
+        if: steps.logos.outputs.added > 0
+        run: sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends libvips-tools
+
+      - uses: ruby/setup-ruby@v1
+        if: steps.logos.outputs.added > 0
+        with:
+          ruby-version: '4.0'
+          bundler-cache: true
+          working-directory: docs
+          cache-version: 3
+
+      - name: Build the site
+        if: steps.logos.outputs.added > 0
+        working-directory: docs
+        run: bundle exec jekyll build -d "$RUNNER_TEMP/site"
+
+      - name: Screenshot both themes
+        if: steps.logos.outputs.added > 0
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+          python3 -m http.server 4000 --directory "$RUNNER_TEMP/site" &
+          sleep 2
+          node .github/scripts/company_logos_screenshot.mjs http://127.0.0.1:4000/ "$RUNNER_TEMP"
+
+      - uses: actions/upload-artifact@v4
+        id: screenshots
+        if: steps.logos.outputs.added > 0
+        with:
+          name: company-logos
+          path: ${{ runner.temp }}/company-logos-*.png
+
+      - name: Open the pull request
+        if: steps.logos.outputs.added > 0
+        env:
+          SCREENSHOTS: ${{ steps.screenshots.outputs.artifact-url }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898729+github-actions[bot]@users.noreply.github.com'
+          git switch -C "$BRANCH"
+          git add docs/_data/company_logos_featured.yml docs/assets/images/companies
+          git commit -m 'Add company logos from the usage survey'
+          git push --force origin "$BRANCH"
+          ruby .github/scripts/company_logos_pull_request.rb "$RUNNER_TEMP" > "$RUNNER_TEMP/body.md"
+          gh pr create --head "$BRANCH" --title 'Add company logos from the usage survey' --body-file "$RUNNER_TEMP/body.md"
