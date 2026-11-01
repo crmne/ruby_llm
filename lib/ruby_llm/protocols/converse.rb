@@ -23,7 +23,21 @@ module RubyLLM
         SERVER_TOOL_ALIASES
       end
 
+      def render(...)
+        keep_binding_beta(super)
+      end
+
       private
+
+      # Provider options replace an array, and Bedrock refuses the binding
+      # without its beta.
+      def keep_binding_beta(payload)
+        fields = payload[:additionalModelRequestFields]
+        return payload unless fields&.dig(:thinking, :block_binding)
+
+        fields[:anthropic_beta] = Array(fields[:anthropic_beta]) | [Anthropic::BlockBinding::BETA]
+        payload
+      end
 
       # Converse carries tools under toolConfig.tools rather than a
       # top-level tools array.

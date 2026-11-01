@@ -76,6 +76,13 @@ RSpec.describe RubyLLM::Protocols::Anthropic::BlockBinding do
       expect(fields).to eq(thinking: { type: 'adaptive', block_binding: drop }, anthropic_beta: [described_class::BETA])
     end
 
+    it 'keeps its beta beside betas from provider options' do
+      chat = chat_with_history('eu.anthropic.claude-opus-5-5', :bedrock)
+             .with_provider_options(additionalModelRequestFields: { anthropic_beta: ['other-beta'] })
+
+      expect(chat.render[:additionalModelRequestFields][:anthropic_beta]).to eq(['other-beta', described_class::BETA])
+    end
+
     it 'keeps thinking off when the chat turned it off' do
       off = { reasoning_config: { type: 'disabled' } }
       chat = chat_with_history('eu.anthropic.claude-opus-5-5', :bedrock)
