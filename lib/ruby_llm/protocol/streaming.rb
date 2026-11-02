@@ -47,18 +47,9 @@ module RubyLLM
         fallback_state = StreamState.new
         on_data = build_on_data_handler(progress, fallback_state: fallback_state, &)
 
-        @connection.post url, payload, usage: @usage_tracker, stream: true do |req|
+        post_stream(url, payload, on_data:, progress:, on_reset: fallback_state.method(:reset),
+                                  on_failure: stream_failure(fallback_state)) do |req|
           req.headers = additional_headers.merge(req.headers) unless additional_headers.empty?
-          (req.options.context ||= {})[Transport::Connection::STREAM_PROGRESS_KEY] = progress
-          req.options.context[Transport::ErrorMiddleware::STREAM_RESET_KEY] = fallback_state.method(:reset)
-          req.options.context[Transport::ErrorMiddleware::STREAM_FAILURE_KEY] = lambda { |env|
-            raise_stream_failure(env[:streaming_state] || fallback_state, env)
-          }
-          if faraday_1?
-            req.options[:on_data] = on_data
-          else
-            req.options.on_data = on_data
-          end
         end
       end
 
@@ -66,6 +57,21 @@ module RubyLLM
 
       def faraday_1?
         Faraday::VERSION.start_with?('1')
+      end
+
+      def post_stream(url, payload, on_data:, progress:, on_reset:, on_failure: nil)
+        @connection.post url, payload, usage: @usage_tracker, stream: true do |request|
+          yield request if block_given?
+          context = (request.options.context ||= {})
+          context[Transport::Connection::STREAM_PROGRESS_KEY] = progress
+          context[Transport::ErrorMiddleware::STREAM_RESET_KEY] = on_reset
+          context[Transport::ErrorMiddleware::STREAM_FAILURE_KEY] = on_failure if on_failure
+          request.options.on_data = on_data
+        end
+      end
+
+      def stream_failure(fallback_state)
+        ->(env) { raise_stream_failure(env[:streaming_state] || fallback_state, env) }
       end
 
       # Some adapters omit the env, so ErrorMiddleware also resets the
