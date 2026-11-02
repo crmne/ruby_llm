@@ -101,6 +101,67 @@ RSpec.describe RubyLLM::Protocol do
       expect { protocol.paint('a ruby', model: 'x', size: nil) }
         .to raise_error(RubyLLM::Error, "OpenAI doesn't support image generation")
     end
+
+    {
+      'remote tool approvals' => lambda { |protocol|
+        protocol.tool_approval_response(RubyLLM::ToolCall.new(id: '1', name: 't', arguments: {}), approved: true)
+      },
+      'token counting' => ->(protocol) { protocol.count_tokens([], tools: {}) },
+      'text tokenization' => ->(protocol) { protocol.tokenize('hi', model: 'x') },
+      'manual compaction' => ->(protocol) { protocol.compact([]) },
+      'video generation' => ->(protocol) { protocol.animate_later('a ruby', model: 'x') },
+      'speech generation' => ->(protocol) { protocol.speak('hi', model: 'x', voice: nil, format: nil) },
+      'transcription' => ->(protocol) { protocol.transcribe(StringIO.new('a'), model: 'x', language: nil) },
+      'OCR' => ->(protocol) { protocol.ocr('file', model: 'x') },
+      'reranking' => ->(protocol) { protocol.rerank('q', %w[a], model: 'x') },
+      'judgments' => ->(protocol) { protocol.judge('hi', questions: [], model: 'x') },
+      'explicit content caching' => ->(protocol) { protocol.find_cache('name') }
+    }.each do |label, call|
+      it "names #{label} when its seams are missing" do
+        expect { call.call(protocol) }.to raise_error(RubyLLM::Error, "OpenAI doesn't support #{label}")
+      end
+    end
+
+    it 'reports the remaining caching and video operations the same way' do
+      expect { protocol.delete_cache('name') }
+        .to raise_error(RubyLLM::Error, "OpenAI doesn't support explicit content caching")
+      expect { protocol.extend_cache('name', ttl: 60) }
+        .to raise_error(RubyLLM::Error, "OpenAI doesn't support explicit content caching")
+      expect { protocol.cache_content('text', model: 'x') }
+        .to raise_error(RubyLLM::Error, "OpenAI doesn't support explicit content caching")
+      expect { protocol.find_video_job('id', model: 'x') }
+        .to raise_error(RubyLLM::Error, "OpenAI doesn't support video generation")
+    end
+
+    it 'leaves a subclass that replaces an operation to answer for itself' do
+      replaced = Class.new(described_class) { def embed(*, **) = raise(NotImplementedError, 'mine') }
+
+      expect { replaced.allocate.embed('hi', model: 'x') }.to raise_error(NotImplementedError, 'mine')
+    end
+
+    it 'keeps a subclass that calls super under the translation' do
+      config = RubyLLM::Configuration.new.tap { |c| c.openai_api_key = 'test' }
+      extended = Class.new(described_class) { def embed(*, **) = super }
+
+      expect { extended.new(RubyLLM::Providers::OpenAI.new(config)).embed('hi', model: 'x', dimensions: nil) }
+        .to raise_error(RubyLLM::Error, "OpenAI doesn't support embeddings")
+    end
+
+    it 'does not claim chat is unsupported when a streaming block raises NotImplementedError' do
+      config = RubyLLM::Configuration.new.tap { |c| c.openai_api_key = 'test' }
+      streaming = Class.new(described_class) do
+        def stream_response(*)
+          yield :chunk
+        end
+      end.new(RubyLLM::Providers::OpenAI.new(config))
+
+      allow(RubyLLM::Accounting::Usage::Tracker).to receive(:new).and_return(
+        instance_double(RubyLLM::Accounting::Usage::Tracker, observe: nil, cancel_pending: nil)
+      )
+
+      expect { streaming.complete_request({}, {}) { raise NotImplementedError, 'from the caller' } }
+        .to raise_error(NotImplementedError, 'from the caller')
+    end
   end
 
   describe '#embed' do

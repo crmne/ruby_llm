@@ -39,6 +39,7 @@ module RubyLLM
     include BinaryStreaming
     include RequestShapes
     include NativeContent
+    prepend UnsupportedOperations
     prepend ToolNamespaces
 
     # The Provider this protocol talks through.
@@ -117,8 +118,6 @@ module RubyLLM
       Message.new(role: :tool, content: approved ? 'Approved' : 'Denied', tool_call_id: tool_call.id,
                   provider_call_id: tool_call.provider_call_id,
                   raw_content: render_tool_approval_response(tool_call, approved:))
-    rescue NotImplementedError
-      raise Error, "#{@provider.name} doesn't support remote tool approvals"
     end
 
     def complete(messages, tools:, temperature:, provider_options: {}, headers: {}, schema: nil, thinking: nil,
@@ -182,8 +181,6 @@ module RubyLLM
       payload = apply_provider_tools(payload, provider_tools)
       payload = apply_tool_search(payload)
       apply_before_request_hooks(payload, before_request)
-    rescue NotImplementedError
-      raise Error, "#{@provider.name} doesn't support chat"
     end
 
     # Returns whether the API searches deferred tools itself. Chat gives a
@@ -253,8 +250,6 @@ module RubyLLM
         caching: caching
       )
       parse_count_tokens_response post_count_tokens(payload)
-    rescue NotImplementedError
-      raise Error, "#{@provider.name} doesn't support token counting"
     rescue Error => e
       claim_error(e, payload)
       raise
@@ -269,8 +264,6 @@ module RubyLLM
       payload = render_tokenization_payload(text, model:)
       response = @connection.post tokenization_url, payload
       parse_tokenization_response(response, model:)
-    rescue NotImplementedError
-      raise Error, "#{@provider.name} doesn't support text tokenization"
     end
 
     def compact(messages, headers: {}, before_request: [], usage_recorder: nil)
@@ -281,8 +274,6 @@ module RubyLLM
         end
         parse_compaction_response(response)
       end
-    rescue NotImplementedError
-      raise Error, "#{@provider.name} doesn't support manual compaction"
     rescue Error => e
       claim_error(e, payload)
       raise
@@ -302,8 +293,6 @@ module RubyLLM
         response = @connection.post(embedding_url(model:), payload, usage: @usage_tracker)
         ensure_embedding_per_text(parse_embedding_response(response, model:, text:), text, attachments, response)
       end
-    rescue NotImplementedError
-      raise Error, "#{@provider.name} doesn't support embeddings"
     end
 
     def render_embedding(text, model:, dimensions: nil, task_type: nil, title: nil, provider_options: {}) # :nodoc:
@@ -317,8 +306,6 @@ module RubyLLM
         response = @connection.post moderation_url, payload, usage: @usage_tracker
         parse_moderation_response(response, model:)
       end
-    rescue NotImplementedError
-      raise Error, "#{@provider.name} doesn't support moderation"
     end
 
     def paint(prompt, model:, size:, count: nil, with: nil, mask: nil, provider_options: {})
@@ -330,8 +317,6 @@ module RubyLLM
         images.each { |image| image.config = @config }
         images.size <= 1 ? images.first : images
       end
-    rescue NotImplementedError
-      raise Error, "#{@provider.name} doesn't support image generation"
     end
 
     def post_image(payload, with:, mask:)
@@ -364,8 +349,6 @@ module RubyLLM
       end
       response = post_video(url, payload)
       parse_video_job(response, model:, **parse_video_request(payload))
-    rescue NotImplementedError
-      raise Error, "#{@provider.name} doesn't support video generation"
     end
 
     # Returns the duration in seconds and the resolution a rendered video
@@ -424,8 +407,6 @@ module RubyLLM
 
     def find_video_job(id, model:)
       VideoJob.new(id:, protocol: self, model:).refresh
-    rescue NotImplementedError
-      raise Error, "#{@provider.name} doesn't support video generation"
     end
 
     def speak(input, model:, voice:, format:, provider_options: {}, &block)
@@ -436,8 +417,6 @@ module RubyLLM
         response = @connection.post speech_url(model:), payload, usage: @usage_tracker
         parse_speech_response(response, model:, voice:, format:)
       end
-    rescue NotImplementedError
-      raise Error, "#{@provider.name} doesn't support speech generation"
     end
 
     def stream_speech(*, **, &)
@@ -472,8 +451,6 @@ module RubyLLM
         response = @connection.post transcription_url, payload, usage: @usage_tracker
         parse_transcription_response(response, model:)
       end
-    rescue NotImplementedError
-      raise Error, "#{@provider.name} doesn't support transcription"
     end
 
     # Streams a transcription, yielding TranscriptionChunk objects and
@@ -500,8 +477,6 @@ module RubyLLM
         response = @connection.post ocr_url, payload, usage: @usage_tracker
         parse_ocr_response(response, model:)
       end
-    rescue NotImplementedError
-      raise Error, "#{@provider.name} doesn't support OCR"
     end
 
     def rerank(query, documents, model:, top_n: nil, provider_options: {})
@@ -510,8 +485,6 @@ module RubyLLM
         response = @connection.post rerank_url, payload, usage: @usage_tracker
         parse_rerank_response(response, model:, documents:)
       end
-    rescue NotImplementedError
-      raise Error, "#{@provider.name} doesn't support reranking"
     end
 
     def cache_content(content, model:, ttl: nil, instructions: nil, with: nil)
@@ -519,8 +492,6 @@ module RubyLLM
                                               attachments: Attachment.wrap(with, config: @config))
       response = @connection.post caches_url, payload, idempotent: false
       parse_cache_response(response.body)
-    rescue NotImplementedError
-      raise Error, "#{@provider.name} doesn't support explicit content caching"
     end
 
     def judge(input, questions:, model:, with: [], provider_options: {}) # :nodoc:
@@ -529,29 +500,21 @@ module RubyLLM
         response = @connection.post judgment_url, payload, usage: @usage_tracker
         parse_judgment_response(response, questions:)
       end
-    rescue NotImplementedError
-      raise Error, "#{@provider.name} doesn't support judgments"
     end
 
     def find_cache(name)
       response = @connection.get cache_url(name)
       parse_cache_response(response.body)
-    rescue NotImplementedError
-      raise Error, "#{@provider.name} doesn't support explicit content caching"
     end
 
     def delete_cache(name)
       @connection.delete cache_url(name)
       true
-    rescue NotImplementedError
-      raise Error, "#{@provider.name} doesn't support explicit content caching"
     end
 
     def extend_cache(name, ttl:)
       response = @connection.patch cache_url(name), render_cache_update_payload(ttl:)
       parse_cache_response(response.body)
-    rescue NotImplementedError
-      raise Error, "#{@provider.name} doesn't support explicit content caching"
     end
 
     def parse_error(response)

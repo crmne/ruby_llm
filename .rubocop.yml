@@ -75,6 +75,7 @@ Naming/PredicateMethod:
     merge:
       - AllowedMethods
   AllowedMethods:
+    - delete_cache # answers true once the provider has dropped the cache
     - unqueue # answers whether it withdrew the message before the loop took it
 
 Style/OptionalBooleanParameter:
