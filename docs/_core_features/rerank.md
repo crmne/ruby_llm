@@ -128,7 +128,7 @@ Reranking is the second stage of a pipeline whose first stage is embeddings. Ret
 # app/models/article.rb
 class Article < ApplicationRecord
   def self.search(query, limit: 5)
-    query_vector = RubyLLM.embed(query).vectors
+    query_vector = RubyLLM.embed(query).vector
     candidates   = nearest_neighbors(:embedding, query_vector, distance: :cosine).limit(50).to_a
 
     rerank = RubyLLM.rerank(query, candidates.map(&:body), model: "{{ site.models.rerank_cohere }}", top_n: limit)

@@ -55,7 +55,7 @@ class Memory < ApplicationRecord
   private
 
   def generate_embedding
-    self.embedding = RubyLLM.embed(content).vectors
+    self.embedding = RubyLLM.embed(content).vector
   end
 end
 ```
@@ -96,7 +96,7 @@ class Recall < RubyLLM::Tool
   end
 
   def execute(query:)
-    embedding = RubyLLM.embed(query).vectors
+    embedding = RubyLLM.embed(query).vector
     memories = @user.memories.nearest_neighbors(:embedding, embedding, distance: "euclidean").limit(5)
     memories.map(&:content).join("\n")
   end

@@ -10,7 +10,7 @@ module RubyLLM
   #   batch = RubyLLM.batch(requests)
   #   # later, once batch.refresh.complete?
   #   batch.results
-  #   requests.first.result.vectors
+  #   requests.first.result.vector
   #
   class EmbeddingRequest
     include Support::Inspectable
