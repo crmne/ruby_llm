@@ -41,7 +41,7 @@ module RubyLLM
         configure_driver
         @driver.start
         read_frame(deadline) until @opened || @closed || @error
-        raise @error if @error
+        raise @error if @error && !@opened
         raise Error, 'WebSocket closed before opening' unless @opened
 
         self
