@@ -105,12 +105,18 @@ module RubyLLM
         end
 
         def raise_streaming_chunk_error(payload)
-          parsed = JSON.parse(payload)
-          message = parsed.dig('error', 'message') || parsed['message'] || 'Bedrock streaming error'
+          message = chunk_error_message(JSON.parse(payload)) || 'Bedrock streaming error'
           response = ErrorResponse.new({ 'message' => message }, 500)
           Transport::ErrorMiddleware.parse_error(provider: self, response: response)
         rescue JSON::ParserError
           nil
+        end
+
+        def chunk_error_message(parsed)
+          return unless parsed.is_a?(Hash)
+
+          error = parsed['error']
+          (error.is_a?(Hash) ? error['message'] : error) || parsed['message']
         end
 
         def decode_events(decoder, raw_chunk)

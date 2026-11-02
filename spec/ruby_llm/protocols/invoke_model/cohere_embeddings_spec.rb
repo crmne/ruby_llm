@@ -18,6 +18,10 @@ RSpec.describe RubyLLM::Protocols::InvokeModel::CohereEmbeddings do
       expect { parse([[0.1]], %w[one two]) }.to raise_error(RubyLLM::Error, 'Expected 2 embeddings, got 1')
     end
 
+    it 'leaves inputs sent through provider options to the provider' do
+      expect(parse([[0.1], [0.2]], []).vectors).to eq([[0.1], [0.2]])
+    end
+
     it 'keeps one vector per text' do
       expect(parse([[0.1], [0.2]], %w[one two]).vectors).to eq([[0.1], [0.2]])
     end

@@ -321,6 +321,15 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
         .to raise_error(RubyLLM::Error, /security token included in the request is expired/)
     end
 
+    it 'reads an error given as a bare string' do
+      expect { parse('{"error":"stream broke"}') }.to raise_error(RubyLLM::Error, /stream broke/)
+    end
+
+    it 'falls back when the JSON is not an object' do
+      expect { parse('["stream", "broke", "as", "a", "list"]') }
+        .to raise_error(RubyLLM::Error, /Bedrock streaming error/)
+    end
+
     it 'raises a RubyLLM error for bytes it cannot read' do
       expect { parse('not json and not an event stream') }
         .to raise_error(RubyLLM::Error, 'Bedrock returned an unreadable event stream')

@@ -39,7 +39,7 @@ module RubyLLM
         end
 
         def aligned_vectors(vectors, text, response)
-          return vectors if vectors.size == text.size
+          return vectors if text.empty? || vectors.size == text.size
 
           raise Error.new("Expected #{text.size} embeddings, got #{vectors.size}", response:)
         end

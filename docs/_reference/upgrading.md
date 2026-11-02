@@ -173,7 +173,7 @@ A non-streaming Responses request that comes back `failed` now raises the same c
 
 ## Bedrock Batches Report No Request Counts
 
-`Batch#request_counts` on Bedrock is now `nil`. It used to hold the job's submit and end timestamps under `submitted` and `completed`, which are not counts. Bedrock's job status reports no counts.
+`Batch#request_counts` on Bedrock is now `nil`. It used to hold the job's submit and end timestamps under `submitted` and `completed`, which are not counts. Bedrock's job status reports no counts. A persisted batch keeps the old value until its next `refresh`.
 
 ## MCP Prompts Take No Attachments
 
