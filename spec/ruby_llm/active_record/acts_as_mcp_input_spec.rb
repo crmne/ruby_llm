@@ -35,6 +35,34 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     expect(chat.pending_inputs.first.message).to eq('Which environment?')
   end
 
+  it 'reads the persisted input on a copy of the underlying chat' do
+    chat = paused_chat
+    copy = chat.to_llm.dup
+
+    expect(copy).to be_awaiting_input
+
+    RubyLLM::ActiveRecord::ToolCall.where(tool_call_id: call_id).update_all(mcp_state: nil)
+
+    expect(copy).not_to be_awaiting_input
+  end
+
+  it 'binds a copy of the record to its own tool call state' do
+    chat = paused_chat
+
+    copy = chat.dup
+    state = copy.to_llm.instance_variable_get(:@tool_call_state)
+
+    expect(state).not_to be(chat.to_llm.instance_variable_get(:@tool_call_state))
+    expect(state.instance_variable_get(:@chat)).to be(copy)
+  end
+
+  it 'sees what another process recorded on the same chat after a reload' do
+    chat = paused_chat
+    RubyLLM::ActiveRecord::ToolCall.where(tool_call_id: call_id).update_all(mcp_state: nil)
+
+    expect(chat.reload).not_to be_awaiting_input
+  end
+
   it 'releases the claims of a call that pauses for input' do
     chat = paused_chat
 

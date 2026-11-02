@@ -35,7 +35,7 @@ module RubyLLM
     PAUSED = Object.new.freeze
     COPIED_STATE = %i[
       @usage_entries @tools @tool_deferrals @mcp @mcp_deferrals @tool_prefs @headers @attachment_replacements
-      @tool_call_decisions @remembered_tools @used_escalations @tool_call_inputs @contested_tool_calls
+      @tool_call_decisions @remembered_tools @used_escalations @tool_call_state @contested_tool_calls
     ].freeze
     UNFINISHED_TOOL_RESULT = { error: 'The tool call did not finish.' }.to_json.freeze
     private_constant :THINKING_OPTIONS, :PAUSED, :COPIED_STATE, :UNFINISHED_TOOL_RESULT
@@ -177,9 +177,7 @@ module RubyLLM
       @used_escalations = []
       @approval_checker = nil
       @remembered_checker = nil
-      @tool_call_inputs = {}
-      @input_checker = nil
-      @input_recorder = nil
+      @tool_call_state = ToolCallState.new
       @tool_call_claimer = nil
       @tool_call_releaser = nil
       @running_checker = nil
@@ -1421,9 +1419,9 @@ module RubyLLM
     end
 
     # Hooks installed by the Rails integration.
-    attr_writer :cancellation_checker, :usage_recorder, :progress_recorder, :approval_checker, :input_checker,
-                :input_recorder, :tool_call_claimer, :tool_call_releaser, :running_checker, :remembered_checker,
-                :interruptions, :message_queue # :nodoc:
+    attr_writer :cancellation_checker, :usage_recorder, :progress_recorder, :approval_checker,
+                :tool_call_claimer, :tool_call_releaser, :running_checker, :remembered_checker,
+                :interruptions, :message_queue, :tool_call_state # :nodoc:
 
     # Appends a message to the conversation and returns it as a Message.
     # Accepts a Message, an attribute Hash, or a record responding to
@@ -2375,12 +2373,11 @@ module RubyLLM
     end
 
     def tool_call_input(tool_call)
-      @input_checker ? @input_checker.call(tool_call) : @tool_call_inputs[tool_call.id]
+      @tool_call_state.input(tool_call)
     end
 
     def record_tool_call_input(tool_call, input)
-      @tool_call_inputs[tool_call.id] = input
-      @input_recorder&.call(tool_call, input)
+      @tool_call_state.record_input(tool_call, input)
     end
 
     def settle_input(request)

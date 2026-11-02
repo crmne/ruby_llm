@@ -8,6 +8,7 @@ require 'ruby_llm/active_record/chat_cancellation'
 require 'ruby_llm/active_record/chat_placeholders'
 require 'ruby_llm/active_record/system_instructions'
 require 'ruby_llm/active_record/chat_queue'
+require 'ruby_llm/active_record/chat_tool_call_state'
 
 module RubyLLM
   module ActiveRecord
@@ -175,6 +176,14 @@ module RubyLLM
 
       def messages_association # :nodoc:
         association(messages_association_name).reader
+      end
+
+      def find_tool_call(tool_call_id) # :nodoc:
+        RubyLLM::ActiveRecord::ToolCall.find_by(
+          tool_call_id: tool_call_id,
+          message_type: messages_association.klass.polymorphic_name,
+          message_id: messages_association.select(:id)
+        )
       end
 
       def refresh_messages # :nodoc:
@@ -1107,8 +1116,7 @@ module RubyLLM
         end
         chat.approval_checker = proc { |tool_call| persisted_tool_call_approval(tool_call) }
         chat.remembered_checker = proc { |call| persisted_remembered_tool?(call) }
-        chat.input_checker = proc { |tool_call| persisted_tool_call_input(tool_call) }
-        chat.input_recorder = proc { |tool_call, input| persist_tool_call_input(tool_call, input) }
+        chat.tool_call_state = ChatToolCallState.new(self)
         chat.message_queue = ChatQueue.new(self)
         install_tool_call_claims(chat)
         install_persistence_callbacks(chat)
@@ -1118,16 +1126,6 @@ module RubyLLM
         chat.tool_call_claimer = proc { |leases, executing:| claim_persisted_tool_calls(leases, executing:) }
         chat.tool_call_releaser = proc { |tool_call_ids| release_persisted_tool_calls(tool_call_ids) }
         chat.running_checker = proc { |tool_call| tool_call_running_elsewhere?(tool_call) }
-      end
-
-      def persisted_tool_call_input(tool_call)
-        record = RubyLLM::ActiveRecord::ToolCall.uncached { find_tool_call(tool_call.id) }
-        record.mcp_state if record&.has_attribute?(:mcp_state)
-      end
-
-      def persist_tool_call_input(tool_call, input)
-        record = find_tool_call(tool_call.id)
-        record.update!(mcp_state: input) if record&.has_attribute?(:mcp_state)
       end
 
       def sync_messages(chat = @chat)
@@ -1275,14 +1273,6 @@ module RubyLLM
           attributes[:approval] = 'pending' if to_llm.approval_pending?(tool_call)
           message_record.ruby_llm_tool_calls.create!(**attributes)
         end
-      end
-
-      def find_tool_call(tool_call_id)
-        RubyLLM::ActiveRecord::ToolCall.find_by(
-          tool_call_id: tool_call_id,
-          message_type: messages_association.klass.polymorphic_name,
-          message_id: messages_association.select(:id)
-        )
       end
     end
   end

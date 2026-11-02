@@ -1,0 +1,25 @@
+# frozen_string_literal: true
+
+module RubyLLM
+  module ActiveRecord
+    # Keeps a persisted chat's tool call state on its
+    # +ruby_llm_tool_calls+ rows, read outside the query cache, so every
+    # process sees the same state.
+    class ChatToolCallState < Chat::ToolCallState # :nodoc:
+      def initialize(chat)
+        super()
+        @chat = chat
+      end
+
+      def input(tool_call)
+        record = RubyLLM::ActiveRecord::ToolCall.uncached { @chat.find_tool_call(tool_call.id) }
+        record.mcp_state if record&.has_attribute?(:mcp_state)
+      end
+
+      def record_input(tool_call, input)
+        record = @chat.find_tool_call(tool_call.id)
+        record.update!(mcp_state: input) if record&.has_attribute?(:mcp_state)
+      end
+    end
+  end
+end
