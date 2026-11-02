@@ -153,7 +153,7 @@ image = RubyLLM.paint(
 )
 ```
 
-Gemini image models also accept `"1K"`, `"2K"`, and `"4K"`. Gemini, Imagen, OpenRouter, ElevenLabs, and Stable Diffusion on Bedrock interpret pixel dimensions as an aspect ratio; the model may return different dimensions. Bedrock image editing controls its own output size, so leave `size:` unset when editing. Omit `size:` to let a model choose.
+Gemini image models also accept `"1K"`, `"2K"`, and `"4K"`, and OpenRouter accepts tiers and pixel dimensions where the model supports them. Gemini, Imagen, ElevenLabs, and Stable Diffusion on Bedrock interpret pixel dimensions as an aspect ratio; the model may return different dimensions. Bedrock image editing controls its own output size, so leave `size:` unset when editing. Omit `size:` to let a model choose.
 
 ## Working with Generated Images
 
