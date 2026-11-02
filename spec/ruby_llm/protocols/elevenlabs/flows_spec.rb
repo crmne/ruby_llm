@@ -112,7 +112,7 @@ RSpec.describe RubyLLM::Protocols::ElevenLabs::Flows do
     job = context.animate_later('A ruby turns slowly', model: video_model, provider: :elevenlabs,
                                                        assume_model_exists: true, with: [image_path, image_path])
 
-    expect(job.wait(timeout: 1)).to be_completed
+    expect(job.wait(timeout: 1)).to be_succeeded
     expect(job.video).to have_attributes(model: video_model, mime_type: 'video/mp4')
     expect(job.video.raw['id']).to eq('generation_video')
     expect(request).to have_been_requested.once
@@ -191,7 +191,7 @@ RSpec.describe RubyLLM::Protocols::ElevenLabs::Flows do
                                                                         provider_options: { duration_secs: 4,
                                                                                             generate_audio: false })
 
-    expect(job.wait(timeout: 240)).to be_completed
+    expect(job.wait(timeout: 240)).to be_succeeded
     expect(job.video.mime_type).to eq('video/mp4')
     expect(job.video.to_blob.bytesize).to be > 1000
   rescue RubyLLM::Error => e

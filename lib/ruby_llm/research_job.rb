@@ -11,6 +11,7 @@ module RubyLLM
   #
   class ResearchJob
     include Support::Inspectable
+    include Support::DeprecatedJobPredicates
 
     class DeadlineExpired < StandardError; end # :nodoc:
     private_constant :DeadlineExpired
@@ -136,10 +137,10 @@ module RubyLLM
     def pending? = status == :pending
 
     # Returns whether the task reached any terminal state.
-    def done? = !pending?
+    def complete? = !pending?
 
     # Returns whether the task finished with a complete report.
-    def completed? = status == :completed
+    def succeeded? = status == :completed
 
     # Returns whether the provider stopped before completing the report.
     def incomplete? = status == :incomplete
@@ -154,7 +155,7 @@ module RubyLLM
     # task finishes. +timeout:+ limits this request in seconds.
     def refresh(timeout: nil)
       self.class.validate_polling_options(timeout, 1) unless timeout.nil?
-      unless done?
+      unless complete?
         state = request_with_timeout(timeout) { @protocol.refresh_research_job(self, timeout:) }
         apply_state(state)
       end
@@ -167,7 +168,7 @@ module RubyLLM
     def wait(timeout: 600, interval: 5)
       self.class.validate_polling_options(timeout, interval)
       deadline = monotonic_time + timeout
-      until done?
+      until complete?
         remaining = deadline - monotonic_time
         raise TimeoutError.new("Research timed out (job #{id})", job: self) unless remaining.positive?
 
@@ -183,7 +184,7 @@ module RubyLLM
     # can confirm cancellation; this does not delete stored task data.
     def cancel(timeout: 5)
       self.class.validate_polling_options(timeout, 1)
-      unless done?
+      unless complete?
         state = request_with_timeout(timeout) { @protocol.cancel_research_job(self, timeout:) }
         apply_state(state)
       end

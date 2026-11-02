@@ -60,23 +60,23 @@ module RubyLLM
         Time.iso8601(data['createdAt']) + (data['ttlMs'] / 1000.0) if data['ttlMs'] && data['createdAt']
       end
 
-      # Returns the MCP::Result once the task #completed?, and +nil+ until
+      # Returns the MCP::Result once the task #succeeded?, and +nil+ until
       # then. Raises MCP::Error when the task failed or was cancelled.
       def result
         raise error if failed? || cancelled?
 
-        Result.new(data['result']) if completed?
+        Result.new(data['result']) if succeeded?
       end
 
       # Checks on the task once and returns +self+, which now tells whether
-      # the task is #done? and how soon to check again. Does nothing once
-      # the task is #done?.
+      # the task is #complete? and how soon to check again. Does nothing once
+      # the task is #complete?.
       def refresh
-        @data = connected.poll_task(id) unless done?
+        @data = connected.poll_task(id) unless complete?
         self
       end
 
-      # Checks on the task until it is #done?, sleeping #poll_interval
+      # Checks on the task until it is #complete?, sleeping #poll_interval
       # seconds in between, and returns +self+. Answers the server's
       # requests for input with MCP.before_input_request callbacks.
       # +timeout+ defaults to the server's MCP.timeout, and the task is
@@ -91,7 +91,7 @@ module RubyLLM
       # Asks the server to cancel the task, and returns +self+. The server
       # may still finish it, so check with #refresh.
       def cancel
-        connected.cancel_task(id) unless done?
+        connected.cancel_task(id) unless complete?
         self
       end
 

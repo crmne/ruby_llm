@@ -96,7 +96,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Videos do
     job = context.animate_later('The wave gently reaches the sandy shore', model:, provider: :gemini,
                                                                            assume_model_exists: true, extend: original)
 
-    expect(job.wait(timeout: 240)).to be_completed
+    expect(job.wait(timeout: 240)).to be_succeeded
     expect(job.video.mime_type).to eq('video/mp4')
     expect(job.video.to_blob.bytesize).to be > 1000
     expect(job.video.raw['done']).to be(true)

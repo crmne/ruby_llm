@@ -20,6 +20,7 @@ After reading this guide, you will know:
 * How persisted chats now run in one process at a time.
 * What changes for a crashed job, a denial, pending approvals, an MCP input error, a stdio server's environment, a dropped MCP tool call, a document URL, and a deploy that mixes versions.
 * What changes for agent `rescue_from` handlers and streamed transcription chunks.
+* Which job predicates replace `done?` and `completed?`.
 
 This guide covers **2.1 to 2.2**. Coming from 2.0? Follow the [2.1 upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.1.1/docs/_reference/upgrading.md) with RubyLLM 2.1 first.
 
@@ -241,6 +242,22 @@ print chunk.delta if chunk.delta?
 ```
 
 The predicates and constants such as `TranscriptionChunk::DELTA` keep working. `chunk.raw` still holds the provider's event.
+
+## Jobs Use `complete?` and `succeeded?`
+
+`VideoJob`, `ResearchJob`, `Task`, and `MCP::Task` now use the same two predicates as `Batch`: `complete?` means finished either way, and `succeeded?` means finished with a result. `done?` and `completed?` still work on those objects and warn through `RubyLLM.deprecator`. RubyLLM 3.0 removes them.
+
+```ruby
+# Before
+job.done?
+job.completed?
+
+# After
+job.complete?
+job.succeeded?
+```
+
+A `ResearchJob` that stopped early is `complete?` and `incomplete?` but not `succeeded?`, and `message` still carries its partial report. Status values do not change, so `job.status` still returns `:completed`. `TranscriptionChunk#done?` also stays, because it means the end of a stream.
 
 ## Rescue Input Errors as Input Errors
 

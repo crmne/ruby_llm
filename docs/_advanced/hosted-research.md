@@ -67,7 +67,7 @@ Save `job.id` in your application. A later Rails job or Ruby process can retriev
 job = RubyLLM::ResearchJob.find(saved_job_id, provider: :vertexai)
 job.refresh
 
-puts job.message.content if job.completed?
+puts job.message.content if job.succeeded?
 ```
 
 `job.wait(timeout: 300, interval: 5)` polls for up to five minutes. Both values are in seconds. A wait timeout raises `RubyLLM::ResearchJob::TimeoutError` and leaves the independent task running. The exception retains it as `error.job`.

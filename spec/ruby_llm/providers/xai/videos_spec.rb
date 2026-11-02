@@ -128,7 +128,7 @@ RSpec.describe RubyLLM::Providers::XAI::Videos do
       job = context.animate_later(prompt, model:, provider: :xai, **options)
 
       expect(job.id).not_to be_empty
-      expect(job.wait(timeout: 180)).to be_completed
+      expect(job.wait(timeout: 180)).to be_succeeded
       expect(job.video.mime_type).to eq('video/mp4')
       expect(job.video.to_blob.bytesize).to be > 1000
       expect(job.video.raw['status']).to eq('done')
