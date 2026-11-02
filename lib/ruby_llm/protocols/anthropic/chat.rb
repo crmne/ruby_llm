@@ -400,7 +400,7 @@ module RubyLLM
         # Stored thinking blocks replay whether or not this request asks for
         # thinking: Claude emits them on its own and requires them back on
         # tool-use turns.
-        def render_message(msg, thinking: nil, citations: false, caching: nil) # rubocop:disable Lint/UnusedMethodArgument
+        def render_message(msg, citations: false, caching: nil, **)
           if msg.role == :assistant && msg.raw_content
             render_raw_assistant_message(msg, caching:)
           elsif msg.tool_call?

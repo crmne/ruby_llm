@@ -9,13 +9,13 @@ module RubyLLM
         ASPECT_RATIO = /\A\d+:\d+\z/
         PIXEL_DIMENSIONS = /\A(\d+)\s*[x×]\s*(\d+)\z/i
 
-        def images_url(with: nil, mask: nil) # rubocop:disable Lint/UnusedMethodArgument
+        def images_url(**)
           id = model_id(@model)
 
           "models/#{id}:#{image_endpoint_action(id)}"
         end
 
-        def render_image_payload(prompt, model:, size:, count: nil, with: nil, mask: nil, provider_options: {}) # rubocop:disable Lint/UnusedMethodArgument
+        def render_image_payload(prompt, model:, size:, count: nil, with: nil, provider_options: {}, **)
           @model = model
           payload = if gemini_image_model?(model)
                       render_gemini_image_payload(prompt, with:, count:, size:)

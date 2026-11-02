@@ -7,7 +7,7 @@ module RubyLLM
       module Speech
         module_function
 
-        def speech_url(model:) # rubocop:disable Lint/UnusedMethodArgument
+        def speech_url(**)
           'audio/speech'
         end
 

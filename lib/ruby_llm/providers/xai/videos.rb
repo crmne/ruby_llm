@@ -45,7 +45,7 @@ module RubyLLM
           "videos/#{job.id}"
         end
 
-        def parse_video_job_status(response, job:) # rubocop:disable Lint/UnusedMethodArgument
+        def parse_video_job_status(response, **)
           body = response.body
           state = case body['status']
                   when 'done' then { status: :completed }

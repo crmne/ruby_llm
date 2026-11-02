@@ -78,7 +78,7 @@ module RubyLLM
           usage.merge('cost' => reported_cost(usage)).compact
         end
 
-        def validate_paint_inputs!(with:, mask:) # rubocop:disable Lint/UnusedMethodArgument
+        def validate_paint_inputs!(mask:, **)
           raise Error, 'xAI image editing does not support a mask parameter' if mask
         end
 

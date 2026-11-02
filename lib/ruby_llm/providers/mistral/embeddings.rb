@@ -11,8 +11,7 @@ module RubyLLM
           'embeddings'
         end
 
-        # rubocop:disable-next Lint/UnusedMethodArgument
-        def render_embedding_payload(text, model:, dimensions:, task_type: nil, title: nil, provider_options: {})
+        def render_embedding_payload(text, model:, dimensions:, provider_options: {}, **)
           {
             model: model,
             input: text,

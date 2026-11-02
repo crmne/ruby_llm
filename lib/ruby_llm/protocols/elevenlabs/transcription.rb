@@ -24,10 +24,8 @@ module RubyLLM
           operation == :transcribe ? %i[prompt speaker_references] : super
         end
 
-        # rubocop:disable-next Lint/UnusedMethodArgument
         def render_transcription_payload(file_part, model:, language:, format: nil, speaker_names: nil,
-                                         speaker_references: nil, provider_options: {}, prompt: nil,
-                                         temperature: nil)
+                                         provider_options: {}, temperature: nil, **)
           payload = {
             model_id: model,
             file: file_part,

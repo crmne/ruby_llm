@@ -11,9 +11,7 @@ module RubyLLM
 
         private
 
-        # rubocop:disable-next Lint/UnusedMethodArgument
-        def render_upload_payload(attachment, purpose: nil, expires_in: nil, visibility: nil,
-                                  display_name: nil, uri: nil, content_type: nil)
+        def render_upload_payload(attachment, purpose: nil, expires_in: nil, visibility: nil, **)
           multipart_payload(attachment, purpose:, expiry: expiry_hours(expires_in), visibility:)
         end
 

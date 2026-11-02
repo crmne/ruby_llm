@@ -51,8 +51,7 @@ module RubyLLM
                           .merge(provider_options).compact
         end
 
-        # rubocop:disable-next Lint/UnusedMethodArgument
-        def render_speech_payload(input, model:, voice: nil, format: nil, provider_options: {})
+        def render_speech_payload(input, **)
           { text: input }
         end
 

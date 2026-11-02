@@ -17,9 +17,7 @@ module RubyLLM
           operation == :embed ? %i[title] : super
         end
 
-        # rubocop:disable-next Lint/UnusedMethodArgument
-        def render_embedding_payload(text, model:, dimensions:, task_type: nil, title: nil, with: [],
-                                     provider_options: {})
+        def render_embedding_payload(text, model:, dimensions:, task_type: nil, with: [], provider_options: {}, **)
           image_only = with.any? && separate_image_embeddings?(model)
           payload = {
             model: model,
