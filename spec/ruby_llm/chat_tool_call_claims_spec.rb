@@ -91,7 +91,9 @@ RSpec.describe RubyLLM::Chat do
 
   it 'runs a call whose tool another process remembered as approved' do
     chat = RubyLLM.chat(model: model_for(:openai)).with_tools(charge_tool)
-    chat.remembered_checker = proc { |call| call.name == 'charge_card' }
+    state = RubyLLM::Chat::ToolCallState.new
+    allow(state).to receive(:remembered?) { |call| call.name == 'charge_card' }
+    chat.tool_call_state = state
     chat.add_message(role: :user, content: 'Charge the card')
     tool_calls = { 'call_1' => RubyLLM::ToolCall.new(id: 'call_1', name: 'charge_card', arguments: {}) }
     chat.add_message(RubyLLM::Message.new(role: :assistant, content: '', tool_calls:))

@@ -20,6 +20,15 @@ module RubyLLM
         record = @chat.find_tool_call(tool_call.id)
         record.update!(mcp_state: input) if record&.has_attribute?(:mcp_state)
       end
+
+      def decision(tool_call)
+        decided = super
+        decided.nil? ? @chat.persisted_tool_call_approval(tool_call) : decided
+      end
+
+      def remembered?(call)
+        super || @chat.persisted_remembered_tool?(call)
+      end
     end
   end
 end

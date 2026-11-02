@@ -35,7 +35,7 @@ module RubyLLM
     PAUSED = Object.new.freeze
     COPIED_STATE = %i[
       @usage_entries @tools @tool_deferrals @mcp @mcp_deferrals @tool_prefs @headers @attachment_replacements
-      @tool_call_decisions @remembered_tools @used_escalations @tool_call_state @contested_tool_calls
+      @tool_call_state @contested_tool_calls
     ].freeze
     UNFINISHED_TOOL_RESULT = { error: 'The tool call did not finish.' }.to_json.freeze
     private_constant :THINKING_OPTIONS, :PAUSED, :COPIED_STATE, :UNFINISHED_TOOL_RESULT
@@ -172,11 +172,6 @@ module RubyLLM
       @attachment_replacements = {}.compare_by_identity
       @cancelled = false
       @cancellation_checker = nil
-      @tool_call_decisions = {}
-      @remembered_tools = []
-      @used_escalations = []
-      @approval_checker = nil
-      @remembered_checker = nil
       @tool_call_state = ToolCallState.new
       @tool_call_claimer = nil
       @tool_call_releaser = nil
@@ -442,7 +437,7 @@ module RubyLLM
     def approve(tool_call, remember: false)
       name = remembered_tool_identity(tool_call) if remember
       record_tool_call_decision(tool_call, true)
-      @remembered_tools |= [name] if name && !tool_call_answered?(tool_call)
+      @tool_call_state.remember(name) if name && !tool_call_answered?(tool_call)
       self
     end
 
@@ -1419,9 +1414,9 @@ module RubyLLM
     end
 
     # Hooks installed by the Rails integration.
-    attr_writer :cancellation_checker, :usage_recorder, :progress_recorder, :approval_checker,
-                :tool_call_claimer, :tool_call_releaser, :running_checker, :remembered_checker,
-                :interruptions, :message_queue, :tool_call_state # :nodoc:
+    attr_writer :cancellation_checker, :usage_recorder, :progress_recorder, :tool_call_claimer,
+                :tool_call_releaser, :running_checker, :interruptions, :message_queue,
+                :tool_call_state # :nodoc:
 
     # Appends a message to the conversation and returns it as a Message.
     # Accepts a Message, an attribute Hash, or a record responding to
@@ -2131,7 +2126,7 @@ module RubyLLM
       tool = tool_for(tool_call)
       return approval_decision(tool, tool_call) if tool&.requires_approval?(tool_call)
 
-      @tool_call_decisions[tool_call.id] != false
+      !@tool_call_state.denied?(tool_call)
     end
 
     def deny_tool_calls(tool_calls)
@@ -2144,7 +2139,7 @@ module RubyLLM
 
     def record_tool_call_decision(tool_call, decision)
       id = tool_call.respond_to?(:id) ? tool_call.id : tool_call
-      @tool_call_decisions[id] = decision
+      @tool_call_state.record_decision(id, decision)
       self
     end
 
@@ -2157,7 +2152,7 @@ module RubyLLM
     end
 
     def remembered_tool?(call)
-      @remembered_tools.include?([call.namespace, call.name.to_s]) || @remembered_checker&.call(call) || false
+      @tool_call_state.remembered?(call)
     end
 
     def remembered_tool_identity(tool_call)
@@ -2189,17 +2184,16 @@ module RubyLLM
     end
 
     def escalation_approved?(tool_call)
-      return false if tool_call.nil? || @used_escalations.include?(tool_call.id)
+      return false if tool_call.nil? || @tool_call_state.escalation_spent?(tool_call)
 
-      @used_escalations << tool_call.id
+      @tool_call_state.spend_escalation(tool_call)
       tool_call_approval(nil, tool_call) == true
     end
 
     def tool_call_approval(tool, tool_call)
       return tool.approval_resolver.call(tool_call) if tool&.approval_resolver
-      return @tool_call_decisions[tool_call.id] if @tool_call_decisions.key?(tool_call.id)
 
-      @approval_checker&.call(tool_call)
+      @tool_call_state.decision(tool_call)
     end
 
     def handle_sequential_tool_calls(tool_calls)

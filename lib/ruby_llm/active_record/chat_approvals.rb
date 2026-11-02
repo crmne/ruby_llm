@@ -10,6 +10,25 @@ module RubyLLM
     # pending approvals are read from the rows without building the chat's
     # tools.
     module ChatApprovals # :nodoc:
+      def persisted_tool_call_approval(tool_call) # :nodoc:
+        record = RubyLLM::ActiveRecord::ToolCall.uncached { find_tool_call(tool_call.id) }
+        return unless record&.has_attribute?(:approval)
+
+        case record.approval
+        when 'approved', 'remembered' then true
+        when 'denied' then false
+        end
+      end
+
+      def persisted_remembered_tool?(call) # :nodoc:
+        return false unless persisted? && row_supports_approval?
+
+        RubyLLM::ActiveRecord::ToolCall.uncached do
+          identity = tool_identity.to_h { |column| [column, call.public_send(column)] }
+          chat_tool_calls.where(**identity, approval: 'remembered').exists?
+        end
+      end
+
       private
 
       def persisted_pending_approvals
@@ -46,25 +65,6 @@ module RubyLLM
         raise ArgumentError, "Unknown tool call: #{id.inspect}" unless record
 
         record
-      end
-
-      def persisted_tool_call_approval(tool_call)
-        record = RubyLLM::ActiveRecord::ToolCall.uncached { find_tool_call(tool_call.id) }
-        return unless record&.has_attribute?(:approval)
-
-        case record.approval
-        when 'approved', 'remembered' then true
-        when 'denied' then false
-        end
-      end
-
-      def persisted_remembered_tool?(call)
-        return false unless persisted? && row_supports_approval?
-
-        RubyLLM::ActiveRecord::ToolCall.uncached do
-          identity = tool_identity.to_h { |column| [column, call.public_send(column)] }
-          chat_tool_calls.where(**identity, approval: 'remembered').exists?
-        end
       end
     end
   end

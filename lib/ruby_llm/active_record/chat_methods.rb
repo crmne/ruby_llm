@@ -1114,8 +1114,6 @@ module RubyLLM
           renew_run_claim
           consume_persisted_cancellation_request
         end
-        chat.approval_checker = proc { |tool_call| persisted_tool_call_approval(tool_call) }
-        chat.remembered_checker = proc { |call| persisted_remembered_tool?(call) }
         chat.tool_call_state = ChatToolCallState.new(self)
         chat.message_queue = ChatQueue.new(self)
         install_tool_call_claims(chat)
