@@ -81,6 +81,10 @@ If you already ran an unreleased 2.2 migration that created `provider_id` on `ru
 rename_column :ruby_llm_tool_calls, :provider_id, :provider_call_id
 ```
 
+## Batches Take One Set of Credentials
+
+`RubyLLM.batch` used to send every chat with the first chat's credentials, even when chats came from contexts with different API keys. It now raises `ArgumentError`. Submit one batch per tenant.
+
 ## Tool Call IDs Belong to RubyLLM
 
 New tool calls receive a RubyLLM ID rather than exposing the provider's ID. Continue using `tool_call.id` for callbacks, approvals and results. Do not compare it with an ID in a raw provider response. Existing persisted calls keep their IDs, and newly persisted calls keep theirs across reloads and job retries.

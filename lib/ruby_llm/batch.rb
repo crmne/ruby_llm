@@ -166,6 +166,10 @@ module RubyLLM
         raise ArgumentError, "A batch takes one provider per submission, got: #{slugs.join(', ')}" if slugs.size > 1
 
         provider = chats.first.provider
+        unless chats.all? { |chat| chat.provider.same_credentials?(provider) }
+          raise ArgumentError, 'A batch takes one set of credentials per submission'
+        end
+
         raise Error, "#{provider.slug} doesn't support batch requests" unless provider.batches?
 
         provider

@@ -41,6 +41,43 @@ RSpec.describe RubyLLM::Batch, :live do
       expect { RubyLLM.batch(chats) }.to raise_error(ArgumentError, /one provider/)
     end
 
+    context 'with chats from two contexts' do
+      let(:contexts) do
+        %w[tenant-a tenant-b].map do |key|
+          RubyLLM.context do |config|
+            config.anthropic_api_key = key
+            config.openai_api_key = key
+          end
+        end
+      end
+
+      it 'rejects different credentials without naming them' do
+        chats = contexts.map { |context| context.chat(model: model).ask_later('Hi') }
+
+        expect { RubyLLM.batch(chats) }.to raise_error(ArgumentError) { |error|
+          expect(error.message).to include('one set of credentials')
+          expect(error.message).not_to include('tenant-')
+        }
+      end
+
+      it 'rejects different credentials on embedding requests' do
+        requests = contexts.map do |context|
+          context.embed_later('Hi', model: 'text-embedding-3-small', provider: :openai)
+        end
+
+        expect { RubyLLM.batch(requests) }.to raise_error(ArgumentError)
+      end
+
+      it 'accepts separate contexts with the same credentials' do
+        same = Array.new(2) { RubyLLM.context { |config| config.anthropic_api_key = 'shared' } }
+        chats = same.map { |context| context.chat(model: model).ask_later('Hi') }
+        allow(chats.first.provider).to receive(:create_batch)
+          .and_return(id: 'msgbatch_test', raw_status: 'in_progress', completed: false)
+
+        expect(RubyLLM.batch(chats).chats).to eq(chats)
+      end
+    end
+
     it 'rejects mixing chats with embedding requests' do
       items = [
         RubyLLM.chat(model: model_for(:openai)).ask_later('Hi'),
