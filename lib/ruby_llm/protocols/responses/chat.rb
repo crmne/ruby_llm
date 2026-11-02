@@ -68,7 +68,7 @@ module RubyLLM
         def parse_completion_body(data, raw:)
           if data.dig('error', 'message')
             raise Error.new(provider_message: data.dig('error', 'message'), error_code: data.dig('error', 'code'),
-                            response: raw)
+                            response: raw, redact: @config&.redact_error_messages)
           end
 
           output = data['output'] || []

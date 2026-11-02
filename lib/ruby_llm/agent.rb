@@ -776,7 +776,7 @@ module RubyLLM
         record = resolved_chat_model.public_send(
           method_name, **resolved_chat_kwargs(inputs: input_values), **chat_options
         )
-        apply_configuration(record, input_values:, persist_instructions: true) if record
+        apply_configuration(record, input_values:, persist_instructions: true) if record&.persisted?
         record
       end
 

@@ -138,8 +138,8 @@ module RubyLLM
       end
 
       def inside(folder)
-        visible.where('path = :folder OR path LIKE :inside', folder:,
-                                                             inside: "#{ChatFile.sanitize_sql_like(folder)}/%")
+        inside = "#{ChatFile.sanitize_sql_like(folder, '!')}/%"
+        visible.where("path = :folder OR path LIKE :inside ESCAPE '!'", folder:, inside:)
       end
 
       def path(name)

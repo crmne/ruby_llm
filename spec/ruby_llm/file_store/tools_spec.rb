@@ -220,6 +220,28 @@ RSpec.describe RubyLLM::FileStore::Tools do
     end
   end
 
+  describe 'on a folder store' do
+    let(:root) { Dir.mktmpdir }
+    let(:chat) do
+      RubyLLM.chat(model: model_for(:openai), provider: :openai).with_file_store(RubyLLM.file_store.directory(root))
+    end
+
+    after { FileUtils.remove_entry(root) }
+
+    it 'answers the model when it reaches for a hidden path' do
+      expect(call(:read_file, path: '.gitignore')[:error]).to eq(".gitignore is not inside the chat's files")
+      expect(call(:write_file, path: '.notes', content: 'x')[:error]).to eq(".notes is not inside the chat's files")
+      expect(call(:list_files, path: '.git')[:error]).to eq(".git is not inside the chat's files")
+      expect(call(:search_files, query: 'x', path: '.git')[:error]).to eq(".git is not inside the chat's files")
+      expect(call(:edit_file, path: '.notes', old_text: 'a',
+                              new_text: 'b')[:error]).to eq(".notes is not inside the chat's files")
+    end
+
+    it 'answers a write the file system refuses, without naming the folder on the host' do
+      expect(call(:write_file, path: "#{'a' * 300}.md", content: 'x')[:error]).to eq('File name too long')
+    end
+  end
+
   describe 'a full store' do
     it 'answers write_file and edit_file with the reason, and keeps the file as it was' do
       files.write('notes.md', 'hello')

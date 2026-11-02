@@ -132,7 +132,7 @@ module RubyLLM
         def raise_failed_generation(message, response: nil)
           raise ServerError.new('The generation failed due to an internal error', response:) unless message
 
-          raise ServerError.new(provider_message: message, response:)
+          raise ServerError.new(provider_message: message, response:, redact: @config&.redact_error_messages)
         end
 
         # Cohere reports what it charges for under billed_units and what the

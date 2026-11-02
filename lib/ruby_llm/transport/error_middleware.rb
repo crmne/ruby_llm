@@ -132,7 +132,8 @@ module RubyLLM
         def provider_details(provider, response)
           {
             provider: (provider.slug if provider.respond_to?(:slug)),
-            error_code: (provider.parse_error_code(response) if provider.respond_to?(:parse_error_code))
+            error_code: (provider.parse_error_code(response) if provider.respond_to?(:parse_error_code)),
+            redact: (provider.config&.redact_error_messages if provider.respond_to?(:config))
           }
         end
 

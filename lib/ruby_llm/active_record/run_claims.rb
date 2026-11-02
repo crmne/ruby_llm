@@ -57,7 +57,7 @@ module RubyLLM
         @run_claim_token = claim[:claim_token]
         @run_claimed_until = claim[:claimed_until]
         @run_claim_renewed_at = now
-        resync_messages if stale && @chat
+        resync_messages if @chat && (stale || latest_message_id != @last_message_id)
         true
       end
 
@@ -96,11 +96,14 @@ module RubyLLM
       def work_arrived_during_run?
         return false if @run_claim_token || !run_claims?
 
-        latest = messages_association.klass.uncached do
+        resync_messages if latest_message_id != @last_message_id
+        !to_llm.complete? && !to_llm.waiting?
+      end
+
+      def latest_message_id
+        messages_association.klass.uncached do
           messages_association.reorder(created_at: :desc, id: :desc).pick(:id)
         end
-        resync_messages if latest != @last_message_id
-        !to_llm.complete? && !to_llm.waiting?
       end
 
       def resync_messages

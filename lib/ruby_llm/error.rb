@@ -66,12 +66,13 @@ module RubyLLM
     # +provider_message:+ for what the provider wrote, which follows
     # +message+, or stands in for it when +message+ is +nil+. Without
     # either, the response body supplies the message.
-    def initialize(message = nil, response: nil, provider: nil, provider_message: nil, error_code: nil)
+    def initialize(message = nil, response: nil, provider: nil, provider_message: nil, error_code: nil, redact: nil)
       @response = response
       @provider = provider
       @provider_message = provider_message
       @error_code = error_code if error_code.is_a?(Integer) || error_code.to_s.match?(ERROR_CODE)
-      super(full_message_for(message) || self.class.default_message)
+      redact = RubyLLM.config.redact_error_messages if redact.nil?
+      super(full_message_for(message, redact:) || self.class.default_message)
     end
 
     # Returns the body of #response, or +nil+ without one. It can quote the
@@ -101,8 +102,8 @@ module RubyLLM
 
     private
 
-    def full_message_for(message)
-      return message || (redacted_message if remote?) if RubyLLM.config.redact_error_messages
+    def full_message_for(message, redact:)
+      return message || (redacted_message if remote?) if redact
       return "#{message}: #{provider_message}" if message && provider_message
 
       message || provider_message || response_body_message

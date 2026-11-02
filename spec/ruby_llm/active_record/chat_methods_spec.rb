@@ -13,6 +13,49 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     RubyLLM::ToolCall.new(id: id, name: name, arguments: arguments)
   end
 
+  describe '#reload' do
+    let(:chat) { Chat.create!(model: model_id) }
+    let(:other_model) { model_for(:openai, :alternate_chat) }
+
+    it 'switches a built chat to the model another process saved' do
+      chat.to_llm
+      Chat.find(chat.id).with_model(other_model)
+
+      chat.reload
+
+      expect(chat.to_llm.model.id).to eq(chat.model_id)
+      expect(chat.model_id).to eq(other_model)
+    end
+
+    it 'refreshes the messages of a built chat' do
+      chat.to_llm
+      Chat.find(chat.id).add_message(role: :user, content: 'Hello')
+
+      expect(chat.reload.to_llm.messages.map(&:content)).to eq(['Hello'])
+    end
+
+    it 'keeps a built chat that still matches the record' do
+      llm = chat.to_llm
+      allow(llm).to receive(:with_model).and_call_original
+
+      chat.reload.to_llm
+
+      expect(llm).not_to have_received(:with_model)
+    end
+
+    it 'switches a built chat to the provider another process saved' do
+      RubyLLM.config.azure_api_base = 'https://example.openai.azure.com'
+      RubyLLM.config.azure_api_key = 'test'
+      shared = Chat.create!(model: 'gpt-4.1', provider: :openai)
+      shared.to_llm
+      Chat.find(shared.id).with_model('gpt-4.1', provider: :azure)
+
+      shared.reload
+
+      expect(shared.to_llm.provider.slug).to eq('azure')
+    end
+  end
+
   it 'keeps multipart citation spans after persisting and reloading a Gemini reply' do
     model = model_for(:gemini)
     body = { candidates: [{ content: { role: 'model', parts: [{ text: '前言。Ruby' }, { text: '😀Ruby' }] },
