@@ -30,9 +30,17 @@ module RubyLLM
       end
       alias each_value each
 
+      # Yields each call ID, in provider order.
+      def each_key(&)
+        return enum_for(__method__) { size } unless block_given?
+
+        @calls.each_key(&)
+        self
+      end
+
       # Returns the ToolCall with the ID +id+, or +nil+.
       def [](id)
-        @calls[id]
+        @calls[key_for(id)]
       end
 
       def []=(id, call) # :nodoc:
@@ -41,8 +49,8 @@ module RubyLLM
 
       # Returns the ToolCall with the ID +id+. Without a default or a block,
       # raises KeyError when there is none.
-      def fetch(...)
-        @calls.fetch(...)
+      def fetch(id, ...)
+        @calls.fetch(key_for(id), ...)
       end
 
       # Returns the number of tool calls.
@@ -68,7 +76,7 @@ module RubyLLM
 
       # Returns +true+ when there is a tool call with the ID +id+.
       def key?(id)
-        @calls.key?(id)
+        @calls.key?(key_for(id))
       end
 
       # Returns a Hash of what the block returns for each ToolCall, keyed by
@@ -101,12 +109,19 @@ module RubyLLM
         @calls.to_json(*)
       end
 
-      # Returns the JSON-ready form of #to_h.
+      # Returns the JSON-ready form of #to_h, where Active Support provides
+      # one, or #to_h.
       def as_json(*)
-        @calls.as_json(*)
+        @calls.respond_to?(:as_json) ? @calls.as_json(*) : to_h
       end
 
       private
+
+      def key_for(id)
+        return id if @calls.key?(id)
+
+        @calls.key(find { |call| call.id == id }) || id
+      end
 
       def inspect_attributes
         { calls: map(&:name) }

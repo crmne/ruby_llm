@@ -26,6 +26,16 @@ RSpec.describe RubyLLM::ToolCall::Collection do
     expect { collection.fetch('missing') }.to raise_error(KeyError)
   end
 
+  it 'reads a streamed call by its ID when it is keyed by stream index' do
+    streamed = described_class.new(0 => first_call)
+
+    expect(streamed['call_a']).to be(first_call)
+    expect(streamed.fetch('call_a')).to be(first_call)
+    expect(streamed).to be_key('call_a')
+    expect(streamed[0]).to be(first_call)
+    expect(streamed['missing']).to be_nil
+  end
+
   it 'reports its size' do
     expect(collection.size).to eq(2)
     expect(collection.length).to eq(2)
@@ -39,6 +49,7 @@ RSpec.describe RubyLLM::ToolCall::Collection do
     expect(collection).to be_key('call_a')
     expect(collection).not_to be_key('missing')
     expect(collection.each_value.to_a).to eq([second, first_call])
+    expect(collection.each_key.to_a).to eq(%w[call_b call_a])
     expect(collection.transform_values(&:name)).to eq('call_b' => 'second', 'call_a' => 'first')
   end
 
@@ -70,6 +81,14 @@ RSpec.describe RubyLLM::ToolCall::Collection do
 
     expect(described_class.new(hash).to_json).to eq(hash.to_json)
     expect(described_class.new(hash).as_json).to eq(hash.as_json)
+  end
+
+  it 'gives its Hash as JSON data without Active Support' do
+    hash = {}
+    allow(hash).to receive(:respond_to?).and_call_original
+    allow(hash).to receive(:respond_to?).with(:as_json).and_return(false)
+
+    expect(described_class.new(hash).as_json).to eq(hash)
   end
 
   it 'prints one short line' do
