@@ -257,7 +257,7 @@ job.complete?
 job.succeeded?
 ```
 
-Status values do not change, so `job.status` still returns `:completed`. `TranscriptionChunk#done?` also stays, because it means the end of a stream.
+A `ResearchJob` that stopped early is `complete?` and `incomplete?` but not `succeeded?`, and `message` still carries its partial report. Status values do not change, so `job.status` still returns `:completed`. `TranscriptionChunk#done?` also stays, because it means the end of a stream.
 
 ## Rescue Input Errors as Input Errors
 
