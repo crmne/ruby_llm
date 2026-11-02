@@ -97,7 +97,7 @@ New tool calls receive a RubyLLM ID rather than exposing the provider's ID. Cont
 
 Restart every worker on 2.2 before resuming these conversations. A 2.1 worker does not read the saved provider ID.
 
-Each new invocation has its own ID, even when a provider repeats an earlier ID or requests the same arguments again. A one-time approval applies only to that invocation. `remember: true` continues to approve later calls to the same tool.
+Each new invocation has its own ID, even when a provider repeats an earlier ID or requests the same arguments again. A one-time approval applies only to that invocation. `remember: true` continues to approve later calls to the same tool, except on a call that already has a result, which now remembers nothing.
 
 For chats with tool calls saved before 2.2, batch redelivery checks still rely on those older provider IDs. Start a new chat for new batches if your provider reuses them.
 

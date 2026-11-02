@@ -16,7 +16,7 @@ module RubyLLM
 
     def self.index(calls, by: :id) # :nodoc:
       calls.each_with_object({}) do |call, indexed|
-        id = call.public_send(by)
+        id = call.public_send(by) || call.provider_call_id
         raise Error, "Duplicate tool call ID in one response: #{id.inspect}" if indexed.key?(id)
 
         indexed[id] = call

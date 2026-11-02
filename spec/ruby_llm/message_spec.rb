@@ -31,6 +31,14 @@ RSpec.describe RubyLLM::Message do
       expect(message.tool_calls.map(&:name)).to eq(%w[weather time])
     end
 
+    it 'keeps an Array of calls that have no RubyLLM ID yet' do
+      call = RubyLLM::ToolCall.new(provider_call_id: 'provider_1', name: 'weather', arguments: {})
+      other = RubyLLM::ToolCall.new(provider_call_id: 'provider_2', name: 'time', arguments: {})
+      message = described_class.new(role: :assistant, content: nil, tool_calls: [call, other])
+
+      expect(message.tool_calls.to_a).to eq([call, other])
+    end
+
     it 'keeps the Array that selecting from tool calls returns' do
       call = RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: {})
       other = RubyLLM::ToolCall.new(id: 'call_0', name: 'time', arguments: {})
