@@ -401,7 +401,7 @@ You can always access the wrapped chat object directly via `agent.chat`.
 
 ## Handling Errors with `rescue_from`
 
-`rescue_from` declares how an agent handles exceptions raised by its chat operations: `ask`, `say`, `ask_later`, `complete`, `generate`, `run_tools`, `step`, and `count_tokens`.
+`rescue_from` declares how an agent handles exceptions raised by its chat operations: `ask`, `say`, `ask_later`, `complete`, `generate`, `run_tools`, `step`, `count_tokens`, and `compact`.
 
 ```ruby
 class ApplicationAgent < RubyLLM::Agent
@@ -450,8 +450,6 @@ The semantics match `ActiveSupport::Rescuable`:
 * Exceptions that no handler matches are re-raised with their original backtrace.
 
 Subclasses inherit the handlers declared when they are defined, so an `ApplicationAgent` base class is the usual place for shared error policy.
-
-Handlers apply to agent instances. `WorkAssistant.chat` returns a plain `RubyLLM::Chat`, which is not wrapped, so use `WorkAssistant.new` when you want the agent's error handling.
 
 ## Rails-Backed Agents
 

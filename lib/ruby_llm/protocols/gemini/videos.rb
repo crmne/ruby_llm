@@ -7,6 +7,9 @@ module RubyLLM
       # operations. The finished video is a Files API URI that requires the
       # API key to download.
       module Videos
+        OPERATION_NAME = %r{\A[\w.-]+(?:/[\w.-]+)*\z}
+        private_constant :OPERATION_NAME
+
         def video_url
           "models/#{model_id(@model)}:predictLongRunning"
         end
@@ -36,7 +39,7 @@ module RubyLLM
         end
 
         def video_job_url(job)
-          job.id
+          video_operation_name(job)
         end
 
         def parse_video_job_status(response, job:) # rubocop:disable Lint/UnusedMethodArgument
@@ -67,6 +70,14 @@ module RubyLLM
         end
 
         private
+
+        # The name is the URL, so a job id from outside must not be able to
+        # send the API key to another host.
+        def video_operation_name(job)
+          return job.id if job.id.match?(OPERATION_NAME)
+
+          raise ArgumentError, "#{job.id.inspect} is not a video operation name"
+        end
 
         def render_video_extension(source)
           if source.is_a?(Video) && source.raw && (video = generated_video(source.raw)) && video['uri']

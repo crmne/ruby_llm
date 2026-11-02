@@ -7,6 +7,7 @@ module RubyLLM
       module Transcription
         STREAM_TYPES = {
           'transcript.text.delta' => RubyLLM::TranscriptionChunk::DELTA,
+          'transcript.text.partial' => RubyLLM::TranscriptionChunk::PARTIAL,
           'transcript.text.segment' => RubyLLM::TranscriptionChunk::SEGMENT,
           'transcript.text.done' => RubyLLM::TranscriptionChunk::DONE
         }.freeze

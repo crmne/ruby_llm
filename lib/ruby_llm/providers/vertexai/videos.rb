@@ -10,7 +10,7 @@ module RubyLLM
         end
 
         def video_job_url(job)
-          "#{job.id.split('/operations/').first}:fetchPredictOperation"
+          "#{video_operation_name(job).split('/operations/').first}:fetchPredictOperation"
         end
 
         def refresh_video_job(job)

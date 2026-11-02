@@ -52,7 +52,7 @@ RSpec.describe RubyLLM::Providers::XAI::Videos do
 
   describe '#parse_video_job' do
     it 'keeps the requested duration and resolution on the job' do
-      context = RubyLLM.context { |config| config.xai_api_key = 'context-key' }
+      context = RubyLLM.context { |config| config.xai_api_key = 'test' }
       stub_request(:post, 'https://api.x.ai/v1/videos/generations')
         .to_return(status: 200, body: { request_id: 'request-1' }.to_json,
                    headers: { 'Content-Type' => 'application/json' })
@@ -136,11 +136,15 @@ RSpec.describe RubyLLM::Providers::XAI::Videos do
   end
 
   describe 'RubyLLM::VideoJob.find' do
-    let(:context) { RubyLLM.context { |config| config.xai_api_key = 'test' } }
+    let(:context) do
+      RubyLLM.context do |config|
+        config.xai_api_key = 'context-key'
+        config.anthropic_api_key = 'test'
+      end
+    end
 
     def stub_job(body)
       stub_request(:get, 'https://api.x.ai/v1/videos/req-1')
-        .with(headers: { 'Authorization' => 'Bearer context-key' })
         .to_return(status: 200, headers: { 'Content-Type' => 'application/json' }, body: body.to_json)
     end
 
@@ -174,6 +178,15 @@ RSpec.describe RubyLLM::Providers::XAI::Videos do
 
       expect(RubyLLM::Accounting::Usage).to have_received(:report)
         .with(having_attributes(operation: :video, provider: 'xai', model:, status: :succeeded), config: anything)
+    end
+
+    it "uses the context's credentials" do
+      stub_job(status: 'pending')
+
+      find_job
+
+      expect(a_request(:get, 'https://api.x.ai/v1/videos/req-1')
+        .with(headers: { 'Authorization' => 'Bearer context-key' })).to have_been_made
     end
 
     it 'requires the model' do

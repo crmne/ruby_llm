@@ -9,6 +9,7 @@ RSpec.describe RubyLLM::TranscriptionChunk do
 
   {
     'transcript.text.delta' => :delta,
+    'transcript.text.partial' => :partial,
     'transcript.text.segment' => :segment,
     'transcript.text.done' => :done
   }.each do |wire, type|
