@@ -59,27 +59,10 @@ module RubyLLM
                  provider_options: {},
                  metadata: nil,
                  owner: nil)
-      config = context&.config || RubyLLM.config
-      model ||= config.default_ocr_model
-      model, provider_instance = Models.resolve(model, provider: provider, assume_model_exists: assume_model_exists,
-                                                       config: config)
-      payload = {
-        provider: provider_instance.slug,
-        provider_class: provider_instance.name,
-        model: model.id,
-        model_info: model,
-        pages: pages,
-        provider_options: provider_options,
-        metadata: metadata
-      }
-
-      RubyLLM.instrument('ocr.ruby_llm', payload, config: config) do |event|
-        result = Accounting::Usage.owned_by(owner) do
-          provider_instance.ocr(file, model:, pages:, provider_options:)
-        end
-        event[:result] = result
-        event[:response_model] = result.model
-        result
+      Accounting::Operation.new(
+        'ocr', model, default: :default_ocr_model, usage: false, provider:, assume_model_exists:, context:, owner:
+      ).run(pages:, provider_options:, metadata:) do |provider_instance, model|
+        provider_instance.ocr(file, model:, pages:, provider_options:)
       end
     end
 

@@ -88,39 +88,16 @@ module RubyLLM
                    metadata: nil,
                    owner: nil,
                    &block)
-      config = context&.config || RubyLLM.config
-      model ||= config.default_speech_model
-      model, provider_instance = Models.resolve(model, provider: provider, assume_model_exists: assume_model_exists,
-                                                       config: config)
-      empty_tokens = Tokens.new
-
-      payload = {
-        provider: provider_instance.slug,
-        provider_class: provider_instance.name,
-        model: model.id,
-        model_info: model,
-        input: input,
-        voice: voice,
-        format: format,
-        provider_options: provider_options,
-        metadata: metadata,
-        streaming: !block.nil?,
-        tokens: empty_tokens,
-        cost: Cost.new(tokens: empty_tokens, model:, category: :audio_tokens)
-      }
-
-      RubyLLM.instrument('speech.ruby_llm', payload, config: config) do |event|
-        result = Accounting::Usage.owned_by(owner) do
-          provider_instance.speak(input, model:, voice:, format:, provider_options:, &block)
-        end
-        event[:result] = result
-        event[:response_model] = result.model
-        event[:voice] = result.voice
-        event[:format] = result.format
-        event[:audio_bytes] = result.to_blob.bytesize
-        event[:tokens] = result.tokens
-        event[:cost] = result.cost
-        result
+      Accounting::Operation.new(
+        'speech', model, default: :default_speech_model, category: :audio_tokens, provider:, assume_model_exists:,
+                         context:, owner:,
+                         details: lambda { |event, result|
+                           event[:voice] = result.voice
+                           event[:format] = result.format
+                           event[:audio_bytes] = result.to_blob.bytesize
+                         }
+      ).run(input:, voice:, format:, provider_options:, metadata:, streaming: !block.nil?) do |provider_instance, model|
+        provider_instance.speak(input, model:, voice:, format:, provider_options:, &block)
       end
     end
 

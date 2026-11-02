@@ -118,40 +118,20 @@ module RubyLLM
                    provider_options: {},
                    metadata: nil,
                    owner: nil)
-      config = context&.config || RubyLLM.config
-      model ||= config.default_embedding_model
-      model, provider_instance = Models.resolve(model, provider: provider, assume_model_exists: assume_model_exists,
-                                                       config: config)
-      model_id = model.id
-      empty_tokens = Tokens.new
-
-      payload = {
-        provider: provider_instance.slug,
-        provider_class: provider_instance.name,
-        model: model_id,
-        model_info: model,
-        input: text,
-        dimensions: dimensions,
-        task_type: task_type,
-        title: title,
-        attachment_count: Attachment.wrap(with).size,
-        provider_options: provider_options,
-        metadata: metadata,
-        tokens: empty_tokens,
-        cost: Cost.new(tokens: empty_tokens, model:, category: :embeddings)
-      }
-
-      RubyLLM.instrument('embedding.ruby_llm', payload, config: config) do |event|
-        result = Accounting::Usage.owned_by(owner) do
-          provider_instance.embed(text, model:, dimensions:, task_type:, title:, with:, provider_options:)
-        end
-        event[:result] = result
-        event[:response_model] = result.model
-        event[:tokens] = result.tokens
-        event[:cost] = result.cost
-        event[:embedding_dimensions] = vector_dimensions(result.vectors)
-        event[:embedding_count] = embedding_count(result.vectors)
-        result
+      Accounting::Operation.new(
+        'embedding', model, default: :default_embedding_model, category: :embeddings, provider:, assume_model_exists:,
+                            context:, owner:,
+                            report: lambda { |event, result|
+                              event[:result] = result
+                              event[:response_model] = result.model
+                              event[:tokens] = result.tokens
+                              event[:cost] = result.cost
+                              event[:embedding_dimensions] = vector_dimensions(result.vectors)
+                              event[:embedding_count] = embedding_count(result.vectors)
+                            }
+      ).run(input: text, dimensions:, task_type:, title:, attachment_count: Attachment.wrap(with).size,
+            provider_options:, metadata:) do |provider_instance, model|
+        provider_instance.embed(text, model:, dimensions:, task_type:, title:, with:, provider_options:)
       end
     end
 
