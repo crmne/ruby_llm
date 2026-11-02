@@ -766,6 +766,11 @@ module RubyLLM
     end
 
     def fetch_protocol(name)
+      if protocols.empty?
+        raise Error, "#{self.class.display_name} has no protocols. A provider subclass does not inherit its " \
+                     'parent\'s protocols, so declare them with `protocol`.'
+      end
+
       protocols.fetch(name.to_sym) do
         raise Error, "#{name} is not a protocol of #{self.class.display_name}. Available: #{protocols.keys.join(', ')}"
       end

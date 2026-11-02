@@ -146,8 +146,13 @@ module RubyLLM
       #   tools SearchDocs, LookupAccount, defer: true
       #   tools(defer: -> { many_tools? }) { connected_tools }
       #
+      # With +defer:+ alone it applies to the tools a parent agent declared.
+      #
       def tools(*tools, defer: nil, &block)
-        return @tools || [] if tools.empty? && !block_given?
+        if tools.empty? && !block_given?
+          @tools_defer = defer unless defer.nil?
+          return @tools || []
+        end
 
         @tools_defer = defer
         @tools = block_given? ? block : tools.flatten
@@ -166,8 +171,13 @@ module RubyLLM
       #
       #   mcp GitHub, defer: true
       #
+      # With +defer:+ alone it applies to the servers a parent agent declared.
+      #
       def mcp(*servers, defer: nil, &block)
-        return @mcp || [] if servers.empty? && !block_given?
+        if servers.empty? && !block_given?
+          @mcp_defer = defer unless defer.nil?
+          return @mcp || []
+        end
 
         @mcp_defer = defer
         @mcp = block_given? ? block : servers.flatten
@@ -319,7 +329,7 @@ module RubyLLM
       #   file_store spill_to_file: 20_000
       #   file_store :memory
       #   file_store -> { "tmp/chats/#{chat.id}" }
-      #   file_store owner: -> { chat.user }
+      #   file_store owner: -> { chat.user } # a plain chat's store is its own, so it ignores owner
       #   file_store nil
       #
       # Each chat gets a store of its own: without +store+, a new
@@ -897,8 +907,11 @@ module RubyLLM
         return chat.with_file_store(nil) if @file_store == false
 
         store = @file_store[:store]
-        options = @file_store.except(:store).transform_values { |value| evaluate(value, runtime) }
-        return chat.with_file_store(**options) if store.equal?(Chat::FileReferences::DEFAULT_STORE)
+        default = store.equal?(Chat::FileReferences::DEFAULT_STORE)
+        options = @file_store.except(:store)
+        options = options.except(:owner) if default && chat.is_a?(Chat)
+        options = options.transform_values { |value| evaluate(value, runtime) }
+        return chat.with_file_store(**options) if default
 
         chat.with_file_store(evaluate(store, runtime), **options)
       end

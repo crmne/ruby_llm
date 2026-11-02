@@ -29,9 +29,9 @@ module RubyLLM
 
       # Audio, realtime, and dedicated search models only exist on Chat Completions.
       def protocol_for(model, **)
-        return protocols[:chat_completions] if Capabilities::SEARCH_MODELS.include?(model.id)
+        return fetch_protocol(:chat_completions) if Capabilities::SEARCH_MODELS.include?(model.id)
 
-        model.id.match?(/audio|realtime/) ? protocols[:chat_completions] : super
+        model.id.match?(/audio|realtime/) ? fetch_protocol(:chat_completions) : super
       end
 
       def headers

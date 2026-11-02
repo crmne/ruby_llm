@@ -3,6 +3,19 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Provider do
+  it 'explains that a subclass of a shipped provider declares its own protocols' do
+    subclass = Class.new(RubyLLM::Providers::OpenAI) do
+      def self.display_name = 'Acme'
+    end
+    subclass.slug = 'openai'
+    config = RubyLLM::Configuration.new.tap { |options| options.openai_api_key = 'test' }
+
+    [model_for(:openai), RubyLLM::Providers::OpenAI::Capabilities::SEARCH_MODELS.first].each do |id|
+      expect { subclass.new(config).protocol_for(RubyLLM::Model.new(id:, provider: 'openai')) }
+        .to raise_error(RubyLLM::Error, /Acme has no protocols.*declare them with `protocol`/)
+    end
+  end
+
   def api_base_cases
     {
       anthropic: {
