@@ -208,8 +208,12 @@ module RubyLLM
           headers.merge(BETA_HEADER => join_betas(headers[BETA_HEADER], Files::BETA_HEADER))
         end
 
+        def apply_mcp_beta(headers)
+          headers.merge(BETA_HEADER => join_betas(headers[BETA_HEADER], Anthropic::MCP_BETA))
+        end
+
         def provider_file_source?(payload)
-          blocks = Array(payload[:messages]).flat_map { |message| Array(message[:content]) }
+          blocks = Array(payload[:messages]).flat_map { |message| Array(block_value(message, :content)) }
           blocks.concat(Array(payload[:system]))
           file_source?(blocks)
         end
@@ -218,8 +222,15 @@ module RubyLLM
           blocks.any? do |block|
             next false unless block.is_a?(Hash)
 
-            (block[:source].is_a?(Hash) && block[:source][:type] == 'file') || file_source?(Array(block[:content]))
+            source = block_value(block, :source)
+            (source.is_a?(Hash) && block_value(source, :type) == 'file') ||
+              file_source?(Array(block_value(block, :content)))
           end
+        end
+
+        # A before_request hook can add blocks parsed from JSON.
+        def block_value(block, key)
+          block.fetch(key) { block[key.to_s] }
         end
 
         # Anthropic takes several betas as one comma-separated header, so an

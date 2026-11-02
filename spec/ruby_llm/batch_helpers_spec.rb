@@ -396,6 +396,21 @@ RSpec.describe RubyLLM::Batch do
       expect(chat.tokens.input).to eq(5)
     end
 
+    it 'retries a deferred result on the same finished batch' do
+      turns = [false, true]
+      delivery = lambda do |_index, &deliver|
+        turns.shift.tap { |turn| deliver.call if turn }
+      end
+      chat = RubyLLM.chat(model: model_for(:openai)).ask_later('Hi')
+      allow(provider).to receive(:batch_results) { [[0, message.dup]] }
+      batch = described_class.new(provider:, chats: [chat], delivery:, **attributes)
+
+      3.times { batch.messages }
+
+      expect(chat.messages.count { |item| item.role == :assistant }).to eq(1)
+      expect(provider).to have_received(:batch_results).twice
+    end
+
     it 'keeps a result a store could not deliver for the next poll' do
       turns = [false, true, true]
       runs = 0

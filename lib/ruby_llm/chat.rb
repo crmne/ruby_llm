@@ -1877,12 +1877,20 @@ module RubyLLM
     def unsupported_attachment_handler
       callbacks = @callbacks[:unsupported_attachment]
       callbacks += [@file_references.method(:describe)] if @file_references
-      callbacks += [CodeExecution.method(:describe)] if @code_execution
-      return if callbacks.empty?
+      return if callbacks.empty? && !@code_execution
 
+      describe = attachment_describer
       lambda do |attachment|
         @attachment_replacements[attachment] ||= callbacks.lazy.filter_map { |handler| handler.call(attachment) }.first
+        @attachment_replacements[attachment] || describe.call(attachment)
       end
+    end
+
+    # A run's names shift as files arrive, so descriptions are not memoized.
+    def attachment_describer
+      return ->(_attachment) {} unless @code_execution
+
+      CodeExecution.describer(messages.flat_map(&:attachments))
     end
 
     # A process that dies mid-round leaves a blank assistant placeholder,

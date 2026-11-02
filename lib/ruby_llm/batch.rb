@@ -248,8 +248,9 @@ module RubyLLM
     def messages
       return @messages if @messages
 
+      @deferred = false
       collected = collect_results
-      @messages = collected if @completed
+      @messages = collected if @completed && !@deferred
       collected
     end
 
@@ -362,10 +363,11 @@ module RubyLLM
       entry = attach_batch_usage(message, operation: :chat, model: chat&.model, category: :text_tokens)
       return if settled?(index, chat) || (chat && already_in_chat?(chat, message))
 
-      @delivered[index] = true if exclusively(index) do
+      delivered = exclusively(index) do
         report_batch_usage(entry, chat:) if entry
         chat&.add_completion(message, record_usage: true)
       end
+      delivered ? @delivered[index] = true : @deferred = true
     end
 
     def settled?(index, owner)

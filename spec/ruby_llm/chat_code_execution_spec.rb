@@ -56,6 +56,78 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  describe 'a run after a file is saved' do
+    let(:sandbox) { writing('kept.txt' => 'y') }
+
+    it 'lets a failing after_file_write callback through instead of calling the file unsaved' do
+      chat.with_file_store(RubyLLM::FileStore::Memory.new).with_code_execution
+      chat.after_file_write { raise ArgumentError, 'callback failed' }
+
+      expect { run_code('puts 1') }.to raise_error(ArgumentError, 'callback failed')
+    end
+  end
+
+  describe 'describing attachments' do
+    def binary(content)
+      RubyLLM::Attachment.new(StringIO.new(content), filename: 'report.bin')
+    end
+
+    def described_in(attachment)
+      chat.send(:unsupported_attachment_handler).call(attachment).content
+    end
+
+    it 'names the file the run finds, and follows a newer file of the same name' do
+      chat.with_code_execution
+      older = binary('old')
+      chat.add_message(role: :user, content: 'One', attachments: [older])
+      expect(described_in(older)).to include('attachments/report.bin')
+
+      newer = binary('new')
+      chat.add_message(role: :user, content: 'Two', attachments: [newer])
+
+      expect(described_in(older)).to include('attachments/report-2.bin')
+      expect(described_in(newer)).to include('attachments/report.bin')
+    end
+
+    it 'has no handler without code execution or a callback' do
+      expect(chat.send(:unsupported_attachment_handler)).to be_nil
+    end
+
+    it 'describes nothing without code execution' do
+      chat.convert_unsupported_attachments { nil }
+
+      expect(chat.send(:unsupported_attachment_handler).call(binary('old'))).to be_nil
+    end
+
+    it 'prefers a conversion, made once, over a description' do
+      file = binary('old')
+      converted = RubyLLM::Attachment.new(StringIO.new('text'), filename: 'report.txt')
+      calls = 0
+      chat.with_code_execution.convert_unsupported_attachments do
+        calls += 1
+        converted
+      end
+
+      2.times { expect(chat.send(:unsupported_attachment_handler).call(file)).to equal(converted) }
+      expect(calls).to eq(1)
+    end
+
+    it 'names a file a run returned the same way' do
+      older = binary('old')
+      newer = binary('new')
+      call = RubyLLM::ToolCall.new(id: 'call_1', name: 'run_code', arguments: {})
+      messages = [
+        RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { 'call_1' => call }),
+        RubyLLM::Message.new(role: :tool, content: 'ran', tool_call_id: 'call_1', attachments: [older]),
+        RubyLLM::Message.new(role: :user, content: 'Hi', attachments: [newer])
+      ]
+
+      seen = RubyLLM::CodeExecution.for_model(messages)[1].attachments.first
+
+      expect(seen.content).to include('attachments/report-2.bin')
+    end
+  end
+
   describe '#with_code_execution' do
     it 'enables code execution with Ruby and shell by default' do
       expect(chat.with_code_execution).to be(chat)

@@ -107,15 +107,23 @@ module RubyLLM
         ids = messages.flat_map { |message| run_code_call_ids(message) }
         return messages if ids.empty?
 
+        names = Workspace.input_names(messages.flat_map(&:attachments))
         messages.map do |message|
-          returned_files?(message, ids) ? message.with_attachments(model_view(message.attachments)) : message
+          returned_files?(message, ids) ? message.with_attachments(model_view(message.attachments, names)) : message
         end
+      end
+
+      # Returns a callable that describes one of +attachments+, the
+      # conversation's files, under the name its run finds.
+      def describer(attachments) # :nodoc:
+        names = Workspace.input_names(attachments)
+        ->(attachment) { describe(attachment, name: names[attachment]) }
       end
 
       # Returns a text Attachment telling the model where its code finds
       # +attachment+.
-      def describe(attachment) # :nodoc:
-        name = Workspace.filename(attachment.filename)
+      def describe(attachment, name: nil) # :nodoc:
+        name ||= Workspace.filename(attachment.filename)
         text = "#{name} (#{attachment.mime_type}, #{attachment.byte_size} bytes) is not shown here. " \
                "Code you run with #{tool_name} can read it at #{Workspace::ATTACHMENTS}/#{name}."
         Attachment.new(StringIO.new(text), filename: "#{name}.txt")
@@ -207,8 +215,8 @@ module RubyLLM
         message.tool_result? && ids.include?(message.tool_call_id) && message.attachments.any?
       end
 
-      def model_view(files)
-        files.map { |file| readable_by_model?(file) ? file : describe(file) }
+      def model_view(files, names)
+        files.map { |file| readable_by_model?(file) ? file : describe(file, name: names[file]) }
       end
 
       def run_code_call_ids(message)
@@ -510,10 +518,13 @@ module RubyLLM
       unsaved = []
       reason = nil
       files.each do |file|
-        saved << store.write(file.filename, file.content).tap { |stored| @written.call(stored) }
+        stored = store.write(file.filename, file.content)
       rescue FileStoreFullError, ArgumentError => e
         unsaved << file.filename
         reason ||= e.message
+      else
+        saved << stored
+        @written.call(stored)
       end
       report(result, saved.map(&:path), skipped, unsaved_files: (unsaved if unsaved.any?), files_error: reason)
     end

@@ -21,6 +21,7 @@ module RubyLLM
       # web_search/web_fetch pin allowed_callers to direct invocation: their
       # 2026 tool versions otherwise default to requiring programmatic tool
       # calling, which not every model supports.
+      MCP_BETA = 'mcp-client-2025-11-20'
       SERVER_TOOL_ALIASES = {
         web_search: { tool: { type: 'web_search_20260318', name: 'web_search', allowed_callers: ['direct'] } },
         web_fetch: { tool: { type: 'web_fetch_20260318', name: 'web_fetch', allowed_callers: ['direct'] } },
@@ -35,7 +36,7 @@ module RubyLLM
               .merge(Anthropic.mcp_tool_filter(options))
               .merge(options.slice(:default_config, :configs)),
             payload: { mcp_servers: [server] },
-            headers: { 'anthropic-beta' => 'mcp-client-2025-11-20' }
+            headers: { 'anthropic-beta' => MCP_BETA }
           }
         end
       }.freeze
@@ -103,10 +104,11 @@ module RubyLLM
       end
 
       def merge_tool_headers(tool_headers, headers)
-        merged = super
-        return merged unless tool_headers[BETA_HEADER] && headers[BETA_HEADER]
+        names = headers.keys.select { |name| name.to_s.casecmp?(BETA_HEADER) }
+        return super unless tool_headers[BETA_HEADER] && names.any?
 
-        merged.merge(BETA_HEADER => join_betas(tool_headers[BETA_HEADER], headers[BETA_HEADER]))
+        betas = join_betas(tool_headers[BETA_HEADER], headers[names.last])
+        super.except(*names).merge(BETA_HEADER => betas)
       end
 
       def merge_turn_segments(segments)
