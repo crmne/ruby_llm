@@ -11,7 +11,9 @@ module RubyLLM
   #
   class Image
     include Support::Inspectable
+    include Files::Saving
     include Accounting::Usage::Result
+    include Accounting::Usage::ModelInfo
 
     # The URL of the hosted image, for providers that return one, or +nil+.
     attr_reader :url
@@ -141,15 +143,15 @@ module RubyLLM
       end
     end
 
+    ##
+    # :method: save
+    # :call-seq:
+    #   save(path)
+    #
     # Writes the binary image to +path+, expanding it first. Returns
     # +path+ as given.
     #
     #   image.save("steampunk_owl.png")
-    #
-    def save(path)
-      File.binwrite(File.expand_path(path), to_blob)
-      path
-    end
 
     # Returns a Tokens with usage across every provider attempt.
     # Its fields are +nil+ when none were reported.
@@ -179,17 +181,11 @@ module RubyLLM
       Cost.new(tokens:, model: model_info, category: :images, input_details: input_tokens_details)
     end
 
-    attr_writer :model_info # :nodoc:
-
     # Returns the image's Model from its provider's registry, falling back
     # to the requested model when the response ID is unknown. Images built
     # without a request look up #model, or return +nil+ if unknown.
     def model_info
-      return unless model
-
-      @model_info ||= RubyLLM.models.find(model)
-    rescue ModelNotFoundError
-      nil
+      super if model
     end
 
     private

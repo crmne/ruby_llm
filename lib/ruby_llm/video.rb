@@ -9,6 +9,7 @@ module RubyLLM
   #
   class Video
     include Support::Inspectable
+    include Files::Saving
     include Accounting::Usage::Result
 
     # The URL of the hosted video, for providers that return one, or +nil+.
@@ -124,6 +125,16 @@ module RubyLLM
       Cost.new(tokens:)
     end
 
+    ##
+    # :method: save
+    # :call-seq:
+    #   save(path)
+    #
+    # Writes the binary video to +path+, expanding it first. Returns
+    # +path+ as given.
+    #
+    #   video.save("clip.mp4")
+
     # Returns the raw binary video bytes, downloading from #url when the
     # provider returned a hosted video.
     #
@@ -131,16 +142,6 @@ module RubyLLM
     #
     def to_blob
       data || Transport::Connection.download(url, config)
-    end
-
-    # Writes the binary video to +path+, expanding it first. Returns
-    # +path+ as given.
-    #
-    #   video.save("clip.mp4")
-    #
-    def save(path)
-      File.binwrite(File.expand_path(path), to_blob)
-      path
     end
 
     private

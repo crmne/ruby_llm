@@ -9,19 +9,20 @@ module RubyLLM
   #
   class DownloadedFile < String
     include Support::Inspectable
+    include Files::Saving
+
+    ##
+    # :method: save
+    # :call-seq:
+    #   save(path)
+    #
+    # Writes the file bytes to +path+, expanding it first. Returns +path+.
+    #
+    #   file.save("report.pdf")
 
     # Returns the raw file bytes as a String.
     def to_blob
       to_s
-    end
-
-    # Writes the file bytes to +path+, expanding it first. Returns +path+.
-    #
-    #   file.save("report.pdf")
-    #
-    def save(path)
-      File.binwrite(File.expand_path(path), to_blob)
-      path
     end
 
     private

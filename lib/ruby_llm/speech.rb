@@ -9,7 +9,9 @@ module RubyLLM
   #
   class Speech
     include Support::Inspectable
+    include Files::Saving
     include Accounting::Usage::Result
+    include Accounting::Usage::ModelInfo
 
     # Maps audio format names to their MIME types.
     MIME_TYPES = {
@@ -122,6 +124,15 @@ module RubyLLM
       end
     end
 
+    ##
+    # :method: save
+    # :call-seq:
+    #   save(path)
+    #
+    # Writes the audio to +path+ in binary mode and returns +path+.
+    #
+    #   speech.save "welcome.mp3"
+
     # Returns the raw audio bytes. Alias for #data, mirroring Image#to_blob.
     def to_blob
       data
@@ -140,23 +151,6 @@ module RubyLLM
       return ruby_llm_usage_cost unless ruby_llm_usage_entries.empty?
 
       Cost.new(tokens:, model: model_info, category: :audio_tokens)
-    end
-
-    attr_writer :model_info # :nodoc:
-
-    def model_info # :nodoc:
-      @model_info ||= RubyLLM.models.find(model)
-    rescue ModelNotFoundError
-      nil
-    end
-
-    # Writes the audio to +path+ in binary mode and returns +path+.
-    #
-    #   speech.save "welcome.mp3"
-    #
-    def save(path)
-      File.binwrite(File.expand_path(path), to_blob)
-      path
     end
 
     def inspect_attributes # :nodoc:

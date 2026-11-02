@@ -90,6 +90,18 @@ module RubyLLM
         end
       end
 
+      # The registry Model of a result that names one. The usage tracker
+      # assigns it; a result built by hand looks up #model.
+      module ModelInfo
+        attr_writer :model_info # :nodoc:
+
+        def model_info # :nodoc:
+          @model_info ||= RubyLLM.models.find(model)
+        rescue ModelNotFoundError
+          nil
+        end
+      end
+
       # One physical provider request attempt and its accounting facts.
       class Entry
         OPERATIONS = %i[chat embedding moderation image speech transcription ocr rerank judgment video research].freeze

@@ -13,6 +13,7 @@ module RubyLLM
   class Rerank
     include Support::Inspectable
     include Accounting::Usage::Result
+    include Accounting::Usage::ModelInfo
 
     # One reranked document: its +index+ in the input array, the
     # +document+ text, and the provider's relevance +score+.
@@ -47,14 +48,6 @@ module RubyLLM
       return ruby_llm_usage_cost unless ruby_llm_usage_entries.empty?
 
       Cost.new(tokens:, model: model_info, category: :embeddings)
-    end
-
-    attr_writer :model_info # :nodoc:
-
-    def model_info # :nodoc:
-      @model_info ||= RubyLLM.models.find(model)
-    rescue ModelNotFoundError
-      nil
     end
 
     def inspect_attributes # :nodoc:
