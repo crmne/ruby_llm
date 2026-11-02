@@ -9,6 +9,7 @@ require 'ruby_llm/active_record/chat_placeholders'
 require 'ruby_llm/active_record/system_instructions'
 require 'ruby_llm/active_record/chat_queue'
 require 'ruby_llm/active_record/chat_tool_call_state'
+require 'ruby_llm/active_record/chat_run'
 
 module RubyLLM
   module ActiveRecord
@@ -184,6 +185,14 @@ module RubyLLM
           message_type: messages_association.klass.polymorphic_name,
           message_id: messages_association.select(:id)
         )
+      end
+
+      def persist_usage_entry(entry) # :nodoc:
+        usage_records_by_entry[entry] = Usage.transaction(requires_new: true) do
+          ruby_llm_usages.create!(Usage.attributes_for(entry))
+        end
+      rescue StandardError => e
+        RubyLLM.logger.warn("RubyLLM could not record #{entry.operation} usage: #{e.class}: #{e.message}")
       end
 
       def refresh_messages # :nodoc:
@@ -966,14 +975,6 @@ module RubyLLM
         message
       end
 
-      def persist_usage_entry(entry)
-        usage_records_by_entry[entry] = Usage.transaction(requires_new: true) do
-          ruby_llm_usages.create!(Usage.attributes_for(entry))
-        end
-      rescue StandardError => e
-        RubyLLM.logger.warn("RubyLLM could not record #{entry.operation} usage: #{e.class}: #{e.message}")
-      end
-
       def link_usage_entries(message)
         Usage.transaction(requires_new: true) do
           message.ruby_llm_usage_entries.each do |entry|
@@ -1109,11 +1110,7 @@ module RubyLLM
           assume_model_exists: assume_model_exists || false
         )
         sync_messages(chat)
-        chat.interruptions = [ClaimLost]
-        chat.cancellation_checker = proc do
-          renew_run_claim
-          consume_persisted_cancellation_request
-        end
+        chat.run = ChatRun.new(self)
         chat.tool_call_state = ChatToolCallState.new(self)
         chat.message_queue = ChatQueue.new(self)
         install_persistence_callbacks(chat)
@@ -1139,8 +1136,6 @@ module RubyLLM
 
       def install_persistence_callbacks(chat)
         chat.before_message { persist_new_message }
-        chat.usage_recorder = method(:persist_usage_entry)
-        chat.progress_recorder = method(:persist_message_progress)
         chat.after_message { |msg| persist_message_completion(msg) }
         chat
       end

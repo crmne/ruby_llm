@@ -5,6 +5,11 @@ module RubyLLM
     # Reads a cancellation request another process persisted on the chat
     # record, at most once per poll interval, and clears it once observed.
     module ChatCancellation # :nodoc:
+      def poll_run_cancellation # :nodoc:
+        renew_run_claim
+        consume_persisted_cancellation_request
+      end
+
       private
 
       def consume_persisted_cancellation_request

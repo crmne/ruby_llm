@@ -50,6 +50,31 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(copy).not_to be_running_elsewhere(tool_call)
   end
 
+  it 'observes a cancellation another process requested on a copy of the underlying chat' do
+    chat = Chat.create!(model: 'gpt-4.1-nano')
+    copy = chat.to_llm.dup
+    Chat.where(id: chat.id).update_all(cancelled: true)
+
+    expect { copy.__send__(:raise_if_cancelled!) }.to raise_error(RubyLLM::CancelledError)
+    expect(chat.reload[:cancelled]).to be(false)
+  end
+
+  it 'records usage on the record from a copy of the underlying chat' do
+    chat = Chat.create!(model: 'gpt-4.1-nano')
+    entry = RubyLLM::Accounting::Usage::Entry.new(operation: :chat, provider: 'openai', model: 'gpt-4.1-nano')
+
+    expect { chat.to_llm.dup.__send__(:record_usage_entry, entry) }.to change { chat.ruby_llm_usages.reset.size }.by(1)
+  end
+
+  it 'binds a copy of the record to its own run' do
+    chat = Chat.create!(model: 'gpt-4.1-nano')
+    chat.to_llm
+
+    copy = chat.dup
+
+    expect(copy.to_llm.instance_variable_get(:@run).instance_variable_get(:@chat)).to be(copy)
+  end
+
   it 'leaves a claim and a pending cancel behind on a dup' do
     chat = Chat.create!(model: model_for(:openai))
     Chat.where(id: chat.id).update_all(claim_token: 'other', claimed_until: 10.minutes.from_now, cancelled: true)
