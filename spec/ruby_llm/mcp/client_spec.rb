@@ -63,12 +63,20 @@ RSpec.describe RubyLLM::MCP::Client do
       expect(sent_cursors(transport).last).to eq('')
     end
 
-    it 'raises when a server repeats a cursor' do
-      transport = paged_transport('', '', 'unreachable')
+    it 'follows a repeated cursor to the last page' do
+      stub_const("#{described_class}::PAGE_LIMIT", 2)
+      transport = paged_transport('same', 'same', nil)
+
+      expect(described_class.new(transport).list('tools/list', 'tools')).to eq(%w[search search search])
+    end
+
+    it 'raises when a list does not end' do
+      stub_const("#{described_class}::PAGE_LIMIT", 2)
+      transport = paged_transport('same', 'same', 'same', 'unreachable')
 
       expect { described_class.new(transport).list('tools/list', 'tools') }
-        .to raise_error(RubyLLM::MCP::Error, 'The server repeated a cursor for tools/list')
-      expect(sent_cursors(transport).count('')).to eq(1)
+        .to raise_error(RubyLLM::MCP::Error, 'The server did not finish tools/list in 2 pages')
+      expect(sent_cursors(transport).count('same')).to eq(2)
     end
 
     it 'times out on a server that stops in the middle of a line' do
