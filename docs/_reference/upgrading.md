@@ -20,6 +20,7 @@ After reading this guide, you will know:
 * How persisted chats now run in one process at a time.
 * What changes for a crashed job, a denial, pending approvals, an MCP input error, a stdio server's environment, a dropped MCP tool call, a write over a folder, a document URL, and a deploy that mixes versions.
 * What changes for agent `rescue_from` handlers and streamed transcription chunks.
+* Which errors failed Responses requests raise.
 * Which job predicates replace `done?` and `completed?`.
 * Why agents name their chat record with `chat_class`.
 
@@ -164,6 +165,10 @@ In 2.1, a cancelled chat left its unanswered tool calls open: `ask` raised `Pend
 ## Empty Streams Raise
 
 A streamed request whose response holds no events, such as an empty body or a plain JSON body from a gateway that ignores `stream: true`, returned a blank assistant message in 2.1. It now raises `RubyLLM::Error` and adds nothing to the transcript.
+
+## Failed Responses Raise What They Report
+
+A non-streaming Responses request that comes back `failed` now raises the same class a stream raises, such as `RubyLLM::RateLimitError`, in place of a plain `RubyLLM::Error`. A `failed` response with no error object raises `RubyLLM::Error` instead of returning an empty message. Embeddings with an error in a successful body raise a `RubyLLM::Error` subclass too. `rescue RubyLLM::Error` keeps working.
 
 ## MCP Prompts Take No Attachments
 

@@ -22,6 +22,19 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Embeddings do
   end
 
   describe '#parse_embedding_response' do
+    def parse_body(body)
+      protocol.send(:parse_embedding_response, Struct.new(:body).new(body), model: 'bge-m3', text: 'Ruby')
+    end
+
+    it 'raises the error a successful status carried' do
+      expect { parse_body('error' => { 'message' => 'upstream busy', 'code' => 'rate_limit_exceeded' }) }
+        .to raise_error(RubyLLM::RateLimitError, /upstream busy/)
+    end
+
+    it 'raises a RubyLLM error for a body with no embeddings' do
+      expect { parse_body('usage' => {}) }.to raise_error(RubyLLM::Error, 'The provider returned no embeddings')
+    end
+
     it 'reports no sparse vectors when the server returns dense ones only' do
       embedding = parse([{ 'embedding' => [0.1, 0.2] }], text: 'Ruby')
 

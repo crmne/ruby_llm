@@ -59,11 +59,11 @@ module RubyLLM
           if json_image_references?(model)
             payload[:images] = build_image_references(with)
             payload[:mask] = build_image_reference(mask) if mask
-            payload[:size] = size if size
           else
             payload[:image] = single_upload_part(build_upload_parts(with))
             payload[:mask] = build_upload_part(mask) if mask
           end
+          payload[:size] = size if size
           payload.merge(provider_options)
         end
 

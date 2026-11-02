@@ -66,10 +66,8 @@ module RubyLLM
         end
 
         def parse_completion_body(data, raw:)
-          if data.dig('error', 'message')
-            raise Error.new(provider_message: data.dig('error', 'message'), error_code: data.dig('error', 'code'),
-                            response: raw, redact: @config&.redact_error_messages)
-          end
+          raise_failed_response(data) if data.dig('error', 'message')
+          raise Error.new('The provider reported a failed response', response: raw) if data['status'] == 'failed'
 
           output = data['output'] || []
           content = parse_output_text(output)

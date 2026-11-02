@@ -79,8 +79,6 @@ RSpec.describe RubyLLM::Error do
     end
 
     {
-      RubyLLM::Protocols::Responses::Chat => [:parse_completion_body, { 'error' => { 'message' => 'wrote' } },
-                                              { raw: nil }],
       RubyLLM::Protocols::Cohere::Chat => [:raise_failed_generation, 'wrote', {}],
       RubyLLM::Protocols::Interactions::Chat => [
         :parse_completion_body, { 'status' => 'failed', 'errors' => [{ 'message' => 'wrote' }] }, { raw: nil }
@@ -99,6 +97,19 @@ RSpec.describe RubyLLM::Error do
 
         expect(error.message).to include(error.provider_message)
       end
+    end
+
+    it "follows the protocol's configuration in a failed Responses completion" do
+      config = RubyLLM::Configuration.new.tap do |c|
+        c.openai_api_key = 'test'
+        c.redact_error_messages = false
+      end
+      RubyLLM.config.redact_error_messages = true
+      parser = RubyLLM::Providers::OpenAI.protocols.fetch(:responses).new(RubyLLM::Providers::OpenAI.new(config))
+
+      error = raised_by { parser.send(:parse_completion_body, { 'error' => { 'message' => 'wrote' } }, raw: nil) }
+
+      expect(error.message).to include('wrote')
     end
 
     it "follows the protocol's configuration in OpenAI Decisions" do
@@ -226,15 +237,13 @@ RSpec.describe RubyLLM::Error do
 
     it 'leaves the prompt out of a failed Responses completion' do
       error = raised_by do
-        RubyLLM::Protocols::Responses::Chat.parse_completion_body(
-          { 'error' => { 'message' => prompt, 'code' => 'server_error' } },
-          raw: Faraday::Response.new(status: 200,
-                                     body: { 'error' => { 'message' => prompt,
-                                                          'code' => 'server_error' } })
-        )
+        RubyLLM::Providers::OpenAI.protocols.fetch(:responses).new(RubyLLM::Providers::OpenAI.new(RubyLLM.config))
+                                  .send(:parse_completion_body,
+                                        { 'error' => { 'message' => prompt, 'code' => 'server_error' } }, raw: nil)
       end
 
-      expect(error.message).to eq('The provider returned HTTP 200 (server_error)')
+      expect(error).to be_a(RubyLLM::ServerError)
+      expect(error.message).not_to include(prompt)
     end
 
     it 'names the JSON-RPC code of an MCP error' do

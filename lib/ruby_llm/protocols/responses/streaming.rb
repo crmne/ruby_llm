@@ -12,6 +12,7 @@ module RubyLLM
 
         def stream_response(...)
           @citation_content_lengths = Hash.new(0)
+          @reasoning_output_index = nil
           super
         end
 
@@ -60,7 +61,9 @@ module RubyLLM
         end
 
         def build_reasoning_summary_part_chunk(data)
-          return chunk unless data['summary_index'].positive?
+          earlier_item = @reasoning_output_index && @reasoning_output_index != data['output_index']
+          @reasoning_output_index = data['output_index']
+          return chunk unless earlier_item || data['summary_index'].positive?
 
           chunk thinking: Thinking.build(text: "\n\n")
         end

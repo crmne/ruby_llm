@@ -155,6 +155,30 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
     expect(accumulator.to_message(nil).thinking.text).to eq("**First summary**\n\n**Second summary**")
   end
 
+  it 'separates the summaries of two reasoning items, as the complete response does' do
+    accumulator = RubyLLM::Protocol::StreamAccumulator.new
+    events = [
+      { 'type' => 'response.reasoning_summary_part.added', 'output_index' => 0, 'summary_index' => 0 },
+      { 'type' => 'response.reasoning_summary_text.delta', 'delta' => 'one' },
+      { 'type' => 'response.reasoning_summary_part.added', 'output_index' => 1, 'summary_index' => 0 },
+      { 'type' => 'response.reasoning_summary_text.delta', 'delta' => 'two' }
+    ]
+
+    events.each { |event| accumulator.add(build_chunk(event)) }
+
+    expect(accumulator.to_message(nil).thinking.text).to eq("one\n\ntwo")
+  end
+
+  it 'starts a new stream without a separator' do
+    build_chunk('type' => 'response.reasoning_summary_part.added', 'output_index' => 3, 'summary_index' => 0)
+    allow(protocol).to receive_messages(stream_events: nil, stream_url: 'responses')
+
+    expect { protocol.send(:stream_response, {}) { nil } }.to raise_error(RubyLLM::Error, /no stream events/)
+    chunk = build_chunk('type' => 'response.reasoning_summary_part.added', 'output_index' => 0, 'summary_index' => 0)
+
+    expect(chunk.thinking).to be_nil
+  end
+
   it 'accumulates a function call across item and argument events' do
     accumulator = RubyLLM::Protocol::StreamAccumulator.new
 

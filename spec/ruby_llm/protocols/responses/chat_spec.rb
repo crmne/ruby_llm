@@ -10,6 +10,24 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
     protocol.send(:render_payload, messages, tools:, temperature: nil, model:, stream:, tool_prefs: nil, **options)
   end
 
+  describe '#parse_completion_body' do
+    before { protocol.instance_variable_set(:@provider, RubyLLM::Providers::OpenAI.allocate) }
+
+    it 'raises the same class the stream raises for a failed response' do
+      body = { 'status' => 'failed', 'error' => { 'code' => 'rate_limit_exceeded', 'message' => 'Slow down' } }
+
+      expect { protocol.send(:parse_completion_body, body, raw: body) }
+        .to raise_error(RubyLLM::RateLimitError, /Slow down/)
+    end
+
+    it 'raises for a failed response with no error object' do
+      body = { 'status' => 'failed', 'error' => nil, 'output' => [] }
+
+      expect { protocol.send(:parse_completion_body, body, raw: body) }
+        .to raise_error(RubyLLM::Error, 'The provider reported a failed response')
+    end
+  end
+
   describe '#render_payload' do
     { RubyLLM::Providers::OpenAI => 'original', RubyLLM::Providers::XAI => 'high' }.each do |provider_class, detail|
       it "preserves #{detail} detail for #{provider_class} tool-returned images" do
