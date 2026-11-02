@@ -93,7 +93,7 @@ RSpec.describe 'upload provider_options' do # rubocop:disable RSpec/DescribeClas
                 .with { |req| field_names(req.body) == %w[name anything asset] }
                 .to_return_json(body: { asset_id: 'asset_1', name: 'ruby.txt' })
 
-      protocol.upload(fixture_path, provider_options: { anything: 1, asset: 'replaced' })
+      protocol.upload(fixture_path, provider_options: { asset: 'replaced', anything: 1 })
 
       expect(request).to have_been_requested
     end

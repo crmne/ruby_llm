@@ -58,7 +58,7 @@ module RubyLLM
       # its fields to arrive before the file.
       def render_upload_payload(attachment, purpose: nil, expires_in: nil, provider_options: {})
         fields = render_upload_fields(attachment, purpose:, expires_in:)
-        fields.merge(provider_options.transform_keys(&:to_sym)).compact
+        fields.merge(provider_options.transform_keys(&:to_sym)).except(upload_file_field).compact
               .merge(upload_file_field => file_part(attachment))
       end
 

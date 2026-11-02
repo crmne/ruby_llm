@@ -28,6 +28,14 @@ RSpec.describe RubyLLM::Providers::XAI::Transcription do
     expect(payload).to eq(model: 'grok-voice-transcribe-3.0', file: :file)
   end
 
+  it 'lets a String option replace the model and keeps the file last' do
+    payload = described_class.render_transcription_payload(
+      :file, model: 'grok-stt', language: nil, provider_options: { 'file' => 'x', 'model' => 'other', keyterm: 'Ruby' }
+    )
+
+    expect(payload.to_a).to eq([[:model, 'other'], [:keyterm, 'Ruby'], %i[file file]])
+  end
+
   it 'turns on diarization for empty speaker_names' do
     payload = described_class.render_transcription_payload(:file, model: 'grok-stt', language: 'en', speaker_names: [])
 

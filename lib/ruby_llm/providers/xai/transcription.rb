@@ -31,7 +31,7 @@ module RubyLLM
           payload = { model: MODEL_IDS.fetch(model, model) }
           payload[:language] = language if language
           payload[:diarize] = true if speaker_names
-          payload.merge(provider_options).merge(file: file_part)
+          payload.merge(provider_options.transform_keys(&:to_sym)).except(:file).merge(file: file_part)
         end
 
         def parse_transcription_response(response, model:)
