@@ -149,10 +149,10 @@ response.model_info.name
 
 Both readers return `nil` when the message has no recorded model. `model_info` also returns `nil` if the model is no longer in the registry.
 
-If your message table has a `finish_reason` column, the record also exposes `stopped?`, `max_tokens?`, `tool_call_stop?`, and `content_filtered?`, with the same meanings as a plain message:
+If your message table has a `finish_reason` column, the record also exposes `stopped?`, `truncated?`, `tool_call_stop?`, and `content_filtered?`, with the same meanings as a plain message:
 
 ```ruby
-response.reload.max_tokens? # => true if a token limit stopped the response
+response.reload.truncated? # => true if a token limit stopped the response
 ```
 
 ## Cost and Usage Tracking

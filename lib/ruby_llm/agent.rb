@@ -80,8 +80,8 @@ module RubyLLM
 
     # Chat values and operations whose return values pass through unchanged.
     PASSTHROUGH_CHAT_DELEGATES = %i[
-      model provider messages tools deferred_tools mcp provider_tools tool_options provider_options headers schema
-      concurrency caching citations code_execution compaction context end_user fallbacks thinking temperature
+      model model_id provider messages tools deferred_tools mcp provider_tools tool_options provider_options headers
+      schema concurrency caching citations code_execution compaction context end_user fallbacks thinking temperature
       max_output_tokens skills file_store
       each complete? cancelled? waiting? awaiting_approval? pending_approvals awaiting_input? pending_inputs
       awaiting_tasks? pending_tasks add_message add_completion tokens cost render
@@ -1468,6 +1468,12 @@ module RubyLLM
     # :call-seq: each(&block)
     #
     # Delegates to Chat#each. See that method for arguments and return values.
+
+    ##
+    # :method: model_id
+    # :call-seq: model_id()
+    #
+    # Delegates to Chat#model_id. See that method for arguments and return values.
 
     ##
     # :method: complete?

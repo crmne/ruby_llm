@@ -53,6 +53,22 @@ RSpec.describe RubyLLM::ActiveRecord::MessageMethods do
       expect(chat.add_message(role: :user, content: 'Continue').model).to be_nil
     end
 
+    it 'answers truncated? and model_id like a plain message' do
+      record = chat.add_message(RubyLLM::Message.new(role: :assistant, content: '', finish_reason: :max_tokens))
+      chat.ruby_llm_usages.create!(message: record, operation: 'chat', provider: 'openai', model: 'gpt-4.1',
+                                   status: 'succeeded')
+
+      expect(record.reload).to be_truncated
+      expect(record.model_id).to eq('gpt-4.1')
+    end
+
+    it 'falls back to a model_id column the application keeps' do
+      record = chat.add_message(role: :assistant, content: 'Hi')
+      record.update!(model_id: 'gpt-4.1')
+
+      expect(record.reload.model_id).to eq('gpt-4.1')
+    end
+
     it 'exposes the plain message finish predicates after reloading' do
       { stop: :stopped?, max_tokens: :max_tokens?, tool_calls: :tool_call_stop?,
         content_filter: :content_filtered? }.each do |reason, predicate|

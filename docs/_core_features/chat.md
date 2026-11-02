@@ -183,7 +183,7 @@ The raw response is a `Faraday::Response` object, which you can use to access th
 ```ruby
 response = chat.ask("Summarize this in one paragraph")
 
-if response.max_tokens?
+if response.truncated?
   puts "The response hit a token limit."
 elsif response.content_filtered?
   puts "The provider filtered the response."

@@ -34,6 +34,7 @@ module RubyLLM
 
     # The ID of the model that produced the message, +nil+ on user messages.
     attr_reader :model
+    alias model_id model
 
     attr_writer :model_info # :nodoc:
 
@@ -230,6 +231,7 @@ module RubyLLM
     def max_tokens?
       finish_reason == :max_tokens
     end
+    alias truncated? max_tokens?
 
     # Returns +true+ if the model stopped to request tool calls,
     # +false+ otherwise.

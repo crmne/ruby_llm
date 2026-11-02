@@ -43,6 +43,14 @@ module RubyLLM
     # The Model the chat sends requests to.
     attr_reader :model
 
+    # Returns the id of the Model the chat sends requests to.
+    #
+    #   chat.model_id # => "gpt-6-luna"
+    #
+    def model_id
+      model.id
+    end
+
     # The Provider instance handling requests for the current model.
     attr_reader :provider
 

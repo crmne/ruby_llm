@@ -70,6 +70,12 @@ module RubyLLM
         to_llm.model
       end
 
+      # Returns the model ID from the last successful attempt, as #model
+      # does, or a +model_id+ column the application keeps, or +nil+.
+      def model_id
+        to_llm.model_id || optional_column(:model_id)
+      end
+
       # Returns the model from the registry, or +nil+ if it is unknown.
       def model_info
         to_llm.model_info
@@ -201,6 +207,7 @@ module RubyLLM
       def max_tokens?
         to_llm.max_tokens?
       end
+      alias truncated? max_tokens?
 
       # Returns +true+ if the model stopped to request tool calls.
       def tool_call_stop?
