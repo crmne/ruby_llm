@@ -41,13 +41,13 @@ In other words, an agent is a named wrapper around the same configuration you wo
 Agents work in two modes:
 
 * Plain Ruby mode via `.chat` (returns `RubyLLM::Chat`)
-* Rails mode via `.create/.create!/.find` when `chat_model` is configured (returns your ActiveRecord chat model)
+* Rails mode via `.create/.create!/.find` when `chat_class` is configured (returns your ActiveRecord chat model)
 
 Example of Rails mode:
 
 ```ruby
 class WorkAssistant < RubyLLM::Agent
-  chat_model Chat  # this activates the Rails integration
+  chat_class Chat  # this activates the Rails integration
   model "{{ site.models.default_chat }}"
   instructions "You are a helpful assistant."
   tools SearchDocs, LookupAccount
@@ -96,7 +96,7 @@ For example, `model` maps to `RubyLLM.chat(model:, provider:, ...)`, `tools` map
 * `schema` (see [Chat Basics]({% link _core_features/chat.md %}))
 * `fallbacks` (see [Model Fallbacks]({% link _advanced/error-handling.md %}#model-fallbacks))
 * `context` (see [Configuration Contexts](#configuration-contexts))
-* `chat_model` (Rails-backed mode)
+* `chat_class` (Rails-backed mode)
 * `inputs` (declared runtime inputs)
 
 Call `caching` without options to use the provider's default prompt cache policy:
@@ -176,7 +176,7 @@ class WorkAssistant < RubyLLM::Agent
 end
 ```
 
-This works for both `WorkAssistant.chat` and Rails-backed agents configured with `chat_model`.
+This works for both `WorkAssistant.chat` and Rails-backed agents configured with `chat_class`.
 
 ## Configuration Contexts
 
@@ -214,7 +214,7 @@ end
 
 The block runs when the agent class is defined and receives a copy of the global
 configuration. Pass either a context object or a block. Both forms work with
-`SupportAgent.chat` and Rails-backed agents configured with `chat_model`.
+`SupportAgent.chat` and Rails-backed agents configured with `chat_class`.
 Call `SupportAgent.context` to read the configured context.
 
 See [Contexts: Isolated Configurations]({% link _getting_started/configuration-connection.md %}#contexts-isolated-configurations)
@@ -228,7 +228,7 @@ Declare additional runtime inputs with `inputs`:
 
 ```ruby
 class WorkAssistant < RubyLLM::Agent
-  chat_model Chat
+  chat_class Chat
   inputs :workspace
 
   instructions { "You are helping #{workspace.name}" }
@@ -238,18 +238,18 @@ end
 Most runtime blocks can use `chat` in their execution context:
 
 * In `.chat` mode, `chat` is a `RubyLLM::Chat`
-* In `.create/.create!/.find` mode, `chat` is your `chat_model` record
+* In `.create/.create!/.find` mode, `chat` is your `chat_class` record
 
 The `model` block runs before the chat exists, so it can read `inputs` but not
 `chat`. A deferred `context` block follows the same timing in plain Ruby, so
 `chat` is `nil` there. In Rails mode, the context block runs while the
-`chat_model` record is being configured, so `chat` is available.
+`chat_class` record is being configured, so `chat` is available.
 
 This enables Rails-style usage:
 
 ```ruby
 class WorkAssistant < RubyLLM::Agent
-  chat_model Chat
+  chat_class Chat
 
   instructions current_date_time: -> { Time.current.strftime("%B %d, %Y") },
     display_name: -> { chat.user.display_name_or_email },
@@ -295,7 +295,7 @@ Named agents automatically use their conventional instructions prompt when it ex
 
 ```ruby
 class WorkAssistant < RubyLLM::Agent
-  chat_model Chat
+  chat_class Chat
 end
 ```
 
@@ -315,7 +315,7 @@ To require a prompt and fail loudly when it is missing, reference it explicitly:
 
 ```ruby
 class WorkAssistant < RubyLLM::Agent
-  chat_model Chat
+  chat_class Chat
   instructions { prompt("instructions") }
 end
 ```
@@ -328,7 +328,7 @@ You can pass locals directly:
 
 ```ruby
 class WorkAssistant < RubyLLM::Agent
-  chat_model Chat
+  chat_class Chat
   instructions display_name: -> { chat.user.display_name_or_email }
 end
 ```
@@ -453,11 +453,11 @@ Subclasses inherit the handlers declared when they are defined, so an `Applicati
 
 ## Rails-Backed Agents
 
-Set `chat_model` to use your ActiveRecord chat model. `bin/rails generate ruby_llm:install` puts it in `ApplicationAgent`, the place for settings every agent in your app shares:
+Set `chat_class` to use your ActiveRecord chat model. `bin/rails generate ruby_llm:install` puts it in `ApplicationAgent`, the place for settings every agent in your app shares:
 
 ```ruby
 class ApplicationAgent < RubyLLM::Agent
-  chat_model Chat
+  chat_class Chat
 end
 ```
 
@@ -481,7 +481,7 @@ chat = WorkAssistant.find(params[:id])
 WorkAssistant.sync_instructions(chat)
 ```
 
-`create/create!/find` require `chat_model`. Calling them without it raises an error.
+`create/create!/find` require `chat_class`. Calling them without it raises an error.
 
 Instruction persistence contract in Rails mode:
 

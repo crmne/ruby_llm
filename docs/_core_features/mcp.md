@@ -337,7 +337,7 @@ TriageAgent.chat(user: current_user).ask "Triage the new reports"
 
 ### Rails
 
-Chat records respond to `with_mcp` and `mcp` like plain chats, and agents with a `chat_model` connect their servers to the records they create and find. Tool calls persist like any other tool call.
+Chat records respond to `with_mcp` and `mcp` like plain chats, and agents with a `chat_class` connect their servers to the records they create and find. Tool calls persist like any other tool call.
 
 ## Resources
 

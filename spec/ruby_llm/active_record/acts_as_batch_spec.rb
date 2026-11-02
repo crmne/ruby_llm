@@ -58,7 +58,7 @@ RSpec.describe RubyLLM::Batch do # rubocop:disable RSpec/SpecFilePathFormat
 
   it 'submits a chat loaded through its agent and routes the answer home' do
     agent = Class.new(RubyLLM::Agent) do
-      chat_model 'Chat'
+      chat_class 'Chat'
       model 'claude-haiku-4-5'
       instructions 'Answer with one word.'
     end

@@ -106,7 +106,7 @@ An agent configures your persisted chat when you load it in another process:
 
 ```ruby
 class StudyAgent < RubyLLM::Agent
-  chat_model Chat
+  chat_class Chat
   model "{{ site.models.default_chat }}"
   instructions "Help organize practical Ruby study sessions."
 end

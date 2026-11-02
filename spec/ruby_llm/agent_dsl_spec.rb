@@ -39,7 +39,7 @@ RSpec.describe RubyLLM::Agent do
       expect(bare.headers).to eq({})
       expect(bare.end_user).to be_nil
       expect(bare.context).to be_nil
-      expect(bare.chat_model).to be_nil
+      expect(bare.chat_class).to be_nil
     end
 
     it 'accepts model options without a model id' do
@@ -385,38 +385,50 @@ RSpec.describe RubyLLM::Agent do
   describe 'Rails mode' do
     it 'requires a chat model for find' do
       expect { Class.new(described_class).find(1) }.to raise_error(
-        ArgumentError, 'chat_model must be configured to use find'
+        ArgumentError, 'chat_class must be configured to use find'
       )
     end
 
     it 'requires a chat model for create' do
       expect { Class.new(described_class).create }.to raise_error(
-        ArgumentError, 'chat_model must be configured to use create/create!'
+        ArgumentError, 'chat_class must be configured to use create/create!'
       )
       expect { Class.new(described_class).create! }.to raise_error(
-        ArgumentError, 'chat_model must be configured to use create/create!'
+        ArgumentError, 'chat_class must be configured to use create/create!'
       )
     end
 
     it 'resolves a chat model named as a string' do
       stub_const('StringNamedChat', Class.new)
       agent = Class.new(described_class)
+      agent.chat_class 'StringNamedChat'
+
+      expect(agent.chat_class).to eq('StringNamedChat')
+      expect(agent.send(:resolved_chat_class)).to eq(StringNamedChat)
+    end
+
+    it 'keeps chat_model as a deprecated alias of chat_class' do
+      allow(RubyLLM.deprecator).to receive(:deprecate)
+      agent = Class.new(described_class)
+
       agent.chat_model 'StringNamedChat'
 
       expect(agent.chat_model).to eq('StringNamedChat')
-      expect(agent.send(:resolved_chat_model)).to eq(StringNamedChat)
+      expect(agent.chat_class).to eq('StringNamedChat')
+      expect(RubyLLM.deprecator).to have_received(:deprecate)
+        .with('Agent.chat_model', replacement: 'Agent.chat_class', removal: '3.0').twice
     end
 
     it 'forgets the resolved class when the configured one changes' do
       stub_const('FirstChat', Class.new)
       stub_const('SecondChat', Class.new)
       agent = Class.new(described_class)
-      agent.chat_model 'FirstChat'
-      agent.send(:resolved_chat_model)
+      agent.chat_class 'FirstChat'
+      agent.send(:resolved_chat_class)
 
-      agent.chat_model 'SecondChat'
+      agent.chat_class 'SecondChat'
 
-      expect(agent.send(:resolved_chat_model)).to eq(SecondChat)
+      expect(agent.send(:resolved_chat_class)).to eq(SecondChat)
     end
   end
 

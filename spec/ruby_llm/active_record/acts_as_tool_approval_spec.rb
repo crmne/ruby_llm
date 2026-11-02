@@ -114,7 +114,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     let(:agent) do
       mcp_server = server_class
       Class.new(RubyLLM::Agent) do
-        chat_model Chat
+        chat_class Chat
         model 'gpt-4.1-nano'
         mcp { [mcp_server] }
       end

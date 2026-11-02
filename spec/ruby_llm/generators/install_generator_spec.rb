@@ -196,7 +196,7 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
     it 'creates an ApplicationAgent that creates and finds chats' do
       within_test_app(app_path) do
         expect(File.read('app/agents/application_agent.rb'))
-          .to eq("class ApplicationAgent < RubyLLM::Agent\n  chat_model Chat\nend\n")
+          .to eq("class ApplicationAgent < RubyLLM::Agent\n  chat_class Chat\nend\n")
         success, output = run_rails_runner(<<~RUBY)
           chat = ApplicationAgent.create!
           exit(chat.is_a?(Chat) && ApplicationAgent.find(chat.id) == chat ? 0 : 1)
@@ -255,7 +255,7 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
                        .create_app_directories
 
         expect(File.read(File.join(destination, 'app/agents/application_agent.rb')))
-          .to eq("class ApplicationAgent < RubyLLM::Agent\n  chat_model Conversation\nend\n")
+          .to eq("class ApplicationAgent < RubyLLM::Agent\n  chat_class Conversation\nend\n")
         expect(File.exist?(File.join(destination, 'app/agents/.gitkeep'))).to be(true)
       end
     end
@@ -350,7 +350,7 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
     it 'creates an ApplicationAgent for the namespaced chat model' do
       within_test_app(app_path) do
         expect(File.read('app/agents/application_agent.rb'))
-          .to eq("class ApplicationAgent < RubyLLM::Agent\n  chat_model Llm::Chat\nend\n")
+          .to eq("class ApplicationAgent < RubyLLM::Agent\n  chat_class Llm::Chat\nend\n")
         success, output = run_rails_runner(<<~RUBY)
           chat = ApplicationAgent.create!
           exit(chat.is_a?(Llm::Chat) && ApplicationAgent.find(chat.id) == chat ? 0 : 1)

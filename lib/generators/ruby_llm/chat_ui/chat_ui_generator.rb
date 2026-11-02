@@ -266,9 +266,9 @@ module RubyLLM
       def queued_message_controller_class_name = controller_class_name_for(queued_message_model_name)
       def chat_agent_class_name = "#{chat_model_name}Agent"
 
-      def application_agent_chat_model?
+      def application_agent_chat_class?
         File.read(File.join(destination_root, APPLICATION_AGENT_PATH))
-            .match?(/^\s*chat_model #{Regexp.escape(chat_model_name)}\s*$/)
+            .match?(/^\s*chat_(?:class|model) #{Regexp.escape(chat_model_name)}\s*$/)
       end
 
       def message_helper_module_name

@@ -73,7 +73,7 @@ RSpec.describe RubyLLM::Generators::AgentGenerator, :generator, type: :generator
       agent_class = File.read('app/agents/billing_agent.rb')
       expect(agent_class).to include('class BillingAgent < RubyLLM::Agent')
       expect(agent_class).not_to include('#')
-      expect(agent_class).to include('chat_model Chat')
+      expect(agent_class).to include('chat_class Chat')
       expect(agent_class).not_to include("\n  instructions")
     end
   end

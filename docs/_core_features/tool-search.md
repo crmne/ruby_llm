@@ -117,7 +117,7 @@ class SupportAgent < RubyLLM::Agent
 end
 ```
 
-Chat records respond to `with_tools` and `with_mcp` with `defer:`, and agents with a `chat_model` apply their deferred tools to the records they create and find. The search a model ran is part of its reply, so a persisted chat that keeps `raw_content` on its messages replays it on the next turn like any other reply.
+Chat records respond to `with_tools` and `with_mcp` with `defer:`, and agents with a `chat_class` apply their deferred tools to the records they create and find. The search a model ran is part of its reply, so a persisted chat that keeps `raw_content` on its messages replays it on the next turn like any other reply.
 
 ## Reading Deferred Tools
 

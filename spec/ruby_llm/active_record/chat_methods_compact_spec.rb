@@ -7,7 +7,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
   let(:agent) do
     klass = Class.new(RubyLLM::Agent) do
-      chat_model Chat
+      chat_class Chat
     end
     klass.model model_for(:xai, :provider_tools), provider: :xai
     klass

@@ -225,7 +225,7 @@ loader.setup
 # Your application owns chats and messages; RubyLLM owns usage, tool calls,
 # models, batches, MCP credentials, and provider files. ActiveRecord::Record configures their shared database
 # connection. Agent can create and reload your chat records through
-# Agent.chat_model. Individual operations also work directly in Rails
+# Agent.chat_class. Individual operations also work directly in Rails
 # services and jobs.
 module RubyLLM
   class << self
