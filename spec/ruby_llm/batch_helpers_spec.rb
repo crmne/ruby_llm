@@ -441,7 +441,7 @@ RSpec.describe RubyLLM::Batch do
   end
 
   describe 'a slot with billed usage and no readable answer' do
-    let(:provider) { RubyLLM::Providers::OpenAI.new(RubyLLM.config) }
+    let(:provider) { RubyLLM::Providers::OpenAI.new(RubyLLM.context { |c| c.instrumenter = instrumenter }.config) }
     let(:tokens) { RubyLLM::Tokens.new(input: 70, output: 80) }
     let(:attributes) { { id: 'batch_1', raw_status: 'completed', completed: true } }
     let(:ledger) { class_double(RubyLLM::Accounting::Usage) }
@@ -459,14 +459,11 @@ RSpec.describe RubyLLM::Batch do
     end
 
     before do
-      RubyLLM.config.instrumenter = instrumenter
-      RubyLLM::Accounting::Usage.ledger = ledger
+      allow(RubyLLM::Accounting::Usage).to receive(:ledger).and_return(ledger)
       allow(ledger).to receive(:record)
       allow(provider).to receive(:batch_results)
         .and_return([[0, nil, :failed, { tokens:, model: model_for(:openai) }]])
     end
-
-    after { RubyLLM::Accounting::Usage.ledger = nil }
 
     it 'reports a failed row once the batch ends, with no chat to own it' do
       batch = described_class.new(provider:, **attributes)
