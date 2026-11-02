@@ -22,6 +22,24 @@ RSpec.describe RubyLLM::Message do
   describe '#tool_calls' do
     let(:call) { RubyLLM::ToolCall.new(id: 'call_1', name: 'weather') }
 
+    it 'keys an Array of tool calls by ID' do
+      call = RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: {})
+      other = RubyLLM::ToolCall.new(id: 'call_0', name: 'time', arguments: {})
+      message = described_class.new(role: :assistant, content: nil, tool_calls: [call, other])
+
+      expect(message.tool_calls).to eq('call_1' => call, 'call_0' => other)
+      expect(message.tool_calls.map(&:name)).to eq(%w[weather time])
+    end
+
+    it 'keeps the Array that selecting from tool calls returns' do
+      call = RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: {})
+      other = RubyLLM::ToolCall.new(id: 'call_0', name: 'time', arguments: {})
+      message = described_class.new(role: :assistant, content: nil, tool_calls: { 'call_1' => call, 'call_0' => other })
+      kept = message.tool_calls.select { |tool_call| tool_call.name == 'time' }
+
+      expect(described_class.new(role: :assistant, content: nil, tool_calls: kept).tool_calls).to eq('call_0' => other)
+    end
+
     it 'is an empty collection on a message without calls' do
       message = described_class.new(role: :assistant, content: 'Hello')
 

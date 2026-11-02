@@ -18,6 +18,8 @@ module RubyLLM
 
         def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil,
                            schema: nil, thinking: nil, citations: false, caching: nil, tool_prefs: nil)
+          raise ArgumentError, 'Mistral has no thinking budget; use effort:' if thinking&.budget
+
           payload = super
           payload.delete(:stream_options)
           normalize_required_tool_choice(payload)

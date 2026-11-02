@@ -15,6 +15,12 @@ module RubyLLM
           SERVER_TOOL_ALIASES
         end
 
+        def render_payload(messages, thinking: nil, **)
+          raise ArgumentError, 'DeepSeek has no thinking budget; use effort:' if thinking&.budget
+
+          super
+        end
+
         def apply_end_user(payload, identifier)
           payload.merge(user_id: identifier)
         end

@@ -436,13 +436,15 @@ module RubyLLM
     #
     #   chat.approve(tool_call, remember: true)
     #
+    # Approving a call that already has a result remembers nothing.
+    #
     # A +run_code+ call that asks for another sandbox is approved one call
     # at a time: passing <tt>remember: true</tt> for it raises
     # ArgumentError, and the approval never applies to another call.
     def approve(tool_call, remember: false)
       name = remembered_tool_identity(tool_call) if remember
       record_tool_call_decision(tool_call, true)
-      @remembered_tools |= [name] if name
+      @remembered_tools |= [name] if name && !tool_call_answered?(tool_call)
       self
     end
 
@@ -2168,6 +2170,11 @@ module RubyLLM
       end
 
       [call.namespace, call.name.to_s]
+    end
+
+    def tool_call_answered?(tool_call)
+      id = tool_call.respond_to?(:id) ? tool_call.id : tool_call
+      messages.any? { |message| message.tool_result? && message.tool_call_id == id }
     end
 
     def find_tool_call(id)

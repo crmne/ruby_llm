@@ -89,6 +89,21 @@ RSpec.describe RubyLLM::Providers::Mistral::Chat do
       expect(payload).not_to have_key(:prompt_mode)
     end
 
+    it 'raises for a thinking budget' do
+      expect { render_payload(model_id: 'mistral-small-latest', thinking: RubyLLM::Thinking::Config.new(budget: 2048)) }
+        .to raise_error(ArgumentError, /no thinking budget/)
+    end
+
+    it 'raises for a thinking budget on Conversations' do
+      protocol = RubyLLM::Protocols::Mistral::Conversations.allocate
+      model = instance_double(RubyLLM::Model, id: 'mistral-small-latest')
+
+      expect do
+        protocol.send(:render_payload, messages, tools: {}, temperature: nil, model:,
+                                                 thinking: RubyLLM::Thinking::Config.new(budget: 2048))
+      end.to raise_error(ArgumentError, /no thinking budget/)
+    end
+
     it 'omits reasoning_effort when no thinking is configured' do
       payload = render_payload(model_id: 'mistral-small-latest')
 
