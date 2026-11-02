@@ -30,6 +30,20 @@ RSpec.describe RubyLLM::Agent do
     prompt_dir
   end
 
+  it 'returns an invalid record from .create with its errors' do
+    stub_const('RefusedChat', Class.new(Chat) { validate { errors.add(:base, 'Refused') } })
+    agent = Class.new(described_class) do
+      chat_model RefusedChat
+      model model_for(:openai)
+      instructions 'Be brief'
+    end
+
+    chat = agent.create
+
+    expect(chat).not_to be_persisted
+    expect(chat.errors[:base]).to eq(['Refused'])
+  end
+
   it 'creates a Rails chat via .create! and renders prompt shorthand instructions' do
     prompt_dir = write_prompt(
       'spec_support_agent',

@@ -237,6 +237,69 @@ RSpec.describe RubyLLM::Batch do # rubocop:disable RSpec/SpecFilePathFormat
       expect(chat.claiming_delivery { raise 'ran while claimed' }).to be(false)
     end
 
+    context 'when saving the answer fails' do
+      def failing_save(method = :save!)
+        allow_any_instance_of(Message).to receive(method).and_raise(ActiveRecord::StatementInvalid, 'lost') # rubocop:disable RSpec/AnyInstance
+      end
+
+      def restoring_save(method = :save!)
+        allow_any_instance_of(Message).to receive(method).and_call_original # rubocop:disable RSpec/AnyInstance
+      end
+
+      def usages
+        RubyLLM::ActiveRecord::Usage.where(chat:)
+      end
+
+      it 'keeps neither the usage nor a blank answer, and the next poll delivers it once' do
+        batch
+        failing_save
+
+        expect { described_class.find(batch.id).refresh.messages }.to raise_error(ActiveRecord::StatementInvalid)
+        expect(usages.count).to eq(0)
+        expect(chat.messages.reload.pluck(:role)).to eq(['user'])
+
+        restoring_save
+        described_class.find(batch.id).refresh.messages
+
+        expect(usages.count).to eq(1)
+        expect(chat.messages.reload.pluck(:role, :content)).to eq([['user', 'What is 2 + 2?'], %w[assistant 4]])
+      end
+
+      it 'undoes the delivery inside a transaction of the caller' do
+        batch
+        failing_save
+
+        Chat.transaction do
+          expect { described_class.find(batch.id).refresh.messages }.to raise_error(ActiveRecord::StatementInvalid)
+        end
+
+        expect(usages.count).to eq(0)
+      end
+
+      it 'adds one usage row when the placeholder could not be created' do
+        batch
+        allow_any_instance_of(Chat).to receive(:persist_new_message).and_raise(ActiveRecord::StatementInvalid, 'lost') # rubocop:disable RSpec/AnyInstance
+
+        expect { described_class.find(batch.id).refresh.messages }.to raise_error(ActiveRecord::StatementInvalid)
+
+        allow_any_instance_of(Chat).to receive(:persist_new_message).and_call_original # rubocop:disable RSpec/AnyInstance
+        described_class.find(batch.id).refresh.messages
+
+        expect(usages.count).to eq(1)
+      end
+
+      it 'keeps the answer when the usage row cannot be written' do
+        batch
+        allow(RubyLLM.logger).to receive(:warn)
+        allow(RubyLLM::ActiveRecord::Usage).to receive(:attributes_for).and_raise(ArgumentError, 'bad row')
+
+        described_class.find(batch.id).refresh.messages
+
+        expect(chat.messages.reload.pluck(:role)).to eq(%w[user assistant])
+        expect(RubyLLM.logger).to have_received(:warn).with(/could not record chat usage/)
+      end
+    end
+
     it 'leaves the answer for the next poll while the chat is running' do
       batch
       Chat.where(id: chat.id).update_all(claim_token: 'other', claimed_until: 10.minutes.from_now)

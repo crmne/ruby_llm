@@ -45,14 +45,19 @@ module RubyLLM
           'List the files with list_files.'
         end
 
-        def write(path, content)
-          store.write(path, content).tap { |file| @written.call(file) }
+        def guarded_write
+          written = nil
+          result = guarded { yield(->(path, content) { written = store.write(path, content) }) }
+          @written.call(written) if written
+          result
         end
 
         def guarded
           yield
-        rescue ToolError, FileStoreFullError => e
+        rescue ToolError, FileStoreFullError, ArgumentError => e
           { error: e.message }
+        rescue SystemCallError => e
+          { error: SystemCallError.new(e.errno).message }
         end
       end
     end

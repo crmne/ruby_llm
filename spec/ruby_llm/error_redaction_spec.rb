@@ -46,6 +46,72 @@ RSpec.describe RubyLLM::Error do
     end
   end
 
+  context 'with a context that disagrees with the global setting' do
+    def asking(context)
+      raised_by { context.chat(model: model_for(:openai), provider: :openai).ask(prompt) }
+    end
+
+    it 'redacts for a context that turns redaction on' do
+      refuse(status: 400, body: openai_refusal)
+
+      error = asking(RubyLLM.context { |config| config.redact_error_messages = true })
+
+      expect(error.message).to eq('openai returned HTTP 400 (invalid_request_error)')
+    end
+
+    it 'quotes the provider for a context that turns redaction off' do
+      RubyLLM.config.redact_error_messages = true
+      refuse(status: 400, body: openai_refusal)
+
+      error = asking(RubyLLM.context { |config| config.redact_error_messages = false })
+
+      expect(error.message).to eq("Invalid content: '#{prompt}'")
+    end
+
+    it 'redacts a failure reported in a successful response' do
+      stub_request(:post, /.*/).to_return(status: 200, body: JSON.generate(error: { message: prompt, code: 'failed' }),
+                                          headers: { 'Content-Type' => 'application/json' })
+      context = RubyLLM.context { |config| config.redact_error_messages = true }
+
+      error = raised_by { context.moderate('hello', model: 'omni-moderation-latest', provider: :openai) }
+
+      expect(error.message).not_to include(prompt)
+    end
+
+    {
+      RubyLLM::Protocols::Responses::Chat => [:parse_completion_body, { 'error' => { 'message' => 'wrote' } },
+                                              { raw: nil }],
+      RubyLLM::Protocols::Cohere::Chat => [:raise_failed_generation, 'wrote', {}],
+      RubyLLM::Protocols::Interactions::Chat => [
+        :parse_completion_body, { 'status' => 'failed', 'errors' => [{ 'message' => 'wrote' }] }, { raw: nil }
+      ],
+      RubyLLM::Protocols::SystemOne::Responses => [
+        :parse_judgment_response, Struct.new(:body).new({ 'usage' => {} }),
+        { questions: { a: Struct.new(:name).new('a') } }
+      ]
+    }.each do |protocol, (method, argument, options)|
+      it "follows the protocol's configuration in #{protocol}" do
+        parser = Object.new.extend(protocol)
+        parser.instance_variable_set(:@config, RubyLLM::Configuration.new.tap { |c| c.redact_error_messages = false })
+        RubyLLM.config.redact_error_messages = true
+
+        error = raised_by { parser.send(method, argument, **options) }
+
+        expect(error.message).to include(error.provider_message)
+      end
+    end
+
+    it "follows the protocol's configuration in OpenAI Decisions" do
+      parser = RubyLLM::Protocols::OpenAI::Decisions.allocate
+      parser.instance_variable_set(:@config, RubyLLM::Configuration.new.tap { |c| c.redact_error_messages = false })
+      RubyLLM.config.redact_error_messages = true
+
+      error = raised_by { parser.send(:parse_judgment_response, Struct.new(:body).new({}), questions: {}) }
+
+      expect(error.message).to include(error.provider_message)
+    end
+  end
+
   context 'with redaction' do
     before { RubyLLM.config.redact_error_messages = true }
 

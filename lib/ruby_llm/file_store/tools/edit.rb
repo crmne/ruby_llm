@@ -30,7 +30,7 @@ module RubyLLM
         end
 
         def execute(path:, old_text:, new_text:, replace_all: false)
-          guarded do
+          guarded_write do |write|
             file = file_at(path)
             content = text_of(file)
             count = old_text.to_s.empty? ? 0 : content.scan(old_text.to_s).size
@@ -41,7 +41,7 @@ module RubyLLM
             end
 
             replace = replace_all ? :gsub : :sub
-            write(file.path, content.public_send(replace, old_text.to_s) { new_text.to_s })
+            write.call(file.path, content.public_send(replace, old_text.to_s) { new_text.to_s })
             "Replaced #{count} #{count == 1 ? 'occurrence' : 'occurrences'} in #{file.path}."
           end
         end

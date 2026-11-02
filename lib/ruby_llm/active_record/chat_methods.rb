@@ -121,7 +121,7 @@ module RubyLLM
       end
 
       def claiming_delivery(&) # :nodoc:
-        exclusively(-> { false }, &)
+        exclusively(-> { false }) { transaction(requires_new: true, &) }
       end
 
       # Returns whether a process is running this chat's conversation loop:
@@ -240,14 +240,14 @@ module RubyLLM
       end
 
       # Reloads the record from the database, Rails-style, and refreshes the
-      # underlying chat's persisted message history to match. Runtime-only
+      # underlying chat's model and persisted message history to match. Runtime-only
       # configuration such as tools, temperature, and callbacks is preserved;
       # a model or provider assigned since the last save is discarded.
       # Returns +self+.
       def reload(...)
         super
-        @chat_model_stale = true if @chat && (@pending_model_id || @pending_provider)
         @pending_model_id = @pending_provider = nil
+        @chat_model_stale = true if @chat && chat_model_moved?
         sync_messages if @chat
         self
       end
@@ -940,6 +940,10 @@ module RubyLLM
       rescue *COMPLETION_ERRORS => e
         cleanup_after_failure(e)
         raise
+      end
+
+      def chat_model_moved?
+        [@chat.model.id, @chat.provider.slug] != [model_id, provider.to_s]
       end
 
       def latest_message

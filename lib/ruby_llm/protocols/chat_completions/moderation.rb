@@ -24,7 +24,7 @@ module RubyLLM
           data = response.body
           if data.dig('error', 'message')
             raise Error.new(provider_message: data.dig('error', 'message'), error_code: data.dig('error', 'code'),
-                            response:)
+                            response:, redact: @config&.redact_error_messages)
           end
 
           RubyLLM::Moderation.new(

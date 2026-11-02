@@ -28,8 +28,8 @@ module RubyLLM
         end
 
         def execute(path:, content:)
-          guarded do
-            file = write(path_for(path), content.to_s)
+          guarded_write do |write|
+            file = write.call(path_for(path), content.to_s)
             "Wrote #{file.path} (#{file.human_size})."
           end
         end

@@ -164,6 +164,33 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(responses.map(&:content)).to eq(['Hello'])
   end
 
+  it 'sends a question saved between loading the chat and claiming it' do
+    chat = question_chat
+    job = Chat.find(chat.id)
+    sent = []
+    allow(job.to_llm.provider).to receive(:complete) do |messages, **|
+      sent << messages.map(&:content)
+      RubyLLM::Message.new(role: :assistant, content: 'Done', input_tokens: 1, output_tokens: 1)
+    end
+    Chat.find(chat.id).ask_later('And then?')
+
+    job.complete
+
+    expect(sent).to eq([['Hello', 'And then?']])
+    expect(Chat.find(chat.id)).to be_complete
+  end
+
+  it 'rereads a chat another process claimed, even with no new message' do
+    chat = question_chat
+    job = job_for(chat)
+    Chat.where(id: chat.id).update_all(claim_token: 'other', claimed_until: nil)
+    allow(job).to receive(:resync_messages).and_call_original
+
+    job.complete
+
+    expect(job).to have_received(:resync_messages).once
+  end
+
   it 'answers a question asked while another process streamed the previous answer' do
     chat = Chat.create!(model: model_for(:openai))
     chat.add_message(role: :user, content: 'Hello')

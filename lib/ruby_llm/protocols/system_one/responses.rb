@@ -18,7 +18,8 @@ module RubyLLM
                                reported_cost: reported_cost(usage))
           )
         rescue KeyError, NoMethodError, TypeError => e
-          raise Error.new('System One returned an invalid judgment', provider_message: e.message, response:)
+          raise Error.new('System One returned an invalid judgment', provider_message: e.message, response:,
+                                                                     redact: @config&.redact_error_messages)
         end
 
         def reported_cost(_usage)

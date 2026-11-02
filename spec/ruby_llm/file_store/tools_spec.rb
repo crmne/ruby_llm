@@ -193,6 +193,32 @@ RSpec.describe RubyLLM::FileStore::Tools do
       expect(written).to eq(['notes/plan.md'])
     end
 
+    [ArgumentError, Errno::EACCES].each do |error|
+      it "lets #{error} from an after_file_write callback through write_file" do
+        chat.after_file_write { raise error }
+
+        expect { call(:write_file, path: 'plan.md', content: '# Plan') }.to raise_error(error)
+        expect(files.read('plan.md')).to eq('# Plan')
+      end
+
+      it "lets #{error} from an after_file_write callback through edit_file" do
+        files.write('plan.md', 'one')
+        chat.after_file_write { raise error }
+
+        expect { call(:edit_file, path: 'plan.md', old_text: 'one', new_text: 'two') }.to raise_error(error)
+        expect(files.read('plan.md')).to eq('two')
+      end
+    end
+
+    it 'skips the after_file_write callback when the write fails' do
+      written = []
+      chat.after_file_write { |file| written << file.path }
+      allow(files).to receive(:write).and_raise(Errno::EACCES)
+
+      expect(call(:write_file, path: 'plan.md', content: '# Plan')[:error]).to eq('Permission denied')
+      expect(written).to be_empty
+    end
+
     it 'replaces one exact span' do
       files.write('plan.md', "one two\nthree two")
 
@@ -217,6 +243,28 @@ RSpec.describe RubyLLM::FileStore::Tools do
 
       expect(call(:edit_file, path: 'logo.png', old_text: 'PNG', new_text: 'x')[:error]).to include('not a text file')
       expect(call(:edit_file, path: 'missing.md', old_text: 'a', new_text: 'b')[:error]).to include('There is no file')
+    end
+  end
+
+  describe 'on a folder store' do
+    let(:root) { Dir.mktmpdir }
+    let(:chat) do
+      RubyLLM.chat(model: model_for(:openai), provider: :openai).with_file_store(RubyLLM.file_store.directory(root))
+    end
+
+    after { FileUtils.remove_entry(root) }
+
+    it 'answers the model when it reaches for a hidden path' do
+      expect(call(:read_file, path: '.gitignore')[:error]).to eq(".gitignore is not inside the chat's files")
+      expect(call(:write_file, path: '.notes', content: 'x')[:error]).to eq(".notes is not inside the chat's files")
+      expect(call(:list_files, path: '.git')[:error]).to eq(".git is not inside the chat's files")
+      expect(call(:search_files, query: 'x', path: '.git')[:error]).to eq(".git is not inside the chat's files")
+      expect(call(:edit_file, path: '.notes', old_text: 'a',
+                              new_text: 'b')[:error]).to eq(".notes is not inside the chat's files")
+    end
+
+    it 'answers a write the file system refuses, without naming the folder on the host' do
+      expect(call(:write_file, path: "#{'a' * 300}.md", content: 'x')[:error]).to eq('File name too long')
     end
   end
 

@@ -71,6 +71,16 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
     expect(described_class.new(other).list).to be_empty
   end
 
+  it 'reads the underscore and percent sign of a folder literally' do
+    store.write('tool_results/a.txt', 'x')
+    store.write('toolXresults/b.txt', 'x')
+    store.write('100%/c.txt', 'x')
+    store.write('100 percent/d.txt', 'x')
+
+    expect(store.list('tool_results').map(&:path)).to eq(['tool_results/a.txt'])
+    expect(store.list('100%').map(&:path)).to eq(['100%/c.txt'])
+  end
+
   describe 'owners' do
     let(:alice) { Chat.create!(model: model_for(:openai)) }
     let(:bob) { Chat.create!(model: model_for(:openai)) }
