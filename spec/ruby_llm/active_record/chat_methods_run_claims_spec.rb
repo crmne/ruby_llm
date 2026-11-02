@@ -61,6 +61,22 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(chat.to_llm.usage_entries.size).to eq(1)
   end
 
+  it 'reads usage outside the query cache when it refreshes' do
+    chat = Chat.create!(model: model_for(:openai))
+    cached = []
+    record = ->(*, payload) { cached << payload[:cached] if payload[:sql].include?('ruby_llm_usages') }
+
+    Chat.cache do
+      chat.tokens
+      ActiveSupport::Notifications.subscribed(record, 'sql.active_record') do
+        chat.refresh_messages
+        chat.tokens
+      end
+    end
+
+    expect(cached.compact).to be_empty
+  end
+
   it 'drops what the failed round destroyed from the transcript in memory' do
     first = RubyLLM::ToolCall.new(id: "call_#{SecureRandom.hex(4)}", name: 'charge_card', arguments: {})
     second = RubyLLM::ToolCall.new(id: "call_#{SecureRandom.hex(4)}", name: 'charge_card', arguments: {})

@@ -110,8 +110,13 @@ module RubyLLM
 
       def resync_messages
         messages_association.reset
-        ruby_llm_usages.reset
+        reload_usages
         messages_association.klass.uncached { sync_messages }
+      end
+
+      def reload_usages
+        ruby_llm_usages.reset
+        ruby_llm_usages.klass.uncached { ruby_llm_usages.load }
       end
 
       def snapshot_run_claim

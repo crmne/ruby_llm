@@ -179,7 +179,7 @@ module RubyLLM
 
       def refresh_messages # :nodoc:
         messages_association.reset
-        ruby_llm_usages.reset
+        reload_usages
         sync_messages if @chat
       end
 

@@ -93,7 +93,8 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     chat.approve(first.id, remember: true)
 
     upcoming = call('refund')
-    expect(chat.to_llm.approval_pending?(upcoming)).to eq(process(chat).to_llm.approval_pending?(upcoming))
+    expect(chat.to_llm.approval_pending?(upcoming)).to be(true)
+    expect(process(chat).to_llm.approval_pending?(upcoming)).to be(true)
   end
 
   it 'remembers approvals in a database that has not added tool call namespaces' do
