@@ -191,6 +191,21 @@ Operations used to drop these options silently. They now raise `ArgumentError` b
 | `embed` | `title:` | Azure, Cohere, Mistral, OpenAI, OpenRouter, Perplexity, GPUStack, Bedrock |
 
 Two options now take effect instead. `content_type:` on `upload` reaches every provider. `size:` becomes an aspect ratio on Imagen and OpenRouter, so a request that used to get a square image follows the ratio you asked for, and a size neither can express, such as `"2K"`, raises `ArgumentError`.
+||||||| parent of af62e5aac (Raise on chat options a protocol cannot carry)
+## Chat Options a Provider Cannot Carry Raise
+
+These chat options were dropped, or downgraded with a log line. They now raise when the request is built.
+
+| Option | Raises on | Do instead |
+| --- | --- | --- |
+| `with_schema` | DeepSeek Chat Completions | Pass `protocol: :responses` |
+| `with_thinking(budget:)` | DeepSeek, Ollama | Use `effort:` |
+| `with_tool_options(choice: :none)` with tools | Bedrock Converse | Remove the tools |
+| `with_tool_options(calls: :one)` | Mistral Conversations | Use Chat Completions |
+| `with_caching(id:)` | Gemini Interactions | Use the default protocol |
+| System attachments | Gemini Interactions | Attach to a user message |
+
+`with_thinking(display: :omitted)` on Gemini now takes effect and keeps thoughts out of the response.
 
 ## Bedrock Batches Report No Request Counts
 

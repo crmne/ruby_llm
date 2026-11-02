@@ -153,7 +153,7 @@ RubyLLM.models.chat_models.select { |model| model.supports?(:structured_output) 
 
 Support varies by model and deployment. A provider can reject a schema or an unsupported JSON Schema keyword. Anthropic document citations cannot be combined with structured output.
 
-DeepSeek requires `protocol: :responses` to enforce a schema:
+DeepSeek requires `protocol: :responses` to enforce a schema. Its default Chat Completions protocol raises `ArgumentError`:
 
 ```ruby
 chat = RubyLLM.chat(model: "{{ site.models.deepseek_chat }}", provider: :deepseek, protocol: :responses)

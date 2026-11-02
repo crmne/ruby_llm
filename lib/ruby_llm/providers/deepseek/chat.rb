@@ -13,9 +13,10 @@ module RubyLLM
 
         def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil,
                            schema: nil, thinking: nil, citations: false, caching: nil, tool_prefs: nil)
+          raise ArgumentError, 'DeepSeek Chat Completions cannot enforce a schema. Use protocol: :responses.' if schema
+
           payload = super
           configure_thinking_payload(payload, thinking)
-          degrade_schema_payload(payload) if schema
           payload
         end
 
@@ -26,9 +27,7 @@ module RubyLLM
         def configure_thinking_payload(payload, thinking)
           return unless thinking&.enabled?
 
-          if thinking.budget
-            RubyLLM.logger.debug { "DeepSeek has no thinking budgets; ignoring budget #{thinking.budget}" }
-          end
+          raise ArgumentError, 'DeepSeek has no thinking budget; use effort:' if thinking.budget
 
           if thinking.disabled?
             payload.delete(:reasoning_effort)
@@ -36,14 +35,6 @@ module RubyLLM
           else
             payload[:thinking] = { type: 'enabled' }
           end
-        end
-
-        def degrade_schema_payload(payload)
-          RubyLLM.logger.warn(
-            'DeepSeek Chat Completions does not support json_schema response formats. ' \
-            'Use protocol: :responses to enforce the schema. Falling back to json_object mode.'
-          )
-          payload[:response_format] = { type: 'json_object' }
         end
 
         def render_thinking(msg)

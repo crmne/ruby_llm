@@ -751,10 +751,13 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       )
     end
 
-    it 'omits toolChoice when the request asks for no tool' do
-      config = described_class.render_tool_config({ 'lookup' => tool }, { choice: :none })
+    it 'raises for a request that offers tools and asks for none' do
+      expect { described_class.render_tool_config({ 'lookup' => tool }, { choice: :none }) }
+        .to raise_error(ArgumentError, /no tool choice of none/)
+    end
 
-      expect(config).not_to have_key(:toolChoice)
+    it 'ignores tool choice when there are no tools' do
+      expect(described_class.render_tool_config({}, { choice: :none })).to be_nil
     end
 
     it 'merges the tool provider options into the spec' do

@@ -113,13 +113,21 @@ module RubyLLM
           off = thinking.enabled == false || (thinking.budget.is_a?(Integer) && thinking.budget.zero?)
           return { includeThoughts: false, thinkingBudget: 0 } if off
 
-          config = { includeThoughts: true }
+          config = { includeThoughts: include_thoughts?(thinking.display) }
 
           config[:thinkingLevel] = thinking.effort.to_s if thinking.effort
           config[:thinkingBudget] = thinking.budget if thinking.budget.is_a?(Integer)
           config[:thinkingBudget] = -1 if thinking.enabled == true
 
           config
+        end
+
+        def include_thoughts?(display)
+          unless [nil, :summarized, :omitted].include?(display)
+            raise ArgumentError, 'Gemini thinking display must be summarized or omitted'
+          end
+
+          display != :omitted
         end
 
         def provider_file_references?

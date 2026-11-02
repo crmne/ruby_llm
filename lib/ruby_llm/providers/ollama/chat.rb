@@ -9,9 +9,8 @@ module RubyLLM
 
         def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil,
                            schema: nil, thinking: nil, citations: false, caching: nil, tool_prefs: nil)
-          if thinking&.budget
-            RubyLLM.logger.debug { "Ollama has no thinking budgets; ignoring budget #{thinking.budget}" }
-          end
+          raise ArgumentError, 'Ollama has no thinking budget; use effort:' if thinking&.budget
+
           super
         end
 

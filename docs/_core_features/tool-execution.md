@@ -55,7 +55,7 @@ chat.with_tools(Weather, Calculator).with_tool_options(choice: Weather)
 
 After a required or specific tool executes, RubyLLM clears that choice so the model can answer without calling it again.
 
-Disabling tool calls keeps the tools registered on the chat. Set `choice: :auto` to make them available again:
+Disabling tool calls keeps the tools registered on the chat. Set `choice: :auto` to make them available again. Bedrock Converse has no such setting and raises `ArgumentError`:
 
 ```ruby
 chat.with_tool_options(choice: :none)

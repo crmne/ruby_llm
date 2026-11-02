@@ -224,6 +224,19 @@ RSpec.describe RubyLLM::Protocols::Interactions do
     expect(parts.last).to include(mime_type: 'application/pdf', data: a_string_starting_with('JVBER'))
   end
 
+  it 'raises for cached content, which an interaction cannot name' do
+    expect { protocol.send(:render_payload, [], tools: {}, temperature: nil, model: chat.model, caching: { id: 'c' }) }
+      .to raise_error(ArgumentError, /cached content id/)
+  end
+
+  it 'raises for system attachments, which system_instruction cannot carry' do
+    file = RubyLLM::Attachment.new(StringIO.new('text'), filename: 'notes.txt')
+    message = RubyLLM::Message.new(role: :system, content: 'Be brief', attachments: [file])
+
+    expect { protocol.send(:render_payload, [message], tools: {}, temperature: nil, model: chat.model) }
+      .to raise_error(RubyLLM::UnsupportedAttachmentError, %r{text/plain})
+  end
+
   describe 'agentic video' do
     it 'renders each video with its own processing mode and leaves other attachments alone' do
       file = RubyLLM::UploadedFile.new(id: 'files/abc', provider: 'gemini', filename: 'lecture.mp4',

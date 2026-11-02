@@ -16,7 +16,8 @@ module RubyLLM
         end
 
         def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil,
-                           schema: nil, thinking: nil, tool_prefs: nil, **)
+                           schema: nil, thinking: nil, caching: nil, tool_prefs: nil, **)
+          ensure_interaction_carries(messages, caching)
           config = { temperature: temperature, max_output_tokens: max_output_tokens }.compact
           config.merge!(render_interaction_thinking(thinking)) if thinking
           choice = tool_prefs&.dig(:choice)
@@ -28,6 +29,15 @@ module RubyLLM
           }
           payload[:response_format] = { type: 'text', mime_type: 'application/json', schema: schema[:schema] } if schema
           payload
+        end
+
+        def ensure_interaction_carries(messages, caching)
+          if caching.is_a?(Hash) && caching[:id]
+            raise ArgumentError, 'Gemini Interactions does not accept a cached content id'
+          end
+
+          attachment = messages.select { |message| message.role == :system }.flat_map(&:attachments).first
+          raise UnsupportedAttachmentError, attachment.mime_type if attachment
         end
 
         def render_interaction_thinking(thinking)

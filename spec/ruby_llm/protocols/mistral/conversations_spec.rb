@@ -17,6 +17,13 @@ RSpec.describe RubyLLM::Protocols::Mistral::Conversations do
     ], 'usage' => { 'prompt_tokens' => 20, 'completion_tokens' => 5 } }
   end
 
+  it 'raises for one tool call per response, which completion_args cannot carry' do
+    tool = Class.new(RubyLLM::Tool) { define_method(:name) { 'lookup' } }
+
+    expect { chat.with_tools(tool).with_tool_options(calls: :one).ask_later('Hello').render }
+      .to raise_error(ArgumentError, /does not accept calls: :one/)
+  end
+
   it 'keeps Chat Completions as the default and registers the explicit conversations protocol' do
     expect(RubyLLM::Providers::Mistral.default_protocol).to eq(:chat_completions)
     expect(chat.ask_later('Hello').render).to include(store: false,
