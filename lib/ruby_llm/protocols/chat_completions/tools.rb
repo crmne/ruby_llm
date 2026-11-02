@@ -47,7 +47,7 @@ module RubyLLM
         def render_tool_calls(tool_calls)
           return nil unless tool_calls&.any?
 
-          tool_calls.map do |_, tc|
+          tool_calls.map do |tc|
             call = {
               id: tc.provider_call_id,
               type: 'function',

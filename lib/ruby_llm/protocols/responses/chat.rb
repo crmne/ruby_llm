@@ -459,7 +459,7 @@ module RubyLLM
         end
 
         def render_function_call_items(tool_calls)
-          tool_calls.map do |_, tc|
+          tool_calls.map do |tc|
             {
               type: 'function_call',
               call_id: tc.provider_call_id,

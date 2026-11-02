@@ -61,7 +61,7 @@ module RubyLLM
         # Gemini checks signatures only in the current turn, which starts at
         # the last user message.
         def render_interaction_input(messages)
-          calls = messages.flat_map { |message| message.tool_calls.to_h.values }.to_h { |call| [call.id, call] }
+          calls = messages.flat_map { |message| message.tool_calls.to_a }.to_h { |call| [call.id, call] }
           turn_start = messages.rindex { |message| message.role == :user }
           messages.each_with_index.flat_map do |message, index|
             next [] if message.role == :system
@@ -100,7 +100,7 @@ module RubyLLM
           steps = []
           content = render_interaction_content(message.content, message.attachments)
           steps << { type: message.role == :assistant ? 'model_output' : 'user_input', content: } if content.any?
-          message.tool_calls.to_h.values.each_with_index do |call, position|
+          message.tool_calls.each_with_index do |call, position|
             signature = call.thought_signature || (Gemini::Tools::PLACEHOLDER_SIGNATURE if current && position.zero?)
             steps << { type: 'function_call', id: call.provider_call_id, name: call.name, arguments: call.arguments,
                        signature: }.compact

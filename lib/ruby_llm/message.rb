@@ -38,8 +38,13 @@ module RubyLLM
 
     attr_writer :model_info # :nodoc:
 
-    # The tool calls the assistant requested, as a Hash of ToolCall objects
-    # keyed by call ID, or +nil+.
+    # The tool calls the assistant requested, as an Enumerable of ToolCall
+    # objects in provider order, also readable by call ID. Empty when there
+    # are none.
+    #
+    #   response.tool_calls.map(&:name) # => ["weather"]
+    #   response.tool_calls["call_1"]   # => #<RubyLLM::ToolCall ...>
+    #
     attr_reader :tool_calls
 
     # The ID of the tool call this message answers. Set only on tool result
@@ -162,7 +167,7 @@ module RubyLLM
     end
 
     def with_tool_calls(tool_calls) # :nodoc:
-      dup.tap { |message| message.instance_variable_set(:@tool_calls, tool_calls) }
+      dup.tap { |message| message.instance_variable_set(:@tool_calls, coerce_tool_calls(tool_calls)) }
     end
 
     def with_tool_call_id(tool_call_id) # :nodoc:
@@ -176,14 +181,14 @@ module RubyLLM
         message.instance_variable_set(:@phase, nil)
         message.instance_variable_set(:@continuation, nil)
         message.instance_variable_set(:@raw_content, raw_content)
-        message.instance_variable_set(:@tool_calls, tool_calls_without_thought_signatures)
+        message.instance_variable_set(:@tool_calls, coerce_tool_calls(tool_calls_without_thought_signatures))
       end
     end
 
     # Returns +true+ if the assistant requested one or more tool calls,
     # +false+ otherwise.
     def tool_call?
-      !tool_calls.nil? && !tool_calls.empty?
+      !tool_calls.empty?
     end
 
     # Returns +true+ if the message carries the result of a tool call,
@@ -197,7 +202,7 @@ module RubyLLM
       return tool_call_id unless tool_result? && conversation
 
       conversation.messages.reverse_each do |message|
-        call = message.tool_calls&.[](tool_call_id)
+        call = message.tool_calls[tool_call_id]
         return call.provider_call_id if call
       end
       tool_call_id
@@ -315,7 +320,7 @@ module RubyLLM
         model: model,
         cost: @supplied_cost && cost.to_h,
         reported_cost: tokens.reported_cost,
-        tool_calls: tool_calls&.transform_values(&:to_h),
+        tool_calls: tool_calls.empty? ? nil : tool_calls.transform_values(&:to_h),
         tool_call_id: tool_call_id,
         provider_call_id: @provider_call_id,
         thinking: thinking&.text,
@@ -371,22 +376,26 @@ module RubyLLM
     end
 
     def coerce_tool_calls(tool_calls)
-      return tool_calls unless tool_calls.is_a?(Hash)
+      return tool_calls if tool_calls.is_a?(ToolCall::Collection)
 
-      tool_calls.to_h do |id, call|
-        next [id, call] unless call.is_a?(Hash)
+      ToolCall::Collection.new(
+        tool_calls.to_h do |id, call|
+          [id, call.is_a?(Hash) ? tool_call_from_h(id, call) : call]
+        end
+      )
+    end
 
-        attributes = call.transform_keys(&:to_sym)
-        [id, ToolCall.new(id: attributes[:id] || id, name: attributes[:name],
-                          provider_call_id: attributes[:provider_call_id] || attributes[:provider_id],
-                          arguments: attributes[:arguments] || {},
-                          namespace: attributes[:namespace],
-                          thought_signature: attributes[:thought_signature], remote: attributes.fetch(:remote, false))]
-      end
+    def tool_call_from_h(id, call)
+      attributes = call.transform_keys(&:to_sym)
+      ToolCall.new(id: attributes[:id] || id, name: attributes[:name],
+                   provider_call_id: attributes[:provider_call_id] || attributes[:provider_id],
+                   arguments: attributes[:arguments] || {},
+                   namespace: attributes[:namespace],
+                   thought_signature: attributes[:thought_signature], remote: attributes.fetch(:remote, false))
     end
 
     def tool_calls_without_thought_signatures
-      tool_calls&.transform_values do |call|
+      tool_calls.transform_values do |call|
         call.dup.tap { |copy| copy.thought_signature = nil }
       end
     end
@@ -413,7 +422,7 @@ module RubyLLM
     end
 
     def normalize_content(content)
-      return '' if role == :assistant && content.nil? && tool_calls && !tool_calls.empty?
+      return '' if role == :assistant && content.nil? && tool_call?
       return content if content.nil? || content.is_a?(String)
 
       raise ArgumentError,
@@ -429,7 +438,7 @@ module RubyLLM
       {
         role: role,
         content: content,
-        tool_calls: tool_calls&.values&.map(&:name),
+        tool_calls: tool_calls.map(&:name),
         tool_call_id: tool_call_id,
         model: model,
         finish_reason: finish_reason

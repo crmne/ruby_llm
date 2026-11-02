@@ -123,7 +123,7 @@ module RubyLLM
 
       # Returns the path each read_file call asked for, by call id.
       def read_paths(list)
-        list.flat_map { |message| (message.tool_calls || {}).values }
+        list.flat_map { |message| message.tool_calls.to_a }
             .select { |call| call.name == READ_TOOL }
             .to_h { |call| [call.id, read_path(call)] }
       end

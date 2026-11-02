@@ -135,7 +135,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Tools do
         arguments: { 'location' => 'Berlin' }
       )
 
-      result = described_class.render_tool_calls({ 'call_123' => tool_call })
+      result = described_class.render_tool_calls([tool_call])
 
       expect(result).to eq([
                              {
@@ -157,7 +157,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Tools do
         thought_signature: 'sig_xyz789'
       )
 
-      result = described_class.render_tool_calls({ 'call_456' => tool_call })
+      result = described_class.render_tool_calls([tool_call])
 
       expect(result).to eq([
                              {
@@ -189,7 +189,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Tools do
         )
       }
 
-      result = described_class.render_tool_calls(tool_calls)
+      result = described_class.render_tool_calls(tool_calls.values)
 
       first_call = result.find { |c| c[:id] == 'call_1' }
       second_call = result.find { |c| c[:id] == 'call_2' }
@@ -200,7 +200,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Tools do
 
     it 'returns nil for empty or nil input' do
       expect(described_class.render_tool_calls(nil)).to be_nil
-      expect(described_class.render_tool_calls({})).to be_nil
+      expect(described_class.render_tool_calls([])).to be_nil
     end
   end
 

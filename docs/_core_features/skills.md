@@ -98,7 +98,7 @@ The model gets one tool, `load_skill`. Called with a skill's name, it returns th
 ```ruby
 chat.ask "Bill order 1042 to ACME"
 
-chat.messages.select(&:tool_call?).flat_map { |message| message.tool_calls.values.map(&:arguments) }
+chat.messages.select(&:tool_call?).flat_map { |message| message.tool_calls.map(&:arguments) }
 # => [{"skill"=>"invoices"}, {"skill"=>"invoices", "file"=>"references/TAX_RULES.md"}]
 ```
 

@@ -1053,7 +1053,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       response = instance_double(Faraday::Response, body: response_body)
       message = described_class.parse_completion_body(response_body, raw: response)
 
-      expect(message.tool_calls).to be_nil
+      expect(message.tool_calls).to be_empty
       expect(message.server_tool_calls.map(&:type)).to eq(%w[server_tool_use nova_grounding_result])
       expect(message.server_tool_calls.first.name).to eq('nova_grounding')
       expect(message.content).to eq('Ruby 4.0.6 is the latest stable version.')

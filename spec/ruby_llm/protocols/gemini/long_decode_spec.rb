@@ -65,7 +65,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::LongDecode do
     reply = chat.ask('Count')
 
     expect(reply.content).to eq('One two three')
-    expect(reply.tool_calls).to be_nil
+    expect(reply.tool_calls).to be_empty
     expect(requests.drop(1)).to eq(%w[first second].map { |token| requests.first.merge('continuationToken' => token) })
     expect(hooks).to eq(1)
     expect(chat.provider_options).not_to have_key(:continuationToken)

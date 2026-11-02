@@ -1234,7 +1234,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       chat = Chat.create!(model: model_id)
       chat.send(:persist_new_message)
       placeholder = chat.instance_variable_get(:@message)
-      chat.send(:persist_tool_calls, { call.id => call }, message_record: placeholder)
+      chat.send(:persist_tool_calls, [call], message_record: placeholder)
 
       chat.send(:persist_new_message)
 

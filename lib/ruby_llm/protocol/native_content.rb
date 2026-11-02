@@ -44,7 +44,7 @@ module RubyLLM
         return true if message.thinking || message.raw_reasoning || message.raw_content || message.phase
         return true if message.continuation
 
-        message.tool_call? && message.tool_calls.each_value.any?(&:thought_signature)
+        message.tool_call? && message.tool_calls.any?(&:thought_signature)
       end
 
       # Only a usage entry names the producer: a model id alone can belong

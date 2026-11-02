@@ -166,7 +166,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::Mantle do
       expect(chat.render[:tools]).to eq([{ type: 'mcp', server_label: 'docs', connector_id: connector,
                                            require_approval: 'never' }])
       expect(chat.render[:input]).to eq(output)
-      expect(message.tool_calls).to be_nil
+      expect(message.tool_calls).to be_empty
       expect(message.server_tool_calls.last).to have_attributes(name: 'read_docs', result: 'Documentation')
     end
 

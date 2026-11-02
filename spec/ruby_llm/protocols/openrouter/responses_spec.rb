@@ -58,7 +58,7 @@ RSpec.describe RubyLLM::Protocols::OpenRouter::Responses do
     chunk = protocol.send(:build_chunk, event)
     expect(chunk.server_tool_calls.first)
       .to have_attributes(type: 'mcp_call', id: 'mcp-1', input: '{"query":"Ruby"}', name: nil, result: nil, raw: event)
-    expect(chunk.tool_calls).to be_nil
+    expect(chunk.tool_calls).to be_empty
   end
 
   it 'executes a hosted shell and returns its real output and billed usage', :live do

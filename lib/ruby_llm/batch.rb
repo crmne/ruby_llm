@@ -462,10 +462,10 @@ module RubyLLM
     end
 
     def tool_calls_delivered?(chat, message)
-      calls = chat.messages.flat_map { |existing| existing.tool_calls.to_h.values }
+      calls = chat.messages.flat_map { |existing| existing.tool_calls.to_a }
       legacy_ids = calls.select { |call| call.provider_call_id == call.id }.map(&:id)
       calls.map(&:id).intersect?(message.tool_calls.keys) ||
-        legacy_ids.intersect?(message.tool_calls.values.map(&:provider_call_id))
+        legacy_ids.intersect?(message.tool_calls.map(&:provider_call_id))
     end
 
     module Helpers # :nodoc:

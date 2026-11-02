@@ -137,7 +137,7 @@ module RubyLLM
           calls = {}
 
           messages.each do |msg|
-            calls.merge!(msg.tool_calls || {})
+            calls.merge!(msg.tool_calls.to_h)
             if msg.tool_result?
               tool_result_blocks << Tools.render_tool_result_block(msg, citations:, tool_call: calls[msg.tool_call_id])
               inject_cache_control(tool_result_blocks, caching:, ttl: msg.cache_ttl) if cache_boundary?(msg, caching:)
@@ -446,7 +446,7 @@ module RubyLLM
           content_blocks = prepend_thinking_blocks([], msg)
           append_formatted_content(content_blocks, msg) unless msg.content.nil? || msg.content.empty?
 
-          msg.tool_calls.each_value do |tool_call|
+          msg.tool_calls.each do |tool_call|
             content_blocks << {
               type: 'tool_use',
               id: tool_call.provider_call_id,

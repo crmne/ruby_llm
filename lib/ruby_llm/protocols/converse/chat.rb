@@ -211,7 +211,7 @@ module RubyLLM
           blocks = render_structured_message_content(msg, citations:)
 
           if msg.tool_call?
-            msg.tool_calls.each_value do |tool_call|
+            msg.tool_calls.each do |tool_call|
               blocks << {
                 toolUse: {
                   toolUseId: tool_call.provider_call_id,

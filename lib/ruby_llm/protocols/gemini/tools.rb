@@ -30,7 +30,7 @@ module RubyLLM
           text = msg.content unless msg.content.to_s.empty?
           parts.concat(Media.render_content(text, msg.attachments))
 
-          msg.tool_calls.each_value do |tool_call|
+          msg.tool_calls.each do |tool_call|
             part = {
               functionCall: {
                 name: tool_call.name,

@@ -30,9 +30,23 @@ RSpec.describe RubyLLM::ActiveRecord::MessageMethods do
   end
 
   describe 'Rails-backed message records' do
-    include_context 'with configured RubyLLM'
-
     let(:chat) { Chat.create!(model: model_for(:openai, :temperature)) }
+
+    it 'returns tool calls as the same collection a plain message does' do
+      call = tool_call
+      with_calls = chat.add_message(
+        RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { call.id => call })
+      )
+      without_calls = chat.add_message(role: :user, content: 'hi')
+
+      expect(with_calls.tool_calls).to be_a(RubyLLM::ToolCall::Collection)
+      expect(with_calls.tool_calls.first).to have_attributes(id: call.id, name: call.name)
+      expect(with_calls.tool_calls[call.id]).to have_attributes(name: call.name)
+      expect(without_calls.tool_calls).to be_a(RubyLLM::ToolCall::Collection).and be_empty
+      expect(without_calls.to_llm.tool_calls).to be_empty
+    end
+
+    include_context 'with configured RubyLLM'
 
     def tool_call
       RubyLLM::ToolCall.new(id: "call_#{SecureRandom.hex(4)}", name: 'lookup', arguments: {})

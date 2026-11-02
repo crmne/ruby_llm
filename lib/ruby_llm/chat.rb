@@ -468,7 +468,7 @@ module RubyLLM
       response = pending_tool_response
       return false unless response
 
-      pending = pending_tool_calls(response).values
+      pending = pending_tool_calls(response)
       pending.any? && pending.all? do |tool_call|
         approval_pending?(tool_call) || paused?(tool_call) ||
           running_elsewhere?(tool_call) || sequence_blocked?(tool_call)
@@ -500,7 +500,7 @@ module RubyLLM
       response = pending_tool_response
       return [] unless response
 
-      pending_tool_calls(response).values.select { |tool_call| approval_pending?(tool_call) }
+      pending_tool_calls(response).select { |tool_call| approval_pending?(tool_call) }
     end
 
     # Returns whether +tool_call+ requires approval and has no recorded
@@ -533,7 +533,7 @@ module RubyLLM
       response = pending_tool_response
       return [] unless response
 
-      pending_tool_calls(response).values.flat_map do |tool_call|
+      pending_tool_calls(response).flat_map do |tool_call|
         Array(tool_call_input(tool_call)&.[]('requests'))
           .map { |data| MCP::InputRequest.from_h(data, tool_call:) }
           .reject(&:answered?)
@@ -567,7 +567,7 @@ module RubyLLM
       response = pending_tool_response
       return [] unless response
 
-      pending_tool_calls(response).values.filter_map do |tool_call|
+      pending_tool_calls(response).filter_map do |tool_call|
         state = tool_call_input(tool_call)
         task_for(tool_call, state) if state&.key?('task') && !unanswered?(state)
       end
@@ -1438,7 +1438,7 @@ module RubyLLM
       message = coerce_message(message_or_attributes)
       return ToolCallIds.answer(message, messages) if message.tool_result?
       return message unless message.tool_call?
-      return message if message.tool_calls.each_value.none? { |call| reused_tool_call_id?(call.id, &taken) }
+      return message if message.tool_calls.none? { |call| reused_tool_call_id?(call.id, &taken) }
 
       ToolCallIds.new.assign(message)
     end
@@ -1516,7 +1516,7 @@ module RubyLLM
       response = pending_tool_response
       return unless response
 
-      names = pending_tool_calls(response).values.map(&:name).uniq
+      names = pending_tool_calls(response).map(&:name).uniq
       raise PendingToolCallsError,
             "The last response has unanswered tool calls (#{names.join(', ')}). " \
             'Run complete, recording approve or deny decisions for calls that ' \
@@ -1926,7 +1926,7 @@ module RubyLLM
     end
 
     def unfinished_results(response, answered)
-      response.tool_calls.values.reject { |tool_call| answered.include?(tool_call.id) }
+      response.tool_calls.reject { |tool_call| answered.include?(tool_call.id) }
               .map { |tool_call| unfinished_result(tool_call) }
     end
 
@@ -2063,7 +2063,7 @@ module RubyLLM
     def execute_pending_tool_calls(response)
       raise_if_cancelled!
 
-      server_calls, local_calls = pending_tool_calls(response).partition { |_, call| call.remote? }.map(&:to_h)
+      server_calls, local_calls = pending_tool_calls(response).to_h.partition { |_, call| call.remote? }.map(&:to_h)
       decisions = server_calls.transform_values { |tool_call| approval_decision(nil, tool_call) }.compact
       executable, denied = partition_pending_tool_calls(local_calls)
       claimed = claim_tool_calls(executable, server_calls.slice(*decisions.keys).merge(denied))
@@ -2172,7 +2172,7 @@ module RubyLLM
 
     def find_tool_call(id)
       messages.reverse_each do |message|
-        call = message.tool_calls&.[](id)
+        call = message.tool_calls[id]
         return call if call
       end
       nil
@@ -2338,7 +2338,7 @@ module RubyLLM
       response = pending_tool_response
       return unless response
 
-      pending_tool_calls(response).each_value do |tool_call|
+      pending_tool_calls(response).each do |tool_call|
         state = tool_call_input(tool_call)
         next unless state&.key?('task')
 
@@ -2351,7 +2351,7 @@ module RubyLLM
       response = pending_tool_response
       return unless response
 
-      pending_tool_calls(response).each_value do |tool_call|
+      pending_tool_calls(response).each do |tool_call|
         next if running_elsewhere?(tool_call)
 
         record_tool_call_input(tool_call, nil) if tool_call_input(tool_call)

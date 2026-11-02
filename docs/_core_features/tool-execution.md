@@ -109,7 +109,7 @@ chat.awaiting_approval? # => true, and nothing has executed
 `complete` returns cleanly instead of running the tool. Record a decision, then continue the loop:
 
 ```ruby
-tool_call = response.tool_calls.values.first
+tool_call = response.tool_calls.first
 
 chat.approve(tool_call)
 chat.complete # executes the tool, then lets the model continue
@@ -121,6 +121,8 @@ chat.complete # executes the tool, then lets the model continue
 chat.deny(tool_call)
 chat.complete # appends the denial result and asks the model to respond
 ```
+
+`tool_calls` is an Enumerable of `RubyLLM::ToolCall` objects in the order the provider returned them, empty when the message has none. It also reads by ID: `response.tool_calls["call_1"]`.
 
 Calls that need no approval still run while protected calls wait. `ask` and `complete` return the assistant message that holds the waiting calls, so `response.tool_calls` is always there to inspect. Use `chat.pending_approvals` to pick out the calls that still need a decision.
 

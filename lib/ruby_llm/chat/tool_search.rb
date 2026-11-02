@@ -47,7 +47,7 @@ module RubyLLM
 
       def loaded_tool_names(deferred)
         results = messages.select(&:tool_result?).to_h { |message| [message.tool_call_id, message.content] }
-        calls = messages.select(&:tool_call?).flat_map { |message| message.tool_calls.values }
+        calls = messages.select(&:tool_call?).flat_map { |message| message.tool_calls.to_a }
         calls.flat_map { |tool_call| names_loaded_by(tool_call, results) }.uniq & deferred
       end
 
