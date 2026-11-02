@@ -18,6 +18,7 @@ RSpec.describe RubyLLM::Protocol::CacheLifetime do
 
   it 'renders the digits a string column keeps for an Integer or Duration' do
     expect(described_class.render('3600')).to eq('1h')
+    expect(described_class.render('5400.0')).to eq('90m')
   end
 
   it 'leaves a provider spelling alone' do

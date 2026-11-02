@@ -40,7 +40,7 @@ Use options when you need a cache key or lifetime:
 chat.with_caching(ttl: 1.hour)
 ```
 
-A lifetime can be a Duration, a number of seconds, or the provider's own spelling such as `"1h"`. RubyLLM renders it the way each provider expects, here and on `cache_until_here` and `RubyLLM.cache`.
+A lifetime can be a Duration, a number of seconds, or the provider's own spelling such as `"1h"`. `1.hour` comes from Active Support, which Rails loads for you; outside Rails, pass `3600`. RubyLLM renders it the way each provider expects, here and on `cache_until_here` and `RubyLLM.cache`.
 
 Options depend on the provider and model:
 

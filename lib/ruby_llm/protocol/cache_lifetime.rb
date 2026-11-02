@@ -11,7 +11,7 @@ module RubyLLM
       module_function
 
       def render(ttl)
-        seconds = ttl.is_a?(String) ? Integer(ttl, exception: false) : ttl.to_i
+        seconds = ttl.is_a?(String) ? Float(ttl, exception: false)&.to_i : ttl.to_i
         return ttl unless seconds
 
         unit, size = UNITS.find { |_unit, length| (seconds % length).zero? }

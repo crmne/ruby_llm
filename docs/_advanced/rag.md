@@ -26,7 +26,7 @@ RAG is often just one step in a larger [workflow]({% link _advanced/agentic-work
 ```ruby
 # Gemfile
 gem 'neighbor'
-gem 'ruby_llm', '2.0.0'
+gem 'ruby_llm'
 ```
 
 ```bash

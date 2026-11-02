@@ -39,7 +39,7 @@ module RubyLLM
     #
     def vector
       return vectors unless vectors.first.is_a?(Array)
-      return vectors.first if vectors.one?
+      return vectors.first if vectors.size == 1
 
       raise Error, "This embedding holds #{vectors.size} vectors; read them with #vectors"
     end
