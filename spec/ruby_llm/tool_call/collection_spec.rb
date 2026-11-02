@@ -37,6 +37,13 @@ RSpec.describe RubyLLM::ToolCall::Collection do
     expect(streamed.except('call_a')).to be_empty
   end
 
+  it 'reads a streamed call by its ID when its stream key is nil' do
+    streamed = described_class.new(nil => first_call)
+
+    expect(streamed['call_a']).to be(first_call)
+    expect(streamed.except('call_a')).to be_empty
+  end
+
   it 'never matches a missing ID to a call without one' do
     fragment = described_class.new(0 => RubyLLM::ToolCall.new(name: nil))
 

@@ -121,7 +121,7 @@ module RubyLLM
       def key_for(id)
         return id if id.nil? || @calls.key?(id)
 
-        @calls.key(find { |call| call.id == id }) || id
+        @calls.find(-> { [id] }) { |_, call| call.id == id }.first
       end
 
       def inspect_attributes
