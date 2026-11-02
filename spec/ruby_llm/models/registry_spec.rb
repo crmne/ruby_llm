@@ -4,6 +4,17 @@ require 'spec_helper'
 require 'tmpdir'
 
 RSpec.describe RubyLLM::Models::Registry do
+  ['[1]', '[{"id":"x","provider":"openai","knowledge_cutoff":"not-a-date"}]'].each do |json|
+    it "reports the entries of #{json} as an invalid registry" do
+      Tempfile.create(['models', '.json']) do |file|
+        file.write(json)
+        file.flush
+
+        expect { described_class.read(file.path) }.to raise_error(RubyLLM::ModelRegistryError, /Invalid model registry/)
+      end
+    end
+  end
+
   let(:model) do
     RubyLLM::Model.new(id: 'new-model', name: 'New Model', provider: 'openai')
   end

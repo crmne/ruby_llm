@@ -63,7 +63,7 @@ module RubyLLM
       def read(timeout: @timeout)
         deadline = monotonic_time + timeout
         read_frame(deadline) while @messages.empty? && !@closed && !@error
-        raise @error if @error
+        raise @error if @error && @messages.empty?
 
         @messages.shift
       rescue IOError, SystemCallError, OpenSSL::SSL::SSLError
@@ -71,11 +71,11 @@ module RubyLLM
       end
 
       def read_available
-        ensure_open
+        ensure_readable
         until @messages.any? || @closed || @error
           break unless read_available_frame
         end
-        ensure_open
+        ensure_readable
 
         @messages.shift
       rescue EOFError, Errno::ECONNRESET
@@ -158,7 +158,7 @@ module RubyLLM
 
       def open_socket(deadline)
         port = @uri.port || (@uri.scheme == 'wss' ? 443 : 80)
-        @socket = Socket.tcp(@uri.host, port, connect_timeout: @timeout)
+        @socket = Socket.tcp(@uri.hostname, port, connect_timeout: @timeout)
         secure_socket(deadline) if @uri.scheme == 'wss'
       end
 
@@ -176,11 +176,15 @@ module RubyLLM
         context = OpenSSL::SSL::SSLContext.new
         context.set_params
         socket = OpenSSL::SSL::SSLSocket.new(@socket, context)
-        socket.hostname = @uri.host
+        socket.hostname = @uri.hostname
         socket.sync_close = true
         @socket = socket
         socket_operation(deadline) { @socket.connect_nonblock }
-        @socket.post_connection_check(@uri.host)
+        @socket.post_connection_check(@uri.hostname)
+      end
+
+      def ensure_readable
+        ensure_open if @messages.empty?
       end
 
       def ensure_open

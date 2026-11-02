@@ -63,7 +63,8 @@ module RubyLLM
 
         @declared_names << name
         backend = Evaluator.new(evaluator) if evaluator
-        definitions[name] = { name:, instructions: instructions&.dup&.freeze, minimum:, evaluator: backend }.freeze
+        definitions[name] = { name:, instructions: instructions&.dup&.freeze, minimum: minimum&.to_f,
+                              evaluator: backend }.freeze
       end
 
       # Converts a custom result into evaluation evidence. The original stays available as result.

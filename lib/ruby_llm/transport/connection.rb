@@ -172,6 +172,7 @@ module RubyLLM
       end
 
       def settings_for(stream)
+        logger = @config.logger || RubyLLM.logger
         Settings.new(
           provider: @provider.class,
           stream: stream,
@@ -179,8 +180,8 @@ module RubyLLM
           adapter: @config.faraday_adapter,
           timeout: @config.request_timeout,
           proxy: @config.http_proxy,
-          logger: RubyLLM.logger,
-          log_bodies: RubyLLM.logger.debug?,
+          logger: logger,
+          log_bodies: logger.debug?,
           log_regexp_timeout: @config.log_regexp_timeout,
           max_retries: @config.max_retries,
           retry_interval: @config.retry_interval,
@@ -210,7 +211,8 @@ module RubyLLM
                          bodies: settings.log_bodies,
                          errors: true,
                          headers: false,
-                         log_level: :debug do |logger|
+                         log_level: :debug,
+                         formatter: LogFormatter do |logger|
           logger.filter(logging_regexp('[A-Za-z0-9+/=]{100,}', settings), '[BASE64 DATA]')
           logger.filter(logging_regexp('[-\\d.e,\\s]{100,}', settings), '[EMBEDDINGS ARRAY]')
         end

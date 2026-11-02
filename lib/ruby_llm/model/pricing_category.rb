@@ -39,6 +39,8 @@ module RubyLLM
         @batch = tier_from(data[:batch])
         @long_context = tier_from(data[:long_context])
         @long_context_threshold = Integer(data[:long_context_threshold], exception: false)
+        @context_tiers = Array(data[:context_tiers]).map { |size, rates| [size, tier_from(rates)] }
+                                                    .sort_by { |size, _| -size }
       end
 
       # Returns the standard-tier input price in USD per million tokens,
@@ -75,6 +77,10 @@ module RubyLLM
       # Uses #long_context when that tier exists and +prompt_tokens+ is
       # greater than #long_context_threshold; otherwise returns #standard.
       def tier_for(prompt_tokens)
+        context_tier = @context_tiers.find { |size, _| prompt_tokens.to_i > size }
+        return context_tier.last if context_tier
+        return standard if @context_tiers.any?
+
         if long_context && long_context_threshold &&
            prompt_tokens.to_i > long_context_threshold
           long_context
@@ -105,20 +111,38 @@ module RubyLLM
         entry, threshold = context_cost(cost)
         return [nil, nil] unless entry
 
-        rates = {
+        rates = context_rates(entry)
+        rates.empty? ? [nil, nil] : [rates, threshold]
+      end
+
+      # Returns every context tier in +cost+ as <tt>[size, rates]</tt>. The
+      # registry schema holds one long-context tier, so a model with more
+      # keeps the rest in its metadata.
+      def self.context_tiers_from_cost(cost) # :nodoc:
+        cost = RubyLLM::Support::Utils.deep_symbolize_keys(cost || {})
+        context_entries(cost).filter_map do |entry|
+          size = Integer(entry.dig(:tier, :size), exception: false)
+          rates = context_rates(entry)
+          [size, rates] if size && rates.any?
+        end
+      end
+
+      def self.context_rates(entry) # :nodoc:
+        {
           input_per_million: entry[:input],
           output_per_million: entry[:output],
           cache_read_input_per_million: entry[:cache_read],
           cache_write_input_per_million: entry[:cache_write],
           reasoning_output_per_million: entry[:reasoning]
         }.compact
-        rates.empty? ? [nil, nil] : [rates, threshold]
+      end
+
+      def self.context_entries(cost) # :nodoc:
+        Array(cost[:tiers]).select { |entry| entry.is_a?(Hash) && entry.dig(:tier, :type).to_s == 'context' }
       end
 
       def self.context_cost(cost) # :nodoc:
-        context_tier = Array(cost[:tiers]).find do |entry|
-          entry.is_a?(Hash) && entry.dig(:tier, :type).to_s == 'context'
-        end
+        context_tier = context_entries(cost).first
         if context_tier
           [context_tier, Integer(context_tier.dig(:tier, :size), exception: false)]
         elsif cost[:context_over_200k].is_a?(Hash)
@@ -126,7 +150,7 @@ module RubyLLM
         end
       end
 
-      private_class_method :context_cost
+      private_class_method :context_cost, :context_rates, :context_entries
 
       private
 

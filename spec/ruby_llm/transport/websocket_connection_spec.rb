@@ -141,6 +141,49 @@ RSpec.describe RubyLLM::Transport::WebsocketConnection do
     worker&.join(1)
   end
 
+  it 'delivers messages received before a close frame that carries an error' do
+    server = TCPServer.new('127.0.0.1', 0)
+    thread = Thread.new { run_abnormal_close(server.accept) }
+    received = []
+
+    expect do
+      described_class.open("ws://127.0.0.1:#{server.addr[1]}", headers: {}, config:) do |connection|
+        while (message = connection.read(timeout: 2))
+          received << message
+        end
+      end
+    end.to raise_error(RubyLLM::Error, /closed with code 1011/)
+    expect(received).to eq(['the last transcript'])
+  ensure
+    thread&.join(2)
+    server&.close
+  end
+
+  def run_abnormal_close(socket)
+    request = +''
+    request << socket.readpartial(4096) until request.include?("\r\n\r\n")
+    key = request[/Sec-WebSocket-Key: (.+)\r/i, 1]
+    accept = Base64.strict_encode64(Digest::SHA1.digest("#{key}258EAFA5-E914-47DA-95CA-C5AB0DC85B11"))
+    socket.write("HTTP/1.1 101 Switching Protocols\r\nUpgrade: websocket\r\nConnection: Upgrade\r\n" \
+                 "Sec-WebSocket-Accept: #{accept}\r\n\r\n")
+    frame = ->(opcode, payload) { [0x80 | opcode, payload.bytesize].pack('CC') + payload.b }
+    socket.write(frame.call(1, 'the last transcript') + frame.call(8, "#{[1011].pack('n')}done"))
+    socket.read
+  rescue IOError, SystemCallError
+    nil
+  ensure
+    socket.close
+  end
+
+  it 'connects to an IPv6 address without its URL brackets' do
+    connection = described_class.new('ws://[::1]:9/', headers: {}, config:)
+    allow(Socket).to receive(:tcp).and_return(instance_double(Socket))
+
+    connection.send(:open_socket, 0)
+
+    expect(Socket).to have_received(:tcp).with('::1', 9, connect_timeout: anything)
+  end
+
   it 'bounds a read when the peer sends no frames' do
     config.request_timeout = 0.05
     with_server(echo: false) do |url, _worker|

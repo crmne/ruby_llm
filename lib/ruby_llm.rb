@@ -586,11 +586,7 @@ module RubyLLM
     end
 
     def logger # :nodoc:
-      @logger ||= config.logger || Logger.new(
-        config.log_file,
-        progname: 'RubyLLM',
-        level: config.log_level
-      )
+      config.logger || (@logger ||= Logger.new(config.log_file, progname: 'RubyLLM', level: config.log_level))
     end
   end
 end

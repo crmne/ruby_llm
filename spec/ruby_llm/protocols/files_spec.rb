@@ -289,6 +289,7 @@ RSpec.describe RubyLLM::Protocols::Files do
     let(:config) do
       instance_double(
         RubyLLM::Configuration,
+        logger: nil,
         bedrock_api_key: 'key',
         bedrock_secret_key: 'secret',
         bedrock_session_token: nil,
@@ -363,6 +364,7 @@ RSpec.describe RubyLLM::Protocols::Files do
     let(:config) do
       instance_double(
         RubyLLM::Configuration,
+        logger: nil,
         vertexai_project_id: 'project',
         vertexai_service_account_key: nil,
         vertexai_batch_gcs_uri: 'gs://ruby-llm-batches/test'

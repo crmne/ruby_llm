@@ -40,7 +40,8 @@ module RubyLLM
 
           parse_format(body) if name == 'fmt '
           @data = body.b if name == 'data'
-          offset += 8 + length + (length % 2)
+          offset += 8 + length
+          offset += length % 2 if offset < content.bytesize
         end
         raise ArgumentError, 'WAV file contains a truncated chunk or padding' unless offset == content.bytesize
       end

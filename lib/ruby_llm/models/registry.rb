@@ -122,6 +122,8 @@ module RubyLLM
         nil
       rescue JSON::ParserError => e
         raise ModelRegistryError, "Invalid model registry JSON in #{file}: #{e.message}"
+      rescue ArgumentError, TypeError, NoMethodError => e
+        raise ModelRegistryError, "Invalid model registry entry in #{file}: #{e.message}"
       rescue SystemCallError => e
         raise ModelRegistryError, "Could not read the model registry from #{file}: #{e.message}"
       end

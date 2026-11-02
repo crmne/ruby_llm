@@ -209,13 +209,16 @@ module RubyLLM
 
     def pricing_data_with_long_context(pricing)
       pricing = RubyLLM::Support::Utils.deep_symbolize_keys(RubyLLM::Support::Utils.deep_dup(pricing))
+      cost = metadata[:cost] || metadata['cost']
       text = pricing[:text_tokens] || {}
+      tiers = PricingCategory.context_tiers_from_cost(cost)
+      pricing[:text_tokens] = text.merge(context_tiers: tiers) if tiers.size > 1
       return pricing if text[:long_context]
 
-      rates, threshold = PricingCategory.long_context_from_cost(metadata[:cost] || metadata['cost'])
+      rates, threshold = PricingCategory.long_context_from_cost(cost)
       return pricing unless rates
 
-      pricing[:text_tokens] = text.merge(long_context: rates)
+      pricing[:text_tokens] = (pricing[:text_tokens] || {}).merge(long_context: rates)
       pricing[:text_tokens][:long_context_threshold] = threshold if threshold
       pricing
     end

@@ -57,12 +57,13 @@ module RubyLLM
         when Attachment then attachment_data(value)
         when Hash then serialize_hash(value, parents)
         when Array then value.map { |item| serialize(item, parents) }
+        when Numeric then value.to_f
         else serialize_object(value, parents)
         end
       end
 
       def scalar?(value)
-        [String, Symbol, Numeric, TrueClass, FalseClass, NilClass].any? { |type| value.is_a?(type) }
+        [String, Symbol, Integer, Float, TrueClass, FalseClass, NilClass].any? { |type| value.is_a?(type) }
       end
 
       def serialize_hash(value, parents)
