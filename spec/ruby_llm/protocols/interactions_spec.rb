@@ -486,9 +486,10 @@ RSpec.describe RubyLLM::Protocols::Interactions do
   it 'reads an uploaded CSV through Interactions', :live do
     file = RubyLLM.upload(File.expand_path('../../fixtures/sample.csv', __dir__), provider: :gemini)
 
-    response = chat.ask('What is the amount of invoice 12345? Answer with the number only.', with: file)
+    chat.ask_later('What is the amount of invoice 12345? Answer with the number only.', with: file)
 
-    expect(response.content).to include('10')
+    expect(chat.render[:input].first[:content]).to include(type: 'document', mime_type: 'text/csv', uri: file.uri)
+    expect(chat.complete.content.strip).to match(/\A10(\.0+)?\z/)
   end
 
   it 'executes local tools and returns JSON Schema output through Interactions', :live do
