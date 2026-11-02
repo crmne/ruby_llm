@@ -123,7 +123,7 @@ speech.save("voiceover.wav")
 
 Available formats depend on the model. `speech.format` and `speech.mime_type` describe the returned audio.
 
-Gemini's speech endpoint returns raw PCM audio:
+Gemini's speech endpoint returns raw PCM audio, so any other `format:` raises `ArgumentError`:
 
 ```ruby
 speech = RubyLLM.speak(

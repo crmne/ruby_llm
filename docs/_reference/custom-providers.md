@@ -194,6 +194,14 @@ end
 
 For a genuinely new wire format (not a Chat Completions variant), subclass `RubyLLM::Protocol` directly and implement the seams the base operations call - `render_payload`, `completion_url`, `parse_completion_body`, and, for streaming, `stream_url` and `build_chunk`. Study `RubyLLM::Protocols::Anthropic` and `RubyLLM::Protocols::Gemini` as worked examples of non-OpenAI dialects.
 
+When your wire format has no field for an option such as `count:` on `paint`, list it in `rejected_options` so RubyLLM raises `ArgumentError` instead of dropping it:
+
+```ruby
+def rejected_options(operation)
+  operation == :paint ? %i[count] : super
+end
+```
+
 > A protocol instance is constructed against a live provider with `protocol_class.new(provider, model)`. Inside a protocol you have `provider`, `config`, `connection`, and `model` available - the protocol borrows the provider's Faraday connection, so you never build HTTP yourself.
 {: .note }
 

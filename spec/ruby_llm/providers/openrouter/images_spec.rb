@@ -15,9 +15,19 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Images do
   describe '#render_image_payload' do
     it 'renders a generation payload' do
       payload = protocol.send(:render_image_payload, 'a cute cat', model: 'google/gemini-2.5-flash-image',
-                                                                   size: '1024x1024')
+                                                                   size: nil)
 
       expect(payload).to eq(model: 'google/gemini-2.5-flash-image', prompt: 'a cute cat')
+    end
+
+    it 'turns size into an aspect ratio' do
+      render = lambda do |size|
+        protocol.send(:render_image_payload, 'a cat', model: 'google/gemini-2.5-flash-image', size:)[:aspect_ratio]
+      end
+
+      expect(render.call('1920x1080')).to eq('16:9')
+      expect(render.call('4:3')).to eq('4:3')
+      expect { render.call('large') }.to raise_error(ArgumentError, /cannot generate an image of size "large"/)
     end
 
     it 'merges provider options' do

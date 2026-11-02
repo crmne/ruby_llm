@@ -7,6 +7,10 @@ module RubyLLM
       module Transcription
         DEFAULT_PROMPT = 'Transcribe the provided audio and respond with only the transcript text.'
 
+        def rejected_options(operation)
+          operation == :transcribe ? %i[speaker_names speaker_references] : super
+        end
+
         # rubocop:disable-next  Lint/UnusedMethodArgument
         def transcribe(audio_file, model:, language:, format: nil, speaker_names: nil,
                        speaker_references: nil, provider_options: {}, prompt: nil, temperature: nil)

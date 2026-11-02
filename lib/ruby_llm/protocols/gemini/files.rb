@@ -11,6 +11,7 @@ module RubyLLM
         # rubocop:disable-next Lint/UnusedMethodArgument
         def upload(file, filename: nil, purpose: nil, expires_in: nil, uri: nil, content_type: nil,
                    provider_options: {})
+          @content_type = content_type
           attachment = file_attachment(file, filename:)
           display_name = provider_options[:display_name] || attachment.filename
           upload_url = start_resumable_upload(attachment, display_name:)

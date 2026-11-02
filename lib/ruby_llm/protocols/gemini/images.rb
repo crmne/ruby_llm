@@ -52,7 +52,8 @@ module RubyLLM
         end
 
         def render_imagen_payload(prompt, count: nil, size: nil)
-          RubyLLM.logger.debug { "Ignoring size #{size}. Imagen sizing is not supported." } if size
+          image_config = build_image_config(size) || {}
+          raise ArgumentError, "Imagen takes an aspect ratio, got size #{size.inspect}" if image_config.key?(:imageSize)
 
           {
             instances: [
@@ -62,7 +63,7 @@ module RubyLLM
             ],
             parameters: {
               sampleCount: count || 1
-            }
+            }.merge(image_config)
           }
         end
 

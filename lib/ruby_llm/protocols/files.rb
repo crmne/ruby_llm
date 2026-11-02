@@ -6,8 +6,13 @@ module RubyLLM
   module Protocols
     # Provider-managed file storage APIs.
     class Files < Protocol
+      def rejected_options(operation)
+        operation == :upload ? %i[purpose expires_in uri] : super
+      end
+
       # rubocop:disable-next Lint/UnusedMethodArgument
       def upload(file, filename: nil, purpose: nil, expires_in: nil, uri: nil, content_type: nil, provider_options: {})
+        @content_type = content_type
         attachment = file_attachment(file, filename:)
         options = { purpose:, expires_in: }.compact.merge(provider_options.transform_keys(&:to_sym))
         response = @connection.post(files_url, render_upload_payload(attachment, **options),
@@ -80,7 +85,7 @@ module RubyLLM
       end
 
       def file_content_type(attachment)
-        attachment.extension == 'jsonl' ? 'application/jsonl' : attachment.mime_type
+        @content_type || (attachment.extension == 'jsonl' ? 'application/jsonl' : attachment.mime_type)
       end
 
       def file_part_source(attachment)

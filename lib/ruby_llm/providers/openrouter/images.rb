@@ -7,23 +7,40 @@ module RubyLLM
       # OpenRouter has a unified images endpoint that generates and edits
       # images across providers and reports the exact cost of each call.
       module Images
+        ASPECT_RATIO = /\A\d+:\d+\z/
+        PIXEL_DIMENSIONS = /\A([1-9]\d*)\s*[x×]\s*([1-9]\d*)\z/i
+
+        def rejected_options(operation)
+          operation == :paint ? %i[count] : super
+        end
+
         module_function
 
         def images_url(with: nil, mask: nil) # rubocop:disable Lint/UnusedMethodArgument
           'images'
         end
 
-        def render_image_payload(prompt, model:, size:, count: nil, with: nil, mask: nil, provider_options: {}) # rubocop:disable Lint/UnusedMethodArgument
-          RubyLLM.logger.debug { "Ignoring size #{size}. Use aspect_ratio/resolution provider options instead." }
-          if count && count > 1
-            RubyLLM.logger.debug do
-              "Ignoring count #{count}. OpenRouter generates one image per request."
-            end
-          end
+        def render_image_payload(prompt, model:, size:, with: nil, mask: nil, provider_options: {}, **) # rubocop:disable Lint/UnusedMethodArgument
           payload = { model: model, prompt: prompt }
           references = build_input_references(with)
           payload[:input_references] = references if references.any?
+          payload[:aspect_ratio] = render_image_aspect_ratio(size) if size
           payload.merge(provider_options)
+        end
+
+        def render_image_aspect_ratio(size)
+          value = size.to_s.strip
+          return value if value.match?(ASPECT_RATIO)
+
+          match = value.match(PIXEL_DIMENSIONS)
+          unless match
+            raise ArgumentError, "OpenRouter cannot generate an image of size #{size.inspect}. Give pixel " \
+                                 'dimensions such as "1024x1024" or an aspect ratio such as "16:9".'
+          end
+
+          width, height = match.captures.map(&:to_i)
+          divisor = width.gcd(height)
+          "#{width / divisor}:#{height / divisor}"
         end
 
         def build_input_references(with)

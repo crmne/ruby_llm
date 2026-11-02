@@ -7,6 +7,10 @@ module RubyLLM
       module Embeddings
         EMBEDDING_MEDIA_TYPES = { audio: :input_audio, video: :input_video, pdf: :input_file }.freeze
 
+        def rejected_options(operation)
+          operation == :embed ? %i[title] : super
+        end
+
         module_function
 
         def embedding_media?

@@ -9,6 +9,10 @@ module RubyLLM
         # reads as a query or fragment.
         S3_URI = %r{\As3://([^/]+)/?(.*)\z}m
 
+        def rejected_options(operation)
+          operation == :upload ? %i[purpose expires_in] : super
+        end
+
         # rubocop:disable-next Lint/UnusedMethodArgument
         def upload(file, filename: nil, purpose: nil, expires_in: nil, uri: nil, content_type: nil,
                    provider_options: {})

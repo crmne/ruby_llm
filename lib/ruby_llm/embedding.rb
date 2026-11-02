@@ -103,7 +103,7 @@ module RubyLLM
     # <tt>"RETRIEVAL_DOCUMENT"</tt>, while Bedrock Cohere takes an input
     # type such as <tt>"search_document"</tt>. +title:+ labels the
     # document on Vertex AI and Gemini retrieval tasks. Providers that
-    # have no task concept ignore both. +with:+ passes one or more media
+    # cannot carry either raise ArgumentError. +with:+ passes one or more media
     # attachments (images, audio, video, PDFs) to embed alongside the
     # text on multimodal embedding models such as Gemini's
     # gemini-embedding-2; providers without multimodal embeddings raise

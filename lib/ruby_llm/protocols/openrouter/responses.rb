@@ -21,6 +21,10 @@ module RubyLLM
           true
         end
 
+        def provider_file_upload_options(_attachment)
+          {}
+        end
+
         def merge_server_tool_entries(payload, entries)
           entries.each do |entry|
             tool = Support::Utils.deep_symbolize_keys(entry)

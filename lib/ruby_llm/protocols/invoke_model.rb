@@ -7,6 +7,10 @@ module RubyLLM
     # Protocols::InvokeModel implement one family each. Requests are signed
     # by the provider, which knows the credentials and the signing service.
     class InvokeModel < Protocol
+      def rejected_options(operation)
+        operation == :embed ? %i[task_type title] : super
+      end
+
       private
 
       def signed_post(url, payload, additional_headers = {})

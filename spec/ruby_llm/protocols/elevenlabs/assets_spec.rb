@@ -49,7 +49,7 @@ RSpec.describe RubyLLM::Protocols::ElevenLabs::Assets do
 
   it 'rejects unsupported expiry and purpose options before an upload' do
     expect { context.upload(image_path, provider: :elevenlabs, expires_in: 60) }
-      .to raise_error(ArgumentError, /do not accept purpose or expires_in/)
+      .to raise_error(ArgumentError, /upload does not accept expires_in/)
   end
 
   it 'uploads retrieves and downloads an ElevenLabs image asset', :live do

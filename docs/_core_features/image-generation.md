@@ -46,7 +46,7 @@ images.each_with_index do |image, index|
 end
 ```
 
-Some models generate one image per request regardless of `count:`.
+Providers that generate one image per request (Stable Diffusion on Bedrock, ElevenLabs, and OpenRouter) raise `ArgumentError` when `count:` is above 1.
 
 Usage for the request lives on the first image. Read `images.first.cost.total`; it is `nil` when pricing or usage is unavailable.
 {: .note }
@@ -153,7 +153,7 @@ image = RubyLLM.paint(
 )
 ```
 
-Gemini also accepts `"1K"`, `"2K"`, and `"4K"`. Gemini, ElevenLabs, and Stable Diffusion on Bedrock interpret pixel dimensions as an aspect ratio; the model may return different dimensions. Bedrock image editing controls its own output size, so leave `size:` unset when editing. Omit `size:` to let a model choose.
+Gemini image models also accept `"1K"`, `"2K"`, and `"4K"`. Gemini, Imagen, OpenRouter, ElevenLabs, and Stable Diffusion on Bedrock interpret pixel dimensions as an aspect ratio; the model may return different dimensions. Bedrock image editing controls its own output size, so leave `size:` unset when editing. Omit `size:` to let a model choose.
 
 ## Working with Generated Images
 

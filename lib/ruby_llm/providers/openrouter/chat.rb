@@ -162,6 +162,10 @@ module RubyLLM
           true
         end
 
+        def provider_file_upload_options(_attachment)
+          {}
+        end
+
         def default_large_file_upload_threshold
           OPENROUTER_INLINE_FILE_THRESHOLD
         end

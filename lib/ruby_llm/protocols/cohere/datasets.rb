@@ -5,10 +5,14 @@ module RubyLLM
     class Cohere
       # Cohere datasets for batch input and generated results.
       class Datasets < Protocols::Files
+        def rejected_options(operation)
+          operation == :upload ? %i[expires_in uri] : super
+        end
+
+        # rubocop:disable-next Lint/UnusedMethodArgument
         def upload(file, filename: nil, purpose: nil, expires_in: nil, uri: nil, content_type: nil,
                    provider_options: {})
           raise ArgumentError, 'Cohere datasets require purpose: with a dataset type' unless purpose
-          raise ArgumentError, 'Cohere datasets do not accept expires_in or uri' if expires_in || uri
 
           attachment = file_attachment(file, filename:)
           options = { name: attachment.filename, type: purpose, keep_original_file: true }

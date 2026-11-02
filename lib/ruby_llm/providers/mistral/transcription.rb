@@ -20,6 +20,10 @@ module RubyLLM
           { timestamp_granularities: ['segment'] }
         end
 
+        def rejected_options(operation)
+          operation == :transcribe ? %i[format speaker_references] : super
+        end
+
         module_function
 
         def build_transcription_chunk(data)

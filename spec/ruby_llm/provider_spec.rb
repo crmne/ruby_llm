@@ -588,7 +588,8 @@ RSpec.describe RubyLLM::Provider do
         paint: RubyLLM::Image.new(model: routed_model.id),
         speak: RubyLLM::Speech.new(data: 'audio', model: routed_model.id),
         transcribe: RubyLLM::Transcription.new(text: 'transcript', model: routed_model.id),
-        render_transcription_options: {}
+        render_transcription_options: {},
+        reject_options: nil
       )
 
       allow(RubyLLM::Protocols::ChatCompletions).to receive(:new)

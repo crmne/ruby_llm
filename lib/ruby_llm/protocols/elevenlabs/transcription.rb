@@ -20,6 +20,10 @@ module RubyLLM
           streaming ? { include_timestamps: true } : { timestamps_granularity: value }
         end
 
+        def rejected_options(operation)
+          operation == :transcribe ? %i[prompt speaker_references] : super
+        end
+
         # rubocop:disable-next Lint/UnusedMethodArgument
         def render_transcription_payload(file_part, model:, language:, format: nil, speaker_names: nil,
                                          speaker_references: nil, provider_options: {}, prompt: nil,

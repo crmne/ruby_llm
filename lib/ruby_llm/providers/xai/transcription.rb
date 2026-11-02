@@ -14,6 +14,10 @@ module RubyLLM
           raise ArgumentError, 'xAI transcription timestamps must be word'
         end
 
+        def rejected_options(operation)
+          operation == :transcribe ? %i[format temperature prompt speaker_references] : super
+        end
+
         module_function
 
         def transcription_url

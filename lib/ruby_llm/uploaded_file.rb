@@ -100,8 +100,10 @@ module RubyLLM
     # xAI, and Mistral support it, and Mistral rounds up to whole hours.
     # Storage-backed providers (Vertex AI and Bedrock) store the file at
     # +uri:+ when given, otherwise at a generated object name under the
-    # configured bucket. +content_type:+ overrides the MIME type RubyLLM
-    # detects. +provider_options:+ carries the rest in the provider's own
+    # configured bucket. Providers that cannot carry +purpose:+,
+    # +expires_in:+, or +uri:+ raise ArgumentError. +content_type:+
+    # overrides the MIME type RubyLLM detects. +provider_options:+
+    # carries the rest in the provider's own
     # vocabulary: +visibility:+ on Mistral, +display_name:+ on Gemini.
     def self.upload(file, provider: nil, context: nil, filename: nil, purpose: nil, expires_in: nil,
                     uri: nil, content_type: nil, provider_options: {})

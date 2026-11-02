@@ -148,7 +148,7 @@ transcription = RubyLLM.transcribe(
 File.write("interview.srt", transcription.text)
 ```
 
-Formats use the provider's names. Leave `format:` unset to get the model's default transcript.
+Formats use the provider's names. Leave `format:` unset to get the model's default transcript. A provider that cannot carry `format:`, `prompt:`, `temperature:`, `speaker_names:`, or `speaker_references:` raises `ArgumentError` rather than ignoring it.
 
 ## Streaming Transcripts
 

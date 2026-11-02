@@ -8,6 +8,10 @@ module RubyLLM
         DEFAULT_EMBEDDING_PURPOSE = 'GENERIC_INDEX'
         INPUT_TOKENS_HEADER = 'x-amzn-bedrock-input-token-count'
 
+        def rejected_options(operation)
+          operation == :embed ? %i[title] : super
+        end
+
         # rubocop:disable-next Lint/UnusedMethodArgument
         def embed(text, model:, dimensions:, task_type: nil, title: nil, with: nil, provider_options: {})
           ensure_no_embedding_media!(with)
