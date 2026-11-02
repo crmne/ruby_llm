@@ -72,7 +72,7 @@ response.cost.total
 response.finish_reason
 ```
 
-Use the chunks for live display and the returned message for the final text and usage.
+Use the chunks for live display and the returned message for the final text and usage. A stream that closes before the provider's finish event returns the partial message with `finish_reason` set to `nil`.
 
 ## Web Application Integration
 

@@ -28,6 +28,15 @@ RSpec.describe RubyLLM::Protocol::Streaming do
     expect(yielded_chunks).to eq([])
   end
 
+  it 'does not count an unparsable or non-hash event as delivered' do
+    progress = {}
+    parser = RubyLLM::Transport::EventStreamParser.new
+
+    test_obj.send(:handle_sse, "data: not json\n\ndata: true\n\n", parser, env, progress) { |_data| nil }
+
+    expect(progress).to be_empty
+  end
+
   it 'processes hash SSE payloads' do
     yielded_chunks = []
     handler = test_obj.send(:handle_stream) { |chunk| yielded_chunks << chunk }

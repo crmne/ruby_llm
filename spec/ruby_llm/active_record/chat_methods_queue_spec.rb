@@ -131,6 +131,23 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(joined.first.last.id).to eq(queued.id)
   end
 
+  it 'runs after_join for a message that joined before a later one failed' do
+    chat.queue('First')
+    chat.queue('Second')
+    job = job_for(chat)
+    joined = []
+    job.after_join { |message, _record| joined << message.content }
+    allow(job).to receive(:add_message).and_wrap_original do |add, **options|
+      raise IOError, 'storage is down' if options[:content] == 'Second'
+
+      add.call(**options)
+    end
+
+    expect { job.complete }.to raise_error(IOError)
+    expect(joined).to eq(['First'])
+    expect(chat.queued_messages.map(&:content)).to eq(['Second'])
+  end
+
   it 'moves attachments to the message without uploading them again' do
     queued = chat.queue('What is this?', with: image_path)
     blob = queued.attachments.blobs.sole

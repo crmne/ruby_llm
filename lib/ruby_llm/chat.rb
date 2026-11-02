@@ -421,9 +421,7 @@ module RubyLLM
     # <tt>steering_only: true</tt> only those that steer, and runs
     # #after_join for each.
     def take_queued_messages(steering_only: false) # :nodoc:
-      @message_queue.take(steering_only:).each do |message, queued|
-        run_callbacks(:after_join, message, queued)
-      end
+      @message_queue.take(steering_only:) { |message, queued| run_callbacks(:after_join, message, queued) }
     end
 
     # Records approval for +tool_call+, a ToolCall or its id, so the next
@@ -2237,13 +2235,21 @@ module RubyLLM
     end
 
     def add_tool_result_message(tool_call, result)
-      content, attachments = Tool.split_result(result)
+      content, attachments = split_tool_result(result)
       content = @file_references.spill(tool_for(tool_call), tool_call, content) if @file_references
       mcp_result = result if result.is_a?(MCP::Result) && result.ui_uri
       message = add_message(role: :tool, content:, attachments:, tool_call_id: tool_call.id,
                             provider_call_id: tool_call.provider_call_id, mcp_result:)
       run_callbacks(:after_message, message)
       message
+    end
+
+    # The tool has run, so a result that cannot be sent goes back as an
+    # error: raising would leave the call pending and run it again.
+    def split_tool_result(result)
+      Tool.split_result(result)
+    rescue StandardError => e
+      Tool.split_result({ error: e.message })
     end
 
     def execute_tool(tool_call)

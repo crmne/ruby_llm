@@ -207,9 +207,7 @@ module RubyLLM
         existing = find_tool_call(stream_key)
         return unless existing
 
-        fragment = tool_call.arguments
-        fragment = '' if fragment.nil?
-        existing.arguments << fragment
+        existing.arguments << (tool_call.arguments || '') unless existing.arguments.is_a?(Hash)
         return unless tool_call.thought_signature && existing.thought_signature.nil?
 
         existing.thought_signature = tool_call.thought_signature

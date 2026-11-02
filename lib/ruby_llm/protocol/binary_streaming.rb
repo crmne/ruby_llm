@@ -11,6 +11,9 @@ module RubyLLM
         response = @connection.post(url, payload, usage: @usage_tracker, stream: true) do |request|
           (request.options.context ||= {})[Transport::Connection::STREAM_PROGRESS_KEY] = progress
           request.options.context[Transport::ErrorMiddleware::STREAM_RESET_KEY] = fallback.method(:reset)
+          request.options.context[Transport::ErrorMiddleware::STREAM_FAILURE_KEY] = lambda { |env|
+            raise_stream_failure(env[:streaming_state] || fallback, env)
+          }
           if faraday_1?
             request.options[:on_data] = on_data
           else

@@ -206,6 +206,31 @@ RSpec.describe RubyLLM::Chat do
   end
 
   describe 'the next ask, complete, or step' do
+    it 'runs after_join for a message that joined before a later one failed' do
+      joined = []
+      chat.after_join { |message, _queued| joined << message.content }
+      chat.queue 'First'
+      chat.queue 'Second'
+      allow(chat).to receive(:add_message).and_wrap_original do |add, **options|
+        raise IOError, 'storage is down' if options[:content] == 'Second'
+
+        add.call(**options)
+      end
+
+      expect { chat.ask 'Hello' }.to raise_error(IOError)
+      expect(joined).to eq(['First'])
+      expect(chat.queued_messages.map(&:content)).to eq(['Second'])
+    end
+
+    it 'keeps later messages queued, and the joined one out, when after_join raises' do
+      chat.after_join { |_message, _queued| raise IOError, 'callback failed' }
+      chat.queue 'First'
+      chat.queue 'Second'
+
+      expect { chat.ask 'Hello' }.to raise_error(IOError)
+      expect(chat.queued_messages.map(&:content)).to eq(['Second'])
+    end
+
     it 'takes every queued message, in order, before the new question' do
       chat.ask('Hello')
       chat.queue('Wait', steer: false)

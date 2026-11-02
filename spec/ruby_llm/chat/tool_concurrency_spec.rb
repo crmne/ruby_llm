@@ -29,6 +29,15 @@ RSpec.describe RubyLLM::Chat::ToolConcurrency do
     stub_const('Rails', rails)
   end
 
+  it 'raises when a thread exits without a result instead of waiting for it' do
+    call = RubyLLM::ToolCall.new(id: '1', name: 'gone', arguments: {})
+
+    Timeout.timeout(2) do
+      expect { described_class.run(:threads, { '1' => call }) { Thread.exit } }
+        .to raise_error(RubyLLM::Error, /gone exited its thread/)
+    end
+  end
+
   it 'wraps threaded tool calls with the Rails executor' do
     stub_rails_executor(executor)
 
