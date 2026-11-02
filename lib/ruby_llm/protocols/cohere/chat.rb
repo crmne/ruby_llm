@@ -123,8 +123,12 @@ module RubyLLM
             finish_reason: finish_reason,
             model: model&.id,
             raw: raw,
-            **usage_tokens(data['usage'] || {})
+            **parse_completion_usage(data)
           )
+        end
+
+        def parse_completion_usage(data)
+          usage_tokens(data['usage'] || {})
         end
 
         # Cohere answers a generation that failed on its side with an ERROR

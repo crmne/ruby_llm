@@ -999,7 +999,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
         input_recorder= interruptions= message_queue= prepare_message raise_if_pending_tool_calls! remembered_checker=
         raise_if_prompt_attachments! running_checker= take_queued_messages tool_call_claimer= tool_call_releaser=
         tool_prefs
-        usage_entries usage_entries= usage_recorder= progress_recorder=
+        add_usage_entry usage_entries usage_entries= usage_recorder= progress_recorder=
       ]
 
       missing_methods = RubyLLM::Chat.public_instance_methods(false) - Chat.public_instance_methods

@@ -174,6 +174,36 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Batches do
       expect(betas).to include('mcp-client-2025-11-20', 'compact-2026-01-12')
     end
 
+    it 'sends the betas each chat set with with_headers, whatever their spelling' do
+      betas = nil
+      request = stub_request(:post, 'https://api.anthropic.com/v1/messages/batches')
+                .with { |sent| betas = sent.headers['Anthropic-Beta'] }
+                .to_return(status: 200, headers: { 'Content-Type' => 'application/json' },
+                           body: { id: 'b', processing_status: 'in_progress' }.to_json)
+
+      live.create_batch([
+                          { custom_id: '0', payload: { messages: [] }, headers: { 'anthropic-beta' => 'one,two' } },
+                          { custom_id: '1', payload: { messages: [] }, headers: { 'Anthropic-Beta' => 'two,three' } },
+                          { custom_id: '2', payload: { messages: [] }, headers: { 'x-other' => '1' } }
+                        ])
+
+      expect(request).to have_been_requested
+      expect(betas).to eq('one,two,three')
+    end
+
+    it 'carries a chat beta from with_headers into the batch request' do
+      request = stub_request(:post, 'https://api.anthropic.com/v1/messages/batches')
+                .with(headers: { 'anthropic-beta' => 'mine' })
+                .to_return(status: 200, headers: { 'Content-Type' => 'application/json' },
+                           body: { id: 'b', processing_status: 'in_progress' }.to_json)
+      chat = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic)
+                    .with_headers('Anthropic-Beta' => 'mine').ask_later('Hi')
+
+      RubyLLM.batch(chat)
+
+      expect(request).to have_been_requested
+    end
+
     it 'sends no beta a plain batch does not need' do
       request = stub_request(:post, 'https://api.anthropic.com/v1/messages/batches')
                 .with { |sent| !sent.headers.key?('Anthropic-Beta') }
@@ -200,6 +230,28 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Batches do
       merged = live.send(:merge_tool_headers, { 'anthropic-beta' => 'mcp' }, { 'Anthropic-Beta' => 'mine' })
 
       expect(merged).to eq('anthropic-beta' => 'mcp,mine')
+    end
+
+    it 'keeps a capitalized with_headers beta when compaction adds its own' do
+      headers = live.send(:apply_compaction_headers, { 'Anthropic-Beta' => 'mine', 'x-mine' => '1' }, {})
+
+      expect(headers).to eq('anthropic-beta' => 'mine,compact-2026-01-12', 'x-mine' => '1')
+    end
+
+    it 'keeps a capitalized with_headers beta when a file adds its own' do
+      headers = live.send(:beta_headers, { 'Anthropic-Beta' => 'mine' }, file_payload)
+
+      expect(headers).to eq('anthropic-beta' => 'mine,files-api-2025-04-14')
+    end
+
+    it 'folds every spelling of the beta header into one' do
+      headers = live.send(:beta_headers, { 'Anthropic-Beta' => 'a,b', :'anthropic-BETA' => 'b,c' }, {})
+
+      expect(headers).to eq('anthropic-beta' => 'a,b,c')
+    end
+
+    it 'leaves headers without a beta alone' do
+      expect(live.send(:beta_headers, { 'x-mine' => '1' }, {})).to eq('x-mine' => '1')
     end
 
     it 'finds a file in a block with string keys' do

@@ -37,6 +37,20 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Streaming do
     expect(chunk.tokens.thinking).to eq(7)
   end
 
+  it 'reads every spelling of the thinking count the sync parser reads' do
+    usages = [
+      { 'output_tokens_details' => { 'reasoning_tokens' => 7 } },
+      { 'thinking_tokens' => 7 },
+      { 'reasoning_tokens' => 7 }
+    ]
+
+    counts = usages.map do |usage|
+      protocol.send(:build_chunk, 'type' => 'message_delta', 'delta' => {}, 'usage' => usage).tokens.thinking
+    end
+
+    expect(counts).to eq([7, 7, 7])
+  end
+
   it 'reports the cumulative input tokens from message_delta usage' do
     accumulator = RubyLLM::Protocol::StreamAccumulator.new
     [

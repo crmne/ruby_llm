@@ -101,6 +101,32 @@ RSpec.describe RubyLLM::Protocols::OpenRouter::Batches do
     expect(batch.tokens).to have_attributes(input: 2, output: 3)
   end
 
+  [['/v1/chat/completions', { model: 'm', usage: { prompt_tokens: 70, completion_tokens: 80 },
+                              choices: [{ finish_reason: 'length', message: { tool_calls: [
+                                { id: 't', type: 'function', function: { name: 'f', arguments: '{"a":' } }
+                              ] } }] }],
+   ['/v1/responses', { model: 'm', usage: { input_tokens: 70, output_tokens: 80 },
+                       output: [{ type: 'function_call', call_id: 'c', name: 'f', arguments: '{"a":' }] }]]
+    .each do |api, body|
+    it "keeps the usage of a #{api} answer it could not read" do
+      data = batch_data(model: 'm', api:, results: [response_row('0', body)])
+      stub_request(:get, "#{endpoint}/batch-ruby").to_return_json(body: data)
+      seen = []
+      instrumenter = Object.new
+      instrumenter.define_singleton_method(:instrument) do |name, payload = {}, &block|
+        seen << payload if name == 'usage.ruby_llm'
+        block&.call(payload)
+      end
+      context.config.instrumenter = instrumenter
+
+      batch = RubyLLM::Batch.find('batch-ruby', provider: :openrouter, context:)
+
+      expect(batch.messages).to eq([nil])
+      expect(seen.sole).to include(status: :failed, model: 'm')
+      expect(seen.sole[:tokens].to_h).to include(input_tokens: 70, output_tokens: 80)
+    end
+  end
+
   it 'rejects multimodal requests and unsupported embedding options before submitting' do
     image = context.chat(model:, provider: :openrouter).ask_later('Describe.', with: 'spec/fixtures/ruby.png')
     embeddings = context.embed_later('Ruby', model: embedding_model, provider: :openrouter)

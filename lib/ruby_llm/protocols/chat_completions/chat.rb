@@ -111,8 +111,6 @@ module RubyLLM
           message_data = data.dig('choices', 0, 'message')
           raise no_completion_message_error(data, raw) unless message_data
 
-          usage = data['usage'] || {}
-          thinking_tokens = thinking_tokens(usage)
           content, thinking_from_blocks =
             parse_content_and_thinking(message_data['content'] || message_data['refusal'])
           thinking_text = thinking_from_blocks || parse_thinking_text(message_data)
@@ -127,18 +125,26 @@ module RubyLLM
             thinking: Thinking.build(text: thinking_text, signature: thinking_signature),
             raw_reasoning: parse_raw_reasoning(message_data),
             tool_calls: parse_tool_calls(message_data['tool_calls'], response: raw, finish_reason: finish_reason),
+            finish_reason: finish_reason,
+            content_filters: ContentFilters.parse_content_filters(data),
+            model: data['model'],
+            raw: raw,
+            **parse_completion_usage(data)
+          )
+        end
+
+        def parse_completion_usage(data)
+          usage = data['usage'] || {}
+
+          {
             input_tokens: input_tokens(usage),
             output_tokens: output_tokens(usage),
             cache_read_tokens: cache_read_tokens(usage),
             cache_write_tokens: cache_write_tokens(usage),
-            thinking_tokens: thinking_tokens,
+            thinking_tokens: thinking_tokens(usage),
             server_tool_use: server_tool_use(usage),
-            reported_cost: reported_cost(usage),
-            finish_reason: finish_reason,
-            content_filters: ContentFilters.parse_content_filters(data),
-            model: data['model'],
-            raw: raw
-          )
+            reported_cost: reported_cost(usage)
+          }
         end
 
         def reported_cost(_usage)

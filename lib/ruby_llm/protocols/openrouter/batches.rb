@@ -126,7 +126,8 @@ module RubyLLM
             return [index, nil, batch_failure(custom_id, 'Invalid or duplicate embedding record positions')]
           end
 
-          parsed_batch_result(index, custom_id) do
+          billed = body unless endpoint == '/v1/embeddings'
+          parsed_batch_result(index, custom_id, billed, parser: batch_parser(endpoint)) do
             parse_batch_body(body, endpoint:, model: data.fetch('model'), shape:)
           end
         end
@@ -139,8 +140,11 @@ module RubyLLM
         def parse_batch_body(body, endpoint:, model:, shape:)
           return parse_batch_embedding(body, model:, shape:) if endpoint == '/v1/embeddings'
 
-          parser = endpoint == '/v1/responses' ? OpenRouter::Responses.new(@provider) : self
-          parser.send(:parse_completion_body, body, raw: body)
+          batch_parser(endpoint).send(:parse_completion_body, body, raw: body)
+        end
+
+        def batch_parser(endpoint)
+          endpoint == '/v1/responses' ? OpenRouter::Responses.new(@provider) : self
         end
 
         def parse_batch_embedding(body, model:, shape:)

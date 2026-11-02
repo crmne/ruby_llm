@@ -216,6 +216,20 @@ RSpec.describe RubyLLM::Providers::Mistral::ChatCompletions::Batches do
       expect(message.model).to eq('mistral-small-latest')
     end
 
+    it 'keeps the usage of a chat answer it could not read' do
+      call = { 'id' => 't', 'type' => 'function', 'function' => { 'name' => 'f', 'arguments' => '{"a":' } }
+      body = {
+        'model' => 'mistral-small-latest', 'usage' => { 'prompt_tokens' => 70, 'completion_tokens' => 80 },
+        'choices' => [{ 'finish_reason' => 'length', 'message' => { 'tool_calls' => [call] } }]
+      }
+      line = { 'custom_id' => '1', 'response' => { 'status_code' => 200, 'body' => body } }
+
+      _, _, status, billed = protocol.send(:parse_batch_result, line)
+
+      expect(status).to eq(:failed)
+      expect(billed[:tokens].to_h).to include(input_tokens: 70, output_tokens: 80)
+    end
+
     it 'fails only the request whose response is an error' do
       allow(RubyLLM.logger).to receive(:warn)
       error = { 'object' => 'error', 'message' => 'Invalid model input', 'type' => 'invalid_request_error' }

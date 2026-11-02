@@ -160,6 +160,21 @@ RSpec.describe RubyLLM::Providers::XAI::ChatCompletions::Batches do
   end
 
   describe '#parse_batch_result response shapes' do
+    it 'fails only the slot whose tool call was cut off and keeps its usage' do
+      call = { 'id' => 't', 'type' => 'function', 'function' => { 'name' => 'f', 'arguments' => '{"a":' } }
+      body = {
+        'model' => 'm', 'usage' => { 'prompt_tokens' => 70, 'completion_tokens' => 80 },
+        'choices' => [{ 'finish_reason' => 'length', 'message' => { 'tool_calls' => [call] } }]
+      }
+
+      index, message, status, billed = protocol.send(
+        :parse_batch_result, { 'batch_request_id' => '4', 'response' => { 'chat_get_completion' => body } }
+      )
+
+      expect([index, message, status]).to eq([4, nil, :failed])
+      expect(billed[:tokens].to_h).to include(input_tokens: 70, output_tokens: 80)
+    end
+
     it 'reads a result nested directly under response' do
       result = {
         'custom_id' => '3',

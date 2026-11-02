@@ -9,7 +9,7 @@ module RubyLLM
         include RubyLLM::Batch::Helpers
 
         def create_batch(requests)
-          headers = batch_betas(requests.map { |request| request[:payload] })
+          headers = batch_betas(requests)
           requests = requests.map { |request| { custom_id: request[:custom_id], params: request[:payload] } }
           response = @connection.post(batches_url, { requests: requests }, idempotent: false) do |request|
             request.headers.merge!(headers)
@@ -36,13 +36,19 @@ module RubyLLM
 
         # One request carries the whole batch, so it takes every beta any
         # of its entries needs.
-        def batch_betas(payloads)
-          payloads.reduce({}) do |headers, payload|
-            headers = beta_headers(headers, payload)
+        def batch_betas(requests)
+          requests.reduce({}) do |headers, request|
+            payload = request[:payload]
+            headers = beta_headers(with_request_betas(headers, request), payload)
             headers = apply_mcp_beta(headers) if block_value(payload, :mcp_servers)
             compaction = block_value(payload, :context_management)
             compaction ? apply_compaction_headers(headers, compaction) : headers
           end
+        end
+
+        def with_request_betas(headers, request)
+          betas = canonical_beta_headers(request[:headers].to_h)[Chat::BETA_HEADER]
+          betas ? add_beta(headers, betas) : headers
         end
 
         def batches_url

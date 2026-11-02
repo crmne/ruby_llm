@@ -109,7 +109,7 @@ module RubyLLM
         payload = { provider: provider.slug, provider_class: provider.name, requests: chats.size }
         RubyLLM.instrument('batch.ruby_llm', payload, config: provider.config) do |event|
           requests = chats.each_with_index.map do |chat, index|
-            { custom_id: index.to_s, model: chat.model.id, payload: chat.render }
+            { custom_id: index.to_s, model: chat.model.id, payload: chat.render, headers: chat.headers }
           end
           store = provider.config.batch_store
           batch = new(provider:, chats:, store:, **provider.create_batch(requests))
@@ -303,10 +303,11 @@ module RubyLLM
       validate_result_indices(results)
       slots = Array.new(result_slot_count(results))
 
-      results.each do |index, result, failure_status|
+      results.each do |index, result, failure_status, billed|
         result = Chat::ToolCallIds.new(namespace: [@provider.slug, id, index]).assign(result) if result.is_a?(Message)
         slots[index] = result
         deliver(index, result, failure_status)
+        deliver_failed_usage(index, **billed) if billed
       end
 
       fill_missing_statuses(slots.size) if complete?
@@ -375,14 +376,27 @@ module RubyLLM
       delivered ? @delivered[index] = true : @deferred = true
     end
 
+    # A slot RubyLLM could not parse still cost what the provider reported.
+    def deliver_failed_usage(index, tokens:, model:)
+      chat = chats&.[](index)
+      entry = failed_usage_entry(tokens, model, chat)
+      return if entry.nil? || settled?(index, chat)
+
+      delivered = exclusively(index, failed: true) do
+        report_batch_usage(entry, chat:)
+        chat&.add_usage_entry(entry)
+      end
+      delivered ? @delivered[index] = true : @deferred = true
+    end
+
     def settled?(index, owner)
       @delivered[index] || !(owner || complete?)
     end
 
     # A store may run this in its own turn, returning false when it could
     # not, so the next poll delivers the result.
-    def exclusively(index, &deliver)
-      return @delivery.call(index, &deliver) if @delivery
+    def exclusively(index, **, &deliver)
+      return @delivery.call(index, **, &deliver) if @delivery
 
       deliver.call
       true
@@ -391,20 +405,35 @@ module RubyLLM
     def attach_batch_usage(result, operation:, model:, category:)
       return unless result.ruby_llm_usage_entries.empty?
 
-      model ||= result_model(result)
-      entry = Accounting::Usage::Entry.new(
-        operation:,
-        provider: @provider.slug,
-        model: result.model || model.id,
-        status: :succeeded,
-        tokens: result.tokens,
-        cost: @provider.batch_cost(result.tokens, model:, category:),
-        message: result.is_a?(Message) ? result : nil,
-        owner: Accounting::Usage.owner,
-        workflow: Accounting::Usage.workflow
+      model ||= result_model(result.model)
+      entry = batch_usage_entry(
+        operation:, model_id: result.model || model.id, model:, status: :succeeded, tokens: result.tokens,
+        category:, message: result.is_a?(Message) ? result : nil
       )
       result.ruby_llm_usage_entries = [entry]
       entry
+    end
+
+    def failed_usage_entry(tokens, model_id, chat)
+      model = chat&.model || (result_model(model_id) if model_id)
+      model_id ||= model&.id
+      return unless model_id
+
+      batch_usage_entry(operation: :chat, model_id:, model:, status: :failed, tokens:, category: :text_tokens)
+    end
+
+    def batch_usage_entry(operation:, model_id:, model:, status:, tokens:, category:, message: nil)
+      Accounting::Usage::Entry.new(
+        operation:,
+        provider: @provider.slug,
+        model: model_id,
+        status:,
+        tokens:,
+        cost: @provider.batch_cost(tokens, model:, category:),
+        message:,
+        owner: Accounting::Usage.owner,
+        workflow: Accounting::Usage.workflow
+      )
     end
 
     # A chat writes its own ledger row when it takes the answer. Anything
@@ -417,8 +446,8 @@ module RubyLLM
       end
     end
 
-    def result_model(result)
-      RubyLLM.models.find(result.model, provider: @provider.slug, config: @provider.config)
+    def result_model(model_id)
+      RubyLLM.models.find(model_id, provider: @provider.slug, config: @provider.config)
     rescue ModelNotFoundError
       nil
     end
@@ -452,10 +481,18 @@ module RubyLLM
       end
 
       # One unreadable answer fails its own slot, so the others still arrive.
-      def parsed_batch_result(index, custom_id)
+      # Pass a chat answer's +body+ to keep the usage the provider billed.
+      def parsed_batch_result(index, custom_id, body = nil, parser: self)
         [index, yield]
       rescue Error => e
-        [index, nil, batch_failure(custom_id, e.message)]
+        [index, nil, batch_failure(custom_id, e.message), *billed_batch_usage(body, parser)]
+      end
+
+      def billed_batch_usage(body, parser)
+        return [] unless body
+
+        tokens = Message.new(role: :assistant, content: nil, **parser.send(:parse_completion_usage, body)).tokens
+        tokens.to_h.any? ? [{ tokens:, model: body['model'] }] : []
       end
 
       def batch_response_succeeded?(response)
