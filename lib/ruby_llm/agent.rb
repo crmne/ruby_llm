@@ -966,17 +966,13 @@ module RubyLLM
       end
 
       def apply_assume_model_exists(chat_object)
-        return unless chat_kwargs.key?(:assume_model_exists) &&
-                      resolved_chat_class &&
-                      chat_object.is_a?(resolved_chat_class)
+        return unless chat_kwargs.key?(:assume_model_exists) && rails_chat_record?(chat_object)
 
         chat_object.assume_model_exists = chat_kwargs[:assume_model_exists]
       end
 
       def apply_protocol(chat_object)
-        return unless chat_kwargs.key?(:protocol) &&
-                      resolved_chat_class &&
-                      chat_object.is_a?(resolved_chat_class)
+        return unless chat_kwargs.key?(:protocol) && rails_chat_record?(chat_object)
 
         chat_object.protocol = chat_kwargs[:protocol]
       end
