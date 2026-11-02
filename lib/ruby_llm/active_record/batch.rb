@@ -73,7 +73,7 @@ module RubyLLM
           provider: provider_instance,
           chats: records.map { |chat| chat&.to_llm },
           delivered: records.each_index.select { |index| answered?(records[index]) },
-          delivery: ->(index, &deliver) { deliver_once(records[index], &deliver) },
+          delivery: ->(index, failed: false, &deliver) { deliver_once(records[index], failed:, &deliver) },
           id: provider_batch_id,
           raw_status: raw_status,
           completed: completed,
@@ -100,12 +100,20 @@ module RubyLLM
 
       # Two pollers can load a batch before either delivers, so the check
       # is repeated once this one holds the chat.
-      def deliver_once(chat)
+      def deliver_once(chat, failed: false)
         return yield.then { true } unless chat
 
         chat.claiming_delivery do
-          yield unless answered?(chat)
+          yield unless failed ? billed_failure?(chat) : answered?(chat)
           true
+        end
+      end
+
+      # A failed slot adds no message, so its usage row is what marks it.
+      def billed_failure?(chat)
+        usages = chat.ruby_llm_usages
+        usages.klass.uncached do
+          usages.where(status: 'failed').where(usages.klass.arel_table[:created_at].gt(created_at)).exists?
         end
       end
 

@@ -191,13 +191,13 @@ module RubyLLM
         end
 
         def apply_compaction_headers(headers, _compaction)
-          headers.merge(BETA_HEADER => join_betas(headers[BETA_HEADER], COMPACTION_BETA))
+          add_beta(headers, COMPACTION_BETA)
         end
 
         def apply_binding_beta(headers, payload)
           return headers unless payload[:thinking]&.key?(:block_binding)
 
-          headers.merge(BETA_HEADER => join_betas(headers[BETA_HEADER], BlockBinding::BETA))
+          add_beta(headers, BlockBinding::BETA)
         end
 
         # The Files API is still a beta, so a request that references an
@@ -205,11 +205,11 @@ module RubyLLM
         def apply_files_beta(headers, payload)
           return headers unless provider_file_source?(payload)
 
-          headers.merge(BETA_HEADER => join_betas(headers[BETA_HEADER], Files::BETA_HEADER))
+          add_beta(headers, Files::BETA_HEADER)
         end
 
         def apply_mcp_beta(headers)
-          headers.merge(BETA_HEADER => join_betas(headers[BETA_HEADER], Anthropic::MCP_BETA))
+          add_beta(headers, Anthropic::MCP_BETA)
         end
 
         def provider_file_source?(payload)
@@ -236,7 +236,22 @@ module RubyLLM
         # Anthropic takes several betas as one comma-separated header, so an
         # added beta joins whatever a server tool or with_headers already set.
         def join_betas(existing, beta)
-          (existing.to_s.split(',').map(&:strip).reject(&:empty?) + [beta]).uniq.join(',')
+          [existing, beta].flat_map { |betas| betas.to_s.split(',') }.map(&:strip).reject(&:empty?).uniq.join(',')
+        end
+
+        def add_beta(headers, beta)
+          headers = canonical_beta_headers(headers)
+          headers.merge(BETA_HEADER => join_betas(headers[BETA_HEADER], beta))
+        end
+
+        # HTTP header names ignore case but Hash keys do not, so every
+        # spelling a caller used folds into BETA_HEADER before a beta joins it.
+        def canonical_beta_headers(headers)
+          names = headers.keys.select { |name| name.to_s.casecmp?(BETA_HEADER) }
+          return headers if names.empty?
+
+          betas = headers.values_at(*names).reduce { |joined, beta| join_betas(joined, beta) }
+          headers.except(*names).merge(BETA_HEADER => betas)
         end
 
         def provider_file_references?
@@ -359,10 +374,6 @@ module RubyLLM
         def build_message(data, content:, citations:, thinking:, thinking_signature:, tool_use_blocks:, raw:,
                           server_tool_calls: [], raw_content: nil)
           usage = aggregate_usage(data['usage'])
-          thinking_tokens = usage.dig('output_tokens_details', 'thinking_tokens') ||
-                            usage.dig('output_tokens_details', 'reasoning_tokens') ||
-                            usage['thinking_tokens'] ||
-                            usage['reasoning_tokens']
 
           Message.new(
             role: :assistant,
@@ -378,7 +389,7 @@ module RubyLLM
             cache_read_tokens: parse_cache_read_tokens(data),
             cache_write_tokens: parse_cache_write_tokens(data),
             cache_write_tokens_by_ttl: parse_cache_write_by_ttl(data),
-            thinking_tokens: thinking_tokens,
+            thinking_tokens: usage_thinking_tokens(usage),
             server_tool_use: usage['server_tool_use'],
             finish_reason: normalize_finish_reason(data['stop_reason']),
             model: data['model'],

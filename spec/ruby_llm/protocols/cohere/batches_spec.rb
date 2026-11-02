@@ -282,4 +282,19 @@ RSpec.describe RubyLLM::Protocols::Cohere::Batches do
   ensure
     clean_up_cohere_batch(batch)
   end
+
+  it 'keeps the usage of a chat answer it could not read, under the model it asked for' do
+    protocol = RubyLLM::Providers::Cohere.protocols.fetch(:cohere).allocate
+    call = { 'id' => 't', 'type' => 'function', 'function' => { 'name' => 'f', 'arguments' => '{"a":' } }
+    row = { 'custom_id' => '0', 'body' => {
+      'usage' => { 'billed_units' => { 'input_tokens' => 70, 'output_tokens' => 80 } },
+      'message' => { 'tool_calls' => [call] }, 'finish_reason' => 'MAX_TOKENS'
+    } }
+
+    _, _, status, billed = protocol.send(:parse_batch_result, row, parser: protocol, model: 'm')
+
+    expect(status).to eq(:failed)
+    expect(billed).to include(model: 'm')
+    expect(billed[:tokens].to_h).to include(input_tokens: 70, output_tokens: 80)
+  end
 end

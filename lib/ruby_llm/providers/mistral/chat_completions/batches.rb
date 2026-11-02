@@ -106,7 +106,8 @@ module RubyLLM
             end
 
             if body
-              parsed_batch_result(index, custom_id) { parse_mistral_batch_body(body, shape:) }
+              billed = body unless body['data'].is_a?(Array)
+              parsed_batch_result(index, custom_id, billed) { parse_mistral_batch_body(body, shape:) }
             else
               [index, nil, batch_failure(line['custom_id'], batch_error_message(line))]
             end

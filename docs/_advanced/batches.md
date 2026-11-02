@@ -50,7 +50,7 @@ batch.id     # Save this to collect the results later
 batch.status # => :pending
 ```
 
-The chats keep their instructions, history, tools, schemas, and other request settings, subject to the [provider's batch restrictions](#provider-restrictions). Custom headers set with `with_headers` do not apply to batch requests.
+The chats keep their instructions, history, tools, schemas, and other request settings, subject to the [provider's batch restrictions](#provider-restrictions). Custom headers set with `with_headers` do not apply to batch requests, except Anthropic betas: the batch carries every `anthropic-beta` value its chats set.
 
 Use one provider and one set of credentials per batch. Chats from contexts with different API keys raise `ArgumentError`, so submit each tenant's chats separately. Anthropic and xAI allow different models in the same batch; other integrations require one model per submission.
 
@@ -89,7 +89,7 @@ chats.first.messages.map(&:role) # => [:system, :user, :assistant]
 chats.first.ask "Shorter, please."
 ```
 
-Requests can fail or expire individually without failing the whole batch. Failed slots are `nil` in `messages` (details go to the log), and their chats stay awaiting a response; resubmit them in a fresh batch or finish them synchronously with `complete`. Read `statuses` to distinguish successful, failed, and cancelled slots without inspecting provider payloads:
+Requests can fail or expire individually without failing the whole batch. Failed slots are `nil` in `messages` (details go to the log), and their chats stay awaiting a response; resubmit them in a fresh batch or finish them synchronously with `complete`. A slot the provider answered but RubyLLM could not read, such as a tool call cut off at the token limit, still records what the provider billed as a failed usage row. Read `statuses` to distinguish successful, failed, and cancelled slots without inspecting provider payloads:
 
 ```ruby
 batch.messages

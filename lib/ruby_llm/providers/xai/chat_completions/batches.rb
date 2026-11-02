@@ -101,7 +101,7 @@ module RubyLLM
                    result.dig('response', 'chat_get_completion')
 
             if body
-              [index, parse_completion_body(body, raw: body)]
+              parsed_batch_result(index, request_id, body) { parse_completion_body(body, raw: body) }
             else
               [index, nil, batch_failure(request_id, batch_error_message(result))]
             end

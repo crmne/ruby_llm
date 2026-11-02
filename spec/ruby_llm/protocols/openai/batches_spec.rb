@@ -28,6 +28,33 @@ RSpec.describe RubyLLM::Protocols::OpenAI::Batches do
     expect(result(:chat_completions, body)).to eq([1, nil, :failed])
   end
 
+  it 'keeps the usage of a Responses slot it could not read' do
+    body = {
+      'id' => 'resp', 'model' => 'm', 'usage' => { 'input_tokens' => 70, 'output_tokens' => 80 },
+      'output' => [{ 'type' => 'function_call', 'call_id' => 'c', 'name' => 'f', 'arguments' => '{"a":' }]
+    }
+
+    _, _, status, billed = result(:responses, body)
+
+    expect(status).to eq(:failed)
+    expect(billed).to include(model: 'm')
+    expect(billed[:tokens].to_h).to include(input_tokens: 70, output_tokens: 80)
+  end
+
+  it 'keeps the usage of a Chat Completions slot it could not read' do
+    call = { 'id' => 't', 'type' => 'function', 'function' => { 'name' => 'f', 'arguments' => '{"a":' } }
+    body = {
+      'id' => 'c', 'model' => 'm', 'usage' => { 'prompt_tokens' => 70, 'completion_tokens' => 80 },
+      'choices' => [{ 'finish_reason' => 'length', 'message' => { 'tool_calls' => [call] } }]
+    }
+
+    _, _, status, billed = result(:chat_completions, body)
+
+    expect(status).to eq(:failed)
+    expect(billed).to include(model: 'm')
+    expect(billed[:tokens].to_h).to include(input_tokens: 70, output_tokens: 80)
+  end
+
   it 'fails only the slot that came back with no choices' do
     expect(result(:chat_completions, 'id' => 'c', 'choices' => [])).to eq([1, nil, :failed])
   end

@@ -83,8 +83,14 @@ module RubyLLM
         end
 
         def parse_thinking_tokens(data)
-          message_usage(data).dig('output_tokens_details', 'thinking_tokens') ||
-            delta_usage(data).dig('output_tokens_details', 'thinking_tokens')
+          usage_thinking_tokens(message_usage(data)) || usage_thinking_tokens(delta_usage(data))
+        end
+
+        def usage_thinking_tokens(usage)
+          usage.dig('output_tokens_details', 'thinking_tokens') ||
+            usage.dig('output_tokens_details', 'reasoning_tokens') ||
+            usage['thinking_tokens'] ||
+            usage['reasoning_tokens']
         end
 
         def parse_cache_read_tokens(data)

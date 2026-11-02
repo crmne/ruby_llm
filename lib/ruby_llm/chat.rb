@@ -1475,6 +1475,10 @@ module RubyLLM
       response
     end
 
+    def add_usage_entry(entry) # :nodoc:
+      record_usage_entry(entry)
+    end
+
     # Returns the request payload this chat would send to the provider for
     # its next completion, with #before_request hooks applied. Useful for
     # inspecting and testing request output.

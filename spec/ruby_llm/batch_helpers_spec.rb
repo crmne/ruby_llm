@@ -440,6 +440,114 @@ RSpec.describe RubyLLM::Batch do
     end
   end
 
+  describe 'a slot with billed usage and no readable answer' do
+    let(:provider) { RubyLLM::Providers::OpenAI.new(RubyLLM.config) }
+    let(:tokens) { RubyLLM::Tokens.new(input: 70, output: 80) }
+    let(:attributes) { { id: 'batch_1', raw_status: 'completed', completed: true } }
+    let(:ledger) { class_double(RubyLLM::Accounting::Usage) }
+    let(:instrumenter) do
+      Class.new do
+        attr_reader :events
+
+        def initialize = @events = []
+
+        def instrument(name, payload = {})
+          @events << [name, payload]
+          yield(payload) if block_given?
+        end
+      end.new
+    end
+
+    before do
+      RubyLLM.config.instrumenter = instrumenter
+      RubyLLM::Accounting::Usage.ledger = ledger
+      allow(ledger).to receive(:record)
+      allow(provider).to receive(:batch_results)
+        .and_return([[0, nil, :failed, { tokens:, model: model_for(:openai) }]])
+    end
+
+    after { RubyLLM::Accounting::Usage.ledger = nil }
+
+    it 'reports a failed row once the batch ends, with no chat to own it' do
+      batch = described_class.new(provider:, **attributes)
+
+      2.times { batch.messages }
+
+      expect(batch.statuses).to eq([:failed])
+      expect(ledger).to have_received(:record).once.with(
+        have_attributes(status: :failed, tokens:, operation: :chat, provider: 'openai', model: model_for(:openai))
+      )
+      expect(instrumenter.events.map { |name, payload| [name, payload[:status]] })
+        .to eq([['usage.ruby_llm', :failed]])
+    end
+
+    it 'prices the row at batch rates' do
+      described_class.new(provider:, **attributes).messages
+
+      model = RubyLLM.models.find(model_for(:openai), provider: 'openai')
+      expect(instrumenter.events.sole.last[:cost].total)
+        .to eq(provider.batch_cost(tokens, model:).total)
+    end
+
+    it 'waits for the end of a batch nothing owns' do
+      described_class.new(provider:, id: 'batch_1', raw_status: 'in_progress', completed: false).messages
+
+      expect(ledger).not_to have_received(:record)
+    end
+
+    it 'records the row on the chat that asked' do
+      chat = RubyLLM.chat(model: model_for(:openai)).ask_later('Hi')
+
+      described_class.new(provider:, chats: [chat], **attributes).messages
+
+      expect(chat.usage_entries.sole).to have_attributes(status: :failed, tokens:)
+      expect(chat.messages.map(&:role)).to eq([:user])
+      expect(instrumenter.events.size).to eq(1)
+      expect(ledger).to have_received(:record).once
+    end
+
+    it 'records the row once however often an unfinished batch is polled' do
+      chat = RubyLLM.chat(model: model_for(:openai)).ask_later('Hi')
+      batch = described_class.new(provider:, chats: [chat], id: 'batch_1', raw_status: 'running', completed: false)
+
+      2.times { batch.messages }
+
+      expect(chat.usage_entries.size).to eq(1)
+    end
+
+    it 'names the chat model when the answer named none' do
+      chat = RubyLLM.chat(model: model_for(:openai)).ask_later('Hi')
+      allow(provider).to receive(:batch_results).and_return([[0, nil, :failed, { tokens:, model: nil }]])
+
+      described_class.new(provider:, chats: [chat], **attributes).messages
+
+      expect(chat.usage_entries.sole.model).to eq(chat.model.id)
+    end
+
+    it 'writes no row when nothing names the model' do
+      allow(provider).to receive(:batch_results).and_return([[0, nil, :failed, { tokens:, model: nil }]])
+
+      described_class.new(provider:, **attributes).messages
+
+      expect(ledger).not_to have_received(:record)
+    end
+
+    it 'keeps the row a store could not take for the next poll' do
+      turns = [false, true]
+      delivery = lambda do |_index, failed:, &deliver|
+        expect(failed).to be(true)
+        turns.shift.tap { |turn| deliver.call if turn }
+      end
+      chat = RubyLLM.chat(model: model_for(:openai)).ask_later('Hi')
+      batch = described_class.new(provider:, chats: [chat], delivery:, **attributes)
+
+      3.times { batch.messages }
+
+      expect(chat.usage_entries.size).to eq(1)
+      expect(provider).to have_received(:batch_results).twice
+    end
+  end
+
   describe 'Helpers#parsed_batch_result' do
     let(:helpers) { Object.new.extend(RubyLLM::Batch::Helpers) }
 

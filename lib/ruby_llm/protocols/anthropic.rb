@@ -100,15 +100,14 @@ module RubyLLM
       end
 
       def beta_headers(additional_headers, payload)
-        apply_binding_beta(apply_files_beta(additional_headers, payload), payload)
+        apply_binding_beta(apply_files_beta(canonical_beta_headers(additional_headers), payload), payload)
       end
 
       def merge_tool_headers(tool_headers, headers)
-        names = headers.keys.select { |name| name.to_s.casecmp?(BETA_HEADER) }
-        return super unless tool_headers[BETA_HEADER] && names.any?
+        headers = canonical_beta_headers(headers)
+        return super unless tool_headers[BETA_HEADER] && headers[BETA_HEADER]
 
-        betas = join_betas(tool_headers[BETA_HEADER], headers[names.last])
-        super.except(*names).merge(BETA_HEADER => betas)
+        super.merge(BETA_HEADER => join_betas(tool_headers[BETA_HEADER], headers[BETA_HEADER]))
       end
 
       def merge_turn_segments(segments)

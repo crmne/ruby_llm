@@ -93,9 +93,12 @@ module RubyLLM
             raw: raw,
             finish_reason: finish_reason,
             content_filters: ChatCompletions::ContentFilters.parse_content_filters(data),
-            **parse_usage(data['usage'] || {}),
-            server_tool_use: parse_server_tool_use(data)
+            **parse_completion_usage(data)
           )
+        end
+
+        def parse_completion_usage(data)
+          parse_usage(data['usage'] || {}).merge(server_tool_use: parse_server_tool_use(data))
         end
 
         # context_management is an OpenAI parameter that only OpenAI's own

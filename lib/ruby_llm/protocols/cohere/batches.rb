@@ -86,7 +86,8 @@ module RubyLLM
           body = row.fetch('body')
           return [index, nil, batch_failure(custom_id, 'generation failed')] if body['finish_reason'] == 'ERROR'
 
-          parsed_batch_result(index, custom_id) do
+          billed = body.merge('model' => model) unless body['embeddings']
+          parsed_batch_result(index, custom_id, billed, parser:) do
             if body['embeddings']
               parser.send(:parse_embedding_response, Response.new(body), model:, text: shape == 'array' ? [] : nil)
             else

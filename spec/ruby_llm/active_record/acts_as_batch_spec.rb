@@ -56,6 +56,22 @@ RSpec.describe RubyLLM::Batch do # rubocop:disable RSpec/SpecFilePathFormat
     expect(chats.second.messages.reload.last.content).to eq('Jupiter')
   end
 
+  it 'records a slot it could not read once, however many pollers collect it' do
+    chat = Chat.create!(model: model).ask_later('Hi')
+    tokens = RubyLLM::Tokens.new(input: 70, output: 80)
+    stub_anthropic_batch(
+      create: { id: 'msgbatch_failed', raw_status: 'in_progress', completed: false },
+      find: { id: 'msgbatch_failed', raw_status: 'ended', completed: true },
+      results: [[0, nil, :failed, { tokens:, model: }]]
+    )
+
+    batch = RubyLLM.batch(chat)
+    2.times { described_class.find(batch.id).messages }
+
+    expect(chat.ruby_llm_usages.reload.sole).to have_attributes(status: 'failed', input_tokens: 70, output_tokens: 80)
+    expect(chat.messages.reload.pluck(:role)).to eq(%w[user])
+  end
+
   it 'submits a chat loaded through its agent and routes the answer home' do
     agent = Class.new(RubyLLM::Agent) do
       chat_class 'Chat'
