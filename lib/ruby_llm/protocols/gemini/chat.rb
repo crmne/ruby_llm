@@ -170,7 +170,8 @@ module RubyLLM
         end
 
         def render_message_parts(msg)
-          parts = Media.render_content(msg.content, msg.attachments)
+          content = msg.content unless msg.role == :assistant && msg.content.to_s.empty?
+          parts = Media.render_content(content, msg.attachments)
           thinking = msg.thinking if msg.role == :assistant
           return parts unless thinking
 
@@ -449,7 +450,10 @@ module RubyLLM
                 @index = next_index
               else
                 remember_tool_calls if current_message.tool_call?
-                formatted << build_standard_message(current_message)
+                turn = build_standard_message(current_message)
+                # Vertex AI refuses a turn without parts, which is what an empty
+                # answer is once another provider's signature is left out.
+                formatted << turn if turn[:parts].any? || current_message.role != :assistant
                 @index += 1
               end
             end

@@ -144,6 +144,50 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
   end
 
   describe '#render_messages' do
+    it 'leaves out an empty answer another provider signed' do
+      entry = RubyLLM::Accounting::Usage::Entry.new(operation: :chat, provider: 'azure', model: 'gpt-5.4',
+                                                    status: :succeeded)
+      messages = [
+        RubyLLM::Message.new(role: :user, content: 'Question?'),
+        RubyLLM::Message.new(role: :assistant, content: nil, usage_entries: [entry],
+                             thinking: RubyLLM::Thinking.build(signature: 'not-gemini')),
+        RubyLLM::Message.new(role: :user, content: 'And now?')
+      ]
+
+      protocol = RubyLLM::Protocols::Gemini.new(RubyLLM::Providers::Gemini.new(RubyLLM.config))
+      result = protocol.send(:render_messages, messages)
+
+      expect(result).to eq([{ role: 'user', parts: [{ text: 'Question?' }] },
+                            { role: 'user', parts: [{ text: 'And now?' }] }])
+    end
+
+    it 'leaves out an answer with empty text' do
+      messages = [
+        RubyLLM::Message.new(role: :user, content: 'Question?'),
+        RubyLLM::Message.new(role: :assistant, content: ''),
+        RubyLLM::Message.new(role: :user, content: 'And now?')
+      ]
+
+      protocol = RubyLLM::Protocols::Gemini.new(RubyLLM::Providers::Gemini.new(RubyLLM.config))
+      result = protocol.send(:render_messages, messages)
+
+      expect(result).to eq([{ role: 'user', parts: [{ text: 'Question?' }] },
+                            { role: 'user', parts: [{ text: 'And now?' }] }])
+    end
+
+    it 'keeps an empty question for the provider to refuse' do
+      messages = [
+        RubyLLM::Message.new(role: :user, content: 'Question?'),
+        RubyLLM::Message.new(role: :assistant, content: 'Answer.'),
+        RubyLLM::Message.new(role: :user, content: '')
+      ]
+
+      protocol = RubyLLM::Protocols::Gemini.new(RubyLLM::Providers::Gemini.new(RubyLLM.config))
+      result = protocol.send(:render_messages, messages)
+
+      expect(result.last).to eq({ role: 'user', parts: [{ text: '' }] })
+    end
+
     it 'groups consecutive tool responses into a single user message with multiple function responses' do
       messages = [
         RubyLLM::Message.new(role: :user, content: 'Question?'),
