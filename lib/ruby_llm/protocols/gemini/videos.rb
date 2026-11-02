@@ -7,7 +7,7 @@ module RubyLLM
       # operations. The finished video is a Files API URI that requires the
       # API key to download.
       module Videos
-        OPERATION_NAME = %r{\A[\w.-]+(?:/[\w.-]+)*\z}
+        OPERATION_NAME = %r{\A(?:[\w-][\w.-]*/)*operations/[\w-][\w.-]*\z}
         private_constant :OPERATION_NAME
 
         def video_url

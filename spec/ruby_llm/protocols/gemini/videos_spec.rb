@@ -109,7 +109,8 @@ RSpec.describe RubyLLM::Protocols::Gemini::Videos do
       expect(protocol.video_job_url(job)).to eq('models/veo/operations/abc123')
     end
 
-    ['https://attacker.example/steal', '//attacker.example/steal', "models/veo\nhttps://attacker.example"].each do |id|
+    ['https://attacker.example/steal', '//attacker.example/steal', "models/veo\nhttps://attacker.example",
+     'files/abc123', 'models/../operations/abc123', 'models/veo/operations/..'].each do |id|
       it "refuses to poll #{id.inspect}, which would carry the API key elsewhere" do
         job = RubyLLM::VideoJob.new(id:, protocol:)
 
