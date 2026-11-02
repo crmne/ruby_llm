@@ -45,7 +45,7 @@ module RubyLLM
 
         def build_streaming_transcription(transcripts, audio, model:)
           RubyLLM::Transcription.new(
-            text: transcripts.map { |item| item.fetch('text') }.join(' '), model:,
+            text: transcripts.map { |item| item.fetch('text') }.reject(&:empty?).join(' '), model:,
             duration: audio.duration, language: transcripts.last['language_code'],
             words: transcripts.flat_map { |item| item['words'] || [] }
           )

@@ -31,6 +31,8 @@ RSpec.describe RubyLLM::Protocols::ElevenLabs::StreamingTranscription do
     audio = instance_double(RubyLLM::Transcription::WavAudio, duration: 25)
     result = protocol.build_streaming_transcription(transcripts, audio, model:)
 
+    expect(protocol.build_streaming_transcription([{ 'text' => 'one' }, { 'text' => '' }, { 'text' => 'two' }],
+                                                  audio, model:).text).to eq('one two')
     expect(chunks.filter_map(&:delta).join).to eq('First sentence. Second sentence.')
     expect(result.text).to eq('First sentence. Second sentence.')
     expect(result.words.map { |word| word['start'] }).to eq([0, 20])

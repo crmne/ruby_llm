@@ -7,19 +7,26 @@ module RubyLLM
       module Transcription
         module_function
 
-        def stream_transcription(payload, model:, &)
-          super({ stream_include_usage: 'true' }.merge(payload), model:, &)
+        # Usage may follow the finish reason in an event of its own, so only
+        # the end of the stream can say the transcript is done.
+        def stream_transcription(payload, model:, &block)
+          done = nil
+          result = super({ stream_include_usage: 'true' }.merge(payload), model:) do |chunk|
+            chunk.done? ? done = chunk : block.call(chunk)
+          end
+          block.call(RubyLLM::TranscriptionChunk.new(type: RubyLLM::TranscriptionChunk::DONE, text: result.text,
+                                                     raw: done&.raw))
+          result
         end
 
         def build_transcription_chunk(data)
           return super unless data.key?('choices')
 
-          choice = data['choices'].first || {}
-          finished = choice['finish_reason'] || data['choices'].empty?
+          choice = data['choices'].first
 
           RubyLLM::TranscriptionChunk.new(
-            type: finished ? RubyLLM::TranscriptionChunk::DONE : RubyLLM::TranscriptionChunk::DELTA,
-            delta: choice.dig('delta', 'content'),
+            type: choice ? RubyLLM::TranscriptionChunk::DELTA : RubyLLM::TranscriptionChunk::DONE,
+            delta: choice&.dig('delta', 'content'),
             raw: data
           )
         end

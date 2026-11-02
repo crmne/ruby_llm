@@ -45,7 +45,7 @@ module RubyLLM
             url = transcription_url(model:, language:, speaker_names:, provider_options:, prompt:)
             payload = render_transcription_payload(attachment)
             response = post_transcription(url, payload, attachment)
-            parse_transcription_response(response, model:)
+            parse_transcription_response(response, model:, language:)
           end
         end
 
@@ -67,7 +67,7 @@ module RubyLLM
           attachment.content
         end
 
-        def parse_transcription_response(response, model:)
+        def parse_transcription_response(response, model:, language: nil)
           data = response.body || {}
           channel = data.dig('results', 'channels', 0) || {}
           alternative = channel.dig('alternatives', 0) || {}
@@ -75,7 +75,7 @@ module RubyLLM
           RubyLLM::Transcription.new(
             text: alternative['transcript'],
             model: model,
-            language: channel['detected_language'],
+            language: channel['detected_language'] || language,
             duration: data.dig('metadata', 'duration'),
             segments: data.dig('results', 'utterances'),
             words: alternative['words']

@@ -45,6 +45,30 @@ RSpec.describe RubyLLM::Protocols::Cohere::Streaming do
       expect(chunk.thinking.text).to eq('Let me')
     end
 
+    it 'leaves the tool plan out once a thinking block streamed, as the complete response does' do
+      build_chunk('{"index":0,"delta":{"message":{"content":{"thinking":"THOUGHT"}}},"type":"content-delta"}')
+      chunk = build_chunk('{"delta":{"message":{"tool_plan":"PLAN"}},"type":"tool-plan-delta"}')
+
+      expect(chunk.thinking).to be_nil
+    end
+
+    it 'keeps the tool plan of a turn after one that streamed thinking' do
+      build_chunk('{"index":0,"delta":{"message":{"content":{"thinking":"THOUGHT"}}},"type":"content-delta"}')
+      allow(protocol).to receive(:stream_events).and_return(nil)
+      expect { protocol.send(:stream_response, {}) { nil } }.to raise_error(RubyLLM::Error, /no stream events/)
+
+      chunk = build_chunk('{"delta":{"message":{"tool_plan":"PLAN"}},"type":"tool-plan-delta"}')
+
+      expect(chunk.thinking.text).to eq('PLAN')
+    end
+
+    it 'keeps the tool plan when text deltas came first' do
+      build_chunk('{"index":0,"delta":{"message":{"content":{"text":"Hi"}}},"type":"content-delta"}')
+      chunk = build_chunk('{"delta":{"message":{"tool_plan":"PLAN"}},"type":"tool-plan-delta"}')
+
+      expect(chunk.thinking.text).to eq('PLAN')
+    end
+
     it 'reads reasoning from tool-plan-delta events' do
       chunk = build_chunk('{"delta":{"message":{"tool_plan":"I"}},"type":"tool-plan-delta"}')
 

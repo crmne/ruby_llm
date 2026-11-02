@@ -35,6 +35,18 @@ RSpec.describe RubyLLM::Providers::GPUStack::Transcription do
     expect(result.tokens.output).to eq(4)
   end
 
+  it 'marks the stream done once, with the whole transcript' do
+    events = [
+      { 'choices' => [{ 'delta' => { 'content' => 'hel' }, 'finish_reason' => nil }] },
+      { 'choices' => [{ 'delta' => { 'content' => 'lo' }, 'finish_reason' => 'stop' }] },
+      { 'choices' => [], 'usage' => { 'prompt_tokens' => 3, 'completion_tokens' => 2 } }
+    ]
+
+    _, chunks = transcribe_events(events)
+
+    expect(chunks.select(&:done?).map(&:text)).to eq(['hello'])
+  end
+
   it 'returns the transcript when vLLM does not report usage' do
     events = [
       { 'choices' => [{ 'delta' => { 'content' => 'Good morning.' }, 'finish_reason' => nil }] },

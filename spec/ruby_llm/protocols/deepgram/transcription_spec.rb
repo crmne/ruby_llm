@@ -140,6 +140,22 @@ RSpec.describe RubyLLM::Protocols::Deepgram::Transcription do
       expect(transcription.language).to eq('en')
     end
 
+    it 'falls back to the requested language when Deepgram detected none' do
+      plain = { 'results' => { 'channels' => [{ 'alternatives' => [{ 'transcript' => 'x' }] }] } }
+
+      transcription = protocol.parse_transcription_response(Struct.new(:body).new(plain), model: 'nova-3',
+                                                                                          language: 'en')
+
+      expect(transcription.language).to eq('en')
+    end
+
+    it 'prefers the language Deepgram detected' do
+      transcription = protocol.parse_transcription_response(Struct.new(:body).new(body), model: 'nova-3',
+                                                                                         language: 'de')
+
+      expect(transcription.language).to eq('en')
+    end
+
     it 'keeps the words and the utterances Deepgram timed' do
       transcription = protocol.parse_transcription_response(Struct.new(:body).new(body), model: 'nova-3')
 
