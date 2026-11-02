@@ -39,8 +39,8 @@ module RubyLLM
         def batch_betas(payloads)
           payloads.reduce({}) do |headers, payload|
             headers = beta_headers(headers, payload)
-            headers = apply_mcp_beta(headers) if payload[:mcp_servers]
-            compaction = payload[:context_management]
+            headers = apply_mcp_beta(headers) if block_value(payload, :mcp_servers)
+            compaction = block_value(payload, :context_management)
             compaction ? apply_compaction_headers(headers, compaction) : headers
           end
         end

@@ -364,6 +364,7 @@ module RubyLLM
       return if settled?(index, chat) || (chat && already_in_chat?(chat, message))
 
       delivered = exclusively(index) do
+        @delivered[index] = true
         report_batch_usage(entry, chat:) if entry
         chat&.add_completion(message, record_usage: true)
       end

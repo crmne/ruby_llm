@@ -160,6 +160,20 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Batches do
       expect(request).to have_been_requested
     end
 
+    it 'reads provider options under string keys' do
+      betas = nil
+      request = stub_request(:post, 'https://api.anthropic.com/v1/messages/batches')
+                .with { |sent| betas = sent.headers['Anthropic-Beta'] }
+                .to_return(status: 200, headers: { 'Content-Type' => 'application/json' },
+                           body: { id: 'b', processing_status: 'in_progress' }.to_json)
+      payload = { messages: [], 'mcp_servers' => [{ name: 'docs' }], 'context_management' => { edits: [] } }
+
+      live.create_batch([{ custom_id: '0', payload: }])
+
+      expect(request).to have_been_requested
+      expect(betas).to include('mcp-client-2025-11-20', 'compact-2026-01-12')
+    end
+
     it 'sends no beta a plain batch does not need' do
       request = stub_request(:post, 'https://api.anthropic.com/v1/messages/batches')
                 .with { |sent| !sent.headers.key?('Anthropic-Beta') }

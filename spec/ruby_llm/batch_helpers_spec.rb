@@ -384,6 +384,20 @@ RSpec.describe RubyLLM::Batch do
       expect(RubyLLM::Accounting::Usage).to have_received(:report).once
     end
 
+    it 'records usage once when saving the answer fails' do
+      chat = RubyLLM.chat(model: model_for(:openai)).ask_later('Hi')
+      allow(RubyLLM::Accounting::Usage).to receive(:instrument).and_call_original
+      allow(chat).to receive(:add_completion).and_raise(RubyLLM::Error, 'database down')
+      allow(provider).to receive(:batch_results) { [[0, message.dup]] }
+      unfinished = attributes.merge(raw_status: 'in_progress', completed: false)
+      batch = described_class.new(provider:, chats: [chat], **unfinished)
+
+      expect { batch.messages }.to raise_error(RubyLLM::Error, 'database down')
+      batch.messages
+
+      expect(RubyLLM::Accounting::Usage).to have_received(:instrument).once
+    end
+
     it 'leaves the ledger row of a chat answer to its chat' do
       chat = RubyLLM.chat(model: model_for(:openai)).ask_later('Hi')
       allow(RubyLLM::Accounting::Usage).to receive(:instrument).and_call_original
