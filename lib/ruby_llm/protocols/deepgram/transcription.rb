@@ -7,9 +7,9 @@ module RubyLLM
     class Deepgram
       # Transcription dialect for the Deepgram speech-to-text API. Every
       # option is a query parameter on v1/listen, and the body is either the
-      # audio bytes or a JSON pointer to a remote url. Giving speaker names
-      # turns on diarization, which labels each word and utterance with a
-      # numeric speaker index.
+      # audio bytes or a JSON pointer to a remote url. Requesting speaker
+      # labels turns on diarization, which labels each word and utterance
+      # with a numeric speaker index.
       module Transcription
         def render_transcription_options(timestamps:, **)
           return {} if timestamps.nil? || timestamps == :word
@@ -18,7 +18,7 @@ module RubyLLM
         end
 
         def rejected_options(operation)
-          operation == :transcribe ? %i[format temperature speaker_references] : super
+          operation == :transcribe ? %i[format temperature speaker_references named_speakers] : super
         end
 
         # Turned on by default so the transcript reads like the transcripts

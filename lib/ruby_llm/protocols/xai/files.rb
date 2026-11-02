@@ -11,8 +11,8 @@ module RubyLLM
 
         private
 
-        def render_upload_payload(attachment, purpose: nil, expires_in: nil, **)
-          multipart_payload(attachment, expires_after: expires_in, purpose:)
+        def render_upload_fields(_attachment, purpose: nil, expires_in: nil)
+          { expires_after: expires_in, purpose: }
         end
 
         def parse_upload_response(data, attachment)

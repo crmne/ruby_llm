@@ -19,8 +19,12 @@ module RubyLLM
           'v1/assets'
         end
 
-        def render_upload_payload(attachment, name: nil, **)
-          { asset: file_part(attachment), name: name || attachment.filename }
+        def upload_file_field
+          :asset
+        end
+
+        def render_upload_fields(attachment, **)
+          { name: attachment.filename }
         end
 
         def parse_file_response(data)

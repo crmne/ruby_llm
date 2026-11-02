@@ -19,10 +19,11 @@ module RubyLLM
           attachment = file_attachment(file, filename:)
           target_uri = uri || storage_uri_for(attachment)
           bucket, key = parse_s3_uri(target_uri)
+          mime_type = content_type || file_content_type(attachment)
 
           with_file_body(attachment) do |body|
-            s3_client.put_object(bucket: bucket, key: key, body: body,
-                                 content_type: content_type || file_content_type(attachment))
+            s3_client.put_object(**provider_options.transform_keys(&:to_sym), bucket:, key:, body:,
+                                                                              content_type: mime_type)
           end
 
           uploaded_file(
@@ -31,7 +32,7 @@ module RubyLLM
             uri: target_uri,
             filename: attachment.filename,
             byte_size: file_size(attachment),
-            mime_type: content_type || file_content_type(attachment)
+            mime_type:
           )
         end
 

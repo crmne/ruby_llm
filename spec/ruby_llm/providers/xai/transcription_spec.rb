@@ -1,0 +1,36 @@
+# frozen_string_literal: true
+
+require 'spec_helper'
+
+RSpec.describe RubyLLM::Providers::XAI::Transcription do
+  let(:audio) { File.expand_path('../../../fixtures/ruby.wav', __dir__) }
+  let(:context) { RubyLLM.context { |config| config.xai_api_key = 'test' } }
+
+  def stub_stt
+    stub_request(:post, 'https://api.x.ai/v1/stt')
+      .with { |request| yield request.body.scan(/(?<!file)name="([^"]+)"/).flatten, request.body }
+      .to_return_json(body: { text: 'Ruby' })
+  end
+
+  it 'sends the real model id for the grok-stt routing name, before the file' do
+    request = stub_stt do |fields, body|
+      fields == %w[model file] && body.include?("\r\n\r\ngrok-voice-transcribe-2.0\r\n")
+    end
+
+    context.transcribe(audio, model: 'grok-stt', provider: :xai)
+
+    expect(request).to have_been_requested
+  end
+
+  it 'sends any other model as given' do
+    payload = described_class.render_transcription_payload(:file, model: 'grok-voice-transcribe-3.0', language: nil)
+
+    expect(payload).to eq(model: 'grok-voice-transcribe-3.0', file: :file)
+  end
+
+  it 'turns on diarization for empty speaker_names' do
+    payload = described_class.render_transcription_payload(:file, model: 'grok-stt', language: 'en', speaker_names: [])
+
+    expect(payload).to include(language: 'en', diarize: true)
+  end
+end

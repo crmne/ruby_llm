@@ -22,7 +22,8 @@ module RubyLLM
           bucket_name, key = parse_gcs_uri(target_uri)
 
           with_file_body(attachment) do |body|
-            bucket(bucket_name).create_file(body, key, content_type: content_type || file_content_type(attachment))
+            bucket(bucket_name).create_file(body, key, **provider_options.transform_keys(&:to_sym),
+                                            content_type: content_type || file_content_type(attachment))
           end
 
           uploaded_file(

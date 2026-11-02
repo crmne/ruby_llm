@@ -113,7 +113,7 @@ transcription = RubyLLM.transcribe(
 )
 ```
 
-References accept file paths, URLs, IO objects, `RubyLLM::Attachment` objects, or Active Storage attachments. Other diarization providers assign speaker labels without matching known identities. ElevenLabs uses the number of supplied names as a speaker-count limit.
+References accept file paths, URLs, IO objects, `RubyLLM::Attachment` objects, or Active Storage attachments. Other diarization providers assign speaker labels without matching known identities, so pass `speaker_names: []` to them. Names raise `ArgumentError` on those providers: xAI, Mistral, Deepgram, OpenRouter, and Vertex AI and Gemini dedicated transcription. ElevenLabs uses the number of supplied names as a speaker-count limit.
 
 ## Segments and Timestamps
 

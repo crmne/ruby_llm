@@ -7,10 +7,18 @@ module RubyLLM
       class Files < Protocols::Files
         BETA_HEADER = 'files-api-2025-04-14'
 
+        def rejected_options(operation)
+          operation == :upload ? %i[purpose uri] : super
+        end
+
         private
 
         def files_url
           'v1/files'
+        end
+
+        def render_upload_fields(_attachment, expires_in: nil, **)
+          { expires_in_seconds: expires_in }
         end
 
         def upload_headers(request)
@@ -28,6 +36,7 @@ module RubyLLM
             filename: data['filename'],
             byte_size: data['size_bytes'],
             created_at: timestamp(data['created_at']),
+            expires_at: timestamp(data['expires_at']),
             mime_type: data['mime_type'],
             downloadable: data['downloadable']
           )

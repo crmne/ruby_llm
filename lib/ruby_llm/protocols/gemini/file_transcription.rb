@@ -5,7 +5,7 @@ module RubyLLM
     class Gemini
       module FileTranscription # :nodoc: all
         def rejected_options(operation)
-          operation == :transcribe ? [] : super
+          operation == :transcribe ? %i[named_speakers] : super
         end
 
         def transcribe(audio_file, model:, language:, format: nil, speaker_names: nil,

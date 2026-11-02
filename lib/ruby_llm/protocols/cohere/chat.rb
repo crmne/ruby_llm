@@ -23,10 +23,10 @@ module RubyLLM
           'v2/chat'
         end
 
-        # rubocop:disable-next Lint/UnusedMethodArgument
         def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil,
                            schema: nil, thinking: nil, citations: false, caching: nil, tool_prefs: nil)
           warn_unsupported_citations(model) if citations && !model.supports?(:citations)
+          reject_caching_options(caching)
 
           payload = {
             model: model.id,
@@ -38,6 +38,12 @@ module RubyLLM
           add_tools(payload, tools, tool_prefs || {})
           add_thinking(payload, thinking)
           payload
+        end
+
+        def reject_caching_options(caching)
+          return unless caching.is_a?(Hash) && caching.any?
+
+          raise ArgumentError, "Cohere caches on its own and does not accept #{caching.keys.join(', ')} for caching"
         end
 
         def add_optional_fields(payload, messages, temperature:, max_output_tokens:, citations:, schema:)

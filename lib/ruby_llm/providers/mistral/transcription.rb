@@ -3,8 +3,8 @@
 module RubyLLM
   module Providers
     class Mistral
-      # Transcription dialect for the Mistral audio API. Giving speaker
-      # names turns on diarization, which labels each segment with a
+      # Transcription dialect for the Mistral audio API. Requesting speaker
+      # labels turns on diarization, which labels each segment with a
       # speaker id; a prompt rides along as context biasing terms.
       module Transcription
         STREAM_TYPES = {
@@ -21,7 +21,7 @@ module RubyLLM
         end
 
         def rejected_options(operation)
-          operation == :transcribe ? %i[format speaker_references] : super
+          operation == :transcribe ? %i[format speaker_references named_speakers] : super
         end
 
         module_function

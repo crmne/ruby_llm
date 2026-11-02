@@ -97,14 +97,19 @@ module RubyLLM
     # dataset type, such as <tt>"embed-input"</tt>.
     # Pass +expires_in:+ as a number of
     # seconds to have the provider delete the file automatically; OpenAI,
-    # xAI, and Mistral support it, and Mistral rounds up to whole hours.
+    # Anthropic, xAI, and Mistral support it, and Mistral rounds up to whole
+    # hours.
     # Storage-backed providers (Vertex AI and Bedrock) store the file at
     # +uri:+ when given, otherwise at a generated object name under the
     # configured bucket. Providers that cannot carry +purpose:+,
     # +expires_in:+, or +uri:+ raise ArgumentError. +content_type:+
     # overrides the MIME type RubyLLM detects. +provider_options:+
-    # carries the rest in the provider's own
-    # vocabulary: +visibility:+ on Mistral, +display_name:+ on Gemini.
+    # carries the rest in the provider's own vocabulary: multipart form
+    # fields on most providers, such as +visibility:+ on Mistral, File
+    # resource fields on Gemini, such as +display_name:+, PutObject keywords
+    # on Bedrock, and +create_file+ keywords on Vertex AI. RubyLLM sends them
+    # as given, so the provider rejects what it does not recognize. They
+    # cannot replace the file itself.
     def self.upload(file, provider: nil, context: nil, filename: nil, purpose: nil, expires_in: nil,
                     uri: nil, content_type: nil, provider_options: {})
       options = { filename:, purpose:, expires_in:, uri:, content_type: }.compact

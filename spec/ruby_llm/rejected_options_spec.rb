@@ -22,7 +22,7 @@ RSpec.describe 'options a wire format cannot carry' do # rubocop:disable RSpec/D
   end
 
   {
-    anthropic: { purpose: 'a', expires_in: 60, uri: 'x://a' },
+    anthropic: { purpose: 'a', uri: 'x://a' },
     gemini: { purpose: 'a', expires_in: 60, uri: 'x://a' },
     openrouter: { purpose: 'a', expires_in: 60, uri: 'x://a' },
     openai: { uri: 'x://a' },
@@ -70,6 +70,40 @@ RSpec.describe 'options a wire format cannot carry' do # rubocop:disable RSpec/D
     end
   end
 
+  def stub_transcription(slug, id)
+    target = provider(slug)
+    allow(target.protocol_for(model(id), operation: :transcribe)).to receive(:new).and_wrap_original do |method, *args|
+      method.call(*args).tap { |protocol| allow(protocol).to receive(:transcribe).and_return(:transcribed) }
+    end
+    target
+  end
+
+  [
+    [:xai, 'grok-stt'],
+    [:mistral, 'voxtral-mini-latest'],
+    [:deepgram, 'nova-3-general'],
+    [:vertexai, 'gemini-3.5-transcribe-preview'],
+    [:gemini, 'gemini-3.5-transcribe']
+  ].each do |slug, id|
+    it "raises for names that have no effect on #{slug} #{id}" do
+      expect { provider(slug).transcribe(audio, model: model(id), language: nil, speaker_names: ['Ana']) }
+        .to raise_error(ArgumentError, /transcribe does not accept named_speakers/)
+    end
+
+    it "accepts empty speaker_names on #{slug} #{id}" do
+      result = stub_transcription(slug, id).transcribe(audio, model: model(id), language: nil, speaker_names: [])
+
+      expect(result).to eq(:transcribed)
+    end
+  end
+
+  it 'keeps the speaker count from names on ElevenLabs' do
+    result = stub_transcription(:elevenlabs, 'scribe_v2')
+             .transcribe(audio, model: model('scribe_v2'), language: nil, speaker_names: ['Ana'])
+
+    expect(result).to eq(:transcribed)
+  end
+
   [
     [:openai, 'text-embedding-3-small', { task_type: 'a' }],
     [:openai, 'text-embedding-3-small', { title: 'a' }],
@@ -107,10 +141,6 @@ RSpec.describe 'options a wire format cannot carry' do # rubocop:disable RSpec/D
       .and_return(class_double(RubyLLM::Protocols::InvokeModel::StabilityImages, new: protocol))
 
     expect(instance.paint('a cat', model: stability, size: nil, count: 1)).to eq(:image)
-  end
-
-  it 'keeps speaker names on Vertex AI dedicated transcription' do
-    expect(RubyLLM::Providers::VertexAI::Transcription.allocate.rejected_options(:transcribe)).to eq([])
   end
 
   it 'keeps options on the protocols that carry them' do
