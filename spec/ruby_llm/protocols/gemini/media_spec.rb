@@ -256,13 +256,17 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
     let(:provider) { RubyLLM::Protocols::Gemini.allocate }
 
     it 'falls back to an extensionless name without a mime type' do
-      expect(provider.attachment_filename(nil, 0)).to eq('gemini_attachment_1')
+      expect(described_class.attachment_filename(nil, 0)).to eq('gemini_attachment_1')
+    end
+
+    it 'names MPEG audio so it reads as audio' do
+      expect(described_class.attachment_filename('audio/mpeg', 0)).to eq('gemini_attachment_1.mp3')
     end
 
     it 'normalizes the extensions Gemini reports' do
-      expect(provider.attachment_filename('image/jpeg', 0)).to eq('gemini_attachment_1.jpg')
-      expect(provider.attachment_filename('text/plain', 1)).to eq('gemini_attachment_2.txt')
-      expect(provider.attachment_filename('image/svg+xml', 2)).to eq('gemini_attachment_3.svg.xml')
+      expect(described_class.attachment_filename('image/jpeg', 0)).to eq('gemini_attachment_1.jpg')
+      expect(described_class.attachment_filename('text/plain', 1)).to eq('gemini_attachment_2.txt')
+      expect(described_class.attachment_filename('image/svg+xml', 2)).to eq('gemini_attachment_3.svg.xml')
     end
   end
 

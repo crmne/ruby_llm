@@ -20,6 +20,15 @@ RSpec.describe RubyLLM::Protocols::Gemini::EmbeddingBatches do
       'response' => { 'embedding' => { 'values' => vector }, 'usageMetadata' => { 'promptTokenCount' => 2 } } }
   end
 
+  it 'leaves a result with no metadata unmatched, whatever its position' do
+    allow(RubyLLM.logger).to receive(:warn)
+    request = protocol.send(:embedding_batch_requests, batch_request(%w[Ruby Rust]), model.id).first
+    results = [inline_response(request, [1]), { 'response' => { 'embedding' => { 'values' => [2] } } }]
+
+    expect(protocol.send(:parse_embedding_batch_results, results)).to eq([])
+    expect(RubyLLM.logger).to have_received(:warn).with('Gemini returned batch results without metadata')
+  end
+
   it 'stages scalar input as embedContent and arrays as batchEmbedContents payloads' do
     scalar = batch_request('Ruby')[:payload]
     array = batch_request(['Ruby'])[:payload]

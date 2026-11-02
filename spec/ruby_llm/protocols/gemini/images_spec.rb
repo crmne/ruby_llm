@@ -185,6 +185,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Images do
       expect(image.model).to eq('gemini-2.5-flash-image-preview')
       expect(image.tokens.input).to eq(7)
       expect(image.tokens.output).to eq(9)
+      expect(image.tokens.cache_read).to eq(3)
     end
 
     it 'returns every Imagen sample the request generated' do

@@ -34,6 +34,21 @@ RSpec.describe RubyLLM::Protocols::Gemini::Tools do
   end
 
   describe '#render_tool_call' do
+    it 'keeps the attachments of a tool call message with no text' do
+      image = RubyLLM::Attachment.new(StringIO.new("\x89PNG\r\n\x1a\n".b), filename: 'a.png')
+      tool_calls = { 'a' => RubyLLM::ToolCall.new(id: 'a', name: 'weather', arguments: {}) }
+      message = RubyLLM::Message.new(role: :assistant, content: nil, attachments: [image], tool_calls:)
+
+      expect(test_obj.render_tool_call(message).map(&:keys)).to eq([%i[inline_data], %i[functionCall]])
+    end
+
+    it 'sends no text part for empty content' do
+      tool_calls = { 'a' => RubyLLM::ToolCall.new(id: 'a', name: 'weather', arguments: {}) }
+      message = RubyLLM::Message.new(role: :assistant, content: '', tool_calls:)
+
+      expect(test_obj.render_tool_call(message).map(&:keys)).to eq([%i[functionCall]])
+    end
+
     it 'outputs a functionCall part for each tool call and preserves assistant text' do
       tool_calls = {
         'a' => RubyLLM::ToolCall.new(id: 'a', name: 'weather', arguments: { 'latitude' => '52.5200' }),

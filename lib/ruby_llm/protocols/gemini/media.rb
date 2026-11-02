@@ -78,6 +78,17 @@ module RubyLLM
             text: text
           }
         end
+
+        def attachment_filename(mime_type, index)
+          return "gemini_attachment_#{index + 1}" unless mime_type
+
+          extension = mime_type.split('/').last.to_s
+          extension = 'jpg' if extension == 'jpeg'
+          extension = 'txt' if extension == 'plain'
+          extension = 'mp3' if mime_type == 'audio/mpeg'
+          extension = extension.tr('+', '.')
+          "gemini_attachment_#{index + 1}.#{extension}"
+        end
       end
 
       def build_response_content(parts) # rubocop:disable Metrics/PerceivedComplexity
@@ -110,7 +121,7 @@ module RubyLLM
         io = StringIO.new(decoded)
         io.set_encoding(Encoding::BINARY) if io.respond_to?(:set_encoding)
 
-        filename = attachment_filename(mime_type, index)
+        filename = Media.attachment_filename(mime_type, index)
         RubyLLM::Attachment.new(io, filename:)
       rescue ArgumentError => e
         RubyLLM.logger.warn "Failed to decode Gemini inline data attachment: #{e.message}"
@@ -121,18 +132,8 @@ module RubyLLM
         uri = file_data['fileUri']
         return unless uri
 
-        filename = file_data['filename'] || attachment_filename(file_data['mimeType'], index)
+        filename = file_data['filename'] || Media.attachment_filename(file_data['mimeType'], index)
         RubyLLM::Attachment.new(uri, filename:)
-      end
-
-      def attachment_filename(mime_type, index)
-        return "gemini_attachment_#{index + 1}" unless mime_type
-
-        extension = mime_type.split('/').last.to_s
-        extension = 'jpg' if extension == 'jpeg'
-        extension = 'txt' if extension == 'plain'
-        extension = extension.tr('+', '.')
-        "gemini_attachment_#{index + 1}.#{extension}"
       end
     end
   end

@@ -16,7 +16,7 @@ module RubyLLM
         end
 
         def supported_attachment?(attachment)
-          attachment.text? || !interaction_attachment_type(attachment).nil?
+          (attachment.text? && !attachment.provider_file?) || !interaction_attachment_type(attachment).nil?
         end
 
         def render_interaction_attachment(attachment)
@@ -24,19 +24,18 @@ module RubyLLM
             raise ArgumentError, "Gemini Interactions does not support #{attachment.mime_type} input"
           end
 
-          return { type: 'text', text: attachment.content } if attachment.text?
+          return { type: 'text', text: attachment.content } if attachment.text? && !attachment.provider_file?
 
-          type = interaction_attachment_type(attachment)
-
-          part = { type: type, mime_type: attachment.mime_type }
+          part = { type: interaction_attachment_type(attachment), mime_type: attachment.mime_type }
           part[:processing] = attachment.processing.to_s if attachment.processing && attachment.video?
-          if attachment.provider_file?
-            part.merge(uri: attachment.provider_file_uri)
-          elsif attachment.url?
-            part.merge(uri: attachment.source.to_s)
-          else
-            part.merge(data: attachment.encoded)
-          end
+          part.merge(interaction_attachment_source(attachment))
+        end
+
+        def interaction_attachment_source(attachment)
+          return { uri: attachment.provider_file_uri } if attachment.provider_file?
+          return { uri: attachment.source.to_s } if attachment.url?
+
+          { data: attachment.encoded }
         end
 
         def interaction_attachment_type(attachment)
@@ -44,7 +43,7 @@ module RubyLLM
           return 'audio' if attachment.audio?
           return 'video' if attachment.video?
 
-          'document' if attachment.pdf?
+          'document' if attachment.pdf? || (attachment.provider_file? && attachment.mime_type == 'text/csv')
         end
 
         def parse_interaction_content(steps)
@@ -61,9 +60,14 @@ module RubyLLM
             result[:citations].concat(parse_interaction_citations(part, result[:text].length))
             result[:text] << text
           elsif part['data'] || part['uri']
-            source = part['uri'] || StringIO.new(Base64.decode64(part['data']))
-            result[:attachments] << Attachment.new(source, config: @config)
+            result[:attachments] << parse_interaction_attachment(part, result[:attachments].size)
           end
+        end
+
+        def parse_interaction_attachment(part, index)
+          source = part['uri'] || StringIO.new(Base64.decode64(part['data']))
+          filename = Gemini::Media.attachment_filename(part['mime_type'], index) if part['mime_type']
+          Attachment.new(source, filename:, config: @config)
         end
 
         def parse_interaction_citations(part, offset)
