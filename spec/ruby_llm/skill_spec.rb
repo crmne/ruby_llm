@@ -11,6 +11,12 @@ RSpec.describe RubyLLM::Skill do
     FileUtils.rm_rf(tmpdir)
   end
 
+  it 'reports a SKILL.md that is not UTF-8 as an invalid skill' do
+    tmpdir.join('SKILL.md').binwrite("---\nname: broken\ndescription: \xFF\n---\nBody\n")
+
+    expect { described_class.new(tmpdir) }.to raise_error(RubyLLM::InvalidSkillError, /valid UTF-8/)
+  end
+
   def write_skill(name, front_matter, body = "Do the thing.\n", root: tmpdir)
     folder = root.join(name)
     folder.mkpath

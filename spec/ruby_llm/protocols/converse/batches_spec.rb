@@ -6,6 +6,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Batches do
   let(:config) do
     instance_double(
       RubyLLM::Configuration,
+      logger: nil,
       bedrock_batch_s3_uri: 's3://ruby-llm-batches/test',
       bedrock_batch_role_arn: 'arn:aws:iam::123456789012:role/BedrockBatch',
       bedrock_region: 'us-west-2'

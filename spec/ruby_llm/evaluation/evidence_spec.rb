@@ -5,7 +5,6 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Evaluation::Evidence do
   include_context 'with configured RubyLLM'
 
-  let(:call) { RubyLLM::ToolCall.new(id: 'call-1', name: 'lookup_order', arguments: { order_id: 42 }) }
   let(:chat) do
     RubyLLM.chat(model: model_for(:openai)).tap do |conversation|
       conversation.with_instructions('Verify before refunding.')
@@ -14,6 +13,18 @@ RSpec.describe RubyLLM::Evaluation::Evidence do
       conversation.add_message(role: :tool, content: 'Order verified', tool_call_id: call.id)
       conversation.add_message(role: :assistant, content: +'Your refund is approved.', finish_reason: :stop)
     end
+  end
+  let(:call) { RubyLLM::ToolCall.new(id: 'call-1', name: 'lookup_order', arguments: { order_id: 42 }) }
+
+  it 'keeps a BigDecimal or Rational output as a number' do
+    expect(described_class.new(BigDecimal('12.5')).data).to eq(12.5)
+    expect(described_class.new(Rational(1, 2)).data).to eq(0.5)
+  end
+
+  it 'lets an adapter decide how a BigDecimal is sent' do
+    evidence = described_class.new(BigDecimal('12.5'), adapters: { BigDecimal => ->(value) { value.to_s('F') } })
+
+    expect(evidence.data).to eq('12.5')
   end
 
   it 'preserves the conversation and tool results without raw provider payloads' do

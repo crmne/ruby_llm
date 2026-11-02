@@ -169,7 +169,10 @@ module RubyLLM
       file = @path.join(FILE)
       raise SkillNotFoundError, "#{file} not found" unless file.file?
 
-      front_matter, @instructions = parse(file.read(encoding: 'UTF-8'))
+      content = file.read(encoding: 'UTF-8')
+      invalid('must be valid UTF-8') unless content.valid_encoding?
+
+      front_matter, @instructions = parse(content)
       assign(front_matter)
     rescue Errno::ENOENT, Errno::ENOTDIR
       raise SkillNotFoundError, "No skill folder at #{path}"

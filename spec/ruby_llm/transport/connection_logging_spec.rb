@@ -24,8 +24,31 @@ RSpec.describe RubyLLM::Transport::Connection do
         retry_backoff_factor: 2,
         http_proxy: nil,
         log_regexp_timeout: 1.0,
-        faraday_adapter: :net_http
+        faraday_adapter: :net_http,
+        logger: nil
       )
+    end
+
+    it 'logs through the logger of the config it was given' do
+      logger = Logger.new(File::NULL)
+      allow(config).to receive(:logger).and_return(logger)
+
+      settings = described_class.new(provider, config).send(:settings_for, false)
+
+      expect(settings.logger).to be(logger)
+    end
+
+    it 'keeps the response when a log filter times out' do
+      io = StringIO.new
+      options = { bodies: true, headers: false, log_level: :debug }
+      formatter = RubyLLM::Transport::LogFormatter.new(logger: Logger.new(io), options:)
+      filters = formatter.instance_variable_get(:@filter)
+      allow(filters).to receive(:each).and_raise(Regexp::TimeoutError)
+
+      formatter.response(Faraday::Env.from(status: 200, body: 'x'))
+
+      expect(io.string).to include('[NOT LOGGED: FILTER TIMED OUT]')
+      expect(io.string).not_to include('body: x')
     end
 
     it 'disables body logging when log level is above DEBUG' do

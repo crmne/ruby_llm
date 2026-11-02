@@ -116,6 +116,7 @@ RSpec.describe RubyLLM::Transport::Connection do
   describe 'settings' do
     def changed_value(option, value)
       return :test if option == :faraday_adapter
+      return Logger.new(File::NULL) if option == :logger
 
       case value
       when nil then 'http://changed.example.test'

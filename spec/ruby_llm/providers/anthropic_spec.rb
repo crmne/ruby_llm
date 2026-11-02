@@ -8,6 +8,7 @@ RSpec.describe RubyLLM::Providers::Anthropic do
   let(:config) do
     instance_double(
       RubyLLM::Configuration,
+      logger: nil,
       request_timeout: 300,
       max_retries: 3,
       retry_interval: 0.1,

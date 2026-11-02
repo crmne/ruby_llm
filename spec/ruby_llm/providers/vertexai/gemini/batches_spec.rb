@@ -6,6 +6,7 @@ RSpec.describe RubyLLM::Providers::VertexAI::Gemini::Batches do
   let(:config) do
     instance_double(
       RubyLLM::Configuration,
+      logger: nil,
       vertexai_batch_gcs_uri: 'gs://ruby-llm-batches/test',
       faraday_adapter: :net_http
     )

@@ -10,6 +10,10 @@ RSpec.describe 'ruby_llm.gemspec' do
     gemspec.dependencies.find { |dependency| dependency.type == :runtime && dependency.name == name }
   end
 
+  it 'declares logger, a bundled gem on Ruby 4 that Faraday 1 does not bring' do
+    expect(runtime_dependency('logger')).not_to be_nil
+  end
+
   it 'keeps faraday compatible with Ruby < 4.0' do
     expect(runtime_dependency('faraday').requirement).to be_satisfied_by(Gem::Version.new('1.10.3'))
   end
