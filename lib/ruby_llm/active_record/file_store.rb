@@ -84,7 +84,7 @@ module RubyLLM
         return delete_folder(path) if recursive
 
         record = owned.find_by(path:)
-        refuse_folder(path) if record.nil? && inside(path).where.not(path:).exists?
+        refuse_folder(path) if record.nil? && rows_in_folder(path).any? { |row| row.path != path }
         record&.destroy
         record&.to_stored_file
       end
@@ -115,8 +115,13 @@ module RubyLLM
 
       def delete_folder(folder)
         ChatFile.transaction do
-          inside(folder, owned).includes(:owner).order(:path, :id).to_a.each(&:destroy).map(&:to_stored_file)
+          rows_in_folder(folder, owned).each(&:destroy).map(&:to_stored_file)
         end
+      end
+
+      def rows_in_folder(folder, scope = visible)
+        inside(folder, scope).includes(:owner).order(:path, :id)
+                             .select { |row| RubyLLM::FileStore.inside?(row.path, folder) }
       end
 
       def write_attachment(path, attachment, content)

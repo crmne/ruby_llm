@@ -71,6 +71,15 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
     expect(described_class.new(other).list).to be_empty
   end
 
+  it 'matches a folder to delete by its exact case' do
+    store.write('reports/a.md', 'lower')
+    store.write('Reports/b.md', 'upper')
+
+    expect(store.delete('reports', recursive: true).map(&:path)).to eq(%w[reports/a.md])
+    expect(store.list.map(&:path)).to eq(%w[Reports/b.md])
+    expect(store.delete('reports')).to be_nil
+  end
+
   it 'reads the underscore and percent sign of a folder literally' do
     store.write('tool_results/a.txt', 'x')
     store.write('toolXresults/b.txt', 'x')
