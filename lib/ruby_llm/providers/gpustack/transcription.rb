@@ -10,12 +10,13 @@ module RubyLLM
         # Usage may follow the finish reason in an event of its own, so only
         # the end of the stream can say the transcript is done.
         def stream_transcription(payload, model:, &block)
-          done = nil
+          last = nil
           result = super({ stream_include_usage: 'true' }.merge(payload), model:) do |chunk|
-            chunk.done? ? done = chunk : block.call(chunk)
+            last = chunk
+            block.call(chunk) unless chunk.done?
           end
           block.call(RubyLLM::TranscriptionChunk.new(type: RubyLLM::TranscriptionChunk::DONE, text: result.text,
-                                                     raw: done&.raw))
+                                                     raw: last&.raw))
           result
         end
 

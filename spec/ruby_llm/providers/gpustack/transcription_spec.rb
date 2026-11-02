@@ -57,6 +57,7 @@ RSpec.describe RubyLLM::Providers::GPUStack::Transcription do
 
     expect(result.text).to eq('Good morning.')
     expect(chunks.last).to be_done
+    expect(chunks.last.raw).to eq(events.last)
     expect(result.tokens.input).to be_nil
   end
 

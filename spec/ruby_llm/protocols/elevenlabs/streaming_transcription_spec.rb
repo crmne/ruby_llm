@@ -33,6 +33,8 @@ RSpec.describe RubyLLM::Protocols::ElevenLabs::StreamingTranscription do
 
     expect(protocol.build_streaming_transcription([{ 'text' => 'one' }, { 'text' => '' }, { 'text' => 'two' }],
                                                   audio, model:).text).to eq('one two')
+    empty = { 'message_type' => 'committed_transcript', 'text' => '' }
+    expect { |block| protocol.send(:process_transcription_event, empty, prefix: true, &block) }.not_to yield_control
     expect(chunks.filter_map(&:delta).join).to eq('First sentence. Second sentence.')
     expect(result.text).to eq('First sentence. Second sentence.')
     expect(result.words.map { |word| word['start'] }).to eq([0, 20])
