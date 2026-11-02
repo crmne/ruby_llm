@@ -157,7 +157,8 @@ module RubyLLM
         def gemini_image_usage(data)
           {
             'input_tokens' => input_tokens(data),
-            'output_tokens' => calculate_output_tokens(data)
+            'output_tokens' => calculate_output_tokens(data),
+            'cache_read_tokens' => data.dig('usageMetadata', 'cachedContentTokenCount')
           }.compact
         end
 

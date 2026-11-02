@@ -27,7 +27,8 @@ module RubyLLM
         def render_tool_call(msg)
           parts = []
 
-          parts.concat(Media.render_content(msg.content, msg.attachments)) if msg.content && !msg.content.empty?
+          text = msg.content unless msg.content.to_s.empty?
+          parts.concat(Media.render_content(text, msg.attachments))
 
           msg.tool_calls.each_value do |tool_call|
             part = {

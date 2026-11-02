@@ -163,6 +163,7 @@ module RubyLLM
       @tokens ||= Tokens.new(
         input: raw_usage['input_tokens'],
         output: raw_usage['output_tokens'],
+        cache_read: raw_usage['cache_read_tokens'],
         reported_cost: raw_usage['cost']
       )
     end

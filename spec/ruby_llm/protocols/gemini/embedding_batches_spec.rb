@@ -20,6 +20,13 @@ RSpec.describe RubyLLM::Protocols::Gemini::EmbeddingBatches do
       'response' => { 'embedding' => { 'values' => vector }, 'usageMetadata' => { 'promptTokenCount' => 2 } } }
   end
 
+  it 'fails the slot of a result with no metadata' do
+    allow(RubyLLM.logger).to receive(:warn)
+    results = protocol.send(:parse_embedding_batch_results, [{ 'response' => { 'embedding' => { 'values' => [1] } } }])
+
+    expect(results).to eq([[0, nil, :failed]])
+  end
+
   it 'stages scalar input as embedContent and arrays as batchEmbedContents payloads' do
     scalar = batch_request('Ruby')[:payload]
     array = batch_request(['Ruby'])[:payload]

@@ -174,6 +174,41 @@ RSpec.describe RubyLLM::Protocols::Interactions do
     expect { chat.with_thinking(display: :full).render }.to raise_error(ArgumentError, /display must be/)
   end
 
+  it 'references an uploaded text file instead of reading it' do
+    upload = RubyLLM::UploadedFile.new(id: 'files/1', uri: 'https://x/files/1', filename: 'n.txt',
+                                       mime_type: 'text/plain', provider: 'gemini')
+
+    part = protocol.send(:render_interaction_attachment, RubyLLM::Attachment.new(upload))
+
+    expect(part).to eq(type: 'document', mime_type: 'text/plain', uri: 'https://x/files/1')
+  end
+
+  it 'still inlines a local text file' do
+    file = RubyLLM::Attachment.new(StringIO.new('body'), filename: 'notes.txt')
+
+    expect(protocol.send(:render_interaction_attachment, file)).to eq(type: 'text', text: 'body')
+  end
+
+  it 'keeps the type and a usable name of each output attachment' do
+    png = Base64.strict_encode64("\x89PNG\r\n\x1a\n".b)
+    parts = [{ 'type' => 'image', 'mime_type' => 'image/png', 'data' => png },
+             { 'type' => 'audio', 'mime_type' => 'audio/wav', 'data' => Base64.strict_encode64('RIFF') }]
+
+    step = { 'type' => 'model_output', 'content' => parts }
+    attachments = protocol.send(:parse_interaction_content, [step])[:attachments]
+
+    expect(attachments.map(&:filename)).to eq(%w[gemini_attachment_1.png gemini_attachment_2.wav])
+    expect(attachments.map(&:type)).to eq(%i[image audio])
+  end
+
+  it 'leaves the name of an output with no MIME type to its source' do
+    part = { 'type' => 'document', 'uri' => 'https://x/files/report.pdf' }
+
+    attachment = protocol.send(:parse_interaction_attachment, part, 0)
+
+    expect(attachment.filename).to eq('report.pdf')
+  end
+
   it 'renders image and PDF attachments as content without changing normal file handling' do
     chat.ask_later('Read', with: ['spec/fixtures/ruby.png', 'spec/fixtures/sample.pdf'])
     parts = chat.render[:input].first[:content]

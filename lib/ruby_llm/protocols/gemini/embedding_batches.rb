@@ -57,9 +57,14 @@ module RubyLLM
           error = responses.find { |inline| inline['error'] }
           return [index, nil, batch_failure(key, error.dig('error', 'message'))] if error
 
-          metadata = responses.first.fetch('metadata')
+          metadata = responses.first['metadata']
+          return [index, nil, batch_failure(key, 'Gemini returned no result metadata')] unless metadata
           return if responses.size < metadata.fetch('embedding_count')
 
+          parse_embedding_batch_slot(index, key, responses, metadata)
+        end
+
+        def parse_embedding_batch_slot(index, key, responses, metadata)
           positions = responses.map { |inline| inline.dig('metadata', 'embedding_index') }
           unless positions.sort == (0...responses.size).to_a
             return [index, nil, batch_failure(key, 'Invalid or duplicate embedding record positions')]
