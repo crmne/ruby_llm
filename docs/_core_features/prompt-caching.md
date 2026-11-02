@@ -132,7 +132,7 @@ On Gemini and Vertex AI, create an explicit cache to reuse the same documents ac
 ```ruby
 cache = RubyLLM.cache(
   File.read("handbook.md"),
-  model: 'gemini-2.5-flash',
+  model: '{{ site.models.gemini_current }}',
   instructions: "You are a meticulous release engineer.",
   ttl: 1.hour
 )
@@ -145,7 +145,7 @@ cache.expires_at # => 2026-08-11 12:34:56 UTC
 Pass file attachments with `with:`, the same way `ask` accepts them:
 
 ```ruby
-cache = RubyLLM.cache("Reference material:", model: 'gemini-2.5-flash', with: "manual.pdf")
+cache = RubyLLM.cache("Reference material:", model: '{{ site.models.gemini_current }}', with: "manual.pdf")
 ```
 
 The content must meet the model's minimum cacheable size. `ttl:` accepts a Duration, seconds, or a duration string such as `"300s"`, and defaults to one hour.
@@ -153,7 +153,7 @@ The content must meet the model's minimum cacheable size. `ttl:` accepts a Durat
 Attach the cache by passing the `CachedContent` to `with_caching`, or its name with `id:`:
 
 ```ruby
-chat = RubyLLM.chat(model: 'gemini-2.5-flash').with_caching(cache)
+chat = RubyLLM.chat(model: '{{ site.models.gemini_current }}').with_caching(cache)
 response = chat.ask("What does the handbook say about cassette hygiene?")
 response.tokens.cache_read # => 7809
 ```
