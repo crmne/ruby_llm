@@ -61,6 +61,20 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Images do
       expect(payload).not_to have_key(:size)
     end
 
+    it 'sends the size on a multipart edit' do
+      payload = described_class.render_image_payload('make it green', model: 'dall-e-2', size: '512x512',
+                                                                      with: image_path)
+
+      expect(payload[:size]).to eq('512x512')
+      expect(payload[:image]).to be_a(Faraday::UploadIO)
+    end
+
+    it 'leaves the size out of a multipart edit that names none' do
+      payload = described_class.render_image_payload('make it green', model: 'dall-e-2', size: nil, with: image_path)
+
+      expect(payload).not_to have_key(:size)
+    end
+
     it 'sends an image given as a bare IO' do
       image = File.binread(File.expand_path('../../../fixtures/ruby.png', __dir__))
       payload = described_class.render_image_payload(
