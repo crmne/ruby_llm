@@ -176,7 +176,7 @@ A batch collected through `Batch.find` without its chats or requests now reports
 
 ## Same-Named Attachments Both Reach `run_code`
 
-In 2.1, a later attachment overwrote an earlier one with the same name in `attachments/`. The newest still takes the name, and an older one is now `report-2.txt` beside it.
+In 2.1, a later attachment overwrote an earlier one with the same name in `attachments/`. The newest still takes the name, and an older one is now `report-2.txt` beside it. Names are compared without case, so `Report.txt` and `report.txt` with different content get separate names on every filesystem.
 
 ## Rescue Denials of Running Calls
 
