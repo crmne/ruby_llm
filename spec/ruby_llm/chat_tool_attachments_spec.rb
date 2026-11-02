@@ -55,10 +55,11 @@ RSpec.describe RubyLLM::Chat do
       expect(message.attachments).to be_empty
     end
 
-    it 'rejects mixes containing anything else' do
-      expect do
-        tool_message_for(['Found:', attachment, 42])
-      end.to raise_error(ArgumentError, /Strings and RubyLLM::Attachments/)
+    it 'answers with an error for mixes containing anything else' do
+      message = tool_message_for(['Found:', attachment, 42])
+
+      expect(JSON.parse(message.content)).to match('error' => /Strings and RubyLLM::Attachments/)
+      expect(message.attachments).to be_empty
     end
   end
 
