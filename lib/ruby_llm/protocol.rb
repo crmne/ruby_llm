@@ -134,8 +134,6 @@ module RubyLLM
       )
 
       complete_request(payload, headers, usage_recorder:, progress_recorder:, &)
-    rescue NotImplementedError
-      raise Error, "#{@provider.name} doesn't support chat"
     end
 
     def complete_request(payload, headers, usage_recorder: nil, **) # :nodoc:
@@ -156,6 +154,10 @@ module RubyLLM
     rescue Error => e
       claim_error(e, payload) unless yielding
       raise
+    rescue NotImplementedError
+      raise if yielding
+
+      raise Error, "#{@provider.name} doesn't support chat"
     end
 
     def render(messages, tools:, temperature:, provider_options: {}, schema: nil, thinking: nil,

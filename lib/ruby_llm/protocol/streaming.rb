@@ -42,19 +42,17 @@ module RubyLLM
 
       # Posts +payload+ to +url+ as a server-sent event stream, yielding each
       # parsed event Hash. Returns the Faraday response.
-      def stream_events(url, payload, additional_headers = {}, &block)
+      def stream_events(url, payload, additional_headers = {}, &)
         progress = {}
         fallback_state = StreamState.new
-        on_data = build_on_data_handler(progress, fallback_state: fallback_state) do |data|
-          block.call(data) if data.is_a?(Hash)
-        end
+        on_data = build_on_data_handler(progress, fallback_state: fallback_state, &)
 
         @connection.post url, payload, usage: @usage_tracker, stream: true do |req|
           req.headers = additional_headers.merge(req.headers) unless additional_headers.empty?
           (req.options.context ||= {})[Transport::Connection::STREAM_PROGRESS_KEY] = progress
           req.options.context[Transport::ErrorMiddleware::STREAM_RESET_KEY] = fallback_state.method(:reset)
           req.options.context[Transport::ErrorMiddleware::STREAM_FAILURE_KEY] = lambda { |env|
-            raise_buffered_error(fallback_state, env)
+            raise_stream_failure(env[:streaming_state] || fallback_state, env)
           }
           if faraday_1?
             req.options[:on_data] = on_data
@@ -65,9 +63,7 @@ module RubyLLM
       end
 
       def handle_stream(&block)
-        build_on_data_handler do |data|
-          block.call(build_chunk(data)) if data.is_a?(Hash)
-        end
+        build_on_data_handler { |data| block.call(build_chunk(data)) }
       end
 
       private
@@ -102,8 +98,15 @@ module RubyLLM
         if json_body?(chunk, state)
           handle_json_body(chunk, state, env)
         else
+          keep_for_failure(chunk, state)
           handle_sse(chunk, state.parser, env, progress, &)
         end
+      end
+
+      # Faraday 1 knows the status only once the response ends, so a failure
+      # body that is not JSON has to be kept until then.
+      def keep_for_failure(chunk, state)
+        state.buffer << chunk if faraday_1? && state.buffer.bytesize + chunk.bytesize <= MAX_JSON_BODY_BYTES
       end
 
       # Adapters cut reads anywhere, so a read inside an event can start with
@@ -131,6 +134,15 @@ module RubyLLM
         RubyLLM.logger.debug { 'Waiting for the remaining JSON response bytes' }
       end
 
+      # Runs once the response has ended, when a body that never parsed as
+      # JSON is the only account of the failure.
+      def raise_stream_failure(state, env)
+        raise_buffered_error(state, env)
+        return unless failed_http_status(env) && !state.buffer.empty?
+
+        env[:streaming_error_response] = build_stream_error_response(state.buffer.dup, env, nil)
+      end
+
       def handle_failed_response(chunk, buffer, env)
         return if buffer.bytesize + chunk.bytesize > MAX_JSON_BODY_BYTES
 
@@ -154,6 +166,8 @@ module RubyLLM
             next if data == '[DONE]'
 
             parsed = handle_data(data, env)
+            next unless parsed.is_a?(Hash)
+
             progress[:started] = true
             yield parsed
           end
@@ -236,7 +250,7 @@ module RubyLLM
             # Some adapters do not expose response status during on_data.
             status = env&.status
 
-            if status && status != 200
+            if status && !status.between?(200, 299)
               on_failed_response.call(chunk, env)
             else
               on_chunk.call(chunk, env)

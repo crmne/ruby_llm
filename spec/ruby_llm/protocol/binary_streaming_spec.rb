@@ -60,4 +60,18 @@ RSpec.describe RubyLLM::Protocol::BinaryStreaming do
       end
     end
   end
+
+  context 'when a failure arrives on Faraday 1' do
+    let(:expose_env) { false }
+    let(:responses) do
+      [{ status: 401, content_type: 'application/json', chunks: ['{"error":{"message":"Incorrect key"}}'] }]
+    end
+
+    before { stub_const('Faraday::VERSION', '1.10.4') }
+
+    it "keeps the provider's message" do
+      expect { context.speak('Hello', model: model_for(:openai, :speech), provider: :openai) { |_chunk| nil } }
+        .to raise_error(RubyLLM::UnauthorizedError) { |error| expect(error.provider_message).to eq('Incorrect key') }
+    end
+  end
 end

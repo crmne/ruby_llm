@@ -36,6 +36,24 @@ RSpec.describe RubyLLM::Protocol::StreamAccumulator do
       end.to raise_error(RubyLLM::Error, /Duplicate tool call ID in one response/)
     end
 
+    it 'keeps complete arguments when a fragment follows them' do
+      accumulator = described_class.new
+      call = RubyLLM::ToolCall.new(provider_call_id: 'call_1', name: 'search', arguments: { 'city' => 'Paris' })
+      fragment = RubyLLM::ToolCall.new(provider_call_id: nil, name: nil, arguments: '', thought_signature: 'sig')
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: '', tool_calls: { 0 => call }))
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: '', tool_calls: { 0 => fragment }))
+
+      expect(accumulator.to_message(nil).tool_calls.fetch('call_1'))
+        .to have_attributes(arguments: { 'city' => 'Paris' }, thought_signature: 'sig')
+    end
+
+    it 'leaves finish_reason nil when a stream closes before its finish event' do
+      accumulator = described_class.new
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: 'partial'))
+
+      expect(accumulator.to_message(nil)).to have_attributes(content: 'partial', finish_reason: nil)
+    end
+
     it 'keeps the attachments chunks carry' do
       accumulator = described_class.new
       image = RubyLLM::Attachment.new(StringIO.new('image'), filename: 'ruby.png')

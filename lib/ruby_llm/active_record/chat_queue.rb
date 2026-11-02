@@ -41,9 +41,12 @@ module RubyLLM
       end
 
       def take(steering_only: false)
-        return [] unless available?
+        return unless available?
 
-        read { scope(steering_only).to_a }.filter_map { |queued| take_one(queued) }
+        read { scope(steering_only).to_a }.each do |queued|
+          message = take_one(queued)
+          yield message, queued if message
+        end
       end
 
       private
@@ -55,7 +58,7 @@ module RubyLLM
           blobs = queued.attachments.blobs.to_a if attachments?(queued)
           message = @chat.add_message(role: :user, content: queued.content, attachments: blobs)
           detach(queued) if blobs
-          [message, queued]
+          message
         end
       end
 

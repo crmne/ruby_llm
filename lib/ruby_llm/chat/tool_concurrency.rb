@@ -25,8 +25,10 @@ module RubyLLM
         threads = []
         tool_calls.each_value.with_index do |tool_call, index|
           thread = Thread.new do
-            queue << capture_result(index, tool_call, caller_context, execute,
+            result = capture_result(index, tool_call, caller_context, execute,
                                     workflow_context:, instrumentation_context:)
+          ensure
+            queue << (result || Result.new(index:, tool_call:, error: thread_exited_error(tool_call)))
           end
           thread.report_on_exception = false
           threads << thread
@@ -106,6 +108,10 @@ module RubyLLM
         Result.new(index:, tool_call:, error: e)
       end
 
+      def thread_exited_error(tool_call)
+        Error.new("Tool #{tool_call.name} exited its thread without a result")
+      end
+
       # Rails gives a thread, and a fiber under fiber isolation, execution
       # state of its own: the block runs as its own unit of work, so its
       # connections return to the pool. A fiber sharing the caller's state
@@ -132,8 +138,8 @@ module RubyLLM
         defined?(Rails) && Rails.respond_to?(:application) && Rails.application&.executor
       end
 
-      private_class_method :run_with_threads, :run_with_fibers, :collect_results, :capture_result, :isolated,
-                           :execution_context, :rails_executor
+      private_class_method :run_with_threads, :run_with_fibers, :collect_results, :capture_result,
+                           :thread_exited_error, :isolated, :execution_context, :rails_executor
     end
   end
 end

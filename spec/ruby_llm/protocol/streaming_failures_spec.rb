@@ -49,11 +49,36 @@ RSpec.describe RubyLLM::Protocol::Streaming do
         end
       end
 
+      it 'keeps the class and message of a failure body that is not JSON' do
+        stub_request(:post, url).to_return(status: 400, body: 'maximum context length exceeded')
+
+        expect { chat.ask('Hi') { |_chunk| nil } }.to raise_error(RubyLLM::ContextLengthExceededError) { |raised|
+          expect(raised.provider_message).to eq('maximum context length exceeded')
+        }
+      end
+
+      it 'lets an error from the caller\'s block through as it is' do
+        body = %(data: {"choices":[{"delta":{"content":"hi"}}]}\n\n)
+        stub_request(:post, url).to_return(status: 200, body:)
+
+        expect { chat.ask('Hi') { |_chunk| raise NotImplementedError, 'unfinished hook' } }
+          .to raise_error(NotImplementedError, 'unfinished hook')
+      end
+
       it 'raises an error body sent with a 200' do
         stub_request(:post, url).to_return(status: 200, body: error_body('In the body', type: 'server_error'))
 
         expect { chat.ask('Hi') { |_chunk| nil } }.to raise_error(RubyLLM::ServerError, /In the body/)
       end
     end
+  end
+
+  it 'reads a streamed 2xx other than 200 as a success' do
+    stub_const('Faraday::VERSION', '2.0.0')
+    body = %(data: {"choices":[{"delta":{"content":"hi"},"finish_reason":"stop"}]}\n\n)
+    stub_request(:post, url).to_return(status: 201, body:)
+
+    expect(context.chat(model: model_for(:openai), provider: :openai, protocol: :chat_completions)
+      .ask('Hi') { |_chunk| nil }.content).to eq('hi')
   end
 end
