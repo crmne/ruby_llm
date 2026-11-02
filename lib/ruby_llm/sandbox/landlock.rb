@@ -9,24 +9,26 @@ module RubyLLM
     # anything inside a granted tree. Entries added later to a directory
     # granted entry by entry stay hidden. A writable path cannot be split
     # that way, since creating files needs the directory itself, so a
-    # denied path inside one raises ConfigurationError.
+    # denied path inside one raises ConfigurationError. Paths compare by
+    # where they really lead, since that is what Landlock grants.
     module Landlock # :nodoc:
       module_function
 
       def policy(sandbox)
-        denied = sandbox.denied.map { |path| File.expand_path(path) }
-        refuse_writable(sandbox.writable, denied)
-        granted = [*sandbox.readable, *sandbox.writable].map { |path| File.expand_path(path) }
+        denied, readable, writable = [sandbox.denied, sandbox.readable, sandbox.writable].map do |paths|
+          paths.map { |path| real(path) }
+        end
+        refuse_writable(writable, denied)
         sandbox.dup
-               .with_readable(nil).with_readable(*around(sandbox.readable, denied))
-               .with_writable(nil).with_writable(*around(sandbox.writable, denied))
-               .with_denied(nil).with_denied(*denied.reject { |path| granted.any? { |root| inside?(path, root) } })
+               .with_readable(nil).with_readable(*around(readable, denied))
+               .with_writable(nil).with_writable(*around(writable, denied))
+               .with_denied(nil)
+               .with_denied(*denied.reject { |path| (readable + writable).any? { |root| inside?(path, root) } })
                .with_backend(:landlock)
       end
 
       def refuse_writable(writable, denied)
         writable.each do |path|
-          path = File.expand_path(path)
           hidden = denied.find { |candidate| candidate != path && inside?(candidate, path) }
           next unless hidden
 
@@ -36,17 +38,16 @@ module RubyLLM
       end
 
       def around(paths, denied)
-        paths.flat_map { |path| entries(File.expand_path(path), denied) }.uniq
+        paths.flat_map { |path| entries(path, denied) }.uniq
       end
 
       def entries(path, denied)
         return [] if hidden?(path, denied)
 
-        inner = denied.select { |hidden| inside?(hidden, path) }
-        return [path] if inner.empty?
-        return [] unless File.directory?(path) && !File.symlink?(path)
+        return [path] if denied.none? { |hidden| inside?(hidden, path) }
+        return [] unless File.directory?(path)
 
-        Dir.children(path).sort.flat_map { |child| entries(File.join(path, child), inner) }
+        Dir.children(path).sort.flat_map { |child| entries(File.join(path, child), denied) }
       end
 
       def hidden?(path, denied)
@@ -60,6 +61,13 @@ module RubyLLM
         denied.any? { |hidden| inside?(target, hidden) || inside?(hidden, target) }
       rescue SystemCallError
         true
+      end
+
+      def real(path)
+        path = File.expand_path(path)
+        File.realpath(path)
+      rescue SystemCallError
+        File.join(real(File.dirname(path)), File.basename(path))
       end
 
       def inside?(path, root)

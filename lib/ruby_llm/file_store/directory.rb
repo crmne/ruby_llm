@@ -62,9 +62,12 @@ module RubyLLM
         raise FileNotFoundError, "No file at #{path}"
       end
 
-      # Writes +content+ to +path+ and returns its StoredFile.
+      # Writes +content+ to +path+ and returns its StoredFile. Raises
+      # ArgumentError when +path+ is a folder.
       def write(path, content, content_type: nil)
         path = FileStore.path(path)
+        raise ArgumentError, "#{path} is a folder, not a file" if folder?(path)
+
         full = full_path(path)
         make_room(full)
         content = FileStore.bytes(content)
@@ -122,7 +125,12 @@ module RubyLLM
           File.delete(parent) if File.symlink?(parent) || File.file?(parent)
         end
         FileUtils.mkdir_p(File.dirname(full))
-        FileUtils.rm_rf(full) if File.directory?(full) || File.symlink?(full)
+      end
+
+      def folder?(path)
+        File.lstat(full_path(path)).directory?
+      rescue SystemCallError
+        false
       end
 
       def file_content_type(full, path)

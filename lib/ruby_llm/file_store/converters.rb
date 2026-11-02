@@ -30,7 +30,10 @@ module RubyLLM
         def convert(attachment, config: RubyLLM.config) # :nodoc:
           for_type(attachment.mime_type, config:).each do |converter|
             text = converter.call(attachment)
-            return text.dup.force_encoding(Encoding::UTF_8).scrub if text.is_a?(String) && !text.strip.empty?
+            next unless text.is_a?(String)
+
+            text = text.dup.force_encoding(Encoding::UTF_8).scrub
+            return text unless text.strip.empty?
           end
           nil
         end

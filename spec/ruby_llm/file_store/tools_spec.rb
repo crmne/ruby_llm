@@ -184,6 +184,17 @@ RSpec.describe RubyLLM::FileStore::Tools do
   end
 
   describe 'write_file and edit_file' do
+    it 'answers write_file with the reason when the path is a folder' do
+      root = Dir.mktmpdir('ruby_llm-store')
+      chat.with_file_store(RubyLLM::FileStore::Directory.new(root))
+      files.write('reports/q3.md', 'x')
+
+      expect(call(:write_file, path: 'reports', content: 'oops')).to eq(error: 'reports is a folder, not a file')
+      expect(files.read('reports/q3.md')).to eq('x')
+    ensure
+      FileUtils.rm_rf(root)
+    end
+
     it 'writes a text file and tells the chat' do
       written = []
       chat.after_file_write { |file| written << file.path }

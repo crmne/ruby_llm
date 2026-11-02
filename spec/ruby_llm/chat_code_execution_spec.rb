@@ -320,6 +320,51 @@ RSpec.describe RubyLLM::Chat do
       expect(sandbox.runs.size).to eq(2)
     end
 
+    it 'checks a sandbox Proc once, when it builds a new sandbox each call' do
+      built = []
+      tool = chat.with_code_execution(sandbox: -> { FakeSandbox.new.tap { |one| built << one } }).tools[:run_code]
+
+      3.times { tool.languages }
+
+      expect(built.sum { |one| one.runs.size }).to eq(2)
+      expect(tool.instance_variable_get(:@languages).size).to eq(1)
+    end
+
+    it 'checks a sandbox a Proc names as its class, shared by every chat' do
+      checks = 0
+      stub_const('NamedSandbox', Class.new(FakeSandbox) do
+        define_method(:run) do |*command, **options, &block|
+          checks += 1
+          super(*command, **options, &block)
+        end
+      end)
+
+      2.times { chat.with_code_execution(sandbox: -> { 'NamedSandbox' }).tools[:run_code].languages }
+
+      expect(checks).to eq(2)
+    end
+
+    it 'checks the sandbox it keys the answer under, when a Proc changes its answer' do
+      able = Class.new(FakeSandbox)
+      unable = Class.new(FakeSandbox) { define_method(:initialize) { super(missing: %w[ruby sh]) } }
+      answers = [able, unable]
+      tool = chat.with_code_execution(sandbox: -> { answers.shift }).tools[:run_code]
+      answers.replace([able, unable])
+
+      expect(tool.languages).to eq(%i[ruby shell])
+    end
+
+    it 'checks each sandbox class a Proc returns' do
+      current = FakeSandbox
+      tool = chat.with_code_execution(sandbox: -> { current }).tools[:run_code]
+
+      tool.languages
+      current = Class.new(FakeSandbox)
+
+      expect(tool.languages).to eq(%i[ruby shell])
+      expect(tool.instance_variable_get(:@languages).size).to eq(2)
+    end
+
     it 'lets go of a sandbox once nothing else uses it' do
       sandbox_class = Class.new(FakeSandbox)
       Thread.new do

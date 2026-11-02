@@ -241,7 +241,9 @@ module RubyLLM
     # before each run that returns one. +approval+ is called with the
     # ToolCall of each escalated run right before it runs, and the run goes
     # ahead only when it returns +true+. +chat+ and +config+ describe where
-    # the instrumentation events go.
+    # the instrumentation events go. Without +sandbox+, runs use
+    # Configuration#sandbox from +config+. A Proc may return a new sandbox
+    # instance each call: it stands for one sandbox, checked once.
     # Raises ConfigurationError without a sandbox.
     def initialize(sandbox:, escalate_to: [], attachments: -> { [] }, file_store: -> {}, written: ->(_file) {},
                    skills: -> { {} }, mounts: {}, approval: ->(_tool_call) { false }, chat: nil, config: nil,
@@ -266,8 +268,7 @@ module RubyLLM
     # Returns the default Sandbox calls run in. Raises ConfigurationError
     # when there is none.
     def sandbox
-      current = resolve(@sandbox.is_a?(Proc) ? @sandbox.call : @sandbox)
-      current || raise(ConfigurationError, 'Code execution needs a sandbox. Set config.sandbox to a sandbox class.')
+      resolved(sandbox_value)
     end
 
     # Returns the names of the sandboxes the model may ask for, leaving out
@@ -313,12 +314,14 @@ module RubyLLM
     # Returns the languages the model may use: those requested that the
     # sandbox can run. Raises ConfigurationError when it can run none.
     def languages
-      (@languages ||= {}.compare_by_identity)[sandbox_key] ||= begin
+      value = sandbox_value
+      key = sandbox_key(value)
+      (@languages ||= {}.compare_by_identity)[key] ||= begin
         options = { env: @packages.base_env(Dir.tmpdir), readable: @packages.runtimes,
                     denied: @packages.denied }
-        runner = @packages.with_libraries(sandbox)
+        runner = @packages.with_libraries(resolved(value))
         checks = @requested_languages.to_h do |name|
-          [name, self.class.check(sandbox_key, runner, Language[name], **options)]
+          [name, self.class.check(key, runner, Language[name], **options)]
         end
         available = checks.select { |_, check| check == true }.keys
         raise ConfigurationError, "The sandbox cannot run #{failed_checks(checks)}" if available.empty?
@@ -413,13 +416,25 @@ module RubyLLM
     end
 
     def resolve(value)
-      config = @config.is_a?(Proc) ? @config.call : @config
-      Sandbox.resolve(value, backend: (config || RubyLLM.config).sandbox_backend)
+      Sandbox.resolve(value, backend: configuration.sandbox_backend)
     end
 
-    def sandbox_key
-      value = @sandbox.is_a?(Proc) ? @sandbox.call : @sandbox
-      value.is_a?(String) ? Sandbox.constant(value) : value
+    def configuration
+      (@config.is_a?(Proc) ? @config.call : @config) || RubyLLM.config
+    end
+
+    def sandbox_value
+      @sandbox.is_a?(Proc) ? @sandbox.call : @sandbox || configuration.sandbox
+    end
+
+    def resolved(value)
+      resolve(value) ||
+        raise(ConfigurationError, 'Code execution needs a sandbox. Set config.sandbox to a sandbox class.')
+    end
+
+    def sandbox_key(value)
+      value = Sandbox.constant(value) if value.is_a?(String)
+      @sandbox.is_a?(Proc) && !value.is_a?(Module) ? @sandbox : value
     end
 
     def failed_checks(checks)
@@ -467,10 +482,12 @@ module RubyLLM
       instrument(language, runner, name, tool_call) do |event|
         result = run_in_sandbox(runner, language.command(script), workspace, readable: mounted, directory: root)
         changed = store.list.reject { |file| before[file.path] == [file.byte_size, file.updated_at] }
+        changed, unnamed = changed.partition { |file| file.path.valid_encoding? }
         changed.each { |file| @written.call(file) }
         record(event, result, changed.map(&:path))
         unmounted = workspace.unmounted
-        report(result, changed.map(&:path), [], unmounted: (unmounted_note(unmounted) if unmounted.any?))
+        skipped = unnamed.map { |file| Workspace.invalid_name(file.path) }
+        report(result, changed.map(&:path), skipped, unmounted: (unmounted_note(unmounted) if unmounted.any?))
       end
     end
 

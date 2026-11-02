@@ -174,6 +174,20 @@ RSpec.describe RubyLLM::Chat do
       expect(store.exists?('keep.txt')).to be(false)
     end
 
+    it 'names a file whose name is not valid UTF-8 as skipped, because the run already happened' do
+      written = []
+      chat.after_file_write { |file| written << file.path }
+      chat.with_code_execution(sandbox: FakeSandbox.new do |run|
+        File.binwrite(File.join(run[:directory], "bad\xFFname.txt".b), 'x')
+        File.write(File.join(run[:directory], 'kept.txt'), 'y')
+        FakeSandbox.result
+      end)
+
+      expect(JSON.parse(run_code)).to include('files' => ['kept.txt'],
+                                              'skipped_files' => ["bad\uFFFDname.txt (name is not valid UTF-8)"])
+      expect(written).to eq(['kept.txt'])
+    end
+
     it 'copies nothing and takes no files argument' do
       tool = chat.tools[:run_code]
 

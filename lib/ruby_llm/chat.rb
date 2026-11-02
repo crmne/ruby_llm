@@ -1034,7 +1034,7 @@ module RubyLLM
       options = CodeExecution.options(enabled, options)
       @code_execution_tool = if options
                                CodeExecution.new(
-                                 sandbox: options.fetch(:sandbox) { -> { @config.sandbox } },
+                                 sandbox: options[:sandbox],
                                  attachments: -> { messages.flat_map(&:attachments) },
                                  file_store: -> { file_store },
                                  written: ->(file) { run_callbacks(:after_file_write, file) },

@@ -26,6 +26,15 @@ RSpec.describe RubyLLM::CodeExecution::Packages do
     directories.join(File::PATH_SEPARATOR)
   end
 
+  it 'installs into an absolute directory when the cache directory is relative' do
+    Dir.chdir(cache_dir) do
+      home = described_class.new(sandbox:, cache_dir: 'relative', gems: %w[prawn]).gem_home
+
+      expect(home).to start_with(File.join(Dir.pwd, 'relative', ''))
+      expect(sandbox.runs.last[:writable]).to include(home)
+    end
+  end
+
   describe 'declared gems' do
     it 'installs them in the sandbox with only RubyGems reachable' do
       directory = packages(gems: %w[rubyzip prawn]).gem_home
