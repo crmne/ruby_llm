@@ -76,8 +76,15 @@ module RubyLLM
       end
 
       # Deletes the file at +path+ and returns its StoredFile, or +nil+.
-      def delete(path)
-        record = owned.find_by(path: path(path))
+      # With <tt>recursive: true</tt>, deletes everything inside the folder
+      # +path+ too and returns the deleted StoredFile objects. A store
+      # with an owner deletes only that owner's files.
+      def delete(path, recursive: false)
+        path = path(path)
+        return delete_folder(path) if recursive
+
+        record = owned.find_by(path:)
+        refuse_folder(path) if record.nil? && inside(path).where.not(path:).exists?
         record&.destroy
         record&.to_stored_file
       end
@@ -105,6 +112,12 @@ module RubyLLM
       end
 
       private
+
+      def delete_folder(folder)
+        ChatFile.transaction do
+          inside(folder, owned).includes(:owner).order(:path, :id).to_a.each(&:destroy).map(&:to_stored_file)
+        end
+      end
 
       def write_attachment(path, attachment, content)
         blob = blob_of(attachment)
@@ -147,9 +160,9 @@ module RubyLLM
         @owner ? rows.where(owner: @owner) : rows.where(owner_type: nil, owner_id: nil)
       end
 
-      def inside(folder)
+      def inside(folder, scope = visible)
         inside = "#{ChatFile.sanitize_sql_like(folder, '!')}/%"
-        visible.where("path = :folder OR path LIKE :inside ESCAPE '!'", folder:, inside:)
+        scope.where("path = :folder OR path LIKE :inside ESCAPE '!'", folder:, inside:)
       end
 
       def path(name)

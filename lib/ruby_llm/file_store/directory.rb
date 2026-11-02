@@ -83,13 +83,26 @@ module RubyLLM
       end
 
       # Deletes the file at +path+ and returns its StoredFile, or +nil+.
-      def delete(path)
+      # With <tt>recursive: true</tt>, deletes the folder +path+ with
+      # everything in it, hidden files included, and returns the deleted
+      # StoredFile objects. Links are removed, never followed.
+      def delete(path, recursive: false)
+        path = FileStore.path(path)
+        return delete_folder(path, recursive:) if folder?(path)
+
         file = find(path)
-        File.delete(full_path(file.path)) if file
-        file
+        File.delete(full_path(path)) if file
+        recursive ? [file].compact : file
       end
 
       private
+
+      def delete_folder(path, recursive:)
+        refuse_folder(path) unless recursive
+
+        full = full_path(path)
+        walk(full).sort_by(&:path).tap { FileUtils.rm_r(full) }
+      end
 
       def full_path(path)
         parent = root

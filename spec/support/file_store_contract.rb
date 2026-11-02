@@ -17,6 +17,33 @@ RSpec.shared_examples 'a file store' do
     expect(store.delete('notes/plan.md')).to be_nil
   end
 
+  it 'refuses to delete a folder without recursive: true' do
+    store.write('reports/q3.md', 'Q3')
+
+    expect { store.delete('reports') }.to raise_error(ArgumentError, /reports is a folder.*recursive: true/)
+    expect(store.exists?('reports/q3.md')).to be(true)
+  end
+
+  it 'deletes a folder and returns its files with recursive: true' do
+    store.write('reports/q3.md', 'Q3')
+    store.write('reports/2026/q4.md', 'Q4')
+    store.write('reportsy.md', 'beside the folder')
+
+    expect(store.delete('reports', recursive: true).map(&:path)).to eq(%w[reports/2026/q4.md reports/q3.md])
+    expect(store.list.map(&:path)).to eq(%w[reportsy.md])
+  end
+
+  it 'returns an Array from every recursive delete' do
+    store.write('notes.md', 'hello')
+
+    expect(store.delete('notes.md', recursive: true).map(&:path)).to eq(%w[notes.md])
+    expect(store.delete('notes.md', recursive: true)).to eq([])
+  end
+
+  it 'refuses to delete everything at once' do
+    expect { store.delete('.', recursive: true) }.to raise_error(ArgumentError, /not a path inside/)
+  end
+
   it 'replaces a file written twice' do
     store.write('a.txt', 'one')
     store.write('a.txt', 'three')

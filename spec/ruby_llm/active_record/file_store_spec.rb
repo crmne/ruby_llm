@@ -109,6 +109,22 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
       expect(described_class.new(chat, owner: alice).delete('shared.md')).to be_nil
       expect(store.exists?('shared.md')).to be(true)
     end
+
+    it 'deletes only its own files from a folder' do
+      store.write('reports/shared.md', 'for everyone')
+      alices = described_class.new(chat, owner: alice)
+      alices.write('reports/alice.md', 'private')
+
+      expect(alices.delete('reports', recursive: true).map(&:path)).to eq(%w[reports/alice.md])
+      expect(alices.list.map(&:path)).to eq(%w[reports/shared.md])
+    end
+
+    it 'still calls a folder with only shared files a folder' do
+      store.write('reports/shared.md', 'for everyone')
+
+      expect { described_class.new(chat, owner: alice).delete('reports') }
+        .to raise_error(ArgumentError, /is a folder/)
+    end
   end
 
   describe 'a persisted chat with files' do

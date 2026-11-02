@@ -66,9 +66,12 @@ chat.file_store.list   # => [#<RubyLLM::StoredFile path: "brief.md", byte_size: 
 chat.file_store.read("brief.md")
 chat.file_store.text("contract-v2.pdf") # => "## Page 1\n\nThis agreement..."
 chat.file_store.delete("brief.md")
+chat.file_store.delete("reports", recursive: true) # => [#<RubyLLM::StoredFile path: "reports/q3.pdf", ...>]
 ```
 
 Each file is a `RubyLLM::StoredFile` with `path`, `filename`, `byte_size`, `content_type`, `digest`, and `updated_at`. Paths are relative, with forward slashes, like `reports/q3.pdf`. A path with `..` raises `ArgumentError`, and reading a missing file raises `RubyLLM::FileNotFoundError`.
+
+`delete` removes one file and returns it, or `nil` when there is none. A folder raises `ArgumentError` unless you pass `recursive: true`, which removes everything in it and returns the deleted files. Only your code deletes this way: the model's file tools can't delete anything.
 
 ## What the Model Sees
 
@@ -178,7 +181,7 @@ class BucketStore < RubyLLM::FileStore
   def find(path) = ...                                 # a StoredFile, or nil
   def read(path) = ...                                 # the bytes, or raise RubyLLM::FileNotFoundError
   def write(path, content, content_type: nil) = ...    # content is a String or an IO; returns the StoredFile
-  def delete(path) = ...                               # the StoredFile, or nil
+  def delete(path, recursive: false) = ...             # the StoredFile or nil; with recursive, an Array of them
 end
 ```
 
