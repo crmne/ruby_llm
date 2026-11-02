@@ -180,4 +180,73 @@ RSpec.describe RubyLLM::Batch do # rubocop:disable RSpec/SpecFilePathFormat
     # The survivor gets its own answer, not the deleted chat's.
     expect(chats.second.messages.reload.last.content).to eq('second')
   end
+
+  context 'when pollers overlap' do
+    let(:chat) { Chat.create!(model: model).ask_later('What is 2 + 2?') }
+    let(:batch_id) { "msgbatch_#{SecureRandom.hex(4)}" }
+    let(:batch) do
+      stub_anthropic_batch(
+        create: { id: batch_id, raw_status: 'in_progress', completed: false },
+        find: { id: batch_id, raw_status: 'ended', completed: true },
+        results: [[0, answer('4')]]
+      )
+      RubyLLM.batch([chat])
+    end
+
+    it 'adds the answer and its usage once' do
+      first, second = Array.new(2) { described_class.find(batch.id).refresh }
+
+      [first, second].each(&:messages)
+
+      expect(chat.messages.reload.pluck(:role)).to eq(%w[user assistant])
+      expect(RubyLLM::ActiveRecord::Usage.where(chat:).count).to eq(1)
+    end
+
+    it 'reports an answer for a deleted chat once, when the batch completes' do
+      batch
+      allow(RubyLLM::Accounting::Usage).to receive(:report).and_call_original
+      allow_any_instance_of(RubyLLM::Providers::Anthropic).to receive(:find_batch) # rubocop:disable RSpec/AnyInstance
+        .and_return(id: batch_id, raw_status: 'in_progress', completed: false)
+      allow_any_instance_of(RubyLLM::Providers::Anthropic).to receive(:batch_results) do # rubocop:disable RSpec/AnyInstance
+        [[0, answer('4')]]
+      end
+      chat.destroy!
+      polled = described_class.find(batch.id).refresh
+
+      2.times { polled.messages }
+      expect(RubyLLM::Accounting::Usage).not_to have_received(:report)
+
+      allow_any_instance_of(RubyLLM::Providers::Anthropic).to receive(:find_batch) # rubocop:disable RSpec/AnyInstance
+        .and_return(id: batch_id, raw_status: 'ended', completed: true)
+      2.times { polled.refresh.messages }
+
+      expect(RubyLLM::Accounting::Usage).to have_received(:report).once
+    end
+
+    it 'counts an answer another poller added as delivered' do
+      batch
+      record = RubyLLM::ActiveRecord::Batch.find_by!(provider_batch_id: batch_id)
+      chat.messages.create!(role: :assistant, content: '4', created_at: 1.minute.from_now)
+
+      expect(record.send(:deliver_once, chat) { raise 'delivered twice' }).to be(true)
+    end
+
+    it 'reports that it could not claim a running chat' do
+      Chat.where(id: chat.id).update_all(claim_token: 'other', claimed_until: 10.minutes.from_now)
+
+      expect(chat.claiming_delivery { raise 'ran while claimed' }).to be(false)
+    end
+
+    it 'leaves the answer for the next poll while the chat is running' do
+      batch
+      Chat.where(id: chat.id).update_all(claim_token: 'other', claimed_until: 10.minutes.from_now)
+
+      described_class.find(batch.id).refresh.messages
+      expect(chat.messages.reload.pluck(:role)).to eq(['user'])
+
+      Chat.where(id: chat.id).update_all(claimed_until: nil)
+      described_class.find(batch.id).refresh.messages
+      expect(chat.messages.reload.pluck(:role)).to eq(%w[user assistant])
+    end
+  end
 end

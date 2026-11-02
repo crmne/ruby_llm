@@ -194,7 +194,7 @@ class BatchPollJob < ApplicationJob
 end
 ```
 
-`batch.messages` appends and persists each answer once. Retrying the polling job does not duplicate messages.
+`batch.messages` appends and persists each answer once. Retrying the polling job, or running two at once, does not duplicate messages. While a chat is running, its answer waits for the next poll.
 
 The same tool workflow works on these records: run pending tools, then batch the next model turns.
 

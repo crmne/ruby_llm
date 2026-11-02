@@ -128,4 +128,95 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Batches do
       expect(status).to eq(:cancelled)
     end
   end
+
+  describe 'beta headers' do
+    include_context 'with configured RubyLLM'
+
+    let(:provider) { RubyLLM::Providers::Anthropic.new(RubyLLM.config) }
+    let(:live) { RubyLLM::Providers::Anthropic.protocols.fetch(:anthropic).new(provider) }
+    let(:file_block) { { type: 'document', source: { type: 'file', file_id: 'f' } } }
+    let(:file_payload) { { messages: [{ role: 'user', content: [file_block] }] } }
+
+    it 'sends every beta any batch entry needs' do
+      request = stub_request(:post, 'https://api.anthropic.com/v1/messages/batches')
+                .with(headers: { 'anthropic-beta' => 'files-api-2025-04-14,compact-2026-01-12' })
+                .to_return(status: 200, headers: { 'Content-Type' => 'application/json' },
+                           body: { id: 'b', processing_status: 'in_progress' }.to_json)
+
+      live.create_batch([{ custom_id: '0', payload: file_payload },
+                         { custom_id: '1', payload: { messages: [], context_management: { edits: [] } } }])
+
+      expect(request).to have_been_requested
+    end
+
+    it 'sends the MCP beta when an entry connects a server' do
+      request = stub_request(:post, 'https://api.anthropic.com/v1/messages/batches')
+                .with(headers: { 'anthropic-beta' => 'mcp-client-2025-11-20' })
+                .to_return(status: 200, headers: { 'Content-Type' => 'application/json' },
+                           body: { id: 'b', processing_status: 'in_progress' }.to_json)
+
+      live.create_batch([{ custom_id: '0', payload: { messages: [], mcp_servers: [{ name: 'docs' }] } }])
+
+      expect(request).to have_been_requested
+    end
+
+    it 'reads provider options under string keys' do
+      betas = nil
+      request = stub_request(:post, 'https://api.anthropic.com/v1/messages/batches')
+                .with { |sent| betas = sent.headers['Anthropic-Beta'] }
+                .to_return(status: 200, headers: { 'Content-Type' => 'application/json' },
+                           body: { id: 'b', processing_status: 'in_progress' }.to_json)
+      payload = { messages: [], 'mcp_servers' => [{ name: 'docs' }], 'context_management' => { edits: [] } }
+
+      live.create_batch([{ custom_id: '0', payload: }])
+
+      expect(request).to have_been_requested
+      expect(betas).to include('mcp-client-2025-11-20', 'compact-2026-01-12')
+    end
+
+    it 'sends no beta a plain batch does not need' do
+      request = stub_request(:post, 'https://api.anthropic.com/v1/messages/batches')
+                .with { |sent| !sent.headers.key?('Anthropic-Beta') }
+                .to_return(status: 200, headers: { 'Content-Type' => 'application/json' },
+                           body: { id: 'b', processing_status: 'in_progress' }.to_json)
+
+      live.create_batch([{ custom_id: '0', payload: { messages: [] } }])
+
+      expect(request).to have_been_requested
+    end
+
+    it 'sends the Files beta when counting tokens over an uploaded file' do
+      request = stub_request(:post, 'https://api.anthropic.com/v1/messages/count_tokens')
+                .with(headers: { 'anthropic-beta' => 'files-api-2025-04-14' })
+                .to_return(status: 200, headers: { 'Content-Type' => 'application/json' },
+                           body: { input_tokens: 5 }.to_json)
+
+      live.send(:post_count_tokens, file_payload)
+
+      expect(request).to have_been_requested
+    end
+
+    it 'joins a beta from with_headers whatever its capitalization' do
+      merged = live.send(:merge_tool_headers, { 'anthropic-beta' => 'mcp' }, { 'Anthropic-Beta' => 'mine' })
+
+      expect(merged).to eq('anthropic-beta' => 'mcp,mine')
+    end
+
+    it 'finds a file in a block with string keys' do
+      block = { 'type' => 'tool_result', 'content' => [{ 'source' => { 'type' => 'file', 'file_id' => 'f' } }] }
+
+      expect(live.send(:provider_file_source?, { messages: [{ 'content' => [block] }] })).to be(true)
+    end
+
+    it 'joins a beta from with_headers with the one a server tool needs' do
+      merged = live.send(:merge_tool_headers, { 'anthropic-beta' => 'mcp', 'x-tool' => '1' },
+                         { 'anthropic-beta' => 'mine', 'x-mine' => '2' })
+
+      expect(merged).to eq('anthropic-beta' => 'mcp,mine', 'x-tool' => '1', 'x-mine' => '2')
+    end
+
+    it 'keeps tool headers when with_headers set no beta' do
+      expect(live.send(:merge_tool_headers, { 'anthropic-beta' => 'mcp' }, {})).to eq('anthropic-beta' => 'mcp')
+    end
+  end
 end

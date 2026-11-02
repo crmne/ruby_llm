@@ -6,6 +6,7 @@ module RubyLLM
       # Amazon Nova multimodal embedding models over Bedrock InvokeModel.
       class NovaEmbeddings < InvokeModel
         DEFAULT_EMBEDDING_PURPOSE = 'GENERIC_INDEX'
+        INPUT_TOKENS_HEADER = 'x-amzn-bedrock-input-token-count'
 
         # rubocop:disable-next Lint/UnusedMethodArgument
         def embed(text, model:, dimensions:, task_type: nil, title: nil, with: nil, provider_options: {})
@@ -43,6 +44,11 @@ module RubyLLM
 
         def parse_embedding(body)
           body.dig('embeddings', 0, 'embedding')
+        end
+
+        # Nova leaves the count out of its body and sends it as a header.
+        def embedding_attempt_tokens(responses)
+          responses.map { |response| Tokens.new(input: response.headers[INPUT_TOKENS_HEADER]&.to_i) }
         end
       end
     end

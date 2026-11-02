@@ -261,4 +261,25 @@ RSpec.describe RubyLLM::Protocols::Gemini::Images do
       )
     end
   end
+
+  describe '#gemini_image_parts' do
+    let(:image) { { 'inlineData' => { 'mimeType' => 'image/png', 'data' => 'one' } } }
+    let(:second) { { 'inlineData' => { 'mimeType' => 'image/jpeg', 'data' => 'two' } } }
+
+    def parts(*content)
+      protocol.send(:gemini_image_parts, 'candidates' => [{ 'content' => { 'parts' => content } }]).pluck('data')
+    end
+
+    it 'keeps every image in a candidate, between its text' do
+      expect(parts(image, { 'text' => 'and' }, second)).to eq(%w[one two])
+    end
+
+    it 'leaves out the draft images a model thinks with' do
+      expect(parts(image.merge('thought' => true), second)).to eq(['two'])
+    end
+
+    it 'leaves out inline data that is no image' do
+      expect(parts({ 'inlineData' => { 'mimeType' => 'audio/wav', 'data' => 'x' } }, image)).to eq(['one'])
+    end
+  end
 end

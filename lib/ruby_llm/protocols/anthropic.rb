@@ -21,6 +21,7 @@ module RubyLLM
       # web_search/web_fetch pin allowed_callers to direct invocation: their
       # 2026 tool versions otherwise default to requiring programmatic tool
       # calling, which not every model supports.
+      MCP_BETA = 'mcp-client-2025-11-20'
       SERVER_TOOL_ALIASES = {
         web_search: { tool: { type: 'web_search_20260318', name: 'web_search', allowed_callers: ['direct'] } },
         web_fetch: { tool: { type: 'web_fetch_20260318', name: 'web_fetch', allowed_callers: ['direct'] } },
@@ -35,7 +36,7 @@ module RubyLLM
               .merge(Anthropic.mcp_tool_filter(options))
               .merge(options.slice(:default_config, :configs)),
             payload: { mcp_servers: [server] },
-            headers: { 'anthropic-beta' => 'mcp-client-2025-11-20' }
+            headers: { 'anthropic-beta' => MCP_BETA }
           }
         end
       }.freeze
@@ -94,8 +95,20 @@ module RubyLLM
         super(payload, beta_headers(additional_headers, payload), &)
       end
 
+      def post_count_tokens(payload)
+        @connection.post(count_tokens_url, payload) { |request| request.headers.merge!(beta_headers({}, payload)) }
+      end
+
       def beta_headers(additional_headers, payload)
         apply_binding_beta(apply_files_beta(additional_headers, payload), payload)
+      end
+
+      def merge_tool_headers(tool_headers, headers)
+        names = headers.keys.select { |name| name.to_s.casecmp?(BETA_HEADER) }
+        return super unless tool_headers[BETA_HEADER] && names.any?
+
+        betas = join_betas(tool_headers[BETA_HEADER], headers[names.last])
+        super.except(*names).merge(BETA_HEADER => betas)
       end
 
       def merge_turn_segments(segments)
