@@ -22,7 +22,7 @@ RSpec.describe RubyLLM::Evaluation::Evidence do
   end
 
   it 'lets an adapter decide how a BigDecimal is sent' do
-    evidence = described_class.new(BigDecimal('12.5'), adapters: { BigDecimal => lambda(&:to_s) })
+    evidence = described_class.new(BigDecimal('12.5'), adapters: { BigDecimal => ->(value) { value.to_s('F') } })
 
     expect(evidence.data).to eq('12.5')
   end

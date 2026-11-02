@@ -39,8 +39,7 @@ module RubyLLM
         @batch = tier_from(data[:batch])
         @long_context = tier_from(data[:long_context])
         @long_context_threshold = Integer(data[:long_context_threshold], exception: false)
-        @context_tiers = Array(data[:context_tiers]).map { |size, rates| [size, tier_from(rates)] }
-                                                    .sort_by { |size, _| -size }
+        @context_tiers = context_tiers_from(data[:context_tiers])
       end
 
       # Returns the standard-tier input price in USD per million tokens,
@@ -74,19 +73,11 @@ module RubyLLM
       end
 
       # Returns the PricingTier that applies for a prompt of the given size.
-      # Uses #long_context when that tier exists and +prompt_tokens+ is
-      # greater than #long_context_threshold; otherwise returns #standard.
+      # Uses the largest context tier +prompt_tokens+ is greater than, such
+      # as #long_context above #long_context_threshold; otherwise returns
+      # #standard.
       def tier_for(prompt_tokens)
-        context_tier = @context_tiers.find { |size, _| prompt_tokens.to_i > size }
-        return context_tier.last if context_tier
-        return standard if @context_tiers.any?
-
-        if long_context && long_context_threshold &&
-           prompt_tokens.to_i > long_context_threshold
-          long_context
-        else
-          standard
-        end
+        @context_tiers.find { |size, _| prompt_tokens.to_i > size }&.last || standard
       end
 
       # Returns a Hash with present tier hashes and optional
@@ -153,6 +144,12 @@ module RubyLLM
       private_class_method :context_cost, :context_rates, :context_entries
 
       private
+
+      def context_tiers_from(tiers)
+        tiers = Array(tiers).to_h { |size, rates| [size, tier_from(rates)] }
+        tiers[long_context_threshold] = long_context if long_context && long_context_threshold
+        tiers.sort_by { |size, _| -size }
+      end
 
       def tier_from(tier_data)
         return nil if empty_tier?(tier_data)

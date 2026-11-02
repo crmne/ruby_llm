@@ -63,11 +63,13 @@ module RubyLLM
       def read(timeout: @timeout)
         deadline = monotonic_time + timeout
         read_frame(deadline) while @messages.empty? && !@closed && !@error
-        raise @error if @error && @messages.empty?
+        raise_unread_error
 
         @messages.shift
       rescue IOError, SystemCallError, OpenSSL::SSL::SSLError
-        raise unless @closed
+        raise unless @closed || @messages.any?
+
+        @messages.shift
       end
 
       def read_available
@@ -82,7 +84,9 @@ module RubyLLM
         @closed = true
         raise Error, 'WebSocket connection ended without a close frame'
       rescue IOError, SystemCallError, OpenSSL::SSL::SSLError
-        raise unless @closed
+        raise unless @closed || @messages.any?
+
+        @messages.shift
       end
 
       def each_message(write:)
@@ -181,6 +185,10 @@ module RubyLLM
         @socket = socket
         socket_operation(deadline) { @socket.connect_nonblock }
         @socket.post_connection_check(@uri.hostname)
+      end
+
+      def raise_unread_error
+        raise @error if @error && @messages.empty?
       end
 
       def ensure_readable

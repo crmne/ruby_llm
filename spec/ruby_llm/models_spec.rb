@@ -407,6 +407,23 @@ RSpec.describe RubyLLM::Models do
       expect(model.to_h[:pricing][:text_tokens].keys).not_to include(:context_tiers)
     end
 
+    it 'keeps explicit long context rates over a metadata tier at the same size' do
+      tier = ->(size, input) { { input:, output: input, tier: { type: 'context', size: } } }
+      model = RubyLLM::Model.new(
+        id: 'tiered', provider: 'openrouter',
+        pricing: {
+          text_tokens: {
+            standard: { input_per_million: 0.03 },
+            long_context: { input_per_million: 0.12 },
+            long_context_threshold: 32_000
+          }
+        },
+        metadata: { cost: { tiers: [tier.call(32_000, 0.1), tier.call(256_000, 0.2)] } }
+      )
+
+      expect(model.pricing.text_tokens.tier_for(100_000).input_per_million).to eq(0.12)
+    end
+
     it 'falls back to context_over_200k when models.dev omits structured tiers' do
       model_data_with_over = model_data.merge(
         cost: {

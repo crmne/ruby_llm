@@ -175,6 +175,17 @@ RSpec.describe RubyLLM::Transport::WebsocketConnection do
     socket.close
   end
 
+  it 'delivers a queued message when answering the close frame fails' do
+    connection = described_class.new('ws://127.0.0.1:9/', headers: {}, config:)
+    connection.instance_variable_set(:@socket, instance_double(Socket))
+    allow(connection).to receive(:read_frame) do
+      connection.instance_variable_get(:@messages) << 'the last transcript'
+      raise Errno::EPIPE
+    end
+
+    expect(connection.read(timeout: 1)).to eq('the last transcript')
+  end
+
   it 'connects to an IPv6 address without its URL brackets' do
     connection = described_class.new('ws://[::1]:9/', headers: {}, config:)
     allow(Socket).to receive(:tcp).and_return(instance_double(Socket))
