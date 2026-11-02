@@ -266,7 +266,7 @@ In 2.1, a successful response with a body RubyLLM could not parse raised `Farada
 
 ## Rename Chat Columns Named After New Methods
 
-`acts_as_chat` records gain `code_execution`, `skills`, `file_store`, `with_code_execution`, `with_skills`, `with_file_store`, `queue`, `queued_messages`, `unqueue`, `after_queue`, `after_dequeue`, `after_unqueue`, `after_file_write`, and the `ruby_llm_chat_files` association in 2.2. A column of your own with one of those names is hidden behind RubyLLM's method, so reading it returns RubyLLM's setting, usually `nil`, instead of your value. Rename such a column before you upgrade, for example a `code_execution` toggle to `runs_code`:
+`acts_as_chat` records gain `code_execution`, `skills`, `file_store`, `with_code_execution`, `with_skills`, `with_file_store`, `queue`, `queued_messages`, `unqueue`, `after_queue`, `after_join`, `after_unqueue`, `after_file_write`, and the `ruby_llm_chat_files` association in 2.2. A column of your own with one of those names is hidden behind RubyLLM's method, so reading it returns RubyLLM's setting, usually `nil`, instead of your value. Rename such a column before you upgrade, for example a `code_execution` toggle to `runs_code`:
 
 ```ruby
 rename_column :chats, :code_execution, :runs_code

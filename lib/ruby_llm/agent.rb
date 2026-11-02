@@ -73,7 +73,7 @@ module RubyLLM
       with_provider_options
       with_headers with_schema with_fallbacks
       before_request before_message after_message before_tool_call after_tool_result after_tool_progress
-      before_fallback after_fallback after_queue after_dequeue after_unqueue after_file_write
+      before_fallback after_fallback after_queue after_join after_unqueue after_file_write
       convert_unsupported_attachments
       cancel approve deny answer decline cache_until_here
     ].freeze
@@ -308,7 +308,7 @@ module RubyLLM
         @code_execution = CodeExecution.options(enabled, options)
       end
 
-      # Attaches a FileStore to chats this agent builds, with the tools to
+      # Attaches a file store to chats this agent builds, with the tools to
       # work with it, applied via Chat#with_file_store, which takes the
       # same arguments. A +store+ lambda runs once for each chat, with
       # +chat+ and the agent's inputs in scope, like the agent's other
@@ -317,13 +317,15 @@ module RubyLLM
       #
       #   file_store
       #   file_store spill_to_file: 20_000
-      #   file_store -> { RubyLLM.file_store.directory("tmp/chats/#{chat.id}") }
+      #   file_store :memory
+      #   file_store -> { "tmp/chats/#{chat.id}" }
       #   file_store owner: -> { chat.user }
       #   file_store nil
       #
       # Each chat gets a store of its own: without +store+, a new
       # FileStore::Memory, or for a persisted chat, its files in Active
-      # Storage.
+      # Storage. A folder path on its own is shared by every chat, so use a
+      # lambda to give each chat its own folder.
       #
       # :call-seq: file_store(store = default, spill_to_file: 10_000, owner: nil)
       def file_store(store = Chat::FileReferences::DEFAULT_STORE, spill_to_file: Chat::FileReferences::SPILL_TO_FILE,
@@ -1169,7 +1171,7 @@ module RubyLLM
 
     ##
     # :method: with_file_store
-    # :call-seq: with_file_store(store = RubyLLM.file_store.memory, spill_to_file: 10_000)
+    # :call-seq: with_file_store(store = :memory, spill_to_file: 10_000)
     #
     # Delegates to Chat#with_file_store. See that method for arguments and return values.
 
@@ -1264,10 +1266,10 @@ module RubyLLM
     # Delegates to Chat#after_queue. See that method for arguments and return values.
 
     ##
-    # :method: after_dequeue
-    # :call-seq: after_dequeue(&block)
+    # :method: after_join
+    # :call-seq: after_join(&block)
     #
-    # Delegates to Chat#after_dequeue. See that method for arguments and return values.
+    # Delegates to Chat#after_join. See that method for arguments and return values.
 
     ##
     # :method: after_unqueue

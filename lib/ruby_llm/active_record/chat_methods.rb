@@ -303,7 +303,7 @@ module RubyLLM
         with_provider_options with_headers with_schema
         convert_unsupported_attachments
         before_request before_message after_message before_tool_call after_tool_result after_tool_progress
-        before_fallback after_fallback after_queue after_dequeue after_unqueue after_file_write
+        before_fallback after_fallback after_queue after_join after_unqueue after_file_write
       ].freeze
 
       ##
@@ -489,10 +489,10 @@ module RubyLLM
       # receives the QueuedMessage record, in the process that queued it.
 
       ##
-      # :method: after_dequeue
-      # :call-seq: after_dequeue(&block)
+      # :method: after_join
+      # :call-seq: after_join(&block)
       #
-      # Applies Chat#after_dequeue and returns this record. The block
+      # Applies Chat#after_join and returns this record. The block
       # receives the message record and the QueuedMessage record, in the
       # process that runs the chat.
 

@@ -11,12 +11,13 @@ module RubyLLM
     #
     # The OCR converter reads PDFs, scans, and photos with RubyLLM.ocr. It
     # costs a request per file, so it only runs where you register it.
-    # RubyLLM.file_store.converter returns the converters RubyLLM ships
-    # (see Converters::Factory):
+    # Converters::Text reads a file as it is, for other types that hold
+    # plain text.
     #
     #   RubyLLM.configure do |config|
-    #     config.file_converters["image/*"] = RubyLLM.file_store.converter.ocr
-    #     config.file_converters["application/pdf"] = RubyLLM.file_store.converter.ocr
+    #     config.file_converters["image/*"] = RubyLLM::FileStore::Converters::OCR.new
+    #     config.file_converters["application/pdf"] = RubyLLM::FileStore::Converters::OCR.new
+    #     config.file_converters["application/x-subrip"] = RubyLLM::FileStore::Converters::Text
     #     config.file_converters["application/vnd.oasis.opendocument.text"] = ->(file) { OdtText.call(file.content) }
     #   end
     #

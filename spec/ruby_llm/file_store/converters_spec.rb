@@ -53,4 +53,35 @@ RSpec.describe RubyLLM::FileStore::Converters do
       expect(RubyLLM).to have_received(:ocr).with(attachment, model: 'mistral-ocr-latest')
     end
   end
+
+  it 'builds an OCR converter with the options it is given' do
+    attachment = RubyLLM::Attachment.new(StringIO.new('scan'), filename: 'scan.png')
+    allow(RubyLLM).to receive(:ocr).and_return(instance_double(RubyLLM::OCR, markdown: '# Read'))
+
+    expect(described_class::OCR.new(model: 'mistral-ocr-latest').call(attachment)).to eq('# Read')
+    expect(RubyLLM).to have_received(:ocr).with(attachment, model: 'mistral-ocr-latest')
+  end
+
+  it 'returns the text converter, which reads a file as it is' do
+    text = RubyLLM::Attachment.new(StringIO.new('{"a":1}'), filename: 'rows.ndjson')
+
+    expect(described_class::Text.call(text)).to eq('{"a":1}')
+  end
+
+  it 'reads a type registered with a built-in converter' do
+    config = RubyLLM::Configuration.new
+    store = RubyLLM::FileStore::Memory.new
+    store.write('talk.srt', "1\n00:00:01,000 --> 00:00:02,000\nHello\n")
+
+    expect(store.text('talk.srt', config:)).to be_nil
+    config.file_converters['application/x-subrip'] = described_class::Text
+    expect(store.text('talk.srt', config:)).to include('Hello')
+  end
+
+  it "keeps a context's converters apart from the global ones" do
+    context = RubyLLM.context { |config| config.file_converters['image/*'] = described_class::OCR.new }
+
+    expect(context.config.file_converters).to include('image/*')
+    expect(RubyLLM.config.file_converters).not_to include('image/*')
+  end
 end

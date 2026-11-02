@@ -15,10 +15,10 @@ module RubyLLM
   #   chat.file_store.list.map(&:path) # => ["contract-v1.pdf", "contract-v2.pdf"]
   #
   # RubyLLM ships FileStore::Memory, the default, and FileStore::Directory,
-  # which keeps the files in a folder; RubyLLM.file_store builds them. The
-  # Rails integration keeps a persisted chat's files in Active Storage.
+  # which keeps the files in a folder. The Rails integration keeps a
+  # persisted chat's files in Active Storage.
   #
-  #   chat.with_file_store(RubyLLM.file_store.directory("tmp/work"))
+  #   chat.with_file_store("tmp/work")
   #
   # Write your own store by subclassing FileStore and implementing #list,
   # #find, #read, #write, and #delete. RubyLLM only ever passes them paths

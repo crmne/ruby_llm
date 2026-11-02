@@ -69,9 +69,6 @@ module RubyLLM
 
         say "\n  📚 Documentation: https://rubyllm.com", :cyan
 
-        say "\n  ❤️  Love RubyLLM?", :magenta
-        say '     • ⭐ Star on GitHub: https://github.com/crmne/ruby_llm'
-        say '     • 🐦 Follow for updates: https://x.com/paolino'
         say "\n"
       end
 

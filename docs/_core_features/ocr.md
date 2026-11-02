@@ -127,7 +127,7 @@ A chat with a [file store]({% link _core_features/chat-files.md %}) reads scans 
 
 ```ruby
 RubyLLM.configure do |config|
-  config.file_converters["image/*"] = RubyLLM.file_store.converter.ocr
+  config.file_converters["image/*"] = RubyLLM::FileStore::Converters::OCR.new
 end
 ```
 

@@ -411,10 +411,10 @@ module RubyLLM
 
     # Adds every queued message to the conversation, or with
     # <tt>steering_only: true</tt> only those that steer, and runs
-    # #after_dequeue for each.
+    # #after_join for each.
     def take_queued_messages(steering_only: false) # :nodoc:
       @message_queue.take(steering_only:).each do |message, queued|
-        run_callbacks(:after_dequeue, message, queued)
+        run_callbacks(:after_join, message, queued)
       end
     end
 
@@ -1068,7 +1068,7 @@ module RubyLLM
       self
     end
 
-    # Attaches +store+, a FileStore, to the chat and gives the model five
+    # Attaches +store+ to the chat and gives the model five
     # tools to work with it: +list_files+, +read_file+, +search_files+,
     # +write_file+, and +edit_file+. Files stop filling the conversation:
     #
@@ -1083,24 +1083,29 @@ module RubyLLM
     #   With other stores, each run copies in the files the model names,
     #   and what the code writes is saved back to the store.
     #
-    # Without +store+, the chat gets a new FileStore::Memory, or for a
-    # persisted chat, its files in Active Storage. +spill_to_file+ is the
-    # characters a tool result may have before it is saved as a file, or
-    # +false+ to send every result whole; tools can set their own with
-    # Tool.spill_to_file. Default: 10,000.
+    # +store+ is a folder path, for a FileStore::Directory, +:memory+, for a
+    # new FileStore::Memory, or a FileStore. Without it, the chat gets a new
+    # FileStore::Memory, or for a persisted chat, its files in Active Storage.
+    #
+    # +spill_to_file+ is the characters a tool result may have before it is
+    # saved as a file, or +false+ to send every result whole; tools can set
+    # their own with Tool.spill_to_file. Default: 10,000.
     #
     # Pass +nil+ to remove the store and its tools. Returns +self+.
     #
     #   chat.with_file_store
-    #   chat.with_file_store(RubyLLM.file_store.directory("tmp/chats/42"))
+    #   chat.with_file_store("tmp/chats/42")
+    #   chat.with_file_store(:memory)
+    #   chat.with_file_store(RubyLLM::FileStore::Directory.new("tmp/chats/42"))
     #   chat.with_file_store(spill_to_file: 20_000)
     #   chat.with_file_store(nil)
     #
     # Text files are read as text; register converters, such as the OCR
     # converter for PDFs and images, in Configuration#file_converters to
     # read more.
-    def with_file_store(store = RubyLLM.file_store.memory, spill_to_file: FileReferences::SPILL_TO_FILE)
+    def with_file_store(store = :memory, spill_to_file: FileReferences::SPILL_TO_FILE)
       FileReferences.validate(store, spill_to_file:) unless store.nil?
+      store = FileReferences.resolve(store)
       @file_references = if store
                            FileReferences.new(store:, spill_to_file:,
                                               written: ->(file) { run_callbacks(:after_file_write, file) })
@@ -1219,10 +1224,10 @@ module RubyLLM
     # It runs in the loop's thread, before the model is asked to answer it.
     # Returns +self+.
     #
-    #   chat.after_dequeue { |message, queued| puts "Joined: #{message.content}" }
+    #   chat.after_join { |message, queued| puts "Joined: #{message.content}" }
     #
-    def after_dequeue(&)
-      add_callback(:after_dequeue, &)
+    def after_join(&)
+      add_callback(:after_join, &)
     end
 
     # Registers a callback that receives each QueuedMessage #unqueue takes

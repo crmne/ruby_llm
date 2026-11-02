@@ -12,7 +12,7 @@ module RubyLLM
     # and can change anything in it, so give each store a folder of its
     # own.
     #
-    #   chat.with_file_store(RubyLLM.file_store.directory("tmp/chats/42"))
+    #   chat.with_file_store("tmp/chats/42")
     #
     class Directory < FileStore
       OPEN_FLAGS = File::RDONLY | File::BINARY | (defined?(File::NOFOLLOW) ? File::NOFOLLOW : 0)

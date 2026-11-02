@@ -249,7 +249,7 @@ RSpec.describe RubyLLM::FileStore::Tools do
   describe 'on a folder store' do
     let(:root) { Dir.mktmpdir }
     let(:chat) do
-      RubyLLM.chat(model: model_for(:openai), provider: :openai).with_file_store(RubyLLM.file_store.directory(root))
+      RubyLLM.chat(model: model_for(:openai), provider: :openai).with_file_store(RubyLLM::FileStore::Directory.new(root))
     end
 
     after { FileUtils.remove_entry(root) }

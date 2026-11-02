@@ -140,14 +140,14 @@ RSpec.describe RubyLLM::Chat do
       expect(requests.last.last(2)).to eq([[:user, 'First'], [:user, 'Second']])
     end
 
-    it 'runs after_dequeue with the message and the queued message before before_message' do
-      chat.after_dequeue { |message, queued| events << [:dequeued, message.role, message.content, queued.content] }
+    it 'runs after_join with the message and the queued message before before_message' do
+      chat.after_join { |message, queued| events << [:joined, message.role, message.content, queued.content] }
       chat.before_message { events << [:before_message] }
       during_request << -> { chat.queue('Steer') }
 
       chat.ask('Hello')
 
-      expect(events).to eq([[:before_message], [:dequeued, :user, 'Steer', 'Steer'], [:before_message]])
+      expect(events).to eq([[:before_message], [:joined, :user, 'Steer', 'Steer'], [:before_message]])
     end
 
     it 'is never taken while the chat is waiting, and joins once the round is answered' do

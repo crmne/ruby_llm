@@ -23,6 +23,17 @@ RSpec.describe RubyLLM::Agent do
     expect(agent).not_to be_waiting
   end
 
+  it 'delegates the queue callbacks to the underlying chat' do
+    chat = RubyLLM.chat(model: model_for(:openai))
+    agent = Class.new(described_class).new(chat:)
+
+    %i[after_queue after_join after_unqueue].each do |callback|
+      allow(chat).to receive(callback).and_return(chat)
+
+      expect(agent.public_send(callback) { nil }).to be(chat)
+    end
+  end
+
   it 'classifies every method defined on Chat' do
     expected_missing_methods = %i[
       approval_checker= approval_pending? cancellation_checker= continue_turn fallback_errors input_checker=

@@ -26,12 +26,30 @@ module RubyLLM
 
       class << self
         def validate(store, spill_to_file:, store_lambda: false)
-          unless store.is_a?(FileStore) || store.equal?(DEFAULT_STORE) || (store_lambda && store.is_a?(Proc))
-            raise ArgumentError, "with_file_store takes a RubyLLM::FileStore or nil, got #{store.inspect}"
+          unless store?(store) || (store_lambda && store.is_a?(Proc))
+            raise ArgumentError, 'with_file_store takes a folder path, :memory, a RubyLLM::FileStore, or nil, ' \
+                                 "got #{store.inspect}"
           end
           return if spill_to_file == false || (spill_to_file.is_a?(Integer) && spill_to_file.positive?)
 
           raise ArgumentError, 'spill_to_file: takes a positive number of characters or false'
+        end
+
+        def resolve(store)
+          return FileStore::Memory.new if store == :memory
+          return FileStore::Directory.new(store) if path?(store)
+
+          store
+        end
+
+        private
+
+        def store?(store)
+          store.is_a?(FileStore) || store.equal?(DEFAULT_STORE) || store == :memory || path?(store)
+        end
+
+        def path?(store)
+          store.is_a?(String) || store.respond_to?(:to_path)
         end
       end
 

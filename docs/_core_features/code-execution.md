@@ -119,7 +119,7 @@ In a chat with a [file store]({% link _core_features/chat-files.md %}), runs wor
 
 ```ruby
 chat = RubyLLM.chat
-  .with_file_store(RubyLLM.file_store.directory("tmp/work"))
+  .with_file_store("tmp/work")
   .with_code_execution(python: %w[pandas matplotlib])
 chat.ask "Plot monthly revenue from this export", with: "revenue.csv"
 
