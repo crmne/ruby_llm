@@ -5,6 +5,10 @@ module RubyLLM
     module OpenAI
       # OpenAI Files API.
       class Files < Protocols::Files
+        def rejected_options(operation)
+          operation == :upload ? %i[uri] : super
+        end
+
         private
 
         # rubocop:disable-next Lint/UnusedMethodArgument

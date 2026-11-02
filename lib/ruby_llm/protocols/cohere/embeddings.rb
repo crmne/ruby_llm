@@ -13,6 +13,10 @@ module RubyLLM
           'v2/embed'
         end
 
+        def rejected_options(operation)
+          operation == :embed ? %i[title] : super
+        end
+
         # rubocop:disable-next Lint/UnusedMethodArgument
         def render_embedding_payload(text, model:, dimensions:, task_type: nil, title: nil, with: [],
                                      provider_options: {})

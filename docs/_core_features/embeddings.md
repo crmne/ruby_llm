@@ -85,7 +85,7 @@ embedding = RubyLLM.embed(
 )
 ```
 
-Gemini Embedding 001 accepts `RETRIEVAL_QUERY` and `RETRIEVAL_DOCUMENT`, with an optional document `title:`. Cohere uses `search_query` and `search_document` (the default). Gemini Embedding 2 takes task instructions in the text instead of `task_type:` or `title:`.
+Gemini Embedding 001 accepts `RETRIEVAL_QUERY` and `RETRIEVAL_DOCUMENT`, with an optional document `title:`. Cohere uses `search_query` and `search_document` (the default). Gemini Embedding 2 takes task instructions in the text instead of `task_type:` or `title:`. A provider with no field for either raises `ArgumentError`.
 
 ## Embedding Images and Other Media
 

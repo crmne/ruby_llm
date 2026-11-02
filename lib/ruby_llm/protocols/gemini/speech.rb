@@ -12,7 +12,9 @@ module RubyLLM
         end
 
         def render_speech_payload(input, model:, voice:, format:, provider_options: {})
-          RubyLLM.logger.debug { "Ignoring speech format #{format}. Gemini returns PCM audio." } if format
+          unless format.nil? || format.to_s == 'pcm'
+            raise ArgumentError, "Gemini speech returns PCM audio and does not accept format #{format.inspect}"
+          end
 
           payload = {
             contents: [

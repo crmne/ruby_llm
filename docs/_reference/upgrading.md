@@ -171,6 +171,27 @@ A streamed request whose response holds no events, such as an empty body or a pl
 
 A non-streaming Responses request that comes back `failed` now raises the same class a stream raises, such as `RubyLLM::RateLimitError`, in place of a plain `RubyLLM::Error`. A `failed` response with no error object raises `RubyLLM::Error` instead of returning an empty message. Embeddings with an error in a successful body raise a `RubyLLM::Error` subclass too. `rescue RubyLLM::Error` keeps working.
 
+## Options a Provider Cannot Carry Raise
+
+Operations used to drop these options silently. They now raise `ArgumentError` before any request, naming the option. Remove the option, or switch provider.
+
+| Operation | Option | Raises on |
+| --- | --- | --- |
+| `upload` | `uri:` | Every provider except Vertex AI and Bedrock |
+| `upload` | `purpose:` | Anthropic, Bedrock, ElevenLabs, Gemini, OpenRouter, Vertex AI |
+| `upload` | `expires_in:` | Anthropic, Bedrock, Cohere, ElevenLabs, Gemini, OpenRouter, Vertex AI |
+| `transcribe` | `format:` | Cohere, Deepgram, Mistral, xAI |
+| `transcribe` | `prompt:` | Cohere, ElevenLabs, xAI |
+| `transcribe` | `temperature:` | Deepgram, xAI |
+| `transcribe` | `speaker_names:` | Cohere, Gemini `generateContent` models |
+| `transcribe` | `speaker_references:` | Cohere, Deepgram, ElevenLabs, Gemini `generateContent` models, Mistral, xAI |
+| `paint` | `count:` above 1 | ElevenLabs, OpenRouter, Stable Diffusion on Bedrock |
+| `speak` | `format:` other than `"pcm"` | Gemini, Vertex AI |
+| `embed` | `task_type:` | Azure, Mistral, OpenAI, Perplexity, GPUStack, Titan on Bedrock |
+| `embed` | `title:` | Azure, Cohere, Mistral, OpenAI, OpenRouter, Perplexity, GPUStack, Bedrock |
+
+Two options now take effect instead. `content_type:` on `upload` reaches every provider. `size:` becomes an aspect ratio on Imagen and OpenRouter, so a request that used to get a square image follows the ratio you asked for, and a size neither can express, such as `"2K"`, raises `ArgumentError`.
+
 ## Bedrock Batches Report No Request Counts
 
 `Batch#request_counts` on Bedrock is now `nil`. It used to hold the job's submit and end timestamps under `submitted` and `completed`, which are not counts. Bedrock's job status reports no counts. A persisted batch keeps the old value until its next `refresh`.

@@ -57,8 +57,8 @@ module RubyLLM
     #     with: "logo.png"
     #   )
     #
-    # Providers that cannot generate several images in one request ignore
-    # +count:+ and return a single Image.
+    # Providers that cannot generate several images in one request raise
+    # ArgumentError when +count:+ is above 1.
     def self.paint(prompt,
                    model: nil,
                    provider: nil,

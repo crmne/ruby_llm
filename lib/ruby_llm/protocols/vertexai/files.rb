@@ -14,6 +14,10 @@ module RubyLLM
           STORAGE_CLIENTS
         end
 
+        def rejected_options(operation)
+          operation == :upload ? %i[purpose expires_in] : super
+        end
+
         # rubocop:disable-next Lint/UnusedMethodArgument
         def upload(file, filename: nil, purpose: nil, expires_in: nil, uri: nil, content_type: nil,
                    provider_options: {})

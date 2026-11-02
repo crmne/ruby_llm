@@ -333,10 +333,9 @@ module RubyLLM
     end
 
     def embed(text, model:, dimensions:, task_type: nil, title: nil, with: nil, provider_options: {}) # :nodoc:
-      protocol = resolve_protocol(nil, model, operation: :embed)
-      protocol.new(self, model).embed(
-        text, model: model_id_for(model), dimensions:, task_type:, title:, with:, provider_options:
-      )
+      protocol = resolve_protocol(nil, model, operation: :embed).new(self, model)
+      protocol.reject_options(:embed, task_type:, title:)
+      protocol.embed(text, model: model_id_for(model), dimensions:, task_type:, title:, with:, provider_options:)
     end
 
     def render_embedding(text, model:, dimensions: nil) # :nodoc:
@@ -360,10 +359,9 @@ module RubyLLM
     end
 
     def paint(prompt, model:, size:, count: nil, with: nil, mask: nil, provider_options: {}) # :nodoc:
-      protocol = resolve_protocol(nil, model, operation: :paint)
-      protocol.new(self, model).paint(
-        prompt, model: model_id_for(model), size:, count:, with:, mask:, provider_options:
-      )
+      protocol = resolve_protocol(nil, model, operation: :paint).new(self, model)
+      protocol.reject_options(:paint, count: (count if count.to_i > 1))
+      protocol.paint(prompt, model: model_id_for(model), size:, count:, with:, mask:, provider_options:)
     end
 
     def animate_later(prompt, model:, with: nil, extend: nil, provider_options: {}) # :nodoc:
@@ -388,6 +386,7 @@ module RubyLLM
     def transcribe(audio_file, model:, language:, format: nil, timestamps: nil, speaker_names: nil, # :nodoc:
                    speaker_references: nil, provider_options: {}, prompt: nil, temperature: nil, &)
       protocol = resolve_protocol(nil, model, operation: :transcribe).new(self, model)
+      protocol.reject_options(:transcribe, format:, temperature:, prompt:, speaker_names:, speaker_references:)
       options = protocol.render_transcription_options(timestamps:, format:, streaming: block_given?)
       provider_options = Support::Utils.deep_merge(options, provider_options)
       protocol.transcribe(
@@ -424,7 +423,9 @@ module RubyLLM
       ensure_files_supported!
       options = { filename:, purpose:, expires_in:, uri:, content_type:, provider_options: }.compact
 
-      protocols.fetch(:files).new(self).upload(file, **options)
+      protocol = protocols.fetch(:files).new(self)
+      protocol.reject_options(:upload, purpose:, expires_in:, uri:)
+      protocol.upload(file, **options)
     end
 
     def cache_content(content, model:, ttl: nil, instructions: nil, with: nil) # :nodoc:

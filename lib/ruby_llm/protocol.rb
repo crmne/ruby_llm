@@ -93,6 +93,26 @@ module RubyLLM
       @model = model
     end
 
+    # Returns the options of +operation+ (+:upload+, +:paint+, +:transcribe+,
+    # or +:embed+) this wire format has no way to carry, as an Array of
+    # Symbols. RubyLLM raises ArgumentError when a caller gives one, rather
+    # than dropping it. The default is none.
+    #
+    #   def rejected_options(operation)
+    #     operation == :paint ? %i[count] : super
+    #   end
+    #
+    def rejected_options(_operation)
+      []
+    end
+
+    def reject_options(operation, **options) # :nodoc:
+      rejected = rejected_options(operation) & options.compact.keys
+      return if rejected.empty?
+
+      raise ArgumentError, "#{@provider.name} #{operation} does not accept #{rejected.join(', ')}"
+    end
+
     def tool_approval_response(tool_call, approved:)
       Message.new(role: :tool, content: approved ? 'Approved' : 'Denied', tool_call_id: tool_call.id,
                   provider_call_id: tool_call.provider_call_id,

@@ -15,13 +15,24 @@ RSpec.describe RubyLLM::Protocols::Gemini::Images do
 
   describe '#render_image_payload' do
     it 'keeps Imagen models on the image API' do
-      payload = protocol.render_image_payload('a cat', model: 'imagen-4.0-generate-001', size: '1024x1024')
+      payload = protocol.render_image_payload('a cat', model: 'imagen-4.0-generate-001', size: nil)
 
       expect(protocol.images_url).to eq('models/imagen-4.0-generate-001:predict')
       expect(payload).to eq(
         instances: [{ prompt: 'a cat' }],
         parameters: { sampleCount: 1 }
       )
+    end
+
+    it 'turns size into the Imagen aspect ratio' do
+      payload = protocol.render_image_payload('a cat', model: 'imagen-4.0-generate-001', size: '1536x864')
+
+      expect(payload.dig(:parameters, :aspectRatio)).to eq('16:9')
+    end
+
+    it 'raises for a size Imagen has no field for' do
+      expect { protocol.render_image_payload('a cat', model: 'imagen-4.0-generate-001', size: '2k') }
+        .to raise_error(ArgumentError, /Imagen takes an aspect ratio/)
     end
 
     it 'asks Imagen for several samples in one request' do

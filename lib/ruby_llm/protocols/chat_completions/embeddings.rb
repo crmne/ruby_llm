@@ -5,6 +5,10 @@ module RubyLLM
     class ChatCompletions
       # Embeddings methods of the OpenAI API integration
       module Embeddings
+        def rejected_options(operation)
+          operation == :embed ? %i[task_type title] : super
+        end
+
         module_function
 
         def embedding_url(...)

@@ -19,9 +19,7 @@ module RubyLLM
           'v1/assets'
         end
 
-        def render_upload_payload(attachment, purpose: nil, expires_in: nil, name: nil)
-          raise ArgumentError, 'ElevenLabs assets do not accept purpose or expires_in' if purpose || expires_in
-
+        def render_upload_payload(attachment, name: nil, **)
           { asset: file_part(attachment), name: name || attachment.filename }
         end
 

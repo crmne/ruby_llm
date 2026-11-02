@@ -13,6 +13,10 @@ module RubyLLM
             @connection.post images_url, payload, usage: @usage_tracker, idempotent: false
           end
 
+          def rejected_options(operation)
+            operation == :paint ? %i[count] : super
+          end
+
           def render_image_payload(prompt, model:, size:, with: nil, mask: nil, provider_options: {}, **)
             images = Attachment.wrap(with, config: @config)
             payload = { model_id: model, prompt: }

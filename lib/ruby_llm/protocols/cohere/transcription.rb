@@ -7,6 +7,10 @@ module RubyLLM
       module Transcription
         DEFAULT_LANGUAGE = 'en'
 
+        def rejected_options(operation)
+          operation == :transcribe ? %i[format prompt speaker_names speaker_references] : super
+        end
+
         module_function
 
         def transcription_url

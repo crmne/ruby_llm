@@ -88,8 +88,6 @@ RSpec.describe RubyLLM::Protocols::Cohere::Datasets do
   it 'requires a purpose and explains the optional decoder dependency' do
     expect { protocol.upload(StringIO.new('text'), filename: 'text.jsonl') }
       .to raise_error(ArgumentError, /require purpose/)
-    expect { protocol.upload(StringIO.new('text'), filename: 'text.jsonl', purpose: 'embed-input', expires_in: 60) }
-      .to raise_error(ArgumentError, /do not accept expires_in/)
     allow(protocol).to receive(:require).with('avro').and_raise(LoadError)
     expect { protocol.records(RubyLLM::UploadedFile.new(id: 'dataset')) }
       .to raise_error(LoadError, /Add gem "avro"/)

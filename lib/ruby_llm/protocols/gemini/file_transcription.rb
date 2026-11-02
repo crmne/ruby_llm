@@ -4,6 +4,10 @@ module RubyLLM
   module Protocols
     class Gemini
       module FileTranscription # :nodoc: all
+        def rejected_options(operation)
+          operation == :transcribe ? [] : super
+        end
+
         def transcribe(audio_file, model:, language:, format: nil, speaker_names: nil,
                        speaker_references: nil, provider_options: {}, prompt: nil, temperature: nil)
           raise_transcription_streaming_unsupported if block_given?

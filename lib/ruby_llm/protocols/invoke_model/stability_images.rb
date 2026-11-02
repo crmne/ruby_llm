@@ -12,6 +12,10 @@ module RubyLLM
         MODELS = (GENERATION_MODELS + [INPAINT_MODEL]).freeze
         ASPECT_RATIOS = %w[16:9 1:1 21:9 2:3 3:2 4:5 5:4 9:16 9:21].freeze
 
+        def rejected_options(operation)
+          operation == :paint ? %i[count] : super
+        end
+
         def paint(prompt, model:, size:, count: nil, with: nil, mask: nil, provider_options: {})
           track_usage(:image) do
             payload = render_image_payload(prompt, model:, size:, count:, with:, mask:, provider_options:)
@@ -22,8 +26,7 @@ module RubyLLM
           end
         end
 
-        def render_image_payload(prompt, model:, size:, count: nil, with: nil, mask: nil, provider_options: {})
-          RubyLLM.logger.debug { 'Stability image models return one image per request' } if count && count > 1
+        def render_image_payload(prompt, model:, size:, with: nil, mask: nil, provider_options: {}, **)
           attachments = Attachment.wrap(with, config: @config)
           payload = { prompt: }.merge(render_image_inputs(attachments, model:, mask:, size:))
           payload.merge(provider_options.transform_keys(&:to_sym))
