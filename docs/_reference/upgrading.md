@@ -172,7 +172,7 @@ One answer RubyLLM could not parse, such as a tool call cut off at the token lim
 
 ## Batches Picked Up by ID Report Usage
 
-A batch collected through `Batch.find` without its chats or requests now reports its usage, to `usage.ruby_llm` and the ledger, once per `Batch` object. It reported nothing in 2.1. Collecting the same batch that way from two processes reports it twice, so collect each one in one place.
+A batch collected through `Batch.find` without its chats or requests now reports its usage, to `usage.ruby_llm` and the ledger, once the batch is complete, once per `Batch` object. It reported nothing in 2.1. Collecting the same batch that way from two processes reports it twice, so collect each one in one place.
 
 ## Same-Named Attachments Both Reach `run_code`
 

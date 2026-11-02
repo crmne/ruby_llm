@@ -202,7 +202,7 @@ RSpec.describe RubyLLM::Batch do # rubocop:disable RSpec/SpecFilePathFormat
       expect(RubyLLM::ActiveRecord::Usage.where(chat:).count).to eq(1)
     end
 
-    it 'reports an early answer for a deleted chat once, across polls' do
+    it 'reports an answer for a deleted chat once, when the batch completes' do
       batch
       allow(RubyLLM::Accounting::Usage).to receive(:report).and_call_original
       allow_any_instance_of(RubyLLM::Providers::Anthropic).to receive(:find_batch) # rubocop:disable RSpec/AnyInstance
@@ -214,6 +214,11 @@ RSpec.describe RubyLLM::Batch do # rubocop:disable RSpec/SpecFilePathFormat
       polled = described_class.find(batch.id).refresh
 
       2.times { polled.messages }
+      expect(RubyLLM::Accounting::Usage).not_to have_received(:report)
+
+      allow_any_instance_of(RubyLLM::Providers::Anthropic).to receive(:find_batch) # rubocop:disable RSpec/AnyInstance
+        .and_return(id: batch_id, raw_status: 'ended', completed: true)
+      2.times { polled.refresh.messages }
 
       expect(RubyLLM::Accounting::Usage).to have_received(:report).once
     end

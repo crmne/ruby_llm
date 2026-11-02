@@ -333,7 +333,9 @@ module RubyLLM
     end
 
     # Collecting early keeps reading fresh, so a result already delivered
-    # comes back on every later poll: hand each one over once.
+    # comes back on every later poll: hand each one over once. A result with
+    # no chat or request waits for completion, because a poller that finds
+    # the batch by id gets a new object each time.
     def deliver(index, result, failure_status)
       statuses[index] = result ? :succeeded : failure_status
       return unless result
@@ -347,9 +349,8 @@ module RubyLLM
 
     def deliver_embedding(index, embedding)
       request = requests&.[](index)
-      delivered = @delivered[index]
       entry = attach_batch_usage(embedding, operation: :embedding, model: request&.model, category: :embeddings)
-      return if delivered
+      return if settled?(index, request)
 
       @delivered[index] = true
       report_batch_usage(entry) if entry
@@ -359,12 +360,16 @@ module RubyLLM
     def deliver_message(index, message)
       chat = chats&.[](index)
       entry = attach_batch_usage(message, operation: :chat, model: chat&.model, category: :text_tokens)
-      return if @delivered[index] || (chat && already_in_chat?(chat, message))
+      return if settled?(index, chat) || (chat && already_in_chat?(chat, message))
 
       @delivered[index] = true if exclusively(index) do
         report_batch_usage(entry, chat:) if entry
         chat&.add_completion(message, record_usage: true)
       end
+    end
+
+    def settled?(index, owner)
+      @delivered[index] || !(owner || complete?)
     end
 
     # A store may run this in its own turn, returning false when it could

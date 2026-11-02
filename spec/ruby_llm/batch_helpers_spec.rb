@@ -343,7 +343,7 @@ RSpec.describe RubyLLM::Batch do
 
     def picked_up(result)
       allow(provider).to receive(:batch_results) { [[0, result.dup]] }
-      described_class.new(provider:, **attributes, raw_status: 'in_progress', completed: false)
+      described_class.new(provider:, **attributes)
     end
 
     it 'reports a chat answer picked up by id once, across polls' do
@@ -356,6 +356,28 @@ RSpec.describe RubyLLM::Batch do
 
     it 'reports an embedding picked up by id once, across polls' do
       batch = picked_up(embedding)
+
+      2.times { batch.messages }
+
+      expect(RubyLLM::Accounting::Usage).to have_received(:report).once
+    end
+
+    it 'reports nothing while a batch picked up by id is unfinished' do
+      unfinished = attributes.merge(raw_status: 'in_progress', completed: false)
+
+      [message, embedding].each do |result|
+        picked_up(result)
+        2.times { described_class.new(provider:, **unfinished).messages }
+      end
+
+      expect(RubyLLM::Accounting::Usage).not_to have_received(:report)
+    end
+
+    it 'reports an embedding with a request once, across polls of an unfinished batch' do
+      request = Struct.new(:model, :result).new(RubyLLM.models.find(embedding.model))
+      picked_up(embedding)
+      unfinished = attributes.merge(raw_status: 'in_progress', completed: false)
+      batch = described_class.new(provider:, requests: [request], **unfinished)
 
       2.times { batch.messages }
 
