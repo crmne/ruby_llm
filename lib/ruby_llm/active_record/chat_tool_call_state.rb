@@ -9,6 +9,7 @@ module RubyLLM
       def initialize(chat)
         super()
         @chat = chat
+        @contested = []
       end
 
       def input(tool_call)
@@ -28,6 +29,23 @@ module RubyLLM
 
       def remembered?(call)
         super || @chat.persisted_remembered_tool?(call)
+      end
+
+      def claim(requested, executing:)
+        @contested = []
+        return requested if requested.empty?
+
+        claimed = @chat.claim_persisted_tool_calls(yield, executing:)
+        @contested = requested - claimed
+        claimed
+      end
+
+      def release(ids)
+        @chat.release_persisted_tool_calls(ids) if ids.any?
+      end
+
+      def running_elsewhere?(tool_call)
+        @contested.include?(tool_call.id) && @chat.tool_call_running_elsewhere?(tool_call)
       end
     end
   end

@@ -64,6 +64,12 @@ RSpec.describe RubyLLM::Chat::ToolCallState do
     expect(copy).to be_escalation_spent(tool_call)
   end
 
+  it 'claims every requested call and reports nothing running elsewhere' do
+    expect(state.claim(%w[call_1 call_2], executing: ['call_1']) { raise 'no leases needed' })
+      .to eq(%w[call_1 call_2])
+    expect(state).not_to be_running_elsewhere(tool_call)
+  end
+
   it 'keeps a paused call paused on a copy of the chat, independently of the original' do
     chat = RubyLLM.chat(model: RubyLLM.config.default_model)
     chat.add_message(role: :assistant, content: '', tool_calls: { 'call_1' => tool_call })

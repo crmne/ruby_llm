@@ -18,6 +18,36 @@ module RubyLLM
       ].freeze
       private_constant :RUN_STATE
 
+      def claim_persisted_tool_calls(leases, executing:) # :nodoc:
+        return leases.keys.map(&:id) unless tool_call_claims?
+
+        rows = RubyLLM::ActiveRecord::ToolCall.uncached { tool_call_rows(leases.keys.map(&:id)) }
+        claimed = RubyLLM::ActiveRecord::ToolCall.transaction do
+          ids = leases.filter_map do |tool_call, seconds|
+            row = rows[tool_call.id]
+            tool_call.id if row.nil? || tool_call_claimed?(tool_call.id, row, seconds, executing.include?(tool_call.id))
+          end
+          extend_run_claim_for_tool_calls
+          ids
+        end
+        resync_messages if claimed.size < leases.size
+        claimed
+      end
+
+      def release_persisted_tool_calls(tool_call_ids) # :nodoc:
+        tool_call_ids.each do |tool_call_id|
+          row, claimed_until = tool_call_claims.delete(tool_call_id)
+          next unless row
+
+          RubyLLM::ActiveRecord::ToolCall.where(id: row, result_id: nil, claimed_until:)
+                                         .update_all(claimed_until: nil)
+        end
+      end
+
+      def tool_call_running_elsewhere?(tool_call) # :nodoc:
+        RubyLLM::ActiveRecord::ToolCall.uncached { find_tool_call(tool_call.id) }&.running? || false
+      end
+
       private
 
       def initialize_dup(*)
@@ -123,22 +153,6 @@ module RubyLLM
         @synced_run_claim_token = self.class.uncached { chat_row.pick(:claim_token) } if run_claims?
       end
 
-      def claim_persisted_tool_calls(leases, executing:)
-        return leases.keys.map(&:id) unless tool_call_claims?
-
-        rows = RubyLLM::ActiveRecord::ToolCall.uncached { tool_call_rows(leases.keys.map(&:id)) }
-        claimed = RubyLLM::ActiveRecord::ToolCall.transaction do
-          ids = leases.filter_map do |tool_call, seconds|
-            row = rows[tool_call.id]
-            tool_call.id if row.nil? || tool_call_claimed?(tool_call.id, row, seconds, executing.include?(tool_call.id))
-          end
-          extend_run_claim_for_tool_calls
-          ids
-        end
-        resync_messages if claimed.size < leases.size
-        claimed
-      end
-
       def tool_call_claimed?(tool_call_id, row, seconds, executing)
         now = Time.current.change(usec: 0)
         claimed_until = now + seconds.to_f.ceil
@@ -156,20 +170,6 @@ module RubyLLM
       def extend_run_claim_for_tool_calls
         latest = tool_call_claims.values.map(&:last).max
         extend_run_claim([@run_claimed_until, latest].max) if @run_claim_token && latest
-      end
-
-      def release_persisted_tool_calls(tool_call_ids)
-        tool_call_ids.each do |tool_call_id|
-          row, claimed_until = tool_call_claims.delete(tool_call_id)
-          next unless row
-
-          RubyLLM::ActiveRecord::ToolCall.where(id: row, result_id: nil, claimed_until:)
-                                         .update_all(claimed_until: nil)
-        end
-      end
-
-      def tool_call_running_elsewhere?(tool_call)
-        RubyLLM::ActiveRecord::ToolCall.uncached { find_tool_call(tool_call.id) }&.running? || false
       end
 
       def tool_result_recorded?(tool_call, message)

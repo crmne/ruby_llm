@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe RubyLLM::Chat do
   include_context 'with configured RubyLLM'
@@ -20,8 +20,9 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
-  def approved_chat
+  def approved_chat(state = RubyLLM::Chat::ToolCallState.new)
     chat = RubyLLM.chat(model: model_for(:openai)).with_tools(charge_tool)
+    chat.tool_call_state = state
     chat.add_message(role: :user, content: 'Charge the card')
     tool_calls = { 'call_1' => RubyLLM::ToolCall.new(id: 'call_1', name: 'charge_card', arguments: {}) }
     chat.add_message(RubyLLM::Message.new(role: :assistant, content: '', tool_calls:))
@@ -29,14 +30,27 @@ RSpec.describe RubyLLM::Chat do
     chat
   end
 
-  def refusing_claims(chat)
-    chat.tool_call_claimer = proc { |_leases, **| [] }
-    chat
+  def claims(running: false, &claimer)
+    record = instance_double(Chat, find_tool_call: nil, persisted_tool_call_approval: nil,
+                                   persisted_remembered_tool?: false, tool_call_running_elsewhere?: running,
+                                   release_persisted_tool_calls: nil)
+    allow(record).to receive(:claim_persisted_tool_calls, &claimer)
+    RubyLLM::ActiveRecord::ChatToolCallState.new(record)
+  end
+
+  def refusing_claims(**)
+    claims(**) { |_leases, **| [] }
+  end
+
+  def recording_leases(leases)
+    claims do |requested, **|
+      leases << requested.transform_keys(&:id)
+      requested.keys.map(&:id)
+    end
   end
 
   it 'waits on a call it could not claim while another process runs it' do
-    chat = refusing_claims(approved_chat)
-    chat.running_checker = proc { true }
+    chat = approved_chat(refusing_claims(running: true))
 
     chat.run_tools
 
@@ -45,7 +59,7 @@ RSpec.describe RubyLLM::Chat do
   end
 
   it 'does not wait on a call it could not claim when nothing reports it running' do
-    chat = refusing_claims(approved_chat)
+    chat = approved_chat(refusing_claims)
 
     chat.run_tools
 
@@ -54,20 +68,15 @@ RSpec.describe RubyLLM::Chat do
   end
 
   it 'does not wait on a call it has not tried to claim, whatever reports it running' do
-    chat = approved_chat
-    chat.running_checker = proc { true }
+    chat = approved_chat(refusing_claims(running: true))
 
     expect(chat).not_to be_waiting
   end
 
   it 'leases a denied call for the configured run time while it records the denial' do
-    chat = approved_chat
-    chat.deny('call_1')
     leases = []
-    chat.tool_call_claimer = proc do |requested, **|
-      leases << requested.transform_keys(&:id)
-      requested.keys.map(&:id)
-    end
+    chat = approved_chat(recording_leases(leases))
+    chat.deny('call_1')
 
     chat.run_tools
 
@@ -77,12 +86,8 @@ RSpec.describe RubyLLM::Chat do
 
   it "leases an approved call for its tool's own run time" do
     charge_tool.max_run_time 90
-    chat = approved_chat
     leases = []
-    chat.tool_call_claimer = proc do |requested, **|
-      leases << requested.transform_keys(&:id)
-      requested.keys.map(&:id)
-    end
+    chat = approved_chat(recording_leases(leases))
 
     chat.run_tools
 

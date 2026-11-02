@@ -57,6 +57,16 @@ module RubyLLM
       def spend_escalation(tool_call)
         @spent_escalations << tool_call.id
       end
+
+      def claim(requested, **)
+        requested
+      end
+
+      def release(_ids); end
+
+      def running_elsewhere?(_tool_call)
+        false
+      end
     end
   end
 end
