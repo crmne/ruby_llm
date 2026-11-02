@@ -41,6 +41,10 @@ RSpec.describe RubyLLM::Chat, :live do
           chat.messages.select(&:tool_result?).map(&:content)
         end
 
+        it 'counts tokens with deferred tools declared' do
+          expect(chat.count_tokens('What is the weather in Berlin?')).to be_positive
+        end
+
         it 'loads a deferred tool through tool search and calls it' do
           response = chat.ask('What is the weather in Berlin right now? Use your tools.')
 

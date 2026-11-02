@@ -154,5 +154,29 @@ RSpec.describe RubyLLM::Protocols::Responses::Tools do
 
       expect(chat.render[:tools].count { |t| t[:type] == 'tool_search' }).to eq(1)
     end
+
+    def counted_request
+      sent = nil
+      stub_request(:post, 'https://api.openai.com/v1/responses/input_tokens').to_return do |request|
+        sent = JSON.parse(request.body)
+        { status: 200, headers: { 'Content-Type' => 'application/json' }, body: { input_tokens: 7 }.to_json }
+      end
+      chat.count_tokens
+      sent
+    end
+
+    it 'counts deferred tools next to the tool_search tool' do
+      chat.with_tools(WeatherLookupTool).ask_later('hi')
+
+      expect(counted_request['tools'].map { |t| t['type'] }).to eq(%w[function tool_search])
+    end
+
+    it 'counts a history without search items once no search tool is declared' do
+      chat.add_message(role: :assistant, content: nil,
+                       raw_content: [{ 'type' => 'tool_search_call', 'call_id' => 's1', 'arguments' => {} }])
+      chat.ask_later('hi')
+
+      expect(counted_request['input'].map { |item| item['type'] }).not_to include('tool_search_call')
+    end
   end
 end
