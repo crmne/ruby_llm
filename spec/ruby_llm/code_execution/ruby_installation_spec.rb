@@ -82,6 +82,12 @@ RSpec.describe RubyLLM::CodeExecution::RubyInstallation do
     )
   end
 
+  it "hides Bundler's git checkouts" do
+    FileUtils.mkdir_p(File.join(gem_dir, 'bundler', 'gems', 'private-abc123'))
+
+    expect(installation.denied).to include(File.join(gem_dir, 'bundler'))
+  end
+
   it "builds a gem directory with only Ruby's bundled gems, once" do
     FileUtils.mkdir_p(File.join(extensions, 'csv-3.3.5'))
     cache = File.join(root, 'cache-dir')

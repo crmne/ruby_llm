@@ -6,6 +6,8 @@ capture_timeout: 1200
 # Equivalent mutants. An id changes when its method changes, so recheck
 # the entry when you edit one of these methods.
 ignore:
+  # Workspace#remove_placed: the method's return value is never read.
+  - a44bcb675769
   # Tools::Search#initialize: Tool defines no initialize, so super() sets
   # nothing up.
   - da765b7a56dc

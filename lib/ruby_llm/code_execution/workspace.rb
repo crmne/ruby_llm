@@ -13,8 +13,8 @@ module RubyLLM
     # read-only mounts, separate home and temporary directories, and the
     # source file. Nothing read-only sits inside the writable working
     # directory, which Landlock could not keep read-only. Everything is
-    # removed when the run ends, and so are the links to mounts placed in a
-    # store's own folder for a run there.
+    # removed when the run ends. Links to mounts placed in a store's own
+    # folder stay until the last run in that folder ends.
     class Workspace # :nodoc:
       # Raised when a run cannot have what it asks for.
       class Unavailable < StandardError; end
@@ -22,6 +22,10 @@ module RubyLLM
       ATTACHMENTS = 'attachments'
       IGNORED = %w[__pycache__].freeze
       OPEN_FLAGS = File::RDONLY | File::BINARY | (defined?(File::NOFOLLOW) ? File::NOFOLLOW : 0)
+      StoreRuns = Struct.new(:active, :placed)
+      STORE_RUNS = Hash.new { |runs, root| runs[root] = StoreRuns.new(0, []) }
+      STORE_RUNS_LOCK = Mutex.new
+      private_constant :StoreRuns, :STORE_RUNS, :STORE_RUNS_LOCK
 
       attr_reader :directory, :home, :tmp, :inputs, :source, :unmounted
 
@@ -49,6 +53,10 @@ module RubyLLM
 
         base = File.basename(path)
         ['', '.', '..'].include?(base) ? 'file' : base
+      end
+
+      def self.invalid_name(name)
+        "#{name.scrub} (name is not valid UTF-8)"
       end
 
       # Returns each attachment's name under +attachments/+, newest first:
@@ -99,7 +107,6 @@ module RubyLLM
         [@directory, @inputs, @home, @tmp, @source].each { |path| FileUtils.mkdir_p(path) }
         @attachments = File.join(@directory, ATTACHMENTS)
         File.symlink(@inputs, @attachments) if attachments
-        @placed = []
         @unmounted = []
       end
 
@@ -118,28 +125,27 @@ module RubyLLM
       # (see #unmounted), and is removed with the folders it made by
       # #remove_links.
       def mount(mounts, into: directory)
-        mounts.filter_map do |name, path|
-          target = File.expand_path(path)
-          link = File.join(into, self.class.mount_path(name))
-          next target if into == directory ? place(link, target) : place_in_store(link, target, into)
+        return place_all(mounts, into) if into == directory
 
-          @unmounted << self.class.mount_path(name)
-          nil
+        STORE_RUNS_LOCK.synchronize do
+          @store_root = into
+          STORE_RUNS[into].active += 1
+          place_all(mounts, into)
         end
       end
 
-      # The mounts left out because the store's folder has a file or folder
-      # of its own at their path.
-
+      # Ends this run in a store's folder. The last run there removes what
+      # the runs placed.
       def remove_links
-        @placed.reverse_each do |path, target|
-          if target
-            File.delete(path) if File.symlink?(path) && File.readlink(path) == target
-          else
-            Dir.rmdir(path)
-          end
-        rescue SystemCallError
-          next
+        return unless @store_root
+
+        STORE_RUNS_LOCK.synchronize do
+          runs = STORE_RUNS[@store_root]
+          runs.active -= 1
+          next unless runs.active.zero?
+
+          STORE_RUNS.delete(@store_root)
+          runs.placed.reverse_each { |path, target| remove_placed(path, target) }
         end
       end
 
@@ -168,7 +174,7 @@ module RubyLLM
           path = File.join(directory, file.path)
           make_room(path, directory)
           File.binwrite(path, content)
-          copied[file.path] = FileStore.digest(content)
+          copied[file.path] = [content.bytesize, FileStore.digest(content)]
         end
       end
 
@@ -177,8 +183,8 @@ module RubyLLM
         skipped = []
         output_paths.each do |path, size|
           name = path.delete_prefix(File.join(directory, ''))
-          next skipped << "#{name.scrub} (name is not valid UTF-8)" unless name.valid_encoding?
-          next if unchanged.key?(name) && unchanged[name] == FileStore.digest(read(path))
+          next skipped << self.class.invalid_name(name) unless name.valid_encoding?
+          next if unchanged?(path, size, unchanged[name])
           next skipped << "#{name} (larger than #{max_size} bytes)" if size > max_size
           next skipped << "#{name} (more than #{max_files} files)" if files.size >= max_files
 
@@ -191,30 +197,51 @@ module RubyLLM
 
       private
 
+      def place_all(mounts, into)
+        mounts.filter_map do |name, path|
+          target = File.expand_path(path)
+          link = File.join(into, self.class.mount_path(name))
+          next target if into == directory ? place(link, target) : place_in_store(link, target, into)
+
+          @unmounted << self.class.mount_path(name)
+          nil
+        end
+      end
+
       def place(link, target)
         FileUtils.mkdir_p(File.dirname(link))
         File.symlink(target, link)
       end
 
       def place_in_store(link, target, root)
-        return true if File.symlink?(link) && File.readlink(link) == target
-        return false if File.symlink?(link) || File.exist?(link)
-
         make_parents(File.dirname(link), root)
+        return true if File.symlink?(link) && File.readlink(link) == target
+
         File.symlink(target, link)
-        @placed << [link, target]
+        STORE_RUNS[root].placed << [link, target]
         true
       rescue SystemCallError
         false
       end
 
       def make_parents(folder, root)
-        return if folder == root || (File.directory?(folder) && !File.symlink?(folder))
-        raise Errno::EEXIST, folder if File.symlink?(folder) || File.exist?(folder)
+        return if folder == root
 
         make_parents(File.dirname(folder), root)
+        return if File.directory?(folder) && !File.symlink?(folder)
+
         Dir.mkdir(folder)
-        @placed << [folder, nil]
+        STORE_RUNS[root].placed << [folder, nil]
+      end
+
+      def remove_placed(path, target)
+        if target
+          File.delete(path) if File.symlink?(path) && File.readlink(path) == target
+        else
+          Dir.rmdir(path)
+        end
+      rescue SystemCallError
+        nil
       end
 
       def make_room(path, base)
@@ -245,6 +272,12 @@ module RubyLLM
         0 if stat.directory? && !(stat.readable? && stat.executable?)
       rescue SystemCallError
         0
+      end
+
+      def unchanged?(path, size, copied)
+        return false unless copied&.first == size
+
+        copied.last == FileStore.digest(read(path))
       end
 
       def read(path)

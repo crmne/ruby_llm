@@ -18,7 +18,7 @@ After reading this guide, you will know:
 * How RubyLLM upgrades move from one release to the next.
 * How to upgrade a 2.1 application and its Rails schema to 2.2.
 * How persisted chats now run in one process at a time.
-* What changes for a crashed job, a denial, pending approvals, an MCP input error, a stdio server's environment, a dropped MCP tool call, a document URL, and a deploy that mixes versions.
+* What changes for a crashed job, a denial, pending approvals, an MCP input error, a stdio server's environment, a dropped MCP tool call, a write over a folder, a document URL, and a deploy that mixes versions.
 * What changes for agent `rescue_from` handlers and streamed transcription chunks.
 * Which job predicates replace `done?` and `completed?`.
 * Why agents name their chat record with `chat_class`.
@@ -195,6 +195,10 @@ One answer RubyLLM could not parse, such as a tool call cut off at the token lim
 ## Batches Picked Up by ID Report Usage
 
 A batch collected through `Batch.find` without its chats or requests now reports its usage, to `usage.ruby_llm` and the ledger, once the batch is complete, once per `Batch` object. It reported nothing in 2.1. Collecting the same batch that way from two processes reports it twice, so collect each one in one place.
+
+## Writing Over a Folder Raises
+
+`RubyLLM::FileStore::Directory#write` used to delete a folder at the path it was given, with everything in it. It now raises `ArgumentError` and leaves the folder alone. The `write_file` tool answers the model with the reason, and an attachment named like a folder gets a numbered name beside it. To replace a folder with a file, delete the folder yourself first.
 
 ## Same-Named Attachments Both Reach `run_code`
 

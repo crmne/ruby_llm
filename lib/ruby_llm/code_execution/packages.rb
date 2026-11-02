@@ -33,7 +33,7 @@ module RubyLLM
         @node = node
         @npm = Array(npm).map(&:to_s)
         @node_modules = node_modules && File.expand_path(node_modules)
-        @cache_dir = cache_dir
+        @cache_dir = cache_dir && File.expand_path(cache_dir)
         @gems = Array(gems).map(&:to_s)
         @python = Array(python).map(&:to_s)
         @gem_home = gem_home && File.expand_path(gem_home)

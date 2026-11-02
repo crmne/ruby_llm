@@ -182,12 +182,48 @@ RSpec.describe RubyLLM::FileStore::Directory do
     expect { store.write('.env', 'x') }.to raise_error(ArgumentError, /not inside/)
   end
 
-  it 'replaces a file with a folder and a folder with a file' do
+  it 'replaces a file with a folder' do
     store.write('a', 'file')
     store.write('a/b.txt', 'inside')
-    expect(store.list.map(&:path)).to eq(['a/b.txt'])
 
-    store.write('a', 'file again')
-    expect(store.list.map(&:path)).to eq(['a'])
+    expect(store.list.map(&:path)).to eq(['a/b.txt'])
+  end
+
+  it 'refuses to write over a folder, keeping what is in it' do
+    store.write('a/b.txt', 'inside')
+    FileUtils.mkdir_p(File.join(root, 'a/.git'))
+    File.write(File.join(root, 'a/.git/HEAD'), 'hidden')
+
+    expect { store.write('a', 'file') }.to raise_error(ArgumentError, 'a is a folder, not a file')
+
+    expect(store.read('a/b.txt')).to eq('inside')
+    expect(File.read(File.join(root, 'a/.git/HEAD'))).to eq('hidden')
+  end
+
+  it 'refuses to write over an empty folder' do
+    FileUtils.mkdir_p(File.join(root, 'empty'))
+
+    expect { store.write('empty', 'file') }.to raise_error(ArgumentError, /is a folder/)
+  end
+
+  it 'replaces a link to a folder, leaving the folder' do
+    outside = Dir.mktmpdir('ruby_llm-outside')
+    File.symlink(outside, File.join(root, 'link'))
+
+    store.write('link', 'mine')
+
+    expect(store.read('link')).to eq('mine')
+    expect(Dir.exist?(outside)).to be(true)
+  ensure
+    FileUtils.rm_rf(outside)
+  end
+
+  it 'numbers an attachment named like a folder instead of writing over it' do
+    store.write('reports/q3.pdf', 'x')
+
+    file = store.store_attachment(RubyLLM::Attachment.new(StringIO.new('new'), filename: 'reports'))
+
+    expect(file.path).to eq('reports-2')
+    expect(store.read('reports/q3.pdf')).to eq('x')
   end
 end

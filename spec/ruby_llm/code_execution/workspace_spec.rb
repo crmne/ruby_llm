@@ -63,6 +63,160 @@ RSpec.describe RubyLLM::CodeExecution::Workspace do
     expect(copied(attachment('same'), attachment('same'))).to eq('report.txt' => 'same')
   end
 
+  describe 'mounts in a store folder' do
+    let(:root) { File.realpath(Dir.mktmpdir('ruby_llm-store')) }
+    let(:mount) { File.realpath(Dir.mktmpdir('ruby_llm-mount')) }
+    let(:link) { File.join(root, 'shared/data') }
+
+    after { FileUtils.rm_rf([root, mount]) }
+
+    def workspaces(count)
+      Array.new(count) { described_class.new(Dir.mktmpdir('ruby_llm-workspace'), attachments: false) }
+    end
+
+    it 'keeps a link until the last run using it ends, then removes it with its folders' do
+      first, second = workspaces(2)
+      expect(first.mount({ 'shared/data' => mount }, into: root)).to eq([mount])
+      expect(second.mount({ 'shared/data' => mount }, into: root)).to eq([mount])
+
+      first.remove_links
+      expect(File.symlink?(link)).to be(true)
+
+      second.remove_links
+      expect(Dir.children(root)).to be_empty
+      expect(described_class.const_get(:STORE_RUNS)).not_to have_key(root)
+    end
+
+    it 'mounts into a folder the store already has' do
+      FileUtils.mkdir_p(File.join(root, 'shared'))
+      workspace = workspaces(1).first
+
+      expect(workspace.mount({ 'shared/data' => mount }, into: root)).to eq([mount])
+      workspace.remove_links
+
+      expect(Dir.children(root)).to eq(['shared'])
+    end
+
+    it 'leaves out a mount where a link leads somewhere else' do
+      FileUtils.mkdir_p(File.dirname(link))
+      File.symlink(root, link)
+      workspace = workspaces(1).first
+
+      expect(workspace.mount({ 'shared/data' => mount }, into: root)).to be_empty
+      expect(workspace.unmounted).to eq(['shared/data'])
+      workspace.remove_links
+    end
+
+    it 'keeps mounts in its own directory out of the store runs' do
+      workspace = workspaces(1).first
+      workspace.mount({ 'data' => mount })
+
+      expect { workspace.mount({ 'data' => mount }) }.to raise_error(Errno::EEXIST)
+      expect(described_class.const_get(:STORE_RUNS)).not_to have_key(workspace.directory)
+    end
+
+    it 'leaves a link it did not place' do
+      FileUtils.mkdir_p(File.dirname(link))
+      File.symlink(mount, link)
+      workspace = workspaces(1).first
+
+      expect(workspace.mount({ 'shared/data' => mount }, into: root)).to eq([mount])
+      expect(workspace.unmounted).to be_empty
+      workspace.remove_links
+
+      expect(File.symlink?(link)).to be(true)
+    end
+
+    it 'keeps its hands off a link the code replaced' do
+      workspace = workspaces(1).first
+      workspace.mount({ 'shared/data' => mount }, into: root)
+      File.delete(link)
+      File.symlink(root, link)
+
+      workspace.remove_links
+
+      expect(File.readlink(link)).to eq(root)
+    end
+
+    it 'leaves a later run alone once the earlier ones have ended' do
+      first, second = workspaces(2)
+      first.mount({ 'shared/data' => mount }, into: root)
+      first.remove_links
+      second.mount({ 'shared/data' => mount }, into: root)
+
+      expect(File.readlink(link)).to eq(mount)
+      second.remove_links
+    end
+
+    it 'does nothing for a run that placed nothing in a store' do
+      expect { workspaces(1).first.remove_links }.not_to raise_error
+      expect(described_class.const_get(:STORE_RUNS)).not_to have_key(nil)
+    end
+
+    it 'never places a mount through a link to somewhere else' do
+      outside = File.realpath(Dir.mktmpdir('ruby_llm-outside'))
+      FileUtils.mkdir_p(File.join(outside, 'b'))
+      File.symlink(outside, File.join(root, 'a'))
+      workspace = workspaces(1).first
+
+      expect(workspace.mount({ 'a/b/c' => mount }, into: root)).to be_empty
+
+      expect(Dir.children(File.join(outside, 'b'))).to be_empty
+      expect(workspace.unmounted).to eq(['a/b/c'])
+      workspace.remove_links
+    ensure
+      FileUtils.rm_rf(outside)
+    end
+
+    it 'does not count a link reached through a link as already there' do
+      outside = File.realpath(Dir.mktmpdir('ruby_llm-outside'))
+      File.symlink(mount, File.join(outside, 'c'))
+      File.symlink(outside, File.join(root, 'a'))
+      workspace = workspaces(1).first
+
+      expect(workspace.mount({ 'a/c' => mount }, into: root)).to be_empty
+      workspace.remove_links
+    ensure
+      FileUtils.rm_rf(outside)
+    end
+  end
+
+  it 'skips an oversized changed copy without reading it' do
+    described_class.open do |workspace|
+      path = File.join(workspace.directory, 'big.bin')
+      File.binwrite(path, 'x' * 200)
+      allow(RubyLLM::FileStore).to receive(:digest).and_call_original
+
+      files, skipped = workspace.outputs(max_files: 10, max_size: 100,
+                                         unchanged: { 'big.bin' => [10, 'copied digest'] })
+
+      expect(RubyLLM::FileStore).not_to have_received(:digest)
+      expect(files).to be_empty
+      expect(skipped).to eq(['big.bin (larger than 100 bytes)'])
+    end
+  end
+
+  it 'leaves out an oversized copy the run did not change' do
+    described_class.open do |workspace|
+      content = 'x' * 200
+      File.binwrite(File.join(workspace.directory, 'big.bin'), content)
+      unchanged = { 'big.bin' => [200, RubyLLM::FileStore.digest(content)] }
+
+      expect(workspace.outputs(max_files: 10, max_size: 100, unchanged:)).to eq([[], []])
+    end
+  end
+
+  it 'returns a copy the run changed without changing its size' do
+    described_class.open do |workspace|
+      File.binwrite(File.join(workspace.directory, 'a.txt'), 'new')
+      unchanged = { 'a.txt' => [3, RubyLLM::FileStore.digest('old')] }
+
+      files, = workspace.outputs(max_files: 10, max_size: 100, unchanged:)
+
+      expect(files.map(&:filename)).to eq(['a.txt'])
+    end
+  end
+
   it 'reports an output whose name is not valid UTF-8 as skipped' do
     described_class.open do |workspace|
       File.binwrite(File.join(workspace.directory, "bad\xFFname.txt".b), 'x')

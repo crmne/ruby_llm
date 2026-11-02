@@ -37,6 +37,18 @@ RSpec.describe RubyLLM::FileStore::Converters do
     expect(described_class.convert(fixture('sample.csv'), config:)).to start_with('invoice')
   end
 
+  it 'scrubs text a converter returns in a broken encoding' do
+    config.file_converters['text/plain'] = ->(_file) { "\xFF text" }
+
+    expect(described_class.convert(text_file('a', 'a.txt'), config:)).to eq("\uFFFD text")
+  end
+
+  it 'moves on from a converter that returns only blanks' do
+    config.file_converters['text/plain'] = [->(_file) { " \n" }, ->(_file) { 'found' }]
+
+    expect(described_class.convert(text_file('a', 'a.txt'), config:)).to eq('found')
+  end
+
   it 'takes */* for every type' do
     config.file_converters = { '*/*' => ->(file) { "read #{file.filename}" } }
 

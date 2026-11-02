@@ -10,11 +10,12 @@ module RubyLLM
     # The application's Ruby, as code execution mounts it: the installation
     # read-only, with every gem in its gem directory hidden except Ruby's
     # default and bundled gems, and every other gem directory the
-    # application uses hidden entirely. RubyGems lists the plugins
+    # application uses hidden entirely, as are Bundler's git checkouts and
+    # RubyGems' cache and documents. RubyGems lists the plugins
     # directory on every +gem+ command, so only the application's plugins
     # are hidden, not the directory: macOS refuses to list a hidden one.
     class RubyInstallation # :nodoc:
-      HIDDEN_DIRECTORIES = %w[cache doc].freeze
+      HIDDEN_DIRECTORIES = %w[bundler cache doc].freeze
       BUILD_MARKER = 'gem.build_complete'
 
       # Ruby's bundled gems that Gem::BUNDLED_GEMS::SINCE may leave out, by

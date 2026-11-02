@@ -210,7 +210,7 @@ module RubyLLM
       candidates(self.class.filename(attachment.filename)).each do |path|
         existing = find(path)
         return existing if existing && same_content?(existing, content, digest)
-        next if existing
+        next if existing || folder?(path)
 
         file = write_attachment(path, attachment, content)
         yield file if block_given?
@@ -219,6 +219,10 @@ module RubyLLM
     end
 
     private
+
+    def folder?(_path)
+      false
+    end
 
     def write_attachment(path, attachment, content)
       write(path, content, content_type: attachment.mime_type)
