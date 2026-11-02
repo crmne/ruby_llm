@@ -14,7 +14,7 @@ module RubyLLM
         end
 
         def render_count_tokens_payload(messages, model:, **)
-          render_payload(messages, model: model, temperature: nil, **).slice(*COUNT_TOKENS_KEYS)
+          apply_tool_search(render_payload(messages, model: model, temperature: nil, **)).slice(*COUNT_TOKENS_KEYS)
         end
 
         def parse_count_tokens_response(response)
