@@ -4,6 +4,25 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Chat, :live do
   describe '#with_caching' do
+    let(:cache) { RubyLLM::CachedContent.allocate }
+
+    it 'attaches a CachedContent passed directly' do
+      chat = RubyLLM.chat.with_caching(cache)
+
+      expect(chat.caching).to eq(id: cache)
+    end
+
+    it 'rejects any other direct value' do
+      expect { RubyLLM.chat.with_caching('cachedContents/abc') }.to raise_error(ArgumentError, /CachedContent/)
+    end
+
+    it 'takes a CachedContent in the agent macro' do
+      cached = cache
+      agent = Class.new(RubyLLM::Agent) { caching cached }
+
+      expect(agent.chat.caching).to eq(id: cached)
+    end
+
     it 'stores provider prompt cache options on the chat' do
       chat = RubyLLM.chat.with_caching(key: 'repo:ruby_llm', retention: '24h')
 
@@ -71,7 +90,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
     it 'rejects nil' do
       expect { RubyLLM.chat.with_caching(nil) }
-        .to raise_error(ArgumentError, /accepts true, false, or caching options/)
+        .to raise_error(ArgumentError, /accepts true, false, a CachedContent, or caching options/)
     end
 
     it 'treats true like a bare call' do

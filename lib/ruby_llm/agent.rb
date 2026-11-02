@@ -388,13 +388,18 @@ module RubyLLM
       #
       #   caching
       #   caching false
+      #   caching cache
       #   caching ttl: "1h"
       #   caching { { ttl: workspace.cache_ttl } }
       #
       def caching(enabled = true, **options, &block) # rubocop:disable Metrics/PerceivedComplexity, Style/OptionalBooleanParameter
         return caching(**enabled.transform_keys(&:to_sym), **options, &block) if enabled.is_a?(Hash)
+        return caching(id: enabled, **options, &block) if enabled.is_a?(CachedContent)
 
-        raise ArgumentError, 'caching accepts false or caching options' unless [true, false].include?(enabled)
+        unless [true, false].include?(enabled)
+          raise ArgumentError, 'caching accepts false, a CachedContent, or caching options'
+        end
+
         raise ArgumentError, 'caching accepts options or a block, not both' if options.any? && block
         raise ArgumentError, 'caching false does not accept options or a block' if !enabled && (options.any? || block)
 
