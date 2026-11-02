@@ -14,6 +14,7 @@ module RubyLLM
     # their content is needed.
     class Resource
       include Support::Inspectable
+      include Files::Saving
 
       # The URI that identifies the resource on its server.
       attr_reader :uri
@@ -61,11 +62,12 @@ module RubyLLM
         content.b
       end
 
+      ##
+      # :method: save
+      # :call-seq:
+      #   save(path)
+      #
       # Writes the content to +path+, expanding it first. Returns +path+.
-      def save(path)
-        File.binwrite(File.expand_path(path), to_blob)
-        path
-      end
 
       # Returns the resource as an Attachment, which is how chats take it
       # through +with:+. The attachment has the MIME type the server reports
