@@ -3,24 +3,6 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Support::Utils do
-  describe '.hash_get' do
-    it 'fetches a value using a symbol when the hash key is stored as a string' do
-      hash = { 'name' => 'RubyLLM' }
-
-      expect(described_class.hash_get(hash, :name)).to eq('RubyLLM')
-    end
-
-    it 'fetches a value using a string when the hash key is stored as a symbol' do
-      hash = { name: 'RubyLLM' }
-
-      expect(described_class.hash_get(hash, 'name')).to eq('RubyLLM')
-    end
-
-    it 'preserves false values' do
-      expect(described_class.hash_get({ enabled: false }, 'enabled')).to be(false)
-    end
-  end
-
   describe '.file_path' do
     it 'underscores a namespaced class name into a path' do
       expect(described_class.file_path('Support::HTTPProxyAgent')).to eq('support/http_proxy_agent')

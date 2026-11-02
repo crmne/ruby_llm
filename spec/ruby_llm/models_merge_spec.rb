@@ -530,7 +530,7 @@ RSpec.describe RubyLLM::Models do
       cached = model(id: 'cached', provider: 'openai', metadata: { source: 'models.dev' })
       provider_fetch = { models: [], fetched_providers: [] }
 
-      merged = described_class.merge_with_existing([cached], provider_fetch, { models: [], fetched: false })
+      merged = described_class.merge_with_existing([cached], provider_fetch, { models: [cached], fetched: false })
 
       expect(merged.map(&:id)).to eq(['cached'])
     end

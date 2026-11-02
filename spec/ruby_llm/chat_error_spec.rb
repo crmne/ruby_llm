@@ -24,9 +24,9 @@ RSpec.describe RubyLLM::Chat, :live do
 
         before do
           # Sabotage the API key after initialization
-          RubyLLM::Provider.remote_providers.each_key do |slug|
+          RubyLLM::Provider.providers.each do |slug, provider_class|
             # Skip vertexai as it uses OAuth, not API keys
-            next if slug == :vertexai
+            next if provider_class.local? || slug == :vertexai
 
             RubyLLM.config.public_send("#{slug}_api_key=", 'invalid-key')
           end

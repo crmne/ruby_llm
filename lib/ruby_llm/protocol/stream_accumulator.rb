@@ -226,8 +226,7 @@ module RubyLLM
       def handle_chunk_content(chunk)
         accumulate_tool_calls(chunk.tool_calls) if chunk.tool_call?
 
-        content_text = chunk.content || ''
-        @content << (content_text.is_a?(String) ? content_text : content_text.to_s)
+        @content << chunk.content.to_s
       end
 
       def append_thinking_from_chunk(chunk)

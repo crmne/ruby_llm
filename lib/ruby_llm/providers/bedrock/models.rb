@@ -209,12 +209,6 @@ module RubyLLM
           inference_types.include?('INFERENCE_PROFILE') && !inference_types.include?('ON_DEMAND')
         end
 
-        def normalize_inference_profile_id(model_id, inference_types, region)
-          return model_id unless inference_profile_only?(inference_types)
-
-          with_region_prefix(model_id, region)
-        end
-
         def with_region_prefix(model_id, region)
           prefixed_with(model_id, region_prefix(region))
         end

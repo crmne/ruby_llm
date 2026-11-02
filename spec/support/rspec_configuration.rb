@@ -34,7 +34,7 @@ RSpec.configure do |config|
   config.before do
     RubyLLM::Transport::Connection.cache.clear
     RubyLLM::Providers::VertexAI::Credentials.cache.clear
-    RubyLLM::Protocols::VertexAI::Files.storage_clients.clear
+    RubyLLM::Protocols::VertexAI::Files::STORAGE_CLIENTS.clear
     RubyLLM::Protocol::StoredUploads.files.clear
   end
 

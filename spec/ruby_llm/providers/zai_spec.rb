@@ -56,7 +56,8 @@ RSpec.describe RubyLLM::Providers::ZAI do
 
   it 'is a remote provider that requires an API key' do
     expect(described_class).not_to be_local
-    expect(RubyLLM::Provider.remote_providers).to include(zai: described_class)
+    expect(RubyLLM::Provider.providers).to include(zai: described_class)
+    expect(described_class).to be_remote
     expect(described_class.configured?(RubyLLM::Configuration.new)).to be(false)
     expect(described_class.configured?(config)).to be(true)
   end
