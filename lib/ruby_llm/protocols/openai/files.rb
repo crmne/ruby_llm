@@ -11,14 +11,8 @@ module RubyLLM
 
         private
 
-        def render_upload_payload(attachment, purpose: nil, expires_in: nil, **)
-          multipart_payload(attachment, purpose:, expires_after: expires_after(expires_in))
-        end
-
-        # OpenAI can misread a field sent after a large file part, rejecting
-        # a valid purpose as "user_data\r", so the fields go first.
-        def multipart_payload(attachment, **fields)
-          fields.compact.merge(file: file_part(attachment))
+        def render_upload_fields(_attachment, purpose: nil, expires_in: nil)
+          { purpose:, expires_after: expires_after(expires_in) }
         end
 
         def expires_after(expires_in)

@@ -24,6 +24,18 @@ RSpec.describe RubyLLM::Protocols::Cohere::Chat do
     RubyLLM::Message.new(role: :user, content: content, attachments: attachments)
   end
 
+  describe 'caching' do
+    it 'raises for options Cohere cannot carry' do
+      expect { render([user('Hi')], caching: { ttl: '1h' }) }.to raise_error(ArgumentError, /does not accept ttl/)
+      expect { render([user('Hi')], caching: { id: 'abc' }) }.to raise_error(ArgumentError, /does not accept id/)
+    end
+
+    it 'allows bare caching, which Cohere does on its own' do
+      expect { render([user('Hi')], caching: {}) }.not_to raise_error
+      expect(render([user('Hi')], caching: {})).not_to have_key(:caching)
+    end
+  end
+
   describe '#completion_url' do
     it 'posts to the v2 chat endpoint' do
       expect(protocol.send(:completion_url)).to eq('v2/chat')

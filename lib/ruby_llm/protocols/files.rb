@@ -14,9 +14,8 @@ module RubyLLM
       def upload(file, filename: nil, purpose: nil, expires_in: nil, uri: nil, content_type: nil, provider_options: {})
         @content_type = content_type
         attachment = file_attachment(file, filename:)
-        options = { purpose:, expires_in: }.compact.merge(provider_options.transform_keys(&:to_sym))
-        response = @connection.post(files_url, render_upload_payload(attachment, **options),
-                                    idempotent: false) do |request|
+        payload = render_upload_payload(attachment, purpose:, expires_in:, provider_options:)
+        response = @connection.post(files_url, payload, idempotent: false) do |request|
           request.headers.delete('Content-Type')
           upload_headers(request)
         end
@@ -54,12 +53,21 @@ module RubyLLM
         "#{file_info_url(file_id)}/content"
       end
 
-      def render_upload_payload(attachment, **)
-        { file: file_part(attachment) }
+      # The file part goes last: OpenAI can misread a field sent after a large
+      # file part, rejecting a valid purpose as "user_data\r", and xAI requires
+      # its fields to arrive before the file.
+      def render_upload_payload(attachment, purpose: nil, expires_in: nil, provider_options: {})
+        fields = render_upload_fields(attachment, purpose:, expires_in:)
+        fields.merge(provider_options.transform_keys(&:to_sym)).except(upload_file_field).compact
+              .merge(upload_file_field => file_part(attachment))
       end
 
-      def multipart_payload(attachment, **fields)
-        { file: file_part(attachment) }.merge(fields.compact)
+      def render_upload_fields(_attachment, **)
+        {}
+      end
+
+      def upload_file_field
+        :file
       end
 
       def parse_upload_response(data, _attachment)

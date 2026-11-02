@@ -180,18 +180,21 @@ Operations used to drop these options silently. They now raise `ArgumentError` b
 | --- | --- | --- |
 | `upload` | `uri:` | Every provider except Vertex AI and Bedrock |
 | `upload` | `purpose:` | Anthropic, Bedrock, ElevenLabs, Gemini, OpenRouter, Vertex AI |
-| `upload` | `expires_in:` | Anthropic, Bedrock, Cohere, ElevenLabs, Gemini, OpenRouter, Vertex AI |
+| `upload` | `expires_in:` | Bedrock, Cohere, ElevenLabs, Gemini, OpenRouter, Vertex AI |
 | `transcribe` | `format:` | Cohere, Deepgram, Mistral, xAI |
 | `transcribe` | `prompt:` | Cohere, ElevenLabs, xAI |
 | `transcribe` | `temperature:` | Deepgram, xAI |
 | `transcribe` | `speaker_names:` | Cohere, Gemini `generateContent` models |
+| `transcribe` | Non-empty `speaker_names:` (`[]` still requests labels) | Deepgram, Gemini and Vertex AI dedicated transcription, Mistral, xAI |
 | `transcribe` | `speaker_references:` | Cohere, Deepgram, ElevenLabs, Gemini `generateContent` models, Mistral, xAI |
 | `paint` | `count:` above 1 | ElevenLabs, OpenRouter, Stable Diffusion on Bedrock |
 | `speak` | `format:` other than `"pcm"` | Gemini, Vertex AI |
 | `embed` | `task_type:` | Azure, Mistral, OpenAI, Perplexity, GPUStack, Titan on Bedrock |
 | `embed` | `title:` | Azure, Cohere, Mistral, OpenAI, OpenRouter, Perplexity, GPUStack, Bedrock |
 
-Two options now take effect instead. `content_type:` on `upload` reaches every provider. `size:` also reaches Imagen and OpenRouter, so a request that used to get a square image follows what you asked for. Imagen takes it as an aspect ratio, and a tier such as `"2K"` raises `ArgumentError`. OpenRouter takes ratios, tiers, and pixel dimensions.
+`provider_options:` on `upload` now reach the provider on every path: the multipart form, the Gemini File resource, Bedrock's PutObject, and Vertex AI's `create_file`. A key the provider does not recognize gets its own error, or `ArgumentError` from the Bedrock and Vertex AI SDKs, instead of vanishing. The option `expires_in:` inside `provider_options:` is no longer translated, so pass it as the `expires_in:` keyword.
+
+Three options now take effect instead. `expires_in:` on `upload` reaches Anthropic as `expires_in_seconds`. `content_type:` on `upload` reaches every provider. `size:` also reaches Imagen and OpenRouter, so a request that used to get a square image follows what you asked for. Imagen takes it as an aspect ratio, and a tier such as `"2K"` raises `ArgumentError`. OpenRouter takes ratios, tiers, and pixel dimensions.
 
 A WAV file for streamed transcription whose odd final chunk has no pad byte is now accepted.
 
@@ -207,6 +210,7 @@ These chat options were dropped, or downgraded with a log line. They now raise w
 | `with_tool_options(choice: :none)` with tools | Bedrock Converse | Remove the tools |
 | `with_tool_options(calls: :one)` | Mistral Conversations | Use Chat Completions |
 | `with_caching(id:)` | Gemini Interactions | Use the default protocol |
+| `with_caching(ttl:)` or `with_caching(id:)` | Cohere | Use bare `with_caching`; Cohere caches on its own |
 | System attachments | Gemini Interactions | Attach to a user message |
 
 `with_thinking(display: :omitted)` on Gemini now takes effect and keeps thoughts out of the response.

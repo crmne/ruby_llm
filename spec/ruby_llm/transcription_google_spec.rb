@@ -12,7 +12,7 @@ RSpec.describe RubyLLM::Transcription, :live do
     it "transcribes audio with speaker labels and word timestamps through #{provider}" do
       result = RubyLLM.transcribe(File.expand_path('../fixtures/ruby.wav', __dir__),
                                   model: model_for(provider, :dedicated_transcription), provider:,
-                                  language: 'en-US', timestamps: :word, speaker_names: ['Speaker'])
+                                  language: 'en-US', timestamps: :word, speaker_names: [])
 
       expect(result.text).to include('Ruby', 'developer happiness')
       expect(result.words).not_to be_empty

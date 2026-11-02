@@ -61,7 +61,7 @@ Pass `content_type:` when the MIME type RubyLLM detects is not the one you want.
 RubyLLM.upload("batch.jsonl", provider: :vertexai, uri: "gs://my-bucket/in/batch.jsonl")
 ```
 
-Provider-specific options go through `provider_options:` in the provider's own vocabulary: `visibility:` on Mistral, `display_name:` on Gemini.
+Provider-specific options go through `provider_options:` in the provider's own vocabulary: `visibility:` on Mistral, `display_name:` on Gemini, `storage_class:` on Bedrock, `cache_control:` on Vertex AI. RubyLLM sends them as given, so a key the provider does not recognize gets the provider's own error. They cannot replace the file itself.
 
 ## Expiration
 
@@ -73,7 +73,7 @@ file = RubyLLM.upload("batch.jsonl", purpose: "batch", expires_in: 24 * 60 * 60)
 file.expires_at # => 2026-07-05 12:00:00 +0000
 ```
 
-OpenAI and xAI accept 1 hour to 30 days. Mistral rounds up to whole hours. Providers without a retention setting raise `ArgumentError`. Gemini files always expire after 48 hours.
+OpenAI and xAI accept 1 hour to 30 days, and Anthropic 1 hour to 90 days. Mistral rounds up to whole hours. Providers without a retention setting raise `ArgumentError`. Gemini files always expire after 48 hours.
 
 ## Using Files in Chat
 

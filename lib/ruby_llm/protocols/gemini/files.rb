@@ -13,8 +13,8 @@ module RubyLLM
                    provider_options: {})
           @content_type = content_type
           attachment = file_attachment(file, filename:)
-          display_name = provider_options[:display_name] || attachment.filename
-          upload_url = start_resumable_upload(attachment, display_name:)
+          resource = { display_name: attachment.filename }.merge(provider_options.transform_keys(&:to_sym))
+          upload_url = start_resumable_upload(attachment, resource:)
           response = upload_file_bytes(upload_url, attachment)
           await_active(parse_file_response(response.body.fetch('file')))
         end
@@ -52,7 +52,7 @@ module RubyLLM
           gemini_file_name(file_id)
         end
 
-        def start_resumable_upload(attachment, display_name:)
+        def start_resumable_upload(attachment, resource:)
           response = gemini_connection(request_json: true, response_json: true).post(gemini_upload_url) do |request|
             request.headers.merge!(@provider.headers)
             request.headers['X-Goog-Upload-Protocol'] = 'resumable'
@@ -60,7 +60,7 @@ module RubyLLM
             request.headers['X-Goog-Upload-Header-Content-Length'] = attachment.content.bytesize.to_s
             request.headers['X-Goog-Upload-Header-Content-Type'] = file_content_type(attachment)
             request.headers['Content-Type'] = 'application/json'
-            request.body = { file: { display_name: display_name } }
+            request.body = { file: resource }
           end
 
           response.headers['x-goog-upload-url'] || response.headers['X-Goog-Upload-URL'] ||

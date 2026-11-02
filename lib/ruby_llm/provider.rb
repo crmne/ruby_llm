@@ -386,7 +386,8 @@ module RubyLLM
     def transcribe(audio_file, model:, language:, format: nil, timestamps: nil, speaker_names: nil, # :nodoc:
                    speaker_references: nil, provider_options: {}, prompt: nil, temperature: nil, &)
       protocol = resolve_protocol(nil, model, operation: :transcribe).new(self, model)
-      protocol.reject_options(:transcribe, format:, temperature:, prompt:, speaker_names:, speaker_references:)
+      protocol.reject_options(:transcribe, format:, temperature:, prompt:, speaker_names:, speaker_references:,
+                                           named_speakers: (speaker_names unless Array(speaker_names).empty?))
       options = protocol.render_transcription_options(timestamps:, format:, streaming: block_given?)
       provider_options = Support::Utils.deep_merge(options, provider_options)
       protocol.transcribe(

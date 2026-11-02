@@ -100,7 +100,7 @@ RSpec.describe RubyLLM::Protocols::XAI::StreamingTranscription do
     with_websocket_cassette('transcription_xai', key: 'XAI_API_KEY') do
       chunks = []
       result = RubyLLM.transcribe(audio_path, model: model_for(:xai, :transcription), provider: :xai,
-                                              language: 'en', speaker_names: ['Speaker']) { |chunk| chunks << chunk }
+                                              language: 'en', speaker_names: []) { |chunk| chunks << chunk }
 
       expect(result.text).to include('Ruby', 'developer happiness')
       expect(result.duration).to be > 3

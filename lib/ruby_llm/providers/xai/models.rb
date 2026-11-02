@@ -4,8 +4,8 @@ module RubyLLM
   module Providers
     class XAI
       # Models metadata for xAI list models. The list endpoint omits the
-      # model-less TTS and STT services, so those are appended under the
-      # grok-tts and grok-stt names from xAI's model catalog.
+      # TTS and STT services, so those are appended under the grok-tts and
+      # grok-stt names from xAI's model catalog.
       module Models
         module_function
 

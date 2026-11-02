@@ -95,7 +95,7 @@ RSpec.describe RubyLLM::Transcription, :live do
 
     it "xai/#{model_for(:xai, :transcription)} labels words with speakers when speaker names are given" do
       transcription = RubyLLM.transcribe(audio_path, model: model_for(:xai, :transcription), provider: :xai,
-                                                     speaker_names: ['Speaker'])
+                                                     speaker_names: [])
 
       expect(transcription.text).to match(/ruby/i)
       expect(transcription.words).to be_an(Array)
@@ -104,7 +104,7 @@ RSpec.describe RubyLLM::Transcription, :live do
 
     it "mistral/#{model_for(:mistral, :transcription)} labels segments with speakers when speaker names are given" do
       transcription = RubyLLM.transcribe(audio_path, model: model_for(:mistral, :transcription), provider: :mistral,
-                                                     speaker_names: ['Speaker'])
+                                                     speaker_names: [])
 
       expect(transcription.text).to match(/ruby/i)
       expect(transcription.segments).to be_an(Array)
@@ -147,7 +147,7 @@ RSpec.describe RubyLLM::Transcription, :live do
       chunks = []
 
       transcription = RubyLLM.transcribe(audio_path, model: model_for(:mistral, :transcription),
-                                                     provider: :mistral, speaker_names: ['Speaker']) do |chunk|
+                                                     provider: :mistral, speaker_names: []) do |chunk|
         chunks << chunk
       end
 

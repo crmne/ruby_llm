@@ -11,7 +11,7 @@ module RubyLLM
 
         private
 
-        def render_upload_payload(attachment, purpose: nil, **)
+        def render_upload_fields(attachment, purpose: nil, **)
           super(attachment, purpose: purpose || 'user_data', **)
         end
 

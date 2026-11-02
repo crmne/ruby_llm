@@ -97,7 +97,7 @@ RSpec.describe RubyLLM::Providers::Deepgram do
                         headers: { 'Content-Type' => 'application/json' })
 
       RubyLLM.transcribe(audio_path, model: 'nova-3', provider: :deepgram, language: 'en',
-                                     speaker_names: ['Speaker'])
+                                     speaker_names: [])
 
       expect(stub).to have_been_requested
     end
@@ -199,7 +199,7 @@ RSpec.describe RubyLLM::Providers::Deepgram do
         model: 'nova-3',
         provider: :deepgram,
         language: 'en',
-        speaker_names: ['Speaker']
+        speaker_names: []
       )
 
       expect(transcription.text).to match(/ruby/i)
