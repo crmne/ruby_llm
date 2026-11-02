@@ -8,6 +8,21 @@ RSpec.describe RubyLLM::Protocols::InvokeModel::CohereEmbeddings do
   let(:provider) { RubyLLM::Providers::Bedrock.new(RubyLLM.config) }
   let(:protocol) { described_class.new(provider) }
 
+  describe 'vector count' do
+    def parse(embeddings, text)
+      response = Struct.new(:body, :headers, :status).new({ 'embeddings' => embeddings }, {}, 200)
+      protocol.send(:parse_embedding_response, response, model: 'us.cohere.embed-v4:0', text:)
+    end
+
+    it 'rejects a response with a different number of vectors than texts' do
+      expect { parse([[0.1]], %w[one two]) }.to raise_error(RubyLLM::Error, 'Expected 2 embeddings, got 1')
+    end
+
+    it 'keeps one vector per text' do
+      expect(parse([[0.1], [0.2]], %w[one two]).vectors).to eq([[0.1], [0.2]])
+    end
+  end
+
   describe 'request shape' do
     it 'renders texts with a default input type' do
       payload = protocol.send(:render_embedding_payload, %w[one two], model: 'us.cohere.embed-v4:0',

@@ -131,6 +131,9 @@ module RubyLLM
           end
 
           events
+        rescue Aws::EventStream::Errors::PreludeChecksumError
+          raise_streaming_chunk_error(raw_chunk)
+          raise Error, 'Bedrock returned an unreadable event stream'
         end
 
         # ConverseStream delivers modeled errors as a frame after the 200, with
