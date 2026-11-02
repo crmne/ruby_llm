@@ -7,11 +7,9 @@ module RubyLLM
     # Keeps a persisted chat's files in +ruby_llm_chat_files+, with their
     # content in Active Storage, so they live on whatever service Active
     # Storage uses: a disk now, a bucket later. A persisted chat uses one
-    # when ChatFiles#with_file_store is given no store, and
-    # RubyLLM.file_store.active_storage builds one.
+    # when ChatFiles#with_file_store is given no store.
     #
     #   chat.with_file_store
-    #   chat.with_file_store(RubyLLM.file_store.active_storage(chat))
     #   chat.file_store.list
     #
     # With +owner:+, the store writes files for that owner and sees only
@@ -32,7 +30,19 @@ module RubyLLM
 
       # Creates a store for the files of the +chat+ record, writing them for
       # +owner+ when given.
+      #
+      # Raises ArgumentError when +chat+ is not an +acts_as_chat+ record,
+      # and ConfigurationError when Active Storage is not loaded.
       def initialize(chat, owner: nil)
+        unless chat.is_a?(ChatFiles)
+          raise ArgumentError, "#{self.class} needs an acts_as_chat record, not #{chat.class}"
+        end
+        unless ChatFile.respond_to?(:reflect_on_attachment) && ChatFile.reflect_on_attachment(:file)
+          raise ConfigurationError, "#{self.class} needs Active Storage. " \
+                                    'Load it with require "active_storage/engine" in config/application.rb, ' \
+                                    'then run bin/rails active_storage:install and bin/rails db:migrate.'
+        end
+
         super()
         @chat = chat
         @owner = owner

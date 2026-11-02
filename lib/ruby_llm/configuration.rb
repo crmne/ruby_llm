@@ -233,7 +233,7 @@ module RubyLLM
     # returns its text, or +nil+ to pass it on. See FileStore::Converters.
     # Default: <tt>{}</tt>.
     #
-    #   config.file_converters["image/*"] = RubyLLM.file_store.converter.ocr
+    #   config.file_converters["image/*"] = RubyLLM::FileStore::Converters::OCR.new
     #
     option :file_converters, -> { {} }
 

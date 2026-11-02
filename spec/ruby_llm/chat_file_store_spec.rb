@@ -78,6 +78,30 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.instance_variable_get(:@file_references).spill_to_file).to eq(20)
     end
 
+    it 'keeps files in the folder at a path' do
+      root = Dir.mktmpdir('ruby_llm-chat-files')
+      folder = File.join(root, 'chats', '42')
+
+      expect(chat.with_file_store(folder).file_store).to be_a(RubyLLM::FileStore::Directory)
+      expect(chat.file_store.root).to eq(File.realpath(folder))
+      expect(chat.with_file_store(Pathname(folder)).file_store.root).to eq(File.realpath(folder))
+    ensure
+      FileUtils.rm_rf(root)
+    end
+
+    it 'takes a new store in memory with :memory' do
+      first = chat.with_file_store(:memory).file_store
+
+      expect(first).to be_a(RubyLLM::FileStore::Memory)
+      expect(chat.with_file_store(:memory).file_store).not_to be(first)
+    end
+
+    it 'keeps the spill_to_file limit with a path or :memory' do
+      chat.with_file_store(:memory, spill_to_file: 20)
+
+      expect(chat.instance_variable_get(:@file_references).spill_to_file).to eq(20)
+    end
+
     it 'removes the store and its tools with nil' do
       chat.with_file_store.with_file_store(nil)
 
@@ -89,8 +113,9 @@ RSpec.describe RubyLLM::Chat do
       expect { chat.with_file_store(quota: 1) }.to raise_error(ArgumentError, /unknown keyword: :quota/)
       expect { chat.with_file_store(spill_to_file: 0) }.to raise_error(ArgumentError, /positive number/)
       expect { chat.with_file_store(spill_to_file: nil) }.to raise_error(ArgumentError, /positive number/)
-      expect { chat.with_file_store('tmp') }.to raise_error(ArgumentError, /takes a RubyLLM::FileStore or nil/)
-      expect { chat.with_file_store(false) }.to raise_error(ArgumentError, /takes a RubyLLM::FileStore or nil/)
+      expect { chat.with_file_store(:redis) }.to raise_error(ArgumentError, /takes a folder path.*got :redis/)
+      expect { chat.with_file_store(false) }.to raise_error(ArgumentError, /takes a folder path/)
+      expect { chat.with_file_store(Object.new) }.to raise_error(ArgumentError, /takes a folder path/)
     end
 
     it 'refuses a tool of the same name' do
@@ -266,7 +291,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'keeps the result whole when the store cannot save it, and names files only with safe characters' do
-      failing = RubyLLM.file_store.memory
+      failing = RubyLLM::FileStore::Memory.new
       allow(failing).to receive(:write).and_raise(IOError)
       allow(RubyLLM.logger).to receive(:warn)
       chat.with_file_store(failing)
@@ -278,7 +303,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'sends the result whole when the store is full' do
-      full = RubyLLM.file_store.memory
+      full = RubyLLM::FileStore::Memory.new
       allow(full).to receive(:write).and_raise(RubyLLM::FileStoreFullError, 'The files are full.')
       allow(RubyLLM.logger).to receive(:warn)
       chat.with_file_store(full)

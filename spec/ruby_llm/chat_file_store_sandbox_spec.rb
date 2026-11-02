@@ -45,7 +45,7 @@ RSpec.describe RubyLLM::Chat do
   context 'with a store in a folder' do
     let(:root) { Dir.mktmpdir('ruby_llm-store') }
 
-    before { chat.with_file_store(RubyLLM.file_store.directory(root)) }
+    before { chat.with_file_store(RubyLLM::FileStore::Directory.new(root)) }
 
     after { FileUtils.rm_rf(root) }
 

@@ -118,17 +118,17 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(transcript(chat).first(2)).to eq([[:user, 'Queued first'], [:user, 'Then this']])
   end
 
-  it 'runs after_dequeue with the message record and the queued record' do
+  it 'runs after_join with the message record and the queued record' do
     queued = chat.queue('Hello')
     job = job_for(chat)
-    dequeued = []
-    job.after_dequeue { |message, record| dequeued << [message, record] }
+    joined = []
+    job.after_join { |message, record| joined << [message, record] }
 
     job.complete
 
-    expect(dequeued.size).to eq(1)
-    expect(dequeued.first.first).to eq(job.messages_association.first)
-    expect(dequeued.first.last.id).to eq(queued.id)
+    expect(joined.size).to eq(1)
+    expect(joined.first.first).to eq(job.messages_association.first)
+    expect(joined.first.last.id).to eq(queued.id)
   end
 
   it 'moves attachments to the message without uploading them again' do

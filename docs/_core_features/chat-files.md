@@ -35,23 +35,16 @@ The first question sends both PDFs. For the second, the model sees two lines lik
 
 ## Giving a Chat Files
 
-`with_file_store` attaches a store to the chat, like `with_tools` attaches tools and `with_schema` a schema. Call it bare for the default store, pass the store you want, and pass `nil` to remove it:
+`with_file_store` attaches a store to the chat, like `with_tools` attaches tools and `with_schema` a schema. Call it bare for the default store, pass a folder path or `:memory`, and pass `nil` to remove it:
 
 ```ruby
 chat.with_file_store
-chat.with_file_store(RubyLLM.file_store.memory, spill_to_file: 20_000)
+chat.with_file_store("tmp/chats/42")
+chat.with_file_store(:memory, spill_to_file: 20_000)
 chat.with_file_store(nil)
 ```
 
-RubyLLM builds three stores, all from `RubyLLM.file_store`:
-
-```ruby
-chat.with_file_store(RubyLLM.file_store.memory)
-chat.with_file_store(RubyLLM.file_store.directory("tmp/work"))
-chat.with_file_store(RubyLLM.file_store.active_storage(chat_record, owner: user))
-```
-
-The default store is `RubyLLM.file_store.memory`, or for a persisted chat, `RubyLLM.file_store.active_storage` with its files in Active Storage (see [Files in Rails](#files-in-rails)).
+The default store keeps files in memory, or for a persisted chat, in Active Storage (see [Files in Rails](#files-in-rails)).
 
 The model gets five tools:
 
@@ -118,21 +111,21 @@ Each version of a file is converted once. A persisted chat keeps the text in the
 
 ### PDFs, Scans, and Photos
 
-The OCR converter, `RubyLLM.file_store.converter.ocr`, reads PDFs, scans, and photos with [`RubyLLM.ocr`]({% link _core_features/ocr.md %}), tables and all. Each file costs one OCR request the first time the model reads or searches it, so OCR only runs where you register it:
+The OCR converter, `RubyLLM::FileStore::Converters::OCR`, reads PDFs, scans, and photos with [`RubyLLM.ocr`]({% link _core_features/ocr.md %}), tables and all. Each file costs one OCR request the first time the model reads or searches it, so OCR only runs where you register it:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.file_converters["image/*"] = RubyLLM.file_store.converter.ocr
-  config.file_converters["application/pdf"] = RubyLLM.file_store.converter.ocr(model: "{{ site.models.default_ocr }}")
+  config.file_converters["image/*"] = RubyLLM::FileStore::Converters::OCR.new
+  config.file_converters["application/pdf"] = RubyLLM::FileStore::Converters::OCR.new(model: "{{ site.models.default_ocr }}")
 end
 ```
 
-`ocr` takes the options [`RubyLLM.ocr`]({% link _core_features/ocr.md %}) does, such as `model:` and `provider:`.
+`OCR.new` takes the options [`RubyLLM.ocr`]({% link _core_features/ocr.md %}) does, such as `model:` and `provider:`.
 
-`RubyLLM.file_store.converter.text` reads a file as it is, for types that hold plain text but don't say so:
+`RubyLLM::FileStore::Converters::Text` reads a file as it is, for types that hold plain text but don't say so:
 
 ```ruby
-config.file_converters["application/x-subrip"] = RubyLLM.file_store.converter.text # .srt subtitles
+config.file_converters["application/x-subrip"] = RubyLLM::FileStore::Converters::Text # .srt subtitles
 ```
 
 ### Writing a Converter
@@ -159,13 +152,13 @@ To share a converter, ship it as a gem named `ruby_llm-converters-<name>`, like 
 
 A store is any `RubyLLM::FileStore`. RubyLLM ships three:
 
-| Store | Keeps files | Use it for |
-| --- | --- | --- |
-| `RubyLLM.file_store.memory` | In memory, for as long as the chat lives | Scripts, tests, and the default in plain Ruby |
-| `RubyLLM.file_store.directory(path)` | In a folder on disk | A chat that lives across runs, or a folder you share with other tools |
-| `RubyLLM.file_store.active_storage(chat_record, owner: nil)` | In `ruby_llm_chat_files`, with their content in Active Storage | Persisted chats, by default; see [Rails](#files-in-rails) |
+| Store | Attach it with | Keeps files | Use it for |
+| --- | --- | --- | --- |
+| `RubyLLM::FileStore::Memory` | `:memory` | In memory, for as long as the chat lives | Scripts, tests, and the default in plain Ruby |
+| `RubyLLM::FileStore::Directory` | A folder path | In a folder on disk | A chat that lives across runs, or a folder you share with other tools |
+| `RubyLLM::ActiveRecord::FileStore` | No store, on an `acts_as_chat` record | In `ruby_llm_chat_files`, with their content in Active Storage | Persisted chats, by default; see [Rails](#files-in-rails) |
 
-`RubyLLM.file_store.memory` builds a `RubyLLM::FileStore::Memory`, `RubyLLM.file_store.directory(path)` a `RubyLLM::FileStore::Directory`, creating the folder when it is missing, and `RubyLLM.file_store.active_storage(chat_record)` a `RubyLLM::ActiveRecord::FileStore` for an `acts_as_chat` record. The last needs RubyLLM's Rails integration and Active Storage, and raises `RubyLLM::ConfigurationError` without them.
+`with_file_store` also takes a store you built yourself, such as `RubyLLM::FileStore::Directory.new("tmp/work")`. `Directory` creates its folder when it is missing. The Active Storage store needs RubyLLM's Rails integration and Active Storage, and raises `RubyLLM::ConfigurationError` without them.
 
 A `Directory` store reads the files someone else puts in its folder too, and code execution runs in that folder, so give each store a folder of its own. It leaves out hidden files and folders, never follows symbolic links, and refuses paths that would leave the folder. It detects content types from file names and, when a name does not tell, from file signatures. Images and PDFs do not need a file extension.
 
@@ -209,11 +202,11 @@ end
 
 With [code execution]({% link _core_features/code-execution.md %}) on, `run_code` works with the chat's files instead of the read-only `attachments/` folder. How depends on the store, with nothing to configure.
 
-**A store in a folder** (`RubyLLM.file_store.directory`) works like a coding agent's workspace: code runs in the folder itself, reads the files where they are, and what it writes, changes, or deletes there is in the store at once. Nothing is copied in or out. The tool result lists the files the run created or changed, and `after_file_write` receives each of them:
+**A store in a folder** (`RubyLLM::FileStore::Directory`) works like a coding agent's workspace: code runs in the folder itself, reads the files where they are, and what it writes, changes, or deletes there is in the store at once. Nothing is copied in or out. The tool result lists the files the run created or changed, and `after_file_write` receives each of them:
 
 ```ruby
 chat = RubyLLM.chat
-  .with_file_store(RubyLLM.file_store.directory("tmp/work"))
+  .with_file_store("tmp/work")
   .with_code_execution(python: %w[pandas matplotlib])
 chat.ask "Plot monthly revenue from this export", with: "revenue.csv"
 
@@ -239,20 +232,18 @@ end
 
 class ProjectAgent < RubyLLM::Agent
   inputs :project
-  file_store -> { RubyLLM.file_store.directory(project.files_path) }
+  file_store -> { project.files_path }
 end
 ```
 
-`file_store nil` removes the store a parent agent declared.
+A folder path without a lambda is shared by every chat the agent builds. `file_store :memory` gives each chat a new store in memory, and `file_store nil` removes the store a parent agent declared.
 
 ## Files in Rails
 
-A persisted chat keeps its files in Active Storage, on whatever service your application uses: a disk today, a bucket tomorrow, with nothing to change in RubyLLM. Each file is a row in RubyLLM's `ruby_llm_chat_files` table. `with_file_store` with no store gives an `acts_as_chat` record that store, the one `RubyLLM.file_store.active_storage` builds:
+A persisted chat keeps its files in Active Storage, on whatever service your application uses: a disk today, a bucket tomorrow, with nothing to change in RubyLLM. Each file is a row in RubyLLM's `ruby_llm_chat_files` table. `with_file_store` with no store gives an `acts_as_chat` record that store:
 
 ```ruby
 chat = Chat.create!(model: "{{ site.models.default_chat }}").with_file_store
-# the same as
-chat.with_file_store(RubyLLM.file_store.active_storage(chat))
 
 chat.ask "Summarize these", with: params[:files]
 
@@ -277,8 +268,6 @@ In a chat several people share, files a tool fetched for one of them may not be 
 
 ```ruby
 chat.with_file_store(owner: Current.user)
-# short for
-chat.with_file_store(RubyLLM.file_store.active_storage(chat, owner: Current.user))
 ```
 
 An agent takes the owner as a lambda, like its store: `file_store owner: -> { Current.user }`.

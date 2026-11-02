@@ -133,7 +133,7 @@ RSpec.describe RubyLLM::Chat do
 
   context 'with a store in a folder' do # rubocop:disable RSpec/MultipleMemoizedHelpers
     let(:root) { Dir.mktmpdir('ruby_llm-store') }
-    let(:store) { RubyLLM.file_store.directory(root) }
+    let(:store) { RubyLLM::FileStore::Directory.new(root) }
     let(:sandbox) do
       FakeSandbox.new do |run|
         directory = run[:directory]

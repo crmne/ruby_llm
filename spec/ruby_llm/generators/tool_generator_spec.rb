@@ -45,7 +45,8 @@ RSpec.describe RubyLLM::Generators::ToolGenerator, :generator, type: :generator 
       tool_class = File.read('app/tools/weather_tool.rb')
       expect(tool_class).to include('class WeatherTool < RubyLLM::Tool')
       expect(tool_class).to include('description "TODO: describe what this tool does"')
-      expect(tool_class).to include('def execute')
+      expect(tool_class).to include("def execute\n  end")
+      expect(tool_class.scan('TODO').size).to eq(1)
 
       tool_call_partial = File.read('app/views/messages/tool_calls/_weather.html.erb')
       expect(tool_call_partial).to include('tool_call.name')

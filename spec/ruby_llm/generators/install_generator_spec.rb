@@ -10,6 +10,15 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
 
   let(:template_path) { File.expand_path('../../fixtures/templates', __dir__) }
 
+  def capture_stdout
+    original = $stdout
+    $stdout = StringIO.new
+    yield
+    $stdout.string
+  ensure
+    $stdout = original
+  end
+
   def run_rails_generate(*args)
     env = {
       'BUNDLE_GEMFILE' => ENV['BUNDLE_GEMFILE'] || Bundler.default_gemfile.to_s,
@@ -207,6 +216,15 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
         expect(success).to be(true), output
       end
     end
+  end
+
+  it 'ends at the next steps and the documentation link' do
+    output = capture_stdout do
+      described_class.new([], {}, destination_root: Dir.tmpdir, shell: Thor::Shell::Basic.new).show_install_info
+    end
+
+    expect(output.lines.reject { |line| line.strip.empty? }.last).to include('https://rubyllm.com')
+    expect(output).not_to include('github.com', 'x.com')
   end
 
   it 'leaves message broadcasting off in the initializer' do
