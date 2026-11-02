@@ -31,19 +31,44 @@ RSpec.describe RubyLLM::MCP::Client do
       expect(names).to eq(%w[echo add fail picture slow wait deploy connect delete_everything])
     end
 
-    [nil, false, ''].each do |cursor|
-      it "stops at a cursor of #{cursor.inspect}" do
-        requests = []
-        transport = Object.new
-        transport.define_singleton_method(:request) do |message, **|
-          requests << message[:method]
-          raise 'kept paging' if requests.count('tools/list') > 2
+    def paged_transport(*cursors)
+      requests = []
+      transport = Object.new
+      transport.define_singleton_method(:requests) { requests }
+      transport.define_singleton_method(:request) do |message, **|
+        requests << message
+        next { 'result' => { 'supportedVersions' => ['2026-07-28'] } } if message[:method] == 'server/discover'
 
-          { 'result' => { 'supportedVersions' => ['2026-07-28'], 'tools' => ['search'], 'nextCursor' => cursor } }
-        end
+        { 'result' => { 'tools' => ['search'], 'nextCursor' => cursors.shift } }
+      end
+      transport
+    end
+
+    def sent_cursors(transport)
+      transport.requests.map { |message| message.dig(:params, :cursor) }
+    end
+
+    [nil, false].each do |cursor|
+      it "stops at a cursor of #{cursor.inspect}" do
+        transport = paged_transport(cursor, 'unreachable')
 
         expect(described_class.new(transport).list('tools/list', 'tools')).to eq(['search'])
       end
+    end
+
+    it 'follows an empty cursor' do
+      transport = paged_transport('', nil)
+
+      expect(described_class.new(transport).list('tools/list', 'tools')).to eq(%w[search search])
+      expect(sent_cursors(transport).last).to eq('')
+    end
+
+    it 'raises when a server repeats a cursor' do
+      transport = paged_transport('', '', 'unreachable')
+
+      expect { described_class.new(transport).list('tools/list', 'tools') }
+        .to raise_error(RubyLLM::MCP::Error, 'The server repeated a cursor for tools/list')
+      expect(sent_cursors(transport).count('')).to eq(1)
     end
 
     it 'times out on a server that stops in the middle of a line' do

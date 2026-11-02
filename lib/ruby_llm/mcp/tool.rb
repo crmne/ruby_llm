@@ -53,7 +53,7 @@ module RubyLLM
         @description = description || definition['description']
         @fixed_arguments = fixed_arguments.transform_keys(&:to_sym)
         @wrap = wrap
-        @annotations = definition['annotations'] || {}
+        @annotations = definition['annotations'].is_a?(Hash) ? definition['annotations'] : {}
         @meta = definition['_meta'] || {}
         @ui_uri = Apps.uri(meta)
         @visibility = Apps.visibility(meta)

@@ -67,7 +67,10 @@ module RubyLLM
       def list(method, key)
         page = request(method)
         items = page.fetch(key, [])
-        while (cursor = page['nextCursor']) && cursor != ''
+        cursors = Set.new
+        while (cursor = page['nextCursor'])
+          raise Error, "The server repeated a cursor for #{method}" unless cursors.add?(cursor)
+
           page = request(method, { cursor: })
           items += page.fetch(key, [])
         end

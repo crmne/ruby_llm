@@ -486,6 +486,14 @@ RSpec.describe RubyLLM::MCP::HTTP do
         expect(calls).to have_been_made.once
       end
 
+      it 'does not send a call again for a tool whose annotations are not an object' do
+        stub_method('tools/list', result: { tools: [{ name: 'lookup', annotations: [] }] })
+        stub_method('tools/call', headers: events, body: event(progress))
+
+        expect { RubyLLM.mcp(url:).call(:lookup) }.to raise_error(RubyLLM::MCP::Error, /did not answer/)
+        expect(calls).to have_been_made.once
+      end
+
       it 'does not fetch the tools again to decide on a call' do
         stub_method('tools/list', result: { tools: [{ name: 'lookup', annotations: { idempotentHint: true } }] })
         mcp = RubyLLM.mcp(url:)
