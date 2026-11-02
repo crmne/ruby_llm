@@ -45,8 +45,11 @@ module RubyLLM
           'List the files with list_files.'
         end
 
-        def write(path, content)
-          store.write(path, content).tap { |file| @written.call(file) }
+        def guarded_write
+          written = nil
+          result = guarded { yield(->(path, content) { written = store.write(path, content) }) }
+          @written.call(written) if written
+          result
         end
 
         def guarded

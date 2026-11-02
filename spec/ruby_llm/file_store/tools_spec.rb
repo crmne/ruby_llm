@@ -193,6 +193,32 @@ RSpec.describe RubyLLM::FileStore::Tools do
       expect(written).to eq(['notes/plan.md'])
     end
 
+    [ArgumentError, Errno::EACCES].each do |error|
+      it "lets #{error} from an after_file_write callback through write_file" do
+        chat.after_file_write { raise error }
+
+        expect { call(:write_file, path: 'plan.md', content: '# Plan') }.to raise_error(error)
+        expect(files.read('plan.md')).to eq('# Plan')
+      end
+
+      it "lets #{error} from an after_file_write callback through edit_file" do
+        files.write('plan.md', 'one')
+        chat.after_file_write { raise error }
+
+        expect { call(:edit_file, path: 'plan.md', old_text: 'one', new_text: 'two') }.to raise_error(error)
+        expect(files.read('plan.md')).to eq('two')
+      end
+    end
+
+    it 'skips the after_file_write callback when the write fails' do
+      written = []
+      chat.after_file_write { |file| written << file.path }
+      allow(files).to receive(:write).and_raise(Errno::EACCES)
+
+      expect(call(:write_file, path: 'plan.md', content: '# Plan')[:error]).to eq('Permission denied')
+      expect(written).to be_empty
+    end
+
     it 'replaces one exact span' do
       files.write('plan.md', "one two\nthree two")
 
