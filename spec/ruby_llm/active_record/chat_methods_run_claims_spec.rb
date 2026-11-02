@@ -37,6 +37,62 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     chat
   end
 
+  it 'leaves a claim and a pending cancel behind on a dup' do
+    chat = Chat.create!(model: model_for(:openai))
+    Chat.where(id: chat.id).update_all(claim_token: 'other', claimed_until: 10.minutes.from_now, cancelled: true)
+
+    copy = Chat.find(chat.id).dup
+    copy.save!
+
+    expect(copy).not_to be_running
+    expect(copy).to have_attributes(claim_token: nil, claimed_until: nil, cancelled: false)
+  end
+
+  it 'reads tokens another process recorded after a takeover' do
+    chat = Chat.create!(model: model_for(:openai))
+    chat.add_message(role: :user, content: 'Hello')
+    chat.to_llm
+    chat.tokens
+    job_for(chat).complete
+
+    chat.send(:resync_messages)
+
+    expect(chat.tokens.input).to eq(1)
+    expect(chat.to_llm.usage_entries.size).to eq(1)
+  end
+
+  it 'reads usage outside the query cache when it refreshes' do
+    chat = Chat.create!(model: model_for(:openai))
+    cached = []
+    record = ->(*, payload) { cached << payload[:cached] if payload[:sql].include?('ruby_llm_usages') }
+
+    Chat.cache do
+      chat.tokens
+      ActiveSupport::Notifications.subscribed(record, 'sql.active_record') do
+        chat.refresh_messages
+        chat.tokens
+      end
+    end
+
+    expect(cached.compact).to be_empty
+  end
+
+  it 'drops what the failed round destroyed from the transcript in memory' do
+    first = RubyLLM::ToolCall.new(id: "call_#{SecureRandom.hex(4)}", name: 'charge_card', arguments: {})
+    second = RubyLLM::ToolCall.new(id: "call_#{SecureRandom.hex(4)}", name: 'charge_card', arguments: {})
+    chat = Chat.create!(model: model_for(:openai)).with_tools(charge_tool)
+    chat.add_message(role: :user, content: 'Charge twice')
+    chat.add_message(RubyLLM::Message.new(role: :assistant, content: '',
+                                          tool_calls: { first.id => first, second.id => second }))
+    chat.add_message(role: :tool, content: 'charged', tool_call_id: first.id)
+    chat.approve(second.id)
+    during_run << -> { raise RubyLLM::ServerError, 'boom' }
+
+    expect { chat.complete }.to raise_error(RubyLLM::ServerError)
+    expect(chat.messages_association.reload.map(&:role)).to eq(['user'])
+    expect(chat.to_llm.messages.map(&:role)).to eq([:user])
+  end
+
   def job_for(chat, tool = charge_tool, &during_request)
     Chat.find(chat.id).with_tools(tool).tap do |job|
       allow(job.to_llm.provider).to receive(:complete) do |*, **, &stream|

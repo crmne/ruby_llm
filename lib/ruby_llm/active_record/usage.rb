@@ -71,6 +71,10 @@ module RubyLLM
         workflow.to_h.slice(*WORKFLOW_COLUMNS)
       end
 
+      def self.owner_preload
+        column_names.include?('owner_id') ? :owner : []
+      end
+
       def tokens
         RubyLLM::Tokens.new(
           input: input_tokens,
@@ -110,8 +114,17 @@ module RubyLLM
           status: status,
           tokens: tokens,
           cost: cost,
-          message: message
+          message: message,
+          owner: (owner if has_attribute?(:owner_id)),
+          workflow: workflow_context
         )
+      end
+
+      private
+
+      def workflow_context
+        context = WORKFLOW_COLUMNS.select { |name| has_attribute?(name) }.index_with { |name| self[name] }.compact
+        context unless context.empty?
       end
     end
   end

@@ -85,6 +85,18 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(later.pending_approvals).to be_empty
   end
 
+  it 'remembers nothing for an answered call, here or in another process' do
+    chat = process(Chat.create!(model: model_for(:openai)))
+    first = park(chat, call('refund'))
+    chat.add_message(role: :tool, content: 'refunded', tool_call_id: first.id)
+
+    chat.approve(first.id, remember: true)
+
+    upcoming = call('refund')
+    expect(chat.to_llm.approval_pending?(upcoming)).to be(true)
+    expect(process(chat).to_llm.approval_pending?(upcoming)).to be(true)
+  end
+
   it 'remembers approvals in a database that has not added tool call namespaces' do
     connection = RubyLLM::ActiveRecord::ToolCall.connection
     connection.remove_column(:ruby_llm_tool_calls, :namespace)

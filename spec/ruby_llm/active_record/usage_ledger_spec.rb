@@ -138,6 +138,14 @@ RSpec.describe RubyLLM::ActiveRecord::Usage do
               ['research', 'agent-id', 'succeeded', 0.42]])
   end
 
+  it 'reads an entry back with its owner and workflow' do
+    workflow = { workflow_id: 'wf', workflow_name: 'Nightly' }
+    record = described_class.create!(operation: 'chat', provider: 'openai', model: model_for(:openai),
+                                     status: 'succeeded', owner:, **workflow)
+
+    expect(record.to_entry).to have_attributes(owner:, workflow:)
+  end
+
   it 'writes a persisted chat attempt once, linked to both its chat and owner' do
     stub_chat_reply
     chat = Chat.create!(model: model_for(:anthropic))

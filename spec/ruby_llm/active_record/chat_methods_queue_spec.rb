@@ -148,6 +148,18 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(chat.queued_messages.map(&:content)).to eq(['Second'])
   end
 
+  it 'reads queued messages outside the query cache' do
+    chat.queue('First')
+    cached = []
+    record = ->(*, payload) { cached << payload[:cached] if payload[:sql].include?('ruby_llm_queued_messages') }
+
+    ActiveSupport::Notifications.subscribed(record, 'sql.active_record') do
+      Chat.cache { 2.times { chat.queued_messages.to_a } }
+    end
+
+    expect(cached.compact).to be_empty
+  end
+
   it 'moves attachments to the message without uploading them again' do
     queued = chat.queue('What is this?', with: image_path)
     blob = queued.attachments.blobs.sole
