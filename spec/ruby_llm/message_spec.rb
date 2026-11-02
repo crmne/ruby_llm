@@ -19,6 +19,43 @@ RSpec.describe RubyLLM::Message do
     )
   end
 
+  describe '#tool_calls' do
+    let(:call) { RubyLLM::ToolCall.new(id: 'call_1', name: 'weather') }
+
+    it 'is an empty collection on a message without calls' do
+      message = described_class.new(role: :assistant, content: 'Hello')
+
+      expect(message.tool_calls).to be_a(RubyLLM::ToolCall::Collection).and be_empty
+      expect(message).not_to be_tool_call
+      expect(message.to_h).not_to have_key(:tool_calls)
+    end
+
+    it 'keeps the order the calls came in and reads them by ID' do
+      other = RubyLLM::ToolCall.new(id: 'call_0', name: 'time')
+      message = described_class.new(role: :assistant, content: nil, tool_calls: { 'call_1' => call, 'call_0' => other })
+
+      expect(message.tool_calls.map(&:name)).to eq(%w[weather time])
+      expect(message.tool_calls['call_0']).to be(other)
+      expect(message.tool_calls).to eq('call_1' => call, 'call_0' => other)
+    end
+
+    it 'survives a round trip through to_h' do
+      message = described_class.new(role: :assistant, content: '', tool_calls: { 'call_1' => call })
+      rebuilt = described_class.new(message.to_h)
+
+      expect(message.to_h[:tool_calls]).to eq('call_1' => call.to_h)
+      expect(rebuilt.tool_calls.first).to have_attributes(id: 'call_1', name: 'weather')
+    end
+
+    it 'stays a collection through internal copies' do
+      message = described_class.new(role: :assistant, content: '', tool_calls: { 'call_1' => call })
+
+      expect(message.with_tool_calls({ 'call_1' => call }).tool_calls).to be_a(RubyLLM::ToolCall::Collection)
+      expect(message.without_native_content.tool_calls).to be_a(RubyLLM::ToolCall::Collection)
+      expect(message.tool_calls.first).to be(call)
+    end
+  end
+
   describe '#content' do
     it 'normalizes nil content to empty string for assistant tool-call messages' do
       tool_call = RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: {})

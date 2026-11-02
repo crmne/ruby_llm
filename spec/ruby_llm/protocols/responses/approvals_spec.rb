@@ -51,7 +51,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Approvals do
     call = approval.merge('type' => 'mcp_call', 'id' => 'remote_1', 'output' => 'Ruby docs')
     message = parse('status' => 'completed', 'output' => [call])
 
-    expect(message.tool_calls).to be_nil
+    expect(message.tool_calls).to be_empty
     expect(message.server_tool_calls.first.result).to eq('Ruby docs')
   end
 

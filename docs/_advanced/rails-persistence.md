@@ -213,7 +213,7 @@ RubyLLM persists provider tool requests internally and exposes public `RubyLLM::
 
 ```ruby
 message = chat.messages.find(&:tool_call?)
-tool_call = message.tool_calls.values.first
+tool_call = message.tool_calls.first
 
 tool_call.id
 tool_call.name

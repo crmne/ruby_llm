@@ -118,7 +118,7 @@ module RubyLLM
                 content: render_message_content(message)
               }
             end
-            message.tool_calls&.each_value do |call|
+            message.tool_calls.each do |call|
               entries << { type: 'function.call', tool_call_id: call.provider_call_id, name: call.name,
                            arguments: JSON.generate(call.arguments) }
             end

@@ -155,7 +155,7 @@ module RubyLLM
 
       def accumulate_tool_calls(new_tool_calls)
         RubyLLM.logger.debug { "Accumulating tool calls: #{new_tool_calls}" } if RubyLLM.config.log_stream_debug
-        new_tool_calls.each do |stream_key, tool_call|
+        new_tool_calls.to_h.each do |stream_key, tool_call|
           if continues_tool_call?(stream_key, tool_call)
             append_tool_call_fragment(stream_key, tool_call)
           else

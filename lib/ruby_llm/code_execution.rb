@@ -220,7 +220,7 @@ module RubyLLM
       end
 
       def run_code_call_ids(message)
-        (message.tool_calls || {}).values.select { |call| call.name == tool_name }.map(&:id)
+        message.tool_calls.select { |call| call.name == tool_name }.map(&:id)
       end
 
       def readable_by_model?(attachment)

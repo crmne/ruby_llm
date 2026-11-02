@@ -171,10 +171,10 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
     delta_chunk = streaming.send(:build_chunk, delta_event)
     result_chunk = streaming.send(:build_chunk, result_event)
 
-    expect(start_chunk.tool_calls).to be_nil
+    expect(start_chunk.tool_calls).to be_empty
     expect(start_chunk.server_tool_calls.map(&:type)).to eq(['server_tool_use'])
     expect(start_chunk.server_tool_calls.first.name).to eq('nova_grounding')
-    expect(delta_chunk.tool_calls).to be_nil
+    expect(delta_chunk.tool_calls).to be_empty
     expect(result_chunk.server_tool_calls.map(&:type)).to eq(['nova_grounding_result'])
   end
 
@@ -589,7 +589,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
     it 'reports no tool calls for a start frame without a toolUse' do
       event = { 'contentBlockStart' => { 'start' => {} } }
 
-      expect(streaming.send(:build_chunk, event).tool_calls).to be_nil
+      expect(streaming.send(:build_chunk, event).tool_calls).to be_empty
     end
   end
 

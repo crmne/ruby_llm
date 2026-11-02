@@ -54,7 +54,7 @@ RSpec.describe RubyLLM::Protocols::Cohere::Tools do
 
   describe '.render_tool_calls' do
     it 'renders assistant tool calls with JSON string arguments' do
-      calls = { 'abc' => RubyLLM::ToolCall.new(id: 'abc', name: 'cohere_weather', arguments: { 'city' => 'Berlin' }) }
+      calls = [RubyLLM::ToolCall.new(id: 'abc', name: 'cohere_weather', arguments: { 'city' => 'Berlin' })]
 
       expect(described_class.render_tool_calls(calls)).to eq(
         [{ id: 'abc', type: 'function', function: { name: 'cohere_weather', arguments: '{"city":"Berlin"}' } }]

@@ -51,7 +51,7 @@ module RubyLLM
           ({ type: 'reasoning', content: thinking } if present?(thinking)),
           ({ type: 'text', content: message.content } if present?(message.content)),
           *message.attachments.map { |attachment| attachment(attachment) },
-          *(message.tool_calls || {}).each_value.map { |call| tool_call(call) }
+          *message.tool_calls.map { |call| tool_call(call) }
         ].compact
       end
 

@@ -1265,7 +1265,7 @@ module RubyLLM
       end
 
       def persist_tool_calls(tool_calls, message_record: @message)
-        tool_calls.each_value do |tool_call|
+        tool_calls.each do |tool_call|
           attributes = tool_call.to_h
           attributes[:tool_call_id] = attributes.delete(:id)
           attributes[:approval] = 'pending' if to_llm.approval_pending?(tool_call)

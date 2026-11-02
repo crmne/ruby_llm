@@ -53,8 +53,8 @@ module RubyLLM
       def earlier_sequence_calls(call)
         return [] unless ordered?(call)
 
-        response = messages.reverse.find { |message| message.tool_calls&.key?(call.id) }
-        response.tool_calls.values.take_while { |candidate| candidate.id != call.id }
+        response = messages.reverse.find { |message| message.tool_calls.key?(call.id) }
+        response.tool_calls.take_while { |candidate| candidate.id != call.id }
                 .select { |candidate| candidate.namespace == call.namespace }
       end
 

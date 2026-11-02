@@ -26,7 +26,7 @@ module RubyLLM
                     when Message then [conversation]
                     else []
                     end.freeze
-        @tool_calls = messages.flat_map { |message| Array(message.tool_calls&.values) }
+        @tool_calls = messages.flat_map { |message| message.tool_calls.to_a }
         @tool_calls << result if result.is_a?(ToolCall)
         @tool_calls.freeze
         @output = primary_output(conversation, result)

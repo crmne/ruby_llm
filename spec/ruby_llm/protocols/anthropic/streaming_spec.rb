@@ -305,7 +305,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Streaming do
     chunk = protocol.send(:build_chunk, { 'type' => 'content_block_delta', 'index' => 0,
                                           'delta' => { 'type' => 'text_delta', 'text' => 'Hi' } })
 
-    expect(chunk.tool_calls).to be_nil
+    expect(chunk.tool_calls).to be_empty
   end
 
   it 'sends Accept-Encoding: identity on streaming requests' do

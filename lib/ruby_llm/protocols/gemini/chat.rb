@@ -498,7 +498,7 @@ module RubyLLM
           end
 
           def remember_tool_calls
-            current_message.tool_calls.each do |tool_call_id, tool_call|
+            current_message.tool_calls.to_h.each do |tool_call_id, tool_call|
               @tool_call_names[tool_call_id] = tool_call.name
             end
           end

@@ -20,6 +20,7 @@ After reading this guide, you will know:
 * How persisted chats now run in one process at a time.
 * What changes for a crashed job, a denial, pending approvals, an MCP input error, a stdio server's environment, a dropped MCP tool call, a write over a folder, a document URL, and a deploy that mixes versions.
 * What changes for agent `rescue_from` handlers and streamed transcription chunks.
+* How `tool_calls` reads now that it is a collection of calls.
 * Which errors failed Responses requests raise.
 * Why Bedrock batches report no request counts.
 * Which job predicates replace `done?` and `completed?`.
@@ -205,6 +206,38 @@ One answer RubyLLM could not parse, such as a tool call cut off at the token lim
 ## Batches Picked Up by ID Report Usage
 
 A batch collected through `Batch.find` without its chats or requests now reports its usage, to `usage.ruby_llm` and the ledger, once the batch is complete, once per `Batch` object. It reported nothing in 2.1. Collecting the same batch that way from two processes reports it twice, so collect each one in one place.
+
+## `tool_calls` Is a Collection of Calls
+
+`message.tool_calls` used to be a Hash keyed by call ID, or `nil` on a plain message without calls. It is now an Enumerable of `RubyLLM::ToolCall` objects, in the order the provider returned them, on plain messages, chunks, and persisted records alike:
+
+```ruby
+response.tool_calls.first
+response.tool_calls.map(&:name)
+response.tool_calls["call_1"]
+```
+
+`[]`, `fetch`, `values`, `keys`, `key?`, `each_value`, `transform_values`, and `size` work as before, and the collection equals an equivalent Hash. Two things change.
+
+Blocks receive a call, not an ID and a call. This covers `each` and everything Enumerable builds on it, such as `map`, `select`, and `any?`, and `select` and `reject` return Arrays. Take one block argument, or call `to_h` for the Hash:
+
+```ruby
+# Before
+response.tool_calls.each { |id, call| puts "#{id}: #{call.name}" }
+
+# After
+response.tool_calls.each { |call| puts "#{call.id}: #{call.name}" }
+```
+
+An empty collection is truthy, so `if message.tool_calls` is now always true. Use `message.tool_call?`:
+
+```ruby
+# Before
+run(message) if message.tool_calls
+
+# After
+run(message) if message.tool_call?
+```
 
 ## Writing Over a Folder Raises
 

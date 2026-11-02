@@ -133,7 +133,7 @@ The search appears on the reply that ran it, in `server_tool_calls`, before the 
 ```ruby
 response = chat.messages.find(&:tool_call?)
 response.server_tool_calls.any?  # => true
-response.tool_calls.values.map(&:name)  # => ["search_issues"]
+response.tool_calls.map(&:name)  # => ["search_issues"]
 ```
 
 A tool the model found stays found for the rest of the conversation. RubyLLM sends the same tool list on every turn, so a prompt cache that covers the tools keeps hitting.

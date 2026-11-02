@@ -47,7 +47,7 @@ Key attributes of a `Chunk`:
 *   `chunk.content`: The text fragment received in this chunk (can be `nil` or empty for some chunks, especially those containing only metadata or tool calls).
 *   `chunk.role`: Always `:assistant` for streamed response chunks.
 *   `chunk.model`: The model generating the response (usually present).
-*   `chunk.tool_calls`: A hash containing partial or complete tool call information if the model is invoking a [Tool]({% link _core_features/tools.md %}). The arguments might be streamed incrementally.
+*   `chunk.tool_calls`: The partial or complete tool calls in this chunk when the model is invoking a [Tool]({% link _core_features/tools.md %}), empty otherwise. The arguments might be streamed incrementally.
 *   `chunk.tokens.input`: Standard input tokens for the request (often `nil` until the final chunk). Cache reads and writes are exposed separately as `chunk.tokens.cache_read` and `chunk.tokens.cache_write` when providers report them.
 *   `chunk.tokens.output`: Cumulative billable output tokens *up to this chunk* (behavior varies by provider, often only accurate in the final chunk). Includes thinking/reasoning tokens when the provider bills them as output.
 *   `chunk.thinking`: Optional thinking output when providers stream it.

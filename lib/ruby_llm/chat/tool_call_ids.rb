@@ -16,7 +16,7 @@ module RubyLLM
 
       def self.unanswered(messages)
         answered = messages.select(&:tool_result?).to_set(&:tool_call_id)
-        messages.select(&:tool_call?).flat_map { |message| message.tool_calls.values }
+        messages.select(&:tool_call?).flat_map { |message| message.tool_calls.to_a }
                 .reject { |call| answered.include?(call.id) }
       end
       private_class_method :unanswered

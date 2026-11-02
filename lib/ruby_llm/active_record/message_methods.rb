@@ -139,10 +139,11 @@ module RubyLLM
         RubyLLM::Cost.aggregate(records.map(&:cost), complete: records.all?(&:cost_available?))
       end
 
-      # Returns the tool calls as RubyLLM::ToolCall values keyed by call id.
+      # Returns the tool calls, as RubyLLM::Message#tool_calls does: an
+      # Enumerable of RubyLLM::ToolCall objects, also readable by call ID.
       def tool_calls
         records = preloaded_records(:ruby_llm_tool_calls) || ruby_llm_tool_calls
-        records.to_h { |record| [record.tool_call_id, record.to_llm] }
+        RubyLLM::ToolCall::Collection.new(records.to_h { |record| [record.tool_call_id, record.to_llm] })
       end
 
       # Returns the tool call this message answers, or +nil+.

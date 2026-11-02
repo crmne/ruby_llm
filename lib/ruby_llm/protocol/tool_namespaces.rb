@@ -75,7 +75,7 @@ module RubyLLM
       end
 
       def flatten_message(message)
-        return message unless message.tool_calls&.values&.any? { |call| flattened?(call) }
+        return message unless message.tool_calls.any? { |call| flattened?(call) }
 
         message.with_tool_calls(message.tool_calls.transform_values { |call| flatten_tool_call(call) })
       end

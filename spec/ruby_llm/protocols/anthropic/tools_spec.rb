@@ -22,13 +22,13 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
                       cache_until_here?: false,
                       thinking: nil,
                       raw_reasoning: nil,
-                      tool_calls: {
-                        'tool_123' => RubyLLM::ToolCall.new(
+                      tool_calls: [
+                        RubyLLM::ToolCall.new(
                           id: 'tool_123',
                           name: 'test_tool',
                           arguments: { 'arg1' => 'value1' }
                         )
-                      })
+                      ])
     end
 
     it 'formats a message with content and tool call' do

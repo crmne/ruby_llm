@@ -168,7 +168,7 @@ RSpec.describe RubyLLM::Providers::Mistral::Chat do
       call = RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: { 'city' => 'Paris' },
                                    thought_signature: 'gemini-signature')
 
-      expect(provider.send(:render_tool_calls, { 'call_1' => call })).to eq(
+      expect(provider.send(:render_tool_calls, [call])).to eq(
         [{ id: 'call_1', type: 'function', function: { name: 'weather', arguments: '{"city":"Paris"}' } }]
       )
     end
