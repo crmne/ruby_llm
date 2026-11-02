@@ -18,7 +18,7 @@ After reading this guide, you will know:
 * How RubyLLM upgrades move from one release to the next.
 * How to upgrade a 2.1 application and its Rails schema to 2.2.
 * How persisted chats now run in one process at a time.
-* What changes for a crashed job, a denial, pending approvals, an MCP input error, a document URL, and a deploy that mixes versions.
+* What changes for a crashed job, a denial, pending approvals, an MCP input error, a stdio server's environment, a document URL, and a deploy that mixes versions.
 
 This guide covers **2.1 to 2.2**. Coming from 2.0? Follow the [2.1 upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.1.1/docs/_reference/upgrading.md) with RubyLLM 2.1 first.
 
@@ -161,6 +161,17 @@ A streamed request whose response holds no events, such as an empty body or a pl
 ## MCP Prompts Take No Attachments
 
 `ask(prompt, with: file)` with an `MCP::Prompt` dropped the attachment in 2.1. It now raises `ArgumentError`.
+
+## Stdio MCP Servers Get a Short Environment
+
+A stdio MCP server inherited your application's whole environment in 2.1, including every API key. It now gets only `HOME`, `LOGNAME`, `PATH`, `SHELL`, `TERM`, `USER`, `TMPDIR`, `LANG`, `LC_ALL`, `LC_CTYPE`, `GEM_HOME`, `GEM_PATH`, their Windows equivalents, and what you set with `env`. A server that relied on anything else, such as a token, a proxy, `NODE_EXTRA_CA_CERTS`, or `BUNDLE_PATH`, now needs it passed explicitly:
+
+```ruby
+class Files < RubyLLM::MCP
+  command "npx", "-y", "@modelcontextprotocol/server-filesystem", "."
+  env NODE_EXTRA_CA_CERTS: ENV.fetch("NODE_EXTRA_CA_CERTS")
+end
+```
 
 ## Gemini Returns Every Image It Made
 

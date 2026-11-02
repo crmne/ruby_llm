@@ -49,6 +49,15 @@ end
 
 The process starts on the first request and stops when you call `close`.
 
+A stdio server does not inherit your application's environment, so it never sees your API keys unless you give them to it. It gets only what a process needs to start: `HOME`, `LOGNAME`, `PATH`, `SHELL`, `TERM`, `USER`, `TMPDIR`, `LANG`, `LC_ALL`, `LC_CTYPE`, `GEM_HOME`, `GEM_PATH`, and their Windows equivalents. Pass anything else with `env`, which also overrides those:
+
+```ruby
+class GitHub < RubyLLM::MCP
+  command "npx", "-y", "@modelcontextprotocol/server-github"
+  env GITHUB_PERSONAL_ACCESS_TOKEN: ENV.fetch("GITHUB_TOKEN")
+end
+```
+
 In Rails, `bin/rails generate ruby_llm:mcp Linear https://mcp.linear.app/mcp` creates `app/mcp/linear.rb`, and `--command` instead of a URL creates a server started over stdio.
 
 ### Custom Transports

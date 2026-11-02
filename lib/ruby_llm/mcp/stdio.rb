@@ -12,6 +12,9 @@ module RubyLLM
     # time. Its stderr is the parent's. A server that predates 2026-07-28
     # keeps its session for the life of its process, so after a restart its
     # requests raise SessionExpired until the client initializes it again.
+    # The process inherits only INHERITED_ENV from the application, and +env+
+    # adds to and overrides those, so a server never sees the application's
+    # API keys unless it is given them.
     #
     # Subscriptions share the channel, so whichever thread reads a message
     # that belongs to one hands it to the subscription's listener: a
@@ -22,6 +25,12 @@ module RubyLLM
       SHUTDOWN_GRACE = 2
       CHECK_INTERVAL = 0.5
       SUBSCRIPTION_ID = 'io.modelcontextprotocol/subscriptionId'
+      INHERITED_ENV = %w[
+        GEM_HOME GEM_PATH HOME LANG LC_ALL LC_CTYPE LOGNAME PATH SHELL TERM TMPDIR USER
+        APPDATA COMSPEC HOMEDRIVE HOMEPATH LOCALAPPDATA PATHEXT PROCESSOR_ARCHITECTURE
+        PROGRAMDATA PROGRAMFILES PROGRAMFILES(X86) PROGRAMW6432 SYSTEMDRIVE SYSTEMROOT
+        TEMP TMP USERNAME USERPROFILE WINDIR
+      ].freeze
 
       # The messages of the subscription opened by request +id+, or with no
       # +id+, the changes a server that predates subscriptions announces.
@@ -218,7 +227,8 @@ module RubyLLM
 
       def start
         options = @directory ? { chdir: @directory } : {}
-        @stdin, @stdout, @process = Open3.popen2(@env, *@command, **options)
+        env = ENV.slice(*INHERITED_ENV).merge(@env)
+        @stdin, @stdout, @process = Open3.popen2(env, *@command, unsetenv_others: true, **options)
         @buffer = +''
       end
 

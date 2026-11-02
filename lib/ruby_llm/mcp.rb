@@ -124,8 +124,10 @@ module RubyLLM
         @directory = value
       end
 
-      # Adds environment variables for a stdio server's process. Values may
-      # be blocks or method names. Called with no arguments, returns them.
+      # Adds environment variables for a stdio server's process, which
+      # inherits only a short list of safe variables from the application.
+      # Values override inherited ones and may be blocks or method names.
+      # Called with no arguments, returns them.
       #
       #   env NODE_ENV: "production", API_KEY: -> { user.api_key }
       #
