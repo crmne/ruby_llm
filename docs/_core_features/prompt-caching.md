@@ -37,8 +37,10 @@ Bedrock caches Claude and Nova prompts on its own only at best effort. With `wit
 Use options when you need a cache key or lifetime:
 
 ```ruby
-chat.with_caching(ttl: "1h")
+chat.with_caching(ttl: 1.hour)
 ```
+
+A lifetime can be a Duration, a number of seconds, or the provider's own spelling such as `"1h"`. RubyLLM renders it the way each provider expects, here and on `cache_until_here` and `RubyLLM.cache`.
 
 Options depend on the provider and model:
 
@@ -132,7 +134,7 @@ cache = RubyLLM.cache(
   File.read("handbook.md"),
   model: 'gemini-2.5-flash',
   instructions: "You are a meticulous release engineer.",
-  ttl: 3600
+  ttl: 1.hour
 )
 
 cache.name       # => "cachedContents/abc123"
@@ -146,7 +148,7 @@ Pass file attachments with `with:`, the same way `ask` accepts them:
 cache = RubyLLM.cache("Reference material:", model: 'gemini-2.5-flash', with: "manual.pdf")
 ```
 
-The content must meet the model's minimum cacheable size. `ttl:` accepts seconds or a duration string such as `"300s"` and defaults to one hour.
+The content must meet the model's minimum cacheable size. `ttl:` accepts a Duration, seconds, or a duration string such as `"300s"`, and defaults to one hour.
 
 Attach the cache with `with_caching(id:)`, passing the `CachedContent` or its name:
 
@@ -161,7 +163,7 @@ The cache is the conversation's prefix. RubyLLM sends the chat's own messages un
 `CachedContent` manages the rest of the lifecycle:
 
 ```ruby
-cache.renew(ttl: 7200) # sets expiry to two hours from now
+cache.renew(ttl: 2.hours) # sets expiry to two hours from now
 cache.delete           # removes the cache before its TTL
 
 cache = RubyLLM::CachedContent.find("cachedContents/abc123", provider: :gemini)

@@ -267,8 +267,9 @@ module RubyLLM
 
     # Marks this message as an explicit prompt cache boundary. Providers
     # with boundary controls use the conversation up to and including this
-    # message as the cacheable prefix. Pass +ttl:+ to give this boundary its
-    # own cache lifetime instead of the +ttl:+ from Chat#with_caching, on
+    # message as the cacheable prefix. Pass +ttl:+, in any form
+    # Chat#with_caching takes, to give this boundary its own cache lifetime
+    # instead of the +ttl:+ from Chat#with_caching, on
     # providers that set a lifetime per boundary. Returns +self+.
     #
     #   chat.add_message(role: :user, content: long_context).cache_until_here

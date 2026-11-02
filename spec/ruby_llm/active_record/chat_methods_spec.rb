@@ -545,6 +545,14 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(chat.to_llm.messages.sole.cache_until_here?).to be(true)
     end
 
+    it 'replays a Duration boundary lifetime after a reload' do
+      chat = Chat.create!(model: model_for(:anthropic))
+
+      chat.with_instructions('Stable policy', cache_until_here: { ttl: 1.hour })
+
+      expect(Chat.find(chat.id).to_llm.render[:system].last[:cache_control]).to include(ttl: '1h')
+    end
+
     it 'persists the boundary lifetime and replays it after a reload' do
       chat = Chat.create!(model: model_id)
 

@@ -60,11 +60,11 @@ module RubyLLM
       self
     end
 
-    # Extends the cache's lifetime to +ttl:+ seconds from now, given as an
-    # Integer or a provider duration string such as <tt>"600s"</tt>.
+    # Extends the cache's lifetime to +ttl:+ from now, given as seconds, a
+    # Duration, or a provider duration string such as <tt>"600s"</tt>.
     # Updates #expires_at and returns +self+.
     #
-    #   cache.renew(ttl: 3600)
+    #   cache.renew(ttl: 1.hour)
     #
     def renew(ttl:)
       refreshed = @provider_instance.extend_cache(name, ttl: ttl)
@@ -81,7 +81,7 @@ module RubyLLM
     # +content+ is the text to cache; pass file attachments with +with:+
     # the way Chat#ask accepts them. +instructions:+ caches a system
     # prompt alongside the content, and +ttl:+ sets the cache lifetime in
-    # seconds (Integer) or as a provider duration string such as
+    # seconds, as a Duration, or as a provider duration string such as
     # <tt>"300s"</tt>. When +provider:+ is omitted, the model's default
     # provider is used. The content must exceed the model's minimum
     # cacheable token count.

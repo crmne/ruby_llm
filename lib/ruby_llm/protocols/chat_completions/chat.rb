@@ -283,8 +283,12 @@ module RubyLLM
 
           {}.tap do |cache_options|
             cache_options[:mode] = options[:mode] if options[:mode]
-            cache_options[:ttl] = ttl if ttl
+            cache_options[:ttl] = render_cache_lifetime(ttl) if ttl
           end
+        end
+
+        def render_cache_lifetime(ttl)
+          Protocol::CacheLifetime.render(ttl)
         end
 
         def retention_ttl(retention)
