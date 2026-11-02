@@ -377,6 +377,40 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     end
   end
 
+  describe 'approvals on a copy of the underlying chat' do
+    let(:chat) { Chat.create!(model: model_for(:openai)) }
+
+    def tool_call
+      message = chat.messages_association.create!(role: 'assistant', content: '')
+      message.ruby_llm_tool_calls.create!(tool_call_id: "call_#{SecureRandom.hex(6)}", name: 'charge_card',
+                                          arguments: {})
+    end
+
+    it 'reads approvals recorded after the copy was made' do
+      record = tool_call
+      copy = chat.to_llm.dup
+      state = copy.instance_variable_get(:@tool_call_state)
+
+      expect(state.decision(record.to_llm)).to be_nil
+
+      record.update!(approval: 'remembered')
+
+      expect(state.decision(record.to_llm)).to be(true)
+      expect(state).to be_remembered(record.to_llm)
+    end
+
+    it 'prefers a decision made on the copy over the row' do
+      record = tool_call
+      record.update!(approval: 'approved')
+      copy = chat.to_llm.dup
+
+      copy.deny(record.to_llm)
+
+      expect(copy.instance_variable_get(:@tool_call_state).decision(record.to_llm)).to be(false)
+      expect(chat.to_llm.instance_variable_get(:@tool_call_state).decision(record.to_llm)).to be(true)
+    end
+  end
+
   describe '#dup' do
     it 'gives the copy its own conversation' do
       chat = Chat.create!(model: model_id)
@@ -995,8 +1029,8 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
     it 'classifies every method defined on Chat' do
       integration_methods = %i[
-        approval_checker= approval_pending? cancellation_checker= continue_turn fallback_errors
-        interruptions= message_queue= prepare_message raise_if_pending_tool_calls! remembered_checker=
+        approval_pending? cancellation_checker= continue_turn fallback_errors
+        interruptions= message_queue= prepare_message raise_if_pending_tool_calls!
         raise_if_prompt_attachments! running_checker= take_queued_messages tool_call_claimer= tool_call_releaser=
         tool_call_state= tool_prefs
         add_usage_entry usage_entries usage_entries= usage_recorder= progress_recorder=
