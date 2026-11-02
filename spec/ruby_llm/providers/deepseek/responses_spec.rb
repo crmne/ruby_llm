@@ -13,6 +13,11 @@ RSpec.describe RubyLLM::Providers::DeepSeek::Responses do
     protocol.send(:render_payload, messages, tools: {}, temperature: nil, model:, **options)
   end
 
+  it 'raises for a thinking budget' do
+    expect { render([], thinking: RubyLLM::Thinking::Config.new(budget: 2048)) }
+      .to raise_error(ArgumentError, /no thinking budget/)
+  end
+
   describe 'server tools' do
     include_context 'with configured RubyLLM'
 

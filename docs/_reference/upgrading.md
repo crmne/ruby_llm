@@ -97,7 +97,7 @@ New tool calls receive a RubyLLM ID rather than exposing the provider's ID. Cont
 
 Restart every worker on 2.2 before resuming these conversations. A 2.1 worker does not read the saved provider ID.
 
-Each new invocation has its own ID, even when a provider repeats an earlier ID or requests the same arguments again. A one-time approval applies only to that invocation. `remember: true` continues to approve later calls to the same tool.
+Each new invocation has its own ID, even when a provider repeats an earlier ID or requests the same arguments again. A one-time approval applies only to that invocation. `remember: true` continues to approve later calls to the same tool, except on a call that already has a result, which now remembers nothing.
 
 For chats with tool calls saved before 2.2, batch redelivery checks still rely on those older provider IDs. Start a new chat for new batches if your provider reuses them.
 
@@ -193,6 +193,8 @@ Operations used to drop these options silently. They now raise `ArgumentError` b
 
 Two options now take effect instead. `content_type:` on `upload` reaches every provider. `size:` also reaches Imagen and OpenRouter, so a request that used to get a square image follows what you asked for. Imagen takes it as an aspect ratio, and a tier such as `"2K"` raises `ArgumentError`. OpenRouter takes ratios, tiers, and pixel dimensions.
 
+A WAV file for streamed transcription whose odd final chunk has no pad byte is now accepted.
+
 ## Chat Options a Provider Cannot Carry Raise
 
 These chat options were dropped, or downgraded with a log line. They now raise when the request is built.
@@ -200,7 +202,8 @@ These chat options were dropped, or downgraded with a log line. They now raise w
 | Option | Raises on | Do instead |
 | --- | --- | --- |
 | `with_schema` | DeepSeek Chat Completions | Pass `protocol: :responses` |
-| `with_thinking(budget:)` | DeepSeek, Ollama | Use `effort:` |
+| `with_thinking(budget:)` | DeepSeek, Mistral, Ollama | Use `effort:` |
+| `with_thinking(effort: :high, display: :full)` | Gemini | Use `display: :summarized` or `display: :omitted` |
 | `with_tool_options(choice: :none)` with tools | Bedrock Converse | Remove the tools |
 | `with_tool_options(calls: :one)` | Mistral Conversations | Use Chat Completions |
 | `with_caching(id:)` | Gemini Interactions | Use the default protocol |
@@ -274,6 +277,10 @@ run(message) if message.tool_calls
 # After
 run(message) if message.tool_call?
 ```
+
+## Tool Results That Cannot Be Sent Reach the Model as Errors
+
+A tool that returns an array mixing attachments with other values, such as `[attachment, 42]`, used to raise `ArgumentError` out of `ask`. The tool has already run by then, so raising left the call pending to run again. The model now receives `{ error: }` as the tool result and the chat continues, so a `rescue ArgumentError` around `ask` no longer sees this case. Return Strings and attachments from your tools.
 
 ## Writing Over a Folder Raises
 

@@ -377,6 +377,9 @@ module RubyLLM
 
     def coerce_tool_calls(tool_calls)
       return tool_calls if tool_calls.is_a?(ToolCall::Collection)
+      if tool_calls.is_a?(Array) && tool_calls.all?(ToolCall)
+        return ToolCall::Collection.new(ToolCall.index(tool_calls))
+      end
 
       ToolCall::Collection.new(
         tool_calls.to_h do |id, call|

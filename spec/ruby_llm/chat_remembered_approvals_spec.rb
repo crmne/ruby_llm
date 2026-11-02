@@ -61,6 +61,16 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.pending_approvals.first.id).not_to eq(first_id)
   end
 
+  it 'remembers nothing when the approved call already has a result' do
+    chat = RubyLLM.chat.with_tools(refund)
+    chat.add_message(calls('call_1'))
+    chat.add_message(role: :tool, content: 'refunded', tool_call_id: 'call_1')
+    chat.approve('call_1', remember: true)
+    chat.add_message(calls('call_2'))
+
+    expect(chat.pending_approvals.map(&:id)).to eq(['call_2'])
+  end
+
   it 'remembers remote tools by name' do
     chat = RubyLLM.chat
     chat.add_message(calls('call_1', name: 'deploy', remote: true))
