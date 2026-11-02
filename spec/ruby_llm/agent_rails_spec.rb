@@ -23,6 +23,49 @@ RSpec.describe RubyLLM::Agent do
     expect(RubyLLM.config.openai_api_key).to be_nil
   end
 
+  describe 'rescue_from on records' do
+    let(:agent) do
+      Class.new(described_class) do
+        chat_model Chat
+        model model_for(:openai, :temperature)
+        inputs :account
+        rescue_from(RubyLLM::RateLimitError) { |error| [self.class, chat, account, error.class] }
+      end
+    end
+
+    def rate_limited(record)
+      allow(record.to_llm.instance_variable_get(:@provider))
+        .to receive(:complete).and_raise(RubyLLM::RateLimitError.new('slow down'))
+      record
+    end
+
+    it 'runs handlers on a record from ::find, the way a generated job calls it' do
+      record = agent.find(agent.create!.id, account: 'acme')
+      rate_limited(record)
+      record.add_message(role: :user, content: 'hi')
+
+      expect(record.complete).to eq([agent, record, 'acme', RubyLLM::RateLimitError])
+    end
+
+    it 'runs handlers on a record from ::create' do
+      record = rate_limited(agent.create(account: 'acme'))
+
+      expect(record.ask('hi')).to eq([agent, record, 'acme', RubyLLM::RateLimitError])
+    end
+
+    it 'runs handlers on a record from ::create!' do
+      record = rate_limited(agent.create!(account: 'acme'))
+
+      expect(record.ask('hi')).to eq([agent, record, 'acme', RubyLLM::RateLimitError])
+    end
+
+    it 'leaves a record found through the model alone' do
+      record = rate_limited(Chat.find(agent.create!.id))
+
+      expect { record.ask('hi') }.to raise_error(RubyLLM::RateLimitError)
+    end
+  end
+
   def write_prompt(agent_name, content)
     prompt_dir = Rails.root.join('app/prompts', agent_name)
     FileUtils.mkdir_p(prompt_dir)

@@ -17,7 +17,7 @@ module RubyLLM
         attributes = inspect_attributes
                      .reject { |_, value| value.nil? || (value.respond_to?(:empty?) && value.empty?) }
                      .map { |name, value| "#{name}: #{format_for_inspect(value)}" }
-        class_name = self.class.ancestors.find(&:name).name
+        class_name = self.class.ancestors.grep(Class).find(&:name).name
         return "#<#{class_name}>" if attributes.empty?
 
         "#<#{class_name} #{attributes.join(', ')}>"

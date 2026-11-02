@@ -102,6 +102,23 @@ RSpec.describe RubyLLM::Protocols::Gemini::Videos do
     expect(job.video.raw['done']).to be(true)
   end
 
+  describe '#video_job_url' do
+    it 'uses the operation name' do
+      job = RubyLLM::VideoJob.new(id: 'models/veo/operations/abc123', protocol: protocol)
+
+      expect(protocol.video_job_url(job)).to eq('models/veo/operations/abc123')
+    end
+
+    ['https://attacker.example/steal', '//attacker.example/steal', "models/veo\nhttps://attacker.example",
+     'files/abc123', 'models/../operations/abc123', 'models/veo/operations/..'].each do |id|
+      it "refuses to poll #{id.inspect}, which would carry the API key elsewhere" do
+        job = RubyLLM::VideoJob.new(id:, protocol:)
+
+        expect { protocol.video_job_url(job) }.to raise_error(ArgumentError, /not a video operation name/)
+      end
+    end
+  end
+
   describe '#parse_video_job_status' do
     let(:job) { RubyLLM::VideoJob.new(id: 'models/veo/operations/abc123', protocol: protocol) }
 

@@ -5,6 +5,13 @@ module RubyLLM
     class ChatCompletions
       # Audio transcription methods for the OpenAI API integration
       module Transcription
+        STREAM_TYPES = {
+          'transcript.text.delta' => RubyLLM::TranscriptionChunk::DELTA,
+          'transcript.text.partial' => RubyLLM::TranscriptionChunk::PARTIAL,
+          'transcript.text.segment' => RubyLLM::TranscriptionChunk::SEGMENT,
+          'transcript.text.done' => RubyLLM::TranscriptionChunk::DONE
+        }.freeze
+
         module_function
 
         def transcription_url
@@ -74,7 +81,7 @@ module RubyLLM
         end
 
         def build_transcription_chunk(data)
-          type = data['type']
+          type = STREAM_TYPES[data['type']]
 
           RubyLLM::TranscriptionChunk.new(
             type: type,

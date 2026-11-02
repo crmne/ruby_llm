@@ -65,10 +65,6 @@ module RubyLLM
     UNRESOLVED_CONTEXT = Object.new.freeze
     private_constant :UNRESOLVED_CONTEXT
 
-    # The chat operations an agent instance runs through its ::rescue_from
-    # handlers. Remaining delegated methods pass through untouched.
-    GUARDED_OPERATIONS = %i[ask say ask_later complete generate run_tools step count_tokens compact].freeze
-
     # Chat methods that return the wrapped chat so calls can be chained there.
     CHAINABLE_CHAT_DELEGATES = %i[
       with_instructions with_tools with_mcp with_provider_tools with_tool_options with_model
@@ -106,7 +102,7 @@ module RubyLLM
       @mcp_defer
     ] + PASSTHROUGH_OPTIONS.map { |option| :"@#{option}" }).freeze
     private_constant :DUPED_INHERITED_CONFIG, :COPIED_INHERITED_CONFIG,
-                     :PASSTHROUGH_OPTIONS, :THINKING_OPTIONS, :GUARDED_OPERATIONS,
+                     :PASSTHROUGH_OPTIONS, :THINKING_OPTIONS,
                      :CHAINABLE_CHAT_DELEGATES, :PASSTHROUGH_CHAT_DELEGATES
 
     class << self
@@ -518,7 +514,8 @@ module RubyLLM
       end
 
       # Registers a handler for exceptions raised by the chat operations of
-      # this agent's instances: #ask, #say, #ask_later, #complete,
+      # this agent's instances and of the chats and records ::chat, ::create,
+      # ::create!, and ::find return: #ask, #say, #ask_later, #complete,
       # #generate, #run_tools, #step, #count_tokens, and #compact. Name the
       # handler with +with:+ or pass a block; either runs on the agent instance,
       # so the agent's #chat, inputs, and class name are available for instrumentation.
@@ -697,7 +694,8 @@ module RubyLLM
         chat,
         input_values:,
         persist_instructions:,
-        resolved_context: UNRESOLVED_CONTEXT
+        resolved_context: UNRESOLVED_CONTEXT,
+        agent: nil
       )
         runtime = runtime_context(chat:, inputs: input_values)
         apply_chat_options(chat)
@@ -718,6 +716,7 @@ module RubyLLM
         apply_headers(chat, runtime)
         apply_schema(chat, runtime)
         apply_fallbacks(chat)
+        apply_rescue_handlers(chat, agent, input_values)
       end
 
       private
@@ -922,6 +921,12 @@ module RubyLLM
         chat.with_fallbacks(*fallbacks, **fallback_options) if fallbacks.any?
       end
 
+      def apply_rescue_handlers(chat, agent, input_values)
+        return unless chat.is_a?(Chat::Rescuable)
+
+        chat.rescuer = rescue_handlers.empty? ? nil : agent || allocate.bind(chat, input_values)
+      end
+
       def resolved_schema_value(runtime)
         value = schema
         return value unless value.is_a?(Proc)
@@ -1048,22 +1053,20 @@ module RubyLLM
       input_values = input_values.merge(inputs || {})
 
       if chat
-        @chat = chat
-        self.class.apply_configuration(@chat, input_values:, persist_instructions:)
+        bind(chat, input_values)
+        self.class.apply_configuration(@chat, input_values:, persist_instructions:, agent: self)
         return
       end
 
       context_value = self.class.resolved_context(inputs: input_values)
-      @chat = self.class.build_chat(
-        inputs: input_values,
-        options: chat_options,
-        resolved_context: context_value
-      )
+      bind(self.class.build_chat(inputs: input_values, options: chat_options, resolved_context: context_value),
+           input_values)
       self.class.apply_configuration(
         @chat,
         input_values:,
         persist_instructions:,
-        resolved_context: context_value
+        resolved_context: context_value,
+        agent: self
       )
     end
 
@@ -1622,12 +1625,18 @@ module RubyLLM
     # Compacts the model context through Chat#compact and returns its Message.
     # Exceptions use ::rescue_from handlers.
 
-    GUARDED_OPERATIONS.each do |operation|
+    Chat::Rescuable::OPERATIONS.each do |operation|
       define_method(operation) do |*args, **kwargs, &block|
-        chat.public_send(operation, *args, **kwargs, &block)
-      rescue StandardError => e
-        rescue_with_handler(e)
+        rescuing { chat.public_send(operation, *args, **kwargs, &block) }
       end
+    end
+
+    def bind(chat, input_values) # :nodoc:
+      @chat = chat
+      input_values.each do |name, value|
+        define_singleton_method(name) { value } unless respond_to?(name)
+      end
+      self
     end
 
     # Runs the ::rescue_from handler matching +exception+ and returns its
@@ -1641,6 +1650,18 @@ module RubyLLM
 
       handler_method = method(handler)
       handler_method.arity.zero? ? handler_method.call : handler_method.call(exception)
+    end
+
+    private
+
+    def rescuing(&)
+      return chat.rescuing_with(self, &) if chat.is_a?(Chat::Rescuable)
+
+      begin
+        yield
+      rescue StandardError => e
+        rescue_with_handler(e)
+      end
     end
   end
 end

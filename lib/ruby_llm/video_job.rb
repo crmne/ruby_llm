@@ -28,12 +28,12 @@ module RubyLLM
     attr_reader :raw
 
     # The clip length in seconds the request asked for, or +nil+ when it
-    # left the length to the provider's default.
+    # left the length to the provider's default or the job came from ::find.
     attr_reader :duration
 
     # The resolution the request asked for, as the provider spells it,
     # such as <tt>"720p"</tt> or <tt>"1280x720"</tt>, or +nil+ when it left
-    # the resolution to the provider's default.
+    # the resolution to the provider's default or the job came from ::find.
     attr_reader :resolution
 
     # Submits a video generation job and returns a VideoJob without
@@ -77,6 +77,22 @@ module RubyLLM
         event[:job_id] = job.id
         job
       end
+    end
+
+    # Returns a VideoJob reflecting the provider's current state for +id+.
+    # Use it to pick a job back up from any process. Pass the #model that
+    # rendered it: it selects the provider and protocol, and names the
+    # usage entry. A job already finished reports its usage here, once per
+    # VideoJob object, attributed to the owner of RubyLLM.with_usage_owner.
+    #
+    #   job = RubyLLM::VideoJob.find(clip.video_job_id, model: clip.video_model, provider: :xai)
+    #   job.video&.save("clip.mp4")
+    #
+    # Pass +context:+ to use a Context in place of the global configuration.
+    def self.find(id, model:, provider: nil, assume_model_exists: false, context: nil)
+      config = context&.config || RubyLLM.config
+      model, provider_instance = Models.resolve(model, provider:, assume_model_exists:, config:)
+      provider_instance.find_video_job(id, model:)
     end
 
     def initialize(id:, protocol:, model: nil, status: :pending, raw: nil, error: nil, # :nodoc:

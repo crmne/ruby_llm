@@ -32,6 +32,7 @@ module RubyLLM
       include ChatCancellation
       include ChatPlaceholders
       include SystemInstructions
+      prepend RubyLLM::Chat::Rescuable
 
       CANCELLATION_POLL_INTERVAL = 1.0 # :nodoc:
       COMPLETION_ERRORS = [ # :nodoc:

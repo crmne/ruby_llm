@@ -23,6 +23,16 @@ RSpec.describe RubyLLM::Protocols::Bedrock::AsyncVideos do
     allow(RubyLLM::Providers::Bedrock).to receive(:new).with(context.config).and_return(provider)
   end
 
+  it 'finds a job through the protocol its model selects' do
+    stub_request(:get, "#{endpoint}/#{CGI.escape(job_id)}").to_return(
+      status: 200, headers: { 'Content-Type' => 'application/json' }, body: { status: 'InProgress' }.to_json
+    )
+
+    job = RubyLLM::VideoJob.find(job_id, model:, provider: :bedrock, context:)
+
+    expect(job).to have_attributes(id: job_id, model:, status: :pending)
+  end
+
   it 'generates and downloads a real Luma video under the intended S3 prefix', :live do
     uri = ENV.fetch('BEDROCK_VIDEO_S3_URI', nil)
     interaction = VCR.current_cassette.http_interactions.interactions

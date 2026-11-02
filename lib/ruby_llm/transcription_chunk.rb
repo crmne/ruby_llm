@@ -13,19 +13,19 @@ module RubyLLM
     include Support::Inspectable
 
     # Text deltas, arriving as the model transcribes.
-    DELTA = 'transcript.text.delta'
+    DELTA = :delta
 
     # A tentative transcript that may change before its segment completes.
-    PARTIAL = 'transcript.text.partial'
+    PARTIAL = :partial
 
     # A completed segment, on models that return timed or diarized segments.
-    SEGMENT = 'transcript.text.segment'
+    SEGMENT = :segment
 
     # The final event, carrying the complete transcript.
-    DONE = 'transcript.text.done'
+    DONE = :done
 
-    # The normalized event type, such as
-    # <tt>"transcript.text.delta"</tt>.
+    # The event type: +:delta+, +:partial+, +:segment+, or +:done+, or +nil+
+    # for a provider event RubyLLM does not normalize.
     attr_reader :type
 
     # The text added by this event, or +nil+ for events that add no text.

@@ -401,7 +401,7 @@ You can always access the wrapped chat object directly via `agent.chat`.
 
 ## Handling Errors with `rescue_from`
 
-`rescue_from` declares how an agent handles exceptions raised by its chat operations: `ask`, `say`, `ask_later`, `complete`, `generate`, `run_tools`, `step`, and `count_tokens`.
+`rescue_from` declares how an agent handles exceptions raised by its chat operations: `ask`, `say`, `ask_later`, `complete`, `generate`, `run_tools`, `step`, `count_tokens`, and `compact`.
 
 ```ruby
 class ApplicationAgent < RubyLLM::Agent
@@ -424,7 +424,14 @@ class ApplicationAgent < RubyLLM::Agent
 end
 ```
 
-Handlers run on the agent instance, so `self`, the agent's inputs, and `agent.chat` are available for instrumentation. Pass a block instead of `with:` when the handler is a one-liner:
+Handlers apply however you reach the chat: `SummaryAgent.new`, `.chat`, `.create`, `.create!`, `.find`, and calls chained from a setter such as `agent.with_temperature(0.2).ask("Hi")`. The `find` in a generated `ChatResponseJob` is covered too:
+
+```ruby
+chat = ChatAgent.find(chat_id)
+chat.complete(&:broadcast) # handle_transient runs on a rate limit
+```
+
+Handlers run on an agent instance, so `self`, the agent's inputs, and `chat` are available for instrumentation. With `find` and `create`, pass the inputs to that call. Pass a block instead of `with:` when the handler is a one-liner:
 
 ```ruby
 class SummaryAgent < ApplicationAgent
@@ -443,8 +450,6 @@ The semantics match `ActiveSupport::Rescuable`:
 * Exceptions that no handler matches are re-raised with their original backtrace.
 
 Subclasses inherit the handlers declared when they are defined, so an `ApplicationAgent` base class is the usual place for shared error policy.
-
-Handlers apply to agent instances. `WorkAssistant.chat` returns a plain `RubyLLM::Chat`, which is not wrapped, so use `WorkAssistant.new` when you want the agent's error handling.
 
 ## Rails-Backed Agents
 

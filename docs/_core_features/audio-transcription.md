@@ -169,7 +169,7 @@ puts transcription.text
 | `chunk.segment?` | `chunk.segment`, a Hash with speaker and timing fields |
 | `chunk.done?` | `chunk.text`, the complete transcript when supplied by the endpoint |
 
-Read the final transcript from `transcription.text`. `chunk.raw` holds the original event when you need additional fields.
+`chunk.type` names the event as a Symbol: `:partial`, `:delta`, `:segment`, or `:done`. It is `nil` for a provider event RubyLLM does not normalize. Read the final transcript from `transcription.text`. `chunk.raw` holds the original event when you need additional fields.
 
 Diarization models can stream speaker segments:
 

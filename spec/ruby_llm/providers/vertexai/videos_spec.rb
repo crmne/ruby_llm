@@ -49,6 +49,14 @@ RSpec.describe RubyLLM::Providers::VertexAI::Videos do
     end
   end
 
+  describe '#video_job_url' do
+    it 'refuses an id that is not an operation name' do
+      job = RubyLLM::VideoJob.new(id: 'https://attacker.example/operations/abc123', protocol:, model:)
+
+      expect { protocol.video_job_url(job) }.to raise_error(ArgumentError, /not a video operation name/)
+    end
+  end
+
   describe '#refresh_video_job' do
     let(:job) { RubyLLM::VideoJob.new(id: operation_name, protocol:, model:) }
 
