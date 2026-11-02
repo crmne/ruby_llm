@@ -43,6 +43,14 @@ module RubyLLM
     # The Model the chat sends requests to.
     attr_reader :model
 
+    # Returns the id of the Model the chat sends requests to.
+    #
+    #   chat.model_id # => "gpt-6-luna"
+    #
+    def model_id
+      model.id
+    end
+
     # The Provider instance handling requests for the current model.
     attr_reader :provider
 
@@ -918,16 +926,17 @@ module RubyLLM
     end
 
     # Enables provider prompt caching. With no arguments the provider's
-    # default behavior applies; options such as +ttl:+ apply where
-    # supported. Pass +id:+ with a CachedContent (or its name) from
-    # RubyLLM.cache to attach an explicit
-    # content cache. Pass +false+ to stop RubyLLM from sending cache
+    # default behavior applies; options apply where supported. +ttl:+ is
+    # a lifetime as a provider String, seconds, or a Duration. Pass +id:+
+    # with a CachedContent (or its name) from RubyLLM.cache to attach an
+    # explicit content cache. Pass +false+ to stop RubyLLM from sending cache
     # controls or rendering explicit cache boundaries. A provider may still
     # cache prompts implicitly. Passing +nil+ raises ArgumentError.
     # Returns +self+.
     #
     #   chat.with_caching
     #   chat.with_caching(ttl: "1h")
+    #   chat.with_caching(ttl: 1.hour)
     #   chat.with_caching(id: cache)
     #   chat.with_caching(false)
     #

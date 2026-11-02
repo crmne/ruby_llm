@@ -5,7 +5,7 @@ module RubyLLM
   # RubyLLM.embed returns one:
   #
   #   embedding = RubyLLM.embed("Ruby is a programmer's best friend")
-  #   embedding.vectors # => [0.018, -0.027, ...]
+  #   embedding.vector # => [0.018, -0.027, ...]
   #
   # Pass an array to embed several texts in one call on supported models:
   #
@@ -31,6 +31,18 @@ module RubyLLM
 
     # The id of the model that produced the vectors, as a String.
     attr_reader :model
+
+    # Returns the only vector of this result. Raises Error when it holds
+    # several, one for each text of an array, so read #vectors instead.
+    #
+    #   RubyLLM.embed("Ruby").vector # => [0.018, -0.027, ...]
+    #
+    def vector
+      return vectors if !vectors.is_a?(Array) || vectors.all?(Numeric)
+      return vectors.first if vectors.size == 1
+
+      raise Error, "This embedding holds #{vectors.size} vectors; read them with #vectors"
+    end
 
     def initialize(vectors:, model:, sparse_vectors: nil, input_tokens: nil, reported_cost: nil) # :nodoc:
       @vectors = vectors

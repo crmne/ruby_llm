@@ -9,6 +9,7 @@ module RubyLLM
   #
   class Video
     include Support::Inspectable
+    include Accounting::Usage::Result
 
     # The URL of the hosted video, for providers that return one, or +nil+.
     attr_reader :url
@@ -103,6 +104,24 @@ module RubyLLM
       @model = model
       @duration = duration
       @raw = raw
+    end
+
+    # Returns the usage the provider reported for the job that rendered
+    # the video.
+    def tokens
+      return ruby_llm_usage_tokens unless ruby_llm_usage_entries.empty?
+
+      Tokens.new
+    end
+
+    # Returns the Cost the provider reported for the job that rendered the
+    # video. Its total is +nil+ when the provider reports no price.
+    #
+    #   video = RubyLLM.animate("a paper boat")
+    #   video.cost.total # => 0.05
+    #
+    def cost
+      Cost.new(tokens:)
     end
 
     # Returns the raw binary video bytes, downloading from #url when the

@@ -26,7 +26,7 @@ RAG is often just one step in a larger [workflow]({% link _advanced/agentic-work
 ```ruby
 # Gemfile
 gem 'neighbor'
-gem 'ruby_llm', '2.0.0'
+gem 'ruby_llm'
 ```
 
 ```bash
@@ -60,7 +60,7 @@ class Document < ApplicationRecord
   private
 
   def generate_embedding
-    self.embedding = RubyLLM.embed(content).vectors
+    self.embedding = RubyLLM.embed(content).vector
   end
 end
 ```
@@ -82,7 +82,7 @@ class DocumentSearch < RubyLLM::Tool
   parameter :query, description: "Search query"
 
   def execute(query:)
-    embedding = RubyLLM.embed(query).vectors
+    embedding = RubyLLM.embed(query).vector
 
     documents = Document.nearest_neighbors(
       :embedding,

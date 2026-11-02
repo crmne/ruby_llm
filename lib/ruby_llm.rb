@@ -358,7 +358,7 @@ module RubyLLM
     # forwarded to Embedding.embed.
     #
     #   embedding = RubyLLM.embed("Ruby is a programmer's best friend")
-    #   embedding.vectors # => [0.018, -0.027, ...]
+    #   embedding.vector # => [0.018, -0.027, ...]
     #
     def embed(...)
       Embedding.embed(...)

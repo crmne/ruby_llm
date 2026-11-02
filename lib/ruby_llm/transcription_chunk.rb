@@ -34,8 +34,8 @@ module RubyLLM
     # The transcript for a partial event or the complete final transcript.
     attr_reader :text
 
-    # The segment this event completed as a Hash, or +nil+. Diarization
-    # models label each segment with a speaker.
+    # The Transcription::Segment this event completed, or +nil+.
+    # Diarization models label each segment with a speaker.
     attr_reader :segment
 
     # The parsed provider event, for fields RubyLLM does not normalize.
@@ -45,7 +45,7 @@ module RubyLLM
       @type = type
       @delta = delta
       @text = text
-      @segment = segment
+      @segment = Transcription::Segment.new(segment) if segment
       @raw = raw
     end
 

@@ -385,7 +385,7 @@ models own their message association.
 
 Delegated methods include:
 
-* `model`, `provider`, `messages`, `tools`, `provider_tools`, `provider_options`, `headers`, `schema`
+* `model`, `model_id`, `provider`, `messages`, `tools`, `provider_tools`, `provider_options`, `headers`, `schema`
 * `concurrency`, `caching`, `compaction`, `end_user`, `fallbacks`
 * `tokens`, `cost`, `count_tokens`, `render`
 * `ask`, `say`, `complete`, `complete?`, `ask_later`, `generate`, `run_tools`, `step`

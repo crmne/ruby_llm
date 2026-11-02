@@ -37,7 +37,8 @@ module RubyLLM
                   "Meta prompt caching accepts :key and :ttl, got #{format_cache_option_keys(unsupported)}"
           end
 
-          { prompt_cache_key: options[:key], prompt_cache_retention: options[:ttl] }.compact
+          ttl = options[:ttl] && render_cache_lifetime(options[:ttl])
+          { prompt_cache_key: options[:key], prompt_cache_retention: ttl }.compact
         end
 
         def inject_cache_breakpoint(item)

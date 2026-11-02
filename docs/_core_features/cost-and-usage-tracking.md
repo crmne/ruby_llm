@@ -238,7 +238,7 @@ One piece of work often makes calls outside its chat: a guardrail check, an embe
 ```ruby
 RubyLLM.workflow("Support reply", id: "chat-#{chat.id}") do |workflow|
   articles = workflow.step("Retrieve") do
-    Article.closest_to(RubyLLM.embed(question).vectors).limit(5)
+    Article.closest_to(RubyLLM.embed(question).vector).limit(5)
   end
 
   workflow.step("Answer") do

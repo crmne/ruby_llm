@@ -114,6 +114,14 @@ RSpec.describe RubyLLM::Providers::Meta do
       expect(sent_body.to_json).not_to include('prompt_cache_breakpoint')
     end
 
+    it 'spells a retention given in seconds' do
+      stub_response
+
+      context.chat(model: model_id, provider: :meta).with_caching(ttl: 86_400).ask('Hello')
+
+      expect(sent_body).to include('prompt_cache_retention' => '24h')
+    end
+
     it 'rejects cache options Meta does not take' do
       chat = context.chat(model: model_id, provider: :meta).with_caching(mode: 'explicit')
 

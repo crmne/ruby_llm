@@ -395,7 +395,7 @@ module RubyLLM
           options = prompt_cache_options(caching)
           ttl ||= options[:ttl]
           point = { type: 'default' }
-          point[:ttl] = ttl if ttl
+          point[:ttl] = Protocol::CacheLifetime.render(ttl) if ttl
           { cachePoint: point }
         end
 

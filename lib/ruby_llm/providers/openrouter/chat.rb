@@ -127,7 +127,7 @@ module RubyLLM
           ttl ||= options[:ttl]
 
           { type: CACHE_CONTROL_TYPE }.tap do |control|
-            control[:ttl] = ttl if ttl
+            control[:ttl] = render_cache_lifetime(ttl) if ttl
           end
         end
 

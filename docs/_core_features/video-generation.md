@@ -65,7 +65,13 @@ job.wait
 job.cost.total # => 0.05
 ```
 
-`job.cost` returns a `RubyLLM::Cost`. Its total is `nil` while the job is pending and when the provider reports no price; xAI and OpenRouter report one.
+`job.cost` returns a `RubyLLM::Cost`, and so does the finished video, including the one `RubyLLM.animate` returns:
+
+```ruby
+video = RubyLLM.animate("A hummingbird hovering in slow motion")
+video.cost.total # => 0.05
+```
+Its total is `nil` while the job is pending and when the provider reports no price; xAI and OpenRouter report one.
 
 ### Picking a Job Back Up
 

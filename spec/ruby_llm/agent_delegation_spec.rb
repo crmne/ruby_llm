@@ -23,6 +23,13 @@ RSpec.describe RubyLLM::Agent do
     expect(agent).not_to be_waiting
   end
 
+  it 'delegates model_id to the underlying chat' do
+    chat = RubyLLM.chat(model: model_for(:openai, :temperature))
+
+    expect(chat.model_id).to eq(chat.model.id)
+    expect(Class.new(described_class).new(chat:).model_id).to eq(chat.model.id)
+  end
+
   it 'delegates the queue callbacks to the underlying chat' do
     chat = RubyLLM.chat(model: model_for(:openai))
     agent = Class.new(described_class).new(chat:)

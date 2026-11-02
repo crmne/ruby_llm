@@ -153,10 +153,10 @@ Poll with `refresh` as usual. Once processing ends, `results` returns the embedd
 ```ruby
 sleep 60 until batch.refresh.complete?
 
-batch.results.first.vectors # => [0.018, -0.027, ...]
+batch.results.first.vector # => [0.018, -0.027, ...]
 
 documents.zip(requests).each do |doc, request|
-  doc.update!(embedding: request.result.vectors) if request.result
+  doc.update!(embedding: request.result.vector) if request.result
 end
 ```
 

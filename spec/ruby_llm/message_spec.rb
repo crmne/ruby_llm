@@ -515,6 +515,22 @@ RSpec.describe RubyLLM::Message do
     end
   end
 
+  describe '#truncated?' do
+    it 'is true when a token limit stopped the response' do
+      expect(described_class.new(role: :assistant, content: 'Hi', finish_reason: :max_tokens)).to be_truncated
+      expect(described_class.new(role: :assistant, content: 'Hi', finish_reason: :stop)).not_to be_truncated
+    end
+  end
+
+  describe '#model_id' do
+    it 'returns the same id as #model' do
+      message = described_class.new(role: :assistant, content: 'Hi', model: model_for(:openai))
+
+      expect(message.model_id).to eq(model_for(:openai))
+      expect(described_class.new(role: :user, content: 'Hi').model_id).to be_nil
+    end
+  end
+
   describe 'finish reason predicates' do
     {
       stopped?: 'stop',

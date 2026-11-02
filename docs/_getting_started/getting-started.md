@@ -249,7 +249,7 @@ Turn text into a vector for similarity search:
 
 ```ruby
 embedding = RubyLLM.embed "Ruby is optimized for programmer happiness."
-vector = embedding.vectors
+vector = embedding.vector
 ```
 
 See [Embeddings]({% link _core_features/embeddings.md %}) for embedding multiple documents and [RAG]({% link _advanced/rag.md %}) for answering questions from your own content.

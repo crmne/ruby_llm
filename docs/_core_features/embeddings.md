@@ -27,9 +27,11 @@ Turn text into a vector you can store or use for similarity search:
 ```ruby
 embedding = RubyLLM.embed("Ruby is a programmer's best friend")
 
-vector = embedding.vectors
+vector = embedding.vector
 # => [0.018, -0.027, ...]
 ```
+
+`vector` returns the only vector of a result. For several texts, read `vectors`.
 
 ## Embedding Multiple Texts
 
@@ -98,7 +100,7 @@ embedding = RubyLLM.embed(
   dimensions: 768
 )
 
-embedding.vectors # => [0.018, -0.027, ...]
+embedding.vector # => [0.018, -0.027, ...]
 ```
 
 You can embed video, audio, and PDFs with a model that accepts them:
@@ -139,10 +141,10 @@ The embedding result contains useful information:
 ```ruby
 embedding = RubyLLM.embed("Example text")
 
-puts embedding.vectors.class  # => Array
-puts embedding.vectors.first.class  # => Float
+puts embedding.vector.class  # => Array
+puts embedding.vector.first.class  # => Float
 
-puts embedding.vectors.length # => 1536
+puts embedding.vector.length # => 1536
 
 puts embedding.model  # => "{{ site.models.embedding_small }}"
 ```
@@ -189,14 +191,14 @@ class Document < ApplicationRecord
   before_save :generate_embedding, if: :content_changed?
 
   def self.search(query)
-    vector = RubyLLM.embed(query).vectors
+    vector = RubyLLM.embed(query).vector
     nearest_neighbors(:embedding, vector, distance: :cosine).limit(5)
   end
 
   private
 
   def generate_embedding
-    self.embedding = RubyLLM.embed(content).vectors
+    self.embedding = RubyLLM.embed(content).vector
   end
 end
 ```

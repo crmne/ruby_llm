@@ -195,7 +195,7 @@ video.save "paper_boat.mp4"
 ```ruby
 # Create embeddings
 embedding = RubyLLM.embed "Ruby is elegant and expressive"
-embedding.vectors
+embedding.vector
 ```
 
 ```ruby
