@@ -438,7 +438,7 @@ RSpec.describe RubyLLM::Chat do
 
       task = chat.pending_tasks.first.refresh.refresh
 
-      expect(task).to be_completed
+      expect(task).to be_succeeded
       expect(chat).to be_awaiting_tasks
       expect(chat.complete.content).to eq('Done')
     end

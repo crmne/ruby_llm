@@ -27,13 +27,13 @@ RSpec.describe RubyLLM::Task do
     task = described_class.new
 
     expect(task).to have_attributes(status: :working, data: {})
-    expect(task).not_to be_done
+    expect(task).not_to be_complete
     expect(task).not_to be_input_required
     expect(task.to_h).to eq('task' => { 'status' => 'working' })
   end
 
   it 'is done once it completed, failed, or was cancelled' do
-    expect(%i[completed failed cancelled].map { |status| described_class.new(status:) }).to all(be_done)
+    expect(%i[completed failed cancelled].map { |status| described_class.new(status:) }).to all(be_complete)
   end
 
   it 'refuses a status it does not know' do

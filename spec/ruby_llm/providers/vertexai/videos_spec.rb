@@ -78,7 +78,7 @@ RSpec.describe RubyLLM::Providers::VertexAI::Videos do
       }
       allow(provider.connection).to receive(:post).and_return(instance_double(Faraday::Response, body:))
 
-      expect(job.refresh).to be_completed
+      expect(job.refresh).to be_succeeded
       video = job.video
       expect(video.data).to eq('mp4 bytes')
       expect(video.mime_type).to eq('video/mp4')
@@ -153,7 +153,7 @@ RSpec.describe RubyLLM::Providers::VertexAI::Videos do
       provider_options: { parameters: { sampleCount: 1, generateAudio: false } }
     )
 
-    expect(job.wait(timeout: 240)).to be_completed
+    expect(job.wait(timeout: 240)).to be_succeeded
     expect(job.video.mime_type).to eq('video/mp4')
     expect(job.video.to_blob.bytesize).to be > 1000
   end
@@ -170,7 +170,7 @@ RSpec.describe RubyLLM::Providers::VertexAI::Videos do
     )
 
     expect(job.id).to include('/operations/')
-    expect(job.wait).to be_completed
+    expect(job.wait).to be_succeeded
     expect(job.video.mime_type).to eq('video/mp4')
     expect(job.video.to_blob.bytesize).to be > 10_000
   end

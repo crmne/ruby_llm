@@ -11,6 +11,7 @@ module RubyLLM
   #
   class VideoJob
     include Support::Inspectable
+    include Support::DeprecatedJobPredicates
 
     # The provider's id for the job.
     attr_reader :id
@@ -43,8 +44,8 @@ module RubyLLM
     # RubyLLM.with_usage_owner, once it finishes.
     #
     #   job = RubyLLM.animate_later("a hummingbird in slow motion")
-    #   job.id      # => "0eb6910f-a353-4699-9d1e-6a4f7a5b39e2"
-    #   job.done?   # => false
+    #   job.id        # => "0eb6910f-a353-4699-9d1e-6a4f7a5b39e2"
+    #   job.complete? # => false
     #
     def self.animate_later(prompt = nil,
                            model: nil,
@@ -117,12 +118,12 @@ module RubyLLM
     end
 
     # Returns +true+ once the job finished, successfully or not.
-    def done?
+    def complete?
       !pending?
     end
 
     # Returns +true+ when the job finished with a video.
-    def completed?
+    def succeeded?
       status == :completed
     end
 
@@ -133,9 +134,9 @@ module RubyLLM
     end
 
     # Re-fetches the job from the provider, updating #status, #error, and
-    # #raw. Does nothing once the job is #done?. Returns self.
+    # #raw. Does nothing once the job is #complete?. Returns self.
     def refresh
-      return self if done?
+      return self if complete?
 
       state = @protocol.refresh_video_job(self)
       @status = state.fetch(:status)
@@ -166,7 +167,7 @@ module RubyLLM
       interval ||= @protocol.config.video_generation_poll_interval
       deadline = monotonic_time + timeout
 
-      until done?
+      until complete?
         remaining = deadline - monotonic_time
         raise Error, "Video generation timed out after #{timeout} seconds" unless remaining.positive?
 
@@ -183,7 +184,7 @@ module RubyLLM
     # Error when #failed?.
     def video
       raise Error, "Video generation failed: #{error}" if failed?
-      return unless completed?
+      return unless succeeded?
 
       @video ||= @protocol.download_video(self).tap { |video| video.config = @protocol.config }
     end
@@ -195,7 +196,7 @@ module RubyLLM
 
       @usage_recorded = true
       entry = Accounting::Usage::Entry.new(operation: :video, provider: @protocol.provider.slug, model:,
-                                           status: completed? ? :succeeded : :failed, cost:, owner: @usage_owner,
+                                           status: succeeded? ? :succeeded : :failed, cost:, owner: @usage_owner,
                                            workflow: @usage_workflow)
       Accounting::Usage.report(entry, config: @protocol.config)
     end

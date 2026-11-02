@@ -683,7 +683,7 @@ module RubyLLM
     def await_task(task, timeout: nil, interval: nil) # :nodoc:
       limit = timeout || self.class.timeout || config.request_timeout
       deadline = Process.clock_gettime(Process::CLOCK_MONOTONIC) + limit
-      until task.done?
+      until task.complete?
         ask_for_task_input(task) if task.status == :input_required
         remaining = deadline - Process.clock_gettime(Process::CLOCK_MONOTONIC)
         raise Error, "Task #{task.id} did not finish in #{limit} seconds" unless remaining.positive?
@@ -691,7 +691,7 @@ module RubyLLM
         Support::Cancellation.pause([interval || poll_interval(task), remaining].min)
         task.refresh
       end
-      raise task.error unless task.completed?
+      raise task.error unless task.succeeded?
 
       task
     end
@@ -827,8 +827,8 @@ module RubyLLM
     def check_task(task, answered_requests)
       update_task(task, answered_requests) if answered_requests
       task.refresh
-      return task.data['result'] if task.completed?
-      raise task.error if task.done?
+      return task.data['result'] if task.succeeded?
+      raise task.error if task.complete?
 
       ask_for_task_input(task) if task.status == :input_required
       task

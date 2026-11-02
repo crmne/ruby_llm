@@ -26,10 +26,11 @@ module RubyLLM
   # tool call that a server runs in the background.
   class Task
     include Support::Inspectable
+    include Support::DeprecatedJobPredicates
 
-    DONE = %i[completed failed cancelled].freeze
-    STATUSES = %i[working input_required].concat(DONE).freeze
-    private_constant :DONE, :STATUSES
+    FINISHED = %i[completed failed cancelled].freeze
+    STATUSES = %i[working input_required].concat(FINISHED).freeze
+    private_constant :FINISHED, :STATUSES
 
     # The task's state as a Symbol: +:working+, +:input_required+,
     # +:completed+, +:failed+, or +:cancelled+.
@@ -76,12 +77,12 @@ module RubyLLM
     end
 
     # Returns +true+ once the task completed, failed, or was cancelled.
-    def done?
-      DONE.include?(status)
+    def complete?
+      FINISHED.include?(status)
     end
 
     # Returns +true+ when the task finished with a result.
-    def completed?
+    def succeeded?
       status == :completed
     end
 

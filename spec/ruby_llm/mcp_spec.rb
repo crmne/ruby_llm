@@ -898,16 +898,16 @@ RSpec.describe RubyLLM::MCP do
       expect(task).to be_a(RubyLLM::MCP::Task)
       expect(task).to have_attributes(id: 'task-1', status: :working, status_message: 'Queued', poll_interval: 0.01,
                                       expires_at: Time.utc(2026, 10, 2, 10, 1), result: nil)
-      expect(task).not_to be_done
+      expect(task).not_to be_complete
     end
 
     it 'checks on a task once each time you refresh it' do
       task = tool('report').call
 
       expect(task.refresh).to have_attributes(status: :working, status_message: 'Rendering')
-      expect(task.refresh).to be_completed
+      expect(task.refresh).to be_succeeded
       expect(task.result).to have_attributes(text: 'Report ready', structured: { 'pages' => 2 })
-      expect(task.refresh).to be_done
+      expect(task.refresh).to be_complete
       expect(server_tasks['polls']).to eq('task-1' => 2)
     end
 

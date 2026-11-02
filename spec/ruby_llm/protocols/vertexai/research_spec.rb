@@ -59,7 +59,7 @@ RSpec.describe RubyLLM::Protocols::VertexAI::Research do
     expect(job.tokens.to_h).to eq({})
     job.wait(interval: 0.01)
 
-    expect(job).to be_completed
+    expect(job).to be_succeeded
     expect(job.message).to have_attributes(content: 'Ruby documentation.', model: nil, finish_reason: :stop)
     expect(job.message.citations.first).to have_attributes(url: 'https://ruby-lang.org', text: 'Ruby')
     expect(job.message.thinking.text).to eq('Checked the documentation.')
@@ -227,7 +227,7 @@ RSpec.describe RubyLLM::Protocols::VertexAI::Research do
     )
     job.wait(timeout: 240, interval: 3)
 
-    expect(job).to be_completed
+    expect(job).to be_succeeded
     expect(job.message.content).not_to be_empty
     expect(job.message.citations.map(&:title)).to include('microsoft_docs_search result')
     expect(job.message.model).to be_nil
