@@ -505,7 +505,7 @@ module RubyLLM
       def default_name_for(url:, command:)
         return File.basename(Array(command).first.to_s) unless url
 
-        labels = URI(url).host.split('.')
+        labels = HTTP.parse(url).host.split('.')
         labels = labels[0...-1] - %w[mcp api www] unless labels.one? || labels.all?(/\A\d+\z/)
         labels.join('_')
       end
@@ -849,7 +849,8 @@ module RubyLLM
     end
 
     def poll_interval(task)
-      task.poll_interval || POLL_INTERVAL
+      interval = task.poll_interval
+      interval&.positive? ? interval : POLL_INTERVAL
     end
 
     def finish(task)
@@ -1044,7 +1045,8 @@ module RubyLLM
         resolve(settings.transport)
       elsif settings.url
         HTTP.new(resolve(settings.url), headers: method(:request_headers), timeout: settings.timeout,
-                                        unauthorized: method(:unauthorized), responded: method(:responded), config:)
+                                        unauthorized: method(:unauthorized), responded: method(:responded),
+                                        idempotent: method(:idempotent?), config:)
       elsif settings.command
         Stdio.new(settings.command.map { |part| resolve(part) },
                   env: settings.env.transform_values { |value| resolve(value) },
@@ -1052,6 +1054,11 @@ module RubyLLM
       else
         raise ConfigurationError, "#{settings.name || 'MCP'} needs a url, a command, or a transport"
       end
+    end
+
+    def idempotent?(name)
+      definition = server_tool(name)
+      !definition.nil? && Tool.new(self, definition).idempotent?
     end
 
     def request_headers(verb)

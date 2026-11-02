@@ -13,7 +13,8 @@ module RubyLLM
     # keeps its session for the life of its process, so after a restart its
     # requests raise SessionExpired until the client initializes it again.
     # The process inherits only INHERITED_ENV from the application, and +env+
-    # adds to and overrides those.
+    # adds to and overrides those. Where the platform has process groups the
+    # server leads its own, so stopping it reaches the processes it started.
     #
     # Subscriptions share the channel, so whichever thread reads a message
     # that belongs to one hands it to the subscription's listener: a
@@ -226,6 +227,7 @@ module RubyLLM
 
       def start
         options = @directory ? { chdir: @directory } : {}
+        options[:pgroup] = true unless Gem.win_platform?
         env = ENV.slice(*INHERITED_ENV).merge(@env)
         @stdin, @stdout, @process = Open3.popen2(env, *@command, unsetenv_others: true, **options)
         @buffer = +''
@@ -241,10 +243,14 @@ module RubyLLM
       end
 
       def terminate
-        Process.kill('TERM', @process.pid)
-        Process.kill('KILL', @process.pid) unless @process.join(SHUTDOWN_GRACE)
+        signal('TERM')
+        signal('KILL') unless @process.join(SHUTDOWN_GRACE)
       rescue Errno::ESRCH
         nil
+      end
+
+      def signal(name)
+        Process.kill(Gem.win_platform? ? name : "-#{name}", @process.pid)
       end
 
       def name

@@ -77,4 +77,43 @@ RSpec.describe RubyLLM::MCP::Stdio do
       expect(child(directory:)['directory']).to eq(File.realpath(directory))
     end
   end
+
+  describe 'stopping a server that outlives its stdin' do
+    before { stub_const("#{described_class}::SHUTDOWN_GRACE", 0.2) }
+
+    def stopped?(pid)
+      40.times do
+        state = `ps -o stat= -p #{pid}`.strip
+        return true if state.empty? || state.start_with?('Z')
+
+        sleep 0.05
+      end
+      false
+    end
+
+    it 'stops the processes it started' do
+      Dir.mktmpdir do |directory|
+        path = File.join(directory, 'pid')
+        stdio = described_class.new(['sh', '-c', "sleep 30 </dev/null & echo $! > #{path}; wait"])
+        stdio.send(:start)
+        sleep 0.05 until File.size?(path)
+
+        stdio.close
+
+        expect(stopped?(File.read(path).to_i)).to be(true)
+      end
+    end
+
+    it 'signals only the server where the platform has no process groups' do
+      allow(Gem).to receive(:win_platform?).and_return(true)
+      allow(Process).to receive(:kill).and_call_original
+      stdio = described_class.new(%w[sleep 30])
+      stdio.send(:start)
+      pid = stdio.instance_variable_get(:@process).pid
+
+      stdio.close
+
+      expect(Process).to have_received(:kill).with('TERM', pid)
+    end
+  end
 end

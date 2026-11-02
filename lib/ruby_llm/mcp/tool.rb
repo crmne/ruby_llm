@@ -73,7 +73,8 @@ module RubyLLM
       end
 
       # Returns whether calling the tool again with the same arguments has
-      # no further effect.
+      # no further effect. Only these calls are sent again when a stream
+      # breaks before the answer.
       def idempotent?
         @annotations['idempotentHint'] == true
       end

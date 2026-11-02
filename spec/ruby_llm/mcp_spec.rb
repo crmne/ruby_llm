@@ -911,6 +911,16 @@ RSpec.describe RubyLLM::MCP do
       expect(server_tasks['polls']).to eq('task-1' => 2)
     end
 
+    it 'waits its usual interval on a task that asks for none' do
+      allow(RubyLLM::Support::Cancellation).to receive(:pause)
+      allow(mcp).to receive(:poll_task).and_return('taskId' => 'task-1', 'status' => 'completed')
+      task = RubyLLM::MCP::Task.new(mcp, { 'taskId' => 'task-1', 'status' => 'working', 'pollIntervalMs' => 0 })
+
+      task.wait(timeout: 5)
+
+      expect(RubyLLM::Support::Cancellation).to have_received(:pause).with(1)
+    end
+
     it 'waits for a task' do
       expect(tool('report').call.wait.result.text).to eq('Report ready')
     end

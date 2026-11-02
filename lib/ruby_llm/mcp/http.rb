@@ -10,8 +10,10 @@ module RubyLLM
     # keep a session, which ends with a DELETE when the transport closes.
     #
     # When a stream ends before the response, 2026-07-28 sends the request
-    # again with a new ID, while older servers resume the stream from its
-    # last event ID after the wait they ask for, a few times at most.
+    # again with a new ID, unless it is a tool call that +idempotent+ does
+    # not vouch for, since the server may have run it. Older servers resume
+    # the stream from its last event ID after the wait they ask for. Either
+    # happens a few times at most.
     #
     # A subscription's stream stays open, so it gets a connection of its
     # own: callbacks it runs can make requests of their own, even through
@@ -30,6 +32,12 @@ module RubyLLM
       RECONNECT_DELAY = 1
       CHECK_INTERVAL = 0.1
 
+      def self.parse(url)
+        URI(url.to_s)
+      rescue URI::InvalidURIError
+        raise ArgumentError, 'The MCP server URL is malformed', cause: nil
+      end
+
       def self.secure?(url)
         uri = URI(url.to_s)
         return false if uri.userinfo
@@ -41,13 +49,15 @@ module RubyLLM
         LOOPBACK_HOSTS.include?(URI(url.to_s).hostname)
       end
 
-      def initialize(url, headers: {}, timeout: nil, unauthorized: nil, responded: nil, config: RubyLLM.config)
-        @url = URI(url)
+      def initialize(url, headers: {}, timeout: nil, unauthorized: nil, responded: nil, idempotent: nil,
+                     config: RubyLLM.config)
+        @url = self.class.parse(url)
         raise ArgumentError, 'MCP servers must use HTTPS without credentials in the URL' unless self.class.secure?(@url)
 
         @headers = headers
         @unauthorized = unauthorized
         @responded = responded
+        @idempotent = idempotent
         @timeout = timeout || config.request_timeout
         @connect = lambda do
           Transport::Connection.basic(config) do |faraday|
@@ -62,7 +72,7 @@ module RubyLLM
         stream = post(message, version:, timeout:, params: headers, &)
         RECONNECTS.times do
           if version == Client::VERSION
-            break unless stream.interrupted?
+            break unless resend?(stream, message)
 
             stream = post(message.merge(id: SecureRandom.uuid), version:, timeout:, params: headers, &)
           else
@@ -191,6 +201,10 @@ module RubyLLM
 
       def answers
         @answers ||= @connect.call
+      end
+
+      def resend?(stream, message)
+        stream.interrupted? && (message[:method] != 'tools/call' || @idempotent&.call(message.dig(:params, :name)))
       end
 
       def resumable?(stream, limit)
@@ -360,7 +374,7 @@ module RubyLLM
         end
 
         def replies
-          receive(@body) if @events == false && @replies.empty?
+          receive(@body.slice!(0..)) if @events == false && !@body.empty?
           @replies
         end
 

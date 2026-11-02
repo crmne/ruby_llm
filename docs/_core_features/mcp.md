@@ -880,7 +880,7 @@ The document's `client_id` must be that exact URL, and its `redirect_uris` must 
 
 RubyLLM speaks the 2026-07-28 revision of the protocol, where every request stands alone. For servers that predate it, back to 2024-11-05, RubyLLM falls back to the older handshake and declares nothing but extensions, so those servers never send requests back. Should one ask anyway, RubyLLM answers right away that it doesn't support the request, so the call goes on. When such a server ends its session, or its process exits, RubyLLM starts a new session and sends the request again, and `close` ends the session. Connecting to a server that speaks none of these revisions raises `RubyLLM::MCP::Error`.
 
-A response stream can break before the answer arrives, such as when a proxy drops a long call. RubyLLM then sends the request again, as the 2026-07-28 revision requires. Older servers can resume the stream instead: RubyLLM waits as long as the server asks and reconnects from the last event it received. Either way it tries three times at most, then raises `RubyLLM::MCP::Error`.
+A response stream can break before the answer arrives, such as when a proxy drops a long call. RubyLLM then sends the request again, as the 2026-07-28 revision requires, unless it is a tool call. The server may already have run the tool, so RubyLLM sends a call again only when the server marks the tool `idempotent?`. Older servers can resume the stream instead: RubyLLM waits as long as the server asks and reconnects from the last event it received. Either way it tries three times at most, then raises `RubyLLM::MCP::Error`.
 
 Some defaults protect applications that connect to servers they do not control:
 
