@@ -6,6 +6,7 @@ require 'aws-eventstream'
 RSpec.describe RubyLLM::Protocols::Converse::Streaming do
   let(:streaming) do
     Object.new.tap do |object|
+      object.extend(RubyLLM::Protocol::Streaming)
       object.extend(RubyLLM::Protocols::Converse::Chat)
       object.extend(described_class)
       object.instance_variable_set(:@model, instance_double(RubyLLM::Model, id: 'bedrock-test-model'))
