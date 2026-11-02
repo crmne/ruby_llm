@@ -49,7 +49,7 @@ Options depend on the provider and model:
 | `key:` | OpenAI-compatible protocols and Mistral |
 | `ttl:` | Supported OpenAI models, Anthropic, OpenRouter, and Bedrock Converse; accepted lifetimes vary |
 | `mode:` | Supported OpenAI-compatible models, using `"implicit"` or `"explicit"` |
-| `id:` | An explicit Gemini or Vertex AI cache, described below |
+| `id:` | The name of an explicit Gemini or Vertex AI cache, described below |
 
 Leave options unset to use provider defaults. Some models support automatic caching but reject explicit lifetimes or boundaries.
 
@@ -150,10 +150,10 @@ cache = RubyLLM.cache("Reference material:", model: 'gemini-2.5-flash', with: "m
 
 The content must meet the model's minimum cacheable size. `ttl:` accepts a Duration, seconds, or a duration string such as `"300s"`, and defaults to one hour.
 
-Attach the cache with `with_caching(id:)`, passing the `CachedContent` or its name:
+Attach the cache by passing the `CachedContent` to `with_caching`, or its name with `id:`:
 
 ```ruby
-chat = RubyLLM.chat(model: 'gemini-2.5-flash').with_caching(id: cache)
+chat = RubyLLM.chat(model: 'gemini-2.5-flash').with_caching(cache)
 response = chat.ask("What does the handbook say about cassette hygiene?")
 response.tokens.cache_read # => 7809
 ```

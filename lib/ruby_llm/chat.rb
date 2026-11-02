@@ -927,9 +927,9 @@ module RubyLLM
 
     # Enables provider prompt caching. With no arguments the provider's
     # default behavior applies; options apply where supported. +ttl:+ is
-    # a lifetime as a provider String, seconds, or a Duration. Pass +id:+
-    # with a CachedContent (or its name) from RubyLLM.cache to attach an
-    # explicit content cache. Pass +false+ to stop RubyLLM from sending cache
+    # a lifetime as a provider String, seconds, or a Duration. Pass a
+    # CachedContent from RubyLLM.cache to attach an explicit content cache,
+    # or +id:+ with its name. Pass +false+ to stop RubyLLM from sending cache
     # controls or rendering explicit cache boundaries. A provider may still
     # cache prompts implicitly. Passing +nil+ raises ArgumentError.
     # Returns +self+.
@@ -937,13 +937,14 @@ module RubyLLM
     #   chat.with_caching
     #   chat.with_caching(ttl: "1h")
     #   chat.with_caching(ttl: 1.hour)
-    #   chat.with_caching(id: cache)
+    #   chat.with_caching(cache)
     #   chat.with_caching(false)
     #
     def with_caching(options = {})
       options = {} if options == true
+      options = { id: options } if options.is_a?(CachedContent)
       unless options == false || options.is_a?(Hash)
-        raise ArgumentError, 'with_caching accepts true, false, or caching options'
+        raise ArgumentError, 'with_caching accepts true, false, a CachedContent, or caching options'
       end
 
       @caching = options == false ? false : options.transform_keys(&:to_sym).freeze
