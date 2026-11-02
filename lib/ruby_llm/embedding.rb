@@ -38,7 +38,7 @@ module RubyLLM
     #   RubyLLM.embed("Ruby").vector # => [0.018, -0.027, ...]
     #
     def vector
-      return vectors unless vectors.any?(Array)
+      return vectors if !vectors.is_a?(Array) || vectors.all?(Numeric)
       return vectors.first if vectors.size == 1
 
       raise Error, "This embedding holds #{vectors.size} vectors; read them with #vectors"
