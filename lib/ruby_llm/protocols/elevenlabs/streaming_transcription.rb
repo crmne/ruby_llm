@@ -28,7 +28,8 @@ module RubyLLM
             write = ->(connection) { send_transcription_audio(connection, audio, commits) }
             socket.each_message(write:) do |message|
               event = JSON.parse(message)
-              transcript = process_transcription_event(event, prefix: transcripts.any?, &block)
+              prefix = transcripts.any? { |item| !item.fetch('text').empty? }
+              transcript = process_transcription_event(event, prefix:, &block)
               next unless transcript
 
               transcripts << transcript
@@ -45,7 +46,7 @@ module RubyLLM
 
         def build_streaming_transcription(transcripts, audio, model:)
           RubyLLM::Transcription.new(
-            text: transcripts.map { |item| item.fetch('text') }.join(' '), model:,
+            text: transcripts.map { |item| item.fetch('text') }.reject(&:empty?).join(' '), model:,
             duration: audio.duration, language: transcripts.last['language_code'],
             words: transcripts.flat_map { |item| item['words'] || [] }
           )
@@ -110,6 +111,8 @@ module RubyLLM
             yield TranscriptionChunk.new(type: TranscriptionChunk::PARTIAL, text: event['text'], raw: event)
           when 'committed_transcript'
             text = event['text']
+            return if text.to_s.empty?
+
             yield TranscriptionChunk.new(type: TranscriptionChunk::DELTA, delta: prefix ? " #{text}" : text, raw: event)
           when 'committed_transcript_with_timestamps'
             return event

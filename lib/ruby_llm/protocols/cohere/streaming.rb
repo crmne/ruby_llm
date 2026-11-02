@@ -11,6 +11,11 @@ module RubyLLM
           completion_url
         end
 
+        def stream_response(...)
+          @stream_thinking = false
+          super
+        end
+
         def build_chunk(data)
           type = data['type']
           raise_failed_stream(data) if data.dig('delta', 'finish_reason') == 'ERROR'
@@ -55,10 +60,16 @@ module RubyLLM
           data.dig('delta', 'message', 'content', 'text') if type == 'content-delta'
         end
 
+        def parse_thinking_block_delta(data)
+          thinking = data.dig('delta', 'message', 'content', 'thinking')
+          @stream_thinking = true if thinking
+          thinking
+        end
+
         def parse_thinking_delta(data, type)
           case type
-          when 'content-delta' then data.dig('delta', 'message', 'content', 'thinking')
-          when 'tool-plan-delta' then data.dig('delta', 'message', 'tool_plan')
+          when 'content-delta' then parse_thinking_block_delta(data)
+          when 'tool-plan-delta' then data.dig('delta', 'message', 'tool_plan') unless @stream_thinking
           end
         end
 
