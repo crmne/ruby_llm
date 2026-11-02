@@ -72,23 +72,6 @@ module RubyLLM
         @messages.shift
       end
 
-      def read_available
-        ensure_readable
-        until @messages.any? || @closed || @error
-          break unless read_available_frame
-        end
-        ensure_readable
-
-        @messages.shift
-      rescue EOFError, Errno::ECONNRESET
-        @closed = true
-        raise Error, 'WebSocket connection ended without a close frame'
-      rescue IOError, SystemCallError, OpenSSL::SSL::SSLError
-        raise unless @closed || @messages.any?
-
-        @messages.shift
-      end
-
       def each_message(write:)
         writer_error = nil
         writer = Thread.new do
@@ -133,16 +116,6 @@ module RubyLLM
       end
 
       private
-
-      def read_available_frame
-        data = @socket.read_nonblock(16_384, exception: false)
-        return if %i[wait_readable wait_writable].include?(data)
-
-        raise EOFError unless data
-
-        @driver.parse(data)
-        data
-      end
 
       def finish_writer(writer)
         raise Error, 'WebSocket closed before outgoing messages finished' unless writer.join(1)
@@ -189,10 +162,6 @@ module RubyLLM
 
       def raise_unread_error
         raise @error if @error && @messages.empty?
-      end
-
-      def ensure_readable
-        ensure_open if @messages.empty?
       end
 
       def ensure_open

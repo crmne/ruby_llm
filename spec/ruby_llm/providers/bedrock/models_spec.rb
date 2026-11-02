@@ -289,21 +289,6 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
     end
   end
 
-  describe '#normalize_inference_profile_id' do
-    it 'leaves ids that are not inference-profile only' do
-      expect(provider.send(:normalize_inference_profile_id, 'model', [], 'us-east-1')).to eq('model')
-      expect(
-        provider.send(:normalize_inference_profile_id, 'model', %w[INFERENCE_PROFILE ON_DEMAND], 'us-east-1')
-      ).to eq('model')
-    end
-
-    it 'prefixes ids that only exist as an inference profile' do
-      expect(
-        provider.send(:normalize_inference_profile_id, 'model', ['INFERENCE_PROFILE'], 'eu-west-1')
-      ).to eq('eu.model')
-    end
-  end
-
   describe '.resolve_registry_id' do
     let(:models) do
       RubyLLM::Models.new(

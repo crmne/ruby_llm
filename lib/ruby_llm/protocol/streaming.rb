@@ -62,10 +62,6 @@ module RubyLLM
         end
       end
 
-      def handle_stream(&block)
-        build_on_data_handler { |data| block.call(build_chunk(data)) }
-      end
-
       private
 
       def faraday_1?

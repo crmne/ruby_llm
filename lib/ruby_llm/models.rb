@@ -294,13 +294,7 @@ module RubyLLM
                            .flatten
 
         provider_models = provider_fetch[:models] + preserved_models
-        models_dev_models = if models_dev_fetch[:fetched]
-                              models_dev_fetch[:models]
-                            else
-                              existing_models.select { |model| model.metadata[:source] == 'models.dev' }
-                            end
-
-        merge_models(provider_models, models_dev_models)
+        merge_models(provider_models, models_dev_fetch[:models])
       end
 
       def merge_models(provider_models, models_dev_models) # :nodoc:

@@ -777,7 +777,7 @@ module RubyLLM
 
         DUPED_INHERITED_CONFIG.each do |ivar, default|
           value = instance_variable_defined?(ivar) ? instance_variable_get(ivar) : default
-          subclass.instance_variable_set(ivar, value.respond_to?(:dup) ? value.dup : value)
+          subclass.instance_variable_set(ivar, value.dup)
         end
 
         COPIED_INHERITED_CONFIG.each do |ivar|

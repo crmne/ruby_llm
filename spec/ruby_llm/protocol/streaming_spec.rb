@@ -20,9 +20,13 @@ RSpec.describe RubyLLM::Protocol::Streaming do
     stub_const('Faraday::VERSION', '2.0.0')
   end
 
+  def chunk_handler(&block)
+    test_obj.send(:build_on_data_handler) { |data| block.call(test_obj.build_chunk(data)) }
+  end
+
   it 'skips non-hash SSE payloads' do
     yielded_chunks = []
-    handler = test_obj.send(:handle_stream) { |chunk| yielded_chunks << chunk }
+    handler = chunk_handler { |chunk| yielded_chunks << chunk }
 
     expect { handler.call("data: true\n\n", 0, env) }.not_to raise_error
     expect(yielded_chunks).to eq([])
@@ -39,7 +43,7 @@ RSpec.describe RubyLLM::Protocol::Streaming do
 
   it 'processes hash SSE payloads' do
     yielded_chunks = []
-    handler = test_obj.send(:handle_stream) { |chunk| yielded_chunks << chunk }
+    handler = chunk_handler { |chunk| yielded_chunks << chunk }
 
     handler.call("data: {\"x\":\"ok\"}\n\n", 0, env)
 
@@ -48,7 +52,7 @@ RSpec.describe RubyLLM::Protocol::Streaming do
 
   it 'delivers an SSE payload whose error is null' do
     yielded_chunks = []
-    handler = test_obj.send(:handle_stream) { |chunk| yielded_chunks << chunk }
+    handler = chunk_handler { |chunk| yielded_chunks << chunk }
 
     handler.call("data: {\"x\":\"ok\",\"error\":null}\n\n", 0, env)
 
@@ -107,7 +111,7 @@ RSpec.describe RubyLLM::Protocol::Streaming do
   # normally rather than treating them as a failed response and discarding them.
   it 'processes chunks when env is nil (status not yet known)' do
     yielded_chunks = []
-    handler = test_obj.send(:handle_stream) { |chunk| yielded_chunks << chunk }
+    handler = chunk_handler { |chunk| yielded_chunks << chunk }
 
     handler.call("data: {\"x\":\"ok\"}\n\n", 0, nil)
 
@@ -165,7 +169,7 @@ RSpec.describe RubyLLM::Protocol::Streaming do
   it 'logs each chunk when stream debugging is on' do
     allow(RubyLLM.config).to receive(:log_stream_debug).and_return(true)
     allow(RubyLLM.logger).to receive(:debug)
-    handler = test_obj.send(:handle_stream) { |_chunk| nil }
+    handler = chunk_handler { |_chunk| nil }
 
     handler.call("data: {\"x\":1}\n\n", 0, env)
 
@@ -187,7 +191,7 @@ RSpec.describe RubyLLM::Protocol::Streaming do
   end
 
   it 'raises the provider error when a stream error arrives with a nil env' do
-    handler = test_obj.send(:handle_stream) { |_chunk| nil }
+    handler = chunk_handler { |_chunk| nil }
 
     expect do
       handler.call("data: {\"error\":{\"message\":\"Rate limit exceeded\"}}\n\n", 0, nil)
@@ -195,7 +199,7 @@ RSpec.describe RubyLLM::Protocol::Streaming do
   end
 
   it 'raises an error event that arrives split across reads' do
-    handler = test_obj.send(:handle_stream) { |_chunk| nil }
+    handler = chunk_handler { |_chunk| nil }
 
     expect { handler.call("event: error\ndata: {\"error\":{\"mes", 0, env) }.not_to raise_error
     expect do
@@ -205,7 +209,7 @@ RSpec.describe RubyLLM::Protocol::Streaming do
 
   it 'delivers an event when a read starts inside its JSON' do
     yielded = []
-    handler = test_obj.send(:handle_stream) { |chunk| yielded << chunk }
+    handler = chunk_handler { |chunk| yielded << chunk }
 
     handler.call('data: {"x":"ok","meta":', 0, env)
     handler.call("{\"error\":null}}\n\n", 0, env)
@@ -215,7 +219,7 @@ RSpec.describe RubyLLM::Protocol::Streaming do
 
   it 'delivers an event when its data arrives in a read of its own' do
     yielded = []
-    handler = test_obj.send(:handle_stream) { |chunk| yielded << chunk }
+    handler = chunk_handler { |chunk| yielded << chunk }
 
     handler.call('data: ', 0, env)
     handler.call("{\"x\":\"ok\",\"response\":{\"error\":null}}\n\n", 0, env)
@@ -224,7 +228,7 @@ RSpec.describe RubyLLM::Protocol::Streaming do
   end
 
   it 'raises a bare JSON error body' do
-    handler = test_obj.send(:handle_stream) { |_chunk| nil }
+    handler = chunk_handler { |_chunk| nil }
 
     expect do
       handler.call("{\"error\":{\"message\":\"Rate limit exceeded\"}}\n\n", 0, env)
@@ -232,7 +236,7 @@ RSpec.describe RubyLLM::Protocol::Streaming do
   end
 
   it 'raises a bare JSON error body that arrives split across reads' do
-    handler = test_obj.send(:handle_stream) { |_chunk| nil }
+    handler = chunk_handler { |_chunk| nil }
 
     expect { handler.call('{"error":{"message":', 0, nil) }.not_to raise_error
     expect do
@@ -241,7 +245,7 @@ RSpec.describe RubyLLM::Protocol::Streaming do
   end
 
   it 'raises a bare JSON error body that follows a blank read' do
-    handler = test_obj.send(:handle_stream) { |_chunk| nil }
+    handler = chunk_handler { |_chunk| nil }
 
     handler.call("\n", 0, nil)
 
@@ -252,7 +256,7 @@ RSpec.describe RubyLLM::Protocol::Streaming do
 
   it 'ignores a bare JSON body without an error' do
     yielded = []
-    handler = test_obj.send(:handle_stream) { |chunk| yielded << chunk }
+    handler = chunk_handler { |chunk| yielded << chunk }
 
     expect { handler.call('{"detail":"Service busy"}', 0, nil) }.not_to raise_error
     expect(yielded).to be_empty
@@ -260,7 +264,7 @@ RSpec.describe RubyLLM::Protocol::Streaming do
 
   it 'rejects an oversized bare JSON body before retaining it' do
     stub_const('RubyLLM::Protocol::Streaming::MAX_JSON_BODY_BYTES', 32)
-    handler = test_obj.send(:handle_stream) { |_chunk| nil }
+    handler = chunk_handler { |_chunk| nil }
 
     expect { handler.call(%({"detail":"#{'x' * 32}), 0, env) }
       .to raise_error(RubyLLM::Error, /JSON response exceeds 32 bytes/)
@@ -269,7 +273,7 @@ RSpec.describe RubyLLM::Protocol::Streaming do
 
   it 'limits the accumulated JSON bytes across network reads' do
     stub_const('RubyLLM::Protocol::Streaming::MAX_JSON_BODY_BYTES', 32)
-    handler = test_obj.send(:handle_stream) { |_chunk| nil }
+    handler = chunk_handler { |_chunk| nil }
     handler.call('{"detail":"', 0, env)
 
     expect { handler.call('é' * 11, 0, env) }
@@ -289,20 +293,20 @@ RSpec.describe RubyLLM::Protocol::Streaming do
 
   it 'ignores a bare JSON body whose error is null' do
     yielded = []
-    handler = test_obj.send(:handle_stream) { |chunk| yielded << chunk }
+    handler = chunk_handler { |chunk| yielded << chunk }
 
     expect { handler.call('{"status":"completed","error":null}', 0, env) }.not_to raise_error
     expect(yielded).to be_empty
   end
 
   it 'ignores a bare JSON body that only mentions an error' do
-    handler = test_obj.send(:handle_stream) { |_chunk| nil }
+    handler = chunk_handler { |_chunk| nil }
 
     expect { handler.call('{"detail":{"error":"Service busy"}}', 0, env) }.not_to raise_error
   end
 
   it 'raises the error an SSE error event carries' do
-    handler = test_obj.send(:handle_stream) { |_chunk| nil }
+    handler = chunk_handler { |_chunk| nil }
 
     expect do
       handler.call("event: error\ndata: {\"error\":{\"message\":\"Rate limit exceeded\"}}\n\n", 0, env)
@@ -311,7 +315,7 @@ RSpec.describe RubyLLM::Protocol::Streaming do
 
   it 'ignores an error event that is not valid JSON' do
     allow(RubyLLM.logger).to receive(:debug)
-    handler = test_obj.send(:handle_stream) { |_chunk| nil }
+    handler = chunk_handler { |_chunk| nil }
 
     expect { handler.call("event: error\ndata: broken\n\n", 0, env) }.not_to raise_error
     expect(RubyLLM.logger).to have_received(:debug)
@@ -319,7 +323,7 @@ RSpec.describe RubyLLM::Protocol::Streaming do
 
   it 'ignores a data chunk that is not valid JSON' do
     allow(RubyLLM.logger).to receive(:debug)
-    handler = test_obj.send(:handle_stream) { |_chunk| nil }
+    handler = chunk_handler { |_chunk| nil }
 
     expect { handler.call("data: {broken\n\n", 0, env) }.not_to raise_error
     expect(RubyLLM.logger).to have_received(:debug)
@@ -327,7 +331,7 @@ RSpec.describe RubyLLM::Protocol::Streaming do
 
   it 'stops at the DONE sentinel without yielding' do
     yielded = []
-    handler = test_obj.send(:handle_stream) { |chunk| yielded << chunk }
+    handler = chunk_handler { |chunk| yielded << chunk }
 
     handler.call("data: [DONE]\n\n", 0, env)
 
@@ -337,7 +341,7 @@ RSpec.describe RubyLLM::Protocol::Streaming do
   it 'accumulates a failed response body until it parses' do
     allow(RubyLLM.logger).to receive(:debug)
     failed_env = Faraday::Env.from(status: 500)
-    handler = test_obj.send(:handle_stream) { |_chunk| nil }
+    handler = chunk_handler { |_chunk| nil }
 
     expect { handler.call('{"error":{"message":', 0, failed_env) }.not_to raise_error
     expect do
@@ -347,7 +351,7 @@ RSpec.describe RubyLLM::Protocol::Streaming do
 
   it 'reports an unknown streaming error when the payload names none' do
     allow(RubyLLM.logger).to receive(:debug)
-    handler = test_obj.send(:handle_stream) { |_chunk| nil }
+    handler = chunk_handler { |_chunk| nil }
 
     expect do
       handler.call("data: {\"error\":{}}\n\n", 0, env)

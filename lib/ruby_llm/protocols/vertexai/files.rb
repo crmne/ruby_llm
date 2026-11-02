@@ -10,10 +10,6 @@ module RubyLLM
 
         STORAGE_CLIENTS = Support::ProcessCache.new
 
-        def self.storage_clients
-          STORAGE_CLIENTS
-        end
-
         def rejected_options(operation)
           operation == :upload ? %i[purpose expires_in] : super
         end

@@ -56,35 +56,6 @@ RSpec.describe RubyLLM::Transport::WebsocketConnection do
     end
   end
 
-  it 'reads available frames without waiting when the socket has no complete message' do
-    with_server do |url, _worker|
-      described_class.open(url, headers: {}, config:) do |connection|
-        started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
-        expect(connection.read_available).to be_nil
-        expect(Process.clock_gettime(Process::CLOCK_MONOTONIC) - started).to be < 0.1
-
-        connection.send_text('Queued cancellation')
-        readable = connection.instance_variable_get(:@socket)
-        expect(readable.wait_readable(1)).to be_truthy
-        expect(connection.read_available).to eq('Queued cancellation')
-        expect(connection.read_available).to be_nil
-      end
-    end
-  end
-
-  it 'keeps partial frames buffered without blocking or losing their bytes' do
-    with_server(echo: false) do |url, _worker|
-      described_class.open(url, headers: {}, config:) do |connection|
-        transport = connection.instance_variable_get(:@socket)
-        allow(transport).to receive(:read_nonblock).with(16_384, exception: false)
-                                                   .and_return("\x81\x05he".b, :wait_readable,
-                                                               'llo'.b, :wait_readable)
-        expect(connection.read_available).to be_nil
-        expect(connection.read_available).to eq('hello')
-      end
-    end
-  end
-
   it 'preserves arbitrary binary frame bytes' do
     with_server do |url, _worker|
       described_class.open(url, headers: {}, config:) do |connection|

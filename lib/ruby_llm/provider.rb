@@ -689,14 +689,6 @@ module RubyLLM
         @model_registry_files ||= {}
       end
 
-      def local_providers # :nodoc:
-        providers.select { |_slug, provider_class| provider_class.local? }
-      end
-
-      def remote_providers # :nodoc:
-        providers.select { |_slug, provider_class| provider_class.remote? }
-      end
-
       def configured_providers(config) # :nodoc:
         providers.select do |_slug, provider_class|
           provider_class.configured?(config)

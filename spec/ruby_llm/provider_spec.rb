@@ -812,11 +812,10 @@ RSpec.describe RubyLLM::Provider do
 
   describe 'provider registry partitions' do
     it 'splits providers into local and remote' do
-      expect(described_class.local_providers.keys).to contain_exactly(:ollama, :gpustack)
-      expect(described_class.remote_providers.keys).not_to include(:ollama, :gpustack)
-      expect(described_class.local_providers.keys + described_class.remote_providers.keys).to match_array(
-        described_class.providers.keys
-      )
+      local, remote = described_class.providers.partition { |_slug, provider_class| provider_class.local? }
+
+      expect(local.to_h.keys).to contain_exactly(:ollama, :gpustack)
+      expect(remote.map(&:last)).to all(be_remote)
     end
 
     it 'lists only providers the configuration can reach' do

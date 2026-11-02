@@ -258,7 +258,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
     event = "event: response.completed\ndata: #{JSON.generate(completed)}\n\n"
     split = event.index('{"model"')
     chunks = []
-    handler = protocol.send(:handle_stream) { |chunk| chunks << chunk }
+    handler = protocol.send(:build_on_data_handler) { |data| chunks << build_chunk(data) }
     env = Faraday::Env.from(status: 200)
 
     [event[0...split], event[split..]].each { |read| handler.call(read, read.bytesize, env) }

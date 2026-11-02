@@ -34,7 +34,8 @@ RSpec.describe RubyLLM::Providers::OllamaCloud do
 
   it 'is a remote provider, unlike local Ollama' do
     expect(described_class).not_to be_local
-    expect(RubyLLM::Provider.remote_providers).to include(ollama_cloud: described_class)
+    expect(RubyLLM::Provider.providers).to include(ollama_cloud: described_class)
+    expect(described_class).to be_remote
   end
 
   it 'requires an API key' do

@@ -1061,7 +1061,7 @@ module RubyLLM
 
         if last.tool_call?
           last.destroy unless last.ruby_llm_tool_calls.any?(&:paused?)
-        elsif last.tool_result?
+        else
           parent = last.ruby_llm_parent_tool_call
           tool_call_message = parent.message
           calls = tool_call_message.ruby_llm_tool_calls

@@ -29,7 +29,7 @@ RSpec.describe RubyLLM::Models do
       context 'with remote_only: true' do # rubocop:disable RSpec/NestedGroups
         it 'excludes local providers' do
           allow(described_class).to receive(:fetch_models_dev_models).and_return({ models: [], fetched: true })
-          allow(RubyLLM::Provider).to receive_messages(remote_providers: {}, configured_remote_providers: [])
+          allow(RubyLLM::Provider).to receive(:configured_remote_providers).and_return([])
 
           described_class.refresh(remote_only: true)
 
@@ -40,7 +40,7 @@ RSpec.describe RubyLLM::Models do
 
     describe '.fetch_provider_models' do
       it 'defaults to remote_only: true' do
-        allow(RubyLLM::Provider).to receive_messages(remote_providers: {}, configured_remote_providers: [])
+        allow(RubyLLM::Provider).to receive(:configured_remote_providers).and_return([])
 
         described_class.fetch_provider_models
 
