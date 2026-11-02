@@ -23,6 +23,8 @@ module RubyLLM
       def initialize_dup(*)
         super
         RUN_STATE.each { |name| instance_variable_set(name, nil) }
+        %i[claim_token claimed_until].each { |name| self[name] = nil if has_attribute?(name) }
+        self[:cancelled] = false if has_attribute?(:cancelled)
       end
 
       def exclusively(busy, &)
@@ -108,6 +110,7 @@ module RubyLLM
 
       def resync_messages
         messages_association.reset
+        ruby_llm_usages.reset
         messages_association.klass.uncached { sync_messages }
       end
 

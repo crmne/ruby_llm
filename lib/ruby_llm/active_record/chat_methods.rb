@@ -104,7 +104,7 @@ module RubyLLM
       #
       def approve(tool_call, remember: false)
         record = tool_call_record(tool_call)
-        to_llm.approve(record.to_llm, remember:)
+        to_llm.approve(record.to_llm, remember:) if record.result_id.nil?
         record_tool_call_decision(record, remember ? 'remembered' : 'approved')
         self
       end
@@ -179,6 +179,7 @@ module RubyLLM
 
       def refresh_messages # :nodoc:
         messages_association.reset
+        ruby_llm_usages.reset
         sync_messages if @chat
       end
 
@@ -919,7 +920,7 @@ module RubyLLM
 
       # Returns the QueuedMessage records waiting in the queue, oldest
       # first, ready to render.
-      def queued_messages = ruby_llm_queued_messages.scope
+      def queued_messages = ruby_llm_queued_messages.scope.skip_query_cache!
 
       # Takes +queued+, a QueuedMessage record or its id, out of the queue
       # and deletes its attachments. Returns +true+, or +false+ once the
@@ -1040,6 +1041,7 @@ module RubyLLM
         reason = error.is_a?(RubyLLM::CancelledError) ? 'chat cancelled' : 'API call failed'
         cleanup_failed_messages(reason:) if blank_placeholder?
         cleanup_orphaned_tool_results
+        resync_messages if @chat
       end
 
       def cleanup_after_block_failure
@@ -1076,7 +1078,7 @@ module RubyLLM
         messages = assoc.to_a
         return messages unless assoc.respond_to?(:klass)
 
-        associations = %i[ruby_llm_tool_calls ruby_llm_parent_tool_call ruby_llm_usages]
+        associations = [:ruby_llm_tool_calls, :ruby_llm_parent_tool_call, { ruby_llm_usages: Usage.owner_preload }]
         associations << { attachments_attachments: :blob } if attachment_association?(assoc.klass)
         rich_text_reflection = assoc.klass.reflect_on_association(:rich_text_content)
         associations << :rich_text_content if rich_text_reflection
@@ -1137,6 +1139,8 @@ module RubyLLM
           record.ruby_llm_usage_records.zip(message.ruby_llm_usage_entries)
         end
         linked_entries = linked_entry_pairs.to_h { |record, entry| [record.id, entry] }
+        ::ActiveRecord::Associations::Preloader.new(records: ruby_llm_usages.to_a,
+                                                    associations: Usage.owner_preload).call
         chat.usage_entries = ruby_llm_usages.map do |record|
           linked_entries.fetch(record.id) { record.to_entry }
         end
