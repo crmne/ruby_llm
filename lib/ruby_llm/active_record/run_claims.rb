@@ -18,6 +18,10 @@ module RubyLLM
       ].freeze
       private_constant :RUN_STATE
 
+      def run_claim_lost?(error) # :nodoc:
+        error.is_a?(ClaimLost)
+      end
+
       def claim_persisted_tool_calls(leases, executing:) # :nodoc:
         return leases.keys.map(&:id) unless tool_call_claims?
 

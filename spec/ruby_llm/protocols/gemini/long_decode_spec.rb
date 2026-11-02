@@ -371,7 +371,9 @@ RSpec.describe RubyLLM::Protocols::Gemini::LongDecode do
     announced = 0
     progress = []
     chat.before_message { announced += 1 }
-    chat.progress_recorder = proc { |partial| progress << [partial, chat.messages.last] }
+    run = RubyLLM::Chat::Run.new
+    allow(run).to receive(:record_progress) { |partial| progress << [partial, chat.messages.last] }
+    chat.run = run
 
     reply = chat.ask('Count')
 

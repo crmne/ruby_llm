@@ -257,15 +257,15 @@ RSpec.describe RubyLLM::Chat do
       2.times { expect { chat.send(:raise_if_cancelled!) }.to raise_error(RubyLLM::CancelledError) }
     end
 
-    it 'consults an external cancellation checker' do
-      chat.cancellation_checker = -> { :cancelled }
+    it 'consults its run for a cancellation request' do
+      run = RubyLLM::Chat::Run.new
+      allow(run).to receive(:cancellation_requested?).and_return(true)
+      chat.run = run
 
       expect { chat.send(:raise_if_cancelled!) }.to raise_error(RubyLLM::CancelledError)
     end
 
     it 'continues when nothing has been cancelled' do
-      chat.cancellation_checker = -> {}
-
       expect { chat.send(:raise_if_cancelled!) }.not_to raise_error
     end
   end

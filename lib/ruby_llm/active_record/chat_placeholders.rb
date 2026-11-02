@@ -6,6 +6,15 @@ module RubyLLM
     # the provider paused keeps its record, with the continuation that
     # resumes it, so a later run continues it instead of starting again.
     module ChatPlaceholders # :nodoc:
+      def persist_message_progress(message) # :nodoc:
+        return unless @message.has_attribute?(:continuation)
+
+        transaction do
+          @message.update!(message_attributes(message))
+          link_usage_entries(message)
+        end
+      end
+
       private
 
       def persist_new_message
@@ -27,15 +36,6 @@ module RubyLLM
         return false if @message.respond_to?(:attachments) && @message.attachments.attached?
 
         !@message.ruby_llm_tool_calls.exists?
-      end
-
-      def persist_message_progress(message)
-        return unless @message.has_attribute?(:continuation)
-
-        transaction do
-          @message.update!(message_attributes(message))
-          link_usage_entries(message)
-        end
       end
 
       def unfinished_message_record

@@ -246,11 +246,13 @@ RSpec.describe RubyLLM::Chat do
     expect(fallback_provider).not_to have_received(:complete)
   end
 
-  it 'does not fall back on an interruption the Rails integration declares' do
+  it 'does not fall back on an error its run reports as an interruption' do
     claim_lost = Class.new(StandardError)
     chat = described_class.new(model: 'primary-model')
                           .with_fallbacks('fallback-model', on: StandardError)
-    chat.interruptions = [claim_lost]
+    run = RubyLLM::Chat::Run.new
+    allow(run).to receive(:interrupted_by?) { |error| error.is_a?(claim_lost) }
+    chat.run = run
     allow(primary_provider).to receive(:complete).and_raise(claim_lost)
     allow(fallback_provider).to receive(:complete)
 

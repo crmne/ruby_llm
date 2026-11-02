@@ -167,11 +167,10 @@ module RubyLLM
       @end_user = nil
       @fallbacks = []
       @fallback_errors = Fallback::DEFAULT_ERRORS
-      @interruptions = []
       @callbacks = Hash.new { |callbacks, name| callbacks[name] = [] }
       @attachment_replacements = {}.compare_by_identity
       @cancelled = false
-      @cancellation_checker = nil
+      @run = Run.new
       @tool_call_state = ToolCallState.new
       @message_queue = build_message_queue
     end
@@ -1410,8 +1409,7 @@ module RubyLLM
     end
 
     # Hooks installed by the Rails integration.
-    attr_writer :cancellation_checker, :usage_recorder, :progress_recorder, :interruptions, :message_queue,
-                :tool_call_state # :nodoc:
+    attr_writer :run, :message_queue, :tool_call_state # :nodoc:
 
     # Appends a message to the conversation and returns it as a Message.
     # Accepts a Message, an attribute Hash, or a record responding to
@@ -1610,7 +1608,7 @@ module RubyLLM
     end
 
     def raise_if_cancelled!
-      @cancelled = true if @cancellation_checker&.call
+      @cancelled = true if @run.cancellation_requested?
       raise CancelledError if @cancelled
     end
 
@@ -1698,7 +1696,7 @@ module RubyLLM
     def record_progress(partial)
       replace_unfinished(partial)
       raise_if_cancelled!
-      @progress_recorder&.call(partial)
+      @run.record_progress(partial)
     end
 
     def replace_unfinished(message)
@@ -1856,7 +1854,7 @@ module RubyLLM
     end
 
     def fallback_error?(error)
-      return false if [CancelledError, *@interruptions].any? { |interruption| error.is_a?(interruption) }
+      return false if error.is_a?(CancelledError) || @run.interrupted_by?(error)
 
       fallback_errors.any? { |error_class| error.is_a?(error_class) }
     end
@@ -2005,7 +2003,7 @@ module RubyLLM
 
     def record_usage_entry(entry)
       usage_entries << entry
-      @usage_recorder ? @usage_recorder.call(entry) : Accounting::Usage.record(entry)
+      @run.record_usage(entry)
       entry
     end
 
