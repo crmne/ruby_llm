@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'faraday'
+require 'faraday/logging/formatter'
 
 module RubyLLM
   module Transport
