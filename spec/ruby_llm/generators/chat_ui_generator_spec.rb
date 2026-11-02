@@ -837,6 +837,20 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
           end
         end
 
+        it 'trusts an ApplicationAgent that still says chat_model' do
+          Dir.mktmpdir do |destination|
+            FileUtils.cp_r("#{app_path}/.", destination)
+            within_test_app(destination) do
+              File.write('app/agents/application_agent.rb',
+                         "class ApplicationAgent < RubyLLM::Agent\n  chat_model Chat\nend\n")
+
+              output, status = run_rails_generate('ruby_llm:chat_ui', '--force', chdir: destination)
+              expect(status.success?).to be(true), output
+              expect(File.read('app/agents/chat_agent.rb')).to eq("class ChatAgent < ApplicationAgent\nend\n")
+            end
+          end
+        end
+
         it 'gives the chat agent its chat model without an ApplicationAgent' do
           Dir.mktmpdir do |destination|
             FileUtils.cp_r("#{app_path}/.", destination)
@@ -846,7 +860,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
               output, status = run_rails_generate('ruby_llm:chat_ui', '--force', chdir: destination)
               expect(status.success?).to be(true), output
               expect(File.read('app/agents/chat_agent.rb'))
-                .to eq("class ChatAgent < RubyLLM::Agent\n  chat_model Chat\nend\n")
+                .to eq("class ChatAgent < RubyLLM::Agent\n  chat_class Chat\nend\n")
             end
           end
         end
@@ -943,7 +957,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
 
           chat_agent = File.read(config[:approval_flow][:agent_path])
           expect(chat_agent).to start_with("class #{config[:approval_flow][:agent]} < ApplicationAgent\n")
-          expect(chat_agent).not_to include('chat_model')
+          expect(chat_agent).not_to include('chat_class')
 
           queued_messages_controller = File.read(config[:queued_messages_controller_path])
           config[:queued_messages_controller_expectations].each do |line|

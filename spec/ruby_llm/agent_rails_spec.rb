@@ -8,7 +8,7 @@ RSpec.describe RubyLLM::Agent do
   it 'uses block-configured credentials when creating and finding a chat' do
     RubyLLM.config.openai_api_key = nil
     agent = Class.new(described_class) do
-      chat_model Chat
+      chat_class Chat
       model model_for(:openai, :temperature), provider: :openai
     end
     agent.context do |config|
@@ -26,7 +26,7 @@ RSpec.describe RubyLLM::Agent do
   describe 'rescue_from on records' do
     let(:agent) do
       Class.new(described_class) do
-        chat_model Chat
+        chat_class Chat
         model model_for(:openai, :temperature)
         inputs :account
         rescue_from(RubyLLM::RateLimitError) { |error| [self.class, chat, account, error.class] }
@@ -76,7 +76,7 @@ RSpec.describe RubyLLM::Agent do
   it 'returns an invalid record from .create with its errors' do
     stub_const('RefusedChat', Class.new(Chat) { validate { errors.add(:base, 'Refused') } })
     agent = Class.new(described_class) do
-      chat_model RefusedChat
+      chat_class RefusedChat
       model model_for(:openai)
       instructions 'Be brief'
     end
@@ -94,7 +94,7 @@ RSpec.describe RubyLLM::Agent do
     )
 
     agent_class = Class.new(RubyLLM::Agent) do
-      chat_model Chat
+      chat_class Chat
       model model_for(:openai, :temperature)
       inputs :display_name
       instructions display_name: -> { display_name }
@@ -118,7 +118,7 @@ RSpec.describe RubyLLM::Agent do
     )
 
     agent_class = Class.new(RubyLLM::Agent) do
-      chat_model Chat
+      chat_class Chat
       model model_for(:openai, :temperature)
       instructions
     end
@@ -138,7 +138,7 @@ RSpec.describe RubyLLM::Agent do
     )
 
     agent_class = Class.new(RubyLLM::Agent) do
-      chat_model Chat
+      chat_class Chat
       model model_for(:openai, :temperature)
     end
 
@@ -152,7 +152,7 @@ RSpec.describe RubyLLM::Agent do
 
   it 'does not add instructions when no instructions macro or conventional prompt exists' do
     agent_class = Class.new(RubyLLM::Agent) do
-      chat_model Chat
+      chat_class Chat
       model model_for(:openai, :temperature)
     end
 
@@ -164,7 +164,7 @@ RSpec.describe RubyLLM::Agent do
 
   it 'raises when an explicitly referenced prompt file is missing' do
     agent_class = Class.new(RubyLLM::Agent) do
-      chat_model Chat
+      chat_class Chat
       model model_for(:openai, :temperature)
       instructions { prompt('instructions') }
     end
@@ -172,9 +172,9 @@ RSpec.describe RubyLLM::Agent do
     expect { agent_class.create! }.to raise_error(RubyLLM::PromptNotFoundError, /Prompt file not found/)
   end
 
-  it 'exposes chat_model record as chat in execution context for .create! and .find' do
+  it 'exposes chat_class record as chat in execution context for .create! and .find' do
     agent_class = Class.new(RubyLLM::Agent) do
-      chat_model Chat
+      chat_class Chat
       model model_for(:openai, :temperature)
       instructions { "chat-class: #{chat.class.name}" }
     end
@@ -191,7 +191,7 @@ RSpec.describe RubyLLM::Agent do
 
   it 'picks the model with a block when creating a Rails chat' do
     agent_class = Class.new(RubyLLM::Agent) do
-      chat_model Chat
+      chat_class Chat
       inputs :quality
       model { quality == :high ? model_for(:openai, :alternate_chat) : model_for(:openai, :temperature) }
     end
@@ -205,7 +205,7 @@ RSpec.describe RubyLLM::Agent do
   it 'resolves a deferred context from inputs for Rails chats' do
     seen_chats = []
     agent_class = Class.new(RubyLLM::Agent) do
-      chat_model Chat
+      chat_class Chat
       model model_for(:openai, :temperature)
       inputs :timeout
       send(:context) do
@@ -234,7 +234,7 @@ RSpec.describe RubyLLM::Agent do
     )
 
     agent_class = Class.new(RubyLLM::Agent) do
-      chat_model Chat
+      chat_class Chat
       model model_for(:openai, :temperature)
       inputs :display_name
       instructions display_name: -> { display_name }
@@ -257,7 +257,7 @@ RSpec.describe RubyLLM::Agent do
 
   it 'combines persisted and unpersisted instruction declarations' do
     agent_class = Class.new(RubyLLM::Agent) do
-      chat_model Chat
+      chat_class Chat
       model model_for(:openai, :temperature)
 
       instructions 'Stable policy', cache_until_here: true
@@ -291,7 +291,7 @@ RSpec.describe RubyLLM::Agent do
 
   it 'leaves unchanged system rows in place when applied to an existing record' do
     agent_class = Class.new(RubyLLM::Agent) do
-      chat_model Chat
+      chat_class Chat
       model model_for(:openai, :temperature)
 
       instructions 'You are a helpful assistant.'
@@ -310,7 +310,7 @@ RSpec.describe RubyLLM::Agent do
 
   it 'replaces system rows when the declared instructions change' do
     agent_class = Class.new(RubyLLM::Agent) do
-      chat_model Chat
+      chat_class Chat
       model model_for(:openai, :temperature)
       inputs :language
 
@@ -334,7 +334,7 @@ RSpec.describe RubyLLM::Agent do
 
   it 'syncs only persistent instruction declarations' do
     agent_class = Class.new(RubyLLM::Agent) do
-      chat_model Chat
+      chat_class Chat
       model model_for(:openai, :temperature)
       inputs :version
 
@@ -354,7 +354,7 @@ RSpec.describe RubyLLM::Agent do
 
   it 'preserves inherited instruction persistence and caching on create and find' do
     parent = Class.new(RubyLLM::Agent) do
-      chat_model Chat
+      chat_class Chat
       model model_for(:openai, :temperature)
       instructions 'Inherited policy', cache_until_here: true
       instructions(append: true, persist: false) { "Runtime chat #{chat.id}" }
@@ -377,7 +377,7 @@ RSpec.describe RubyLLM::Agent do
   it 'prefers child declarations and prompts to inherited instructions on Rails records' do
     prompt_dir = write_prompt('spec_inherited_rails_agent', 'Child prompt')
     parent = Class.new(RubyLLM::Agent) do
-      chat_model Chat
+      chat_class Chat
       model model_for(:openai, :temperature)
       instructions 'Inherited policy', cache_until_here: true
     end
@@ -403,7 +403,7 @@ RSpec.describe RubyLLM::Agent do
     )
 
     agent_class = Class.new(RubyLLM::Agent) do
-      chat_model Chat
+      chat_class Chat
       model model_for(:openai, :temperature)
       inputs :display_name
       instructions display_name: -> { display_name }
@@ -427,7 +427,7 @@ RSpec.describe RubyLLM::Agent do
     )
 
     agent_class = Class.new(RubyLLM::Agent) do
-      chat_model Chat
+      chat_class Chat
       model model_for(:openai, :temperature)
       inputs :display_name
       instructions display_name: -> { display_name }
@@ -450,19 +450,19 @@ RSpec.describe RubyLLM::Agent do
     FileUtils.rm_rf(prompt_dir) if prompt_dir
   end
 
-  it 'raises when .create! is used without chat_model' do
+  it 'raises when .create! is used without chat_class' do
     agent_class = Class.new(RubyLLM::Agent) do
       model model_for(:openai, :temperature)
     end
 
     expect do
       agent_class.create!
-    end.to raise_error(ArgumentError, /chat_model must be configured/)
+    end.to raise_error(ArgumentError, /chat_class must be configured/)
   end
 
   it 'propagates assume_model_exists from class config when using find' do
     agent_class = Class.new(RubyLLM::Agent) do
-      chat_model Chat
+      chat_class Chat
       model 'not-a-real-model', provider: :openai, assume_model_exists: true
       instructions 'Hello'
     end
@@ -475,7 +475,7 @@ RSpec.describe RubyLLM::Agent do
 
   it 'propagates assume_model_exists from class config when using sync_instructions with id' do
     agent_class = Class.new(RubyLLM::Agent) do
-      chat_model Chat
+      chat_class Chat
       model 'not-a-real-model', provider: :openai, assume_model_exists: true
       instructions 'Hello'
     end
@@ -488,7 +488,7 @@ RSpec.describe RubyLLM::Agent do
 
   it 'propagates assume_model_exists from class config when initializing with a reloaded chat record' do
     agent_class = Class.new(RubyLLM::Agent) do
-      chat_model Chat
+      chat_class Chat
       model 'not-a-real-model', provider: :openai, assume_model_exists: true
       instructions 'Hello'
     end
@@ -502,7 +502,7 @@ RSpec.describe RubyLLM::Agent do
 
   it 'forwards the protocol model option to created and found Rails chat records' do
     agent_class = Class.new(RubyLLM::Agent) do
-      chat_model Chat
+      chat_class Chat
       model model_for(:openai), protocol: :chat_completions
       instructions 'Hello'
     end
@@ -516,13 +516,13 @@ RSpec.describe RubyLLM::Agent do
     expect(found.to_llm.instance_variable_get(:@protocol)).to eq(:chat_completions)
   end
 
-  it 'raises when .sync_instructions is used without chat_model' do
+  it 'raises when .sync_instructions is used without chat_class' do
     agent_class = Class.new(RubyLLM::Agent) do
       model model_for(:openai, :temperature)
     end
 
     expect do
       agent_class.sync_instructions(1)
-    end.to raise_error(ArgumentError, /chat_model must be configured/)
+    end.to raise_error(ArgumentError, /chat_class must be configured/)
   end
 end

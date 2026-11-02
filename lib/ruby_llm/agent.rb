@@ -16,7 +16,7 @@ module RubyLLM
   #
   #   SupportAgent.new.ask "How do I reset my API key?"
   #
-  # ::chat returns a configured Chat. When ::chat_model names an ActiveRecord
+  # ::chat returns a configured Chat. When ::chat_class names an ActiveRecord
   # chat class, ::create, ::create!, and ::find return configured records of
   # that class instead.
   #
@@ -97,7 +97,7 @@ module RubyLLM
       @end_user
       @schema
       @context
-      @chat_model
+      @chat_class
       @tools_defer
       @mcp_defer
     ] + PASSTHROUGH_OPTIONS.map { |option| :"@#{option}" }).freeze
@@ -493,13 +493,18 @@ module RubyLLM
       # ::sync_instructions). Accepts the class or its name as a string.
       # Called with no argument, returns the configured value.
       #
-      #   chat_model Chat
+      #   chat_class Chat
       #
-      def chat_model(value = nil)
-        return @chat_model if value.nil?
+      def chat_class(value = nil)
+        return @chat_class if value.nil?
 
-        @chat_model = value
-        remove_instance_variable(:@resolved_chat_model) if instance_variable_defined?(:@resolved_chat_model)
+        @chat_class = value
+        remove_instance_variable(:@resolved_chat_class) if instance_variable_defined?(:@resolved_chat_class)
+      end
+
+      def chat_model(value = nil) # :nodoc:
+        RubyLLM.deprecator.deprecate('Agent.chat_model', replacement: 'Agent.chat_class', removal: '3.0')
+        chat_class(value)
       end
 
       # Declares named runtime inputs. Matching keyword arguments passed to
@@ -607,13 +612,13 @@ module RubyLLM
         chat
       end
 
-      # Creates a ::chat_model record, applies this agent's configuration to
+      # Creates a ::chat_class record, applies this agent's configuration to
       # it, and returns it. Keywords matching declared ::inputs become
       # runtime inputs; the rest are forwarded to the model's +create+.
       #
       #   chat = WorkAssistant.create(user: current_user)
       #
-      # Raises ArgumentError if ::chat_model is not configured.
+      # Raises ArgumentError if ::chat_class is not configured.
       def create(**)
         with_rails_chat_record(:create, **)
       end
@@ -627,36 +632,36 @@ module RubyLLM
         with_rails_chat_record(:create!, **)
       end
 
-      # Finds the ::chat_model record with +id+ and applies this agent's
+      # Finds the ::chat_class record with +id+ and applies this agent's
       # configuration at runtime, without persisting instructions. Returns
       # the record.
       #
       #   chat = WorkAssistant.find(params[:id])
       #
-      # Raises ArgumentError if ::chat_model is not configured.
+      # Raises ArgumentError if ::chat_class is not configured.
       def find(id, **kwargs)
-        raise ArgumentError, 'chat_model must be configured to use find' unless resolved_chat_model
+        raise ArgumentError, 'chat_class must be configured to use find' unless resolved_chat_class
 
         input_values, = partition_inputs(kwargs)
-        record = resolved_chat_model.find(id)
+        record = resolved_chat_class.find(id)
         apply_configuration(record, input_values:, persist_instructions: false)
 
         record
       end
 
       # Re-renders this agent's instructions and persists them on the given
-      # ::chat_model record (or the record found by that id). Keywords
+      # ::chat_class record (or the record found by that id). Keywords
       # matching declared ::inputs become runtime inputs. Returns the
       # record.
       #
       #   WorkAssistant.sync_instructions(chat)
       #
-      # Raises ArgumentError if ::chat_model is not configured.
+      # Raises ArgumentError if ::chat_class is not configured.
       def sync_instructions(chat_or_id, **kwargs)
-        raise ArgumentError, 'chat_model must be configured to use sync_instructions' unless resolved_chat_model
+        raise ArgumentError, 'chat_class must be configured to use sync_instructions' unless resolved_chat_class
 
         input_values, = partition_inputs(kwargs)
-        record = chat_or_id.is_a?(resolved_chat_model) ? chat_or_id : resolved_chat_model.find(chat_or_id)
+        record = chat_or_id.is_a?(resolved_chat_class) ? chat_or_id : resolved_chat_class.find(chat_or_id)
         apply_assume_model_exists(record)
         apply_protocol(record)
         runtime = runtime_context(chat: record, inputs: input_values)
@@ -771,10 +776,10 @@ module RubyLLM
       end
 
       def with_rails_chat_record(method_name, **kwargs)
-        raise ArgumentError, 'chat_model must be configured to use create/create!' unless resolved_chat_model
+        raise ArgumentError, 'chat_class must be configured to use create/create!' unless resolved_chat_class
 
         input_values, chat_options = partition_inputs(kwargs)
-        record = resolved_chat_model.public_send(
+        record = resolved_chat_class.public_send(
           method_name, **resolved_chat_kwargs(inputs: input_values), **chat_options
         )
         apply_configuration(record, input_values:, persist_instructions: true) if record&.persisted?
@@ -944,16 +949,16 @@ module RubyLLM
 
       def apply_assume_model_exists(chat_object)
         return unless chat_kwargs.key?(:assume_model_exists) &&
-                      resolved_chat_model &&
-                      chat_object.is_a?(resolved_chat_model)
+                      resolved_chat_class &&
+                      chat_object.is_a?(resolved_chat_class)
 
         chat_object.assume_model_exists = chat_kwargs[:assume_model_exists]
       end
 
       def apply_protocol(chat_object)
         return unless chat_kwargs.key?(:protocol) &&
-                      resolved_chat_model &&
-                      chat_object.is_a?(resolved_chat_model)
+                      resolved_chat_class &&
+                      chat_object.is_a?(resolved_chat_class)
 
         chat_object.protocol = chat_kwargs[:protocol]
       end
@@ -988,7 +993,7 @@ module RubyLLM
       end
 
       def rails_chat_record?(chat)
-        resolved_chat_model && chat.is_a?(resolved_chat_model)
+        resolved_chat_class && chat.is_a?(resolved_chat_class)
       end
 
       def default_instructions_prompt_exists?
@@ -1026,12 +1031,12 @@ module RubyLLM
         Support::Utils.underscore(class_name.gsub('::', '/')).tr('-', '_')
       end
 
-      def resolved_chat_model
-        return @resolved_chat_model if defined?(@resolved_chat_model)
+      def resolved_chat_class
+        return @resolved_chat_class if defined?(@resolved_chat_class)
 
-        @resolved_chat_model = case @chat_model
-                               when String then Object.const_get(@chat_model)
-                               else @chat_model
+        @resolved_chat_class = case @chat_class
+                               when String then Object.const_get(@chat_class)
+                               else @chat_class
                                end
       end
     end

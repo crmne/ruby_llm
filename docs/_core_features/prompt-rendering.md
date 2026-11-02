@@ -232,7 +232,7 @@ Agents build on the same prompt renderer. Named agents automatically render thei
 
 ```ruby
 class WorkAssistant < RubyLLM::Agent
-  chat_model Chat
+  chat_class Chat
 end
 ```
 
@@ -248,7 +248,7 @@ Reference the prompt explicitly when the file is required; RubyLLM then raises `
 
 ```ruby
 class WorkAssistant < RubyLLM::Agent
-  chat_model Chat
+  chat_class Chat
   instructions { prompt("instructions") }
 end
 ```
@@ -257,7 +257,7 @@ You can pass locals to the conventional prompt:
 
 ```ruby
 class WorkAssistant < RubyLLM::Agent
-  chat_model Chat
+  chat_class Chat
 
   instructions display_name: -> { chat.user.display_name_or_email }
 end

@@ -173,7 +173,7 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
                    .create_app_directories
 
     expect(File.read(File.join(destination, 'app/agents/application_agent.rb')))
-      .to eq("class ApplicationAgent < RubyLLM::Agent\n  chat_model Conversation\nend\n")
+      .to eq("class ApplicationAgent < RubyLLM::Agent\n  chat_class Conversation\nend\n")
   end
 
   it 'removes the broadcasting and attachments 2.1 wrote into the message model' do
@@ -293,7 +293,7 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
   it 'leaves an existing ApplicationAgent alone' do
     path = File.join(destination, 'app/agents/application_agent.rb')
     FileUtils.mkdir_p(File.dirname(path))
-    File.write(path, "class ApplicationAgent < RubyLLM::Agent\n  chat_model Chat\n  model 'gpt-5.6-luna'\nend\n")
+    File.write(path, "class ApplicationAgent < RubyLLM::Agent\n  chat_class Chat\n  model 'gpt-5.6-luna'\nend\n")
 
     described_class.new([], {}, destination_root: destination, shell: Thor::Shell::Basic.new).create_app_directories
 

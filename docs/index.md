@@ -613,7 +613,7 @@ response.parsed["features"]
 
 ```ruby
 class SupportAgent < RubyLLM::Agent
-  chat_model Chat
+  chat_class Chat
   model "{{ site.models.default_chat }}"
   instructions "Refund unopened items within 30 days."
   tools LookupOrder, IssueRefund

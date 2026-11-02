@@ -25,7 +25,7 @@ module RubyLLM
 
         create_file APPLICATION_AGENT_PATH, <<~RUBY
           class ApplicationAgent < RubyLLM::Agent
-            chat_model #{chat_model_name}
+            chat_class #{chat_model_name}
           end
         RUBY
       end

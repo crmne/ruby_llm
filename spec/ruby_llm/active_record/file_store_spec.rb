@@ -160,7 +160,7 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
 
     it "takes an agent's owner lambda, run with the chat in scope" do
       agent = Class.new(RubyLLM::Agent) do
-        chat_model Chat
+        chat_class Chat
         file_store owner: -> { chat }
       end
       agent.model model_for(:openai), provider: :openai

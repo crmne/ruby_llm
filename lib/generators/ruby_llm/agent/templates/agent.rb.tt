@@ -3,6 +3,6 @@ class <%= agent_class_name %> < ApplicationAgent
 end
 <% else -%>
 class <%= agent_class_name %> < RubyLLM::Agent
-  chat_model Chat
+  chat_class Chat
 end
 <% end -%>

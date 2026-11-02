@@ -21,6 +21,7 @@ After reading this guide, you will know:
 * What changes for a crashed job, a denial, pending approvals, an MCP input error, a stdio server's environment, a dropped MCP tool call, a document URL, and a deploy that mixes versions.
 * What changes for agent `rescue_from` handlers and streamed transcription chunks.
 * Which job predicates replace `done?` and `completed?`.
+* Why agents name their chat record with `chat_class`.
 
 This guide covers **2.1 to 2.2**. Coming from 2.0? Follow the [2.1 upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.1.1/docs/_reference/upgrading.md) with RubyLLM 2.1 first.
 
@@ -284,6 +285,16 @@ In 2.1, `message.raw` and `error.response` still carried the request headers, in
 ## A Malformed Response Raises RubyLLM::Error
 
 In 2.1, a successful response with a body RubyLLM could not parse raised `Faraday::ParsingError`. In 2.2 it raises `RubyLLM::Error`, so `rescue RubyLLM::Error` catches it. Replace any `rescue Faraday::ParsingError` in your application.
+
+## Agents Say `chat_class`
+
+`RubyLLM.models.chat_models` lists LLMs, so `chat_model` on an agent read like one too. Agents now use `chat_class`, the name `acts_as_message` already uses. `chat_model` still works and warns through `RubyLLM.deprecator`. RubyLLM 3.0 removes it.
+
+```ruby
+class ApplicationAgent < RubyLLM::Agent
+  chat_class Chat
+end
+```
 
 ## Rename Chat Columns Named After New Methods
 

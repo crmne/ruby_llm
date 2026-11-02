@@ -205,7 +205,7 @@ class Handoff < RubyLLM::Tool
 end
 
 class SupportRouter < RubyLLM::Agent
-  chat_model Chat
+  chat_class Chat
   instructions "Call handoff with the specialist who should take over."
   tools Handoff
 end
