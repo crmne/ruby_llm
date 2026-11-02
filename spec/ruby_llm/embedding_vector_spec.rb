@@ -21,9 +21,9 @@ RSpec.describe RubyLLM::Embedding do
     end
 
     it 'counts a row the provider left empty' do
-      embedding = described_class.new(vectors: [[0.1], nil], model:)
-
-      expect { embedding.vector }.to raise_error(RubyLLM::Error, /holds 2 vectors/)
+      [[[0.1], nil], [nil, [0.1]]].each do |vectors|
+        expect { described_class.new(vectors:, model:).vector }.to raise_error(RubyLLM::Error, /holds 2 vectors/)
+      end
     end
 
     it 'leaves vectors as they are' do
