@@ -679,8 +679,9 @@ RSpec.describe RubyLLM::MCP::HTTP do
       socket.close
     end
 
-    def open_stream(socket, *events)
-      socket.write("HTTP/1.1 200 OK\r\nContent-Type: text/event-stream\r\nTransfer-Encoding: chunked\r\n\r\n")
+    def open_stream(socket, *events, close: false)
+      socket.write("HTTP/1.1 200 OK\r\nContent-Type: text/event-stream\r\nTransfer-Encoding: chunked\r\n" \
+                   "#{"Connection: close\r\n" if close}\r\n")
       events.each { |data| socket.write("#{data.bytesize.to_s(16)}\r\n#{data}\r\n") }
     end
 
@@ -709,7 +710,7 @@ RSpec.describe RubyLLM::MCP::HTTP do
       require 'faraday/net_http_persistent'
 
       keep_open = lambda do |socket, request|
-        open_stream(socket, answer(request))
+        open_stream(socket, answer(request), close: true)
         sleep 2
         socket.write("0\r\n\r\n")
         socket.close
