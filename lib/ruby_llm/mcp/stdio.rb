@@ -13,8 +13,7 @@ module RubyLLM
     # keeps its session for the life of its process, so after a restart its
     # requests raise SessionExpired until the client initializes it again.
     # The process inherits only INHERITED_ENV from the application, and +env+
-    # adds to and overrides those, so a server never sees the application's
-    # API keys unless it is given them.
+    # adds to and overrides those.
     #
     # Subscriptions share the channel, so whichever thread reads a message
     # that belongs to one hands it to the subscription's listener: a

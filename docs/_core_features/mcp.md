@@ -49,7 +49,7 @@ end
 
 The process starts on the first request and stops when you call `close`.
 
-A stdio server does not inherit your application's environment, so it never sees your API keys unless you give them to it. It gets only what a process needs to start: `HOME`, `LOGNAME`, `PATH`, `SHELL`, `TERM`, `USER`, `TMPDIR`, `LANG`, `LC_ALL`, `LC_CTYPE`, `GEM_HOME`, `GEM_PATH`, and their Windows equivalents. Pass anything else with `env`, which also overrides those:
+A stdio server does not inherit your application's API keys or the rest of its environment. It gets only what a process needs to start: `HOME`, `LOGNAME`, `PATH`, `SHELL`, `TERM`, `USER`, `TMPDIR`, `LANG`, `LC_ALL`, `LC_CTYPE`, `GEM_HOME`, `GEM_PATH`, and their Windows equivalents. Pass anything else with `env`, which also overrides those:
 
 ```ruby
 class GitHub < RubyLLM::MCP
