@@ -15,11 +15,11 @@ module RubyLLM
 
         module_function
 
-        def images_url(with: nil, mask: nil) # rubocop:disable Lint/UnusedMethodArgument
+        def images_url(**)
           'images'
         end
 
-        def render_image_payload(prompt, model:, size:, with: nil, mask: nil, provider_options: {}, **) # rubocop:disable Lint/UnusedMethodArgument
+        def render_image_payload(prompt, model:, size:, with: nil, provider_options: {}, **)
           payload = { model: model, prompt: prompt }
           references = build_input_references(with)
           payload[:input_references] = references if references.any?
@@ -40,7 +40,7 @@ module RubyLLM
           end
         end
 
-        def validate_paint_inputs!(with:, mask:) # rubocop:disable Lint/UnusedMethodArgument
+        def validate_paint_inputs!(mask:, **)
           raise UnsupportedAttachmentError, 'image mask' unless mask.nil?
         end
 

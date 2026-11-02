@@ -54,9 +54,7 @@ module RubyLLM
         "#{file_info_url(file_id)}/content"
       end
 
-      # rubocop:disable-next Lint/UnusedMethodArgument
-      def render_upload_payload(attachment, purpose: nil, expires_in: nil, visibility: nil,
-                                display_name: nil, uri: nil, content_type: nil)
+      def render_upload_payload(attachment, **)
         { file: file_part(attachment) }
       end
 

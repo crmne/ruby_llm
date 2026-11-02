@@ -39,7 +39,7 @@ module RubyLLM
           "#{path}?output_format=#{URI.encode_uri_component(output_format_for(format))}"
         end
 
-        def render_speech_payload(input, model:, voice: nil, format: nil, provider_options: {}) # rubocop:disable Lint/UnusedMethodArgument
+        def render_speech_payload(input, model:, provider_options: {}, **)
           Support::Utils.deep_merge({ text: input, model_id: model }, provider_options)
         end
 

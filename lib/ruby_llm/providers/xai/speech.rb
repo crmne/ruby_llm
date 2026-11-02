@@ -9,11 +9,11 @@ module RubyLLM
       module Speech
         module_function
 
-        def speech_url(model:) # rubocop:disable Lint/UnusedMethodArgument
+        def speech_url(**)
           'tts'
         end
 
-        def render_speech_payload(input, model:, voice:, format:, provider_options: {}) # rubocop:disable Lint/UnusedMethodArgument
+        def render_speech_payload(input, voice:, format:, provider_options: {}, **)
           payload = {
             text: input,
             voice_id: voice,

@@ -14,7 +14,7 @@ module RubyLLM
           "models/#{model_id(@model)}:predictLongRunning"
         end
 
-        def render_video_payload(prompt, model:, with: [], provider_options: {}) # rubocop:disable Lint/UnusedMethodArgument
+        def render_video_payload(prompt, with: [], provider_options: {}, **)
           instance = { prompt: prompt }
           instance[:image] = render_video_image(with.first) if with.first
 
@@ -42,7 +42,7 @@ module RubyLLM
           video_operation_name(job)
         end
 
-        def parse_video_job_status(response, job:) # rubocop:disable Lint/UnusedMethodArgument
+        def parse_video_job_status(response, **)
           body = response.body
           if body['error']
             { status: :failed, raw: body, error: body.dig('error', 'message') }

@@ -13,7 +13,7 @@ module RubyLLM
           azure_video_url('video/generations/jobs')
         end
 
-        def render_video_payload(prompt, model:, with: [], provider_options: {}) # rubocop:disable Lint/UnusedMethodArgument
+        def render_video_payload(prompt, model:, provider_options: {}, **)
           { model: model, prompt: prompt }.merge(provider_options)
         end
 
@@ -33,7 +33,7 @@ module RubyLLM
           azure_video_url("video/generations/jobs/#{job.id}")
         end
 
-        def parse_video_job_status(response, job:) # rubocop:disable Lint/UnusedMethodArgument
+        def parse_video_job_status(response, **)
           body = response.body
           case body['status']
           when 'succeeded' then { status: :completed, raw: body }

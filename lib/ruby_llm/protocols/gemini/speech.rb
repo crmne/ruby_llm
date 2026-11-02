@@ -41,7 +41,7 @@ module RubyLLM
           Support::Utils.deep_merge(payload, provider_options)
         end
 
-        def parse_speech_response(response, model:, voice:, format:) # rubocop:disable Lint/UnusedMethodArgument
+        def parse_speech_response(response, model:, voice:, **)
           audio = response.body.dig('candidates', 0, 'content', 'parts', 0, 'inlineData', 'data')
           raise Error, 'Unexpected response format from Gemini speech generation API' unless audio
 

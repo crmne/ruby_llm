@@ -15,8 +15,7 @@ module RubyLLM
           false
         end
 
-        # rubocop:disable-next Lint/UnusedMethodArgument
-        def render_embedding_payload(text, model:, dimensions:, task_type: nil, title: nil, provider_options: {})
+        def render_embedding_payload(text, dimensions:, task_type: nil, title: nil, provider_options: {}, **)
           instances = [text].flatten.map do |t|
             { content: t.to_s, task_type: task_type, title: title }.compact
           end

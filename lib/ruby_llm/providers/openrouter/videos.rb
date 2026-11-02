@@ -36,7 +36,7 @@ module RubyLLM
           "videos/#{job.id}"
         end
 
-        def parse_video_job_status(response, job:) # rubocop:disable Lint/UnusedMethodArgument
+        def parse_video_job_status(response, **)
           body = response.body
           status = job_status(body)
           state = { status: status, raw: body, reported_cost: reported_cost(body['usage'] || {}) }

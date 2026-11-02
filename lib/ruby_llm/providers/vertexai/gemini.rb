@@ -48,7 +48,7 @@ module RubyLLM
           @provider.model_path(model_id)
         end
 
-        def images_url(with: nil, mask: nil) # rubocop:disable Lint/UnusedMethodArgument
+        def images_url(**)
           id = model_id(@model)
 
           "#{@provider.model_path(id)}:#{image_endpoint_action(id)}"

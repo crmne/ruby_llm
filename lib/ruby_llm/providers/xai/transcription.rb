@@ -24,10 +24,7 @@ module RubyLLM
           'stt'
         end
 
-        # rubocop:disable-next Lint/UnusedMethodArgument
-        def render_transcription_payload(file_part, model:, language:, format: nil, speaker_names: nil,
-                                         speaker_references: nil, provider_options: {}, prompt: nil,
-                                         temperature: nil)
+        def render_transcription_payload(file_part, language:, speaker_names: nil, provider_options: {}, **)
           payload = {}
           payload[:language] = language if language
           payload[:diarize] = true if speaker_names

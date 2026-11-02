@@ -43,10 +43,8 @@ module RubyLLM
           usage['prompt_audio_seconds'] || super
         end
 
-        # rubocop:disable-next Lint/UnusedMethodArgument
-        def render_transcription_payload(file_part, model:, language:, format: nil, speaker_names: nil,
-                                         speaker_references: nil, provider_options: {}, prompt: nil,
-                                         temperature: nil)
+        def render_transcription_payload(file_part, model:, language:, speaker_names: nil, provider_options: {},
+                                         prompt: nil, temperature: nil, **)
           payload = {
             model: model,
             file: file_part,
