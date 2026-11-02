@@ -430,9 +430,7 @@ module RubyLLM
 
           return config if tool_prefs.nil? || tool_prefs[:choice].nil?
 
-          tool_choice = render_tool_choice(tool_prefs[:choice])
-          config[:toolChoice] = tool_choice if tool_choice
-          config
+          config.merge(toolChoice: render_tool_choice(tool_prefs[:choice]))
         end
 
         def render_tool_choice(choice)
@@ -440,7 +438,7 @@ module RubyLLM
           when :auto
             { auto: {} }
           when :none
-            nil
+            raise ArgumentError, 'Bedrock Converse has no tool choice of none; remove the tools from this request'
           when :required
             { any: {} }
           else

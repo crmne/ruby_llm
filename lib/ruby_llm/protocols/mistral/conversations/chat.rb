@@ -30,6 +30,10 @@ module RubyLLM
             options = super(messages, tools:, temperature:, model:, stream:, max_output_tokens:,
                                       schema:, thinking:, citations: false, caching: nil, tool_prefs:)
             normalize_conversation_choice(options)
+            if options[:parallel_tool_calls] == false
+              raise ArgumentError, 'Mistral Conversations does not accept calls: :one'
+            end
+
             {
               model: model.id,
               inputs: render_entries(messages),

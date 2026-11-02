@@ -29,13 +29,9 @@ RSpec.describe RubyLLM::Providers::Ollama::Chat do
       end
     end
 
-    it 'ignores thinking budgets with a debug note' do
-      allow(RubyLLM.logger).to receive(:debug)
-
-      payload = render_payload(thinking: RubyLLM::Thinking::Config.new(budget: 4096))
-
-      expect(payload).not_to have_key(:reasoning_effort)
-      expect(RubyLLM.logger).to have_received(:debug)
+    it 'raises for a thinking budget' do
+      expect { render_payload(thinking: RubyLLM::Thinking::Config.new(budget: 4096)) }
+        .to raise_error(ArgumentError, /no thinking budget/)
     end
   end
 

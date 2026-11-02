@@ -48,14 +48,9 @@ RSpec.describe RubyLLM::Providers::DeepSeek::Chat do
       )
     end
 
-    it 'ignores thinking budgets with a debug note' do
-      allow(RubyLLM.logger).to receive(:debug)
-
-      payload = render_payload(thinking: RubyLLM::Thinking::Config.new(budget: 2048))
-
-      expect(payload[:thinking]).to eq(type: 'enabled')
-      expect(payload).not_to have_key(:reasoning_effort)
-      expect(RubyLLM.logger).to have_received(:debug)
+    it 'raises for a thinking budget' do
+      expect { render_payload(thinking: RubyLLM::Thinking::Config.new(budget: 2048)) }
+        .to raise_error(ArgumentError, /no thinking budget/)
     end
 
     it 'omits thinking controls when thinking is not configured' do
@@ -65,13 +60,9 @@ RSpec.describe RubyLLM::Providers::DeepSeek::Chat do
       expect(payload).not_to have_key(:reasoning_effort)
     end
 
-    it 'degrades json_schema response formats to json_object with a warning' do
-      allow(RubyLLM.logger).to receive(:warn)
-
-      payload = render_payload(schema: { name: 'person', schema: { type: 'object' }, strict: true })
-
-      expect(payload[:response_format]).to eq(type: 'json_object')
-      expect(RubyLLM.logger).to have_received(:warn).with(/does not support json_schema/)
+    it 'raises for a schema, which this protocol cannot enforce' do
+      expect { render_payload(schema: { name: 'person', schema: { type: 'object' }, strict: true }) }
+        .to raise_error(ArgumentError, /cannot enforce a schema\. Use protocol: :responses/)
     end
   end
 

@@ -283,6 +283,21 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
   end
 
   describe '#build_thinking_config' do
+    it 'keeps thoughts out of the response for display: :omitted' do
+      thinking = RubyLLM::Thinking::Config.new(effort: :high, display: :omitted)
+
+      expect(test_obj.send(:build_thinking_config, nil, thinking)).to eq(
+        includeThoughts: false, thinkingLevel: 'high'
+      )
+    end
+
+    it 'raises for a display Gemini has no setting for' do
+      thinking = RubyLLM::Thinking::Config.new(effort: :high, display: :full)
+
+      expect { test_obj.send(:build_thinking_config, nil, thinking) }
+        .to raise_error(ArgumentError, /summarized or omitted/)
+    end
+
     it 'sends the effort level when one is set' do
       thinking = RubyLLM::Thinking::Config.new(effort: :high)
 
