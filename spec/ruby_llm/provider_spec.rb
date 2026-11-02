@@ -10,8 +10,10 @@ RSpec.describe RubyLLM::Provider do
     subclass.slug = 'openai'
     config = RubyLLM::Configuration.new.tap { |options| options.openai_api_key = 'test' }
 
-    expect { subclass.new(config).protocol_for(RubyLLM::Model.new(id: model_for(:openai), provider: 'openai')) }
-      .to raise_error(RubyLLM::Error, /Acme has no protocols.*declare them with `protocol`/)
+    [model_for(:openai), RubyLLM::Providers::OpenAI::Capabilities::SEARCH_MODELS.first].each do |id|
+      expect { subclass.new(config).protocol_for(RubyLLM::Model.new(id:, provider: 'openai')) }
+        .to raise_error(RubyLLM::Error, /Acme has no protocols.*declare them with `protocol`/)
+    end
   end
 
   def api_base_cases

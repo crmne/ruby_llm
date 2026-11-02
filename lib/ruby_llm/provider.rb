@@ -732,11 +732,7 @@ module RubyLLM
     end
 
     def default_protocol
-      name = configured_protocol || self.class.default_protocol
-      return fetch_protocol(name) if name
-
-      raise Error, "#{self.class.display_name} has no protocols. A provider subclass does not inherit its " \
-                   'parent\'s protocols, so declare them with `protocol`.'
+      fetch_protocol(configured_protocol || self.class.default_protocol)
     end
 
     # The model catalog lives at the provider's own listing endpoint, which
@@ -769,6 +765,11 @@ module RubyLLM
     end
 
     def fetch_protocol(name)
+      if protocols.empty?
+        raise Error, "#{self.class.display_name} has no protocols. A provider subclass does not inherit its " \
+                     'parent\'s protocols, so declare them with `protocol`.'
+      end
+
       protocols.fetch(name.to_sym) do
         raise Error, "#{name} is not a protocol of #{self.class.display_name}. Available: #{protocols.keys.join(', ')}"
       end
