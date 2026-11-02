@@ -1057,7 +1057,7 @@ module RubyLLM
     end
 
     def idempotent?(name)
-      definition = server_tool(name)
+      definition = @server_tools&.find { |server_tool| server_tool['name'] == name }
       !definition.nil? && Tool.new(self, definition).idempotent?
     end
 

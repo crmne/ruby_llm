@@ -67,8 +67,8 @@ module RubyLLM
       def list(method, key)
         page = request(method)
         items = page.fetch(key, [])
-        until page['nextCursor'].to_s.empty?
-          page = request(method, { cursor: page['nextCursor'] })
+        while (cursor = page['nextCursor']) && cursor != ''
+          page = request(method, { cursor: })
           items += page.fetch(key, [])
         end
         items

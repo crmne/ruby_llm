@@ -486,6 +486,18 @@ RSpec.describe RubyLLM::MCP::HTTP do
         expect(calls).to have_been_made.once
       end
 
+      it 'does not fetch the tools again to decide on a call' do
+        stub_method('tools/list', result: { tools: [{ name: 'lookup', annotations: { idempotentHint: true } }] })
+        mcp = RubyLLM.mcp(url:)
+        stub_method('tools/call', headers: events, body: lambda { |_request|
+          mcp.send(:forget_tools)
+          event(progress)
+        })
+
+        expect { mcp.call(:lookup) }.to raise_error(RubyLLM::MCP::Error, /did not answer/)
+        expect(calls).to have_been_made.once
+      end
+
       it 'sends other requests again' do
         ids = []
         stub_method('tools/list', headers: events, body: lambda { |request|

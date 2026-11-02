@@ -31,17 +31,19 @@ RSpec.describe RubyLLM::MCP::Client do
       expect(names).to eq(%w[echo add fail picture slow wait deploy connect delete_everything])
     end
 
-    it 'stops at an empty cursor' do
-      requests = []
-      transport = Object.new
-      transport.define_singleton_method(:request) do |message, **|
-        requests << message[:method]
-        raise 'kept paging' if requests.count('tools/list') > 2
+    [nil, false, ''].each do |cursor|
+      it "stops at a cursor of #{cursor.inspect}" do
+        requests = []
+        transport = Object.new
+        transport.define_singleton_method(:request) do |message, **|
+          requests << message[:method]
+          raise 'kept paging' if requests.count('tools/list') > 2
 
-        { 'result' => { 'supportedVersions' => ['2026-07-28'], 'tools' => ['search'], 'nextCursor' => '' } }
+          { 'result' => { 'supportedVersions' => ['2026-07-28'], 'tools' => ['search'], 'nextCursor' => cursor } }
+        end
+
+        expect(described_class.new(transport).list('tools/list', 'tools')).to eq(['search'])
       end
-
-      expect(described_class.new(transport).list('tools/list', 'tools')).to eq(['search'])
     end
 
     it 'times out on a server that stops in the middle of a line' do

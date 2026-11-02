@@ -23,6 +23,7 @@ module RubyLLM
     # thread, so it reads and writes with that deferred.
     class Stdio # :nodoc:
       SHUTDOWN_GRACE = 2
+      SHUTDOWN_CHECK = 0.05
       CHECK_INTERVAL = 0.5
       SUBSCRIPTION_ID = 'io.modelcontextprotocol/subscriptionId'
       INHERITED_ENV = %w[
@@ -227,7 +228,7 @@ module RubyLLM
 
       def start
         options = @directory ? { chdir: @directory } : {}
-        options[:pgroup] = true unless Gem.win_platform?
+        options[:pgroup] = true if groups?
         env = ENV.slice(*INHERITED_ENV).merge(@env)
         @stdin, @stdout, @process = Open3.popen2(env, *@command, unsetenv_others: true, **options)
         @buffer = +''
@@ -238,19 +239,35 @@ module RubyLLM
 
         @stdin.close unless @stdin.closed?
         @stdout.close unless @stdout.closed?
-        terminate unless @process.join(SHUTDOWN_GRACE)
+        @process.join(SHUTDOWN_GRACE)
+        terminate if groups? || @process.alive?
         @process = nil
       end
 
       def terminate
         signal('TERM')
-        signal('KILL') unless @process.join(SHUTDOWN_GRACE)
-      rescue Errno::ESRCH
+        signal('KILL') unless exited?
+      rescue Errno::ESRCH, Errno::EPERM
         nil
       end
 
-      def signal(name)
-        Process.kill(Gem.win_platform? ? name : "-#{name}", @process.pid)
+      def exited?
+        deadline = monotonic_now + SHUTDOWN_GRACE
+        while monotonic_now < deadline
+          signal(0)
+          sleep SHUTDOWN_CHECK
+        end
+        false
+      rescue Errno::ESRCH, Errno::EPERM
+        true
+      end
+
+      def signal(signal)
+        Process.kill(signal, groups? ? -@process.pid : @process.pid)
+      end
+
+      def groups?
+        !Gem.win_platform?
       end
 
       def name
