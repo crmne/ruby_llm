@@ -1091,6 +1091,51 @@ RSpec.describe RubyLLM::MCP::OAuth do
     end
   end
 
+  describe 'answers that are not JSON objects' do
+    def answers_with(method, url, body)
+      stub_request(method, url).to_return(body:)
+    end
+
+    def starts
+      linear.authorization_url(redirect_uri:)
+    end
+
+    it 'raises when a registration is not one' do
+      answers_with(:post, 'https://auth.example.com/register', '["registered"]')
+
+      expect { starts }.to raise_error(RubyLLM::MCP::Error, /did not answer with a JSON object/)
+    end
+
+    it 'raises when a token response is not one' do
+      url = linear.authorization_url(redirect_uri:)
+      answers_with(:post, 'https://auth.example.com/token', '"access-1"')
+
+      expect { linear.authorize(callback(url)) }
+        .to raise_error(RubyLLM::MCP::Error, /did not answer with a JSON object/)
+    end
+
+    it 'raises when the metadata a challenge names is not one' do
+      answers_with(:get, 'https://mcp.example.com/.well-known/oauth-protected-resource/mcp', '[]')
+
+      expect { starts }.to raise_error(RubyLLM::MCP::Error, /did not answer with a JSON object/)
+    end
+
+    it 'moves on from metadata that is not one' do
+      answers_with(:get, 'https://auth.example.com/.well-known/oauth-authorization-server', '[]')
+      stub_request(:get, 'https://auth.example.com/.well-known/openid-configuration')
+        .to_return(body: authorization_server.to_json)
+
+      expect(starts).to start_with('https://auth.example.com/authorize')
+    end
+
+    it 'still reads refused token requests' do
+      url = linear.authorization_url(redirect_uri:)
+      stub_request(:post, 'https://auth.example.com/token').to_return(body: { error: 'invalid_grant' }.to_json)
+
+      expect { linear.authorize(callback(url)) }.to raise_error(RubyLLM::MCP::Error, /refused the request/)
+    end
+  end
+
   it 'refuses grants it does not know' do
     expect { Class.new(RubyLLM::MCP) { oauth grant: :password } }
       .to raise_error(ArgumentError, 'Unknown OAuth grant: password')

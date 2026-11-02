@@ -27,6 +27,7 @@ module RubyLLM
       MODERN_ERRORS = [-32_020, -32_021, UNSUPPORTED_VERSION].freeze
       METHOD_NOT_FOUND = -32_601
       DISCOVERY_TIMEOUT = 10
+      PAGE_LIMIT = 1_000
       ACKNOWLEDGED = 'notifications/subscriptions/acknowledged'
       CHANGES = %w[
         notifications/tools/list_changed notifications/prompts/list_changed
@@ -67,10 +68,13 @@ module RubyLLM
       def list(method, key)
         page = request(method)
         items = page.fetch(key, [])
-        while (cursor = page['nextCursor'])
+        PAGE_LIMIT.times do
+          cursor = page['nextCursor'] or break
           page = request(method, { cursor: })
           items += page.fetch(key, [])
         end
+        raise Error, "The server did not finish #{method} in #{PAGE_LIMIT} pages" if page['nextCursor']
+
         items
       end
 

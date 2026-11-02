@@ -31,6 +31,34 @@ RSpec.describe RubyLLM::MCP::HTTP do
       .to raise_error(ArgumentError) { |error| expect(error.message).not_to include('hunter2') }
   end
 
+  context 'with a malformed URL' do
+    let(:malformed) { 'https://user:hunter2@bad host/mcp' }
+
+    def expect_no_url(&)
+      expect(&).to raise_error(ArgumentError, 'The MCP server URL is malformed') do |error|
+        expect(error.full_message).not_to include('hunter2')
+      end
+    end
+
+    it 'keeps it out of the refusal' do
+      expect_no_url { described_class.new(malformed) }
+    end
+
+    it 'keeps it out of the name of an inline MCP' do
+      expect_no_url { RubyLLM.mcp(url: malformed).name }
+    end
+
+    it 'keeps it out of an OAuth refusal' do
+      url = malformed
+      mcp = Class.new(RubyLLM::MCP) do
+        url url
+        oauth
+      end
+
+      expect_no_url { mcp.new.authorization_url(redirect_uri: 'https://app.example.com/callback') }
+    end
+  end
+
   it 'refuses URLs that carry credentials' do
     expect { described_class.new('https://mcp.example.com@attacker.io/mcp') }
       .to raise_error(ArgumentError, /credentials/)
@@ -386,6 +414,16 @@ RSpec.describe RubyLLM::MCP::HTTP do
     end
   end
 
+  it 'hands a request in a JSON body to the receiver once' do
+    received = []
+    stream = described_class::Stream.new('call') { |message| received << message }
+    stream.feed({ jsonrpc: '2.0', id: 'ping-1', method: 'ping' }.to_json)
+
+    3.times { stream.answer }
+
+    expect(received.map { |message| message['id'] }).to eq(['ping-1'])
+  end
+
   describe 'streams that end before the answer' do
     let(:events) { { 'Content-Type' => 'text/event-stream' } }
     let(:progress) { { jsonrpc: '2.0', method: 'notifications/progress', params: { progress: 1 } }.to_json }
@@ -408,24 +446,93 @@ RSpec.describe RubyLLM::MCP::HTTP do
     context 'with a 2026-07-28 server' do
       before { stub_method('server/discover', result: discover_result) }
 
-      it 'sends the request again with a new ID' do
+      def idempotent_client(*names)
+        RubyLLM::MCP::Client.new(described_class.new(url, idempotent: names.method(:include?)))
+      end
+
+      it 'sends an idempotent tool call again with a new ID' do
         ids = []
         stub_method('tools/call', headers: events, body: lambda { |request|
           ids << JSON.parse(request.body)['id']
           ids.one? ? event(progress) : event(answer(request))
         })
 
-        expect(client.request('tools/call', { name: 'slow' })).to eq('content' => [])
+        expect(idempotent_client('slow').request('tools/call', { name: 'slow' })).to eq('content' => [])
         expect(ids.uniq.size).to eq(2)
         expect(a_request(:get, url)).not_to have_been_made
       end
 
-      it 'gives up after a few attempts' do
+      it 'gives up on an idempotent tool call after a few attempts' do
         stub_method('tools/call', headers: events, body: event(progress))
 
-        expect { client.request('tools/call', { name: 'slow' }) }
+        expect { idempotent_client('slow').request('tools/call', { name: 'slow' }) }
           .to raise_error(RubyLLM::MCP::Error, 'mcp.example.com did not answer tools/call')
         expect(calls).to have_been_made.times(4)
+      end
+
+      it 'does not send a tool call again unless it is idempotent' do
+        stub_method('tools/call', headers: events, body: event(progress))
+
+        expect { idempotent_client('other').request('tools/call', { name: 'deploy' }) }
+          .to raise_error(RubyLLM::MCP::Error, 'mcp.example.com did not answer tools/call')
+        expect(calls).to have_been_made.once
+      end
+
+      it 'does not send a tool call again without a way to tell it is idempotent' do
+        stub_method('tools/call', headers: events, body: event(progress))
+
+        expect { client.request('tools/call', { name: 'deploy' }) }
+          .to raise_error(RubyLLM::MCP::Error, /did not answer/)
+        expect(calls).to have_been_made.once
+      end
+
+      it 'does not send a call again for a tool whose annotations are not an object' do
+        stub_method('tools/list', result: { tools: [{ name: 'lookup', annotations: [] }] })
+        stub_method('tools/call', headers: events, body: event(progress))
+
+        expect { RubyLLM.mcp(url:).call(:lookup) }.to raise_error(RubyLLM::MCP::Error, /did not answer/)
+        expect(calls).to have_been_made.once
+      end
+
+      it 'does not fetch the tools again to decide on a call' do
+        stub_method('tools/list', result: { tools: [{ name: 'lookup', annotations: { idempotentHint: true } }] })
+        mcp = RubyLLM.mcp(url:)
+        stub_method('tools/call', headers: events, body: lambda { |_request|
+          mcp.send(:forget_tools)
+          event(progress)
+        })
+
+        expect { mcp.call(:lookup) }.to raise_error(RubyLLM::MCP::Error, /did not answer/)
+        expect(calls).to have_been_made.once
+      end
+
+      it 'sends other requests again' do
+        ids = []
+        stub_method('tools/list', headers: events, body: lambda { |request|
+          ids << JSON.parse(request.body)['id']
+          ids.one? ? event(progress) : event(answer(request))
+        })
+
+        expect(client.request('tools/list')).to eq('content' => [])
+        expect(ids.uniq.size).to eq(2)
+      end
+
+      it 'sends a call again only for tools the server marks idempotent' do
+        tools = [{ name: 'lookup', annotations: { idempotentHint: true } }, { name: 'deploy' }]
+        stub_method('tools/list', result: { tools: })
+        stub_method('tools/call', headers: events, body: event(progress))
+        mcp = RubyLLM.mcp(url:)
+
+        expect { mcp.call(:lookup) }.to raise_error(RubyLLM::MCP::Error, /did not answer/)
+        expect(calls).to have_been_made.times(4)
+
+        WebMock.reset_executed_requests!
+        expect { mcp.call(:deploy) }.to raise_error(RubyLLM::MCP::Error, /did not answer/)
+        expect(calls).to have_been_made.once
+
+        WebMock.reset_executed_requests!
+        expect { mcp.call(:unlisted) }.to raise_error(RubyLLM::MCP::Error, /did not answer/)
+        expect(calls).to have_been_made.once
       end
 
       it 'skips event data that is not a JSON-RPC message' do
@@ -556,7 +663,9 @@ RSpec.describe RubyLLM::MCP::HTTP do
           respond.call(socket, JSON.parse(socket.read(head[/^content-length: (\d+)/i, 1].to_i)))
         end
       end
-      yield RubyLLM::MCP::Client.new(described_class.new("http://127.0.0.1:#{server.addr[1]}/mcp", timeout: 3))
+      address = "http://127.0.0.1:#{server.addr[1]}/mcp"
+      transport = described_class.new(address, timeout: 3, idempotent: ->(_name) { true })
+      yield RubyLLM::MCP::Client.new(transport)
     ensure
       worker&.kill
       sockets&.each(&:close)
@@ -585,7 +694,7 @@ RSpec.describe RubyLLM::MCP::HTTP do
       end
     end
 
-    it 'sends the request again when the connection breaks midway' do
+    it 'sends an idempotent call again when the connection breaks midway' do
       broken = lambda do |socket, _request|
         open_stream(socket, "data: #{{ jsonrpc: '2.0', method: 'notifications/progress', params: {} }.to_json}\n\n")
         socket.close

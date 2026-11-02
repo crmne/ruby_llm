@@ -53,7 +53,7 @@ module RubyLLM
         @description = description || definition['description']
         @fixed_arguments = fixed_arguments.transform_keys(&:to_sym)
         @wrap = wrap
-        @annotations = definition['annotations'] || {}
+        @annotations = definition['annotations'].is_a?(Hash) ? definition['annotations'] : {}
         @meta = definition['_meta'] || {}
         @ui_uri = Apps.uri(meta)
         @visibility = Apps.visibility(meta)
@@ -73,7 +73,8 @@ module RubyLLM
       end
 
       # Returns whether calling the tool again with the same arguments has
-      # no further effect.
+      # no further effect. Only these calls are sent again when a stream
+      # breaks before the answer.
       def idempotent?
         @annotations['idempotentHint'] == true
       end

@@ -18,7 +18,7 @@ After reading this guide, you will know:
 * How RubyLLM upgrades move from one release to the next.
 * How to upgrade a 2.1 application and its Rails schema to 2.2.
 * How persisted chats now run in one process at a time.
-* What changes for a crashed job, a denial, pending approvals, an MCP input error, a stdio server's environment, a document URL, and a deploy that mixes versions.
+* What changes for a crashed job, a denial, pending approvals, an MCP input error, a stdio server's environment, a dropped MCP tool call, a document URL, and a deploy that mixes versions.
 * What changes for agent `rescue_from` handlers and streamed transcription chunks.
 
 This guide covers **2.1 to 2.2**. Coming from 2.0? Follow the [2.1 upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.1.1/docs/_reference/upgrading.md) with RubyLLM 2.1 first.
@@ -177,6 +177,10 @@ class Files < RubyLLM::MCP
   env NODE_EXTRA_CA_CERTS: ENV.fetch("NODE_EXTRA_CA_CERTS")
 end
 ```
+
+## Dropped MCP Tool Calls Are Sent Again Only When Idempotent
+
+When a response stream from a 2026-07-28 server broke before the answer, 2.1 sent the tool call again, up to three times, so a tool with side effects could run four times. RubyLLM now sends a call again only when the server marks the tool `idempotent?` with the `idempotentHint` annotation. Any other tool call raises `RubyLLM::MCP::Error` after the first dropped stream, and the tool may or may not have run. Other requests, and resuming a stream on older servers, work as before.
 
 ## Gemini Returns Every Image It Made
 

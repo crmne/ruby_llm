@@ -100,6 +100,7 @@ module RubyLLM
       def initialize(server_url, owner:, scopes: nil, client_id: nil, client_secret: nil, grant: nil,
                      private_key: nil, assertion: nil, identity_provider: nil, config: RubyLLM.config,
                      resolve: ->(value) { value })
+        HTTP.parse(server_url)
         @server_url = server_url.to_s
         @owner = owner
         @scopes = scopes
@@ -380,7 +381,7 @@ module RubyLLM
         return tokens if granted?(tokens)
 
         # Keep only the error fields: a partial response may still carry a refresh or ID token.
-        raise rejection(url, tokens.is_a?(Hash) ? tokens.slice('error', 'error_description', 'error_uri') : tokens)
+        raise rejection(url, tokens.slice('error', 'error_description', 'error_uri'))
       rescue Error => e
         raise if retried || !client['dpop_key'] || oauth_error(e) != 'use_dpop_nonce'
 
@@ -388,7 +389,7 @@ module RubyLLM
       end
 
       def granted?(tokens)
-        tokens.is_a?(Hash) && tokens['access_token'] && !tokens['error']
+        tokens['access_token'] && !tokens['error']
       end
 
       def oauth_error(error)
@@ -637,9 +638,12 @@ module RubyLLM
       end
 
       def parse(response)
-        JSON.parse(response.body)
+        document = JSON.parse(response.body)
+        raise JSON::ParserError unless document.is_a?(Hash)
+
+        document
       rescue JSON::ParserError
-        raise Error, 'The authorization server did not answer with JSON'
+        raise Error, 'The authorization server did not answer with a JSON object'
       end
 
       def connection(url)
