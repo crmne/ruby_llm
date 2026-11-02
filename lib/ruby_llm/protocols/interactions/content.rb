@@ -16,7 +16,7 @@ module RubyLLM
         end
 
         def supported_attachment?(attachment)
-          attachment.text? || !interaction_attachment_type(attachment).nil?
+          (attachment.text? && !attachment.provider_file?) || !interaction_attachment_type(attachment).nil?
         end
 
         def render_interaction_attachment(attachment)
@@ -43,7 +43,7 @@ module RubyLLM
           return 'audio' if attachment.audio?
           return 'video' if attachment.video?
 
-          'document' if attachment.pdf? || (attachment.text? && attachment.provider_file?)
+          'document' if attachment.pdf? || (attachment.provider_file? && attachment.mime_type == 'text/csv')
         end
 
         def parse_interaction_content(steps)

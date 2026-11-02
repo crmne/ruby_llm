@@ -259,6 +259,10 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
       expect(described_class.attachment_filename(nil, 0)).to eq('gemini_attachment_1')
     end
 
+    it 'names MPEG audio so it reads as audio' do
+      expect(described_class.attachment_filename('audio/mpeg', 0)).to eq('gemini_attachment_1.mp3')
+    end
+
     it 'normalizes the extensions Gemini reports' do
       expect(described_class.attachment_filename('image/jpeg', 0)).to eq('gemini_attachment_1.jpg')
       expect(described_class.attachment_filename('text/plain', 1)).to eq('gemini_attachment_2.txt')

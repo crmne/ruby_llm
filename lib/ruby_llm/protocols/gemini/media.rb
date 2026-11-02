@@ -85,6 +85,7 @@ module RubyLLM
           extension = mime_type.split('/').last.to_s
           extension = 'jpg' if extension == 'jpeg'
           extension = 'txt' if extension == 'plain'
+          extension = 'mp3' if mime_type == 'audio/mpeg'
           extension = extension.tr('+', '.')
           "gemini_attachment_#{index + 1}.#{extension}"
         end

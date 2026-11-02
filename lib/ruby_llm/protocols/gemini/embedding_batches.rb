@@ -44,11 +44,11 @@ module RubyLLM
         end
 
         def parse_embedding_batch_results(responses)
-          groups = responses.each_with_index.group_by do |inline, index|
-            inline.dig('metadata', 'custom_id') || index.to_s
-          end
-          groups.filter_map do |key, indexed|
-            parse_embedding_batch_group(key, indexed.map(&:first))
+          identified, unidentified = responses.partition { |inline| inline.dig('metadata', 'custom_id') }
+          RubyLLM.logger.warn 'Gemini returned batch results without metadata' if unidentified.any?
+
+          identified.group_by { |inline| inline.dig('metadata', 'custom_id') }.filter_map do |key, group|
+            parse_embedding_batch_group(key, group)
           end
         end
 
@@ -57,8 +57,7 @@ module RubyLLM
           error = responses.find { |inline| inline['error'] }
           return [index, nil, batch_failure(key, error.dig('error', 'message'))] if error
 
-          metadata = responses.first['metadata']
-          return [index, nil, batch_failure(key, 'Gemini returned no result metadata')] unless metadata
+          metadata = responses.first.fetch('metadata')
           return if responses.size < metadata.fetch('embedding_count')
 
           parse_embedding_batch_slot(index, key, responses, metadata)

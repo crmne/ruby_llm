@@ -174,13 +174,21 @@ RSpec.describe RubyLLM::Protocols::Interactions do
     expect { chat.with_thinking(display: :full).render }.to raise_error(ArgumentError, /display must be/)
   end
 
-  it 'references an uploaded text file instead of reading it' do
-    upload = RubyLLM::UploadedFile.new(id: 'files/1', uri: 'https://x/files/1', filename: 'n.txt',
-                                       mime_type: 'text/plain', provider: 'gemini')
+  it 'references an uploaded CSV as a document instead of reading it' do
+    upload = RubyLLM::UploadedFile.new(id: 'files/1', uri: 'https://x/files/1', filename: 'n.csv',
+                                       mime_type: 'text/csv', provider: 'gemini')
 
     part = protocol.send(:render_interaction_attachment, RubyLLM::Attachment.new(upload))
 
-    expect(part).to eq(type: 'document', mime_type: 'text/plain', uri: 'https://x/files/1')
+    expect(part).to eq(type: 'document', mime_type: 'text/csv', uri: 'https://x/files/1')
+  end
+
+  it 'names the type of an uploaded text file the API takes no document for' do
+    upload = RubyLLM::UploadedFile.new(id: 'files/1', uri: 'https://x/files/1', filename: 'n.txt',
+                                       mime_type: 'text/plain', provider: 'gemini')
+
+    expect { protocol.send(:render_interaction_attachment, RubyLLM::Attachment.new(upload)) }
+      .to raise_error(ArgumentError, 'Gemini Interactions does not support text/plain input')
   end
 
   it 'still inlines a local text file' do
