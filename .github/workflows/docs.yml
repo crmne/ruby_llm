@@ -161,7 +161,7 @@ jobs:
 
       - name: Upload IndexNow plan
         if: steps.registry.outputs.deploy == 'true'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: indexnow
           path: ${{ runner.temp }}/indexnow.json
@@ -196,7 +196,7 @@ jobs:
         with:
           sparse-checkout: .github/scripts
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: indexnow
 
