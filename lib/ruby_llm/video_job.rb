@@ -155,7 +155,7 @@ module RubyLLM
     #   job.cost.total # => 0.05
     #
     def cost
-      Cost.new(tokens: Tokens.new(reported_cost: @reported_cost))
+      Cost.new(tokens: usage_tokens)
     end
 
     # Polls the job until it finishes, then returns self. Raises Error
@@ -186,19 +186,26 @@ module RubyLLM
       raise Error, "Video generation failed: #{error}" if failed?
       return unless succeeded?
 
-      @video ||= @protocol.download_video(self).tap { |video| video.config = @protocol.config }
+      @video ||= @protocol.download_video(self).tap do |video|
+        video.config = @protocol.config
+        video.ruby_llm_usage_entries = @usage_entry
+      end
     end
 
     private
 
     def record_usage
-      return if pending? || @usage_recorded
+      return if pending? || @usage_entry
 
-      @usage_recorded = true
-      entry = Accounting::Usage::Entry.new(operation: :video, provider: @protocol.provider.slug, model:,
-                                           status: succeeded? ? :succeeded : :failed, cost:, owner: @usage_owner,
-                                           workflow: @usage_workflow)
-      Accounting::Usage.report(entry, config: @protocol.config)
+      @usage_entry = Accounting::Usage::Entry.new(
+        operation: :video, provider: @protocol.provider.slug, model:, status: succeeded? ? :succeeded : :failed,
+        tokens: usage_tokens, cost:, owner: @usage_owner, workflow: @usage_workflow
+      )
+      Accounting::Usage.report(@usage_entry, config: @protocol.config)
+    end
+
+    def usage_tokens
+      Tokens.new(reported_cost: @reported_cost)
     end
 
     def monotonic_time

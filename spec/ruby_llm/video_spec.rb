@@ -64,6 +64,15 @@ RSpec.describe RubyLLM::Video, :live do
     end
   end
 
+  describe '#cost', live: false do
+    it 'has no usage of its own outside a job' do
+      video = described_class.new(data: 'mp4')
+
+      expect(video.cost.total).to be_nil
+      expect(video.tokens.reported_cost).to be_nil
+    end
+  end
+
   describe '#to_blob', live: false do
     it 'follows redirects to the video' do
       stub_request(:get, 'https://example.com/clip.mp4')
@@ -120,6 +129,26 @@ RSpec.describe RubyLLM::Video, :live do
 
       job.refresh
       expect(protocol).to have_received(:refresh_video_job).once
+    end
+
+    it 'hands its reported cost to the video it finished' do
+      allow(protocol).to receive_messages(refresh_video_job: { status: :completed, reported_cost: 0.05 },
+                                          download_video: RubyLLM::Video.new(data: 'mp4'))
+      job = described_class.new(id: 'operations/op-1', protocol:, model: 'veo-3.1-fast-generate-preview')
+
+      video = job.refresh.video
+
+      expect(video.cost.total).to eq(0.05)
+      expect(video.tokens.reported_cost).to eq(0.05)
+      expect(video.config).to eq(config)
+    end
+
+    it 'leaves the cost of a video unknown when the provider reports no price' do
+      allow(protocol).to receive_messages(refresh_video_job: { status: :completed },
+                                          download_video: RubyLLM::Video.new(data: 'mp4'))
+      job = described_class.new(id: 'operations/op-1', protocol:, model: 'veo-3.1-fast-generate-preview')
+
+      expect(job.refresh.video.cost.total).to be_nil
     end
 
     it 'records its usage once when it finishes, attributed to the owner at submission' do
