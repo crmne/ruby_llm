@@ -40,7 +40,7 @@ RSpec.describe RubyLLM::Transport::Connection do
 
     it 'keeps the response when a log filter times out' do
       io = StringIO.new
-      options = { bodies: true, log_level: :debug }
+      options = { bodies: true, headers: false, log_level: :debug }
       formatter = RubyLLM::Transport::LogFormatter.new(logger: Logger.new(io), options:)
       filters = formatter.instance_variable_get(:@filter)
       allow(filters).to receive(:each).and_raise(Regexp::TimeoutError)
