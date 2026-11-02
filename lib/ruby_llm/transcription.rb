@@ -26,13 +26,14 @@ module RubyLLM
     # report it.
     attr_reader :duration
 
-    # The timed segments of the transcript as an array of hashes, or +nil+
-    # when the provider does not return segments. Diarization models add a
-    # speaker label to each segment.
+    # The timed segments of the transcript as an array of Segment objects,
+    # or +nil+ when the provider does not return segments. Diarization
+    # models add a speaker label to each segment.
     attr_reader :segments
 
-    # Word timing and speaker labels as an array of hashes, or +nil+ when
-    # the provider does not return them. Request timing with +timestamps:+.
+    # Word timing and speaker labels as an array of Segment objects, or
+    # +nil+ when the provider does not return them. Request timing with
+    # +timestamps:+.
     attr_reader :words
 
     def initialize(text:, model:, **attributes) # :nodoc:
@@ -40,8 +41,8 @@ module RubyLLM
       @model = model
       @language = attributes[:language]
       @duration = attributes[:duration]
-      @segments = attributes[:segments]
-      @words = attributes[:words]
+      @segments = Segment.wrap(attributes[:segments])
+      @words = Segment.wrap(attributes[:words])
       @input_tokens = attributes[:input_tokens]
       @output_tokens = attributes[:output_tokens]
       @reported_cost = attributes[:reported_cost]

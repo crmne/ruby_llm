@@ -83,18 +83,18 @@ transcription = RubyLLM.transcribe(
 )
 
 transcription.words.each do |word|
-  puts "#{word['speaker']}: #{word['word']} (#{word['start']}s)"
+  puts "#{word.speaker}: #{word.text} (#{word.start}s)"
 end
 ```
 
-Speaker and timing fields retain the provider's names. Depending on the model, speaker labels appear on words or segments. OpenAI's diarization model returns segments:
+Words and segments are `RubyLLM::Transcription::Segment` objects with `text`, `speaker`, `start`, and `end` readers. Use `[]` for any other field, under the provider's own name, such as `word["confidence"]`. Depending on the model, speaker labels appear on words or segments. OpenAI's diarization model returns segments:
 
 ```ruby
 transcription = RubyLLM.transcribe("meeting.wav", model: "gpt-4o-transcribe-diarize")
 
 transcription.segments.each do |segment|
-  puts "#{segment['speaker']}: #{segment['text']}"
-  puts "#{segment['start']}s - #{segment['end']}s"
+  puts "#{segment.speaker}: #{segment.text}"
+  puts "#{segment.start}s - #{segment.end}s"
 end
 ```
 
@@ -129,7 +129,7 @@ transcription = RubyLLM.transcribe(
 puts "Duration: #{transcription.duration} seconds"
 
 transcription.words.each do |word|
-  puts "#{word['start']}s - #{word['end']}s: #{word['word']}"
+  puts "#{word.start}s - #{word.end}s: #{word.text}"
 end
 ```
 
@@ -166,7 +166,7 @@ puts transcription.text
 | :--- | :--- |
 | `chunk.partial?` | `chunk.text`, tentative text that replaces the previous partial |
 | `chunk.delta?` | `chunk.delta`, committed text to append |
-| `chunk.segment?` | `chunk.segment`, a Hash with speaker and timing fields |
+| `chunk.segment?` | `chunk.segment`, a `Transcription::Segment` with speaker and timing readers |
 | `chunk.done?` | `chunk.text`, the complete transcript when supplied by the endpoint |
 
 `chunk.type` names the event as a Symbol: `:partial`, `:delta`, `:segment`, or `:done`. It is `nil` for a provider event RubyLLM does not normalize. Read the final transcript from `transcription.text`. `chunk.raw` holds the original event when you need additional fields.
@@ -177,7 +177,7 @@ Diarization models can stream speaker segments:
 RubyLLM.transcribe("meeting.wav", model: "gpt-4o-transcribe-diarize") do |chunk|
   next unless chunk.segment?
 
-  puts "#{chunk.segment['speaker']}: #{chunk.segment['text']}"
+  puts "#{chunk.segment.speaker}: #{chunk.segment.text}"
 end
 ```
 
