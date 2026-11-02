@@ -369,6 +369,11 @@ module RubyLLM
       )
     end
 
+    def find_video_job(id, model:) # :nodoc:
+      protocol = resolve_protocol(nil, model, operation: :animate)
+      protocol.new(self, model).find_video_job(id, model: model_id_for(model))
+    end
+
     def speak(input, model:, voice:, format:, provider_options: {}, &) # :nodoc:
       protocol = resolve_protocol(nil, model, operation: :speak)
       protocol.new(self, model).speak(

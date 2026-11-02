@@ -400,6 +400,12 @@ module RubyLLM
       parse_video_job_status @connection.get(video_job_url(job)), job: job
     end
 
+    def find_video_job(id, model:)
+      VideoJob.new(id:, protocol: self, model:).refresh
+    rescue NotImplementedError
+      raise Error, "#{@provider.name} doesn't support video generation"
+    end
+
     def speak(input, model:, voice:, format:, provider_options: {}, &block)
       track_usage(:speech) do
         payload = render_speech_payload(input, model:, voice:, format:, provider_options:)

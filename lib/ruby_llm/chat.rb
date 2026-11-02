@@ -27,6 +27,7 @@ module RubyLLM
     include Support::Inspectable
     include ToolSearch
     include ToolSequences
+    prepend Rescuable
 
     # The provider-neutral options #with_compaction accepts.
     COMPACTION_OPTIONS = %i[at instructions pause_after].freeze

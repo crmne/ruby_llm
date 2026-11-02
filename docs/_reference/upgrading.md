@@ -19,6 +19,7 @@ After reading this guide, you will know:
 * How to upgrade a 2.1 application and its Rails schema to 2.2.
 * How persisted chats now run in one process at a time.
 * What changes for a crashed job, a denial, pending approvals, an MCP input error, a stdio server's environment, a document URL, and a deploy that mixes versions.
+* What changes for agent `rescue_from` handlers and streamed transcription chunks.
 
 This guide covers **2.1 to 2.2**. Coming from 2.0? Follow the [2.1 upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.1.1/docs/_reference/upgrading.md) with RubyLLM 2.1 first.
 
@@ -214,6 +215,24 @@ chat = ChatAgent.find(chat_id)
 chat.to_llm.pending_approvals.map(&:id) # => ["call_1a2b3c"]
 chat.approve("call_1a2b3c")
 ```
+
+## Agent Handlers Cover Every Chat
+
+`rescue_from` handlers used to run only on `Agent.new`. They now also run on the chats and records from `Agent.chat`, `create`, `create!`, and `find`, and on calls chained from a setter such as `agent.with_temperature(0.2).ask("Hi")`. A generated `ChatResponseJob` starts running the handlers your agent declares, so a handler that returns instead of raising keeps that error from Active Job, which no longer retries it. Re-raise in the handler to keep the retry.
+
+## Transcription Chunk Types Are Symbols
+
+`TranscriptionChunk#type` is now `:delta`, `:partial`, `:segment`, or `:done` instead of a wire string such as `"transcript.text.delta"`, and `nil` for a provider event RubyLLM does not normalize. Replace literal comparisons:
+
+```ruby
+# Before
+print chunk.delta if chunk.type == "transcript.text.delta"
+
+# After
+print chunk.delta if chunk.delta?
+```
+
+The predicates and constants such as `TranscriptionChunk::DELTA` keep working. `chunk.raw` still holds the provider's event.
 
 ## Rescue Input Errors as Input Errors
 

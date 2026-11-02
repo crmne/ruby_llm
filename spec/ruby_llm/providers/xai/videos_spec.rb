@@ -52,7 +52,7 @@ RSpec.describe RubyLLM::Providers::XAI::Videos do
 
   describe '#parse_video_job' do
     it 'keeps the requested duration and resolution on the job' do
-      context = RubyLLM.context { |config| config.xai_api_key = 'test' }
+      context = RubyLLM.context { |config| config.xai_api_key = 'context-key' }
       stub_request(:post, 'https://api.x.ai/v1/videos/generations')
         .to_return(status: 200, body: { request_id: 'request-1' }.to_json,
                    headers: { 'Content-Type' => 'application/json' })
@@ -132,6 +132,58 @@ RSpec.describe RubyLLM::Providers::XAI::Videos do
       expect(job.video.mime_type).to eq('video/mp4')
       expect(job.video.to_blob.bytesize).to be > 1000
       expect(job.video.raw['status']).to eq('done')
+    end
+  end
+
+  describe 'RubyLLM::VideoJob.find' do
+    let(:context) { RubyLLM.context { |config| config.xai_api_key = 'test' } }
+
+    def stub_job(body)
+      stub_request(:get, 'https://api.x.ai/v1/videos/req-1')
+        .with(headers: { 'Authorization' => 'Bearer context-key' })
+        .to_return(status: 200, headers: { 'Content-Type' => 'application/json' }, body: body.to_json)
+    end
+
+    def find_job
+      RubyLLM::VideoJob.find('req-1', model:, provider: :xai, context:)
+    end
+
+    it 'reads the state of a job still rendering' do
+      stub_job(status: 'pending')
+
+      expect(find_job).to be_a(RubyLLM::VideoJob).and have_attributes(id: 'req-1', model:, status: :pending)
+    end
+
+    it 'collects a finished video' do
+      stub_job(status: 'done', video: { url: 'https://cdn.x.ai/clip.mp4', duration: 4 })
+
+      expect(find_job.video).to have_attributes(url: 'https://cdn.x.ai/clip.mp4', duration: 4, model:)
+    end
+
+    it 'returns a failed job without raising' do
+      stub_job(status: 'failed', error: 'blocked')
+
+      expect(find_job).to be_failed.and have_attributes(error: 'blocked')
+    end
+
+    it 'reports the usage of a finished job under its model' do
+      stub_job(status: 'done', video: { url: 'https://cdn.x.ai/clip.mp4' })
+      allow(RubyLLM::Accounting::Usage).to receive(:report)
+
+      find_job
+
+      expect(RubyLLM::Accounting::Usage).to have_received(:report)
+        .with(having_attributes(operation: :video, provider: 'xai', model:, status: :succeeded), config: anything)
+    end
+
+    it 'requires the model' do
+      expect { RubyLLM::VideoJob.find('req-1', provider: :xai) }.to raise_error(ArgumentError, /model/)
+    end
+
+    it 'raises for a provider without video generation' do
+      expect do
+        RubyLLM::VideoJob.find('req-1', model: model_for(:anthropic), context:)
+      end.to raise_error(RubyLLM::Error, /Anthropic doesn't support video generation/)
     end
   end
 

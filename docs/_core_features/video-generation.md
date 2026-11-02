@@ -14,6 +14,7 @@ After reading this guide, you will know:
 
 *   How to generate a video from a text prompt.
 *   How to start a video job and collect the result later.
+*   How to pick a video job back up from another process.
 *   How to animate a still image into a video.
 *   How to edit a video or extend a generated clip.
 *   How to select video models and pass provider-specific options.
@@ -65,6 +66,23 @@ job.cost.total # => 0.05
 ```
 
 `job.cost` returns a `RubyLLM::Cost`. Its total is `nil` while the job is pending and when the provider reports no price; xAI and OpenRouter report one.
+
+### Picking a Job Back Up
+
+Save the job's `id` and `model`, then pick the job up from any process with `RubyLLM::VideoJob.find`. It fetches the current state from the provider:
+
+```ruby
+job = RubyLLM.animate_later("A paper boat sailing down a gutter")
+clip.update!(video_job_id: job.id, video_model: job.model)
+
+# Later, in another process
+job = RubyLLM::VideoJob.find(clip.video_job_id, model: clip.video_model)
+job.video&.save("boat.mp4")
+```
+
+`model:` is required: it selects the API that serves the job and names the usage entry. Pass `provider:` and `assume_model_exists:` the way you did to `animate_later`. A job from `find` leaves `duration` and `resolution` as `nil`.
+
+`find` reports the usage of a job that has already finished, so collect each job in one place. Wrap the call in `RubyLLM.with_usage_owner` to attribute that cost.
 
 ## Animating a Still Image
 
@@ -270,6 +288,35 @@ class GenerateTrailerJob < ApplicationJob
   def perform(product, prompt)
     video = RubyLLM.animate(prompt)
 
+    product.trailer.attach(
+      io: StringIO.new(video.to_blob),
+      filename: "#{product.slug}-trailer.mp4",
+      content_type: video.mime_type
+    )
+  end
+end
+```
+
+To keep a worker free while the provider renders, start the job in one Active Job and collect it in another:
+
+```ruby
+# app/jobs/start_trailer_job.rb
+class StartTrailerJob < ApplicationJob
+  def perform(product, prompt)
+    job = RubyLLM.animate_later(prompt)
+    product.update!(video_job_id: job.id, video_model: job.model)
+
+    CollectTrailerJob.set(wait: 30.seconds).perform_later(product)
+  end
+end
+
+# app/jobs/collect_trailer_job.rb
+class CollectTrailerJob < ApplicationJob
+  def perform(product)
+    job = RubyLLM::VideoJob.find(product.video_job_id, model: product.video_model)
+    return self.class.set(wait: 30.seconds).perform_later(product) if job.pending?
+
+    video = job.video
     product.trailer.attach(
       io: StringIO.new(video.to_blob),
       filename: "#{product.slug}-trailer.mp4",

@@ -424,7 +424,14 @@ class ApplicationAgent < RubyLLM::Agent
 end
 ```
 
-Handlers run on the agent instance, so `self`, the agent's inputs, and `agent.chat` are available for instrumentation. Pass a block instead of `with:` when the handler is a one-liner:
+Handlers apply however you reach the chat: `SummaryAgent.new`, `.chat`, `.create`, `.create!`, `.find`, and calls chained from a setter such as `agent.with_temperature(0.2).ask("Hi")`. The `find` in a generated `ChatResponseJob` is covered too:
+
+```ruby
+chat = ChatAgent.find(chat_id)
+chat.complete(&:broadcast) # handle_transient runs on a rate limit
+```
+
+Handlers run on an agent instance, so `self`, the agent's inputs, and `chat` are available for instrumentation. With `find` and `create`, pass the inputs to that call. Pass a block instead of `with:` when the handler is a one-liner:
 
 ```ruby
 class SummaryAgent < ApplicationAgent

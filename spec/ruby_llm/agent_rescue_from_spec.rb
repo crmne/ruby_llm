@@ -250,6 +250,163 @@ RSpec.describe RubyLLM::Agent do
     end
   end
 
+  describe 'chats the class methods build' do
+    def agent_handling(error_class = RubyLLM::RateLimitError)
+      Class.new(described_class) do
+        model model_for(:openai, :temperature)
+        inputs :account
+        rescue_from error_class, with: :handle
+
+        private
+
+        def handle(error) = [:rescued, error.class]
+      end
+    end
+
+    def rate_limited(chat)
+      allow(chat.instance_variable_get(:@provider)).to receive(:complete).and_raise(rate_limit)
+      chat
+    end
+
+    it 'runs handlers on a chat from ::chat' do
+      chat = rate_limited(agent_handling.chat)
+
+      expect(chat.ask('hi')).to eq([:rescued, RubyLLM::RateLimitError])
+    end
+
+    it 'guards every operation of a chat from ::chat' do
+      %i[ask say ask_later complete generate run_tools step count_tokens compact].each do |operation|
+        chat = agent_handling.chat
+        allow(chat).to receive(:rescuing_with).and_return(:guarded)
+
+        expect(chat.public_send(operation)).to eq(:guarded)
+      end
+    end
+
+    it 'leaves a chat alone when the agent declares no handlers' do
+      chat = rate_limited(Class.new(described_class) { model model_for(:openai, :temperature) }.chat)
+
+      expect { chat.ask('hi') }.to raise_error(RubyLLM::RateLimitError)
+    end
+
+    it 're-raises errors no handler matches on a chat from ::chat' do
+      chat = rate_limited(agent_handling(RubyLLM::ServerError).chat)
+
+      expect { chat.ask('hi') }.to raise_error(RubyLLM::RateLimitError)
+    end
+
+    it 'runs handlers on a call chained from a delegated setter' do
+      agent = agent_handling.new
+      rate_limited(agent.chat)
+
+      expect(agent.with_temperature(0.1).ask('hi')).to eq([:rescued, RubyLLM::RateLimitError])
+    end
+
+    it 'runs a re-raising handler once, at the outermost operation' do
+      handled = []
+      klass = agent_handling
+      klass.rescue_from(RubyLLM::RateLimitError) do |error|
+        handled << error
+        raise error
+      end
+      agent = klass.new
+      rate_limited(agent.chat)
+
+      expect { agent.ask('hi') }.to raise_error(RubyLLM::RateLimitError)
+      expect { agent.chat.ask('hi') }.to raise_error(RubyLLM::RateLimitError)
+      expect(handled).to eq([rate_limit, rate_limit])
+    end
+
+    it 'rescues again on the next operation' do
+      chat = rate_limited(agent_handling.chat)
+
+      chat.ask('first')
+
+      expect(chat.complete).to eq([:rescued, RubyLLM::RateLimitError])
+    end
+
+    it 'guards an operation a handler retries' do
+      attempts = 0
+      klass = agent_handling
+      klass.rescue_from(RubyLLM::RateLimitError) do |error|
+        attempts += 1
+        attempts == 1 ? chat.complete : error.class
+      end
+      chat = rate_limited(klass.chat)
+
+      expect(chat.ask('hi')).to eq(RubyLLM::RateLimitError)
+      expect(attempts).to eq(2)
+    end
+
+    it 'gives handlers on a chat from ::chat its inputs and the chat' do
+      klass = agent_handling
+      klass.rescue_from(RubyLLM::RateLimitError) { [account, chat, self.class] }
+      built = rate_limited(klass.chat(account: 'acme'))
+
+      expect(built.ask('hi')).to eq(['acme', built, klass])
+    end
+
+    it 'gives handlers on an instance the inputs passed to ::new' do
+      klass = agent_handling
+      klass.rescue_from(RubyLLM::RateLimitError) { [account, self] }
+      agent = klass.new(account: 'acme')
+      rate_limited(agent.chat)
+
+      expect(agent.chat.ask('hi')).to eq(['acme', agent])
+    end
+
+    it 'keeps delegated readers when an input shares their name' do
+      klass = Class.new(described_class) do
+        model model_for(:openai, :temperature)
+        inputs :temperature
+      end
+
+      expect(klass.new(temperature: 2).temperature).to be_nil
+    end
+
+    it 'runs handlers on an object that only quacks like a chat' do
+      error = rate_limit
+      quacking = Class.new { define_method(:ask) { |_message| raise error } }.new
+      agent = Class.new(described_class) { rescue_from(RubyLLM::RateLimitError) { :rescued } }.new(chat: quacking)
+
+      expect(agent.ask('hi')).to eq(:rescued)
+    end
+
+    it 'stops rescuing a chat rewrapped by an agent without handlers' do
+      chat = rate_limited(agent_handling.chat)
+      Class.new(described_class).new(chat:)
+
+      expect { chat.ask('hi') }.to raise_error(RubyLLM::RateLimitError)
+    end
+
+    it 'runs handlers on a copy of the chat' do
+      chat = rate_limited(agent_handling.chat)
+
+      expect(chat.dup.ask('hi')).to eq([:rescued, RubyLLM::RateLimitError])
+    end
+
+    it 'keeps the transcript of a copy apart from the original' do
+      chat = rate_limited(agent_handling.chat)
+
+      chat.dup.ask('hi')
+
+      expect(chat.messages).to be_empty
+    end
+
+    it 'runs handlers on a copy made during an operation' do
+      chat = agent_handling.chat
+      copy = nil
+      allow(chat.instance_variable_get(:@provider)).to receive(:complete) do
+        copy ||= chat.dup
+        raise rate_limit
+      end
+
+      chat.ask('hi')
+
+      expect(copy.complete).to eq([:rescued, RubyLLM::RateLimitError])
+    end
+  end
+
   describe 'argument checking' do
     it 'requires a handler' do
       expect do
