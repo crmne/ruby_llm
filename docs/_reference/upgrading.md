@@ -288,7 +288,7 @@ In 2.1, a successful response with a body RubyLLM could not parse raised `Farada
 
 ## Agents Say `chat_class`
 
-`RubyLLM.models.chat_models` lists LLMs, so `chat_model` on an agent read like one too. Agents now use `chat_class`, the name `acts_as_message` already uses. `chat_model` still works and warns through `RubyLLM.deprecator`. RubyLLM 3.0 removes it.
+Use `chat_class` to name your agent's chat record. `chat_model` read like an LLM, as in `RubyLLM.models.chat_models`, and `chat_class` is the name `acts_as_message` already uses. `chat_model` still works and warns through `RubyLLM.deprecator`. RubyLLM 3.0 removes it.
 
 ```ruby
 class ApplicationAgent < RubyLLM::Agent
