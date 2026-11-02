@@ -57,26 +57,11 @@ module RubyLLM
                            provider_options: {},
                            metadata: nil,
                            owner: nil)
-      config = context&.config || RubyLLM.config
-      model ||= config.default_video_model
-      model, provider_instance = Models.resolve(model, provider: provider, assume_model_exists: assume_model_exists,
-                                                       config: config)
-      payload = {
-        provider: provider_instance.slug,
-        provider_class: provider_instance.name,
-        model: model.id,
-        model_info: model,
-        prompt: prompt,
-        provider_options: provider_options,
-        metadata: metadata
-      }
-
-      RubyLLM.instrument('video_job.ruby_llm', payload, config: config) do |event|
-        job = Accounting::Usage.owned_by(owner) do
-          provider_instance.animate_later(prompt, model:, with:, extend:, provider_options:)
-        end
-        event[:job_id] = job.id
-        job
+      Accounting::Operation.new(
+        'video_job', model, default: :default_video_model, usage: false, provider:, assume_model_exists:, context:,
+                            owner:, report: ->(event, job) { event[:job_id] = job.id }
+      ).run(prompt:, provider_options:, metadata:) do |provider_instance, model|
+        provider_instance.animate_later(prompt, model:, with:, extend:, provider_options:)
       end
     end
 

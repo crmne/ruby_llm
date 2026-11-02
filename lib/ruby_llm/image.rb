@@ -73,35 +73,18 @@ module RubyLLM
                    provider_options: {},
                    metadata: nil,
                    owner: nil)
-      config = context&.config || RubyLLM.config
-      model ||= config.default_image_model
-      model, provider_instance = Models.resolve(model, provider: provider, assume_model_exists: assume_model_exists,
-                                                       config: config)
-      empty_tokens = Tokens.new
-      payload = {
-        provider: provider_instance.slug,
-        provider_class: provider_instance.name,
-        model: model.id,
-        model_info: model,
-        prompt: prompt,
-        size: size,
-        count: count,
-        provider_options: provider_options,
-        metadata: metadata,
-        tokens: empty_tokens,
-        cost: Cost.new(tokens: empty_tokens, model:, category: :images)
-      }
-
-      RubyLLM.instrument('image.ruby_llm', payload, config: config) do |event|
-        result = Accounting::Usage.owned_by(owner) do
-          provider_instance.paint(prompt, model:, size:, count:, with:, mask:, provider_options:)
-        end
-        images = Support::Utils.to_safe_array(result)
-        event[:result] = result
-        event[:response_model] = images.first&.model
-        event[:tokens] = Tokens.aggregate(images.map(&:tokens))
-        event[:cost] = Cost.aggregate(images.map(&:cost))
-        result
+      Accounting::Operation.new(
+        'image', model, default: :default_image_model, category: :images, provider:, assume_model_exists:, context:,
+                        owner:,
+                        report: lambda { |event, result|
+                          images = Support::Utils.to_safe_array(result)
+                          event[:result] = result
+                          event[:response_model] = images.first&.model
+                          event[:tokens] = Tokens.aggregate(images.map(&:tokens))
+                          event[:cost] = Cost.aggregate(images.map(&:cost))
+                        }
+      ).run(prompt:, size:, count:, provider_options:, metadata:) do |provider_instance, model|
+        provider_instance.paint(prompt, model:, size:, count:, with:, mask:, provider_options:)
       end
     end
 

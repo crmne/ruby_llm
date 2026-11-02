@@ -125,36 +125,12 @@ module RubyLLM
                         metadata: nil,
                         owner: nil,
                         &block)
-      config = context&.config || RubyLLM.config
-      model ||= config.default_transcription_model
-      model, provider_instance = Models.resolve(model, provider: provider, assume_model_exists: assume_model_exists,
-                                                       config: config)
-      empty_tokens = Tokens.new
-      payload = {
-        provider: provider_instance.slug,
-        provider_class: provider_instance.name,
-        model: model.id,
-        model_info: model,
-        streaming: !block.nil?,
-        language: language,
-        temperature: temperature,
-        provider_options: provider_options,
-        metadata: metadata,
-        tokens: empty_tokens,
-        cost: Cost.new(tokens: empty_tokens, model:, category: :audio_tokens)
-      }
-
-      RubyLLM.instrument('transcription.ruby_llm', payload, config: config) do |event|
-        result = Accounting::Usage.owned_by(owner) do
-          provider_instance.transcribe(audio_file, model:, language:, format:, timestamps:, speaker_names:,
-                                                   speaker_references:, provider_options:, prompt:,
-                                                   temperature:, &block)
-        end
-        event[:result] = result
-        event[:response_model] = result.model
-        event[:tokens] = result.tokens
-        event[:cost] = result.cost
-        result
+      Accounting::Operation.new(
+        'transcription', model, default: :default_transcription_model, category: :audio_tokens, provider:,
+                                assume_model_exists:, context:, owner:
+      ).run(streaming: !block.nil?, language:, temperature:, provider_options:, metadata:) do |provider_instance, model|
+        provider_instance.transcribe(audio_file, model:, language:, format:, timestamps:, speaker_names:,
+                                                 speaker_references:, provider_options:, prompt:, temperature:, &block)
       end
     end
 

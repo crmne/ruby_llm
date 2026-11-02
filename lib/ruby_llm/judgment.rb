@@ -76,31 +76,12 @@ module RubyLLM
       validate_input!(input, attachments)
       raise ArgumentError, 'A judgment requires a model' unless model || config.default_judgment_model
 
-      model, provider_instance = Models.resolve(model, provider:, assume_model_exists:, config:, operation: :judge,
-                                                       default_model: config.default_judgment_model)
-      empty_tokens = Tokens.new
-      payload = {
-        provider: provider_instance.slug,
-        provider_class: provider_instance.name,
-        model: model.id,
-        model_info: model,
-        question_count: questions.size,
-        attachment_count: attachments.size,
-        provider_options:,
-        metadata:,
-        tokens: empty_tokens,
-        cost: Cost.new(tokens: empty_tokens, model:)
-      }
-
-      RubyLLM.instrument('judgment.ruby_llm', payload, config:) do |event|
-        result = Accounting::Usage.owned_by(owner) do
-          provider_instance.judge(input, questions:, model:, with: attachments, provider_options:)
-        end
-        event[:result] = result
-        event[:response_model] = result.model
-        event[:tokens] = result.tokens
-        event[:cost] = result.cost
-        result
+      Accounting::Operation.new(
+        'judgment', model, operation: :judge, default: :default_judgment_model, provider:, assume_model_exists:,
+                           context:, owner:
+      ).run(question_count: questions.size, attachment_count: attachments.size, provider_options:,
+            metadata:) do |provider_instance, model|
+        provider_instance.judge(input, questions:, model:, with: attachments, provider_options:)
       end
     end
 

@@ -100,34 +100,12 @@ module RubyLLM
       attachments = Attachment.wrap(with)
       raise ArgumentError, 'must provide input text, image attachment, or both' if input.nil? && attachments.empty?
 
-      config = context&.config || RubyLLM.config
-      model, provider_instance = Models.resolve(model, provider: provider, assume_model_exists: assume_model_exists,
-                                                       config: config, operation: :moderate,
-                                                       default_model: config.default_moderation_model)
-      empty_tokens = Tokens.new
-      payload = {
-        provider: provider_instance.slug,
-        provider_class: provider_instance.name,
-        model: model&.id,
-        model_info: model,
-        input: input,
-        attachment_count: attachments.size,
-        provider_options: provider_options,
-        metadata: metadata,
-        tokens: empty_tokens,
-        cost: Cost.new(tokens: empty_tokens, model:)
-      }
-
-      RubyLLM.instrument('moderation.ruby_llm', payload, config: config) do |event|
-        result = Accounting::Usage.owned_by(owner) do
-          provider_instance.moderate(input, model:, with: attachments, provider_options:)
-        end
-        event[:result] = result
-        event[:response_model] = result.model
-        event[:flagged] = result.flagged?
-        event[:tokens] = result.tokens
-        event[:cost] = result.cost
-        result
+      Accounting::Operation.new(
+        'moderation', model, operation: :moderate, default: :default_moderation_model, provider:, assume_model_exists:,
+                             context:, owner:,
+                             details: ->(event, result) { event[:flagged] = result.flagged? }
+      ).run(input:, attachment_count: attachments.size, provider_options:, metadata:) do |provider_instance, model|
+        provider_instance.moderate(input, model:, with: attachments, provider_options:)
       end
     end
 
