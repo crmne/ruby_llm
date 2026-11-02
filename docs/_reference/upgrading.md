@@ -190,8 +190,8 @@ Operations used to drop these options silently. They now raise `ArgumentError` b
 | `embed` | `task_type:` | Azure, Mistral, OpenAI, Perplexity, GPUStack, Titan on Bedrock |
 | `embed` | `title:` | Azure, Cohere, Mistral, OpenAI, OpenRouter, Perplexity, GPUStack, Bedrock |
 
-Two options now take effect instead. `content_type:` on `upload` reaches every provider. `size:` becomes an aspect ratio on Imagen and OpenRouter, so a request that used to get a square image follows the ratio you asked for, and a size neither can express, such as `"2K"`, raises `ArgumentError`.
-||||||| parent of af62e5aac (Raise on chat options a protocol cannot carry)
+Two options now take effect instead. `content_type:` on `upload` reaches every provider. `size:` also reaches Imagen and OpenRouter, so a request that used to get a square image follows what you asked for. Imagen takes it as an aspect ratio, and a tier such as `"2K"` raises `ArgumentError`. OpenRouter takes ratios, tiers, and pixel dimensions.
+
 ## Chat Options a Provider Cannot Carry Raise
 
 These chat options were dropped, or downgraded with a log line. They now raise when the request is built.

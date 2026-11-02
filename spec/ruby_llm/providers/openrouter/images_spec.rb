@@ -20,14 +20,16 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Images do
       expect(payload).to eq(model: 'google/gemini-2.5-flash-image', prompt: 'a cute cat')
     end
 
-    it 'turns size into an aspect ratio' do
+    it 'sends a ratio as aspect_ratio and any other size as size' do
       render = lambda do |size|
-        protocol.send(:render_image_payload, 'a cat', model: 'google/gemini-2.5-flash-image', size:)[:aspect_ratio]
+        protocol.send(:render_image_payload, 'a cat', model: 'google/gemini-2.5-flash-image', size:)
+                .slice(:aspect_ratio, :size)
       end
 
-      expect(render.call('1920x1080')).to eq('16:9')
-      expect(render.call('4:3')).to eq('4:3')
-      expect { render.call('large') }.to raise_error(ArgumentError, /cannot generate an image of size "large"/)
+      expect(render.call('16:9')).to eq(aspect_ratio: '16:9')
+      expect(render.call('auto')).to eq(aspect_ratio: 'auto')
+      expect(render.call(' 2K ')).to eq(size: '2K')
+      expect(render.call('2048x2048')).to eq(size: '2048x2048')
     end
 
     it 'merges provider options' do
