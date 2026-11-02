@@ -104,8 +104,7 @@ module RubyLLM
           {
             id: data['jobArn'] || data['jobIdentifier'],
             raw_status: status,
-            completed: TERMINAL.include?(status),
-            request_counts: bedrock_request_counts(data)
+            completed: TERMINAL.include?(status)
           }
         end
 
@@ -115,13 +114,6 @@ module RubyLLM
           return :cancelled if raw_status == 'Stopped'
 
           :failed
-        end
-
-        def bedrock_request_counts(data)
-          {
-            'submitted' => data['submitTime'],
-            'completed' => data['endTime']
-          }.compact
         end
       end
     end

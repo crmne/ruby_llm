@@ -310,6 +310,32 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
     end
   end
 
+  describe '#parse_stream_chunk with a body that is not an event stream' do
+    def parse(body)
+      streaming.send(:parse_stream_chunk, streaming.send(:event_stream_decoder), body,
+                     RubyLLM::Protocol::StreamAccumulator.new, {}) { nil }
+    end
+
+    it 'raises the message of the JSON error Faraday 1 passes through' do
+      expect { parse('{"message":"The security token included in the request is expired"}') }
+        .to raise_error(RubyLLM::Error, /security token included in the request is expired/)
+    end
+
+    it 'reads an error given as a bare string' do
+      expect { parse('{"error":"stream broke"}') }.to raise_error(RubyLLM::Error, /stream broke/)
+    end
+
+    it 'falls back when the JSON is not an object' do
+      expect { parse('["stream", "broke", "as", "a", "list"]') }
+        .to raise_error(RubyLLM::Error, /Bedrock streaming error/)
+    end
+
+    it 'raises a RubyLLM error for bytes it cannot read' do
+      expect { parse('not json and not an event stream') }
+        .to raise_error(RubyLLM::Error, 'Bedrock returned an unreadable event stream')
+    end
+  end
+
   describe '#handle_non_eventstream_error_chunk' do
     it 'raises on an SSE error frame' do
       chunk = "event: error\ndata: {\"message\":\"stream broke\"}\n\n"

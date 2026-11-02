@@ -192,6 +192,12 @@ RSpec.describe RubyLLM::Protocols::Converse::Batches do
       expect(protocol.find_batch(job['jobArn'])).to include(raw_status: 'Completed', completed: true)
     end
 
+    it 'reports no request counts, which Bedrock does not return' do
+      allow(provider).to receive(:signed_get).and_return(Struct.new(:body).new(job))
+
+      expect(protocol.find_batch(job['jobArn'])[:request_counts]).to be_nil
+    end
+
     it 'stops a running job and reads it back' do
       allow(provider).to receive_messages(
         signed_post: nil, signed_get: Struct.new(:body).new(job.merge('status' => 'Stopped'))

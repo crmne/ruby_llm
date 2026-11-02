@@ -92,6 +92,15 @@ RSpec.describe RubyLLM::Protocols::Bedrock::Rerank do
     end).to have_been_made.once
   end
 
+  it 'rejects an index repeated across pages, which would pair a score with the wrong document' do
+    stub_request(:post, endpoint)
+      .to_return_json(body: { results: [{ index: 0, relevanceScore: 0.9 }], nextToken: 'next' })
+      .then.to_return_json(body: { results: [{ index: 0, relevanceScore: 0.8 }] })
+
+    expect { protocol.rerank('Ruby', documents, model:) }
+      .to raise_error(RubyLLM::Error, 'Bedrock reranking returned a duplicate document index')
+  end
+
   it 'rejects repeated page tokens and invalid provider result indices' do
     stub_request(:post, endpoint).to_return_json(body: { results: [], nextToken: 'same' })
     expect { protocol.rerank('Ruby', documents, model:) }.to raise_error(RubyLLM::Error, /repeated pagination/)

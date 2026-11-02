@@ -32,10 +32,16 @@ module RubyLLM
         def parse_embedding_response(response, model:, text:)
           vectors = response.body['embeddings']
           vectors = vectors['float'] || vectors.values.first if vectors.is_a?(Hash)
-          vectors = vectors.first unless text.is_a?(Array)
+          vectors = text.is_a?(Array) ? aligned_vectors(vectors, text, response) : vectors.first
 
           Embedding.new(vectors:, model:,
                         input_tokens: response.headers['x-amzn-bedrock-input-token-count']&.to_i)
+        end
+
+        def aligned_vectors(vectors, text, response)
+          return vectors if text.empty? || vectors.size == text.size
+
+          raise Error.new("Expected #{text.size} embeddings, got #{vectors.size}", response:)
         end
       end
     end

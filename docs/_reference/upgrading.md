@@ -21,6 +21,7 @@ After reading this guide, you will know:
 * What changes for a crashed job, a denial, pending approvals, an MCP input error, a stdio server's environment, a dropped MCP tool call, a write over a folder, a document URL, and a deploy that mixes versions.
 * What changes for agent `rescue_from` handlers and streamed transcription chunks.
 * Which errors failed Responses requests raise.
+* Why Bedrock batches report no request counts.
 * Which job predicates replace `done?` and `completed?`.
 * Why agents name their chat record with `chat_class`.
 
@@ -169,6 +170,10 @@ A streamed request whose response holds no events, such as an empty body or a pl
 ## Failed Responses Raise What They Report
 
 A non-streaming Responses request that comes back `failed` now raises the same class a stream raises, such as `RubyLLM::RateLimitError`, in place of a plain `RubyLLM::Error`. A `failed` response with no error object raises `RubyLLM::Error` instead of returning an empty message. Embeddings with an error in a successful body raise a `RubyLLM::Error` subclass too. `rescue RubyLLM::Error` keeps working.
+
+## Bedrock Batches Report No Request Counts
+
+`Batch#request_counts` on Bedrock is now `nil`. It used to hold the job's submit and end timestamps under `submitted` and `completed`, which are not counts. Bedrock's job status reports no counts. A persisted batch keeps the old value until its next `refresh`.
 
 ## MCP Prompts Take No Attachments
 

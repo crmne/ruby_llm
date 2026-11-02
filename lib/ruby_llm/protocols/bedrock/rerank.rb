@@ -71,6 +71,8 @@ module RubyLLM
               RubyLLM::Rerank::Result.new(index:, document: documents[index], score: item['relevanceScore'])
             end
           end
+          raise Error, 'Bedrock reranking returned a duplicate document index' unless results.uniq(&:index) == results
+
           RubyLLM::Rerank.new(results:, model:, raw: pages.length == 1 ? pages.first : pages)
         end
       end
