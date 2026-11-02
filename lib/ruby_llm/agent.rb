@@ -406,7 +406,10 @@ module RubyLLM
         return caching(**enabled.transform_keys(&:to_sym), **options, &block) if enabled.is_a?(Hash)
         return caching(id: enabled, **options, &block) if enabled.is_a?(CachedContent)
 
-        raise ArgumentError, 'caching accepts false, a CachedContent, or options' unless [true, false].include?(enabled)
+        unless [true, false].include?(enabled)
+          raise ArgumentError, 'caching accepts false, a CachedContent, or caching options'
+        end
+
         raise ArgumentError, 'caching accepts options or a block, not both' if options.any? && block
         raise ArgumentError, 'caching false does not accept options or a block' if !enabled && (options.any? || block)
 
@@ -467,6 +470,12 @@ module RubyLLM
         @fallbacks = models.flatten.compact
         @fallback_options = { on: }
       end
+
+      def fallback_options
+        @fallback_options || {}
+      end
+
+      private :fallback_options
 
       # Sets a Context whose configuration chats this agent builds should
       # use, applied via Chat#with_context. A block taking a configuration
@@ -733,10 +742,6 @@ module RubyLLM
       end
 
       private
-
-      def fallback_options
-        @fallback_options || {}
-      end
 
       def validate_context_proc(value)
         return unless value.is_a?(Proc)
