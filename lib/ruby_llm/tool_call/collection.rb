@@ -30,7 +30,8 @@ module RubyLLM
       end
       alias each_value each
 
-      # Yields each call ID, in provider order.
+      # Yields each key, in provider order: the call ID on a complete message,
+      # and on a streamed Chunk the stream index when the provider sends one.
       def each_key(&)
         return enum_for(__method__) { size } unless block_given?
 
@@ -69,7 +70,7 @@ module RubyLLM
         @calls.values
       end
 
-      # Returns the call IDs as an Array.
+      # Returns the keys as an Array, as #each_key yields them.
       def keys
         @calls.keys
       end
@@ -87,7 +88,7 @@ module RubyLLM
 
       # Returns a Collection without the calls with the given IDs.
       def except(*ids)
-        self.class.new(@calls.except(*ids))
+        self.class.new(@calls.except(*ids.map { |id| key_for(id) }))
       end
 
       # Returns the tool calls as a new Hash of ToolCall objects keyed by call
@@ -118,7 +119,7 @@ module RubyLLM
       private
 
       def key_for(id)
-        return id if @calls.key?(id)
+        return id if id.nil? || @calls.key?(id)
 
         @calls.key(find { |call| call.id == id }) || id
       end

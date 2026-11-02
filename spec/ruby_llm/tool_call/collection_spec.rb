@@ -34,6 +34,16 @@ RSpec.describe RubyLLM::ToolCall::Collection do
     expect(streamed).to be_key('call_a')
     expect(streamed[0]).to be(first_call)
     expect(streamed['missing']).to be_nil
+    expect(streamed.except('call_a')).to be_empty
+  end
+
+  it 'never matches a missing ID to a call without one' do
+    fragment = described_class.new(0 => RubyLLM::ToolCall.new(name: nil))
+
+    expect(fragment[nil]).to be_nil
+    expect(fragment).not_to be_key(nil)
+    expect { fragment.fetch(nil) }.to raise_error(KeyError)
+    expect(fragment.except(nil).size).to eq(1)
   end
 
   it 'reports its size' do

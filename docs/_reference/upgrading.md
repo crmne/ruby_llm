@@ -217,7 +217,7 @@ response.tool_calls.map(&:name)
 response.tool_calls["call_1"]
 ```
 
-`[]`, `fetch`, `values`, `keys`, `key?`, `each_key`, `each_value`, `transform_values`, and `size` work as before, and the collection equals an equivalent Hash. Two things change.
+`[]`, `fetch`, `values`, `keys`, `key?`, `each_key`, `each_value`, `transform_values`, and `size` work as before, and the collection equals an equivalent Hash. Other Hash methods, such as `dig`, `merge`, and `each_pair`, raise `NoMethodError`: call `to_h` first. Two more things change.
 
 Blocks receive a call, not an ID and a call. This covers `each` and everything Enumerable builds on it, such as `map`, `select`, and `any?`, and `select` and `reject` return Arrays. Take one block argument, or call `to_h` for the Hash:
 
