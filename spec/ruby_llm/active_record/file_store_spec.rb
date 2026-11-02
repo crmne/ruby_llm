@@ -71,6 +71,15 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
     expect(described_class.new(other).list).to be_empty
   end
 
+  it 'matches a folder to delete by its exact case' do
+    store.write('reports/a.md', 'lower')
+    store.write('Reports/b.md', 'upper')
+
+    expect(store.delete('reports', recursive: true).map(&:path)).to eq(%w[reports/a.md])
+    expect(store.list.map(&:path)).to eq(%w[Reports/b.md])
+    expect(store.delete('reports')).to be_nil
+  end
+
   it 'reads the underscore and percent sign of a folder literally' do
     store.write('tool_results/a.txt', 'x')
     store.write('toolXresults/b.txt', 'x')
@@ -108,6 +117,22 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
 
       expect(described_class.new(chat, owner: alice).delete('shared.md')).to be_nil
       expect(store.exists?('shared.md')).to be(true)
+    end
+
+    it 'deletes only its own files from a folder' do
+      store.write('reports/shared.md', 'for everyone')
+      alices = described_class.new(chat, owner: alice)
+      alices.write('reports/alice.md', 'private')
+
+      expect(alices.delete('reports', recursive: true).map(&:path)).to eq(%w[reports/alice.md])
+      expect(alices.list.map(&:path)).to eq(%w[reports/shared.md])
+    end
+
+    it 'still calls a folder with only shared files a folder' do
+      store.write('reports/shared.md', 'for everyone')
+
+      expect { described_class.new(chat, owner: alice).delete('reports') }
+        .to raise_error(ArgumentError, /is a folder/)
     end
   end
 

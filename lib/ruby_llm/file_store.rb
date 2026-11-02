@@ -36,7 +36,7 @@ module RubyLLM
   #     def find(path) = ...
   #     def read(path) = ...
   #     def write(path, content, content_type: nil) = ...
-  #     def delete(path) = ...
+  #     def delete(path, recursive: false) = ...
   #   end
   class FileStore
     include Enumerable
@@ -134,8 +134,15 @@ module RubyLLM
     end
 
     # Deletes the file at +path+ and returns its StoredFile, or +nil+ when
-    # there was none.
-    def delete(path)
+    # there was none. Raises ArgumentError when +path+ is a folder.
+    #
+    # With <tt>recursive: true</tt>, also deletes everything inside the
+    # folder +path+ and returns an Array of the deleted StoredFile objects,
+    # sorted by path.
+    #
+    #   chat.file_store.delete("notes/plan.md")
+    #   chat.file_store.delete("reports", recursive: true)
+    def delete(path, recursive: false)
       raise NotImplementedError, "#{self.class} must implement delete"
     end
 
@@ -222,6 +229,10 @@ module RubyLLM
 
     def folder?(_path)
       false
+    end
+
+    def refuse_folder(path)
+      raise ArgumentError, "#{path} is a folder: delete it with recursive: true"
     end
 
     def write_attachment(path, attachment, content)

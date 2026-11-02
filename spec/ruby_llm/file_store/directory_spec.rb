@@ -218,6 +218,45 @@ RSpec.describe RubyLLM::FileStore::Directory do
     FileUtils.rm_rf(outside)
   end
 
+  it 'refuses to delete an empty folder without recursive: true, and removes it with it' do
+    FileUtils.mkdir_p(File.join(root, 'empty'))
+
+    expect { store.delete('empty') }.to raise_error(ArgumentError, /empty is a folder/)
+    expect(store.delete('empty', recursive: true)).to eq([])
+    expect(File.exist?(File.join(root, 'empty'))).to be(false)
+  end
+
+  it 'deletes a link in a folder without touching its target' do
+    outside = Dir.mktmpdir('ruby_llm-outside')
+    File.write(File.join(outside, 'keep.txt'), 'safe')
+    store.write('reports/q3.md', 'Q3')
+    File.symlink(outside, File.join(root, 'reports', 'link'))
+
+    expect(store.delete('reports', recursive: true).map(&:path)).to eq(%w[reports/q3.md])
+    expect(File.read(File.join(outside, 'keep.txt'))).to eq('safe')
+    expect(File.exist?(File.join(root, 'reports'))).to be(false)
+  ensure
+    FileUtils.rm_rf(outside)
+  end
+
+  it 'leaves a link to a folder, and its target, alone' do
+    outside = Dir.mktmpdir('ruby_llm-outside')
+    File.write(File.join(outside, 'keep.txt'), 'safe')
+    File.symlink(outside, File.join(root, 'link'))
+
+    expect(store.delete('link', recursive: true)).to eq([])
+    expect(File.read(File.join(outside, 'keep.txt'))).to eq('safe')
+  ensure
+    FileUtils.rm_rf(outside)
+  end
+
+  it 'refuses to delete a hidden folder' do
+    FileUtils.mkdir_p(File.join(root, '.git'))
+
+    expect { store.delete('.git', recursive: true) }.to raise_error(ArgumentError, /not inside/)
+    expect(File.exist?(File.join(root, '.git'))).to be(true)
+  end
+
   it 'numbers an attachment named like a folder instead of writing over it' do
     store.write('reports/q3.pdf', 'x')
 
