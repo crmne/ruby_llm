@@ -37,6 +37,19 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     chat
   end
 
+  it 'keeps contested tool calls apart on a copy of the underlying chat' do
+    record = instance_double(Chat, claim_persisted_tool_calls: [], tool_call_running_elsewhere?: true)
+    state = RubyLLM::ActiveRecord::ChatToolCallState.new(record)
+    tool_call = RubyLLM::ToolCall.new(id: 'call_1', name: 'deploy', arguments: {})
+    state.claim(['call_1'], executing: []) { { tool_call => 60 } }
+    copy = state.dup
+
+    copy.claim([], executing: [])
+
+    expect(state).to be_running_elsewhere(tool_call)
+    expect(copy).not_to be_running_elsewhere(tool_call)
+  end
+
   it 'leaves a claim and a pending cancel behind on a dup' do
     chat = Chat.create!(model: model_for(:openai))
     Chat.where(id: chat.id).update_all(claim_token: 'other', claimed_until: 10.minutes.from_now, cancelled: true)

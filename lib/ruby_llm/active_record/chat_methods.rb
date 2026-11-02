@@ -1116,14 +1116,7 @@ module RubyLLM
         end
         chat.tool_call_state = ChatToolCallState.new(self)
         chat.message_queue = ChatQueue.new(self)
-        install_tool_call_claims(chat)
         install_persistence_callbacks(chat)
-      end
-
-      def install_tool_call_claims(chat)
-        chat.tool_call_claimer = proc { |leases, executing:| claim_persisted_tool_calls(leases, executing:) }
-        chat.tool_call_releaser = proc { |tool_call_ids| release_persisted_tool_calls(tool_call_ids) }
-        chat.running_checker = proc { |tool_call| tool_call_running_elsewhere?(tool_call) }
       end
 
       def sync_messages(chat = @chat)

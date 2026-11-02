@@ -35,7 +35,7 @@ module RubyLLM
     PAUSED = Object.new.freeze
     COPIED_STATE = %i[
       @usage_entries @tools @tool_deferrals @mcp @mcp_deferrals @tool_prefs @headers @attachment_replacements
-      @tool_call_state @contested_tool_calls
+      @tool_call_state
     ].freeze
     UNFINISHED_TOOL_RESULT = { error: 'The tool call did not finish.' }.to_json.freeze
     private_constant :THINKING_OPTIONS, :PAUSED, :COPIED_STATE, :UNFINISHED_TOOL_RESULT
@@ -173,10 +173,6 @@ module RubyLLM
       @cancelled = false
       @cancellation_checker = nil
       @tool_call_state = ToolCallState.new
-      @tool_call_claimer = nil
-      @tool_call_releaser = nil
-      @running_checker = nil
-      @contested_tool_calls = []
       @message_queue = build_message_queue
     end
 
@@ -1414,8 +1410,7 @@ module RubyLLM
     end
 
     # Hooks installed by the Rails integration.
-    attr_writer :cancellation_checker, :usage_recorder, :progress_recorder, :tool_call_claimer,
-                :tool_call_releaser, :running_checker, :interruptions, :message_queue,
+    attr_writer :cancellation_checker, :usage_recorder, :progress_recorder, :interruptions, :message_queue,
                 :tool_call_state # :nodoc:
 
     # Appends a message to the conversation and returns it as a Message.
@@ -2081,22 +2076,16 @@ module RubyLLM
 
     def claim_tool_calls(executable, answered)
       requested = executable.keys + answered.keys
-      @contested_tool_calls = []
-      return requested unless @tool_call_claimer && requested.any?
-
-      leases = executable.values.to_h { |tool_call| [tool_call, max_run_time_for(tool_call)] }
-      answered.each_value { |tool_call| leases[tool_call] = @config.max_run_time }
-      claimed = @tool_call_claimer.call(leases, executing: executable.keys)
-      @contested_tool_calls = requested - claimed
-      claimed
+      @tool_call_state.claim(requested, executing: executable.keys) do
+        leases = executable.values.to_h { |tool_call| [tool_call, max_run_time_for(tool_call)] }
+        answered.each_value { |tool_call| leases[tool_call] = @config.max_run_time }
+        leases
+      end
     end
 
     def release_tool_calls(ids)
-      return unless @tool_call_releaser
-
       answered = messages.filter_map { |message| message.tool_call_id if message.tool_result? }
-      unanswered = ids - answered
-      @tool_call_releaser.call(unanswered) if unanswered.any?
+      @tool_call_state.release(ids - answered)
     end
 
     def max_run_time_for(tool_call)
@@ -2104,7 +2093,7 @@ module RubyLLM
     end
 
     def running_elsewhere?(tool_call)
-      @contested_tool_calls.include?(tool_call.id) && @running_checker&.call(tool_call)
+      @tool_call_state.running_elsewhere?(tool_call)
     end
 
     def respond_to_tool_approvals(tool_calls, decisions)

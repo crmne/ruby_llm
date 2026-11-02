@@ -320,8 +320,9 @@ RSpec.describe RubyLLM::Chat do
       end
 
       it 'leaves a call another process is running' do
-        chat.instance_variable_set(:@contested_tool_calls, ['call_1'])
-        chat.running_checker = ->(_tool_call) { true }
+        state = RubyLLM::Chat::ToolCallState.new
+        allow(state).to receive(:running_elsewhere?).and_return(true)
+        chat.tool_call_state = state
 
         expect { chat.step }.to raise_error(RubyLLM::CancelledError)
 
