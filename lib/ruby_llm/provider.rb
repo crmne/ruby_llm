@@ -111,6 +111,10 @@ module RubyLLM
       self.class.configuration_requirements
     end
 
+    def same_credentials?(other) # :nodoc:
+      settings == other.settings
+    end
+
     def original_image_detail? # :nodoc:
       false
     end
@@ -450,6 +454,10 @@ module RubyLLM
     def list_file_uris(uri) # :nodoc:
       ensure_files_supported!
       protocols.fetch(:files).new(self).list_uris(uri)
+    end
+
+    def settings # :nodoc:
+      self.class.configuration_options.map { |option| config.public_send(option) }
     end
 
     def configured? # :nodoc:

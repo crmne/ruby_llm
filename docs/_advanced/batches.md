@@ -52,7 +52,7 @@ batch.status # => :pending
 
 The chats keep their instructions, history, tools, schemas, and other request settings, subject to the [provider's batch restrictions](#provider-restrictions). Custom headers set with `with_headers` do not apply to batch requests.
 
-Use one provider per batch. Anthropic and xAI allow different models in the same batch; other integrations require one model per submission.
+Use one provider and one set of credentials per batch. Chats from contexts with different API keys raise `ArgumentError`, so submit each tenant's chats separately. Anthropic and xAI allow different models in the same batch; other integrations require one model per submission.
 
 ## Collecting the Answers
 
