@@ -234,6 +234,20 @@ RSpec.describe RubyLLM::Agent do
       expect(Class.new(agent_with_tools(echo_tool, defer: true)).chat.deferred_tools.keys).to eq([:echo])
     end
 
+    it 'defers tools a parent declared when given defer: alone' do
+      child = Class.new(agent_with_tools(echo_tool)) { tools defer: true }
+
+      expect(child.chat.deferred_tools.keys).to eq([:echo])
+    end
+
+    it 'keeps a parent\'s MCP servers when given defer: alone' do
+      server = Class.new(RubyLLM::MCP)
+      child = Class.new(Class.new(RubyLLM::Agent) { mcp server }) { mcp defer: true }
+
+      expect(child.mcp).to eq([server])
+      expect(child.instance_variable_get(:@mcp_defer)).to be(true)
+    end
+
     it 'decides when the chat is built from a lambda' do
       tool = echo_tool
       agent = Class.new(described_class) do
