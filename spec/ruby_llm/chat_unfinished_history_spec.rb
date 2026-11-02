@@ -110,7 +110,9 @@ RSpec.describe RubyLLM::Chat do
     states = { 'a' => { 'requests' => [{ 'key' => 'environment', 'response' => nil }] },
                'b' => { 'task' => { 'taskId' => 'task-1' } } }
     chat = chat_with(RubyLLM::Message.new(role: :user, content: 'Deploy'), round(tool_call('a'), tool_call('b')))
-    chat.input_checker = ->(call) { states[call.id] }
+    state = RubyLLM::Chat::ToolCallState.new
+    allow(state).to receive(:input) { |call| states[call.id] }
+    chat.tool_call_state = state
 
     expect(chat).to be_waiting
 

@@ -309,8 +309,10 @@ RSpec.describe RubyLLM::Chat do
 
       it 'clears the input the call was waiting on' do
         recorded = []
-        chat.input_checker = ->(_tool_call) { { 'requests' => [] } }
-        chat.input_recorder = ->(_tool_call, input) { recorded << input }
+        state = RubyLLM::Chat::ToolCallState.new
+        allow(state).to receive(:input).and_return('requests' => [])
+        allow(state).to receive(:record_input) { |_tool_call, input| recorded << input }
+        chat.tool_call_state = state
 
         expect { chat.step }.to raise_error(RubyLLM::CancelledError)
 
