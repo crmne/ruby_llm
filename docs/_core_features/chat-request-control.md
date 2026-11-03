@@ -246,7 +246,7 @@ chat = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
 response = chat.ask "Tell me about the weather"
 ```
 
-Headers are merged with the provider's own, and the provider's win. `with_headers` cannot replace the authentication headers, such as `Authorization` or `x-api-key`, or the API version headers, such as `anthropic-version`, that the provider sets from your configuration. Use it to add headers for optional features.
+Headers are merged with the provider's own, and the provider's win. `with_headers` cannot replace the authentication headers, such as `Authorization` or `x-api-key`, or the API version headers, such as `anthropic-version`, that the provider sets. Use it to add headers for optional features.
 
 
 ## Next Steps

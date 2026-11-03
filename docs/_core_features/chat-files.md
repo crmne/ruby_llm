@@ -114,7 +114,7 @@ Each version of a file is converted once. A persisted chat keeps the text in the
 
 ### PDFs, Scans, and Photos
 
-The OCR converter, `RubyLLM::FileStore::Converters::OCR`, reads PDFs, scans, and photos with [`RubyLLM.ocr`]({% link _core_features/ocr.md %}), tables and all. Each file costs one OCR request the first time the model reads or searches it, so OCR only runs where you register it:
+The OCR converter, `RubyLLM::FileStore::Converters::OCR`, reads PDFs, scans, and photos with [`RubyLLM.ocr`]({% link _core_features/ocr.md %}), tables and all. Each file costs one OCR request the first time the model reads it, so OCR only runs where you register it. `search_files` never runs OCR; it searches the text a read already extracted:
 
 ```ruby
 RubyLLM.configure do |config|
