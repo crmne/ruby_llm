@@ -88,7 +88,8 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
     message = protocol.send(:merge_turn_segments, [parse_message(first), parse_message(last)])
 
     expect(message.thinking.text).to eq('Search first. Now answer.')
-    expect(message.thinking.signature).to eq('sig-one')
+    expect(message.thinking.signature).to be_nil
+    expect(rendered_content(message)).to eq(first + last)
   end
 
   it 'keeps redacted-only thinking without text across paused segments' do

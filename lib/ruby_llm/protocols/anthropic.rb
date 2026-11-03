@@ -129,12 +129,14 @@ module RubyLLM
         )
       end
 
+      # A signature covers one segment's thinking, so joined text carries
+      # none; replay sends each segment's own blocks from raw_content.
       def merge_thinking(segments)
         thoughts = segments.filter_map(&:thinking)
-        return if thoughts.empty?
+        return thoughts.first if thoughts.size <= 1
 
         texts = thoughts.filter_map(&:text)
-        Thinking.build(text: (texts.join unless texts.empty?), signature: thoughts.filter_map(&:signature).first)
+        Thinking.build(text: (texts.join unless texts.empty?))
       end
 
       def merge_citations(segments)
