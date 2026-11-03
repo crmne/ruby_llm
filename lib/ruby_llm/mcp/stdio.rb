@@ -13,8 +13,10 @@ module RubyLLM
     # keeps its session for the life of its process, so after a restart its
     # requests raise SessionExpired until the client initializes it again.
     # The process inherits only INHERITED_ENV from the application, and +env+
-    # adds to and overrides those. Where the platform has process groups the
-    # server leads its own, so stopping it reaches the processes it started.
+    # adds to and overrides those: a Hash, or a callable that returns one,
+    # called each time the process starts. Where the platform has process
+    # groups the server leads its own, so stopping it reaches the processes
+    # it started.
     #
     # Subscriptions share the channel, so whichever thread reads a message
     # that belongs to one hands it to the subscription's listener: a
@@ -51,7 +53,7 @@ module RubyLLM
 
       def initialize(command, env: {}, directory: nil, timeout: nil, config: RubyLLM.config)
         @command = Array(command).map(&:to_s)
-        @env = env.to_h { |key, value| [key.to_s, value.to_s] }
+        @env = env
         @directory = directory&.to_s
         @timeout = timeout || config.request_timeout
         @lock = Mutex.new
@@ -90,8 +92,6 @@ module RubyLLM
 
           receive(subscription)
         end
-      rescue IOError
-        raise Error, "#{name} exited"
       ensure
         uninterrupted { @lock.synchronize { @subscriptions.delete(subscription) } }
       end
@@ -130,6 +130,8 @@ module RubyLLM
         return sleep(CHECK_INTERVAL) unless read
 
         @stdout.wait_readable(CHECK_INTERVAL) if subscription.messages.empty?
+      rescue IOError
+        raise Error, "#{name} exited"
       end
 
       def drain
@@ -174,11 +176,13 @@ module RubyLLM
 
       def write(message)
         start unless @process&.alive?
-        @stdin.puts JSON.generate(message)
-        @stdin.flush
-      rescue Errno::EPIPE, IOError
-        stop
-        raise Error, "#{name} exited"
+        begin
+          @stdin.puts JSON.generate(message)
+          @stdin.flush
+        rescue Errno::EPIPE, IOError
+          stop
+          raise Error, "#{name} exited"
+        end
       end
 
       def read(deadline)
@@ -229,9 +233,14 @@ module RubyLLM
       def start
         options = @directory ? { chdir: @directory } : {}
         options[:pgroup] = true if groups?
-        env = ENV.slice(*INHERITED_ENV).merge(@env)
+        env = ENV.slice(*INHERITED_ENV).merge(environment)
         @stdin, @stdout, @process = Open3.popen2(env, *@command, unsetenv_others: true, **options)
         @buffer = +''
+      end
+
+      def environment
+        variables = @env.respond_to?(:call) ? @env.call : @env
+        variables.to_h { |key, value| [key.to_s, value.to_s] }
       end
 
       def stop

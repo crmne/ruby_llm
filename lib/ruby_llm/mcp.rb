@@ -126,8 +126,9 @@ module RubyLLM
 
       # Adds environment variables for a stdio server's process, which
       # inherits only a short list of safe variables from the application.
-      # Values override inherited ones and may be blocks or method names.
-      # Called with no arguments, returns them.
+      # Values override inherited ones and may be blocks or method names,
+      # read each time the process starts. Called with no arguments, returns
+      # them.
       #
       #   env NODE_ENV: "production", API_KEY: -> { user.api_key }
       #
@@ -1049,7 +1050,7 @@ module RubyLLM
                                         idempotent: method(:idempotent?), config:)
       elsif settings.command
         Stdio.new(settings.command.map { |part| resolve(part) },
-                  env: settings.env.transform_values { |value| resolve(value) },
+                  env: -> { settings.env.transform_values { |value| resolve(value) } },
                   directory: resolve(settings.directory), timeout: settings.timeout, config:)
       else
         raise ConfigurationError, "#{settings.name || 'MCP'} needs a url, a command, or a transport"
