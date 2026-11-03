@@ -121,7 +121,7 @@ end
 
 ## Cancelling a Background Stream
 
-`acts_as_chat` stores cancellation requests on the chat record. A stop button can call `cancel` from the web process while the background job is streaming. The job observes the request, clears it, and raises `RubyLLM::CancelledError`.
+`acts_as_chat` stores cancellation requests on the chat record. A stop button can call `cancel` from the web process while the background job is streaming. The job observes the request, clears it, and raises `RubyLLM::CancelledError`. A request that arrives as the job finishes is cleared with its run, so it never cancels the next reply.
 
 ```ruby
 # app/controllers/chats_controller.rb

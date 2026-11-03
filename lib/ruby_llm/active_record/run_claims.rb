@@ -102,7 +102,9 @@ module RubyLLM
         return unless token
 
         @run_claim_token = nil
-        chat_row.where(claim_token: token).update_all(claimed_until: nil)
+        released = { claimed_until: nil }
+        released[:cancelled] = false if has_attribute?(:cancelled)
+        chat_row.where(claim_token: token).update_all(released)
         @synced_run_claim_token = completed ? token : nil
       end
 
