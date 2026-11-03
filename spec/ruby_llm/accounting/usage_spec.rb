@@ -150,6 +150,38 @@ RSpec.describe 'RubyLLM::Accounting::Usage::Tracker' do
     expect(result.cost.total).to be_positive
   end
 
+  it 'prices a chat whose first attempt failed with a server error' do
+    tracker = RubyLLM::Accounting::Usage::Tracker.new(
+      operation: :chat,
+      provider: provider,
+      model: RubyLLM.models.find(model_for(:openai, :temperature)),
+      config: RubyLLM.config
+    )
+    failed = tracker.start
+    response = Struct.new(:status, :body).new(500, '')
+    tracker.fail_attempt(failed, RubyLLM::ServerError.new('Internal server error', response:))
+    tracker.start
+    result = RubyLLM::Message.new(role: :assistant, content: 'hi', model: model_for(:openai, :temperature),
+                                  input_tokens: 10, output_tokens: 4)
+    tracker.succeed(result)
+    chat = RubyLLM.chat(model: model_for(:openai, :temperature))
+    chat.usage_entries = tracker.entries
+
+    expect(failed.tokens.to_h).to eq(input_tokens: 0, output_tokens: 0)
+    expect(chat.cost.total).to eq(result.cost.total).and be_positive
+  end
+
+  it 'keeps usage unknown for a server error after the stream delivered a chunk' do
+    tracker = build_tracker
+    entry = tracker.start
+    tracker.observe(RubyLLM::Chunk.new(role: :assistant, content: 'Hello'))
+    response = Struct.new(:status, :body).new(500, '')
+
+    tracker.fail_attempt(entry, RubyLLM::ServerError.new('Internal server error', response:))
+
+    expect(entry).not_to be_usage_available
+  end
+
   it 'prices against the requested model when the provider echoes an unregistered id' do
     tracker = RubyLLM::Accounting::Usage::Tracker.new(
       operation: :chat,

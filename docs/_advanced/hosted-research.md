@@ -94,6 +94,8 @@ job.cost.total
 
 `job.tokens` reports task usage. Cost remains unknown when the service supplies no price; `report.model` is `nil` for a hosted agent task.
 
+Each `ResearchJob` object reports its usage to `usage.ruby_llm` and the ledger once, when it first sees the task finished. That includes a job you `find` after it finished, so collect each task in one place.
+
 Reports can omit intermediate tool calls, thinking summaries, and citation URLs. Check for those fields before displaying them.
 
 ## Configure Remote Tools

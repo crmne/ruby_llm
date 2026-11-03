@@ -279,11 +279,11 @@ module RubyLLM
         end
 
         # A request that never reached the provider, or that the provider
-        # refused before running it, cannot have been billed; possibly-billed
-        # failures keep their usage unknown.
+        # answered with an error before streaming anything, cannot have been
+        # billed; possibly-billed failures keep their usage unknown.
         def failure_tokens(entry, error)
           return entry.tokens unless @model_info
-          return entry.tokens if entry.usage_available? || (!never_sent?(entry, error) && !refused?(error))
+          return entry.tokens if entry.usage_available? || (!never_sent?(entry, error) && !refused?(entry, error))
 
           Tokens.new(input: 0, output: 0)
         end
@@ -306,10 +306,11 @@ module RubyLLM
           error.is_a?(ConnectionError) ? error.cause : error
         end
 
-        def refused?(error)
+        def refused?(entry, error)
           return false unless error.is_a?(Error) && error.response.respond_to?(:status)
 
-          (400..499).cover?(error.response.status)
+          status = error.response.status
+          (400..499).cover?(status) || ((500..599).cover?(status) && !entry.equal?(@answered))
         end
 
         def finish(entry, status:, tokens:, **details)

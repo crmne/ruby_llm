@@ -116,10 +116,13 @@ RSpec.describe RubyLLM::ResearchJob do
       expect(usage_events.map { |event| event[:status] }).to eq([:cancelled])
     end
 
-    it 'leaves a job found already finished to the process that observed it finish' do
-      described_class.new(id: 'job-1', provider: :vertexai, agent: 'agent-id', protocol:, status: :completed)
+    it 'records a job found already finished once' do
+      found = described_class.new(id: 'job-1', provider: :vertexai, agent: 'agent-id', protocol:, status: :completed,
+                                  tokens: RubyLLM::Tokens.new(input: 10, output: 5))
+      found.refresh
 
-      expect(usage_events).to be_empty
+      expect(usage_events.map { |event| event[:status] }).to eq([:succeeded])
+      expect(usage_events.first[:tokens].input).to eq(10)
     end
   end
 end

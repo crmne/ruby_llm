@@ -305,6 +305,70 @@ RSpec.describe RubyLLM::Model do
       expect(model.cost_for(tokens, tier: :batch).total).to eq(0.01125)
     end
 
+    it 'leaves batch amounts unknown when the model has no batch price' do
+      model = described_class.new(
+        data.merge(pricing: { text_tokens: { standard: { input_per_million: 2.50, output_per_million: 10.00 } } })
+      )
+      cost = model.cost_for(RubyLLM::Tokens.new(input: 1_000, output: 2_000), tier: :batch)
+
+      expect(cost.input).to be_nil
+      expect(cost.output).to be_nil
+      expect(cost.total).to be_nil
+    end
+
+    it 'prices each request of a chat at its own context tier' do
+      model = described_class.new(
+        data.merge(
+          pricing: {
+            text_tokens: {
+              standard: { input_per_million: 1.0, output_per_million: 2.0 },
+              long_context: { input_per_million: 10.0, output_per_million: 20.0 },
+              long_context_threshold: 1_000
+            }
+          }
+        )
+      )
+      entries = [600, 600].map do |input|
+        RubyLLM::Accounting::Usage::Entry.new(operation: :chat, provider: 'openai', model: 'gpt-5', status: :succeeded,
+                                              tokens: RubyLLM::Tokens.new(input:, output: 0))
+      end
+      chat = RubyLLM.context { |config| config.openai_api_key = 'test' }
+                    .chat(model: 'gpt-5', provider: :openai, assume_model_exists: true)
+      chat.usage_entries = entries
+
+      expect(model.cost_for(chat).total).to be_within(1e-12).of(0.0012)
+    end
+
+    it 'keeps a chat total unknown when one request has unknown usage' do
+      model = described_class.new(
+        data.merge(pricing: { text_tokens: { standard: { input_per_million: 1.0, output_per_million: 2.0 } } })
+      )
+      known = RubyLLM::Accounting::Usage::Entry.new(operation: :chat, provider: 'openai', model: 'gpt-5',
+                                                    status: :succeeded, tokens: RubyLLM::Tokens.new(input: 10))
+      unknown = RubyLLM::Accounting::Usage::Entry.new(operation: :chat, provider: 'openai', model: 'gpt-5',
+                                                      status: :failed)
+      chat = RubyLLM.context { |config| config.openai_api_key = 'test' }
+                    .chat(model: 'gpt-5', provider: :openai, assume_model_exists: true)
+      chat.usage_entries = [unknown, known]
+
+      expect(model.cost_for(chat).total).to be_nil
+    end
+
+    it 'keeps a chat total unknown when a request has only a recorded cost it cannot reprice' do
+      model = described_class.new(
+        data.merge(pricing: { text_tokens: { standard: { input_per_million: 1.0, output_per_million: 2.0 } } })
+      )
+      known = RubyLLM::Accounting::Usage::Entry.new(operation: :chat, provider: 'openai', model: 'gpt-5',
+                                                    status: :succeeded, tokens: RubyLLM::Tokens.new(input: 10))
+      recorded = RubyLLM::Accounting::Usage::Entry.new(operation: :chat, provider: 'openai', model: 'gpt-5',
+                                                       cost: RubyLLM::Cost.from_h({ total: 0.0042 }))
+      chat = RubyLLM.context { |config| config.openai_api_key = 'test' }
+                    .chat(model: 'gpt-5', provider: :openai, assume_model_exists: true)
+      chat.usage_entries = [recorded, known]
+
+      expect(model.cost_for(chat).total).to be_nil
+    end
+
     it 'hydrates long_context pricing from metadata.cost when pricing lacks it' do
       model = described_class.new(
         data.merge(
