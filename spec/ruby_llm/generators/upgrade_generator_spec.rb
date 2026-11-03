@@ -139,11 +139,12 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
       generator.create_migration_file
       migration = File.read(Dir.glob(File.join(destination, 'db/migrate/*_upgrade_ruby_llm_to_2_2.rb')).sole)
       changes = [
-        'change_column :messages, column, :text, size: :long if column_exists?(:messages, column)',
+        '%i[content thinking_text thinking_signature].select',
+        'change_table :messages, bulk: true do |t|',
+        'message_columns.each { |column| t.change column, :text, size: :long }',
         'change_column :ruby_llm_tool_calls, :thought_signature, :text, size: :long'
       ]
 
-      expect(migration.include?('%i[content thinking_text thinking_signature].each')).to be(mysql)
       changes.each { |change| expect(migration.include?(change)).to be(mysql) }
       expect(migration).to include("t.text :content#{', size: :long' if mysql}\n")
     end
