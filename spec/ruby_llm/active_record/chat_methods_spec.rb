@@ -898,6 +898,26 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(chat.cost.total).to be_nil
     end
 
+    it 'prices each persisted request at its own context tier' do
+      model = RubyLLM::Model.new(
+        id: model_id, provider: 'openai',
+        pricing: {
+          text_tokens: {
+            standard: { input_per_million: 1.0, output_per_million: 2.0 },
+            long_context: { input_per_million: 10.0, output_per_million: 20.0 },
+            long_context_threshold: 1_000
+          }
+        }
+      )
+      chat = Chat.create!(model: model_id)
+      2.times do
+        chat.ruby_llm_usages.create!(operation: 'chat', provider: 'openai', model: model_id, status: 'succeeded',
+                                     input_tokens: 600, output_tokens: 0)
+      end
+
+      expect(model.cost_for(Chat.find(chat.id)).total).to be_within(1e-12).of(0.0012)
+    end
+
     it 'uses a stored exact cost when token counts were unavailable' do
       chat = Chat.create!(model: model_id)
       message = chat.messages.create!(role: :assistant, content: 'done')

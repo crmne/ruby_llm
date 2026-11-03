@@ -262,7 +262,7 @@ A `ResearchJob` found by ID after its task finished reported no usage in 2.1. In
 
 ## Pricing Changes in `cost_for`
 
-`model.cost_for(chat)` and `model.cost_for(message)` priced the summed tokens of every request, so several short requests could cross the long-context threshold together and all pay the long-context rate. In 2.2 each request pays the tier its own prompt reached.
+`model.cost_for(chat)` and `model.cost_for(message)`, on plain objects and on Rails records, priced the summed tokens of every request, so several short requests could cross the long-context threshold together and all pay the long-context rate. In 2.2 each request pays the tier its own prompt reached.
 
 `model.cost_for(tokens, tier: :batch)` priced at standard rates when the model had no batch price. In 2.2 those amounts and `total` are `nil`, the same as any other missing price.
 
