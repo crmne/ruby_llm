@@ -26,12 +26,13 @@ module RubyLLM
           'alaw' => 'ALAW'
         }.freeze
 
-        # Request fields RubyLLM fills from its own arguments, which
-        # provider_options may not replace.
+        # Request fields that choose the text, voice, or encoding RubyLLM
+        # reports, which provider_options may not replace in either JSON
+        # spelling (languageCode or language_code).
         RESERVED_OPTIONS = {
-          'input' => %w[text ssml markup multiSpeakerMarkup],
-          'voice' => %w[name languageCode],
-          'audioConfig' => %w[audioEncoding]
+          'input' => %w[text ssml markup multispeakermarkup],
+          'voice' => %w[name languagecode customvoice voiceclone],
+          'audioconfig' => %w[audioencoding]
         }.freeze
 
         MIME_TYPES = {
@@ -74,14 +75,20 @@ module RubyLLM
         private
 
         def reject_reserved_options(options)
-          reserved = RESERVED_OPTIONS.flat_map do |section, keys|
-            fields = options[section]
-            fields.is_a?(Hash) ? (fields.keys & keys).map { |key| "#{section}.#{key}" } : []
+          reserved = options.flat_map do |section, fields|
+            keys = RESERVED_OPTIONS[field_key(section)]
+            next [] unless keys && fields.is_a?(Hash)
+
+            fields.keys.select { |key| keys.include?(field_key(key)) }.map { |key| "#{section}.#{key}" }
           end
           return if reserved.empty?
 
           raise ArgumentError, 'Use the input, voice:, and format: arguments instead of provider_options for ' \
                                "#{reserved.join(', ')}"
+        end
+
+        def field_key(key)
+          key.delete('_').downcase
         end
 
         def voice_name(voice, model)

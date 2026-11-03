@@ -161,9 +161,12 @@ RSpec.describe RubyLLM::Protocols::VertexAI::TextToSpeech do
   {
     'text' => { input: { ssml: '<speak>Other text</speak>' } },
     'voice' => { voice: { languageCode: 'en-GB' } },
-    'format' => { 'audioConfig' => { 'audioEncoding' => 'LINEAR16' } }
+    'voice in its proto spelling' => { voice: { language_code: 'de-DE' } },
+    'custom voice' => { voice: { customVoice: { model: 'projects/p/locations/eu/models/m' } } },
+    'format' => { 'audioConfig' => { 'audioEncoding' => 'LINEAR16' } },
+    'format in its proto spelling' => { audio_config: { audio_encoding: 'LINEAR16' } }
   }.each do |argument, options|
-    it "refuses provider options that would replace the #{argument} it was given" do
+    it "refuses provider options that set the #{argument}" do
       expect { speak('Hi', provider_options: options) }.to raise_error(ArgumentError, /instead of provider_options/)
       expect(a_request(:post, endpoint)).not_to have_been_made
     end
