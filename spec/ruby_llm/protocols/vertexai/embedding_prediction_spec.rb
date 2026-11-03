@@ -158,7 +158,7 @@ RSpec.describe RubyLLM::Protocols::VertexAI::EmbeddingPrediction do
     allow(provider).to receive(:upload_file)
     stub_request(:post, %r{/batchPredictionJobs\z}).to_raise(Faraday::TimeoutError)
 
-    expect { protocol.create_batch([descriptor('Ruby')]) }.to raise_error(Faraday::TimeoutError)
+    expect { protocol.create_batch([descriptor('Ruby')]) }.to raise_error(RubyLLM::ConnectionError)
     expect(a_request(:post, %r{/batchPredictionJobs\z})).to have_been_made.once
   end
 

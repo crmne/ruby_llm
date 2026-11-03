@@ -53,10 +53,15 @@ module RubyLLM
 
       # Posts +payload+ to +url+ as a server-sent event stream, yielding each
       # parsed event Hash. Returns the Faraday response.
-      def stream_events(url, payload, additional_headers = {}, &)
+      def stream_events(url, payload, additional_headers = {}, &handler)
         progress = {}
         fallback_state = StreamState.new
-        on_data = build_on_data_handler(progress, fallback_state: fallback_state, &)
+        on_data = build_on_data_handler(progress, fallback_state: fallback_state) do |event|
+          handler.call(event)
+        rescue StandardError => e
+          progress[:callback_error] = e
+          raise
+        end
 
         post_stream(url, payload, on_data:, progress:, on_reset: fallback_state.method(:reset),
                                   on_failure: stream_failure(fallback_state)) do |req|

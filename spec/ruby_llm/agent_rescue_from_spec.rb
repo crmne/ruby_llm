@@ -105,6 +105,41 @@ RSpec.describe RubyLLM::Agent do
       expect(agent.ask('hi')).to eq(:by_name)
     end
 
+    it 'rejects classes that can never match a StandardError when they are declared' do
+      [Interrupt, Integer].each do |klass|
+        expect { Class.new(described_class) { rescue_from klass, with: :handle } }
+          .to raise_error(ArgumentError, /#{klass} is not a StandardError class/)
+      end
+    end
+
+    it 'matches errors that include a module handled by rescue_from' do
+      transient = Module.new
+      error = Class.new(RubyLLM::Error) { include transient }.new('slow down')
+      agent = agent_raising(error) do
+        rescue_from transient, with: :handle
+
+        private
+
+        def handle(_error) = :rescued
+      end
+
+      expect(agent.ask('hi')).to eq(:rescued)
+    end
+
+    it 'matches StandardErrors with a handler for one of their ancestors, by class or by name' do
+      %w[Exception StandardError].flat_map { |name| [name, Object.const_get(name)] }.each do |klass|
+        agent = agent_raising(rate_limit) do
+          rescue_from klass, with: :handle
+
+          private
+
+          def handle(_error) = :rescued
+        end
+
+        expect(agent.ask('hi')).to eq(:rescued)
+      end
+    end
+
     it 'ignores handlers whose exception class is not defined' do
       agent = agent_raising(rate_limit) do
         rescue_from 'Namespace::NeverLoadedError', with: :handle
@@ -423,7 +458,7 @@ RSpec.describe RubyLLM::Agent do
     it 'rejects values that are neither a class nor a class name' do
       expect do
         Class.new(described_class) { rescue_from 42, with: :handle }
-      end.to raise_error(ArgumentError, /not an exception class/)
+      end.to raise_error(ArgumentError, /not a StandardError class or its name/)
     end
   end
 end

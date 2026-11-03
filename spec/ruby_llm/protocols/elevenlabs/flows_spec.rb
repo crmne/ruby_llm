@@ -73,7 +73,7 @@ RSpec.describe RubyLLM::Protocols::ElevenLabs::Flows do
 
     expect do
       context.paint('A ruby', model:, provider: :elevenlabs, assume_model_exists: true)
-    end.to raise_error(Faraday::TimeoutError)
+    end.to raise_error(RubyLLM::ConnectionError)
     expect(request).to have_been_requested.once
   end
 

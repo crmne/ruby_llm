@@ -196,7 +196,7 @@ RSpec.describe RubyLLM::Protocols::Bedrock::AsyncVideos do
     context.config.max_retries = 3
     request = stub_request(:post, endpoint).to_raise(Faraday::TimeoutError)
 
-    expect { context.animate_later('A boat', model:, provider: :bedrock) }.to raise_error(Faraday::TimeoutError)
+    expect { context.animate_later('A boat', model:, provider: :bedrock) }.to raise_error(RubyLLM::ConnectionError)
     expect(request).to have_been_requested.once
   end
 

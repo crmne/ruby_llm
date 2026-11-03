@@ -131,6 +131,12 @@ RSpec.describe RubyLLM::Protocol do
         .to raise_error(RubyLLM::Error, "OpenAI doesn't support explicit content caching")
       expect { protocol.find_video_job('id', model: 'x') }
         .to raise_error(RubyLLM::Error, "OpenAI doesn't support video generation")
+      expect { protocol.refresh_video_job(RubyLLM::VideoJob.new(id: 'id', protocol:, model: 'x')) }
+        .to raise_error(RubyLLM::Error, "OpenAI doesn't support video generation")
+    end
+
+    it 'reports a missing model listing the same way' do
+      expect { protocol.list_models }.to raise_error(RubyLLM::Error, "OpenAI doesn't support model listing")
     end
 
     it 'leaves a subclass that replaces an operation to answer for itself' do

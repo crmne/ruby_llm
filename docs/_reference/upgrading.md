@@ -324,6 +324,8 @@ chat.approve("call_1a2b3c")
 
 `rescue_from` handlers used to run only on `Agent.new`. They now also run on the chats and records from `Agent.chat`, `create`, `create!`, and `find`, and on calls chained from a setter such as `agent.with_temperature(0.2).ask("Hi")`. A generated `ChatResponseJob` starts running the handlers your agent declares, so a handler that returns instead of raising keeps that error from Active Job, which no longer retries it. Re-raise in the handler to keep the retry.
 
+`rescue_from` now raises `ArgumentError` when you declare a class that can never match a `StandardError`, such as `Interrupt`. Agents rescue only `StandardError`s, so such a handler never ran: remove it. Handlers for `StandardError` classes, their ancestors such as `Exception`, and modules your error classes include work as before.
+
 ## Transcription Chunk Types Are Symbols
 
 `TranscriptionChunk#type` is now `:delta`, `:partial`, `:segment`, or `:done` instead of a wire string such as `"transcript.text.delta"`, and `nil` for a provider event RubyLLM does not normalize. Replace literal comparisons:
@@ -379,6 +381,10 @@ In 2.1, `message.raw` and `error.response` still carried the request headers, in
 ## A Malformed Response Raises RubyLLM::Error
 
 In 2.1, a successful response with a body RubyLLM could not parse raised `Faraday::ParsingError`. In 2.2 it raises `RubyLLM::Error`, so `rescue RubyLLM::Error` catches it. Replace any `rescue Faraday::ParsingError` in your application.
+
+## Network Failures Raise RubyLLM::ConnectionError
+
+In 2.1, a request that timed out, could not connect, or failed TLS raised `Faraday::TimeoutError`, `Faraday::ConnectionFailed`, or `Faraday::SSLError`, which `rescue RubyLLM::Error` missed. In 2.2 RubyLLM retries it as before, then raises `RubyLLM::ConnectionError`, with the Faraday error as its `cause`. Replace those Faraday classes in your `rescue`, `rescue_from`, and `with_fallbacks(on:)` lists with `RubyLLM::ConnectionError`, and use `error.timeout?` to tell a timeout apart.
 
 ## Agents Say `chat_class`
 

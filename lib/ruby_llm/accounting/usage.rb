@@ -293,11 +293,17 @@ module RubyLLM
         # whether the connection was ever established.
         def never_sent?(entry, error)
           return false if entry.equal?(@answered)
+
+          error = transport_error(error)
           return false unless error.is_a?(Faraday::ConnectionFailed) || error.is_a?(Faraday::SSLError)
 
           cause = error.wrapped_exception || error.cause
           CONNECT_FAILURES.any? { |failure| cause.is_a?(failure) } ||
             (cause.is_a?(OpenSSL::SSL::SSLError) && cause.message.match?(TLS_HANDSHAKE_FAILURE))
+        end
+
+        def transport_error(error)
+          error.is_a?(ConnectionError) ? error.cause : error
         end
 
         def refused?(error)

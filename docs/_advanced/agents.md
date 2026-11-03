@@ -446,6 +446,7 @@ The semantics match `ActiveSupport::Rescuable`:
 
 * Handlers are searched in reverse declaration order, so the last matching handler wins and a subclass can override an inherited one.
 * Exception classes may be given as strings (`rescue_from "MyGem::Error"`), which defers constant lookup until an exception is raised.
+* Handlers catch `StandardError`s. Declaring a class that can never match one, such as `Interrupt`, raises `ArgumentError`. A module matches the errors that include it.
 * Re-raise inside the handler to let the caller see the exception. Without a `raise`, the exception is swallowed and the handler's return value becomes the operation's return value.
 * Exceptions that no handler matches are re-raised with their original backtrace.
 

@@ -118,7 +118,7 @@ RSpec.describe RubyLLM::Protocol::Streaming do
         chunks = []
 
         expect { chat.ask('Hello') { |chunk| chunks << chunk.content } }
-          .to raise_error(Faraday::ConnectionFailed, 'Connection lost')
+          .to raise_error(RubyLLM::ConnectionError, 'Connection lost')
         expect(attempts.size).to eq(1)
         expect(chunks).to eq(['Hello'])
       end
