@@ -137,6 +137,42 @@ RSpec.describe RubyLLM::MCP::OAuth do
     expect(params).to include('p' => 'b2c_1_signin', 'response_type' => 'code', 'client_id' => 'registered')
   end
 
+  describe 'authorization_params:' do
+    def mcp_with(params)
+      url = server_url
+      Class.new(RubyLLM::MCP) do
+        url url
+        inputs :user
+        oauth owner: :user, authorization_params: params
+      end
+    end
+
+    it 'adds extra parameters to the authorization URL' do
+      google = mcp_with(access_type: 'offline', prompt: 'consent').new(user: 'ada')
+
+      params = URI.decode_www_form(URI(google.authorization_url(redirect_uri:)).query).to_h
+
+      expect(params).to include('access_type' => 'offline', 'prompt' => 'consent', 'client_id' => 'registered')
+    end
+
+    it 'reads them from a block on the instance' do
+      google = mcp_with(-> { { login_hint: "#{user}@example.com" } }).new(user: 'ada')
+
+      params = URI.decode_www_form(URI(google.authorization_url(redirect_uri:)).query).to_h
+
+      expect(params).to include('login_hint' => 'ada@example.com')
+    end
+
+    it 'refuses the parameters RubyLLM sets itself' do
+      %w[client_id redirect_uri state code_challenge code_challenge_method response_type resource scope]
+        .each do |name|
+        expect { mcp_with(name => 'x') }.to raise_error(ArgumentError, /#{name}/)
+      end
+      expect { mcp_with(-> { { scope: 'all' } }).new(user: 'ada').authorization_url(redirect_uri:) }
+        .to raise_error(ArgumentError, /scope/)
+    end
+  end
+
   it 'registers for the scopes it requests, and again when it needs more' do
     linear.authorization_url(redirect_uri:)
     url = linear_class.new(user: 'ada').authorization_url(redirect_uri:)
