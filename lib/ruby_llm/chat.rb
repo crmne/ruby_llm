@@ -1295,6 +1295,8 @@ module RubyLLM
     # block that raises leaves the message queued and out of the
     # conversation. Several blocks nest in the order they were registered,
     # the first outermost, and #after_join runs once they all return.
+    # When an inner block withdraws the message, <tt>join.call</tt> in an
+    # outer block returns +nil+.
     #
     # On a persisted chat, the block runs inside the transaction that
     # creates the message record and deletes the queued one, and

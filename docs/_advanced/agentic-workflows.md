@@ -111,7 +111,7 @@ chat.around_join do |queued, join|
 end
 ```
 
-If the block raises, the message stays queued and out of the conversation, and the error reaches the caller of `complete`. Several `around_join` blocks nest in the order you register them, the first outermost, like Rails around callbacks. Agents declare them with the `around_join` class macro.
+If the block raises, the message stays queued and out of the conversation, and the error reaches the caller of `complete`. Several `around_join` blocks nest in the order you register them, the first outermost, like Rails around callbacks. When an inner block withdraws the message, `join.call` in an outer block returns `nil`. Agents declare them with the `around_join` class macro.
 
 `join_queued_messages` joins everything waiting, steering or not, without asking the model. Each message goes through `around_join` and `after_join`, and you get back the messages that joined:
 
