@@ -4,7 +4,8 @@ module RubyLLM
   module ActiveRecord
     # A provider-side batch of persisted chats, in RubyLLM's
     # +ruby_llm_batches+ table. RubyLLM.batch writes a row when it submits
-    # chat records, and RubyLLM::Batch.find reads it back in any process.
+    # persisted chats of one class, and RubyLLM::Batch.find reads it back
+    # in any process.
     #
     #   RubyLLM::ActiveRecord::Batch.where(completed: false).pluck(:provider_batch_id)
     #
@@ -19,8 +20,8 @@ module RubyLLM
     # [+reported_cost+] The cost the provider reported, as a Hash.
     # [+chat_type+, +chat_ids+] The class and ids of the submitted chats.
     #
-    # RubyLLM writes these rows. Read and query them, and add scopes,
-    # columns, or encryption of your own, but do not create or update them.
+    # RubyLLM writes these rows. Read and query them, and add scopes and
+    # columns of your own, but do not create or update them.
     # Use RubyLLM::Batch to refresh a batch and deliver its results.
     class Batch < Record
       self.table_name = 'ruby_llm_batches'

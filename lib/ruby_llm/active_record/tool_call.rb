@@ -24,8 +24,8 @@ module RubyLLM
     #              or <tt>"denied"</tt>, or +nil+ when no approval was asked.
     # [+remote+] Whether the provider ran the tool instead of RubyLLM.
     #
-    # RubyLLM writes these rows. Read and query them, and add scopes,
-    # columns, or encryption of your own, but do not create or update them.
+    # RubyLLM writes these rows. Read and query them, and add scopes and
+    # columns of your own, but do not create or update them.
     class ToolCall < Record
       self.table_name = 'ruby_llm_tool_calls'
 

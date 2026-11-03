@@ -3,9 +3,10 @@
 module RubyLLM
   module ActiveRecord
     # One provider attempt in RubyLLM's usage ledger, the +ruby_llm_usages+
-    # table. Every billable attempt gets a row, including retries, cancelled
-    # streams, and one-shot operations without a chat, so the ledger sums
-    # to what providers charge.
+    # table. RubyLLM writes a row for every billable attempt, including
+    # retries, cancelled streams, and one-shot operations without a chat.
+    # A write that fails is logged and skipped, so it never breaks the
+    # operation.
     #
     #   chat.ruby_llm_usages.sum(:total_cost)
     #   RubyLLM::ActiveRecord::Usage.where(owner: current_user).group(:operation).sum(:total_cost)
@@ -30,8 +31,8 @@ module RubyLLM
     # [+workflow_id+, +workflow_name+, +workflow_step_id+, +workflow_step_name+]
     #   The workflow and step that made the attempt, if any.
     #
-    # RubyLLM writes these rows. Read and query them, and add scopes,
-    # columns, or encryption of your own, but do not create or update them.
+    # RubyLLM writes these rows. Read and query them, and add scopes and
+    # columns of your own, but do not create or update them.
     class Usage < Record
       self.table_name = 'ruby_llm_usages'
 
