@@ -60,8 +60,8 @@ module RubyLLM
       def request(method, params = {}, headers: {}, &)
         server
         call(method, params, headers:, &)
-      rescue SessionExpired
-        @connecting.synchronize { @server = handshake }
+      rescue SessionExpired => e
+        reconnect(e.session)
         call(method, params, headers:, &)
       end
 
@@ -173,9 +173,13 @@ module RubyLLM
         listened = changes.except(:taskIds).transform_keys(&:to_s)
         yield({ 'method' => ACKNOWLEDGED, 'params' => { 'notifications' => listened } })
         @transport.listen(nil, version:, &)
-      rescue SessionExpired
-        @connecting.synchronize { @server = handshake }
+      rescue SessionExpired => e
+        reconnect(e.session)
         raise
+      end
+
+      def reconnect(expired)
+        @connecting.synchronize { @server = handshake if @server.nil? || @transport.session.equal?(expired) }
       end
 
       def cancels?(notification, request)
