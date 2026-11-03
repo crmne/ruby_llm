@@ -135,6 +135,7 @@ module RubyLLM
 
       def save(path, byte_size, content_type, digest)
         ChatFile.transaction do
+          lock_chat
           record = owned.find_or_initialize_by(path:)
           record.assign_attributes(byte_size:, content_type:, digest:)
           record.text = nil if record.has_attribute?(:text)
@@ -142,6 +143,10 @@ module RubyLLM
           record.save!
           record.to_stored_file
         end
+      end
+
+      def lock_chat
+        @chat.class.unscoped.where(@chat.class.primary_key => @chat.id).lock.pick(@chat.class.primary_key)
       end
 
       def row(path)

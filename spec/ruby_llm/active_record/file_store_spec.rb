@@ -71,6 +71,24 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
     expect(described_class.new(other).list).to be_empty
   end
 
+  it 'keeps one row when another process writes the same path at the same time' do
+    other_write = nil
+    allow(RubyLLM::ActiveRecord::ChatFile).to receive(:new).and_wrap_original do |original, *arguments, &block|
+      allow(RubyLLM::ActiveRecord::ChatFile).to receive(:new).and_call_original
+      other_write = Thread.new do
+        Chat.connection_pool.with_connection { described_class.new(Chat.find(chat.id)).write('a.txt', 'theirs') }
+      end
+      other_write.join(0.5)
+      original.call(*arguments, &block)
+    end
+
+    store.write('a.txt', 'mine')
+    other_write.join
+
+    expect(chat.ruby_llm_chat_files.where(path: 'a.txt').count).to eq(1)
+    expect(store.read('a.txt')).to eq('theirs')
+  end
+
   it 'matches a folder to delete by its exact case' do
     store.write('reports/a.md', 'lower')
     store.write('Reports/b.md', 'upper')
