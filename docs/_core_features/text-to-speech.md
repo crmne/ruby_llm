@@ -66,6 +66,8 @@ Here, `player` is your application's audio player or output stream. Each `RubyLL
 
 Chunks are not retried once delivered to your block.
 
+Chirp 3: HD voices on Vertex AI do not stream. Call `RubyLLM.speak` without a block for them.
+
 ## Choosing Models
 
 Pass `model:` to choose a speech model:

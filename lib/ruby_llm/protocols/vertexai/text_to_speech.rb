@@ -26,6 +26,14 @@ module RubyLLM
           'alaw' => 'ALAW'
         }.freeze
 
+        # Request fields RubyLLM fills from its own arguments, which
+        # provider_options may not replace.
+        RESERVED_OPTIONS = {
+          'input' => %w[text ssml markup multiSpeakerMarkup],
+          'voice' => %w[name languageCode],
+          'audioConfig' => %w[audioEncoding]
+        }.freeze
+
         MIME_TYPES = {
           'opus' => 'audio/ogg',
           'mulaw' => 'audio/wav',
@@ -66,9 +74,10 @@ module RubyLLM
         private
 
         def reject_reserved_options(options)
-          reserved = options.keys & %w[input voice]
-          reserved << 'audioConfig.audioEncoding' if options['audioConfig'].is_a?(Hash) &&
-                                                     options['audioConfig'].key?('audioEncoding')
+          reserved = RESERVED_OPTIONS.flat_map do |section, keys|
+            fields = options[section]
+            fields.is_a?(Hash) ? (fields.keys & keys).map { |key| "#{section}.#{key}" } : []
+          end
           return if reserved.empty?
 
           raise ArgumentError, 'Use the input, voice:, and format: arguments instead of provider_options for ' \

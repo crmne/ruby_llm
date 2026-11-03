@@ -23,7 +23,7 @@ After reading this guide, you will know:
 * How to chat with MiniMax's M3 models.
 * How to chat with GLM models on Z.ai.
 * How to chat with Meta's Muse models.
-* How to speak with Google's Chirp 3: HD voices on Vertex AI, in the EU.
+* How to speak with Google's Chirp 3: HD voices on Vertex AI.
 * How to separate reasoning that a server leaves inside the answer.
 * How to upgrade.
 
@@ -232,7 +232,7 @@ Set `meta_api_key` to a key from dev.meta.ai. See [Provider Setup]({% link _gett
 
 ## Chirp 3: HD Voices on Vertex AI
 
-Vertex AI now speaks with Google's Chirp 3: HD voices through Cloud Text-to-Speech, from the endpoint of your `vertexai_location`. Set it to `eu` and Google processes your requests in the EU:
+Vertex AI now speaks with Google's Chirp 3: HD voices through Cloud Text-to-Speech, from the endpoint of your `vertexai_location`:
 
 ```ruby
 RubyLLM.speak("Willkommen zurück.", model: "{{ site.models.speech_vertexai }}",

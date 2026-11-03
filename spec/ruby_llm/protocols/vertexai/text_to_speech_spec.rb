@@ -148,16 +148,18 @@ RSpec.describe RubyLLM::Protocols::VertexAI::TextToSpeech do
   it 'merges provider options into the request' do
     request = stub_request(:post, endpoint).with(body: hash_including(
       'voice' => { 'languageCode' => 'en-US', 'name' => 'en-US-Chirp3-HD-Charon' },
-      'audioConfig' => { 'audioEncoding' => 'MP3', 'speakingRate' => 1.2 }
+      'audioConfig' => { 'audioEncoding' => 'MP3', 'speakingRate' => 1.2 },
+      'input' => { 'text' => 'Hi', 'customPronunciations' => { 'pronunciations' => [] } }
     )).to_return_json(body: synthesized)
 
-    speak('Hi', provider_options: { 'audioConfig' => { speakingRate: 1.2 } })
+    speak('Hi', provider_options: { 'audioConfig' => { speakingRate: 1.2 },
+                                    input: { customPronunciations: { pronunciations: [] } } })
 
     expect(request).to have_been_requested.once
   end
 
   {
-    'text' => { input: { text: 'Other text' } },
+    'text' => { input: { ssml: '<speak>Other text</speak>' } },
     'voice' => { voice: { languageCode: 'en-GB' } },
     'format' => { 'audioConfig' => { 'audioEncoding' => 'LINEAR16' } }
   }.each do |argument, options|
