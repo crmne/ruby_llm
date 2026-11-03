@@ -75,7 +75,7 @@ chat.queue "Then draft the board summary", steer: false
 chat.complete while chat.queued_messages.any?
 ```
 
-A turn starts once its question is in place. Every `ask`, `ask_later`, or `step`, and a `complete` on a chat the model has answered, first takes every queued message, steering or not, oldest first, before the model is asked and before the new question `ask` adds. Within a turn only steering messages join, so a steering message can join before a waiting one queued earlier. A `complete` after `ask_later`, or one that retries a turn that failed, continues that turn: messages queued with `steer: false` wait for its answer. Messages that join together become separate user messages, in order.
+A turn starts once its question is in place. Every `ask` and `ask_later`, a `step` with no tool calls pending, and a `complete` on a chat the model has answered first take every queued message, steering or not, oldest first, before the model is asked and before the new question `ask` adds. Within a turn only steering messages join, so a steering message can join before a waiting one queued earlier. A `complete` after `ask_later`, or one that retries a turn that failed, continues that turn: messages queued with `steer: false` wait for its answer. Messages that join together become separate user messages, in order.
 
 `queue` never runs the loop. When nothing is running, call `complete` yourself. A few more rules:
 

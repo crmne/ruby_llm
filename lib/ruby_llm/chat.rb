@@ -376,10 +376,11 @@ module RubyLLM
     # after the next round of tool results, or once the model finishes its
     # answer, which then goes on to answer it too. Pass <tt>steer: false</tt>
     # to wait for the turn to end instead: #complete returns, the chat is
-    # #complete?, and the next #ask, #ask_later, #step, or a #complete
-    # on the answered chat takes the message. Steering messages can join
-    # before waiting ones queued earlier. Messages that join together
-    # become separate user messages, oldest first.
+    # #complete?, and the next #ask, #ask_later, or #complete on the
+    # answered chat takes the message, as does a #step with no tool calls
+    # pending. Steering messages can join before waiting ones queued
+    # earlier. Messages that join together become separate user messages,
+    # oldest first.
     #
     # Nothing is taken while the chat is #waiting?, and #cancel leaves the
     # queue as it is. Queueing never runs the loop: when nothing is
