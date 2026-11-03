@@ -92,8 +92,6 @@ module RubyLLM
 
           receive(subscription)
         end
-      rescue IOError
-        raise Error, "#{name} exited"
       ensure
         uninterrupted { @lock.synchronize { @subscriptions.delete(subscription) } }
       end
@@ -132,6 +130,8 @@ module RubyLLM
         return sleep(CHECK_INTERVAL) unless read
 
         @stdout.wait_readable(CHECK_INTERVAL) if subscription.messages.empty?
+      rescue IOError
+        raise Error, "#{name} exited"
       end
 
       def drain
@@ -176,11 +176,13 @@ module RubyLLM
 
       def write(message)
         start unless @process&.alive?
-        @stdin.puts JSON.generate(message)
-        @stdin.flush
-      rescue Errno::EPIPE, IOError
-        stop
-        raise Error, "#{name} exited"
+        begin
+          @stdin.puts JSON.generate(message)
+          @stdin.flush
+        rescue Errno::EPIPE, IOError
+          stop
+          raise Error, "#{name} exited"
+        end
       end
 
       def read(deadline)

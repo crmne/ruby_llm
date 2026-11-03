@@ -79,6 +79,21 @@ RSpec.describe RubyLLM::MCP::Stdio do
     end
   end
 
+  context 'with an env value that raises an I/O error' do
+    let(:stdio) { described_class.new([RbConfig.ruby, '-e', server], env: -> { raise IOError, 'token file closed' }) }
+
+    after { stdio.close }
+
+    it 'raises it from a request instead of reporting that the server exited' do
+      expect { stdio.request({ id: 1, method: 'probe' }) }.to raise_error(IOError, 'token file closed')
+    end
+
+    it 'raises it from a subscription instead of reporting that the server exited' do
+      expect { stdio.listen({ id: 1, method: 'subscriptions/listen' }) { nil } }
+        .to raise_error(IOError, 'token file closed')
+    end
+  end
+
   describe 'stopping a server that outlives its stdin' do
     before { stub_const("#{described_class}::SHUTDOWN_GRACE", 0.2) }
 
