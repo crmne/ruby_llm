@@ -280,8 +280,12 @@ A block decides when the chat is built. It returns aliases, or a Hash of aliases
 
 ```ruby
 class ResearchAgent < RubyLLM::Agent
-  provider_tools { { web_search: { allowed_domains: allowed_domains } } }
+  model "{{ site.models.anthropic_provider_tools }}"
+  inputs :domains
+  provider_tools { { web_search: { allowed_domains: domains } } }
 end
+
+ResearchAgent.chat(domains: ["ruby-lang.org"])
 ```
 
 Tool history and approval decisions survive `Agent.find` and worker restarts. Apps upgrading from 1.16 get the required message and tool-call columns from the [2.0 upgrade](https://github.com/crmne/ruby_llm/blob/v2.0.0/docs/_reference/upgrading.md).

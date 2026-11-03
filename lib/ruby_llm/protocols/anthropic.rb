@@ -133,7 +133,8 @@ module RubyLLM
         thoughts = segments.filter_map(&:thinking)
         return if thoughts.empty?
 
-        Thinking.build(text: thoughts.filter_map(&:text).join, signature: thoughts.filter_map(&:signature).first)
+        texts = thoughts.filter_map(&:text)
+        Thinking.build(text: (texts.join unless texts.empty?), signature: thoughts.filter_map(&:signature).first)
       end
 
       def merge_citations(segments)

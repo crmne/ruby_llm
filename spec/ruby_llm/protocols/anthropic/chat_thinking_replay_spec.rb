@@ -90,4 +90,19 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
     expect(message.thinking.text).to eq('Search first. Now answer.')
     expect(message.thinking.signature).to eq('sig-one')
   end
+
+  it 'keeps redacted-only thinking without text across paused segments' do
+    first = [{ 'type' => 'redacted_thinking', 'data' => 'encrypted' },
+             { 'type' => 'server_tool_use', 'id' => 'server-1', 'name' => 'web_search', 'input' => {} }]
+    last = [{ 'type' => 'text', 'text' => 'Done.' }]
+
+    message = protocol.send(:merge_turn_segments, [parse_message(first), parse_message(last)])
+
+    expect(message.thinking.text).to be_nil
+    expect(message.thinking.signature).to eq('encrypted')
+  end
+
+  it 'turns an unmapped finish reason into a lowercase Symbol' do
+    expect(protocol.send(:normalize_finish_reason, 'Refusal_Pending')).to eq(:refusal_pending)
+  end
 end
