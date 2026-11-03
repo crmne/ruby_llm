@@ -30,10 +30,13 @@ RSpec.describe RubyLLM::MCP::Stdio do
   end
 
   it 'keeps the application environment from the server' do
-    ENV['FAKE_PROVIDER_API_KEY'] = 'sk-parent'
-    ENV['BUNDLE_GEMFILE'] = '/app/Gemfile'
+    parent = %w[
+      FAKE_PROVIDER_API_KEY BUNDLE_GEMFILE BUNDLE_PATH RAILS_ENV SECRET_KEY_BASE NODE_EXTRA_CA_CERTS
+      HTTP_PROXY HTTPS_PROXY ALL_PROXY NO_PROXY http_proxy https_proxy all_proxy no_proxy
+    ]
+    parent.each { |name| ENV[name] = "parent-#{name}" }
 
-    expect(child['env'].keys).not_to include('FAKE_PROVIDER_API_KEY', 'BUNDLE_GEMFILE')
+    expect(child['env'].keys & parent).to be_empty
   end
 
   it 'passes on the variables a server needs to start' do
