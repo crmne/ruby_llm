@@ -25,6 +25,8 @@ module RubyLLM
         provider = context&.[](PROVIDER_KEY) || @provider
         attempt(env, context, provider)
       rescue *NETWORK_FAILURES => e
+        raise if context&.dig(Connection::STREAM_PROGRESS_KEY, :callback_error).equal?(e)
+
         raise ConnectionError.new(e.message, provider: (provider.slug if provider.respond_to?(:slug)))
       end
 

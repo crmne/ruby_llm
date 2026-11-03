@@ -162,6 +162,7 @@ RSpec.describe RubyLLM::Transport::Connection do
     {
       'a refused connection' => [Errno::ECONNREFUSED.new, Faraday::ConnectionFailed, false],
       'a timeout' => [Net::ReadTimeout.new, Faraday::TimeoutError, true],
+      'a connection that timed out opening' => [Net::OpenTimeout.new, Faraday::ConnectionFailed, true],
       'a TLS failure' => [OpenSSL::SSL::SSLError.new('certificate verify failed'), Faraday::SSLError, false]
     }.each do |failure, (raised, wrapped, timeout)|
       it "raises a RubyLLM::ConnectionError after retrying #{failure}" do

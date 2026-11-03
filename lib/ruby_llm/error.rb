@@ -314,9 +314,12 @@ module RubyLLM
   #   rescue RubyLLM::ConnectionError => e
   #     retry_later if e.timeout?
   class ConnectionError < Error
-    # Returns whether the request timed out, rather than failing to connect.
+    # Returns whether the request timed out, including while opening the
+    # connection, rather than failing to connect.
     def timeout?
-      cause.is_a?(Faraday::TimeoutError)
+      return true if cause.is_a?(Faraday::TimeoutError)
+
+      cause.respond_to?(:wrapped_exception) && cause.wrapped_exception.is_a?(Timeout::Error)
     end
   end
 

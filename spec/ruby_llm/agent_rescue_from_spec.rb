@@ -105,10 +105,24 @@ RSpec.describe RubyLLM::Agent do
       expect(agent.ask('hi')).to eq(:by_name)
     end
 
-    it 'rejects classes that are not StandardErrors when they are declared' do
-      [Interrupt, Exception, Comparable, Integer].each do |klass|
+    it 'rejects classes that can never match a StandardError when they are declared' do
+      [Interrupt, Comparable, Integer].each do |klass|
         expect { Class.new(described_class) { rescue_from klass, with: :handle } }
           .to raise_error(ArgumentError, /#{klass} is not a StandardError class/)
+      end
+    end
+
+    it 'matches StandardErrors with a handler for one of their ancestors, by class or by name' do
+      %w[Exception StandardError].flat_map { |name| [name, Object.const_get(name)] }.each do |klass|
+        agent = agent_raising(rate_limit) do
+          rescue_from klass, with: :handle
+
+          private
+
+          def handle(_error) = :rescued
+        end
+
+        expect(agent.ask('hi')).to eq(:rescued)
       end
     end
 

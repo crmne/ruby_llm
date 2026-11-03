@@ -65,6 +65,14 @@ RSpec.describe RubyLLM::Protocol::Streaming do
           .to raise_error(NotImplementedError, 'unfinished hook')
       end
 
+      it 'lets a Faraday network error from the caller\'s block through as it is' do
+        body = %(data: {"choices":[{"delta":{"content":"hi"}}]}\n\n)
+        stub_request(:post, url).to_return(status: 200, body:)
+
+        expect { chat.ask('Hi') { |_chunk| raise Faraday::TimeoutError, 'my own request' } }
+          .to raise_error(Faraday::TimeoutError, 'my own request')
+      end
+
       it 'raises an error body sent with a 200' do
         stub_request(:post, url).to_return(status: 200, body: error_body('In the body', type: 'server_error'))
 

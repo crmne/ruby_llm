@@ -565,8 +565,8 @@ module RubyLLM
       # defined.
       #
       # Exception classes may be named as Strings, which defers constant
-      # lookup until an exception is raised. A class that is not a
-      # StandardError raises ArgumentError, since no handler would run.
+      # lookup until an exception is raised. A class that can never match a
+      # StandardError, such as Interrupt, raises ArgumentError.
       def rescue_from(*exception_classes, with: nil, &block)
         raise ArgumentError, 'rescue_from needs a handler: pass with: or a block' unless with || block
         raise ArgumentError, 'rescue_from takes with: or a block, not both' if with && block
@@ -764,7 +764,8 @@ module RubyLLM
 
       def rescue_handler_key(exception_class)
         case exception_class
-        when ->(klass) { klass.is_a?(Class) && klass <= StandardError } then exception_class.name || exception_class
+        when ->(klass) { klass.is_a?(Class) && (klass <= StandardError || klass > StandardError) }
+          exception_class.name || exception_class
         when String then exception_class
         else raise ArgumentError, "#{exception_class.inspect} is not a StandardError class or its name"
         end
