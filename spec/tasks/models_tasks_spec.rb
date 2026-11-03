@@ -125,6 +125,21 @@ RSpec.describe 'models:update', type: :task do
     expect(saved_models.map(&:id)).to eq(existing_models.drop(1).map(&:id))
   end
 
+  it 'adds unit prices to the refreshed models and reports what it could not apply' do
+    entry = ModelUnitPrices::Entry.new(
+      provider: 'openai', model: 'gpt-4.1', unit: 'characters', per_million: 15, quoted: '$15.00 / 1M characters',
+      source: 'https://developers.openai.com/api/docs/pricing', checked: Date.new(2026, 11, 3)
+    )
+    missing = entry.with(model: 'gpt-0')
+    refreshed = RubyLLM::Models.new([RubyLLM::Model.new(existing_models[2].to_h.merge(metadata: {}))])
+
+    priced = nil
+    expect { priced = with_unit_prices(refreshed, ModelUnitPrices.new([entry, missing])) }
+      .to output(/Unit prices to review \(1\):\n  - openai:gpt-0 is not in the registry/).to_stdout
+
+    expect(priced.find('gpt-4.1', provider: :openai).pricing.characters.input).to eq(15)
+  end
+
   it 'does not rewrite the registry when only upstream ordering changes' do
     expect { persist(existing_models.reverse) }.to output(/Model list unchanged/).to_stdout
 

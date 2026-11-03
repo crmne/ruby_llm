@@ -326,7 +326,7 @@ TEST_MODELS = {
   image_count: [{ provider: :openai, model: 'gpt-image-1.5' }],
   image_quality: [
     { provider: :openai, model: 'gpt-image-2' },
-    { provider: :xai, model: 'grok-imagine-image-quality' }
+    { provider: :xai, model: 'grok-imagine-image-2.0' }
   ],
   streaming_transcription: [{ provider: :openai, model: 'gpt-4o-transcribe' }],
   dedicated_transcription: [
