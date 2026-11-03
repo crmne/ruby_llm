@@ -58,6 +58,8 @@ class GitHub < RubyLLM::MCP
 end
 ```
 
+Values in `env` can also be blocks or method names, such as `env GITHUB_PERSONAL_ACCESS_TOKEN: -> { user.github_token }`. They run each time the process starts, so a server that starts again after `close` or a crash gets the current values.
+
 In Rails, `bin/rails generate ruby_llm:mcp Linear https://mcp.linear.app/mcp` creates `app/mcp/linear.rb`, and `--command` instead of a URL creates a server started over stdio.
 
 ### Custom Transports

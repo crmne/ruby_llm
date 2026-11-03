@@ -373,6 +373,7 @@ $stdin.each_line do |line|
     reply(id, result: {})
   when 'spec/subscriptions' then reply(id, result: { subscriptions:, watched: })
   when 'spec/exit' then exit
+  when 'spec/env' then reply(id, result: { env: ENV.to_h, pid: Process.pid })
   when 'tools/call'
     if (TOOLS - tools).any? { |tool| tool[:name] == params['name'] }
       next reply(id, error: { code: -32_602, message: "Unknown tool: #{params['name']}" })

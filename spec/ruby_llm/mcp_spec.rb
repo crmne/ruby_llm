@@ -1095,6 +1095,75 @@ RSpec.describe RubyLLM::MCP do
     end
   end
 
+  describe 'stdio environment' do
+    let(:tokens) { %w[first second] }
+    let(:mcp_class) do
+      command = [RbConfig.ruby, server]
+      Class.new(described_class) do
+        command(*command)
+        inputs :tokens
+        env BLOCK_TOKEN: -> { tokens.first }, METHOD_TOKEN: :method_token, STATIC_TOKEN: 'static'
+
+        private
+
+        def method_token = "method-#{tokens.first}"
+      end
+    end
+    let(:mcp) { mcp_class.new(tokens:) }
+
+    def server_env
+      mcp.send(:client).request('spec/env')
+    end
+
+    it 'gives the process its env' do
+      expect(server_env['env'])
+        .to include('BLOCK_TOKEN' => 'first', 'METHOD_TOKEN' => 'method-first', 'STATIC_TOKEN' => 'static')
+    end
+
+    it 'reads blocks and methods again when the process starts after close' do
+      first = server_env
+      mcp.close
+      tokens.shift
+
+      second = server_env
+
+      expect(second['pid']).not_to eq(first['pid'])
+      expect(second['env'])
+        .to include('BLOCK_TOKEN' => 'second', 'METHOD_TOKEN' => 'method-second', 'STATIC_TOKEN' => 'static')
+    end
+
+    it 'reads blocks and methods again when the process starts after it exits' do
+      first = server_env
+      expect { mcp.send(:client).request('spec/exit') }.to raise_error(RubyLLM::MCP::Error, /exited/)
+      tokens.shift
+
+      second = server_env
+
+      expect(second['pid']).not_to eq(first['pid'])
+      expect(second['env']).to include('BLOCK_TOKEN' => 'second', 'METHOD_TOKEN' => 'method-second')
+    end
+
+    it 'keeps each instance to its own values' do
+      other = mcp_class.new(tokens: %w[other])
+
+      expect(other.send(:client).request('spec/env')['env']).to include('BLOCK_TOKEN' => 'other')
+      expect(server_env['env']).to include('BLOCK_TOKEN' => 'first')
+    ensure
+      other&.close
+    end
+
+    it 'raises the error of a value that fails, without starting the process' do
+      failing = Class.new(described_class) do
+        command RbConfig.ruby, '-e', 'abort "started"'
+        env TOKEN: -> { raise KeyError, 'TOKEN is not set' }
+      end.new
+
+      expect { failing.tools }.to raise_error(KeyError, 'TOKEN is not set')
+    ensure
+      failing&.close
+    end
+  end
+
   it 'passes its settings to subclasses' do
     parent = Class.new(described_class) do
       url 'https://mcp.example.com/mcp'
