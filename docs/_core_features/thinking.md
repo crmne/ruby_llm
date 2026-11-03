@@ -111,15 +111,18 @@ Turn on `split_think_tags` to move it into `thinking`:
 
 ```ruby
 RubyLLM.configure do |config|
+  config.openai_api_base = "http://localhost:8080/v1" # llama.cpp
+  config.openai_protocol = :chat_completions
   config.split_think_tags = true
 end
 
+chat = RubyLLM.chat(model: "qwen3", provider: :openai, assume_model_exists: true)
 response = chat.ask("What is 15 * 23?")
 response.content        # => "345"
 response.thinking.text  # => "15 * 20 is 300, and 15 * 3 is 45..."
 ```
 
-RubyLLM splits only a `<think>...</think>` block at the very start of the answer, after any leading whitespace. A `<think>` tag later in the answer, such as one in a code example, stays in the content. A block the model never closed, because it ran out of tokens, counts as thinking. When the server also sends reasoning in its own field, such as `reasoning_content`, that field wins and the content stays as it is.
+RubyLLM splits only a `<think>...</think>` block at the very start of the answer, after at most 64 bytes of leading whitespace. A `<think>` tag later in the answer, such as one in a code example, stays in the content. A block the model never closed, because it ran out of tokens, counts as thinking. When the server also sends reasoning in its own field, such as `reasoning_content`, that field wins and the content stays as it is.
 
 Streaming works the same way. Each chunk carries its part of the reasoning in `chunk.thinking` as it arrives, even when a tag is cut across chunks, and the content chunks, the final message, Turbo broadcasts, and the persisted record all agree.
 

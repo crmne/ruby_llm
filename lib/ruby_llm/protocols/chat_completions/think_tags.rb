@@ -17,7 +17,7 @@ module RubyLLM
           splitter = new
           content, thinking = splitter.feed(text)
           rest_content, rest_thinking = splitter.finish
-          [join(content, rest_content), join(thinking, rest_thinking)]
+          [join(content, rest_content), join(thinking, rest_thinking), splitter.offset]
         end
 
         def self.join(first, second)
@@ -30,12 +30,18 @@ module RubyLLM
         def initialize
           @state = :start
           @held = +''
+          @seen = 0
+        end
+
+        def offset
+          @offset || (@state == :start ? 0 : @seen)
         end
 
         def feed(text, explicit_thinking = nil)
           return stop(text, explicit_thinking) if explicit_thinking
           return [text, nil] if text.nil? || text.empty? || @state == :off
 
+          @seen += text.length
           case @state
           when :start then feed_start(text)
           when :thinking then feed_thinking(text)
@@ -52,6 +58,7 @@ module RubyLLM
         def stop(text, thinking)
           held = take_held
           state = @state
+          @offset ||= offset
           @state = :off
           return [presence(self.class.join(held, text)), thinking] if state == :start
 
@@ -68,6 +75,7 @@ module RubyLLM
           end
 
           @state = :off
+          @offset = 0
           [buffer, nil]
         end
 
@@ -96,8 +104,10 @@ module RubyLLM
           leading = whitespace_length(text, text.bytesize)
           return [nil, nil] if leading == text.bytesize
 
+          answer = text.byteslice(leading..)
           @state = :off
-          [text.byteslice(leading..), nil]
+          @offset = @seen - answer.length
+          [answer, nil]
         end
 
         def whitespace_length(text, limit)

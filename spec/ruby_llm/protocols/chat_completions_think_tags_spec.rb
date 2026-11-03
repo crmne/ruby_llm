@@ -126,6 +126,22 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions do
       expect(chunks.filter_map(&:content).join).to eq(whole.content)
     end
 
+    it 'moves annotation indices onto the answer' do
+      annotation = lambda do |start_index, end_index|
+        { 'url_citation' => { 'url' => 'https://example.com', 'start_index' => start_index,
+                              'end_index' => end_index } }
+      end
+      content = "<think>é r</think>\nThe answer"
+      message = complete(content, 'annotations' => [annotation.call(23, 29), annotation.call(7, 10)])
+      _, chunks = stream(*contents(content[0, 12], content[12..]), { 'annotations' => [annotation.call(23, 29)] })
+      streamed = chunks.flat_map(&:citations).sole
+
+      expect(message.citations.map { |citation| [citation.start_index, citation.end_index] })
+        .to eq([[4, 10], [nil, nil]])
+      expect(message.citations.map(&:text)).to eq(['answer', 'é r'])
+      expect([streamed.start_index, streamed.end_index]).to eq([4, 10])
+    end
+
     it 'reads the setting from a context' do
       context = RubyLLM.context do |context_config|
         context_config.ollama_api_base = 'http://localhost:11434/v1'

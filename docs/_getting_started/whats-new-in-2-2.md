@@ -248,9 +248,12 @@ Some OpenAI-compatible servers, such as llama.cpp with `--reasoning-format none`
 
 ```ruby
 RubyLLM.configure do |config|
+  config.openai_api_base = "http://localhost:8080/v1" # llama.cpp
+  config.openai_protocol = :chat_completions
   config.split_think_tags = true
 end
 
+chat = RubyLLM.chat(model: "qwen3", provider: :openai, assume_model_exists: true)
 response = chat.ask("What is 15 * 23?")
 response.content        # => "345"
 response.thinking.text  # => "15 * 20 is 300, and 15 * 3 is 45..."

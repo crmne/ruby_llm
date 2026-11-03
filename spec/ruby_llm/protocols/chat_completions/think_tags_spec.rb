@@ -10,11 +10,17 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::ThinkTags do
   end
 
   def split(text)
-    described_class.split(text)
+    described_class.split(text).first(2)
   end
 
   it 'splits a leading block from the answer' do
     expect(split("<think>reasoning</think>\nanswer")).to eq(%w[answer reasoning])
+  end
+
+  it 'counts the characters removed before the answer' do
+    expect(described_class.split(" <think>é</think>\nanswer").last).to eq(18)
+    expect(described_class.split('<think>unclosed').last).to eq(15)
+    expect(described_class.split('plain').last).to eq(0)
   end
 
   it 'allows whitespace before the opening tag' do

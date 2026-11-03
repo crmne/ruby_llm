@@ -115,14 +115,14 @@ module RubyLLM
             parse_content_and_thinking(message_data['content'] || message_data['refusal'])
           thinking_text = thinking_from_blocks || parse_thinking_text(message_data)
           thinking_signature = parse_thinking_signature(message_data)
-          answer, thinking_text = parse_think_tags(content, thinking_text)
+          answer, thinking_text, offset = parse_think_tags(content, thinking_text)
 
           finish_reason = normalize_finish_reason(data.dig('choices', 0, 'finish_reason'))
 
           Message.new(
             role: :assistant,
             content: answer,
-            citations: extract_citations(message_data, data, content),
+            citations: offset_citations(extract_citations(message_data, data, content), offset),
             thinking: Thinking.build(text: thinking_text, signature: thinking_signature),
             raw_reasoning: parse_raw_reasoning(message_data),
             tool_calls: parse_tool_calls(message_data['tool_calls'], response: raw, finish_reason: finish_reason),
@@ -482,10 +482,24 @@ module RubyLLM
         end
 
         def parse_think_tags(content, thinking_text)
-          return [content, thinking_text] unless split_think_tags? && thinking_text.nil?
-          return [content, nil] unless content.is_a?(String) && !content.empty?
+          return [content, thinking_text, 0] unless split_think_tags? && thinking_text.nil?
+          return [content, nil, 0] unless content.is_a?(String) && !content.empty?
 
           ThinkTags.split(content)
+        end
+
+        # Annotation indices count from the start of the content the server
+        # sent, before the think block was removed.
+        def offset_citations(citations, offset)
+          return citations if offset.zero?
+
+          citations.map do |citation|
+            next citation unless citation.start_index && citation.end_index
+
+            start_index = citation.start_index - offset
+            end_index = citation.end_index - offset if start_index >= 0
+            Citation.new(**citation.to_h, start_index: end_index && start_index, end_index:)
+          end
         end
 
         def split_think_tags?
