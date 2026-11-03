@@ -86,9 +86,11 @@ module RubyLLM
           return '' if file.byte_size.zero?
           return if file.byte_size > MAX_FILE_SIZE
 
+          cached = store.cached_text(file)
+          return cached if cached
           return Converters::Text.call(store.attachment(file.path, file:)) if file.text?
 
-          store.cached_text(file) || (:unextracted if Converters.for_type(file.content_type, config:).any?)
+          :unextracted if Converters.for_type(file.content_type, config:).any?
         end
 
         def report(query, matches, skipped)

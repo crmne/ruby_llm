@@ -174,6 +174,13 @@ RSpec.describe RubyLLM::FileStore::Tools do
       expect(files).not_to have_received(:cache_text)
     end
 
+    it 'searches the converted text of a text file once read_file converted it, with its line numbers' do
+      chat.context.config.file_converters['text/markdown'] = ->(_file) { "Converted\nORCHID converted" }
+      call(:read_file, path: 'a.md')
+
+      expect(call(:search_files, query: 'orchid', path: 'a.md')).to eq('a.md:2: ORCHID converted')
+    end
+
     it 'takes a regular expression, and plain words when it is not one' do
       call(:read_file, path: 'sub/sheet.xlsx')
       expect(call(:search_files, query: '^al.ha$')).to start_with('a.md:1: Alpha')
