@@ -324,7 +324,7 @@ chat.approve("call_1a2b3c")
 
 `rescue_from` handlers used to run only on `Agent.new`. They now also run on the chats and records from `Agent.chat`, `create`, `create!`, and `find`, and on calls chained from a setter such as `agent.with_temperature(0.2).ask("Hi")`. A generated `ChatResponseJob` starts running the handlers your agent declares, so a handler that returns instead of raising keeps that error from Active Job, which no longer retries it. Re-raise in the handler to keep the retry.
 
-`rescue_from` now raises `ArgumentError` when you declare a class that can never match a `StandardError`, such as `Interrupt`, or a module. Such a handler never ran, so remove it.
+`rescue_from` now raises `ArgumentError` when you declare a class that can never match a `StandardError`, such as `Interrupt`. Agents rescue only `StandardError`s, so such a handler never ran: remove it. Handlers for `StandardError` classes, their ancestors such as `Exception`, and modules your error classes include work as before.
 
 ## Transcription Chunk Types Are Symbols
 

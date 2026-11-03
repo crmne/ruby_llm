@@ -106,10 +106,24 @@ RSpec.describe RubyLLM::Agent do
     end
 
     it 'rejects classes that can never match a StandardError when they are declared' do
-      [Interrupt, Comparable, Integer].each do |klass|
+      [Interrupt, Integer].each do |klass|
         expect { Class.new(described_class) { rescue_from klass, with: :handle } }
           .to raise_error(ArgumentError, /#{klass} is not a StandardError class/)
       end
+    end
+
+    it 'matches errors that include a module handled by rescue_from' do
+      transient = Module.new
+      error = Class.new(RubyLLM::Error) { include transient }.new('slow down')
+      agent = agent_raising(error) do
+        rescue_from transient, with: :handle
+
+        private
+
+        def handle(_error) = :rescued
+      end
+
+      expect(agent.ask('hi')).to eq(:rescued)
     end
 
     it 'matches StandardErrors with a handler for one of their ancestors, by class or by name' do

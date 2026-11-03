@@ -764,7 +764,7 @@ module RubyLLM
 
       def rescue_handler_key(exception_class)
         case exception_class
-        when ->(klass) { klass.is_a?(Class) && (klass <= StandardError || klass > StandardError) }
+        when ->(klass) { klass.is_a?(Module) && !(klass.is_a?(Class) && (klass <=> StandardError).nil?) }
           exception_class.name || exception_class
         when String then exception_class
         else raise ArgumentError, "#{exception_class.inspect} is not a StandardError class or its name"
