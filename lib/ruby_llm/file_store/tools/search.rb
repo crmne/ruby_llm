@@ -15,9 +15,10 @@ module RubyLLM
         end
 
         def description
-          "Searches the text of this chat's files, every file that can be read as text, for lines matching a " \
-            'regular expression, ignoring case, and returns each match with its path and line number. Read ' \
-            'around a match with read_file and its offset. Pass path to search one file or folder.'
+          "Searches the text of this chat's files, text files and files whose text read_file already " \
+            'extracted, for lines matching a regular expression, ignoring case, and returns each match with its ' \
+            'path and line number. Read around a match with read_file and its offset. Pass path to search one ' \
+            'file or folder.'
         end
 
         def parameters_schema
@@ -36,8 +37,7 @@ module RubyLLM
         def execute(query:, path: nil)
           guarded do
             pattern = pattern_for(query.to_s)
-            matches, skipped = search(pattern, scope(path))
-            report(query, matches, skipped)
+            report(query, *search(pattern, scope(path)))
           end
         end
 
@@ -63,10 +63,10 @@ module RubyLLM
 
         def search(pattern, files)
           matches = []
-          skipped = []
+          skipped = { none: [], unextracted: [] }
           files.each do |file|
             text = searchable_text(file)
-            next skipped << file.path if text.nil?
+            next skipped[text.is_a?(Symbol) ? text : :none] << file.path unless text.is_a?(String)
 
             text.each_line.with_index(1) do |line, number|
               next unless pattern.match?(line)
@@ -80,10 +80,17 @@ module RubyLLM
           [matches, skipped]
         end
 
+        # Converters can cost money, like OCR, so search reads only text
+        # files and conversions already made.
         def searchable_text(file)
           return '' if file.byte_size.zero?
+          return if file.byte_size > MAX_FILE_SIZE
 
-          store.text(file.path, config:) unless file.byte_size > MAX_FILE_SIZE
+          cached = store.cached_text(file)
+          return cached if cached
+          return Converters::Text.call(store.attachment(file.path, file:)) if file.text?
+
+          :unextracted if Converters.for_type(file.content_type, config:).any?
         end
 
         def report(query, matches, skipped)
@@ -91,7 +98,11 @@ module RubyLLM
           if matches.size > MAX_MATCHES
             lines << "[More than #{MAX_MATCHES} matches. Narrow the query or search one folder.]"
           end
-          lines << "[Not searched, no text: #{skipped.join(', ')}]" if skipped.any?
+          if skipped[:unextracted].any?
+            lines << "[Not searched, text not extracted yet: #{skipped[:unextracted].join(', ')}. " \
+                     'Read a file with read_file to extract its text first.]'
+          end
+          lines << "[Not searched, no text: #{skipped[:none].join(', ')}]" if skipped[:none].any?
           lines.join("\n")
         end
       end

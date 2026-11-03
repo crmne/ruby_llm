@@ -56,7 +56,7 @@ The model gets five tools:
 | `write_file` | Writes a text file, replacing any file at that path |
 | `edit_file` | Replaces one exact span of a text file, or every occurrence with `replace_all` |
 
-`read_file` and `search_files` read text files, and other formats through the converters you register, such as OCR for PDFs (see [Reading Files as Text](#reading-files-as-text)). An image, and a PDF no converter reads, come back from `read_file` as the file itself, so a model with vision sees it.
+`read_file` reads text files, and other formats through the converters you register, such as OCR for PDFs (see [Reading Files as Text](#reading-files-as-text)). `search_files` never runs a converter, since one like OCR costs a request per file: it searches text files and the text `read_file` or `chat.file_store.text` already extracted, and names the files it skipped so the model can read them first. An image, and a PDF no converter reads, come back from `read_file` as the file itself, so a model with vision sees it.
 
 `chat.file_store` returns the store, so your code works with the same files:
 
@@ -108,13 +108,13 @@ end
 
 ## Reading Files as Text
 
-`read_file`, `search_files`, and `chat.file_store.text` read a file through converters. Text files, including source code, CSV, JSON, YAML, and Markdown, are read as they are. Other formats need a converter you register; without one, `read_file` hands an image or a PDF to the model as the file itself, so a model with vision sees it, and says any other file has no text to read.
+`read_file` and `chat.file_store.text` read a file through converters. Text files, including source code, CSV, JSON, YAML, and Markdown, are read as they are. Other formats need a converter you register; without one, `read_file` hands an image or a PDF to the model as the file itself, so a model with vision sees it, and says any other file has no text to read.
 
 Each version of a file is converted once. A persisted chat keeps the text in the file's row, and the other stores keep it in memory, so the next read or search is free.
 
 ### PDFs, Scans, and Photos
 
-The OCR converter, `RubyLLM::FileStore::Converters::OCR`, reads PDFs, scans, and photos with [`RubyLLM.ocr`]({% link _core_features/ocr.md %}), tables and all. Each file costs one OCR request the first time the model reads or searches it, so OCR only runs where you register it:
+The OCR converter, `RubyLLM::FileStore::Converters::OCR`, reads PDFs, scans, and photos with [`RubyLLM.ocr`]({% link _core_features/ocr.md %}), tables and all. Each file costs one OCR request the first time the model reads it, so OCR only runs where you register it. `search_files` never runs OCR; it searches the text a read already extracted:
 
 ```ruby
 RubyLLM.configure do |config|

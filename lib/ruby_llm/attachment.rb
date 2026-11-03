@@ -44,6 +44,11 @@ module RubyLLM
     # Video processing modes accepted by +processing:+.
     PROCESSING_MODES = %i[static agentic].freeze
 
+    ATTRIBUTE_ESCAPES = { # :nodoc:
+      '&' => '&amp;', '<' => '&lt;', '>' => '&gt;', "'" => '&#39;', '"' => '&quot;'
+    }.freeze
+    CLOSING_FILE_TAG = %r{</(file)}i # :nodoc:
+
     # File extensions recognized as document attachments when the MIME type
     # alone is inconclusive.
     DOCUMENT_EXTENSIONS = %w[
@@ -199,7 +204,8 @@ module RubyLLM
     def for_llm # :nodoc:
       case type
       when :text
-        "<file name='#{filename}' mime_type='#{mime_type}'>#{content}</file>"
+        "<file name='#{escape_attribute(filename)}' mime_type='#{escape_attribute(mime_type)}'>" \
+        "#{content.to_s.gsub(CLOSING_FILE_TAG, '<\/\1')}</file>"
       else
         data_uri
       end
@@ -280,6 +286,10 @@ module RubyLLM
     end
 
     private
+
+    def escape_attribute(value)
+      value.to_s.gsub(/[&<>'"]/, ATTRIBUTE_ESCAPES)
+    end
 
     def check_option(name, value, allowed)
       return if value.nil? || allowed.include?(value)

@@ -106,6 +106,8 @@ response = chat.ask "Explain what this Ruby file does.", with: "app/models/user.
 puts response.content
 ```
 
+RubyLLM marks where a text file starts and ends, and neither its name nor its content can break out of that boundary, so a file cannot pose as your own instructions.
+
 ### Working with PDFs
 
 Ask about a report, manual, or research paper with a model that accepts PDFs:

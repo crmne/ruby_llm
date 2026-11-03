@@ -266,6 +266,10 @@ A retry that recovered from an HTTP 5xx left `chat.cost.total` `nil`, because th
 * `Moderation#model` for a Bedrock guardrail returns the `"id:version"` its usage records, instead of `nil`.
 * When an Anthropic server tool pauses a turn, `message.thinking` joins the thinking of every segment instead of keeping only the last.
 
+## `search_files` Reads Only Extracted Text
+
+In 2.1, the `search_files` tool ran your converters on every file it searched, so one search could send every uncached PDF and image through paid OCR. In 2.2 it searches text files and text already extracted, and lists the files it skipped. The model reads those with `read_file`, or your code extracts them first with `chat.file_store.text(path)`.
+
 ## Batches Picked Up by ID Report Usage
 
 A batch collected through `Batch.find` without its chats or requests now reports its usage, to `usage.ruby_llm` and the ledger, once the batch is complete, once per `Batch` object. It reported nothing in 2.1. Collecting the same batch that way from two processes reports it twice, so collect each one in one place.

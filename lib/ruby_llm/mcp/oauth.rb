@@ -499,19 +499,15 @@ module RubyLLM
         server.path == path || server.path.start_with?("#{path}/")
       end
 
+      # RFC 8414 section 3.3: metadata whose issuer is not the authorization
+      # server it was fetched for must not be used.
       def discover_authorization_server(issuer)
         server = authorization_server_metadata(issuer)
         return server if same_issuer?(server['issuer'], issuer)
 
-        named = server['issuer']
-        raise Error, "#{issuer} metadata names a different issuer" unless named.is_a?(String) && URI(named).host
-
-        server = authorization_server_metadata(named)
-        raise Error, "#{issuer} metadata names a different issuer" unless same_issuer?(server['issuer'], named)
-
-        server
-      rescue URI::InvalidURIError
         raise Error, "#{issuer} metadata names a different issuer"
+      rescue URI::InvalidURIError
+        raise Error, "#{issuer} is not a valid authorization server URL"
       end
 
       def authorization_server_metadata(issuer)
