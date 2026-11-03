@@ -101,6 +101,16 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(job).to be_complete
   end
 
+  it 'keeps a waiting message queued while a job answers the question ask_later staged' do
+    chat.ask_later('Summarize Q3')
+    elsewhere(chat).queue('Then email it', steer: false)
+
+    job_for(chat).complete
+
+    expect(transcript(chat)).to eq([[:user, 'Summarize Q3'], [:assistant, 'Done']])
+    expect(chat.queued_messages.map(&:content)).to eq(['Then email it'])
+  end
+
   it 'takes every queued message at the next complete, waiting ones included' do
     chat.queue('Wait', steer: false)
     chat.queue('Steer')

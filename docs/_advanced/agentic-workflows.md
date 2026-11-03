@@ -75,12 +75,12 @@ chat.queue "Then draft the board summary", steer: false
 chat.complete while chat.queued_messages.any?
 ```
 
-Every `ask`, `ask_later`, `complete`, or `step` that starts a turn first takes every queued message, steering or not, oldest first, before the model is asked and before the new question `ask` adds. Within one turn, after that first moment, only steering messages join, so a steering message can join before a waiting one queued earlier. Messages that join together become separate user messages, in order.
+A turn starts once its question is in place. Every `ask`, `ask_later`, or `step`, and a `complete` on a chat the model has answered, first takes every queued message, steering or not, oldest first, before the model is asked and before the new question `ask` adds. Within a turn only steering messages join, so a steering message can join before a waiting one queued earlier. A `complete` after `ask_later`, or one that retries a turn that failed, continues that turn: messages queued with `steer: false` wait for its answer. Messages that join together become separate user messages, in order.
 
 `queue` never runs the loop. When nothing is running, call `complete` yourself. A few more rules:
 
 * While the chat is `waiting?` on an approval, an input, or a task, nothing joins: the round's tool calls need their results first. Record the decision and call `complete`. The tools run, then the steering messages join. The resumed turn is the same turn, so messages queued with `steer: false` keep waiting for the next one.
-* `cancel` stops the loop and leaves the queue as it is. The next `ask` or `complete` takes those messages as ordinary user messages.
+* `cancel` stops the loop and leaves the queue as it is. The next `ask` takes those messages as ordinary user messages. A `complete` instead continues the cancelled turn, so only the steering ones join until the model answers.
 * `unqueue` withdraws a message before the loop takes it. It returns `false` once the loop has taken it, so a Cancel button and the loop can race safely.
 * `queued_messages` lists what waits, oldest first, as `RubyLLM::QueuedMessage` values with `content`, `attachments`, `owner`, `queued_at`, and `steer?`.
 

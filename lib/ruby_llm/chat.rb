@@ -324,15 +324,17 @@ module RubyLLM
     # without waiting, and continues once it has a result. For an MCP tool,
     # that checks on its MCP::Task.
     #
-    # The first time the loop could ask the model, every message in the
-    # queue joins the conversation, in order. After that, only messages
-    # that steer join, after each round of tool results and after the
-    # answer, so the turn goes on until the model has answered them.
-    # Messages queued with <tt>steer: false</tt> wait for the next
-    # #complete. A #complete that resumes a turn, such as one paused for
-    # an approval, continues it: only messages that steer join. See #queue.
+    # A turn starts once a question is in place. When the model has
+    # answered the last one, every message in the queue joins first, in
+    # order, and starts the next turn. Within a turn, only messages that
+    # steer join, after each round of tool results and after the answer,
+    # so the turn goes on until the model has answered them. Messages
+    # queued with <tt>steer: false</tt> wait for the turn to end. A
+    # #complete on an unanswered chat, such as one after #ask_later, a
+    # retry, or a pause for an approval, continues that turn: only
+    # messages that steer join. See #queue.
     def complete(&)
-      resuming = mid_turn?
+      resuming = !answered?
       run_tools if awaiting_tasks?
       continue_turn(steering_only: resuming, &)
     end
@@ -374,10 +376,10 @@ module RubyLLM
     # after the next round of tool results, or once the model finishes its
     # answer, which then goes on to answer it too. Pass <tt>steer: false</tt>
     # to wait for the turn to end instead: #complete returns, the chat is
-    # #complete?, and the next #ask, #ask_later, #complete, or #step takes
-    # the message. Steering messages can join before waiting ones queued
-    # earlier. Messages that join together become separate user messages,
-    # oldest first.
+    # #complete?, and the next #ask, #ask_later, #step, or a #complete
+    # on the answered chat takes the message. Steering messages can join
+    # before waiting ones queued earlier. Messages that join together
+    # become separate user messages, oldest first.
     #
     # Nothing is taken while the chat is #waiting?, and #cancel leaves the
     # queue as it is. Queueing never runs the loop: when nothing is
@@ -1728,10 +1730,6 @@ module RubyLLM
 
     def settled?(steering_only)
       answered? && @message_queue.none?(steering_only:)
-    end
-
-    def mid_turn?
-      !answered? && last_conversation_message&.role != :user
     end
 
     def last_conversation_message
