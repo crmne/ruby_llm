@@ -198,11 +198,13 @@ module RubyLLM
 
       # Enables provider-executed tools for chats this agent builds, applied
       # via Chat#with_provider_tools. Accepts the same aliases, options, and
-      # raw Hashes; a block defers evaluation until the chat is built.
+      # raw Hashes; a block defers evaluation until the chat is built and
+      # returns a list, or a Hash of aliases and options like the keywords.
       # Called with no arguments, returns the declared entries.
       #
       #   provider_tools :web_search
       #   provider_tools web_search: { allowed_domains: ["ruby-lang.org"] }
+      #   provider_tools { { web_search: { max_uses: max_searches } } }
       #
       def provider_tools(*tools, **tools_with_options, &block)
         return @provider_tools || [] if tools.empty? && tools_with_options.empty? && !block_given?
@@ -855,7 +857,7 @@ module RubyLLM
         servers = Array(evaluate(mcp, runtime)).compact
         chat.with_mcp(*servers, defer: evaluate(@mcp_defer, runtime)) if servers.any?
 
-        provider_tools_to_apply = Array(evaluate(provider_tools, runtime)).compact
+        provider_tools_to_apply = RubyLLM::Tools::ProviderTools.entries(evaluate(provider_tools, runtime))
         chat.with_provider_tools(*provider_tools_to_apply) if provider_tools_to_apply.any?
       end
 

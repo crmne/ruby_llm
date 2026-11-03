@@ -68,6 +68,12 @@ module RubyLLM
         entries + tools_with_options.map { |name, options| { name: name.to_sym, options: options.to_h } }
       end
 
+      # Normalizes what an Agent's provider_tools block returns: a Hash of
+      # aliases and their options, like the macro's keywords, or a list.
+      def entries(value)
+        value.is_a?(Hash) ? normalize([], value) : Array(value).compact
+      end
+
       def normalize_positional(tool)
         case tool
         when Symbol, String then { name: tool.to_sym, options: {} }

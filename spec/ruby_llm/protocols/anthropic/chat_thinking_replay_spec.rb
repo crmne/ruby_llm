@@ -78,4 +78,32 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
 
     expect(rendered_content(message)).to eq(first + last)
   end
+
+  it 'joins the thinking of every segment of a paused server-tool turn' do
+    first = [{ 'type' => 'thinking', 'thinking' => 'Search first. ', 'signature' => 'sig-one' },
+             { 'type' => 'server_tool_use', 'id' => 'server-1', 'name' => 'web_search', 'input' => {} }]
+    last = [{ 'type' => 'thinking', 'thinking' => 'Now answer.', 'signature' => 'sig-two' },
+            { 'type' => 'text', 'text' => 'Done.' }]
+
+    message = protocol.send(:merge_turn_segments, [parse_message(first), parse_message(last)])
+
+    expect(message.thinking.text).to eq('Search first. Now answer.')
+    expect(message.thinking.signature).to be_nil
+    expect(rendered_content(message)).to eq(first + last)
+  end
+
+  it 'keeps redacted-only thinking without text across paused segments' do
+    first = [{ 'type' => 'redacted_thinking', 'data' => 'encrypted' },
+             { 'type' => 'server_tool_use', 'id' => 'server-1', 'name' => 'web_search', 'input' => {} }]
+    last = [{ 'type' => 'text', 'text' => 'Done.' }]
+
+    message = protocol.send(:merge_turn_segments, [parse_message(first), parse_message(last)])
+
+    expect(message.thinking.text).to be_nil
+    expect(message.thinking.signature).to eq('encrypted')
+  end
+
+  it 'turns an unmapped finish reason into a lowercase Symbol' do
+    expect(protocol.send(:normalize_finish_reason, 'Refusal_Pending')).to eq(:refusal_pending)
+  end
 end

@@ -16,7 +16,7 @@ module RubyLLM
         def normalize_finish_reason(reason)
           return nil if reason.nil?
 
-          finish_reasons.fetch(reason.to_s) { reason.to_s.to_sym }
+          finish_reasons.fetch(reason.to_s) { reason.to_s.downcase.to_sym }
         end
 
         def completion_url

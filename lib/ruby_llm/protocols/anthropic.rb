@@ -120,13 +120,23 @@ module RubyLLM
           citations: merge_citations(segments),
           server_tool_calls: segments.flat_map(&:server_tool_calls),
           raw_content: merge_raw_content(segments),
-          thinking: final.thinking,
+          thinking: merge_thinking(segments),
           tool_calls: merge_tool_calls(segments),
           tokens: Tokens.aggregate(segments.map(&:tokens)),
           finish_reason: final.finish_reason,
           model: final.model,
           raw: final.raw
         )
+      end
+
+      # A signature covers one segment's thinking, so joined text carries
+      # none; replay sends each segment's own blocks from raw_content.
+      def merge_thinking(segments)
+        thoughts = segments.filter_map(&:thinking)
+        return thoughts.first if thoughts.size <= 1
+
+        texts = thoughts.filter_map(&:text)
+        Thinking.build(text: (texts.join unless texts.empty?))
       end
 
       def merge_citations(segments)

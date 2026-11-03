@@ -46,7 +46,7 @@ module RubyLLM
         def parse_moderation_responses(responses)
           RubyLLM::Moderation.new(
             id: responses.one? ? responses.first.first.headers['x-amzn-requestid'] : nil,
-            model: nil,
+            model: guardrail_model_id,
             results: responses.map(&:last),
             raw: responses.one? ? responses.first.first.body : responses.map { |response, _result| response.body }
           )

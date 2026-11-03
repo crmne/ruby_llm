@@ -105,7 +105,7 @@ chat.tools[:crm_customer_lookup]
 
 The chat keys the tool by its namespace and name joined, `:crm_customer_lookup`, and raises an `ArgumentError` when another tool already has that name. The tool's own name stays `customer_lookup`, and `tool_call.namespace` names its group. RubyLLM routes calls and remembers approvals by both, including after a Rails reload. `namespace` is inherited; pass `nil` to remove an inherited namespace. Namespaced tools can be [deferred for tool search]({% link _core_features/tool-search.md %}) like any other.
 
-The Responses protocol sends each group as a function namespace, which needs a description. Every other protocol sends the tool under its joined name, `crm_customer_lookup`, and maps the model's calls back to the namespace. Anthropic's `computer` and `browser` namespaces are the members of its [native client toolsets]({% link _core_features/provider-tools.md %}#native-client-toolsets) instead.
+The Responses protocol sends each group as a function namespace, which needs a description. Every other protocol sends the tool under its joined name, `crm_customer_lookup`, and maps the model's calls back to the namespace. Anthropic's `computer` and `browser` namespaces are the members of its [native client toolsets]({% link _core_features/provider-tools.md %}#native-client-toolsets) instead. The Responses API reserves those two names and drops the functions in them, so RubyLLM raises `RubyLLM::Error` when a Responses request carries either.
 
 You can force a namespaced tool with `with_tool_options(choice: CustomerLookup)` where it travels under its joined name. Responses namespaces and Anthropic's toolset members cannot be forced, so RubyLLM raises there; use `choice: :required` instead.
 

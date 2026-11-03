@@ -9,6 +9,7 @@ module RubyLLM
         module_function
 
         NATIVE_TOOL_SEARCH = { type: 'tool_search' }.freeze
+        RESERVED_NAMESPACES = %w[computer browser].freeze
 
         def tool_for(tool)
           definition = {
@@ -28,6 +29,11 @@ module RubyLLM
         def render_tools(tools)
           ordinary, namespaced = tools.values.partition { |tool| tool.namespace.nil? }
           groups = namespaced.group_by(&:namespace).map do |namespace, members|
+            if RESERVED_NAMESPACES.include?(namespace)
+              raise Error, "The namespace \"#{namespace}\" is reserved by the Responses API, which drops its " \
+                           'functions; choose another namespace'
+            end
+
             { type: 'namespace', name: namespace, description: members.filter_map(&:namespace_description).first,
               tools: members.map { |tool| tool_for(tool) } }.compact
           end

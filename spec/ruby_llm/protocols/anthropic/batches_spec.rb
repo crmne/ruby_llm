@@ -31,13 +31,21 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Batches do
     end
 
     it 'names how an ended batch finished from its request counts' do
-      counts = { 'processing' => 0, 'succeeded' => 1, 'errored' => 1, 'canceled' => 0, 'expired' => 0 }
+      counts = { 'processing' => 0, 'succeeded' => 0, 'errored' => 1, 'canceled' => 0, 'expired' => 0 }
       statuses = [counts, counts.merge('canceled' => 2), counts.merge('expired' => 2)].map do |request_counts|
         protocol.send(:parse_batch_response, 'id' => 'msgbatch_123', 'processing_status' => 'ended',
                                              'request_counts' => request_counts)[:raw_status]
       end
 
       expect(statuses).to eq(%w[ended canceled expired])
+    end
+
+    it 'keeps a batch that ended with successes succeeded when some requests were cancelled' do
+      counts = { 'processing' => 0, 'succeeded' => 3, 'errored' => 0, 'canceled' => 1, 'expired' => 1 }
+      raw_status = protocol.send(:parse_batch_response, 'id' => 'msgbatch_123', 'processing_status' => 'ended',
+                                                        'request_counts' => counts)[:raw_status]
+
+      expect(protocol.send(:parse_batch_status, raw_status, completed: true)).to eq(:succeeded)
     end
   end
 
