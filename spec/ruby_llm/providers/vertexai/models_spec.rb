@@ -257,7 +257,7 @@ RSpec.describe RubyLLM::Providers::VertexAI::Models do
       google_models(global_connection, 'gemini-2.0-flash-001', '001')
       google_models(central_connection, 'gemini-embedding-001', '001')
 
-      catalogued = models.reject { |model| model.metadata[:source] == 'known_models' }.map(&:id)
+      catalogued = models.reject { |model| model.metadata[:source] }.map(&:id)
 
       expect(catalogued).to contain_exactly('gemini-2.0-flash-001', 'gemini-embedding-001')
     end
@@ -280,6 +280,13 @@ RSpec.describe RubyLLM::Providers::VertexAI::Models do
 
       expect(models.map(&:id)).to include('gemini-2.5-flash')
       expect(RubyLLM.logger).to have_received(:warn).with(/us-central1.*anthropic .*boom/)
+    end
+
+    it 'adds the Cloud Text-to-Speech voice models' do
+      chirp = models.find { |model| model.id == 'Chirp3-HD' }
+
+      expect(chirp).to have_attributes(provider: 'vertexai', type: :audio, name: 'Chirp 3: HD')
+      expect(chirp.pricing.to_h).to eq({})
     end
 
     it 'raises when a publisher fails at the configured location' do
