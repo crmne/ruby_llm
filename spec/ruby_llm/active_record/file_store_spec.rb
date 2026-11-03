@@ -71,6 +71,55 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
     expect(described_class.new(other).list).to be_empty
   end
 
+  def write_elsewhere(path, content)
+    Thread.new do
+      Chat.connection_pool.with_connection { described_class.new(Chat.find(chat.id)).write(path, content) }
+    end
+  end
+
+  it 'locks the chat row before it looks the file up' do
+    store
+    queries = []
+    record = ->(*, payload) { queries << payload[:sql] unless payload[:name] == 'SCHEMA' }
+
+    ActiveSupport::Notifications.subscribed(record, 'sql.active_record') { store.write('a.txt', 'mine') }
+
+    chat_lock = queries.index { |sql| sql.match?(/\ASELECT .* FROM ["`]?chats["`]?/) }
+    lookup = queries.index { |sql| sql.match?(/\ASELECT .* FROM ["`]?ruby_llm_chat_files["`]?/) }
+    expect(chat_lock).to be < lookup
+    expect(queries[chat_lock]).to include('FOR UPDATE') unless Chat.connection.adapter_name.match?(/sqlite/i)
+  end
+
+  it 'finds a row another process wrote after the query cache saw none' do
+    RubyLLM::ActiveRecord::ChatFile.cache do
+      expect(store.delete('a.txt')).to be_nil
+      write_elsewhere('a.txt', 'theirs').join
+
+      store.write('a.txt', 'mine')
+    end
+
+    expect(chat.ruby_llm_chat_files.where(path: 'a.txt').count).to eq(1)
+  end
+
+  it 'keeps one row when another process writes the same path at the same time' do
+    skip 'SQLite locks the whole database for a write, so writers never interleave' if
+      Chat.connection.adapter_name.match?(/sqlite/i)
+
+    other_write = nil
+    allow(RubyLLM::ActiveRecord::ChatFile).to receive(:new).and_wrap_original do |original, *arguments, &block|
+      allow(RubyLLM::ActiveRecord::ChatFile).to receive(:new).and_call_original
+      other_write = write_elsewhere('a.txt', 'theirs')
+      other_write.join(0.5)
+      original.call(*arguments, &block)
+    end
+
+    store.write('a.txt', 'mine')
+    other_write.join
+
+    expect(chat.ruby_llm_chat_files.where(path: 'a.txt').count).to eq(1)
+    expect(store.read('a.txt')).to eq('theirs')
+  end
+
   it 'matches a folder to delete by its exact case' do
     store.write('reports/a.md', 'lower')
     store.write('Reports/b.md', 'upper')
