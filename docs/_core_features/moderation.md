@@ -93,10 +93,11 @@ Apply a [configured Bedrock guardrail]({% link _getting_started/configuration-pr
 ```ruby
 result = RubyLLM.moderate(user_input, provider: :bedrock)
 result.flagged?
+result.model # => "your-guardrail-id:1"
 result.raw['outputs']
 ```
 
-`flagged?` includes sensitive-information masking. Read replacement text and policy assessments from `raw`; `category_scores` is empty because Bedrock does not return numeric scores.
+`result.model` names the guardrail and version that ran, the same identifier its usage records. `flagged?` includes sensitive-information masking. Read replacement text and policy assessments from `raw`; `category_scores` is empty because Bedrock does not return numeric scores.
 
 To check generated output instead of user input:
 

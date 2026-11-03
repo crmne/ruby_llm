@@ -690,6 +690,11 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
       expect(message.finish_reason).to eq(:content_filter)
     end
 
+    it 'turns an unmapped finish reason into a lowercase Symbol' do
+      expect(%w[OTHER MALFORMED_FUNCTION_CALL].map { |reason| test_obj.send(:normalize_finish_reason, reason) })
+        .to eq(%i[other malformed_function_call])
+    end
+
     it 'keeps thought-only parts out of assistant content' do
       response = Struct.new(:body, :env).new(
         {

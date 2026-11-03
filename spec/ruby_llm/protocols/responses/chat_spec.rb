@@ -172,6 +172,19 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
                                     }])
     end
 
+    %w[computer browser].each do |reserved|
+      it "raises for a namespace named #{reserved}, which the API reserves and drops" do
+        tool = Class.new(RubyLLM::Tool) do
+          description 'Takes a screenshot'
+          namespace reserved
+          def self.name = 'Screenshot'
+        end.new
+
+        expect { render_payload([RubyLLM::Message.new(role: :user, content: 'hi')], tools: { screenshot: tool }) }
+          .to raise_error(RubyLLM::Error, /namespace "#{reserved}" is reserved/)
+      end
+    end
+
     it 'lets tools opt into strict mode via provider_options' do
       tool = instance_double(RubyLLM::Tool, namespace: nil, name: 'weather', description: 'Looks up weather',
                                             parameters_schema: { 'type' => 'object' },

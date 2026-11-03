@@ -79,6 +79,15 @@ RSpec.describe RubyLLM::Agent, :live do
     expect(chat.provider_tools).to eq([{ name: :web_search, options: { max_uses: 2 } }])
   end
 
+  it 'takes a Hash of aliases and options from a provider_tools block' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      model model_for(:anthropic), provider: :anthropic
+      provider_tools { { web_search: { max_uses: 2 } } }
+    end
+
+    expect(agent_class.chat.provider_tools).to eq([{ name: :web_search, options: { max_uses: 2 } }])
+  end
+
   it 'forwards the protocol model option to new chats' do
     agent_class = Class.new(RubyLLM::Agent) do
       model model_for(:openai), protocol: :chat_completions

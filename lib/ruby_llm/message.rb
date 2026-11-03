@@ -65,7 +65,8 @@ module RubyLLM
 
     # Why the model stopped: +:stop+, +:max_tokens+, +:tool_calls+, or
     # +:content_filter+. Any other reason comes through as the provider
-    # spelled it, such as Anthropic's +:pause_turn+.
+    # named it, as a lowercase Symbol, such as Anthropic's +:pause_turn+ or
+    # Gemini's +:malformed_function_call+.
     attr_reader :finish_reason
 
     # The ContentFilter verdicts the provider reported on the request and

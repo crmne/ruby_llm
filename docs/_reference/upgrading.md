@@ -258,6 +258,14 @@ A `ResearchJob` found by ID after its task finished reported no usage in 2.1. In
 
 A retry that recovered from an HTTP 5xx left `chat.cost.total` `nil`, because the failed attempt's usage was unknown. In 2.2 an attempt the provider answered with an error before streaming anything records zero tokens, so the total is known.
 
+## Requests That Were Silently Dropped Now Raise or Report
+
+* A Responses API request with a tool in the `computer` or `browser` namespace raises `RubyLLM::Error`. The API reserves those names and dropped the functions without an error. Rename the namespace.
+* An Anthropic batch that ended with any successful request is `:succeeded`, with its cancelled requests failed in their own slots. In 2.1, one cancelled request made the whole batch `:cancelled`.
+* A finish reason RubyLLM does not map is a lowercase Symbol on every provider. Gemini's `MALFORMED_FUNCTION_CALL` was `:MALFORMED_FUNCTION_CALL` and is now `:malformed_function_call`; Cohere's reasons change the same way.
+* `Moderation#model` for a Bedrock guardrail returns the `"id:version"` its usage records, instead of `nil`.
+* When an Anthropic server tool pauses a turn, `message.thinking` joins the thinking of every segment instead of keeping only the last.
+
 ## Batches Picked Up by ID Report Usage
 
 A batch collected through `Batch.find` without its chats or requests now reports its usage, to `usage.ruby_llm` and the ledger, once the batch is complete, once per `Batch` object. It reported nothing in 2.1. Collecting the same batch that way from two processes reports it twice, so collect each one in one place.

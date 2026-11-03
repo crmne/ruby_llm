@@ -24,6 +24,10 @@ RSpec.describe RubyLLM::Protocols::Cohere::Chat do
     RubyLLM::Message.new(role: :user, content: content, attachments: attachments)
   end
 
+  it 'turns an unmapped finish reason into a lowercase Symbol' do
+    expect(protocol.send(:normalize_finish_reason, 'ERROR_TOXIC')).to eq(:error_toxic)
+  end
+
   describe 'caching' do
     it 'raises for options Cohere cannot carry' do
       expect { render([user('Hi')], caching: { ttl: '1h' }) }.to raise_error(ArgumentError, /does not accept ttl/)

@@ -73,8 +73,11 @@ module RubyLLM
         end
 
         # Anthropic ends every batch as "ended"; only the request counts say
-        # whether it was cancelled or ran out of time.
+        # whether it was cancelled or ran out of time. A batch with any
+        # success ended, and its cancelled or expired slots fail on their own.
         def ended_batch_status(request_counts)
+          return 'ended' if request_counts&.fetch('succeeded', 0).to_i.positive?
+
           %w[canceled expired].find { |outcome| request_counts&.fetch(outcome, 0).to_i.positive? } || 'ended'
         end
 

@@ -120,13 +120,20 @@ module RubyLLM
           citations: merge_citations(segments),
           server_tool_calls: segments.flat_map(&:server_tool_calls),
           raw_content: merge_raw_content(segments),
-          thinking: final.thinking,
+          thinking: merge_thinking(segments),
           tool_calls: merge_tool_calls(segments),
           tokens: Tokens.aggregate(segments.map(&:tokens)),
           finish_reason: final.finish_reason,
           model: final.model,
           raw: final.raw
         )
+      end
+
+      def merge_thinking(segments)
+        thoughts = segments.filter_map(&:thinking)
+        return if thoughts.empty?
+
+        Thinking.build(text: thoughts.filter_map(&:text).join, signature: thoughts.filter_map(&:signature).first)
       end
 
       def merge_citations(segments)

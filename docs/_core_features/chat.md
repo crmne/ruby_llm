@@ -178,7 +178,7 @@ The raw response is a `Faraday::Response` object, which you can use to access th
 
 ## Finish Reasons
 
-`finish_reason` tells you why the model stopped. RubyLLM maps each provider's values onto four symbols: `:stop`, `:max_tokens`, `:tool_calls`, and `:content_filter`. Anything else, such as Anthropic's `:pause_turn`, comes through as the provider spelled it.
+`finish_reason` tells you why the model stopped. RubyLLM maps each provider's values onto four symbols: `:stop`, `:max_tokens`, `:tool_calls`, and `:content_filter`. Anything else comes through as the provider named it, as a lowercase symbol, such as Anthropic's `:pause_turn` or Gemini's `:malformed_function_call`.
 
 ```ruby
 response = chat.ask("Summarize this in one paragraph")

@@ -29,7 +29,8 @@ RSpec.describe RubyLLM::Protocols::Bedrock::Guardrails do
 
     result = RubyLLM.moderate('Review this.', provider: :bedrock)
 
-    expect(result).to have_attributes(id: 'request-1', model: nil, flagged?: true, flagged_categories: ['VIOLENCE'])
+    expect(result).to have_attributes(id: 'request-1', model: 'test-guardrail:1', flagged?: true,
+                                      flagged_categories: ['VIOLENCE'])
     expect(result.category_scores).to eq({})
     expect(result.raw).to eq(JSON.parse(JSON.generate(blocked)))
     expect(result.tokens.to_h).to eq({})
@@ -168,7 +169,7 @@ RSpec.describe RubyLLM::Protocols::Bedrock::Guardrails do
     RubyLLM.config.bedrock_guardrail_version = version
     result = RubyLLM.moderate('Ruby is a programming language.', provider: :bedrock)
 
-    expect(result.model).to be_nil
+    expect(result.model).to eq("#{identifier}:#{version}")
     expect(result.raw['action']).to be_in(%w[NONE GUARDRAIL_INTERVENED])
     expect(result.flagged?).to eq(result.raw['action'] == 'GUARDRAIL_INTERVENED')
     expect(result.tokens.to_h).to eq({})
