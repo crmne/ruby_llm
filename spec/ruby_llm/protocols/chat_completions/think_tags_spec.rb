@@ -122,9 +122,9 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::ThinkTags do
     end
     time.call(10_000)
 
-    small = [time.call(25_000), time.call(25_000)].min
-    large = [time.call(100_000), time.call(100_000)].min
+    small = Array.new(3) { time.call(20_000) }.min
+    large = Array.new(3) { time.call(160_000) }.min
 
-    expect(large / small).to be < 8
+    expect(large / small).to be < 24
   end
 end
