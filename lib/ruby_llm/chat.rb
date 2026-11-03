@@ -329,10 +329,12 @@ module RubyLLM
     # that steer join, after each round of tool results and after the
     # answer, so the turn goes on until the model has answered them.
     # Messages queued with <tt>steer: false</tt> wait for the next
-    # #complete. See #queue.
+    # #complete. A #complete that resumes a turn, such as one paused for
+    # an approval, continues it: only messages that steer join. See #queue.
     def complete(&)
+      resuming = mid_turn?
       run_tools if awaiting_tasks?
-      continue_turn(steering_only: false, &)
+      continue_turn(steering_only: resuming, &)
     end
 
     # Runs the loop like #complete. With <tt>steering_only: true</tt> the
@@ -405,11 +407,59 @@ module RubyLLM
       !removed.nil?
     end
 
+    # Adds every queued message to the conversation, without asking the
+    # model, and returns the user Message objects they became, oldest
+    # first. Each message joins through #around_join and #after_join,
+    # whether it steers or not.
+    #
+    #   chat.queue "Use the EU file"
+    #   chat.queue "Then email it to me", steer: false
+    #   chat.join_queued_messages.map(&:content) # => ["Use the EU file", "Then email it to me"]
+    #
+    # Raises PendingToolCallsError while the last response has unanswered
+    # tool calls, as #ask_later does.
+    def join_queued_messages
+      raise_if_pending_tool_calls!
+      take_queued_messages
+    end
+
     # Adds every queued message to the conversation, or with
     # <tt>steering_only: true</tt> only those that steer, and runs
-    # #after_join for each.
+    # #after_join for each, or #after_unqueue for one an #around_join
+    # withdrew. Returns the joined messages.
     def take_queued_messages(steering_only: false) # :nodoc:
-      @message_queue.take(steering_only:) { |message, queued| run_callbacks(:after_join, message, queued) }
+      joined = []
+      @message_queue.take(steering_only:) do |message, queued|
+        next run_callbacks(:after_unqueue, queued) unless message
+
+        joined << message
+        run_callbacks(:after_join, message, queued)
+      end
+      joined
+    end
+
+    # Runs the #around_join callbacks for +queued+, outermost first, around
+    # the given block, which adds the message with the attributes the
+    # callbacks pass to +join+. Returns the message, or +nil+ when a
+    # callback withdrew it. Takes the message back out of the conversation
+    # when a callback raises.
+    def run_around_join(queued, &add) # :nodoc:
+      joined = nil
+      size = messages.length
+      innermost = ->(**attributes) { joined ||= add.call(**attributes) }
+      chain = @callbacks[:around_join].reverse.reduce(innermost) do |inner, callback|
+        lambda do |**outer|
+          callback.call(queued, lambda { |**attributes|
+            inner.call(**outer, **attributes)
+            joined
+          })
+        end
+      end
+      chain.call
+      joined
+    rescue StandardError
+      messages.slice!(size..)
+      raise
     end
 
     # Records approval for +tool_call+, a ToolCall or its id, so the next
@@ -1230,9 +1280,37 @@ module RubyLLM
       add_callback(:after_join, &)
     end
 
+    # Registers a callback that wraps the moment each queued message joins
+    # the conversation. It receives the QueuedMessage and +join+, and runs
+    # in the loop's thread. <tt>join.call</tt> adds the user Message and
+    # returns it. Returns +self+.
+    #
+    #   chat.around_join do |queued, join|
+    #     message = join.call
+    #     audit_log << [queued.owner, message.content]
+    #   end
+    #
+    # A block that never calls +join+ withdraws the message: it leaves the
+    # queue without joining, #after_unqueue runs, and the turn goes on. A
+    # block that raises leaves the message queued and out of the
+    # conversation. Several blocks nest in the order they were registered,
+    # the first outermost, and #after_join runs once they all return.
+    #
+    # On a persisted chat, the block runs inside the transaction that
+    # creates the message record and deletes the queued one, and
+    # <tt>join.call</tt> takes attributes for the new record, such as
+    # columns of your own. See RubyLLM::ActiveRecord::ChatMethods. A plain
+    # chat has no such columns, so its +join+ raises ArgumentError when
+    # given attributes. Registering the same block again does nothing.
+    def around_join(&block)
+      return self if @callbacks[:around_join].include?(block)
+
+      add_callback(:around_join, &block)
+    end
+
     # Registers a callback that receives each QueuedMessage #unqueue takes
-    # out of the queue. It runs in the thread that called #unqueue. Returns
-    # +self+.
+    # out of the queue, or an #around_join withdraws. It runs in the thread
+    # that took it out. Returns +self+.
     def after_unqueue(&)
       add_callback(:after_unqueue, &)
     end
@@ -1616,7 +1694,11 @@ module RubyLLM
 
     def build_message_queue(queued = [])
       MessageQueue.new(queued) do |message|
-        add_message(role: :user, content: message.content, attachments: message.attachments)
+        run_around_join(message) do |**attributes|
+          raise ArgumentError, 'join takes attributes only on a persisted chat' if attributes.any?
+
+          add_message(role: :user, content: message.content, attachments: message.attachments)
+        end
       end
     end
 
@@ -1646,10 +1728,18 @@ module RubyLLM
       answered? && @message_queue.none?(steering_only:)
     end
 
+    def mid_turn?
+      !answered? && last_conversation_message&.role != :user
+    end
+
+    def last_conversation_message
+      messages.reverse.find { |message| message.role != :system && !placeholder?(message) }
+    end
+
     def answered?
       return false if pending_tool_response
 
-      last = messages.reverse.find { |message| message.role != :system && !placeholder?(message) }
+      last = last_conversation_message
       case last&.role
       when nil then true
       when :user, :tool then false

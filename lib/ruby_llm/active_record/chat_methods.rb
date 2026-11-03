@@ -322,7 +322,7 @@ module RubyLLM
         with_provider_options with_headers with_schema
         convert_unsupported_attachments
         before_request before_message after_message before_tool_call after_tool_result after_tool_progress
-        before_fallback after_fallback after_queue after_join after_unqueue after_file_write
+        before_fallback after_fallback after_queue around_join after_join after_unqueue after_file_write
       ].freeze
 
       ##
@@ -506,6 +506,25 @@ module RubyLLM
       #
       # Applies Chat#after_queue and returns this record. The block
       # receives the QueuedMessage record, in the process that queued it.
+
+      ##
+      # :method: around_join
+      # :call-seq: around_join(&block)
+      #
+      # Applies Chat#around_join and returns this record. The block
+      # receives the QueuedMessage record and +join+, in the process that
+      # runs the chat, inside the transaction that creates the message
+      # record and deletes the queued one. <tt>join.call</tt> takes
+      # attributes for the new message record and returns it, so the
+      # record is saved with your own columns set:
+      #
+      #   chat.around_join do |queued, join|
+      #     join.call(sender: queued.owner)
+      #   end
+      #
+      # When the block raises, the transaction rolls back and the message
+      # stays queued. When it never calls +join+, the queued record is
+      # deleted without joining.
 
       ##
       # :method: after_join
@@ -740,11 +759,17 @@ module RubyLLM
       #   chat.add_message(role: :user, content: long_context)
       #
       def add_message(message_or_attributes)
+        persist_message(message_or_attributes)
+      end
+
+      # Persists +message_or_attributes+ like #add_message, assigning
+      # +record_attributes+ to the new record. Returns the message record.
+      def persist_message(message_or_attributes, record_attributes = {}) # :nodoc:
         llm_message = to_llm.prepare_message(message_or_attributes) do |id|
           RubyLLM::ActiveRecord::ToolCall.exists?(tool_call_id: id)
         end
 
-        message_record = messages_association.create!(message_attributes(llm_message))
+        message_record = messages_association.create!(message_attributes(llm_message).merge(record_attributes))
         @last_message_id = message_record.id
 
         tool_call = find_tool_call(llm_message.tool_call_id) if llm_message.tool_call_id
@@ -946,6 +971,17 @@ module RubyLLM
       # See RubyLLM::Chat#unqueue.
       def unqueue(queued)
         to_llm.unqueue(queued)
+      end
+
+      # Persists every queued message as a user message record, without
+      # calling the model, and returns the records, oldest first. Each joins
+      # through #around_join and #after_join, as
+      # RubyLLM::Chat#join_queued_messages describes.
+      #
+      #   chat.join_queued_messages.map(&:content) # => ["Use the EU file"]
+      #
+      def join_queued_messages
+        to_llm.join_queued_messages
       end
 
       private

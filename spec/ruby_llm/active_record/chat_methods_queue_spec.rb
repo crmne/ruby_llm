@@ -137,15 +137,112 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     job = job_for(chat)
     joined = []
     job.after_join { |message, _record| joined << message.content }
-    allow(job).to receive(:add_message).and_wrap_original do |add, **options|
-      raise IOError, 'storage is down' if options[:content] == 'Second'
+    allow(job).to receive(:persist_message).and_wrap_original do |persist, attributes, *rest|
+      raise IOError, 'storage is down' if attributes[:content] == 'Second'
 
-      add.call(**options)
+      persist.call(attributes, *rest)
     end
 
     expect { job.complete }.to raise_error(IOError)
     expect(joined).to eq(['First'])
     expect(chat.queued_messages.map(&:content)).to eq(['Second'])
+  end
+
+  def with_sender_column
+    ActiveRecord::Base.transaction do
+      ActiveRecord::Base.connection.add_column(:messages, :sender_id, :integer)
+      Message.reset_column_information
+      yield
+      raise ActiveRecord::Rollback
+    end
+  ensure
+    Message.reset_column_information
+  end
+
+  describe '#around_join' do
+    it 'saves the message with the attributes join is given, merged across nested callbacks' do
+      with_sender_column do
+        owner = Chat.create!(model: model_for(:openai))
+        chat.queue('Hello', owner:)
+        job = job_for(chat)
+        seen = []
+        job.around_join do |queued, join|
+          seen << RubyLLM::ActiveRecord::QueuedMessage.exists?(queued.id)
+          seen << join.call(sender_id: queued.owner.id).sender_id
+        end
+        job.around_join { |_queued, join| join.call(cache_until_here: true) }
+        job.after_join { |message, _queued| seen << message.persisted? }
+
+        job.complete
+
+        message = chat.messages_association.reload.first
+        expect(message).to have_attributes(role: 'user', content: 'Hello', sender_id: owner.id)
+        expect(message[:cache_until_here]).to be(true)
+        expect(seen).to eq([false, owner.id, true])
+      end
+    end
+
+    it 'rolls the join back and keeps the message queued when the callback raises' do
+      queued = chat.queue('Hello', with: image_path)
+      job = job_for(chat)
+      job.around_join do |_queued, join|
+        join.call
+        raise IOError, 'audit failed'
+      end
+
+      expect { job.complete }.to raise_error(IOError)
+      expect(chat.messages_association.reload).to be_empty
+      expect(job.messages_association).to be_empty
+      expect(job.to_llm.messages).to be_empty
+      expect(chat.queued_messages.to_a).to eq([queued])
+      expect(queued.reload.attachments.blobs.size).to eq(1)
+      expect(requests).to be_empty
+    end
+
+    it 'withdraws a message whose callback never joins it, and the turn goes on' do
+      withdrawn = chat.queue('Never mind', with: image_path)
+      chat.queue('Keep this')
+      job = job_for(chat)
+      unqueued = []
+      job.around_join { |queued, join| join.call unless queued.content == 'Never mind' }
+      job.after_unqueue { |record| unqueued << record.content }
+
+      expect(job.complete.content).to eq('Done')
+      expect(transcript(chat)).to eq([[:user, 'Keep this'], [:assistant, 'Done']])
+      expect(unqueued).to eq(['Never mind'])
+      expect(chat.queued_messages).to be_empty
+      expect(ActiveStorage::Attachment.where(record_type: withdrawn.class.polymorphic_name, record_id: withdrawn.id))
+        .to be_empty
+    end
+  end
+
+  it 'joins every queued message with join_queued_messages, without calling the model' do
+    chat.queue('Steer')
+    chat.queue('Wait', steer: false)
+    job = job_for(chat)
+
+    joined = job.join_queued_messages
+
+    expect(joined).to eq(chat.messages_association.reload.to_a)
+    expect(joined.map(&:content)).to eq(%w[Steer Wait])
+    expect(chat.queued_messages).to be_empty
+    expect(requests).to be_empty
+  end
+
+  it 'takes only steering messages when a turn resumes after an approval' do
+    approved_echo = Class.new(echo_tool) { requires_approval }
+    responses.push(tool_call, answer('Echoed'))
+    job_for(chat).with_tools(nil).with_tools(approved_echo).ask('Echo hello')
+    chat.queue('Afterwards', steer: false)
+    chat.queue('Steer')
+
+    resumed = job_for(chat).with_tools(nil).with_tools(approved_echo)
+    resumed.approve(resumed.pending_approvals.first)
+    resumed.complete
+
+    expect(transcript(chat)).to eq([[:user, 'Echo hello'], [:assistant, ''], [:tool, 'hello'], [:user, 'Steer'],
+                                    [:assistant, 'Echoed']])
+    expect(chat.queued_messages.map(&:content)).to eq(['Afterwards'])
   end
 
   it 'reads queued messages outside the query cache' do

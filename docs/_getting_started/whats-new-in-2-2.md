@@ -19,6 +19,7 @@ After reading this guide, you will know:
 * How sandboxes decide what code can do, and how the model asks for more.
 * How skills teach the model your workflows, and run their scripts in the sandbox.
 * How persisted chats now run in one process at a time.
+* How to queue messages while a chat runs, and attribute them as they join.
 * How to chat with Kimi models on Moonshot AI.
 * How to chat with MiniMax's M3 models.
 * How to chat with GLM models on Z.ai.
@@ -189,6 +190,23 @@ end
 ```
 
 If a process dies, its claims expire and another process picks the chat up. See [Durable Agents]({% link _advanced/durable-agents.md %}#one-process-at-a-time).
+
+## Queued Messages
+
+People keep typing while an agent works. `queue` holds a message until the loop can take it, from any thread or, for a persisted chat, any process:
+
+```ruby
+chat.queue "Use the EU numbers, not the US ones"
+chat.queue "Then draft the board summary", steer: false
+```
+
+A message that steers joins the turn that is running, after the next round of tool results. One queued with `steer: false` waits for the next turn. `around_join` wraps the moment a message joins. On a persisted chat it runs inside the transaction that creates the message, so you can set your own columns on it:
+
+```ruby
+chat.around_join { |queued, join| join.call(sender: queued.owner) }
+```
+
+A block that never calls `join` withdraws the message. `join_queued_messages` joins everything waiting without asking the model. See [Queueing Messages]({% link _advanced/agentic-workflows.md %}#queueing-messages) and [Queued Messages in Rails]({% link _advanced/rails-persistence.md %}#queued-messages).
 
 ## Moonshot AI
 

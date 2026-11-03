@@ -170,6 +170,168 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  describe 'a resumed turn' do
+    it 'takes only steering messages when it resumes after an approval' do
+      approved_echo = Class.new(echo_tool) { requires_approval }
+      chat.with_tools(nil).with_tools(approved_echo)
+      responses.push(tool_call, answer('Echoed'))
+      during_request << lambda {
+        chat.queue('Afterwards', steer: false)
+        chat.queue('Steer')
+      }
+
+      chat.ask('Echo hello')
+      chat.approve(chat.pending_approvals.first)
+      response = chat.complete
+
+      expect(response.content).to eq('Echoed')
+      expect(requests.last).to eq([[:user, 'Echo hello'], [:assistant, ''], [:tool, 'hello'], [:user, 'Steer']])
+      expect(chat.queued_messages.map(&:content)).to eq(['Afterwards'])
+      expect(chat).to be_complete
+    end
+
+    it 'takes only steering messages when it resumes after its tool results' do
+      responses.push(tool_call)
+      chat.ask_later('Echo hello').step
+      chat.step
+      chat.queue('Afterwards', steer: false)
+
+      chat.complete
+
+      expect(transcript.last).to eq([:assistant, 'Done'])
+      expect(chat.queued_messages.map(&:content)).to eq(['Afterwards'])
+    end
+  end
+
+  describe '#around_join' do
+    it 'wraps each join, and join.call returns the message it added' do
+      chat.around_join do |queued, join|
+        events << [:before, queued.content, chat.messages.size]
+        message = join.call
+        events << [:after, message.role, message.content]
+      end
+      chat.after_join { |message, _queued| events << [:joined, message.content] }
+      chat.queue('Steer')
+
+      chat.complete
+
+      expect(events).to eq([[:before, 'Steer', 0], [:after, :user, 'Steer'], [:joined, 'Steer']])
+      expect(transcript).to eq([[:user, 'Steer'], [:assistant, 'Done']])
+    end
+
+    it 'nests several callbacks in the order they were registered' do
+      chat.around_join do |_queued, join|
+        events << :outer_before
+        events << [:outer_got, join.call.content]
+      end
+      chat.around_join do |_queued, join|
+        events << :inner_before
+        join.call
+        events << :inner_after
+      end
+      chat.queue('Hello')
+
+      chat.complete
+
+      expect(events).to eq([:outer_before, :inner_before, :inner_after, [:outer_got, 'Hello']])
+      expect(transcript.count { |role, content| role == :user && content == 'Hello' }).to eq(1)
+    end
+
+    it 'withdraws a message whose callback never joins it, and the turn goes on' do
+      chat.around_join { |queued, join| join.call unless queued.content == 'Never mind' }
+      chat.after_unqueue { |queued| events << [:unqueued, queued.content] }
+      chat.after_join { |message, _queued| events << [:joined, message.content] }
+      chat.queue('Never mind')
+      chat.queue('Keep this')
+
+      response = chat.complete
+
+      expect(response.content).to eq('Done')
+      expect(transcript).to eq([[:user, 'Keep this'], [:assistant, 'Done']])
+      expect(events).to eq([[:unqueued, 'Never mind'], [:joined, 'Keep this']])
+      expect(chat.queued_messages).to be_empty
+    end
+
+    it 'keeps the message queued and out of the conversation when the callback raises' do
+      chat.around_join do |_queued, join|
+        join.call
+        raise IOError, 'audit failed'
+      end
+      chat.queue('Hello')
+
+      expect { chat.complete }.to raise_error(IOError)
+      expect(chat.messages).to be_empty
+      expect(chat.queued_messages.map(&:content)).to eq(['Hello'])
+      expect(chat.provider).not_to have_received(:complete)
+    end
+
+    it 'rejects attributes for join on a plain chat' do
+      chat.around_join { |queued, join| join.call(sender: queued.owner) }
+      chat.queue('Hello', owner: :alice)
+
+      expect { chat.complete }.to raise_error(ArgumentError, /persisted chat/)
+      expect(chat.queued_messages.map(&:content)).to eq(['Hello'])
+    end
+
+    it 'registers the same block once' do
+      callback = proc do |_queued, join|
+        events << :around
+        join.call
+      end
+      chat.around_join(&callback).around_join(&callback)
+      chat.queue('Hello')
+
+      chat.complete
+
+      expect(events).to eq([:around])
+    end
+  end
+
+  describe '#join_queued_messages' do
+    it 'joins every queued message without asking the model, and returns them' do
+      chat.around_join do |_queued, join|
+        events << :around
+        join.call
+      end
+      chat.after_join { |message, _queued| events << [:joined, message.content] }
+      chat.queue('Steer')
+      chat.queue('Wait', steer: false)
+
+      joined = chat.join_queued_messages
+
+      expect(joined).to all(be_a(RubyLLM::Message))
+      expect(joined.map(&:content)).to eq(%w[Steer Wait])
+      expect(events).to eq([:around, [:joined, 'Steer'], :around, [:joined, 'Wait']])
+      expect(transcript).to eq([[:user, 'Steer'], [:user, 'Wait']])
+      expect(chat.queued_messages).to be_empty
+      expect(chat.provider).not_to have_received(:complete)
+    end
+
+    it 'leaves out a message an around_join withdrew' do
+      chat.around_join { |queued, join| join.call if queued.steer? }
+      chat.queue('Steer')
+      chat.queue('Wait', steer: false)
+
+      expect(chat.join_queued_messages.map(&:content)).to eq(['Steer'])
+      expect(chat.queued_messages).to be_empty
+    end
+
+    it 'returns an empty list when nothing is queued' do
+      expect(chat.join_queued_messages).to eq([])
+    end
+
+    it 'raises while tool calls are pending' do
+      approved_echo = Class.new(echo_tool) { requires_approval }
+      chat.with_tools(nil).with_tools(approved_echo)
+      responses.push(tool_call)
+      chat.ask('Echo hello')
+      chat.queue('Steer')
+
+      expect { chat.join_queued_messages }.to raise_error(RubyLLM::PendingToolCallsError)
+      expect(chat.queued_messages.map(&:content)).to eq(['Steer'])
+    end
+  end
+
   describe 'steer: false' do
     it 'waits for the turn to end, and the next complete takes it' do
       responses.push(tool_call, answer('First answer'), answer('Second answer'))
@@ -297,6 +459,26 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.messages).to be_empty
       expect(copy.messages.map(&:content)).to eq(['Shared', 'Copy only', 'Copied'])
       expect(copy.queued_messages).to be_empty
+    end
+
+    it 'gives the copy the around_join callbacks, and keeps its own to itself' do
+      chat.around_join do |_queued, join|
+        events << :shared
+        join.call
+      end
+      copy = chat.dup
+      copy.around_join do |_queued, join|
+        events << :copy_only
+        join.call
+      end
+      allow(copy.provider).to receive(:complete).and_return(answer('Copied'))
+
+      chat.queue('Original')
+      chat.join_queued_messages
+      copy.queue('Copy')
+      copy.join_queued_messages
+
+      expect(events).to eq(%i[shared shared copy_only])
     end
   end
 

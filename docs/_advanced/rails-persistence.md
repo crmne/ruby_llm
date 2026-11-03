@@ -262,6 +262,20 @@ chat.unqueue(params[:id]) # => true, or false once the chat took it
 
 Taking and unqueuing each delete the row, and only the process whose delete succeeds goes on, so a message joins once or is withdrawn, never both. Destroying a chat destroys its queued messages.
 
+`around_join` runs inside the transaction that creates the message record and deletes the queued row. Pass attributes to `join.call` and the message is saved with them, so a column of your own is set before anyone sees the message:
+
+```ruby
+class ChatAgent < ApplicationAgent
+  around_join { |queued, join| join.call(sender: queued.owner) }
+end
+
+ChatAgent.find(chat_id).complete(&:broadcast)
+```
+
+Without an agent, call `around_join` on the chat record in your job, before `complete`.
+
+Attributes from nested `around_join` blocks merge, inner ones last. When the block raises, the transaction rolls back: the message is not created and the row stays queued. When it never calls `join`, the row is deleted, its attachments with it, and `after_unqueue` runs. `join_queued_messages` returns the message records.
+
 ## Batches
 
 Submitting persisted chats automatically stores the provider batch state internally:
