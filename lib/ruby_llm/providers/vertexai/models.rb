@@ -29,6 +29,10 @@ module RubyLLM
           text-multilingual-embedding-002
         ].freeze
 
+        # Cloud Text-to-Speech voice models, which no publisher catalog lists.
+        # Each id is the model part of its voice names: en-US-Chirp3-HD-Charon.
+        TEXT_TO_SPEECH_MODELS = { 'Chirp3-HD' => 'Chirp 3: HD' }.freeze
+
         # Every publisher with models Vertex AI serves as a service. The rest
         # of the Model Garden is deploy-it-yourself and not callable directly.
         PUBLISHERS = %w[google anthropic mistralai meta deepseek-ai qwen openai moonshotai zai-org].freeze
@@ -57,7 +61,7 @@ module RubyLLM
           models = fetched.uniq(&:id)
           log_catalog(counts, models)
 
-          models + build_known_models(models.map(&:id))
+          models + build_known_models(models.map(&:id)) + text_to_speech_models
         end
 
         private
@@ -174,6 +178,24 @@ module RubyLLM
               metadata: {
                 source: 'known_models'
               }
+            )
+          end
+        end
+
+        def text_to_speech_models
+          TEXT_TO_SPEECH_MODELS.map do |model_id, name|
+            Model.new(
+              id: model_id,
+              name:,
+              provider: @provider.slug,
+              family: 'chirp',
+              created_at: nil,
+              context_window: nil,
+              max_output_tokens: nil,
+              modalities: { input: %w[text], output: %w[audio] },
+              capabilities: %w[speech_generation],
+              pricing: nil,
+              metadata: { source: 'cloud_text_to_speech' }
             )
           end
         end

@@ -66,6 +66,8 @@ Here, `player` is your application's audio player or output stream. Each `RubyLL
 
 Chunks are not retried once delivered to your block.
 
+Chirp 3: HD voices on Vertex AI do not stream. Call `RubyLLM.speak` without a block for them.
+
 ## Choosing Models
 
 Pass `model:` to choose a speech model:
@@ -112,6 +114,18 @@ RubyLLM.speak(
 
 Choose a model in the language you want to speak.
 
+Google's Chirp 3: HD voices on Vertex AI name their language. Pass the full voice name to speak another one:
+
+```ruby
+RubyLLM.speak(
+  "Willkommen zurück.",
+  model: "{{ site.models.speech_vertexai }}",
+  voice: "de-DE-Chirp3-HD-Leda"
+)
+```
+
+A bare name such as `"Leda"` speaks American English. Without `voice:`, Chirp 3: HD uses `"en-US-Chirp3-HD-Charon"`.
+
 ## Formats
 
 Choose an output format with `format:`:
@@ -141,6 +155,8 @@ Convert PCM with a tool like ffmpeg when you need a container format:
 ```bash
 ffmpeg -f s16le -ar 24000 -ac 1 -i out.pcm out.wav
 ```
+
+Chirp 3: HD returns `mp3` by default, and also `wav`, `opus` in an Ogg container, `mulaw`, and `alaw`.
 
 ElevenLabs also accepts formats with an explicit sample rate:
 
@@ -173,6 +189,16 @@ RubyLLM.speak(
     voice_settings: { stability: 0.4, similarity_boost: 0.8, speed: 1.1 },
     language_code: "en"
   }
+)
+```
+
+Chirp 3: HD takes Cloud Text-to-Speech's `audioConfig`:
+
+```ruby
+RubyLLM.speak(
+  "The build is green.",
+  model: "{{ site.models.speech_vertexai }}",
+  provider_options: { audioConfig: { speakingRate: 1.1 } }
 )
 ```
 

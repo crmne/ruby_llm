@@ -23,6 +23,7 @@ After reading this guide, you will know:
 * How to chat with MiniMax's M3 models.
 * How to chat with GLM models on Z.ai.
 * How to chat with Meta's Muse models.
+* How to speak with Google's Chirp 3: HD voices on Vertex AI.
 * How to separate reasoning that a server leaves inside the answer.
 * How to upgrade.
 
@@ -228,6 +229,17 @@ RubyLLM.chat(model: "muse-spark-1.3").ask("Hello from Muse")
 ```
 
 Set `meta_api_key` to a key from dev.meta.ai. See [Provider Setup]({% link _getting_started/configuration-providers.md %}#meta).
+
+## Chirp 3: HD Voices on Vertex AI
+
+Vertex AI now speaks with Google's Chirp 3: HD voices through Cloud Text-to-Speech, from the endpoint of your `vertexai_location`:
+
+```ruby
+RubyLLM.speak("Willkommen zurück.", model: "{{ site.models.speech_vertexai }}",
+                                    voice: "de-DE-Chirp3-HD-Leda").save("welcome.mp3")
+```
+
+See [Text to Speech]({% link _core_features/text-to-speech.md %}) and [Provider Setup]({% link _getting_started/configuration-providers.md %}#text-to-speech).
 
 ## Judgments on OpenRouter
 

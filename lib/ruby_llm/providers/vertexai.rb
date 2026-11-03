@@ -13,6 +13,7 @@ module RubyLLM
       protocol :transcription, VertexAI::Transcription
       protocol :live_transcription, VertexAI::LiveTranscription
       protocol :ranking, Protocols::VertexAI::Ranking
+      protocol :text_to_speech, Protocols::VertexAI::TextToSpeech
       protocol :research, Protocols::VertexAI::Research
       protocol :files, Protocols::VertexAI::Files
 
@@ -60,8 +61,8 @@ module RubyLLM
       def protocol_for(model, operation: nil, **)
         return protocols[:ranking] if operation == :rerank
 
-        transcription = transcription_protocol_for(model.id) if operation == :transcribe
-        return transcription if transcription
+        audio = audio_protocol_for(model.id, operation)
+        return audio if audio
 
         if operation == :embed && %w[gemini-embedding-2 gemini-embedding-2-preview].include?(model.id)
           return protocols[:embed_content]
@@ -150,6 +151,14 @@ module RubyLLM
         )
       end
 
+      # Cloud Text-to-Speech answers at the multi-region or region named by
+      # vertexai_location, never at the global endpoint unless asked for it.
+      def text_to_speech_connection # :nodoc:
+        @text_to_speech_connection ||= signed_connection(
+          text_to_speech_api_base, headers: { 'X-Goog-User-Project' => @config.vertexai_project_id }
+        )
+      end
+
       # Signs each attempt as it is sent, so a retry never replays an access
       # token that expired while the previous attempt waited.
       def signed_connection(base_url, headers: {}) # :nodoc:
@@ -190,6 +199,19 @@ module RubyLLM
       end
 
       private
+
+      def text_to_speech_api_base
+        location = @config.vertexai_location.to_s
+        host = location == 'global' ? 'texttospeech.googleapis.com' : "#{location}-texttospeech.googleapis.com"
+        "https://#{host}/v1"
+      end
+
+      def audio_protocol_for(id, operation)
+        case operation
+        when :transcribe then transcription_protocol_for(id)
+        when :speak then protocols[:text_to_speech] if Protocols::VertexAI::TextToSpeech::MODELS.include?(id)
+        end
+      end
 
       def transcription_protocol_for(id)
         case id

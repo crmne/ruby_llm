@@ -392,6 +392,10 @@ RubyLLM supports both Vertex AI authentication methods:
 
 If `vertexai_service_account_key` is not set, RubyLLM uses ADC.
 
+### Text to Speech
+
+Enable the Cloud Text-to-Speech API in your Google Cloud project to speak with Chirp 3: HD voices. RubyLLM sends each request to the endpoint of your `vertexai_location`: `eu` uses `eu-texttospeech.googleapis.com`, `us` uses `us-texttospeech.googleapis.com`, and `global` uses the global endpoint. Google serves Chirp 3: HD from the `global`, `eu`, and `us` endpoints only, and excludes these voices from its data residency commitments. `vertexai_api_base` does not apply to Text-to-Speech. See [Text to Speech]({% link _core_features/text-to-speech.md %}) for voices and formats.
+
 ### Reranking
 
 Enable the Discovery Engine API in your Google Cloud project and grant your credentials access to rank documents. RubyLLM uses the project's global `default_ranking_config`. Set `vertexai_ranking_config` to a full resource name if you need a different configuration, or `vertexai_ranking_api_base` for a custom endpoint. See [Reranking]({% link _core_features/rerank.md %}) for examples.
