@@ -23,6 +23,7 @@ After reading this guide, you will know:
 * How to chat with MiniMax's M3 models.
 * How to chat with GLM models on Z.ai.
 * How to chat with Meta's Muse models.
+* How to separate reasoning that a server leaves inside the answer.
 * How to upgrade.
 
 RubyLLM 2.2 lets a model run the code it writes, safely, on your own servers, lets it ask for more access one call at a time, teaches it your workflows with skills, and makes persisted chats safe to complete from several processes at once. For everything that arrived in 2.1, see [What's New in 2.1]({% link _reference/whats-new-in-2-1.md %}).
@@ -240,6 +241,22 @@ judgment.cost.total # => what OpenRouter charged, in US dollars
 ```
 
 Clef Omni also judges audio and video passed with `with:`.
+
+## Reasoning Inside the Answer
+
+Some OpenAI-compatible servers, such as llama.cpp with `--reasoning-format none`, leave the model's reasoning in the answer, wrapped in `<think>` tags. Turn on `split_think_tags` and RubyLLM moves a leading `<think>` block into `thinking`, in complete and streamed responses alike:
+
+```ruby
+RubyLLM.configure do |config|
+  config.split_think_tags = true
+end
+
+response = chat.ask("What is 15 * 23?")
+response.content        # => "345"
+response.thinking.text  # => "15 * 20 is 300, and 15 * 3 is 45..."
+```
+
+It is off by default, and a context can turn it on for one server. See [Reasoning Inside the Answer]({% link _core_features/thinking.md %}#reasoning-inside-the-answer).
 
 ## Upgrades
 

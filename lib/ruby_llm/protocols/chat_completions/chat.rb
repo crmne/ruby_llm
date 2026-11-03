@@ -115,12 +115,13 @@ module RubyLLM
             parse_content_and_thinking(message_data['content'] || message_data['refusal'])
           thinking_text = thinking_from_blocks || parse_thinking_text(message_data)
           thinking_signature = parse_thinking_signature(message_data)
+          answer, thinking_text = parse_think_tags(content, thinking_text)
 
           finish_reason = normalize_finish_reason(data.dig('choices', 0, 'finish_reason'))
 
           Message.new(
             role: :assistant,
-            content: content,
+            content: answer,
             citations: extract_citations(message_data, data, content),
             thinking: Thinking.build(text: thinking_text, signature: thinking_signature),
             raw_reasoning: parse_raw_reasoning(message_data),
@@ -478,6 +479,17 @@ module RubyLLM
         def parse_thinking_signature(message_data)
           candidate = message_data['reasoning_signature'] || message_data['signature']
           candidate.is_a?(String) ? candidate : nil
+        end
+
+        def parse_think_tags(content, thinking_text)
+          return [content, thinking_text] unless split_think_tags? && thinking_text.nil?
+          return [content, nil] unless content.is_a?(String) && !content.empty?
+
+          ThinkTags.split(content)
+        end
+
+        def split_think_tags?
+          @config&.split_think_tags
         end
 
         def parse_raw_reasoning(_message_data)
