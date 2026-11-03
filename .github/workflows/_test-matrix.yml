@@ -36,14 +36,14 @@ jobs:
       fail-fast: false
       matrix:
         # Pull requests test the oldest and newest Ruby and Rails; main tests every pair.
-        ruby-version: ${{ fromJSON(inputs.full && '["3.2", "3.3", "3.4", "4.0", "jruby-10.0.2.0"]' || '["3.2", "4.0", "jruby-10.0.2.0"]') }}
+        ruby-version: ${{ fromJSON(inputs.full && '["3.2", "3.3", "3.4", "4.0", "jruby-10.0.7.0"]' || '["3.2", "4.0", "jruby-10.0.7.0"]') }}
         rails-version: ${{ fromJSON(inputs.full && '["rails-7.1", "rails-7.2", "rails-8.0", "rails-8.1"]' || '["rails-7.1", "rails-8.1"]') }}
         exclude:
-          - ruby-version: "jruby-10.0.2.0"
+          - ruby-version: "jruby-10.0.7.0"
             rails-version: "rails-8.1"
-          - ruby-version: "jruby-10.0.2.0"
+          - ruby-version: "jruby-10.0.7.0"
             rails-version: "rails-8.0"
-          - ruby-version: "jruby-10.0.2.0"
+          - ruby-version: "jruby-10.0.7.0"
             rails-version: "rails-7.2"
 
     steps:
