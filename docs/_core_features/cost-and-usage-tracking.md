@@ -135,7 +135,10 @@ When a model publishes a long-context tier, `cost_for` uses those rates once the
 
 ```ruby
 model.cost_for(chat).total
+model.cost_for(chat_record.to_llm).total # a Rails chat record
 ```
+
+When one of the requests has unknown usage, `total` is `nil`, as `chat.cost.total` is.
 
 `cost_for(tokens, tier: :batch)` uses the model's batch rates. When the model has no batch price for a component, that amount and `total` are `nil`; see [Batches]({% link _advanced/batches.md %}).
 

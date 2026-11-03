@@ -354,6 +354,21 @@ RSpec.describe RubyLLM::Model do
       expect(model.cost_for(chat).total).to be_nil
     end
 
+    it 'keeps a chat total unknown when a request has only a recorded cost it cannot reprice' do
+      model = described_class.new(
+        data.merge(pricing: { text_tokens: { standard: { input_per_million: 1.0, output_per_million: 2.0 } } })
+      )
+      known = RubyLLM::Accounting::Usage::Entry.new(operation: :chat, provider: 'openai', model: 'gpt-5',
+                                                    status: :succeeded, tokens: RubyLLM::Tokens.new(input: 10))
+      recorded = RubyLLM::Accounting::Usage::Entry.new(operation: :chat, provider: 'openai', model: 'gpt-5',
+                                                       cost: RubyLLM::Cost.from_h({ total: 0.0042 }))
+      chat = RubyLLM.context { |config| config.openai_api_key = 'test' }
+                    .chat(model: 'gpt-5', provider: :openai, assume_model_exists: true)
+      chat.usage_entries = [recorded, known]
+
+      expect(model.cost_for(chat).total).to be_nil
+    end
+
     it 'hydrates long_context pricing from metadata.cost when pricing lacks it' do
       model = described_class.new(
         data.merge(

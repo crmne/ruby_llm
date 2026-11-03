@@ -163,7 +163,7 @@ module RubyLLM
     def cost_for(tokens, tier: :standard)
       requests = usage_entries_of(tokens)
       if requests.any?
-        complete = requests.all? { |entry| entry.usage_available? || entry.cost_available? }
+        complete = requests.all? { |entry| entry.usage_available? || entry.tokens.reported_cost }
         return Cost.aggregate(requests.map { |entry| cost_for(entry.tokens, tier:) }, complete:)
       end
 
