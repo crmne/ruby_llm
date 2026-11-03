@@ -391,6 +391,41 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     travel_back
   end
 
+  it 'clears a cancel that arrived after its run last checked, so the next turn runs' do
+    chat = question_chat
+    first_job = job_for(chat)
+    first_job.after_message { Chat.where(id: chat.id).update_all(cancelled: true) }
+    first_job.complete
+    next_job = job_for(chat)
+
+    next_job.ask('And then?')
+
+    expect(requests).to eq([first_job, next_job])
+    expect(Chat.find(chat.id)[:cancelled]).to be(false)
+  end
+
+  it 'clears a cancel the record itself requested after its run last checked' do
+    job = job_for(question_chat)
+    job.after_message { job.cancel if requests.one? }
+    job.complete
+
+    job.ask('And then?')
+
+    expect(requests).to eq([job, job])
+    expect(job).not_to be_cancelled
+  end
+
+  it 'keeps a cancel aimed at the run of the process that took the chat over' do
+    chat = question_chat
+
+    job_for(chat) do
+      take_over(chat)
+      Chat.where(id: chat.id).update_all(cancelled: true)
+    end.complete
+
+    expect(Chat.find(chat.id)[:cancelled]).to be(true)
+  end
+
   it 'does not fall back when another process takes over the run' do
     chat = question_chat
     fallback = stub_request(:post, 'https://api.anthropic.com/v1/messages').to_return(status: 500)
