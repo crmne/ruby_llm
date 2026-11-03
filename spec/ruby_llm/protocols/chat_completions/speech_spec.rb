@@ -55,4 +55,16 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Speech do
       expect(speech.mime_type).to eq('audio/mpeg')
     end
   end
+
+  describe '#speak' do
+    it 'counts the characters sent, which per-character speech models bill' do
+      context = RubyLLM.context { |config| config.openai_api_key = 'test' }
+      allow(RubyLLM::Accounting::Usage).to receive(:ledger).and_return(nil)
+      stub_request(:post, 'https://api.openai.com/v1/audio/speech').to_return(body: 'audio bytes')
+
+      speech = context.speak('Héllo there', model: 'tts-1', provider: :openai, assume_model_exists: true)
+
+      expect(speech.tokens.characters).to eq(11)
+    end
+  end
 end

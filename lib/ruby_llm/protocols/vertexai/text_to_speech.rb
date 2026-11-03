@@ -50,6 +50,11 @@ module RubyLLM
           'text:synthesize'
         end
 
+        def speak(input, **, &)
+          @speech_characters = input.to_s.length
+          super
+        end
+
         def render_speech_payload(input, model:, voice:, format:, provider_options: {})
           options = Support::Utils.deep_stringify_keys(provider_options || {})
           reject_reserved_options(options)
@@ -69,7 +74,7 @@ module RubyLLM
 
           format = format_for(format)
           RubyLLM::Speech.new(data: Base64.decode64(audio), model:, voice: voice_name(voice, model), format:,
-                              mime_type: MIME_TYPES[format])
+                              mime_type: MIME_TYPES[format], characters: @speech_characters)
         end
 
         private

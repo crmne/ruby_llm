@@ -5,7 +5,9 @@ module RubyLLM
     # A PricingCategory holds the standard, batch, and long-context pricing
     # tiers for one kind of model usage, such as text tokens or images.
     # Model#pricing returns a Pricing collection whose categories are
-    # PricingCategory instances. Prices are in USD per million tokens.
+    # PricingCategory instances. Prices are in USD per million tokens, or
+    # per million units for categories billed in characters, audio seconds,
+    # or search units.
     #
     #   model    = RubyLLM.models.find "claude-sonnet-5"
     #   category = model.pricing.text_tokens

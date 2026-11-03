@@ -222,6 +222,17 @@ RSpec.describe RubyLLM::Models do
     it 'returns nothing when models.dev reports no cost' do
       expect(described_class.models_dev_pricing(nil)).to eq({})
     end
+
+    it 'reads per-million prices for characters, audio seconds, and search units' do
+      pricing = described_class.models_dev_pricing(characters: 30, audio_seconds: 100, search_units: 2000)
+
+      expect(pricing).to eq(
+        characters: { standard: { input_per_million: 30 } },
+        audio_seconds: { standard: { input_per_million: 100 } },
+        search_units: { standard: { input_per_million: 2000 } }
+      )
+      expect(RubyLLM::Model::Pricing.new(pricing).characters.input).to eq(30)
+    end
   end
 
   describe '.normalize_models_dev_modalities' do

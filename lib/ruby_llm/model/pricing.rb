@@ -3,9 +3,10 @@
 module RubyLLM
   class Model
     # A Pricing groups a model's prices by usage category: text tokens,
-    # images, audio tokens, and embeddings. Each category is a
-    # PricingCategory. Prices are in USD per million tokens. Instances come
-    # from Model#pricing.
+    # images, audio tokens, and embeddings, plus the characters, audio
+    # seconds, and search units some operations bill instead of tokens.
+    # Each category is a PricingCategory. Prices are in USD per million
+    # units of the category. Instances come from Model#pricing.
     #
     #   model = RubyLLM.models.find "claude-sonnet-5"
     #   model.pricing.text_tokens.input   # => 3
@@ -13,7 +14,7 @@ module RubyLLM
     #
     class Pricing
       # The pricing categories a model may define.
-      CATEGORIES = %i[text_tokens images audio_tokens embeddings].freeze
+      CATEGORIES = %i[text_tokens images audio_tokens embeddings characters audio_seconds search_units].freeze
 
       def initialize(data) # :nodoc:
         @data = {}
@@ -45,6 +46,27 @@ module RubyLLM
       # category if the model has none.
       def embeddings
         category(:embeddings)
+      end
+
+      # Returns the PricingCategory for prices per million input
+      # characters, such as a text-to-speech model's, or an empty category
+      # if the model has none.
+      def characters
+        category(:characters)
+      end
+
+      # Returns the PricingCategory for prices per million seconds of
+      # input audio, such as a transcription model's, or an empty category
+      # if the model has none.
+      def audio_seconds
+        category(:audio_seconds)
+      end
+
+      # Returns the PricingCategory for prices per million search units,
+      # such as a rerank model's, or an empty category if the model has
+      # none.
+      def search_units
+        category(:search_units)
       end
 
       # Returns the pricing data as a nested Hash keyed by category.

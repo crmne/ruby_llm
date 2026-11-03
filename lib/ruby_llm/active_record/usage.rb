@@ -7,6 +7,7 @@ module RubyLLM
       self.table_name = 'ruby_llm_usages'
 
       WORKFLOW_COLUMNS = %i[workflow_id workflow_name workflow_step_id workflow_step_name].freeze
+      UNIT_COLUMNS = ::RubyLLM::Cost::UNITS.flat_map { |unit| [unit, :"#{unit}_cost"] }.freeze
 
       belongs_to :chat, polymorphic: true, optional: true
       belongs_to :message, polymorphic: true, optional: true
@@ -62,9 +63,17 @@ module RubyLLM
           total_cost: cost.total
         }
         attributes[:server_tool_use] = tokens.server_tool_use if column_names.include?('server_tool_use')
+        attributes.merge!(unit_attributes(tokens, cost)) if column_names.include?('search_units')
         attributes[:owner] = entry.owner if entry.owner.is_a?(::ActiveRecord::Base) && column_names.include?('owner_id')
         attributes.merge!(workflow_attributes(entry.workflow)) if column_names.include?('workflow_id')
         attributes
+      end
+
+      def self.unit_attributes(tokens, cost)
+        ::RubyLLM::Cost::UNITS.each_with_object({}) do |unit, attributes|
+          attributes[unit] = tokens.public_send(unit)
+          attributes[:"#{unit}_cost"] = cost.public_send(unit)
+        end
       end
 
       def self.workflow_attributes(workflow)
@@ -82,6 +91,7 @@ module RubyLLM
           cache_read: cache_read_tokens,
           cache_write: cache_write_tokens,
           thinking: thinking_tokens,
+          **recorded_units,
           server_tool_use: (self[:server_tool_use] if has_attribute?(:server_tool_use))
         )
       end
@@ -93,6 +103,7 @@ module RubyLLM
           cache_read: cache_read_cost,
           cache_write: cache_write_cost,
           thinking: thinking_cost,
+          **recorded_units(suffix: '_cost'),
           total: total_cost
         }.compact
         RubyLLM::Cost.from_h(recorded, tokens: tokens)
@@ -121,6 +132,13 @@ module RubyLLM
       end
 
       private
+
+      def recorded_units(suffix: nil)
+        ::RubyLLM::Cost::UNITS.each_with_object({}) do |unit, units|
+          column = :"#{unit}#{suffix}"
+          units[unit] = self[column] if has_attribute?(column)
+        end
+      end
 
       def workflow_context
         context = WORKFLOW_COLUMNS.select { |name| has_attribute?(name) }.index_with { |name| self[name] }.compact

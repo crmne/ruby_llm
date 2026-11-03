@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ActiveRecord::Schema[7.1].define(version: 20_261_025_120_000) do
+ActiveRecord::Schema[7.1].define(version: 20_261_103_120_000) do
   create_table 'action_text_rich_texts', force: :cascade do |t|
     t.string 'name', null: false
     t.text 'body'
@@ -198,6 +198,12 @@ ActiveRecord::Schema[7.1].define(version: 20_261_025_120_000) do
     t.string 'workflow_name'
     t.string 'workflow_step_id'
     t.string 'workflow_step_name'
+    t.integer 'characters'
+    t.decimal 'audio_seconds', precision: 16, scale: 6
+    t.integer 'search_units'
+    t.decimal 'characters_cost', precision: 16, scale: 10
+    t.decimal 'audio_seconds_cost', precision: 16, scale: 10
+    t.decimal 'search_units_cost', precision: 16, scale: 10
     t.index %w[chat_type chat_id], name: 'index_ruby_llm_usages_on_chat'
     t.index %w[message_type message_id], name: 'index_ruby_llm_usages_on_message'
     t.index %w[owner_type owner_id], name: 'index_ruby_llm_usages_on_owner'

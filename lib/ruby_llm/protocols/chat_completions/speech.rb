@@ -5,6 +5,11 @@ module RubyLLM
     class ChatCompletions
       # Speech generation methods for the OpenAI API integration
       module Speech
+        def speak(input, **, &)
+          @speech_characters = input.to_s.length
+          super
+        end
+
         module_function
 
         def speech_url(**)
@@ -31,7 +36,8 @@ module RubyLLM
             data: response.body,
             model: model,
             voice: voice || 'alloy',
-            format: resolved_format
+            format: resolved_format,
+            characters: @speech_characters
           )
         end
       end

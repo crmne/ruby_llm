@@ -98,6 +98,25 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Transcription do
       expect(transcription.segments).to eq(response_body['segments'])
       expect(transcription.tokens.input).to eq(12)
       expect(transcription.tokens.output).to eq(3)
+      expect(transcription.tokens.audio_seconds).to be_nil
+    end
+
+    it 'counts the audio seconds a duration-billed model reports' do
+      body = { 'text' => 'Hello', 'usage' => { 'type' => 'duration', 'seconds' => 9 } }
+      response = instance_double(Faraday::Response, body:)
+
+      transcription = described_class.parse_transcription_response(response, model: 'whisper-1')
+
+      expect(transcription.tokens).to have_attributes(audio_seconds: 9, input: nil)
+    end
+
+    it 'counts the reported duration when the provider reports no token usage' do
+      body = { 'text' => 'Hello', 'duration' => 8.47 }
+      response = instance_double(Faraday::Response, body:)
+
+      transcription = described_class.parse_transcription_response(response, model: 'whisper-large-v3')
+
+      expect(transcription.tokens.audio_seconds).to eq(8.47)
     end
   end
 end

@@ -42,6 +42,7 @@ module RubyLLM
             model: model,
             language: data['language'],
             duration: data['duration'],
+            audio_seconds: data['duration'],
             segments: data['channels'],
             words: data['words']
           )

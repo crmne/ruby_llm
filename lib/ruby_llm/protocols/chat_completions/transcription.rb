@@ -103,6 +103,7 @@ module RubyLLM
             language: data['language'],
             duration: transcription_duration(usage),
             segments: streamed_transcription_segments(chunks, data),
+            audio_seconds: billed_audio_seconds(usage),
             reported_cost: reported_cost(usage),
             **transcription_tokens(usage)
           )
@@ -136,6 +137,7 @@ module RubyLLM
             duration: data['duration'] || transcription_duration(usage),
             segments: data['segments'],
             words: data['words'],
+            audio_seconds: billed_audio_seconds(usage, data['duration']),
             reported_cost: reported_cost(usage),
             **transcription_tokens(usage)
           )
@@ -150,6 +152,12 @@ module RubyLLM
 
         def transcription_duration(usage)
           usage['seconds']
+        end
+
+        def billed_audio_seconds(usage, duration = nil)
+          return usage['seconds'] if usage['type'] == 'duration'
+
+          duration if transcription_tokens(usage).values.all?(&:nil?)
         end
       end
     end

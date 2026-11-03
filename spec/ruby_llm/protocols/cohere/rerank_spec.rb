@@ -83,6 +83,12 @@ RSpec.describe RubyLLM::Protocols::Cohere::Rerank do
       expect(rerank.results.last.document).to eq(documents[0])
     end
 
+    it 'reads the billed search units' do
+      rerank = protocol.send(:parse_rerank_response, response, model: 'rerank-v4.0-pro', documents: documents)
+
+      expect(rerank.tokens).to have_attributes(search_units: 1, input: nil)
+    end
+
     it 'reads billed input tokens when Cohere reports them' do
       body['meta']['tokens'] = { 'input_tokens' => 42 }
 

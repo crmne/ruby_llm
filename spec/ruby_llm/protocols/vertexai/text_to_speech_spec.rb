@@ -102,16 +102,16 @@ RSpec.describe RubyLLM::Protocols::VertexAI::TextToSpeech do
     expect(request).to have_been_requested.once
   end
 
-  it 'records the usage for the owner without counts, since Google bills characters, not tokens' do
+  it 'records the characters sent for the owner, since Google bills characters, not tokens' do
     stub_request(:post, endpoint).to_return_json(body: synthesized)
 
-    speech = RubyLLM.with_usage_owner('account-1') { speak('Grüße aus Köln!') }
+    speech = RubyLLM.with_usage_owner('account-1') { speak("Grüße aus\nKöln!") }
 
-    expect(speech.tokens.input).to be_nil
+    expect(speech.tokens).to have_attributes(characters: 15, input: nil)
     expect(speech.cost.total).to be_nil
     expect(usage_events.sole).to include(operation: :speech, provider: 'vertexai', model:, status: :succeeded,
                                          owner: 'account-1')
-    expect(usage_events.sole[:tokens].input).to be_nil
+    expect(usage_events.sole[:tokens]).to have_attributes(characters: 15, input: nil)
     expect(usage_events.sole[:cost].total).to be_nil
   end
 

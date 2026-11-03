@@ -47,6 +47,17 @@ class <%= 'upgrade_ruby_llm_to_2_2'.camelize %> < ActiveRecord::Migration<%= mig
     end
     add_index :ruby_llm_usages, :workflow_id unless index_exists?(:ruby_llm_usages, :workflow_id)
 
+    add_column :ruby_llm_usages, :characters, :integer unless column_exists?(:ruby_llm_usages, :characters)
+    unless column_exists?(:ruby_llm_usages, :audio_seconds)
+      add_column :ruby_llm_usages, :audio_seconds, :decimal, precision: 16, scale: 6
+    end
+    add_column :ruby_llm_usages, :search_units, :integer unless column_exists?(:ruby_llm_usages, :search_units)
+    %i[characters_cost audio_seconds_cost search_units_cost].each do |column|
+      unless column_exists?(:ruby_llm_usages, column)
+        add_column :ruby_llm_usages, column, :decimal, precision: 16, scale: 10
+      end
+    end
+
     unless table_exists?(:ruby_llm_queued_messages)
       create_table :ruby_llm_queued_messages, id: :<%= reference_type %> do |t|
         t.references :chat, polymorphic: true, null: false, type: :<%= reference_type %>, index: false
@@ -81,6 +92,9 @@ class <%= 'upgrade_ruby_llm_to_2_2'.camelize %> < ActiveRecord::Migration<%= mig
     drop_table :ruby_llm_chat_files, if_exists: true
     drop_table :ruby_llm_queued_messages, if_exists: true
     remove_column :<%= message_table_name %>, :continuation
+    %i[search_units_cost audio_seconds_cost characters_cost search_units audio_seconds characters].each do |column|
+      remove_column :ruby_llm_usages, column
+    end
     remove_index :ruby_llm_usages, :workflow_id, if_exists: true
     remove_column :ruby_llm_usages, :workflow_step_name
     remove_column :ruby_llm_usages, :workflow_step_id

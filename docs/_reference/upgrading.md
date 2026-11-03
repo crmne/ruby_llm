@@ -130,6 +130,16 @@ RubyLLM::ActiveRecord::Usage.where(workflow_id: "chat-#{chat.id}").sum(:total_co
 
 Rows written before the upgrade have no workflow. Until you run the migration, RubyLLM writes rows without one. See [Usage by Workflow]({% link _core_features/cost-and-usage-tracking.md %}#usage-by-workflow).
 
+## Usage Rows Record Characters, Audio Seconds, and Search Units
+
+`Tokens` now counts the units some operations bill instead of tokens: `characters` for text-to-speech, `audio_seconds` for transcription billed by duration, and `search_units` for Cohere reranking. `Cost` prices them in components of the same names. Usage rows store them in new `characters`, `audio_seconds`, and `search_units` columns, with `characters_cost`, `audio_seconds_cost`, and `search_units_cost` beside them:
+
+```ruby
+RubyLLM::ActiveRecord::Usage.where(operation: "speech").sum(:characters)
+```
+
+Rows written before the upgrade have no units. Until you run the migration, RubyLLM writes rows without them. See [Characters, Audio Seconds, and Search Units]({% link _core_features/cost-and-usage-tracking.md %}#characters-audio-seconds-and-search-units).
+
 ## Messages Declare Their Attachments
 
 `acts_as_message` now declares `has_many_attached :attachments`, so you can remove that line from your message model. Without Active Storage, the model boots without attachments and RubyLLM logs how to add them; storing an attachment then raises `RubyLLM::ConfigurationError`. To add Active Storage, run `bin/rails active_storage:install` and `bin/rails db:migrate`.

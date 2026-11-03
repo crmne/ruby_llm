@@ -103,6 +103,37 @@ RSpec.describe RubyLLM::ActiveRecord::Usage do
                                                     input_tokens: 133)
   end
 
+  it 'records the search units a rerank billed, with an unknown cost when no price is known' do
+    stub_request(:post, 'https://api.cohere.com/v2/rerank')
+      .to_return(json_response({ results: [{ index: 0, relevance_score: 0.9 }],
+                                 meta: { billed_units: { search_units: 1 } } }))
+
+    RubyLLM.rerank('Ruby', ['Ruby is a language'], model: 'rerank-v3.5', provider: :cohere, owner:)
+
+    expect(rows_for(owner).sole).to have_attributes(operation: 'rerank', search_units: 1, search_units_cost: nil,
+                                                    total_cost: nil)
+  end
+
+  it 'stores characters, audio seconds, and search units with their costs and reads them back' do
+    model = RubyLLM::Model.new(id: 'unit-model', provider: 'cohere',
+                               pricing: { characters: { standard: { input_per_million: 30.0 } },
+                                          audio_seconds: { standard: { input_per_million: 100.0 } },
+                                          search_units: { standard: { input_per_million: 2000.0 } } })
+    tokens = RubyLLM::Tokens.new(characters: 1_000, audio_seconds: 1.5, search_units: 2)
+    entry = RubyLLM::Accounting::Usage::Entry.new(operation: :rerank, provider: 'cohere', model: 'unit-model',
+                                                  status: :succeeded, tokens:, owner:,
+                                                  cost: RubyLLM::Cost.new(tokens:, model:))
+
+    described_class.record(entry)
+    row = rows_for(owner).sole
+
+    expect(row).to have_attributes(characters: 1_000, audio_seconds: 1.5, search_units: 2)
+    expect(row.characters_cost.to_f).to be_within(1e-10).of(0.03)
+    expect(row.tokens).to have_attributes(characters: 1_000, audio_seconds: 1.5, search_units: 2)
+    expect(row.cost.search_units).to be_within(1e-10).of(0.004)
+    expect(row.cost.total).to be_within(1e-10).of(0.03415)
+  end
+
   it 'writes a row for a guardrail moderation, naming the guardrail and version it ran' do
     RubyLLM.config.bedrock_guardrail_id = 'test-guardrail'
     RubyLLM.config.bedrock_guardrail_version = '1'

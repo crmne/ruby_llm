@@ -91,6 +91,9 @@ class <%= create_migration_class_name('ruby_llm_records') %> < ActiveRecord::Mig
       t.integer :cache_read_tokens
       t.integer :cache_write_tokens
       t.integer :thinking_tokens
+      t.integer :characters
+      t.decimal :audio_seconds, precision: 16, scale: 6
+      t.integer :search_units
 <% if postgresql? %>
       t.jsonb :server_tool_use
 <% else %>
@@ -101,6 +104,9 @@ class <%= create_migration_class_name('ruby_llm_records') %> < ActiveRecord::Mig
       t.decimal :cache_read_cost, precision: 16, scale: 10
       t.decimal :cache_write_cost, precision: 16, scale: 10
       t.decimal :thinking_cost, precision: 16, scale: 10
+      t.decimal :characters_cost, precision: 16, scale: 10
+      t.decimal :audio_seconds_cost, precision: 16, scale: 10
+      t.decimal :search_units_cost, precision: 16, scale: 10
       t.decimal :total_cost, precision: 16, scale: 10
       t.string :workflow_id
       t.string :workflow_name

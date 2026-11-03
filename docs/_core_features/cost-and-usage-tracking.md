@@ -158,6 +158,28 @@ cost.total
 
 If pricing is incomplete for tokens that were used, the affected cost and `cost.total` return `nil`.
 
+## Characters, Audio Seconds, and Search Units
+
+Some operations are billed in units other than tokens. Text-to-speech is billed per character sent, transcription per second of audio, and Cohere reranking per search. RubyLLM counts these units next to the tokens:
+
+```ruby
+speech = RubyLLM.speak("Welcome back.", model: "{{ site.models.speech_vertexai }}", provider: :vertexai)
+speech.tokens.characters # => 13
+speech.cost.characters
+
+transcription = RubyLLM.transcribe("meeting.wav", model: "{{ site.models.transcription_openai_timestamps }}")
+transcription.tokens.audio_seconds # => 42
+transcription.cost.audio_seconds
+
+rerank = RubyLLM.rerank("Ruby web frameworks", documents, model: "{{ site.models.rerank_cohere }}", provider: :cohere)
+rerank.tokens.search_units # => 1
+rerank.cost.search_units
+```
+
+`characters` counts every character of the text sent, including spaces and newlines. `audio_seconds` is the billed length of the audio, which may be fractional. It is recorded when the provider bills transcription by duration, so a model that reports token usage leaves it `nil`. `search_units` is the count the provider reports.
+
+`cost` prices each unit from the model registry, in US dollars per million units, and adds it to `cost.total`. When the registry has no price for a unit that was used, that component and `cost.total` are `nil`, never zero. The registry does not price these units yet, so expect `nil` until it does.
+
 ## Pricing Tool Use
 
 Providers bill some [provider tools]({% link _core_features/provider-tools.md %}) per use instead of per token. A web search costs the same whether it returns two results or ten. Read how many times each tool ran from `tokens.server_tool_use`:
@@ -196,7 +218,7 @@ chat.tokens.input
 chat.cost.total
 ```
 
-The ledger is internal to RubyLLM; your application still owns only its Chat and Message models. Each usage row records the operation, provider, model, status, token buckets, cost components, and timestamps in normalized numeric columns, so ordinary SQL sums and period queries work directly against `ruby_llm_usages`. A JSON `server_tool_use` column keeps the attempt's [tool use counts](#pricing-tool-use). Costs are frozen at completion, so a later `RubyLLM.models.refresh` that changes registry pricing leaves recorded usage untouched. The 2.0 upgrade moves token counts and frozen costs from pre-2.0 message columns into the ledger and removes those columns, so old and new rows read through the same path.
+The ledger is internal to RubyLLM; your application still owns only its Chat and Message models. Each usage row records the operation, provider, model, status, token buckets, cost components, and timestamps in normalized numeric columns, so ordinary SQL sums and period queries work directly against `ruby_llm_usages`. A JSON `server_tool_use` column keeps the attempt's [tool use counts](#pricing-tool-use). The `characters`, `audio_seconds`, and `search_units` columns, with their `_cost` columns, keep [units billed instead of tokens](#characters-audio-seconds-and-search-units). Costs are frozen at completion, so a later `RubyLLM.models.refresh` that changes registry pricing leaves recorded usage untouched. The 2.0 upgrade moves token counts and frozen costs from pre-2.0 message columns into the ledger and removes those columns, so old and new rows read through the same path.
 
 ### One-Shot Operations
 

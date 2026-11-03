@@ -31,7 +31,8 @@ module RubyLLM
             results: parse_rerank_results(data, documents),
             model: model,
             raw: data,
-            input_tokens: tokens['input_tokens'] || billed['input_tokens']
+            input_tokens: tokens['input_tokens'] || billed['input_tokens'],
+            search_units: billed['search_units']
           )
         end
 

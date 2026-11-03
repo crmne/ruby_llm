@@ -40,7 +40,7 @@ module RubyLLM
     attr_reader :mime_type
 
     def initialize(data:, model:, voice: nil, format: 'mp3', mime_type: nil, # :nodoc:
-                   input_tokens: nil, output_tokens: nil)
+                   input_tokens: nil, output_tokens: nil, characters: nil)
       @data = data
       @model = model
       @voice = voice
@@ -48,6 +48,7 @@ module RubyLLM
       @mime_type = mime_type || MIME_TYPES.fetch(@format, "audio/#{@format}")
       @input_tokens = input_tokens
       @output_tokens = output_tokens
+      @characters = characters
     end
 
     # Generates speech for +input+ and returns a Speech holding the audio.
@@ -120,7 +121,7 @@ module RubyLLM
     def tokens
       return ruby_llm_usage_tokens unless ruby_llm_usage_entries.empty?
 
-      Tokens.new(input: @input_tokens, output: @output_tokens)
+      Tokens.new(input: @input_tokens, output: @output_tokens, characters: @characters)
     end
 
     # Returns the speech cost across every provider attempt.
