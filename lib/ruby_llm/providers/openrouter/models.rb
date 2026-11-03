@@ -114,11 +114,9 @@ module RubyLLM
         def supported_parameters_to_capabilities(params)
           return [] unless params
 
-          capabilities = ['streaming'] + CAPABILITY_PARAMETERS.filter_map do |capability, parameters|
+          ['streaming'] + CAPABILITY_PARAMETERS.filter_map do |capability, parameters|
             capability if parameters.any? { |parameter| params.include?(parameter) }
           end
-          capabilities << 'predicted_outputs' if params.include?('logit_bias') && params.include?('top_k')
-          capabilities
         end
       end
     end

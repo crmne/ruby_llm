@@ -209,13 +209,7 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Models do
         %w[response_format batch logit_bias top_k]
       )
 
-      expect(capabilities).to contain_exactly(
-        'streaming', 'structured_output', 'batch', 'predicted_outputs'
-      )
-    end
-
-    it 'requires both logit_bias and top_k for predicted outputs' do
-      expect(parser.supported_parameters_to_capabilities(['logit_bias'])).not_to include('predicted_outputs')
+      expect(capabilities).to contain_exactly('streaming', 'structured_output', 'batch')
     end
   end
 end

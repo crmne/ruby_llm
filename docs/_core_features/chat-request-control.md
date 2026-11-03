@@ -175,7 +175,7 @@ chat = RubyLLM.chat(model: "{{ site.models.perplexity_agent }}", provider: :perp
 
 The presets are `fast`, `low`, `medium`, `high`, `xhigh`, and `wide-research`. They search the web on their own and return [citations]({% link _core_features/citations.md %}). A model searches when you add the `web_search` provider tool. `response.cost` is the total Perplexity bills, search fees included.
 
-Perplexity retires Sonar on September 27, 2026. The Sonar model names run the presets Perplexity recommends and log a deprecation warning: `sonar` runs `fast`, `sonar-pro` runs `low`, `sonar-reasoning-pro` runs `medium`, and `sonar-deep-research` runs `high`. The Agent API accepts images and text files, but not PDFs or other documents.
+The Agent API accepts images and text files, but not PDFs or other documents.
 
 ### Perplexity Router
 
