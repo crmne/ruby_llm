@@ -131,16 +131,11 @@ puts cost.thinking
 puts cost.total
 ```
 
-When a model publishes a long-context tier, `cost_for` uses those rates once the prompt exceeds the registry threshold. Prompt size is `input + cache_read + cache_write`. Below that threshold, or when the model has no long-context tier, standard rates apply. Pass a chat or a message instead of its tokens to price each provider request at the tier its own prompt reached:
+When a model publishes a long-context tier, `cost_for` uses those rates once the prompt exceeds the registry threshold. Prompt size is `input + cache_read + cache_write`. Below that threshold, or when the model has no long-context tier, standard rates apply. Pass a chat or a message instead of its tokens to price each provider request at the tier its own prompt reached. Rails chat and message records work the same way:
 
 ```ruby
 model.cost_for(chat).total
-```
-
-For a Rails chat record, price the chat it wraps:
-
-```ruby
-model.cost_for(Chat.find(chat_id).to_llm).total
+model.cost_for(Chat.find(chat_id)).total
 ```
 
 When one of the requests has unknown usage, `total` is `nil`, as `chat.cost.total` is.

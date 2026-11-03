@@ -826,6 +826,12 @@ module RubyLLM
         RubyLLM::Cost.aggregate(records.map(&:cost), complete: records.all?(&:cost_available?))
       end
 
+      def ruby_llm_usage_entries # :nodoc:
+        records = ruby_llm_usages.to_a
+        ::ActiveRecord::Associations::Preloader.new(records:, associations: [:message, *Usage.owner_preload]).call
+        records.map(&:to_entry)
+      end
+
       # Persists +message+ as a user message, after every queued message
       # (see #queue), then runs the conversation loop and returns the latest
       # assistant RubyLLM::Message. The loop pauses when #awaiting_approval?
