@@ -136,7 +136,7 @@ module RubyLLM
       def save(path, byte_size, content_type, digest)
         ChatFile.transaction do
           lock_chat
-          record = owned.find_or_initialize_by(path:)
+          record = owned.lock.find_or_initialize_by(path:)
           record.assign_attributes(byte_size:, content_type:, digest:)
           record.text = nil if record.has_attribute?(:text)
           yield record
