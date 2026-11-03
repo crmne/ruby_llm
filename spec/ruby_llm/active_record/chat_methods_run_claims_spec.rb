@@ -393,7 +393,8 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
   it 'clears a cancel that arrived after its run last checked, so the next turn runs' do
     chat = question_chat
-    first_job = job_for(chat) { Chat.where(id: chat.id).update_all(cancelled: true) }
+    first_job = job_for(chat)
+    first_job.after_message { Chat.where(id: chat.id).update_all(cancelled: true) }
     first_job.complete
     next_job = job_for(chat)
 
@@ -401,6 +402,17 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
     expect(requests).to eq([first_job, next_job])
     expect(Chat.find(chat.id)[:cancelled]).to be(false)
+  end
+
+  it 'clears a cancel the record itself requested after its run last checked' do
+    job = job_for(question_chat)
+    job.after_message { job.cancel if requests.one? }
+    job.complete
+
+    job.ask('And then?')
+
+    expect(requests).to eq([job, job])
+    expect(job).not_to be_cancelled
   end
 
   it 'keeps a cancel aimed at the run of the process that took the chat over' do
