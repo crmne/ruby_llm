@@ -222,9 +222,13 @@ loader.setup
 # Active Storage attachments, and support for Hotwire streaming and jobs.
 # Approvals and cancellation survive requests and processes.
 #
-# Your application owns chats and messages; RubyLLM owns usage, tool calls,
-# models, batches, MCP credentials, and provider files. ActiveRecord::Record configures their shared database
-# connection. Agent can create and reload your chat records through
+# Your application owns chats and messages; RubyLLM owns and writes
+# ActiveRecord::Usage, ActiveRecord::ToolCall, ActiveRecord::Model,
+# ActiveRecord::Batch, ActiveRecord::MCPCredential,
+# ActiveRecord::ProviderFile, ActiveRecord::QueuedMessage, and
+# ActiveRecord::ChatFile, which your application can read and query.
+# ActiveRecord::Record configures their shared database connection.
+# Agent can create and reload your chat records through
 # Agent.chat_class. Individual operations also work directly in Rails
 # services and jobs.
 module RubyLLM

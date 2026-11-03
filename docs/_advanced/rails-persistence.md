@@ -14,9 +14,10 @@ description: Persist application-owned chats and messages while RubyLLM manages 
 After reading this guide, you will know:
 
 * How to add RubyLLM to your `Chat` and `Message` models.
-* Which records belong to your application and which RubyLLM manages internally.
+* Which records belong to your application and which RubyLLM manages.
 * How persisted usage, tool calls, models, and batches behave.
 * How to queue messages from a request while a job runs the chat.
+* How to query and encrypt the records RubyLLM writes.
 * How to use custom or namespaced chat and message classes.
 
 ## Two Application Models
@@ -52,7 +53,7 @@ RubyLLM owns eight supporting tables under the `ruby_llm_` prefix:
 * `ruby_llm_queued_messages` for user messages waiting to join a chat.
 * `ruby_llm_chat_files` for the files of chats with [files]({% link _core_features/chat-files.md %}#files-in-rails).
 
-They are regular tables installed by migrations, not a Rails engine. Their record classes are implementation details; use the public RubyLLM APIs described below. The exceptions are `RubyLLM::ActiveRecord::QueuedMessage`, whose records `queued_messages` hands you to render, and `RubyLLM::ActiveRecord::ChatFile`, the rows behind a chat's files, which `ruby_llm_chat_files` gives you to list and download.
+They are regular tables installed by migrations, not a Rails engine. Each has a record class under `RubyLLM::ActiveRecord` that you can read and query like any model; [Querying RubyLLM's Records](#querying-rubyllms-records) shows how. RubyLLM writes the rows, so use the public RubyLLM APIs described below to change them.
 
 Their shared abstract base, `RubyLLM::ActiveRecord::Record`, inherits the default database connection. If your chats and messages use a secondary database, [configure the shared connection]({% link _advanced/rails-advanced-config.md %}#using-a-secondary-database) so all related tables stay together.
 
@@ -209,7 +210,7 @@ chat.with_tools(Weather)
 chat.ask("What is the weather in Berlin?")
 ```
 
-RubyLLM persists provider tool requests internally and exposes public `RubyLLM::ToolCall` values from the message:
+RubyLLM persists provider tool requests in `ruby_llm_tool_calls` and exposes `RubyLLM::ToolCall` values from the message:
 
 ```ruby
 message = chat.messages.find(&:tool_call?)
@@ -221,7 +222,7 @@ tool_call.arguments
 message.tool_results
 ```
 
-The tool result itself is an application-owned message with the `tool` role. The internal tool-call row only preserves the provider request and links it to that result message.
+The tool result itself is an application-owned message with the `tool` role. The tool-call row preserves the provider request and links it to that result message.
 
 ## Queued Messages
 
@@ -301,6 +302,83 @@ end
 ```
 
 No application `Batch` model is required. See [Batch Processing]({% link _advanced/batches.md %}) for polling and multi-round tool workflows.
+
+## Querying RubyLLM's Records
+
+Every table RubyLLM owns has a record class you can query like your own models:
+
+| Table | Record class |
+| --- | --- |
+| `ruby_llm_models` | `RubyLLM::ActiveRecord::Model` |
+| `ruby_llm_tool_calls` | `RubyLLM::ActiveRecord::ToolCall` |
+| `ruby_llm_usages` | `RubyLLM::ActiveRecord::Usage` |
+| `ruby_llm_batches` | `RubyLLM::ActiveRecord::Batch` |
+| `ruby_llm_mcp_credentials` | `RubyLLM::ActiveRecord::MCPCredential` |
+| `ruby_llm_provider_files` | `RubyLLM::ActiveRecord::ProviderFile` |
+| `ruby_llm_queued_messages` | `RubyLLM::ActiveRecord::QueuedMessage` |
+| `ruby_llm_chat_files` | `RubyLLM::ActiveRecord::ChatFile` |
+
+Their columns are the ones the install generator creates, and each class's API documentation describes its associations and columns.
+
+Sum this month's spend per user from the usage ledger:
+
+```ruby
+RubyLLM::ActiveRecord::Usage
+  .where(owner_type: "User", created_at: Time.current.all_month)
+  .group(:owner_id)
+  .sum(:total_cost)
+# => {1 => 0.0421, 7 => 1.2093}
+```
+
+`total_cost` is `nil` for an attempt RubyLLM could not price, and `sum` skips it. Group by `provider`, `model`, `operation`, or `status` the same way, or call `tokens` and `cost` on a row for the value objects.
+
+List the tools a chat called, and the ones still waiting for a result or an approval:
+
+```ruby
+calls = RubyLLM::ActiveRecord::ToolCall.where(message: chat.messages)
+
+calls.pluck(:name, :arguments) # => [["weather", {"city" => "Berlin"}]]
+calls.where(result_id: nil)
+calls.where(approval: "pending")
+```
+
+A message reaches its own calls through `ruby_llm_tool_calls`, and `to_llm` turns a row into a `RubyLLM::ToolCall`.
+
+Find messages that are still queued, across chats:
+
+```ruby
+RubyLLM::ActiveRecord::QueuedMessage.where(owner: current_user).includes(:chat)
+RubyLLM::ActiveRecord::QueuedMessage.where(steer: false).where(created_at: ...10.minutes.ago)
+```
+
+Read these records, but leave writing them to RubyLLM. Creating, updating, or deleting rows yourself can count an attempt twice, lose an approval, or hand a queued message to two processes. Use `queue` and `unqueue`, `approve` and `deny`, `RubyLLM::Batch`, and the MCP server's `deauthorize` to change them.
+
+You can still add your own scopes and columns. Declare them when the application prepares, since RubyLLM's classes live in the gem:
+
+```ruby
+# config/initializers/ruby_llm.rb
+Rails.application.config.to_prepare do
+  RubyLLM::ActiveRecord::Usage.scope :this_month, -> { where(created_at: Time.current.all_month) }
+end
+```
+
+### Encrypting Records
+
+MCP credentials are always encrypted with [Active Record encryption](https://guides.rubyonrails.org/active_record_encryption.html), so an application that uses MCP authorization needs encryption keys:
+
+```bash
+bin/rails db:encryption:init
+```
+
+Encrypt other columns the same way you would your own. Provider file ids work with deterministic encryption, which keeps them queryable as RubyLLM needs:
+
+```ruby
+Rails.application.config.to_prepare do
+  RubyLLM::ActiveRecord::ProviderFile.encrypts :file_id, deterministic: true
+end
+```
+
+Active Record cannot read a plain-text value from an encrypted column. When the table already has rows, turn on `config.active_record.encryption.support_unencrypted_data` and `config.active_record.encryption.extend_queries` while you encrypt them once with `RubyLLM::ActiveRecord::ProviderFile.find_each(&:encrypt)`, as the Rails guide describes.
 
 ## Attachments and Structured Output
 
@@ -409,7 +487,7 @@ class Chat < ApplicationRecord
 end
 ```
 
-Keep transcript content and application relationships in these models. Observe provider cost and usage through `usage.ruby_llm` instrumentation instead of copying RubyLLM's internal supporting models into your domain.
+Keep transcript content and application relationships in these models. Read cost and usage from [RubyLLM's records](#querying-rubyllms-records) or the `usage.ruby_llm` event instead of copying them into your own tables.
 
 ## Next Steps
 

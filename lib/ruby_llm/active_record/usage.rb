@@ -2,12 +2,41 @@
 
 module RubyLLM
   module ActiveRecord
-    # RubyLLM's private normalized persistence for one provider attempt.
-    class Usage < Record # :nodoc:
+    # One provider attempt in RubyLLM's usage ledger, the +ruby_llm_usages+
+    # table. Every billable attempt gets a row, including retries, cancelled
+    # streams, and one-shot operations without a chat, so the ledger sums
+    # to what providers charge.
+    #
+    #   chat.ruby_llm_usages.sum(:total_cost)
+    #   RubyLLM::ActiveRecord::Usage.where(owner: current_user).group(:operation).sum(:total_cost)
+    #
+    # Each row has optional polymorphic +chat+, +message+, and +owner+
+    # associations. The +chronological+ scope orders rows oldest first.
+    # Its columns:
+    #
+    # [+operation+] What ran: <tt>"chat"</tt>, <tt>"embedding"</tt>, <tt>"image"</tt>,
+    #               <tt>"speech"</tt>, <tt>"transcription"</tt>, and so on.
+    # [+provider+] The provider's slug.
+    # [+model+] The model the provider ran, or its own resource identifier.
+    # [+status+] <tt>"pending"</tt>, <tt>"succeeded"</tt>, <tt>"failed"</tt>, or <tt>"cancelled"</tt>.
+    # [+input_tokens+, +output_tokens+, +cache_read_tokens+, +cache_write_tokens+, +thinking_tokens+]
+    #   Token counts, in the bucket the provider bills each at.
+    # [+characters+, +audio_seconds+, +search_units+] Units billed instead of tokens.
+    # [+server_tool_use+] Counts of provider-run tool calls, as a Hash.
+    # [+input_cost+, +output_cost+, +cache_read_cost+, +cache_write_cost+, +thinking_cost+]
+    #   The cost of each token bucket, frozen when the attempt finished.
+    # [+characters_cost+, +audio_seconds_cost+, +search_units_cost+] The cost of each unit.
+    # [+total_cost+] The attempt's total cost, or +nil+ when it is unknown.
+    # [+workflow_id+, +workflow_name+, +workflow_step_id+, +workflow_step_name+]
+    #   The workflow and step that made the attempt, if any.
+    #
+    # RubyLLM writes these rows. Read and query them, and add scopes,
+    # columns, or encryption of your own, but do not create or update them.
+    class Usage < Record
       self.table_name = 'ruby_llm_usages'
 
-      WORKFLOW_COLUMNS = %i[workflow_id workflow_name workflow_step_id workflow_step_name].freeze
-      UNIT_COLUMNS = ::RubyLLM::Cost::UNITS.flat_map { |unit| [unit, :"#{unit}_cost"] }.freeze
+      WORKFLOW_COLUMNS = %i[workflow_id workflow_name workflow_step_id workflow_step_name].freeze # :nodoc:
+      UNIT_COLUMNS = ::RubyLLM::Cost::UNITS.flat_map { |unit| [unit, :"#{unit}_cost"] }.freeze # :nodoc:
 
       belongs_to :chat, polymorphic: true, optional: true
       belongs_to :message, polymorphic: true, optional: true
@@ -25,7 +54,7 @@ module RubyLLM
       # it. A savepoint keeps a failed insert from aborting the caller's
       # transaction, and a thread that held no connection gives back the
       # one it borrowed.
-      def self.record(entry)
+      def self.record(entry) # :nodoc:
         return unless entry.model
 
         connection_pool.with_connection do
@@ -38,11 +67,11 @@ module RubyLLM
         nil
       end
 
-      def self.ledger_available?
+      def self.ledger_available? # :nodoc:
         table_exists? && columns_hash['chat_id']&.null
       end
 
-      def self.attributes_for(entry)
+      def self.attributes_for(entry) # :nodoc:
         tokens = entry.tokens
         cost = entry.cost
         attributes = {
@@ -69,21 +98,22 @@ module RubyLLM
         attributes
       end
 
-      def self.unit_attributes(tokens, cost)
+      def self.unit_attributes(tokens, cost) # :nodoc:
         ::RubyLLM::Cost::UNITS.each_with_object({}) do |unit, attributes|
           attributes[unit] = tokens.public_send(unit)
           attributes[:"#{unit}_cost"] = cost.public_send(unit)
         end
       end
 
-      def self.workflow_attributes(workflow)
+      def self.workflow_attributes(workflow) # :nodoc:
         workflow.to_h.slice(*WORKFLOW_COLUMNS)
       end
 
-      def self.owner_preload
+      def self.owner_preload # :nodoc:
         column_names.include?('owner_id') ? :owner : []
       end
 
+      # Returns the attempt's counts as RubyLLM::Tokens.
       def tokens
         RubyLLM::Tokens.new(
           input: input_tokens,
@@ -96,6 +126,7 @@ module RubyLLM
         )
       end
 
+      # Returns the attempt's frozen cost as RubyLLM::Cost.
       def cost
         recorded = {
           input: input_cost,
@@ -109,15 +140,15 @@ module RubyLLM
         RubyLLM::Cost.from_h(recorded, tokens: tokens)
       end
 
-      def usage_available?
+      def usage_available? # :nodoc:
         tokens.to_h.any?
       end
 
-      def cost_available?
+      def cost_available? # :nodoc:
         !total_cost.nil?
       end
 
-      def to_entry
+      def to_entry # :nodoc:
         ::RubyLLM::Accounting::Usage::Entry.new(
           operation: operation,
           provider: provider,
