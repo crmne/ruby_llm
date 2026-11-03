@@ -106,6 +106,8 @@ response = chat.ask "Explain what this Ruby file does.", with: "app/models/user.
 puts response.content
 ```
 
+RubyLLM sends a text file inside a `<file name='...' mime_type='...'>` wrapper. It escapes the file name and turns any `</file` in the content into `<\/file`, so a file cannot close its wrapper early and pose as your own instructions.
+
 ### Working with PDFs
 
 Ask about a report, manual, or research paper with a model that accepts PDFs:

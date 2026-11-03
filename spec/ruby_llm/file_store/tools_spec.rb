@@ -149,18 +149,32 @@ RSpec.describe RubyLLM::FileStore::Tools do
     end
 
     it 'finds lines in text and converted files, ignoring case' do
+      call(:read_file, path: 'sub/sheet.xlsx')
+
       expect(call(:search_files, query: 'orchid')).to eq(
         "a.md:2: the ORCHID line\nsub/sheet.xlsx:4: spreadsheet_code\tORCHID-97\n[Not searched, no text: logo.png]"
       )
     end
 
+    it 'never converts a file to search it, and names the files it skipped for that' do
+      ocr = ->(_file) { raise 'search must not run a converter' }
+      chat.context.config.file_converters['image/png'] = ocr
+
+      expect(call(:search_files, query: 'orchid')).to eq(
+        "a.md:2: the ORCHID line\n[Not searched, text not extracted yet: logo.png, sub/sheet.xlsx. " \
+        'Read a file with read_file to extract its text first.]'
+      )
+    end
+
     it 'takes a regular expression, and plain words when it is not one' do
+      call(:read_file, path: 'sub/sheet.xlsx')
       expect(call(:search_files, query: '^al.ha$')).to start_with('a.md:1: Alpha')
       expect(call(:search_files, query: 'ORCHID (')).to eq('No lines match ORCHID (.' \
                                                            "\n[Not searched, no text: logo.png]")
     end
 
     it 'searches one file or folder' do
+      call(:read_file, path: 'sub/sheet.xlsx')
       expect(call(:search_files, query: 'orchid', path: 'sub')).to eq("sub/sheet.xlsx:4: spreadsheet_code\tORCHID-97")
       expect(call(:search_files, query: 'orchid', path: 'a.md')).to eq('a.md:2: the ORCHID line')
       expect(call(:search_files, query: 'orchid', path: '/')).to eq(call(:search_files, query: 'orchid'))
