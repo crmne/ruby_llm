@@ -164,9 +164,7 @@ RSpec.describe RubyLLM::Evaluation do
   end
 
   it 'preserves unknown totals when a failed evaluator attempt may have been billed' do
-    stub_request(:post, 'https://api.openai.com/v1/chat/completions')
-      .to_return(status: 500, body: { error: { message: 'Failed after acceptance' } }.to_json,
-                 headers: { 'Content-Type' => 'application/json' })
+    stub_request(:post, 'https://api.openai.com/v1/chat/completions').to_raise(Errno::ECONNRESET)
     trial = evaluation.run(dataset: cases).first
 
     expect(trial.status).to eq(:error)

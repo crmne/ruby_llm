@@ -162,7 +162,10 @@ module RubyLLM
     #
     def cost_for(tokens, tier: :standard)
       requests = usage_entries_of(tokens)
-      return Cost.aggregate(requests.map { |entry| cost_for(entry.tokens, tier:) }) if requests.any?
+      if requests.any?
+        complete = requests.all? { |entry| entry.usage_available? || entry.cost_available? }
+        return Cost.aggregate(requests.map { |entry| cost_for(entry.tokens, tier:) }, complete:)
+      end
 
       tokens = tokens.tokens if tokens.respond_to?(:tokens)
       Cost.new(tokens:, model: self, tier:)

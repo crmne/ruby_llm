@@ -51,10 +51,10 @@ RSpec.describe RubyLLM::Protocols::Bedrock::Rerank do
     context = RubyLLM.context { |config| config.instrumenter = instrumenter }
     stub_request(:post, endpoint)
       .to_return_json(body: { results: [{ index: 1, relevanceScore: 0.9 }], nextToken: 'page2' })
-      .then.to_return_json(status: 500, body: { message: 'Unable to read the next page' })
+      .then.to_raise(Errno::ECONNRESET)
 
     expect { context.rerank('Ruby language', documents, model:, provider: :bedrock) }
-      .to raise_error(RubyLLM::ServerError)
+      .to raise_error(RubyLLM::ConnectionError)
 
     attempts = instrumenter.events.filter_map { |name, payload| payload if name == 'usage.ruby_llm' }
     expect(attempts.map { |attempt| attempt[:status] }).to eq(%i[succeeded failed])

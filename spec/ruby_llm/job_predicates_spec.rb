@@ -12,6 +12,7 @@ RSpec.describe 'job predicates' do # rubocop:disable RSpec/DescribeClass
   end
 
   def research_job(status)
+    allow(protocol).to receive(:config).and_return(RubyLLM.config)
     RubyLLM::ResearchJob.new(id: 'job', provider: :vertexai, agent: 'agent', protocol:, status:)
   end
 
