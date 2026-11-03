@@ -306,10 +306,10 @@ module RubyLLM
     end
   end
 
-  # Raised when a request never gets an answer from the provider: the
-  # connection is refused or drops, TLS fails, or the request times out.
-  # RubyLLM retries it first, following Configuration#max_retries. The
-  # original Faraday error is its +cause+.
+  # Raised when a request never gets an answer from the provider or an
+  # MCP server: the connection is refused or drops, TLS fails, or the
+  # request times out. RubyLLM retries provider requests first, following
+  # Configuration#max_retries. The original Faraday error is its +cause+.
   #
   #   rescue RubyLLM::ConnectionError => e
   #     retry_later if e.timeout?
