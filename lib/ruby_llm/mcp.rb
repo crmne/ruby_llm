@@ -106,8 +106,8 @@ module RubyLLM
       # <tt>notify(message, version:)</tt> and
       # <tt>cancel(notification, version:)</tt> send a notification, and
       # +close+ releases the connection until the next request. Raise
-      # MCP::Error when the server cannot be reached. The transport handles
-      # its own authentication and timeouts.
+      # RubyLLM::ConnectionError when the server cannot be reached. The
+      # transport handles its own authentication and timeouts.
       def transport(value = nil, &block)
         return @transport if value.nil? && block.nil?
 
@@ -764,8 +764,9 @@ module RubyLLM
     #   reports.listen(tasks: chat.pending_tasks)
     #
     # Without +resources+ or +tasks+, does nothing for a server that
-    # announces no changes. Raises MCP::Error when the server cannot be
-    # reached or does not send updates for the resources or tasks.
+    # announces no changes. Raises RubyLLM::ConnectionError when a server
+    # over HTTP cannot be reached, and MCP::Error when the server does not
+    # send updates for the resources or tasks.
     def listen(resources: [], tasks: [])
       uris = resources.map { |resource| resource.respond_to?(:uri) ? resource.uri : resource.to_s }
       ids = tasks.map { |task| task.respond_to?(:id) ? task.id : task.to_s }
@@ -870,7 +871,7 @@ module RubyLLM
     rescue StandardError
       begin
         task.cancel
-      rescue RubyLLM::Error => e
+      rescue RubyLLM::Error, Faraday::Error => e
         RubyLLM.logger.debug { "#{name} could not cancel task #{task.id}: #{e.message}" }
       end
       raise

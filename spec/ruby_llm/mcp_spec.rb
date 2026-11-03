@@ -989,7 +989,7 @@ RSpec.describe RubyLLM::MCP do
       expect(server_tasks['cancelled']).to eq(['task-1'])
     end
 
-    [RubyLLM::ConnectionError, RubyLLM::UnauthorizedError].each do |failure|
+    [RubyLLM::ConnectionError, RubyLLM::UnauthorizedError, Faraday::ConnectionFailed].each do |failure|
       it "keeps the cancellation when cancelling the task raises #{failure}" do
         cancel = false
         allow(RubyLLM::MCP::Task).to receive(:new).and_wrap_original do |original, *arguments, **options|
