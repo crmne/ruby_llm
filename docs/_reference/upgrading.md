@@ -246,6 +246,18 @@ When a response stream from a 2026-07-28 server broke before the answer, 2.1 sen
 
 One answer RubyLLM could not parse, such as a tool call cut off at the token limit, made `batch.messages` raise for the whole batch in 2.1. That answer now counts as failed in `batch.statuses` and the others arrive.
 
+## Research Jobs Found Finished Report Usage
+
+A `ResearchJob` found by ID after its task finished reported no usage in 2.1. In 2.2 it reports it once per `ResearchJob` object, like `Batch.find`. Finding the same finished task from two processes reports it twice, so collect each task in one place.
+
+## Pricing Changes in `cost_for`
+
+`model.cost_for(chat)` and `model.cost_for(message)` priced the summed tokens of every request, so several short requests could cross the long-context threshold together and all pay the long-context rate. In 2.2 each request pays the tier its own prompt reached.
+
+`model.cost_for(tokens, tier: :batch)` priced at standard rates when the model had no batch price. In 2.2 those amounts and `total` are `nil`, the same as any other missing price.
+
+A retry that recovered from an HTTP 5xx left `chat.cost.total` `nil`, because the failed attempt's usage was unknown. In 2.2 an attempt the provider answered with an error before streaming anything records zero tokens, so the total is known.
+
 ## Batches Picked Up by ID Report Usage
 
 A batch collected through `Batch.find` without its chats or requests now reports its usage, to `usage.ruby_llm` and the ledger, once the batch is complete, once per `Batch` object. It reported nothing in 2.1. Collecting the same batch that way from two processes reports it twice, so collect each one in one place.

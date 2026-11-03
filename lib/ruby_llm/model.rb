@@ -150,16 +150,21 @@ module RubyLLM
     end
 
     # Builds a Cost for +tokens+ (a Tokens object, or anything responding
-    # to +tokens+) using this model's pricing.
+    # to +tokens+) using this model's pricing. A Chat or Message is priced
+    # one provider request at a time, so each request pays the context
+    # tier its own prompt reached.
     #
     #   cost = model.cost_for(response.tokens)
     #   puts cost.total
     #
     # Pass <tt>tier: :batch</tt> to use the model's explicit batch rates.
+    # Amounts the model has no batch price for are +nil+.
     #
     def cost_for(tokens, tier: :standard)
-      tokens = tokens.tokens if tokens.respond_to?(:tokens)
+      requests = usage_entries_of(tokens)
+      return Cost.aggregate(requests.map { |entry| cost_for(entry.tokens, tier:) }) if requests.any?
 
+      tokens = tokens.tokens if tokens.respond_to?(:tokens)
       Cost.new(tokens:, model: self, tier:)
     end
 
@@ -206,6 +211,13 @@ module RubyLLM
     end
 
     private
+
+    def usage_entries_of(source)
+      return source.usage_entries if source.respond_to?(:usage_entries)
+      return source.ruby_llm_usage_entries if source.respond_to?(:ruby_llm_usage_entries)
+
+      []
+    end
 
     def pricing_data_with_long_context(pricing)
       pricing = RubyLLM::Support::Utils.deep_symbolize_keys(RubyLLM::Support::Utils.deep_dup(pricing))

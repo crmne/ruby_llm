@@ -233,10 +233,10 @@ module RubyLLM
       Error.new("Research request failed: #{error.message} (job #{id})", job: self, response:)
     end
 
-    # A job found by ID may have been submitted and recorded elsewhere, so
-    # only a finish this object observes records usage.
+    # Each object records its job's usage once: when it first sees the job
+    # finished, at construction or on a later refresh.
     def apply_state(state)
-      observed_finish = pending? && state.fetch(:status) != :pending
+      observed_finish = (@status.nil? || pending?) && state.fetch(:status) != :pending
       @status = state.fetch(:status)
       @raw = state[:raw]
       @error = state[:error]

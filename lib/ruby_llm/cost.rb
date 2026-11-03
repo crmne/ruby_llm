@@ -278,13 +278,9 @@ module RubyLLM
     end
 
     def text_price(attribute, standard_price)
-      applicable_text_tier&.public_send(attribute) || standard_price
-    end
+      return text_pricing.batch&.public_send(attribute) if @tier == :batch
 
-    def applicable_text_tier
-      return text_pricing.batch if @tier == :batch
-
-      text_pricing.tier_for(prompt_tokens)
+      text_pricing.tier_for(prompt_tokens)&.public_send(attribute) || standard_price
     end
 
     def prompt_tokens

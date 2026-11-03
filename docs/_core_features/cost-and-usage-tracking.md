@@ -112,7 +112,7 @@ One response can require several physical attempts. If a transport request fails
 
 Fallbacks work the same way. When an initial model fails and a fallback produces the message, every attempt involved in that logical generation contributes to the resulting message's aggregates.
 
-A cancelled attempt may have no message to attach to. It still contributes to `chat.tokens` and `chat.cost` when RubyLLM has enough reported usage. If an attempt may have been billed but the provider supplied no defensible usage, the token fields for that attempt and `chat.cost.total` are `nil` rather than misleading zeroes. An attempt that provably never reached the provider, such as a refused connection or a failed TLS handshake, records zero tokens instead: it cannot have been billed, so it does not blank the total. A connection that drops after the request was sent, including one reset in the middle of a stream, may have been billed and stays `nil`.
+A cancelled attempt may have no message to attach to. It still contributes to `chat.tokens` and `chat.cost` when RubyLLM has enough reported usage. If an attempt may have been billed but the provider supplied no defensible usage, the token fields for that attempt and `chat.cost.total` are `nil` rather than misleading zeroes. An attempt that provably never reached the provider, such as a refused connection or a failed TLS handshake, records zero tokens instead: it cannot have been billed, so it does not blank the total. So does an attempt the provider answered with an HTTP error before streaming anything, such as a 500 that a retry then recovered from. A connection that drops after the request was sent, including one reset in the middle of a stream, may have been billed and stays `nil`.
 
 ## Pricing Usage Yourself
 
@@ -131,7 +131,13 @@ puts cost.thinking
 puts cost.total
 ```
 
-When a model publishes a long-context tier, `cost_for` uses those rates once the prompt exceeds the registry threshold. Prompt size is `input + cache_read + cache_write`. Below that threshold, or when the model has no long-context tier, standard rates apply. Batch rates remain unused by `cost_for`; see [Batches]({% link _advanced/batches.md %}).
+When a model publishes a long-context tier, `cost_for` uses those rates once the prompt exceeds the registry threshold. Prompt size is `input + cache_read + cache_write`. Below that threshold, or when the model has no long-context tier, standard rates apply. Pass a chat or a message instead of its tokens to price each provider request at the tier its own prompt reached:
+
+```ruby
+model.cost_for(chat).total
+```
+
+`cost_for(tokens, tier: :batch)` uses the model's batch rates. When the model has no batch price for a component, that amount and `total` are `nil`; see [Batches]({% link _advanced/batches.md %}).
 
 Most applications use the shorter helpers on messages, chats, and agents: `response.cost.total`, `chat.cost.total`, `agent.cost.total`.
 
