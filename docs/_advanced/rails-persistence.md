@@ -370,7 +370,7 @@ MCP credentials are always encrypted with [Active Record encryption](https://gui
 bin/rails db:encryption:init
 ```
 
-Encrypt other columns the same way you would your own. Provider file ids work with deterministic encryption, which keeps them queryable as RubyLLM needs:
+You can encrypt other columns the same way you would your own. A column RubyLLM looks up by value, such as a provider file id or a provider batch id, needs `deterministic: true` to stay queryable:
 
 ```ruby
 Rails.application.config.to_prepare do
