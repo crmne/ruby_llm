@@ -350,6 +350,16 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.queued_messages).to be_empty
     end
 
+    it 'waits through a complete that answers the question ask_later staged' do
+      chat.ask_later('Summarize Q3')
+      chat.queue('Then email it', steer: false)
+
+      expect(chat.complete.content).to eq('Done')
+      expect(requests).to eq([[[:user, 'Summarize Q3']]])
+      expect(chat).to be_complete
+      expect(chat.queued_messages.map(&:content)).to eq(['Then email it'])
+    end
+
     it 'is overtaken by steering messages queued after it' do
       during_request << lambda {
         chat.queue('Wait', steer: false)
@@ -428,7 +438,7 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.queued_messages.map(&:content)).to eq(%w[Broken Last])
     end
 
-    it 'keeps them queued when the chat is cancelled, and takes them after' do
+    it 'keeps them queued when the chat is cancelled, and the turn takes the steering ones after' do
       during_request << lambda {
         chat.queue('Steer')
         chat.queue('Wait', steer: false)
@@ -441,8 +451,8 @@ RSpec.describe RubyLLM::Chat do
 
       chat.complete
 
-      expect(requests.last).to eq([[:user, 'Hello'], [:user, 'Steer'], [:user, 'Wait']])
-      expect(chat.queued_messages).to be_empty
+      expect(requests.last).to eq([[:user, 'Hello'], [:user, 'Steer']])
+      expect(chat.queued_messages.map(&:content)).to eq(['Wait'])
     end
   end
 
