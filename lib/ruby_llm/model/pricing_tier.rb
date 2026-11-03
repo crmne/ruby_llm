@@ -4,8 +4,9 @@ module RubyLLM
   class Model
     # A PricingTier holds the prices a model charges within one billing tier,
     # such as standard, batch, or long_context. Each price is in USD per one
-    # million tokens. Prices missing from the registry read as +nil+. A zero
-    # price means the usage is free.
+    # million tokens, or per million units of a category billed in other
+    # units, such as Pricing#characters. Prices missing from the registry
+    # read as +nil+. A zero price means the usage is free.
     #
     # Instances come from PricingCategory#standard, #batch, and #long_context:
     #

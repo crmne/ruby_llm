@@ -22,6 +22,14 @@ RSpec.describe RubyLLM::Providers::XAI::Transcription do
     expect(request).to have_been_requested
   end
 
+  it 'counts the reported duration as billed audio seconds' do
+    response = Struct.new(:body).new({ 'text' => 'Ruby', 'duration' => 3.2 })
+
+    transcription = described_class.parse_transcription_response(response, model: 'grok-voice-transcribe-2.0')
+
+    expect(transcription.tokens.audio_seconds).to eq(3.2)
+  end
+
   it 'sends any other model as given' do
     payload = described_class.render_transcription_payload(:file, model: 'grok-voice-transcribe-3.0', language: nil)
 

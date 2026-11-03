@@ -55,6 +55,18 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator do
     expect(usages).to include('t.index [ :owner_type, :owner_id ]')
   end
 
+  it 'records billing units other than tokens on usage rows' do
+    generator = described_class.new([], {}, destination_root: destination, shell: Thor::Shell::Basic.new)
+    generator.create_migration_files
+    migration = File.read(Dir.glob(File.join(destination, 'db/migrate/*_create_ruby_llm_records.rb')).sole)
+    usages = migration[/create_table :ruby_llm_usages.*?^    end$/m]
+
+    expect(usages).to include('t.integer :characters', 't.decimal :audio_seconds, precision: 16, scale: 6',
+                              't.integer :search_units', 't.decimal :characters_cost, precision: 16, scale: 10',
+                              't.decimal :audio_seconds_cost, precision: 16, scale: 10',
+                              't.decimal :search_units_cost, precision: 16, scale: 10')
+  end
+
   it 'stores tool namespaces on tool calls' do
     generator = described_class.new([], {}, destination_root: destination, shell: Thor::Shell::Basic.new)
     generator.create_migration_files

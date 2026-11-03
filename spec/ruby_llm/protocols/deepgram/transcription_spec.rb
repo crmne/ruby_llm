@@ -137,6 +137,7 @@ RSpec.describe RubyLLM::Protocols::Deepgram::Transcription do
       transcription = protocol.parse_transcription_response(Struct.new(:body).new(body), model: 'nova-3')
 
       expect(transcription.duration).to eq(25.933313)
+      expect(transcription.tokens.audio_seconds).to eq(25.933313)
       expect(transcription.language).to eq('en')
     end
 

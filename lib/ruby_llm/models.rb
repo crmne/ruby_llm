@@ -475,7 +475,13 @@ module RubyLLM
         text_tokens = models_dev_text_tokens_pricing(text_standard, cost)
         pricing[:text_tokens] = text_tokens if text_tokens
         pricing[:audio_tokens] = { standard: audio_standard } if audio_standard.any?
-        pricing
+        pricing.merge(models_dev_unit_pricing(cost))
+      end
+
+      def models_dev_unit_pricing(cost) # :nodoc:
+        %i[characters audio_seconds search_units].each_with_object({}) do |unit, pricing|
+          pricing[unit] = { standard: { input_per_million: cost[unit] } } unless cost[unit].nil?
+        end
       end
 
       def models_dev_text_tokens_pricing(text_standard, cost) # :nodoc:

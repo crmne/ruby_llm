@@ -12,11 +12,23 @@ module RubyLLM
   #   response.tokens.cache_read  # prompt cache reads
   #   response.tokens.cache_write # prompt cache writes
   #
+  # Operations a provider bills in other units count those units here too,
+  # so Cost prices them the same way:
+  #
+  #   RubyLLM.speak("Hello").tokens.characters             # => 5
+  #   RubyLLM.transcribe("call.mp3").tokens.audio_seconds  # => 42.3
+  #   RubyLLM.rerank(query, documents).tokens.search_units # => 1
+  #
   class Tokens
     include Support::Inspectable
 
     READERS = %i[
-      input output cache_read cache_write thinking cache_write_by_ttl server_tool_use reported_cost
+      input output cache_read cache_write thinking characters audio_seconds search_units cache_write_by_ttl
+      server_tool_use reported_cost
+    ].freeze # :nodoc:
+
+    SUMMED = %i[
+      input output cache_read cache_write thinking characters audio_seconds search_units reported_cost
     ].freeze # :nodoc:
 
     # The number of standard (non-cached) input tokens, or +nil+ if the
@@ -50,6 +62,20 @@ module RubyLLM
     # does not report them.
     attr_reader :thinking
 
+    # The number of input characters the provider bills, such as the text
+    # sent to a text-to-speech model, or +nil+ if the operation is not
+    # billed by character.
+    attr_reader :characters
+
+    # The seconds of audio the provider bills, such as the length of a
+    # transcribed recording, or +nil+ if the operation is not billed by
+    # duration. May be fractional.
+    attr_reader :audio_seconds
+
+    # The number of search units the provider bills, such as Cohere's
+    # rerank searches, or +nil+ if the operation is not billed by search.
+    attr_reader :search_units
+
     # How many times each provider-executed tool ran, as a Hash of String
     # keys and Integer counts, or +nil+ if the provider reported none.
     # Web searches are <tt>"web_search_requests"</tt> on every provider
@@ -74,18 +100,24 @@ module RubyLLM
     #   tokens = RubyLLM::Tokens.new(input: 100, output: 20)
     #   RubyLLM.models.find("gpt-6.1-sol").cost_for(tokens).total
     #
+    # +characters:+, +audio_seconds:+, and +search_units:+ count usage
+    # billed in those units;
     # +cache_write_by_ttl:+ splits the cache writes by lifetime, keyed as
     # #cache_write_by_ttl describes;
     # +server_tool_use:+ counts the provider-executed tools that ran, keyed
     # as #server_tool_use describes;
     # +reported_cost:+ holds the provider's total price in US dollars.
     def initialize(input: nil, output: nil, cache_read: nil, cache_write: nil, thinking: nil,
+                   characters: nil, audio_seconds: nil, search_units: nil,
                    cache_write_by_ttl: nil, server_tool_use: nil, reported_cost: nil)
       @input = input
       @output = output
       @cache_read = cache_read
       @cache_write = cache_write
       @thinking = thinking
+      @characters = characters
+      @audio_seconds = audio_seconds
+      @search_units = search_units
       @cache_write_by_ttl = positive_counts(cache_write_by_ttl)
       @server_tool_use = positive_counts(server_tool_use)
       @reported_cost = reported_cost
@@ -97,7 +129,7 @@ module RubyLLM
       tokens = Array(tokens).compact
       return tokens.first if tokens.one?
 
-      values = %i[input output cache_read cache_write thinking reported_cost].to_h do |component|
+      values = SUMMED.to_h do |component|
         reported = tokens.filter_map { |usage| usage.public_send(component) }
         [component, reported.empty? ? nil : reported.sum]
       end
@@ -126,8 +158,9 @@ module RubyLLM
 
     # Returns the counts as a hash with keys +:input_tokens+,
     # +:output_tokens+, +:cache_read_tokens+, +:cache_write_tokens+, and
-    # +:thinking_tokens+, omitting +nil+ counts. Includes
-    # +:cache_write_tokens_by_ttl+ and +:server_tool_use+ when reported.
+    # +:thinking_tokens+, omitting +nil+ counts. Includes +:characters+,
+    # +:audio_seconds+, +:search_units+, +:cache_write_tokens_by_ttl+, and
+    # +:server_tool_use+ when reported.
     # The provider's reported cost is available separately
     # through #reported_cost.
     #
@@ -141,6 +174,9 @@ module RubyLLM
         cache_read_tokens: cache_read,
         cache_write_tokens: cache_write,
         thinking_tokens: thinking,
+        characters: characters,
+        audio_seconds: audio_seconds,
+        search_units: search_units,
         cache_write_tokens_by_ttl: cache_write_by_ttl,
         server_tool_use: server_tool_use
       }.compact
@@ -153,6 +189,9 @@ module RubyLLM
         cache_read: cache_read,
         cache_write: cache_write,
         thinking: thinking,
+        characters: characters,
+        audio_seconds: audio_seconds,
+        search_units: search_units,
         cache_write_by_ttl: cache_write_by_ttl,
         server_tool_use: server_tool_use
       }.compact

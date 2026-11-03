@@ -28,11 +28,12 @@ module RubyLLM
     # The raw provider response body.
     attr_reader :raw
 
-    def initialize(results:, model:, raw: nil, input_tokens: nil, reported_cost: nil) # :nodoc:
+    def initialize(results:, model:, raw: nil, input_tokens: nil, search_units: nil, reported_cost: nil) # :nodoc:
       @results = results
       @model = model
       @raw = raw
       @input_tokens = input_tokens
+      @search_units = search_units
       @reported_cost = reported_cost
     end
 
@@ -40,7 +41,7 @@ module RubyLLM
     def tokens
       return ruby_llm_usage_tokens unless ruby_llm_usage_entries.empty?
 
-      Tokens.new(input: @input_tokens, reported_cost: @reported_cost)
+      Tokens.new(input: @input_tokens, search_units: @search_units, reported_cost: @reported_cost)
     end
 
     # Returns the rerank cost across every provider attempt.

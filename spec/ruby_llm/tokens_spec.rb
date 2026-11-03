@@ -3,6 +3,29 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Tokens do
+  describe 'billing units' do
+    it 'counts characters, audio seconds, and search units next to tokens' do
+      tokens = described_class.new(characters: 31, audio_seconds: 9.5, search_units: 1)
+
+      expect(tokens).to have_attributes(characters: 31, audio_seconds: 9.5, search_units: 1, input: nil)
+      expect(tokens.to_h).to eq(characters: 31, audio_seconds: 9.5, search_units: 1)
+    end
+
+    it 'sums each unit across attempts and leaves unreported units nil' do
+      tokens = described_class.aggregate(
+        [described_class.new(characters: 10, search_units: 1), described_class.new(characters: 5, input: 3)]
+      )
+
+      expect(tokens).to have_attributes(characters: 15, search_units: 1, audio_seconds: nil, input: 3)
+    end
+
+    it 'keeps units through merge' do
+      merged = described_class.new(audio_seconds: 4).merge(described_class.new(input: 2))
+
+      expect(merged).to have_attributes(audio_seconds: 4, input: 2)
+    end
+  end
+
   describe '#server_tool_use' do
     it 'counts each tool that ran under a String key' do
       tokens = described_class.new(server_tool_use: { web_search_requests: 2, 'web_fetch_requests' => 1 })

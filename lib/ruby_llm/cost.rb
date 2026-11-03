@@ -13,9 +13,14 @@ module RubyLLM
   #   cost.output
   #
   # The components are RubyLLM's normalized token buckets: #input, #output,
-  # #cache_read, #cache_write, and #thinking. When the registry lacks
-  # pricing for tokens that were used, the affected component and #total
-  # return +nil+ instead of a false zero.
+  # #cache_read, #cache_write, and #thinking, plus #characters,
+  # #audio_seconds, and #search_units for operations billed in those units.
+  # When the registry lacks pricing for usage that was reported, the
+  # affected component and #total return +nil+ instead of a false zero.
+  #
+  #   speech = RubyLLM.speak "Hello"
+  #   speech.cost.characters # => 0.00015, or nil when no price is known
+  #
   #
   # When the provider reports the exact cost of a call, #total returns the
   # reported amount instead of a registry-price estimate, even when
@@ -28,7 +33,8 @@ module RubyLLM
   class Cost
     include Support::Inspectable
 
-    COMPONENTS = %i[input output cache_read cache_write thinking].freeze # :nodoc:
+    UNITS = %i[characters audio_seconds search_units].freeze # :nodoc:
+    COMPONENTS = (%i[input output cache_read cache_write thinking] + UNITS).freeze # :nodoc:
     PER_MILLION = 1_000_000.0 # :nodoc:
 
     class << self
@@ -90,7 +96,7 @@ module RubyLLM
 
       def missing_recorded_components(amounts, tokens, total)
         if tokens
-          COMPONENTS.select { |component| tokens.public_send(component).to_i.positive? && amounts[component].nil? }
+          COMPONENTS.select { |component| tokens.public_send(component).to_f.positive? && amounts[component].nil? }
         elsif total && amounts.values.any?
           []
         else
@@ -155,6 +161,24 @@ module RubyLLM
       @amounts[:thinking]
     end
 
+    # Returns the cost of billed characters in US dollars, or +nil+ when
+    # the count or its pricing is unavailable.
+    def characters
+      @amounts[:characters]
+    end
+
+    # Returns the cost of billed audio seconds in US dollars, or +nil+ when
+    # the duration or its pricing is unavailable.
+    def audio_seconds
+      @amounts[:audio_seconds]
+    end
+
+    # Returns the cost of billed search units in US dollars, or +nil+ when
+    # the count or its pricing is unavailable.
+    def search_units
+      @amounts[:search_units]
+    end
+
     # Returns the sum of all components in US dollars, or the exact amount
     # the provider reported when it reported one. Returns +nil+ when there
     # is no token usage, or when pricing is missing for tokens that were
@@ -174,14 +198,7 @@ module RubyLLM
     # Returns a hash of component costs in US dollars, plus +:total+,
     # omitting +nil+ values.
     def to_h
-      {
-        input: input,
-        output: output,
-        cache_read: cache_read,
-        cache_write: cache_write,
-        thinking: thinking,
-        total: total
-      }.compact
+      COMPONENTS.to_h { |component| [component, public_send(component)] }.merge(total: total).compact
     end
 
     def tokens? # :nodoc:
@@ -213,7 +230,7 @@ module RubyLLM
       return image_input_missing? if component == :input && detailed_image_input?
       return cache_write_missing? if component == :cache_write && repriced_cache_writes?
 
-      tokens_for(component).to_i.positive? && price_for(component).nil?
+      tokens_for(component).to_f.positive? && price_for(component).nil?
     end
 
     def amount_for(component)
@@ -244,6 +261,8 @@ module RubyLLM
         @tokens.cache_write
       when :thinking
         @tokens.thinking if thinking_priced_separately?
+      when *UNITS
+        @tokens.public_send(component) if @tokens.respond_to?(component)
       end
     end
 
@@ -254,7 +273,16 @@ module RubyLLM
       when :cache_read then text_price(:cache_read_input_per_million, text_pricing.cache_read_input)
       when :cache_write then text_price(:cache_write_input_per_million, text_pricing.cache_write_input)
       when :thinking then text_price(:reasoning_output_per_million, text_pricing.reasoning_output)
+      when *UNITS then unit_price(component)
       end
+    end
+
+    def unit_price(unit)
+      pricing = @model&.pricing
+      return unless pricing
+
+      category = pricing.public_send(unit)
+      @tier == :batch ? category.batch&.input_per_million : category.input
     end
 
     def input_price

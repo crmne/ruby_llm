@@ -686,4 +686,52 @@ RSpec.describe RubyLLM::Cost do
       expect(cost.input).to be_within(0.0000000001).of(0.001)
     end
   end
+
+  describe 'billing units' do
+    def unit_model(pricing)
+      RubyLLM::Model.new(id: 'unit-model', name: 'Unit Model', provider: 'vertexai', pricing:)
+    end
+
+    it 'prices characters, audio seconds, and search units per million' do
+      model = unit_model(
+        characters: { standard: { input_per_million: 30.0 } },
+        audio_seconds: { standard: { input_per_million: 100.0 } },
+        search_units: { standard: { input_per_million: 2000.0 } }
+      )
+      tokens = RubyLLM::Tokens.new(characters: 1_000, audio_seconds: 60, search_units: 2)
+      cost = described_class.new(tokens:, model:)
+
+      expect(cost.characters).to be_within(1e-12).of(0.03)
+      expect(cost.audio_seconds).to be_within(1e-12).of(0.006)
+      expect(cost.search_units).to be_within(1e-12).of(0.004)
+      expect(cost.total).to be_within(1e-12).of(0.04)
+      expect(cost.to_h.keys).to include(:characters, :audio_seconds, :search_units)
+    end
+
+    it 'is unknown, not free, when the registry has no price for the unit' do
+      cost = described_class.new(tokens: RubyLLM::Tokens.new(characters: 1_000), model: unit_model({}))
+
+      expect(cost.characters).to be_nil
+      expect(cost.total).to be_nil
+      expect(cost.tokens?).to be(true)
+    end
+
+    it 'prices batch units at the batch rate' do
+      model = unit_model(characters: { standard: { input_per_million: 30.0 }, batch: { input_per_million: 15.0 } })
+      cost = described_class.new(tokens: RubyLLM::Tokens.new(characters: 1_000), model:, tier: :batch)
+
+      expect(cost.total).to be_within(1e-12).of(0.015)
+    end
+
+    it 'keeps a stored unit cost through from_h and aggregate' do
+      model = unit_model(search_units: { standard: { input_per_million: 2000.0 } })
+      tokens = RubyLLM::Tokens.new(search_units: 1)
+      restored = described_class.from_h(described_class.new(tokens:, model:).to_h, tokens:)
+      unpriced = described_class.new(tokens:, model: unit_model({}))
+
+      expect(restored.search_units).to be_within(1e-12).of(0.002)
+      expect(described_class.aggregate([restored, restored]).total).to be_within(1e-12).of(0.004)
+      expect(described_class.aggregate([restored, unpriced]).total).to be_nil
+    end
+  end
 end

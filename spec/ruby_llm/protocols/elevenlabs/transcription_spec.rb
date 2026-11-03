@@ -84,6 +84,7 @@ RSpec.describe RubyLLM::Protocols::ElevenLabs::Transcription do
       expect(transcription.model).to eq('scribe_v2')
       expect(transcription.language).to eq('en')
       expect(transcription.duration).to eq(10.5)
+      expect(transcription.tokens.audio_seconds).to eq(10.5)
       expect(transcription.words.first).to include('speaker_id' => 'speaker_1', 'type' => 'word')
     end
   end

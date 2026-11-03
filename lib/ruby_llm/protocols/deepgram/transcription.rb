@@ -72,11 +72,14 @@ module RubyLLM
           channel = data.dig('results', 'channels', 0) || {}
           alternative = channel.dig('alternatives', 0) || {}
 
+          duration = data.dig('metadata', 'duration')
+
           RubyLLM::Transcription.new(
             text: alternative['transcript'],
             model: model,
             language: channel['detected_language'] || language,
-            duration: data.dig('metadata', 'duration'),
+            duration:,
+            audio_seconds: duration,
             segments: data.dig('results', 'utterances'),
             words: alternative['words']
           )
