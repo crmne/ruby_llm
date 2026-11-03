@@ -394,7 +394,7 @@ If `vertexai_service_account_key` is not set, RubyLLM uses ADC.
 
 ### Text to Speech
 
-Enable the Cloud Text-to-Speech API in your Google Cloud project to speak with Chirp 3: HD voices. RubyLLM sends each request to the endpoint of your `vertexai_location`: `eu` uses `eu-texttospeech.googleapis.com`, `us` uses `us-texttospeech.googleapis.com`, and `global` uses the global endpoint. Google serves Chirp 3: HD from the `global`, `eu`, and `us` endpoints only, and excludes these voices from its data residency commitments. `vertexai_api_base` does not apply to Text-to-Speech. See [Text to Speech]({% link _core_features/text-to-speech.md %}) for voices and formats.
+Enable the Cloud Text-to-Speech API in your Google Cloud project to speak with Chirp 3: HD voices. RubyLLM sends each request to the endpoint of your `vertexai_location`: `eu` uses `eu-texttospeech.googleapis.com`, a region such as `europe-west2` uses `europe-west2-texttospeech.googleapis.com`, and `global` uses the global endpoint. A regional or multi-regional endpoint keeps your data in that region, as Google's [regional endpoints guide](https://docs.cloud.google.com/text-to-speech/docs/endpoints) describes; the global endpoint gives no residency guarantee. Google lists the locations that serve Chirp 3: HD on its [Chirp 3: HD page](https://docs.cloud.google.com/text-to-speech/docs/chirp3-hd). `vertexai_api_base` does not apply to Text-to-Speech. See [Text to Speech]({% link _core_features/text-to-speech.md %}) for voices and formats.
 
 ### Reranking
 
