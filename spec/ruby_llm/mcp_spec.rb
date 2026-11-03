@@ -988,6 +988,25 @@ RSpec.describe RubyLLM::MCP do
         .to raise_error(RubyLLM::CancelledError)
       expect(server_tasks['cancelled']).to eq(['task-1'])
     end
+
+    it 'keeps the cancellation when the server cannot be reached to cancel the task' do
+      cancel = false
+      allow(RubyLLM::MCP::Task).to receive(:new).and_wrap_original do |original, *arguments, **options|
+        original.call(*arguments, **options).tap do |task|
+          allow(task).to receive(:cancel).and_raise(RubyLLM::ConnectionError, 'unreachable')
+          cancel = true
+        end
+      end
+      checkpoint = lambda do
+        next unless cancel
+
+        cancel = false
+        raise RubyLLM::CancelledError
+      end
+
+      expect { RubyLLM::Support::Cancellation.watch(checkpoint) { mcp.call(:endless_report) } }
+        .to raise_error(RubyLLM::CancelledError)
+    end
   end
 
   describe 'log messages' do

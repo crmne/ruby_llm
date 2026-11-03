@@ -428,6 +428,8 @@ In 2.1, a successful response with a body RubyLLM could not parse raised `Farada
 
 In 2.1, a request that timed out, could not connect, or failed TLS raised `Faraday::TimeoutError`, `Faraday::ConnectionFailed`, or `Faraday::SSLError`, which `rescue RubyLLM::Error` missed. In 2.2 RubyLLM retries it as before, then raises `RubyLLM::ConnectionError`, with the Faraday error as its `cause`. Replace those Faraday classes in your `rescue`, `rescue_from`, and `with_fallbacks(on:)` lists with `RubyLLM::ConnectionError`, and use `error.timeout?` to tell a timeout apart.
 
+MCP servers and their authorization servers follow the same rule. In 2.1, an MCP request that could not reach its server raised a Faraday error, and `listen` raised `RubyLLM::MCP::Error`. An unreachable token endpoint raised `RubyLLM::MCP::Error` saying it refused the request, and a token refresh that could not connect counted as refused. In 2.2 each raises `RubyLLM::ConnectionError`. Rescue it next to `RubyLLM::MCP::Error` where you handle MCP failures. A custom transport should raise it too when its server can't be reached.
+
 ## Agents Say `chat_class`
 
 Use `chat_class` to name your agent's chat record. `chat_model` read like an LLM, as in `RubyLLM.models.chat_models`, and `chat_class` is the name `acts_as_message` already uses. `chat_model` still works and warns through `RubyLLM.deprecator`. RubyLLM 3.0 removes it.

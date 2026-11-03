@@ -1086,6 +1086,42 @@ RSpec.describe RubyLLM::MCP::HTTP do
     expect { client.server }.to raise_error(RubyLLM::UnauthorizedError, 'mcp.example.com requires authorization')
   end
 
+  describe 'network failures' do
+    it 'raises ConnectionError with the Faraday error as its cause' do
+      stub_request(:post, url).to_raise(Errno::ECONNREFUSED)
+
+      expect { client.server }.to raise_error(RubyLLM::ConnectionError) { |error|
+        expect([error.cause.class, error.timeout?]).to eq([Faraday::ConnectionFailed, false])
+      }
+    end
+
+    it 'tells a timeout apart' do
+      stub_request(:post, url).to_timeout
+
+      expect { client.server }.to raise_error(RubyLLM::ConnectionError) { |error|
+        expect(error.timeout?).to be(true)
+      }
+    end
+
+    it 'raises ConnectionError when the session stream of an older server cannot connect' do
+      http = described_class.new(url)
+      stub_request(:get, url).to_raise(Errno::ECONNREFUSED)
+
+      expect { http.listen(nil, version: '2025-06-18') }.to raise_error(RubyLLM::ConnectionError) { |error|
+        expect(error.cause).to be_a(Faraday::ConnectionFailed)
+      }
+    end
+
+    it 'raises ConnectionError when a subscription cannot connect' do
+      http = described_class.new(url)
+      stub_request(:post, url).to_raise(Errno::ECONNREFUSED)
+      message = { jsonrpc: '2.0', id: 'listen-1', method: 'subscriptions/listen', params: {} }
+
+      expect { http.listen(message, version: RubyLLM::MCP::Client::VERSION) }
+        .to raise_error(RubyLLM::ConnectionError)
+    end
+  end
+
   it 'resolves callable headers on every request' do
     tokens = %w[first second].each
     headers = ->(_verb) { { 'Authorization' => tokens.next } }

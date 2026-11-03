@@ -101,8 +101,6 @@ module RubyLLM
 
         stream = post(message, version:, connection: streams, &)
         stream.answer || raise(Error, "#{@url.host} closed the subscription")
-      rescue Faraday::Error => e
-        raise Error, e.message
       end
 
       def close
@@ -137,7 +135,7 @@ module RubyLLM
         remember(message, version, stream.headers)
         stream
       rescue Faraday::Error => e
-        raise unless e.response
+        raise unanswered(e) unless e.response
 
         responded(e.response[:headers])
         return stream if answered?(stream)
@@ -166,7 +164,7 @@ module RubyLLM
         get(stream, version:, connection: streams, session:)
         nil
       rescue Faraday::Error => e
-        raise Error, e.message unless e.response
+        raise unanswered(e) unless e.response
         raise SessionExpired.new("#{@url.host} ended the session", session:) if e.response[:status] == 404 && session
         raise Error.new("#{@url.host} sends no events", code: Client::METHOD_NOT_FOUND) if e.response[:status] == 405
 
@@ -199,7 +197,7 @@ module RubyLLM
 
       def answer(request, version:)
         post(Client.reply(request), version:, connection: answers)
-      rescue RubyLLM::Error, Faraday::Error => e
+      rescue RubyLLM::Error => e
         RubyLLM.logger.debug { "#{@url.host} did not take the answer to #{request['method']}: #{e.message}" }
       end
 
@@ -301,6 +299,10 @@ module RubyLLM
         return ForbiddenError.new(message, **details) unless challenge[:error] == 'insufficient_scope'
 
         InsufficientScopeError.new(message, scopes: challenge[:scope].to_s.split, **details)
+      end
+
+      def unanswered(error)
+        ConnectionError.new(error.message, provider: @url.host)
       end
 
       def response_for(response)

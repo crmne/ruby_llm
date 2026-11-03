@@ -621,6 +621,10 @@ module RubyLLM
 
       def get_json(url)
         parse(connection(url).get(url, nil, 'Accept' => 'application/json'))
+      rescue Faraday::Error => e
+        raise unanswered(url, e) unless e.response
+
+        raise
       end
 
       def post(url, body, headers)
@@ -628,8 +632,14 @@ module RubyLLM
         proofs.remember(url, response.headers['dpop-nonce'])
         parse(response)
       rescue Faraday::Error => e
-        raise refusal(url, e.response && Faraday::Response.new(status: e.response[:status], body: e.response[:body],
-                                                               response_headers: e.response[:headers]))
+        raise unanswered(url, e) unless e.response
+
+        raise refusal(url, Faraday::Response.new(status: e.response[:status], body: e.response[:body],
+                                                 response_headers: e.response[:headers]))
+      end
+
+      def unanswered(url, error)
+        ConnectionError.new(error.message, provider: URI(url).host)
       end
 
       def refusal(url, response)

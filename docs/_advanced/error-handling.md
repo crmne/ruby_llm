@@ -32,7 +32,7 @@ Provider/API operation errors inherit from `RubyLLM::Error`. Local setup and pro
 ```ruby
 RubyLLM::Error                    # Base error class for provider-operation issues
     RubyLLM::BadRequestError      # 400: Invalid request parameters
-    RubyLLM::ConnectionError      # The provider could not be reached or timed out
+    RubyLLM::ConnectionError      # The provider or an MCP server could not be reached or timed out
     RubyLLM::UnauthorizedError    # 401: API key issues
     RubyLLM::PaymentRequiredError # 402: Billing issues, such as an account out of credit
     RubyLLM::ForbiddenError       # 403: Permission issues

@@ -275,6 +275,37 @@ RSpec.describe RubyLLM::MCP::OAuth do
     expect(linear_class.new(user: 'grace')).not_to be_authorized
   end
 
+  describe 'an authorization server that cannot be reached' do
+    it 'raises ConnectionError from the code exchange' do
+      url = linear.authorization_url(redirect_uri:)
+      stub_request(:post, 'https://auth.example.com/token').to_raise(Errno::ECONNREFUSED)
+
+      expect { linear.authorize(callback(url)) }.to raise_error(RubyLLM::ConnectionError) { |error|
+        expect(error.cause).to be_a(Faraday::ConnectionFailed)
+      }
+    end
+
+    it 'raises ConnectionError from a refresh and keeps the stored credential' do
+      linear.authorize(callback(linear.authorization_url(redirect_uri:)))
+      store = RubyLLM.config.mcp_credential_store
+      key = "ada@#{server_url}"
+      store.write(key, store.read(key).merge('expires_at' => 0))
+      stored = store.read(key)
+      stub_request(:post, 'https://auth.example.com/token').to_timeout
+
+      expect { linear_class.new(user: 'ada').send(:oauth).refresh }
+        .to raise_error(RubyLLM::ConnectionError, &:timeout?)
+      expect(store.read(key)).to eq(stored)
+    end
+
+    it 'raises ConnectionError from discovery' do
+      stub_request(:get, 'https://mcp.example.com/.well-known/oauth-protected-resource/mcp')
+        .to_raise(Errno::ECONNREFUSED)
+
+      expect { linear.authorization_url(redirect_uri:) }.to raise_error(RubyLLM::ConnectionError)
+    end
+  end
+
   it 'refreshes an expired token when the server rejects it' do
     linear.authorize(callback(linear.authorization_url(redirect_uri:)))
     store = RubyLLM.config.mcp_credential_store
