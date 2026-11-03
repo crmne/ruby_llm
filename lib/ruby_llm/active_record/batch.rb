@@ -2,17 +2,37 @@
 
 module RubyLLM
   module ActiveRecord
-    # RubyLLM's private persistence for provider-side batches.
-    class Batch < Record # :nodoc:
+    # A provider-side batch of persisted chats, in RubyLLM's
+    # +ruby_llm_batches+ table. RubyLLM.batch writes a row when it submits
+    # persisted chats of one class, and RubyLLM::Batch.find reads it back
+    # in any process.
+    #
+    #   RubyLLM::ActiveRecord::Batch.where(completed: false).pluck(:provider_batch_id)
+    #
+    # Its columns:
+    #
+    # [+provider_batch_id+] The provider's id for the batch.
+    # [+provider+] The provider's slug.
+    # [+status+] <tt>"pending"</tt>, <tt>"succeeded"</tt>, <tt>"failed"</tt>, or <tt>"cancelled"</tt>.
+    # [+raw_status+] The status as the provider last reported it.
+    # [+completed+] Whether the provider has finished the batch.
+    # [+request_counts+] The provider's request counts, as a Hash.
+    # [+reported_cost+] The cost the provider reported, as a Hash.
+    # [+chat_type+, +chat_ids+] The class and ids of the submitted chats.
+    #
+    # RubyLLM writes these rows. Read and query them, and add scopes and
+    # columns of your own, but do not create or update them.
+    # Use RubyLLM::Batch to refresh a batch and deliver its results.
+    class Batch < Record
       self.table_name = 'ruby_llm_batches'
 
-      STATUSES = %w[pending succeeded failed cancelled].freeze
+      STATUSES = %w[pending succeeded failed cancelled].freeze # :nodoc:
 
       validates :provider_batch_id, :provider, :status, presence: true
       validates :status, inclusion: { in: STATUSES }
 
       class << self
-        def persist(batch, chats)
+        def persist(batch, chats) # :nodoc:
           records = Array(chats)
           return unless table_exists?
           return unless persistable_chats?(records)
@@ -31,11 +51,11 @@ module RubyLLM
           )
         end
 
-        def fetch(id, provider: nil, context: nil)
+        def fetch(id, provider: nil, context: nil) # :nodoc:
           find_record(id, provider:)&.to_llm(context:, store: self)
         end
 
-        def sync(batch)
+        def sync(batch) # :nodoc:
           find_record(batch.id, provider: batch.provider)&.sync_from(batch)
         end
 
@@ -58,6 +78,8 @@ module RubyLLM
         end
       end
 
+      # Returns the submitted chat records in submission order, with +nil+
+      # for a chat that no longer exists.
       def chats
         klass = chat_type.constantize
         by_id = klass.where(klass.primary_key => Array(chat_ids))
@@ -65,7 +87,7 @@ module RubyLLM
         Array(chat_ids).map { |id| by_id[id] }
       end
 
-      def to_llm(context: nil, store: nil)
+      def to_llm(context: nil, store: nil) # :nodoc:
         config = context&.config || RubyLLM.config
         provider_instance = RubyLLM::Provider.resolve!(provider).new(config)
         records = chats
@@ -84,7 +106,7 @@ module RubyLLM
         )
       end
 
-      def sync_from(batch)
+      def sync_from(batch) # :nodoc:
         attributes = {
           status: batch.status,
           raw_status: batch.raw_status,

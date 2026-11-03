@@ -7,21 +7,35 @@ module RubyLLM
     # already uploaded instead of uploading the blob again. Rows name the
     # blob by its key, which Active Storage never hands out twice, so a row
     # left by a deleted blob can never match a newer one.
-    class ProviderFile < Record # :nodoc:
+    #
+    #   RubyLLM::ActiveRecord::ProviderFile.where(blob_key: document.file.key).pluck(:provider, :file_id)
+    #
+    # Its columns:
+    #
+    # [+blob_key+] The key of the Active Storage blob.
+    # [+provider+] The provider's slug.
+    # [+account+] A digest that identifies the provider account the file was uploaded to.
+    # [+file_id+] The provider's id for the uploaded file.
+    # [+expires_at+] When the provider deletes the file, or +nil+.
+    #
+    # RubyLLM writes these rows. Read and query them, and add scopes,
+    # columns, or encryption of your own, but do not create or update them.
+    # Encrypt +file_id+ deterministically, since RubyLLM queries it.
+    class ProviderFile < Record
       self.table_name = 'ruby_llm_provider_files'
 
       validates :blob_key, :provider, :account, :file_id, presence: true
 
       # Returns a store for the blob whose key the block returns, or +nil+
       # while the table has not been migrated.
-      def self.store(&)
+      def self.store(&) # :nodoc:
         Store.new(&) if table_exists?
       end
 
       # Deletes the uploads recorded for +blob+ as Active Storage destroys it.
       # Reads the stored key: Blob#key generates one when it is missing, and
       # a destroyed blob is frozen.
-      def self.forget_blob(blob)
+      def self.forget_blob(blob) # :nodoc:
         key = blob[:key]
         where(blob_key: key).delete_all if key && table_exists?
       end

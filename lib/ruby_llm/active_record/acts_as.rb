@@ -7,7 +7,8 @@ module RubyLLM
   # Rails integration brings the RubyLLM API to Active Record models, with
   # Active Storage attachments and a persisted message lifecycle for Hotwire
   # streaming and background jobs. Applications own chats and messages;
-  # RubyLLM owns the supporting usage, tool-call, registry, and batch records.
+  # RubyLLM owns the supporting records (see Record), which applications
+  # read and query.
   module ActiveRecord
     # Adds the RubyLLM conversation API to application-owned records.
     #
@@ -74,8 +75,11 @@ module RubyLLM
       #   end
       #
       # Adds the RubyLLM::Message readers (see MessageMethods), a
-      # +belongs_to+ association to the chat, the tool-call and usage
-      # associations behind +tool_calls+, +tokens+, and +cost+, and
+      # +belongs_to+ association to the chat, the associations behind
+      # +tool_calls+, +tokens+, and +cost+ (+has_many :ruby_llm_tool_calls+
+      # over the ToolCall rows it requested, +has_one :ruby_llm_parent_tool_call+
+      # for the call a tool message answers, and +has_many :ruby_llm_usages+
+      # over its Usage rows), and
       # <tt>has_many_attached :attachments</tt>, so Active Storage is
       # required. When turbo-rails and Action Cable are loaded, it also
       # broadcasts the chat's messages with Turbo when
