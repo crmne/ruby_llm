@@ -25,7 +25,7 @@ PROTOCOLS = {
 }.freeze
 DEEPSEEK = { model: 'deepseek-v4-flash', provider: :deepseek, protocol: :chat_completions }.freeze
 BEDROCK = { model: 'claude-haiku-4-5', provider: :bedrock }.freeze
-OPENROUTER = { model: 'deepseek/deepseek-r1', provider: :openrouter, protocol: :chat_completions }.freeze
+OPENROUTER = { model: 'deepseek/deepseek-r1-0528', provider: :openrouter, protocol: :chat_completions }.freeze
 PERPLEXITY = { model: 'sonar', provider: :perplexity, protocol: :chat_completions }.freeze
 
 def stream(chat_options)

@@ -128,7 +128,7 @@ module Benchmarks
       deltas = words(count).map do |word|
         { reasoning: word, reasoning_details: [{ type: 'reasoning.text', text: word, index: 0 }] }
       end
-      chat_completions_stream(deltas + [{ content: 'Done.' }], model: 'deepseek/deepseek-r1')
+      chat_completions_stream(deltas + [{ content: 'Done.' }], model: 'deepseek/deepseek-r1-0528')
     end
 
     # Perplexity repeats every source on every chunk.
