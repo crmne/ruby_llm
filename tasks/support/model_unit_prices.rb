@@ -31,8 +31,7 @@ class ModelUnitPrices
   def apply(models)
     by_key = entries.group_by(&:key)
     priced = models.map do |model|
-      model_entries = by_key.delete("#{model.provider}:#{model.id}")
-      model_entries ? price(model, model_entries) : model
+      price(model, by_key.delete("#{model.provider}:#{model.id}") || [])
     end
     by_key.each_value { |missing| missing.each { |entry| notices << missing_notice(entry) } }
     priced
@@ -41,20 +40,25 @@ class ModelUnitPrices
   private
 
   def price(model, model_entries)
-    pricing = model.pricing.to_h
     cost = models_dev_cost(model)
+    pricing = model.pricing.to_h
+    stale = stale_units(pricing, cost)
+    return model if stale.empty? && model_entries.empty?
 
+    pricing = pricing.except(*stale)
     model_entries.each do |entry|
-      unit = entry.unit.to_sym
       if cost.empty?
-        pricing[unit] = (pricing[unit] || {}).merge(standard: { input_per_million: entry.per_million })
+        pricing[entry.unit.to_sym] = { standard: { input_per_million: entry.per_million } }
       else
-        pricing.delete(unit) if cost[unit].nil?
         notices << models_dev_notice(entry)
       end
     end
 
     RubyLLM::Model.new(model.to_h.merge(pricing:))
+  end
+
+  def stale_units(pricing, cost)
+    UNITS.map(&:to_sym).select { |unit| pricing.key?(unit) && cost[unit].nil? }
   end
 
   def models_dev_cost(model)

@@ -122,6 +122,24 @@ RSpec.describe ModelUnitPrices do
       expect(priced.pricing.to_h).to eq({})
     end
 
+    it 'drops a price an earlier refresh applied once its entry is removed' do
+      retained = model(pricing: { characters: { standard: { input_per_million: 15 } },
+                                  text_tokens: { standard: { input_per_million: 1 } } },
+                       metadata: { source: 'models.dev', cost: { input: 1 } })
+
+      priced = described_class.new([]).apply([retained]).first
+
+      expect(priced.pricing.to_h).to eq(text_tokens: { standard: { input_per_million: 1 } })
+    end
+
+    it 'drops a price an earlier refresh applied to a model models.dev does not price' do
+      retained = model(pricing: { audio_seconds: { standard: { input_per_million: 100 } } })
+
+      priced = described_class.new([]).apply([retained]).first
+
+      expect(priced.pricing.to_h).to eq({})
+    end
+
     it 'keeps a unit price models.dev gives itself' do
       upstream = model(pricing: { characters: { standard: { input_per_million: 16 } } },
                        metadata: { source: 'models.dev', cost: { characters: 16 } })
