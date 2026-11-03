@@ -135,7 +135,12 @@ When a model publishes a long-context tier, `cost_for` uses those rates once the
 
 ```ruby
 model.cost_for(chat).total
-model.cost_for(chat_record.to_llm).total # a Rails chat record
+```
+
+For a Rails chat record, price the chat it wraps:
+
+```ruby
+model.cost_for(Chat.find(chat_id).to_llm).total
 ```
 
 When one of the requests has unknown usage, `total` is `nil`, as `chat.cost.total` is.
