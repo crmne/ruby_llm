@@ -306,6 +306,20 @@ module RubyLLM
     end
   end
 
+  # Raised when a request never gets an answer from the provider: the
+  # connection is refused or drops, TLS fails, or the request times out.
+  # RubyLLM retries it first, following Configuration#max_retries. The
+  # original Faraday error is its +cause+.
+  #
+  #   rescue RubyLLM::ConnectionError => e
+  #     retry_later if e.timeout?
+  class ConnectionError < Error
+    # Returns whether the request timed out, rather than failing to connect.
+    def timeout?
+      cause.is_a?(Faraday::TimeoutError)
+    end
+  end
+
   # Raised for HTTP 401 responses when the API key is missing or invalid.
   class UnauthorizedError < Error
     def self.default_message # :nodoc:

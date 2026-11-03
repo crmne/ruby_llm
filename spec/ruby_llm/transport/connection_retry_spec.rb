@@ -159,6 +159,23 @@ RSpec.describe RubyLLM::Transport::Connection do
       expect(stub).to have_been_requested.twice
     end
 
+    {
+      'a refused connection' => [Errno::ECONNREFUSED.new, Faraday::ConnectionFailed, false],
+      'a timeout' => [Net::ReadTimeout.new, Faraday::TimeoutError, true],
+      'a TLS failure' => [OpenSSL::SSL::SSLError.new('certificate verify failed'), Faraday::SSLError, false]
+    }.each do |failure, (raised, wrapped, timeout)|
+      it "raises a RubyLLM::ConnectionError after retrying #{failure}" do
+        stub = stub_request(:post, 'https://api.openai.com/v1/chat/completions').to_raise(raised)
+
+        expect { provider.connection.post('chat/completions', {}) }.to raise_error(RubyLLM::ConnectionError) { |error|
+          expect(error.cause).to be_a(wrapped)
+          expect(error.provider).to eq('openai')
+          expect(error.timeout?).to be(timeout)
+        }
+        expect(stub).to have_been_requested.twice
+      end
+    end
+
     [429, 500, 503, 529].each do |status|
       it "honors millisecond retry delays for HTTP #{status}" do
         stub = stub_request(:post, 'https://api.openai.com/v1/chat/completions')
@@ -214,7 +231,7 @@ RSpec.describe RubyLLM::Transport::Connection do
       stub = stub_request(:post, 'https://api.anthropic.com/v1/messages/batches')
              .to_timeout.then.to_return(created_batch)
 
-      expect { provider.create_batch(requests) }.to raise_error(Faraday::ConnectionFailed)
+      expect { provider.create_batch(requests) }.to raise_error(RubyLLM::ConnectionError)
       expect(stub).to have_been_requested.once
     end
 
@@ -223,7 +240,7 @@ RSpec.describe RubyLLM::Transport::Connection do
              .to_raise(OpenSSL::SSL::SSLError.new('SSL_read: unexpected eof while reading'))
              .then.to_return(created_batch)
 
-      expect { provider.create_batch(requests) }.to raise_error(Faraday::SSLError)
+      expect { provider.create_batch(requests) }.to raise_error(RubyLLM::ConnectionError)
       expect(stub).to have_been_requested.once
     end
   end

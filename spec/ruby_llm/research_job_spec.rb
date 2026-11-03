@@ -44,6 +44,18 @@ RSpec.describe RubyLLM::ResearchJob do
     expect(job.cancellation_error.cause).to be_a(Faraday::TimeoutError)
   end
 
+  it 'reports a request that timed out on the connection as a research timeout' do
+    allow(protocol).to receive(:refresh_research_job) do
+      raise Faraday::TimeoutError, 'Read timed out'
+    rescue Faraday::TimeoutError
+      raise RubyLLM::ConnectionError, 'Read timed out'
+    end
+
+    expect { job.refresh }.to raise_error(described_class::TimeoutError) { |error|
+      expect(error.cause).to be_a(RubyLLM::ConnectionError)
+    }
+  end
+
   it 'preserves interruption semantics and the job handle after a blocking call is interrupted' do
     allow(described_class).to receive(:research_later).and_return(job)
     original = Interrupt.new('Stop waiting')

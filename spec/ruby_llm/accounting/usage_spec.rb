@@ -28,6 +28,24 @@ RSpec.describe 'RubyLLM::Accounting::Usage::Tracker' do
     expect(entry).to be_usage_available
   end
 
+  it 'records zero tokens when the refused connection arrives as a RubyLLM::ConnectionError' do
+    tracker = build_tracker
+    entry = tracker.start
+    error = begin
+      begin
+        raise Faraday::ConnectionFailed, Errno::ECONNREFUSED.new
+      rescue Faraday::ConnectionFailed
+        raise RubyLLM::ConnectionError, 'refused'
+      end
+    rescue RubyLLM::ConnectionError => e
+      e
+    end
+
+    tracker.fail_attempt(entry, error)
+
+    expect(entry.tokens.to_h).to eq(input_tokens: 0, output_tokens: 0)
+  end
+
   it 'records zero tokens for a failed TLS handshake' do
     tracker = build_tracker
     entry = tracker.start

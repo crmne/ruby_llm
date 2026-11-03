@@ -27,8 +27,7 @@ module RubyLLM
       ServerError,
       ServiceUnavailableError,
       OverloadedError,
-      Faraday::TimeoutError,
-      Faraday::ConnectionFailed
+      ConnectionError
     ].freeze
 
     # The model id of the fallback target.

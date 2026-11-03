@@ -111,7 +111,7 @@ RSpec.describe RubyLLM::Protocols::GPUStack::Videos do
     context.config.max_retries = 3
     request = stub_request(:post, base).to_raise(Faraday::TimeoutError)
 
-    expect { context.animate_later('A street', model:, provider: :gpustack) }.to raise_error(Faraday::TimeoutError)
+    expect { context.animate_later('A street', model:, provider: :gpustack) }.to raise_error(RubyLLM::ConnectionError)
     expect(request).to have_been_requested.once
   end
 

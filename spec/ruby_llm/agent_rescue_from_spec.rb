@@ -105,6 +105,13 @@ RSpec.describe RubyLLM::Agent do
       expect(agent.ask('hi')).to eq(:by_name)
     end
 
+    it 'rejects classes that are not StandardErrors when they are declared' do
+      [Interrupt, Exception, Comparable, Integer].each do |klass|
+        expect { Class.new(described_class) { rescue_from klass, with: :handle } }
+          .to raise_error(ArgumentError, /#{klass} is not a StandardError class/)
+      end
+    end
+
     it 'ignores handlers whose exception class is not defined' do
       agent = agent_raising(rate_limit) do
         rescue_from 'Namespace::NeverLoadedError', with: :handle
@@ -423,7 +430,7 @@ RSpec.describe RubyLLM::Agent do
     it 'rejects values that are neither a class nor a class name' do
       expect do
         Class.new(described_class) { rescue_from 42, with: :handle }
-      end.to raise_error(ArgumentError, /not an exception class/)
+      end.to raise_error(ArgumentError, /not a StandardError class or its name/)
     end
   end
 end

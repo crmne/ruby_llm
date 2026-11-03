@@ -9,6 +9,7 @@ module RubyLLM
       PROVIDER_KEY = :ruby_llm_provider
       STREAM_RESET_KEY = :ruby_llm_stream_reset
       STREAM_FAILURE_KEY = :ruby_llm_stream_failure
+      NETWORK_FAILURES = [Faraday::ConnectionFailed, Faraday::TimeoutError, Faraday::SSLError].freeze
 
       def initialize(app, options = {})
         super(app)
@@ -20,20 +21,26 @@ module RubyLLM
       # attempt must not leak into the next one, and a body the previous
       # attempt read to its end is sent again from its start.
       def call(env)
+        context = env[:request]&.context
+        provider = context&.[](PROVIDER_KEY) || @provider
+        attempt(env, context, provider)
+      rescue *NETWORK_FAILURES => e
+        raise ConnectionError.new(e.message, provider: (provider.slug if provider.respond_to?(:slug)))
+      end
+
+      private
+
+      def attempt(env, context, provider)
         env[:streaming_error_response] = nil
         env[:streaming_state] = nil
         env[:body].rewind if env[:body].respond_to?(:rewind)
-        context = env[:request]&.context
         context&.[](STREAM_RESET_KEY)&.call
-        provider = context&.[](PROVIDER_KEY) || @provider
         @app.call(env).on_complete do |response|
           apply_retry_delay(response, provider)
           context&.[](STREAM_FAILURE_KEY)&.call(response)
           self.class.parse_error(provider:, response: streaming_error_response(response))
         end
       end
-
-      private
 
       # The retry middleware only reads the standard Retry-After header, so
       # other retry hints are normalized into seconds here.

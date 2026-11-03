@@ -32,6 +32,7 @@ Provider/API operation errors inherit from `RubyLLM::Error`. Local setup and pro
 ```ruby
 RubyLLM::Error                    # Base error class for provider-operation issues
     RubyLLM::BadRequestError      # 400: Invalid request parameters
+    RubyLLM::ConnectionError      # The provider could not be reached or timed out
     RubyLLM::UnauthorizedError    # 401: API key issues
     RubyLLM::PaymentRequiredError # 402: Billing issues, such as an account out of credit
     RubyLLM::ForbiddenError       # 403: Permission issues
@@ -98,6 +99,9 @@ rescue RubyLLM::ContextLengthExceededError
 rescue RubyLLM::ServiceUnavailableError
   puts "The AI service is temporarily unavailable. Please try again later."
   # Maybe offer a fallback or notify user
+rescue RubyLLM::ConnectionError => e
+  puts e.timeout? ? "The request timed out." : "Could not reach the provider."
+  # e.cause holds the original Faraday error
 rescue RubyLLM::BadRequestError => e
   puts "Invalid request sent to the API: #{e.message}"
   # Check the data being sent
@@ -313,7 +317,7 @@ When you use [Agents]({% link _advanced/agents.md %}), `rescue_from` moves error
 
 ```ruby
 class ApplicationAgent < RubyLLM::Agent
-  rescue_from RubyLLM::RateLimitError, Faraday::TimeoutError, with: :handle_transient
+  rescue_from RubyLLM::RateLimitError, RubyLLM::ConnectionError, with: :handle_transient
 
   private
 
@@ -333,8 +337,7 @@ Retries are driven by error classification (exception types), not raw HTTP statu
 
 Retries are attempted for:
 
-*   Network timeouts (`Timeout::Error`, `Faraday::TimeoutError`, `Errno::ETIMEDOUT`)
-*   Connection failures (`Faraday::ConnectionFailed`, `Faraday::SSLError`)
+*   Network failures (`RubyLLM::ConnectionError`: timeouts, refused or dropped connections, and TLS failures)
 *   Rate limit errors (`RubyLLM::RateLimitError`, often HTTP 429)
 *   Server-side errors (`RubyLLM::ServerError`, `RubyLLM::ServiceUnavailableError`, `RubyLLM::OverloadedError` / HTTP 500, 502, 503, 504, 529)
 

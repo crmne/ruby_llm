@@ -214,13 +214,23 @@ module RubyLLM
     def request_with_timeout(timeout, &)
       Timeout.timeout(timeout, DeadlineExpired, &)
     rescue DeadlineExpired, Faraday::TimeoutError => e
-      raise TimeoutError.new("Research request timed out (job #{id})", job: self), cause: e
+      raise request_timed_out, cause: e
     rescue Error
       raise
+    rescue ConnectionError => e
+      raise e.timeout? ? request_timed_out : request_failed(e), cause: e
     rescue RubyLLM::Error, Faraday::Error => e
-      response = e.response if e.respond_to?(:response)
+      raise request_failed(e), cause: e
+    end
+
+    def request_timed_out
+      TimeoutError.new("Research request timed out (job #{id})", job: self)
+    end
+
+    def request_failed(error)
+      response = error.response if error.respond_to?(:response)
       @raw = response.body if response.respond_to?(:body)
-      raise Error.new("Research request failed: #{e.message} (job #{id})", job: self, response:), cause: e
+      Error.new("Research request failed: #{error.message} (job #{id})", job: self, response:)
     end
 
     # A job found by ID may have been submitted and recorded elsewhere, so

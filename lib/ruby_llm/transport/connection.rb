@@ -271,6 +271,7 @@ module RubyLLM
           Faraday::ConnectionFailed,
           Faraday::SSLError,
           Faraday::RetriableResponse,
+          RubyLLM::ConnectionError,
           RubyLLM::RateLimitError,
           RubyLLM::ServerError,
           RubyLLM::ServiceUnavailableError,
