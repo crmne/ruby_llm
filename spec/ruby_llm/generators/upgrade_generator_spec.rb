@@ -132,6 +132,24 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
     expect(migration).to include('add_column :conversations, :claimed_until, :datetime')
   end
 
+  { true => 'widens', false => 'leaves' }.each do |mysql, verb|
+    it "#{verb} the text columns that hold model output #{mysql ? 'on MySQL' : 'alone on other databases'}" do
+      generator = described_class.new([], {}, destination_root: destination, shell: Thor::Shell::Basic.new)
+      allow(generator).to receive(:mysql?).and_return(mysql)
+      generator.create_migration_file
+      migration = File.read(Dir.glob(File.join(destination, 'db/migrate/*_upgrade_ruby_llm_to_2_2.rb')).sole)
+      changes = [
+        '%i[content thinking_text thinking_signature].select',
+        'change_table :messages, bulk: true do |t|',
+        'message_columns.each { |column| t.change column, :text, size: :long }',
+        'change_column :ruby_llm_tool_calls, :thought_signature, :text, size: :long'
+      ]
+
+      changes.each { |change| expect(migration.include?(change)).to be(mysql) }
+      expect(migration).to include("t.text :content#{', size: :long' if mysql}\n")
+    end
+  end
+
   it 'leaves an up-to-date schema alone' do
     expect { ActiveRecord::Migration.suppress_messages { migration_class.migrate(:up) } }.not_to raise_error
   end

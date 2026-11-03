@@ -89,6 +89,22 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator do
     expect(files).to include('t.index [ :chat_type, :chat_id, :path ]')
   end
 
+  { true => ['long text', 'on MySQL', ', size: :long'], false => ['plain text', 'on other databases', ''] }
+    .each do |mysql, (kind, databases, size)|
+    it "stores model output in #{kind} columns #{databases}" do
+      generator = described_class.new([], {}, destination_root: destination, shell: Thor::Shell::Basic.new)
+      allow(generator).to receive(:mysql?).and_return(mysql)
+      generator.create_migration_files
+      migrations = Dir.glob(File.join(destination, 'db/migrate/*.rb')).map { |path| File.read(path) }.join("\n")
+      texts = migrations.lines.grep(/t\.text :(content|thinking_text|thinking_signature|thought_signature)\b/)
+
+      expect(texts.map(&:strip)).to contain_exactly(
+        "t.text :content#{size}", "t.text :thinking_text#{size}", "t.text :thinking_signature#{size}",
+        "t.text :thought_signature#{size}", "t.text :content#{size}"
+      )
+    end
+  end
+
   [nil, :uuid, :integer].each do |primary_key_type|
     context "with #{primary_key_type || 'default'} primary keys" do
       before do

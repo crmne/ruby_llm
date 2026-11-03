@@ -29,6 +29,18 @@ class <%= 'upgrade_ruby_llm_to_2_2'.camelize %> < ActiveRecord::Migration<%= mig
     unless column_exists?(:<%= message_table_name %>, :continuation)
       add_column :<%= message_table_name %>, :continuation, :text<%= ', size: :long' if mysql? %>
     end
+<% if mysql? -%>
+
+    message_columns = %i[content thinking_text thinking_signature].select do |column|
+      column_exists?(:<%= message_table_name %>, column)
+    end
+    if message_columns.any?
+      change_table :<%= message_table_name %>, bulk: true do |t|
+        message_columns.each { |column| t.change column, :text, size: :long }
+      end
+    end
+    change_column :ruby_llm_tool_calls, :thought_signature, :text, size: :long
+<% end -%>
 
     %i[workflow_id workflow_name workflow_step_id workflow_step_name].each do |column|
       add_column :ruby_llm_usages, column, :string unless column_exists?(:ruby_llm_usages, column)
@@ -39,7 +51,7 @@ class <%= 'upgrade_ruby_llm_to_2_2'.camelize %> < ActiveRecord::Migration<%= mig
       create_table :ruby_llm_queued_messages, id: :<%= reference_type %> do |t|
         t.references :chat, polymorphic: true, null: false, type: :<%= reference_type %>, index: false
         t.references :owner, polymorphic: true, type: :<%= reference_type %>, index: false
-        t.text :content
+        t.text :content<%= ', size: :long' if mysql? %>
         t.boolean :steer, default: true, null: false
         t.timestamps
 
