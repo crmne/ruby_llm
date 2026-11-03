@@ -18,6 +18,7 @@ After reading this guide, you will know:
 * How to drive the agentic loop yourself, one move at a time.
 * Why the loop is safe to interrupt and resume between moves.
 * How to queue messages that join a running loop or wait for its turn to end.
+* How to wrap, attribute, or withdraw a queued message as it joins.
 * How to implement common workflow patterns with plain Ruby classes.
 * How to compose sequential, routing, parallel, and fan-in workflows.
 * When to reach for an evaluator loop to iterate on output quality.
@@ -74,11 +75,11 @@ chat.queue "Then draft the board summary", steer: false
 chat.complete while chat.queued_messages.any?
 ```
 
-Every `ask`, `ask_later`, `complete`, or `step` first takes every queued message, steering or not, oldest first, before the model is asked and before the new question `ask` adds. Within one `complete`, after that first moment, only steering messages join, so a steering message can join before a waiting one queued earlier. Messages that join together become separate user messages, in order.
+Every `ask`, `ask_later`, `complete`, or `step` that starts a turn first takes every queued message, steering or not, oldest first, before the model is asked and before the new question `ask` adds. Within one turn, after that first moment, only steering messages join, so a steering message can join before a waiting one queued earlier. Messages that join together become separate user messages, in order.
 
 `queue` never runs the loop. When nothing is running, call `complete` yourself. A few more rules:
 
-* While the chat is `waiting?` on an approval, an input, or a task, nothing joins: the round's tool calls need their results first. Record the decision and call `complete`. The tools run, then the queued messages join.
+* While the chat is `waiting?` on an approval, an input, or a task, nothing joins: the round's tool calls need their results first. Record the decision and call `complete`. The tools run, then the steering messages join. The resumed turn is the same turn, so messages queued with `steer: false` keep waiting for the next one.
 * `cancel` stops the loop and leaves the queue as it is. The next `ask` or `complete` takes those messages as ordinary user messages.
 * `unqueue` withdraws a message before the loop takes it. It returns `false` once the loop has taken it, so a Cancel button and the loop can race safely.
 * `queued_messages` lists what waits, oldest first, as `RubyLLM::QueuedMessage` values with `content`, `attachments`, `owner`, `queued_at`, and `steer?`.
@@ -89,7 +90,40 @@ chat.queued_messages # => [#<RubyLLM::QueuedMessage ...>]
 chat.unqueue(queued) # => true
 ```
 
-`owner` is stored with the message and handed back on it. RubyLLM does not interpret it, so use it for whatever your application needs to know about who asked. [Queue events]({% link _core_features/chat-callbacks.md %}#queue-events) tell you when a message is queued, joins, or is withdrawn. With Rails, queued messages live in their own table, so a request can queue a message for a reply a job is running; see [Queued Messages]({% link _advanced/rails-persistence.md %}#queued-messages).
+`owner` is stored with the message and handed back on it. RubyLLM does not interpret it, so use it for whatever your application needs to know about who asked.
+
+### Joining Queued Messages
+
+`around_join` wraps the moment a queued message joins the conversation. The block receives the queued message and `join`. Call `join.call` to add the user message; it returns the message:
+
+```ruby
+chat.around_join do |queued, join|
+  message = join.call
+  AuditLog.record(queued.owner, message.content)
+end
+```
+
+A block that never calls `join` withdraws the message. It leaves the queue without joining, `after_unqueue` runs for it, and the turn goes on without it:
+
+```ruby
+chat.around_join do |queued, join|
+  join.call unless queued.owner.blocked?
+end
+```
+
+If the block raises, the message stays queued and out of the conversation, and the error reaches the caller of `complete`. Several `around_join` blocks nest in the order you register them, the first outermost, like Rails around callbacks. When an inner block withdraws the message, `join.call` in an outer block returns `nil`. Agents declare them with the `around_join` class macro.
+
+`join_queued_messages` joins everything waiting, steering or not, without asking the model. Each message goes through `around_join` and `after_join`, and you get back the messages that joined:
+
+```ruby
+chat.queue "Use the EU numbers"
+chat.queue "Then draft the board summary", steer: false
+chat.join_queued_messages.map(&:content) # => ["Use the EU numbers", "Then draft the board summary"]
+```
+
+Like `ask_later`, it raises `RubyLLM::PendingToolCallsError` while tool calls wait for their results.
+
+[Queue events]({% link _core_features/chat-callbacks.md %}#queue-events) tell you when a message is queued, joins, or is withdrawn. With Rails, queued messages live in their own table, so a request can queue a message for a reply a job is running; see [Queued Messages]({% link _advanced/rails-persistence.md %}#queued-messages).
 
 ## Workflow Patterns
 

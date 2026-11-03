@@ -8,6 +8,8 @@ module RubyLLM
     # so any process can queue one and the process running the chat takes
     # it. Taking or unqueuing deletes the row, and only the process whose
     # delete removes it goes on, so each message joins once or not at all.
+    # Joining runs Chat#around_join inside the transaction that deletes the
+    # row, so a callback that raises puts the row back.
     class ChatQueue # :nodoc:
       include AttachmentHelpers
 
@@ -44,22 +46,32 @@ module RubyLLM
         return unless available?
 
         read { scope(steering_only).to_a }.each do |queued|
-          message = take_one(queued)
-          yield message, queued if message
+          taken = take_one(queued)
+          yield taken.first, queued if taken
         end
       end
 
       private
 
       def take_one(queued)
+        taken = nil
         QueuedMessage.transaction do
           next unless QueuedMessage.where(id: queued.id).delete_all == 1
 
-          blobs = queued.attachments.blobs.to_a if attachments?(queued)
-          message = @chat.add_message(role: :user, content: queued.content, attachments: blobs)
-          detach(queued) if blobs
-          message
+          taken = [@chat.to_llm.run_around_join(queued) { |**attributes| join(queued, attributes) }]
+        rescue StandardError
+          @chat.messages_association.reset
+          raise
         end
+        queued.attachments.purge_later if taken == [nil] && attachments?(queued)
+        taken
+      end
+
+      def join(queued, attributes)
+        blobs = queued.attachments.blobs.to_a if attachments?(queued)
+        message = @chat.persist_message({ role: :user, content: queued.content, attachments: blobs }, attributes)
+        detach(queued) if blobs
+        message
       end
 
       def detach(queued)

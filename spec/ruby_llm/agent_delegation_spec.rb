@@ -34,18 +34,51 @@ RSpec.describe RubyLLM::Agent do
     chat = RubyLLM.chat(model: model_for(:openai))
     agent = Class.new(described_class).new(chat:)
 
-    %i[after_queue after_join after_unqueue].each do |callback|
+    %i[after_queue around_join after_join after_unqueue].each do |callback|
       allow(chat).to receive(callback).and_return(chat)
 
       expect(agent.public_send(callback) { nil }).to be(chat)
     end
   end
 
+  it 'delegates join_queued_messages to the underlying chat' do
+    chat = RubyLLM.chat(model: model_for(:openai))
+    chat.queue('Hello')
+
+    expect(Class.new(described_class).new(chat:).join_queued_messages.map(&:content)).to eq(['Hello'])
+  end
+
+  it 'applies around_join callbacks declared on the class, inherited by subclasses' do
+    events = []
+    parent = Class.new(described_class) do
+      around_join do |queued, join|
+        events << [:parent, queued.content]
+        join.call
+      end
+    end
+    child = Class.new(parent) do
+      around_join do |_queued, join|
+        events << :child
+        join.call
+      end
+    end
+    chat = RubyLLM.chat(model: model_for(:openai))
+    agent = child.new(chat:)
+    child.new(chat:)
+    chat.queue('Hello')
+
+    agent.join_queued_messages
+
+    expect(events).to eq([[:parent, 'Hello'], :child])
+    expect(parent.around_join_callbacks.size).to eq(1)
+    expect { parent.around_join }.to raise_error(ArgumentError)
+  end
+
   it 'classifies every method defined on Chat' do
     expected_missing_methods = %i[
       approval_pending? continue_turn fallback_errors
       message_queue= messages= prepare_message raise_if_pending_tool_calls!
-      raise_if_prompt_attachments! run= take_queued_messages tool_call_state= tool_prefs
+      raise_if_prompt_attachments! run= run_around_join take_queued_messages tool_call_state= tool_prefs
       add_usage_entry usage_entries usage_entries=
     ]
 
