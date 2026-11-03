@@ -34,6 +34,9 @@ module RubyLLM
       REFRESH_EARLY = 60
       ASSERTION_FOR = 60
       GRANTS = %i[authorization_code client_credentials jwt_bearer].freeze
+      RESERVED_AUTHORIZATION_PARAMS = %w[
+        client_id redirect_uri state code_challenge code_challenge_method response_type resource scope
+      ].freeze
       JWT_BEARER = 'urn:ietf:params:oauth:grant-type:jwt-bearer'
       TOKEN_EXCHANGE = 'urn:ietf:params:oauth:grant-type:token-exchange'
       ID_JAG = 'urn:ietf:params:oauth:token-type:id-jag'
@@ -98,8 +101,8 @@ module RubyLLM
       end
 
       def initialize(server_url, owner:, scopes: nil, client_id: nil, client_secret: nil, grant: nil,
-                     private_key: nil, assertion: nil, identity_provider: nil, config: RubyLLM.config,
-                     resolve: ->(value) { value })
+                     private_key: nil, assertion: nil, identity_provider: nil, authorization_params: nil,
+                     config: RubyLLM.config, resolve: ->(value) { value })
         HTTP.parse(server_url)
         @server_url = server_url.to_s
         @owner = owner
@@ -109,6 +112,7 @@ module RubyLLM
         @private_key = resolve.call(private_key)
         @assertion = assertion
         @identity_provider = identity_provider
+        @authorization_params = authorization_params
         @grant = grant || (assertion || identity_provider ? :jwt_bearer : :authorization_code)
         @resolve = resolve
         @config = config
@@ -189,8 +193,15 @@ module RubyLLM
                   code_challenge: Base64.urlsafe_encode64(Digest::SHA256.digest(verifier), padding: false),
                   code_challenge_method: 'S256', resource:, scope: pending['scope'] }.compact
         uri = URI(endpoint(server['authorization_endpoint']))
-        uri.query = URI.encode_www_form(URI.decode_www_form(uri.query.to_s) + query.to_a)
+        uri.query = URI.encode_www_form(URI.decode_www_form(uri.query.to_s) + extra_authorization_params + query.to_a)
         uri.to_s
+      end
+
+      def self.check_authorization_params(params) # :nodoc:
+        reserved = params.keys.map(&:to_s) & RESERVED_AUTHORIZATION_PARAMS
+        return params if reserved.empty?
+
+        raise ArgumentError, "RubyLLM sets #{reserved.join(', ')} itself; remove it from authorization_params"
       end
 
       def authorize(params)
@@ -210,6 +221,11 @@ module RubyLLM
 
       def credential
         @credential ||= store.read(key)
+      end
+
+      def extra_authorization_params
+        params = Hash(@resolve.call(@authorization_params))
+        self.class.check_authorization_params(params).map { |name, value| [name.to_s, @resolve.call(value).to_s] }
       end
 
       def write(data)

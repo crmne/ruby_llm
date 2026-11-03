@@ -207,11 +207,22 @@ module RubyLLM
       #   oauth owner: :user, client_id: ENV["WIKI_CLIENT_ID"], client_secret: ENV["WIKI_CLIENT_SECRET"],
       #         identity_provider: { issuer: "https://acme.okta.com", client_id: ENV["OKTA_CLIENT_ID"],
       #                              client_secret: ENV["OKTA_CLIENT_SECRET"], id_token: -> { user.id_token } }
+      #
+      # +authorization_params:+ adds query parameters to MCP#authorization_url
+      # that the authorization server needs, such as Google's
+      # +access_type+, which it requires before it issues a refresh token.
+      # It may be a block or method name, and so may its values. The
+      # parameters RubyLLM sets itself, such as +client_id+, +state+, and
+      # +scope+, raise ArgumentError.
+      #
+      #   oauth authorization_params: { access_type: "offline", prompt: "consent" }
       def oauth(owner: nil, scopes: nil, client_id: nil, client_secret: nil, grant: nil, private_key: nil,
-                assertion: nil, identity_provider: nil)
+                assertion: nil, identity_provider: nil, authorization_params: nil)
         raise ArgumentError, "Unknown OAuth grant: #{grant}" unless grant.nil? || OAuth::GRANTS.include?(grant)
 
-        @oauth = { owner:, scopes:, client_id:, client_secret:, grant:, private_key:, assertion:, identity_provider: }
+        OAuth.check_authorization_params(authorization_params) if authorization_params.is_a?(Hash)
+        @oauth = { owner:, scopes:, client_id:, client_secret:, grant:, private_key:, assertion:, identity_provider:,
+                   authorization_params: }
       end
 
       def oauth_settings # :nodoc:

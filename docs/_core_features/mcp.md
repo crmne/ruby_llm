@@ -775,6 +775,17 @@ end
 
 An app belongs to the authorization server you registered it with. RubyLLM remembers that server the first time it uses the app's credentials, and if the MCP server later names another one, it raises `RubyLLM::MCP::Error` instead of sending them there. Register an app with the new authorization server and pass its credentials.
 
+Some authorization servers need extra parameters on the authorization URL. Google, for example, issues a refresh token only with `access_type=offline`, and issues one again only with `prompt=consent`, so a Google-hosted MCP server would otherwise lose its grant after an hour. Pass them as `authorization_params:`:
+
+```ruby
+class BigQuery < RubyLLM::MCP
+  url "https://bigquery.googleapis.com/mcp"
+  oauth authorization_params: { access_type: "offline", prompt: "consent" }
+end
+```
+
+They can be a block or method name, like other `oauth` options. RubyLLM raises `ArgumentError` for the parameters it sets itself, such as `client_id`, `state`, and `scope`.
+
 Pass `scopes:` to ask for specific scopes instead of the ones the server suggests.
 
 A server that needs a scope the token lacks raises `RubyLLM::MCP::InsufficientScopeError`, a `RubyLLM::ForbiddenError` whose message carries the server's reason and whose `scopes` lists what it asked for. RubyLLM never asks for wider access by itself, so a model's tool call cannot grant itself more permissions. Decide which scopes your app needs, add them to `scopes:`, and send the user through `authorization_url` again:
