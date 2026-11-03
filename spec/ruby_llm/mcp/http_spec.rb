@@ -367,6 +367,35 @@ RSpec.describe RubyLLM::MCP::HTTP do
       expect(initializations).to have_been_made.twice
     end
 
+    it 'keeps the session a request started while another request waited on the old one' do
+      client.request('tools/list')
+      recovered_meanwhile = lambda do |_request|
+        ended << 'session-1'
+        client.request('tools/list')
+        { status: 404, body: '' }
+      end
+      stub_request(:post, url)
+        .with { |request| JSON.parse(request.body)['method'] == 'tools/call' }
+        .to_return(recovered_meanwhile, { headers: { 'Content-Type' => 'application/json' },
+                                          body: json_rpc(result: { content: [] }) })
+
+      expect(client.request('tools/call')).to eq('content' => [])
+      expect(initializations).to have_been_made.twice
+    end
+
+    it 'keeps the session a request started while the session stream waited on the old one' do
+      client.request('tools/list')
+      stub_request(:get, url).to_return do
+        ended << 'session-1'
+        client.request('tools/list')
+        { status: 404, body: '' }
+      end
+
+      expect { client.listen({}) { nil } }.to raise_error(RubyLLM::MCP::SessionExpired)
+      expect(initializations).to have_been_made.twice
+      expect(a_request(:get, url).with(headers: { 'Mcp-Session-Id' => 'session-1' })).to have_been_made.once
+    end
+
     it 'gives callable headers the HTTP method of each request' do
       verbs = []
       headers = lambda do |verb|

@@ -270,12 +270,14 @@ RSpec.describe RubyLLM::MCP::Client do
           @sent = Queue.new
           @session = 0
           @ended = []
+          @pauses = Queue.new
           @holds = Queue.new
           @held = Queue.new
           @released = Queue.new
         end
 
         def end_session = @ended << @session
+        def pause(count) = count.times { @pauses << true }
         def hold(count) = count.times { @holds << true }
         def held = @held.pop
         def release = @released << true
@@ -286,7 +288,9 @@ RSpec.describe RubyLLM::MCP::Client do
           when 'server/discover'
             { 'id' => message[:id], 'error' => { 'code' => -32_601, 'message' => 'Not found' } }
           when 'initialize' then start_session(message)
-          else { 'id' => message[:id], 'result' => { 'session' => current_session } }
+          else
+            wait(@pauses)
+            { 'id' => message[:id], 'result' => { 'session' => current_session } }
           end
         end
 
@@ -297,24 +301,30 @@ RSpec.describe RubyLLM::MCP::Client do
 
         def notify(message, **) = @sent << message[:method]
         def cancel(*, **) = nil
-        def close = nil
+        def close = @closed = true
+        def session = (@session unless @closed)
 
         private
 
         def start_session(message)
+          @closed = false
           @session += 1
           { 'id' => message[:id], 'result' => { 'protocolVersion' => '2025-06-18', 'capabilities' => {} } }
         end
 
         def current_session
           session = @session
-          if @holds.pop(timeout: 0)
-            @held << true
-            @released.pop
-          end
-          raise RubyLLM::MCP::SessionExpired, 'ended' if @ended.include?(session)
+          wait(@holds)
+          raise RubyLLM::MCP::SessionExpired.new('ended', session:) if @ended.include?(session)
 
           session
+        end
+
+        def wait(gates)
+          return unless gates.pop(timeout: 0)
+
+          @held << true
+          @released.pop
         end
       end
     end
@@ -365,6 +375,20 @@ RSpec.describe RubyLLM::MCP::Client do
 
       expect(threads.map { |thread| finish(thread) }).to eq([{ 'session' => 2 }, { 'session' => 2 }])
       expect(sent_since_last_check.count('initialize')).to eq(1)
+    end
+
+    it 'starts a new session when a request is sent on a session another thread started and that one ends' do
+      mcp_client
+      server.end_session
+      server.pause(1)
+
+      request = Thread.new { mcp_client.request('tools/list') }
+      server.held
+      expect(mcp_client.request('tools/list')).to eq('session' => 2)
+      server.end_session
+      server.release
+
+      expect(finish(request)).to eq('session' => 3)
     end
 
     it 'keeps the new session a request started while a listener waited on the old one' do

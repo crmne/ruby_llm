@@ -49,6 +49,9 @@ module RubyLLM
         end
       end
 
+      # The session of a server that predates 2026-07-28: the process it was initialized in, or +nil+.
+      attr_reader :session
+
       def initialize(command, env: {}, directory: nil, timeout: nil, config: RubyLLM.config)
         @command = Array(command).map(&:to_s)
         @env = env.to_h { |key, value| [key.to_s, value.to_s] }
@@ -105,7 +108,7 @@ module RubyLLM
       def check_session(version)
         return if version.nil? || version == Client::VERSION || (@process&.alive? && @process.equal?(@session))
 
-        raise SessionExpired, "#{name} exited"
+        raise SessionExpired.new("#{name} exited", session: @session)
       end
 
       def subscribe(subscription, message)

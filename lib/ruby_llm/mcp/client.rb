@@ -58,10 +58,10 @@ module RubyLLM
       end
 
       def request(method, params = {}, headers: {}, &)
-        session = server
+        server
         call(method, params, headers:, &)
-      rescue SessionExpired
-        reconnect(session)
+      rescue SessionExpired => e
+        reconnect(e.session)
         call(method, params, headers:, &)
       end
 
@@ -170,17 +170,16 @@ module RubyLLM
         uris.each { |uri| request('resources/subscribe', { uri: }) }
         @subscribed = uris
         request('ping')
-        session = @server
         listened = changes.except(:taskIds).transform_keys(&:to_s)
         yield({ 'method' => ACKNOWLEDGED, 'params' => { 'notifications' => listened } })
         @transport.listen(nil, version:, &)
-      rescue SessionExpired
-        reconnect(session)
+      rescue SessionExpired => e
+        reconnect(e.session)
         raise
       end
 
       def reconnect(expired)
-        @connecting.synchronize { @server = handshake if @server.nil? || @server.equal?(expired) }
+        @connecting.synchronize { @server = handshake if @server.nil? || @transport.session.equal?(expired) }
       end
 
       def cancels?(notification, request)

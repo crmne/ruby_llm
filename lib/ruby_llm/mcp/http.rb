@@ -49,6 +49,9 @@ module RubyLLM
         LOOPBACK_HOSTS.include?(URI(url.to_s).hostname)
       end
 
+      # The session of a server that predates 2026-07-28: the ID the server gave its session, or +nil+.
+      attr_reader :session
+
       def initialize(url, headers: {}, timeout: nil, unauthorized: nil, responded: nil, idempotent: nil,
                      config: RubyLLM.config)
         @url = self.class.parse(url)
@@ -138,7 +141,7 @@ module RubyLLM
 
         responded(e.response[:headers])
         return stream if answered?(stream)
-        raise SessionExpired, "#{@url.host} ended the session" if expired?(e.response, message, session)
+        raise SessionExpired.new("#{@url.host} ended the session", session:) if expired?(e.response, message, session)
 
         recovery = recover(e.response, recovered)
         if recovery
@@ -158,22 +161,23 @@ module RubyLLM
       end
 
       def listen_to_session(version:, &on_notification)
+        session = @session
         stream = Stream.new(nil, &receiver(version, on_notification))
-        get(stream, version:, connection: streams)
+        get(stream, version:, connection: streams, session:)
         nil
       rescue Faraday::Error => e
         raise Error, e.message unless e.response
-        raise SessionExpired, "#{@url.host} ended the session" if e.response[:status] == 404 && @session
+        raise SessionExpired.new("#{@url.host} ended the session", session:) if e.response[:status] == 404 && session
         raise Error.new("#{@url.host} sends no events", code: Client::METHOD_NOT_FOUND) if e.response[:status] == 405
 
         raise failure(e.response, stream)
       end
 
-      def get(stream, version:, timeout: nil, last_event_id: nil, connection: @connection)
+      def get(stream, version:, timeout: nil, last_event_id: nil, connection: @connection, session: @session)
         stream.read do
           connection.get(@url) do |request|
             request.headers.update({ 'Accept' => 'text/event-stream', 'MCP-Protocol-Version' => version,
-                                     'Mcp-Session-Id' => @session, 'Last-Event-ID' => last_event_id }.compact)
+                                     'Mcp-Session-Id' => session, 'Last-Event-ID' => last_event_id }.compact)
             request.headers.update(custom_headers('GET'))
             stream.attach(request, timeout)
           end
