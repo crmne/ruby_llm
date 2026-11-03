@@ -5,16 +5,9 @@ module RubyLLM
     module Perplexity
       # Perplexity's Agent API, a dialect of the Responses API. A request names
       # either a preset, which bundles a model, search settings, and
-      # instructions, or a model in provider/model form. The retired Sonar
-      # model ids run the presets Perplexity recommends in their place.
+      # instructions, or a model in provider/model form.
       class Agent < Responses
         PRESETS = %w[fast low medium high xhigh wide-research].freeze
-        SONAR_PRESETS = {
-          'sonar' => 'fast',
-          'sonar-pro' => 'low',
-          'sonar-reasoning-pro' => 'medium',
-          'sonar-deep-research' => 'high'
-        }.freeze
         SERVER_TOOL_USAGE_NAMES = { 'search_web' => 'web_search', 'fetch_url' => 'web_fetch' }.freeze
 
         def completion_url
@@ -24,11 +17,10 @@ module RubyLLM
         def render_payload(messages, model:, max_output_tokens: nil, **)
           max_output_tokens ||= default_max_output_tokens(model)
           payload = super
-          preset = preset_for(model.id)
-          return payload unless preset
+          return payload unless PRESETS.include?(model.id)
 
           payload.delete(:model)
-          payload.merge(preset: preset)
+          payload.merge(preset: model.id)
         end
 
         def render_document(document)
@@ -43,19 +35,6 @@ module RubyLLM
 
         def default_max_output_tokens(model)
           model.max_output_tokens || Anthropic::DEFAULT_MAX_OUTPUT_TOKENS if model.id.start_with?('anthropic/')
-        end
-
-        def preset_for(model_id)
-          return model_id if PRESETS.include?(model_id)
-
-          preset = SONAR_PRESETS[model_id]
-          if preset
-            RubyLLM.deprecator.warn(
-              "Perplexity retires Sonar on September 27, 2026. #{model_id} now runs the #{preset} " \
-              "Agent API preset; use model: \"#{preset}\" instead."
-            )
-          end
-          preset
         end
 
         def parse_citations(data, output, content)

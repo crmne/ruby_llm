@@ -270,6 +270,14 @@ A retry that recovered from an HTTP 5xx left `chat.cost.total` `nil`, because th
 
 In 2.1, the `search_files` tool ran your converters on every file it searched, so one search could send every uncached PDF and image through paid OCR. In 2.2 it searches text files and text already extracted, and lists the files it skipped. The model reads those with `read_file`, or your code extracts them first with `chat.file_store.text(path)`.
 
+## Sonar Model Names No Longer Run Perplexity Presets
+
+Perplexity retired Sonar on September 27, 2026. In 2.1, `sonar`, `sonar-pro`, `sonar-reasoning-pro`, and `sonar-deep-research` ran the presets Perplexity recommended in their place, with a deprecation warning. In 2.2 RubyLLM sends them as model names and Perplexity answers. Name the preset instead: `fast` for `sonar`, `low` for `sonar-pro`, `medium` for `sonar-reasoning-pro`, and `high` for `sonar-deep-research`.
+
+```ruby
+RubyLLM.chat(model: "fast", provider: :perplexity)
+```
+
 ## Batches Picked Up by ID Report Usage
 
 A batch collected through `Batch.find` without its chats or requests now reports its usage, to `usage.ruby_llm` and the ledger, once the batch is complete, once per `Batch` object. It reported nothing in 2.1. Collecting the same batch that way from two processes reports it twice, so collect each one in one place.

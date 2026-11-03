@@ -79,11 +79,13 @@ RSpec.describe RubyLLM::Protocols::Perplexity::Agent do
     expect(payload).not_to have_key(:model)
   end
 
-  it 'runs a retired Sonar model id as its recommended preset and warns' do
+  it 'sends a retired Sonar model id as a model, for Perplexity to answer' do
     allow(RubyLLM.deprecator).to receive(:warn)
+    payload = preset_chat('sonar-pro').render
 
-    expect(preset_chat('sonar-pro').render).to include(preset: 'low')
-    expect(RubyLLM.deprecator).to have_received(:warn).with(/sonar-pro now runs the low Agent API preset/)
+    expect(payload).to include(model: 'sonar-pro')
+    expect(payload).not_to have_key(:preset)
+    expect(RubyLLM.deprecator).not_to have_received(:warn)
   end
 
   it 'caps the output of Anthropic models, which Perplexity requires' do
