@@ -66,6 +66,31 @@ RSpec.describe RubyLLM::ActiveRecord::MessageBroadcasting do
       expect(broadcasts.last).to eq([:broadcast_refresh_to, [chat], {}])
     end
 
+    it 'broadcasts, streams, and persists split think tags the same way' do
+      allow(RubyLLM.config).to receive(:split_think_tags).and_return(true)
+      events = ['<thi', 'nk>reas', 'oning</th', "ink>\nAns", 'wer <think>'].map do |piece|
+        "data: #{JSON.generate(model: model_for(:deepseek), choices: [{ delta: { content: piece } }])}\n\n"
+      end
+      stub_request(:post, 'https://api.deepseek.com/chat/completions')
+        .to_return(body: "#{events.join}data: [DONE]\n\n", headers: { 'Content-Type' => 'text/event-stream' })
+      chat = BroadcastChat.create!(model: model_for(:deepseek), provider: :deepseek)
+      streamed = []
+
+      reply = chat.ask('Think first') do |chunk|
+        streamed << chunk
+        chunk.broadcast
+      end
+
+      record = chat.messages.last.reload
+      sent = broadcasts.filter_map { |action, _, options| options[:content] if action == :broadcast_append_to }
+      expect([reply.content, reply.thinking.text]).to eq(['Answer <think>', 'reasoning'])
+      expect([record.content, record.thinking_text]).to eq(['Answer <think>', 'reasoning'])
+      expect(streamed.filter_map(&:content).join).to eq('Answer <think>')
+      expect(streamed.filter_map { |chunk| chunk.thinking&.text }.join).to eq('reasoning')
+      expect(sent.join).to include('Ans').and include('wer &lt;think&gt;')
+      expect(sent.join).not_to include('reas')
+    end
+
     it 'broadcasts a chunk a record builds for a test' do
       chat = BroadcastChat.create!(model: model_for(:openai))
       message = chat.messages.create!(role: :assistant, content: '')

@@ -243,6 +243,7 @@ RubyLLM.configure do |config|
   config.tool_concurrency = false # true/:threads or :fibers
   config.max_run_time = Integer # Seconds before a persisted chat's run counts as crashed; defaults to 600
   config.broadcast_messages = false # acts_as_message broadcasts chats with Turbo; the chat UI generator turns it on
+  config.split_think_tags = false # true moves a leading <think> block into thinking on Chat Completions
 
   # Code Execution
   config.sandbox = "ApplicationSandbox" # The name of an MXC::Sandbox class or your own sandbox; defaults to nil

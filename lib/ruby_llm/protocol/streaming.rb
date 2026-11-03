@@ -35,9 +35,20 @@ module RubyLLM
         end
         raise Error.new('Provider returned no stream events', response:) unless received
 
+        if (remainder = stream_remainder)
+          accumulator.add remainder
+          block.call remainder
+        end
+
         message = accumulator.to_message(response)
         RubyLLM.logger.debug { "Stream completed: #{message.content}" }
         message
+      end
+
+      # Returns a last Chunk for text a protocol held back while streaming,
+      # or +nil+.
+      def stream_remainder
+        nil
       end
 
       # Posts +payload+ to +url+ as a server-sent event stream, yielding each

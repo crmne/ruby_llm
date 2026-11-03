@@ -358,6 +358,16 @@ module RubyLLM
     option :redact_error_messages, false
 
     ##
+    # :attr_accessor: split_think_tags
+    #
+    # Whether Chat Completions responses that open with a
+    # <tt><think>...</think></tt> block move that block into the
+    # message's thinking. Turn it on for servers that leave reasoning
+    # inline, such as llama.cpp with <tt>--reasoning-format none</tt>.
+    # A +reasoning_content+ field still wins. Default: +false+.
+    option :split_think_tags, false
+
+    ##
     # :attr_accessor: faraday_adapter
     #
     # Faraday adapter used for HTTP requests. Default: +:net_http+.

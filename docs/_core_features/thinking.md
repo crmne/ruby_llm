@@ -19,6 +19,7 @@ After reading this guide, you will know:
 * How to control extended thinking with `with_thinking`
 * How effort and budget are sent to providers
 * How to access thinking output in responses and streams
+* How to separate reasoning that a server leaves inside the answer
 * How to persist thinking data with ActiveRecord
 
 ## What is Extended Thinking?
@@ -101,6 +102,41 @@ end
 ```
 
 Some providers only expose thinking in the final response. In those cases, `response.thinking` is populated after the stream completes, and `chunk.thinking` stays empty.
+
+## Reasoning Inside the Answer
+
+Some OpenAI-compatible servers leave a model's reasoning in the answer, wrapped in `<think>` tags: llama.cpp with `--reasoning-format none`, chat templates that do not separate it, and some proxies. The reasoning then shows up as answer text, is stored as content, and goes back to the model on every later turn.
+
+Turn on `split_think_tags` to move it into `thinking`:
+
+```ruby
+RubyLLM.configure do |config|
+  config.openai_api_base = "http://localhost:8080/v1" # llama.cpp
+  config.openai_protocol = :chat_completions
+  config.split_think_tags = true
+end
+
+chat = RubyLLM.chat(model: "qwen3", provider: :openai, assume_model_exists: true)
+response = chat.ask("What is 15 * 23?")
+response.content        # => "345"
+response.thinking.text  # => "15 * 20 is 300, and 15 * 3 is 45..."
+```
+
+RubyLLM splits only a `<think>...</think>` block at the very start of the answer, after at most 64 bytes of leading whitespace. A `<think>` tag later in the answer, such as one in a code example, stays in the content. A block the model never closed, because it ran out of tokens, counts as thinking. When the server also sends reasoning in its own field, such as `reasoning_content`, that field wins and the content stays as it is.
+
+Streaming works the same way. Each chunk carries its part of the reasoning in `chunk.thinking` as it arrives, even when a tag is cut across chunks, and the content chunks, the final message, Turbo broadcasts, and the persisted record all agree.
+
+The setting applies to the Chat Completions API and is off by default. To turn it on for one server only, set it in a [context]({% link _getting_started/configuration-connection.md %}#contexts-isolated-configurations):
+
+```ruby
+llama = RubyLLM.context do |config|
+  config.openai_api_base = "http://localhost:8080/v1"
+  config.openai_protocol = :chat_completions
+  config.split_think_tags = true
+end
+
+llama.chat(model: "qwen3", provider: :openai, assume_model_exists: true).ask("Hello")
+```
 
 ## ActiveRecord Integration
 

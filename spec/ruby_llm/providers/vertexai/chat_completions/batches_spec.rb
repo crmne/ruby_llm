@@ -8,7 +8,8 @@ RSpec.describe RubyLLM::Providers::VertexAI::ChatCompletions::Batches do
       RubyLLM::Configuration,
       logger: nil,
       vertexai_batch_gcs_uri: 'gs://ruby-llm-batches/test',
-      faraday_adapter: :net_http
+      faraday_adapter: :net_http,
+      split_think_tags: false
     )
   end
   let(:provider) { instance_double(RubyLLM::Providers::VertexAI, slug: 'vertexai') }
