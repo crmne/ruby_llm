@@ -135,7 +135,7 @@ module RubyLLM
         remember(message, version, stream.headers)
         stream
       rescue Faraday::Error => e
-        raise unanswered(e) unless e.response
+        raise unanswered(e, stream) unless e.response
 
         responded(e.response[:headers])
         return stream if answered?(stream)
@@ -164,7 +164,7 @@ module RubyLLM
         get(stream, version:, connection: streams, session:)
         nil
       rescue Faraday::Error => e
-        raise unanswered(e) unless e.response
+        raise unanswered(e, stream) unless e.response
         raise SessionExpired.new("#{@url.host} ended the session", session:) if e.response[:status] == 404 && session
         raise Error.new("#{@url.host} sends no events", code: Client::METHOD_NOT_FOUND) if e.response[:status] == 405
 
@@ -301,7 +301,9 @@ module RubyLLM
         InsufficientScopeError.new(message, scopes: challenge[:scope].to_s.split, **details)
       end
 
-      def unanswered(error)
+      def unanswered(error, stream)
+        return error if stream.raised?(error)
+
         ConnectionError.new(error.message, provider: @url.host)
       end
 
@@ -351,14 +353,18 @@ module RubyLLM
           self
         rescue Abandoned
           self
-        rescue Faraday::ConnectionFailed
-          raise unless events?
+        rescue Faraday::ConnectionFailed => e
+          raise if raised?(e) || !events?
 
           self
-        rescue Faraday::TimeoutError
-          raise unless answer
+        rescue Faraday::TimeoutError => e
+          raise if raised?(e) || !answer
 
           self
+        end
+
+        def raised?(error)
+          @raised.equal?(error)
         end
 
         def feed(chunk, _size = nil, env = nil)
@@ -417,10 +423,17 @@ module RubyLLM
         def receive(data)
           parsed = JSON.parse(data)
           (parsed.is_a?(Array) ? parsed : [parsed]).grep(Hash).each do |reply|
-            reply['method'] ? @on_message&.call(reply) : @replies << reply
+            reply['method'] ? deliver(reply) : @replies << reply
           end
         rescue JSON::ParserError
           RubyLLM.logger.debug { 'MCP server sent a message that is not JSON' }
+        end
+
+        def deliver(message)
+          @on_message&.call(message)
+        rescue StandardError => e
+          @raised = e
+          raise
         end
       end
     end

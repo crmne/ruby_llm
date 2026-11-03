@@ -1112,6 +1112,18 @@ RSpec.describe RubyLLM::MCP::HTTP do
       }
     end
 
+    it 'keeps a Faraday error that a notification callback raised' do
+      stub_method('server/discover', result: discover_result)
+      stub_method('tools/call', headers: { 'Content-Type' => 'text/event-stream' }, body: lambda { |_request|
+        progress = { jsonrpc: '2.0', method: 'notifications/progress', params: { progress: 1 } }
+        "data: #{progress.to_json}\n\n"
+      })
+      timeout = Faraday::TimeoutError.new('another service timed out')
+
+      expect { client.request('tools/call', { name: 'slow' }) { raise timeout } }
+        .to raise_error(Faraday::TimeoutError) { |error| expect(error).to be(timeout) }
+    end
+
     it 'raises ConnectionError when a subscription cannot connect' do
       http = described_class.new(url)
       stub_request(:post, url).to_raise(Errno::ECONNREFUSED)

@@ -870,7 +870,7 @@ module RubyLLM
     rescue StandardError
       begin
         task.cancel
-      rescue Error, ConnectionError => e
+      rescue RubyLLM::Error => e
         RubyLLM.logger.debug { "#{name} could not cancel task #{task.id}: #{e.message}" }
       end
       raise

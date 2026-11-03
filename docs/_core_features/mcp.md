@@ -88,7 +88,7 @@ class Tunnel
 end
 ```
 
-The transport handles its own authentication and timeouts. `timeout` is `nil` unless RubyLLM wants a shorter one than the transport's own, and `headers` holds the tool arguments the server asks to receive as `Mcp-Param-*` HTTP headers, which a transport that doesn't end in HTTP can ignore. After `close`, the next request reconnects. Raise `RubyLLM::ConnectionError` when the server can't be reached, as the built-in transports do. To let the model know instead, answer a `tools/call` request with a tool error, `{ "result" => { "isError" => true, "content" => [{ "type" => "text", "text" => "The laptop is offline" }] } }`.
+The transport handles its own authentication and timeouts. `timeout` is `nil` unless RubyLLM wants a shorter one than the transport's own, and `headers` holds the tool arguments the server asks to receive as `Mcp-Param-*` HTTP headers, which a transport that doesn't end in HTTP can ignore. After `close`, the next request reconnects. Raise `RubyLLM::ConnectionError` when the server can't be reached, as the HTTP transport does. To let the model know instead, answer a `tools/call` request with a tool error, `{ "result" => { "isError" => true, "content" => [{ "type" => "text", "text" => "The laptop is offline" }] } }`.
 
 To support [listening for changes](#listening-for-changes), a transport also responds to `listen(message, version:)`. It sends `message`, a `subscriptions/listen` request, yields each notification the server sends for it, and returns the server's response once the server ends the subscription. RubyLLM calls it from the listener's thread and raises `RubyLLM::CancelledError` there to stop it. For servers that predate the 2026-07-28 revision, `message` is `nil`, and the transport yields the changes the server announces on its own.
 
@@ -526,7 +526,7 @@ handbook = Handbook.new.listen(resources: ["handbook://policies"])
 
 `listen` asks the server for every list it announces changes to, for updates to the `resources` you pass, as URIs or as resources from `resources`, and for the status of the `tasks` you pass, as [Tasks](#tasks) describes. It returns once the server confirms, then listens in a thread of its own until you call `close`, while chats and requests go on as before. Calling `listen` again replaces the resources and tasks it listens to.
 
-A server that announces no changes leaves `listen` nothing to do. When the server cannot be reached, `listen` raises `RubyLLM::ConnectionError`. When it will not send updates for a resource or task you pass, `listen` raises `RubyLLM::MCP::Error`.
+A server that announces no changes leaves `listen` nothing to do. When a server over HTTP cannot be reached, `listen` raises `RubyLLM::ConnectionError`. When it will not send updates for a resource or task you pass, `listen` raises `RubyLLM::MCP::Error`.
 
 Callbacks for the changes a listener hears run in its thread, one at a time, so keep them short. They can call the server, as `tools` and `content` do above. An exception in one is logged, and listening goes on.
 

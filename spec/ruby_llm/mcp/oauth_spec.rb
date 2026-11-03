@@ -298,6 +298,13 @@ RSpec.describe RubyLLM::MCP::OAuth do
       expect(store.read(key)).to eq(stored)
     end
 
+    it 'raises an MCP error when the protected resource metadata is missing' do
+      stub_request(:get, 'https://mcp.example.com/.well-known/oauth-protected-resource/mcp').to_return(status: 404)
+
+      expect { linear.authorization_url(redirect_uri:) }
+        .to raise_error(RubyLLM::MCP::Error, 'mcp.example.com refused the request')
+    end
+
     it 'raises ConnectionError from discovery' do
       stub_request(:get, 'https://mcp.example.com/.well-known/oauth-protected-resource/mcp')
         .to_raise(Errno::ECONNREFUSED)
