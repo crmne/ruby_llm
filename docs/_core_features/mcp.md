@@ -53,7 +53,7 @@ A stdio server does not inherit your application's API keys or the rest of its e
 
 ```ruby
 class GitHub < RubyLLM::MCP
-  command "npx", "-y", "@modelcontextprotocol/server-github"
+  command "docker", "run", "-i", "--rm", "-e", "GITHUB_PERSONAL_ACCESS_TOKEN", "ghcr.io/github/github-mcp-server"
   env GITHUB_PERSONAL_ACCESS_TOKEN: ENV.fetch("GITHUB_TOKEN")
 end
 ```
