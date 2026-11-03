@@ -780,7 +780,9 @@ Some authorization servers need extra parameters on the authorization URL. Googl
 ```ruby
 class BigQuery < RubyLLM::MCP
   url "https://bigquery.googleapis.com/mcp"
-  oauth authorization_params: { access_type: "offline", prompt: "consent" }
+  inputs :user
+  oauth owner: :user, client_id: ENV["GOOGLE_CLIENT_ID"], client_secret: ENV["GOOGLE_CLIENT_SECRET"],
+        authorization_params: { access_type: "offline", prompt: "consent" }
 end
 ```
 
