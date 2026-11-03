@@ -173,7 +173,9 @@ rerank.cost.search_units
 
 `characters` counts every character of the text sent, including spaces and newlines. `audio_seconds` is the billed length of the audio, which may be fractional. It is recorded when the provider bills transcription by duration, so a model that reports token usage leaves it `nil`. `search_units` is the count the provider reports.
 
-`cost` prices each unit from the model registry, in US dollars per million units, and adds it to `cost.total`. When the registry has no price for a unit that was used, that component and `cost.total` are `nil`, never zero. The registry does not price these units yet, so expect `nil` until it does.
+`cost` prices each unit from the model registry, in US dollars per million units, and adds it to `cost.total`. When the registry has no price for a unit that was used, that component and `cost.total` are `nil`, never zero.
+
+Token prices in the registry come from [models.dev](https://models.dev), which has no fields for these units yet. Until it does, RubyLLM fills them from each provider's published list price, checked by date, for models whose page states one plainly, such as OpenAI's `tts-1` and `whisper-1` or Cloud Text-to-Speech's `Chirp3-HD`. Once models.dev prices a model, its prices win. A model without a listed price, such as one billed differently on each plan, keeps a `nil` cost for the unit.
 
 ## Pricing Tool Use
 

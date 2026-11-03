@@ -9,6 +9,7 @@ require 'json_schemer'
 require 'fileutils'
 require_relative 'support/model_registry_diff'
 require_relative 'support/model_catalog_page'
+require_relative 'support/model_unit_prices'
 
 desc 'Update models, docs, and aliases'
 task models: ['models:update', 'models:docs', 'models:aliases']
@@ -82,7 +83,7 @@ def refresh_models
   initial_count = existing_models.size
   puts "Refreshing models (#{initial_count} cached)..."
 
-  models = RubyLLM.models.refresh_from_providers(remote_only: true)
+  models = with_unit_prices(RubyLLM.models.refresh_from_providers(remote_only: true))
 
   if models.all.empty? && initial_count.zero?
     puts 'Error: Failed to fetch models.'
@@ -92,6 +93,15 @@ def refresh_models
   end
 
   @models = models
+end
+
+def with_unit_prices(models, prices = ModelUnitPrices.load)
+  priced = RubyLLM::Models.new(prices.apply(models.all))
+  if prices.notices.any?
+    puts "Unit prices to review (#{prices.notices.size}):"
+    puts(prices.notices.map { |notice| "  - #{notice}" })
+  end
+  priced
 end
 
 def persist_refreshed_models(existing_models, models, registry_file)

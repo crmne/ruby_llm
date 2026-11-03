@@ -19,7 +19,7 @@ RSpec.describe RubyLLM::Providers::XAI::Images do
 
     it 'renders reference images as typed data URIs for the edits endpoint' do
       image_path = File.expand_path('../../../fixtures/ruby.png', __dir__)
-      payload = described_class.render_image_payload('combine the logos', model: 'grok-imagine-image-quality',
+      payload = described_class.render_image_payload('combine the logos', model: 'grok-imagine-image-2.0',
                                                                           size: nil, with: [image_path])
 
       expect(payload[:images].length).to eq(1)
@@ -30,14 +30,14 @@ RSpec.describe RubyLLM::Providers::XAI::Images do
     it 'renders a reference image given as an attachment' do
       image = File.binread(File.expand_path('../../../fixtures/ruby.png', __dir__))
       attachment = RubyLLM::Attachment.new(StringIO.new(image), filename: 'logo.png')
-      payload = described_class.render_image_payload('combine the logos', model: 'grok-imagine-image-quality',
+      payload = described_class.render_image_payload('combine the logos', model: 'grok-imagine-image-2.0',
                                                                           size: nil, with: attachment)
 
       expect(payload[:images].first[:url]).to start_with('data:image/png;base64,')
     end
 
     it 'passes remote reference images through as URLs' do
-      payload = described_class.render_image_payload('combine the logos', model: 'grok-imagine-image-quality',
+      payload = described_class.render_image_payload('combine the logos', model: 'grok-imagine-image-2.0',
                                                                           size: nil,
                                                                           with: 'https://example.com/logo.png')
 
@@ -46,7 +46,7 @@ RSpec.describe RubyLLM::Providers::XAI::Images do
 
     it 'sends a reference image given as a bare IO' do
       image = File.binread(File.expand_path('../../../fixtures/ruby.png', __dir__))
-      payload = described_class.render_image_payload('combine the logos', model: 'grok-imagine-image-quality',
+      payload = described_class.render_image_payload('combine the logos', model: 'grok-imagine-image-2.0',
                                                                           size: nil, with: StringIO.new(image))
 
       expect(payload[:images].length).to eq(1)

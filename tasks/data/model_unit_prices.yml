@@ -1,0 +1,136 @@
+# Prices models.dev cannot express yet: per character, per second of audio,
+# and per search unit (https://github.com/anomalyco/models.dev/issues/12512).
+# `rake models` adds them to lib/ruby_llm/models.json. A model models.dev
+# prices keeps its models.dev pricing, and the refresh reports the entry so
+# it can be removed, or the price reported upstream.
+#
+# Each entry is one price from the provider's own pricing page:
+#   provider:    RubyLLM provider slug
+#   model:       model id, as RubyLLM.models.find finds it
+#   unit:        characters, audio_seconds, or search_units
+#   per_million: USD per million units
+#   quoted:      the price as the page states it
+#   source:      the pricing page
+#   checked:     the date the price was read from the page
+#
+# List only list prices the page states plainly, the same on every plan.
+
+- provider: openai
+  model: tts-1
+  unit: characters
+  per_million: 15
+  quoted: "$15.00 / 1M characters"
+  source: https://developers.openai.com/api/docs/models/tts-1
+  checked: 2026-11-03
+
+- provider: openai
+  model: tts-1-hd
+  unit: characters
+  per_million: 30
+  quoted: "$30.00 / 1M characters"
+  source: https://developers.openai.com/api/docs/models/tts-1-hd
+  checked: 2026-11-03
+
+- provider: openai
+  model: whisper-1
+  unit: audio_seconds
+  per_million: 100
+  quoted: "$0.006 / minute"
+  source: https://developers.openai.com/api/docs/models/whisper-1
+  checked: 2026-11-03
+
+- provider: vertexai
+  model: Chirp3-HD
+  unit: characters
+  per_million: 30
+  quoted: "US$30 per 1 million characters"
+  source: https://cloud.google.com/text-to-speech/pricing
+  checked: 2026-11-03
+
+- provider: elevenlabs
+  model: eleven_v4
+  unit: characters
+  per_million: 80
+  quoted: "$0.08 per 1K characters"
+  source: https://elevenlabs.io/pricing/api
+  checked: 2026-11-03
+
+- provider: elevenlabs
+  model: eleven_v4_turbo
+  unit: characters
+  per_million: 40
+  quoted: "$0.04 per 1K characters"
+  source: https://elevenlabs.io/pricing/api
+  checked: 2026-11-03
+
+- provider: elevenlabs
+  model: eleven_v3
+  unit: characters
+  per_million: 80
+  quoted: "$0.08 per 1K characters"
+  source: https://elevenlabs.io/pricing/api
+  checked: 2026-11-03
+
+- provider: elevenlabs
+  model: eleven_v3_conversational
+  unit: characters
+  per_million: 40
+  quoted: "$0.04 per 1K characters"
+  source: https://elevenlabs.io/pricing/api
+  checked: 2026-11-03
+
+- provider: elevenlabs
+  model: eleven_multilingual_v2
+  unit: characters
+  per_million: 80
+  quoted: "$0.08 per 1K characters"
+  source: https://elevenlabs.io/pricing/api
+  checked: 2026-11-03
+
+- provider: elevenlabs
+  model: eleven_flash_v2
+  unit: characters
+  per_million: 40
+  quoted: "$0.04 per 1K characters (Flash / Turbo)"
+  source: https://elevenlabs.io/pricing/api
+  checked: 2026-11-03
+
+- provider: elevenlabs
+  model: eleven_flash_v2_5
+  unit: characters
+  per_million: 40
+  quoted: "$0.04 per 1K characters (Flash / Turbo)"
+  source: https://elevenlabs.io/pricing/api
+  checked: 2026-11-03
+
+- provider: elevenlabs
+  model: eleven_turbo_v2
+  unit: characters
+  per_million: 40
+  quoted: "$0.04 per 1K characters (Flash / Turbo)"
+  source: https://elevenlabs.io/pricing/api
+  checked: 2026-11-03
+
+- provider: elevenlabs
+  model: eleven_turbo_v2_5
+  unit: characters
+  per_million: 40
+  quoted: "$0.04 per 1K characters (Flash / Turbo)"
+  source: https://elevenlabs.io/pricing/api
+  checked: 2026-11-03
+
+- provider: elevenlabs
+  model: scribe_v2
+  unit: audio_seconds
+  per_million: 61.111111
+  quoted: "$0.22 per hour"
+  source: https://elevenlabs.io/pricing/api
+  checked: 2026-11-03
+
+- provider: elevenlabs
+  model: scribe_v2_realtime
+  unit: audio_seconds
+  per_million: 108.333333
+  quoted: "$0.39 per hour"
+  source: https://elevenlabs.io/pricing/api
+  checked: 2026-11-03
