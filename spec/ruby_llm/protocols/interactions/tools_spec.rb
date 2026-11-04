@@ -45,5 +45,14 @@ RSpec.describe RubyLLM::Protocols::Interactions::Tools do
       expect { described_class.parse_interaction_calls([step], finish_reason: :max_tokens) }
         .to raise_error(RubyLLM::ToolCallTruncatedError)
     end
+
+    it 'raises ToolCallTruncatedError when the token limit stops the last call before its arguments' do
+      first = { 'type' => 'function_call', 'id' => 'c1', 'name' => 'now' }
+      last = { 'type' => 'function_call', 'id' => 'c2', 'name' => 'move', 'arguments' => '' }
+
+      expect(described_class.parse_interaction_calls([first, last], finish_reason: :tool_calls).size).to eq(2)
+      expect { described_class.parse_interaction_calls([first, last], finish_reason: :max_tokens) }
+        .to raise_error(RubyLLM::ToolCallTruncatedError)
+    end
   end
 end

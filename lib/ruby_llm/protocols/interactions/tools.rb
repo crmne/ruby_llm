@@ -24,9 +24,11 @@ module RubyLLM
 
         def parse_interaction_calls(steps, response: nil, finish_reason: nil)
           answered = interaction_answered_calls(steps)
-          calls = steps.filter_map do |step|
-            next unless step['type'] == 'function_call' && !answered.include?(step['id'])
+          pending = steps.select { |step| step['type'] == 'function_call' && !answered.include?(step['id']) }
+          cut_off = finish_reason == :max_tokens && pending.any? && [nil, '', {}].include?(pending.last['arguments'])
+          raise ToolCallTruncatedError.new(response:) if cut_off
 
+          calls = pending.map do |step|
             ToolCall.new(provider_call_id: step.fetch('id'), name: step.fetch('name'),
                          **ToolCall.parse_arguments(step['arguments'], response:, finish_reason:),
                          thought_signature: step['signature'])
