@@ -364,6 +364,26 @@ RSpec.describe RubyLLM::MCP::OAuth do
       expect(oauth.access_token).to eq('access-2')
       expect(refreshes).not_to have_been_made
     end
+
+    it 'stays deauthorized when another thread forgets the credentials during a refresh' do
+      store.write(key, store.read(key).merge('expires_at' => 0))
+      requested = Queue.new
+      answer = Queue.new
+      stub_request(:post, 'https://auth.example.com/token').to_return do
+        requested << true
+        answer.pop
+        { body: { access_token: 'access-2', refresh_token: 'refresh-2', expires_in: 3600 }.to_json }
+      end
+      refreshing = Thread.new { linear_class.new(user: 'ada').send(:oauth).access_token }
+      Timeout.timeout(5) { requested.pop }
+      forgetting = Thread.new { linear_class.new(user: 'ada').deauthorize }
+      Timeout.timeout(5) { Thread.pass until forgetting.stop? }
+      answer << true
+      Timeout.timeout(5) { [refreshing, forgetting].each(&:join) }
+
+      expect(store.read(key)).to be_nil
+      expect(linear_class.new(user: 'ada')).not_to be_authorized
+    end
   end
 
   describe 'a token response that grants no token' do
