@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://inference.hetzner.com/api/v1/chat/completions
+    uri: https://inference.hetzner.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"Qwen3.8-27B","messages":[{"role":"user","content":"Call the
@@ -26,26 +26,25 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:10:25 GMT
+      - Wed, 04 Nov 2026 19:44:14 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Vary:
-      - Origin
-      X-Went-Into-Resp-Headers:
-      - 'true'
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
+      Vary:
+      - Origin
       Server:
       - HeRay
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":348,"completion_tokens":62,"total_tokens":410,"completion_tokens_details":{"reasoning_tokens":29},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-bbf4e44406a5910e","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
-        [\"red\", \"blue\"]}"}}],"reasoning":"The user wants to call the array_params
-        tool with tags [\"red\",\"blue\"] and report the combined tags. Let''s make
-        the call.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-4fe9a111-7b46-47c7-9837-430cd1559b4d","object":"chat.completion","created":1791753024,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Sun, 11 Oct 2026 21:10:25 GMT
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":348,"completion_tokens":80,"total_tokens":428,"completion_tokens_details":{"reasoning_tokens":47},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-8bc085f79cc4dd68","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
+        [\"red\", \"blue\"]}"}}],"reasoning":"We need respond to user: \"Call the
+        array params tool with tags [\"red\",\"blue\"] and tell me the combined tags.\"
+        Need invoke array_params with tags array. Then tell combined tags. Simple.
+        Need final after tool.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-e1b55343-684c-4717-a45b-e28b44fd59d5","object":"chat.completion","created":1793821449,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Wed, 04 Nov 2026 19:44:14 GMT
 recorded_with: VCR 6.4.0

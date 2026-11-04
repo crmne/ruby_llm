@@ -74,7 +74,7 @@ RSpec.describe RubyLLM::Provider do
         provider: RubyLLM::Providers::Hetzner,
         key: :hetzner_api_base,
         custom: 'https://hetzner-proxy.example.com/api/v1',
-        default: 'https://inference.hetzner.com/api/v1'
+        default: 'https://inference.hetzner.com/v1'
       },
       meta: {
         provider: RubyLLM::Providers::Meta,

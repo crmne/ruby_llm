@@ -23,7 +23,7 @@ RSpec.describe RubyLLM::Providers::Hetzner do
   end
 
   it 'defaults to the Hetzner Inference endpoint and sends a bearer token' do
-    expect(provider.api_base).to eq('https://inference.hetzner.com/api/v1')
+    expect(provider.api_base).to eq('https://inference.hetzner.com/v1')
     expect(provider.headers).to eq('Authorization' => 'Bearer test-key')
   end
 
@@ -57,7 +57,7 @@ RSpec.describe RubyLLM::Providers::Hetzner do
 
   describe 'chat' do
     before do
-      stub_request(:post, 'https://inference.hetzner.com/api/v1/chat/completions')
+      stub_request(:post, 'https://inference.hetzner.com/v1/chat/completions')
         .with(headers: { 'Authorization' => 'Bearer test-key' })
         .to_return(status: 200, body: {
           id: 'chatcmpl-1',
@@ -83,7 +83,7 @@ RSpec.describe RubyLLM::Providers::Hetzner do
       expect(response.tokens.input).to eq(12)
       expect(response.tokens.output).to eq(3)
       expect(
-        a_request(:post, 'https://inference.hetzner.com/api/v1/chat/completions').with do |request|
+        a_request(:post, 'https://inference.hetzner.com/v1/chat/completions').with do |request|
           body = JSON.parse(request.body)
           instructions = { 'role' => 'system', 'content' => 'Answer in German.' }
           body['model'] == model_id && body['messages'].first == instructions

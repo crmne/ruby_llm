@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://inference.hetzner.com/api/v1/chat/completions
+    uri: https://inference.hetzner.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"Qwen3.8-27B","messages":[{"role":"user","content":[{"type":"text","text":"What''s
@@ -25,44 +25,42 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:07:03 GMT
+      - Wed, 04 Nov 2026 19:34:04 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Vary:
-      - Origin
-      X-Went-Into-Resp-Headers:
-      - 'true'
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
+      Vary:
+      - Origin
       Server:
       - HeRay
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":77,"completion_tokens":80,"total_tokens":157,"completion_tokens_details":{"reasoning_tokens":56},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\nThe
-        file `ruby.txt` contains the text:\n\n```text\nRuby is the best.\n```","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"We
-        need to answer user: \"What''s in this file?<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>\" Need produce final concise. Need maybe say file contains
-        \"Ruby is the best.\" Possibly explain. Ensure no extra.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-97b01ce9-9a6b-492e-b09e-3589235e3d59","object":"chat.completion","created":1791752820,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Sun, 11 Oct 2026 21:07:03 GMT
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":77,"completion_tokens":75,"total_tokens":152,"completion_tokens_details":{"reasoning_tokens":53},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\nThe
+        file `ruby.txt` contains:\n\n```text\nRuby is the best.\n```","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"We
+        need to respond to user: \"What''s in this file?<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>\" Simple. Need final answer. Probably say file contains
+        \"Ruby is the best.\" Keep concise.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-7e96c5a6-0f1a-4dab-8521-4eb30305b832","object":"chat.completion","created":1793820788,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Wed, 04 Nov 2026 19:34:04 GMT
 - request:
     method: post
-    uri: https://inference.hetzner.com/api/v1/chat/completions
+    uri: https://inference.hetzner.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"Qwen3.8-27B","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]},{"role":"assistant","content":"\n\nThe file `ruby.txt`
-        contains the text:\n\n```text\nRuby is the best.\n```","reasoning":"We need
-        to answer user: \"What''s in this file?<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>\" Need produce final concise. Need maybe say file contains
-        \"Ruby is the best.\" Possibly explain. Ensure no extra.\n","reasoning_content":"We
-        need to answer user: \"What''s in this file?<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>\" Need produce final concise. Need maybe say file contains
-        \"Ruby is the best.\" Possibly explain. Ensure no extra.\n"},{"role":"user","content":[{"type":"text","text":"and
+        contains:\n\n```text\nRuby is the best.\n```","reasoning":"We need to respond
+        to user: \"What''s in this file?<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>\" Simple. Need final answer. Probably say file contains
+        \"Ruby is the best.\" Keep concise.\n","reasoning_content":"We need to respond
+        to user: \"What''s in this file?<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>\" Simple. Need final answer. Probably say file contains
+        \"Ruby is the best.\" Keep concise.\n"},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
@@ -82,30 +80,25 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:07:11 GMT
+      - Wed, 04 Nov 2026 19:35:14 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Vary:
-      - Origin
-      X-Went-Into-Resp-Headers:
-      - 'true'
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
+      Vary:
+      - Origin
       Server:
       - HeRay
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":198,"completion_tokens":120,"total_tokens":318,"completion_tokens_details":{"reasoning_tokens":76},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\nThe
-        file `ruby.xml` contains an XML document:\n\n```xml\n<truism>Ruby is the best</truism>\n```\n\nIts
-        text content is: **Ruby is the best**.","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"Need
-        answer user''s question. We need maybe parse XML. Content is <truism>Ruby
-        is the best</truism>. Could say file contains an XML document with root element
-        truism and text \"Ruby is the best\". Need maybe mention no period unlike
-        previous. Final concise. Ensure maybe if asked \"and in this one?\" likely
-        wants contents. We can answer.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-753e3f0d-c509-42bb-aab5-ff1b668d890e","object":"chat.completion","created":1791752823,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Sun, 11 Oct 2026 21:07:11 GMT
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":193,"completion_tokens":82,"total_tokens":275,"completion_tokens_details":{"reasoning_tokens":31},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\nThe
+        file `ruby.xml` contains an XML document with a `<truism>` element:\n\n```xml\n<truism>Ruby
+        is the best</truism>\n```\n\nThe text content is: **Ruby is the best**.","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"User
+        asks content in XML file. Need answer concise. Need maybe mention it''s XML
+        with element truism text \"Ruby is the best\". Final.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-75d155fc-9b64-422d-8e5b-e18e854e9994","object":"chat.completion","created":1793820844,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Wed, 04 Nov 2026 19:35:14 GMT
 recorded_with: VCR 6.4.0
