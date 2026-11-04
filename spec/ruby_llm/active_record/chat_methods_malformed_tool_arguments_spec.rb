@@ -32,7 +32,16 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   it 'stores the text of malformed arguments in the arguments column' do
     unanswered_chat
 
-    expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call_id).arguments).to eq(malformed)
+    expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call_id)[:arguments]).to eq(malformed)
+  end
+
+  it 'reads the arguments of a malformed call as an empty Hash' do
+    unanswered_chat
+
+    record = RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call_id)
+
+    expect(record.arguments).to eq({})
+    expect(record.to_llm.malformed_arguments).to eq(malformed)
   end
 
   it 'stores a NUL in malformed arguments as its escape, which jsonb accepts' do
@@ -40,7 +49,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     call = RubyLLM::ToolCall.new(id: call_id, name: 'lookup', malformed_arguments: "{\"q\":\"a\u0000")
     chat.add_message(role: :assistant, content: '', tool_calls: { call_id => call })
 
-    expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call_id).arguments).to eq('{"q":"a\u0000')
+    expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call_id)[:arguments]).to eq('{"q":"a\u0000')
   end
 
   it 'keeps an unanswered malformed call malformed after a reload, and answers it without running the tool' do

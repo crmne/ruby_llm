@@ -133,6 +133,12 @@ RSpec.describe RubyLLM::Error do
     end
   end
 
+  it 'names the finish reason once when a truncated error is copied from its message' do
+    error = RubyLLM::ToolCallTruncatedError.new
+
+    expect(error.class.new(error.message).message).to eq(error.message)
+  end
+
   describe RubyLLM::UnsupportedAttachmentError do
     it 'is a RubyLLM operation error' do
       error = described_class.new('audio/wav')

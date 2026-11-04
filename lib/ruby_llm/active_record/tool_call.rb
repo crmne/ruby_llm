@@ -19,8 +19,8 @@ module RubyLLM
     # [+tool_call_id+] The call's id, unique across the table.
     # [+name+] The tool's name.
     # [+namespace+] The namespace of a namespaced tool, or +nil+.
-    # [+arguments+] The arguments the model passed, as a Hash, or as the
-    #               model's text when it was not a JSON object.
+    # [+arguments+] The arguments the model passed, as a Hash. Empty when
+    #               the model's text was not a JSON object.
     # [+approval+] <tt>"pending"</tt>, <tt>"approved"</tt>, <tt>"remembered"</tt>,
     #              or <tt>"denied"</tt>, or +nil+ when no approval was asked.
     # [+remote+] Whether the provider ran the tool instead of RubyLLM.
@@ -44,11 +44,23 @@ module RubyLLM
           provider_call_id: self[:provider_call_id],
           name: name,
           namespace: self[:namespace],
-          arguments: arguments || {},
-          malformed_arguments: (arguments if arguments.is_a?(String)),
+          arguments: arguments,
+          malformed_arguments: malformed_arguments,
           thought_signature: thought_signature,
           remote: self[:remote]
         )
+      end
+
+      # Returns the arguments the model passed, as a Hash, or an empty Hash
+      # when the model's text was not a JSON object.
+      def arguments
+        value = self[:arguments]
+        value.is_a?(Hash) ? value : {}
+      end
+
+      def malformed_arguments # :nodoc:
+        value = self[:arguments]
+        value if value.is_a?(String)
       end
 
       # Returns whether a process is running this tool call: it has no

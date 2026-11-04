@@ -242,9 +242,14 @@ module RubyLLM
 
     def initialize(message = nil, response: nil, finish_reason: nil) # :nodoc:
       @finish_reason = finish_reason
-      message ||= 'Provider returned malformed tool call arguments'
-      message = "#{message} (finish_reason: #{finish_reason})" if finish_reason
-      super(message, response: response)
+      super(message || default_message, response: response)
+    end
+
+    private
+
+    def default_message
+      message = 'Provider returned malformed tool call arguments'
+      finish_reason ? "#{message} (finish_reason: #{finish_reason})" : message
     end
   end
 
@@ -253,8 +258,13 @@ module RubyLLM
   # the limit with Chat#with_max_output_tokens, or ask for less at once.
   class ToolCallTruncatedError < ToolCallParseError
     def initialize(message = nil, response: nil) # :nodoc:
-      super(message || 'The response reached its output token limit while writing a tool call',
-            response:, finish_reason: :max_tokens)
+      super(message, response:, finish_reason: :max_tokens)
+    end
+
+    private
+
+    def default_message
+      'The response reached its output token limit while writing a tool call (finish_reason: max_tokens)'
     end
   end
 
