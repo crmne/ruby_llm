@@ -80,9 +80,21 @@ module RubyLLM
 
         def build_item_done_chunk(data)
           item = data['item']
+          return build_function_call_done_chunk(data) if item['type'] == 'function_call'
           return chunk unless item['type'] == 'reasoning' && item['encrypted_content']
 
           chunk thinking: Thinking.build(text: nil, signature: item['encrypted_content'])
+        end
+
+        def build_function_call_done_chunk(data)
+          item = data['item']
+          return chunk unless item['arguments'].is_a?(String)
+
+          chunk tool_calls: {
+            data['output_index'] => ToolCall.new(provider_call_id: item['call_id'], name: item['name'],
+                                                 namespace: item['namespace'],
+                                                 arguments: parse_function_call_arguments(item['arguments']))
+          }
         end
 
         def build_final_chunk(data)
