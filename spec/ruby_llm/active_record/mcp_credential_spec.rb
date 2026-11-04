@@ -18,6 +18,16 @@ RSpec.describe RubyLLM::ActiveRecord::MCPCredential do
       .not_to include('secret-token')
   end
 
+  it 'deletes the row when the server is deauthorized' do
+    server_url = 'https://mcp.example.com/mcp'
+    key = "#{owner.to_gid}@#{server_url}"
+    described_class.write(key, { 'access_token' => 'access-1' }, owner:)
+
+    RubyLLM::MCP::OAuth.new(server_url, owner:).deauthorize
+
+    expect(described_class.where(key:)).not_to exist
+  end
+
   it 'lets one process refresh a grant while the others wait for its token' do
     skip 'needs fork' unless RUBY_ENGINE == 'ruby'
     server_url = 'https://mcp.example.com/mcp'

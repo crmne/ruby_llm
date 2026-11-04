@@ -213,8 +213,10 @@ module RubyLLM
       end
 
       def deauthorize
-        @credential = nil
-        store.delete(key)
+        synchronize do
+          @credential = nil
+          store.delete(key)
+        end
       end
 
       private
