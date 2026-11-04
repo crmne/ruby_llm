@@ -330,7 +330,7 @@ A tool that returns an array mixing attachments with other values, such as `[att
 
 ## Malformed Tool Arguments Reach the Model as Errors
 
-In 2.1, tool-call arguments that were not a JSON object raised `RubyLLM::ToolCallParseError` out of `ask`, and the turn failed. In 2.2 the call gets an error result instead, without running the tool or asking for approval, and the model calls the tool again. Later requests send the call with empty arguments. A tool call the output token limit cut off still raises `RubyLLM::ToolCallTruncatedError`, so `rescue RubyLLM::ToolCallParseError` keeps catching it. A persisted call keeps the model's text in its `arguments` column, as a JSON string.
+In 2.1, tool-call arguments that were not a JSON object raised `RubyLLM::ToolCallParseError` out of `ask`, and the turn failed. In 2.2 the call gets an error result instead, without running the tool or asking for approval, and the model calls the tool again. Later requests send the call with empty arguments. A tool call the output token limit cut off still raises `RubyLLM::ToolCallTruncatedError`, so `rescue RubyLLM::ToolCallParseError` keeps catching it. A persisted call keeps the model's text in its `arguments` column, as a JSON string, and its `arguments` reader returns an empty Hash, like `ToolCall#arguments`.
 
 ## Writing Over a Folder Raises
 
