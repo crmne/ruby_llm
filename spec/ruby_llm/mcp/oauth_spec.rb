@@ -368,6 +368,7 @@ RSpec.describe RubyLLM::MCP::OAuth do
 
   describe '.refreshing' do
     def locks = described_class.instance_variable_get(:@refreshes)
+    def workers = @workers ||= []
 
     def hold(key, entered)
       leave = Queue.new
@@ -377,7 +378,15 @@ RSpec.describe RubyLLM::MCP::OAuth do
           leave.pop
         end
       end
+      workers << [thread, leave]
       [thread, leave]
+    end
+
+    after do
+      workers.each do |thread, leave|
+        leave << true
+        thread.join(1) || thread.kill.join
+      end
     end
 
     it 'keeps no lock for a key once nothing refreshes it' do
