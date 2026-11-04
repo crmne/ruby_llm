@@ -1298,10 +1298,16 @@ module RubyLLM
         tool_calls.each do |tool_call|
           attributes = tool_call.to_h
           attributes[:tool_call_id] = attributes.delete(:id)
-          attributes[:arguments] = attributes.delete(:malformed_arguments) if tool_call.malformed_arguments?
+          malformed = attributes.delete(:malformed_arguments)
+          attributes[:arguments] = without_nul(malformed) if malformed
           attributes[:approval] = 'pending' if to_llm.approval_pending?(tool_call)
           message_record.ruby_llm_tool_calls.create!(**attributes)
         end
+      end
+
+      # PostgreSQL jsonb cannot store U+0000.
+      def without_nul(text)
+        text.gsub("\u0000", '\u0000')
       end
     end
   end
