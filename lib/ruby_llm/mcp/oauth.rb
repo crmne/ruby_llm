@@ -58,7 +58,7 @@ module RubyLLM
         '%<path>s/.well-known/openid-configuration'
       ].freeze
 
-      @refreshes = Hash.new { |refreshes, key| refreshes[key] = Mutex.new }
+      @refreshes = {}
       @refreshes_lock = Mutex.new
 
       def self.memory_store
@@ -78,9 +78,19 @@ module RubyLLM
       end
 
       # Runs the block while no other thread in this process refreshes the
-      # credentials stored under +key+.
+      # credentials stored under +key+. A key's lock lives only while a
+      # thread holds it or waits for it.
       def self.refreshing(key, &)
-        @refreshes_lock.synchronize { @refreshes[key] }.synchronize(&)
+        lock = @refreshes_lock.synchronize do
+          entry = @refreshes[key] ||= [Mutex.new, 0]
+          entry[1] += 1
+          entry.first
+        end
+        begin
+          lock.synchronize(&)
+        ensure
+          @refreshes_lock.synchronize { @refreshes.delete(key) if (@refreshes[key][1] -= 1).zero? }
+        end
       end
 
       # Reads the challenges of a WWW-Authenticate header (RFC 9110

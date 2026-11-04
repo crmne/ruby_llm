@@ -366,6 +366,69 @@ RSpec.describe RubyLLM::MCP::OAuth do
     end
   end
 
+  describe '.refreshing' do
+    def locks = described_class.instance_variable_get(:@refreshes)
+
+    def hold(key, entered)
+      leave = Queue.new
+      thread = Thread.new do
+        described_class.refreshing(key) do
+          entered << key
+          leave.pop
+        end
+      end
+      [thread, leave]
+    end
+
+    it 'keeps no lock for a key once nothing refreshes it' do
+      described_class.refreshing('ada@https://mcp.example.com/mcp') { nil }
+
+      expect(locks).not_to have_key('ada@https://mcp.example.com/mcp')
+    end
+
+    it 'lets one thread at a time into a key while others wait for it' do
+      entered = Queue.new
+      first, leave_first = hold('ada', entered)
+      Timeout.timeout(5) { entered.pop }
+      second, leave_second = hold('ada', entered)
+      Timeout.timeout(5) { Thread.pass until second.stop? }
+      leave_first << true
+      Timeout.timeout(5) { entered.pop }
+      third, leave_third = hold('ada', entered)
+      Timeout.timeout(5) { Thread.pass until third.stop? }
+
+      expect(entered).to be_empty
+      leave_second << true
+      Timeout.timeout(5) { entered.pop }
+      leave_third << true
+      Timeout.timeout(5) { [first, second, third].each(&:join) }
+    end
+
+    it 'refreshes different keys at the same time' do
+      entered = Queue.new
+      first, leave_first = hold('ada', entered)
+      second, leave_second = hold('grace', entered)
+
+      expect(Timeout.timeout(5) { [entered.pop, entered.pop] }).to contain_exactly('ada', 'grace')
+      [leave_first, leave_second].each { |leave| leave << true }
+      Timeout.timeout(5) { [first, second].each(&:join) }
+    end
+
+    it 'keeps no lock for a key once its refresh raises' do
+      expect { described_class.refreshing('ada') { raise RubyLLM::Error, 'token endpoint failed' } }
+        .to raise_error(RubyLLM::Error)
+
+      expect(locks).not_to have_key('ada')
+    end
+
+    it 'lets the next refresh of a key in after one raises' do
+      expect { described_class.refreshing('ada') { raise RubyLLM::Error, 'token endpoint failed' } }
+        .to raise_error(RubyLLM::Error)
+
+      expect(Timeout.timeout(5) { described_class.refreshing('ada') { :refreshed } }).to eq(:refreshed)
+    end
+  end
+
   describe 'a token response that grants no token' do
     def store = RubyLLM.config.mcp_credential_store
     def key = "ada@#{server_url}"
