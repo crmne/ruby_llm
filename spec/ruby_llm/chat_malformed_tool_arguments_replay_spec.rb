@@ -48,6 +48,17 @@ RSpec.describe RubyLLM::Chat do
       expect(payload['input'][1]).to eq(raw.first.merge('arguments' => '{}'))
     end
 
+    it 'empties the arguments of a retained Responses approval request' do
+      call = RubyLLM::ToolCall.new(id: 'mcpr_1', name: 'deploy', malformed_arguments: '{"env":"zzq', remote: true)
+      raw = [{ 'type' => 'mcp_approval_request', 'id' => 'mcpr_1', 'name' => 'deploy', 'server_label' => 'ops',
+               'arguments' => '{"env":"zzq' }]
+      chat = RubyLLM.chat(model: model_for(:openai), provider: :openai)
+      chat.add_message(role: :user, content: 'Deploy')
+      chat.add_message(role: :assistant, content: nil, tool_calls: { 'mcpr_1' => call }, raw_content: raw)
+
+      expect(JSON.parse(JSON.generate(chat.render))['input'][1]).to eq(raw.first.merge('arguments' => '{}'))
+    end
+
     it 'empties the input of an Anthropic tool use block' do
       raw = [{ 'type' => 'tool_use', 'id' => 'call_1', 'name' => 'echo', 'input' => 'zzq' }]
       payload = JSON.parse(render(model_for(:anthropic), provider: :anthropic, raw_content: raw))

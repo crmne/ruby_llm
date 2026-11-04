@@ -17,7 +17,8 @@ module RubyLLM
         return entries if ids.empty? || !entries.is_a?(Array)
 
         entries.map do |entry|
-          next entry unless entry.is_a?(Hash) && entry.key?(arguments) && ids.include?(entry[id])
+          next entry unless entry.is_a?(Hash) && entry.key?(arguments)
+          next entry unless Array(id).any? { |key| ids.include?(entry[key]) }
 
           entry.merge(arguments => empty)
         end

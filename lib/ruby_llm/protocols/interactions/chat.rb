@@ -126,7 +126,7 @@ module RubyLLM
 
           steps = data.fetch('steps', [])
           content = parse_interaction_content(steps)
-          calls = parse_interaction_calls(steps)
+          calls = parse_interaction_calls(steps, response: raw, finish_reason: finish_reasons[data['status']])
           status = interaction_status(data, calls, steps)
           if status == 'requires_action' && calls.empty?
             raise Error.new('Gemini interaction requires an unsupported action', response: raw)

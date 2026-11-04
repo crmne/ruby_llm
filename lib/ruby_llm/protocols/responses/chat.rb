@@ -459,7 +459,8 @@ module RubyLLM
         end
 
         def replayed_output(msg)
-          Protocol::ReplayedArguments.blank(msg.raw_content, msg, id: 'call_id', arguments: 'arguments', empty: '{}')
+          Protocol::ReplayedArguments.blank(msg.raw_content, msg,
+                                            id: %w[call_id id], arguments: 'arguments', empty: '{}')
         end
 
         def render_function_call_items(tool_calls)

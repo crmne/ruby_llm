@@ -38,5 +38,12 @@ RSpec.describe RubyLLM::Protocols::Interactions::Tools do
       expect(tool_call.arguments).to eq({})
       expect(tool_call.malformed_arguments).to eq('{"tz":')
     end
+
+    it 'raises ToolCallTruncatedError for arguments the token limit cut off' do
+      step = { 'type' => 'function_call', 'id' => 'c1', 'name' => 'now', 'arguments' => '{"tz":' }
+
+      expect { described_class.parse_interaction_calls([step], finish_reason: :max_tokens) }
+        .to raise_error(RubyLLM::ToolCallTruncatedError)
+    end
   end
 end
