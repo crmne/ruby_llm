@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://inference.hetzner.com/api/v1/chat/completions
+    uri: https://inference.hetzner.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"Qwen3.8-27B","messages":[{"role":"user","content":"Call the
@@ -28,26 +28,24 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:10:40 GMT
+      - Wed, 04 Nov 2026 19:44:34 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Vary:
-      - Origin
-      X-Went-Into-Resp-Headers:
-      - 'true'
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
+      Vary:
+      - Origin
       Server:
       - HeRay
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":407,"completion_tokens":111,"total_tokens":518,"completion_tokens_details":{"reasoning_tokens":53},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-ad7c8bfdf234e1b7","type":"function","function":{"name":"object_params","arguments":"{\"window\":
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":407,"completion_tokens":108,"total_tokens":515,"completion_tokens_details":{"reasoning_tokens":50},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-a410f5744a63a17b","type":"function","function":{"name":"object_params","arguments":"{\"window\":
         {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}"}}],"reasoning":"The
-        user is asking to call the object_params tool with window start 2025-01-01,
-        end 2025-01-02, and to include the result.\n\nLet''s make that function call.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-ee82074c-f751-47bf-902b-484ca5070528","object":"chat.completion","created":1791753032,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Sun, 11 Oct 2026 21:10:40 GMT
+        user is asking me to call the object_params tool specifying a window start
+        of 2025-01-01 and an end of 2025-01-02, and to include the results.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-e30e769e-6a78-4e74-a08c-d7294eab7ca8","object":"chat.completion","created":1793821460,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Wed, 04 Nov 2026 19:44:34 GMT
 recorded_with: VCR 6.4.0

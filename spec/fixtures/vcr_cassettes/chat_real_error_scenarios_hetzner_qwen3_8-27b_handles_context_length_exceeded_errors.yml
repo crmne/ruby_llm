@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: https://inference.hetzner.com/api/v1/chat/completions
+    uri: https://inference.hetzner.com/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen3.8-27B","messages":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"Hi"}],"stream":false}'
+      string: '{"model":"Qwen3.8-27B","messages":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"Hi"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -19,21 +19,29 @@ http_interactions:
       - "*/*"
   response:
     status:
-      code: 413
-      message: Payload Too Large
+      code: 400
+      message: Bad Request
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:07:06 GMT
+      - Wed, 04 Nov 2026 19:50:38 GMT
       Content-Type:
-      - text/plain; charset=utf-8
-      Content-Length:
-      - '52'
+      - application/json
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
+      X-Llm-D-Flow-Queue-Duration-Ms:
+      - '0'
+      Vary:
+      - Origin
       Server:
       - HeRay
     body:
       encoding: UTF-8
-      string: 'failed to process LLM request: request was too large'
-  recorded_at: Sun, 11 Oct 2026 21:07:06 GMT
+      string: '{"error":{"message":"This model''s maximum context length is 262144
+        tokens. However, you requested 0 output tokens and your prompt contains at
+        least 262145 input tokens, for a total of at least 262145 tokens. Please reduce
+        the length of the input prompt or the number of requested output tokens. (parameter=input_tokens,
+        value=262145)","type":"BadRequestError","param":"input_tokens","code":400}}'
+  recorded_at: Wed, 04 Nov 2026 19:50:38 GMT
 recorded_with: VCR 6.4.0

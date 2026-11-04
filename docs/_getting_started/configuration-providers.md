@@ -74,7 +74,7 @@ RubyLLM.configure do |config|
 
   # Hetzner
   config.hetzner_api_key = ENV['HETZNER_API_KEY'] # Token from the Hetzner Console
-  config.hetzner_api_base = ENV['HETZNER_API_BASE'] # Optional, defaults to https://inference.hetzner.com/api/v1
+  config.hetzner_api_base = ENV['HETZNER_API_BASE'] # Optional, defaults to https://inference.hetzner.com/v1
 
   # Meta
   config.meta_api_key = ENV['META_API_KEY'] # Key from dev.meta.ai

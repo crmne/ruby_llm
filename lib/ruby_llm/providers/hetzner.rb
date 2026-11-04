@@ -12,7 +12,7 @@ module RubyLLM
       protocol :chat_completions, ChatCompletions
 
       def api_base
-        @config.hetzner_api_base || 'https://inference.hetzner.com/api/v1'
+        @config.hetzner_api_base || 'https://inference.hetzner.com/v1'
       end
 
       def headers
