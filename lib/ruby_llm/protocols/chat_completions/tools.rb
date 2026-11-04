@@ -65,18 +65,6 @@ module RubyLLM
           end
         end
 
-        def parse_tool_call_arguments(tool_call, response: nil, finish_reason: nil)
-          arguments = tool_call.dig('function', 'arguments')
-
-          if arguments.nil? || arguments.empty?
-            {}
-          else
-            Hash(JSON.parse(arguments))
-          end
-        rescue JSON::ParserError, TypeError => e
-          raise ToolCallParseError.for(response:, finish_reason:), cause: e
-        end
-
         # Streaming deltas key by index so id-less argument fragments find
         # their call even when a delta batches or interleaves several calls;
         # complete responses key by id, which tool results join on.
@@ -93,12 +81,9 @@ module RubyLLM
         end
 
         def parse_tool_call(call, parse_arguments:, response:, finish_reason:)
-          arguments = if parse_arguments
-                        parse_tool_call_arguments(call, response:, finish_reason:)
-                      else
-                        call.dig('function', 'arguments')
-                      end
-          ToolCall.new(provider_call_id: call['id'], name: call.dig('function', 'name'), arguments:,
+          arguments = call.dig('function', 'arguments')
+          arguments = parse_arguments ? ToolCall.parse_arguments(arguments, response:, finish_reason:) : { arguments: }
+          ToolCall.new(provider_call_id: call['id'], name: call.dig('function', 'name'), **arguments,
                        thought_signature: parse_tool_call_thought_signature(call))
         end
 

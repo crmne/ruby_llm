@@ -26,16 +26,17 @@ RSpec.describe RubyLLM::Protocols::Interactions::Tools do
       expect(call({ 'tz' => 'UTC' }).arguments).to eq({ 'tz' => 'UTC' })
     end
 
-    it 'reads null arguments as none and refuses other values that are not objects' do
-      expect(call('null').arguments).to eq({})
-      expect { call('"x"') }.to raise_error(RubyLLM::ToolCallParseError)
+    it 'reads null arguments as none and keeps other values that are not objects as malformed' do
+      expect(call('null')).not_to be_malformed_arguments
+      expect(call('"x"').malformed_arguments).to eq('"x"')
+      expect(call([1]).malformed_arguments).to eq('[1]')
     end
 
-    it 'wraps malformed JSON in a RubyLLM error' do
-      expect { call('{"tz":') }.to raise_error(RubyLLM::ToolCallParseError) do |error|
-        expect(error).to be_a(RubyLLM::Error)
-        expect(error.cause).to be_a(JSON::ParserError)
-      end
+    it 'keeps arguments that are not valid JSON on a call with empty arguments' do
+      tool_call = call('{"tz":')
+
+      expect(tool_call.arguments).to eq({})
+      expect(tool_call.malformed_arguments).to eq('{"tz":')
     end
   end
 end

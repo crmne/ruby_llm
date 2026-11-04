@@ -121,17 +121,18 @@ RSpec.describe RubyLLM::Protocols::Cohere::Tools do
         described_class.parse_tool_calls([{ 'id' => 'abc', 'function' => { 'name' => 'now', 'arguments' => json } }])
       end
 
-      expect(parse.call('null')['abc'].arguments).to eq({})
-      expect { parse.call('"x"') }.to raise_error(RubyLLM::ToolCallParseError)
+      expect(parse.call('null')['abc']).not_to be_malformed_arguments
+      expect(parse.call('"x"')['abc'].malformed_arguments).to eq('"x"')
     end
 
-    it 'raises when the model returns truncated arguments' do
-      expect do
-        described_class.parse_tool_calls(
-          [{ 'id' => 'abc', 'function' => { 'name' => 'cohere_weather', 'arguments' => '{"city":' } }],
-          finish_reason: 'MAX_TOKENS'
-        )
-      end.to raise_error(RubyLLM::ToolCallParseError)
+    it 'keeps arguments that are not valid JSON on a call with empty arguments' do
+      calls = described_class.parse_tool_calls(
+        [{ 'id' => 'abc', 'function' => { 'name' => 'cohere_weather', 'arguments' => '{"city":' } }],
+        finish_reason: :tool_calls
+      )
+
+      expect(calls['abc'].arguments).to eq({})
+      expect(calls['abc'].malformed_arguments).to eq('{"city":')
     end
 
     it 'raises ToolCallTruncatedError for arguments the token limit cut off' do

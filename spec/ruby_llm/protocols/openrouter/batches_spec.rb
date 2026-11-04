@@ -105,7 +105,8 @@ RSpec.describe RubyLLM::Protocols::OpenRouter::Batches do
                               choices: [{ finish_reason: 'length', message: { tool_calls: [
                                 { id: 't', type: 'function', function: { name: 'f', arguments: '{"a":' } }
                               ] } }] }],
-   ['/v1/responses', { model: 'm', usage: { input_tokens: 70, output_tokens: 80 },
+   ['/v1/responses', { model: 'm', usage: { input_tokens: 70, output_tokens: 80 }, status: 'incomplete',
+                       incomplete_details: { reason: 'max_output_tokens' },
                        output: [{ type: 'function_call', call_id: 'c', name: 'f', arguments: '{"a":' }] }]]
     .each do |api, body|
     it "keeps the usage of a #{api} answer it could not read" do

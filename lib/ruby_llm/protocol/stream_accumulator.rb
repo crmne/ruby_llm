@@ -121,32 +121,25 @@ module RubyLLM
 
       def tool_calls_from_stream(response)
         tool_calls.transform_values do |tc|
-          arguments = if tc.arguments.is_a?(String) && !tc.arguments.empty?
-                        parse_tool_call_arguments(tc.arguments, response)
-                      elsif tc.arguments.is_a?(String)
-                        raise ToolCallTruncatedError.new(response:) if cut_off?(tc)
-
-                        {}
-                      else
-                        tc.arguments
-                      end
-
           ToolCall.new(
             id: tc.id,
             provider_call_id: tc.provider_call_id,
             name: tc.name,
             namespace: tc.namespace,
-            arguments: arguments,
+            **streamed_arguments(tc, response),
             thought_signature: tc.thought_signature,
             remote: tc.remote?
           )
         end
       end
 
-      def parse_tool_call_arguments(arguments, response)
-        Hash(JSON.parse(arguments))
-      rescue JSON::ParserError, TypeError => e
-        raise ToolCallParseError.for(response:, finish_reason: @finish_reason), cause: e
+      def streamed_arguments(tool_call, response)
+        arguments = tool_call.arguments
+        return { malformed_arguments: tool_call.malformed_arguments } if tool_call.malformed_arguments?
+        return { arguments: } unless arguments.is_a?(String)
+        raise ToolCallTruncatedError.new(response:) if arguments.empty? && cut_off?(tool_call)
+
+        ToolCall.parse_arguments(arguments, response:, finish_reason: @finish_reason)
       end
 
       def cut_off?(tool_call)
@@ -189,6 +182,7 @@ module RubyLLM
           name: tool_call.name,
           namespace: tool_call.namespace,
           arguments: initial_tool_call_arguments(tool_call),
+          malformed_arguments: tool_call.malformed_arguments,
           thought_signature: tool_call.thought_signature,
           remote: tool_call.remote?
         )

@@ -53,15 +53,42 @@ module RubyLLM
     # RubyLLM replays it to the provider on later requests.
     attr_accessor :thought_signature
 
+    def self.parse_arguments(text, response: nil, finish_reason: nil) # :nodoc:
+      return { arguments: text } if text.is_a?(Hash)
+
+      text = JSON.generate(text) unless text.nil? || text.is_a?(String)
+      return { arguments: {} } if text.nil? || text.empty?
+
+      { arguments: Hash(JSON.parse(text)) }
+    rescue JSON::ParserError, TypeError => e
+      raise ToolCallTruncatedError.new(response:), cause: e if finish_reason == :max_tokens
+
+      { malformed_arguments: text }
+    end
+
     def initialize(name:, id: nil, provider_call_id: nil, arguments: {}, thought_signature: nil,
-                   remote: false, namespace: nil) # :nodoc:
+                   remote: false, namespace: nil, malformed_arguments: nil) # :nodoc:
       @id = id
       @provider_call_id = provider_call_id
       @name = name
       @namespace = namespace&.to_s
-      @arguments = canonical_arguments(arguments)
+      @malformed_arguments = malformed_arguments
+      @arguments = malformed_arguments ? {} : canonical_arguments(arguments)
       @thought_signature = thought_signature
       @remote = remote
+    end
+
+    # The provider's argument text when it was not a JSON object, or +nil+.
+    # A call with such text has empty #arguments and never runs.
+    attr_reader :malformed_arguments # :nodoc:
+
+    def malformed_arguments? = !@malformed_arguments.nil? # :nodoc:
+
+    def malformed_arguments_problem # :nodoc:
+      JSON.parse(@malformed_arguments)
+      'not a JSON object'
+    rescue JSON::ParserError => e
+      "not valid JSON (#{e.message})"
     end
 
     def provider_call_id = @provider_call_id || id # :nodoc:
@@ -74,7 +101,8 @@ module RubyLLM
     end
 
     def inspect_attributes # :nodoc:
-      { id: id, name: name, namespace: namespace, arguments: arguments, remote: remote? || nil }.compact
+      { id: id, name: name, namespace: namespace, arguments: arguments, remote: remote? || nil,
+        malformed_arguments: malformed_arguments }.compact
     end
 
     # Returns the call as a Hash, omitting +nil+ values.
@@ -85,6 +113,7 @@ module RubyLLM
         name: @name,
         namespace: @namespace,
         arguments: @arguments,
+        malformed_arguments: @malformed_arguments,
         remote: remote? || nil,
         thought_signature: @thought_signature
       }.compact

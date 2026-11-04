@@ -22,7 +22,18 @@ module RubyLLM
           return super unless group.one? && content.is_a?(Array) &&
                               content.all? { |entry| entry.is_a?(Hash) && entry['role'] && !entry['type'] }
 
-          content.map { |entry| entry.except('index') }
+          ids = Protocol::ReplayedArguments.malformed_call_ids(group.first)
+          content.map { |entry| replayed_multi_entry(entry.except('index'), ids) }
+        end
+
+        def replayed_multi_entry(entry, malformed_ids)
+          return entry if malformed_ids.empty? || !entry['tool_calls'].is_a?(Array)
+
+          entry.merge('tool_calls' => entry['tool_calls'].map do |call|
+            next call unless malformed_ids.include?(call['id'])
+
+            call.merge('function' => call['function'].to_h.merge('arguments' => '{}'))
+          end)
         end
 
         def parse_completion_body(data, raw:)

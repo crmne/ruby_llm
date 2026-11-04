@@ -31,6 +31,7 @@ RSpec.describe RubyLLM::Protocols::OpenAI::Batches do
   it 'keeps the usage of a Responses slot it could not read' do
     body = {
       'id' => 'resp', 'model' => 'm', 'usage' => { 'input_tokens' => 70, 'output_tokens' => 80 },
+      'status' => 'incomplete', 'incomplete_details' => { 'reason' => 'max_output_tokens' },
       'output' => [{ 'type' => 'function_call', 'call_id' => 'c', 'name' => 'f', 'arguments' => '{"a":' }]
     }
 

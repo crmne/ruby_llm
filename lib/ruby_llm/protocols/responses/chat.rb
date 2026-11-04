@@ -440,7 +440,7 @@ module RubyLLM
         def render_assistant_items(msg)
           # Turns that used server tools replay their output items verbatim,
           # reasoning and tool results included, as stateless chaining expects.
-          return msg.raw_content if msg.raw_content
+          return replayed_output(msg) if msg.raw_content
 
           items = []
           items << render_reasoning_item(msg.thinking) if own_signature(msg)
@@ -456,6 +456,10 @@ module RubyLLM
             summary: thinking.text ? [{ type: 'summary_text', text: thinking.text }] : [],
             encrypted_content: thinking.signature
           }
+        end
+
+        def replayed_output(msg)
+          Protocol::ReplayedArguments.blank(msg.raw_content, msg, id: 'call_id', arguments: 'arguments', empty: '{}')
         end
 
         def render_function_call_items(tool_calls)
@@ -513,23 +517,13 @@ module RubyLLM
           return nil if calls.empty?
 
           ToolCall.index(calls.map do |call|
-            arguments = call['arguments']
-
             ToolCall.new(
               provider_call_id: call['call_id'],
               name: call['name'],
               namespace: call['namespace'],
-              arguments: parse_function_call_arguments(arguments, response: response, finish_reason: finish_reason)
+              **ToolCall.parse_arguments(call['arguments'], response:, finish_reason:)
             )
           end, by: :provider_call_id)
-        end
-
-        def parse_function_call_arguments(arguments, response: nil, finish_reason: nil)
-          return {} if arguments.nil? || arguments.empty?
-
-          Hash(JSON.parse(arguments))
-        rescue JSON::ParserError, TypeError => e
-          raise ToolCallParseError.for(response:, finish_reason:), cause: e
         end
 
         def parse_reasoning_summary(output)

@@ -38,7 +38,7 @@ RubyLLM::Error                    # Base error class for provider-operation issu
     RubyLLM::ForbiddenError       # 403: Permission issues
     RubyLLM::ContextLengthExceededError # Context/token limits exceeded (provider-specific)
     RubyLLM::ContentFilterError   # Provider content filters blocked a transcription
-    RubyLLM::ToolCallParseError   # Provider returned malformed tool-call arguments
+    RubyLLM::ToolCallParseError   # Parent of ToolCallTruncatedError; other malformed arguments go back to the model
         RubyLLM::ToolCallTruncatedError # The output token limit cut off a tool call
     RubyLLM::UnsupportedAttachmentError # Attachment cannot be sent to this provider/model
     RubyLLM::UnsupportedServerToolError # Provider/protocol does not define this server tool

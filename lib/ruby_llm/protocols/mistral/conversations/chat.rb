@@ -77,7 +77,8 @@ module RubyLLM
 
           def render_entry(message)
             if conversation_entries?(message.raw_content)
-              message.raw_content
+              Protocol::ReplayedArguments.blank(message.raw_content, message,
+                                                id: 'tool_call_id', arguments: 'arguments', empty: '{}')
             elsif message.tool_result?
               [{ type: 'function.result', tool_call_id: message.provider_call_id, result: message.content.to_s }]
             else

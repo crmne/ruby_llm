@@ -92,7 +92,8 @@ module RubyLLM
 
       def rebuild_tool_call(call, name:, namespace:)
         ToolCall.new(id: call.id, provider_call_id: call.provider_call_id, name:, namespace:,
-                     arguments: call.arguments, thought_signature: call.thought_signature, remote: call.remote?)
+                     arguments: call.arguments, malformed_arguments: call.malformed_arguments,
+                     thought_signature: call.thought_signature, remote: call.remote?)
       end
     end
   end

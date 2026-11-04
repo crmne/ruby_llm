@@ -19,7 +19,8 @@ module RubyLLM
     # [+tool_call_id+] The call's id, unique across the table.
     # [+name+] The tool's name.
     # [+namespace+] The namespace of a namespaced tool, or +nil+.
-    # [+arguments+] The arguments the model passed, as a Hash.
+    # [+arguments+] The arguments the model passed, as a Hash, or as the
+    #               model's text when it was not a JSON object.
     # [+approval+] <tt>"pending"</tt>, <tt>"approved"</tt>, <tt>"remembered"</tt>,
     #              or <tt>"denied"</tt>, or +nil+ when no approval was asked.
     # [+remote+] Whether the provider ran the tool instead of RubyLLM.
@@ -44,6 +45,7 @@ module RubyLLM
           name: name,
           namespace: self[:namespace],
           arguments: arguments || {},
+          malformed_arguments: (arguments if arguments.is_a?(String)),
           thought_signature: thought_signature,
           remote: self[:remote]
         )

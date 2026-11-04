@@ -394,6 +394,7 @@ module RubyLLM
       ToolCall.new(id: attributes[:id] || id, name: attributes[:name],
                    provider_call_id: attributes[:provider_call_id] || attributes[:provider_id],
                    arguments: attributes[:arguments] || {},
+                   malformed_arguments: attributes[:malformed_arguments],
                    namespace: attributes[:namespace],
                    thought_signature: attributes[:thought_signature], remote: attributes.fetch(:remote, false))
     end

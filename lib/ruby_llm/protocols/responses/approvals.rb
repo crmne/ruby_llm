@@ -15,9 +15,8 @@ module RubyLLM
           calls = output.filter_map do |item|
             next unless item['type'] == 'mcp_approval_request'
 
-            arguments = item['arguments']
-            arguments = parse_function_call_arguments(arguments, response:, finish_reason:) unless arguments.is_a?(Hash)
-            ToolCall.new(provider_call_id: item.fetch('id'), name: item.fetch('name'), arguments:, remote: true)
+            arguments = ToolCall.parse_arguments(item['arguments'], response:, finish_reason:)
+            ToolCall.new(provider_call_id: item.fetch('id'), name: item.fetch('name'), **arguments, remote: true)
           end
           ToolCall.index(calls, by: :provider_call_id)
         end

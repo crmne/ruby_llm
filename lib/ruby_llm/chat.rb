@@ -549,7 +549,7 @@ module RubyLLM
     # Returns whether +tool_call+ requires approval and has no recorded
     # decision.
     def approval_pending?(tool_call) # :nodoc:
-      return false if skipped_result(tool_call)
+      return false if tool_call.malformed_arguments? || skipped_result(tool_call)
       return approval_decision(nil, tool_call).nil? if tool_call.remote?
 
       tool = tool_for(tool_call)
@@ -2203,6 +2203,8 @@ module RubyLLM
     end
 
     def execution_decision(tool_call)
+      return false if tool_call.malformed_arguments?
+
       tool = tool_for(tool_call)
       return approval_decision(tool, tool_call) if tool&.requires_approval?(tool_call)
 
@@ -2213,8 +2215,15 @@ module RubyLLM
       tool_calls.each_value do |tool_call|
         raise_if_cancelled!
         run_callbacks(:before_message)
-        add_tool_result_message(tool_call, { error: "The user denied the #{tool_call.name} tool call." })
+        add_tool_result_message(tool_call, { error: refusal_error(tool_call) })
       end
+    end
+
+    def refusal_error(tool_call)
+      name = tool_call.name
+      return "The user denied the #{name} tool call." unless tool_call.malformed_arguments?
+
+      "The arguments for #{name} were #{tool_call.malformed_arguments_problem}. Call #{name} again with a JSON object."
     end
 
     def record_tool_call_decision(tool_call, decision)
@@ -2224,6 +2233,8 @@ module RubyLLM
     end
 
     def approval_decision(tool, tool_call)
+      return false if tool_call.malformed_arguments?
+
       decision = tool_call_approval(tool, tool_call)
       return decision unless decision.nil?
       return if tool.is_a?(CodeExecution)

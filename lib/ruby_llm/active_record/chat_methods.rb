@@ -1298,6 +1298,7 @@ module RubyLLM
         tool_calls.each do |tool_call|
           attributes = tool_call.to_h
           attributes[:tool_call_id] = attributes.delete(:id)
+          attributes[:arguments] = attributes.delete(:malformed_arguments) if tool_call.malformed_arguments?
           attributes[:approval] = 'pending' if to_llm.approval_pending?(tool_call)
           message_record.ruby_llm_tool_calls.create!(**attributes)
         end

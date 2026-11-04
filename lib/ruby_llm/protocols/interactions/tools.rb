@@ -28,7 +28,7 @@ module RubyLLM
             next unless step['type'] == 'function_call' && !answered.include?(step['id'])
 
             ToolCall.new(provider_call_id: step.fetch('id'), name: step.fetch('name'),
-                         arguments: parse_interaction_arguments(step['arguments']),
+                         **ToolCall.parse_arguments(step['arguments']),
                          thought_signature: step['signature'])
           end
           ToolCall.index(calls, by: :provider_call_id)
@@ -38,14 +38,6 @@ module RubyLLM
           calls = steps.filter_map { |step| step['id'] if step['type'] == 'function_call' }
           results = steps.filter_map { |step| step['call_id'] if step['type'] == 'function_result' }
           calls & results
-        end
-
-        def parse_interaction_arguments(arguments)
-          return {} if arguments.nil? || (arguments.is_a?(String) && arguments.empty?)
-
-          Hash(arguments.is_a?(String) ? JSON.parse(arguments) : arguments)
-        rescue JSON::ParserError, TypeError => e
-          raise ToolCallParseError.new(finish_reason: :tool_calls), cause: e
         end
 
         def parse_interaction_server_calls(steps)

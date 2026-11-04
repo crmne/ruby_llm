@@ -211,6 +211,8 @@ A verdict never holds the text it judged, so you can log it. Only the live respo
 
 When a token limit cuts the response off while the model writes a tool call, the call's arguments are incomplete, and the chat raises `RubyLLM::ToolCallTruncatedError`, a kind of `RubyLLM::ToolCallParseError`. Unless you call `with_max_output_tokens`, RubyLLM asks providers that need a number for the model's whole output limit, so this only happens when the model writes more than it can.
 
+When the model writes tool-call arguments that are not a JSON object for any other reason, the chat doesn't raise. The tool doesn't run and no approval is asked. The call gets an error result that names the problem, and the model calls the tool again. The call's `arguments` is an empty Hash, and later requests send it with empty arguments, so the provider never sees the invalid text again.
+
 ## Long Responses
 
 Gemini models that support long decode can write more than one response holds. Set a total output budget above 65,536 tokens and stream the answer:

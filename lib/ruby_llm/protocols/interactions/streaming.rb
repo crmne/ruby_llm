@@ -80,7 +80,7 @@ module RubyLLM
           steps = @interaction_steps.sort.map do |_index, step|
             next step unless step['type'] == 'function_call'
 
-            step.merge('arguments' => parse_interaction_arguments(step['arguments']))
+            step.merge('arguments' => ToolCall.parse_arguments(step['arguments']).fetch(:arguments, step['arguments']))
           end
           @interaction_response.merge('steps' => steps)
         end
