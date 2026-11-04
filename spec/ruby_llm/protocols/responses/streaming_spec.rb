@@ -232,6 +232,34 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
     expect(accumulator.to_message(nil).tool_calls['call_1'].arguments).to eq({ 'city' => 'Berlin' })
   end
 
+  it 'reports a function call the output limit cut off as truncated' do
+    accumulator = RubyLLM::Protocol::StreamAccumulator.new
+    item = { 'type' => 'function_call', 'call_id' => 'call_1', 'name' => 'weather', 'arguments' => '' }
+    accumulator.add build_chunk({ 'type' => 'response.output_item.added', 'output_index' => 0, 'item' => item })
+    accumulator.add build_chunk({ 'type' => 'response.function_call_arguments.delta', 'output_index' => 0,
+                                  'delta' => '{"city":' })
+    accumulator.add build_chunk({ 'type' => 'response.output_item.done', 'output_index' => 0,
+                                  'item' => item.merge('arguments' => '{"city":', 'status' => 'incomplete') })
+    accumulator.add build_chunk({ 'type' => 'response.incomplete',
+                                  'response' => { 'status' => 'incomplete', 'output' => [],
+                                                  'incomplete_details' => { 'reason' => 'max_output_tokens' } } })
+
+    expect { accumulator.to_message(nil) }.to raise_error(RubyLLM::ToolCallTruncatedError)
+  end
+
+  it 'reports a function call cut off before any arguments as truncated' do
+    accumulator = RubyLLM::Protocol::StreamAccumulator.new
+    item = { 'type' => 'function_call', 'call_id' => 'call_1', 'name' => 'weather', 'arguments' => '' }
+    accumulator.add build_chunk({ 'type' => 'response.output_item.added', 'output_index' => 0, 'item' => item })
+    accumulator.add build_chunk({ 'type' => 'response.output_item.done', 'output_index' => 0,
+                                  'item' => item.merge('status' => 'incomplete') })
+    accumulator.add build_chunk({ 'type' => 'response.incomplete',
+                                  'response' => { 'status' => 'incomplete', 'output' => [],
+                                                  'incomplete_details' => { 'reason' => 'max_output_tokens' } } })
+
+    expect { accumulator.to_message(nil) }.to raise_error(RubyLLM::ToolCallTruncatedError)
+  end
+
   it 'captures encrypted reasoning from completed items' do
     chunk = build_chunk({
                           'type' => 'response.output_item.done',
