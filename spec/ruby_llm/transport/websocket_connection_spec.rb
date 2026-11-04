@@ -167,7 +167,7 @@ RSpec.describe RubyLLM::Transport::WebsocketConnection do
   end
 
   it 'bounds a read when the peer sends no frames' do
-    config.request_timeout = 0.05
+    config.request_timeout = 0.5
     with_server(echo: false) do |url, _worker|
       described_class.open(url, headers: {}, config:) do |connection|
         expect { connection.read }.to raise_error(RubyLLM::Error, /timed out/)
