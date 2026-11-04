@@ -131,7 +131,7 @@ RSpec.describe RubyLLM::Protocol::StreamAccumulator do
       )
     end
 
-    it 'reads null streamed arguments as none and refuses other values that are not objects' do
+    it 'reads null streamed arguments as none and keeps other values that are not objects as malformed' do
       message = lambda do |arguments|
         accumulator = described_class.new
         call = RubyLLM::ToolCall.new(provider_call_id: 'call_1', name: 'now', arguments:)
@@ -139,8 +139,8 @@ RSpec.describe RubyLLM::Protocol::StreamAccumulator do
         accumulator.to_message(instance_double(Faraday::Response))
       end
 
-      expect(message.call('null').tool_calls['call_1'].arguments).to eq({})
-      expect { message.call('"x"') }.to raise_error(RubyLLM::ToolCallParseError)
+      expect(message.call('null').tool_calls['call_1']).not_to be_malformed_arguments
+      expect(message.call('"x"').tool_calls['call_1'].malformed_arguments).to eq('"x"')
     end
 
     it 'raises ToolCallTruncatedError when a token limit cuts off the last tool call' do
@@ -174,32 +174,38 @@ RSpec.describe RubyLLM::Protocol::StreamAccumulator do
       expect(accumulator.to_message(nil).tool_calls['call_1'].arguments).to eq({})
     end
 
-    it 'wraps malformed streamed tool call arguments in a RubyLLM error' do
+    it 'keeps streamed arguments that are not valid JSON on a call with empty arguments' do
+      accumulator = described_class.new
+      call = RubyLLM::ToolCall.new(provider_call_id: 'call_1', name: 'weather', arguments: '{"city":"Berlin"')
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: nil, tool_calls: { 0 => call }))
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: nil, finish_reason: :tool_calls))
+
+      parsed = accumulator.to_message(instance_double(Faraday::Response)).tool_calls['call_1']
+
+      expect(parsed.arguments).to eq({})
+      expect(parsed.malformed_arguments).to eq('{"city":"Berlin"')
+    end
+
+    it 'keeps a malformed call that arrives whole, such as a remote approval request' do
+      accumulator = described_class.new
+      call = RubyLLM::ToolCall.new(provider_call_id: 'mcpr_1', name: 'deploy', malformed_arguments: '{"env":',
+                                   remote: true)
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: nil, tool_calls: { 'mcpr_1' => call }))
+
+      expect(accumulator.to_message(nil).tool_calls['mcpr_1'].malformed_arguments).to eq('{"env":')
+    end
+
+    it 'raises ToolCallTruncatedError for any call a token limit leaves without valid JSON' do
       accumulator = described_class.new
       response = instance_double(Faraday::Response)
+      call = RubyLLM::ToolCall.new(provider_call_id: 'call_1', name: 'weather', arguments: '{"city":"Berlin"')
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: nil, tool_calls: { 0 => call }))
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: nil, finish_reason: :max_tokens))
 
-      accumulator.add(
-        RubyLLM::Chunk.new(
-          role: :assistant,
-          content: nil,
-          tool_calls: { 0 => RubyLLM::ToolCall.new(provider_call_id: 'call_1', name: 'weather', arguments: '{"city":"Berlin"') }
-        )
-      )
-      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: nil, finish_reason: 'length'))
-
-      error = nil
-
-      expect do
-        accumulator.to_message(response)
-      rescue RubyLLM::ToolCallParseError => e
-        error = e
-        raise
-      end.to raise_error(RubyLLM::ToolCallParseError)
-
-      expect(error).to be_a(RubyLLM::Error)
-      expect(error.response).to eq(response)
-      expect(error.finish_reason).to eq(:length)
-      expect(error.cause).to be_a(JSON::ParserError)
+      expect { accumulator.to_message(response) }.to raise_error(RubyLLM::ToolCallTruncatedError) do |error|
+        expect(error.response).to eq(response)
+        expect(error.cause).to be_a(JSON::ParserError)
+      end
     end
 
     it 'deduplicates citations repeated across chunks' do

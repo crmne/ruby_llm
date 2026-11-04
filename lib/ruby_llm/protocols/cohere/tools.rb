@@ -115,17 +115,9 @@ module RubyLLM
             ToolCall.new(
               provider_call_id: tool_call['id'],
               name: tool_call.dig('function', 'name'),
-              arguments: parse_arguments(tool_call.dig('function', 'arguments'), response, finish_reason)
+              **ToolCall.parse_arguments(tool_call.dig('function', 'arguments'), response:, finish_reason:)
             )
           end, by: :provider_call_id)
-        end
-
-        def parse_arguments(arguments, response, finish_reason)
-          return {} if arguments.nil? || arguments.empty?
-
-          Hash(JSON.parse(arguments))
-        rescue JSON::ParserError, TypeError => e
-          raise ToolCallParseError.for(response:, finish_reason:), cause: e
         end
       end
     end

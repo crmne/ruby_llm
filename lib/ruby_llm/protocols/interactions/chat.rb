@@ -72,7 +72,9 @@ module RubyLLM
 
         def render_interaction_turn(message, calls, current:)
           if interaction_state?(message.raw_content)
-            render_interaction_history(message.raw_content.dig('response', 'steps') || [])
+            steps = message.raw_content.dig('response', 'steps') || []
+            steps = Protocol::ReplayedArguments.blank(steps, message, id: 'id', arguments: 'arguments', empty: {})
+            render_interaction_history(steps)
           elsif message.tool_result?
             [render_interaction_result(message, calls)]
           else
@@ -124,7 +126,7 @@ module RubyLLM
 
           steps = data.fetch('steps', [])
           content = parse_interaction_content(steps)
-          calls = parse_interaction_calls(steps)
+          calls = parse_interaction_calls(steps, response: raw, finish_reason: finish_reasons[data['status']])
           status = interaction_status(data, calls, steps)
           if status == 'requires_action' && calls.empty?
             raise Error.new('Gemini interaction requires an unsupported action', response: raw)

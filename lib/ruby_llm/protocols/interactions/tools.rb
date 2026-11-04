@@ -22,13 +22,15 @@ module RubyLLM
           { allowed_tools: { mode: 'any', tools: [choice.to_s] } }
         end
 
-        def parse_interaction_calls(steps)
+        def parse_interaction_calls(steps, response: nil, finish_reason: nil)
           answered = interaction_answered_calls(steps)
-          calls = steps.filter_map do |step|
-            next unless step['type'] == 'function_call' && !answered.include?(step['id'])
+          pending = steps.select { |step| step['type'] == 'function_call' && !answered.include?(step['id']) }
+          cut_off = finish_reason == :max_tokens && pending.any? && [nil, '', {}].include?(pending.last['arguments'])
+          raise ToolCallTruncatedError.new(response:) if cut_off
 
+          calls = pending.map do |step|
             ToolCall.new(provider_call_id: step.fetch('id'), name: step.fetch('name'),
-                         arguments: parse_interaction_arguments(step['arguments']),
+                         **ToolCall.parse_arguments(step['arguments'], response:, finish_reason:),
                          thought_signature: step['signature'])
           end
           ToolCall.index(calls, by: :provider_call_id)
@@ -38,14 +40,6 @@ module RubyLLM
           calls = steps.filter_map { |step| step['id'] if step['type'] == 'function_call' }
           results = steps.filter_map { |step| step['call_id'] if step['type'] == 'function_result' }
           calls & results
-        end
-
-        def parse_interaction_arguments(arguments)
-          return {} if arguments.nil? || (arguments.is_a?(String) && arguments.empty?)
-
-          Hash(arguments.is_a?(String) ? JSON.parse(arguments) : arguments)
-        rescue JSON::ParserError, TypeError => e
-          raise ToolCallParseError.new(finish_reason: :tool_calls), cause: e
         end
 
         def parse_interaction_server_calls(steps)

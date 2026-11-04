@@ -42,6 +42,17 @@ RSpec.describe RubyLLM::ToolCall do
     expect(described_class.new(id: 'call_2', name: 'search').inspect).not_to include('remote')
   end
 
+  it 'keeps malformed arguments through a message round trip, with empty arguments' do
+    tool_call = described_class.new(id: 'call_1', name: 'search', arguments: { 'q' => 'x' },
+                                    malformed_arguments: '{"q":')
+    message = RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { 'call_1' => tool_call })
+    restored = RubyLLM::Message.new(JSON.parse(JSON.generate(message.to_h)).transform_keys(&:to_sym))
+
+    expect(tool_call.arguments).to eq({})
+    expect(restored.tool_calls['call_1'].malformed_arguments).to eq('{"q":')
+    expect(restored.tool_calls['call_1'].arguments).to eq({})
+  end
+
   %i[anthropic openai].each do |provider|
     it "renders the same #{provider} request before and after a jsonb round trip" do
       context = RubyLLM.context do |config|

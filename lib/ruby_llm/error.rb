@@ -232,17 +232,13 @@ module RubyLLM
     end
   end
 
-  # Raised when a provider returns tool-call arguments that are not a JSON
-  # object, often because the response was truncated mid-tool-call.
+  # The parent of ToolCallTruncatedError, the error RubyLLM raises for
+  # tool-call arguments it cannot read. Other arguments that are not a JSON
+  # object no longer raise: the chat answers the call with an error result
+  # and the model calls the tool again.
   class ToolCallParseError < Error
     # Returns the normalized reason generation stopped, or +nil+.
     attr_reader :finish_reason
-
-    def self.for(response: nil, finish_reason: nil) # :nodoc:
-      return ToolCallTruncatedError.new(response:) if finish_reason == :max_tokens
-
-      new(response:, finish_reason:)
-    end
 
     def initialize(message = nil, response: nil, finish_reason: nil) # :nodoc:
       @finish_reason = finish_reason

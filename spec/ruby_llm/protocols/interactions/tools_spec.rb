@@ -26,16 +26,33 @@ RSpec.describe RubyLLM::Protocols::Interactions::Tools do
       expect(call({ 'tz' => 'UTC' }).arguments).to eq({ 'tz' => 'UTC' })
     end
 
-    it 'reads null arguments as none and refuses other values that are not objects' do
-      expect(call('null').arguments).to eq({})
-      expect { call('"x"') }.to raise_error(RubyLLM::ToolCallParseError)
+    it 'reads null arguments as none and keeps other values that are not objects as malformed' do
+      expect(call('null')).not_to be_malformed_arguments
+      expect(call('"x"').malformed_arguments).to eq('"x"')
+      expect(call([1]).malformed_arguments).to eq('[1]')
     end
 
-    it 'wraps malformed JSON in a RubyLLM error' do
-      expect { call('{"tz":') }.to raise_error(RubyLLM::ToolCallParseError) do |error|
-        expect(error).to be_a(RubyLLM::Error)
-        expect(error.cause).to be_a(JSON::ParserError)
-      end
+    it 'keeps arguments that are not valid JSON on a call with empty arguments' do
+      tool_call = call('{"tz":')
+
+      expect(tool_call.arguments).to eq({})
+      expect(tool_call.malformed_arguments).to eq('{"tz":')
+    end
+
+    it 'raises ToolCallTruncatedError for arguments the token limit cut off' do
+      step = { 'type' => 'function_call', 'id' => 'c1', 'name' => 'now', 'arguments' => '{"tz":' }
+
+      expect { described_class.parse_interaction_calls([step], finish_reason: :max_tokens) }
+        .to raise_error(RubyLLM::ToolCallTruncatedError)
+    end
+
+    it 'raises ToolCallTruncatedError when the token limit stops the last call before its arguments' do
+      first = { 'type' => 'function_call', 'id' => 'c1', 'name' => 'now' }
+      last = { 'type' => 'function_call', 'id' => 'c2', 'name' => 'move', 'arguments' => '' }
+
+      expect(described_class.parse_interaction_calls([first, last], finish_reason: :tool_calls).size).to eq(2)
+      expect { described_class.parse_interaction_calls([first, last], finish_reason: :max_tokens) }
+        .to raise_error(RubyLLM::ToolCallTruncatedError)
     end
   end
 end

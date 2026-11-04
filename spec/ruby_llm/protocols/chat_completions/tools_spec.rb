@@ -79,51 +79,41 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Tools do
       expect(described_class.parse_tool_calls([])).to be_nil
     end
 
-    it 'reads null arguments as none and refuses other values that are not objects' do
+    it 'reads null arguments as none and keeps other values that are not objects as malformed' do
       parse = lambda do |json|
         described_class.parse_tool_calls([{ 'id' => 'call_1', 'function' => { 'name' => 'now', 'arguments' => json } }])
       end
 
-      expect(parse.call('null')['call_1'].arguments).to eq({})
+      expect(parse.call('null')['call_1']).not_to be_malformed_arguments
       ['"x"', '5', '[1]'].each do |arguments|
-        expect { parse.call(arguments) }.to raise_error(RubyLLM::ToolCallParseError)
+        call = parse.call(arguments)['call_1']
+        expect([call.arguments, call.malformed_arguments]).to eq([{}, arguments])
       end
     end
 
     it 'raises ToolCallTruncatedError for arguments the token limit cut off' do
-      expect do
+      response = instance_double(Faraday::Response)
+      parse = lambda do
         described_class.parse_tool_calls(
           [{ 'id' => 'call_1', 'function' => { 'name' => 'move', 'arguments' => '{"from":"a.txt","to' } }],
-          finish_reason: :max_tokens
+          response:, finish_reason: :max_tokens
         )
-      end.to raise_error(RubyLLM::ToolCallTruncatedError)
+      end
+
+      expect(&parse).to raise_error(RubyLLM::ToolCallTruncatedError) do |error|
+        expect(error.response).to eq(response)
+        expect(error.cause).to be_a(JSON::ParserError)
+      end
     end
 
-    it 'wraps malformed argument JSON in a RubyLLM error' do
-      response = instance_double(Faraday::Response)
-      tool_calls = [
-        {
-          'id' => 'call_123',
-          'function' => {
-            'name' => 'weather',
-            'arguments' => '{"location":"Berlin"'
-          }
-        }
-      ]
+    it 'keeps arguments that are not valid JSON on a call with empty arguments' do
+      calls = described_class.parse_tool_calls(
+        [{ 'id' => 'call_123', 'function' => { 'name' => 'weather', 'arguments' => '{"location":"Berlin"' } }],
+        finish_reason: :tool_calls
+      )
 
-      error = nil
-
-      expect do
-        described_class.parse_tool_calls(tool_calls, response: response, finish_reason: 'length')
-      rescue RubyLLM::ToolCallParseError => e
-        error = e
-        raise
-      end.to raise_error(RubyLLM::ToolCallParseError)
-
-      expect(error).to be_a(RubyLLM::Error)
-      expect(error.response).to eq(response)
-      expect(error.finish_reason).to eq('length')
-      expect(error.cause).to be_a(JSON::ParserError)
+      expect(calls['call_123'].arguments).to eq({})
+      expect(calls['call_123'].malformed_arguments).to eq('{"location":"Berlin"')
     end
   end
 

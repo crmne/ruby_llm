@@ -424,7 +424,7 @@ module RubyLLM
         # verbatim: the API requires the tool_use/result blocks and their
         # citations back exactly as returned.
         def render_raw_assistant_message(msg, caching: nil)
-          blocks = msg.raw_content.dup
+          blocks = Protocol::ReplayedArguments.blank(msg.raw_content.dup, msg, id: 'id', arguments: 'input', empty: {})
           inject_cache_control(blocks, caching:, ttl: msg.cache_ttl) if cache_boundary?(msg, caching:)
 
           { role: 'assistant', content: blocks }

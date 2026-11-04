@@ -434,6 +434,25 @@ RSpec.describe RubyLLM::Protocols::Interactions do
     expect(chat.render[:input].last['arguments']).to eq('left' => 17, 'right' => 19)
   end
 
+  it 'keeps streamed function arguments that are not valid JSON malformed, and replays them empty' do
+    events = [
+      { 'event_type' => 'step.start', 'index' => 0,
+        'step' => { 'type' => 'function_call', 'id' => 'local1', 'name' => 'multiply', 'arguments' => {} } },
+      { 'event_type' => 'step.delta', 'index' => 0,
+        'delta' => { 'type' => 'arguments_delta', 'arguments' => '{"left":17,' } },
+      { 'event_type' => 'interaction.completed',
+        'interaction' => body.except('steps').merge('status' => 'requires_action') }
+    ]
+    allow(protocol).to receive(:stream_events) do |*_args, &block|
+      events.each(&block)
+      instance_double(Faraday::Response)
+    end
+    message = protocol.send(:stream_response, {}) { |_chunk| nil }
+    expect(message.tool_calls['local1'].malformed_arguments).to eq('{"left":17,')
+    chat.add_message(message)
+    expect(chat.render[:input].last['arguments']).to eq({})
+  end
+
   it 'uses Vertex AI Search retrieval for its named file-search alias' do
     vertex = RubyLLM.chat(model: model_for(:vertexai), provider: :vertexai)
     allow(vertex.provider).to receive(:headers).and_return({})

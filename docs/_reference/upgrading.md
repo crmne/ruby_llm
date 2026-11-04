@@ -21,7 +21,7 @@ After reading this guide, you will know:
 * What changes for a crashed job, a denial, pending approvals, an MCP input error, a stdio server's environment, a dropped MCP tool call, a write over a folder, a document URL, and a deploy that mixes versions.
 * What changes for agent `rescue_from` handlers and streamed transcription chunks.
 * How `tool_calls` reads now that it is a collection of calls.
-* Which errors failed Responses requests raise.
+* Which errors failed Responses requests raise, and why malformed tool arguments no longer do.
 * Why Bedrock batches report no request counts.
 * Which job predicates replace `done?` and `completed?`.
 * Why agents name their chat record with `chat_class`.
@@ -327,6 +327,10 @@ run(message) if message.tool_call?
 ## Tool Results That Cannot Be Sent Reach the Model as Errors
 
 A tool that returns an array mixing attachments with other values, such as `[attachment, 42]`, used to raise `ArgumentError` out of `ask`. The tool has already run by then, so raising left the call pending to run again. The model now receives `{ error: }` as the tool result and the chat continues, so a `rescue ArgumentError` around `ask` no longer sees this case. Return Strings and attachments from your tools.
+
+## Malformed Tool Arguments Reach the Model as Errors
+
+In 2.1, tool-call arguments that were not a JSON object raised `RubyLLM::ToolCallParseError` out of `ask`, and the turn failed. In 2.2 the call gets an error result instead, without running the tool or asking for approval, and the model calls the tool again. Later requests send the call with empty arguments. A tool call the output token limit cut off still raises `RubyLLM::ToolCallTruncatedError`, so `rescue RubyLLM::ToolCallParseError` keeps catching it. A persisted call keeps the model's text in its `arguments` column, as a JSON string.
 
 ## Writing Over a Folder Raises
 

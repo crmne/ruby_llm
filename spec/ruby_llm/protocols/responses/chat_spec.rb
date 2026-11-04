@@ -424,7 +424,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       expect(message.tool_calls['call_1'].arguments).to eq({ 'city' => 'Berlin' })
     end
 
-    it 'reads null function-call arguments as none and refuses other values that are not objects' do
+    it 'reads null function-call arguments as none and keeps other values that are not objects as malformed' do
       parse = lambda do |arguments|
         body = { 'model' => 'gpt-5-nano', 'status' => 'completed',
                  'output' => [{ 'type' => 'function_call', 'call_id' => 'call_1', 'name' => 'now',
@@ -432,8 +432,28 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
         protocol.send(:parse_completion_response, instance_double(Faraday::Response, body:))
       end
 
-      expect(parse.call('null').tool_calls['call_1'].arguments).to eq({})
-      expect { parse.call('"x"') }.to raise_error(RubyLLM::ToolCallParseError)
+      expect(parse.call('null').tool_calls['call_1']).not_to be_malformed_arguments
+      expect(parse.call('"x"').tool_calls['call_1'].malformed_arguments).to eq('"x"')
+    end
+
+    it 'keeps function-call arguments that are not valid JSON on a call with empty arguments' do
+      body = { 'model' => 'gpt-5-nano', 'status' => 'completed',
+               'output' => [{ 'type' => 'function_call', 'call_id' => 'call_1', 'name' => 'weather',
+                              'arguments' => '{"city":"Berlin"' }] }
+      call = protocol.send(:parse_completion_response, instance_double(Faraday::Response, body:)).tool_calls['call_1']
+
+      expect(call.arguments).to eq({})
+      expect(call.malformed_arguments).to eq('{"city":"Berlin"')
+    end
+
+    it 'keeps approval request arguments that are not valid JSON on a remote call with empty arguments' do
+      body = { 'model' => 'gpt-5-nano', 'status' => 'completed',
+               'output' => [{ 'type' => 'mcp_approval_request', 'id' => 'mcpr_1', 'name' => 'deploy',
+                              'server_label' => 'ops', 'arguments' => '{"env":' }] }
+      call = protocol.send(:parse_completion_response, instance_double(Faraday::Response, body:)).tool_calls['mcpr_1']
+
+      expect(call).to be_remote
+      expect(call.malformed_arguments).to eq('{"env":')
     end
 
     it 'wraps malformed function-call arguments in a RubyLLM error' do
