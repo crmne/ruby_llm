@@ -99,6 +99,7 @@ module RubyLLM
         def acts_as_chat(messages: :messages, message_class: nil, messages_foreign_key: nil)
           include RubyLLM::ActiveRecord::ChatMethods
           include RubyLLM::ActiveRecord::ChatFiles
+          singleton_class.prepend RubyLLM::ActiveRecord::ChatColumnGuard
 
           class_attribute :messages_association_name, :message_class
           self.messages_association_name = messages

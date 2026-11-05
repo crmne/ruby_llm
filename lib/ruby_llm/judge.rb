@@ -136,7 +136,7 @@ module RubyLLM
     # Judges the supplied input and returns a Judgment. Accepts model and
     # provider overrides, images as +with:+, an isolated +context:+,
     # +provider_options:+, instrumentation +metadata:+, and a usage +owner:+,
-    # as RubyLLM.with_usage_owner describes. Additional
+    # as RubyLLM.with_owner describes. Additional
     # +questions:+ are a Hash keyed by question name, with +type:+,
     # +instructions:+, and +criteria:+ (probability), +options:+ (choice), or
     # +levels:+ (score). The block supplies input only. Input may be omitted

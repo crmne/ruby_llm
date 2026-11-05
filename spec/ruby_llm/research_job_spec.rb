@@ -92,7 +92,7 @@ RSpec.describe RubyLLM::ResearchJob do
     end
 
     it 'records the reported usage when it observes the job finish, attributed to the owner' do
-      job = RubyLLM.with_usage_owner('account-1') do
+      job = RubyLLM.with_owner('account-1') do
         described_class.new(id: 'job-1', provider: :vertexai, agent: 'agent-id', protocol:, status: :pending)
       end
       tokens = RubyLLM::Tokens.new(input: 1200, output: 300, reported_cost: 0.42)

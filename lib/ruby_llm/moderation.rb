@@ -83,7 +83,7 @@ module RubyLLM
     # to use a model that is not in the registry. An explicitly selected
     # provider may instead use a configured resource without a model.
     # +owner:+ attributes the usage to a record, such as a user, and wins
-    # over RubyLLM.with_usage_owner.
+    # over RubyLLM.with_owner.
     #
     #   RubyLLM.moderate("User message")
     #   RubyLLM.moderate(["First comment", "Second comment"]).results

@@ -49,7 +49,7 @@ chat.messages.last.content      # => "It's 15°C and partly cloudy in Paris."
 
 With Rails persistence, each method reads the saved transcript and skips tool calls with saved results. Only one process runs a chat at a time: while another process is running it, each method returns without doing anything and `waiting?` is `true`. Work interrupted before its result is saved may run again once its claim expires. See [Agents in Background Jobs]({% link _advanced/durable-agents.md %}) for job retries and idempotent tools.
 
-Stop scheduling work while `waiting?` is true: the chat waits on something outside it. `awaiting_approval?` tells you it waits on an approval, so record one or a denial, then resume the loop. `awaiting_input?` and `awaiting_tasks?` cover [MCP servers]({% link _tools/mcp.md %}#input-requests) asking for input and running tasks.
+Stop scheduling work while `waiting?` is true: the chat waits on something outside it. `awaiting_approval?` tells you it waits on an approval, so record one or a denial, then resume the loop. `awaiting_input?` and `awaiting_tasks?` cover [MCP servers]({% link _tools/mcp.md %}#input-requests) asking for input and running tasks. `awaiting_person?` is true when any of them needs a person to act, including a task that reports `input_required?`.
 
 [Batches]({% link _advanced/batches.md %}) are the same idea at scale: a batch is `generate` deferred for many chats at once, with `run_tools` run locally between rounds.
 

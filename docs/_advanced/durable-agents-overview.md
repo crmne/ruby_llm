@@ -55,9 +55,10 @@ chat.waiting?           # => true
 chat.awaiting_approval? # a tool call needs approval
 chat.awaiting_input?    # a tool or MCP server asked a question
 chat.awaiting_tasks?    # a tool call runs as a task
+chat.awaiting_person?   # any of them needs a person to act
 ```
 
-Record the approval or the answer from your controller, then enqueue the job again. The next `complete` picks up where the last one stopped.
+`awaiting_person?` is the one to check before you notify someone: it is true for approvals, questions, and tasks that report `input_required?`, and false while the chat only waits on work that runs elsewhere. Record the approval or the answer from your controller, then enqueue the job again. The next `complete` picks up where the last one stopped.
 
 ## The Pieces
 

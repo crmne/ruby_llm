@@ -153,7 +153,7 @@ RSpec.describe RubyLLM::Video, :live do
 
     it 'records its usage once when it finishes, attributed to the owner at submission' do
       allow(protocol).to receive(:refresh_video_job).and_return({ status: :pending }, { status: :completed })
-      job = RubyLLM.with_usage_owner('account-1') do
+      job = RubyLLM.with_owner('account-1') do
         described_class.new(id: 'operations/op-1', protocol:, model: 'veo-3.1-fast-generate-preview')
       end
 

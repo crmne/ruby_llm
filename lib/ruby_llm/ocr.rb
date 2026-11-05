@@ -42,7 +42,7 @@ module RubyLLM
     # into the request in the provider's own vocabulary, such as Mistral's
     # +include_image_base64:+ or +table_format:+.
     # +owner:+ attributes the usage to a record, such as a user, and wins
-    # over RubyLLM.with_usage_owner.
+    # over RubyLLM.with_owner.
     #
     #   RubyLLM.ocr("report.pdf")
     #   RubyLLM.ocr("https://example.com/scan.png")

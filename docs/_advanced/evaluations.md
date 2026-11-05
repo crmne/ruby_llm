@@ -661,7 +661,7 @@ The task side counts every RubyLLM request made in `setup`, `perform`, `assertio
 In Rails, these requests are written to `ruby_llm_usages` like any other request, with no duplicate rows. Attribute them to an owner with the usual scope:
 
 ```ruby
-report = RubyLLM.with_usage_owner(account) do
+report = RubyLLM.with_owner(account) do
   SupportEvaluation.run
 end
 ```

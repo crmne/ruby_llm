@@ -96,7 +96,7 @@ module RubyLLM
     # +provider_options:+ takes options in the provider's request vocabulary
     # and merges them into the rendered request as-is.
     # +owner:+ attributes the usage to a record, such as a user, and wins
-    # over RubyLLM.with_usage_owner.
+    # over RubyLLM.with_owner.
     #
     # Given a block, the transcript streams: each TranscriptionChunk is
     # yielded as it arrives and the completed Transcription is still

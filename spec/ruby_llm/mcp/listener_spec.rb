@@ -115,7 +115,7 @@ RSpec.describe RubyLLM::MCP::Listener do
     let(:callback) { ->(_notification) { owners << RubyLLM::Accounting::Usage.owner } }
 
     it 'attributes nothing to that owner' do
-      RubyLLM.with_usage_owner('alice') { listener.start(tools) }
+      RubyLLM.with_owner('alice') { listener.start(tools) }
 
       expect(owners.pop).to be_nil
     end

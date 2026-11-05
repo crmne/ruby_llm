@@ -10,6 +10,7 @@ RSpec.describe RubyLLM::Agent do
                   .with_provider_tools(:web_search)
                   .with_tool_options(concurrency: :fibers)
                   .with_end_user('customer-42')
+                  .with_owner(:alice)
                   .with_fallbacks(model_for(:openai, :alternate_chat))
     chat.add_message(role: :user, content: 'Hello')
     agent = Class.new(described_class).new(chat:)
@@ -18,6 +19,8 @@ RSpec.describe RubyLLM::Agent do
     expect(agent.provider_tools).to eq(chat.provider_tools)
     expect(agent.concurrency).to eq(:fibers)
     expect(agent.end_user).to eq('customer-42')
+    expect(agent.owner).to eq(:alice)
+    expect(agent.with_owner(:bob)).to be(chat)
     expect(agent.fallbacks).to eq(chat.fallbacks)
     expect(agent.cache_until_here).to be(chat)
     expect(agent).not_to be_waiting

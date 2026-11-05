@@ -71,7 +71,7 @@ module RubyLLM
     # +provider_tools:+ accepts an array of aliases or a Hash of aliases
     # and their options, as on Chat#with_provider_tools. The job records
     # its usage, attributed to +owner:+ or the owner of
-    # RubyLLM.with_usage_owner, when it finishes.
+    # RubyLLM.with_owner, when it finishes.
     def self.research_later(prompt, provider:, agent:, with: nil, provider_tools: nil,
                             context: nil, provider_options: {}, metadata: nil, owner: nil)
       config = context&.config || RubyLLM.config
