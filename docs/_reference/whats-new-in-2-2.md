@@ -209,6 +209,18 @@ chat.around_join { |queued, join| join.call(sender: queued.sender) }
 
 A block that never calls `join` withdraws the message, and so does `queued.withdraw`, for a Cancel button. `join_queued_messages` joins everything waiting without asking the model. See [Queueing Messages]({% link _advanced/agentic-workflows.md %}#queueing-messages) and [Queued Messages in Rails]({% link _advanced/rails-persistence.md %}#queued-messages).
 
+## Subagents
+
+An agent class now goes wherever tools go. The model hands it a task, a fresh agent does the work in its own conversation, and only its answer comes back:
+
+```ruby
+class SupportAgent < ApplicationAgent
+  tools LookupOrder, ResearchAgent
+end
+```
+
+A subagent that waits for an approval pauses the call, and the calling chat is `awaiting_person?`. Agents also declare chat callbacks once, `after_message :log_reply`, with `if:` and `unless:` like Rails. See [Subagents]({% link _getting_started/agents.md %}#subagents) and [Callbacks]({% link _getting_started/agents.md %}#callbacks).
+
 ## Moonshot AI
 
 Moonshot AI joins the built-in providers, bringing the total to twenty. Its Kimi models read text and images, think before they answer, and call tools:

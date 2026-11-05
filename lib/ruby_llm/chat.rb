@@ -709,6 +709,7 @@ module RubyLLM
         @tool_deferrals.clear
       end
       tools.flatten.compact.each do |tool|
+        tool = tool.to_tool if tool.respond_to?(:to_tool)
         tool = tool.new if tool.is_a?(Class)
         name = tool.qualified_name.to_sym
         existing = @tools[name]

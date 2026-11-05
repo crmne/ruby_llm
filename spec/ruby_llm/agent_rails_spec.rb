@@ -52,6 +52,26 @@ RSpec.describe RubyLLM::Agent do
     expect(record.to_llm.messages.first.content).to eq("Owner #{id}")
   end
 
+  it 'applies callback macros to a found record, running them on an agent with its inputs' do
+    events = []
+    agent = Class.new(described_class) do
+      chat_class Chat
+      model model_for(:openai, :temperature)
+      inputs :account
+      after_message(:note, if: -> { account == 'acme' })
+
+      define_method(:note) { |message| events << [account, chat.class, message.content] }
+    end
+    record = agent.find(agent.create!.id, account: 'acme')
+    allow(record.to_llm.provider).to receive(:complete)
+      .and_return(RubyLLM::Message.new(role: :assistant, content: 'Hello', input_tokens: 1, output_tokens: 1))
+
+    record.ask('Hi')
+
+    expect(events).to eq([['acme', Chat, 'Hello']])
+    expect(record.messages_association.reload.map(&:content)).to eq(%w[Hi Hello])
+  end
+
   describe 'rescue_from on records' do
     let(:agent) do
       Class.new(described_class) do

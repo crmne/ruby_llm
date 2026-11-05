@@ -41,7 +41,7 @@ module RubyLLM
   # enumerable over their messages.
   class Agent
     extend Forwardable
-    singleton_class.prepend JoinCallbacks, Ownership
+    singleton_class.prepend JoinCallbacks, Ownership, Callbacks, ToolConversion
     include Enumerable
 
     DUPED_INHERITED_CONFIG = {
@@ -1108,6 +1108,125 @@ module RubyLLM
     # Agent instances delegate the Chat conversation API to the wrapped
     # #chat without adapting its return values.
     def_delegators :chat, *CHAINABLE_CHAT_DELEGATES, *PASSTHROUGH_CHAT_DELEGATES
+
+    ##
+    # :singleton-method: description
+    # :call-seq: description(text = nil)
+    #
+    # Sets what the agent does, which a model reads when the agent is one
+    # of its tools (see ::to_tool), or returns it when called without an
+    # argument.
+    #
+    #   class ResearchAgent < RubyLLM::Agent
+    #     description "Researches a question across the web and reports back"
+    #   end
+
+    ##
+    # :singleton-method: to_tool
+    # :call-seq: to_tool(**inputs)
+    #
+    # Returns an AgentTool that runs this agent as a subagent: a model
+    # hands it a task and gets its answer back. Keywords matching ::inputs
+    # are given to every run; the agent's other inputs become parameters
+    # the model fills. Chat#with_tools and ::tools take an Agent class too,
+    # and convert it with no inputs.
+    #
+    #   chat.with_tools(ResearchAgent.to_tool(workspace: current_workspace))
+    #   chat.with_tools(ResearchAgent)
+    #
+    # Raises ArgumentError for an agent class without a name.
+
+    ##
+    # :singleton-method: after_message
+    # :call-seq: after_message(method_name = nil, if: nil, unless: nil, &block)
+    #
+    # Registers a Chat#after_message callback on every chat the agent builds
+    # or finds, Agent::find records included. Name a method or pass a block;
+    # either runs on the agent instance, so its inputs, +chat+, and private
+    # methods are available, and receives the callback's arguments when it
+    # takes them. +if:+ and +unless:+ take a method name, a lambda, or an
+    # Array of them, like Rails callbacks. Subclasses inherit the callbacks
+    # declared when they are defined. Returns the agent class.
+    #
+    # For a chat from ::chat or ::find, the agent is bound to the chat
+    # without running +initialize+, as for ::rescue_from handlers, so read
+    # inputs and +chat+ rather than instance variables +initialize+ sets.
+    # Wrapping a configured chat in a new agent, as
+    # <tt>SupportAgent.new(chat:)</tt> does, moves its callbacks to that
+    # agent instead of registering them twice.
+    #
+    #   class SupportAgent < RubyLLM::Agent
+    #     inputs :ticket
+    #
+    #     after_message :log_reply, if: -> { ticket.urgent? }
+    #     before_tool_call { |tool_call| Rails.logger.info "Calling #{tool_call.name}" }
+    #
+    #     private
+    #
+    #     def log_reply(message) = ticket.notes.create!(body: message.content)
+    #   end
+    #
+    # The other chat callbacks have macros of the same name and shape:
+    # ::before_request, ::before_message, ::before_tool_call,
+    # ::after_tool_result, ::after_tool_progress, ::before_fallback,
+    # ::after_fallback, and ::after_file_write. Raises ArgumentError for
+    # both a method name and a block, neither, or another option.
+
+    ##
+    # :singleton-method: before_request
+    # :call-seq: before_request(method_name = nil, if: nil, unless: nil, &block)
+    #
+    # Registers a Chat#before_request callback on every chat the agent builds or
+    # finds. See ::after_message.
+
+    ##
+    # :singleton-method: before_message
+    # :call-seq: before_message(method_name = nil, if: nil, unless: nil, &block)
+    #
+    # Registers a Chat#before_message callback on every chat the agent builds or
+    # finds. See ::after_message.
+
+    ##
+    # :singleton-method: before_tool_call
+    # :call-seq: before_tool_call(method_name = nil, if: nil, unless: nil, &block)
+    #
+    # Registers a Chat#before_tool_call callback on every chat the agent builds or
+    # finds. See ::after_message.
+
+    ##
+    # :singleton-method: after_tool_result
+    # :call-seq: after_tool_result(method_name = nil, if: nil, unless: nil, &block)
+    #
+    # Registers a Chat#after_tool_result callback on every chat the agent builds or
+    # finds. See ::after_message.
+
+    ##
+    # :singleton-method: after_tool_progress
+    # :call-seq: after_tool_progress(method_name = nil, if: nil, unless: nil, &block)
+    #
+    # Registers a Chat#after_tool_progress callback on every chat the agent builds or
+    # finds. See ::after_message.
+
+    ##
+    # :singleton-method: before_fallback
+    # :call-seq: before_fallback(method_name = nil, if: nil, unless: nil, &block)
+    #
+    # Registers a Chat#before_fallback callback on every chat the agent builds or
+    # finds. See ::after_message.
+
+    ##
+    # :singleton-method: after_fallback
+    # :call-seq: after_fallback(method_name = nil, if: nil, unless: nil, &block)
+    #
+    # Registers a Chat#after_fallback callback on every chat the agent builds or
+    # finds. See ::after_message.
+
+    ##
+    # :singleton-method: after_file_write
+    # :call-seq: after_file_write(method_name = nil, if: nil, unless: nil, &block)
+    #
+    # Registers a Chat#after_file_write callback on every chat the agent builds or
+    # finds. See ::after_message.
 
     ##
     # :singleton-method: around_join

@@ -11,6 +11,11 @@ module RubyLLM
 
       attr_writer :rescuer
 
+      # The agents whose callback macros run on this chat, by agent class.
+      def agent_callback_receivers
+        @agent_callback_receivers ||= {}
+      end
+
       OPERATIONS.each do |operation|
         define_method(operation) do |*args, **kwargs, &block|
           return super(*args, **kwargs, &block) unless @rescuer
@@ -36,6 +41,7 @@ module RubyLLM
       def initialize_copy(source)
         super
         @rescuing = false
+        @agent_callback_receivers = @agent_callback_receivers&.dup
       end
     end
   end
