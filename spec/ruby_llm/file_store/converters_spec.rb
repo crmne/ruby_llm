@@ -21,7 +21,59 @@ RSpec.describe RubyLLM::FileStore::Converters do
   it 'reads nothing from a file no converter knows' do
     expect(described_class.convert(fixture('ruby.png'), config:)).to be_nil
     expect(described_class.convert(fixture('sample.pdf'), config:)).to be_nil
+  end
+
+  it 'reads Word, Excel, and PowerPoint files on this machine' do
+    expect(described_class.convert(fixture('sample.docx'), config:))
+      .to eq('RubyLLM document attachment probe. The project codename is BLUE-LANTERN-42. ' \
+             'The approval status is ready.')
+    expect(described_class.convert(fixture('sample.xlsx'), config:))
+      .to eq("## rubyllm_spreadsheet_probe\nlabel\tvalue\nspreadsheet_code\tORCHID-97\nstatus\tready")
+    expect(described_class.convert(fixture('sample.pptx'), config:))
+      .to eq("## Slide 1\n\nQuarterly review\nRevenue & costs\n\n## Slide 2\n\nThe launch code is SILVER-FERN-8")
+  end
+
+  it 'keeps the cells of a row in their columns, and the order of sheets and slides in the workbook and deck' do
+    expect(described_class::Office.send(:cells, '<c r="A1"><v>1</v></c><c r="C1"><v>3</v></c>', []))
+      .to eq(['1', '', '3'])
+    expect(described_class.convert(fixture('sample.pptx'), config:)).to start_with("## Slide 1\n\nQuarterly review")
+  end
+
+  it 'reads the entities XML defines and no others' do
+    expect(described_class::Office.send(:unescape, '&amp;lt; &#233; &#xe9; &nbsp;')).to eq('&lt; é é &nbsp;')
+  end
+
+  it 'stops local extraction at the first converter that is not local' do
+    paid = ->(_file) { raise 'a paid converter must wait' }
+    local = Class.new do
+      def self.call(_file) = nil
+      def self.local? = true
+    end
+    config.file_converters = { 'application/pdf' => [local, paid] }
+
+    expect(described_class.convert(fixture('sample.pdf'), config:, local: true)).to be_nil
+  end
+
+  it 'reads nothing from a truncated Office file' do
+    content = File.binread(File.expand_path('../../fixtures/sample.docx', __dir__))
+
+    expect(described_class.convert(text_file(content[0, 200], 'cut.docx'), config:)).to be_nil
+    expect(described_class.convert(text_file(content[-30..], 'tail.docx'), config:)).to be_nil
+  end
+
+  it 'reads nothing from a broken Office file' do
+    expect(described_class.convert(text_file('not a zip', 'notes.docx'), config:)).to be_nil
+  end
+
+  it 'refuses an Office file whose part inflates past its limit' do
+    stub_const('RubyLLM::FileStore::Converters::Office::MAX_SIZE', 100)
+
     expect(described_class.convert(fixture('sample.docx'), config:)).to be_nil
+  end
+
+  it 'says which converters run on this machine for free' do
+    expect([described_class::Text, described_class::Office]).to all(satisfy(&:local?))
+    expect(described_class::OCR.new).not_to respond_to(:local?)
   end
 
   it 'tries configured converters first, exact types before wildcards, then the built-in ones' do

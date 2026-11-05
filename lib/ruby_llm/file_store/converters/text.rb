@@ -16,6 +16,11 @@ module RubyLLM
         def call(attachment)
           attachment.content.to_s.dup.force_encoding(Encoding::UTF_8).scrub
         end
+
+        # Returns true: it reads files here, for free.
+        def local?
+          true
+        end
       end
     end
   end

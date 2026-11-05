@@ -259,12 +259,13 @@ RSpec.describe RubyLLM::Chat do
     let(:docx) { File.expand_path('../fixtures/sample.docx', __dir__) }
 
     it 'sends a line naming the file, for the model to read with read_file' do
+      broken = RubyLLM::Attachment.new(StringIO.new('not a zip'), filename: 'broken.docx')
       chat.with_file_store
-      chat.add_message(role: :user, content: 'What is the codename?', attachments: [docx])
+      chat.add_message(role: :user, content: 'What is the codename?', attachments: [broken])
 
-      expect(chat.render.to_json).to include('sample.docx (application/vnd.openxmlformats-officedocument.' \
+      expect(chat.render.to_json).to include('broken.docx (application/vnd.openxmlformats-officedocument.' \
                                              'wordprocessingml.document, ')
-      expect(chat.file_store.exist?('sample.docx')).to be(true)
+      expect(chat.file_store.exist?('broken.docx')).to be(true)
     end
 
     def converting_chat(text)
@@ -307,14 +308,18 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'converts again once the chat moves to a context with a converter' do
+      odt = RubyLLM::Attachment.new(StringIO.new('zipped'), filename: 'notes.odt')
       chat = described_class.new(model: model_for(:anthropic), provider: :anthropic).with_file_store
-      chat.add_message(role: :user, content: 'What is the codename?', attachments: [docx])
+      chat.add_message(role: :user, content: 'What is the codename?', attachments: [odt])
       expect(chat.render.to_json).to include('is in this chat')
 
-      type = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-      chat.with_context(RubyLLM.context { |config| config.file_converters = { type => ->(_file) { 'Bluebird' } } })
+      chat.with_context(RubyLLM.context do |config|
+        config.file_converters = { odt.mime_type => lambda { |_file|
+          'Bluebird'
+        } }
+      end)
 
-      expect(chat.render.to_json).to include('sample.docx, read as text:')
+      expect(chat.render.to_json).to include('notes.odt, read as text:')
     end
 
     it 'keeps what a convert_unsupported_attachments handler made when the store changes' do
@@ -340,6 +345,36 @@ RSpec.describe RubyLLM::Chat do
         '[sample.docx has 15000 characters, so only the start is shown. ' \
         'Read more with read_file, or search it with search_files.]'
       )
+    end
+
+    it 'extracts the text of a document it keeps, so the model can search it at once' do
+      chat.with_file_store
+      chat.add_message(role: :user, content: 'What is the codename?', attachments: [docx])
+      chat.render
+
+      expect(chat.tools[:search_files].call(query: 'codename'))
+        .to start_with('sample.docx:1: RubyLLM document attachment probe. The project codename is BLUE-LANTERN-42.')
+    end
+
+    it 'lets a registered converter go first, and extracts nothing ahead of one that may cost money' do
+      chat = converting_chat('The codename is Bluebird.')
+      chat.add_message(role: :user, content: 'What is the codename?', attachments: [docx])
+      chat.render
+
+      expect(chat.file_store.text('sample.docx')).to eq('The codename is Bluebird.')
+    end
+
+    it 'leaves converters that cost money, like OCR, for read_file' do
+      ocr = ->(_file) { raise 'OCR must wait for read_file' }
+      chat = RubyLLM.context { |config| config.file_converters['application/pdf'] = ocr }
+                    .chat(model: model_for(:anthropic), provider: :anthropic).with_file_store
+      chat.add_message(role: :user, content: 'Summarize', attachments: [pdf_path])
+      chat.add_message(answer)
+      chat.add_message(role: :user, content: 'Again')
+      chat.render
+
+      expect(chat.tools[:search_files].call(query: 'x'))
+        .to include('[Not searched, text not extracted yet: sample.pdf. read_file extracts it.]')
     end
 
     it 'leaves the error in place without files' do
