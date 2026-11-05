@@ -172,7 +172,8 @@ RSpec.describe RubyLLM::Chat do
 
       expect(chunks).to eq(['one'])
       expect(chat).not_to be_cancelled
-      expect(chat.messages.map(&:role)).to eq([:user])
+      expect(chat.messages.map(&:role)).to eq(%i[user assistant])
+      expect(chat.messages.last).to be_cancelled
     end
 
     it 'raises before appending a non-streaming response when cancelled during the request' do
@@ -338,7 +339,7 @@ RSpec.describe RubyLLM::Chat do
       expect(chat).not_to be_cancelled
     end
 
-    it 'reuses the chat after streaming cancellation without keeping a partial assistant message' do
+    it 'reuses the chat after streaming cancellation, keeping the partial assistant message' do
       attempts = 0
       allow(chat.provider).to receive(:complete) do |_messages, **_options, &block|
         attempts += 1
@@ -348,7 +349,8 @@ RSpec.describe RubyLLM::Chat do
 
       expect { chat.ask('First') { chat.cancel } }.to raise_error(RubyLLM::CancelledError)
       expect(chat.ask('Second').content).to eq('hello')
-      expect(chat.messages.map(&:role)).to eq(%i[user user assistant])
+      expect(chat.messages.map(&:role)).to eq(%i[user assistant user assistant])
+      expect(chat.messages.second.content).to eq('partial')
       expect(attempts).to eq(2)
       expect(chat).not_to be_cancelled
     end

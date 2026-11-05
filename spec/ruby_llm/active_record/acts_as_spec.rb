@@ -172,7 +172,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs, :live do
       expect(chat.ruby_llm_usages.pluck(:id)).to eq([first.id, orphan.id])
     end
 
-    it 'keeps usage when a cancelled stream produces no message' do
+    it 'keeps a cancelled stream as a cancelled reply with its usage' do
       stub_const('RubyLLM::ActiveRecord::ChatMethods::CANCELLATION_POLL_INTERVAL', 0.0)
       chat = Chat.create!(model: model).ask_later('Hello')
       provider = chat.to_llm.provider
@@ -197,8 +197,13 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs, :live do
       entry = chat.reload.ruby_llm_usages.sole
       expect(entry.status).to eq('cancelled')
       expect(entry.tokens.output).to eq(1)
-      expect(entry.message).to be_nil
-      expect(chat.messages.pluck(:role)).to eq(['user'])
+      reply = chat.messages.last
+      expect(entry.message).to eq(reply)
+      expect(chat.messages.pluck(:role)).to eq(%w[user assistant])
+      expect(reply.content).to eq('one')
+      expect(reply.finish_reason).to eq(:cancelled)
+      expect(reply).to be_cancelled
+      expect(Chat.find(chat.id).to_llm.messages.last).to be_cancelled
     end
 
     it 'uses normalized cost columns rather than a JSON cost payload' do

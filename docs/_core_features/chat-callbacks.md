@@ -103,7 +103,8 @@ end
 
 ## Usage Events
 
-`after_message` observes transcript changes. A cancelled request may produce no message, so use `usage.ruby_llm` for accounting across provider attempts, including retries and cancellations. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) and [Instrumentation]({% link _advanced/instrumentation.md %}).
+`after_message` observes transcript changes, including the partial reply a cancelled stream keeps. A cancelled request may produce no message, so use `usage.ruby_llm` for accounting across provider attempts, including retries and cancellations. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) and [Instrumentation]({% link _advanced/instrumentation.md %}).
+
 ## Next Steps
 
 * [Chat]({% link _getting_started/chat.md %}) - the core conversation interface these events fire on.

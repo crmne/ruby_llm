@@ -144,6 +144,8 @@ class ChatStreamJob < ApplicationJob
 end
 ```
 
+The reply record keeps the text streamed before the cancel, with `finish_reason` set to `cancelled`, so the page shows what the person read and the next question sends it to the model. A reply that streamed no text is removed. See [Cancelling a Stream]({% link _core_features/streaming.md %}#cancelling-a-stream) to remove it yourself.
+
 ## Messages Sent During a Reply
 
 A message sent while the job streams a reply goes in the chat's queue. The running job takes it at its next step, and it broadcasts like any other message once it joins:
