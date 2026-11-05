@@ -175,6 +175,21 @@ RSpec.describe RubyLLM::Batch, :live do
       expect(provider).to have_received(:batch_results).once
     end
 
+    it 'attributes each answer to the owner of its chat' do
+      chats = [
+        RubyLLM.chat(model: model).with_owner(:alice).ask_later('Hi'),
+        RubyLLM.chat(model: model).with_owner(:bob).ask_later('Hi')
+      ]
+      answers = Array.new(2) { RubyLLM::Message.new(role: :assistant, content: 'Hello', input_tokens: 1, output_tokens: 1) }
+      allow(chats.first.provider).to receive(:batch_results).and_return([[0, answers.first], [1, answers.last]])
+      batch = described_class.new(provider: chats.first.provider, chats:, id: 'msgbatch_test',
+                                  raw_status: 'ended', completed: true)
+
+      RubyLLM.with_owner(:poller) { batch.messages }
+
+      expect(chats.map { |chat| chat.usage_entries.sole.owner }).to eq(%i[alice bob])
+    end
+
     it 'delivers an answer to a chat whose instructions were set while the batch was in flight' do
       chat = RubyLLM.chat(model: model).ask_later('Hi')
       message = RubyLLM::Message.new(role: :assistant, content: 'Hello', input_tokens: 1, output_tokens: 1)

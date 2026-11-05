@@ -365,7 +365,8 @@ module RubyLLM
 
     def deliver_message(index, message)
       chat = chats&.[](index)
-      entry = attach_batch_usage(message, operation: :chat, model: chat&.model, category: :text_tokens)
+      entry = attach_batch_usage(message, operation: :chat, model: chat&.model, category: :text_tokens,
+                                          owner: chat&.owner)
       return if settled?(index, chat) || (chat && already_in_chat?(chat, message))
 
       delivered = exclusively(index) do
@@ -402,13 +403,13 @@ module RubyLLM
       true
     end
 
-    def attach_batch_usage(result, operation:, model:, category:)
+    def attach_batch_usage(result, operation:, model:, category:, owner: nil)
       return unless result.ruby_llm_usage_entries.empty?
 
       model ||= result_model(result.model)
       entry = batch_usage_entry(
         operation:, model_id: result.model || model.id, model:, status: :succeeded, tokens: result.tokens,
-        category:, message: result.is_a?(Message) ? result : nil
+        category:, message: result.is_a?(Message) ? result : nil, owner:
       )
       result.ruby_llm_usage_entries = [entry]
       entry
@@ -419,10 +420,11 @@ module RubyLLM
       model_id ||= model&.id
       return unless model_id
 
-      batch_usage_entry(operation: :chat, model_id:, model:, status: :failed, tokens:, category: :text_tokens)
+      batch_usage_entry(operation: :chat, model_id:, model:, status: :failed, tokens:, category: :text_tokens,
+                        owner: chat&.owner)
     end
 
-    def batch_usage_entry(operation:, model_id:, model:, status:, tokens:, category:, message: nil)
+    def batch_usage_entry(operation:, model_id:, model:, status:, tokens:, category:, message: nil, owner: nil)
       Accounting::Usage::Entry.new(
         operation:,
         provider: @provider.slug,
@@ -431,7 +433,7 @@ module RubyLLM
         tokens:,
         cost: @provider.batch_cost(tokens, model:, category:),
         message:,
-        owner: Accounting::Usage.owner,
+        owner: owner || Accounting::Usage.owner,
         workflow: Accounting::Usage.workflow
       )
     end

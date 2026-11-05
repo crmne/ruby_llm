@@ -274,11 +274,28 @@ RSpec.describe RubyLLM::Chat do
     it 'converts again once the store changes its limit' do
       chat = converting_chat('word ' * 3_000)
       chat.add_message(role: :user, content: 'Summarize', attachments: [docx])
-      chat.render
+      expect(chat.render.to_json).to include('so only the start is shown')
 
       chat.with_file_store(chat.file_store, spill_to_file: false)
 
-      expect(chat.render.to_json).not_to include('so only the start is shown')
+      rendered = chat.render.to_json
+      expect(rendered).to include("sample.docx, read as text:\\n\\n#{'word ' * 2_999}word")
+      expect(rendered).not_to include('so only the start is shown')
+    end
+
+    it 'keeps what a convert_unsupported_attachments handler made when the store changes' do
+      calls = 0
+      chat = converting_chat('The codename is Bluebird.').convert_unsupported_attachments do
+        calls += 1
+        RubyLLM::Attachment.new(StringIO.new('Handled'), filename: 'h.txt')
+      end
+      chat.add_message(role: :user, content: 'What is the codename?', attachments: [docx])
+      chat.render
+
+      chat.with_file_store(chat.file_store, spill_to_file: false)
+      chat.render
+
+      expect(calls).to eq(1)
     end
 
     it 'sends the start of a long text and says where the rest is' do

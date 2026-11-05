@@ -59,6 +59,7 @@ module RubyLLM
         @spill_to_file = spill_to_file
         @written = written
         @stored = {}.compare_by_identity
+        @described = {}.compare_by_identity
       end
 
       def view(list)
@@ -89,7 +90,13 @@ module RubyLLM
 
       def describe(attachment, config: RubyLLM.config)
         file = store_attachment(attachment)
-        as_text(file, config) || reference(file.path, file)
+        (as_text(file, config) || reference(file.path, file)).tap { |replacement| @described[replacement] = true }
+      end
+
+      # Removes the replacements #describe made from +replacements+, a
+      # chat's memo, so another store or limit describes them again.
+      def forget(replacements)
+        replacements.delete_if { |_attachment, replacement| @described.key?(replacement) }
       end
 
       private
