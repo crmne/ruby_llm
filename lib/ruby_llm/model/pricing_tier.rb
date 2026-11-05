@@ -15,7 +15,7 @@ module RubyLLM
     #   tier.input_per_million  # => 3
     #   tier.output_per_million # => 15
     #
-    class PricingTier # :nodoc:
+    class PricingTier
       # The names of the price readers a tier responds to.
       ATTRIBUTES = %i[
         input_per_million

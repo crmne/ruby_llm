@@ -14,7 +14,7 @@ module RubyLLM
     #   category.input  # => 3
     #   category.output # => 15
     #
-    class PricingCategory # :nodoc:
+    class PricingCategory
       # The billing tiers a category may define.
       TIERS = %i[standard batch long_context].freeze
 
