@@ -29,11 +29,20 @@ module RubyLLM
     end
 
     # Cancels the agent, as Chat#cancel does for the chat that waits on it,
-    # and returns +self+.
+    # along with the tasks the agent waits on, and returns +self+.
     def cancel
-      agent&.cancel
+      stop(agent) if agent
       @tool&.forget(data['run'])
       self
+    end
+
+    private
+
+    def stop(agent)
+      agent.cancel
+      agent.run_tools
+    rescue CancelledError
+      nil
     end
   end
 end

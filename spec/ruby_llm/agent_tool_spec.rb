@@ -189,6 +189,28 @@ RSpec.describe RubyLLM::AgentTool do
         .to eq(%w[First Second])
     end
 
+    it 'cancels what the subagent waits on when the calling chat is cancelled' do
+      cancelled = []
+      render_task = Class.new(RubyLLM::Task) { define_method(:cancel) { cancelled << :render } }
+      render = Class.new(RubyLLM::Tool) do
+        description 'Renders a report in the background'
+        define_method(:name) { 'render' }
+        define_method(:execute) { render_task.new(status: :working) }
+        define_method(:resume) { |task, **| task }
+        define_method(:task) { |state, tool_call: nil| render_task.load(state, tool_call:) }
+      end
+      research_agent.tools(render)
+      stub_subagents(research_agent)
+      sub_answers.push(calling('render', {}, id: 'sub_1'))
+      chat = parent_chat(calling('research_agent', { 'task' => 'Render it', 'region' => 'EU' }))
+      chat.with_tools(research_agent).ask('Go')
+
+      chat.cancel
+
+      expect { chat.complete }.to raise_error(RubyLLM::CancelledError)
+      expect(cancelled).to eq([:render])
+    end
+
     it 'cancels the subagent when the chat that waits on it is cancelled' do
       research_agent.tools(wipe)
       stub_subagents(research_agent)
@@ -201,7 +223,7 @@ RSpec.describe RubyLLM::AgentTool do
       chat.cancel
 
       expect { chat.complete }.to raise_error(RubyLLM::CancelledError)
-      expect(subagent).to be_cancelled
+      expect(subagent).not_to be_waiting
       expect(chat.tools[:research_agent].task(paused.to_h, tool_call: paused.tool_call).agent).to be_nil
     end
   end
