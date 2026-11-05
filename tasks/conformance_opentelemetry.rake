@@ -3,9 +3,9 @@
 require 'json'
 require 'tmpdir'
 
-namespace :opentelemetry do
+namespace :conformance do
   desc 'Check RubyLLM traces against the official GenAI conventions (requires Weaver 0.26.1)'
-  task :check do
+  task :opentelemetry do
     Dir.mktmpdir('ruby-llm-opentelemetry') do |directory|
       samples = File.join(directory, 'samples')
       FileUtils.mkdir_p(samples)
