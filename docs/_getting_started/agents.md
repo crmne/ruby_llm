@@ -457,7 +457,7 @@ task.agent.pending_approvals.each { |tool_call| task.agent.approve(tool_call) }
 chat.complete
 ```
 
-The subagent lives in the process that ran it. A chat resumed in another process, such as a later job, reports the subagent's work as lost to the model, which can start it again.
+Cancelling the calling chat cancels a subagent it waits on. The subagent lives in the process that ran it. A chat resumed in another process, such as a later job, reports the subagent's work as lost to the model, which can start it again.
 
 ## Handling Errors with `rescue_from`
 

@@ -26,5 +26,12 @@ module RubyLLM
       super(**)
       @agent = agent
     end
+
+    # Cancels the agent, as Chat#cancel does for the chat that waits on it,
+    # and returns +self+.
+    def cancel
+      agent&.cancel
+      self
+    end
   end
 end

@@ -138,5 +138,19 @@ RSpec.describe RubyLLM::AgentTool do
       expect(chat.messages.last.content).to eq('All done')
       expect(chat).not_to be_waiting
     end
+
+    it 'cancels the subagent when the chat that waits on it is cancelled' do
+      research_agent.tools(wipe)
+      stub_subagents(research_agent)
+      sub_answers.push(calling('wipe', {}, id: 'sub_1'))
+      chat = parent_chat(calling('research_agent', { 'task' => 'Wipe it', 'region' => 'EU' }))
+      chat.with_tools(research_agent).ask('Clean up')
+      subagent = chat.pending_tasks.sole.agent
+
+      chat.cancel
+
+      expect { chat.complete }.to raise_error(RubyLLM::CancelledError)
+      expect(subagent).to be_cancelled
+    end
   end
 end
