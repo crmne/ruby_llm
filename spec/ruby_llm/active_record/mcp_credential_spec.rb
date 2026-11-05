@@ -28,6 +28,24 @@ RSpec.describe RubyLLM::ActiveRecord::MCPCredential do
     expect(described_class.where(key:)).not_to exist
   end
 
+  it 'keeps the tokens of an authorization it completes' do
+    server_url = 'https://mcp.example.com/mcp'
+    key = "#{owner.to_gid}@#{server_url}"
+    server = { 'issuer' => 'https://auth.example.com', 'token_endpoint' => 'https://auth.example.com/token' }
+    described_class.write(key, { 'pending' => {
+                            'client_id' => 'client', 'state' => 'state-1', 'verifier' => 'verifier-1',
+                            'redirect_uri' => 'https://app.example.com/callback', 'issuer' => server['issuer'],
+                            'expires_at' => Time.now.to_i + 600, 'server' => server
+                          } }, owner:)
+    stub_request(:post, 'https://auth.example.com/token')
+      .to_return(body: { access_token: 'access-1', expires_in: 3600 }.to_json)
+
+    RubyLLM::MCP::OAuth.new(server_url, owner:).authorize(code: 'code-1', state: 'state-1', iss: server['issuer'])
+
+    expect(described_class.read(key)).to include('access_token' => 'access-1', 'client_id' => 'client')
+    expect(described_class.read(key)).not_to have_key('pending')
+  end
+
   it 'lets one process refresh a grant while the others wait for its token' do
     skip 'needs fork' unless RUBY_ENGINE == 'ruby'
     server_url = 'https://mcp.example.com/mcp'
