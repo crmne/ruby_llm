@@ -141,6 +141,22 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
     expect(queries[chat_lock]).to include('FOR UPDATE') unless Chat.connection.adapter_name.match?(/sqlite/i)
   end
 
+  { 'delete' => ->(store) { store.delete('a.txt') },
+    'delete_folder' => ->(store) { store.delete_folder('reports') } }.each do |name, deletion|
+    it "locks the chat row before #{name} looks the files up" do
+      store.write('a.txt', 'mine')
+      store.write('reports/q3.md', 'Q3')
+      queries = []
+      record = ->(*, payload) { queries << payload[:sql] unless payload[:name] == 'SCHEMA' }
+
+      ActiveSupport::Notifications.subscribed(record, 'sql.active_record') { deletion.call(store) }
+
+      chat_lock = queries.index { |sql| sql.match?(/\A(SELECT .* FROM|UPDATE) ["`]?chats["`]?/) }
+      lookup = queries.index { |sql| sql.match?(/\ASELECT .* FROM ["`]?ruby_llm_chat_files["`]?/) }
+      expect(chat_lock).to be < lookup
+    end
+  end
+
   it 'finds a row another process wrote after the query cache saw none' do
     RubyLLM::ActiveRecord::ChatFile.cache do
       expect(store.delete('a.txt')).to be_nil

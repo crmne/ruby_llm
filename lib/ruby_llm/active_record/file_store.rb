@@ -82,10 +82,12 @@ module RubyLLM
       # store with an owner deletes only that owner's files.
       def delete(path)
         path = path(path)
-        record = owned.find_by(path:)
-        refuse_folder(path) if record.nil? && rows_in_folder(path).any? { |row| row.path != path }
-        record&.destroy
-        record&.to_stored_file
+        with_lock do
+          record = owned.find_by(path:)
+          refuse_folder(path) if record.nil? && rows_in_folder(path).any? { |row| row.path != path }
+          record&.destroy
+          record&.to_stored_file
+        end
       end
 
       # Deletes everything inside the folder +path+ and returns the deleted
@@ -93,9 +95,9 @@ module RubyLLM
       # owner's files.
       def delete_folder(path)
         path = path(path)
-        refuse_file(path) if row(path)
+        with_lock do
+          refuse_file(path) if row(path)
 
-        ChatFile.transaction do
           rows_in_folder(path, owned).each(&:destroy).map(&:to_stored_file)
         end
       end

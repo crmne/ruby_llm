@@ -35,14 +35,12 @@ module RubyLLM
         private
 
         def delete(path)
-          if store[path].nil? && store.list(path).any?
-            raise ToolError, "#{path} is a folder. Delete its files one by one."
-          end
-
           file = store.delete(path)
           raise ToolError, "There is no file at #{path}. List the files with list_files." unless file
 
           "Deleted #{file.path}."
+        rescue ArgumentError
+          raise ToolError, "#{path} is a folder. Delete its files one by one."
         end
       end
     end
