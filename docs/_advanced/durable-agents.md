@@ -141,6 +141,8 @@ end
 
 When the other process is alive, it finishes the work and the retry finds nothing to do.
 
+A process that dies mid-request removes nothing. Its assistant placeholder stays blank, and a tool call it was running keeps no result. RubyLLM leaves blank assistant messages out of every request, so the chat still works. Once the claims expire, the next `complete` runs the unfinished calls of the latest round again. A call in a round the conversation has moved past reaches the model with an error saying it didn't finish. Your records stay as they are.
+
 ## Stopping from Anywhere
 
 `chat.cancel` on a persisted chat writes the request to the database, so a stop button in the web process halts a background job mid-stream at its next checkpoint. See [Cancelling a Background Stream]({% link _advanced/rails-streaming.md %}#cancelling-a-background-stream).

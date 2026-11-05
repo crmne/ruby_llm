@@ -166,7 +166,7 @@ For prompt lookup, RubyLLM uses class name conventions:
 - `WorkAssistant` -> `app/prompts/work_assistant/instructions.txt.erb`
 - `Admin::SupportAgent` -> `app/prompts/admin/support_agent/instructions.txt.erb`
 
-See the [Agents guide]({% link _getting_started/agents.md %}#default-instructions-prompt) for how agent instruction rendering works, or [Prompt Rendering]({% link _core_features/prompt-rendering.md %}) for direct `RubyLLM.render_prompt` usage.
+See the [Agents guide]({% link _getting_started/agents.md %}#keeping-instructions-in-prompt-templates) for how agent instruction rendering works, or [Prompt Rendering]({% link _core_features/prompt-rendering.md %}) for direct `RubyLLM.render_prompt` usage.
 
 ## Generators
 

@@ -24,6 +24,8 @@ RubyLLM separates service configuration from API formats. A **provider** knows *
 
 The same protocol can serve several providers, and one provider can offer several protocols. One wire format serves many hosts - the OpenAI Chat Completions dialect is reused by Ollama, Perplexity, and DeepSeek, each with its own host and auth. One host can serve many wire formats - Vertex AI is a single provider that speaks Gemini, Anthropic, Mistral, and Chat Completions, picking one per model.
 
+A protocol also streams events and turns the service's errors into RubyLLM errors. When a service differs slightly from the protocol it implements, the provider selects a small dialect of that protocol. Request and response format changes stay in the protocol; URLs, credentials, and catalog rules stay in the provider. Chats, tools, and agents never see either.
+
 So before you write anything, decide which case you are in:
 
 * **The service speaks an API RubyLLM already knows** (almost always OpenAI Chat Completions). Write only a provider. This is the common case, and it is a few dozen lines.

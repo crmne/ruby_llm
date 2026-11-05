@@ -17,31 +17,17 @@ After reading this guide, you will know:
 
 * How to install RubyLLM in a Rails application.
 * How to use the conversation API on your own records.
-* How to work with Active Storage attachments and Hotwire streaming.
-* How to run agents and individual AI operations in background jobs.
+* How to run an agent against a saved chat.
+* How to stream a reply from a background job, with or without the generator.
+* How to retry and discard jobs on RubyLLM errors.
+* How to run individual AI operations in jobs.
 * How message persistence affects your validations.
 
-RubyLLM fits into the Rails application you already have. Chats and messages are your Active Record models. Files use Active Storage. Responses stream through Hotwire, and background work runs through your job backend.
-
-The conversation API stays the same:
-
-```ruby
-chat = Chat.create!(model: "{{ site.models.default_chat }}")
-response = chat.ask "Help me plan a Ruby study group."
-response.content
-```
-
-`response` is a `RubyLLM::Message`. RubyLLM also saves it as your application's message record, together with tool calls, attachments, and usage. Read those records through `chat.messages`.
+RubyLLM fits into the Rails application you already have. Chats and messages are your Active Record models, files use Active Storage, replies stream through Hotwire, and background work runs on your job backend. This guide puts the support desk from the earlier guides into a Rails app.
 
 ## Setting Up Your Rails Application
 
-JSON 3 needs Rails 8.1.4 or later. RubyLLM allows JSON 2 and 3, so on an older Rails version, keep JSON 2 in your `Gemfile`:
-
-```ruby
-gem "json", "< 3"
-```
-
-The install generator creates your chat and message models, migrations, and initializer:
+The install generator creates your chat and message models, their migrations, RubyLLM's own tables, and an initializer:
 
 ```bash
 bin/rails generate ruby_llm:install
@@ -49,111 +35,179 @@ bin/rails db:migrate
 bin/rails ruby_llm:load_models
 ```
 
-Generated primary and foreign keys follow your application's `config.generators` setting for
-`active_record.primary_key_type`, including `:uuid`. The default is `:bigint`.
+Generated primary and foreign keys follow your `config.generators` setting for `active_record.primary_key_type`, including `:uuid`. The default is `:bigint`.
 
-Configure a provider in the generated initializer:
+Configure your providers in the generated initializer, reading keys from your credentials:
 
 ```ruby
 # config/initializers/ruby_llm.rb
 RubyLLM.configure do |config|
-  config.openai_api_key = ENV.fetch('OPENAI_API_KEY')
+  config.openai_api_key = Rails.application.credentials.openai_api_key
 end
 ```
 
-Use your application's secret storage for credentials. See [Configuration]({% link _getting_started/configuration.md %}) for other providers and defaults.
+See [Configuration]({% link _getting_started/configuration.md %}) for other providers and defaults.
+
+JSON 3 needs Rails 8.1.4 or later. On older Rails versions, keep JSON 2 in your Gemfile with `gem "json", "< 3"`.
+{: .note }
 
 ## The Same API on Your Records
 
-Use the same chainable methods, tools, and schemas as plain Ruby:
+Your `Chat` and `Message` models are yours: add associations, validations, and columns as you would to any model. The support desk's chats belong to a customer:
 
 ```ruby
-chat = Chat.create!(model: "{{ site.models.default_chat }}")
-chat.with_instructions "Explain Ruby with short, runnable examples."
-chat.ask "How does Enumerable#map work?"
+class Chat < ApplicationRecord
+  acts_as_chat
+  belongs_to :customer
+end
+```
 
-chat.messages.count
+Everything a plain chat does, a record does too, and each message is saved as it arrives:
+
+```ruby
+chat = Chat.create!(customer: current_customer, model: "{{ site.models.default_chat }}")
+chat.with_instructions "You answer customers of Acme Outfitters. Be brief and friendly."
+chat.ask "Do you ship to Canada?"
+
+chat.messages.count # => 3
 chat.cost.total
 ```
 
-Your application owns its `Chat` and `Message` models, so you can add users, permissions, titles, and other relationships. RubyLLM owns the supporting registry, tool-call, usage, batch, MCP credential, and provider file tables. See [Persistence with acts_as]({% link _advanced/rails-persistence.md %}) for the records and associations.
+`ask` returns a `RubyLLM::Message`, and RubyLLM saves it as your message record, with its tool calls, attachments, and usage. RubyLLM keeps its own data in eight supporting tables: the model registry, tool calls, usage, queued messages, chat files, batches, MCP credentials, and provider files. See [Persistence with acts_as]({% link _advanced/rails-persistence.md %}) for the records and associations.
 
 ## Active Storage Attachments
 
-Pass an attached file directly with `with:`:
+Pass an attachment with `with:`, as you pass a file in plain Ruby:
 
 ```ruby
-chat.ask "Summarize this report.", with: report.document
+chat.ask "What's wrong with this item?", with: ticket.photo
 ```
 
-Here `report.document` is an Active Storage attachment. RubyLLM handles reading it and stores message attachments through the association created by the install generator. See [Attachments]({% link _core_features/attachments.md %}) for other file sources.
+RubyLLM reads the file and stores the message's attachments through the association the install generator creates. See [Attachments]({% link _core_features/attachments.md %}) for other file sources.
 
 `with_file_store` gives a chat its own files in Active Storage, so attachments and long tool results stop riding along with every request, and the model reads them with tools when it needs them. Attachments already in Active Storage share their blobs with the chat's files. See [File Stores]({% link _core_features/file-stores.md %}#files-in-rails).
 
-## Hotwire Streaming
+## Agents on Saved Chats
 
-Generate a working chat interface with controllers, views, Turbo Streams, and an Active Job:
+The install generator writes `ApplicationAgent` with `chat_class Chat`, so agents create and find your records. The support agent reads its customer from the chat:
+
+```ruby
+# app/agents/support_agent.rb
+class SupportAgent < ApplicationAgent
+  model "{{ site.models.default_chat }}"
+  instructions { "You answer #{chat.customer.name}, a customer of Acme Outfitters. Be brief and friendly." }
+  tools { [LookupOrder.new(chat.customer), SearchDocs] }
+end
+```
+
+`SupportAgent.create!` saves a new chat with the agent's instructions, and `SupportAgent.find` loads one and applies the agent's configuration, so any process can carry on the conversation:
+
+```ruby
+chat = SupportAgent.create!(customer: current_customer)
+SupportAgent.find(chat.id).ask "Where is my order R-1042?"
+```
+
+See [Rails-Backed Agents]({% link _getting_started/agents.md %}#rails-backed-agents) for how instructions are saved.
+
+## Streaming a Reply from a Job
+
+A reply takes seconds, so answer in a job and stream it to the page. Turn on message broadcasting:
+
+```ruby
+# config/initializers/ruby_llm.rb
+RubyLLM.configure do |config|
+  config.broadcast_messages = true
+end
+```
+
+The controller saves the customer's message and hands the reply to a job:
+
+```ruby
+class MessagesController < ApplicationController
+  def create
+    chat = current_customer.chats.find(params[:chat_id])
+    chat.add_message(role: :user, content: params[:content])
+    SupportReplyJob.perform_later(chat.id)
+    head :accepted
+  end
+end
+```
+
+The job lets the agent finish the conversation, broadcasting each chunk as it arrives:
+
+```ruby
+class SupportReplyJob < ApplicationJob
+  def perform(chat_id)
+    SupportAgent.find(chat_id).complete(&:broadcast)
+  end
+end
+```
+
+The chat's page subscribes to its stream and renders its messages:
+
+```erb
+<%# app/views/chats/show.html.erb %>
+<%= turbo_stream_from @chat %>
+<div id="messages"><%= render @chat.messages %></div>
+```
+
+`complete` answers whatever the conversation is waiting for, and each chunk's `broadcast` appends it to the assistant message on the page. [Streaming with Hotwire]({% link _advanced/rails-streaming.md %}) covers the message partials, cancelling a reply, and messages sent while one streams.
+
+To skip the wiring, generate a working chat interface with controllers, views, and a job:
 
 ```bash
 bin/rails generate ruby_llm:chat_ui
 ```
 
-Visit `/chats` in your running application. The generated files belong to your app, so you can adapt the interface and broadcasts. [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}) explains how the pieces fit together.
+Visit `/chats` in your running application. The generated files belong to your app, so change them as you like.
 
-## Agents and Background Jobs
+## Handling Errors in Jobs
 
-An agent configures your persisted chat when you load it in another process:
+RubyLLM retries rate limits, timeouts, and server errors itself, up to `config.max_retries` times. When those retries run out, the error reaches your job. Let Active Job decide what happens next:
 
 ```ruby
-class StudyAgent < RubyLLM::Agent
-  chat_class Chat
-  model "{{ site.models.default_chat }}"
-  instructions "Help organize practical Ruby study sessions."
-end
+class SupportReplyJob < ApplicationJob
+  retry_on RubyLLM::RateLimitError, RubyLLM::ServiceUnavailableError, wait: :polynomially_longer, attempts: 5
+  discard_on RubyLLM::BadRequestError
 
-class StudyReplyJob < ApplicationJob
-  def perform(chat_id, question)
-    StudyAgent.find(chat_id).ask(question)
+  def perform(chat_id)
+    SupportAgent.find(chat_id).complete(&:broadcast)
   end
 end
 ```
 
-```ruby
-chat = StudyAgent.create!
-StudyReplyJob.perform_later(chat.id, "Plan a session about Ruby blocks.")
-```
+A rate limit or an outage passes, so retry later. A bad request fails the same way every time, so discard the job and report it. Retrying is safe because the controller already saved the customer's message: `complete` picks up where the conversation stopped instead of asking twice.
 
-Use your existing Active Job backend. See [Agents]({% link _getting_started/agents.md %}) for persisted configuration and [Durable Agents]({% link _advanced/durable-agents-overview.md %}) for work that pauses for approval or resumes after a deploy.
+See [Error Handling]({% link _advanced/error-handling.md %}) for every error class, and [Durable Agents]({% link _advanced/durable-agents-overview.md %}) for jobs that pause for approvals and survive deploys.
 
-## Media and Document Processing
+## Individual Operations in Jobs
 
-Individual AI operations work in Rails services and jobs too. For example, transcribe an attached recording and save the text:
+Individual AI operations work in Rails services and jobs too. The support desk transcribes voicemails as they arrive and opens a ticket:
 
 ```ruby
-class TranscribeRecordingJob < ApplicationJob
-  def perform(recording_id)
-    recording = Recording.find(recording_id)
-    transcript = RubyLLM.transcribe(recording.audio)
-    recording.update!(transcript: transcript.text)
+class TranscribeVoicemailJob < ApplicationJob
+  def perform(voicemail)
+    transcript = RubyLLM.transcribe(voicemail.audio)
+    voicemail.customer.tickets.create!(body: transcript.text, channel: "phone")
   end
 end
 ```
 
-This assumes your `Recording` model has an `audio` attachment and a `transcript` text column. The same pattern works for [OCR]({% link _getting_started/ocr.md %}), [image generation]({% link _getting_started/image-generation.md %}), and [moderation]({% link _getting_started/moderation.md %}).
+`voicemail.audio` is an Active Storage attachment, passed straight to `transcribe`. The same pattern works for [OCR]({% link _getting_started/ocr.md %}) on uploaded invoices, [moderation]({% link _getting_started/moderation.md %}) of incoming messages, and [image generation]({% link _getting_started/image-generation.md %}).
 
-## Understanding the Persistence Flow
+## Message Persistence and Validations
 
-When you call `ask`, RubyLLM saves the user message, calls the provider, and saves the assistant's response. For streaming, it creates the assistant record before the first chunk arrives, giving Turbo Streams a stable target. A failed request removes its empty placeholder, and so does an error raised by your streaming block.
+When you call `ask`, RubyLLM saves the user message, calls the provider, and saves the assistant's answer. When streaming, it creates the assistant record before the first chunk arrives, so Turbo has a target to append to. A failed request removes that empty placeholder, and so does an error raised by your streaming block.
 
-Only one process runs a chat at a time. `complete`, `step`, `generate`, `run_tools`, and `compact` claim the chat in the database before they call the model or run tools, and each tool call is claimed before it runs. A second process that finds the chat claimed returns without doing anything, and `chat.running?` tells you another process is on it. See [One Process at a Time]({% link _advanced/durable-agents.md %}#one-process-at-a-time).
+Allow assistant messages with empty content. Streaming starts before any text arrives, and a message that only calls tools has no text. A blanket `validates :content, presence: true` on `Message` breaks both.
+{: .warning }
 
-A process that dies mid-request removes nothing: its placeholder stays blank, and a tool call it was running keeps no result. RubyLLM leaves blank assistant messages out of every request, so the chat still works. Its claims expire after `config.max_run_time`, ten minutes by default. The next `complete` after that runs the unfinished calls of the latest round again. A call in a round the conversation has moved past reaches the model with an error saying it did not finish. Your records stay as they are. Write tools so running them twice is safe; see [Agents in Background Jobs]({% link _advanced/durable-agents.md %}#at-least-once-not-exactly-once).
+Only one process runs a chat at a time, and a crashed process's work resumes once its claim expires. Write tools so running them twice is safe. See [One Process at a Time]({% link _advanced/durable-agents.md %}#one-process-at-a-time) and [At-Least-Once, Not Exactly-Once]({% link _advanced/durable-agents.md %}#at-least-once-not-exactly-once).
 
-Allow assistant messages to have empty content. Streaming begins before text arrives, and tool calls can be valid responses without text. A blanket `validates :content, presence: true` on `Message` prevents these flows.
+## Next Steps
 
-## Going further
-
-* [Persistence with acts_as]({% link _advanced/rails-persistence.md %}) - records, associations, tools, usage, and custom model names.
-* [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}) - broadcasts, cancellation, and message ordering.
-* [Generators and App Conventions]({% link _advanced/rails-generators.md %}) - generated files and options.
-* [Advanced Rails Configuration]({% link _advanced/rails-advanced-config.md %}) - provider overrides, tenant credentials, caching, and async connections.
+* [Persistence with acts_as]({% link _advanced/rails-persistence.md %}): records, associations, tools, usage, and custom model names.
+* [Streaming with Hotwire]({% link _advanced/rails-streaming.md %}): partials, cancellation, and message ordering.
+* [Durable Agents]({% link _advanced/durable-agents-overview.md %}): approvals, deploys, and crashed runs.
+* [Generators and App Conventions]({% link _advanced/rails-generators.md %}): generated files and options.
+* [Advanced Rails Configuration]({% link _advanced/rails-advanced-config.md %}): provider overrides, tenant credentials, and caching.

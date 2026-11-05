@@ -179,7 +179,7 @@ chat.ask "Which of those changes affect Rails apps?"
 
 Thinking signatures, provider tool steps, compaction, and other provider-shaped content now go back only to the model that produced them. Another model receives the same conversation as text and tool calls, so it never sees blocks it cannot read. This matters inside one provider too: Bedrock, Vertex AI, Azure, and OpenRouter serve model families that refuse each other's reasoning. Gemini continues a tool round another provider began, such as a call that waited for an approval while the user switched models.
 
-A worker that dies mid-turn no longer leaves a conversation providers refuse. Requests leave out the blank reply it saved, and calls from a round the conversation has moved past reach the model as unfinished. See [Understanding the Persistence Flow]({% link _getting_started/rails.md %}#understanding-the-persistence-flow).
+A worker that dies mid-turn no longer leaves a conversation providers refuse. Requests leave out the blank reply it saved, and calls from a round the conversation has moved past reach the model as unfinished. See [Understanding the Persistence Flow]({% link _getting_started/rails.md %}#message-persistence-and-validations).
 
 ## Files a Provider Cannot Read
 

@@ -195,6 +195,46 @@ Use custom initialization for dependencies and runtime state. If two tools need
 different names, descriptions, or inputs, define separate tool classes so the
 parameter schema and `execute` signature stay together.
 
+## Tool Names and Namespaces
+
+The model calls a tool by a name RubyLLM derives from its class: the class name in snake case, with a trailing `Tool` dropped. `SearchDocs` becomes `search_docs`, and `WeatherTool` becomes `weather`. Define `tool_name` on the class to choose another:
+
+```ruby
+class SearchDocs < RubyLLM::Tool
+  def self.tool_name
+    "help_center_search"
+  end
+end
+```
+
+`SearchDocs.tool_name` reads the name without building the tool, which helps when you select tool classes by name. The instance method `name` delegates to it, so overriding `name` on an instance also works.
+
+A namespace groups related tools and lets tools in different groups share a name. Give it a description so the model knows what the group is for:
+
+```ruby
+class CustomerLookup < RubyLLM::Tool
+  namespace "crm", description: "Customer records and orders"
+  description "Finds a customer by email"
+
+  def execute(email:)
+    Customer.find_by(email:)&.attributes
+  end
+end
+
+chat.with_tools(CustomerLookup)
+chat.tools[:crm_customer_lookup]
+```
+
+The chat keys the tool by its namespace and name joined, `:crm_customer_lookup`, and raises an `ArgumentError` when another tool already has that name. The tool's own name stays `customer_lookup`, and `tool_call.namespace` names its group. RubyLLM routes calls and remembers approvals by both, including after a Rails reload. `namespace` is inherited; pass `nil` to remove an inherited namespace. Namespaced tools can be [deferred for tool search]({% link _tools/tool-search.md %}) like any other.
+
+How a namespace reaches the model depends on the protocol:
+
+* The Responses protocol sends each group as a function namespace, which needs a description.
+* Every other protocol sends the tool under its joined name, `crm_customer_lookup`, and maps the model's calls back to the namespace.
+* Anthropic's `computer` and `browser` namespaces hold the members of its [native client toolsets]({% link _tools/provider-tools.md %}#native-client-toolsets). The Responses API reserves those two names and drops the functions in them, so RubyLLM raises `RubyLLM::Error` when a Responses request carries either.
+
+You can force a namespaced tool with `with_tool_options(choice: CustomerLookup)` where it travels under its joined name. Responses namespaces and Anthropic's toolset members can't be forced, so RubyLLM raises there; use `choice: :required` instead.
+
 ## Advanced Tool Metadata
 
 ### Provider-Specific Parameters

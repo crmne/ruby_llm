@@ -19,7 +19,7 @@ After reading this guide, you will know:
 
 ## API Keys
 
-Configure API keys only for the providers you use. RubyLLM won't complain about missing keys for providers you never touch.
+Configure API keys only for the providers you use. RubyLLM won't complain about missing keys for providers you never touch. This block lists every provider setting.
 
 RubyLLM resolves the provider from the model registry. Pass `provider:` when you want another host for that model or use a custom deployment. See [Model Resolution]({% link _reference/model-resolution.md %}).
 
@@ -46,6 +46,8 @@ RubyLLM.configure do |config|
   config.bedrock_batch_s3_uri = ENV['BEDROCK_BATCH_S3_URI'] # s3://bucket/prefix for batches and large attachments
   config.bedrock_batch_role_arn = ENV['BEDROCK_BATCH_ROLE_ARN'] # IAM role Bedrock assumes for batch jobs
   config.bedrock_video_s3_uri = ENV['BEDROCK_VIDEO_S3_URI'] # s3://bucket/prefix for generated videos
+  config.bedrock_guardrail_id = ENV['BEDROCK_GUARDRAIL_ID'] # optional, see Guardrails below
+  config.bedrock_guardrail_version = ENV['BEDROCK_GUARDRAIL_VERSION']
 
   # Cohere
   config.cohere_api_key = ENV['COHERE_API_KEY']
@@ -101,6 +103,10 @@ RubyLLM.configure do |config|
   # OpenAI
   config.openai_api_key = ENV['OPENAI_API_KEY']
   config.openai_api_base = ENV['OPENAI_API_BASE'] # Optional custom OpenAI-compatible endpoint
+  config.openai_organization_id = ENV['OPENAI_ORG_ID'] # optional, see Organization and Project Headers
+  config.openai_project_id = ENV['OPENAI_PROJECT_ID']
+  config.openai_use_system_role = true # optional, see System Role Compatibility
+  config.openai_protocol = :chat_completions # optional; every provider has a <provider>_protocol setting
 
   # OpenRouter
   config.openrouter_api_key = ENV['OPENROUTER_API_KEY']
@@ -524,5 +530,5 @@ Blank strings are treated as unset, so environment variables can be wired direct
 
 - [Custom Endpoints and Unlisted Models]({% link _reference/custom-endpoints.md %}) - work with models RubyLLM doesn't know about.
 - [Connection, Logging and Contexts]({% link _reference/configuration-connection.md %}) - timeouts, proxies, and per-tenant isolation.
-- [Configuration]({% link _getting_started/configuration.md %}#full-reference) - the complete option list.
+- [Connection, Logging and Contexts]({% link _reference/configuration-connection.md %}#all-other-settings) - every setting that isn't a provider's.
 - [Model Registry]({% link _reference/models.md %}) - discover, select, and refresh the model registry.

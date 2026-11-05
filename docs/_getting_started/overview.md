@@ -2,7 +2,7 @@
 layout: default
 title: How RubyLLM Works
 nav_order: 2
-description: Understand RubyLLM's public API, its providers and protocols, and the services they share.
+description: See how conversations, individual AI operations, providers, shared services, and Rails fit together in RubyLLM.
 redirect_from:
   - /guides/overview
 ---
@@ -14,200 +14,161 @@ redirect_from:
 
 After reading this guide, you will know:
 
-* How the RubyLLM API covers conversations and individual AI operations.
-* What providers do and what protocols do.
+* How conversations and individual AI operations divide the RubyLLM API.
+* What providers do for you.
 * How model selection, configuration, and usage tracking work across the API.
-* How Rails integration adds persistence, attachments, streaming, and jobs.
+* What Rails integration adds.
 
-RubyLLM is an AI framework for Ruby and Rails. You build with its Ruby API: text generation and conversations on one side, individual AI operations on the other. Providers and protocols connect that API to AI services. Rails integration brings it into your application with the conventions you already use.
+RubyLLM is an AI framework for Ruby and Rails. You build with its Ruby API: conversations on one side, individual AI operations on the other. Providers connect that API to AI services, and Rails integration brings it into your application with the conventions you already use.
 
-## The RubyLLM API
+This guide follows the support desk from [Getting Started]({% link _getting_started/getting-started.md %}) through each part.
 
-### Text Generation and Conversations
+## Conversations
 
-A `Chat` holds the conversation and its settings. Calling `ask` adds your question, generates a response, runs any tool calls, and returns a `Message`:
+A `Chat` holds a conversation and its settings. `ask` adds your message, gets the model's answer, runs any tools the model calls, and returns a `Message`:
 
 ```ruby
 chat = RubyLLM.chat(model: "{{ site.models.default_chat }}")
-response = chat.ask "Help me plan a Ruby study group."
+response = chat.ask "A customer's parcel arrived damaged. Draft a short reply."
 puts response.content
 ```
 
-The conversation API provides:
+Everything that involves a conversation builds on `Chat`:
 
-* **Messages and attachments** for text, images, audio, and documents the model supports.
-* **Streaming** to display a response as it arrives.
-* **Tools** that let the model call your Ruby code, with optional human approval before execution.
-* **MCP servers** whose tools a chat or agent can use, described in a Ruby class. See [MCP]({% link _tools/mcp.md %}).
-* **Code execution** that lets the model run Ruby, Python, JavaScript, and shell code in a sandbox on your own servers and hand back the files it makes. See [Code Execution]({% link _advanced/code-execution.md %}).
-* **File stores** that give an agent its own files, in Active Storage or a folder on disk, and keep attachments and long tool results out of the conversation, so the model finds, reads, searches, and edits them with tools, and reads PDFs and scans with OCR. See [File Stores]({% link _core_features/file-stores.md %}).
-* **Skills** that teach the model your workflows with folders of instructions, reference files, and scripts in the open Agent Skills format, loaded only when a task needs them. See [Skills]({% link _tools/skills.md %}).
-* **Structured output** for results you read as a Hash through `response.parsed`.
-* **Agents** that put a model, instructions, tools, and other settings in a reusable Ruby class.
-* **Loop control** to generate a response, run tools, or advance one step at a time.
+* **Messages and attachments**: text, images, audio, and documents the model supports.
+* **Streaming**: show an answer as the model writes it.
+* **Structured output**: answers you read as a Hash through `response.parsed`.
+* **Tools**: Ruby classes the model calls, with an optional approval step before they run.
+* **MCP servers**, **skills**, and **code execution**: tools from a [Model Context Protocol server]({% link _tools/mcp.md %}), folders of instructions in the [Agent Skills]({% link _tools/skills.md %}) format, and [code the model runs in a sandbox]({% link _advanced/code-execution.md %}).
+* **File stores**: an agent's own files, in Active Storage or a folder on disk, which also keep attachments and long tool results out of the conversation. The model finds, reads, searches, and edits them with tools. See [File Stores]({% link _core_features/file-stores.md %}).
+* **Agents**: a model, instructions, and tools in a reusable class.
+* **Loop control**: run the model and the tools one step at a time.
 
-An agent uses the same conversation API:
+An agent is a configured chat with a name:
 
 ```ruby
-class StudyPlanner < RubyLLM::Agent
+class SupportAgent < RubyLLM::Agent
   model "{{ site.models.default_chat }}"
-  instructions "Help organize practical Ruby study sessions."
+  instructions "You answer customers of Acme Outfitters. Be brief and friendly."
+  tools SearchDocs
 end
 
-response = StudyPlanner.new.ask "Plan a session about Ruby blocks."
+SupportAgent.new.ask "How do I return a jacket that doesn't fit?"
 ```
 
-Use ordinary Ruby methods and jobs to coordinate agents. [Agentic Workflows]({% link _advanced/agentic-workflows.md %}) covers handoffs and explicit loop control; [Durable Agents]({% link _advanced/durable-agents-overview.md %}) covers resuming work across jobs and deploys.
+Coordinate agents with ordinary Ruby methods and jobs. [Agentic Workflows]({% link _advanced/agentic-workflows.md %}) shows routing, chaining, and parallel work; [Durable Agents]({% link _advanced/durable-agents-overview.md %}) shows agents that resume across jobs and deploys.
 
-### Individual AI Operations
+## Individual AI Operations
 
-These operations take an input and return a result without maintaining a conversation. Use them directly:
+Some work needs no conversation. An operation takes an input and returns a typed result:
 
 ```ruby
-image = RubyLLM.paint "A watercolor illustration of a Ruby study group"
-image.save "study_group.png"
+transcript = RubyLLM.transcribe "voicemail.mp3"
+transcript.text
 ```
 
-Use `paint` for [images]({% link _getting_started/image-generation.md %}), `animate` for [video]({% link _advanced/video-generation.md %}), and `speak` for [speech]({% link _getting_started/text-to-speech.md %}). In the other direction, `transcribe` turns [audio into text]({% link _getting_started/audio-transcription.md %}) and `ocr` extracts [document text]({% link _getting_started/ocr.md %}).
+The support desk uses most of them:
 
-For search, `embed` creates [vectors]({% link _getting_started/embeddings.md %}) and `rerank` orders [candidate documents by relevance]({% link _getting_started/rerank.md %}). Use `moderate` to check [content flags and categories]({% link _getting_started/moderation.md %}).
+| Operation | Support desk use | Result |
+| --- | --- | --- |
+| [`transcribe`]({% link _getting_started/audio-transcription.md %}) | Turn a voicemail into text | `transcription.text` |
+| [`ocr`]({% link _getting_started/ocr.md %}) | Read a scanned invoice | `document.markdown` |
+| [`moderate`]({% link _getting_started/moderation.md %}) | Check a message before anyone reads it | `moderation.flagged?` |
+| [`embed`]({% link _getting_started/embeddings.md %}) | Turn FAQ answers into vectors for search | `embedding.vectors` |
+| [`rerank`]({% link _getting_started/rerank.md %}) | Put the best search hit first | `ranked.results` |
+| [`judge`]({% link _advanced/judgments.md %}) | Ask a typed question, such as "is this reply polite?" | probabilities, choices, and scores |
+| [`paint`]({% link _getting_started/image-generation.md %}) | Illustrate a help article | `image.save(path)` |
+| [`animate`]({% link _advanced/video-generation.md %}) | Make a packing how-to clip | `video.save(path)` |
+| [`speak`]({% link _getting_started/text-to-speech.md %}) | Read a reply aloud on the phone line | `speech.save(path)` |
 
-Use `judge` to ask typed questions about application data and receive [probabilities, choices, and scores]({% link _advanced/judgments.md %}). Define reusable questions in a `RubyLLM::Judge` class.
+An operation may take several requests. `animate` submits a job and waits for the video, while `animate_later` returns a `VideoJob` at once. Transcription can stream. You call the operation the same way, and RubyLLM handles the lifecycle.
 
-Each result has readers for its output, such as `transcription.text`, `document.markdown`, or `embedding.vectors`. Generated images, video, and speech have a `save` method.
+## Providers
 
-An individual operation may involve several requests. `animate` submits a job and waits for the video; `animate_later` returns a `VideoJob` immediately. Transcription can stream. You use the same operation API while RubyLLM handles that lifecycle.
+A provider is the service you talk to, such as OpenAI, Anthropic, Gemini, Bedrock, or a local Ollama. It knows the service's URL, authentication, settings, and models, and picks a protocol, the request format the service speaks. Your code never deals with either: the same `ask` works on every provider, and switching is a different model name. To pick the protocol yourself, see [Choosing the Wire Protocol]({% link _core_features/chat-request-control.md %}#choosing-the-wire-protocol). To connect a service RubyLLM doesn't know yet, see [Custom Providers and Protocols]({% link _reference/custom-providers.md %}).
 
-## Providers and Protocols
+## What Everything Shares
 
-Your Ruby code describes the work. Providers and protocols translate it into calls to a particular service.
+### Models
 
-### Providers
-
-A provider represents the service you use. It supplies the base URL, authentication, configuration, and model catalog. It also selects the protocol for a model and supplies service-specific settings or routing rules.
-
-For example, OpenAI and Ollama have different hosts and authentication requirements, but both can use the Chat Completions protocol. One provider can also expose several protocols: OpenAI supports Responses and Chat Completions, while Vertex AI routes models to several API formats.
-
-### Protocols
-
-A protocol implements an API format. It renders requests, parses responses, handles streaming events, and turns service errors into RubyLLM errors. Examples include Chat Completions, Responses, Anthropic, Gemini, and Converse.
-
-Services sometimes differ from the protocol they implement. A provider can select a small dialect of an existing protocol for those differences. Request and response format changes stay in the protocol; service URLs, credentials, and catalog rules stay in the provider. Your chat, tool, or agent does not need to know those details.
-
-A service that implements an existing protocol can be supported without writing its request format again. See [Custom Providers and Protocols]({% link _reference/custom-providers.md %}) for extending this layer.
-
-## What They Share
-
-### Model and Provider Selection
-
-The [Model Registry]({% link _reference/models.md %}) records which providers offer each model, its capabilities, limits, and pricing. RubyLLM uses it to resolve a model name to a provider:
+The [Model Registry]({% link _reference/models.md %}) records which providers offer each model, with its capabilities, limits, and prices. RubyLLM uses it to find the provider for a model name:
 
 ```ruby
 chat = RubyLLM.chat(model: "{{ site.models.default_chat }}")
 chat.model.provider
 # => "openai"
+
+RubyLLM.models.find("{{ site.models.default_chat }}").supports?(:vision)
+# => true
 ```
 
-Pass `provider:` when you want to choose the service explicitly. You still need its credentials configured. [Model Resolution]({% link _reference/model-resolution.md %}) explains aliases and selection when several providers offer the same model.
-
-Capabilities depend on the model. Query them through the registry, or browse the [Models]({% link _reference/available-models.md %}) page:
-
-```ruby
-model = RubyLLM.models.find("{{ site.models.openai_tools }}")
-model.supports?(:vision)
-model.supports?(:function_calling)
-```
-
-### Protocol Selection
-
-The provider chooses a protocol for the model and operation. For conversations, you can override its default:
-
-```ruby
-chat = RubyLLM.chat(
-  model: "{{ site.models.default_chat }}",
-  provider: :openai,
-  protocol: :chat_completions
-)
-```
-
-The chat still returns `Message` objects and uses the same tools and callbacks. See [Choosing the Wire Protocol]({% link _core_features/chat-request-control.md %}#choosing-the-wire-protocol).
+Pass `provider:` to choose the service yourself. [Model Resolution]({% link _reference/model-resolution.md %}) explains aliases and how RubyLLM chooses when several providers offer a model, and the [Models]({% link _reference/available-models.md %}) page lists them all.
 
 ### Configuration
 
-Set application-wide defaults with `RubyLLM.configure`. Use a `Context` for an isolated set of credentials or defaults, such as one tenant's configuration. Contexts expose the same entry points, including `chat`, `paint`, and `embed`:
+`RubyLLM.configure` sets keys and defaults for the whole application. A context holds a separate set, such as one tenant's key, and has the same entry points: `chat`, `paint`, `embed`, and the rest.
 
 ```ruby
 context = RubyLLM.context do |config|
-  config.openai_api_key = tenant.api_key
+  config.openai_api_key = store.openai_api_key
 end
 
-chat = context.chat
+context.chat.ask "Do you ship to Canada?"
 ```
 
-Set conversation-specific options with chainable methods such as `with_instructions` and `with_tools`. Use shared RubyLLM options where available; `provider_options` carries fields specific to a service. See [Configuration]({% link _getting_started/configuration.md %}).
+Per-conversation options use chainable methods such as `with_instructions` and `with_tools`. See [Configuration]({% link _getting_started/configuration.md %}).
 
 ### Usage, Costs, and Instrumentation
 
-Read usage from a response:
+Every result knows its tokens and cost:
 
 ```ruby
-response = chat.ask "Explain Ruby blocks."
-response.tokens.input
+response = chat.ask "Summarize our returns policy in one sentence."
 response.tokens.output
 response.cost.total
 ```
 
-The accounting follows provider attempts, so a successful answer can include the cost of earlier failed attempts. Unknown costs stay unknown. In Rails, the usage ledger keeps those attempts separately from messages. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}).
+The cost covers every attempt the provider billed, so a successful answer includes the cost of retries before it. Unknown costs stay `nil`. In Rails, a usage ledger records each attempt. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}).
 
-[Instrumentation]({% link _advanced/instrumentation.md %}) lets you observe calls across chats, tools, and individual operations. `RubyLLM.workflow` groups events from ordinary Ruby code into a named workflow.
-
-[OpenTelemetry]({% link _advanced/opentelemetry.md %}) sends those calls to your tracing backend as spans. [Evaluations]({% link _advanced/evaluations.md %}) run your agents against a dataset of cases and grade each answer, from Rake, RSpec, or Minitest.
+[Instrumentation]({% link _advanced/instrumentation.md %}) reports every call, from chats, tools, and individual operations, and `RubyLLM.workflow` groups calls into a named unit. [OpenTelemetry]({% link _advanced/opentelemetry.md %}) sends them to your tracing backend, and [Evaluations]({% link _advanced/evaluations.md %}) grade your agents' answers against a dataset of cases.
 
 ### Background Work and Provider Resources
 
-[Batches]({% link _advanced/batches.md %}) submit chats or embedding requests for provider-side processing. Stage them with `ask_later` or `embed_later` and submit them with `RubyLLM.batch`.
-
-[File Storage]({% link _core_features/files.md %}) handles provider uploads and downloads with `RubyLLM.upload` and `RubyLLM.download`. [Prompt Caching]({% link _core_features/prompt-caching.md %}) supports reusing prompt content, including provider-managed caches through `RubyLLM.cache`.
-
-[Error Handling]({% link _advanced/error-handling.md %}) provides common exceptions, retries, and model fallbacks. These services support the public API without requiring you to manage each provider's request format.
+* [Batches]({% link _advanced/batches.md %}) send many chats or embeddings for the provider to process later, at a lower price.
+* [File Storage]({% link _core_features/files.md %}) uploads files to a provider and downloads its results with `RubyLLM.upload` and `RubyLLM.download`.
+* [Prompt Caching]({% link _core_features/prompt-caching.md %}) reuses long, stable prompts, including caches you create with `RubyLLM.cache`.
+* [Error Handling]({% link _advanced/error-handling.md %}) covers RubyLLM's errors, automatic retries, and model fallbacks.
 
 ## Rails Integration
 
-Rails integration keeps the Ruby API and adds the parts a Rails application needs. `acts_as_chat` and `acts_as_message` give your Active Record models the same conversation methods as the plain-Ruby objects:
+In Rails, your own Active Record models become chats and messages. `acts_as_chat` and `acts_as_message` give them the same methods as the plain-Ruby objects:
 
 ```ruby
 class Chat < ApplicationRecord
   acts_as_chat
+  belongs_to :customer
 end
 
 class Message < ApplicationRecord
   acts_as_message
 end
 
-chat = Chat.create!(model: "{{ site.models.default_chat }}")
-response = chat.ask "Help me plan a Ruby study group."
+chat = Chat.create!(customer: current_customer, model: "{{ site.models.default_chat }}")
+chat.ask "Where is my order R-1042?"
 ```
 
-RubyLLM owns the supporting model-registry, tool-call, usage, batch, MCP credential, and provider file tables. Your application keeps its users, permissions, and other relationships on its own records. The framework can evolve its supporting data without asking you to maintain those models.
+Your application owns its chats and messages, with their customers, permissions, and anything else you add. RubyLLM owns eight supporting tables: the model registry, tool calls, usage, queued messages, files, batches, MCP credentials, and provider files. It can change them between releases without touching your models.
 
-With [Active Record]({% link _advanced/rails-persistence.md %}), you can reload conversations, restore agents, and read usage through associations. Pass [Active Storage attachments]({% link _core_features/attachments.md %}) with `with:`, just as you pass a file in plain Ruby.
+Rails integration adds:
 
-Use [Hotwire]({% link _advanced/rails-streaming.md %}) to stream replies into a page and [Active Job]({% link _advanced/durable-agents.md %}) to run agents in your existing job backend. Persisted agents can resume their work in another process.
+* [Active Record persistence]({% link _advanced/rails-persistence.md %}): reload conversations, restore agents, and read usage through associations.
+* [Active Storage attachments]({% link _core_features/attachments.md %}): pass an attachment with `with:`, as you pass a file in plain Ruby.
+* [Hotwire streaming]({% link _advanced/rails-streaming.md %}): stream replies into a page.
+* [Active Job]({% link _advanced/durable-agents.md %}): run agents in your job backend, and resume them in another process.
+* [Generators]({% link _advanced/rails-generators.md %}): persistence, agents, tools, schemas, and a chat UI in conventional directories.
 
-The [generators]({% link _advanced/rails-generators.md %}) set up these pieces in conventional Rails directories. They create persistence, agents, tools, schemas, and an optional chat UI with streaming already connected.
-
-Individual operations such as `paint`, `transcribe`, and `ocr` also work directly in your Rails services and jobs. See [Rails Integration]({% link _getting_started/rails.md %}) to get started.
-
-## How the Parts Fit Together
-
-| Part | In practice |
-| --- | --- |
-| Ruby API: conversations | Chats, messages, tools, agents, structured output, and streaming. |
-| Ruby API: individual operations | Images, video, speech, transcription, OCR, moderation, embeddings, and reranking. |
-| Providers and protocols | Providers choose the service and its settings; protocols translate the API format. |
-| Shared services | Model selection, configuration, usage and costs, instrumentation, batches, and provider resources. |
-| Rails integration | The same API with Active Record, Active Storage, Hotwire, jobs, and generators. |
+Individual operations work in Rails services and jobs as they do anywhere. See [Rails Integration]({% link _getting_started/rails.md %}).
 
 ## Next Steps
 
-Try the examples in [Getting Started]({% link _getting_started/getting-started.md %}), then read the rest of Start Here in order: [Chat]({% link _getting_started/chat.md %}), [Tools]({% link _getting_started/tools.md %}), [Agents]({% link _getting_started/agents.md %}), [Configuration]({% link _getting_started/configuration.md %}), the individual operations, and [Rails Integration]({% link _getting_started/rails.md %}). Then follow the guide for the feature you want to build.
+Read the rest of Start Here in order: [Chat]({% link _getting_started/chat.md %}), [Tools]({% link _getting_started/tools.md %}), [Agents]({% link _getting_started/agents.md %}), [Configuration]({% link _getting_started/configuration.md %}), the individual operations, and [Rails Integration]({% link _getting_started/rails.md %}). Then follow the guide for the feature you're building.

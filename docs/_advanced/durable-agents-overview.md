@@ -67,10 +67,10 @@ Each piece has its own guide. Read the ones your agent needs.
 | Piece | What it does | Guide |
 | --- | --- | --- |
 | Background jobs | Run one turn per job, survive deploys with ActiveJob Continuations, and stop a run from anywhere. | [Agents in Background Jobs]({% link _advanced/durable-agents.md %}) |
-| Run claims | Let only one process run a chat or a tool call at a time, and resume a run after a crash. | [One Process at a Time]({% link _advanced/durable-agents.md %}#one-process-at-a-time), [Long-Running Tools]({% link _getting_started/tools.md %}#long-running-tools) |
+| Run claims | Let only one process run a chat or a tool call at a time, and resume a run after a crash. | [One Process at a Time]({% link _advanced/durable-agents.md %}#one-process-at-a-time), [Long-Running Tools]({% link _tools/tool-execution.md %}#long-running-tools) |
 | Approvals | Pause a tool call until a person approves or denies it. | [Requiring Approval]({% link _tools/tool-execution.md %}#requiring-approval), [Approval in Rails]({% link _tools/tool-execution.md %}#approval-in-rails) |
-| Input requests | Let a tool or an MCP server ask the user a question in the middle of a call. | [Asking the User]({% link _getting_started/tools.md %}#asking-the-user), [MCP Input Requests]({% link _tools/mcp.md %}#input-requests) |
-| Tasks | Pause a tool call while slow work runs elsewhere, then resume it. | [Pausing a Tool Call]({% link _getting_started/tools.md %}#pausing-a-tool-call), [MCP Tasks]({% link _tools/mcp.md %}#tasks) |
+| Input requests | Let a tool or an MCP server ask the user a question in the middle of a call. | [Asking the User]({% link _tools/tool-execution.md %}#asking-the-user), [MCP Input Requests]({% link _tools/mcp.md %}#input-requests) |
+| Tasks | Pause a tool call while slow work runs elsewhere, then resume it. | [Pausing a Tool Call]({% link _tools/tool-execution.md %}#pausing-a-tool-call), [MCP Tasks]({% link _tools/mcp.md %}#tasks) |
 | Queued messages | Accept new messages while a job runs the chat, and decide when they join. | [Queueing Messages]({% link _advanced/agentic-workflows.md %}#queueing-messages), [Queued Messages in Rails]({% link _advanced/rails-persistence.md %}#queued-messages) |
 | File stores | Keep attachments and long tool results as files the model reads when it needs them. | [File Stores]({% link _core_features/file-stores.md %}) |
 | Sandboxes | Decide what code from a model can read, write, and reach. | [Sandboxes]({% link _advanced/sandboxes.md %}) |

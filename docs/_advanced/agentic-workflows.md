@@ -2,7 +2,7 @@
 layout: default
 title: Agentic Workflows
 nav_order: 1
-description: Compose agents and AI operations with ordinary Ruby methods, from sequential steps to routing and parallel work.
+description: Compose agents and AI operations with ordinary Ruby methods, from routing and handoffs to parallel work, and drive the agentic loop yourself.
 redirect_from:
   - /agent-handoffs/
 ---
@@ -14,17 +14,246 @@ redirect_from:
 
 After reading this guide, you will know:
 
+* What a workflow is, and which pattern fits which problem.
+* How to chain, route, hand off, and run agents in parallel with plain Ruby classes.
+* When an evaluator loop is worth its cost.
+* How to group a workflow's calls for instrumentation and cost tracking.
 * How to drive the agentic loop yourself, one move at a time.
-* Why the loop is safe to interrupt and resume between moves.
 * How to queue messages that join a running loop or wait for its turn to end.
-* How to wrap, attribute, or withdraw a queued message as it joins.
-* How to implement common workflow patterns with plain Ruby classes.
-* How to compose sequential, routing, parallel, and fan-in workflows.
-* When to reach for an evaluator loop to iterate on output quality.
 
-A workflow is orchestration code that coordinates one or more agents. In practice, this is often a small Ruby class with a single public method, plus a loop you control. Before you build a multi-agent workflow, it helps to understand how a single agent's turn-by-turn loop runs, so you can pause it, persist it, and resume it on demand.
+## What Is a Workflow?
 
-When you want to see the whole operation as one unit in your observability stack, wrap that Ruby code with `RubyLLM.workflow` and mark meaningful regions with `workflow.step`. These wrappers only add correlation to [instrumentation]({% link _advanced/instrumentation.md %}#workflows-and-steps) and to the [usage ledger]({% link _core_features/cost-and-usage-tracking.md %}#usage-by-workflow), so you can total what a workflow cost; they do not introduce a workflow DSL or take over execution.
+One agent with good tools handles most requests. Some work is better split: a cheap model sorts incoming email so an expensive one only sees what needs it, independent checks run at once instead of one after another, or a second agent reviews the first one's draft before a customer sees it.
+
+A workflow is the Ruby code that coordinates those steps. RubyLLM has no workflow DSL: a workflow is usually a small class with one public method that calls agents and operations and passes results between them. You test it, retry it, and run it in jobs like any other Ruby code.
+
+## Choosing a Pattern
+
+| Pattern | Use it when | Support desk example |
+| --- | --- | --- |
+| [Sequential](#sequential-workflow) | Each step needs the previous step's result. | Transcribe a voicemail, then draft a reply. |
+| [Routing](#routing-workflow) | Requests fall into categories that need different agents or models. | Send billing questions to `BillingAgent` and delivery questions to `ShippingAgent`. |
+| [Handoff](#agent-handoffs) | A specialist should take over the same conversation. | Billing takes over a chat that started as a delivery question. |
+| [Subagent](#subagents) | The model should decide when to delegate, and only the answer matters. | `SupportAgent` asks `ResearchAgent` to read the help center. |
+| [Parallel](#parallel-workflow) | Independent steps can run at the same time. | Moderate, triage, and search for one email at once. |
+| [Fan-out, fan-in](#fan-outfan-in-workflow) | Several specialists' results combine into one. | Three reviewers check a reply, and one summary comes back. |
+| [Evaluator loop](#evaluation-loop-evaluator-optimizer) | Quality criteria are clear and a draft can improve. | Revise a reply until it follows the refund policy. |
+
+Start with the simplest pattern that works. Each step adds latency and cost, so add one when it makes the result better.
+
+## Workflow Patterns
+
+The examples use `SupportAgent` and `TriageAgent` from [Agents]({% link _getting_started/agents.md %}) and the tools from [Tools]({% link _getting_started/tools.md %}).
+
+### Sequential Workflow
+
+Use this pattern when each step needs the previous step's result. A voicemail becomes text, and the text becomes a drafted reply:
+
+```ruby
+class VoicemailReply
+  def call(voicemail)
+    transcript = RubyLLM.transcribe(voicemail.audio).text
+    SupportAgent.new(customer: voicemail.customer).ask("Draft a reply to this voicemail:\n#{transcript}").content
+  end
+end
+```
+
+### Routing Workflow
+
+Use this pattern when requests fall into categories that need different agents, instructions, or models. A cheap model triages, and a specialist answers:
+
+```ruby
+class BillingAgent < RubyLLM::Agent
+  model "{{ site.models.anthropic_current }}"
+  inputs :customer
+  instructions "You handle billing for Acme Outfitters: invoices, charges, and refunds."
+  tools { [LookupOrder.new(customer), IssueRefund] }
+end
+
+class ShippingAgent < RubyLLM::Agent
+  model "{{ site.models.openai_mini }}"
+  inputs :customer
+  instructions "You handle deliveries for Acme Outfitters: tracking, delays, and addresses."
+  tools { [LookupOrder.new(customer)] }
+end
+
+class SupportRouter
+  SPECIALISTS = { "billing" => BillingAgent, "shipping" => ShippingAgent }
+
+  def call(customer, message)
+    category = TriageAgent.new.ask(message).parsed["category"]
+    SPECIALISTS.fetch(category, SupportAgent).new(customer: customer).ask(message)
+  end
+end
+```
+
+`TriageAgent` answers with its schema, so the category is always one the router expects, and anything else goes to the general `SupportAgent`. `IssueRefund` is the tool from [Requiring Approval]({% link _tools/tool-execution.md %}#requiring-approval), so a refund waits for a person.
+
+### Agent Handoffs
+
+Routing picks an agent for one message. A handoff gives the *same conversation* to another agent, so the specialist sees the whole history and the customer keeps one thread. `Agent.find(chat_id)` makes this work: it loads a saved chat and applies another agent's instructions and tools, leaving the messages as they are.
+
+The simplest handoff routes each new message, and the specialist answers in the saved chat:
+
+```ruby
+class SupportHandoff
+  SPECIALISTS = { "billing" => BillingAgent, "shipping" => ShippingAgent }
+
+  def call(chat_id, message)
+    category = TriageAgent.new.ask(message).parsed["category"]
+    SPECIALISTS.fetch(category, SupportAgent).find(chat_id).ask(message)
+  end
+end
+```
+
+`find` needs [Rails-backed agents]({% link _getting_started/agents.md %}#rails-backed-agents), which read the customer from `chat`. Outside Rails, pass the chat object with `BillingAgent.new(chat: chat, customer: customer)` instead.
+
+To let the agent decide in the middle of a conversation, give it a tool that names the specialist, and switch agents in the [loop](#driving-the-loop-yourself) when a tool result names one:
+
+```ruby
+class Handoff < RubyLLM::Tool
+  description "Hands the conversation to the specialist who should answer next"
+  parameter :specialist, description: "billing or shipping"
+
+  def execute(specialist:) = specialist
+end
+
+AGENTS = { "billing" => BillingAgent, "shipping" => ShippingAgent }
+
+agent = SupportAgent.find(chat_id).with_tools(Handoff)
+agent.ask_later(message)
+
+until agent.complete? || agent.waiting?
+  agent.step
+  last = agent.messages.reload.last
+  agent = AGENTS[last.content].find(chat_id).with_tools(Handoff) if last.role == "tool" && AGENTS.key?(last.content)
+end
+```
+
+The switch belongs in the loop, not the tool: a tool's `execute` never receives the chat, so it can't reconfigure it.
+
+### Subagents
+
+A subagent is a handoff the model decides on: a fresh agent does the work in its own conversation, and only its answer comes back. Use one when the delegated work is long, such as reading twenty articles, and the calling conversation needs only the result. See [Subagents]({% link _getting_started/agents.md %}#subagents).
+
+### Parallel Workflow
+
+Use this pattern when independent steps can run at the same time. Before anyone reads an email, moderate it, triage it, and look for help center articles at once:
+
+```ruby
+require "async"
+
+class IncomingEmail
+  def call(email)
+    Async do |task|
+      moderation = task.async { RubyLLM.moderate(email.body) }
+      triage = task.async { TriageAgent.new.ask(email.body).parsed }
+      articles = task.async { SearchDocs.new.execute(query: email.subject) }
+
+      { flagged: moderation.wait.flagged?, triage: triage.wait, articles: articles.wait }
+    end.wait
+  end
+end
+```
+
+The three calls take as long as the slowest one. See [Scale with Async]({% link _advanced/async.md %}) for running RubyLLM in fibers.
+
+### Fan-Out/Fan-In Workflow
+
+Use this pattern when several specialists review the same input and one summary comes back. Before a sensitive reply goes out, check it three ways:
+
+```ruby
+require "async"
+
+class ToneReviewer < RubyLLM::Agent
+  model "{{ site.models.openai_mini }}"
+  instructions "Review a support reply for tone. Is it friendly, calm, and free of blame?"
+end
+
+class PolicyReviewer < RubyLLM::Agent
+  model "{{ site.models.anthropic_current }}"
+  instructions "Review a support reply against the Acme Outfitters refund and returns policy."
+end
+
+class AccuracyReviewer < RubyLLM::Agent
+  model "{{ site.models.default_chat }}"
+  instructions "Check every order detail in a support reply against the order data given."
+end
+
+class ReviewSummary < RubyLLM::Agent
+  instructions "Combine the reviews into a short, prioritized list of changes to make."
+end
+
+class ReplyReview
+  def call(reply, order)
+    Async do |task|
+      tone = task.async { ToneReviewer.new.ask(reply).content }
+      policy = task.async { PolicyReviewer.new.ask(reply).content }
+      accuracy = task.async { AccuracyReviewer.new.ask("Order: #{order.to_json}\n\nReply: #{reply}").content }
+
+      ReviewSummary.new.ask("Tone:\n#{tone.wait}\n\nPolicy:\n#{policy.wait}\n\nAccuracy:\n#{accuracy.wait}").content
+    end.wait
+  end
+end
+```
+
+### Evaluation Loop (Evaluator-Optimizer)
+
+Use this pattern when you have clear criteria and a draft can get better. One agent writes, another judges, and the writer revises until the judge passes it or the rounds run out:
+
+```ruby
+class PolicyCritic < RubyLLM::Agent
+  instructions "Check a support reply against the refund policy: refunds within 30 days, store credit after."
+
+  schema do
+    string :verdict, enum: %w[pass revise], description: "Whether the reply follows the policy"
+    string :feedback, description: "What to change, if anything"
+  end
+end
+
+class PolicyCheckedReply
+  MAX_ROUNDS = 3
+
+  def call(customer, question)
+    writer = SupportAgent.new(customer: customer)
+    reply = writer.ask(question).content
+
+    MAX_ROUNDS.times do
+      review = PolicyCritic.new.ask("Question:\n#{question}\n\nReply:\n#{reply}").parsed
+      return reply if review["verdict"] == "pass"
+
+      reply = writer.ask("Revise your reply. #{review['feedback']}").content
+    end
+
+    reply
+  end
+end
+```
+
+Each round costs a review and a revision. Cap the rounds, and use this pattern where a wrong answer costs more than the extra calls. To grade agents offline instead of on every request, see [Evaluations]({% link _advanced/evaluations.md %}).
+
+## Grouping a Workflow's Calls
+
+Wrap a workflow in `RubyLLM.workflow` and mark its steps with `workflow.step` to see it as one unit. This one turns a voicemail into a triaged ticket and reads a reply back on the phone line:
+
+```ruby
+RubyLLM.workflow("Voicemail", id: "voicemail-#{voicemail.id}") do |workflow|
+  transcript = workflow.step("Transcribe") { RubyLLM.transcribe(voicemail.audio) }
+  triage = workflow.step("Triage") { TriageAgent.new.ask(transcript.text).parsed }
+  reply = workflow.step("Reply") do
+    SupportAgent.new(customer: voicemail.customer).ask("Reply to this voicemail:\n#{transcript.text}")
+  end
+  workflow.step("Speak") { RubyLLM.speak(reply.content).save("reply-#{voicemail.id}.mp3") }
+end
+```
+
+Each step returns its block's value. The wrappers don't run anything themselves: they add correlation to the [instrumentation events]({% link _advanced/instrumentation.md %}#workflows-and-steps), so you can follow the four calls as one operation. In Rails, the usage ledger records the workflow too, so you can read what it cost:
+
+```ruby
+RubyLLM::ActiveRecord::Usage.where(workflow_id: "voicemail-#{voicemail.id}").sum(:total_cost)
+```
+
+See [Usage by Workflow]({% link _core_features/cost-and-usage-tracking.md %}#usage-by-workflow).
 
 ## Driving the Loop Yourself
 
@@ -39,10 +268,10 @@ When you want to see the whole operation as one unit in your observability stack
 So the agentic loop is `step` until `complete?`:
 
 ```ruby
-chat = RubyLLM.chat.with_tools(Weather).ask_later("What's the weather in Paris?")
+chat = RubyLLM.chat.with_tools(LookupOrder.new(customer)).ask_later("Where is my order R-1042?")
 
 chat.step until chat.complete? || chat.waiting?
-chat.messages.last.content      # => "It's 15°C and partly cloudy in Paris."
+chat.messages.last.content      # => "Order R-1042 shipped on Monday and arrives tomorrow."
 ```
 
 `ask_later` stages the question without sending it, so `ask` is `ask_later` then `complete`.
@@ -58,10 +287,10 @@ Stop scheduling work while `waiting?` is true: the chat waits on something outsi
 People keep typing while an agent works. `queue` adds a user message without touching the conversation, from any thread, even while `complete` runs in another one, and the loop takes it between two of its moves:
 
 ```ruby
-chat = RubyLLM.chat.with_tools(Search, SendEmail)
-worker = Thread.new { chat.ask "Find the Q3 report and email it to finance" }
+chat = SupportAgent.chat(customer: customer)
+worker = Thread.new { chat.ask "Where is my order R-1042?" }
 
-chat.queue "Use the EU numbers, not the US ones"
+chat.queue "Actually, it's R-1043"
 worker.join
 ```
 
@@ -70,7 +299,7 @@ By default a queued message steers the turn that is running. It joins after the 
 Pass `steer: false` to wait for the turn boundary instead. `complete` finishes the turn and returns, the chat is `complete?`, and the message stays queued until the conversation moves on:
 
 ```ruby
-chat.queue "Then draft the board summary", steer: false
+chat.queue "Also, can I change the delivery address?", steer: false
 chat.complete while chat.queued_messages.any?
 ```
 
@@ -84,7 +313,7 @@ A turn starts once its question is in place. With no tool calls pending, every `
 * `queued_messages` lists what waits, oldest first, as `RubyLLM::QueuedMessage` values with `content`, `attachments`, `sender`, `queued_at`, and `steer?`.
 
 ```ruby
-queued = chat.queue "Also check this file", with: "q3.pdf", sender: current_user
+queued = chat.queue "Here is the receipt", with: "receipt.pdf", sender: current_customer
 chat.queued_messages # => [#<RubyLLM::QueuedMessage ...>]
 queued.withdraw      # => true
 ```
@@ -115,311 +344,14 @@ If the block raises, the message stays queued and out of the conversation, and t
 `join_queued_messages` joins everything waiting, steering or not, without asking the model. Each message goes through `around_join` and `after_message`, and you get back the messages that joined:
 
 ```ruby
-chat.queue "Use the EU numbers"
-chat.queue "Then draft the board summary", steer: false
-chat.join_queued_messages.map(&:content) # => ["Use the EU numbers", "Then draft the board summary"]
+chat.queue "Actually, it's R-1043"
+chat.queue "Also, can I change the delivery address?", steer: false
+chat.join_queued_messages.map(&:content) # => ["Actually, it's R-1043", "Also, can I change the delivery address?"]
 ```
 
 Like `ask_later`, it raises `RubyLLM::PendingToolCallsError` while tool calls wait for their results.
 
 `after_message` receives each message that joins; see [Queue Events]({% link _core_features/chat-callbacks.md %}#queue-events). With Rails, queued messages live in their own table, so a request can queue a message for a reply a job is running; see [Queued Messages]({% link _advanced/rails-persistence.md %}#queued-messages).
-
-## Workflow Patterns
-
-With the loop in hand, you can compose agents into larger systems. Each pattern below uses ordinary Ruby methods to coordinate RubyLLM agents.
-
-### Sequential Workflow
-
-Use this pattern when each step depends on the previous one.
-
-```ruby
-class ResearchAgent < RubyLLM::Agent
-  model "{{ site.models.gemini_current }}"
-  instructions "Given a topic, return concise, reliable key facts."
-end
-
-class WriterAgent < RubyLLM::Agent
-  model "{{ site.models.anthropic_current }}"
-  instructions "Given research notes, write a clear article."
-end
-
-class ResearchWriterWorkflow
-  def create_article(topic)
-    research = ResearchAgent.new.ask(topic).content
-    WriterAgent.new.ask(research).content
-  end
-end
-
-workflow = ResearchWriterWorkflow.new
-article = workflow.create_article("Ruby 3.3 features")
-```
-
-### Routing Workflow
-
-Use this pattern when requests fall into clear categories that benefit from specialized agents or models.
-
-```ruby
-class CodeAgent < RubyLLM::Agent
-  model "{{ site.models.best_for_code }}"
-  instructions "You are a coding assistant. Be precise and practical."
-end
-
-class CreativeAgent < RubyLLM::Agent
-  model "{{ site.models.best_for_creative }}"
-  instructions "You are a creative writing assistant."
-end
-
-class FactualAgent < RubyLLM::Agent
-  model "{{ site.models.best_for_factual }}"
-  instructions "You are a factual assistant. Prioritize accuracy."
-end
-
-class TaskClassifierAgent < RubyLLM::Agent
-  model "{{ site.models.openai_mini }}"
-  instructions "Classify the request as one word only: code, creative, or factual."
-end
-
-class ModelRouterWorkflow
-  def call(query)
-    agent_for(query).new.ask(query).content
-  end
-
-  private
-
-  def agent_for(query)
-    case classify(query)
-    when :code then CodeAgent
-    when :creative then CreativeAgent
-    when :factual then FactualAgent
-    else FactualAgent
-    end
-  end
-
-  def classify(query)
-    TaskClassifierAgent.new.ask(query).content.downcase.to_sym
-  end
-end
-
-workflow = ModelRouterWorkflow.new
-response = workflow.call("Write a Ruby function to parse JSON")
-```
-
-### Agent Handoffs
-
-[Routing](#routing-workflow) picks an agent up front. A handoff goes further: it hands the *same ongoing conversation* to a different agent, so the specialist sees the full history and the user keeps one continuous thread. `Agent.find(chat_id)` is what makes this work. It loads a persisted chat and applies a different agent's instructions and tools at runtime, leaving the messages intact, so whichever agent takes over inherits the whole conversation.
-
-The simplest version is a single turn. Give a router an inline schema so it answers with the specialist to hand to, then let that specialist continue the persisted chat:
-
-```ruby
-class SupportRouter < RubyLLM::Agent
-  schema do
-    string :specialist, enum: %w[billing technical]
-  end
-  instructions "Pick the specialist best suited to the latest message."
-end
-
-SPECIALISTS = { "billing" => BillingAgent, "technical" => TechnicalAgent }
-
-def handle(chat_id, message)
-  specialist = SupportRouter.new.ask(message).parsed["specialist"]
-  SPECIALISTS.fetch(specialist).find(chat_id).ask(message)
-end
-```
-
-The router responds immediately with its choice (no tool round-trip), and the specialist takes over the same chat with full history. Outside Rails, pass the chat object with `SpecialistAgent.new(chat: chat)` instead of `find(chat_id)`.
-
-If you would rather the agent decide mid-conversation, give it a single handoff tool that returns the specialist to switch to. Drive the [loop](#driving-the-loop-yourself) a step at a time, and when a tool result names an agent, hand off:
-
-```ruby
-class Handoff < RubyLLM::Tool
-  description "Hand the conversation to the specialist who should answer next"
-  parameter :specialist, description: "billing or technical"
-  def execute(specialist:) = specialist
-end
-
-class SupportRouter < RubyLLM::Agent
-  chat_class Chat
-  instructions "Call handoff with the specialist who should take over."
-  tools Handoff
-end
-
-AGENTS = { "billing" => BillingAgent, "technical" => TechnicalAgent }
-
-agent = SupportRouter.find(chat_id)
-agent.ask_later(message)
-
-until agent.complete?
-  agent.step
-  last = agent.messages.reload.last
-  if last.role == "tool" && (specialist = AGENTS[last.content])
-    agent = specialist.find(chat_id)
-  end
-end
-```
-
-The tool returns the specialist name, and the loop switches agents. Give specialists the same `Handoff` tool if they should be able to pass the conversation onward.
-
-(A tool cannot reconfigure the chat it runs inside, since its `execute` never receives the chat, so the switch belongs in the loop, not in the tool.)
-
-### Parallel Workflow
-
-Use this pattern when independent analyses can run at the same time.
-
-```ruby
-require 'async'
-
-class SentimentAgent < RubyLLM::Agent
-  instructions "Given text, return one word sentiment: positive, negative, or neutral."
-end
-
-class SummaryAgent < RubyLLM::Agent
-  instructions "Given text, summarize it in one concise sentence."
-end
-
-class KeywordAgent < RubyLLM::Agent
-  instructions "Given text, extract exactly 5 relevant keywords."
-end
-
-class ParallelAnalyzer
-  def analyze(text)
-    Async do |task|
-      sentiment = task.async { SentimentAgent.new.ask(text).content }
-      summary = task.async { SummaryAgent.new.ask(text).content }
-      keywords = task.async { KeywordAgent.new.ask(text).content }
-
-      {
-        sentiment: sentiment.wait,
-        summary: summary.wait,
-        keywords: keywords.wait
-      }
-    end.wait
-  end
-end
-
-analyzer = ParallelAnalyzer.new
-insights = analyzer.analyze("Your text here...")
-```
-
-### Fan-Out/Fan-In Workflow
-
-Use this pattern when multiple specialists produce outputs that are later synthesized.
-
-```ruby
-require 'async'
-
-class SecurityReviewAgent < RubyLLM::Agent
-  model "{{ site.models.anthropic_current }}"
-  instructions "Given code, review it for security issues."
-end
-
-class PerformanceReviewAgent < RubyLLM::Agent
-  model "{{ site.models.openai_tools }}"
-  instructions "Given code, review it for performance issues."
-end
-
-class StyleReviewAgent < RubyLLM::Agent
-  model "{{ site.models.openai_mini }}"
-  instructions "Given code, review style against Ruby conventions."
-end
-
-class ReviewSynthesizerAgent < RubyLLM::Agent
-  instructions "Given multiple code review reports, summarize prioritized findings."
-end
-
-class CodeReviewSystem
-  def review_code(code)
-    Async do |task|
-      security = task.async { SecurityReviewAgent.new.ask(code).content }
-      performance = task.async { PerformanceReviewAgent.new.ask(code).content }
-      style = task.async { StyleReviewAgent.new.ask(code).content }
-
-      ReviewSynthesizerAgent.new.ask(
-        "security: #{security.wait}\n\n" \
-        "performance: #{performance.wait}\n\n" \
-        "style: #{style.wait}"
-      ).content
-    end.wait
-  end
-end
-
-reviewer = CodeReviewSystem.new
-summary = reviewer.review_code("def calculate(x); x * 2; end")
-```
-
-### Evaluation Loop (Evaluator-Optimizer)
-
-Use this pattern when you have clear quality criteria and want iterative refinement.
-
-```ruby
-class DraftAgent < RubyLLM::Agent
-  instructions "Given a task, produce the best possible draft response."
-end
-
-class CriticAgent < RubyLLM::Agent
-  schema do
-    string :verdict, enum: ["pass", "revise"], description: "Whether the draft passes or needs changes"
-    string :feedback, description: "Specific feedback for improvement"
-  end
-  instructions "Review the draft against the task and return a verdict and specific feedback."
-end
-
-class EvaluatorOptimizerWorkflow
-  MAX_ROUNDS = 3
-
-  def call(task)
-    draft = DraftAgent.new.ask(task).content
-
-    MAX_ROUNDS.times do
-      verdict, feedback = review(task:, draft:)
-      return draft if verdict == "pass"
-
-      draft = revise(task:, draft:, feedback:)
-    end
-
-    draft
-  end
-
-  private
-
-  def review(task:, draft:)
-    result = CriticAgent.new.ask("Task:\n#{task}\n\nDraft:\n#{draft}").parsed
-    [result.fetch("verdict"), result.fetch("feedback")]
-  end
-
-  def revise(task:, draft:, feedback:)
-    DraftAgent.new.ask("Task:\n#{task}\n\nCurrent draft:\n#{draft}\n\nFeedback:\n#{feedback}").content
-  end
-end
-
-workflow = EvaluatorOptimizerWorkflow.new
-final = workflow.call("Write a concise onboarding email for a new API customer")
-```
-
-## Combining Conversations with Other Operations
-
-Workflows can include any RubyLLM operation. This one turns a recording into a spoken summary:
-
-```ruby
-RubyLLM.workflow("Summarize recording") do |workflow|
-  transcript = workflow.step("Transcribe") { RubyLLM.transcribe("meeting.wav") }
-  summary = workflow.step("Summarize") do
-    RubyLLM.chat.ask "Summarize the main decisions:\n#{transcript.text}"
-  end
-  workflow.step("Narrate") do
-    RubyLLM.speak(summary.content).save("summary.mp3")
-  end
-end
-```
-
-Each step returns its block's value. `RubyLLM.workflow` adds correlation to the [instrumentation events]({% link _advanced/instrumentation.md %}#workflows-and-steps), so you can follow the three calls as one operation. In Rails, the usage ledger records the workflow too, so you can read what the three calls cost together:
-
-```ruby
-RubyLLM.workflow("Summarize recording", id: "recording-#{recording.id}") do |workflow|
-  # ...
-end
-
-RubyLLM::ActiveRecord::Usage.where(workflow_id: "recording-#{recording.id}").sum(:total_cost)
-```
 
 ## Retrieval-Augmented Generation
 
@@ -429,16 +361,13 @@ Retrieve relevant documents and pass them to an answering agent. See [RAG]({% li
 
 Handle failures at the step that can recover from them:
 
-* Return `{ error: "description" }` for recoverable errors the LLM might fix
-* Raise exceptions for unrecoverable errors (missing config, service down)
-* Use the retry middleware for transient failures
-
-See the [Error Handling section in Tools]({% link _getting_started/tools.md %}#error-handling-in-tools) for detailed patterns.
+* Return `{ error: "..." }` from a tool when the model can fix the problem, and raise when it can't. See [Handling Errors in Tools]({% link _getting_started/tools.md %}#handling-errors-in-tools).
+* Let RubyLLM's automatic retries handle rate limits and outages, and add [model fallbacks]({% link _advanced/error-handling.md %}#model-fallbacks) for a step that must answer.
+* Run workflows in jobs, and use `retry_on` and `discard_on` for what's left. See [Handling Errors in Jobs]({% link _getting_started/rails.md %}#handling-errors-in-jobs).
 
 ## Next Steps
 
-* [Retrieval-Augmented Generation (RAG)]({% link _advanced/rag.md %}) - Ground answers in your own documents.
-* [Agents]({% link _getting_started/agents.md %}) - Define reusable agent classes.
-* [Tools]({% link _getting_started/tools.md %}) - Add capabilities and external actions.
-* [Scale with Async]({% link _advanced/async.md %}) - Run concurrent workflow steps.
-* [Error Handling]({% link _advanced/error-handling.md %}) - Build resilient systems.
+* [Durable Agents]({% link _advanced/durable-agents-overview.md %}): run workflows in jobs that pause for people and survive deploys.
+* [Retrieval-Augmented Generation]({% link _advanced/rag.md %}): ground answers in your own documents.
+* [Scale with Async]({% link _advanced/async.md %}): run workflow steps concurrently.
+* [Instrumentation]({% link _advanced/instrumentation.md %}): follow a workflow's calls in your observability stack.

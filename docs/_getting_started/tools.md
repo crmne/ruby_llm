@@ -3,7 +3,7 @@ layout: default
 title: Tools
 nav_order: 4
 has_children: true
-description: Let AI call your Ruby code. Connect to databases, APIs, or any external system with function calling.
+description: Let the model call your Ruby code to look up records, search your content, and take actions.
 redirect_from:
   - /guides/tools
 ---
@@ -15,296 +15,161 @@ redirect_from:
 
 After reading this guide, you will know:
 
-* What Tools are and why they are useful.
-* How to define a Tool using `RubyLLM::Tool`.
-* How to attach Tools to a `RubyLLM::Chat` and trigger them.
-* What happens step by step when a model uses a Tool.
-* How a Tool pauses its call and resumes it later.
-* How a Tool asks the user something while it runs.
-* How to handle errors inside a Tool.
-* What security considerations apply when you let a model run your code.
+* What tools are and what happens when a model calls one.
+* How to define a tool with `RubyLLM::Tool`.
+* How to give a tool the current customer or user.
+* How to add tools to a chat.
+* How to report errors from a tool.
+* What to watch for when a model runs your code.
 
 ## What Are Tools?
 
-A tool lets the model call your Ruby code to look up a record, fetch data, or carry out an action. You write the method; RubyLLM handles passing arguments and returning the result to the model.
+A model only knows what it learned in training and what you put in the conversation. It doesn't know where order R-1042 is, and it can't read your help center. A tool closes that gap: it's a Ruby class the model can call, with a description that says when to call it and an `execute` method that does the work.
+
+The examples in these guides build a support desk. A customer asks where their order is. The model can't answer from memory, so it calls `LookupOrder`, reads the result, and writes a reply.
+
+### What Happens When the Model Calls a Tool
+
+One `ask` runs the whole exchange:
+
+1. RubyLLM sends your question with the name, description, and parameters of each tool.
+2. The model answers with a tool call instead of text: the tool's name and its arguments.
+3. RubyLLM calls the tool's `execute` with those arguments and adds the result to the conversation as a tool message.
+4. RubyLLM asks the model again. It may call more tools, or answer.
+5. When the model answers without calling a tool, `ask` returns that answer.
+
+You write the tool. RubyLLM handles the requests, the arguments, and the results. To run this loop one step at a time instead, for example one step per background job, see [Driving the Loop Yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself).
 
 ## Creating a Tool
 
-Start with a tool that needs no external service:
+A tool inherits from `RubyLLM::Tool`, describes itself, and implements `execute`. Here's the tool the support desk uses to search its help center:
 
 ```ruby
-class CurrentTime < RubyLLM::Tool
-  description "Returns the current date, time, and time zone"
+class SearchDocs < RubyLLM::Tool
+  description "Searches the help center for articles that answer a customer's question"
+  parameter :query, description: "What the customer wants to know"
 
-  def execute
-    Time.now.to_s
+  def execute(query:)
+    Article.search(query).first(3).map do |article|
+      { title: article.title, url: article.url, body: article.body }
+    end
   end
 end
+```
 
-chat = RubyLLM.chat.with_tools(CurrentTime)
-response = chat.ask "What day is it?"
+`Article.search` stands for whatever search your application already has, such as a SQL query, full-text search, or the embeddings in [RAG]({% link _advanced/rag.md %}). Give the tool to a chat and ask:
+
+```ruby
+chat = RubyLLM.chat.with_tools(SearchDocs)
+response = chat.ask "How do I return a jacket that doesn't fit?"
 puts response.content
+# => "You can return it within 30 days. Start a return from Orders..."
 ```
 
-Tools can also call services your application uses. This one gets weather data from Open-Meteo:
+A tool has three parts:
+
+* **`description`** tells the model what the tool does and when to call it. Write it for the model: it's the only documentation the model reads.
+* **`parameter`** declares an argument the model fills, with a description. Without declarations, RubyLLM reads the keyword arguments of `execute` and treats each as a string. See [Tool Parameters]({% link _tools/tool-parameters.md %}) for types, nested objects, enums, and JSON Schema.
+* **`execute`** runs your code. Return a String, or a Hash or Array that RubyLLM sends as JSON.
+
+The model calls the tool by a name derived from its class: `SearchDocs` becomes `search_docs`, and a trailing `Tool` is dropped, so `WeatherTool` becomes `weather`. To choose another name, or to group tools under a namespace, see [Tool Names and Namespaces]({% link _tools/tool-parameters.md %}#tool-names-and-namespaces).
+
+## Tools That Need the Current User
+
+Most useful tools act on behalf of someone. `LookupOrder` must only find the current customer's orders, whatever order number the model asks for. Pass the customer to the tool when you create it:
 
 ```ruby
-class Weather < RubyLLM::Tool
-  description "Gets current weather for a location"
+class LookupOrder < RubyLLM::Tool
+  description "Looks up one of the customer's orders by its number"
+  parameter :number, description: "The order number, such as R-1042"
 
-  def execute(latitude:, longitude:)
-    response = Faraday.get("https://api.open-meteo.com/v1/forecast",
-                           latitude: latitude, longitude: longitude,
-                           current: "temperature_2m,wind_speed_10m")
-    JSON.parse(response.body)
-  rescue Faraday::ConnectionFailed
-    { error: "The weather service is unavailable. Try again later." }
+  def initialize(customer)
+    @customer = customer
+  end
+
+  def execute(number:)
+    order = @customer.orders.find_by(number: number)
+    return { error: "No order #{number} on this account" } unless order
+
+    { number: order.number, status: order.status, shipped_on: order.shipped_on&.iso8601 }
   end
 end
 ```
 
-### Tool Components
-
-1.  **Inheritance:** Must inherit from `RubyLLM::Tool`.
-2.  **`description`:** Tells the model what the tool does and when to call it.
-3.  **`execute` Method:** The instance method containing your Ruby code. RubyLLM infers simple keyword parameters from this signature when no explicit parameter schema is declared.
-4.  **Parameter declarations:** Optional. Use `parameter` for simple descriptions and types, or `parameters` for nested objects, arrays, enums, and full JSON Schema control.
-
-> The tool's class name is automatically converted to a snake_case name used in the API call, with a trailing `Tool` dropped (e.g., `WeatherLookup` becomes `weather_lookup` and `WeatherTool` becomes `weather`). This is how the LLM would call it. You can override this by defining `tool_name` on the class:
->
-> ```ruby
-> class WeatherLookup < RubyLLM::Tool
->   def self.tool_name
->     "Weather"
->   end
-> end
-> ```
->
-> `WeatherLookup.tool_name` reads the model-facing name without instantiating the tool, which is useful when you select tool classes by name before building them. The instance method `#name` delegates to it, so overriding `name` on the instance still works.
-{: .note }
-
-If the model requests a tool the chat doesn't have, RubyLLM answers with an error naming up to three tools with similar names, and the conversation continues.
-
-## Tool Namespaces
-
-A namespace groups related tools, and lets tools in different groups share a name. Give it a description so the model knows what the group is for:
+Pass an instance instead of the class:
 
 ```ruby
-class CustomerLookup < RubyLLM::Tool
-  namespace "crm", description: "Customer records and orders"
-  description "Finds a customer by email"
-
-  def execute(email:)
-    Customer.find_by(email:)&.attributes
-  end
-end
-
-chat.with_tools(CustomerLookup)
-chat.tools[:crm_customer_lookup]
+chat = RubyLLM.chat.with_tools(LookupOrder.new(current_customer), SearchDocs)
+chat.ask "Where is my order R-1042?"
 ```
 
-The chat keys the tool by its namespace and name joined, `:crm_customer_lookup`, and raises an `ArgumentError` when another tool already has that name. The tool's own name stays `customer_lookup`, and `tool_call.namespace` names its group. RubyLLM routes calls and remembers approvals by both, including after a Rails reload. `namespace` is inherited; pass `nil` to remove an inherited namespace. Namespaced tools can be [deferred for tool search]({% link _tools/tool-search.md %}) like any other.
+The model chooses the arguments; your code chooses whose data it may see. Scope every query to the customer, as `@customer.orders` does here, so a model that asks for someone else's order number gets nothing. An [agent]({% link _getting_started/agents.md %}#runtime-inputs) builds these tools for you from its inputs.
 
-The Responses protocol sends each group as a function namespace, which needs a description. Every other protocol sends the tool under its joined name, `crm_customer_lookup`, and maps the model's calls back to the namespace. Anthropic's `computer` and `browser` namespaces are the members of its [native client toolsets]({% link _tools/provider-tools.md %}#native-client-toolsets) instead. The Responses API reserves those two names and drops the functions in them, so RubyLLM raises `RubyLLM::Error` when a Responses request carries either.
+## Using Tools in a Chat
 
-You can force a namespaced tool with `with_tool_options(choice: CustomerLookup)` where it travels under its joined name. Responses namespaces and Anthropic's toolset members cannot be forced, so RubyLLM raises there; use `choice: :required` instead.
-
-## Declaring Parameters
-
-The simplest case needs nothing extra. When a tool has no `parameter` or `parameters` declaration, RubyLLM builds a JSON Schema from the `execute` keyword arguments:
+`with_tools` adds tools to the ones the chat already has. Pass `nil` to remove them all, then add the ones you want to replace them:
 
 ```ruby
-class Weather < RubyLLM::Tool
-  description "Gets current weather for a location"
-
-  def execute(latitude:, longitude:, units: "metric")
-    # ...
-  end
-end
-```
-
-Required keywords become required string parameters. Optional keywords become optional string parameters. A tool with `def execute` receives an empty object schema.
-
-Ruby method signatures do not expose reliable JSON Schema types or descriptions, so add explicit declarations when those details matter. For the `parameter` helper, the `parameters` DSL, and supplying JSON Schema manually, see [Tool Parameters]({% link _tools/tool-parameters.md %}).
-
-## Using Tools in Chat
-
-Pass tool classes directly when they need no constructor arguments:
-
-```ruby
-chat = RubyLLM.chat(model: '{{ site.models.openai_tools }}').with_tools(Weather)
-response = chat.ask "What's the weather in Berlin? Latitude 52.52, longitude 13.40."
-puts response.content
-```
-
-Pass an instance when a tool needs application context, such as the current user. See [Custom Initialization]({% link _tools/tool-parameters.md %}#custom-initialization).
-
-You can add, replace, or clear the available tools:
-
-```ruby
-chat.with_tools(CurrentTime)
-chat.with_tools(nil).with_tools(CurrentTime)
+chat.with_tools(SearchDocs)
+chat.with_tools(nil).with_tools(LookupOrder.new(current_customer))
 chat.with_tools(nil)
 ```
 
-The first call adds `CurrentTime` to the existing tools. The second replaces the set; the third clears it.
+When the model calls a tool the chat doesn't have, RubyLLM answers with an error naming up to three tools with similar names, and the conversation continues.
 
-For controlling which tools the model may use, how many calls it can make in one turn, concurrent execution, model compatibility, and callbacks, see [Controlling Tool Execution]({% link _tools/tool-execution.md %}).
+[Controlling Tool Execution]({% link _tools/tool-execution.md %}) covers forcing a tool, limiting calls, requiring a person's approval, running calls concurrently, and callbacks. With dozens of tools, pass `defer: true` and let the model search for the ones it needs; see [Tool Search]({% link _tools/tool-search.md %}).
 
-With dozens of tools, pass `defer: true` and let the model search for the ones it needs. See [Tool Search]({% link _tools/tool-search.md %}).
+## Handling Errors in Tools
 
-## The Tool Execution Flow
+Decide who can fix the problem.
 
-One `ask` call handles the conversation loop:
-
-1. The model receives your question and the available tool descriptions.
-2. If it requests a tool, RubyLLM calls `execute` with the model's arguments.
-3. The result becomes a tool message, and RubyLLM asks the model to continue.
-4. When the model answers without requesting more tools, `ask` returns its message.
-
-For full control over this loop (running each turn as its own job, setting an iteration budget, or stopping and resuming elsewhere), see [Driving the Loop Yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself).
-
-## Long-Running Tools
-
-A persisted chat claims each tool call while it runs, so no other process runs it at the same time. The claim lasts `config.max_run_time`, ten minutes by default. If the process running a tool dies, another process runs the call again once the claim expires. Give a tool that legitimately runs longer its own limit:
+When the model can fix it, return an error as the result. The model reads it and tries again, or tells the customer. `LookupOrder` does this for an unknown order number. Do the same when a service the tool calls is down:
 
 ```ruby
-class GenerateReport < RubyLLM::Tool
-  description "Builds the quarterly report"
-  max_run_time 2.hours
-
-  def execute(quarter:)
-    Reports.build!(quarter)
-  end
+def execute(query:)
+  HelpCenter.search(query)
+rescue Faraday::ConnectionFailed
+  { error: "The help center is unavailable. Try again later." }
 end
 ```
 
-A run that takes longer than its `max_run_time` counts as crashed, and another process may start the call again. MCP tools use `config.max_run_time`; tools that [pause their call](#pausing-a-tool-call), like MCP operations that run as [tasks]({% link _tools/mcp.md %}#tasks), release their claim instead. See [Agents in Background Jobs]({% link _advanced/durable-agents.md %}#one-process-at-a-time) for how claims work.
+When only you can fix it, such as a missing API key or a database that's down, raise. The exception stops the chat and reaches your code. See [Handling Errors Within Tools]({% link _advanced/error-handling.md %}#handling-errors-within-tools).
 
-## Pausing a Tool Call
+## Security
 
-Some calls can't finish while the chat waits. A contract sent for signature may wait days for a person to sign it. Return a `RubyLLM::Task` from `execute`, and the chat pauses the call the way it pauses for [an approval]({% link _tools/tool-execution.md %}#requiring-approval), so no process waits for it. Then implement `resume`, which carries the call on:
+The model writes a tool's arguments from the conversation, and the conversation includes what the customer typed. Treat arguments as untrusted input.
+{: .warning }
 
-```ruby
-class RequestSignature < RubyLLM::Tool
-  description "Sends a contract for signature and reports when it is signed"
+* Never pass arguments to `eval`, `system`, `send`, or SQL strings.
+* Validate types, ranges, and allowed values before acting on them.
+* Scope queries to the current user, as `LookupOrder` does, and give each tool access only to what it needs.
+* Require a person's [approval]({% link _tools/tool-execution.md %}#requiring-approval) before a tool does something you can't undo, such as issuing a refund.
 
-  def execute(contract_id:)
-    envelope = Signatures.send_for_signature(Contract.find(contract_id))
-    RubyLLM::Task.new(status: :input_required, status_message: "Waiting for the signature",
-                      data: { "envelope_id" => envelope.id })
-  end
+## More Kinds of Tools
 
-  def resume(task, contract_id:)
-    envelope = Signatures.find(task.data["envelope_id"])
-    envelope.signed? ? "Signed on #{envelope.signed_on}" : task
-  end
-end
-```
-
-`ask` and `complete` return while the call waits. The chat is `waiting?` and `awaiting_tasks?`, and `pending_tasks` returns the tasks:
-
-```ruby
-chat = RubyLLM.chat.with_tools(RequestSignature)
-chat.ask "Send contract 42 for signature"
-
-chat.awaiting_tasks?               # => true
-task = chat.pending_tasks.first
-task.status_message                # => "Waiting for the signature"
-task.input_required?               # => true
-```
-
-Each `complete` calls `resume` once for every paused call, with the task and the call's arguments. Return the call's result to finish it, or a task to keep it paused. Once every call has a result, the model carries on.
-
-A task's `status` is `:working` while the work runs on its own, so you check again after its `poll_interval`, and `:input_required` while it waits on a person, so nothing changes until they act. Call `complete` after they do, such as from the controller that records their decision.
-
-`data` is what `resume` needs, as a Hash that serializes to JSON. In Rails, the task persists on its tool call, so one process can pause the chat and another can resume it, even after a deploy. To rebuild a task as your own subclass of `RubyLLM::Task`, override `task(state, tool_call:)` on the tool and return `YourTask.load(state, tool_call:)`. A subclass can override `refresh` to check on its work and `cancel` to stop it; cancelling the chat calls `cancel` on every task it waits on and drops the paused calls.
-
-MCP tools pause the same way when a server runs a call as a [task]({% link _tools/mcp.md %}#tasks), and so do [subagents]({% link _getting_started/agents.md %}#subagents) while they wait on a person.
-
-## Agents as Tools
-
-An agent class goes wherever a tool goes, so a model can hand work to another agent and get its answer back:
-
-```ruby
-chat.with_tools(ResearchAgent).ask "What changed in Ruby 4.0?"
-```
-
-See [Subagents]({% link _getting_started/agents.md %}#subagents).
-
-## Asking the User
-
-A tool can ask the user something while it runs, the way an MCP server asks for input. `request_input` takes the question and the fields to fill, as JSON Schema properties (`required: true` on the ones the user must fill), or `url:` for a page to visit:
-
-```ruby
-class AskTeam < RubyLLM::Tool
-  description "Ask the team something you can't answer from the docs"
-
-  parameters do
-    string :question, description: "Written for a colleague"
-  end
-
-  def execute(question:)
-    answer = request_input(question, answer: { type: "string", title: "Answer", required: true })
-    answer.accepted? ? { answer: answer[:answer] } : { error: "Nobody answered" }
-  end
-end
-```
-
-In a chat, the call pauses on the question as on a server's: the chat is `awaiting_input?`, `pending_inputs` lists it, and `answer` or `decline` settles it before `complete` resumes. Resuming runs `execute` again from the start, and this time `request_input` returns the answer, so code before `request_input` runs twice: ask first, then do the work. A call can ask several questions, one after another. Outside a chat, an unanswered `request_input` raises `RubyLLM::InputRequiredError`, which `RubyLLM::MCP::InputRequiredError` now inherits from.
+* **Agents as tools.** An agent class goes wherever a tool goes, so the model can hand a task to another agent and get its answer back. See [Subagents]({% link _getting_started/agents.md %}#subagents).
+* **MCP servers.** `with_mcp` connects a [Model Context Protocol server]({% link _tools/mcp.md %}), and the model calls its tools like your own. To have the provider connect to a remote server instead, see [Provider Tools]({% link _tools/provider-tools.md %}#mcp-servers).
+* **Provider tools.** Web search, code execution, and other tools the provider runs on its side. See [Provider Tools]({% link _tools/provider-tools.md %}).
+* **Tools that wait.** A tool can run for hours, pause until a person signs a contract, or ask the user a question. See [Long-Running Tools]({% link _tools/tool-execution.md %}#long-running-tools), [Pausing a Tool Call]({% link _tools/tool-execution.md %}#pausing-a-tool-call), and [Asking the User]({% link _tools/tool-execution.md %}#asking-the-user).
 
 ## Long Results
 
 A tool that returns a lot, like a search with hundreds of hits, sends all of it to the model, and all of it stays in every later request. In a chat with a [file store]({% link _core_features/file-stores.md %}), a result longer than 10,000 characters is saved as a file instead, and the model gets its start and the file's path to read or search the rest. A tool can set its own limit, or send its results whole when it already returns them in pages, with `inline_limit`: see [Long tool results]({% link _core_features/file-stores.md %}#what-the-model-sees) in the File Stores guide.
 
-## Error Handling in Tools
-
-Tools should handle errors based on whether they're recoverable:
-
-- **Recoverable errors** (invalid parameters, external API failures): Return `{ error: "description" }`
-- **Unrecoverable errors** (missing configuration, database down): Raise an exception
-
-```ruby
-def execute(location:)
-  return { error: "Location too short" } if location.length < 3
-
-  # Fetch weather data...
-rescue Faraday::ConnectionFailed
-  { error: "Weather service unavailable" }
-end
-```
-
-See the [Error Handling Guide]({% link _advanced/error-handling.md %}#handling-errors-within-tools) for more discussion.
-
-## Security Considerations
-
-> Treat any arguments passed to your `execute` method as potentially untrusted user input, as the AI model generates them based on the conversation.
-{: .warning }
-
-*   **NEVER** use methods like `eval`, `system`, `send`, or direct SQL interpolation with raw arguments from the AI.
-*   **Validate and Sanitize:** Always validate parameter types, ranges, formats, and allowed values. Sanitize strings to prevent injection attacks if they are used in database queries or system commands (though ideally, avoid direct system commands).
-*   **Principle of Least Privilege:** Ensure the code within `execute` only has access to the resources it absolutely needs.
-
-## Model Context Protocol (MCP) Support
-
-Connect an MCP server to your chat with `with_mcp`, and the model can call its tools like your own. See [MCP Client]({% link _tools/mcp.md %}). When the provider should connect to a remote server instead, use [Provider Tools]({% link _tools/provider-tools.md %}#mcp-servers).
-
 ## Debugging Tools
 
-Set the `RUBYLLM_DEBUG` environment variable to see detailed logging, including tool calls and results.
+Set `RUBYLLM_DEBUG` to log every request, including tool calls and their results:
 
 ```bash
 export RUBYLLM_DEBUG=true
-# Run your script
 ```
 
-See the [Error Handling Guide]({% link _advanced/error-handling.md %}#debugging) for more on debugging.
+See [Debugging]({% link _advanced/error-handling.md %}#debugging) for more.
 
 ## Next Steps
 
-*   [Tool Parameters]({% link _tools/tool-parameters.md %}) - Declare flat arguments, structured schemas, and provider-specific metadata.
-*   [Controlling Tool Execution]({% link _tools/tool-execution.md %}) - Steer tool choice, call counts, approval, concurrency, and callbacks.
-*   [Tool Search]({% link _tools/tool-search.md %}) - Keep large tool sets out of the model's context until it searches for them.
-*   [Code Execution]({% link _advanced/code-execution.md %}) - Let the model run Ruby, Python, JavaScript, and shell code in a sandbox.
-*   [Chatting with AI Models]({% link _getting_started/chat.md %}) - The conversational core that tools plug into.
-*   [Error Handling]({% link _advanced/error-handling.md %}) - Recover from failures across the whole stack.
+* [Agents]({% link _getting_started/agents.md %}): put the support desk's model, instructions, and tools in one class.
+* [Tool Parameters]({% link _tools/tool-parameters.md %}): types, nested objects, enums, names, and namespaces.
+* [Controlling Tool Execution]({% link _tools/tool-execution.md %}): tool choice, approvals, concurrency, callbacks, and tools that wait.
+* [Tool Search]({% link _tools/tool-search.md %}): keep large tool sets out of the model's context.
+* [Code Execution]({% link _advanced/code-execution.md %}): let the model run code in a sandbox.

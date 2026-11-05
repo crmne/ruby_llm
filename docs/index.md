@@ -472,7 +472,7 @@ app/
   <div class="home-code-cta">
     <p><a href="{% link _advanced/rails-generators.md %}#generators">Generators</a> create each piece where Rails expects it.
       Store files with <a href="{% link _advanced/rails-generators.md %}#setting-up-active-storage">Active Storage</a>
-      and write your prompts in <a href="{% link _getting_started/agents.md %}#prompt-management-and-conventions">ERB templates</a>.
+      and write your prompts in <a href="{% link _getting_started/agents.md %}#keeping-instructions-in-prompt-templates">ERB templates</a>.
       Use <a href="{% link _advanced/rails-streaming.md %}#full-streaming-implementation">Turbo Streams</a> to show replies
       and <a href="{% link _advanced/durable-agents.md %}">Active Job</a> to run agents in the background,
       one process per chat, with <a href="{% link _tools/tool-execution.md %}#approval-in-rails">approvals</a> that survive restarts.

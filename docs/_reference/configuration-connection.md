@@ -237,9 +237,64 @@ tenant_b_service = TenantService.new(tenant_b)
 - **Thread Safety**: Each context is independent and thread-safe
 - **Connections**: Contexts with the same connection settings share connections, as described in [Connection Reuse](#connection-reuse)
 
+## All Other Settings
+
+Every setting that isn't a provider's, with its type and default. Provider keys and endpoints are in [Provider Setup]({% link _reference/configuration-providers.md %}#api-keys), and the [Configuration API reference]({{ '/api/RubyLLM/Configuration.html' | relative_url }}) documents each one.
+
+```ruby
+RubyLLM.configure do |config|
+  # Default Models
+  config.default_model = String
+  config.default_embedding_model = String
+  config.default_image_model = String
+  config.default_video_model = String
+  config.default_speech_model = String
+  config.default_moderation_model = String
+  config.default_transcription_model = String
+  config.default_ocr_model = String
+  config.default_judgment_model = String
+
+  # Model Registry
+  config.model_registry_file = String  # Writable registry cache; defaults to the OS user cache directory
+  config.model_registry_store = Object # Responds to read, optionally write(registry)
+
+  # Connection Settings
+  config.request_timeout = Integer
+  config.video_generation_timeout = Integer
+  config.video_generation_poll_interval = Integer
+  config.max_retries = Integer
+  config.retry_interval = Float
+  config.retry_backoff_factor = Integer
+  config.retry_interval_randomness = Float
+  config.retry_max_interval = Integer
+  config.http_proxy = String
+  config.faraday_adapter = Symbol # Defaults to :net_http
+  config.auto_upload_large_files = Boolean
+  config.tool_concurrency = false # true/:threads or :fibers
+  config.max_run_time = Integer # Seconds before a persisted chat's run counts as crashed; defaults to 600
+  config.broadcast_messages = false # acts_as_message broadcasts chats with Turbo; the chat UI generator turns it on
+  config.split_think_tags = false # true moves a leading <think> block into thinking on Chat Completions
+
+  # Code Execution
+  config.sandbox = "ApplicationSandbox" # The name of an MXC::Sandbox class or your own sandbox; defaults to nil
+  config.sandbox_backend = :bubblewrap # Or :landlock, which isolates less; Linux only
+  config.package_cache_dir = String # Declared gems and Python packages; defaults to the OS user cache directory
+
+  # Logging
+  config.logger = Logger
+  config.instrumenter = Object # Responds to instrument(name, payload) { ... }
+  config.deprecation_behavior = :warn # :warn, :silence, or :raise
+  config.redact_error_messages = false # true leaves what providers wrote out of error messages
+  config.log_file = String
+  config.log_level = Symbol
+  config.log_stream_debug = Boolean
+  config.log_regexp_timeout = Numeric
+end
+```
+
 ## Next Steps
 
-- [Configuration]({% link _getting_started/configuration.md %}#full-reference) - the complete option list in one block.
+- [Configuration]({% link _getting_started/configuration.md %}) - API keys, default models, and the Rails initializer.
 - [Provider Setup and Custom Endpoints]({% link _reference/configuration-providers.md %}) - per-provider keys and OpenAI-compatible endpoints.
 - [Instrumentation and Observability]({% link _advanced/instrumentation.md %}) - hook RubyLLM into your metrics and tracing stack.
 - [Model Registry]({% link _reference/models.md %}) - discover, select, and refresh models.

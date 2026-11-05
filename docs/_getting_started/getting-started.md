@@ -2,7 +2,7 @@
 layout: default
 title: Getting Started
 nav_order: 1
-description: Install RubyLLM and build with chats, tools, agents, images, video, audio, and document processing in Ruby and Rails.
+description: Install RubyLLM and build a small support desk with chats, tools, agents, structured output, and audio and document processing.
 redirect_from:
   - /guides/getting-started
   - /installation
@@ -15,15 +15,14 @@ redirect_from:
 
 After reading this guide, you will know:
 
-*   How to install RubyLLM.
-*   How to configure the providers you want to use.
-*   How to chat, stream responses, ask about files, get structured output, and read costs.
-*   How to define tools and agents.
-*   How to generate images, video, and speech, and transcribe audio.
-*   How to extract document text, moderate content, and search with embeddings and reranking.
+*   How to install and configure RubyLLM.
+*   How to chat with a model, stream its answer, and ask about files.
+*   How to get structured data back and read what a request cost.
+*   How to give the model tools and put them in an agent.
+*   How to transcribe audio, read documents, moderate messages, search with embeddings and reranking, and generate images, video, and speech.
 *   How to save conversations in Rails.
 
-Each example shows one feature. Try the ones your application needs, then follow its guide for more options. The Start Here guides that follow cover the same ground in this order.
+This guide builds pieces of a support desk for Acme Outfitters, an online clothing store. Customers write in about orders, returns, and invoices, and RubyLLM helps answer them. Each section shows one feature in a few lines. The rest of Start Here builds on the same example, one guide per feature.
 
 ## Installation
 
@@ -43,252 +42,246 @@ bundle add ruby_llm --version 2.1.1
 
 {% assign legacy_docs = site.data.versions.items | where: 'id', 'v1' | first %}
 For an existing 1.x application, use the [1.x docs]({{ legacy_docs.url }}) or follow the [upgrade guide]({% link _reference/upgrading.md %}) before switching versions.
-{: .important }
+{: .warning }
 
-RubyLLM supports JSON 2 and JSON 3. For Rails applications, JSON 3 requires Rails 8.1.4 or later. On older Rails versions, keep JSON 2 in your Gemfile:
+RubyLLM works with JSON 2 and JSON 3. In Rails, JSON 3 needs Rails 8.1.4 or later, so on older Rails versions keep JSON 2 in your Gemfile:
 
 ```ruby
-gem 'json', '< 3'
+gem "json", "< 3"
 ```
 
-## Minimal Configuration
+## Configuring a Provider
 
-Start with an OpenAI API key. Put this configuration at the start of your script, or in `config/initializers/ruby_llm.rb` in Rails:
+Start with an OpenAI API key. Put this at the top of your script, or in `config/initializers/ruby_llm.rb` in Rails:
 
 ```ruby
-require 'ruby_llm'
+require "ruby_llm"
 
 RubyLLM.configure do |config|
-  config.openai_api_key = ENV.fetch('OPENAI_API_KEY')
+  config.openai_api_key = ENV.fetch("OPENAI_API_KEY")
 end
 ```
 
-Most examples below use OpenAI. The video, OCR, and reranking examples show the additional provider keys they need. Configure only the providers you use. See [Configuration]({% link _getting_started/configuration.md %}) for other providers and local models.
+Most examples here use OpenAI. The video, OCR, and reranking examples add the keys they need. Configure only the providers you use; see [Configuration]({% link _getting_started/configuration.md %}) for the others and for local models.
 
 ## Your First Chat
 
-Ask a question and read the response:
+A customer writes that their parcel arrived damaged. Ask the model for a reply:
 
 ```ruby
 chat = RubyLLM.chat
 
-response = chat.ask "What is Ruby on Rails?"
-
+response = chat.ask "A customer says their parcel arrived damaged. Draft a short, friendly reply."
 puts response.content
-# => "Ruby on Rails, often shortened to Rails, is a server-side web application..."
+# => "I'm so sorry your parcel arrived damaged. Could you send a photo of..."
 ```
 
-The chat remembers the conversation, so you can follow up:
+The chat remembers the conversation, so you can refine the answer:
 
 ```ruby
-response = chat.ask "How do I create my first Rails app?"
-puts response.content
+chat.ask "Make it shorter, and offer a replacement."
 ```
 
-See [Chatting with AI Models]({% link _getting_started/chat.md %}) for choosing models and setting instructions.
+See [Chat]({% link _getting_started/chat.md %}) for instructions, choosing models, and continuing conversations.
 
-## Streaming a Response
+## Streaming the Answer
 
-Pass a block to `ask` and RubyLLM yields chunks as they arrive:
+Pass a block to `ask`, and RubyLLM yields the answer in chunks as the model writes it:
 
 ```ruby
-chat.ask "Tell me a story about a Ruby programmer" do |chunk|
+chat.ask "Now write the same reply in German." do |chunk|
   print chunk.content
 end
 ```
 
-See the [Streaming Guide]({% link _core_features/streaming.md %}) for streaming into web pages and background jobs.
+See [Streaming]({% link _core_features/streaming.md %}) for streaming into web pages and background jobs.
 
 ## Asking About Files
 
-Pass an image or PDF with `with:`:
+Customers send screenshots and PDFs. Pass a file with `with:`:
 
 ```ruby
-chat = RubyLLM.chat
-response = chat.ask "Summarize this document", with: "report.pdf"
+response = RubyLLM.chat.ask "What error does this checkout screenshot show?", with: "screenshot.png"
 puts response.content
 ```
 
-Use your own files in these examples. See [Attachments]({% link _core_features/attachments.md %}) for supported formats, URLs, and Active Storage files.
+`with:` takes a path, a URL, an IO, or an Active Storage attachment. See [Attachments]({% link _core_features/attachments.md %}) for supported formats.
 
-## Getting Structured Output
+## Getting Structured Data Back
 
-Describe the fields you want in a Ruby schema, then read the result as a Hash:
+Before anyone reads a support email, triage it: what it's about, how urgent it is, and a one-line summary. Describe those fields in a schema, and read the answer as a Hash:
 
 ```ruby
-class PersonSchema < Schematist::Schema
-  string :name
-  integer :age
+class TicketTriage < Schematist::Schema
+  string :category, enum: %w[billing shipping returns other]
+  string :priority, enum: %w[low normal urgent]
+  string :summary, description: "One sentence for the support queue"
 end
 
-response = RubyLLM.chat.with_schema(PersonSchema).ask "Alice is 30 years old."
-response.parsed
-# => {"name" => "Alice", "age" => 30}
+email = "My order R-1042 still hasn't arrived and I need it for a wedding on Saturday!"
+triage = RubyLLM.chat.with_schema(TicketTriage).ask(email).parsed
+# => {"category" => "shipping", "priority" => "urgent", "summary" => "Order R-1042 is late; needed by Saturday."}
 ```
 
 Schematist comes with RubyLLM. See [Structured Output]({% link _core_features/structured-output.md %}) for nested objects, arrays, and optional fields.
 
-## Tracking Usage and Costs
+## Reading Usage and Costs
 
-Read token counts and costs from the response:
+Every response knows its tokens and what it cost:
 
 ```ruby
-response = RubyLLM.chat.ask "Explain Ruby blocks in one paragraph."
+response = RubyLLM.chat.ask "Summarize our returns policy in one sentence."
 response.tokens.input
 response.tokens.output
 response.cost.total
 ```
 
-See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) for cache usage, retries, and the Rails usage ledger. Use [Batches]({% link _advanced/batches.md %}) for bulk work that can run asynchronously.
+See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) for cached tokens, retries, and the Rails usage ledger, and [Batches]({% link _advanced/batches.md %}) for bulk work at a lower price.
 
 ## Giving the Model Tools
 
-Let the model call your Ruby code. Define a tool and implement `execute`:
+The model doesn't know your help center. A tool lets it search it: a Ruby class with a description and an `execute` method.
 
 ```ruby
-class CurrentTime < RubyLLM::Tool
-  description "Returns the current date, time, and time zone"
+class SearchDocs < RubyLLM::Tool
+  description "Searches the help center for articles that answer a customer's question"
+  parameter :query, description: "What the customer wants to know"
 
-  def execute
-    Time.now.to_s
+  def execute(query:)
+    Article.search(query).first(3).map do |article|
+      { title: article.title, url: article.url, body: article.body }
+    end
   end
 end
 
-response = RubyLLM.chat.with_tools(CurrentTime).ask "What day is it?"
+response = RubyLLM.chat.with_tools(SearchDocs).ask "How do I return a jacket that doesn't fit?"
 puts response.content
 ```
 
-RubyLLM runs the tool calls and returns their results to the model. See [Tools]({% link _getting_started/tools.md %}) for parameters and [Tool Execution]({% link _tools/tool-execution.md %}) for human approvals.
+`Article.search` stands for whatever search your application already has. When the model calls the tool, RubyLLM runs `execute` and sends the result back to the model, which then answers. See [Tools]({% link _getting_started/tools.md %}) for tools that act for the current customer.
 
 ## Defining an Agent
 
-Give an agent its model, instructions, and tools in a Ruby class. This one uses the `CurrentTime` tool above:
+The support chat needs the same model, instructions, and tools everywhere it runs. Put them in an agent:
 
 ```ruby
-class PlanningAssistant < RubyLLM::Agent
+class SupportAgent < RubyLLM::Agent
   model "{{ site.models.default_chat }}"
-  instructions "Help plan the week. Check the current date before suggesting dates."
-  tools CurrentTime
+  instructions "You answer customers of Acme Outfitters. Be brief and friendly, and link to articles you used."
+  tools SearchDocs
 end
 
-response = PlanningAssistant.new.ask "Help me plan a three-day Ruby study schedule."
+response = SupportAgent.new.ask "Do you ship to Canada?"
 puts response.content
 ```
 
-See [Agents]({% link _getting_started/agents.md %}) for reusable prompts, inputs, and Rails persistence, or [Agentic Workflows]({% link _advanced/agentic-workflows.md %}) for coordinating agents.
+See [Agents]({% link _getting_started/agents.md %}) for runtime inputs, prompts, callbacks, and subagents, and [Agentic Workflows]({% link _advanced/agentic-workflows.md %}) for agents that work together.
 
-## Generating an Image
+## Transcribing a Voicemail
 
-Generate an image and save it:
-
-```ruby
-image = RubyLLM.paint "A photorealistic red panda coding Ruby"
-image.save "red_panda.png"
-```
-
-See [Image Generation]({% link _getting_started/image-generation.md %}) for editing images, choosing sizes, and generating several at once.
-
-## Generating a Video
-
-Generate a video and save it the same way. The default video model uses xAI, so add its key to your configuration:
+Not every customer writes. Turn a voicemail into text, then handle it like an email:
 
 ```ruby
-RubyLLM.configure do |config|
-  config.xai_api_key = ENV.fetch('XAI_API_KEY')
-end
-```
-
-```ruby
-video = RubyLLM.animate "A red panda typing on a laptop, with rain at the window"
-video.save "red_panda.mp4"
-```
-
-`animate` waits for the video to finish. See [Video Generation]({% link _advanced/video-generation.md %}) for other providers, animating an image, and submitting jobs with `animate_later`.
-
-## Generating Speech
-
-Turn text into an audio file:
-
-```ruby
-speech = RubyLLM.speak "Welcome to your first RubyLLM application."
-speech.save "welcome.mp3"
-```
-
-See [Text to Speech]({% link _getting_started/text-to-speech.md %}) for voices, languages, and audio formats.
-
-## Transcribing Audio
-
-Turn a recording into text:
-
-```ruby
-transcript = RubyLLM.transcribe "meeting.wav"
+transcript = RubyLLM.transcribe "voicemail.mp3"
 puts transcript.text
 ```
 
 See [Audio Transcription]({% link _getting_started/audio-transcription.md %}) for timestamps, speaker identification, and streaming.
 
-## Extracting Text from Documents
+## Reading an Invoice
 
-Extract text from PDFs and scanned images as Markdown. OCR uses Mistral, so add its key:
+A customer disputes a charge and attaches a scanned invoice. OCR extracts its text as Markdown. It uses Mistral, so add its key:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY')
+  config.mistral_api_key = ENV.fetch("MISTRAL_API_KEY")
 end
 ```
 
 ```ruby
-document = RubyLLM.ocr "scanned-contract.pdf"
-puts document.markdown
+invoice = RubyLLM.ocr "invoice.pdf"
+puts invoice.markdown
 ```
 
-See [Document OCR]({% link _getting_started/ocr.md %}) for extracting individual pages and working with tables.
+See [Document OCR]({% link _getting_started/ocr.md %}) for single pages and tables.
 
-## Moderating Content
+## Moderating a Message
 
-Check whether the model flags text for moderation:
+Check a message before an agent reads it or a person sees it:
 
 ```ruby
-moderation = RubyLLM.moderate "I love programming in Ruby."
+moderation = RubyLLM.moderate "Your courier threw my parcel over the fence. Again."
 moderation.flagged?
 # => false
 ```
 
-See [Moderation]({% link _getting_started/moderation.md %}) for categories, scores, and image moderation.
+See [Moderation]({% link _getting_started/moderation.md %}) for categories, scores, and images.
 
-## Creating an Embedding
+## Searching the FAQ
 
-Turn text into a vector for similarity search:
+Embeddings turn text into vectors, so you can find the answers closest in meaning to a question, not just in wording. Embed the FAQ once and store the vectors:
 
 ```ruby
-embedding = RubyLLM.embed "Ruby is optimized for programmer happiness."
-vector = embedding.vector
+faq = [
+  "Returns are free within 30 days of delivery.",
+  "Orders ship within two business days.",
+  "We ship to the EU, the UK, and the US."
+]
+
+embedding = RubyLLM.embed faq
+embedding.vectors # => one vector per answer
 ```
 
-See [Embeddings]({% link _getting_started/embeddings.md %}) for embedding multiple documents and [RAG]({% link _advanced/rag.md %}) for answering questions from your own content.
-
-## Ranking Search Results
-
-Order candidate documents by how well they answer a question. This example uses Cohere:
+A vector search returns candidates. Reranking puts the best answer first. This example uses Cohere:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.cohere_api_key = ENV.fetch('COHERE_API_KEY')
+  config.cohere_api_key = ENV.fetch("COHERE_API_KEY")
 end
 ```
 
 ```ruby
-documents = ["Reset your password in Settings.", "Invoices arrive by email."]
-ranked = RubyLLM.rerank("How do I reset my password?", documents,
-                       model: "{{ site.models.rerank_cohere }}")
-puts ranked.results.first.document
+ranked = RubyLLM.rerank "Can I send back a jacket?", faq, model: "{{ site.models.rerank_cohere }}"
+ranked.results.first.document
+# => "Returns are free within 30 days of delivery."
 ```
 
-See [Reranking]({% link _getting_started/rerank.md %}) for scores, result limits, and combining it with embeddings.
+See [Embeddings]({% link _getting_started/embeddings.md %}), [Reranking]({% link _getting_started/rerank.md %}), and [RAG]({% link _advanced/rag.md %}) for answering questions from your own content.
+
+## Generating Images, Video, and Speech
+
+The help center needs an illustration for its returns article:
+
+```ruby
+image = RubyLLM.paint "A friendly flat illustration of a parcel being packed for return"
+image.save "returns.png"
+```
+
+And a short clip for its packing guide. The default video model uses xAI, so add its key:
+
+```ruby
+RubyLLM.configure do |config|
+  config.xai_api_key = ENV.fetch("XAI_API_KEY")
+end
+```
+
+```ruby
+video = RubyLLM.animate "Hands folding a sweater and packing it into a cardboard box"
+video.save "packing.mp4"
+```
+
+The phone line reads replies aloud:
+
+```ruby
+speech = RubyLLM.speak "Thanks for calling Acme Outfitters. Your order shipped this morning."
+speech.save "reply.mp3"
+```
+
+`animate` waits for the video to finish. See [Image Generation]({% link _getting_started/image-generation.md %}), [Video Generation]({% link _advanced/video-generation.md %}), and [Text to Speech]({% link _getting_started/text-to-speech.md %}) for sizes, voices, formats, and background jobs.
 
 ## Using It in Rails
 
-Use the install generator to create Chat and Message models with Active Record persistence:
+The install generator creates Chat and Message models backed by Active Record:
 
 ```bash
 bin/rails generate ruby_llm:install
@@ -298,27 +291,27 @@ bin/rails ruby_llm:load_models
 
 ```ruby
 chat = Chat.create!(model: "{{ site.models.default_chat }}")
-chat.ask "What's the best way to learn Rails?"
+chat.ask "Do you ship to Canada?"
 ```
 
-The API stays the same, and each message persists automatically. Pass Active Storage attachments with `with:`, just as you pass files in plain Ruby. Optionally, add a ready-to-use chat interface with Hotwire streaming, controllers, and an Active Job:
+The API stays the same, and each message is saved as it arrives. For a working chat interface with Hotwire streaming, add:
 
 ```bash
 bin/rails generate ruby_llm:chat_ui
 ```
 
-Then visit `http://localhost:3000/chats` to start chatting. See the [Rails Integration Guide]({% link _getting_started/rails.md %}) for full details.
+Then visit `http://localhost:3000/chats`. See [Rails Integration]({% link _getting_started/rails.md %}) for the full setup.
 
-## What's Next?
+## Next Steps
 
-The Start Here guides take each of these concepts in turn:
+The Start Here guides take each piece in turn:
 
 1.  [How RubyLLM Works]({% link _getting_started/overview.md %}): how the pieces fit together.
-2.  [Chat]({% link _getting_started/chat.md %}): conversations, instructions, models, and the messages they return.
-3.  [Tools]({% link _getting_started/tools.md %}): let the model call your Ruby code.
-4.  [Agents]({% link _getting_started/agents.md %}): reusable classes with a model, instructions, and tools.
-5.  [Configuration]({% link _getting_started/configuration.md %}): API keys, default models, and every setting.
+2.  [Chat]({% link _getting_started/chat.md %}): conversations, instructions, models, and thinking.
+3.  [Tools]({% link _getting_started/tools.md %}): `SearchDocs`, `LookupOrder`, and tools that act for the current customer.
+4.  [Agents]({% link _getting_started/agents.md %}): `SupportAgent`, inputs, prompts, callbacks, and subagents.
+5.  [Configuration]({% link _getting_started/configuration.md %}): API keys, default models, and contexts.
 6.  The individual operations: [images]({% link _getting_started/image-generation.md %}), [speech]({% link _getting_started/text-to-speech.md %}), [transcription]({% link _getting_started/audio-transcription.md %}), [OCR]({% link _getting_started/ocr.md %}), [moderation]({% link _getting_started/moderation.md %}), [embeddings]({% link _getting_started/embeddings.md %}), and [reranking]({% link _getting_started/rerank.md %}).
-7.  [Rails Integration]({% link _getting_started/rails.md %}): `acts_as_chat` and `acts_as_message` on your own records.
+7.  [Rails Integration]({% link _getting_started/rails.md %}): the support desk on your own records and jobs.
 
-After that, go deeper where your application needs it: [Chat in Depth]({% link _core_features/streaming.md %}) and [Tools in Depth]({% link _tools/tool-parameters.md %}) for every chat and tool option, [Durable Agents]({% link _advanced/durable-agents-overview.md %}) for agents that run in jobs and wait for people, [Batches]({% link _advanced/batches.md %}) and [Prompt Caching]({% link _core_features/prompt-caching.md %}) for lower costs, [Error Handling]({% link _advanced/error-handling.md %}) for failures, and [Models]({% link _reference/available-models.md %}) for comparing capabilities and pricing. If you write code with an AI assistant, see [AI Coding Assistants]({% link _reference/ai-coding-assistants.md %}).
+Then go deeper where your application needs it: [Chat in Depth]({% link _core_features/streaming.md %}) and [Tools in Depth]({% link _tools/tool-parameters.md %}) for every option, [Agentic Workflows]({% link _advanced/agentic-workflows.md %}) for routing and parallel work, [Durable Agents]({% link _advanced/durable-agents-overview.md %}) for agents that wait for people, [Error Handling]({% link _advanced/error-handling.md %}) for failures, and [Models]({% link _reference/available-models.md %}) for capabilities and prices. If you write code with an AI assistant, see [AI Coding Assistants]({% link _reference/ai-coding-assistants.md %}).

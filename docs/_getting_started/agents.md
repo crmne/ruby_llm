@@ -5,7 +5,7 @@ seo:
   title: AI Agents in Ruby
 nav_order: 5
 has_children: true
-description: Give agents instructions, tools, and schemas in a Ruby class, then use them in scripts, services, and Rails jobs.
+description: Define a model, instructions, and tools once in a Ruby class, then use it in scripts, services, jobs, and Rails records.
 ---
 
 # {{ page.title }}
@@ -15,415 +15,236 @@ description: Give agents instructions, tools, and schemas in a Ruby class, then 
 
 After reading this guide, you will know:
 
-* How to define agents with a class-based DSL
-* How to use agents with plain Ruby chats and Rails-backed chats
-* How runtime context works (`chat`, `inputs`, and lazy evaluation)
-* How prompt conventions work in `app/prompts`
-* Which methods are available on agent instances
-* How to declare callbacks once for every chat of an agent
-* How to hand work to another agent as a subagent
-* How to handle errors for a whole agent with `rescue_from`
+* Why an agent is worth defining.
+* How to declare an agent's model, instructions, and tools.
+* How to give an agent runtime inputs, such as the current customer.
+* How to get structured answers from an agent.
+* How to keep instructions in `app/prompts`.
+* How to declare callbacks and error handlers once for every chat.
+* How to hand work to another agent as a subagent.
+* How to use agents with Rails records.
 
-## What Are Agents?
+## Why Agents?
 
-Agents are a class-based way to define a chat setup once and reuse it everywhere.
+A support chat needs the same setup wherever it runs: the model, the instructions that say how to talk to customers, and the tools that look up orders and search the help center. Without an agent, every controller, job, and console session repeats that setup with `with_instructions` and `with_tools`, and the copies drift apart.
 
-For example, instead of re-adding the same instructions and tools in every controller, job, or service, you define them once in an agent class and call that agent wherever you need it.
+An agent is a class that holds that setup. You name it once, after the job it does, and create a configured chat wherever you need one:
 
 ```ruby
 class SupportAgent < RubyLLM::Agent
   model "{{ site.models.default_chat }}"
-  instructions "You are a concise support assistant."
-  tools SearchDocs, LookupAccount
+  instructions "You answer customers of Acme Outfitters. Be brief and friendly, and link to articles you used."
+  tools SearchDocs
 end
 
-response = SupportAgent.new.ask "How do I reset my API key?"
+response = SupportAgent.new.ask "How do I return a jacket that doesn't fit?"
 ```
 
-In other words, an agent is a named wrapper around the same configuration you would otherwise apply progressively with `chat.with_*` calls (`with_instructions`, `with_tools`, `with_provider_options`, and so on).
-
-Agents work in two modes:
-
-* Plain Ruby mode via `.chat` (returns `RubyLLM::Chat`)
-* Rails mode via `.create/.create!/.find` when `chat_class` is configured (returns your ActiveRecord chat model)
-
-Example of Rails mode:
-
-```ruby
-class WorkAssistant < RubyLLM::Agent
-  chat_class Chat  # this activates the Rails integration
-  model "{{ site.models.default_chat }}"
-  instructions "You are a helpful assistant."
-  tools SearchDocs, LookupAccount
-end
-
-chat = WorkAssistant.create!(user: current_user)
-same_chat = WorkAssistant.find(chat.id)
-```
+`SearchDocs` is the tool from the [Tools guide]({% link _getting_started/tools.md %}#creating-a-tool). An agent adds no new abilities: it's the same `Chat` you'd build by hand, configured from a class. Use a plain chat for a one-off script, and an agent once the setup is worth naming.
 
 ## Defining an Agent
 
-Create a class that inherits from `RubyLLM::Agent` and declare its configuration:
+Inherit from `RubyLLM::Agent` and declare the configuration with class macros. Each macro does what the matching `Chat` method does:
 
 ```ruby
-# app/agents/work_assistant.rb
-class WorkAssistant < RubyLLM::Agent
+class SupportAgent < RubyLLM::Agent
   model "{{ site.models.default_chat }}"
-  instructions "You are a helpful assistant."
-  tools SearchDocs, LookupAccount
+  instructions "You answer customers of Acme Outfitters. Be brief and friendly, and link to articles you used."
+  tools SearchDocs
   temperature 0.2
-  max_output_tokens 256
+  max_output_tokens 1_000
 end
 ```
 
-Supported class macros:
+Feature macros such as `thinking`, `caching`, `citations`, and `compaction` follow the shape of their `with_*` methods: call them bare to turn the feature on, pass `false` to turn it off, or pass options to tune it.
 
-These macros use the same arguments you already know from `RubyLLM.chat(...)` and `Chat#with_*` methods.
-For example, `model` maps to `RubyLLM.chat(model:, provider:, ...)`, `tools` maps to `with_tools`, `tool_options` maps to `with_tool_options`, `instructions` maps to `with_instructions`, and so on.
+| Macro | Same as | See |
+| --- | --- | --- |
+| `model` | `RubyLLM.chat(model:, provider:, protocol:)` | [Chat]({% link _getting_started/chat.md %}#working-with-different-models) |
+| `instructions` | `with_instructions` | [Chat]({% link _getting_started/chat.md %}#giving-the-model-instructions), [Prompts](#keeping-instructions-in-prompt-templates) |
+| `tools`, `tool_options` | `with_tools`, `with_tool_options` | [Tools]({% link _getting_started/tools.md %}), [Tool Execution]({% link _tools/tool-execution.md %}) |
+| `mcp`, `provider_tools`, `skills` | `with_mcp`, `with_provider_tools`, `with_skills` | [MCP]({% link _tools/mcp.md %}), [Provider Tools]({% link _tools/provider-tools.md %}), [Skills]({% link _tools/skills.md %}) |
+| `code_execution`, `file_store` | `with_code_execution`, `with_file_store` | [Code Execution]({% link _advanced/code-execution.md %}), [File Stores]({% link _core_features/file-stores.md %}#agents) |
+| `schema` | `with_schema` | [Structured Answers](#structured-answers) |
+| `temperature`, `max_output_tokens` | `with_temperature`, `with_max_output_tokens` | [Chat]({% link _getting_started/chat.md %}#controlling-responses) |
+| `thinking`, `citations`, `caching`, `compaction` | `with_thinking`, `with_citations`, `with_caching`, `with_compaction` | [Thinking]({% link _core_features/thinking.md %}), [Citations]({% link _core_features/citations.md %}), [Prompt Caching]({% link _core_features/prompt-caching.md %}), [Request Control]({% link _core_features/chat-request-control.md %}#compacting-long-conversations) |
+| `provider_options`, `headers` | `with_provider_options`, `with_headers` | [Request Control]({% link _core_features/chat-request-control.md %}) |
+| `end_user`, `owner` | `with_end_user`, `with_owner` | [Request Control]({% link _core_features/chat-request-control.md %}#identifying-end-users), [Usage]({% link _core_features/cost-and-usage-tracking.md %}#one-shot-operations) |
+| `fallbacks` | `with_fallbacks` | [Model Fallbacks](#model-fallbacks) |
+| `context` | `with_context` | [Configuration Contexts](#configuration-contexts) |
+| `inputs` | | [Runtime Inputs](#runtime-inputs) |
+| `description` | | [Subagents](#subagents) |
+| `chat_class` | | [Rails-Backed Agents](#rails-backed-agents) |
+| `rescue_from` | | [Handling Errors](#handling-errors-with-rescue_from) |
+| `after_message` and the other callbacks | `after_message` and the other callbacks | [Callbacks](#callbacks) |
 
-* `model`, and its `provider:` and `protocol:` options (see [Chat Basics]({% link _getting_started/chat.md %}) and [Request Control]({% link _core_features/chat-request-control.md %}#choosing-the-wire-protocol))
-* `tools` (see [Tools]({% link _getting_started/tools.md %}))
-* `tool_options` (see [Controlling Tool Execution]({% link _tools/tool-execution.md %}))
-* `provider_tools` (see [Provider Tools]({% link _tools/provider-tools.md %}))
-* `instructions` (see [Chat Basics]({% link _getting_started/chat.md %}))
-* `temperature` (see [Chat Basics]({% link _getting_started/chat.md %}))
-* `max_output_tokens` (see [Request Control]({% link _core_features/chat-request-control.md %}))
-* `thinking` (see [Thinking]({% link _core_features/thinking.md %}))
-* `citations` (see [Citations]({% link _core_features/citations.md %}))
-* `caching` (see [Prompt Caching]({% link _core_features/prompt-caching.md %}))
-* `end_user` (see [Request Control]({% link _core_features/chat-request-control.md %}#identifying-end-users))
-* `owner` (see [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}#one-shot-operations))
-* `compaction` (see [Request Control]({% link _core_features/chat-request-control.md %}#compacting-long-conversations))
-* `code_execution` (see [Code Execution]({% link _advanced/code-execution.md %}))
-* `file_store` (see [File Stores]({% link _core_features/file-stores.md %}#agents))
-* `provider_options` (see [Request Control]({% link _core_features/chat-request-control.md %}))
-* `headers` (see [Chat Basics]({% link _getting_started/chat.md %}))
-* `schema` (see [Chat Basics]({% link _getting_started/chat.md %}))
-* `fallbacks` (see [Model Fallbacks]({% link _advanced/error-handling.md %}#model-fallbacks))
-* `context` (see [Configuration Contexts](#configuration-contexts))
-* `chat_class` (Rails-backed mode)
-* `inputs` (declared runtime inputs)
+## Runtime Inputs
 
-Call `caching` without options to use the provider's default prompt cache policy:
+The support desk's `LookupOrder` tool needs the customer whose orders it may read, and that customer changes with every conversation. Declare it with `inputs`, then read it in a block:
 
 ```ruby
-class WorkAssistant < RubyLLM::Agent
-  caching
+class SupportAgent < RubyLLM::Agent
+  model "{{ site.models.default_chat }}"
+  inputs :customer
+
+  instructions { "You answer #{customer.name}, a customer of Acme Outfitters. Be brief and friendly." }
+  tools { [LookupOrder.new(customer), SearchDocs] }
+end
+
+agent = SupportAgent.new(customer: current_customer)
+agent.ask "Where is my order R-1042?"
+```
+
+Blocks run each time the agent builds a chat, with every input available as a method, along with `chat`, the chat being configured. A value that depends on an input or on `chat` must sit in a block or lambda; a plain value is read once, when Ruby loads the class.
+{: .warning }
+
+`model` takes a block too, so an agent can pick a model from its inputs. The `model` block runs before the chat exists, so it reads inputs but not `chat`:
+
+```ruby
+class SupportAgent < RubyLLM::Agent
+  inputs :customer
+  model { customer.premium? ? "{{ site.models.default_chat }}" : "{{ site.models.openai_mini }}" }
 end
 ```
 
-This is the agent equivalent of calling `chat.with_caching`. Pass provider-specific options when you need them, such as `caching ttl: "1h"`.
+Options stay beside the block: `model(provider: :openai) { ... }`.
 
-Feature macros follow the same shape as their `with_*` methods: call them bare to enable the registered default, pass `false` to disable them, or pass options to tune them.
+## Structured Answers
+
+Give an agent a `schema`, and every answer comes back as data you read with `parsed`. This one triages incoming support email:
 
 ```ruby
-class WorkAssistant < RubyLLM::Agent
-  thinking
-  caching
-  compaction
-  citations
+class TicketTriage < Schematist::Schema
+  string :category, enum: %w[billing shipping returns other]
+  string :priority, enum: %w[low normal urgent]
+  string :summary, description: "One sentence for the support queue"
+end
+
+class TriageAgent < RubyLLM::Agent
+  model "{{ site.models.openai_mini }}"
+  instructions "Triage emails sent to the Acme Outfitters help desk."
+  schema TicketTriage
 end
 ```
 
-`tools` sets which tools the agent's chats may call. Use `tool_options` for `choice`, `calls`, and `concurrency`:
+The schema's fields match the `tickets` table's columns, so the parsed Hash goes straight into the record:
 
 ```ruby
-class WorkAssistant < RubyLLM::Agent
-  tools SearchDocs, LookupAccount
-  tool_options choice: :auto, calls: :one
-end
-```
-
-`schema` supports:
-
-* A schema class (for example `PersonSchema`) - same as `with_schema`
-* A JSON schema hash - same as `with_schema`
-* An inline DSL block with `schema do ... end` - agent-specific convenience
-
-Inline DSL example:
-
-```ruby
-class CriticAgent < RubyLLM::Agent
-  schema do
-    string :verdict, enum: ["pass", "revise"]
-    string :feedback
+class TriageTicketJob < ApplicationJob
+  def perform(ticket)
+    ticket.update!(TriageAgent.new.ask(ticket.body).parsed)
   end
 end
 ```
 
-### Model Fallbacks
-
-Use `fallbacks` to give every chat created by the agent the same ordered fallback models:
+`schema` also takes a JSON Schema Hash, or a block for a schema only one agent uses:
 
 ```ruby
-class WorkAssistant < RubyLLM::Agent
-  model "gpt-4.1"
-  fallbacks "gpt-4.1-mini", "claude-haiku-4-5"
+class TriageAgent < RubyLLM::Agent
+  schema do
+    string :category, enum: %w[billing shipping returns other]
+    string :priority, enum: %w[low normal urgent]
+  end
 end
 ```
 
-You can also customize which errors trigger fallback:
+See [Structured Output]({% link _core_features/structured-output.md %}) for nested objects, arrays, and provider support.
+
+## Keeping Instructions in Prompt Templates
+
+Instructions grow. Once they're longer than a line, keep them in a template next to your other views. An agent finds its own: `SupportAgent` reads `app/prompts/support_agent/instructions.txt.erb` when the file exists, and `Admin::SupportAgent` reads `app/prompts/admin/support_agent/instructions.txt.erb`.
+
+```erb
+<%# app/prompts/support_agent/instructions.txt.erb %>
+You answer <%= customer_name %>, a customer of Acme Outfitters.
+Be brief and friendly. Link to every help center article you used.
+Never promise a refund; offer to pass the request to the billing team.
+```
+
+Pass the template's locals to `instructions`. Use lambdas for values that come from inputs or the chat:
 
 ```ruby
-class WorkAssistant < RubyLLM::Agent
-  model "gpt-4.1"
-  fallbacks "gpt-4.1-mini",
-            on: [RubyLLM::RateLimitError, RubyLLM::ServiceUnavailableError]
+class SupportAgent < RubyLLM::Agent
+  inputs :customer
+  instructions customer_name: -> { customer.name }
 end
 ```
 
-Fallbacks can be model IDs or `RubyLLM::Model` objects:
+An agent picks its instructions in this order:
+
+1. `instructions` declared on the class.
+2. Its `instructions.txt.erb` template.
+3. Instructions inherited from its parent class.
+
+An empty template or `instructions ""` means no instructions. To fail loudly when the template is missing, render it explicitly with `instructions { prompt("instructions") }`, which raises `RubyLLM::PromptNotFoundError`. `prompt` also renders other templates in the agent's folder, with locals: `prompt("escalation", order: order)`.
+
+See [Prompt Rendering]({% link _core_features/prompt-rendering.md %}) for rendering templates outside an agent.
+
+## Model Fallbacks
+
+`fallbacks` gives every chat the agent builds the same list of models to try when the first one fails:
 
 ```ruby
-class WorkAssistant < RubyLLM::Agent
-  model "gpt-4.1"
-  fallbacks RubyLLM.models.find("claude-haiku-4-5", provider: :anthropic)
+class SupportAgent < RubyLLM::Agent
+  model "{{ site.models.default_chat }}"
+  fallbacks "{{ site.models.openai_mini }}", "{{ site.models.anthropic_haiku }}"
 end
 ```
 
-This works for both `WorkAssistant.chat` and Rails-backed agents configured with `chat_class`.
+Fallbacks may be model ids or `RubyLLM::Model` objects, and `on:` chooses which errors trigger them:
+
+```ruby
+fallbacks "{{ site.models.anthropic_haiku }}", on: [RubyLLM::RateLimitError, RubyLLM::ServiceUnavailableError]
+```
+
+See [Model Fallbacks]({% link _advanced/error-handling.md %}#model-fallbacks).
 
 ## Configuration Contexts
 
-Use a configuration context to give an agent its own credentials, endpoint, or
-connection settings without changing global configuration.
-
-You can define a context elsewhere in your application and pass it to the agent:
-
-```ruby
-# config/initializers/ai_context.rb
-SupportAIContext = RubyLLM.context do |config|
-  config.openai_api_key = ENV.fetch('SUPPORT_OPENAI_API_KEY')
-  config.request_timeout = 180
-end
-
-# app/agents/support_agent.rb
-class SupportAgent < RubyLLM::Agent
-  model "{{ site.models.default_chat }}", provider: :openai
-  context SupportAIContext
-end
-```
-
-Or configure the context directly with a block:
+A context gives an agent its own credentials or connection settings without touching the global configuration. Pass a context you defined elsewhere, or configure one in a block:
 
 ```ruby
 class SupportAgent < RubyLLM::Agent
   model "{{ site.models.default_chat }}", provider: :openai
 
   context do |config|
-    config.openai_api_key = ENV.fetch('SUPPORT_OPENAI_API_KEY')
+    config.openai_api_key = Rails.application.credentials.support_openai_api_key
     config.request_timeout = 180
   end
 end
 ```
 
-The block runs when the agent class is defined and receives a copy of the global
-configuration. Pass either a context object or a block. Both forms work with
-`SupportAgent.chat` and Rails-backed agents configured with `chat_class`.
-Call `SupportAgent.context` to read the configured context.
-
-See [Contexts: Isolated Configurations]({% link _reference/configuration-connection.md %}#contexts-isolated-configurations)
-for more configuration examples.
-
-## Runtime Context and Inputs
-
-Agents support runtime-evaluated values using blocks and lambdas.
-
-Declare additional runtime inputs with `inputs`:
-
-```ruby
-class WorkAssistant < RubyLLM::Agent
-  chat_class Chat
-  inputs :workspace
-
-  instructions { "You are helping #{workspace.name}" }
-end
-```
-
-Most runtime blocks can use `chat` in their execution context:
-
-* In `.chat` mode, `chat` is a `RubyLLM::Chat`
-* In `.create/.create!/.find` mode, `chat` is your `chat_class` record
-
-The `model` block runs before the chat exists, so it can read `inputs` but not
-`chat`. A deferred `context` block follows the same timing in plain Ruby, so
-`chat` is `nil` there. In Rails mode, the context block runs while the
-`chat_class` record is being configured, so `chat` is available.
-
-This enables Rails-style usage:
-
-```ruby
-class WorkAssistant < RubyLLM::Agent
-  chat_class Chat
-
-  instructions current_date_time: -> { Time.current.strftime("%B %d, %Y") },
-    display_name: -> { chat.user.display_name_or_email },
-    full_name: -> { chat.user.full_name.presence || chat.user.display_name_or_email }
-
-  tools do
-    [
-      TodoTool.new(chat: chat),
-      GoogleDriveListTool.new(user: chat.user),
-      GoogleDriveSearchTool.new(user: chat.user),
-      GoogleDriveReadTool.new(user: chat.user)
-    ]
-  end
-end
-```
-
-Values that depend on runtime `chat` must be lazy (blocks or lambdas), not eager class-load expressions.
-{: .important }
-
-### Choosing the model at runtime
-
-`model` takes a block too, so an agent can route work to a cheaper or larger model based on its inputs:
-
-```ruby
-class CardAgent < RubyLLM::Agent
-  inputs :card
-  model { card.special_type? ? "gpt-4.1-mini" : "gpt-4.1-nano" }
-  instructions "You are helpful."
-end
-
-CardAgent.chat(card: card)
-```
-
-Options stay alongside the block: `model(provider: :openai) { ... }`.
-
-## Prompt Management and Conventions
-
-Agents have prompt conventions built in. They use the same `app/prompts` templates as [Prompt Rendering]({% link _core_features/prompt-rendering.md %}), with class-based lookup layered on top.
-
-### Default instructions prompt
-
-Named agents automatically use their conventional instructions prompt when it exists:
-
-```ruby
-class WorkAssistant < RubyLLM::Agent
-  chat_class Chat
-end
-```
-
-RubyLLM looks for:
-
-* `app/prompts/work_assistant/instructions.txt.erb`
-
-Instructions are selected in this order:
-
-1. `instructions` declarations on the agent class.
-2. The agent's conventional `instructions.txt.erb` template.
-3. Inherited `instructions` declarations, including their persistence and cache settings.
-
-Child declarations and templates replace inherited instructions. An empty child template or an explicit `instructions ""` means no instructions. If none of these sources exists, the agent starts without system instructions.
-
-To require a prompt and fail loudly when it is missing, reference it explicitly:
-
-```ruby
-class WorkAssistant < RubyLLM::Agent
-  chat_class Chat
-  instructions { prompt("instructions") }
-end
-```
-
-If that file does not exist, RubyLLM raises `RubyLLM::PromptNotFoundError`.
-
-### Prompt shorthand with locals
-
-You can pass locals directly:
-
-```ruby
-class WorkAssistant < RubyLLM::Agent
-  chat_class Chat
-  instructions display_name: -> { chat.user.display_name_or_email }
-end
-```
-
-This also renders `instructions.txt.erb` for that agent path.
-
-### Prompt helper in runtime blocks
-
-Within execution context you can call:
-
-```ruby
-instructions { prompt("instructions", display_name: chat.user.display_name_or_email) }
-```
-
-### Naming conventions
-
-Agent prompt path is derived from class name:
-
-* `WorkAssistant` -> `app/prompts/work_assistant/...`
-* `Admin::SupportAgent` -> `app/prompts/admin/support_agent/...`
-
-Prompt extension defaults to `.txt.erb`.
-
-For rendering a prompt directly outside an agent, use `RubyLLM.render_prompt`. See [Prompt Rendering]({% link _core_features/prompt-rendering.md %}).
-
-## Using an Agent
-
-### Plain Ruby chat
-
-```ruby
-chat = WorkAssistant.chat
-response = chat.ask("Hello")
-
-puts response.content
-```
-
-`WorkAssistant.chat(...)` returns a configured `RubyLLM::Chat`.
-
-### Instance API
-
-You can still instantiate and use an agent instance directly:
-
-```ruby
-agent = WorkAssistant.new
-response = agent.ask("Hello")
-
-response.cost.total
-agent.cost.total
-```
-
-Agent instances delegate the conversation API from `RubyLLM::Chat` to the wrapped chat object.
-Direct transcript replacement with `messages=` stays on the wrapped chat because Rails-backed chat
-models own their message association.
-
-Delegated methods include:
-
-* `model`, `model_id`, `provider`, `messages`, `tools`, `provider_tools`, `provider_options`, `headers`, `schema`
-* `concurrency`, `caching`, `compaction`, `end_user`, `owner`, `fallbacks`
-* `tokens`, `cost`, `count_tokens`, `render`
-* `ask`, `say`, `complete`, `complete?`, `ask_later`, `generate`, `run_tools`, `step`
-* `cancel`, `cancelled?`, `waiting?`, `approve`, `deny`, `awaiting_approval?`, `pending_approvals`, `awaiting_person?`
-* `queue`, `queued_messages`, `withdraw`, `join_queued_messages`
-* `add_message`, `each`
-* `cache_until_here`, `with_tools`, `with_provider_tools`, `with_tool_options`
-* `with_model`, `with_instructions`, `with_temperature`, `with_max_output_tokens`, `with_thinking`, `with_citations`, `with_end_user`, `with_owner`, `with_compaction`, `with_context`
-* `with_caching`, `with_provider_options`, `with_headers`, `with_schema`, `with_fallbacks`
-* `before_request`, `before_message`, `after_message`, `before_tool_call`, `around_tool_call`, `after_tool_result`, `after_tool_progress`, `before_fallback`, `after_fallback`, `around_join`
-
-You can always access the wrapped chat object directly via `agent.chat`.
+The block runs once, when Ruby loads the class, on a copy of the global configuration. A block that takes no arguments runs each time the agent builds a chat instead: it reads inputs and returns a context. See [Contexts]({% link _reference/configuration-connection.md %}#contexts-isolated-configurations).
 
 ## Callbacks
 
-Declare a [chat callback]({% link _core_features/chat-callbacks.md %}) once on the agent, and every chat it builds or finds gets it, including Rails records from `find`. Name a method, as a Rails model does, or pass a block:
+Declare a [chat callback]({% link _core_features/chat-callbacks.md %}) on the agent, and every chat it builds or finds runs it. Name a method, as a Rails model does, or pass a block. This agent shows the customer what it's doing and logs each reply:
 
 ```ruby
 class SupportAgent < ApplicationAgent
-  inputs :ticket
+  STATUSES = { "lookup_order" => "Looking up your order", "search_docs" => "Searching the help center" }
 
-  after_message :log_reply, if: -> { ticket.urgent? }
-  before_tool_call { |tool_call| Rails.logger.info "Calling #{tool_call.name}" }
+  before_tool_call :show_status
+  after_message :log_reply, if: ->(message) { message.role == :assistant }
 
   private
 
+  def show_status(tool_call)
+    Turbo::StreamsChannel.broadcast_update_to chat, target: "support_status",
+                                                    html: STATUSES.fetch(tool_call.name, "Working on it")
+  end
+
   def log_reply(message)
-    ticket.notes.create!(body: message.content)
+    Rails.logger.info "[support] chat=#{chat.id} model=#{message.model_id} cost=#{message.cost.total}"
   end
 end
 ```
 
-The method or block runs on the agent instance, so it reads the agent's inputs and `chat`, and receives the callback's arguments when it takes them. `if:` and `unless:` take a method name, a lambda, or an array of them. Every chat callback has a macro: `before_request`, `before_message`, `after_message`, `before_tool_call`, `around_tool_call`, `after_tool_result`, `after_tool_progress`, `before_fallback`, `after_fallback`, and `after_file_write`. Subclasses inherit the callbacks declared when they are defined, so an `ApplicationAgent` can declare the ones every agent shares. For chats from `SupportAgent.chat` and `SupportAgent.find`, the agent the callbacks run on is set up without calling `initialize`, as for `rescue_from`, so read inputs and `chat` rather than instance variables your `initialize` sets. `around_tool_call` takes the tool as a block: a method yields to it, and a block takes it as `&run`:
+Callbacks run on the agent instance, so they read its inputs and `chat`, and receive the callback's arguments when they take any. `if:` and `unless:` take a method name, a lambda, or an array of them.
+
+Every chat callback has a macro: `before_request`, `before_message`, `after_message`, `before_tool_call`, `around_tool_call`, `after_tool_result`, `after_tool_progress`, `before_fallback`, `after_fallback`, and `after_file_write`. Subclasses inherit callbacks, so `ApplicationAgent` is the place for the ones every agent shares.
+
+`around_tool_call` wraps each tool's execution, in the thread or fiber that runs it, so a tool can see state such as the current tenant. Its method or block calls the tool by yielding to its block. When `if:` or `unless:` skips it, the tool runs without it:
 
 ```ruby
 class SupportAgent < ApplicationAgent
@@ -439,100 +260,81 @@ class SupportAgent < ApplicationAgent
 end
 ```
 
-When `if:` or `unless:` skips it, the tool runs without it. `around_join` works the same way for [queued messages]({% link _advanced/agentic-workflows.md %}#joining-queued-messages).
+See [Wrapping Tool Calls]({% link _core_features/chat-callbacks.md %}#wrapping-tool-calls). `around_join` works the same way for [queued messages]({% link _advanced/agentic-workflows.md %}#joining-queued-messages).
+
+Chats from `SupportAgent.chat` and `SupportAgent.find` bind to an agent without calling `initialize`, so read inputs and `chat` in callbacks rather than instance variables your `initialize` sets.
+{: .note }
 
 ## Subagents
 
-An agent class works wherever tools go. The model hands it a task, a fresh instance of the agent does the work in its own conversation, and only its answer comes back, so a long search through files or pages doesn't fill the calling chat:
+Some questions take a long search: twenty help center articles read to answer one question. Run that in the support chat and every article stays in its context. Hand it to another agent instead. A subagent works in its own conversation, and only its answer comes back.
+
+An agent class goes wherever a tool goes. Describe it so the calling model knows when to use it:
 
 ```ruby
-class ResearchAgent < ApplicationAgent
-  description "Researches a question across the docs and reports back with links"
-  inputs :product
-  tools SearchDocs, ReadPage
+class ResearchAgent < RubyLLM::Agent
+  description "Researches a question across the help center and reports back with links"
+  instructions "Read every relevant article before you answer. Cite each one."
+  tools SearchDocs
 end
 
-class SupportAgent < ApplicationAgent
-  tools LookupOrder, ResearchAgent
+class SupportAgent < RubyLLM::Agent
+  inputs :customer
+  tools { [LookupOrder.new(customer), ResearchAgent] }
 end
 ```
 
-The tool is named after the agent, `research_agent`, or `billing_research_agent` for `Billing::ResearchAgent`, and the model reads its `description`. It takes a `task` and the agent's inputs as parameters. Fix inputs yourself with `to_tool`, and the model fills only the rest:
+The model calls it as the tool `research_agent`, or `billing_research_agent` for `Billing::ResearchAgent`, with a `task` and any of the agent's inputs. Fix inputs yourself with `to_tool`, and the model fills only the rest:
 
 ```ruby
-chat.with_tools(ResearchAgent.to_tool(product: current_product))
+tools { [LookupOrder.new(customer), BillingAgent.to_tool(customer: customer)] }
 ```
 
-Each call runs a new agent instance under the [owner]({% link _core_features/cost-and-usage-tracking.md %}#one-shot-operations) of the chat that called it, and returns the content of the agent's last answer.
+Each call runs a new instance of the agent under the [owner]({% link _core_features/cost-and-usage-tracking.md %}#one-shot-operations) of the chat that called it, and returns the content of the agent's last answer.
 
-When the subagent waits on a person, for an approval or an answer, the call pauses on a `RubyLLM::AgentTask`, and the calling chat is `awaiting_person?`. The task's `agent` is the subagent, so you can settle what it waits for, then `complete` the calling chat to carry it on:
+A subagent can wait on a person. When `BillingAgent` calls a refund tool that [requires approval]({% link _tools/tool-execution.md %}#requiring-approval), the call pauses on a `RubyLLM::AgentTask`, and the calling chat is `awaiting_person?`. The task's `agent` is the subagent, so settle what it waits for, then `complete` the calling chat:
 
 ```ruby
-chat.ask "Clear the cache for order 42"
+agent = SupportAgent.new(customer: current_customer)
+agent.ask "Please refund the shipping on order R-1042"
 
-task = chat.pending_tasks.first
+task = agent.pending_tasks.first
 task.agent.pending_approvals.each { |tool_call| task.agent.approve(tool_call) }
-chat.complete
+agent.complete
 ```
 
-Cancelling the calling chat cancels a subagent it waits on. The subagent lives in the process that ran it. A chat resumed in another process, such as a later job, reports the subagent's work as lost to the model, which can start it again.
+Cancelling the calling chat cancels a subagent it waits on. A subagent lives in the process that ran it: a chat resumed in another process, such as a later job, reports the subagent's work as lost, and the model can start it again.
 
 ## Handling Errors with `rescue_from`
 
-`rescue_from` declares how an agent handles exceptions raised by its chat operations: `ask`, `say`, `ask_later`, `complete`, `generate`, `run_tools`, `step`, `count_tokens`, and `compact`.
+`rescue_from` declares how an agent handles exceptions from its chat operations, the way a Rails controller does:
 
 ```ruby
 class ApplicationAgent < RubyLLM::Agent
-  rescue_from RubyLLM::RateLimitError, RubyLLM::ServerError, with: :handle_transient
-  rescue_from RubyLLM::BadRequestError, with: :handle_bad_request
+  rescue_from RubyLLM::RateLimitError, RubyLLM::ServerError, with: :report_transient
+  rescue_from RubyLLM::BadRequestError, with: :report_bug
 
   private
 
-  def handle_transient(error)
-    StatsD.increment("llm.api_error", tags: ["type:transient"])
-    Rails.logger.error("#{error.class}: #{error.message}")
-    raise # re-raise after instrumenting
+  def report_transient(error)
+    Rails.logger.warn "#{self.class.name}: #{error.class}: #{error.message}"
+    raise
   end
 
-  def handle_bad_request(error)
-    StatsD.increment("llm.api_error", tags: ["type:bad_request"])
-    Sentry.capture_exception(error) # this one is a bug in our pipeline
+  def report_bug(error)
+    Sentry.capture_exception(error)
     raise
   end
 end
 ```
 
-Handlers apply however you reach the chat: `SummaryAgent.new`, `.chat`, `.create`, `.create!`, `.find`, and calls chained from a setter such as `agent.with_temperature(0.2).ask("Hi")`. The `find` in a generated `ChatResponseJob` is covered too:
+Handlers cover `ask`, `say`, `ask_later`, `complete`, `generate`, `run_tools`, `step`, `count_tokens`, and `compact`, however you reach the chat: `new`, `chat`, `create`, `find`, or a chained setter such as `agent.with_temperature(0.2).ask "Hi"`. They run on the agent instance, so inputs and `chat` are available. A handler that doesn't re-raise swallows the exception, and its return value becomes the operation's return value.
 
-```ruby
-chat = ChatAgent.find(chat_id)
-chat.complete(&:broadcast) # handle_transient runs on a rate limit
-```
-
-Handlers run on an agent instance, so `self`, the agent's inputs, and `chat` are available for instrumentation. With `find` and `create`, pass the inputs to that call. Pass a block instead of `with:` when the handler is a one-liner:
-
-```ruby
-class SummaryAgent < ApplicationAgent
-  rescue_from RubyLLM::RateLimitError do |error|
-    Rails.logger.warn("#{self.class.name} rate limited: #{error.message}")
-    nil
-  end
-end
-```
-
-The semantics match `ActiveSupport::Rescuable`:
-
-* Handlers are searched in reverse declaration order, so the last matching handler wins and a subclass can override an inherited one.
-* Exception classes may be given as strings (`rescue_from "MyGem::Error"`), which defers constant lookup until an exception is raised.
-* Handlers catch `StandardError`s. Declaring a class that can never match one, such as `Interrupt`, raises `ArgumentError`. A module matches the errors that include it.
-* Re-raise inside the handler to let the caller see the exception. Without a `raise`, the exception is swallowed and the handler's return value becomes the operation's return value.
-* Exceptions that no handler matches are re-raised with their original backtrace.
-
-Subclasses inherit the handlers declared when they are defined, so an `ApplicationAgent` base class is the usual place for shared error policy.
+The rules match `ActiveSupport::Rescuable`. The last matching handler wins, so a subclass can override an inherited one. Class names may be Strings, looked up when an exception is raised. Handlers catch `StandardError`s, and a module matches the errors that include it. Unhandled exceptions keep their original backtrace.
 
 ## Rails-Backed Agents
 
-Set `chat_class` to use your ActiveRecord chat model. `bin/rails generate ruby_llm:install` puts it in `ApplicationAgent`, the place for settings every agent in your app shares:
+Set `chat_class`, and the agent creates and finds your Active Record chats instead of plain ones. The install generator puts it in `ApplicationAgent`, which your agents inherit from as models inherit from `ApplicationRecord`:
 
 ```ruby
 class ApplicationAgent < RubyLLM::Agent
@@ -540,74 +342,33 @@ class ApplicationAgent < RubyLLM::Agent
 end
 ```
 
-Agents inherit from it, the way models inherit from `ApplicationRecord`, and `bin/rails generate ruby_llm:agent Support` writes `class SupportAgent < ApplicationAgent` for you:
+In Rails, the chat record knows its customer, so read it from `chat` instead of declaring an input:
 
 ```ruby
-class WorkAssistant < ApplicationAgent
+class SupportAgent < ApplicationAgent
   model "{{ site.models.default_chat }}"
-  instructions "You are a helpful assistant."
-  tools SearchDocs, LookupAccount
-end
-```
-
-Then you can:
-
-```ruby
-chat = WorkAssistant.create!(user: current_user)
-
-chat = WorkAssistant.find(params[:id])
-
-WorkAssistant.sync_instructions(chat)
-```
-
-`create/create!/find` require `chat_class`. Calling them without it raises an error.
-
-Instruction persistence contract in Rails mode:
-
-* `create/create!` applies and persists instructions
-* `find` applies instructions at runtime only (no persistence side effects)
-* `sync_instructions` explicitly persists the current agent instructions
-
-### Using an Existing Chat Record
-If you already have a `Chat` record, pass it to `Agent.new(chat:)` instead of calling `Agent.find`. This applies all agent configuration (instructions, tools, etc.) without an extra database query:
-
-```ruby
-chat_record = Chat.find(params[:id])
-chat = WorkAssistant.new(chat: chat_record)
-chat.ask("Hello")
-```
-
-## When to Use an Agent
-
-These two styles are equivalent in capability, but optimized for different contexts.
-
-Use progressive `Chat#with_*` when configuration is local and one-off:
-
-```ruby
-chat = RubyLLM.chat(model: "{{ site.models.default_chat }}")
-chat.with_instructions("You are a helpful assistant.")
-chat.with_tools(SearchDocs, LookupAccount)
-chat.ask("Help me find docs about callbacks.")
-```
-
-Use agents when that setup should be centralized and reused:
-
-```ruby
-class WorkAssistant < RubyLLM::Agent
-  model "{{ site.models.default_chat }}"
-  instructions "You are a helpful assistant."
-  tools SearchDocs, LookupAccount
+  instructions { "You answer #{chat.customer.name}, a customer of Acme Outfitters. Be brief and friendly." }
+  tools { [LookupOrder.new(chat.customer), SearchDocs] }
 end
 
-WorkAssistant.new.ask("Help me find docs about callbacks.")
+chat = SupportAgent.create!(customer: current_customer)
+SupportAgent.find(chat.id).ask "Where is my order R-1042?"
 ```
+
+`bin/rails generate ruby_llm:agent Support` writes the class to start from. Keywords that aren't declared inputs, such as `customer:` here, go to `Chat.create!`.
+
+`create` and `create!` save the agent's instructions with the new chat. `find` applies them in memory without saving, so a changed prompt reaches old chats without rewriting their history. `SupportAgent.sync_instructions(chat)` saves the current instructions explicitly. When you already have the record, `SupportAgent.new(chat: chat)` configures it without loading it again.
+
+`create`, `create!`, and `find` raise without a `chat_class`. See [Durable Agents]({% link _advanced/durable-agents-overview.md %}) for agents that run in jobs and wait for people.
+
+## Using an Agent
+
+An agent instance answers everything a chat does. `ask`, `complete`, `messages`, `cost`, the `with_*` setters, and the rest delegate to the chat it wraps, which `agent.chat` returns. `SupportAgent.chat` returns that configured `RubyLLM::Chat` directly. See the [Agent API reference]({{ '/api/RubyLLM/Agent.html' | relative_url }}) for every method.
 
 ## Next Steps
 
-* Compose agents with [Agentic Workflows]({% link _advanced/agentic-workflows.md %})
-* Resume them across jobs and deploys with [Durable Agents]({% link _advanced/durable-agents-overview.md %})
-* Give them [Memory]({% link _advanced/memory.md %}) across conversations
-* Ground them in your documents with [RAG]({% link _advanced/rag.md %})
-* Learn about [Chat Basics]({% link _getting_started/chat.md %})
-* Explore [Tools]({% link _getting_started/tools.md %})
-* Review [Rails Integration]({% link _getting_started/rails.md %})
+* [Configuration]({% link _getting_started/configuration.md %}): API keys, default models, and per-agent contexts.
+* [Agentic Workflows]({% link _advanced/agentic-workflows.md %}): route, chain, and run agents in parallel.
+* [Durable Agents]({% link _advanced/durable-agents-overview.md %}): run agents in jobs and resume them across deploys.
+* [Memory]({% link _advanced/memory.md %}): let agents remember across conversations.
+* [Evaluations]({% link _advanced/evaluations.md %}): test agents against a dataset of cases.
