@@ -29,6 +29,7 @@ RSpec.describe RubyLLM::Providers::Azure::Decisions do
       urls = %w[
         https://res.openai.azure.com
         https://res.openai.azure.com/openai/v1
+        https://res.openai.azure.com/openai/v1/?api-version=preview
         https://res.openai.azure.com/openai/deployments/luna
       ].map { |base| described_class.new(provider_for(base)).judgment_url }
 

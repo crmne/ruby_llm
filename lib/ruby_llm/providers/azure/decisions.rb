@@ -9,7 +9,7 @@ module RubyLLM
       # names v1 over any dated version the configured base carries.
       class Decisions < Protocols::OpenAI::Decisions
         def judgment_url
-          "#{@provider.azure_openai_v1_base}/decisions?api-version=v1"
+          "#{@provider.azure_openai_v1_base.sub(%r{/+\z}, '')}/decisions?api-version=v1"
         end
       end
     end
