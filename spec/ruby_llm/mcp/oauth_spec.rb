@@ -113,6 +113,50 @@ RSpec.describe RubyLLM::MCP::OAuth do
     expect(linear.tools).to eq([])
   end
 
+  describe 'deauthorizing during an authorization' do
+    def store = RubyLLM.config.mcp_credential_store
+    def key = "ada@#{server_url}"
+
+    it 'stays deauthorized when another thread forgets the credentials during the code exchange' do
+      url = linear.authorization_url(redirect_uri:)
+      requested = Queue.new
+      answer = Queue.new
+      stub_request(:post, 'https://auth.example.com/token').to_return do
+        requested << true
+        answer.pop
+        { body: { access_token: 'access-1', refresh_token: 'refresh-1', expires_in: 3600 }.to_json }
+      end
+      authorizing = Thread.new { linear_class.new(user: 'ada').authorize(callback(url)) }
+      Timeout.timeout(5) { requested.pop }
+      forgetting = Thread.new { linear_class.new(user: 'ada').deauthorize }
+      Timeout.timeout(5) { Thread.pass until forgetting.stop? }
+      answer << true
+      Timeout.timeout(5) { [authorizing, forgetting].each(&:join) }
+
+      expect(store.read(key)).to be_nil
+      expect(linear_class.new(user: 'ada')).not_to be_authorized
+    end
+
+    it 'refuses the callback of an authorization another instance forgot' do
+      oauth = linear.send(:oauth)
+      url = oauth.authorization_url(redirect_uri:)
+      linear_class.new(user: 'ada').deauthorize
+
+      expect { oauth.authorize(callback(url)) }.to raise_error(RubyLLM::MCP::Error, 'No authorization in progress')
+      expect(store.read(key)).to be_nil
+    end
+
+    it 'authorizes again with a new authorization after forgetting one' do
+      linear.authorization_url(redirect_uri:)
+      linear_class.new(user: 'ada').deauthorize
+      url = linear_class.new(user: 'ada').authorization_url(redirect_uri:)
+
+      linear_class.new(user: 'ada').authorize(callback(url))
+
+      expect(linear_class.new(user: 'ada')).to be_authorized
+    end
+  end
+
   it 'starts an authorization with PKCE, the resource, and the challenged scope' do
     url = linear.authorization_url(redirect_uri:)
     params = URI.decode_www_form(URI(url).query).to_h
