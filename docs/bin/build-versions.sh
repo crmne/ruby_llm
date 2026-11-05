@@ -36,7 +36,7 @@ prepare_version() {
   local source="$1" channel="$2"
   mkdir -p "$source/_data" "$source/_includes" "$source/_plugins"
   cp "$docs/_data/versions.yml" "$source/_data/versions.yml"
-  cp "$docs/_includes/version_select.html" "$source/_includes/"
+  cp "$docs/_includes/version_select.html" "$docs/_includes/version_banner.html" "$source/_includes/"
   cp "$docs/_plugins/versioned_docs.rb" "$source/_plugins/"
   cp -R "$docs/_plugins/social_cards.rb" "$docs/_plugins/social_cards" "$source/_plugins/"
   sed -i.bak '/^ *- jekyll-og-image$/d' "$source/_config.yml" && rm "$source/_config.yml.bak"
@@ -96,7 +96,7 @@ echo "==> Building 1.x docs ($onex_ref) -> /v1/"
 archive_release "$onex_ref" "$workspace/v1"
 "$docs/bin/prepare_one_x_docs.rb" "$workspace/v1/docs"
 prepare_version "$workspace/v1/docs" v1
-perl -0pi -e 's{(\{% include components/header.html %\}\n)}{$1    {% include version_select.html %}\n}' \
+perl -0pi -e 's{(\{% include components/header.html %\}\n)}{$1    {% include version_banner.html %}\n    {% include version_select.html %}\n}' \
   "$workspace/v1/docs/_layouts/default.html"
 build_version "$workspace/v1/docs" "$workspace/v1-out" "$BASE/v1" "$workspace/v1"
 

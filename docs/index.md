@@ -2,7 +2,9 @@
 layout: home
 title: RubyLLM
 nav_order: 1
-description: 'The Ruby AI framework: models, tools, agents, sandboxed code, evaluations, and Rails conventions across 23 providers.'
+seo:
+  title: "RubyLLM: the Ruby AI framework for agents, chat and Rails"
+description: 'The Ruby AI framework: models, tools, agents, sandboxed code, evaluations, and Rails conventions across {{ site.provider_count }} providers.'
 permalink: /
 redirect_from:
   - /guides/
@@ -21,7 +23,7 @@ hero:
     <div class="home-hero-install home-code-grid home-code-grid--bare" markdown="1">
 
 ```sh
-{% if site.docs_unreleased %}bundle add ruby_llm --git https://github.com/crmne/ruby_llm --branch main{% else %}bundle add ruby_llm --version 2.1.1{% endif %}
+{% if site.docs_unreleased %}bundle add ruby_llm --git https://github.com/crmne/ruby_llm --branch main{% else %}bundle add ruby_llm --version {{ site.gem_version }}{% endif %}
 ```
 {: .home-code-card }
 
@@ -33,7 +35,7 @@ hero:
 
 <section class="home-section home-band home-models-section">
   <div class="home-section-inner">
-    <h2 class="home-heading">23 providers. One API.</h2>
+    <h2 class="home-heading">{{ site.provider_count }} providers. One API.</h2>
     <p class="home-lead">
       Build with the models you want. Move between hosted and local providers without rewriting your application, or connect an OpenAI-compatible endpoint.
     </p>
@@ -50,29 +52,29 @@ chat.ask "Hello!"
     </div>
 
     <div class="provider-icons" aria-label="Supported AI providers">
-      <a href="https://anthropic.com" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/anthropic-text.svg' | relative_url }}" alt="Anthropic" class="logo-wide"></a>
-      <a href="https://azure.microsoft.com/products/ai-services/openai-service" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/azureai-color.svg' | relative_url }}" alt="Azure AI" class="logo-mark"><img src="{{ '/assets/images/providers/azureai-text.svg' | relative_url }}" alt="" class="logo-text"></a>
-      <a href="https://aws.amazon.com/bedrock/" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/bedrock-color.svg' | relative_url }}" alt="Amazon Bedrock" class="logo-mark"><img src="{{ '/assets/images/providers/bedrock-text.svg' | relative_url }}" alt="" class="logo-text"></a>
-      <a href="https://cohere.com" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/cohere-color.svg' | relative_url }}" alt="Cohere" class="logo-mark"><img src="{{ '/assets/images/providers/cohere-text.svg' | relative_url }}" alt="" class="logo-text"></a>
-      <a href="https://deepgram.com" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/deepgram-text.svg' | relative_url }}" alt="Deepgram" class="logo-wide"></a>
-      <a href="https://deepseek.com" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/deepseek-color.svg' | relative_url }}" alt="DeepSeek" class="logo-mark"><img src="{{ '/assets/images/providers/deepseek-text.svg' | relative_url }}" alt="" class="logo-text"></a>
-      <a href="https://elevenlabs.io" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/elevenlabs-text.svg' | relative_url }}" alt="ElevenLabs" class="logo-wide"></a>
-      <a href="https://ai.google.dev" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/gemini-color.svg' | relative_url }}" alt="Gemini" class="logo-mark"><img src="{{ '/assets/images/providers/gemini-text.svg' | relative_url }}" alt="" class="logo-text"></a>
-      <a href="https://gpustack.ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/gpustack-logo.png' | relative_url }}" alt="GPUStack" class="logo-wide"></a>
-      <a href="https://www.hetzner.com/" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/hetzner-color.svg' | relative_url }}" alt="" class="logo-mark"><span class="logo-wordmark">Hetzner</span></a>
-      <a href="https://dev.meta.ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/meta-color.svg' | relative_url }}" alt="Meta" class="logo-mark"><img src="{{ '/assets/images/providers/meta-text.svg' | relative_url }}" alt="" class="logo-text"></a>
-      <a href="https://www.minimax.io" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/minimax-color.svg' | relative_url }}" alt="MiniMax" class="logo-mark"><img src="{{ '/assets/images/providers/minimax-text.svg' | relative_url }}" alt="" class="logo-text"></a>
-      <a href="https://mistral.ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/mistral-color.svg' | relative_url }}" alt="Mistral AI" class="logo-mark"><img src="{{ '/assets/images/providers/mistral-text.svg' | relative_url }}" alt="" class="logo-text"></a>
-      <a href="https://www.moonshot.ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/moonshot.svg' | relative_url }}" alt="Moonshot AI" class="logo-mark logo-mono"><img src="{{ '/assets/images/providers/moonshot-text.svg' | relative_url }}" alt="" class="logo-text"></a>
-      <a href="https://ollama.com" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/ollama.svg' | relative_url }}" alt="" class="logo-mark logo-mono"><span class="logo-wordmark">Ollama</span></a>
-      <a href="https://ollama.com/cloud" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/ollama.svg' | relative_url }}" alt="" class="logo-mark logo-mono"><span class="logo-wordmark">Ollama Cloud</span></a>
-      <a href="https://openai.com" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/openai.svg' | relative_url }}" alt="OpenAI" class="logo-mark logo-mono"><img src="{{ '/assets/images/providers/openai-text.svg' | relative_url }}" alt="" class="logo-text"></a>
-      <a href="https://openrouter.ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/openrouter.svg' | relative_url }}" alt="OpenRouter" class="logo-mark logo-mono"><img src="{{ '/assets/images/providers/openrouter-text.svg' | relative_url }}" alt="" class="logo-text"></a>
-      <a href="https://perplexity.ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/perplexity-color.svg' | relative_url }}" alt="Perplexity" class="logo-mark"><img src="{{ '/assets/images/providers/perplexity-text.svg' | relative_url }}" alt="" class="logo-text"></a>
-      <a href="https://typesafe.ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/typesafe.svg' | relative_url }}" alt="" class="logo-mark logo-mono"><span class="logo-wordmark">TypeSafe AI</span></a>
-      <a href="https://cloud.google.com/vertex-ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/vertexai-color.svg' | relative_url }}" alt="Vertex AI" class="logo-mark"><img src="{{ '/assets/images/providers/vertexai-text.svg' | relative_url }}" alt="" class="logo-text"></a>
-      <a href="https://x.ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/xai.svg' | relative_url }}" alt="xAI" class="logo-mark logo-mono"><img src="{{ '/assets/images/providers/xai-text.svg' | relative_url }}" alt="" class="logo-text"></a>
-      <a href="https://z.ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/zai.svg' | relative_url }}" alt="Z.ai" class="logo-mark logo-mono"><img src="{{ '/assets/images/providers/zai-text.svg' | relative_url }}" alt="" class="logo-text"></a>
+      <a href="https://anthropic.com" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/anthropic-text.svg' | relative_url }}" width="182" height="24" loading="lazy" alt="Anthropic" class="logo-wide"></a>
+      <a href="https://azure.microsoft.com/products/ai-services/openai-service" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/azureai-color.svg' | relative_url }}" width="24" height="24" loading="lazy" alt="Azure AI" class="logo-mark"><img src="{{ '/assets/images/providers/azureai-text.svg' | relative_url }}" width="96" height="24" loading="lazy" alt="" class="logo-text"></a>
+      <a href="https://aws.amazon.com/bedrock/" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/bedrock-color.svg' | relative_url }}" width="24" height="24" loading="lazy" alt="Amazon Bedrock" class="logo-mark"><img src="{{ '/assets/images/providers/bedrock-text.svg' | relative_url }}" width="214" height="24" loading="lazy" alt="" class="logo-text"></a>
+      <a href="https://cohere.com" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/cohere-color.svg' | relative_url }}" width="24" height="24" loading="lazy" alt="Cohere" class="logo-mark"><img src="{{ '/assets/images/providers/cohere-text.svg' | relative_url }}" width="102" height="24" loading="lazy" alt="" class="logo-text"></a>
+      <a href="https://deepgram.com" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/deepgram-text.svg' | relative_url }}" width="146" height="32" loading="lazy" alt="Deepgram" class="logo-wide"></a>
+      <a href="https://deepseek.com" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/deepseek-color.svg' | relative_url }}" width="24" height="24" loading="lazy" alt="DeepSeek" class="logo-mark"><img src="{{ '/assets/images/providers/deepseek-text.svg' | relative_url }}" width="131" height="24" loading="lazy" alt="" class="logo-text"></a>
+      <a href="https://elevenlabs.io" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/elevenlabs-text.svg' | relative_url }}" width="175" height="24" loading="lazy" alt="ElevenLabs" class="logo-wide"></a>
+      <a href="https://ai.google.dev" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/gemini-color.svg' | relative_url }}" width="24" height="24" loading="lazy" alt="Gemini" class="logo-mark"><img src="{{ '/assets/images/providers/gemini-text.svg' | relative_url }}" width="98" height="24" loading="lazy" alt="" class="logo-text"></a>
+      <a href="https://gpustack.ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/gpustack-logo.png' | relative_url }}" width="1800" height="300" loading="lazy" alt="GPUStack" class="logo-wide"></a>
+      <a href="https://www.hetzner.com/" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/hetzner-color.svg' | relative_url }}" width="24" height="24" loading="lazy" alt="" class="logo-mark"><span class="logo-wordmark">Hetzner</span></a>
+      <a href="https://dev.meta.ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/meta-color.svg' | relative_url }}" width="24" height="24" loading="lazy" alt="Meta" class="logo-mark"><img src="{{ '/assets/images/providers/meta-text.svg' | relative_url }}" width="75" height="24" loading="lazy" alt="" class="logo-text"></a>
+      <a href="https://www.minimax.io" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/minimax-color.svg' | relative_url }}" width="24" height="24" loading="lazy" alt="MiniMax" class="logo-mark"><img src="{{ '/assets/images/providers/minimax-text.svg' | relative_url }}" width="114" height="24" loading="lazy" alt="" class="logo-text"></a>
+      <a href="https://mistral.ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/mistral-color.svg' | relative_url }}" width="24" height="24" loading="lazy" alt="Mistral AI" class="logo-mark"><img src="{{ '/assets/images/providers/mistral-text.svg' | relative_url }}" width="134" height="24" loading="lazy" alt="" class="logo-text"></a>
+      <a href="https://www.moonshot.ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/moonshot.svg' | relative_url }}" width="24" height="24" loading="lazy" alt="Moonshot AI" class="logo-mark logo-mono"><img src="{{ '/assets/images/providers/moonshot-text.svg' | relative_url }}" width="171" height="24" loading="lazy" alt="" class="logo-text"></a>
+      <a href="https://ollama.com" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/ollama.svg' | relative_url }}" width="24" height="24" loading="lazy" alt="" class="logo-mark logo-mono"><span class="logo-wordmark">Ollama</span></a>
+      <a href="https://ollama.com/cloud" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/ollama.svg' | relative_url }}" width="24" height="24" loading="lazy" alt="" class="logo-mark logo-mono"><span class="logo-wordmark">Ollama Cloud</span></a>
+      <a href="https://openai.com" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/openai.svg' | relative_url }}" width="24" height="24" loading="lazy" alt="OpenAI" class="logo-mark logo-mono"><img src="{{ '/assets/images/providers/openai-text.svg' | relative_url }}" width="86" height="24" loading="lazy" alt="" class="logo-text"></a>
+      <a href="https://openrouter.ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/openrouter.svg' | relative_url }}" width="24" height="24" loading="lazy" alt="OpenRouter" class="logo-mark logo-mono"><img src="{{ '/assets/images/providers/openrouter-text.svg' | relative_url }}" width="143" height="24" loading="lazy" alt="" class="logo-text"></a>
+      <a href="https://perplexity.ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/perplexity-color.svg' | relative_url }}" width="24" height="24" loading="lazy" alt="Perplexity" class="logo-mark"><img src="{{ '/assets/images/providers/perplexity-text.svg' | relative_url }}" width="117" height="24" loading="lazy" alt="" class="logo-text"></a>
+      <a href="https://typesafe.ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/typesafe.svg' | relative_url }}" width="16" height="24" loading="lazy" alt="" class="logo-mark logo-mono"><span class="logo-wordmark">TypeSafe AI</span></a>
+      <a href="https://cloud.google.com/vertex-ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/vertexai-color.svg' | relative_url }}" width="24" height="24" loading="lazy" alt="Vertex AI" class="logo-mark"><img src="{{ '/assets/images/providers/vertexai-text.svg' | relative_url }}" width="119" height="24" loading="lazy" alt="" class="logo-text"></a>
+      <a href="https://x.ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/xai.svg' | relative_url }}" width="24" height="24" loading="lazy" alt="xAI" class="logo-mark logo-mono"><img src="{{ '/assets/images/providers/xai-text.svg' | relative_url }}" width="41" height="24" loading="lazy" alt="" class="logo-text"></a>
+      <a href="https://z.ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/zai.svg' | relative_url }}" width="24" height="24" loading="lazy" alt="Z.ai" class="logo-mark logo-mono"><img src="{{ '/assets/images/providers/zai-text.svg' | relative_url }}" width="50" height="24" loading="lazy" alt="" class="logo-text"></a>
     </div>
 
 
@@ -413,7 +415,7 @@ RubyLLM.moderate(comment.body).flagged?
     </p>
 
     <div class="home-demo-frame home-rails-demo-frame" data-demo-video>
-      <pre class="home-demo-terminal" aria-hidden="true"><code><span class="term-green">$</span> {% if site.docs_unreleased %}bundle add ruby_llm --git https://github.com/crmne/ruby_llm --branch main{% else %}bundle add ruby_llm --version 2.1.1{% endif %}
+      <pre class="home-demo-terminal" aria-hidden="true"><code><span class="term-green">$</span> {% if site.docs_unreleased %}bundle add ruby_llm --git https://github.com/crmne/ruby_llm --branch main{% else %}bundle add ruby_llm --version {{ site.gem_version }}{% endif %}
 <span class="term-green">$</span> bin/rails generate ruby_llm:install
 <span class="term-green">$</span> bin/rails db:migrate
 <span class="term-green">$</span> bin/rails generate ruby_llm:chat_ui
@@ -666,8 +668,8 @@ gem exec skill add "$(bundle show ruby_llm)" --skill rubyllm --agents coding
       {% for company in site.data.company_logos_featured %}
         {% if company.mark %}
         <div class="home-company-logo home-company-logo--layered" data-company="{{ company.name | slugify }}">
-          <img class="logo-layer-color" src="{{ company.mark | relative_url }}" alt="" aria-hidden="true">
-          <img class="logo-layer-text" src="{{ company.text | relative_url }}" alt="{{ company.name }}">
+          <img class="logo-layer-color" src="{{ company.mark | relative_url }}" {{ company.mark | image_size }} loading="lazy" alt="" aria-hidden="true">
+          <img class="logo-layer-text" src="{{ company.text | relative_url }}" {{ company.text | image_size }} loading="lazy" alt="{{ company.name }}">
         </div>
         {% elsif company.light and company.dark %}
         {% assign company_logo_light_external = false %}
@@ -679,12 +681,12 @@ gem exec skill add "$(bundle show ruby_llm)" --skill rubyllm --agents coding
           {% assign company_logo_dark_external = true %}
         {% endif %}
         <div class="home-company-logo home-company-logo--theme-swap" data-company="{{ company.name | slugify }}">
-          <img class="logo-light" src="{% if company_logo_light_external %}{{ company.light }}{% else %}{{ company.light | relative_url }}{% endif %}" alt="{{ company.name }}">
-          <img class="logo-dark" src="{% if company_logo_dark_external %}{{ company.dark }}{% else %}{{ company.dark | relative_url }}{% endif %}" alt="{{ company.name }}">
+          <img class="logo-light" src="{% if company_logo_light_external %}{{ company.light }}{% else %}{{ company.light | relative_url }}{% endif %}" {{ company.light | image_size }} loading="lazy" alt="{{ company.name }}">
+          <img class="logo-dark" src="{% if company_logo_dark_external %}{{ company.dark }}{% else %}{{ company.dark | relative_url }}{% endif %}" {{ company.dark | image_size }} loading="lazy" alt="{{ company.name }}">
         </div>
         {% else %}
         <div class="home-company-logo" data-company="{{ company.name | slugify }}">
-          <img src="{{ company.src | relative_url }}" alt="{{ company.name }}">
+          <img src="{{ company.src | relative_url }}" {{ company.src | image_size }} loading="lazy" alt="{{ company.name }}">
         </div>
         {% endif %}
       {% endfor %}
@@ -706,7 +708,7 @@ gem exec skill add "$(bundle show ruby_llm)" --skill rubyllm --agents coding
     <div class="home-company-logos home-sponsor-logos" aria-label="RubyLLM gold sponsors">
       {% for sponsor in site.data.sponsors %}
       <a class="home-company-logo" data-company="{{ sponsor.name | slugify }}" href="{{ sponsor.url }}" target="_blank" rel="sponsored noopener noreferrer">
-        <img src="{{ sponsor.logo | relative_url }}" alt="{{ sponsor.name }}" loading="lazy">
+        <img src="{{ sponsor.logo | relative_url }}" {{ sponsor.logo | image_size }} alt="{{ sponsor.name }}" loading="lazy">
       </a>
       {% endfor %}
     </div>
@@ -722,111 +724,111 @@ gem exec skill add "$(bundle show ruby_llm)" --skill rubyllm --agents coding
   <div class="home-love-stage">
     <div class="home-love-grid">
     <article class="home-love-card" data-love-card>
-      <header><img src="{{ '/assets/images/home/testimonials/people/jorge-manrubia.webp' | relative_url }}" alt="Jorge Manrubia"><strong>Jorge Manrubia</strong><small>Principal Programmer, 37signals</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/jorge-manrubia.webp' | relative_url }}" width="48" height="48" loading="lazy" alt="Jorge Manrubia"><strong>Jorge Manrubia</strong><small>Principal Programmer, 37signals</small></header>
       <p>We are using OpenAI API using the fantastic RubyLLM gem from @paolino.</p>
     </article>
     <article class="home-love-card" data-love-card>
-      <header><img src="{{ '/assets/images/home/testimonials/people/nick-warwick.webp' | relative_url }}" alt="Nick Warwick"><strong>Nick Warwick</strong><small>Founding Engineer, Nodal Networks</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/nick-warwick.webp' | relative_url }}" width="48" height="48" loading="lazy" alt="Nick Warwick"><strong>Nick Warwick</strong><small>Founding Engineer, Nodal Networks</small></header>
       <p>Our Langgraph agent was failing. I took a gamble and rebuilt it using RubyLLM. Not only was it far simpler, it performed better.</p>
     </article>
     <article class="home-love-card" data-love-card>
-      <header><img src="{{ '/assets/images/home/testimonials/people/brendan-samek.webp' | relative_url }}" alt="Brendan Samek"><strong>Brendan Samek</strong><small>Founding Software Engineer, Build Canada</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/brendan-samek.webp' | relative_url }}" width="48" height="48" loading="lazy" alt="Brendan Samek"><strong>Brendan Samek</strong><small>Founding Software Engineer, Build Canada</small></header>
       <p>It feels natural. At Yuma, serving over 100,000 end users, our unified AI interface had accumulated so much cruft. RubyLLM is so much nicer than all of that.</p>
     </article>
     <article class="home-love-card" data-love-card>
-      <header><img src="{{ '/assets/images/home/testimonials/people/aaron-snyder.webp' | relative_url }}" alt="Aaron Snyder"><strong>Aaron Snyder</strong><small>CTO / Co-founder, Corepilot</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/aaron-snyder.webp' | relative_url }}" width="48" height="48" loading="lazy" alt="Aaron Snyder"><strong>Aaron Snyder</strong><small>CTO / Co-founder, Corepilot</small></header>
       <p>We got our proof of concept up in one day and the first beta in about a week. Really impressive.</p>
     </article>
     <article class="home-love-card" data-love-card>
-      <header><img src="{{ '/assets/images/home/testimonials/people/joe-leo.webp' | relative_url }}" alt="Joe Leo"><strong>Joe Leo</strong><small>Founder/CEO, Def Method</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/joe-leo.webp' | relative_url }}" width="48" height="48" loading="lazy" alt="Joe Leo"><strong>Joe Leo</strong><small>Founder/CEO, Def Method</small></header>
       <p>Most tools add layers. This one removes them. It keeps the mental load low.</p>
     </article>
     <article class="home-love-card" data-love-card>
-      <header><img src="{{ '/assets/images/home/testimonials/people/cole-robertson.webp' | relative_url }}" alt="Cole Robertson"><strong>Cole Robertson</strong><small>Co-founder and CTO, dScribe AI</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/cole-robertson.webp' | relative_url }}" width="48" height="48" loading="lazy" alt="Cole Robertson"><strong>Cole Robertson</strong><small>Co-founder and CTO, dScribe AI</small></header>
       <p>The speed of development and the closest thing to the AI SDK in JavaScript land. Easiest Rails integration.</p>
     </article>
     <article class="home-love-card" data-love-card>
-      <header><img src="{{ '/assets/images/home/testimonials/people/philippe-lehoux.webp' | relative_url }}" alt="Philippe Lehoux"><strong>Philippe Lehoux</strong><small>CEO, Missive</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/philippe-lehoux.webp' | relative_url }}" width="48" height="48" loading="lazy" alt="Philippe Lehoux"><strong>Philippe Lehoux</strong><small>CEO, Missive</small></header>
       <p>Multi-provider support. Agentic loop support. Can we sponsor?</p>
     </article>
     <article class="home-love-card" data-love-card>
-      <header><img src="{{ '/assets/images/home/testimonials/people/hamid-siddiqui.webp' | relative_url }}" alt="Hamid Siddiqui"><strong>Hamid Siddiqui</strong><small>Founder, ReelMoney</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/hamid-siddiqui.webp' | relative_url }}" width="48" height="48" loading="lazy" alt="Hamid Siddiqui"><strong>Hamid Siddiqui</strong><small>Founder, ReelMoney</small></header>
       <p>I replaced my internal provider implementation with RubyLLM and it just worked nicely. Deleted a lot of code.</p>
     </article>
     <article class="home-love-card" data-love-card>
-      <header><img src="{{ '/assets/images/home/testimonials/people/marc-kohlbrugge.webp' | relative_url }}" alt="Marc Köhlbrugge"><strong>Marc Köhlbrugge</strong><small>Founder/CEO, Startup Jobs</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/marc-kohlbrugge.webp' | relative_url }}" width="48" height="48" loading="lazy" alt="Marc Köhlbrugge"><strong>Marc Köhlbrugge</strong><small>Founder/CEO, Startup Jobs</small></header>
       <p>Ruby-esque DSL and the right level of abstraction: composable, flexible on architecture, opinionated on lower-level implementation.</p>
     </article>
     <article class="home-love-card" data-love-card hidden>
-      <header><img src="{{ '/assets/images/home/testimonials/people/kieran-klaassen.webp' | relative_url }}" alt="Kieran Klaassen"><strong>Kieran Klaassen</strong><small>Founder, Cora</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/kieran-klaassen.webp' | relative_url }}" width="48" height="48" loading="lazy" alt="Kieran Klaassen"><strong>Kieran Klaassen</strong><small>Founder, Cora</small></header>
       <p>Love deleting code when adding a library, and love the thought that goes into the gem.</p>
     </article>
     <article class="home-love-card" data-love-card hidden>
-      <header><img src="{{ '/assets/images/home/testimonials/people/elvinas-predkelis.webp' | relative_url }}" alt="Elvinas Predkelis"><strong>Elvinas Predkelis</strong><small>CEO, Primevise</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/elvinas-predkelis.webp' | relative_url }}" width="48" height="48" loading="lazy" alt="Elvinas Predkelis"><strong>Elvinas Predkelis</strong><small>CEO, Primevise</small></header>
       <p>RubyLLM is pretty much the devise of this generation. Adding it to any application is pretty much a no-brainer.</p>
     </article>
     <article class="home-love-card" data-love-card hidden>
-      <header><img src="{{ '/assets/images/home/testimonials/people/axel-grubba.webp' | relative_url }}" alt="Axel Grubba"><strong>Axel Grubba</strong><small>Founder, Crevio</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/axel-grubba.webp' | relative_url }}" width="48" height="48" loading="lazy" alt="Axel Grubba"><strong>Axel Grubba</strong><small>Founder, Crevio</small></header>
       <p>Love how Ruby-like it feels. The DSL is incredibly intuitive and follows all the conventions I would expect.</p>
     </article>
     <article class="home-love-card" data-love-card hidden>
-      <header><img src="{{ '/assets/images/home/testimonials/people/luis-ezcurdia.webp' | relative_url }}" alt="Luis Ezcurdia"><strong>Luis Ezcurdia</strong><small>Software Engineer</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/luis-ezcurdia.webp' | relative_url }}" width="48" height="48" loading="lazy" alt="Luis Ezcurdia"><strong>Luis Ezcurdia</strong><small>Software Engineer</small></header>
       <p>RubyLLM is awesome, easy and intuitive. You should try it, even if you don’t work with Ruby.</p>
     </article>
     <article class="home-love-card" data-love-card hidden>
-      <header><img src="{{ '/assets/images/home/testimonials/people/chris-sonnier.webp' | relative_url }}" alt="Chris Sonnier"><strong>Chris Sonnier</strong><small>Ruby/Rails Engineer</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/chris-sonnier.webp' | relative_url }}" width="48" height="48" loading="lazy" alt="Chris Sonnier"><strong>Chris Sonnier</strong><small>Ruby/Rails Engineer</small></header>
       <p>If you can find a better Ruby AI library than RubyLLM, I will only write JavaScript for the rest of the year!</p>
     </article>
     <article class="home-love-card" data-love-card hidden>
-      <header><img src="{{ '/assets/images/home/testimonials/people/mauro-eldritch.webp' | relative_url }}" alt="Mauro Eldritch"><strong>Mauro Eldritch</strong><small>Founder, BCA LTD</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/mauro-eldritch.webp' | relative_url }}" width="48" height="48" loading="lazy" alt="Mauro Eldritch"><strong>Mauro Eldritch</strong><small>Founder, BCA LTD</small></header>
       <p>We built our own quick and dirty wrapper, then your project came up and rocked it.</p>
     </article>
     <article class="home-love-card" data-love-card hidden>
-      <header><img src="{{ '/assets/images/home/testimonials/people/ruslan-leteyski.webp' | relative_url }}" alt="Ruslan Leteyski"><strong>Ruslan Leteyski</strong><small>CEO, Zipchat</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/ruslan-leteyski.webp' | relative_url }}" width="48" height="48" loading="lazy" alt="Ruslan Leteyski"><strong>Ruslan Leteyski</strong><small>CEO, Zipchat</small></header>
       <p>Implementation-agnostic access to models helps us simplify our flow and experiment with agentic systems.</p>
     </article>
     <article class="home-love-card" data-love-card hidden>
-      <header><img src="{{ '/assets/images/home/testimonials/people/jonathan-satovsky.webp' | relative_url }}" alt="Jonathan Satovsky"><strong>Jonathan Satovsky</strong><small>CEO, FinDash</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/jonathan-satovsky.webp' | relative_url }}" width="48" height="48" loading="lazy" alt="Jonathan Satovsky"><strong>Jonathan Satovsky</strong><small>CEO, FinDash</small></header>
       <p>When a tool removes noise instead of adding it, you get to stay focused on the real work.</p>
     </article>
     <article class="home-love-card" data-love-card hidden>
-      <header><img src="{{ '/assets/images/home/testimonials/people/rich-chetwynd.webp' | relative_url }}" alt="Rich Chetwynd"><strong>Rich Chetwynd</strong><small>Generalist, Bunny Inc</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/rich-chetwynd.webp' | relative_url }}" width="48" height="48" loading="lazy" alt="Rich Chetwynd"><strong>Rich Chetwynd</strong><small>Generalist, Bunny Inc</small></header>
       <p>Super easy way to start adding magic to our app. Love the speed of improvements.</p>
     </article>
     <article class="home-love-card" data-love-card hidden>
-      <header><img src="{{ '/assets/images/home/testimonials/people/ale-solano.webp' | relative_url }}" alt="Ale Solano"><strong>Ale Solano</strong><small>Software Engineer, OpenRegulatory</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/ale-solano.webp' | relative_url }}" width="48" height="48" loading="lazy" alt="Ale Solano"><strong>Ale Solano</strong><small>Software Engineer, OpenRegulatory</small></header>
       <p>Just having a framework to structure all our LLM processes is gigantic value. Tool integration works like a charm.</p>
     </article>
     <article class="home-love-card" data-love-card hidden>
-      <header><img src="{{ '/assets/images/home/testimonials/people/eric-wright.webp' | relative_url }}" alt="Eric Wright"><strong>Eric Wright</strong><small>Chief Content Officer, GTM Delta</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/eric-wright.webp' | relative_url }}" width="48" height="48" loading="lazy" alt="Eric Wright"><strong>Eric Wright</strong><small>Chief Content Officer, GTM Delta</small></header>
       <p>It just works. I do not want to keep dealing with wrappers and fast-moving provider changes.</p>
     </article>
     <article class="home-love-card" data-love-card hidden>
-      <header><img src="{{ '/assets/images/home/testimonials/people/hadrien-blanc.webp' | relative_url }}" alt="Hadrien Blanc"><strong>Hadrien Blanc</strong><small>Freelancer, Hadrien Blanc Innovation</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/hadrien-blanc.webp' | relative_url }}" width="48" height="48" loading="lazy" alt="Hadrien Blanc"><strong>Hadrien Blanc</strong><small>Freelancer, Hadrien Blanc Innovation</small></header>
       <p>I delivered a lot of value to my customers because of your work.</p>
     </article>
     <article class="home-love-card" data-love-card hidden>
-      <header><img src="{{ '/assets/images/home/testimonials/people/dewayne-vanhoozer.webp' | relative_url }}" alt="Dewayne VanHoozer"><strong>Dewayne VanHoozer</strong><small>The MadBomber, MadBomber Software</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/dewayne-vanhoozer.webp' | relative_url }}" width="48" height="48" loading="lazy" alt="Dewayne VanHoozer"><strong>Dewayne VanHoozer</strong><small>The MadBomber, MadBomber Software</small></header>
       <p>Letting someone else manage the fast-moving infrastructure of the LLM API landscape allowed me to focus on applications.</p>
     </article>
     <article class="home-love-card" data-love-card hidden>
-      <header><img src="{{ '/assets/images/home/testimonials/people/john-desilva.webp' | relative_url }}" alt="John DeSilva"><strong>John DeSilva</strong><small>Chief Architect, Revela</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/john-desilva.webp' | relative_url }}" width="48" height="48" loading="lazy" alt="John DeSilva"><strong>John DeSilva</strong><small>Chief Architect, Revela</small></header>
       <p>Really solid overall, well thought out, and seamless across Rails model-backed chats and one-off chats.</p>
     </article>
     <article class="home-love-card" data-love-card hidden>
-      <header><img src="{{ '/assets/images/home/testimonials/people/angel-mendez.webp' | relative_url }}" alt="Angel Mendez"><strong>Angel Mendez</strong><small>CEO, Yato</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/angel-mendez.webp' | relative_url }}" width="48" height="48" loading="lazy" alt="Angel Mendez"><strong>Angel Mendez</strong><small>CEO, Yato</small></header>
       <p>My clients and my clients&#39; clients are very happy because we can iterate and improve our system quickly.</p>
     </article>
     <article class="home-love-card" data-love-card hidden>
-      <header><img src="{{ '/assets/images/home/testimonials/people/nina-revko.webp' | relative_url }}" alt="Nina Revko"><strong>Nina Revko</strong><small>Senior Software Engineer, Instrumentl</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/nina-revko.webp' | relative_url }}" width="48" height="48" loading="lazy" alt="Nina Revko"><strong>Nina Revko</strong><small>Senior Software Engineer, Instrumentl</small></header>
       <p>RubyLLM made the future of Ruby and AI feel easier, more accessible, and completely within reach.</p>
     </article>
     <article class="home-love-card" data-love-card hidden>
-      <header><img src="{{ '/assets/images/home/testimonials/people/daniel-friis.webp' | relative_url }}" alt="Daniel Friis"><strong>Daniel Friis</strong><small>Creator, Schematist</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/daniel-friis.webp' | relative_url }}" width="48" height="48" loading="lazy" alt="Daniel Friis"><strong>Daniel Friis</strong><small>Creator, Schematist</small></header>
       <p>Foundational tooling for working with AI in Ruby and Rails applications.</p>
     </article>
     <article class="home-love-card" data-love-card hidden>
-      <header><img src="{{ '/assets/images/home/testimonials/people/giovapanasiti.webp' | relative_url }}" alt="Giovanni Panasiti"><strong>Giovanni Panasiti</strong><small>Co-founder, Consultala</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/giovapanasiti.webp' | relative_url }}" width="48" height="48" loading="lazy" alt="Giovanni Panasiti"><strong>Giovanni Panasiti</strong><small>Co-founder, Consultala</small></header>
       <p>I’m kinda fitting RubyLLM into all of my projects.</p>
     </article>
     </div>

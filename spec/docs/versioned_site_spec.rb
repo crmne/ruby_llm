@@ -152,21 +152,34 @@ RSpec.describe 'Versioned documentation site', type: :task do
   end
 
   describe 'versioned metadata' do
+    let(:versions) do
+      { 'current' => 'Next (unreleased)',
+        'items' => [{ 'id' => 'stable', 'title' => '2.1.1 (stable)' },
+                    { 'id' => 'next', 'title' => 'Next (unreleased)' },
+                    { 'id' => 'v1', 'title' => '1.16.0' }] }
+    end
+
+    before do
+      stub_const('Jekyll::Hooks', double(register: nil))
+      load File.join(root, 'docs/_plugins/versioned_docs.rb')
+    end
+
+    def rendered_page(output, channel:, title: 'RubyLLM')
+      site = double(config: { 'title' => title, 'docs_channel' => channel })
+      Struct.new(:site, :output_ext, :output).new(site, '.html', output)
+    end
+
     it 'keeps canonicals and API discovery within the selected version while retaining the live registry URL' do
       pages = [double(data: { 'canonical_url' => 'https://rubyllm.com/available-models/' }),
                double(data: { 'canonical_url' => 'https://example.com/reference/' })]
       config = { 'url' => 'https://rubyllm.com', 'baseurl' => '/ruby_llm/next', 'jekyll_vitepress' => {
         'llms' => { 'details' => 'https://rubyllm.com/api/index.md https://rubyllm.com/models.json' }
       } }
-      jekyll_site = double(config:, pages:, collections: {},
-                           data: { 'versions' => { 'current' => 'Next (unreleased)' } })
-      hooks = stub_const('Jekyll::Hooks', double)
-      allow(hooks).to receive(:register) do |*_args, **_options, &callback|
-        callback.call(jekyll_site)
-      end
+      jekyll_site = double(config:, pages:, collections: {}, data: { 'versions' => versions })
 
-      load File.join(root, 'docs/_plugins/versioned_docs.rb')
+      VersionedDocs.prepare(jekyll_site)
 
+      expect(config['docs_channel']).to eq('next')
       expect(pages.first.data['canonical_url']).to eq('/available-models/')
       expect(pages.last.data['canonical_url']).to eq('https://example.com/reference/')
       expect(config['docs_unreleased']).to be(true)
@@ -174,6 +187,52 @@ RSpec.describe 'Versioned documentation site', type: :task do
         'description' => 'Developer documentation for RubyLLM Next (unreleased).',
         'details' => 'https://rubyllm.com/ruby_llm/next/api/index.md https://rubyllm.com/models.json'
       )
+    end
+
+    it 'names the docs version in the page title and the titles link previews show' do
+      page = rendered_page(<<~HTML, channel: 'next')
+        <html><head><title>Chat | RubyLLM</title>
+        <meta property="og:title" content="Chat"><meta name="twitter:title" content="Chat">
+        </head><body><div id="vp-page-state" hidden data-title="Chat | RubyLLM"></div>
+        <svg><title>Copy</title></svg></body></html>
+      HTML
+
+      VersionedDocs.label_titles(page)
+      head = Nokogiri::HTML(page.output)
+
+      expect(head.at_css('head title').text).to eq('Chat | RubyLLM Next')
+      expect(head.at_css('meta[property="og:title"]')['content']).to eq('Chat | RubyLLM Next')
+      expect(head.at_css('meta[name="twitter:title"]')['content']).to eq('Chat | RubyLLM Next')
+      expect(head.at_css('#vp-page-state')['data-title']).to eq('Chat | RubyLLM Next')
+      expect(head.at_css('svg title').text).to eq('Copy')
+    end
+
+    it 'puts the version after the site name when a title starts with it' do
+      expect(VersionedDocs.labeled_title('RubyLLM', 'RubyLLM', 'RubyLLM v1')).to eq('RubyLLM v1')
+      expect(VersionedDocs.labeled_title('RubyLLM: the Ruby AI framework', 'RubyLLM', 'RubyLLM Next'))
+        .to eq('RubyLLM Next: the Ruby AI framework')
+      expect(VersionedDocs.labeled_title('RubyLLM | One framework', 'RubyLLM', 'RubyLLM v1'))
+        .to eq('RubyLLM v1 | One framework')
+      expect(VersionedDocs.labeled_title('RubyLLMs explained', 'RubyLLM', 'RubyLLM v1'))
+        .to eq('RubyLLMs explained | RubyLLM v1')
+    end
+
+    it 'leaves stable titles alone' do
+      page = rendered_page('<html><head><title>Chat | RubyLLM</title></head></html>', channel: 'stable')
+
+      expect { VersionedDocs.label_titles(page) }.not_to(change(page, :output))
+    end
+
+    it 'does not repeat the site name after a title that already starts with it' do
+      home = double(data: { '_seo' => { 'page_title' => 'RubyLLM: the Ruby AI framework',
+                                        'title' => 'RubyLLM: the Ruby AI framework | RubyLLM' } })
+      chat = double(data: { '_seo' => { 'page_title' => 'Chat', 'title' => 'Chat | RubyLLM' } })
+      site = double(config: { 'title' => 'RubyLLM' }, pages: [home, chat], collections: {})
+
+      VersionedDocs.keep_branded_titles(site)
+
+      expect(home.data.dig('_seo', 'title')).to eq('RubyLLM: the Ruby AI framework')
+      expect(chat.data.dig('_seo', 'title')).to eq('Chat | RubyLLM')
     end
   end
 
@@ -209,6 +268,21 @@ RSpec.describe 'Versioned documentation site', type: :task do
                                                                       'https://rubyllm.com/ruby_llm/next/upgrading/',
                                                                       'https://github.com/crmne/ruby_llm'
                                                                     ])
+    end
+
+    it 'names the docs version in API page titles outside the stable docs' do
+      write_page('next/api/RubyLLM/Chat.html', <<~HTML)
+        <html><head><title>class RubyLLM::Chat - RubyLLM</title>
+        <meta property="og:title" content="class RubyLLM::Chat - RubyLLM"></head><body></body></html>
+      HTML
+      write_page('api/RubyLLM/Chat.html', '<html><head><title>class RubyLLM::Chat - RubyLLM</title></head></html>')
+      run_script('postprocess_api_seo.rb', File.join(site, 'next/api'), 'https://rubyllm.com/next')
+      run_script('postprocess_api_seo.rb', File.join(site, 'api'), 'https://rubyllm.com')
+
+      expect(html('next/api/RubyLLM/Chat.html').at_css('title').text).to eq('class RubyLLM::Chat - RubyLLM Next')
+      expect(html('next/api/RubyLLM/Chat.html').at_css('meta[property="og:title"]')['content'])
+        .to eq('class RubyLLM::Chat - RubyLLM Next')
+      expect(html('api/RubyLLM/Chat.html').at_css('title').text).to eq('class RubyLLM::Chat - RubyLLM')
     end
   end
 
