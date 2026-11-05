@@ -14,7 +14,7 @@ module RubyLLM
 
       # A declared callback: a method name or a block, with the +if:+ and
       # +unless:+ conditions that guard it.
-      class Callback
+      class Callback # :nodoc:
         def initialize(hook, method_name, block, conditions)
           unless method_name.nil? ^ block.nil?
             raise ArgumentError, "#{hook} takes a method name or a block, not both or neither"
