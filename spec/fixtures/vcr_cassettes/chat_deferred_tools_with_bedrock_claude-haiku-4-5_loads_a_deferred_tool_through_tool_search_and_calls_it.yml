@@ -1,0 +1,125 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/invoke
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"type":"text","text":"What
+        is the weather in Berlin right now? Use your tools."}]}],"max_tokens":64000,"tools":[{"name":"weather_lookup","description":"Looks
+        up the current weather for a city","input_schema":{"type":"object","properties":{"city":{"type":"string","description":"City
+        name"}},"required":["city"],"additionalProperties":false,"strict":true},"defer_loading":true},{"name":"stock_price","description":"Looks
+        up the current price of a stock ticker","input_schema":{"type":"object","properties":{"ticker":{"type":"string","description":"Ticker
+        symbol"}},"required":["ticker"],"additionalProperties":false,"strict":true},"defer_loading":true},{"type":"tool_search_tool_bm25_20251119","name":"tool_search_tool_bm25"}],"anthropic_version":"bedrock-2023-05-31","anthropic_beta":["tool-search-tool-2025-10-19"]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Content-Type:
+      - application/json
+      X-Amz-Date:
+      - 20261105T194723Z
+      X-Amz-Content-Sha256:
+      - 3856be3cdcfe6f32ad72304087cdbfac047b8aa6d284298ec2c77186884ee553
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 05 Nov 2026 19:47:25 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1265'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - b69b3ba0-b042-42b0-b3a8-f4e09f2d4baf
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '1215'
+      X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
+      - '0'
+      X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
+      - '0'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '171'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '1679'
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_7vjqrzqquuaeqe5r5bmpyoxm7uorbyrqieywyvb2cjcknptnajga","type":"message","role":"assistant","content":[{"type":"text","text":"I''ll
+        search for a tool that can help me get the current weather in Berlin."},{"type":"server_tool_use","id":"srvtoolu_bdrk_01CuhpBbPx9WmHtCnPwHk3tc","name":"tool_search_tool_bm25","input":{"query":"current
+        weather Berlin","limit":5}},{"type":"tool_search_tool_result","tool_use_id":"srvtoolu_bdrk_01CuhpBbPx9WmHtCnPwHk3tc","content":{"type":"tool_search_tool_search_result","tool_references":[{"type":"tool_reference","tool_name":"weather_lookup"},{"type":"tool_reference","tool_name":"stock_price"}]}},{"type":"text","text":"Great!
+        I found a weather lookup tool. Let me use it to get the current weather in
+        Berlin."},{"type":"tool_use","id":"toolu_bdrk_01AAHAB4FNdRRXcXgo4FqaJL","name":"weather_lookup","input":{"city":"Berlin"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":1679,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":171,"server_tool_use":{"web_search_requests":0},"service_tier":"standard"}}'
+  recorded_at: Thu, 05 Nov 2026 19:47:25 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/invoke
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"type":"text","text":"What
+        is the weather in Berlin right now? Use your tools."}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        search for a tool that can help me get the current weather in Berlin."},{"type":"server_tool_use","id":"srvtoolu_bdrk_01CuhpBbPx9WmHtCnPwHk3tc","name":"tool_search_tool_bm25","input":{"query":"current
+        weather Berlin","limit":5}},{"type":"tool_search_tool_result","tool_use_id":"srvtoolu_bdrk_01CuhpBbPx9WmHtCnPwHk3tc","content":{"type":"tool_search_tool_search_result","tool_references":[{"type":"tool_reference","tool_name":"weather_lookup"},{"type":"tool_reference","tool_name":"stock_price"}]}},{"type":"text","text":"Great!
+        I found a weather lookup tool. Let me use it to get the current weather in
+        Berlin."},{"type":"tool_use","id":"toolu_bdrk_01AAHAB4FNdRRXcXgo4FqaJL","name":"weather_lookup","input":{"city":"Berlin"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_01AAHAB4FNdRRXcXgo4FqaJL","content":[{"type":"text","text":"Sunny
+        and 22°C in Berlin"}]}]}],"max_tokens":64000,"tools":[{"name":"weather_lookup","description":"Looks
+        up the current weather for a city","input_schema":{"type":"object","properties":{"city":{"type":"string","description":"City
+        name"}},"required":["city"],"additionalProperties":false,"strict":true},"defer_loading":true},{"name":"stock_price","description":"Looks
+        up the current price of a stock ticker","input_schema":{"type":"object","properties":{"ticker":{"type":"string","description":"Ticker
+        symbol"}},"required":["ticker"],"additionalProperties":false,"strict":true},"defer_loading":true},{"type":"tool_search_tool_bm25_20251119","name":"tool_search_tool_bm25"}],"anthropic_version":"bedrock-2023-05-31","anthropic_beta":["tool-search-tool-2025-10-19"]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Content-Type:
+      - application/json
+      X-Amz-Date:
+      - 20261105T194725Z
+      X-Amz-Content-Sha256:
+      - 399bac57bab2c187fd8f714a21a2bcb74b3a09a883eb53d721b7ac46b7574547
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 05 Nov 2026 19:47:26 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '585'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 83cd0278-6fd2-4a0a-a604-3bcbbe910fc7
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '554'
+      X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
+      - '0'
+      X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
+      - '0'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '27'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '1071'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtb2RlbCI6ImFudGhyb3BpYy5jbGF1ZGUtaGFpa3UtNC01LTIwMjUxMDAxLXYxOjAiLCJpZCI6Im1zZ19iZHJrX3lqdHV2dzdoZ29oYnNndXJnZGR3eW1wZndiamdrMnM2dmo1d2gyYndkem91eG1oNng2Y2EiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiBpcyAqKnN1bm55IHdpdGggYSB0ZW1wZXJhdHVyZSBvZiAyMsKwQyAoYXBwcm94aW1hdGVseSA3MsKwRikqKi4ifV0sImNvbnRhaW5lciI6bnVsbCwic3RvcF9yZWFzb24iOiJlbmRfdHVybiIsInN0b3Bfc2VxdWVuY2UiOm51bGwsInN0b3BfZGV0YWlscyI6bnVsbCwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjoxMDcxLCJjYWNoZV9jcmVhdGlvbl9pbnB1dF90b2tlbnMiOjAsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjowLCJjYWNoZV9jcmVhdGlvbiI6eyJlcGhlbWVyYWxfNW1faW5wdXRfdG9rZW5zIjowLCJlcGhlbWVyYWxfMWhfaW5wdXRfdG9rZW5zIjowfSwib3V0cHV0X3Rva2VucyI6MjcsInNlcnZpY2VfdGllciI6InN0YW5kYXJkIn19
+  recorded_at: Thu, 05 Nov 2026 19:47:26 GMT
+recorded_with: VCR 6.4.1

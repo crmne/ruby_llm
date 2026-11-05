@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Agents
+seo:
+  title: AI Agents in Ruby
 nav_order: 5
 has_children: true
 description: Give agents instructions, tools, and schemas in a Ruby class, then use them in scripts, services, and Rails jobs.
@@ -18,6 +20,8 @@ After reading this guide, you will know:
 * How runtime context works (`chat`, `inputs`, and lazy evaluation)
 * How prompt conventions work in `app/prompts`
 * Which methods are available on agent instances
+* How to declare callbacks once for every chat of an agent
+* How to hand work to another agent as a subagent
 * How to handle errors for a whole agent with `rescue_from`
 
 ## What Are Agents?
@@ -88,6 +92,7 @@ For example, `model` maps to `RubyLLM.chat(model:, provider:, ...)`, `tools` map
 * `citations` (see [Citations]({% link _core_features/citations.md %}))
 * `caching` (see [Prompt Caching]({% link _core_features/prompt-caching.md %}))
 * `end_user` (see [Request Control]({% link _core_features/chat-request-control.md %}#identifying-end-users))
+* `owner` (see [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}#one-shot-operations))
 * `compaction` (see [Request Control]({% link _core_features/chat-request-control.md %}#compacting-long-conversations))
 * `code_execution` (see [Code Execution]({% link _advanced/code-execution.md %}))
 * `file_store` (see [File Stores]({% link _core_features/file-stores.md %}#agents))
@@ -386,18 +391,75 @@ models own their message association.
 Delegated methods include:
 
 * `model`, `model_id`, `provider`, `messages`, `tools`, `provider_tools`, `provider_options`, `headers`, `schema`
-* `concurrency`, `caching`, `compaction`, `end_user`, `fallbacks`
+* `concurrency`, `caching`, `compaction`, `end_user`, `owner`, `fallbacks`
 * `tokens`, `cost`, `count_tokens`, `render`
 * `ask`, `say`, `complete`, `complete?`, `ask_later`, `generate`, `run_tools`, `step`
-* `cancel`, `cancelled?`, `waiting?`, `approve`, `deny`, `awaiting_approval?`, `pending_approvals`
-* `queue`, `queued_messages`, `unqueue`, `join_queued_messages`
+* `cancel`, `cancelled?`, `waiting?`, `approve`, `deny`, `awaiting_approval?`, `pending_approvals`, `awaiting_person?`
+* `queue`, `queued_messages`, `withdraw`, `join_queued_messages`
 * `add_message`, `each`
 * `cache_until_here`, `with_tools`, `with_provider_tools`, `with_tool_options`
-* `with_model`, `with_instructions`, `with_temperature`, `with_max_output_tokens`, `with_thinking`, `with_citations`, `with_end_user`, `with_compaction`, `with_context`
+* `with_model`, `with_instructions`, `with_temperature`, `with_max_output_tokens`, `with_thinking`, `with_citations`, `with_end_user`, `with_owner`, `with_compaction`, `with_context`
 * `with_caching`, `with_provider_options`, `with_headers`, `with_schema`, `with_fallbacks`
-* `before_request`, `before_message`, `after_message`, `before_tool_call`, `after_tool_result`, `after_tool_progress`, `before_fallback`, `after_fallback`, `after_queue`, `around_join`, `after_join`, `after_unqueue`
+* `before_request`, `before_message`, `after_message`, `before_tool_call`, `after_tool_result`, `after_tool_progress`, `before_fallback`, `after_fallback`, `around_join`
 
 You can always access the wrapped chat object directly via `agent.chat`.
+
+## Callbacks
+
+Declare a [chat callback]({% link _core_features/chat-callbacks.md %}) once on the agent, and every chat it builds or finds gets it, including Rails records from `find`. Name a method, as a Rails model does, or pass a block:
+
+```ruby
+class SupportAgent < ApplicationAgent
+  inputs :ticket
+
+  after_message :log_reply, if: -> { ticket.urgent? }
+  before_tool_call { |tool_call| Rails.logger.info "Calling #{tool_call.name}" }
+
+  private
+
+  def log_reply(message)
+    ticket.notes.create!(body: message.content)
+  end
+end
+```
+
+The method or block runs on the agent instance, so it reads the agent's inputs and `chat`, and receives the callback's arguments when it takes them. `if:` and `unless:` take a method name, a lambda, or an array of them. Every chat callback has a macro: `before_request`, `before_message`, `after_message`, `before_tool_call`, `after_tool_result`, `after_tool_progress`, `before_fallback`, `after_fallback`, and `after_file_write`. Subclasses inherit the callbacks declared when they are defined, so an `ApplicationAgent` can declare the ones every agent shares. For chats from `SupportAgent.chat` and `SupportAgent.find`, the agent the callbacks run on is set up without calling `initialize`, as for `rescue_from`, so read inputs and `chat` rather than instance variables your `initialize` sets. `around_join` works the same way for [queued messages]({% link _advanced/agentic-workflows.md %}#joining-queued-messages).
+
+## Subagents
+
+An agent class works wherever tools go. The model hands it a task, a fresh instance of the agent does the work in its own conversation, and only its answer comes back, so a long search through files or pages doesn't fill the calling chat:
+
+```ruby
+class ResearchAgent < ApplicationAgent
+  description "Researches a question across the docs and reports back with links"
+  inputs :product
+  tools SearchDocs, ReadPage
+end
+
+class SupportAgent < ApplicationAgent
+  tools LookupOrder, ResearchAgent
+end
+```
+
+The tool is named after the agent, `research_agent`, or `billing_research_agent` for `Billing::ResearchAgent`, and the model reads its `description`. It takes a `task` and the agent's inputs as parameters. Fix inputs yourself with `to_tool`, and the model fills only the rest:
+
+```ruby
+chat.with_tools(ResearchAgent.to_tool(product: current_product))
+```
+
+Each call runs a new agent instance under the [owner]({% link _core_features/cost-and-usage-tracking.md %}#one-shot-operations) of the chat that called it, and returns the content of the agent's last answer.
+
+When the subagent waits on a person, for an approval or an answer, the call pauses on a `RubyLLM::AgentTask`, and the calling chat is `awaiting_person?`. The task's `agent` is the subagent, so you can settle what it waits for, then `complete` the calling chat to carry it on:
+
+```ruby
+chat.ask "Clear the cache for order 42"
+
+task = chat.pending_tasks.first
+task.agent.pending_approvals.each { |tool_call| task.agent.approve(tool_call) }
+chat.complete
+```
+
+Cancelling the calling chat cancels a subagent it waits on. The subagent lives in the process that ran it. A chat resumed in another process, such as a later job, reports the subagent's work as lost to the model, which can start it again.
 
 ## Handling Errors with `rescue_from`
 

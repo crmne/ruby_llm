@@ -1,6 +1,8 @@
 ---
 layout: default
 title: MCP Client
+seo:
+  title: MCP Client for Ruby
 nav_order: 3
 description: Connect your chats and agents to Model Context Protocol servers and use their tools, resources, and prompts
 ---

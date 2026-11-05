@@ -70,7 +70,7 @@ RSpec.describe RubyLLM::ActiveRecord::Usage do
     other = Chat.create!(model: model_for(:anthropic))
 
     expect do
-      RubyLLM.with_usage_owner(owner) do
+      RubyLLM.with_owner(owner) do
         embed
         embed(owner: other)
       end
@@ -155,7 +155,7 @@ RSpec.describe RubyLLM::ActiveRecord::Usage do
     allow(video_protocol).to receive(:refresh_video_job).and_return({ status: :completed })
     allow(research_protocol).to receive(:refresh_research_job)
       .and_return(status: :completed, tokens: RubyLLM::Tokens.new(input: 1200, output: 300, reported_cost: 0.42))
-    video, research = RubyLLM.with_usage_owner(owner) do
+    video, research = RubyLLM.with_owner(owner) do
       [RubyLLM::VideoJob.new(id: 'operations/op-1', protocol: video_protocol, model: 'veo-3.1-fast-generate-preview'),
        RubyLLM::ResearchJob.new(id: 'job-1', provider: :vertexai, agent: 'agent-id', protocol: research_protocol,
                                 status: :pending)]
@@ -181,10 +181,21 @@ RSpec.describe RubyLLM::ActiveRecord::Usage do
     stub_chat_reply
     chat = Chat.create!(model: model_for(:anthropic))
 
-    expect { RubyLLM.with_usage_owner(owner) { chat.ask('Hello') } }.to change(described_class, :count).by(1)
+    expect { RubyLLM.with_owner(owner) { chat.ask('Hello') } }.to change(described_class, :count).by(1)
 
     expect(chat.reload.ruby_llm_usages.sole).to have_attributes(operation: 'chat', chat:, owner:,
                                                                 message: chat.messages.last, input_tokens: 9)
+  end
+
+  it 'writes the attempts of a persisted chat with its own owner, linked to both' do
+    stub_chat_reply
+    chat = Chat.create!(model: model_for(:anthropic))
+
+    expect(chat.with_owner(owner)).to be(chat)
+    expect(chat.owner).to eq(owner)
+    expect { chat.ask('Hello') }.to change(described_class, :count).by(1)
+
+    expect(chat.reload.ruby_llm_usages.sole).to have_attributes(operation: 'chat', chat:, owner:)
   end
 
   it 'keeps the owner of each turn when different people use the same chat' do
@@ -192,8 +203,8 @@ RSpec.describe RubyLLM::ActiveRecord::Usage do
     chat = Chat.create!(model: model_for(:anthropic))
     other = Chat.create!(model: model_for(:anthropic))
 
-    RubyLLM.with_usage_owner(owner) { chat.ask('Hello') }
-    RubyLLM.with_usage_owner(other) { chat.reload.ask('Hello again') }
+    RubyLLM.with_owner(owner) { chat.ask('Hello') }
+    RubyLLM.with_owner(other) { chat.reload.ask('Hello again') }
     chat.reload.ask('Goodbye')
 
     expect(chat.reload.ruby_llm_usages.map(&:owner)).to eq([owner, other, nil])
@@ -204,7 +215,7 @@ RSpec.describe RubyLLM::ActiveRecord::Usage do
       .to_return(json_response({ error: { type: 'api_error', message: 'Boom' } }, status: 500))
     chat = Chat.create!(model: model_for(:anthropic))
 
-    expect { RubyLLM.with_usage_owner(owner) { chat.ask('Hello') } }.to raise_error(RubyLLM::ServerError)
+    expect { RubyLLM.with_owner(owner) { chat.ask('Hello') } }.to raise_error(RubyLLM::ServerError)
 
     expect(chat.reload.ruby_llm_usages.sole).to have_attributes(owner:, status: 'failed', message: nil)
   end
@@ -222,7 +233,7 @@ RSpec.describe RubyLLM::ActiveRecord::Usage do
       raise error
     end
 
-    expect { RubyLLM.with_usage_owner(owner) { chat.ask('Hello') } }.to raise_error(RubyLLM::CancelledError)
+    expect { RubyLLM.with_owner(owner) { chat.ask('Hello') } }.to raise_error(RubyLLM::CancelledError)
 
     expect(chat.reload.ruby_llm_usages.sole).to have_attributes(owner:, status: 'cancelled', message: nil,
                                                                 input_tokens: 9, output_tokens: 1)
@@ -231,7 +242,7 @@ RSpec.describe RubyLLM::ActiveRecord::Usage do
   it 'attributes the rows of a chat without a record to the owner' do
     stub_chat_reply
 
-    RubyLLM.with_usage_owner(owner) { RubyLLM.chat(model: model_for(:anthropic)).ask('Hello') }
+    RubyLLM.with_owner(owner) { RubyLLM.chat(model: model_for(:anthropic)).ask('Hello') }
 
     expect(rows_for(owner).sole).to have_attributes(operation: 'chat', chat_id: nil, output_tokens: 2)
   end
@@ -241,7 +252,7 @@ RSpec.describe RubyLLM::ActiveRecord::Usage do
     stub_embedding
     chat = Chat.create!(model: model_for(:anthropic))
 
-    RubyLLM.with_usage_owner('user-42') do
+    RubyLLM.with_owner('user-42') do
       expect(chat.ask('Hello').content).to eq('Hi')
       embed
     end

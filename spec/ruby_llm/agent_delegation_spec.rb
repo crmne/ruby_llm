@@ -10,6 +10,7 @@ RSpec.describe RubyLLM::Agent do
                   .with_provider_tools(:web_search)
                   .with_tool_options(concurrency: :fibers)
                   .with_end_user('customer-42')
+                  .with_owner(:alice)
                   .with_fallbacks(model_for(:openai, :alternate_chat))
     chat.add_message(role: :user, content: 'Hello')
     agent = Class.new(described_class).new(chat:)
@@ -18,6 +19,8 @@ RSpec.describe RubyLLM::Agent do
     expect(agent.provider_tools).to eq(chat.provider_tools)
     expect(agent.concurrency).to eq(:fibers)
     expect(agent.end_user).to eq('customer-42')
+    expect(agent.owner).to eq(:alice)
+    expect(agent.with_owner(:bob)).to be(chat)
     expect(agent.fallbacks).to eq(chat.fallbacks)
     expect(agent.cache_until_here).to be(chat)
     expect(agent).not_to be_waiting
@@ -30,15 +33,20 @@ RSpec.describe RubyLLM::Agent do
     expect(Class.new(described_class).new(chat:).model_id).to eq(chat.model.id)
   end
 
-  it 'delegates the queue callbacks to the underlying chat' do
+  it 'delegates around_join to the underlying chat' do
     chat = RubyLLM.chat(model: model_for(:openai))
     agent = Class.new(described_class).new(chat:)
+    allow(chat).to receive(:around_join).and_return(chat)
 
-    %i[after_queue around_join after_join after_unqueue].each do |callback|
-      allow(chat).to receive(callback).and_return(chat)
+    expect(agent.around_join { nil }).to be(chat)
+  end
 
-      expect(agent.public_send(callback) { nil }).to be(chat)
-    end
+  it 'delegates withdraw to the underlying chat' do
+    chat = RubyLLM.chat(model: model_for(:openai))
+    queued = chat.queue('Hello')
+
+    expect(Class.new(described_class).new(chat:).withdraw(queued)).to be(true)
+    expect(chat.queued_messages).to be_empty
   end
 
   it 'delegates join_queued_messages to the underlying chat' do

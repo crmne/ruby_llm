@@ -183,22 +183,21 @@ A run that takes longer than its `max_run_time` counts as crashed, and another p
 
 ## Pausing a Tool Call
 
-Some calls can't finish while the chat waits. A tool that hands a job to another agent may have to wait for a person to approve a change, and that can take hours. Return a `RubyLLM::Task` from `execute`, and the chat pauses the call the way it pauses for [an approval]({% link _tools/tool-execution.md %}#requiring-approval), so no process waits for it. Then implement `resume`, which carries the call on:
+Some calls can't finish while the chat waits. A contract sent for signature may wait days for a person to sign it. Return a `RubyLLM::Task` from `execute`, and the chat pauses the call the way it pauses for [an approval]({% link _tools/tool-execution.md %}#requiring-approval), so no process waits for it. Then implement `resume`, which carries the call on:
 
 ```ruby
-class RunSubAgent < RubyLLM::Tool
-  description "Hands a job to a sub-agent"
+class RequestSignature < RubyLLM::Tool
+  description "Sends a contract for signature and reports when it is signed"
 
-  def execute(job:)
-    run = SubAgentRun.start(job)
-    return run.answer if run.finished?
-
-    RubyLLM::Task.new(status: :input_required, status_message: "Waiting for approval", data: { "run_id" => run.id })
+  def execute(contract_id:)
+    envelope = Signatures.send_for_signature(Contract.find(contract_id))
+    RubyLLM::Task.new(status: :input_required, status_message: "Waiting for the signature",
+                      data: { "envelope_id" => envelope.id })
   end
 
-  def resume(task, job:)
-    run = SubAgentRun.find(task.data["run_id"]).continue
-    run.finished? ? run.answer : task
+  def resume(task, contract_id:)
+    envelope = Signatures.find(task.data["envelope_id"])
+    envelope.signed? ? "Signed on #{envelope.signed_on}" : task
   end
 end
 ```
@@ -206,12 +205,12 @@ end
 `ask` and `complete` return while the call waits. The chat is `waiting?` and `awaiting_tasks?`, and `pending_tasks` returns the tasks:
 
 ```ruby
-chat = RubyLLM.chat.with_tools(RunSubAgent)
-chat.ask "Deploy the new pricing page"
+chat = RubyLLM.chat.with_tools(RequestSignature)
+chat.ask "Send contract 42 for signature"
 
 chat.awaiting_tasks?               # => true
 task = chat.pending_tasks.first
-task.status_message                # => "Waiting for approval"
+task.status_message                # => "Waiting for the signature"
 task.input_required?               # => true
 ```
 
@@ -221,11 +220,21 @@ A task's `status` is `:working` while the work runs on its own, so you check aga
 
 `data` is what `resume` needs, as a Hash that serializes to JSON. In Rails, the task persists on its tool call, so one process can pause the chat and another can resume it, even after a deploy. To rebuild a task as your own subclass of `RubyLLM::Task`, override `task(state, tool_call:)` on the tool and return `YourTask.load(state, tool_call:)`. A subclass can override `refresh` to check on its work and `cancel` to stop it; cancelling the chat calls `cancel` on every task it waits on and drops the paused calls.
 
-MCP tools pause the same way when a server runs a call as a [task]({% link _tools/mcp.md %}#tasks).
+MCP tools pause the same way when a server runs a call as a [task]({% link _tools/mcp.md %}#tasks), and so do [subagents]({% link _getting_started/agents.md %}#subagents) while they wait on a person.
+
+## Agents as Tools
+
+An agent class goes wherever a tool goes, so a model can hand work to another agent and get its answer back:
+
+```ruby
+chat.with_tools(ResearchAgent).ask "What changed in Ruby 4.0?"
+```
+
+See [Subagents]({% link _getting_started/agents.md %}#subagents).
 
 ## Asking the User
 
-A tool can ask the user something while it runs, the way an MCP server asks for input. `ask` takes the question and the fields to fill, as JSON Schema properties (`required: true` on the ones the user must fill), or `url:` for a page to visit:
+A tool can ask the user something while it runs, the way an MCP server asks for input. `request_input` takes the question and the fields to fill, as JSON Schema properties (`required: true` on the ones the user must fill), or `url:` for a page to visit:
 
 ```ruby
 class AskTeam < RubyLLM::Tool
@@ -236,13 +245,13 @@ class AskTeam < RubyLLM::Tool
   end
 
   def execute(question:)
-    answer = ask(question, answer: { type: "string", title: "Answer", required: true })
+    answer = request_input(question, answer: { type: "string", title: "Answer", required: true })
     answer.accepted? ? { answer: answer[:answer] } : { error: "Nobody answered" }
   end
 end
 ```
 
-In a chat, the call pauses on the question as on a server's: the chat is `awaiting_input?`, `pending_inputs` lists it, and `answer` or `decline` settles it before `complete` resumes. Resuming runs `execute` again from the start, and this time `ask` returns the answer, so code before `ask` runs twice: ask first, then do the work. A call can ask several questions, one after another. Outside a chat, an unanswered `ask` raises `RubyLLM::InputRequiredError`, which `RubyLLM::MCP::InputRequiredError` now inherits from.
+In a chat, the call pauses on the question as on a server's: the chat is `awaiting_input?`, `pending_inputs` lists it, and `answer` or `decline` settles it before `complete` resumes. Resuming runs `execute` again from the start, and this time `request_input` returns the answer, so code before `request_input` runs twice: ask first, then do the work. A call can ask several questions, one after another. Outside a chat, an unanswered `request_input` raises `RubyLLM::InputRequiredError`, which `RubyLLM::MCP::InputRequiredError` now inherits from.
 
 ## Long Results
 

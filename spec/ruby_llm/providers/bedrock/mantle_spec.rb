@@ -62,7 +62,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::Mantle do
       expect(provider.protocol_for(model)).to eq(described_class::ChatCompletions)
     end
 
-    it 'keeps dated, versioned, and region-prefixed ids on Converse' do
+    it 'keeps dated, versioned, and region-prefixed Claude ids on InvokeModel' do
       %w[
         anthropic.claude-sonnet-4-5-20250929-v1:0
         us.anthropic.claude-sonnet-5
@@ -70,6 +70,14 @@ RSpec.describe RubyLLM::Providers::Bedrock::Mantle do
         au.anthropic.claude-sonnet-5
         jp.anthropic.claude-opus-4-7
         global.anthropic.claude-fable-5
+      ].each do |id|
+        model = RubyLLM::Model.default(id, 'bedrock')
+        expect(provider.protocol_for(model)).to eq(provider.protocols[:anthropic])
+      end
+    end
+
+    it 'keeps dated, versioned, and region-prefixed ids of other families on Converse' do
+      %w[
         amazon.nova-2-lite-v1:0
         meta.llama3-70b-instruct-v1:0
       ].each do |id|

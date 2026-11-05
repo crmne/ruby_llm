@@ -130,9 +130,9 @@ Keep suppressions out of `lib/`. An id changes when its method changes, so check
 Install [OpenTelemetry Weaver](https://github.com/open-telemetry/weaver/releases/tag/v0.26.1), then run:
 
 ```bash
-bundle exec rake opentelemetry:check
+bundle exec rake conformance:opentelemetry
 # Or select a local executable:
-WEAVER=/path/to/weaver bundle exec rake opentelemetry:check
+WEAVER=/path/to/weaver bundle exec rake conformance:opentelemetry
 ```
 
 This runs the tracing unit, Rails, and recorded provider specs, then checks

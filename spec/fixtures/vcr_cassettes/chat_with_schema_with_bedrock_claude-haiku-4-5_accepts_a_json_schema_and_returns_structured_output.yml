@@ -2,20 +2,20 @@
 http_interactions:
 - request:
     method: post
-    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/invoke
     body:
       encoding: UTF-8
-      string: '{"messages":[{"role":"user","content":[{"text":"Generate a person named
-        John who is 30 years old"}]}],"inferenceConfig":{},"outputConfig":{"textFormat":{"type":"json_schema","structure":{"jsonSchema":{"schema":"{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"age\":{\"type\":\"integer\"}},\"required\":[\"name\",\"age\"],\"additionalProperties\":false}","name":"response"}}}}}'
+      string: '{"messages":[{"role":"user","content":[{"type":"text","text":"Generate
+        a person named John who is 30 years old"}]}],"max_tokens":64000,"output_config":{"format":{"type":"json_schema","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false}}},"anthropic_version":"bedrock-2023-05-31"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261011T210622Z
+      - 20261105T194701Z
       X-Amz-Content-Sha256:
-      - a87561e69b895503dafa53c61a295cf180506dc3c52d59b07ffd858994574c4b
+      - d14c6285db2a1efb4e9bbc6392b6912c00f53f186b48cf7e41146f79068e4f52
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -29,17 +29,27 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:25 GMT
+      - Thu, 05 Nov 2026 19:47:02 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '345'
+      - '521'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 5ce999e1-58f1-49c4-b01d-179942356978
+      - 2c3dfea6-1375-4fc0-8d22-3f023f32c403
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '569'
+      X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
+      - '0'
+      X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
+      - '0'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '12'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '181'
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":2176},"output":{"message":{"content":[{"text":"{\"name\":\"John\",\"age\":30}"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":181,"outputTokens":12,"serverToolUsage":{},"totalTokens":193}}'
-  recorded_at: Sun, 11 Oct 2026 21:06:25 GMT
-recorded_with: VCR 6.4.0
+      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_jxoo5hkg5jn53lbouv2d7ls2lync6cnzusd5bv7d5ivdlacvko5q","type":"message","role":"assistant","content":[{"type":"text","text":"{\"name\":\"John\",\"age\":30}"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":181,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":12,"service_tier":"standard"}}'
+  recorded_at: Thu, 05 Nov 2026 19:47:02 GMT
+recorded_with: VCR 6.4.1

@@ -34,7 +34,19 @@ Dir.glob('**/*.html', base: File.join(site, 'v1')).each do |relative|
   redirect_page(File.join(site, relative), "#{base}/v1/#{route}")
 end
 
+# The theme keeps search engines off the Markdown twins of each page, which
+# would index as duplicates. AI agents and their fetchers are the readers the
+# twins exist for, so they get a group of their own that allows everything.
+ai_agents = %w[
+  GPTBot OAI-SearchBot ChatGPT-User ClaudeBot Claude-User Claude-SearchBot anthropic-ai
+  PerplexityBot Perplexity-User Google-Extended Applebot-Extended Amazonbot
+  meta-externalagent meta-externalfetcher MistralAI-User DuckAssistBot cohere-ai CCBot
+]
+
 robots = File.join(site, 'robots.txt')
 File.open(robots, 'a') do |file|
+  file.puts
+  ai_agents.each { |agent| file.puts "User-agent: #{agent}" }
+  file.puts 'Allow: /'
   %w[next v1].each { |version| file.puts "\nSitemap: https://rubyllm.com#{base}/#{version}/sitemap.xml" }
 end

@@ -12,7 +12,8 @@ module RubyLLM
     # one line naming the file, and reads it again with the file tools. A
     # tool result longer than the inline limit is saved as a file, and
     # the model gets its start and the path. An attachment the provider
-    # cannot take, such as a Word file, becomes that line too.
+    # cannot take, such as a Word file, goes as the text the store's
+    # converters read from it, or as that line when none can.
     class FileReferences # :nodoc:
       INLINE_LIMIT = 10_000
       PREVIEW = 2_000
@@ -60,6 +61,7 @@ module RubyLLM
         @tools = FileStore::Tools.names(tools)
         @written = written
         @stored = {}.compare_by_identity
+        @described = {}.compare_by_identity
       end
 
       def view(list)
@@ -88,9 +90,15 @@ module RubyLLM
         @stored[attachment] ||= store.store_attachment(attachment) { |file| @written.call(file) }
       end
 
-      def describe(attachment)
+      def describe(attachment, config: RubyLLM.config)
         file = store_attachment(attachment)
-        reference(file.path, file)
+        (as_text(file, config) || reference(file.path, file)).tap { |replacement| @described[replacement] = true }
+      end
+
+      # Removes the replacements #describe made from +replacements+, a
+      # chat's memo, so another store or limit describes them again.
+      def forget(replacements)
+        replacements.delete_if { |_attachment, replacement| @described.key?(replacement) }
       end
 
       private
@@ -111,6 +119,21 @@ module RubyLLM
       rescue StandardError => e
         RubyLLM.logger.warn { "Could not keep an attachment in the chat's files: #{e.class}" }
         attachment
+      end
+
+      def as_text(file, config)
+        text = store.text(file.path, config:)
+        return if text.nil? || text.strip.empty?
+
+        if @inline_limit && text.length > @inline_limit
+          text = "#{text[0, @inline_limit]}\n\n[#{file.path} has #{text.length} characters, so only the start " \
+                 'is shown. Read more with read_file, or search it with search_files.]'
+        end
+        Attachment.new(StringIO.new("#{file.path}, read as text:\n\n#{text}"),
+                       filename: "#{File.basename(file.path)}.txt")
+      rescue StandardError => e
+        RubyLLM.logger.warn { "Could not read #{file.path} as text: #{e.class}" }
+        nil
       end
 
       def reference(path, file)

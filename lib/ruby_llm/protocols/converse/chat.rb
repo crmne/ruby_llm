@@ -74,7 +74,7 @@ module RubyLLM
           payload[:toolConfig] = tool_config if tool_config
 
           additional_fields = render_additional_model_request_fields(thinking, model, max_output_tokens)
-          additional_fields = bind_replayed_thinking(additional_fields, payload[:messages], model)
+          additional_fields = bind_thinking(additional_fields, model)
           payload[:additionalModelRequestFields] = additional_fields if additional_fields
 
           output_config = build_output_config(schema)
@@ -474,18 +474,14 @@ module RubyLLM
           fields.empty? ? nil : fields
         end
 
-        def bind_replayed_thinking(fields, messages, model)
+        # Bound from the first request, as on the Anthropic API, so the
+        # thinking setting never changes mid-conversation.
+        def bind_thinking(fields, model)
           return fields unless Anthropic::BlockBinding.binds?(foundation_model_id(model&.id))
-          return fields if fields&.key?(:reasoning_config) || !replays_thinking?(messages)
+          return fields if fields&.key?(:reasoning_config)
 
           bound = Anthropic::BlockBinding.apply(fields&.dig(:thinking))
           bound ? { **fields.to_h, thinking: bound, anthropic_beta: [Anthropic::BlockBinding::BETA] } : fields
-        end
-
-        def replays_thinking?(messages)
-          messages.any? do |message|
-            message[:content].any? { |block| block.key?(:reasoningContent) || block.key?('reasoningContent') }
-          end
         end
 
         def build_output_config(schema)

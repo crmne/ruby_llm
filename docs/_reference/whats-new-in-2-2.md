@@ -21,6 +21,7 @@ After reading this guide, you will know:
 * How skills teach the model your workflows, and run their scripts in the sandbox.
 * How persisted chats now run in one process at a time.
 * How to queue messages while a chat runs, and attribute them as they join.
+* How to keep a tool that shares state from running alongside others.
 * How to chat with Kimi models on Moonshot AI.
 * How to chat with MiniMax's M3 models.
 * How to chat with GLM models on Z.ai.
@@ -204,10 +205,34 @@ chat.queue "Then draft the board summary", steer: false
 A message that steers joins the turn that is running, after the next round of tool results. One queued with `steer: false` waits for the next turn. `around_join` wraps the moment a message joins. On a persisted chat it runs inside the transaction that creates the message, so you can set your own columns on it:
 
 ```ruby
-chat.around_join { |queued, join| join.call(sender: queued.owner) }
+chat.around_join { |queued, join| join.call(sender: queued.sender) }
 ```
 
-A block that never calls `join` withdraws the message. `join_queued_messages` joins everything waiting without asking the model. See [Queueing Messages]({% link _advanced/agentic-workflows.md %}#queueing-messages) and [Queued Messages in Rails]({% link _advanced/rails-persistence.md %}#queued-messages).
+A block that never calls `join` withdraws the message, and so does `queued.withdraw`, for a Cancel button. `join_queued_messages` joins everything waiting without asking the model. See [Queueing Messages]({% link _advanced/agentic-workflows.md %}#queueing-messages) and [Queued Messages in Rails]({% link _advanced/rails-persistence.md %}#queued-messages).
+
+## Subagents
+
+An agent class now goes wherever tools go. The model hands it a task, a fresh agent does the work in its own conversation, and only its answer comes back:
+
+```ruby
+class SupportAgent < ApplicationAgent
+  tools LookupOrder, ResearchAgent
+end
+```
+
+A subagent that waits for an approval pauses the call, and the calling chat is `awaiting_person?`. Agents also declare chat callbacks once, `after_message :log_reply`, with `if:` and `unless:` like Rails. See [Subagents]({% link _getting_started/agents.md %}#subagents) and [Callbacks]({% link _getting_started/agents.md %}#callbacks).
+
+## Exclusive Tools
+
+Tools that share state, such as a browser page, can now run by themselves while the rest of a concurrent round runs in parallel:
+
+```ruby
+class BrowserClick < RubyLLM::Tool
+  exclusive
+end
+```
+
+See [Exclusive Tools]({% link _tools/tool-execution.md %}#exclusive-tools).
 
 ## Moonshot AI
 

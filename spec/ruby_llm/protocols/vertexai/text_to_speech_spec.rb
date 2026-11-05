@@ -105,7 +105,7 @@ RSpec.describe RubyLLM::Protocols::VertexAI::TextToSpeech do
   it 'records and prices the characters sent for the owner, since Google bills characters, not tokens' do
     stub_request(:post, endpoint).to_return_json(body: synthesized)
 
-    speech = RubyLLM.with_usage_owner('account-1') { speak("Grüße aus\nKöln!") }
+    speech = RubyLLM.with_owner('account-1') { speak("Grüße aus\nKöln!") }
 
     expect(speech.tokens).to have_attributes(characters: 15, input: nil)
     expect(speech.cost.total).to be_within(1e-12).of(0.00045)

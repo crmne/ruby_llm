@@ -46,7 +46,7 @@ module RubyLLM
     # +context:+ supplies a Context whose configuration replaces the
     # global one. +metadata:+ is included in the instrumentation payload.
     # +owner:+ attributes the usage to a record, such as a user, and wins
-    # over RubyLLM.with_usage_owner.
+    # over RubyLLM.with_owner.
     #
     #   image = RubyLLM.paint("A small watercolor robot", model: "gpt-image-2")
     #

@@ -227,12 +227,12 @@ RubyLLM.transcribe("memo.m4a", owner: current_user)
 RubyLLM.embed(document.body, owner: current_user.account)
 ```
 
-To attribute everything a block of code does, wrap it in `RubyLLM.with_usage_owner`:
+To attribute everything a block of code does, wrap it in `RubyLLM.with_owner`:
 
 ```ruby
 class ProcessUploadJob < ApplicationJob
   def perform(upload)
-    RubyLLM.with_usage_owner(upload.user) do
+    RubyLLM.with_owner(upload.user) do
       transcript = RubyLLM.transcribe(upload.file_path)
       RubyLLM.embed(transcript.text)
     end
@@ -242,15 +242,22 @@ end
 
 An operation's `owner:` wins over the block's owner, and a nested block restores the outer owner when it ends. Each fiber and thread keeps its own owner, and fibers and threads started inside the block inherit it. Without an owner, RubyLLM still writes the row, unattributed. An owner that is not an Active Record record, such as a user ID String, reaches the [`usage.ruby_llm` event](#instrumentation) but leaves the row unattributed.
 
-Rows of an `acts_as_chat` record keep both their chat association and the scoped owner. In a shared conversation, wrap each turn to record who caused its attempts, including failed or cancelled attempts that produce no message:
+A chat takes its own owner with `with_owner`. Every attempt it makes is attributed to it: each request, the tools it runs and the model calls they make, the file converters it triggers, and compaction, including failed or cancelled attempts that produce no message:
 
 ```ruby
-RubyLLM.with_usage_owner(current_user) do
-  chat.ask("Summarize the latest reviews.")
+chat.with_owner(current_user).ask("Summarize the latest reviews.")
+```
+
+A chat's owner wins over `RubyLLM.with_owner`, which still applies to a chat without one. Agents declare it with the `owner` macro, which takes a block evaluated when the chat is built:
+
+```ruby
+class SupportAgent < RubyLLM::Agent
+  inputs :account
+  owner { account }
 end
 ```
 
-The chat writes each row once. Its owner also applies to independent model calls made by tools inside the block. Re-enter the scope when a background job resumes the work. Existing rows keep their recorded owner; RubyLLM does not infer one from your chat or message models.
+Rows of an `acts_as_chat` record keep both their chat association and the owner. The owner is not persisted with the chat, so set it again, or let the agent set it, when a background job resumes the work. In a shared conversation, set it on each turn to record who caused its attempts. The chat writes each row once. Existing rows keep their recorded owner; RubyLLM does not infer one from your chat or message models.
 
 To query an owner's spend, declare the association on the owner's model:
 
@@ -330,7 +337,7 @@ ActiveSupport::Notifications.subscribe("usage.ruby_llm") do |event|
 end
 ```
 
-The payload contains `operation`, `provider`, `model`, `status`, `tokens`, `cost`, and `owner`, the record given as [`owner:` or through `RubyLLM.with_usage_owner`](#one-shot-operations). Inside a [workflow](#usage-by-workflow), it also carries `workflow_id`, `workflow_name`, and the step's `workflow_step_id` and `workflow_step_name`, from the workflow the attempt started in. It does not expose RubyLLM's internal persistence record. Without Active Record, subscribe to this event to attribute spend yourself:
+The payload contains `operation`, `provider`, `model`, `status`, `tokens`, `cost`, and `owner`, the record given as [`owner:` or through `RubyLLM.with_owner`](#one-shot-operations). Inside a [workflow](#usage-by-workflow), it also carries `workflow_id`, `workflow_name`, and the step's `workflow_step_id` and `workflow_step_name`, from the workflow the attempt started in. It does not expose RubyLLM's internal persistence record. Without Active Record, subscribe to this event to attribute spend yourself:
 
 ```ruby
 ActiveSupport::Notifications.subscribe("usage.ruby_llm") do |event|

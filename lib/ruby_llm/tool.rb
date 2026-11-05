@@ -55,6 +55,7 @@ module RubyLLM
       @requires_approval
       @approval_resolver
       @deferred
+      @exclusive
       @max_run_time
       @inline_limit
     ].freeze
@@ -211,6 +212,27 @@ module RubyLLM
         @requires_approval || false
       end
 
+      # Declares that this tool runs by itself. When a chat runs a round of
+      # tool calls concurrently (see Chat#with_tool_options), an exclusive
+      # call waits for the calls before it to finish, and the calls after
+      # it wait for it, while the other tools still run in parallel. Use it
+      # for tools that share state, such as a browser page. When an
+      # exclusive call waits for an approval or a Task, the calls after it
+      # stay pending until it finishes.
+      #
+      #   class BrowserClick < RubyLLM::Tool
+      #     exclusive
+      #   end
+      #
+      def exclusive
+        @exclusive = true
+      end
+
+      # Returns whether this tool was declared with ::exclusive.
+      def exclusive?
+        @exclusive || false
+      end
+
       # :call-seq:
       #   max_run_time(seconds) -> seconds
       #   max_run_time -> seconds or nil
@@ -363,6 +385,12 @@ module RubyLLM
       self.class.approval_resolver
     end
 
+    # Returns whether this tool runs by itself in a concurrent round of
+    # tool calls: whether its class was declared with ::exclusive.
+    def exclusive?
+      self.class.exclusive?
+    end
+
     # Returns the limit declared on the class with ::inline_limit: a number
     # of characters, +false+, or +nil+ to use the chat's.
     def inline_limit
@@ -453,23 +481,23 @@ module RubyLLM
       result
     end
 
-    # Asks the user something while #execute runs, and returns their
+    # Asks a person something while #execute runs, and returns their
     # InputRequest::Answer. In a chat, the call pauses until Chat#answer or
     # Chat#decline settles the question (see Chat#pending_inputs), then runs
-    # again from the start, and this +ask+ returns the answer. Code before
+    # again from the start, and this +request_input+ returns the answer. Code before
     # it runs again too, so do work after asking. Pass the fields to ask for
     # as JSON Schema properties, with <tt>required: true</tt> on the ones
     # the user must fill, or +url:+ to ask them to visit a page.
     #
     #   def execute(question:)
-    #     answer = ask(question, answer: { type: "string", title: "Answer" })
+    #     answer = request_input(question, answer: { type: "string", title: "Answer" })
     #     answer.accepted? ? { answer: answer[:answer] } : { error: "Nobody answered." }
     #   end
     #
     # Each call may ask several questions, one after another. Outside a chat,
     # an unanswered question raises InputRequiredError. +url:+ is reserved
     # for the page, so name a form field for a URL something else.
-    def ask(message, url: nil, **fields)
+    def request_input(message, url: nil, **fields)
       raise ArgumentError, 'url: takes the page to visit; give a form field another name' if url.is_a?(Hash)
 
       state = (Fiber[ASKING] ||= { 'input' => nil, 'asked' => 0 })
@@ -513,8 +541,8 @@ module RubyLLM
     # implementation raises NotImplementedError.
     #
     #   def resume(task, **)
-    #     run = SubAgentRun.find(task.data["run_id"]).continue
-    #     run.finished? ? run.answer : task
+    #     envelope = Signatures.find(task.data["envelope_id"])
+    #     envelope.signed? ? "Signed on #{envelope.signed_on}" : task
     #   end
     #
     def resume(task, **arguments)
@@ -525,7 +553,7 @@ module RubyLLM
     # Task#to_h returned. Override it to return a Task subclass.
     #
     #   def task(state, tool_call: nil)
-    #     SubAgentTask.load(state, tool_call:)
+    #     SignatureTask.load(state, tool_call:)
     #   end
     #
     def task(state, tool_call: nil)
@@ -588,7 +616,7 @@ module RubyLLM
       Fiber[ASKING] = previous
     end
 
-    # Runs a call again that paused on its questions (#ask), now answered or
+    # Runs a call again that paused on its questions (#request_input), now answered or
     # declined, with +input+, the state Chat saved for it.
     def answered(input, arguments, tool_call:) # :nodoc:
       Fiber[RESUMING] = input

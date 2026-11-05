@@ -76,7 +76,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::LongDecode do
     first[:usageMetadata][:cachedContentTokenCount] = 5
     stub_hops(first, hop('Answer', input: 30, output: 4, thinking: 2))
 
-    reply = RubyLLM.with_usage_owner('owner') { chat.ask('Think') }
+    reply = RubyLLM.with_owner('owner') { chat.ask('Think') }
 
     expect(reply.tokens.to_h).to include(input_tokens: 45, output_tokens: 14, thinking_tokens: 10, cache_read_tokens: 5)
     expect(chat.usage_entries.map(&:status)).to eq(%i[succeeded succeeded])

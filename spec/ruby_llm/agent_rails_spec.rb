@@ -23,6 +23,55 @@ RSpec.describe RubyLLM::Agent do
     expect(RubyLLM.config.openai_api_key).to be_nil
   end
 
+  it 'sets the owner of a found record after its context and protocol, before its instructions' do
+    RubyLLM.config.openai_api_key = nil
+    agent = Class.new(described_class) do
+      chat_class Chat
+      model model_for(:openai, :temperature), provider: :openai, protocol: :responses
+      owner { chat.id }
+      instructions { "Owner #{chat.owner}" }
+    end
+    agent.context do |config|
+      config.openai_api_key = 'agent-key'
+      config.openai_api_base = 'https://example.com/v1'
+    end
+    id = agent.create!.id
+    built = []
+    allow(Chat).to receive(:find).and_wrap_original do |find, *args|
+      find.call(*args).tap do |record|
+        allow(record).to receive(:build_llm_chat).and_wrap_original do |build|
+          build.call.tap { built << [record.context&.config&.openai_api_base, record.protocol] }
+        end
+      end
+    end
+
+    record = agent.find(id)
+
+    expect(built).to eq([['https://example.com/v1', :responses]])
+    expect(record.owner).to eq(id)
+    expect(record.to_llm.messages.first.content).to eq("Owner #{id}")
+  end
+
+  it 'applies callback macros to a found record, running them on an agent with its inputs' do
+    events = []
+    agent = Class.new(described_class) do
+      chat_class Chat
+      model model_for(:openai, :temperature)
+      inputs :account
+      after_message(:note, if: -> { account == 'acme' })
+
+      define_method(:note) { |message| events << [account, chat.class, message.content] }
+    end
+    record = agent.find(agent.create!.id, account: 'acme')
+    allow(record.to_llm.provider).to receive(:complete)
+      .and_return(RubyLLM::Message.new(role: :assistant, content: 'Hello', input_tokens: 1, output_tokens: 1))
+
+    record.ask('Hi')
+
+    expect(events).to eq([['acme', Chat, 'Hello']])
+    expect(record.messages_association.reload.map(&:content)).to eq(%w[Hi Hello])
+  end
+
   describe 'rescue_from on records' do
     let(:agent) do
       Class.new(described_class) do

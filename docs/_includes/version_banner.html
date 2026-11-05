@@ -1,0 +1,42 @@
+{%- comment -%} Tells readers of /next/ and /v1/ that they are not reading the stable docs. docs/bin/build-versions.sh copies it into every version. {%- endcomment -%}
+{%- assign channel = site.docs_channel -%}
+{%- if channel == 'next' or channel == 'v1' -%}
+  {%- assign stable = site.data.versions.items | where: 'id', 'stable' | first -%}
+  {%- assign stable_version = stable.title | remove: ' (stable)' -%}
+  <div class="rl-version-banner{% if include.fixed %} rl-version-banner--fixed{% endif %}" role="note">
+    <p>
+      {% if channel == 'next' %}You're reading the docs for unreleased RubyLLM from <code>main</code>.{% else %}You're reading the docs for RubyLLM 1.x.{% endif %}
+      <a href="{{ stable.url }}">Read the {% if stable_version == 'Stable' %}stable{% else %}{{ stable_version }}{% endif %} docs</a>
+    </p>
+  </div>
+  <style>
+    .rl-version-banner { padding: 0.55rem 1rem; border-bottom: 1px solid var(--vp-c-divider, var(--border-color, #e0d9d5)); background: var(--vp-c-bg-alt, var(--code-background-color, #f3ece7)); color: var(--vp-c-text-1, var(--body-text-color, #2c2926)); font-size: 0.82rem; line-height: 1.4; text-align: center; }
+    .rl-version-banner p { margin: 0; }
+    .rl-version-banner a { font-weight: 600; color: var(--vp-c-brand-1, var(--link-color, #b30000)); text-decoration: underline; text-underline-offset: 2px; }
+    .rl-version-banner code { font-size: 0.9em; }
+    {%- unless include.fixed %}
+    @media (prefers-color-scheme: dark) {
+      .rl-version-banner { border-color: #44434d; background: #302d36; color: #e6e1e8; }
+      .rl-version-banner a { color: #2c84fa; }
+    }
+    {%- endunless %}
+    {%- if include.fixed %}
+    :root { --vp-layout-top-height: 38px; }
+    .rl-version-banner--fixed { position: fixed; top: 0; right: 0; left: 0; z-index: calc(var(--vp-z-index-nav, 30) + 1); display: flex; align-items: center; justify-content: center; box-sizing: border-box; min-height: 38px; }
+    @media (max-width: 640px) {
+      :root { --vp-layout-top-height: 56px; }
+    }
+    {%- endif %}
+  </style>
+  {%- if include.fixed %}
+  <script>
+    (function () {
+      var banner = document.querySelector('.rl-version-banner--fixed');
+      if (!banner) return;
+      var fit = function () { document.documentElement.style.setProperty('--vp-layout-top-height', banner.offsetHeight + 'px'); };
+      fit();
+      if (window.ResizeObserver) new ResizeObserver(fit).observe(banner);
+    })();
+  </script>
+  {%- endif %}
+{%- endif -%}

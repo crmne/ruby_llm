@@ -58,7 +58,7 @@ module RubyLLM
     # provider's request vocabulary, such as +instructions:+ and +speed:+
     # for OpenAI, and merges them into the request as-is.
     # +owner:+ attributes the usage to a record, such as a user, and wins
-    # over RubyLLM.with_usage_owner.
+    # over RubyLLM.with_owner.
     #
     #   speech = RubyLLM.speak "Hello, welcome to RubyLLM!"
     #   speech.save "welcome.mp3"

@@ -267,6 +267,81 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.file_store.exist?('sample.docx')).to be(true)
     end
 
+    def converting_chat(text)
+      type = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+      RubyLLM.context { |config| config.file_converters = { type => ->(_file) { text } } }
+             .chat(model: model_for(:anthropic), provider: :anthropic)
+             .with_file_store
+    end
+
+    it 'sends the text a converter reads, and keeps the file in the chat files' do
+      chat = converting_chat('The codename is Bluebird.')
+      chat.add_message(role: :user, content: 'What is the codename?', attachments: [docx])
+
+      rendered = chat.render.to_json
+      expect(rendered).to include('sample.docx, read as text:', 'The codename is Bluebird.')
+      expect(rendered).not_to include('wordprocessingml')
+      expect(chat.file_store.exist?('sample.docx')).to be(true)
+    end
+
+    it 'prefers a convert_unsupported_attachments handler to the converters' do
+      chat = converting_chat('The codename is Bluebird.')
+             .convert_unsupported_attachments { RubyLLM::Attachment.new(StringIO.new('Handled'), filename: 'h.txt') }
+      chat.add_message(role: :user, content: 'What is the codename?', attachments: [docx])
+
+      rendered = chat.render.to_json
+      expect(rendered).to include('Handled')
+      expect(rendered).not_to include('Bluebird')
+    end
+
+    it 'converts again once the store changes its limit' do
+      chat = converting_chat('word ' * 3_000)
+      chat.add_message(role: :user, content: 'Summarize', attachments: [docx])
+      expect(chat.render.to_json).to include('so only the start is shown')
+
+      chat.with_file_store(chat.file_store, inline_limit: false)
+
+      rendered = chat.render.to_json
+      expect(rendered).to include("sample.docx, read as text:\\n\\n#{'word ' * 2_999}word")
+      expect(rendered).not_to include('so only the start is shown')
+    end
+
+    it 'converts again once the chat moves to a context with a converter' do
+      chat = described_class.new(model: model_for(:anthropic), provider: :anthropic).with_file_store
+      chat.add_message(role: :user, content: 'What is the codename?', attachments: [docx])
+      expect(chat.render.to_json).to include('is in this chat')
+
+      type = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+      chat.with_context(RubyLLM.context { |config| config.file_converters = { type => ->(_file) { 'Bluebird' } } })
+
+      expect(chat.render.to_json).to include('sample.docx, read as text:')
+    end
+
+    it 'keeps what a convert_unsupported_attachments handler made when the store changes' do
+      calls = 0
+      chat = converting_chat('The codename is Bluebird.').convert_unsupported_attachments do
+        calls += 1
+        RubyLLM::Attachment.new(StringIO.new('Handled'), filename: 'h.txt')
+      end
+      chat.add_message(role: :user, content: 'What is the codename?', attachments: [docx])
+      chat.render
+
+      chat.with_file_store(chat.file_store, inline_limit: false)
+      chat.render
+
+      expect(calls).to eq(1)
+    end
+
+    it 'sends the start of a long text and says where the rest is' do
+      chat = converting_chat('word ' * 3_000)
+      chat.add_message(role: :user, content: 'Summarize', attachments: [docx])
+
+      expect(chat.render.to_json).to include(
+        '[sample.docx has 15000 characters, so only the start is shown. ' \
+        'Read more with read_file, or search it with search_files.]'
+      )
+    end
+
     it 'leaves the error in place without files' do
       chat.add_message(role: :user, content: 'What is the codename?', attachments: [docx])
 

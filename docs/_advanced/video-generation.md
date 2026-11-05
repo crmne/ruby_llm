@@ -88,7 +88,7 @@ job.video&.save("boat.mp4")
 
 `model:` is required: it selects the API that serves the job and names the usage entry. Pass `provider:` and `assume_model_exists:` the way you did to `animate_later`. A job from `find` leaves `duration` and `resolution` as `nil`.
 
-`find` reports the usage of a job that has already finished, so collect each job in one place. Wrap the call in `RubyLLM.with_usage_owner` to attribute that cost.
+`find` reports the usage of a job that has already finished, so collect each job in one place. Wrap the call in `RubyLLM.with_owner` to attribute that cost.
 
 ## Animating a Still Image
 

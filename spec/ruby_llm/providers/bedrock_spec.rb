@@ -187,10 +187,25 @@ RSpec.describe RubyLLM::Providers::Bedrock do
         .to raise_error(RubyLLM::Error, /Bedrock embeddings are not supported/)
     end
 
-    it 'keeps chat routing on Converse for versioned ids' do
-      model = instance_double(RubyLLM::Model, id: 'anthropic.claude-3-5-haiku-20241022-v1:0')
+    it 'routes versioned and regional Claude ids to the Anthropic Messages protocol' do
+      %w[
+        anthropic.claude-3-5-haiku-20241022-v1:0
+        eu.anthropic.claude-sonnet-5-5
+        global.anthropic.claude-haiku-4-5-20251001-v1:0
+        arn:aws:bedrock:eu-central-1:123:inference-profile/eu.anthropic.claude-sonnet-5-5
+      ].each do |id|
+        model = instance_double(RubyLLM::Model, id: id)
 
-      expect(provider.protocol_for(model)).to eq(provider.protocols[:converse])
+        expect(provider.protocol_for(model)).to eq(provider.protocols[:anthropic])
+      end
+    end
+
+    it 'keeps other model families and application inference profiles on Converse' do
+      %w[amazon.nova-2-lite-v1:0 arn:aws:bedrock:us-west-2:123:application-inference-profile/p].each do |id|
+        model = instance_double(RubyLLM::Model, id: id)
+
+        expect(provider.protocol_for(model)).to eq(provider.protocols[:converse])
+      end
     end
 
     it 'routes un-versioned anthropic ids to Mantle' do

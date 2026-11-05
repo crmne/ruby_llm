@@ -52,7 +52,7 @@ module RubyLLM
     # the request as-is. +context:+ supplies a Context whose configuration
     # replaces the global one. +metadata:+ is included in the
     # instrumentation payload. +owner:+ attributes the usage to a record,
-    # such as a user, and wins over RubyLLM.with_usage_owner.
+    # such as a user, and wins over RubyLLM.with_owner.
     #
     #   video = RubyLLM.animate("a hummingbird in slow motion", model: "veo-3.1-fast-generate-preview")
     #

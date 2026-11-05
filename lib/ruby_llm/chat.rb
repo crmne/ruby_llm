@@ -28,6 +28,7 @@ module RubyLLM
     include ToolSearch
     include ToolSequences
     prepend Rescuable
+    prepend Ownership
 
     # The provider-neutral options #with_compaction accepts.
     COMPACTION_OPTIONS = %i[at instructions pause_after].freeze
@@ -96,6 +97,10 @@ module RubyLLM
     # The opaque per-user identifier set with #with_end_user, or
     # +nil+.
     attr_reader :end_user
+
+    # Whoever the chat's usage is attributed to, set with #with_owner, or
+    # +nil+.
+    attr_reader :owner
 
     # The Fallback models tried in order when generation fails.
     attr_reader :fallbacks
@@ -372,7 +377,7 @@ module RubyLLM
     #
     #   chat.queue "Use the EU file instead"
     #   chat.queue "Then email it to me", steer: false
-    #   chat.queue "Check this one too", with: "q3.pdf", owner: current_user
+    #   chat.queue "Check this one too", with: "q3.pdf", sender: current_user
     #
     # A message that steers, the default, joins the turn that is running:
     # after the next round of tool results, or once the model finishes its
@@ -386,12 +391,10 @@ module RubyLLM
     #
     # Nothing is taken while the chat is #waiting?, and #cancel leaves the
     # queue as it is. Queueing never runs the loop: when nothing is
-    # running, call #complete. +owner+ is stored with the message and
-    # handed back on it without RubyLLM interpreting it.
-    def queue(message = nil, with: nil, steer: true, owner: nil)
-      queued = @message_queue.push(content: message, attachments: with, steer:, owner:)
-      run_callbacks(:after_queue, queued)
-      queued
+    # running, call #complete. +sender+, whoever queued the message, is
+    # stored with it and handed back without RubyLLM interpreting it.
+    def queue(message = nil, with: nil, steer: true, sender: nil)
+      @message_queue.push(content: message, attachments: with, steer:, sender:)
     end
 
     # Returns the messages waiting in the queue, as QueuedMessage objects,
@@ -402,20 +405,19 @@ module RubyLLM
 
     # Takes +queued+, a QueuedMessage or its id, out of the queue before the
     # loop takes it. Returns +true+, or +false+ when it is no longer queued:
-    # the loop took it into the conversation, or it was unqueued already.
+    # the loop took it into the conversation, or it was withdrawn already.
+    # QueuedMessage#withdraw does the same from the message.
     #
-    #   chat.unqueue(queued) # => true
+    #   chat.withdraw(queued) # => true
     #
-    def unqueue(queued)
-      removed = @message_queue.delete(queued)
-      run_callbacks(:after_unqueue, removed) if removed
-      !removed.nil?
+    def withdraw(queued)
+      !@message_queue.delete(queued).nil?
     end
 
     # Adds every queued message to the conversation, without asking the
     # model, and returns the user Message objects they became, oldest
-    # first. Each message joins through #around_join and #after_join,
-    # whether it steers or not.
+    # first. Each message joins through #around_join and runs
+    # #after_message, whether it steers or not.
     #
     #   chat.queue "Use the EU file"
     #   chat.queue "Then email it to me", steer: false
@@ -430,15 +432,14 @@ module RubyLLM
 
     # Adds every queued message to the conversation, or with
     # <tt>steering_only: true</tt> only those that steer, and runs
-    # #after_join for each, or #after_unqueue for one an #around_join
-    # withdrew. Returns the joined messages.
+    # #after_message for each one that joined. Returns the joined messages.
     def take_queued_messages(steering_only: false) # :nodoc:
       joined = []
-      @message_queue.take(steering_only:) do |message, queued|
-        next run_callbacks(:after_unqueue, queued) unless message
+      @message_queue.take(steering_only:) do |message|
+        next unless message
 
         joined << message
-        run_callbacks(:after_join, message, queued)
+        run_callbacks(:after_message, messages.last)
       end
       joined
     end
@@ -516,7 +517,7 @@ module RubyLLM
       pending = pending_tool_calls(response)
       pending.any? && pending.all? do |tool_call|
         approval_pending?(tool_call) || paused?(tool_call) ||
-          running_elsewhere?(tool_call) || sequence_blocked?(tool_call)
+          running_elsewhere?(tool_call) || sequence_blocked?(tool_call) || exclusive_blocked?(tool_call)
       end
     end
 
@@ -597,6 +598,18 @@ module RubyLLM
     #
     def awaiting_tasks?
       waiting? && pending_tasks.any?
+    end
+
+    # Returns whether the conversation can make no progress until a person
+    # acts: it is #waiting? and an approval waits for a decision, an input
+    # request waits for an answer, or a Task is Task#input_required?. A
+    # chat that waits only on tasks that are working returns +false+, so
+    # check on those with #complete instead of asking anyone.
+    #
+    #   notify(chat.owner) if chat.awaiting_person?
+    #
+    def awaiting_person?
+      waiting? && (pending_approvals.any? || pending_inputs.any? || pending_tasks.any?(&:input_required?))
     end
 
     # Returns the Task objects that tool calls wait on, as they were when
@@ -698,6 +711,7 @@ module RubyLLM
         @tool_deferrals.clear
       end
       tools.flatten.compact.each do |tool|
+        tool = tool.to_tool if tool.respond_to?(:to_tool)
         tool = tool.new if tool.is_a?(Class)
         name = tool.qualified_name.to_sym
         existing = @tools[name]
@@ -1170,6 +1184,7 @@ module RubyLLM
     def with_file_store(store = :memory, inline_limit: FileReferences::INLINE_LIMIT, tools: FileStore::Tools::DEFAULT)
       FileReferences.validate(store, inline_limit:, tools:) unless store.nil?
       store = FileReferences.resolve(store)
+      @file_references&.forget(@attachment_replacements)
       @file_references = if store
                            FileReferences.new(store:, inline_limit:, tools:,
                                               written: ->(file) { run_callbacks(:after_file_write, file) })
@@ -1201,12 +1216,29 @@ module RubyLLM
       self
     end
 
+    # Attributes the usage of every attempt the chat makes to +owner+, such
+    # as a user or an account record: each request, the tools it runs, the
+    # file converters it triggers, and compaction. In Rails, the usage
+    # ledger stores the owner with each row; everywhere, the
+    # +usage.ruby_llm+ event carries it. It wins over RubyLLM.with_owner.
+    # Pass +nil+ to remove it. Returns +self+.
+    #
+    #   chat.with_owner(current_user).ask "Summarize this thread"
+    #
+    # RubyLLM never sends the owner to the provider; see #with_end_user
+    # for the identifier providers receive.
+    def with_owner(owner)
+      @owner = owner
+      self
+    end
+
     # Rebinds the chat to +context+, a Context built with RubyLLM.context,
     # so subsequent requests use its configuration. Pass +nil+ to return to
     # the global RubyLLM.config. Returns +self+.
     def with_context(context)
       @context = context
       @config = context&.config || RubyLLM.config
+      @file_references&.forget(@attachment_replacements)
       with_model(@model.id, provider: @provider.slug, protocol: @protocol, assume_model_exists: true)
       apply_tool_concurrency(nil) unless @concurrency_chosen
       self
@@ -1267,33 +1299,14 @@ module RubyLLM
       add_callback(:before_message, &)
     end
 
-    # Registers a callback that receives each assistant response and each
-    # tool result message once it has been appended. Returns +self+.
+    # Registers a callback that receives each assistant response, each
+    # tool result message, and each user message a queued message becomes,
+    # once it has been appended. Returns +self+.
     #
     #   chat.after_message { |message| puts message.content }
     #
     def after_message(&)
       add_callback(:after_message, &)
-    end
-
-    # Registers a callback that receives each QueuedMessage once #queue has
-    # added it. It runs in the thread that called #queue. Returns +self+.
-    #
-    #   chat.after_queue { |queued| puts "Queued: #{queued.content}" }
-    #
-    def after_queue(&)
-      add_callback(:after_queue, &)
-    end
-
-    # Registers a callback that receives each queued message as it joins
-    # the conversation: the user Message it became, then the QueuedMessage.
-    # It runs in the loop's thread, before the model is asked to answer it.
-    # Returns +self+.
-    #
-    #   chat.after_join { |message, queued| puts "Joined: #{message.content}" }
-    #
-    def after_join(&)
-      add_callback(:after_join, &)
     end
 
     # Registers a callback that wraps the moment each queued message joins
@@ -1303,14 +1316,14 @@ module RubyLLM
     #
     #   chat.around_join do |queued, join|
     #     message = join.call
-    #     audit_log << [queued.owner, message.content]
+    #     audit_log << [queued.sender, message.content]
     #   end
     #
     # A block that never calls +join+ withdraws the message: it leaves the
-    # queue without joining, #after_unqueue runs, and the turn goes on. A
-    # block that raises leaves the message queued and out of the
-    # conversation. Several blocks nest in the order they were registered,
-    # the first outermost, and #after_join runs once they all return.
+    # queue without joining, and the turn goes on. A block that raises
+    # leaves the message queued and out of the conversation. Several
+    # blocks nest in the order they were registered, the first outermost,
+    # and #after_message runs once they all return.
     # When an inner block withdraws the message, <tt>join.call</tt> in an
     # outer block returns +nil+.
     #
@@ -1324,13 +1337,6 @@ module RubyLLM
       return self if @callbacks[:around_join].include?(block)
 
       add_callback(:around_join, &block)
-    end
-
-    # Registers a callback that receives each QueuedMessage #unqueue takes
-    # out of the queue, or an #around_join withdraws. It runs in the thread
-    # that took it out. Returns +self+.
-    def after_unqueue(&)
-      add_callback(:after_unqueue, &)
     end
 
     # Registers a callback that receives each local ToolCall before the tool
@@ -1988,7 +1994,7 @@ module RubyLLM
 
     def unsupported_attachment_handler
       callbacks = @callbacks[:unsupported_attachment]
-      callbacks += [@file_references.method(:describe)] if @file_references
+      callbacks += [->(attachment) { @file_references.describe(attachment, config: @config) }] if @file_references
       return if callbacks.empty? && !@code_execution
 
       describe = attachment_describer
@@ -2161,6 +2167,7 @@ module RubyLLM
       server_calls, local_calls = pending_tool_calls(response).to_h.partition { |_, call| call.remote? }.map(&:to_h)
       decisions = server_calls.transform_values { |tool_call| approval_decision(nil, tool_call) }.compact
       executable, denied = partition_pending_tool_calls(local_calls)
+      executable = executable.reject { |_id, tool_call| exclusive_blocked?(tool_call, executable) }
       claimed = claim_tool_calls(executable, server_calls.slice(*decisions.keys).merge(denied))
       answer_claimed_tool_calls(claimed, server_calls, decisions, executable, denied)
       @tool_prefs[:choice] = nil if forced_tool_choice?
@@ -2302,7 +2309,7 @@ module RubyLLM
 
     def handle_sequential_tool_calls(tool_calls)
       tool_calls.each_value do |tool_call|
-        next if sequence_blocked?(tool_call)
+        next if sequence_blocked?(tool_call) || exclusive_blocked?(tool_call)
 
         raise_if_cancelled!
         result = skipped_result(tool_call) || execute_tool_with_callbacks(tool_call)
@@ -2323,7 +2330,9 @@ module RubyLLM
     end
 
     def execute_tools_concurrently(tool_calls, &on_result)
-      ToolConcurrency.run(concurrency, tool_calls, on_result:) do |tool_call|
+      exclusive = ->(tool_call) { exclusive_call?(tool_call) }
+      paused = ->(result) { result.equal?(PAUSED) }
+      ToolConcurrency.run(concurrency, tool_calls, exclusive:, paused:, on_result:) do |tool_call|
         execute_tool_with_callbacks(tool_call)
       end
     end

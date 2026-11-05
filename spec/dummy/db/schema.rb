@@ -137,14 +137,14 @@ ActiveRecord::Schema[7.1].define(version: 20_261_105_120_000) do
   create_table 'ruby_llm_queued_messages', force: :cascade do |t|
     t.string 'chat_type', null: false
     t.integer 'chat_id', null: false
-    t.string 'owner_type'
-    t.integer 'owner_id'
+    t.string 'sender_type'
+    t.integer 'sender_id'
     t.text 'content'
     t.boolean 'steer', default: true, null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index %w[chat_type chat_id], name: 'index_ruby_llm_queued_messages_on_chat_type_and_chat_id'
-    t.index %w[owner_type owner_id], name: 'index_ruby_llm_queued_messages_on_owner_type_and_owner_id'
+    t.index %w[sender_type sender_id], name: 'index_ruby_llm_queued_messages_on_sender_type_and_sender_id'
   end
 
   create_table 'ruby_llm_tool_calls', force: :cascade do |t|

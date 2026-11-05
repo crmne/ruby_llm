@@ -16,7 +16,7 @@ RSpec.describe RubyLLM::Chat do
   end
 
   def render(model, message)
-    chat = RubyLLM.chat(model:, provider: :bedrock)
+    chat = RubyLLM.chat(model:, provider: :bedrock, protocol: :converse)
     chat.add_message(role: :user, content: 'Hi')
     chat.add_message(message)
     chat.add_message(role: :user, content: 'And now?')

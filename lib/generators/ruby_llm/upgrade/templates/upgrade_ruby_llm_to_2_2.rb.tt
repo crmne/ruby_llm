@@ -61,13 +61,13 @@ class <%= 'upgrade_ruby_llm_to_2_2'.camelize %> < ActiveRecord::Migration<%= mig
     unless table_exists?(:ruby_llm_queued_messages)
       create_table :ruby_llm_queued_messages, id: :<%= reference_type %> do |t|
         t.references :chat, polymorphic: true, null: false, type: :<%= reference_type %>, index: false
-        t.references :owner, polymorphic: true, type: :<%= reference_type %>, index: false
+        t.references :sender, polymorphic: true, type: :<%= reference_type %>, index: false
         t.text :content<%= ', size: :long' if mysql? %>
         t.boolean :steer, default: true, null: false
         t.timestamps
 
         t.index [ :chat_type, :chat_id ]
-        t.index [ :owner_type, :owner_id ]
+        t.index [ :sender_type, :sender_id ]
       end
     end
 

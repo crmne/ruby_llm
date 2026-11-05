@@ -10,13 +10,13 @@ RSpec.describe RubyLLM::Chat::ToolConcurrency do
       listener = ->(_progress) {}
       calls = (1..10).to_h { |id| [id, id] }
 
-      RubyLLM.with_usage_owner('caller') do
+      RubyLLM.with_owner('caller') do
         RubyLLM::Support::ProgressReporter.listen(listener) do
           3.times do
             results = Timeout.timeout(5) do
               described_class.run(mode, calls) do |call|
                 workers << (mode == :threads ? Thread.current : Async::Task.current)
-                RubyLLM.with_usage_owner('worker') do
+                RubyLLM.with_owner('worker') do
                   RubyLLM::Support::ProgressReporter.listen(nil) { :work }
                 end
                 observed << [RubyLLM::Accounting::Usage.owner, RubyLLM::Support::ProgressReporter.listener]

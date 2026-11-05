@@ -23,6 +23,7 @@ After reading this guide, you will know:
 * How `tool_calls` reads now that it is a collection of calls.
 * Which errors failed Responses requests raise, and why malformed tool arguments no longer do.
 * Why Bedrock batches report no request counts.
+* Why Claude on Bedrock now speaks the Anthropic Messages API, and how to keep Converse.
 * Which job predicates replace `done?` and `completed?`.
 * Why agents name their chat record with `chat_class`.
 
@@ -228,6 +229,33 @@ These chat options were dropped, or downgraded with a log line. They now raise w
 ## Bedrock Batches Report No Request Counts
 
 `Batch#request_counts` on Bedrock is now `nil`. It used to hold the job's submit and end timestamps under `submitted` and `completed`, which are not counts. Bedrock's job status reports no counts. A persisted batch keeps the old value until its next `refresh`.
+
+## Claude on Bedrock Speaks Anthropic Messages
+
+Bedrock sent Claude through the Converse API in 2.1. It now sends Claude through InvokeModel with the Anthropic Messages API, on the same host, credentials, and model IDs, including cross-region inference profiles such as `eu.anthropic.claude-sonnet-5-5`. Converse cannot carry Anthropic's tool search, so a chat with deferred tools used RubyLLM's own `tool_search` tool, and the call after each search missed the prompt cache. Claude now searches with Anthropic's tool search and keeps the cache.
+
+Other model families and application inference profile ARNs stay on Converse. For Claude, a few things change:
+
+* `before_request` hooks and `with_provider_options` see and take Anthropic Messages fields, such as `thinking` and `output_config`, instead of Converse fields such as `additionalModelRequestFields` and `guardrailConfig`.
+* Word, Excel, and other office documents raise `RubyLLM::UnsupportedAttachmentError`. The Anthropic Messages API reads images, PDFs, and text files, including CSV and HTML.
+* Batches of Claude chats run as InvokeModel jobs, with Anthropic Messages records.
+* A citation of an attached document takes the file name as its title, such as `facts.txt`, as it does on the Anthropic API.
+
+To keep Converse for a chat, pass `protocol: :converse`. To keep it for every Bedrock chat, configure it:
+
+```ruby
+RubyLLM.chat(model: "claude-sonnet-4-5", provider: :bedrock, protocol: :converse)
+
+RubyLLM.configure do |config|
+  config.bedrock_protocol = :converse
+end
+```
+
+## Claude 5.5 Requests Carry the Thinking Binding From the Start
+
+Claude Opus 5.5, Sonnet 5.5, Haiku 5.5, and Fable 5.1 refuse a replayed thinking block once the instructions, tools, or earlier messages change, unless the request says to drop it. 2.1.1 added that setting, `thinking: { type: "adaptive", block_binding: { prefix_mismatch_behavior: "drop_block" } }` with the `thinking-binding-controls-2026-08-01` beta, only once the model's own thinking appeared in the history. The request changed mid-conversation, which can invalidate the prompt cache. Every request to these models on the Anthropic API, Bedrock InvokeModel, and Bedrock Converse now carries it from the first call.
+
+These models think adaptively by default, so a chat without `with_thinking` behaves and bills as before. `with_thinking(false)` and other settings that are not adaptive are sent unchanged, without the binding. `before_request` hooks see the `thinking` field on the first request.
 
 ## MCP Prompts Take No Attachments
 
@@ -440,9 +468,21 @@ class ApplicationAgent < RubyLLM::Agent
 end
 ```
 
+## Usage Owners Use `with_owner`
+
+`RubyLLM.with_usage_owner` is now `RubyLLM.with_owner`, the same name a chat uses for its own owner. `with_usage_owner` still works and warns through `RubyLLM.deprecator`. RubyLLM 3.0 removes it. A chat that should always bill the same record can take it directly, and wins over the block:
+
+```ruby
+# Before
+RubyLLM.with_usage_owner(current_user) { chat.ask "Summarize this thread" }
+
+# After
+chat.with_owner(current_user).ask "Summarize this thread"
+```
+
 ## Rename Chat Columns Named After New Methods
 
-`acts_as_chat` records gain `code_execution`, `skills`, `file_store`, `with_code_execution`, `with_skills`, `with_file_store`, `queue`, `queued_messages`, `unqueue`, `join_queued_messages`, `after_queue`, `around_join`, `after_join`, `after_unqueue`, `after_file_write`, and the `ruby_llm_chat_files` association in 2.2. A column of your own with one of those names is hidden behind RubyLLM's method, so reading it returns RubyLLM's setting, usually `nil`, instead of your value. Rename such a column before you upgrade, for example a `code_execution` toggle to `runs_code`:
+`acts_as_chat` records gain `code_execution`, `skills`, `file_store`, `owner`, `with_code_execution`, `with_skills`, `with_file_store`, `with_owner`, `awaiting_person?`, `queue`, `queued_messages`, `withdraw`, `join_queued_messages`, `around_join`, `after_file_write`, and the `ruby_llm_chat_files` association in 2.2. A column of your own with one of those names would be hidden behind RubyLLM's method, so reading it would return RubyLLM's setting, usually `nil`, instead of your value. In 2.2, `acts_as_chat` raises `ArgumentError` naming such a column, and any column a RubyLLM reader hides, such as `cost`, `temperature`, or `tools`, when the model loads its columns. Rename such a column before you upgrade, for example a `code_execution` toggle to `runs_code`:
 
 ```ruby
 rename_column :chats, :code_execution, :runs_code

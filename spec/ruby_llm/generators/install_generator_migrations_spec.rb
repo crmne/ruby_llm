@@ -76,14 +76,15 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator do
     expect(calls).to include('t.string :namespace')
   end
 
-  it 'creates the queued messages table for any chat, with an optional owner' do
+  it 'creates the queued messages table for any chat, with an optional sender' do
     generator = described_class.new([], {}, destination_root: destination, shell: Thor::Shell::Basic.new)
     generator.create_migration_files
     migration = File.read(Dir.glob(File.join(destination, 'db/migrate/*_create_ruby_llm_records.rb')).sole)
     queued = migration[/create_table :ruby_llm_queued_messages.*?^    end$/m]
 
     expect(queued).to include('t.references :chat, polymorphic: true, null: false, type: :bigint, index: false')
-    expect(queued).to include('t.references :owner, polymorphic: true, type: :bigint, index: false')
+    expect(queued).to include('t.references :sender, polymorphic: true, type: :bigint, index: false')
+    expect(queued).to include('t.index [ :sender_type, :sender_id ]')
     expect(queued).to include('t.boolean :steer, default: true, null: false')
     expect(queued).to include('t.index [ :chat_type, :chat_id ]')
   end

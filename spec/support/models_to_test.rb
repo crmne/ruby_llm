@@ -110,6 +110,7 @@ THINKING_MODELS = filter_local_providers(thinking_models).freeze
 
 tool_search_models = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
+  { provider: :bedrock, model: 'claude-haiku-4-5' },
   { provider: :openai, model: 'gpt-5.4' }
 ].freeze
 TOOL_SEARCH_MODELS = filter_local_providers(tool_search_models).freeze
@@ -146,13 +147,13 @@ DOCUMENT_URL_MODELS = [
 ].freeze
 
 DOCUMENT_MODELS = [
-  { provider: :bedrock, model: 'claude-sonnet-4-5' },
+  { provider: :bedrock, model: 'claude-sonnet-4-5', protocol: :converse },
   { provider: :mistral, model: 'mistral-small-latest' },
   { provider: :openai, model: 'gpt-5-nano' }
 ].freeze
 
 SPREADSHEET_MODELS = [
-  { provider: :bedrock, model: 'claude-sonnet-4-5' },
+  { provider: :bedrock, model: 'claude-sonnet-4-5', protocol: :converse },
   { provider: :openai, model: 'gpt-5-nano' }
 ].freeze
 
@@ -253,7 +254,7 @@ IMAGE_GENERATION_MODELS = filter_local_providers(image_generation_models).freeze
 # Use the unfiltered rows so unit specs also work with local providers disabled.
 TEST_MODELS = {
   judgment: [{ provider: :typesafe, model: 'jev-latest' }, { provider: :openai, model: 'gpt-6-luna' },
-             { provider: :openrouter, model: 'typesafe/jev-1.14' }],
+             { provider: :openrouter, model: 'typesafe/jev-1.14' }, { provider: :azure, model: 'gpt-6-luna' }],
   judgment_multimodal: [{ provider: :openrouter, model: 'cloudflare/clef-omni' }],
   azure_cohere_embedding: [{ provider: :azure, model: 'embed-v-4-0' }],
   azure_cohere_rerank: [{ provider: :azure, model: 'Cohere-rerank-v4.0-fast' }],

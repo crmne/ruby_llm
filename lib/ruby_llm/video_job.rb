@@ -41,7 +41,7 @@ module RubyLLM
     # waiting for the result. Most code calls this through
     # RubyLLM.animate_later. Takes the same arguments as Video.animate.
     # The job records its usage, attributed to +owner:+ or the owner of
-    # RubyLLM.with_usage_owner, once it finishes.
+    # RubyLLM.with_owner, once it finishes.
     #
     #   job = RubyLLM.animate_later("a hummingbird in slow motion")
     #   job.id        # => "0eb6910f-a353-4699-9d1e-6a4f7a5b39e2"
@@ -69,7 +69,7 @@ module RubyLLM
     # Use it to pick a job back up from any process. Pass the #model that
     # rendered it: it selects the provider and protocol, and names the
     # usage entry. A job already finished reports its usage here, once per
-    # VideoJob object, attributed to the owner of RubyLLM.with_usage_owner.
+    # VideoJob object, attributed to the owner of RubyLLM.with_owner.
     #
     #   job = RubyLLM::VideoJob.find(clip.video_job_id, model: clip.video_model, provider: :xai)
     #   job.video&.save("clip.mp4")

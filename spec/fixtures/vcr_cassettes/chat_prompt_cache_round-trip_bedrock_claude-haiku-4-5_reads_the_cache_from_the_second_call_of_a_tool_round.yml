@@ -2,11 +2,14 @@
 http_interactions:
 - request:
     method: post
-    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/invoke
     body:
       encoding: UTF-8
-      string: '{"messages":[{"role":"user","content":[{"text":"Fetch the release checklist
-        for version 2.1.0 with the tool, then reply with its first item."},{"cachePoint":{"type":"default"}}]}],"system":[{"text":"You
+      string: '{"messages":[{"role":"user","content":[{"type":"text","text":"Fetch
+        the release checklist for version 2.1.0 with the tool, then reply with its
+        first item."}]}],"max_tokens":64000,"tools":[{"name":"release_checklist","description":"Returns
+        the release checklist for a version","input_schema":{"type":"object","properties":{"version":{"type":"string","description":"Version
+        number, such as 2.1.0"}},"required":["version"],"additionalProperties":false,"strict":true}}],"system":[{"type":"text","text":"You
         are a meticulous release engineer for the RubyLLM project. Review every\nchange
         for backwards compatibility, provider wire-format drift, cassette\nhygiene,
         and documentation accuracy before approving it for release.\nYou are a meticulous
@@ -426,18 +429,16 @@ http_interactions:
         wire-format drift, cassette\nhygiene, and documentation accuracy before approving
         it for release.\nYou are a meticulous release engineer for the RubyLLM project.
         Review every\nchange for backwards compatibility, provider wire-format drift,
-        cassette\nhygiene, and documentation accuracy before approving it for release.\n"},{"cachePoint":{"type":"default"}}],"inferenceConfig":{"maxTokens":64000},"toolConfig":{"tools":[{"toolSpec":{"name":"release_checklist","description":"Returns
-        the release checklist for a version","inputSchema":{"json":{"type":"object","properties":{"version":{"type":"string","description":"Version
-        number, such as 2.1.0"}},"required":["version"],"additionalProperties":false,"strict":true}}}}]}}'
+        cassette\nhygiene, and documentation accuracy before approving it for release.\n"}],"cache_control":{"type":"ephemeral"},"anthropic_version":"bedrock-2023-05-31"}'
     headers:
       User-Agent:
-      - Faraday v2.15.0
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261018T214433Z
+      - 20261105T194552Z
       X-Amz-Content-Sha256:
-      - 99b4a6494dc157a83e8d4eb4d0980e1118f0303ccf8c2ea51b37fd7aacbfc7a5
+      - 8dd922e5cdfb36047b620179fb0269dd919370eb590007f206d53a43b8f0cf11
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -451,27 +452,40 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 18 Oct 2026 21:44:35 GMT
+      - Thu, 05 Nov 2026 19:45:54 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '488'
+      - '587'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 97e14e01-d7c6-4a8f-b89d-26700e18a0ca
+      - e6427325-793b-40b6-95ef-b1e2453db4af
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '1301'
+      X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
+      - '7961'
+      X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
+      - '0'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '59'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '3'
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":952},"output":{"message":{"content":[{"toolUse":{"input":{"version":"2.1.0"},"name":"release_checklist","toolUseId":"tooluse_cXjJb2IPbwjQXp5BrWb9t2","type":"tool_use"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"cacheDetails":[{"inputTokens":7961,"ttl":"5m"}],"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":7961,"cacheWriteInputTokens":7961,"inputTokens":3,"outputTokens":59,"serverToolUsage":{},"totalTokens":8023}}'
-  recorded_at: Sun, 18 Oct 2026 21:44:35 GMT
+      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_fvh2k7orzre6lqc2mmukfomt5xef24imldh2zi7ttnq3s2nwvkkq","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_bdrk_01VCwgUwpqZwVn8N2cvpiSjn","name":"release_checklist","input":{"version":"2.1.0"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":3,"cache_creation_input_tokens":7961,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":7961,"ephemeral_1h_input_tokens":0},"output_tokens":59,"service_tier":"standard"}}'
+  recorded_at: Thu, 05 Nov 2026 19:45:54 GMT
 - request:
     method: post
-    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/invoke
     body:
       encoding: UTF-8
-      string: '{"messages":[{"role":"user","content":[{"text":"Fetch the release checklist
-        for version 2.1.0 with the tool, then reply with its first item."}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_cXjJb2IPbwjQXp5BrWb9t2","name":"release_checklist","input":{"version":"2.1.0"}}},{"cachePoint":{"type":"default"}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_cXjJb2IPbwjQXp5BrWb9t2","content":[{"text":"Checklist
-        for 2.1.0: changelog written, cassettes re-recorded, docs updated."}]}},{"cachePoint":{"type":"default"}}]}],"system":[{"text":"You
+      string: '{"messages":[{"role":"user","content":[{"type":"text","text":"Fetch
+        the release checklist for version 2.1.0 with the tool, then reply with its
+        first item."}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_bdrk_01VCwgUwpqZwVn8N2cvpiSjn","name":"release_checklist","input":{"version":"2.1.0"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_01VCwgUwpqZwVn8N2cvpiSjn","content":[{"type":"text","text":"Checklist
+        for 2.1.0: changelog written, cassettes re-recorded, docs updated."}]}]}],"max_tokens":64000,"tools":[{"name":"release_checklist","description":"Returns
+        the release checklist for a version","input_schema":{"type":"object","properties":{"version":{"type":"string","description":"Version
+        number, such as 2.1.0"}},"required":["version"],"additionalProperties":false,"strict":true}}],"system":[{"type":"text","text":"You
         are a meticulous release engineer for the RubyLLM project. Review every\nchange
         for backwards compatibility, provider wire-format drift, cassette\nhygiene,
         and documentation accuracy before approving it for release.\nYou are a meticulous
@@ -891,18 +905,16 @@ http_interactions:
         wire-format drift, cassette\nhygiene, and documentation accuracy before approving
         it for release.\nYou are a meticulous release engineer for the RubyLLM project.
         Review every\nchange for backwards compatibility, provider wire-format drift,
-        cassette\nhygiene, and documentation accuracy before approving it for release.\n"},{"cachePoint":{"type":"default"}}],"inferenceConfig":{"maxTokens":64000},"toolConfig":{"tools":[{"toolSpec":{"name":"release_checklist","description":"Returns
-        the release checklist for a version","inputSchema":{"json":{"type":"object","properties":{"version":{"type":"string","description":"Version
-        number, such as 2.1.0"}},"required":["version"],"additionalProperties":false,"strict":true}}}}]}}'
+        cassette\nhygiene, and documentation accuracy before approving it for release.\n"}],"cache_control":{"type":"ephemeral"},"anthropic_version":"bedrock-2023-05-31"}'
     headers:
       User-Agent:
-      - Faraday v2.15.0
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261018T214435Z
+      - 20261105T194554Z
       X-Amz-Content-Sha256:
-      - 80cd2a8cbf7edf64d645e70ad559c38ac902268e14fe7dda60dde924bc82965b
+      - 2f746179e5d8265725585c659bf9ac947d397460f21ccd2892452d8f8e00bf71
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -916,19 +928,29 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 18 Oct 2026 21:44:36 GMT
+      - Thu, 05 Nov 2026 19:45:56 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '488'
+      - '584'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 65772cc8-67d0-4731-98b3-615aceead5ef
+      - 591694d6-3142-41cb-a1fc-3edc9a9b6b9b
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '693'
+      X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
+      - '91'
+      X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
+      - '7961'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '27'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '5'
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":790},"output":{"message":{"content":[{"text":"The
-        release checklist for version 2.1.0 has been retrieved. The first item on
-        the checklist is:\n\n**Changelog written**"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheDetails":[{"inputTokens":91,"ttl":"5m"}],"cacheReadInputTokenCount":7961,"cacheReadInputTokens":7961,"cacheWriteInputTokenCount":91,"cacheWriteInputTokens":91,"inputTokens":5,"outputTokens":35,"serverToolUsage":{},"totalTokens":8092}}'
-  recorded_at: Sun, 18 Oct 2026 21:44:37 GMT
-recorded_with: VCR 6.4.0
+      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_4fqnisrewxnuwo2utdulu66e5yzxqghh3jw2o6d5ul4x6xdommxa","type":"message","role":"assistant","content":[{"type":"text","text":"Based
+        on the release checklist for version 2.1.0, the first item is: **changelog
+        written**"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":5,"cache_creation_input_tokens":91,"cache_read_input_tokens":7961,"cache_creation":{"ephemeral_5m_input_tokens":91,"ephemeral_1h_input_tokens":0},"output_tokens":27,"service_tier":"standard"}}'
+  recorded_at: Thu, 05 Nov 2026 19:45:56 GMT
+recorded_with: VCR 6.4.1

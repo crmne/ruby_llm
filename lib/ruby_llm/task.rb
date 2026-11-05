@@ -7,23 +7,24 @@ module RubyLLM
   # Chat#complete hands every one back to its tool's Tool#resume, which
   # returns the call's result once it has one:
   #
-  #   class RunSubAgent < RubyLLM::Tool
-  #     description "Hands a job to a sub-agent"
+  #   class RequestSignature < RubyLLM::Tool
+  #     description "Sends a contract for signature and reports when it is signed"
   #
-  #     def execute(job:)
-  #       run = SubAgentRun.start(job)
-  #       run.finished? ? run.answer : RubyLLM::Task.new(status: :input_required, data: { "run_id" => run.id })
+  #     def execute(contract_id:)
+  #       envelope = Signatures.send_for_signature(Contract.find(contract_id))
+  #       RubyLLM::Task.new(status: :input_required, data: { "envelope_id" => envelope.id })
   #     end
   #
   #     def resume(task, **)
-  #       run = SubAgentRun.find(task.data["run_id"]).continue
-  #       run.finished? ? run.answer : task
+  #       envelope = Signatures.find(task.data["envelope_id"])
+  #       envelope.signed? ? "Signed on #{envelope.signed_on}" : task
   #     end
   #   end
   #
   # A task is saved with its tool call as #to_h, so a Rails chat can pause
   # in one process and resume in another. MCP::Task is the task of an MCP
-  # tool call that a server runs in the background.
+  # tool call that a server runs in the background, and AgentTask the task
+  # of a subagent that waits.
   class Task
     include Support::Inspectable
     include Support::DeprecatedJobPredicates

@@ -36,8 +36,12 @@ prepare_version() {
   local source="$1" channel="$2"
   mkdir -p "$source/_data" "$source/_includes" "$source/_plugins"
   cp "$docs/_data/versions.yml" "$source/_data/versions.yml"
-  cp "$docs/_includes/version_select.html" "$source/_includes/"
+  cp "$docs/_includes/version_select.html" "$docs/_includes/version_banner.html" "$source/_includes/"
   cp "$docs/_plugins/versioned_docs.rb" "$source/_plugins/"
+  cp "$docs/_data/llms_areas.yml" "$source/_data/"
+  cp "$docs/_plugins/llms_discovery.rb" "$source/_plugins/"
+  # The quick reference shows the 2.x API, so the 1.x docs go without it.
+  [[ "$channel" == v1 ]] || cp "$docs/_includes/llms_intro.md" "$source/_includes/"
   cp -R "$docs/_plugins/social_cards.rb" "$docs/_plugins/social_cards" "$source/_plugins/"
   sed -i.bak '/^ *- jekyll-og-image$/d' "$source/_config.yml" && rm "$source/_config.yml.bak"
   ruby "$docs/bin/prepare_versions.rb" "$source/_data/versions.yml" "$channel" "$BASE" "$stable_ref" "$onex_ref"
@@ -96,7 +100,7 @@ echo "==> Building 1.x docs ($onex_ref) -> /v1/"
 archive_release "$onex_ref" "$workspace/v1"
 "$docs/bin/prepare_one_x_docs.rb" "$workspace/v1/docs"
 prepare_version "$workspace/v1/docs" v1
-perl -0pi -e 's{(\{% include components/header.html %\}\n)}{$1    {% include version_select.html %}\n}' \
+perl -0pi -e 's{(\{% include components/header.html %\}\n)}{$1    {% include version_banner.html %}\n    {% include version_select.html %}\n}' \
   "$workspace/v1/docs/_layouts/default.html"
 build_version "$workspace/v1/docs" "$workspace/v1-out" "$BASE/v1" "$workspace/v1"
 

@@ -106,24 +106,19 @@ module RubyLLM
           }
 
           add_thinking_fields(payload, thinking, model)
-          bind_replayed_thinking(payload, model)
+          bind_thinking(payload, model)
 
           payload
         end
 
-        def bind_replayed_thinking(payload, model)
-          return unless thinking_block_binding? && BlockBinding.binds?(model.id) && replays_thinking?(payload)
+        # The binding goes on every request, not only once thinking appears
+        # in the history: a thinking setting that changes mid-conversation
+        # invalidates the prompt cache.
+        def bind_thinking(payload, model)
+          return unless thinking_block_binding? && BlockBinding.binds?(model.id)
 
           bound = BlockBinding.apply(payload[:thinking])
           payload[:thinking] = bound if bound
-        end
-
-        def replays_thinking?(payload)
-          payload[:messages].any? do |message|
-            Array(message[:content]).any? do |block|
-              block.is_a?(Hash) && THINKING_BLOCK_TYPES.include?(block[:type] || block['type'])
-            end
-          end
         end
 
         # Hosts that don't take the binding's beta override this.
@@ -392,9 +387,13 @@ module RubyLLM
             thinking_tokens: usage_thinking_tokens(usage),
             server_tool_use: usage['server_tool_use'],
             finish_reason: normalize_finish_reason(data['stop_reason']),
-            model: data['model'],
+            model: parse_response_model_id(data),
             raw: raw
           )
+        end
+
+        def parse_response_model_id(data)
+          data['model']
         end
 
         # Stored thinking blocks replay whether or not this request asks for
@@ -559,9 +558,10 @@ module RubyLLM
         # Effort alone never turns thinking on; Claude needs a thinking block.
         # Generations that take a budget get one sized from the effort with
         # the levels Bedrock publishes. Generations without a budget option
-        # think adaptively.
+        # think adaptively, and so does a bare switch, except on generations
+        # that only take a budget, which get the smallest one.
         def thinking_mode(thinking, model, effort, max_tokens)
-          return { type: 'adaptive' } if thinking.enabled == true
+          return toggle_mode(model) if thinking.enabled == true
 
           budget = thinking.budget || effort_budget(effort, model, max_tokens)
           mode = if budget
@@ -574,6 +574,13 @@ module RubyLLM
         end
 
         EFFORT_BUDGETS = { 'low' => 1024, 'medium' => 40_000, 'high' => 63_999 }.freeze
+
+        def toggle_mode(model)
+          budget = model.reasoning_option(:budget_tokens)
+          return { type: 'adaptive' } unless budget && !model.reasoning_option(:effort)
+
+          { type: 'enabled', budget_tokens: [budget[:min].to_i, EFFORT_BUDGETS['low']].max }
+        end
 
         def adaptive_thinking?(thinking, effort, model)
           return true if thinking.display
