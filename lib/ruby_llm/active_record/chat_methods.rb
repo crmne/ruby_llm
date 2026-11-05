@@ -318,7 +318,7 @@ module RubyLLM
       CHAINABLE_CHAT_DELEGATES = %i[
         with_tools with_mcp with_tool_options with_provider_tools with_fallbacks with_temperature answer decline
         with_max_output_tokens with_thinking with_citations with_caching
-        with_end_user with_compaction with_code_execution with_skills
+        with_end_user with_owner with_compaction with_code_execution with_skills
         with_provider_options with_headers with_schema
         convert_unsupported_attachments
         before_request before_message after_message before_tool_call after_tool_result after_tool_progress
@@ -403,6 +403,14 @@ module RubyLLM
       # :call-seq: with_end_user(end_user)
       #
       # Applies Chat#with_end_user and returns this record.
+
+      ##
+      # :method: with_owner
+      # :call-seq: with_owner(owner)
+      #
+      # Applies Chat#with_owner and returns this record. The owner is not
+      # persisted, so set it, or let the agent's +owner+ set it, on each
+      # record you load.
 
       ##
       # :method: with_compaction
@@ -568,6 +576,12 @@ module RubyLLM
       # Delegates to Chat#end_user. See that method for arguments and return values.
 
       ##
+      # :method: owner
+      # :call-seq: owner
+      #
+      # Delegates to Chat#owner. See that method for arguments and return values.
+
+      ##
       # :method: fallbacks
       # :call-seq: fallbacks
       #
@@ -659,6 +673,12 @@ module RubyLLM
       # Delegates to Chat#awaiting_tasks?. See that method for arguments and return values.
 
       ##
+      # :method: awaiting_person?
+      # :call-seq: awaiting_person?
+      #
+      # Delegates to Chat#awaiting_person?. See that method for arguments and return values.
+
+      ##
       # :method: pending_tasks
       # :call-seq: pending_tasks
       #
@@ -677,10 +697,11 @@ module RubyLLM
       # The public methods behave as documented on RubyLLM::Chat.
 
       PASSTHROUGH_CHAT_DELEGATES = %i[
-        caching citations code_execution compaction concurrency end_user fallbacks headers max_output_tokens
+        caching citations code_execution compaction concurrency end_user owner fallbacks headers max_output_tokens
         provider_options schema provider_tools temperature thinking tool_options tools deferred_tools mcp
         skills file_store
-        awaiting_input? pending_inputs awaiting_tasks? pending_tasks add_completion count_tokens each render
+        awaiting_input? pending_inputs awaiting_tasks? pending_tasks awaiting_person? add_completion count_tokens
+        each render
       ].freeze
 
       ##

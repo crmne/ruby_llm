@@ -444,9 +444,21 @@ class ApplicationAgent < RubyLLM::Agent
 end
 ```
 
+## Usage Owners Use `with_owner`
+
+`RubyLLM.with_usage_owner` is now `RubyLLM.with_owner`, the same name a chat uses for its own owner. `with_usage_owner` still works and warns through `RubyLLM.deprecator`. RubyLLM 3.0 removes it. A chat that should always bill the same record can take it directly, and wins over the block:
+
+```ruby
+# Before
+RubyLLM.with_usage_owner(current_user) { chat.ask "Summarize this thread" }
+
+# After
+chat.with_owner(current_user).ask "Summarize this thread"
+```
+
 ## Rename Chat Columns Named After New Methods
 
-`acts_as_chat` records gain `code_execution`, `skills`, `file_store`, `with_code_execution`, `with_skills`, `with_file_store`, `queue`, `queued_messages`, `withdraw`, `join_queued_messages`, `around_join`, `after_file_write`, and the `ruby_llm_chat_files` association in 2.2. A column of your own with one of those names is hidden behind RubyLLM's method, so reading it returns RubyLLM's setting, usually `nil`, instead of your value. Rename such a column before you upgrade, for example a `code_execution` toggle to `runs_code`:
+`acts_as_chat` records gain `code_execution`, `skills`, `file_store`, `owner`, `with_code_execution`, `with_skills`, `with_file_store`, `with_owner`, `awaiting_person?`, `queue`, `queued_messages`, `withdraw`, `join_queued_messages`, `around_join`, `after_file_write`, and the `ruby_llm_chat_files` association in 2.2. A column of your own with one of those names would be hidden behind RubyLLM's method, so reading it would return RubyLLM's setting, usually `nil`, instead of your value. In 2.2, `acts_as_chat` raises `ArgumentError` naming such a column, and any column a RubyLLM reader hides, such as `cost`, `temperature`, or `tools`, when the model loads its columns. Rename such a column before you upgrade, for example a `code_execution` toggle to `runs_code`:
 
 ```ruby
 rename_column :chats, :code_execution, :runs_code

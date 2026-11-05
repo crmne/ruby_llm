@@ -326,6 +326,24 @@ RSpec.describe RubyLLM::Agent do
       expect(agent.chat(tenant: 'acme').end_user).to eq('tenant-acme')
     end
 
+    it 'sets the owner, from a value or a block evaluated with the agent inputs, inherited by subclasses' do
+      agent = Class.new(described_class) do
+        model model_for(:openai, :temperature), provider: :openai
+        inputs :account
+
+        owner { account }
+      end
+      fixed = Class.new(described_class) do
+        model model_for(:openai, :temperature), provider: :openai
+        owner :house
+      end
+
+      expect(agent.chat(account: :acme).owner).to eq(:acme)
+      expect(Class.new(agent).new(account: :globex).owner).to eq(:globex)
+      expect(fixed.chat.owner).to eq(:house)
+      expect(fixed.owner).to eq(:house)
+    end
+
     it 'resolves a context block from agent inputs before building the chat' do
       agent = Class.new(described_class) do
         model 'gpt-4.1-nano', provider: :openai

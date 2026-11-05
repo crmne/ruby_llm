@@ -105,7 +105,7 @@ module RubyLLM
     # request as-is. +metadata:+ is not sent to the provider; it is
     # attached to the emitted +embedding.ruby_llm+ instrumentation event.
     # +owner:+ attributes the usage to a record, such as a user, and wins
-    # over RubyLLM.with_usage_owner.
+    # over RubyLLM.with_owner.
     def self.embed(text,
                    model: nil,
                    provider: nil,

@@ -52,7 +52,7 @@ RSpec.describe RubyLLM::Evaluation do
       report = nil
 
       expect do
-        report = RubyLLM.with_usage_owner(owner) { evaluation.run(dataset:) }
+        report = RubyLLM.with_owner(owner) { evaluation.run(dataset:) }
       end.to change(RubyLLM::ActiveRecord::Usage, :count).by(2)
 
       rows = RubyLLM::ActiveRecord::Usage.order(:id).last(2)

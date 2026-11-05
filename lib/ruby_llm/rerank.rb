@@ -61,7 +61,7 @@ module RubyLLM
     # limits how many results come back. +provider_options:+ merges
     # options into the request in the provider's vocabulary.
     # +owner:+ attributes the usage to a record, such as a user, and wins
-    # over RubyLLM.with_usage_owner.
+    # over RubyLLM.with_owner.
     #
     #   RubyLLM.rerank "what is ruby", docs, model: "voyageai/rerank-2.5-lite", provider: :openrouter
     #

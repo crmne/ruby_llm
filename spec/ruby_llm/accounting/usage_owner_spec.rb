@@ -41,10 +41,10 @@ RSpec.describe RubyLLM::Accounting::Usage do
   end
 
   it 'applies the ambient owner, lets the keyword win, and restores outer owners' do
-    RubyLLM.with_usage_owner('outer') do
+    RubyLLM.with_owner('outer') do
       embed
       embed(owner: 'keyword')
-      RubyLLM.with_usage_owner('inner') { embed }
+      RubyLLM.with_owner('inner') { embed }
       embed
     end
     embed
@@ -53,8 +53,8 @@ RSpec.describe RubyLLM::Accounting::Usage do
   end
 
   it 'returns the block value and restores the owner when the block raises' do
-    expect(RubyLLM.with_usage_owner('account-1') { :done }).to eq(:done)
-    expect { RubyLLM.with_usage_owner('account-1') { raise 'boom' } }.to raise_error('boom')
+    expect(RubyLLM.with_owner('account-1') { :done }).to eq(:done)
+    expect { RubyLLM.with_owner('account-1') { raise 'boom' } }.to raise_error('boom')
 
     embed
     expect(usage_owners).to eq([nil])
@@ -65,7 +65,7 @@ RSpec.describe RubyLLM::Accounting::Usage do
     proceed = Queue.new
     threads = %w[thread-1 thread-2].map do |owner|
       Thread.new do
-        RubyLLM.with_usage_owner(owner) do
+        RubyLLM.with_owner(owner) do
           ready << true
           proceed.pop
           embed
@@ -77,7 +77,7 @@ RSpec.describe RubyLLM::Accounting::Usage do
     threads.each(&:join)
 
     fiber = Fiber.new do
-      RubyLLM.with_usage_owner('fiber') do
+      RubyLLM.with_owner('fiber') do
         Fiber.yield
         embed
       end
@@ -91,7 +91,7 @@ RSpec.describe RubyLLM::Accounting::Usage do
   end
 
   it 'passes the owner to threads started inside the block' do
-    RubyLLM.with_usage_owner('parent') { Thread.new { embed }.join }
+    RubyLLM.with_owner('parent') { Thread.new { embed }.join }
 
     expect(usage_owners).to eq(['parent'])
   end

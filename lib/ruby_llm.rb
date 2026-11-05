@@ -200,7 +200,7 @@ loader.setup
 # Tokens and Cost report usage and pricing. Chat totals include retries
 # and attempts that produced no message. Provider-reported costs take
 # precedence over estimates; unknown usage and prices remain +nil+.
-# RubyLLM.with_usage_owner attributes the usage of operations to a record.
+# RubyLLM.with_owner attributes the usage of operations to a record.
 # OpenTelemetry.enable enables optional tracing alongside existing subscribers.
 # Your application configures the OpenTelemetry SDK and exporters.
 #
@@ -285,13 +285,20 @@ module RubyLLM
     # restore the outer owner when they end. Each fiber and thread keeps its
     # own owner, and fibers and threads started inside the block inherit it.
     #
-    #   RubyLLM.with_usage_owner(current_user) do
+    #   RubyLLM.with_owner(current_user) do
     #     RubyLLM.transcribe("memo.m4a")
     #     RubyLLM.paint("a paper boat in the rain")
     #   end
     #
-    def with_usage_owner(owner, &)
+    # A chat's own Chat#with_owner wins inside it.
+    def with_owner(owner, &)
       Accounting::Usage.with_owner(owner, &)
+    end
+
+    # Deprecated alias for ::with_owner.
+    def with_usage_owner(owner, &)
+      deprecator.deprecate('RubyLLM.with_usage_owner', replacement: 'RubyLLM.with_owner', removal: '3.0')
+      with_owner(owner, &)
     end
 
     # Creates a Chat conversation. Arguments are forwarded to Chat.new:

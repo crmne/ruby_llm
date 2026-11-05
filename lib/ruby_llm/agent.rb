@@ -41,7 +41,7 @@ module RubyLLM
   # enumerable over their messages.
   class Agent
     extend Forwardable
-    singleton_class.prepend JoinCallbacks
+    singleton_class.prepend JoinCallbacks, Ownership
     include Enumerable
 
     DUPED_INHERITED_CONFIG = {
@@ -70,7 +70,7 @@ module RubyLLM
     CHAINABLE_CHAT_DELEGATES = %i[
       with_instructions with_tools with_mcp with_provider_tools with_tool_options with_model
       with_temperature with_max_output_tokens with_thinking with_citations
-      with_end_user with_compaction with_caching with_code_execution with_skills with_file_store with_context
+      with_end_user with_owner with_compaction with_caching with_code_execution with_skills with_file_store with_context
       with_provider_options with_headers with_schema with_fallbacks
       before_request before_message after_message before_tool_call after_tool_result after_tool_progress
       before_fallback after_fallback around_join after_file_write
@@ -82,9 +82,9 @@ module RubyLLM
     PASSTHROUGH_CHAT_DELEGATES = %i[
       model model_id provider messages tools deferred_tools mcp provider_tools tool_options provider_options headers
       schema concurrency caching citations code_execution compaction context end_user fallbacks thinking temperature
-      max_output_tokens skills file_store
+      max_output_tokens skills file_store owner
       each complete? cancelled? waiting? awaiting_approval? pending_approvals awaiting_input? pending_inputs
-      awaiting_tasks? pending_tasks add_message add_completion tokens cost render
+      awaiting_tasks? pending_tasks awaiting_person? add_message add_completion tokens cost render
       queue queued_messages withdraw join_queued_messages
     ].freeze
 
@@ -374,11 +374,18 @@ module RubyLLM
       #   end_user "tenant-42"
       #   end_user { workspace.public_id }
       #
-      def end_user(value = nil, &block)
-        return @end_user if value.nil? && !block_given?
+      def end_user(value = nil, &block) = value.nil? && !block ? @end_user : (@end_user = block || value)
 
-        @end_user = block || value
-      end
+      # Sets whoever the usage of chats this agent builds or finds is
+      # attributed to, applied via Chat#with_owner. A block defers
+      # evaluation until the chat is built, so the owner can come from the
+      # agent's inputs or, for a persisted chat, from +chat+. Subclasses
+      # inherit it. Called with no arguments, returns the configured value.
+      #
+      #   owner { account }
+      #   owner { chat.user }
+      #
+      def owner(value = nil, &block) = value.nil? && !block ? @owner : (@owner = block || value)
 
       # Enables citations for chats this agent builds, applied via
       # Chat#with_citations. Pass +false+ to disable them.
@@ -1185,6 +1192,12 @@ module RubyLLM
     # Delegates to Chat#with_end_user. See that method for arguments and return values.
 
     ##
+    # :method: with_owner
+    # :call-seq: with_owner(owner)
+    #
+    # Delegates to Chat#with_owner. See that method for arguments and return values.
+
+    ##
     # :method: with_compaction
     # :call-seq: with_compaction(options = {})
     #
@@ -1473,6 +1486,12 @@ module RubyLLM
     # Delegates to Chat#end_user. See that method for arguments and return values.
 
     ##
+    # :method: owner
+    # :call-seq: owner
+    #
+    # Delegates to Chat#owner. See that method for arguments and return values.
+
+    ##
     # :method: fallbacks
     # :call-seq: fallbacks
     #
@@ -1555,6 +1574,12 @@ module RubyLLM
     # :call-seq: awaiting_tasks?()
     #
     # Delegates to Chat#awaiting_tasks?. See that method for arguments and return values.
+
+    ##
+    # :method: awaiting_person?
+    # :call-seq: awaiting_person?()
+    #
+    # Delegates to Chat#awaiting_person?. See that method for arguments and return values.
 
     ##
     # :method: pending_tasks

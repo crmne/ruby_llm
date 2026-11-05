@@ -41,6 +41,8 @@ end
 
 That is the complete application-facing persistence setup. There is no `Model`, `ToolCall`, `UsageEntry`, or `Batch` model to add to `app/models`.
 
+`acts_as_chat` gives the record the chat's readers, such as `cost`, `temperature`, and `tools`. A column of yours with one of those names would be hidden behind them, so the model raises `ArgumentError` naming the column when it loads its columns. Rename the column to fix it.
+
 RubyLLM owns eight supporting tables under the `ruby_llm_` prefix:
 
 * `ruby_llm_models` for the model registry.
@@ -173,11 +175,12 @@ An entry links to the message it produced when there is one. A failed retry or a
 
 Token buckets and cost components are numeric columns in `ruby_llm_usages`; cost details are not stored as JSON. This freezes the price calculated when an attempt finishes and keeps the ledger suitable for database aggregation. The 2.0 runtime reads this ledger only; the 2.0 upgrade moves 1.16 message tokens into it before removing the old columns.
 
-Attribute each chat attempt to a record with `RubyLLM.with_usage_owner`. Its usage rows keep both the chat and owner associations. One-shot operations write to the same ledger, with no chat, and also accept `owner:`. Query an owner's spend through its own association:
+Attribute each chat attempt to a record with `with_owner`. Its usage rows keep both the chat and owner associations. One-shot operations write to the same ledger, with no chat, and accept `owner:`, or take the owner of a surrounding `RubyLLM.with_owner` block. Query an owner's spend through its own association:
 
 ```ruby
-RubyLLM.with_usage_owner(current_user) do
-  chat.ask("Summarize the latest reviews.")
+chat.with_owner(current_user).ask("Summarize the latest reviews.")
+
+RubyLLM.with_owner(current_user) do
   RubyLLM.transcribe("memo.m4a")
   RubyLLM.paint("a paper boat in the rain", owner: current_user.account)
 end

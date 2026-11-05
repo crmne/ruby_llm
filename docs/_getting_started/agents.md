@@ -88,6 +88,7 @@ For example, `model` maps to `RubyLLM.chat(model:, provider:, ...)`, `tools` map
 * `citations` (see [Citations]({% link _core_features/citations.md %}))
 * `caching` (see [Prompt Caching]({% link _core_features/prompt-caching.md %}))
 * `end_user` (see [Request Control]({% link _core_features/chat-request-control.md %}#identifying-end-users))
+* `owner` (see [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}#one-shot-operations))
 * `compaction` (see [Request Control]({% link _core_features/chat-request-control.md %}#compacting-long-conversations))
 * `code_execution` (see [Code Execution]({% link _advanced/code-execution.md %}))
 * `file_store` (see [Chat Files]({% link _advanced/chat-files.md %}#agents))
@@ -386,14 +387,14 @@ models own their message association.
 Delegated methods include:
 
 * `model`, `model_id`, `provider`, `messages`, `tools`, `provider_tools`, `provider_options`, `headers`, `schema`
-* `concurrency`, `caching`, `compaction`, `end_user`, `fallbacks`
+* `concurrency`, `caching`, `compaction`, `end_user`, `owner`, `fallbacks`
 * `tokens`, `cost`, `count_tokens`, `render`
 * `ask`, `say`, `complete`, `complete?`, `ask_later`, `generate`, `run_tools`, `step`
-* `cancel`, `cancelled?`, `waiting?`, `approve`, `deny`, `awaiting_approval?`, `pending_approvals`
+* `cancel`, `cancelled?`, `waiting?`, `approve`, `deny`, `awaiting_approval?`, `pending_approvals`, `awaiting_person?`
 * `queue`, `queued_messages`, `withdraw`, `join_queued_messages`
 * `add_message`, `each`
 * `cache_until_here`, `with_tools`, `with_provider_tools`, `with_tool_options`
-* `with_model`, `with_instructions`, `with_temperature`, `with_max_output_tokens`, `with_thinking`, `with_citations`, `with_end_user`, `with_compaction`, `with_context`
+* `with_model`, `with_instructions`, `with_temperature`, `with_max_output_tokens`, `with_thinking`, `with_citations`, `with_end_user`, `with_owner`, `with_compaction`, `with_context`
 * `with_caching`, `with_provider_options`, `with_headers`, `with_schema`, `with_fallbacks`
 * `before_request`, `before_message`, `after_message`, `before_tool_call`, `after_tool_result`, `after_tool_progress`, `before_fallback`, `after_fallback`, `around_join`
 

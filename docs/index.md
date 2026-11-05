@@ -295,9 +295,7 @@ chat.ask "Review this diff", with: "changes.patch"
 {: .home-code-card data-title="Cache repeated prompts" data-href="{% link _core_features/prompt-caching.md %}" data-doc-title="Prompt Caching" }
 
 ```ruby
-RubyLLM.with_usage_owner(current_account) do
-  SupportAgent.new.ask "Where is order 42?"
-end
+SupportAgent.new.with_owner(current_account).ask "Where is order 42?"
 
 current_account.ruby_llm_usages.sum(:total_cost)
 ```

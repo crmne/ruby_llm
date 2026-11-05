@@ -28,6 +28,7 @@ module RubyLLM
     include ToolSearch
     include ToolSequences
     prepend Rescuable
+    prepend Ownership
 
     # The provider-neutral options #with_compaction accepts.
     COMPACTION_OPTIONS = %i[at instructions pause_after].freeze
@@ -96,6 +97,10 @@ module RubyLLM
     # The opaque per-user identifier set with #with_end_user, or
     # +nil+.
     attr_reader :end_user
+
+    # Whoever the chat's usage is attributed to, set with #with_owner, or
+    # +nil+.
+    attr_reader :owner
 
     # The Fallback models tried in order when generation fails.
     attr_reader :fallbacks
@@ -591,6 +596,18 @@ module RubyLLM
     #
     def awaiting_tasks?
       waiting? && pending_tasks.any?
+    end
+
+    # Returns whether the conversation can make no progress until a person
+    # acts: it is #waiting? and an approval waits for a decision, an input
+    # request waits for an answer, or a Task is Task#input_required?. A
+    # chat that waits only on tasks that are working returns +false+, so
+    # check on those with #complete instead of asking anyone.
+    #
+    #   notify(chat.owner) if chat.awaiting_person?
+    #
+    def awaiting_person?
+      waiting? && (pending_approvals.any? || pending_inputs.any? || pending_tasks.any?(&:input_required?))
     end
 
     # Returns the Task objects that tool calls wait on, as they were when
@@ -1181,6 +1198,22 @@ module RubyLLM
     # your user id, never personal data.
     def with_end_user(end_user)
       @end_user = end_user
+      self
+    end
+
+    # Attributes the usage of every attempt the chat makes to +owner+, such
+    # as a user or an account record: each request, the tools it runs, the
+    # file converters it triggers, and compaction. In Rails, the usage
+    # ledger stores the owner with each row; everywhere, the
+    # +usage.ruby_llm+ event carries it. It wins over RubyLLM.with_owner.
+    # Pass +nil+ to remove it. Returns +self+.
+    #
+    #   chat.with_owner(current_user).ask "Summarize this thread"
+    #
+    # RubyLLM never sends the owner to the provider; see #with_end_user
+    # for the identifier providers receive.
+    def with_owner(owner)
+      @owner = owner
       self
     end
 
@@ -1945,7 +1978,7 @@ module RubyLLM
 
     def unsupported_attachment_handler
       callbacks = @callbacks[:unsupported_attachment]
-      callbacks += [@file_references.method(:describe)] if @file_references
+      callbacks += [->(attachment) { @file_references.describe(attachment, config: @config) }] if @file_references
       return if callbacks.empty? && !@code_execution
 
       describe = attachment_describer
