@@ -13,7 +13,7 @@ RSpec.describe 'Migrating from ruby-openai guide', type: :task do
 
   it 'configures RubyLLM without a client object' do
     allow(ENV).to receive(:fetch).and_call_original
-    allow(ENV).to receive(:fetch).with('OPENAI_API_KEY').and_return('sk-doc')
+    allow(ENV).to receive(:fetch).with('OPENAI_ACCESS_TOKEN').and_return('sk-doc')
 
     evaluate('config.openai_api_key')
 
@@ -52,5 +52,6 @@ RSpec.describe 'Migrating from ruby-openai guide', type: :task do
     schema = provider_requests.first['tools'].first['parameters']
     expect(schema['properties']['unit']['enum']).to eq(%w[celsius fahrenheit])
     expect(schema['required']).to eq(['location'])
+    expect(provider_requests.first['tool_choice']).to eq('required')
   end
 end

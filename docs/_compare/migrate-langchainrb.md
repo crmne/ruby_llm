@@ -36,8 +36,8 @@ gem "ruby_llm"
 
 ```ruby
 RubyLLM.configure do |config|
-  config.openai_api_key = ENV.fetch("OPENAI_API_KEY")
-  config.anthropic_api_key = ENV.fetch("ANTHROPIC_API_KEY")
+  config.openai_api_key = ENV["OPENAI_API_KEY"]
+  config.anthropic_api_key = ENV["ANTHROPIC_API_KEY"]
 end
 ```
 
@@ -102,7 +102,7 @@ client.create_default_schema
 client.add_texts(
   texts: [
     "Begin by preheating your oven to 375°F (190°C)...",
-    "In a bowl, combine the spinach mixture with 4 ounces of softened cream cheese..."
+    "...Add the stuffed chicken breasts and sear on each side for 3-4 minutes, or until golden brown."
   ]
 )
 
@@ -124,7 +124,7 @@ class Document < ApplicationRecord
 end
 
 Document.create! content: "Begin by preheating your oven to 375°F (190°C)..."
-Document.create! content: "In a bowl, combine the spinach mixture with 4 ounces of softened cream cheese..."
+Document.create! content: "...Add the stuffed chicken breasts and sear on each side for 3-4 minutes, or until golden brown."
 ```
 
 Then give the model a search tool and an agent that uses it:

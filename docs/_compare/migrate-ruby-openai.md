@@ -51,7 +51,7 @@ After, with RubyLLM:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.openai_api_key = ENV.fetch("OPENAI_API_KEY")
+  config.openai_api_key = ENV.fetch("OPENAI_ACCESS_TOKEN")
 end
 ```
 
@@ -232,7 +232,10 @@ class CurrentWeather < RubyLLM::Tool
   def execute(location:, unit: "fahrenheit") = "The weather in #{location} is nice 🌞 #{unit}"
 end
 
-chat = RubyLLM.chat(model: "{{ site.models.openai_latest }}").with_tools CurrentWeather
+chat = RubyLLM.chat model: "{{ site.models.openai_latest }}"
+chat.with_tools CurrentWeather
+chat.with_tool_options choice: :required
+
 response = chat.ask "What is the weather like in San Francisco?"
 
 puts response.content
@@ -240,7 +243,7 @@ puts response.content
 
 RubyLLM runs the loop: it sends the schema, executes each call the model makes, sends the results back, and repeats until the model answers. That works when the model calls several tools, or the same tool several times, which the README example would need another loop for. For simple tools you can drop the `parameters` block, and RubyLLM reads the keyword arguments of `execute` instead.
 
-To force a tool call as `tool_choice: "required"` does, use `chat.with_tool_options choice: :required`. See [Tools]({% link _getting_started/tools.md %}) and [Controlling Tool Execution]({% link _tools/tool-execution.md %}).
+`with_tool_options choice: :required` is the README's `tool_choice: "required"`. RubyLLM clears it once the tool has run, so the model can answer. See [Tools]({% link _getting_started/tools.md %}) and [Controlling Tool Execution]({% link _tools/tool-execution.md %}).
 
 ## Everything Else
 
@@ -254,11 +257,11 @@ The rest of ruby-openai's endpoints map to RubyLLM operations that work across p
 | `client.audio.speech` | [`RubyLLM.speak`]({% link _getting_started/text-to-speech.md %}) |
 | `client.moderations` | [`RubyLLM.moderate`]({% link _getting_started/moderation.md %}) |
 | `client.batches` | [`RubyLLM.batch`]({% link _advanced/batches.md %}) |
-| `response_format: { type: "json_object" }` | [`with_schema`]({% link _core_features/structured-output.md %}) |
+| `response_format: { type: "json_object" }` | `with_provider_options text: { format: { type: "json_object" } }`, or [`with_schema`]({% link _core_features/structured-output.md %}) to enforce a schema |
 | Image URLs in `content` parts | `chat.ask "...", with: "photo.jpg"` ([Attachments]({% link _core_features/attachments.md %})) |
 | `uri_base` for Ollama, Groq, or Gemini | `provider:` with RubyLLM's native [providers]({% link _reference/configuration-providers.md %}) |
 
-Request fields RubyLLM does not name yet still reach the API. Pass them in OpenAI's own vocabulary with `with_provider_options`. See [Request Control]({% link _core_features/chat-request-control.md %}).
+Request fields RubyLLM does not name yet still reach the API. Pass them in OpenAI's own vocabulary with `with_provider_options`. RubyLLM talks to OpenAI through the Responses API, so use its field names: a Chat Completions field such as `response_format` does not always carry over unchanged. See [Request Control]({% link _core_features/chat-request-control.md %}).
 
 ## What You Gain
 
