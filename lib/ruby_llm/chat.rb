@@ -1174,6 +1174,7 @@ module RubyLLM
                            FileReferences.new(store:, spill_to_file:,
                                               written: ->(file) { run_callbacks(:after_file_write, file) })
                          end
+      @attachment_replacements.clear
       @file_tools = store ? build_file_tools : []
       self
     end

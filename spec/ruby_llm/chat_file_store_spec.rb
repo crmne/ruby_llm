@@ -271,6 +271,16 @@ RSpec.describe RubyLLM::Chat do
       expect(rendered).not_to include('Bluebird')
     end
 
+    it 'converts again once the store changes its limit' do
+      chat = converting_chat('word ' * 3_000)
+      chat.add_message(role: :user, content: 'Summarize', attachments: [docx])
+      chat.render
+
+      chat.with_file_store(chat.file_store, spill_to_file: false)
+
+      expect(chat.render.to_json).not_to include('so only the start is shown')
+    end
+
     it 'sends the start of a long text and says where the rest is' do
       chat = converting_chat('word ' * 3_000)
       chat.add_message(role: :user, content: 'Summarize', attachments: [docx])

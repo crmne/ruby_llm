@@ -83,6 +83,24 @@ RSpec.describe RubyLLM::Chat do
       expect(seen).to eq(%i[account alice])
     end
 
+    it 'attributes the converters a render runs to the owner' do
+      seen = []
+      docx = File.expand_path('../fixtures/sample.docx', __dir__)
+      type = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+      converter = lambda do |_file|
+        seen << RubyLLM::Accounting::Usage.owner
+        'The codename is Bluebird.'
+      end
+      chat = RubyLLM.context { |config| config.file_converters = { type => converter } }
+                    .chat(model: model_for(:anthropic), provider: :anthropic)
+                    .with_file_store.with_owner(:alice)
+      chat.add_message(role: :user, content: 'What is the codename?', attachments: [docx])
+
+      chat.render
+
+      expect(seen).to eq([:alice])
+    end
+
     it 'keeps the owner on a copy' do
       expect(chat.with_owner(:alice).dup.owner).to eq(:alice)
     end

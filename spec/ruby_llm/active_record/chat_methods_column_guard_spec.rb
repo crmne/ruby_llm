@@ -39,6 +39,12 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect { chat_class.column_names }.to raise_error(ArgumentError, /cost.*tokens.*context|cost, tokens, and context/m)
   end
 
+  it 'catches columns hidden by the operations and the Enumerable methods a chat answers' do
+    chat_class = chat_class_with(:complete, :count)
+
+    expect { chat_class.new }.to raise_error(ArgumentError, /guarded_chats\.complete, guarded_chats\.count/)
+  end
+
   it 'leaves a table with only its own columns alone' do
     expect(chat_class_with(:title).new).to be_a(ActiveRecord::Base)
     expect(Chat.new).to be_a(Chat)

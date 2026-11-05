@@ -5,9 +5,11 @@ module RubyLLM
     # Refuses a chat table with a column that a RubyLLM reader on the record
     # would hide, such as +temperature+ or +cost+: reading it would return
     # RubyLLM's setting instead of the stored value. The check runs when the
-    # class loads its columns, so it needs no database at boot.
+    # class loads its columns, so it needs no database at boot. A reader
+    # hides a column when it comes from ChatMethods or ChatFiles, or a
+    # module they bring along, such as Enumerable.
     module ChatColumnGuard # :nodoc:
-      OWNERS = [ChatMethods, ChatFiles].freeze
+      OWNERS = (ChatMethods.ancestors | ChatFiles.ancestors).freeze
 
       private
 

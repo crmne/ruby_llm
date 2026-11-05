@@ -344,6 +344,19 @@ RSpec.describe RubyLLM::Agent do
       expect(fixed.owner).to eq(:house)
     end
 
+    it 'clears the owner when its block returns nil, and leaves it alone when no owner is declared' do
+      agent = Class.new(described_class) do
+        inputs :account
+
+        owner { account }
+      end
+      bare = Class.new(described_class)
+      chat = RubyLLM.chat(model: model_for(:openai, :temperature)).with_owner(:alice)
+
+      expect(bare.new(chat:).owner).to eq(:alice)
+      expect(agent.new(chat:, account: nil).owner).to be_nil
+    end
+
     it 'resolves a context block from agent inputs before building the chat' do
       agent = Class.new(described_class) do
         model 'gpt-4.1-nano', provider: :openai

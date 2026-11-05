@@ -12,8 +12,7 @@ module RubyLLM
 
       def apply_configuration(chat, input_values:, **)
         super.tap do
-          value = evaluate(owner, runtime_context(chat:, inputs: input_values))
-          chat.with_owner(value) unless value.nil?
+          chat.with_owner(evaluate(owner, runtime_context(chat:, inputs: input_values))) unless owner.nil?
         end
       end
     end
