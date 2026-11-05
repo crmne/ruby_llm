@@ -164,11 +164,14 @@ Sources and citations answer different questions. Sources are every page a web s
 ```ruby
 response = chat.with_provider_tools(:web_search).ask "What changed in the latest Ruby release?"
 
-sources = response.server_tool_calls.flat_map { |call| Array(call.result) }
+searches = response.server_tool_calls.select do |call|
+  %w[web_search_call web_search_tool_result].include?(call.type)
+end
+sources = searches.flat_map { |call| Array(call.result) }
 urls = sources.filter_map { |source| source["url"] if source.is_a?(Hash) }
 ```
 
-The result keeps the service's own shape. On the Responses API, each `web_search_call` lists Hashes with a `"url"`, and real-time feeds appear as `{"type" => "api", "name" => "oai-weather"}`. Anthropic's `web_search_tool_result` lists results with a `"url"` and a `"title"`. Gemini reports its search queries and grounds the answer through citations instead. Persisted chats keep the sources with the rest of the tool call.
+The result keeps the service's own shape. On the Responses API, each `web_search_call` lists Hashes with a `"url"`, and real-time feeds appear as `{"type" => "api", "name" => "oai-weather"}`. Anthropic's `web_search_tool_result` lists results with a `"url"` and a `"title"`. Gemini reports its search queries and grounds the answer through citations instead. In Rails, messages keep the sources in their `server_tool_calls` column, which the install generator creates.
 
 ### Google Search Suggestions
 
