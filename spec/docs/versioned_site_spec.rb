@@ -118,6 +118,18 @@ RSpec.describe 'Versioned documentation site', type: :task do
       expect(File.read(File.join(site, 'llms.txt'))).to eq('stable index')
     end
 
+    it 'lets AI agents fetch the Markdown twins that search engines skip' do
+      write_page('robots.txt', "User-agent: *\nAllow: /\nDisallow: /*.md$\n\nSitemap: https://rubyllm.com/sitemap.xml\n")
+
+      run_script('build_version_redirects.rb', site)
+      groups = File.read(File.join(site, 'robots.txt')).split(/\n{2,}/)
+      ai_group = groups.find { |group| group.include?('User-agent: ClaudeBot') }
+
+      expect(groups.first).to include('User-agent: *', 'Disallow: /*.md$')
+      expect(ai_group).to include('User-agent: GPTBot', 'User-agent: PerplexityBot', 'Allow: /')
+      expect(ai_group).not_to include('Disallow')
+    end
+
     it 'supports a Pages base path for legacy section redirects and sitemap discovery' do
       run_script('build_version_redirects.rb', site, '/ruby_llm')
 

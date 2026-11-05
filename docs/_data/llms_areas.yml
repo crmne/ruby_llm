@@ -1,0 +1,24 @@
+# Splits the full documentation into the per-area files that llms.txt lists,
+# so a model can read one area at a time. A page belongs to the first area
+# that names its file in `pages` or its collection in `collections`, and to
+# the last area otherwise. Catalog pages such as the model list stay out of
+# the area files; llms.txt links them directly.
+- id: tools-and-agents
+  title: Tools and agents
+  description: Tools, MCP, agents, prompt templates, the agentic loop, durable agents, code execution, skills, judgments, and evaluations.
+  pages: [tools, agents, mcp, tool-parameters, tool-execution, tool-search, provider-tools, skills, prompt-rendering, agentic-workflows, durable-agents-overview, durable-agents, code-execution, sandboxes, memory, judgments, evaluations]
+- id: rails
+  title: Rails
+  description: Active Record persistence, Active Storage attachments, Hotwire streaming, generators, and background jobs.
+  pages: [rails, rails-persistence, rails-streaming, rails-generators, rails-advanced-config]
+- id: operations
+  title: Individual operations
+  description: Images, video, speech, transcription, OCR, moderation, embeddings, reranking, RAG, files, batches, tokenization, and hosted research.
+  pages: [image-generation, video-generation, text-to-speech, audio-transcription, ocr, moderation, embeddings, rerank, rag, files, batches, tokenization, hosted-research]
+- id: reference
+  title: Reference
+  description: Provider setup, models, custom providers, releases, and upgrade guides.
+  collections: [reference]
+- id: core
+  title: Core
+  description: Installation, configuration, chat, streaming, attachments, structured output, thinking, caching, cost tracking, errors, and observability.

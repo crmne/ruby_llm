@@ -1,0 +1,28 @@
+{
+  "$schema": "https://context7.com/schema/context7.json",
+  "projectTitle": "RubyLLM",
+  "description": "The Ruby AI framework: chats, tools, agents, MCP, structured output, evaluations, images, video, audio, OCR, embeddings, reranking, and Rails integration behind one API across every major provider.",
+  "folders": ["docs", "skills"],
+  "excludeFolders": ["docs/_site", "docs/vendor", "docs/assets", "docs/_data", "docs/_includes", "docs/_layouts", "docs/_plugins", "docs/bin"],
+  "excludeFiles": ["available-models.md", "release-history.md"],
+  "rules": [
+    "Use RubyLLM 2.x. Check the installed version in Gemfile.lock or with RubyLLM::VERSION before choosing an API. A 1.x application uses the 1.x docs at https://rubyllm.com/v1/.",
+    "Set instructions with chat.with_instructions or the Agent instructions macro. There is no system_prompt.",
+    "Limit output with with_max_output_tokens, not max_tokens.",
+    "Control reasoning with with_thinking, not reasoning options. with_thinking, with_caching, with_compaction, and with_citations take nothing or true to enable and false to disable; they reject nil.",
+    "Every with_x method on a chat returns the chat, so calls chain: RubyLLM.chat.with_instructions(...).with_tools(...).ask(...).",
+    "Pass provider: as a keyword, as in RubyLLM.chat(model: ..., provider: :anthropic). Reserve provider_options for a request field only one provider has.",
+    "Check model capabilities with model.supports?(:vision). There are no supports_vision? style predicates.",
+    "Never invent model IDs. Verify one with RubyLLM.models.find(id) before using it.",
+    "Read structured output with message.parsed after with_schema. message.content stays text.",
+    "Read tokens through message.tokens.input, .output, .cache_read, .cache_write, and .thinking, and cost through message.cost.total. An unknown cost is nil, not zero.",
+    "RubyLLM enumerations are Symbols, such as finish_reason == :stop and thinking effort :medium. Model IDs and provider slugs are Strings.",
+    "Use RubyLLM.paint, animate, speak, transcribe, ocr, moderate, embed, and rerank directly without a chat. Save generated files with result.save(path).",
+    "Subclass RubyLLM::Tool for tools and RubyLLM::Agent for reusable assistants. Connect MCP servers by subclassing RubyLLM::MCP; do not add another MCP client gem.",
+    "In Rails, run bin/rails generate ruby_llm:install and declare acts_as_chat and acts_as_message on your own models. Persisted chats use the same API as RubyLLM.chat."
+  ],
+  "previousVersions": [
+    { "tag": "v2.1.1" },
+    { "tag": "1.16.0" }
+  ]
+}
