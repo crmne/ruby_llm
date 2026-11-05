@@ -173,6 +173,30 @@ RSpec.describe RubyLLM::Chat, :live do
       expect(payload[:tools]).to include({ type: 'code_interpreter', container: { type: 'auto' } })
     end
 
+    it 'asks OpenAI Responses for the sources its web searches found' do
+      payload = RubyLLM.chat(model: model_for(:openai, :reasoning_effort), provider: :openai)
+                       .with_provider_tools(:web_search)
+                       .render
+
+      expect(payload[:include]).to eq(%w[reasoning.encrypted_content web_search_call.action.sources])
+    end
+
+    it 'asks for web search sources when the search tool is a raw Hash' do
+      payload = RubyLLM.chat(model: model_for(:azure, :thinking), provider: :azure, protocol: :responses)
+                       .with_provider_tools({ type: 'web_search_preview' })
+                       .render
+
+      expect(payload[:include]).to include('web_search_call.action.sources')
+    end
+
+    it 'leaves the include list alone without web search' do
+      payload = RubyLLM.chat(model: model_for(:openai, :reasoning_effort), provider: :openai)
+                       .with_provider_tools(:code_execution)
+                       .render
+
+      expect(payload[:include]).to eq(%w[reasoning.encrypted_content])
+    end
+
     it 'renders Gemini aliases with options nested inside the tool key' do
       payload = RubyLLM.chat(model: model_for(:gemini, :provider_tools), provider: :gemini)
                        .with_provider_tools(:web_search, file_search: { file_search_store_names: ['store'] })
@@ -283,6 +307,11 @@ RSpec.describe RubyLLM::Chat, :live do
   end
 
   describe 'web search' do
+    def web_search_source_urls(response)
+      response.server_tool_calls.select { |call| call.type == 'web_search_call' }
+              .flat_map { |call| Array(call.result) }.filter_map { |source| source['url'] }
+    end
+
     context "with anthropic/#{model_for(:anthropic)}" do
       let(:chat) { RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic).with_provider_tools(:web_search) }
 
@@ -323,10 +352,11 @@ RSpec.describe RubyLLM::Chat, :live do
         RubyLLM.chat(model: model_for(:openai, :reasoning_effort), provider: :openai).with_provider_tools(:web_search)
       end
 
-      it 'searches and records the tool call items' do
+      it 'searches and records the tool call items with the sources they found' do
         response = chat.ask('Search the web: what is the latest stable Ruby version? Cite your source.')
 
         expect(response.server_tool_calls.map(&:type)).to include('web_search_call')
+        expect(web_search_source_urls(response)).to include(start_with('https://'))
         expect(response.tokens.server_tool_use).to match('web_search_requests' => be_positive)
         expect(response.raw_content).to be_an(Array)
 
@@ -350,11 +380,15 @@ RSpec.describe RubyLLM::Chat, :live do
                .with_provider_tools(:web_search)
       end
 
-      it 'searches and counts the searches Azure bills' do
+      it 'searches, returns the sources, and counts the searches Azure bills' do
         response = chat.ask('Search the web: what is the latest stable Ruby version? Cite your source.')
 
         expect(response.server_tool_calls.map(&:type)).to include('web_search_call')
+        expect(web_search_source_urls(response)).to include(start_with('https://'))
         expect(response.tokens.server_tool_use).to match('web_search_requests' => be_positive)
+
+        followup = chat.ask('Thanks. Now just say OK.')
+        expect(followup.content).to be_present
       end
     end
 
@@ -421,6 +455,7 @@ RSpec.describe RubyLLM::Chat, :live do
         response = chat.ask('Search the web: what is the latest stable Ruby version? Cite your source.')
 
         expect(response.server_tool_calls).not_to be_empty
+        expect(web_search_source_urls(response)).to include(start_with('https://'))
         expect(response.citations).not_to be_empty
         expect(response.tokens.server_tool_use).to match('web_search_requests' => be_positive)
         expect(response.raw_content).to be_an(Array)
