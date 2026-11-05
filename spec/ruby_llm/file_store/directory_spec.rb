@@ -125,7 +125,7 @@ RSpec.describe RubyLLM::FileStore::Directory do
     File.symlink(outside, File.join(root, 'folder'))
 
     expect(store.list.map(&:path)).to be_empty
-    expect(store.find('link.txt')).to be_nil
+    expect(store['link.txt']).to be_nil
     expect { store.read('link.txt') }.to raise_error(RubyLLM::FileNotFoundError)
     expect { store.read('folder/secret.txt') }.to raise_error(ArgumentError, /not inside/)
   ensure
@@ -218,11 +218,11 @@ RSpec.describe RubyLLM::FileStore::Directory do
     FileUtils.rm_rf(outside)
   end
 
-  it 'refuses to delete an empty folder without recursive: true, and removes it with it' do
+  it 'refuses to delete an empty folder with delete, and removes it with delete_folder' do
     FileUtils.mkdir_p(File.join(root, 'empty'))
 
     expect { store.delete('empty') }.to raise_error(ArgumentError, /empty is a folder/)
-    expect(store.delete('empty', recursive: true)).to eq([])
+    expect(store.delete_folder('empty')).to eq([])
     expect(File.exist?(File.join(root, 'empty'))).to be(false)
   end
 
@@ -232,7 +232,7 @@ RSpec.describe RubyLLM::FileStore::Directory do
     store.write('reports/q3.md', 'Q3')
     File.symlink(outside, File.join(root, 'reports', 'link'))
 
-    expect(store.delete('reports', recursive: true).map(&:path)).to eq(%w[reports/q3.md])
+    expect(store.delete_folder('reports').map(&:path)).to eq(%w[reports/q3.md])
     expect(File.read(File.join(outside, 'keep.txt'))).to eq('safe')
     expect(File.exist?(File.join(root, 'reports'))).to be(false)
   ensure
@@ -244,7 +244,7 @@ RSpec.describe RubyLLM::FileStore::Directory do
     File.write(File.join(outside, 'keep.txt'), 'safe')
     File.symlink(outside, File.join(root, 'link'))
 
-    expect(store.delete('link', recursive: true)).to eq([])
+    expect(store.delete_folder('link')).to eq([])
     expect(File.read(File.join(outside, 'keep.txt'))).to eq('safe')
   ensure
     FileUtils.rm_rf(outside)
@@ -253,7 +253,7 @@ RSpec.describe RubyLLM::FileStore::Directory do
   it 'refuses to delete a hidden folder' do
     FileUtils.mkdir_p(File.join(root, '.git'))
 
-    expect { store.delete('.git', recursive: true) }.to raise_error(ArgumentError, /not inside/)
+    expect { store.delete_folder('.git') }.to raise_error(ArgumentError, /not inside/)
     expect(File.exist?(File.join(root, '.git'))).to be(true)
   end
 

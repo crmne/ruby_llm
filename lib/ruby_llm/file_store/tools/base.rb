@@ -3,12 +3,13 @@
 module RubyLLM
   class FileStore
     module Tools
-      # What the five file tools share: the chat's store, its
-      # configuration, and the callback for each file a tool writes.
+      # What the file tools share: the chat's store, its configuration,
+      # the callback for each file a tool writes, and the check that the
+      # model read a file before it changes it.
       class Base < Tool # :nodoc:
         class ToolError < StandardError; end # :nodoc:
 
-        spill_to_file false
+        inline_limit false
 
         def initialize(store:, config: -> { RubyLLM.config }, written: ->(_file) {})
           super()
@@ -33,9 +34,13 @@ module RubyLLM
           raise ToolError, e.message
         end
 
+        def folder_for(name)
+          path_for(name) unless name.to_s.strip.empty? || %w[. /].include?(name.to_s.strip)
+        end
+
         def file_at(name)
           path = path_for(name)
-          store.find(path) || raise(ToolError, "There is no file at #{path}. #{missing_hint(path)}")
+          store[path] || raise(ToolError, "There is no file at #{path}. #{missing_hint(path)}")
         end
 
         def missing_hint(path)
@@ -45,9 +50,37 @@ module RubyLLM
           'List the files with list_files.'
         end
 
+        def digest_of(file)
+          file.digest || FileStore.digest(store.read(file.path))
+        end
+
+        # Yields the file at +path+, or +nil+ for a new one, with the store
+        # locked, once the model has read the file as it is now.
+        def changing(path)
+          store.with_lock do
+            file = store[path]
+            fresh!(file) if file
+            yield file
+          end
+        end
+
+        def fresh!(file)
+          seen = store.read_digest(file.path)
+          raise ToolError, "Read #{file.path} before you change it." unless seen
+          return if seen == digest_of(file)
+
+          raise ToolError, "#{file.path} changed since you read it. Read it again."
+        end
+
         def guarded_write
           written = nil
-          result = guarded { yield(->(path, content) { written = store.write(path, content) }) }
+          result = guarded do
+            yield(lambda do |path, content|
+              written = store.write(path, content)
+              store.record_read(written.path, written.digest || FileStore.digest(content))
+              written
+            end)
+          end
           @written.call(written) if written
           result
         end

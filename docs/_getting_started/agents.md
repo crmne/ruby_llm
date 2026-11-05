@@ -90,7 +90,7 @@ For example, `model` maps to `RubyLLM.chat(model:, provider:, ...)`, `tools` map
 * `end_user` (see [Request Control]({% link _core_features/chat-request-control.md %}#identifying-end-users))
 * `compaction` (see [Request Control]({% link _core_features/chat-request-control.md %}#compacting-long-conversations))
 * `code_execution` (see [Code Execution]({% link _advanced/code-execution.md %}))
-* `file_store` (see [Chat Files]({% link _advanced/chat-files.md %}#agents))
+* `file_store` (see [File Stores]({% link _core_features/file-stores.md %}#agents))
 * `provider_options` (see [Request Control]({% link _core_features/chat-request-control.md %}))
 * `headers` (see [Chat Basics]({% link _getting_started/chat.md %}))
 * `schema` (see [Chat Basics]({% link _getting_started/chat.md %}))

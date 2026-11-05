@@ -91,10 +91,25 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
 
       ActiveRecord::Migration.suppress_messages { upgrade.migrate(:up) }
 
-      %w[chat_type chat_id owner_type owner_id path content_type byte_size digest text].each do |column|
+      %w[chat_type chat_id owner_type owner_id path content_type byte_size digest text read_digest].each do |column|
         expect(connection.column_exists?(:ruby_llm_chat_files, column)).to be(true)
       end
       expect(connection.index_exists?(:ruby_llm_chat_files, %i[chat_type chat_id path])).to be(true)
+      raise ActiveRecord::Rollback
+    end
+  ensure
+    RubyLLM::ActiveRecord::ChatFile.reset_column_information
+  end
+
+  it 'adds the read digest to a chat files table made before it' do
+    upgrade = migration_class
+
+    ActiveRecord::Base.transaction do
+      connection.remove_column(:ruby_llm_chat_files, :read_digest)
+
+      ActiveRecord::Migration.suppress_messages { upgrade.migrate(:up) }
+
+      expect(connection.column_exists?(:ruby_llm_chat_files, :read_digest, :string)).to be(true)
       raise ActiveRecord::Rollback
     end
   ensure

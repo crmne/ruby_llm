@@ -23,8 +23,12 @@ RSpec.describe RubyLLM::FileStore::Tools do
 
   it 'gives the model five tools that send their results whole' do
     expect(chat.tools.keys).to eq(%i[list_files read_file search_files write_file edit_file])
-    expect(chat.tools.values.map(&:spill_to_file)).to all(be(false))
-    expect(chat.tools.values.map(&:description)).to all(include("chat's file"))
+    expect(chat.tools.values.map(&:inline_limit)).to all(be(false))
+  end
+
+  it 'keeps each tool description short' do
+    expect(chat.with_file_store(tools: %i[read write edit delete]).tools.values.map(&:description))
+      .to all(satisfy { |description| description.length <= 400 })
   end
 
   describe 'list_files' do
@@ -46,7 +50,7 @@ RSpec.describe RubyLLM::FileStore::Tools do
       stub_const('RubyLLM::FileStore::Tools::List::MAX_FILES', 2)
       3.times { |index| files.write("#{index}.txt", 'x') }
 
-      expect(call(:list_files).lines.last).to eq('[1 more files. List a folder to see them.]')
+      expect(call(:list_files).lines.last).to eq('[1 more files. Narrow the list with path or pattern.]')
     end
   end
 
@@ -200,7 +204,7 @@ RSpec.describe RubyLLM::FileStore::Tools do
     it 'stops after its limit' do
       stub_const('RubyLLM::FileStore::Tools::Search::MAX_MATCHES', 1)
 
-      expect(call(:search_files, query: 'a').lines.last).to start_with('[More than 1 matches.')
+      expect(call(:search_files, query: 'a').lines.last).to eq('[More matches. Narrow the query, path, or glob.]')
     end
 
     it 'refuses an empty query and a regular expression that runs too long' do
@@ -243,6 +247,7 @@ RSpec.describe RubyLLM::FileStore::Tools do
 
       it "lets #{error} from an after_file_write callback through edit_file" do
         files.write('plan.md', 'one')
+        call(:read_file, path: 'plan.md')
         chat.after_file_write { raise error }
 
         expect { call(:edit_file, path: 'plan.md', old_text: 'one', new_text: 'two') }.to raise_error(error)
@@ -261,6 +266,7 @@ RSpec.describe RubyLLM::FileStore::Tools do
 
     it 'replaces one exact span' do
       files.write('plan.md', "one two\nthree two")
+      call(:read_file, path: 'plan.md')
 
       expect(call(:edit_file, path: 'plan.md', old_text: 'three', new_text: 'four'))
         .to eq('Replaced 1 occurrence in plan.md.')
@@ -269,6 +275,7 @@ RSpec.describe RubyLLM::FileStore::Tools do
 
     it 'refuses a span that is missing or not unique, unless replacing all' do
       files.write('plan.md', 'two \\1 two')
+      call(:read_file, path: 'plan.md')
 
       expect(call(:edit_file, path: 'plan.md', old_text: 'six', new_text: 'x')[:error]).to include('does not appear')
       expect(call(:edit_file, path: 'plan.md', old_text: '', new_text: 'x')[:error]).to include('does not appear')
@@ -280,9 +287,174 @@ RSpec.describe RubyLLM::FileStore::Tools do
 
     it 'refuses binary files and missing ones' do
       files.write('logo.png', fixture('ruby.png'))
+      call(:read_file, path: 'logo.png')
 
       expect(call(:edit_file, path: 'logo.png', old_text: 'PNG', new_text: 'x')[:error]).to include('not a text file')
       expect(call(:edit_file, path: 'missing.md', old_text: 'a', new_text: 'b')[:error]).to include('There is no file')
+    end
+  end
+
+  describe 'reading before changing' do
+    it 'refuses to edit or overwrite a file the model has not read' do
+      files.write('notes/plan.md', 'one')
+
+      expect(call(:edit_file, path: 'notes/plan.md', old_text: 'one', new_text: 'two'))
+        .to eq(error: 'Read notes/plan.md before you change it.')
+      expect(call(:write_file, path: 'notes/plan.md', content: 'two'))
+        .to eq(error: 'Read notes/plan.md before you change it.')
+      expect(files.read('notes/plan.md')).to eq('one')
+    end
+
+    it 'refuses to change a file that changed since the model read it' do
+      files.write('notes/plan.md', 'one')
+      call(:read_file, path: 'notes/plan.md', limit: 1)
+      files.write('notes/plan.md', 'theirs')
+
+      expect(call(:edit_file, path: 'notes/plan.md', old_text: 'theirs', new_text: 'mine'))
+        .to eq(error: 'notes/plan.md changed since you read it. Read it again.')
+      expect(call(:write_file, path: 'notes/plan.md', content: 'mine'))
+        .to eq(error: 'notes/plan.md changed since you read it. Read it again.')
+
+      call(:read_file, path: 'notes/plan.md')
+      expect(call(:edit_file, path: 'notes/plan.md', old_text: 'theirs', new_text: 'mine'))
+        .to eq('Replaced 1 occurrence in notes/plan.md.')
+    end
+
+    it 'creates a new file without a read, and keeps changing what it wrote' do
+      expect(call(:write_file, path: 'plan.md', content: 'one')).to eq('Wrote plan.md (3 bytes).')
+      expect(call(:edit_file, path: 'plan.md', old_text: 'one', new_text: 'two')).to start_with('Replaced 1')
+      expect(call(:edit_file, path: 'plan.md', old_text: 'two', new_text: 'three')).to start_with('Replaced 1')
+      expect(call(:write_file, path: 'plan.md', content: 'four')).to eq('Wrote plan.md (4 bytes).')
+    end
+
+    it 'applies concurrent edits of one file one after the other' do
+      files.write('plan.md', "a\nb\n")
+      call(:read_file, path: 'plan.md')
+      allow(files).to receive(:read).and_wrap_original do |original, *arguments|
+        original.call(*arguments).tap { sleep 0.05 }
+      end
+
+      edits = [%w[a A], %w[b B]].map do |old_text, new_text|
+        Thread.new { call(:edit_file, path: 'plan.md', old_text:, new_text:) }
+      end
+
+      expect(edits.map(&:value)).to all(start_with('Replaced 1'))
+      expect(files.read('plan.md')).to eq("A\nB\n")
+    end
+
+    it 'remembers reads in a folder store for as long as the store lives' do
+      Dir.mktmpdir('ruby_llm-files') do |root|
+        chat.with_file_store(root)
+        files.write('plan.md', 'one')
+        call(:read_file, path: 'plan.md')
+        File.write(File.join(root, 'plan.md'), 'changed on disk')
+
+        expect(call(:edit_file, path: 'plan.md', old_text: 'changed', new_text: 'x'))
+          .to eq(error: 'plan.md changed since you read it. Read it again.')
+      end
+    end
+  end
+
+  describe 'search_files options' do
+    before do
+      files.write('notes/a.md', "Alpha\nthe ORCHID line\nomega")
+      files.write('notes/b.md', "orchid\nmore orchid")
+      files.write('notes/c.txt', 'orchid in text')
+      files.write('log.txt', (1..9).map { |number| "line #{number}" }.join("\n"))
+    end
+
+    it 'searches the files a glob matches, by name anywhere or by path' do
+      expect(call(:search_files, query: 'orchid', glob: '*.md'))
+        .to eq("notes/a.md:2: the ORCHID line\nnotes/b.md:1: orchid\nnotes/b.md:2: more orchid")
+      expect(call(:search_files, query: 'orchid', glob: 'notes/*.txt')).to eq('notes/c.txt:1: orchid in text')
+      expect(call(:search_files, query: 'orchid', path: 'notes', glob: '*.{txt,csv}'))
+        .to eq('notes/c.txt:1: orchid in text')
+      expect(call(:search_files, query: 'orchid', glob: '*.pdf')).to eq('No files match *.pdf.')
+    end
+
+    it 'shows context lines around each match, merging close ones' do
+      expect(call(:search_files, query: 'line [28]', path: 'log.txt', context: 1)).to eq(
+        "log.txt-1- line 1\nlog.txt:2: line 2\nlog.txt-3- line 3\n--\n" \
+        "log.txt-7- line 7\nlog.txt:8: line 8\nlog.txt-9- line 9"
+      )
+      expect(call(:search_files, query: 'line [45]', path: 'log.txt', context: 1))
+        .to eq("log.txt-3- line 3\nlog.txt:4: line 4\nlog.txt:5: line 5\nlog.txt-6- line 6")
+    end
+
+    it 'caps the context it shows' do
+      stub_const('RubyLLM::FileStore::Tools::Search::MAX_CONTEXT', 1)
+
+      expect(call(:search_files, query: 'line 5', path: 'log.txt', context: 50).lines.size).to eq(3)
+    end
+
+    it 'matches case when asked' do
+      expect(call(:search_files, query: 'orchid', path: 'notes/a.md', case_sensitive: true))
+        .to eq('No lines match orchid.')
+      expect(call(:search_files, query: 'ORCHID', path: 'notes/a.md', case_sensitive: true))
+        .to eq('notes/a.md:2: the ORCHID line')
+    end
+
+    it 'names only the files that match with files_only' do
+      expect(call(:search_files, query: 'orchid', path: 'notes', files_only: true))
+        .to eq("notes/a.md\nnotes/b.md\nnotes/c.txt")
+    end
+
+    it 'keeps its output short' do
+      stub_const('RubyLLM::FileStore::Tools::Search::MAX_CHARACTERS', 40)
+
+      expect(call(:search_files, query: 'orchid', glob: '*.md'))
+        .to eq("notes/a.md:2: the ORCHID line\n[More matches. Narrow the query, path, or glob.]")
+    end
+
+    it 'stops a search that runs too long' do
+      stub_const('RubyLLM::FileStore::Tools::Search::MAX_SECONDS', 0)
+
+      expect(call(:search_files, query: 'orchid')).to end_with('[The search took too long and stopped. Narrow ' \
+                                                               'it with path or glob.]')
+    end
+  end
+
+  describe 'list_files with a pattern' do
+    before do
+      %w[reports/2026/q3.csv reports/q2.csv reports/notes.md top.csv].each { |path| files.write(path, 'x') }
+    end
+
+    def paths(**arguments)
+      call(:list_files, **arguments).lines.map { |line| line.split("\t").first.chomp }
+    end
+
+    it 'finds files by a glob, by name anywhere or by path inside the folder' do
+      expect(paths(pattern: 'reports/**/*.csv')).to eq(%w[reports/2026/q3.csv reports/q2.csv])
+      expect(paths(pattern: '*.csv')).to eq(%w[reports/2026/q3.csv reports/q2.csv top.csv])
+      expect(paths(path: 'reports', pattern: '*.csv')).to eq(%w[reports/2026/q3.csv reports/q2.csv])
+      expect(paths(path: 'reports', pattern: '2026/*')).to eq(%w[reports/2026/q3.csv])
+    end
+
+    it 'says when nothing matches' do
+      expect(call(:list_files, pattern: '**/*.pdf')).to eq('No files match **/*.pdf.')
+      expect(call(:list_files, path: 'reports', pattern: '*.pdf')).to eq('No files in reports match *.pdf.')
+    end
+  end
+
+  describe 'delete_file' do
+    let(:chat) do
+      RubyLLM.chat(model: model_for(:openai), provider: :openai).with_file_store(tools: %i[read write edit delete])
+    end
+
+    it 'deletes one file' do
+      files.write('old.md', 'x')
+
+      expect(call(:delete_file, path: 'old.md')).to eq('Deleted old.md.')
+      expect(files.exist?('old.md')).to be(false)
+    end
+
+    it 'refuses a folder and a missing file' do
+      files.write('reports/q3.md', 'x')
+
+      expect(call(:delete_file, path: 'reports')[:error]).to eq('reports is a folder. Delete its files one by one.')
+      expect(call(:delete_file, path: 'nope.md')[:error])
+        .to eq('There is no file at nope.md. List the files with list_files.')
+      expect(files.exist?('reports/q3.md')).to be(true)
     end
   end
 
@@ -311,13 +483,14 @@ RSpec.describe RubyLLM::FileStore::Tools do
   describe 'a full store' do
     it 'answers write_file and edit_file with the reason, and keeps the file as it was' do
       files.write('notes.md', 'hello')
+      call(:read_file, path: 'notes.md')
       allow(files).to receive(:write).and_raise(RubyLLM::FileStoreFullError, 'The files are full: delete some.')
 
       expect(call(:write_file, path: 'big.txt', content: 'x')).to eq(error: 'The files are full: delete some.')
       expect(call(:edit_file, path: 'notes.md', old_text: 'hello', new_text: 'bye'))
         .to eq(error: 'The files are full: delete some.')
       expect(files.read('notes.md')).to eq('hello')
-      expect(files.exists?('big.txt')).to be(false)
+      expect(files.exist?('big.txt')).to be(false)
     end
   end
 end

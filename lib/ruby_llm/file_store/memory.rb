@@ -22,7 +22,7 @@ module RubyLLM
       end
 
       # Returns the StoredFile at +path+, or +nil+.
-      def find(path)
+      def [](path)
         @lock.synchronize { @files[FileStore.path(path)]&.first }
       end
 
@@ -47,23 +47,24 @@ module RubyLLM
       end
 
       # Deletes the file at +path+ and returns its StoredFile, or +nil+.
-      # With <tt>recursive: true</tt>, deletes everything inside the folder
-      # +path+ too and returns the deleted StoredFile objects.
-      def delete(path, recursive: false)
+      def delete(path)
         path = FileStore.path(path)
         @lock.synchronize do
-          next delete_folder(path) if recursive
-
           refuse_folder(path) if !@files.key?(path) && @files.keys.any? { |key| FileStore.inside?(key, path) }
           @files.delete(path)&.first
         end
       end
 
-      private
-
+      # Deletes everything inside the folder +path+ and returns the deleted
+      # StoredFile objects.
       def delete_folder(path)
-        paths = @files.keys.select { |key| FileStore.inside?(key, path) }
-        paths.map { |key| @files.delete(key).first }.sort_by(&:path)
+        path = FileStore.path(path)
+        @lock.synchronize do
+          refuse_file(path) if @files.key?(path)
+
+          paths = @files.keys.select { |key| FileStore.inside?(key, path) }
+          paths.map { |key| @files.delete(key).first }.sort_by(&:path)
+        end
       end
     end
   end

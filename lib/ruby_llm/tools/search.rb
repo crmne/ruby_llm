@@ -13,7 +13,7 @@ module RubyLLM
       SELECT = 'select:'
       SUMMARY_LENGTH = 200
 
-      spill_to_file false
+      inline_limit false
 
       def self.tool_name
         'tool_search'

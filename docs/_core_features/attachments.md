@@ -182,7 +182,7 @@ This handles formats the protocol cannot send. A model can still reject an attac
 
 ### Keeping Attachments Out of the Conversation
 
-Every attachment travels with the conversation, so a long PDF attached to the first question is sent again with every later one. With [chat files]({% link _advanced/chat-files.md %}), the model sees a file in full on the question it came with, and one line naming it after that. It reads the parts it needs with its `read_file` and `search_files` tools:
+Every attachment travels with the conversation, so a long PDF attached to the first question is sent again with every later one. With a [file store]({% link _core_features/file-stores.md %}), the model sees a file in full on the question it came with, and one line naming it after that. It reads the parts it needs with its `read_file` and `search_files` tools:
 
 ```ruby
 chat = RubyLLM.chat.with_file_store

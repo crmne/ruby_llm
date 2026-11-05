@@ -32,15 +32,22 @@ RSpec.describe RubyLLM::Agent do
     root = Dir.mktmpdir('ruby_llm-agent-files')
     agent = agent_with do
       inputs :folder
-      file_store -> { RubyLLM::FileStore::Directory.new(File.join(folder, 'chat')) }, spill_to_file: 20
+      file_store -> { RubyLLM::FileStore::Directory.new(File.join(folder, 'chat')) }, inline_limit: 20
     end
 
     chat = agent.new(folder: root)
 
     expect(chat.file_store.root).to eq(File.realpath(File.join(root, 'chat')))
-    expect(chat.chat.instance_variable_get(:@file_references).spill_to_file).to eq(20)
+    expect(chat.chat.instance_variable_get(:@file_references).inline_limit).to eq(20)
   ensure
     FileUtils.rm_rf(root)
+  end
+
+  it 'gives chats only the file tools it names' do
+    agent = agent_with { file_store tools: :read }
+
+    expect(agent.new.tools.keys).to eq(%i[list_files read_file search_files])
+    expect { agent_with { file_store tools: :rename } }.to raise_error(ArgumentError, /tools: takes/)
   end
 
   it 'gives each chat a new store in memory with :memory' do
@@ -71,9 +78,9 @@ RSpec.describe RubyLLM::Agent do
     expect(child.new.file_store).to be_nil
   end
 
-  it 'refuses a store that is not one, and a spill_to_file limit that is not one' do
+  it 'refuses a store that is not one, and an inline_limit that is not one' do
     expect { agent_with { file_store :redis } }.to raise_error(ArgumentError, /takes a folder path/)
-    expect { RubyLLM::Tool.spill_to_file(0) }.to raise_error(ArgumentError, /positive number/)
+    expect { RubyLLM::Tool.inline_limit(0) }.to raise_error(ArgumentError, /positive number/)
   end
 
   it 'has no store unless asked' do

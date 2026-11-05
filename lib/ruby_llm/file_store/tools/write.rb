@@ -11,8 +11,8 @@ module RubyLLM
         end
 
         def description
-          "Writes a text file to this chat's file store, replacing any file at that path. Use it for notes, " \
-            'drafts, data, and results you want to keep or come back to. To change part of a file, use edit_file.'
+          'Writes a text file, replacing any file at path. Read an existing file before you replace it. ' \
+            'To change part of a file, use edit_file.'
         end
 
         def parameters_schema
@@ -29,7 +29,8 @@ module RubyLLM
 
         def execute(path:, content:)
           guarded_write do |write|
-            file = write.call(path_for(path), content.to_s)
+            path = path_for(path)
+            file = changing(path) { write.call(path, content.to_s) }
             "Wrote #{file.path} (#{file.human_size})."
           end
         end

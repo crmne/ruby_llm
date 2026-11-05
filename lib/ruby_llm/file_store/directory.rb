@@ -38,7 +38,7 @@ module RubyLLM
       # Returns the files inside the folder +prefix+, or every file.
       def list(prefix = nil)
         start = prefix.to_s.empty? ? root : full_path(FileStore.path(prefix))
-        return [find(prefix)].compact unless File.lstat(start).directory?
+        return [self[prefix]].compact unless File.lstat(start).directory?
 
         walk(start).sort_by(&:path)
       rescue SystemCallError
@@ -46,7 +46,7 @@ module RubyLLM
       end
 
       # Returns the StoredFile at +path+, or +nil+.
-      def find(path)
+      def [](path)
         full = full_path(FileStore.path(path))
         stat = File.lstat(full)
         stored_file(full, stat) if stat.file?
@@ -83,26 +83,44 @@ module RubyLLM
       end
 
       # Deletes the file at +path+ and returns its StoredFile, or +nil+.
-      # With <tt>recursive: true</tt>, deletes the folder +path+ with
-      # everything in it, hidden files included, and returns the deleted
-      # StoredFile objects. Links are removed, never followed.
-      def delete(path, recursive: false)
+      def delete(path)
         path = FileStore.path(path)
-        return delete_folder(path, recursive:) if folder?(path)
+        refuse_folder(path) if folder?(path)
 
-        file = find(path)
+        file = self[path]
         File.delete(full_path(path)) if file
-        recursive ? [file].compact : file
+        file
       end
 
-      private
-
-      def delete_folder(path, recursive:)
-        refuse_folder(path) unless recursive
+      # Deletes the folder +path+ with everything in it, hidden files
+      # included, and returns the deleted StoredFile objects. Links are
+      # removed, never followed.
+      def delete_folder(path)
+        path = FileStore.path(path)
+        refuse_file(path) if self[path]
+        return [] unless folder?(path)
 
         full = full_path(path)
         walk(full).sort_by(&:path).tap { FileUtils.rm_r(full) }
       end
+
+      # Runs the block with the store locked, against other threads and,
+      # through a lock on #root, other processes, and returns its value.
+      def with_lock
+        super do
+          next yield if @locked
+
+          File.open(root, File::RDONLY) do |folder|
+            folder.flock(File::LOCK_EX)
+            @locked = true
+            yield
+          ensure
+            @locked = false
+          end
+        end
+      end
+
+      private
 
       def full_path(path)
         parent = root

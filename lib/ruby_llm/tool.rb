@@ -56,7 +56,7 @@ module RubyLLM
       @approval_resolver
       @deferred
       @max_run_time
-      @spill_to_file
+      @inline_limit
     ].freeze
     private_constant :DUPED_INHERITED_CONFIG, :COPIED_INHERITED_CONFIG
 
@@ -267,28 +267,29 @@ module RubyLLM
       end
 
       # :call-seq:
-      #   spill_to_file(characters) -> characters
-      #   spill_to_file(false) -> false
-      #   spill_to_file -> characters, false, or nil
+      #   inline_limit(characters) -> characters
+      #   inline_limit(false) -> false
+      #   inline_limit -> characters, false, or nil
       #
-      # Sets how many characters this tool's results may have before a
-      # chat with files saves them as a file and sends the model their
-      # start and the file's path, overriding the chat's own limit (see
-      # Chat#with_file_store). +false+ always sends them whole, for tools that
-      # already return what they find in pages. Without an argument,
+      # Sets how many characters this tool's results may have and still go
+      # to the model whole. In a chat with a file store, a longer result is
+      # saved as a file, and the model gets its start and the file's path.
+      # It overrides the chat's own limit (see Chat#with_file_store).
+      # +false+ always sends results whole, for tools that already return
+      # what they find in pages. Without an argument,
       # returns the declared value, or +nil+.
       #
       #   class ExportOrders < RubyLLM::Tool
-      #     spill_to_file 50_000
+      #     inline_limit 50_000
       #   end
       #
-      def spill_to_file(characters = (get = true))
-        return @spill_to_file if get
+      def inline_limit(characters = (get = true))
+        return @inline_limit if get
         unless characters == false || (characters.is_a?(Integer) && characters.positive?)
-          raise ArgumentError, 'spill_to_file takes a positive number of characters or false'
+          raise ArgumentError, 'inline_limit takes a positive number of characters or false'
         end
 
-        @spill_to_file = characters
+        @inline_limit = characters
       end
 
       def split_result(result) # :nodoc:
@@ -362,10 +363,10 @@ module RubyLLM
       self.class.approval_resolver
     end
 
-    # Returns the limit declared on the class with ::spill_to_file: a number
+    # Returns the limit declared on the class with ::inline_limit: a number
     # of characters, +false+, or +nil+ to use the chat's.
-    def spill_to_file
-      self.class.spill_to_file
+    def inline_limit
+      self.class.inline_limit
     end
 
     # Returns the run time declared on the class with ::max_run_time, or

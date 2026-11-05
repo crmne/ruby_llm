@@ -80,11 +80,15 @@ class <%= 'upgrade_ruby_llm_to_2_2'.camelize %> < ActiveRecord::Migration<%= mig
         t.bigint :byte_size
         t.string :digest
         t.text :text<%= ', size: :long' if mysql? %>
+        t.string :read_digest
         t.timestamps
 
         t.index [ :chat_type, :chat_id, :path ]
         t.index [ :owner_type, :owner_id ]
       end
+    end
+    unless column_exists?(:ruby_llm_chat_files, :read_digest)
+      add_column :ruby_llm_chat_files, :read_digest, :string
     end
   end
 

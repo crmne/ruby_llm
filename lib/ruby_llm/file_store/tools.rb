@@ -2,9 +2,38 @@
 
 module RubyLLM
   class FileStore
-    # The five tools Chat#with_file_store gives the model: +list_files+,
-    # +read_file+, +search_files+, +write_file+, and +edit_file+.
+    # The tools Chat#with_file_store gives the model, by the names its
+    # +tools:+ option takes: +:read+ for +list_files+, +read_file+, and
+    # +search_files+, +:write+ for +write_file+, +:edit+ for +edit_file+,
+    # and +:delete+ for +delete_file+.
     module Tools # :nodoc:
+      GROUPS = { read: %i[List Read Search], write: %i[Write], edit: %i[Edit], delete: %i[Delete] }.freeze
+      DEFAULT = %i[read write edit].freeze
+
+      class << self
+        # Returns +tools+, a name or an Array of them, as Symbols in the
+        # order of GROUPS. Raises ArgumentError for a name it does not know,
+        # and for changes without reading.
+        def names(tools)
+          names = Array(tools).map { |name| name.to_s.to_sym }
+          unknown = names - GROUPS.keys
+          if unknown.any?
+            raise ArgumentError,
+                  "tools: takes :read, :write, :edit, and :delete, got #{unknown.map(&:inspect).join(', ')}"
+          end
+          if names.intersect?(%i[write edit]) && !names.include?(:read)
+            raise ArgumentError, 'tools: needs :read with :write or :edit, since the model reads a file before it ' \
+                                 'changes it'
+          end
+
+          GROUPS.keys & names
+        end
+
+        # Returns the tool classes for +names+.
+        def classes(names)
+          names.flat_map { |name| GROUPS.fetch(name) }.map { |name| const_get(name) }
+        end
+      end
     end
   end
 end

@@ -50,7 +50,7 @@ RubyLLM owns eight supporting tables under the `ruby_llm_` prefix:
 * `ruby_llm_mcp_credentials` for encrypted MCP OAuth credentials.
 * `ruby_llm_provider_files` for the provider uploads of stored attachments.
 * `ruby_llm_queued_messages` for user messages waiting to join a chat.
-* `ruby_llm_chat_files` for the files of chats with [files]({% link _advanced/chat-files.md %}#files-in-rails).
+* `ruby_llm_chat_files` for the files of chats with [files]({% link _core_features/file-stores.md %}#files-in-rails).
 
 They are regular tables installed by migrations, not a Rails engine. Each has a record class under `RubyLLM::ActiveRecord` that you can read and query like any model; [Querying RubyLLM's Records](#querying-rubyllms-records) shows how. RubyLLM writes the rows, so use the public RubyLLM APIs described below to change them.
 

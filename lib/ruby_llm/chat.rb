@@ -203,7 +203,9 @@ module RubyLLM
       @skill_loader = build_skill_loader
       @tool_search_tool = nil
       with_code_execution(**@code_execution) if @code_execution
-      with_file_store(file_store, spill_to_file: @file_references.spill_to_file) if @file_references
+      if @file_references
+        with_file_store(file_store, inline_limit: @file_references.inline_limit, tools: @file_references.tools)
+      end
       @message_queue = build_message_queue(@message_queue.to_a) if @message_queue.is_a?(MessageQueue)
       @cancelled = false
     end
@@ -1119,16 +1121,19 @@ module RubyLLM
       self
     end
 
-    # Attaches +store+ to the chat and gives the model five
-    # tools to work with it: +list_files+, +read_file+, +search_files+,
-    # +write_file+, and +edit_file+. Files stop filling the conversation:
+    # Attaches +store+ to the chat and gives the model tools to work
+    # with it: +list_files+, +read_file+, and +search_files+ to find and
+    # read files, and +write_file+ and +edit_file+ to change them. Files
+    # stop filling the conversation:
     #
     # * Every attachment is kept in the store. The model sees the files
     #   attached to the latest question, and those it opens with
     #   +read_file+, in full until the next question; after that, and for
     #   files other tools return, it sees one line naming the file.
-    # * A tool result longer than +spill_to_file+ characters is saved under
+    # * A tool result longer than +inline_limit+ characters is saved under
     #   +results/+, and the model gets its start and the file's path.
+    # * +write_file+ and +edit_file+ change only a file the model read, as
+    #   it is now, so the model never writes over a change it hasn't seen.
     # * With #with_code_execution, code runs in the store's folder when it
     #   has one, such as FileStore::Directory, changing the files in place.
     #   With other stores, each run copies in the files the model names,
@@ -1138,9 +1143,15 @@ module RubyLLM
     # new FileStore::Memory, or a FileStore. Without it, the chat gets a new
     # FileStore::Memory, or for a persisted chat, its files in Active Storage.
     #
-    # +spill_to_file+ is the characters a tool result may have before it is
-    # saved as a file, or +false+ to send every result whole; tools can set
-    # their own with Tool.spill_to_file. Default: 10,000.
+    # +inline_limit+ is the characters a tool result may have and still go
+    # to the model whole, or +false+ to send every result whole; tools can
+    # set their own with Tool.inline_limit. Default: 10,000.
+    #
+    # +tools+ names the tools the model gets: +:read+ for +list_files+,
+    # +read_file+, and +search_files+, and +:write+, +:edit+, and
+    # +:delete+ for +write_file+, +edit_file+, and +delete_file+. Default:
+    # <tt>%i[read write edit]</tt>. Raises ArgumentError for +:write+ or
+    # +:edit+ without +:read+.
     #
     # Pass +nil+ to remove the store and its tools. Returns +self+.
     #
@@ -1148,17 +1159,19 @@ module RubyLLM
     #   chat.with_file_store("tmp/chats/42")
     #   chat.with_file_store(:memory)
     #   chat.with_file_store(RubyLLM::FileStore::Directory.new("tmp/chats/42"))
-    #   chat.with_file_store(spill_to_file: 20_000)
+    #   chat.with_file_store(inline_limit: 20_000)
+    #   chat.with_file_store(tools: :read)
+    #   chat.with_file_store(tools: %i[read write edit delete])
     #   chat.with_file_store(nil)
     #
     # Text files are read as text; register converters, such as the OCR
     # converter for PDFs and images, in Configuration#file_converters to
     # read more.
-    def with_file_store(store = :memory, spill_to_file: FileReferences::SPILL_TO_FILE)
-      FileReferences.validate(store, spill_to_file:) unless store.nil?
+    def with_file_store(store = :memory, inline_limit: FileReferences::INLINE_LIMIT, tools: FileStore::Tools::DEFAULT)
+      FileReferences.validate(store, inline_limit:, tools:) unless store.nil?
       store = FileReferences.resolve(store)
       @file_references = if store
-                           FileReferences.new(store:, spill_to_file:,
+                           FileReferences.new(store:, inline_limit:, tools:,
                                               written: ->(file) { run_callbacks(:after_file_write, file) })
                          end
       @file_tools = store ? build_file_tools : []
@@ -1605,8 +1618,8 @@ module RubyLLM
 
     def build_file_tools
       written = ->(file) { run_callbacks(:after_file_write, file) }
-      [FileStore::Tools::List, FileStore::Tools::Read, FileStore::Tools::Search, FileStore::Tools::Write,
-       FileStore::Tools::Edit].map { |tool| tool.new(store: -> { file_store }, config: -> { @config }, written:) }
+      FileStore::Tools.classes(@file_references.tools)
+                      .map { |tool| tool.new(store: -> { file_store }, config: -> { @config }, written:) }
     end
 
     def resolved_thinking
