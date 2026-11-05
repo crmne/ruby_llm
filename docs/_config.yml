@@ -34,6 +34,9 @@ collections:
   reference:
     permalink: "/:name/"
     output: true
+  compare:
+    permalink: "/:name/"
+    output: true
 
 # Configure Just the Docs collections
 
@@ -67,6 +70,11 @@ defaults:
   - scope:
       path: ""
       type: reference
+    values:
+      layout: default
+  - scope:
+      path: ""
+      type: compare
     values:
       layout: default
 
