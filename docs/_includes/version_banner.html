@@ -14,6 +14,12 @@
     .rl-version-banner p { margin: 0; }
     .rl-version-banner a { font-weight: 600; color: var(--vp-c-brand-1, var(--link-color, #b30000)); text-decoration: underline; text-underline-offset: 2px; }
     .rl-version-banner code { font-size: 0.9em; }
+    {%- unless include.fixed %}
+    @media (prefers-color-scheme: dark) {
+      .rl-version-banner { border-color: #44434d; background: #302d36; color: #e6e1e8; }
+      .rl-version-banner a { color: #2c84fa; }
+    }
+    {%- endunless %}
     {%- if include.fixed %}
     :root { --vp-layout-top-height: 38px; }
     .rl-version-banner--fixed { position: fixed; top: 0; right: 0; left: 0; z-index: calc(var(--vp-z-index-nav, 30) + 1); display: flex; align-items: center; justify-content: center; box-sizing: border-box; height: var(--vp-layout-top-height); padding-top: 0; padding-bottom: 0; }
