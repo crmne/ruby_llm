@@ -122,7 +122,7 @@ This keeps the model from writing over a file from memory, or over a change some
 
 The store remembers the digest of what the model read, for each path. A persisted chat keeps it in the file's row, so it survives a reload and holds across processes. `Memory` and `Directory` stores remember for as long as the store object lives, so after a reload, the model reads a folder store's file again before it changes it.
 
-Each change locks the store while the tool reads the file, checks it, and writes it back, so two `edit_file` calls running at once never lose an edit. Two `write_file` calls each write the whole file, so the later one wins. The Active Storage store locks the chat's row, and a `Directory` store locks its folder, which holds across processes on the same machine.
+Each change locks the store while the tool reads the file, checks it, and writes it back, so `edit_file` calls running at once take turns, each on the file as the one before left it. An edit whose `old_text` the earlier one changed fails and says so, instead of writing over it. Two `write_file` calls each write the whole file, so the later one wins. Stores in the box also take the lock for every write and delete, so code execution saving its files, or your code writing one, never lands between a tool's check and its write. The Active Storage store locks the chat's row, and a `Directory` store locks its folder, which holds across processes on the same machine.
 
 ### Working with the Store
 

@@ -169,3 +169,25 @@ RSpec.shared_examples 'a file store' do
     expect(written).to eq(['a.txt'])
   end
 end
+
+# Stores that keep their lock in the process, Memory and Directory, take
+# it for every write and delete, so a direct write never lands between a
+# tool's check and its write.
+RSpec.shared_examples 'a file store that writes under its lock' do
+  it 'waits for its lock to write or delete' do
+    store.write('notes.md', 'one')
+    locked = Queue.new
+    holder = Thread.new do
+      store.with_lock do
+        locked << true
+        sleep 0.2
+        store.write('notes.md', 'held')
+      end
+    end
+    locked.pop
+    store.write('notes.md', 'waited')
+    holder.join
+
+    expect(store.read('notes.md')).to eq('waited')
+  end
+end

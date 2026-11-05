@@ -26,6 +26,11 @@ RSpec.describe RubyLLM::FileStore::Tools do
     expect(chat.tools.values.map(&:inline_limit)).to all(be(false))
   end
 
+  it 'tells the model to read only the lines around a match' do
+    expect(chat.tools[:read_file].description)
+      .to include('After search_files, read just the lines around a match with offset and limit.')
+  end
+
   it 'keeps each tool description short' do
     expect(chat.with_file_store(tools: %i[read write edit delete]).tools.values.map(&:description))
       .to all(satisfy { |description| description.length <= 400 })
@@ -318,6 +323,15 @@ RSpec.describe RubyLLM::FileStore::Tools do
       call(:read_file, path: 'notes/plan.md')
       expect(call(:edit_file, path: 'notes/plan.md', old_text: 'theirs', new_text: 'mine'))
         .to eq('Replaced 1 occurrence in notes/plan.md.')
+    end
+
+    it 'counts only a read that returned the file' do
+      files.write('notes/plan.md', "one\n")
+
+      expect(call(:read_file, path: 'notes/plan.md', offset: 9)).to have_key(:error)
+      expect(call(:read_file, path: 'notes/plan.md', unit: 'bytes')).to have_key(:error)
+      expect(call(:write_file, path: 'notes/plan.md', content: 'two'))
+        .to eq(error: 'Read notes/plan.md before you change it.')
     end
 
     it 'creates a new file without a read, and keeps changing what it wrote' do

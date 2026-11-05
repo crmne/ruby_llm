@@ -66,30 +66,20 @@ module RubyLLM
       # ArgumentError when +path+ is a folder.
       def write(path, content, content_type: nil)
         path = FileStore.path(path)
-        raise ArgumentError, "#{path} is a folder, not a file" if folder?(path)
-
-        full = full_path(path)
-        make_room(full)
-        content = FileStore.bytes(content)
-        temporary = File.join(File.dirname(full), ".#{SecureRandom.hex(16)}.tmp")
-        File.open(temporary, WRITE_FLAGS, binmode: true) { |io| io.write(content) }
-        File.rename(temporary, full)
-        file = stored_file(full, File.lstat(full))
-        return file unless content_type
-
-        StoredFile.new(**file.to_h, content_type:)
-      ensure
-        FileUtils.rm_f(temporary) if temporary
+        file = with_lock { write_file(path, FileStore.bytes(content)) }
+        content_type ? StoredFile.new(**file.to_h, content_type:) : file
       end
 
       # Deletes the file at +path+ and returns its StoredFile, or +nil+.
       def delete(path)
         path = FileStore.path(path)
-        refuse_folder(path) if folder?(path)
+        with_lock do
+          refuse_folder(path) if folder?(path)
 
-        file = self[path]
-        File.delete(full_path(path)) if file
-        file
+          file = self[path]
+          File.delete(full_path(path)) if file
+          file
+        end
       end
 
       # Deletes the folder +path+ with everything in it, hidden files
@@ -97,11 +87,13 @@ module RubyLLM
       # removed, never followed.
       def delete_folder(path)
         path = FileStore.path(path)
-        refuse_file(path) if self[path]
-        return [] unless folder?(path)
+        with_lock do
+          refuse_file(path) if self[path]
+          next [] unless folder?(path)
 
-        full = full_path(path)
-        walk(full).sort_by(&:path).tap { FileUtils.rm_r(full) }
+          full = full_path(path)
+          walk(full).sort_by(&:path).tap { FileUtils.rm_r(full) }
+        end
       end
 
       # Runs the block with the store locked, against other threads and,
@@ -121,6 +113,19 @@ module RubyLLM
       end
 
       private
+
+      def write_file(path, content)
+        raise ArgumentError, "#{path} is a folder, not a file" if folder?(path)
+
+        full = full_path(path)
+        make_room(full)
+        temporary = File.join(File.dirname(full), ".#{SecureRandom.hex(16)}.tmp")
+        File.open(temporary, WRITE_FLAGS, binmode: true) { |io| io.write(content) }
+        File.rename(temporary, full)
+        stored_file(full, File.lstat(full))
+      ensure
+        FileUtils.rm_f(temporary) if temporary
+      end
 
       def full_path(path)
         parent = root

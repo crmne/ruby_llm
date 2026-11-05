@@ -20,7 +20,8 @@ module RubyLLM
         def description
           "Reads a file. Text comes back with line numbers, #{MAX_LINES} lines or #{MAX_CHARACTERS} characters " \
             'at a time: pass offset and limit to read further, and unit "characters" for very long lines. ' \
-            'Documents a converter reads come back as text, and other images and PDFs as the file itself.'
+            'After search_files, read just the lines around a match with offset and limit. Documents a ' \
+            'converter reads come back as text, and other images and PDFs as the file itself.'
         end
 
         def parameters_schema
@@ -40,9 +41,10 @@ module RubyLLM
         end
 
         def execute(path:, offset: nil, limit: nil, unit: nil)
-          guarded do
+          seen = nil
+          result = guarded do
             file = file_at(path)
-            store.record_read(file.path, digest_of(file))
+            seen = [file.path, digest_of(file)]
             unit = (unit || 'lines').to_s
             raise ToolError, "unit is lines or characters, not #{unit}." unless UNITS.include?(unit)
             next "#{file.path} is empty." if file.byte_size.zero?
@@ -52,6 +54,8 @@ module RubyLLM
 
             unit == 'characters' ? characters(file, text, offset, limit) : lines(file, text, offset, limit)
           end
+          store.record_read(*seen) if seen && !result.is_a?(Hash)
+          result
         end
 
         private

@@ -9,6 +9,7 @@ RSpec.describe RubyLLM::FileStore::Directory do
   after { FileUtils.rm_rf(root) }
 
   it_behaves_like 'a file store'
+  it_behaves_like 'a file store that writes under its lock'
 
   it 'creates its folder and keeps files in it' do
     folder = File.join(root, 'chats', '42')

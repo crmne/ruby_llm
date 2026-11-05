@@ -80,6 +80,7 @@ RSpec.describe RubyLLM::FileStore do
     let(:store) { described_class.new }
 
     it_behaves_like 'a file store'
+    it_behaves_like 'a file store that writes under its lock'
 
     it 'records a SHA-256 digest and the time of each write' do
       file = store.write('a.txt', 'hello')

@@ -65,6 +65,25 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
     end
   end
 
+  it 'applies concurrent edits of one file from two processes one after the other' do
+    store.write('plan.md', "a\nb\n")
+    store.record_read('plan.md', RubyLLM::FileStore.digest("a\nb\n"))
+    allow_any_instance_of(described_class).to receive(:read).and_wrap_original do |original, *arguments| # rubocop:disable RSpec/AnyInstance
+      original.call(*arguments).tap { sleep 0.1 }
+    end
+
+    edits = [%w[a A], %w[b B]].map do |old_text, new_text|
+      Thread.new do
+        Chat.connection_pool.with_connection do
+          Chat.find(chat.id).with_file_store.to_llm.tools[:edit_file].call(path: 'plan.md', old_text:, new_text:)
+        end
+      end
+    end
+
+    expect(edits.map(&:value)).to all(start_with('Replaced 1'))
+    expect(described_class.new(chat).read('plan.md')).to eq("A\nB\n")
+  end
+
   it 'lets the model change a file it read before the chat was reloaded' do
     chat.with_file_store.file_store.write('notes.md', 'one')
     chat.to_llm.tools[:read_file].call(path: 'notes.md')

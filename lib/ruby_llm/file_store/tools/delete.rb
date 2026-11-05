@@ -28,15 +28,21 @@ module RubyLLM
         def execute(path:)
           guarded do
             path = path_for(path)
-            if store[path].nil? && store.list(path).any?
-              raise ToolError, "#{path} is a folder. Delete its files one by one."
-            end
-
-            file = store.delete(path)
-            raise ToolError, "There is no file at #{path}. List the files with list_files." unless file
-
-            "Deleted #{file.path}."
+            store.with_lock { delete(path) }
           end
+        end
+
+        private
+
+        def delete(path)
+          if store[path].nil? && store.list(path).any?
+            raise ToolError, "#{path} is a folder. Delete its files one by one."
+          end
+
+          file = store.delete(path)
+          raise ToolError, "There is no file at #{path}. List the files with list_files." unless file
+
+          "Deleted #{file.path}."
         end
       end
     end
