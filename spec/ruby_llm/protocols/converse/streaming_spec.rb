@@ -314,7 +314,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
   describe '#parse_stream_chunk with a body that is not an event stream' do
     def parse(body)
       streaming.send(:parse_stream_chunk, streaming.send(:event_stream_decoder), body,
-                     RubyLLM::Protocol::StreamAccumulator.new, {}) { nil }
+                     {}) { nil }
     end
 
     it 'raises the message of the JSON error Faraday 1 passes through' do
@@ -371,7 +371,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
       event = { 'contentBlockDelta' => { 'delta' => { 'text' => 'hi' } } }
       allow(streaming).to receive(:decode_events).and_return([event])
 
-      streaming.send(:parse_stream_chunk, :decoder, 'frame', RubyLLM::Protocol::StreamAccumulator.new, progress) { |_chunk| nil }
+      streaming.send(:parse_stream_chunk, :decoder, 'frame', progress) { |_chunk| nil }
 
       expect(progress[:started]).to be(true)
     end
@@ -382,7 +382,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
       allow(streaming).to receive(:decode_events).and_return([event])
 
       expect do
-        streaming.send(:parse_stream_chunk, :decoder, 'frame', RubyLLM::Protocol::StreamAccumulator.new, progress) { |_c| nil }
+        streaming.send(:parse_stream_chunk, :decoder, 'frame', progress) { |_c| nil }
       end.to raise_error(RubyLLM::RateLimitError)
       expect(progress).to be_empty
     end
@@ -398,7 +398,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
 
       expect do
         streaming.send(:parse_stream_chunk, Aws::EventStream::Decoder.new, chunk,
-                       RubyLLM::Protocol::StreamAccumulator.new, {}) { |received| yielded << received.content }
+                       {}) { |event| yielded << streaming.send(:build_chunk, event).content }
       end.to raise_error(RubyLLM::ServerError, /ModelStreamErrorException: stream failed/)
       expect(yielded).to eq(['partial'])
     end
@@ -688,7 +688,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
     it 'parses the chunk when env is nil (status not yet known)' do
       captured_on_data.call('event-frame', 11, nil)
 
-      expect(streaming).to have_received(:parse_stream_chunk).with(:decoder, 'event-frame', anything, anything)
+      expect(streaming).to have_received(:parse_stream_chunk).with(:decoder, 'event-frame', anything)
       expect(streaming).not_to have_received(:handle_failed_stream)
     end
 
@@ -696,7 +696,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
       env = Struct.new(:status).new(200)
       captured_on_data.call('event-frame', 11, env)
 
-      expect(streaming).to have_received(:parse_stream_chunk).with(:decoder, 'event-frame', anything, anything)
+      expect(streaming).to have_received(:parse_stream_chunk).with(:decoder, 'event-frame', anything)
       expect(streaming).not_to have_received(:handle_failed_stream)
     end
 

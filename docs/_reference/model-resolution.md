@@ -135,8 +135,16 @@ Bedrock serves models through two endpoints, and the model ID decides which one 
 | `anthropic.claude-sonnet-5` | `bedrock-mantle` | Anthropic Messages |
 | `openai.gpt-oss-20b`, `google.gemma-4-31b` | `bedrock-mantle` | OpenAI Responses |
 | `qwen.qwen3-coder-next`, `zai.glm-5` | `bedrock-mantle` | OpenAI Chat Completions |
-| `anthropic.claude-haiku-4-5-20251001-v1:0` | `bedrock-runtime` | Converse |
-| `us.anthropic.claude-sonnet-5`, `us.amazon.nova-2-lite-v1:0` | `bedrock-runtime` | Converse |
+| `anthropic.claude-haiku-4-5-20251001-v1:0`, `eu.anthropic.claude-sonnet-5-5` | `bedrock-runtime` | Anthropic Messages |
+| `us.amazon.nova-2-lite-v1:0`, application inference profile ARNs | `bedrock-runtime` | Converse |
+
+On `bedrock-runtime`, Claude speaks the Anthropic Messages API through InvokeModel, so it keeps Anthropic features Converse cannot carry, such as [tool search]({% link _tools/tool-search.md %}). Pass `protocol: :converse` to send a Claude chat through Converse instead, for example to attach Word or Excel files, which only Converse reads:
+
+```ruby
+RubyLLM.chat(model: "claude-sonnet-4-5", provider: :bedrock, protocol: :converse)
+```
+
+Set `config.bedrock_protocol = :converse` to do the same for every Bedrock chat.
 
 RubyLLM refreshes both catalogs, so the registry records which endpoint serves each model and routing reads that record rather than guessing from the ID. The two catalogs overlap and disagree: mantle spells some Converse models differently (`qwen.qwen3-next-80b-a3b-instruct` against Converse's `qwen.qwen3-next-80b-a3b`) and lists models Converse has never heard of.
 

@@ -8,6 +8,7 @@ module RubyLLM
       include Bedrock::Models
 
       protocol :converse, Protocols::Converse, batches: Protocols::Converse::Batches
+      protocol :anthropic, Bedrock::Anthropic, batches: Bedrock::Anthropic::Batches
       protocol :mantle_anthropic, Bedrock::Mantle::Anthropic
       protocol :mantle_responses, Bedrock::Mantle::Responses
       protocol :mantle_chat_completions, Bedrock::Mantle::ChatCompletions
@@ -64,9 +65,14 @@ module RubyLLM
         return protocols[:rerank] if operation == :rerank
         return video_protocol_for(model_id) if operation == :animate
         return protocols[:voxtral_transcription] if voxtral_transcription?(operation, model_id)
-        return mantle_protocol_for(model_id) if mantle_model?(model_id)
 
-        super
+        chat_protocol_for(model_id) || super
+      end
+
+      # Claude speaks the Anthropic Messages API through InvokeModel, which
+      # keeps features Converse drops, such as tool search.
+      def claude_model?(model_id) # :nodoc:
+        Protocols::Converse::Chat.foundation_model_id(model_id).start_with?('anthropic.claude')
       end
 
       # Un-versioned ids such as anthropic.claude-sonnet-5 and
@@ -130,6 +136,10 @@ module RubyLLM
       end
 
       def batch_cost_multiplier(**) = 0.5
+
+      def invoke_model_batch_protocol(model_id) # :nodoc:
+        claude_model?(model_id) ? protocols[:anthropic] : embedding_batch_protocol(model_id)
+      end
 
       def embedding_batch_protocol(model_id) # :nodoc:
         case model_id
@@ -234,14 +244,22 @@ module RubyLLM
       end
 
       def batch_protocol_for(requests)
-        return super unless requests.any? { |request| request.key?(:text) }
+        return embedding_batch_protocol_for(requests) if requests.any? { |request| request.key?(:text) }
 
+        requests.all? { |request| anthropic_payload?(request[:payload]) } ? protocols[:anthropic] : super
+      end
+
+      def embedding_batch_protocol_for(requests)
         kinds = requests.map { |request| embedding_batch_protocol(request.fetch(:model)) }.uniq
         unless requests.all? { |request| request.key?(:text) } && kinds.one? && kinds.first
           raise Error, 'Bedrock embedding batches require one supported Titan embedding model'
         end
 
         kinds.first
+      end
+
+      def anthropic_payload?(payload)
+        payload.is_a?(Hash) && (payload.key?(:anthropic_version) || payload.key?('anthropic_version'))
       end
 
       def bedrock_region
@@ -263,6 +281,12 @@ module RubyLLM
       def list_mantle_models
         response = signed_get(mantle_api_base, mantle_models_url, service: Bedrock::Mantle::SIGNING_SERVICE)
         parse_mantle_models_response(response, slug)
+      end
+
+      def chat_protocol_for(model_id)
+        return mantle_protocol_for(model_id) if mantle_model?(model_id)
+
+        protocols[:anthropic] if claude_model?(model_id)
       end
 
       def mantle_protocol_for(model_id)

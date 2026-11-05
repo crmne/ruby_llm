@@ -110,6 +110,7 @@ THINKING_MODELS = filter_local_providers(thinking_models).freeze
 
 tool_search_models = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
+  { provider: :bedrock, model: 'claude-haiku-4-5' },
   { provider: :openai, model: 'gpt-5.4' }
 ].freeze
 TOOL_SEARCH_MODELS = filter_local_providers(tool_search_models).freeze
@@ -146,13 +147,13 @@ DOCUMENT_URL_MODELS = [
 ].freeze
 
 DOCUMENT_MODELS = [
-  { provider: :bedrock, model: 'claude-sonnet-4-5' },
+  { provider: :bedrock, model: 'claude-sonnet-4-5', protocol: :converse },
   { provider: :mistral, model: 'mistral-small-latest' },
   { provider: :openai, model: 'gpt-5-nano' }
 ].freeze
 
 SPREADSHEET_MODELS = [
-  { provider: :bedrock, model: 'claude-sonnet-4-5' },
+  { provider: :bedrock, model: 'claude-sonnet-4-5', protocol: :converse },
   { provider: :openai, model: 'gpt-5-nano' }
 ].freeze
 

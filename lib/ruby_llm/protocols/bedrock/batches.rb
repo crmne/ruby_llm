@@ -45,7 +45,8 @@ module RubyLLM
 
         def find_batch(id)
           data = @provider.signed_get(@provider.control_api_base, bedrock_job_url(id)).body
-          protocol = @provider.embedding_batch_protocol(data['modelId']) if data['modelInvocationType'] == 'InvokeModel'
+          invoke_model = data['modelInvocationType'] == 'InvokeModel'
+          protocol = @provider.invoke_model_batch_protocol(data['modelId']) if invoke_model
           parser = protocol ? protocol.new(@provider) : self
           parser.send(:parse_batch_response, data).tap do |result|
             result[:batch_protocol] = protocol if protocol
@@ -114,6 +115,31 @@ module RubyLLM
           return :cancelled if raw_status == 'Stopped'
 
           :failed
+        end
+
+        def bedrock_batch_jsonl(requests)
+          requests.map do |request|
+            JSON.generate(recordId: request[:custom_id], modelInput: bedrock_model_input(request))
+          end.join("\n")
+        end
+
+        def bedrock_model_input(request)
+          batch_payload(request)
+        end
+
+        def parse_bedrock_outputs(outputs, model:)
+          outputs.flat_map do |body|
+            body.to_s.each_line.filter_map { |line| parse_bedrock_record(JSON.parse(line), model:) }
+          end
+        end
+
+        def parse_bedrock_record(line, model:)
+          record_id = line['recordId'] || line['record_id']
+          index = batch_result_index(record_id)
+          output = line['modelOutput']
+          return [index, parse_bedrock_model_output(output, model:)] if output
+
+          [index, nil, batch_failure(record_id, line.dig('error', 'message') || line['errorMessage'])]
         end
       end
     end

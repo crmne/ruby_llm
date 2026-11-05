@@ -43,9 +43,7 @@ RSpec.describe RubyLLM::Chat do
                        .with_thinking
                        .render
 
-      expect(payload[:additionalModelRequestFields]).to eq(
-        reasoning_config: { type: 'enabled', budget_tokens: 1024 }
-      )
+      expect(payload[:thinking]).to eq(type: 'enabled', budget_tokens: 1024)
     end
 
     it 'sends the registered off control with false' do
@@ -312,7 +310,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'keeps the Claude budget shape for Claude models' do
-      payload = RubyLLM.chat(model: model_for(:bedrock, :thinking), provider: :bedrock)
+      payload = RubyLLM.chat(model: model_for(:bedrock, :thinking), provider: :bedrock, protocol: :converse)
                        .with_thinking(budget: 2048)
                        .render
 

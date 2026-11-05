@@ -120,7 +120,7 @@ RSpec.describe RubyLLM::Chat, :live do
         expect(response.citations).not_to be_empty
         citation = response.citations.first
         expect(citation.cited_text).to be_present
-        expect(citation.title).to eq('facts')
+        expect(citation.title).to eq('facts.txt')
         expect(citation.source_index).to eq(0)
         expect(response.content[citation.start_index...citation.end_index]).to eq(citation.text)
       end
@@ -155,7 +155,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
         expect(response.citations).not_to be_empty
         citation = response.citations.first
-        expect(citation.title).to eq('facts')
+        expect(citation.title).to eq('facts.txt')
         expect(citation.cited_text).to be_present
         expect(response.content[citation.start_index...citation.end_index]).to eq(citation.text)
       end
