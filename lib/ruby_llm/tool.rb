@@ -55,6 +55,7 @@ module RubyLLM
       @requires_approval
       @approval_resolver
       @deferred
+      @exclusive
       @max_run_time
       @spill_to_file
     ].freeze
@@ -211,6 +212,25 @@ module RubyLLM
         @requires_approval || false
       end
 
+      # Declares that this tool runs by itself. When a chat runs a round of
+      # tool calls concurrently (see Chat#with_tool_options), an exclusive
+      # call waits for the calls before it to finish, and the calls after
+      # it wait for it, while the other tools still run in parallel. Use it
+      # for tools that share state, such as a browser page.
+      #
+      #   class BrowserClick < RubyLLM::Tool
+      #     exclusive
+      #   end
+      #
+      def exclusive
+        @exclusive = true
+      end
+
+      # Returns whether this tool was declared with ::exclusive.
+      def exclusive?
+        @exclusive || false
+      end
+
       # :call-seq:
       #   max_run_time(seconds) -> seconds
       #   max_run_time -> seconds or nil
@@ -360,6 +380,12 @@ module RubyLLM
 
     def approval_resolver # :nodoc:
       self.class.approval_resolver
+    end
+
+    # Returns whether this tool runs by itself in a concurrent round of
+    # tool calls: whether its class was declared with ::exclusive.
+    def exclusive?
+      self.class.exclusive?
     end
 
     # Returns the limit declared on the class with ::spill_to_file: a number

@@ -16,6 +16,7 @@ After reading this guide, you will know:
 * How to limit how many tool calls appear in one assistant response.
 * How to require a human decision before a tool executes.
 * How to run multiple tool calls concurrently for I/O-bound work.
+* How to keep a tool that shares state from running alongside others.
 * How to access the executing tool call from inside a tool.
 * What happens when a model does not support function calling.
 * How to observe tool calls and results with callbacks.
@@ -250,6 +251,25 @@ Rails chat records use the same settings.
 
 With concurrency enabled, tool results are added back to the conversation as each tool finishes. RubyLLM waits
 for all tool results before asking the model for the next response.
+
+### Exclusive Tools
+
+Some tools share state that can't take two calls at once, such as a browser page: two clicks in the same round race each other. Declare them `exclusive`:
+
+```ruby
+class BrowserClick < RubyLLM::Tool
+  description "Clicks an element on the open page"
+  parameter :selector, description: "CSS selector"
+
+  exclusive
+
+  def execute(selector:)
+    Browser.page.click(selector)
+  end
+end
+```
+
+An exclusive call waits for the calls before it to finish, runs by itself, and the calls after it wait for it. The other tools still run in parallel. When the model asks for two searches, a click, and another search, the two searches run together, then the click, then the last search. Results reach the conversation as they do without `exclusive`. Sequential chats run one call at a time already, so the declaration only matters with concurrency enabled.
 
 In Rails, a tool call on another thread, or on another fiber when `config.active_support.isolation_level` is `:fiber`, runs as its own unit of work, as Rails expects of any work on another thread. It checks out its own database connection and doesn't see the caller's `Current` attributes. Give the tool what it needs when you create it:
 
