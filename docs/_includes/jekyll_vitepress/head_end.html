@@ -2,6 +2,10 @@
 {% if page.layout == 'home' or page.url == '/' %}
 <script defer src="{{ '/assets/js/homepage.js' | relative_url }}"></script>
 {% endif %}
+{% if page.url == '/' and site.gem_version and site.docs_channel != 'next' %}
+{%- assign home_url = '/' | absolute_url -%}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","@id":{{ home_url | append: '#software' | jsonify }},"name":{{ site.title | jsonify }},"description":{{ page.description | jsonify }},"url":{{ home_url | jsonify }},"codeRepository":{{ 'https://github.com/' | append: site.repository | jsonify }},"programmingLanguage":{"@type":"ComputerLanguage","name":"Ruby","url":"https://www.ruby-lang.org/"},"runtimePlatform":"Ruby","license":"https://opensource.org/licenses/MIT","version":{{ site.gem_version | jsonify }},"downloadUrl":"https://rubygems.org/gems/ruby_llm","author":{"@type":"Person","name":"Carmine Paolino","url":"https://paolino.me"},"publisher":{"@id":{{ home_url | append: '#identity' | jsonify }}}}</script>
+{% endif %}
 {% if page.layout == 'models' %}
 <meta name="turbo-visit-control" content="reload">
 <link rel="stylesheet" href="{{ '/assets/css/model-catalog.css' | relative_url }}">

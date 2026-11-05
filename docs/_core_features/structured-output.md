@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Structured Output
+seo:
+  title: Structured Output in Ruby
 nav_order: 3
 description: Get AI responses that match an exact JSON schema with required fields and types
 ---

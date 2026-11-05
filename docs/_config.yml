@@ -1,6 +1,10 @@
 title: RubyLLM
-description: 'RubyLLM is the Ruby AI framework: chats, tools, agents, sandboxed code, skills, evaluations, RAG, multimodal operations, and Rails conventions, with 21 providers and a generator for custom ones.'
+description: 'RubyLLM is the Ruby AI framework: chats, tools, agents, sandboxed code, skills, evaluations, RAG, multimodal operations, and Rails conventions, with {{ site.provider_count }} providers and a generator for custom ones.'
 tagline: The Ruby AI framework
+# The released gem version and the number of providers registered in
+# lib/ruby_llm.rb. spec/docs/site_facts_spec.rb keeps both in step with the code.
+gem_version: 2.1.1
+provider_count: 23
 url: https://rubyllm.com
 baseurl: /
 lang: en-US
@@ -116,7 +120,7 @@ jekyll_vitepress:
     body_font_family: "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
       sans-serif"
     code_font_family: "'IBM Plex Mono', ui-monospace, monospace"
-    google_fonts_url: "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,300;1,400;1,500;1,600;1,700;1,900&family=Lora:wght@400;500;600;700&display=swap"
+    google_fonts_url: "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Lora:wght@500;600;700&display=swap"
   syntax:
     light_theme: rubyllm.light
     dark_theme: rubyllm.dark

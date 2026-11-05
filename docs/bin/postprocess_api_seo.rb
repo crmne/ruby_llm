@@ -10,6 +10,7 @@ image_url = "#{site_root}/assets/images/social/index.png"
 default_robots = 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1'
 api_urls = []
 index_pages = %w[index.html RubyLLM.html]
+version_label = { 'next' => 'RubyLLM Next', 'v1' => 'RubyLLM v1' }[site_root[%r{/([^/]+)\z}, 1]]
 
 def tag(name, attributes)
   rendered = attributes.map { |key, value| %(#{key}="#{CGI.escapeHTML(value)}") }.join(' ')
@@ -40,6 +41,13 @@ output_dir.glob('**/*.html').sort.each do |path|
               end
   robots = redirect ? 'noindex,follow' : default_robots
   title = CGI.unescapeHTML(html[%r{<title>(.*?)</title>}mi, 1].to_s).strip
+  if version_label && !redirect
+    title = "#{title.delete_suffix(' - RubyLLM')} - #{version_label}"
+    html.sub!(%r{<title>.*?</title>}mi, "<title>#{CGI.escapeHTML(title)}</title>")
+    html.gsub!(/(<meta\s+(?:property|name)="(?:og|twitter):title"\s+content=")[^"]*"/) do
+      %(#{Regexp.last_match(1)}#{CGI.escapeHTML(title)}")
+    end
+  end
   description = CGI.unescapeHTML(html[/<meta\s+name="description"\s+content="([^"]*)"/mi, 1].to_s).strip
 
   html.sub!(/<link\s+rel="canonical"\s+href="[^"]*">/i, '')

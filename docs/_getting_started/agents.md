@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Agents
+seo:
+  title: AI Agents in Ruby
 nav_order: 5
 has_children: true
 description: Give agents instructions, tools, and schemas in a Ruby class, then use them in scripts, services, and Rails jobs.
