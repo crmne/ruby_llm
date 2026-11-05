@@ -215,11 +215,15 @@ module RubyLLM
       end
 
       def authorize(params)
-        pending = credential&.fetch('pending', nil) or raise Error, 'No authorization in progress'
-        check_callback(pending, params)
-        tokens = token_request('authorization_code', code: value(params, :code), redirect_uri: pending['redirect_uri'],
-                                                     code_verifier: pending['verifier'], client: pending)
-        store_tokens(tokens, client: pending.slice(*CLIENT_FIELDS, 'scope'))
+        synchronize do
+          @credential = store.read(key)
+          pending = credential&.fetch('pending', nil) or raise Error, 'No authorization in progress'
+          check_callback(pending, params)
+          tokens = token_request('authorization_code', code: value(params, :code),
+                                                       redirect_uri: pending['redirect_uri'],
+                                                       code_verifier: pending['verifier'], client: pending)
+          store_tokens(tokens, client: pending.slice(*CLIENT_FIELDS, 'scope'))
+        end
       end
 
       def deauthorize
