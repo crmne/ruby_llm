@@ -10,6 +10,7 @@ module VersionedDocs
 
   TITLE_LABELS = { 'next' => 'RubyLLM Next', 'v1' => 'RubyLLM v1' }.freeze
   HEAD_TITLE = %r{<title>(.*?)</title>}m
+  PAGE_STATE_TITLE = /(<div id="vp-page-state"[^>]*\sdata-title=")[^"]*(")/
   SHARED_TITLE = /(<meta\s+(?:property|name)="(?:og|twitter):title"\s+content=")[^"]*(")/
 
   def prepare(site)
@@ -66,6 +67,7 @@ module VersionedDocs
     return unless title
 
     head = head.gsub(SHARED_TITLE) { "#{Regexp.last_match(1)}#{CGI.escapeHTML(title)}#{Regexp.last_match(2)}" }
+    body = body.sub(PAGE_STATE_TITLE) { "#{Regexp.last_match(1)}#{CGI.escapeHTML(title)}#{Regexp.last_match(2)}" }
     page.output = "#{head}#{closing}#{body}"
   end
 

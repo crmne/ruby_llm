@@ -193,7 +193,8 @@ RSpec.describe 'Versioned documentation site', type: :task do
       page = rendered_page(<<~HTML, channel: 'next')
         <html><head><title>Chat | RubyLLM</title>
         <meta property="og:title" content="Chat"><meta name="twitter:title" content="Chat">
-        </head><body><svg><title>Copy</title></svg></body></html>
+        </head><body><div id="vp-page-state" hidden data-title="Chat | RubyLLM"></div>
+        <svg><title>Copy</title></svg></body></html>
       HTML
 
       VersionedDocs.label_titles(page)
@@ -202,6 +203,7 @@ RSpec.describe 'Versioned documentation site', type: :task do
       expect(head.at_css('head title').text).to eq('Chat | RubyLLM Next')
       expect(head.at_css('meta[property="og:title"]')['content']).to eq('Chat | RubyLLM Next')
       expect(head.at_css('meta[name="twitter:title"]')['content']).to eq('Chat | RubyLLM Next')
+      expect(head.at_css('#vp-page-state')['data-title']).to eq('Chat | RubyLLM Next')
       expect(head.at_css('svg title').text).to eq('Copy')
     end
 
