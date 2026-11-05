@@ -121,6 +121,21 @@ RSpec.describe RubyLLM::Agent do
     expect(events).to eq([[agent_class, 'Hello']])
   end
 
+  it 'registers callbacks once when an agent wraps a chat it already configured, on the newest agent' do
+    events = []
+    agent_class = Class.new(described_class) do
+      inputs :name
+      after_message { events << name }
+    end
+    chat = agent_class.chat(name: 'first')
+    agent = agent_class.new(chat:, name: 'second')
+    stub_answers(chat, answer)
+
+    agent.ask('Hi')
+
+    expect(events).to eq(['second'])
+  end
+
   it 'refuses a callback with both a method name and a block, or neither, and unknown options' do
     agent_class = Class.new(described_class)
 

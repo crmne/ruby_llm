@@ -62,6 +62,19 @@ RSpec.describe RubyLLM::AgentTool do
     it 'refuses an agent class without a name' do
       expect { Class.new(RubyLLM::Agent).to_tool }.to raise_error(ArgumentError, /class name/)
     end
+
+    it 'refuses an agent with an input named task, which the tool takes for the prompt' do
+      stub_const('TaskAgent', Class.new(RubyLLM::Agent) { inputs :task })
+
+      expect { TaskAgent.to_tool }.to raise_error(ArgumentError, /task/)
+    end
+
+    it 'keeps the namespace in the name, so namespaced agents stay apart' do
+      stub_const('Billing', Module.new)
+      stub_const('Billing::ResearchAgent', Class.new(RubyLLM::Agent))
+
+      expect(Billing::ResearchAgent.to_tool.name).to eq('billing_research_agent')
+    end
   end
 
   it 'runs a fresh agent on the task with the inputs, and returns its answer to the chat' do
@@ -83,6 +96,27 @@ RSpec.describe RubyLLM::AgentTool do
     chat.with_owner(:alice).with_tools(research_agent.to_tool).ask('Go')
 
     expect(sub_requests.sole.first).to eq(:alice)
+  end
+
+  it 'runs under the owner of the calling chat even when the agent declares its own' do
+    research_agent.owner(:house)
+    stub_subagents(research_agent)
+    chat = parent_chat(calling('research_agent', { 'task' => 'Look it up', 'region' => 'EU' }), answer('Done'))
+
+    chat.with_owner(:alice).with_tools(research_agent).ask('Go')
+
+    expect(sub_requests.sole.first).to eq(:alice)
+  end
+
+  it 'lets go of an agent whose run fails' do
+    tool = research_agent.to_tool(region: 'EU')
+    allow(research_agent).to receive(:new).and_wrap_original do |new, **kwargs|
+      new.call(**kwargs).tap { |agent| allow(agent.chat.provider).to receive(:complete).and_raise(IOError) }
+    end
+    call = RubyLLM::ToolCall.new(id: 'call_1', name: 'research_agent', arguments: { 'task' => 'Go' })
+
+    expect { tool.call(task: 'Go', tool_call: call) }.to raise_error(IOError)
+    expect(tool.task({ 'task' => { 'status' => 'working' } }, tool_call: call).agent).to be_nil
   end
 
   it 'goes wherever tools go, such as another agent' do
@@ -145,12 +179,14 @@ RSpec.describe RubyLLM::AgentTool do
       sub_answers.push(calling('wipe', {}, id: 'sub_1'))
       chat = parent_chat(calling('research_agent', { 'task' => 'Wipe it', 'region' => 'EU' }))
       chat.with_tools(research_agent).ask('Clean up')
-      subagent = chat.pending_tasks.sole.agent
+      paused = chat.pending_tasks.sole
+      subagent = paused.agent
 
       chat.cancel
 
       expect { chat.complete }.to raise_error(RubyLLM::CancelledError)
       expect(subagent).to be_cancelled
+      expect(chat.tools[:research_agent].task(paused.to_h, tool_call: paused.tool_call).agent).to be_nil
     end
   end
 end

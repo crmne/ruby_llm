@@ -16,21 +16,23 @@ module RubyLLM
     attr_reader :agent
 
     # Returns the AgentTask that +state+ describes, for +agent+.
-    def self.load(state, tool_call: nil, agent: nil) # :nodoc:
+    def self.load(state, tool_call: nil, agent: nil, tool: nil) # :nodoc:
       task = state.fetch('task')
       new(status: task.fetch('status'), status_message: task['status_message'], data: task.fetch('data', {}),
-          tool_call:, agent:)
+          tool_call:, agent:, tool:)
     end
 
-    def initialize(agent: nil, **) # :nodoc:
+    def initialize(agent: nil, tool: nil, **) # :nodoc:
       super(**)
       @agent = agent
+      @tool = tool
     end
 
     # Cancels the agent, as Chat#cancel does for the chat that waits on it,
     # and returns +self+.
     def cancel
       agent&.cancel
+      @tool&.forget(tool_call)
       self
     end
   end

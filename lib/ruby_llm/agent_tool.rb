@@ -12,8 +12,9 @@ module RubyLLM
   #
   #   chat.with_tools(ResearchAgent).ask "What changed in Ruby 4.0?"
   #
-  # The tool is named after the agent (+research_agent+) and takes a
-  # +task+, everything the agent needs written to stand alone, plus the
+  # The tool is named after the agent (+research_agent+, or
+  # +billing_research_agent+ for <tt>Billing::ResearchAgent</tt>) and takes
+  # a +task+, everything the agent needs written to stand alone, plus the
   # agent's ::inputs that ::to_tool was not given. Each call runs a fresh
   # instance of the agent on the task, under the owner of the chat that
   # called it, and returns the content of its last answer. When the agent
@@ -32,6 +33,9 @@ module RubyLLM
       # left out of its parameters.
       def for(agent_class, given) # :nodoc:
         raise ArgumentError, 'An agent needs a class name to become a tool' unless agent_class.name
+        if agent_class.inputs.include?(:task)
+          raise ArgumentError, "#{agent_class.name} has an input named task, which its tool takes for the prompt"
+        end
 
         missing = agent_class.inputs - given.keys.map(&:to_sym)
         Class.new(self) do
@@ -45,7 +49,7 @@ module RubyLLM
 
       # Returns the agent's name in snake case, such as +research_agent+.
       def tool_name
-        Support::Utils.underscore(agent_class.name.split('::').last)
+        Support::Utils.underscore(agent_class.name.gsub('::', '_'))
       end
     end
 
@@ -61,8 +65,10 @@ module RubyLLM
     # its last answer, or an AgentTask when the agent waits.
     def execute(task:, tool_call: nil, **inputs)
       agent = self.class.agent_class.new(**@inputs, **inputs.slice(*self.class.input_parameters))
+      owner = Accounting::Usage.owner
+      agent.with_owner(owner) unless owner.nil?
       remember(tool_call, agent)
-      report(agent, agent.ask(task), tool_call)
+      running(tool_call) { report(agent, agent.ask(task), tool_call) }
     end
 
     # Carries the agent on once nothing holds it, with Chat#complete, and
@@ -72,23 +78,35 @@ module RubyLLM
       return { error: "This agent's work was lost. Start it again with everything it needs." } unless agent
       return task if agent.awaiting_person?
 
-      report(agent, agent.complete, task.tool_call)
+      running(task.tool_call) { report(agent, agent.complete, task.tool_call) }
     end
 
     # Returns the AgentTask the call paused on, with the agent it waits for.
     def task(state, tool_call: nil)
-      AgentTask.load(state, tool_call:, agent: tool_call && @lock.synchronize { @agents[tool_call.id] })
+      AgentTask.load(state, tool_call:, tool: self, agent: tool_call && @lock.synchronize { @agents[tool_call.id] })
+    end
+
+    # Lets go of the agent +tool_call+ ran, once the call is over.
+    def forget(tool_call) # :nodoc:
+      @lock.synchronize { @agents.delete(tool_call.id) } if tool_call
     end
 
     private
 
+    def running(tool_call)
+      yield
+    rescue StandardError
+      forget(tool_call)
+      raise
+    end
+
     def report(agent, message, tool_call)
       if agent.waiting?
         status = agent.awaiting_person? ? :input_required : :working
-        return AgentTask.new(status:, agent:, tool_call:, data: { 'agent' => self.class.agent_class.name })
+        return AgentTask.new(status:, agent:, tool: self, tool_call:, data: { 'agent' => self.class.agent_class.name })
       end
 
-      @lock.synchronize { @agents.delete(tool_call.id) } if tool_call
+      forget(tool_call)
       message&.content
     end
 

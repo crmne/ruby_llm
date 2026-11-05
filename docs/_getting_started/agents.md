@@ -421,7 +421,7 @@ class SupportAgent < ApplicationAgent
 end
 ```
 
-The method or block runs on the agent instance, so it reads the agent's inputs and `chat`, and receives the callback's arguments when it takes them. `if:` and `unless:` take a method name, a lambda, or an array of them. Every chat callback has a macro: `before_request`, `before_message`, `after_message`, `before_tool_call`, `after_tool_result`, `after_tool_progress`, `before_fallback`, `after_fallback`, and `after_file_write`. Subclasses inherit the callbacks declared when they are defined, so an `ApplicationAgent` can declare the ones every agent shares. `around_join` works the same way for [queued messages]({% link _advanced/agentic-workflows.md %}#joining-queued-messages).
+The method or block runs on the agent instance, so it reads the agent's inputs and `chat`, and receives the callback's arguments when it takes them. `if:` and `unless:` take a method name, a lambda, or an array of them. Every chat callback has a macro: `before_request`, `before_message`, `after_message`, `before_tool_call`, `after_tool_result`, `after_tool_progress`, `before_fallback`, `after_fallback`, and `after_file_write`. Subclasses inherit the callbacks declared when they are defined, so an `ApplicationAgent` can declare the ones every agent shares. For chats from `SupportAgent.chat` and `SupportAgent.find`, the agent the callbacks run on is set up without calling `initialize`, as for `rescue_from`, so read inputs and `chat` rather than instance variables your `initialize` sets. `around_join` works the same way for [queued messages]({% link _advanced/agentic-workflows.md %}#joining-queued-messages).
 
 ## Subagents
 
@@ -439,7 +439,7 @@ class SupportAgent < ApplicationAgent
 end
 ```
 
-The tool is named after the agent, `research_agent`, and the model reads its `description`. It takes a `task` and the agent's inputs as parameters. Fix inputs yourself with `to_tool`, and the model fills only the rest:
+The tool is named after the agent, `research_agent`, or `billing_research_agent` for `Billing::ResearchAgent`, and the model reads its `description`. It takes a `task` and the agent's inputs as parameters. Fix inputs yourself with `to_tool`, and the model fills only the rest:
 
 ```ruby
 chat.with_tools(ResearchAgent.to_tool(product: current_product))

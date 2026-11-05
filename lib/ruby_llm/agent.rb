@@ -1148,6 +1148,13 @@ module RubyLLM
     # Array of them, like Rails callbacks. Subclasses inherit the callbacks
     # declared when they are defined. Returns the agent class.
     #
+    # For a chat from ::chat or ::find, the agent is bound to the chat
+    # without running +initialize+, as for ::rescue_from handlers, so read
+    # inputs and +chat+ rather than instance variables +initialize+ sets.
+    # Wrapping a configured chat in a new agent, as
+    # <tt>SupportAgent.new(chat:)</tt> does, moves its callbacks to that
+    # agent instead of registering them twice.
+    #
     #   class SupportAgent < RubyLLM::Agent
     #     inputs :ticket
     #

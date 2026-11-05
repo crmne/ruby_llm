@@ -5,7 +5,11 @@ module RubyLLM
     # The Agent callback macros, such as Agent::after_message, which
     # register the Chat callback of the same name on every chat an agent
     # builds or finds. Each runs on the agent instance, like a Rails
-    # callback on its record.
+    # callback on its record. An agent that configures a chat again, as
+    # Agent.new(chat:) does for a chat from Agent::chat, takes over the
+    # callbacks already registered instead of adding them twice. As for
+    # Agent::rescue_from handlers, the agent behind a chat from Agent::chat
+    # or Agent::find is bound to it without running +initialize+.
     module Callbacks # :nodoc:
       HOOKS = %i[
         before_request before_message after_message before_tool_call after_tool_result after_tool_progress
@@ -67,9 +71,13 @@ module RubyLLM
         super.tap do
           next if chat_callbacks.empty?
 
-          receiver = agent || allocate.bind(chat, input_values)
+          receivers = (chat.respond_to?(:to_llm) ? chat.to_llm : chat).agent_callback_receivers
+          registered = receivers.key?(self)
+          receivers[self] = agent || allocate.bind(chat, input_values)
+          next if registered
+
           chat_callbacks.each do |hook, callback|
-            chat.public_send(hook) { |*args| callback.run(receiver, args) }
+            chat.public_send(hook) { |*args| callback.run(receivers[self], args) }
           end
         end
       end
