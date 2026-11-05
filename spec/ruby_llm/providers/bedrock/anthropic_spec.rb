@@ -109,6 +109,12 @@ RSpec.describe RubyLLM::Providers::Bedrock::Anthropic do
       expect(response.tokens).to have_attributes(input: 3, output: 1, cache_read: 2, cache_write: 4)
     end
 
+    it 'keeps the inference profile it called, not the foundation model the body names' do
+      stub_invoke
+
+      expect(chat.ask('Hi').model_id).to eq(model_id)
+    end
+
     it 'decodes Anthropic events from the InvokeModel event stream' do
       events = [
         { type: 'message_start',
@@ -129,7 +135,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::Anthropic do
       response = chat.ask('Hi') { |chunk| chunks << chunk.content }
 
       expect(chunks.compact.join).to eq('Hello')
-      expect(response).to have_attributes(content: 'Hello', finish_reason: :stop)
+      expect(response).to have_attributes(content: 'Hello', finish_reason: :stop, model_id:)
       expect(response.tokens).to have_attributes(input: 5, output: 2)
     end
 
@@ -205,7 +211,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::Anthropic do
                                      { 'recordId' => '3', 'modelOutput' => JSON.parse(reply.to_json) }, model: model_id)
 
       expect(index).to eq(3)
-      expect(message).to have_attributes(content: 'Hi', role: :assistant)
+      expect(message).to have_attributes(content: 'Hi', role: :assistant, model_id:)
     end
   end
 end
