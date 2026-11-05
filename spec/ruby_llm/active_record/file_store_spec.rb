@@ -66,6 +66,10 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
   end
 
   it 'applies concurrent edits of one file from two processes one after the other' do
+    if Chat.connection.adapter_name.match?(/sqlite/i) && ActiveRecord.version < Gem::Version.new('7.2')
+      skip 'Before Rails 7.2, SQLite waits for a lock holding the GVL, so threads in one process cannot take turns'
+    end
+
     store.write('plan.md', "a\nb\n")
     store.record_read('plan.md', RubyLLM::FileStore.digest("a\nb\n"))
     allow_any_instance_of(described_class).to receive(:read).and_wrap_original do |original, *arguments| # rubocop:disable RSpec/AnyInstance
@@ -131,7 +135,7 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
 
     ActiveSupport::Notifications.subscribed(record, 'sql.active_record') { store.write('a.txt', 'mine') }
 
-    chat_lock = queries.index { |sql| sql.match?(/\ASELECT .* FROM ["`]?chats["`]?/) }
+    chat_lock = queries.index { |sql| sql.match?(/\A(SELECT .* FROM|UPDATE) ["`]?chats["`]?/) }
     lookup = queries.index { |sql| sql.match?(/\ASELECT .* FROM ["`]?ruby_llm_chat_files["`]?/) }
     expect(chat_lock).to be < lookup
     expect(queries[chat_lock]).to include('FOR UPDATE') unless Chat.connection.adapter_name.match?(/sqlite/i)

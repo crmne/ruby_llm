@@ -182,8 +182,16 @@ module RubyLLM
         end
       end
 
+      # SQLite has no row locks, and a deferred transaction that reads
+      # first fails when it later writes beside another writer, so it takes
+      # the write lock at once with a no-op update.
       def lock_chat
-        @chat.class.unscoped.where(@chat.class.primary_key => @chat.id).lock.pick(@chat.class.primary_key)
+        key = @chat.class.primary_key
+        scope = @chat.class.unscoped.where(key => @chat.id)
+        return scope.lock.pick(key) unless @chat.class.connection.adapter_name.match?(/sqlite/i)
+
+        column = @chat.class.connection.quote_column_name(key)
+        scope.update_all("#{column} = #{column}")
       end
 
       def row(path)
