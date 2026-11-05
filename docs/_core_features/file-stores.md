@@ -182,7 +182,7 @@ results/search_drive-8f3a2b1c.json: read more with read_file, or search it with 
 
 JSON is saved pretty printed, one value per line, so the model can read and search it by line. The message keeps only what the model saw, so a persisted chat stores the start too.
 
-Change the limit with `inline_limit:`, the characters a result may have and still go to the model whole, or send every result whole with `inline_limit: false`. A tool that already returns what it finds in pages can opt out, and a tool with very long results can set its own limit:
+A [context budget]({% link _core_features/chat-request-control.md %}#keeping-tool-results-in-budget) leaves a saved result as it is, since its start already fits. Change the limit with `inline_limit:`, the characters a result may have and still go to the model whole, or send every result whole with `inline_limit: false`. A tool that already returns what it finds in pages can opt out, and a tool with very long results can set its own limit:
 
 ```ruby
 class SearchDocs < RubyLLM::Tool

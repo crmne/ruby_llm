@@ -221,6 +221,16 @@ messages_for_model = chat.messages.last(4)
 chat.messages = messages_for_model
 ```
 
+To change one message for the model, `with` returns a copy with the fields you name changed, like `Data#with`, and leaves the original alone:
+
+```ruby
+chat.messages = chat.messages.map do |message|
+  message.tool_result? ? message.with(content: Redactor.call(message.content)) : message
+end
+```
+
+It changes `content` and `attachments`. New content drops what holds the old text: on an assistant message its thinking, citations, and what else only its provider can replay, and on a tool result its MCP result. To keep long tool results out of requests without changing the transcript, see [Keeping Tool Results in Budget]({% link _core_features/chat-request-control.md %}#keeping-tool-results-in-budget).
+
 For persisted Rails chats, see [Separate User and LLM Transcripts]({% link _advanced/rails-persistence.md %}#separate-user-and-llm-transcripts).
 
 ## Going Further

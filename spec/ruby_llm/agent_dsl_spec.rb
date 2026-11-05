@@ -18,6 +18,7 @@ RSpec.describe RubyLLM::Agent do
         headers 'X-Test' => '1'
         end_user 'tenant-42'
         compaction at: 50_000
+        context_budget per_result: 0.25, per_request: 0.7
       end
     end
 
@@ -62,6 +63,12 @@ RSpec.describe RubyLLM::Agent do
       expect(chat.instance_variable_get(:@thinking).effort).to eq(:low)
       expect(chat.end_user).to eq('tenant-42')
       expect(chat.compaction).to eq(at: 50_000)
+      expect(chat.context_budget).to eq(per_result: 0.25, per_request: 0.7)
+    end
+
+    it 'inherits the context budget and rejects shares outside zero to one' do
+      expect(Class.new(agent_class).chat.context_budget).to eq(per_result: 0.25, per_request: 0.7)
+      expect { Class.new(described_class) { context_budget per_request: 2 } }.to raise_error(ArgumentError)
     end
 
     it 'enables provider-default caching without options' do

@@ -41,7 +41,7 @@ module RubyLLM
   # conversation through #messages.
   class Agent
     extend Forwardable
-    singleton_class.prepend JoinCallbacks, Ownership, Callbacks, ToolConversion
+    singleton_class.prepend JoinCallbacks, Ownership, Callbacks, ToolConversion, ContextBudget
     include Support::DeprecatedEnumerable
 
     DUPED_INHERITED_CONFIG = {
@@ -69,7 +69,7 @@ module RubyLLM
     # Chat methods that return the wrapped chat so calls can be chained there.
     CHAINABLE_CHAT_DELEGATES = %i[
       with_instructions with_tools with_mcp with_provider_tools with_tool_options with_model
-      with_temperature with_max_output_tokens with_thinking with_citations
+      with_temperature with_max_output_tokens with_thinking with_citations with_context_budget
       with_end_user with_owner with_compaction with_caching with_code_execution with_skills with_file_store with_context
       with_provider_options with_headers with_schema with_fallbacks
       before_request before_message after_message before_tool_call around_tool_call after_tool_result
@@ -81,8 +81,8 @@ module RubyLLM
     # Chat values and operations whose return values pass through unchanged.
     PASSTHROUGH_CHAT_DELEGATES = %i[
       model model_id provider messages tools deferred_tools mcp provider_tools tool_options provider_options headers
-      schema concurrency caching citations code_execution compaction context end_user fallbacks thinking temperature
-      max_output_tokens skills file_store owner
+      schema concurrency caching citations code_execution compaction context_budget context end_user fallbacks thinking
+      temperature max_output_tokens skills file_store owner
       each complete? cancelled? waiting? awaiting_approval? pending_approvals awaiting_input? pending_inputs
       awaiting_tasks? pending_tasks awaiting_person? add_message add_completion tokens cost render
       queue queued_messages withdraw join_queued_messages
@@ -97,6 +97,7 @@ module RubyLLM
       @end_user
       @schema
       @context
+      @context_budget
       @chat_class
       @tools_defer
       @mcp_defer
@@ -302,6 +303,13 @@ module RubyLLM
 
         @compaction = options
       end
+
+      # Keeps tool results within shares of the model's context window in
+      # chats this agent builds, applied via Chat#with_context_budget.
+      #
+      #   context_budget per_result: 0.25, per_request: 0.7
+      #
+      def context_budget(budget = {}, **) = (@context_budget = Chat::ContextBudget.normalize(budget, **))
 
       # Lets chats this agent builds run code in the configured sandbox,
       # applied via Chat#with_code_execution. Accepts the same options as
@@ -1338,6 +1346,12 @@ module RubyLLM
     # Delegates to Chat#with_owner. See that method for arguments and return values.
 
     ##
+    # :method: with_context_budget
+    # :call-seq: with_context_budget(budget = {}, per_result: nil, per_request: nil)
+    #
+    # Delegates to Chat#with_context_budget. See that method for arguments and return values.
+
+    ##
     # :method: with_compaction
     # :call-seq: with_compaction(options = {})
     #
@@ -1620,6 +1634,12 @@ module RubyLLM
     # :call-seq: compaction
     #
     # Delegates to Chat#compaction. See that method for arguments and return values.
+
+    ##
+    # :method: context_budget
+    # :call-seq: context_budget
+    #
+    # Delegates to Chat#context_budget. See that method for arguments and return values.
 
     ##
     # :method: context

@@ -94,6 +94,10 @@ module RubyLLM
     # explicitly disabled, or +nil+ when not configured.
     attr_reader :compaction
 
+    # The shares of the context window set with #with_context_budget, or
+    # +nil+ when not configured.
+    attr_reader :context_budget
+
     # The opaque per-user identifier set with #with_end_user, or
     # +nil+.
     attr_reader :end_user
@@ -163,6 +167,7 @@ module RubyLLM
       @citations = false
       @caching = nil
       @compaction = nil
+      @context_budget = nil
       @code_execution = nil
       @code_execution_tool = nil
       @skills = []
@@ -1039,6 +1044,31 @@ module RubyLLM
       end
 
       @compaction = options == false ? false : normalize_compaction(options)
+      self
+    end
+
+    # Keeps tool results within shares of the model's context window, from
+    # the model registry. Pass +nil+ to remove the budget. Returns +self+.
+    #
+    # +per_result+:: a tool result longer than this share is cut when it
+    #                is added, ending with a note that tells the model to
+    #                ask for less.
+    # +per_request+:: when a request would take more than this share, the
+    #                 oldest tool results are left out of what is sent,
+    #                 each replaced by a one-line note. The transcript
+    #                 keeps them. The results of the latest round always
+    #                 go out. The cut point moves in steps, so the request
+    #                 prefix, and the provider's prompt cache, hold for
+    #                 many rounds.
+    #
+    #   chat.with_context_budget(per_result: 0.25, per_request: 0.7)
+    #
+    # Shares are above 0 and at most 1. Sizes are estimated from
+    # characters, at two a token. A result a file store already saved as
+    # a file (see #with_file_store) is short enough to keep. Without a
+    # known context window the budget does nothing.
+    def with_context_budget(budget = {}, **shares)
+      @context_budget = ContextBudget.normalize(budget, **shares)
       self
     end
 
@@ -2006,11 +2036,16 @@ module RubyLLM
     def preprocessed_messages(list = messages)
       list = request_history(list)
       list = @file_references.view(list) if @file_references
+      list = context_budget_for_model.fit(list) if @context_budget
       list = CodeExecution.for_model(with_skill_listing(list))
       return list unless @provider
 
       @provider.preprocess_messages(list, model: @model, protocol: @protocol,
                                           unsupported_attachment: unsupported_attachment_handler)
+    end
+
+    def context_budget_for_model
+      ContextBudget.new(@context_budget, @model&.context_window)
     end
 
     def with_skill_listing(list)
@@ -2400,6 +2435,7 @@ module RubyLLM
     def add_tool_result_message(tool_call, result)
       content, attachments = split_tool_result(result)
       content = @file_references.spill(tool_for(tool_call), tool_call, content) if @file_references
+      content = context_budget_for_model.cap(content) if @context_budget
       mcp_result = result if result.is_a?(MCP::Result) && result.ui_uri
       message = add_message(role: :tool, content:, attachments:, tool_call_id: tool_call.id,
                             provider_call_id: tool_call.provider_call_id, mcp_result:)
