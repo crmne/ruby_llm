@@ -34,10 +34,14 @@ Durable agents use [Rails persistence]({% link _advanced/rails-persistence.md %}
 ```ruby
 class CompleteJob < ApplicationJob
   def perform(chat_id)
-    SupportAgent.find(chat_id).complete
+    chat = SupportAgent.find(chat_id)
+    chat.complete
+    CompleteJob.set(wait: 1.minute).perform_later(chat_id) if chat.running?
   end
 end
 ```
+
+When another process still holds the chat, `complete` returns without doing anything, so the job tries again later. See [Resuming a Crashed Run]({% link _advanced/durable-agents.md %}#resuming-a-crashed-run).
 
 ## Waiting for Something Outside
 

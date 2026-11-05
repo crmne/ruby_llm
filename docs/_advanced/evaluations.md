@@ -297,7 +297,7 @@ The evaluator decides whether an answer passes. By default it is your chat model
 
 An evaluation that only defines `perform` checks one criterion, `correctness`: "The answer agrees with the expected output". Every case needs an `expected_output`. If one is missing, the run raises before calling your application, so you never pay for a run that cannot be graded.
 
-The evaluator accepts answers that say the same thing in different words, gives a short reason for each verdict, and ignores any instructions that appear inside the answer it is grading.
+The evaluator accepts answers that say the same thing in different words, gives a short reason for each verdict, and is instructed to ignore any instructions that appear inside the answer it is grading.
 
 ### Writing Your Own Criteria
 
@@ -444,9 +444,13 @@ end
 
 labels = YAML.load_file("app/evals/reviewed_answer_labels.yml")
 report = ReviewedAnswerEvaluation.run
-agreed = report.count { |trial| trial.passed? == labels.fetch(trial.test_case.name) }
-puts "Agreement: #{agreed}/#{report.trials.size}"
+decided, undecided = report.partition { |trial| %i[passed failed].include?(trial.status) }
+agreed = decided.count { |trial| trial.passed? == labels.fetch(trial.test_case.name) }
+puts "Agreement: #{agreed}/#{decided.size}"
+puts "Undecided: #{undecided.map { |trial| "#{trial.test_case.name} (#{trial.status})" }.join(", ")}" if undecided.any?
 ```
+
+Compare labels only with trials that passed or failed. An `error`, `unassessed`, or `measured` trial is not a verdict, so report it instead of counting it as a failure.
 
 When you tune a threshold, tune it on one set of labeled answers and measure agreement on another. A handful of agreeing examples does not prove the evaluator is reliable in general.
 
