@@ -251,6 +251,12 @@ RubyLLM.configure do |config|
 end
 ```
 
+## Claude 5.5 Requests Carry the Thinking Binding From the Start
+
+Claude Opus 5.5, Sonnet 5.5, Haiku 5.5, and Fable 5.1 refuse a replayed thinking block once the instructions, tools, or earlier messages change, unless the request says to drop it. 2.1.1 added that setting, `thinking: { type: "adaptive", block_binding: { prefix_mismatch_behavior: "drop_block" } }` with the `thinking-binding-controls-2026-08-01` beta, only once the model's own thinking appeared in the history. The request changed mid-conversation, which can invalidate the prompt cache. Every request to these models on the Anthropic API, Bedrock InvokeModel, and Bedrock Converse now carries it from the first call.
+
+These models think adaptively by default, so a chat without `with_thinking` behaves and bills as before. `with_thinking(false)` and other settings that are not adaptive are sent unchanged, without the binding. `before_request` hooks see the `thinking` field on the first request.
+
 ## MCP Prompts Take No Attachments
 
 `ask(prompt, with: file)` with an `MCP::Prompt` dropped the attachment in 2.1. It now raises `ArgumentError`.
