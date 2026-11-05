@@ -1,8 +1,7 @@
 ---
 layout: default
 title: Advanced Rails Configuration
-parent: "Rails Integration"
-nav_order: 4
+nav_order: 10
 description: Route models through different providers, use per-tenant contexts, persist cache boundaries, adjust provider payloads per request, and run fiber-safe.
 ---
 

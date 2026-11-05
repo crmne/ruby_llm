@@ -34,7 +34,7 @@ judgment.urgent.probability # => 0.96
 
 In Rails, `bin/rails generate ruby_llm:judge Urgency` creates `UrgencyJudge` in `app/judges/urgency_judge.rb`.
 
-Configure your [TypeSafe API key]({% link _getting_started/configuration-providers.md %}#typesafe) or a [Jev-compatible local endpoint]({% link _getting_started/configuration-providers.md %}#jev-compatible-apis) before making a request. With an [OpenAI API key]({% link _getting_started/configuration-providers.md %}#api-keys), choose `{{ site.models.openai_judgment }}`. OpenAI judgments use the Decisions API and answer the same questions. With an [OpenRouter API key]({% link _getting_started/configuration-providers.md %}#api-keys), choose a decision model such as `{{ site.models.openrouter_judgment }}` with `provider: :openrouter`. OpenRouter serves Jev, Clef, and other decision models and reports the exact cost of each judgment. To judge on your own machine, run a decision model such as Clef with [Ollama](#local-decision-models). Judges use `config.default_judgment_model`, not the default chat model.
+Configure your [TypeSafe API key]({% link _reference/configuration-providers.md %}#typesafe) or a [Jev-compatible local endpoint]({% link _reference/configuration-providers.md %}#jev-compatible-apis) before making a request. With an [OpenAI API key]({% link _reference/configuration-providers.md %}#api-keys), choose `{{ site.models.openai_judgment }}`. OpenAI judgments use the Decisions API and answer the same questions. With an [OpenRouter API key]({% link _reference/configuration-providers.md %}#api-keys), choose a decision model such as `{{ site.models.openrouter_judgment }}` with `provider: :openrouter`. OpenRouter serves Jev, Clef, and other decision models and reports the exact cost of each judgment. To judge on your own machine, run a decision model such as Clef with [Ollama](#local-decision-models). Judges use `config.default_judgment_model`, not the default chat model.
 
 Each call judges the input you supply. It does not retain conversation history. Put a conversation in the input when you want the questions to consider it.
 
@@ -260,7 +260,7 @@ end
 Urgency.judge("Please refund the duplicate charge today.").urgent.probability
 ```
 
-`clef-flash` (9B) is built for low latency; `clef` (27B) is the larger model. Both accept images through `with:`. Clef needs a current Ollama release. `RubyLLM.models.refresh` lists your local decision models as judgment models. Set `ollama_api_base` as described in [Provider Setup]({% link _getting_started/configuration-providers.md %}#api-keys).
+`clef-flash` (9B) is built for low latency; `clef` (27B) is the larger model. Both accept images through `with:`. Clef needs a current Ollama release. `RubyLLM.models.refresh` lists your local decision models as judgment models. Set `ollama_api_base` as described in [Provider Setup]({% link _reference/configuration-providers.md %}#api-keys).
 
 ## Configuration and Usage
 
@@ -278,3 +278,8 @@ Unknown costs remain `nil`. The provider's catalog does not necessarily include 
 Pass `model:`, `provider:`, `context:`, `provider_options:`, or instrumentation `metadata:` to `judge`. You can also declare `provider_options` on a Judge class as a Hash, proc, or block. Reserved input, question, and model fields must use the public arguments. `RubyLLM.context` exposes the same `judge` entry point for isolated credentials and settings.
 
 Judgments use the shared timeouts, retries, and error classes. They emit `judgment.ruby_llm` and per-attempt `usage.ruby_llm` events. See [Instrumentation]({% link _advanced/instrumentation.md %}). Call judges from ordinary Rails services or jobs; no chat record is required.
+
+## Next Steps
+
+* [Evaluations]({% link _advanced/evaluations.md %}) - Grade your agents against a dataset, with a Judge as the evaluator.
+* [Structured Output]({% link _core_features/structured-output.md %}) - Read a Hash that follows your schema from a chat instead.

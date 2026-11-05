@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Structured Output
-parent: "Chat"
 nav_order: 3
 description: Get AI responses that match an exact JSON schema with required fields and types
 ---
@@ -201,7 +200,7 @@ JSON mode does not enforce fields or types. Use `with_schema` when your applicat
 
 ## Next Steps
 
-* [Chat]({% link _core_features/chat.md %}) - the conversation interface `with_schema` builds on.
-* [Tools]({% link _core_features/tools.md %}) - let the model call your Ruby code when a schema is not enough.
-* [Rails Integration]({% link _advanced/rails.md %}) - persist structured responses alongside your conversations.
+* [Chat]({% link _getting_started/chat.md %}) - the conversation interface `with_schema` builds on.
+* [Tools]({% link _getting_started/tools.md %}) - let the model call your Ruby code when a schema is not enough.
+* [Rails Integration]({% link _getting_started/rails.md %}) - persist structured responses alongside your conversations.
 * [Advanced Request Control]({% link _core_features/chat-request-control.md %}) - reach JSON mode and other provider-specific options directly.

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Reranking
-nav_order: 4
+nav_order: 13
 description: Order candidate documents by how well they answer a query, the second stage of a retrieval pipeline
 ---
 
@@ -87,11 +87,11 @@ RubyLLM.rerank(query, documents, model: "{{ site.models.rerank_bedrock }}", prov
 RubyLLM.rerank(query, documents, model: "{{ site.models.azure_rerank }}", provider: :azure)
 ```
 
-Azure requires a [deployed reranker]({% link _getting_started/configuration-providers.md %}#azure-deployments). Bedrock reranking uses your AWS credentials without a knowledge base.
+Azure requires a [deployed reranker]({% link _reference/configuration-providers.md %}#azure-deployments). Bedrock reranking uses your AWS credentials without a knowledge base.
 
 ### Vertex AI Search
 
-Enable the Discovery Engine API in your project and use your [Vertex AI ranking configuration]({% link _getting_started/configuration-providers.md %}#reranking):
+Enable the Discovery Engine API in your project and use your [Vertex AI ranking configuration]({% link _reference/configuration-providers.md %}#reranking):
 
 ```ruby
 RubyLLM.rerank(
@@ -143,6 +143,6 @@ See the [RAG guide]({% link _advanced/rag.md %}) for the retrieval-augmented gen
 
 ## Next Steps
 
-* [Embeddings]({% link _core_features/embeddings.md %}) - generate the vectors that produce your candidates.
+* [Embeddings]({% link _getting_started/embeddings.md %}) - generate the vectors that produce your candidates.
 * [RAG]({% link _advanced/rag.md %}) - build retrieval-augmented generation on top of this pipeline.
 * [Tokens and Costs]({% link _core_features/cost-and-usage-tracking.md %}) - track what retrieval costs across every call.

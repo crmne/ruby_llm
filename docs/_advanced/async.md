@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Scale with Async
-nav_order: 5
+nav_order: 11
 description: Run AI jobs with Solid Queue fiber workers, use Async for concurrent Ruby calls, and choose Async::Job for higher throughput.
 redirect_from:
   - /guides/async
@@ -116,7 +116,7 @@ answers = Async do |task|
 end.wait
 ```
 
-RubyLLM's default HTTP adapter cooperates with Ruby's fiber scheduler. Each task above creates its own chat, so the conversations stay independent. To keep connections open between calls inside a reactor, use the `:async_http` adapter described in [Connection Reuse]({% link _getting_started/configuration-connection.md %}#connection-reuse). See Async's [task guide](https://socketry.github.io/async/guides/tasks/index.html) for task creation and waiting.
+RubyLLM's default HTTP adapter cooperates with Ruby's fiber scheduler. Each task above creates its own chat, so the conversations stay independent. To keep connections open between calls inside a reactor, use the `:async_http` adapter described in [Connection Reuse]({% link _reference/configuration-connection.md %}#connection-reuse). See Async's [task guide](https://socketry.github.io/async/guides/tasks/index.html) for task creation and waiting.
 
 ## Concurrent Operations
 
@@ -264,4 +264,4 @@ For more on fibers, threads, and processes, read [Ruby Concurrency: What Actuall
 
 * [Batches]({% link _advanced/batches.md %}) - Provider-side batching at a discount when nobody is waiting.
 * [Streaming Responses]({% link _core_features/streaming.md %})
-* [Rails Integration]({% link _advanced/rails.md %})
+* [Rails Integration]({% link _getting_started/rails.md %})

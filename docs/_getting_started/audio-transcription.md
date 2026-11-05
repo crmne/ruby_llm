@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Audio Transcription
-nav_order: 7
+nav_order: 9
 description: Convert speech to text with support for multiple languages and speaker diarization
 redirect_from:
   - /guides/audio-transcription
@@ -43,7 +43,7 @@ RubyLLM.transcribe("meeting.wav", model: "{{ site.models.transcription_elevenlab
 
 Set `default_transcription_model` in [Configuration]({% link _getting_started/configuration.md %}#default-models) to change the default. Browse the [Models]({% link _reference/available-models.md %}) page for audio models. Pass `provider:` to select a hosted deployment explicitly.
 
-For Azure, pass your [deployment name]({% link _getting_started/configuration-providers.md %}#azure-deployments). A diarization deployment with a custom name also needs `format: "diarized_json"`.
+For Azure, pass your [deployment name]({% link _reference/configuration-providers.md %}#azure-deployments). A diarization deployment with a custom name also needs `format: "diarized_json"`.
 
 ## Language and Vocabulary Hints
 
@@ -98,7 +98,7 @@ transcription.segments.each do |segment|
 end
 ```
 
-For Google's dedicated transcription model on Vertex AI, use `model: "{{ site.models.transcription_vertexai }}"`, `provider: :vertexai`, and set `vertexai_location` to `"global"` in [Configuration]({% link _getting_started/configuration-providers.md %}#vertex-ai-authentication-configuration).
+For Google's dedicated transcription model on Vertex AI, use `model: "{{ site.models.transcription_vertexai }}"`, `provider: :vertexai`, and set `vertexai_location` to `"global"` in [Configuration]({% link _reference/configuration-providers.md %}#vertex-ai-authentication-configuration).
 
 ### Identifying Known Speakers
 
@@ -247,10 +247,10 @@ Google still bills the audio it read before blocking it. The failed attempt keep
 
 ## Longer Recordings and Errors
 
-Long recordings may need a longer [request timeout]({% link _getting_started/configuration-connection.md %}#connection-settings). See [Error Handling]({% link _advanced/error-handling.md %}) for retries and provider failures.
+Long recordings may need a longer [request timeout]({% link _reference/configuration-connection.md %}#connection-settings). See [Error Handling]({% link _advanced/error-handling.md %}) for retries and provider failures.
 
 ## Next Steps
 
-* [Chat]({% link _core_features/chat.md %}) - ask questions about a transcript.
-* [Text to Speech]({% link _core_features/text-to-speech.md %}) - turn a summary into audio.
+* [Chat]({% link _getting_started/chat.md %}) - ask questions about a transcript.
+* [Text to Speech]({% link _getting_started/text-to-speech.md %}) - turn a summary into audio.
 * [Structured Output]({% link _core_features/structured-output.md %}) - extract decisions, speakers, and action items.

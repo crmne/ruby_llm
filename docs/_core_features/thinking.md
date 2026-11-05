@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Extended Thinking
-parent: "Chat"
 nav_order: 4
 description: Give reasoning models more time and budget to deliberate, with optional access to thinking output
 redirect_from:
@@ -126,7 +125,7 @@ RubyLLM splits only a `<think>...</think>` block at the very start of the answer
 
 Streaming works the same way. Each chunk carries its part of the reasoning in `chunk.thinking` as it arrives, even when a tag is cut across chunks, and the content chunks, the final message, Turbo broadcasts, and the persisted record all agree.
 
-The setting applies to the Chat Completions API and is off by default. To turn it on for one server only, set it in a [context]({% link _getting_started/configuration-connection.md %}#contexts-isolated-configurations):
+The setting applies to the Chat Completions API and is off by default. To turn it on for one server only, set it in a [context]({% link _reference/configuration-connection.md %}#contexts-isolated-configurations):
 
 ```ruby
 llama = RubyLLM.context do |config|
@@ -174,5 +173,5 @@ The generated schema also preserves the complete thinking blocks when you reload
 ## Next Steps
 
 * [Streaming Responses]({% link _core_features/streaming.md %})
-* [Rails Integration]({% link _advanced/rails.md %})
+* [Rails Integration]({% link _getting_started/rails.md %})
 * [Error Handling]({% link _advanced/error-handling.md %})

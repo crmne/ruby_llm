@@ -76,7 +76,7 @@ Pass `model:` to choose a speech model:
 RubyLLM.speak("Ship it.", model: "{{ site.models.speech_elevenlabs }}")
 ```
 
-Set `default_speech_model` in [Configuration]({% link _getting_started/configuration.md %}#default-models) to change the default. For Azure, pass the [deployment name]({% link _getting_started/configuration-providers.md %}#azure-deployments) with `provider: :azure`.
+Set `default_speech_model` in [Configuration]({% link _getting_started/configuration.md %}#default-models) to change the default. For Azure, pass the [deployment name]({% link _reference/configuration-providers.md %}#azure-deployments) with `provider: :azure`.
 
 ## Voices
 
@@ -216,6 +216,6 @@ For retries and provider errors, see [Error Handling]({% link _advanced/error-ha
 
 ## Next Steps
 
-*   [Audio Transcription]({% link _core_features/audio-transcription.md %}): Convert speech back to text.
+*   [Audio Transcription]({% link _getting_started/audio-transcription.md %}): Convert speech back to text.
 *   [Model Resolution]({% link _reference/model-resolution.md %}): Learn how `model:` and `provider:` are resolved.
 *   [Instrumentation and Observability]({% link _advanced/instrumentation.md %}): Track speech generation events in production.

@@ -1,7 +1,7 @@
 ---
 layout: coverage
 title: Provider API Coverage
-nav_order: 6
+nav_order: 8
 description: Check RubyLLM's provider API audit, with implementation notes, sources, and remaining gaps.
 provider_coverage: true
 llms: false
@@ -14,7 +14,7 @@ llms: false
   <h1>{{ page.title }}</h1>
   <p>{{ page.description }}</p>
   <p class="coverage-audit-date">Source audit: {{ coverage.audited_on }} · {{ coverage.providers.size }} providers · {{ coverage.summary.feature_count }} shared feature rows</p>
-  <p>This dated matrix covers {{ coverage.providers.size }} providers and predates TypeSafe and Hetzner support. TypeSafe's Jev models now have built-in support for probabilities, choices, and scores through <a href="{% link _core_features/judgments.md %}">Judgments</a>. You can also use a <a href="{% link _getting_started/configuration-providers.md %}#jev-compatible-apis">Jev-compatible local endpoint</a>. Hetzner serves open-weight chat models with tool calling and image input; see <a href="{% link _getting_started/configuration-providers.md %}#hetzner">its setup</a>.</p>
+  <p>This dated matrix covers {{ coverage.providers.size }} providers and predates TypeSafe and Hetzner support. TypeSafe's Jev models now have built-in support for probabilities, choices, and scores through <a href="{% link _advanced/judgments.md %}">Judgments</a>. You can also use a <a href="{% link _reference/configuration-providers.md %}#jev-compatible-apis">Jev-compatible local endpoint</a>. Hetzner serves open-weight chat models with tool calling and image input; see <a href="{% link _reference/configuration-providers.md %}#hetzner">its setup</a>.</p>
   <p><a href="{% link _reference/whats-new-in-2-0.md %}">What's New in 2.0</a> · <a href="#coverage-method">How to read this audit</a> · <a href="{{ '/provider-coverage.json' | relative_url }}" download>Download the audit data</a> · <a href="{{ '/assets/images/provider-coverage.svg' | relative_url }}" download>Download the chart</a></p>
 </header>
 

@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Advanced Request Control
-parent: "Chat"
 nav_order: 8
 description: Reach provider-specific features with custom parameters, wire protocols, request hooks, and HTTP headers
 ---
@@ -43,7 +42,7 @@ chat.with_caching
 chat.with_caching(false)
 ```
 
-The same feature-switch pattern applies to `with_citations` and `with_compaction`. These switches reject `nil`. `with_tools(nil)` clears the tool list; other tool settings are covered in [Controlling Tool Execution]({% link _core_features/tool-execution.md %}).
+The same feature-switch pattern applies to `with_citations` and `with_compaction`. These switches reject `nil`. `with_tools(nil)` clears the tool list; other tool settings are covered in [Controlling Tool Execution]({% link _tools/tool-execution.md %}).
 
 ## Identifying End Users
 
@@ -224,7 +223,7 @@ end
 ```
 
 Providers that do not understand these extra fields silently ignore them, so you can reuse the same tools across models.
-See the [Tool Provider Parameters]({% link _core_features/tool-parameters.md %}#provider-specific-parameters) section for more detail.
+See the [Tool Provider Parameters]({% link _tools/tool-parameters.md %}#provider-specific-parameters) section for more detail.
 
 ### Inspecting the Payload
 
@@ -251,7 +250,7 @@ Headers are merged with the provider's own, and the provider's win. `with_header
 
 ## Next Steps
 
-* [Chat]({% link _core_features/chat.md %}) - the core conversation interface.
-* [Tool Parameters]({% link _core_features/tool-parameters.md %}) - pass provider-specific options to tool definitions.
+* [Chat]({% link _getting_started/chat.md %}) - the core conversation interface.
+* [Tool Parameters]({% link _tools/tool-parameters.md %}) - pass provider-specific options to tool definitions.
 * [Structured Output]({% link _core_features/structured-output.md %}) - get schema-validated responses instead of raw JSON mode.
 * [Configuration]({% link _getting_started/configuration.md %}) - set provider protocols and defaults app-wide.

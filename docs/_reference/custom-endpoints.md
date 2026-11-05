@@ -26,7 +26,7 @@ Sometimes you need to interact with models or endpoints not covered by the stand
 *   Brand-new model releases.
 *   Custom fine-tunes or deployments with unique names.
 
-Azure has a first-class provider: configure `azure_api_base` and use `provider: :azure` instead. See the [Provider Setup and Custom Endpoints Guide]({% link _getting_started/configuration-providers.md %}).
+Azure has a first-class provider: configure `azure_api_base` and use `provider: :azure` instead. See the [Provider Setup and Custom Endpoints Guide]({% link _reference/configuration-providers.md %}).
 
 RubyLLM offers two mechanisms for these cases.
 
@@ -44,7 +44,7 @@ end
 
 *   This setting **only** affects requests made with `provider: :openai`.
 *   It directs those requests to your specified URL instead of `https://api.openai.com/v1`.
-*   See the [Provider Setup and Custom Endpoints Guide]({% link _getting_started/configuration-providers.md %}) for the full `api_base` setup details.
+*   See the [Provider Setup and Custom Endpoints Guide]({% link _reference/configuration-providers.md %}) for the full `api_base` setup details.
 
 ### Assuming Model Existence (`assume_model_exists`)
 
@@ -98,6 +98,6 @@ Use these features when the standard registry doesn't cover your specific model 
 
 ## Next Steps
 
-*   [Chat]({% link _core_features/chat.md %}) - start a conversation once your custom endpoint or unlisted model is wired up.
+*   [Chat]({% link _getting_started/chat.md %}) - start a conversation once your custom endpoint or unlisted model is wired up.
 *   [Model Resolution]({% link _reference/model-resolution.md %}) - the exact procedure behind `assume_model_exists` and provider selection.
 *   [Model Registry]({% link _reference/models.md %}) - return to the registry for validated, capability-aware models.

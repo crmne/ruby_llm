@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Agentic Workflows
-parent: "Agents"
 nav_order: 1
 description: Compose agents and AI operations with ordinary Ruby methods, from sequential steps to routing and parallel work.
 redirect_from:
@@ -29,7 +28,7 @@ When you want to see the whole operation as one unit in your observability stack
 
 ## Driving the Loop Yourself
 
-`ask` sends your message and runs the conversation to completion: it calls the model, runs any [tools]({% link _core_features/tools.md %}) the model asks for, and calls the model again until it answers without a tool. When you need to control that loop, for example to run each turn as its own background job, set an iteration budget, or stop and resume on another machine, `Chat` exposes it as named verbs:
+`ask` sends your message and runs the conversation to completion: it calls the model, runs any [tools]({% link _getting_started/tools.md %}) the model asks for, and calls the model again until it answers without a tool. When you need to control that loop, for example to run each turn as its own background job, set an iteration budget, or stop and resume on another machine, `Chat` exposes it as named verbs:
 
 * `generate` runs the model once and appends its response (the model's move). It returns the response.
 * `run_tools` executes the tool calls the model asked for and appends their results (your move). It makes no model call and returns the chat.
@@ -48,9 +47,9 @@ chat.messages.last.content      # => "It's 15°C and partly cloudy in Paris."
 
 `ask_later` stages the question without sending it, so `ask` is `ask_later` then `complete`.
 
-With Rails persistence, each method reads the saved transcript and skips tool calls with saved results. Only one process runs a chat at a time: while another process is running it, each method returns without doing anything and `waiting?` is `true`. Work interrupted before its result is saved may run again once its claim expires. See [Durable Agents]({% link _advanced/durable-agents.md %}) for job retries and idempotent tools.
+With Rails persistence, each method reads the saved transcript and skips tool calls with saved results. Only one process runs a chat at a time: while another process is running it, each method returns without doing anything and `waiting?` is `true`. Work interrupted before its result is saved may run again once its claim expires. See [Agents in Background Jobs]({% link _advanced/durable-agents.md %}) for job retries and idempotent tools.
 
-Stop scheduling work while `waiting?` is true: the chat waits on something outside it. `awaiting_approval?` tells you it waits on an approval, so record one or a denial, then resume the loop. `awaiting_input?` and `awaiting_tasks?` cover [MCP servers]({% link _core_features/mcp.md %}#input-requests) asking for input and running tasks.
+Stop scheduling work while `waiting?` is true: the chat waits on something outside it. `awaiting_approval?` tells you it waits on an approval, so record one or a denial, then resume the loop. `awaiting_input?` and `awaiting_tasks?` cover [MCP servers]({% link _tools/mcp.md %}#input-requests) asking for input and running tasks.
 
 [Batches]({% link _advanced/batches.md %}) are the same idea at scale: a batch is `generate` deferred for many chats at once, with `run_tools` run locally between rounds.
 
@@ -424,7 +423,7 @@ RubyLLM::ActiveRecord::Usage.where(workflow_id: "recording-#{recording.id}").sum
 
 ## Retrieval-Augmented Generation
 
-Retrieve relevant documents and pass them to an answering agent. See [RAG]({% link _advanced/rag.md %}) for a retrieval tool, and [Reranking]({% link _core_features/rerank.md %}) for ordering candidate documents before the model reads them.
+Retrieve relevant documents and pass them to an answering agent. See [RAG]({% link _advanced/rag.md %}) for a retrieval tool, and [Reranking]({% link _getting_started/rerank.md %}) for ordering candidate documents before the model reads them.
 
 ## Error Handling
 
@@ -434,12 +433,12 @@ Handle failures at the step that can recover from them:
 * Raise exceptions for unrecoverable errors (missing config, service down)
 * Use the retry middleware for transient failures
 
-See the [Error Handling section in Tools]({% link _core_features/tools.md %}#error-handling-in-tools) for detailed patterns.
+See the [Error Handling section in Tools]({% link _getting_started/tools.md %}#error-handling-in-tools) for detailed patterns.
 
 ## Next Steps
 
 * [Retrieval-Augmented Generation (RAG)]({% link _advanced/rag.md %}) - Ground answers in your own documents.
-* [Agents]({% link _advanced/agents.md %}) - Define reusable agent classes.
-* [Tools]({% link _core_features/tools.md %}) - Add capabilities and external actions.
+* [Agents]({% link _getting_started/agents.md %}) - Define reusable agent classes.
+* [Tools]({% link _getting_started/tools.md %}) - Add capabilities and external actions.
 * [Scale with Async]({% link _advanced/async.md %}) - Run concurrent workflow steps.
 * [Error Handling]({% link _advanced/error-handling.md %}) - Build resilient systems.

@@ -1,8 +1,7 @@
 ---
 layout: default
 title: Retrieval-Augmented Generation (RAG)
-parent: "Agents"
-nav_order: 2
+nav_order: 3
 description: Retrieve relevant context from your own documents, then answer with that context
 ---
 
@@ -19,7 +18,7 @@ After reading this guide, you will know:
 * How to expose semantic search to an agent as a retrieval tool.
 * How to build an answering agent that cites its sources.
 
-RAG is often just one step in a larger [workflow]({% link _advanced/agentic-workflows.md %}): retrieve relevant context, then answer with that context. You embed your documents once, search them by similarity at query time, and feed the closest matches to the model as grounding. For the mechanics of turning text into vectors, see [Embeddings]({% link _core_features/embeddings.md %}).
+RAG is often just one step in a larger [workflow]({% link _advanced/agentic-workflows.md %}): retrieve relevant context, then answer with that context. You embed your documents once, search them by similarity at query time, and feed the closest matches to the model as grounding. For the mechanics of turning text into vectors, see [Embeddings]({% link _getting_started/embeddings.md %}).
 
 ## Setup
 
@@ -72,7 +71,7 @@ text = RubyLLM.ocr("refund-policy.pdf").markdown
 Document.create!(title: "Refund policy", content: text)
 ```
 
-The callback generates its embedding. Configure the OCR provider as described in [Document OCR]({% link _core_features/ocr.md %}). Split long documents into passages before embedding them so each result contains focused context.
+The callback generates its embedding. Configure the OCR provider as described in [Document OCR]({% link _getting_started/ocr.md %}). Split long documents into passages before embedding them so each result contains focused context.
 
 ## Retrieval Tool
 
@@ -113,12 +112,12 @@ agent = SupportWithDocsAgent.new
 agent.ask("What is our refund policy?").content
 ```
 
-To improve retrieval ordering, fetch a larger candidate set and rerank it before building `SearchResults`. [Reranking]({% link _core_features/rerank.md %}#retrieval-end-to-end) shows the complete database-to-results example.
+To improve retrieval ordering, fetch a larger candidate set and rerank it before building `SearchResults`. [Reranking]({% link _getting_started/rerank.md %}#retrieval-end-to-end) shows the complete database-to-results example.
 
 ## Next Steps
 
-* [Embeddings]({% link _core_features/embeddings.md %}) - Turn text into vectors for similarity search.
+* [Embeddings]({% link _getting_started/embeddings.md %}) - Turn text into vectors for similarity search.
 * [Memory]({% link _advanced/memory.md %}) - The same pattern over memories the agent writes itself.
 * [Agentic Workflows]({% link _advanced/agentic-workflows.md %}) - Compose retrieval into larger orchestrations.
-* [Tools]({% link _core_features/tools.md %}) - Build the retrieval tool and other capabilities.
-* [Agents]({% link _advanced/agents.md %}) - Define the answering agent class.
+* [Tools]({% link _getting_started/tools.md %}) - Build the retrieval tool and other capabilities.
+* [Agents]({% link _getting_started/agents.md %}) - Define the answering agent class.

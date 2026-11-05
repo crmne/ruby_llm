@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Sandboxes
-parent: "Tools"
-nav_order: 7
+parent: "Durable Agents"
+nav_order: 3
 description: Decide what code from a model can read, write, and reach, and let the model ask for more one call at a time.
 ---
 
@@ -25,7 +25,7 @@ After reading this guide, you will know:
 
 ## What a Sandbox Is
 
-[Code execution]({% link _core_features/code-execution.md %}) runs code a model wrote. That code never runs in your application's process. It runs in a sandbox, and the sandbox decides everything the code may do: which paths it reads, which it changes, which hosts it reaches, where it starts, and how long it runs.
+[Code execution]({% link _advanced/code-execution.md %}) runs code a model wrote. That code never runs in your application's process. It runs in a sandbox, and the sandbox decides everything the code may do: which paths it reads, which it changes, which hosts it reaches, where it starts, and how long it runs.
 
 A sandbox is a class. RubyLLM's sandboxes come from the [mxc gem](https://crmne.github.io/mxc/), which uses Bubblewrap on Linux, Seatbelt on macOS, and process containers on Windows:
 
@@ -58,7 +58,7 @@ end
 
 `MXC::Sandbox` on its own reads the system's programs and libraries, writes nothing, and has no network. Each macro widens it: `readable` and `writable` add paths, `network` opens the network or lists hosts, `directory` sets where the code starts, and `timeout` sets how long it may run. `limits` and `priority` bound what it may use. A sandbox without a timeout stops runs after 120 seconds. See [mxc's policies](https://crmne.github.io/mxc/policies/) for every setting.
 
-The class holds the whole policy. RubyLLM adds only what a run needs to work: a fresh run directory with the conversation's files and your [mounted folders]({% link _core_features/code-execution.md %}#your-own-folders), the Ruby and Node.js installations, and the [packages]({% link _core_features/code-execution.md %}#packages) you declared. It never widens the sandbox in any other way.
+The class holds the whole policy. RubyLLM adds only what a run needs to work: a fresh run directory with the conversation's files and your [mounted folders]({% link _advanced/code-execution.md %}#your-own-folders), the Ruby and Node.js installations, and the [packages]({% link _advanced/code-execution.md %}#packages) you declared. It never widens the sandbox in any other way.
 
 ## The Default Sandbox
 
@@ -156,7 +156,7 @@ chat.approve(call)
 chat.complete
 ```
 
-Show the person the code, the reason, and the summary before they decide. `approve` runs that one call in the named sandbox, and `deny` refuses it: the model learns the user said no, and continues. These calls are ordinary [tool approvals]({% link _core_features/tool-execution.md %}#requiring-approval), so the approval interface you already have works for them. The cards from the [chat UI generator]({% link _advanced/rails-generators.md %}#approvals-and-attachments) show all three.
+Show the person the code, the reason, and the summary before they decide. `approve` runs that one call in the named sandbox, and `deny` refuses it: the model learns the user said no, and continues. These calls are ordinary [tool approvals]({% link _tools/tool-execution.md %}#requiring-approval), so the approval interface you already have works for them. The cards from the [chat UI generator]({% link _advanced/rails-generators.md %}#approvals-and-attachments) show all three.
 
 Escalation is per call. The next call runs in the default sandbox again unless it asks again, and every call that asks waits for its own decision. An escalated call is never remembered: `approve(call, remember: true)` raises `ArgumentError` for it, so no approval can turn into standing access.
 
@@ -235,7 +235,7 @@ class ReportAgent < RubyLLM::Agent
 end
 ```
 
-Without `escalate_to:`, the model has no way to ask for more, and no call waits for anyone. Add `file_store` to the agent, and runs work with the chat's [files]({% link _core_features/chat-files.md %}), in the store's folder when it has one, so the report a run builds is still there for the next question.
+Without `escalate_to:`, the model has no way to ask for more, and no call waits for anyone. Add `file_store` to the agent, and runs work with the chat's [files]({% link _advanced/chat-files.md %}), in the store's folder when it has one, so the report a run builds is still there for the next question.
 
 `limits` caps the CPU time and memory each process the code starts may use, and `priority :low` keeps your application responsive while code runs. When the code uses up a limit, the sandbox stops it and the model is told which limit it hit. The limits apply to each process, so to bound a run that starts many workers, also limit the container your application runs in. See [mxc's limits on each platform](https://crmne.github.io/mxc/policies/#limits-on-each-platform) for what each platform enforces.
 
@@ -272,10 +272,10 @@ RubyLLM creates an instance of a class for each use. `run` takes the command lik
 | `timeout` | The sandbox's own timeout, or 120 seconds |
 | `network` | `nil` for the sandbox's own access; `{ allow: [...] }` only to install declared packages |
 
-A sandbox on another machine copies the readable and writable paths in before the command runs and copies the writable ones back after it, so the files the code writes come back. When `run` gets a block, it may yield each line of output as it arrives, from standard output and standard error, like `IO#each_line`, and code execution [reports the lines as progress]({% link _core_features/code-execution.md %}#following-a-run). A sandbox that ignores the block still works. Its result can also answer `blocked`, the hosts the network policy refused, which RubyLLM passes on to the model. To explain why `supported?` is false at boot, define `reason`, returning a String. A sandbox that can let a command load the libraries other files link may define `with_libraries_of(*paths)`, returning a sandbox that does: RubyLLM passes Ruby and its extensions. Answer `readable`, `writable`, `network`, `directory`, `timeout`, and `limits` to describe the sandbox to the model and to the person approving an escalation.
+A sandbox on another machine copies the readable and writable paths in before the command runs and copies the writable ones back after it, so the files the code writes come back. When `run` gets a block, it may yield each line of output as it arrives, from standard output and standard error, like `IO#each_line`, and code execution [reports the lines as progress]({% link _advanced/code-execution.md %}#following-a-run). A sandbox that ignores the block still works. Its result can also answer `blocked`, the hosts the network policy refused, which RubyLLM passes on to the model. To explain why `supported?` is false at boot, define `reason`, returning a String. A sandbox that can let a command load the libraries other files link may define `with_libraries_of(*paths)`, returning a sandbox that does: RubyLLM passes Ruby and its extensions. Answer `readable`, `writable`, `network`, `directory`, `timeout`, and `limits` to describe the sandbox to the model and to the person approving an escalation.
 
 ## Next Steps
 
-* [Code Execution]({% link _core_features/code-execution.md %}) - Let the model run Ruby, Python, JavaScript, and shell code.
-* [Controlling Tool Execution]({% link _core_features/tool-execution.md %}) - Approve calls, remember approvals, and run calls concurrently.
-* [Agents]({% link _advanced/agents.md %}) - Package code execution with instructions and tools.
+* [Code Execution]({% link _advanced/code-execution.md %}) - Let the model run Ruby, Python, JavaScript, and shell code.
+* [Controlling Tool Execution]({% link _tools/tool-execution.md %}) - Approve calls, remember approvals, and run calls concurrently.
+* [Agents]({% link _getting_started/agents.md %}) - Package code execution with instructions and tools.

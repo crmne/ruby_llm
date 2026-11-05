@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Rails Integration
-nav_order: 1
+nav_order: 14
 has_children: true
 description: Use the RubyLLM API with Active Record, Active Storage, Hotwire, and your existing Rails jobs.
 redirect_from:
@@ -88,7 +88,7 @@ chat.ask "Summarize this report.", with: report.document
 
 Here `report.document` is an Active Storage attachment. RubyLLM handles reading it and stores message attachments through the association created by the install generator. See [Attachments]({% link _core_features/attachments.md %}) for other file sources.
 
-`with_file_store` gives a chat its own files in Active Storage, so attachments and long tool results stop riding along with every request, and the model reads them with tools when it needs them. Attachments already in Active Storage share their blobs with the chat's files. See [Chat Files]({% link _core_features/chat-files.md %}#files-in-rails).
+`with_file_store` gives a chat its own files in Active Storage, so attachments and long tool results stop riding along with every request, and the model reads them with tools when it needs them. Attachments already in Active Storage share their blobs with the chat's files. See [Chat Files]({% link _advanced/chat-files.md %}#files-in-rails).
 
 ## Hotwire Streaming
 
@@ -123,7 +123,7 @@ chat = StudyAgent.create!
 StudyReplyJob.perform_later(chat.id, "Plan a session about Ruby blocks.")
 ```
 
-Use your existing Active Job backend. See [Agents]({% link _advanced/agents.md %}) for persisted configuration and [Durable Agents]({% link _advanced/durable-agents.md %}) for work that pauses for approval or resumes after a deploy.
+Use your existing Active Job backend. See [Agents]({% link _getting_started/agents.md %}) for persisted configuration and [Durable Agents]({% link _advanced/durable-agents-overview.md %}) for work that pauses for approval or resumes after a deploy.
 
 ## Media and Document Processing
 
@@ -139,7 +139,7 @@ class TranscribeRecordingJob < ApplicationJob
 end
 ```
 
-This assumes your `Recording` model has an `audio` attachment and a `transcript` text column. The same pattern works for [OCR]({% link _core_features/ocr.md %}), [image generation]({% link _core_features/image-generation.md %}), and [moderation]({% link _core_features/moderation.md %}).
+This assumes your `Recording` model has an `audio` attachment and a `transcript` text column. The same pattern works for [OCR]({% link _getting_started/ocr.md %}), [image generation]({% link _getting_started/image-generation.md %}), and [moderation]({% link _getting_started/moderation.md %}).
 
 ## Understanding the Persistence Flow
 
@@ -147,7 +147,7 @@ When you call `ask`, RubyLLM saves the user message, calls the provider, and sav
 
 Only one process runs a chat at a time. `complete`, `step`, `generate`, `run_tools`, and `compact` claim the chat in the database before they call the model or run tools, and each tool call is claimed before it runs. A second process that finds the chat claimed returns without doing anything, and `chat.running?` tells you another process is on it. See [One Process at a Time]({% link _advanced/durable-agents.md %}#one-process-at-a-time).
 
-A process that dies mid-request removes nothing: its placeholder stays blank, and a tool call it was running keeps no result. RubyLLM leaves blank assistant messages out of every request, so the chat still works. Its claims expire after `config.max_run_time`, ten minutes by default. The next `complete` after that runs the unfinished calls of the latest round again. A call in a round the conversation has moved past reaches the model with an error saying it did not finish. Your records stay as they are. Write tools so running them twice is safe; see [Durable Agents]({% link _advanced/durable-agents.md %}#at-least-once-not-exactly-once).
+A process that dies mid-request removes nothing: its placeholder stays blank, and a tool call it was running keeps no result. RubyLLM leaves blank assistant messages out of every request, so the chat still works. Its claims expire after `config.max_run_time`, ten minutes by default. The next `complete` after that runs the unfinished calls of the latest round again. A call in a round the conversation has moved past reaches the model with an error saying it did not finish. Your records stay as they are. Write tools so running them twice is safe; see [Agents in Background Jobs]({% link _advanced/durable-agents.md %}#at-least-once-not-exactly-once).
 
 Allow assistant messages to have empty content. Streaming begins before text arrives, and tool calls can be valid responses without text. A blanket `validates :content, presence: true` on `Message` prevents these flows.
 

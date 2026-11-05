@@ -1,8 +1,7 @@
 ---
 layout: default
 title: Provider Setup and Custom Endpoints
-parent: Configuration
-nav_order: 1
+nav_order: 2
 description: Configure provider credentials and connect to hosted or local APIs through compatible endpoints.
 ---
 
@@ -141,7 +140,7 @@ end
 
 ## TypeSafe
 
-Set `typesafe_api_key` to use TypeSafe's Jev models with [Judgments]({% link _core_features/judgments.md %}):
+Set `typesafe_api_key` to use TypeSafe's Jev models with [Judgments]({% link _advanced/judgments.md %}):
 
 ```ruby
 RubyLLM.configure do |config|
@@ -248,7 +247,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-MiniMax decides on its own when to call your tools: it accepts no `with_tool_options(choice:)` other than `:auto`. Of the [provider tools]({% link _core_features/provider-tools.md %}), it runs only `with_provider_tools(:web_search)`, a beta on MiniMax's side; the others raise `RubyLLM::UnsupportedServerToolError`.
+MiniMax decides on its own when to call your tools: it accepts no `with_tool_options(choice:)` other than `:auto`. Of the [provider tools]({% link _tools/provider-tools.md %}), it runs only `with_provider_tools(:web_search)`, a beta on MiniMax's side; the others raise `RubyLLM::UnsupportedServerToolError`.
 
 ## Moonshot AI
 
@@ -321,7 +320,7 @@ For a custom endpoint, set `bedrock_api_base` for Converse or `bedrock_mantle_ap
 
 ### Guardrails
 
-To use [moderation]({% link _core_features/moderation.md %}) with Bedrock, configure an existing guardrail and give your credentials permission to apply it:
+To use [moderation]({% link _getting_started/moderation.md %}) with Bedrock, configure an existing guardrail and give your credentials permission to apply it:
 
 ```ruby
 RubyLLM.configure do |config|
@@ -381,7 +380,7 @@ embedding = cohere.embed(
 )
 ```
 
-Use the endpoint and key belonging to that deployment. For image-only Embed v3 requests, use the registered model name as the deployment name; custom names use the Embed v4 media format. See [Embeddings]({% link _core_features/embeddings.md %}) for text and image inputs.
+Use the endpoint and key belonging to that deployment. For image-only Embed v3 requests, use the registered model name as the deployment name; custom names use the Embed v4 media format. See [Embeddings]({% link _getting_started/embeddings.md %}) for text and image inputs.
 
 ## Vertex AI Authentication Configuration
 
@@ -394,11 +393,11 @@ If `vertexai_service_account_key` is not set, RubyLLM uses ADC.
 
 ### Text to Speech
 
-Enable the Cloud Text-to-Speech API in your Google Cloud project to speak with Chirp 3: HD voices. RubyLLM sends each request to the endpoint of your `vertexai_location`: `eu` uses `eu-texttospeech.googleapis.com`, a region such as `europe-west2` uses `europe-west2-texttospeech.googleapis.com`, and `global` uses the global endpoint. A regional or multi-regional endpoint keeps your data in that region, as Google's [regional endpoints guide](https://docs.cloud.google.com/text-to-speech/docs/endpoints) describes; the global endpoint gives no residency guarantee. Google lists the locations that serve Chirp 3: HD on its [Chirp 3: HD page](https://docs.cloud.google.com/text-to-speech/docs/chirp3-hd). `vertexai_api_base` does not apply to Text-to-Speech. See [Text to Speech]({% link _core_features/text-to-speech.md %}) for voices and formats.
+Enable the Cloud Text-to-Speech API in your Google Cloud project to speak with Chirp 3: HD voices. RubyLLM sends each request to the endpoint of your `vertexai_location`: `eu` uses `eu-texttospeech.googleapis.com`, a region such as `europe-west2` uses `europe-west2-texttospeech.googleapis.com`, and `global` uses the global endpoint. A regional or multi-regional endpoint keeps your data in that region, as Google's [regional endpoints guide](https://docs.cloud.google.com/text-to-speech/docs/endpoints) describes; the global endpoint gives no residency guarantee. Google lists the locations that serve Chirp 3: HD on its [Chirp 3: HD page](https://docs.cloud.google.com/text-to-speech/docs/chirp3-hd). `vertexai_api_base` does not apply to Text-to-Speech. See [Text to Speech]({% link _getting_started/text-to-speech.md %}) for voices and formats.
 
 ### Reranking
 
-Enable the Discovery Engine API in your Google Cloud project and grant your credentials access to rank documents. RubyLLM uses the project's global `default_ranking_config`. Set `vertexai_ranking_config` to a full resource name if you need a different configuration, or `vertexai_ranking_api_base` for a custom endpoint. See [Reranking]({% link _core_features/rerank.md %}) for examples.
+Enable the Discovery Engine API in your Google Cloud project and grant your credentials access to rank documents. RubyLLM uses the project's global `default_ranking_config`. Set `vertexai_ranking_config` to a full resource name if you need a different configuration, or `vertexai_ranking_api_base` for a custom endpoint. See [Reranking]({% link _getting_started/rerank.md %}) for examples.
 
 ## Batch Processing
 
@@ -416,9 +415,9 @@ For Bedrock, your credentials need permission to submit jobs, pass the role, and
 
 Configure `gpustack_api_base` and `gpustack_api_key` for your GPUStack installation. The available operations depend on its deployed models and backends.
 
-For [tokenization]({% link _core_features/tokenization.md %}#tokenizing-text) or [video generation]({% link _core_features/video-generation.md %}), enable the model proxy and set `gpustack_api_base` to its `/model/proxy/ROUTE_ID/v1` URL, including any installation path prefix. The route ID identifies the deployment; pass its model name separately as `model:`. These operations require a vLLM tokenizer or vLLM-Omni video model respectively. The standard `/v1` gateway does not expose them.
+For [tokenization]({% link _core_features/tokenization.md %}#tokenizing-text) or [video generation]({% link _advanced/video-generation.md %}), enable the model proxy and set `gpustack_api_base` to its `/model/proxy/ROUTE_ID/v1` URL, including any installation path prefix. The route ID identifies the deployment; pass its model name separately as `model:`. These operations require a vLLM tokenizer or vLLM-Omni video model respectively. The standard `/v1` gateway does not expose them.
 
-For [provider tools]({% link _core_features/provider-tools.md %}), configure MCP servers on the vLLM deployment. Web search and web fetch use the `web_search_preview` label; code execution uses `code_interpreter`. The backend controls which tools are available and permitted.
+For [provider tools]({% link _tools/provider-tools.md %}), configure MCP servers on the vLLM deployment. Web search and web fetch use the `web_search_preview` label; code execution uses `code_interpreter`. The backend controls which tools are available and permitted.
 
 ## Media Generation
 
@@ -430,7 +429,7 @@ Most media calls use your provider's existing configuration. These services requ
 | Vertex AI video | Set `vertexai_location` to a region that serves your Veo model. For Cloud Storage output, add `google-cloud-storage` to your Gemfile and give your credentials read access to the output bucket. |
 | ElevenLabs Image & Video | Use a Pro plan or above and a key with Image & Video or Flows permission. The same `elevenlabs_api_key` serves audio, images, and video. Its model-listing endpoint omits media models, so pass a documented model with `assume_model_exists: true` and `provider: :elevenlabs`. |
 
-See [Image Generation]({% link _core_features/image-generation.md %}) and [Video Generation]({% link _core_features/video-generation.md %}) for inputs, output formats, and job handling.
+See [Image Generation]({% link _getting_started/image-generation.md %}) and [Video Generation]({% link _advanced/video-generation.md %}) for inputs, output formats, and job handling.
 
 ## Custom Endpoints
 
@@ -488,7 +487,7 @@ judgment.urgent.probability
 
 Use the server's root URL without `/v1`; RubyLLM appends `/v1/systemone`. Set `LOCAL_JUDGMENT_MODEL` to a model ID the server accepts. `assume_model_exists: true` allows IDs outside the bundled registry. The placeholder key is only for servers with authentication disabled; otherwise set the server's actual key.
 
-The context leaves hosted TypeSafe credentials unchanged. It returns the same [typed answers]({% link _core_features/judgments.md %}#reading-answers) and uses the shared retries and usage tracking. Unknown pricing remains `nil`.
+The context leaves hosted TypeSafe credentials unchanged. It returns the same [typed answers]({% link _advanced/judgments.md %}#reading-answers) and uses the shared retries and usage tracking. Unknown pricing remains `nil`.
 
 API compatibility does not imply the same predictions or input limits as Jev. Follow the server's installation instructions and model limits. Supply explicit question instructions for servers that require them, even when your answer descriptions already express the question.
 
@@ -524,6 +523,6 @@ Blank strings are treated as unset, so environment variables can be wired direct
 ## Next Steps
 
 - [Custom Endpoints and Unlisted Models]({% link _reference/custom-endpoints.md %}) - work with models RubyLLM doesn't know about.
-- [Connection, Logging and Contexts]({% link _getting_started/configuration-connection.md %}) - timeouts, proxies, and per-tenant isolation.
+- [Connection, Logging and Contexts]({% link _reference/configuration-connection.md %}) - timeouts, proxies, and per-tenant isolation.
 - [Configuration]({% link _getting_started/configuration.md %}#full-reference) - the complete option list.
 - [Model Registry]({% link _reference/models.md %}) - discover, select, and refresh the model registry.

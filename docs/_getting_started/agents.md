@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Agents
-nav_order: 2
+nav_order: 5
 has_children: true
 description: Give agents instructions, tools, and schemas in a Ruby class, then use them in scripts, services, and Rails jobs.
 ---
@@ -77,23 +77,23 @@ Supported class macros:
 These macros use the same arguments you already know from `RubyLLM.chat(...)` and `Chat#with_*` methods.
 For example, `model` maps to `RubyLLM.chat(model:, provider:, ...)`, `tools` maps to `with_tools`, `tool_options` maps to `with_tool_options`, `instructions` maps to `with_instructions`, and so on.
 
-* `model`, and its `provider:` and `protocol:` options (see [Chat Basics]({% link _core_features/chat.md %}) and [Request Control]({% link _core_features/chat-request-control.md %}#choosing-the-wire-protocol))
-* `tools` (see [Tools]({% link _core_features/tools.md %}))
-* `tool_options` (see [Controlling Tool Execution]({% link _core_features/tool-execution.md %}))
-* `provider_tools` (see [Provider Tools]({% link _core_features/provider-tools.md %}))
-* `instructions` (see [Chat Basics]({% link _core_features/chat.md %}))
-* `temperature` (see [Chat Basics]({% link _core_features/chat.md %}))
+* `model`, and its `provider:` and `protocol:` options (see [Chat Basics]({% link _getting_started/chat.md %}) and [Request Control]({% link _core_features/chat-request-control.md %}#choosing-the-wire-protocol))
+* `tools` (see [Tools]({% link _getting_started/tools.md %}))
+* `tool_options` (see [Controlling Tool Execution]({% link _tools/tool-execution.md %}))
+* `provider_tools` (see [Provider Tools]({% link _tools/provider-tools.md %}))
+* `instructions` (see [Chat Basics]({% link _getting_started/chat.md %}))
+* `temperature` (see [Chat Basics]({% link _getting_started/chat.md %}))
 * `max_output_tokens` (see [Request Control]({% link _core_features/chat-request-control.md %}))
 * `thinking` (see [Thinking]({% link _core_features/thinking.md %}))
 * `citations` (see [Citations]({% link _core_features/citations.md %}))
 * `caching` (see [Prompt Caching]({% link _core_features/prompt-caching.md %}))
 * `end_user` (see [Request Control]({% link _core_features/chat-request-control.md %}#identifying-end-users))
 * `compaction` (see [Request Control]({% link _core_features/chat-request-control.md %}#compacting-long-conversations))
-* `code_execution` (see [Code Execution]({% link _core_features/code-execution.md %}))
-* `file_store` (see [Chat Files]({% link _core_features/chat-files.md %}#agents))
+* `code_execution` (see [Code Execution]({% link _advanced/code-execution.md %}))
+* `file_store` (see [Chat Files]({% link _advanced/chat-files.md %}#agents))
 * `provider_options` (see [Request Control]({% link _core_features/chat-request-control.md %}))
-* `headers` (see [Chat Basics]({% link _core_features/chat.md %}))
-* `schema` (see [Chat Basics]({% link _core_features/chat.md %}))
+* `headers` (see [Chat Basics]({% link _getting_started/chat.md %}))
+* `schema` (see [Chat Basics]({% link _getting_started/chat.md %}))
 * `fallbacks` (see [Model Fallbacks]({% link _advanced/error-handling.md %}#model-fallbacks))
 * `context` (see [Configuration Contexts](#configuration-contexts))
 * `chat_class` (Rails-backed mode)
@@ -217,7 +217,7 @@ configuration. Pass either a context object or a block. Both forms work with
 `SupportAgent.chat` and Rails-backed agents configured with `chat_class`.
 Call `SupportAgent.context` to read the configured context.
 
-See [Contexts: Isolated Configurations]({% link _getting_started/configuration-connection.md %}#contexts-isolated-configurations)
+See [Contexts: Isolated Configurations]({% link _reference/configuration-connection.md %}#contexts-isolated-configurations)
 for more configuration examples.
 
 ## Runtime Context and Inputs
@@ -527,9 +527,9 @@ WorkAssistant.new.ask("Help me find docs about callbacks.")
 ## Next Steps
 
 * Compose agents with [Agentic Workflows]({% link _advanced/agentic-workflows.md %})
-* Resume them across jobs and deploys with [Durable Agents]({% link _advanced/durable-agents.md %})
+* Resume them across jobs and deploys with [Durable Agents]({% link _advanced/durable-agents-overview.md %})
 * Give them [Memory]({% link _advanced/memory.md %}) across conversations
 * Ground them in your documents with [RAG]({% link _advanced/rag.md %})
-* Learn about [Chat Basics]({% link _core_features/chat.md %})
-* Explore [Tools]({% link _core_features/tools.md %})
-* Review [Rails Integration]({% link _advanced/rails.md %})
+* Learn about [Chat Basics]({% link _getting_started/chat.md %})
+* Explore [Tools]({% link _getting_started/tools.md %})
+* Review [Rails Integration]({% link _getting_started/rails.md %})

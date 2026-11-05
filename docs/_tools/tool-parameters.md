@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Tool Parameters
-parent: "Tools"
 nav_order: 1
 description: Declare tool arguments - from inferred signatures to full JSON Schema, rich return values, and provider-specific metadata.
 ---
@@ -254,6 +253,6 @@ Strict mode requires every property in `required`; make optional parameters null
 
 ## Next Steps
 
-*   [Controlling Tool Execution]({% link _core_features/tool-execution.md %}) - Steer tool choice, call counts, concurrency, and callbacks.
-*   [Tools]({% link _core_features/tools.md %}) - The execution flow, error handling, and security overview.
+*   [Controlling Tool Execution]({% link _tools/tool-execution.md %}) - Steer tool choice, call counts, concurrency, and callbacks.
+*   [Tools]({% link _getting_started/tools.md %}) - The execution flow, error handling, and security overview.
 *   [Attachments]({% link _core_features/attachments.md %}) - How attachments returned from tools are consumed.

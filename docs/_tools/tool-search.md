@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Tool Search
-parent: "Tools"
 nav_order: 5
 description: Give a model hundreds of tools without sending them all, and let it search for the ones it needs.
 redirect_from:
@@ -146,7 +145,7 @@ RubyLLM adds the provider's default search tool. Anthropic also offers a regular
 chat.with_provider_tools({ type: "tool_search_tool_regex_20251119", name: "tool_search_tool_regex" })
 ```
 
-See [Provider Tools]({% link _core_features/provider-tools.md %}) for how raw tool definitions work.
+See [Provider Tools]({% link _tools/provider-tools.md %}) for how raw tool definitions work.
 
 ## Provider Support
 
@@ -167,8 +166,8 @@ When a chat switches to another model of the same provider, the tools the earlie
 
 ## Next Steps
 
-*   [Tools]({% link _core_features/tools.md %})
-*   [Model Context Protocol]({% link _core_features/mcp.md %})
-*   [Provider Tools]({% link _core_features/provider-tools.md %})
+*   [Tools]({% link _getting_started/tools.md %})
+*   [Model Context Protocol]({% link _tools/mcp.md %})
+*   [Provider Tools]({% link _tools/provider-tools.md %})
 *   [Anthropic tool search](https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-search-tool)
 *   [OpenAI tool search](https://developers.openai.com/api/docs/guides/tools-tool-search)

@@ -1,8 +1,7 @@
 ---
 layout: default
 title: Chat Event Handlers
-parent: "Chat"
-nav_order: 10
+nav_order: 9
 description: Hook into the chat lifecycle with additive callbacks for UI updates, logging, and analytics
 ---
 
@@ -59,7 +58,7 @@ chat.after_tool_progress do |call, progress|
 end
 ```
 
-See [Reporting Progress]({% link _core_features/tool-execution.md %}#reporting-progress).
+See [Reporting Progress]({% link _tools/tool-execution.md %}#reporting-progress).
 
 ## Queue Events
 
@@ -95,9 +94,9 @@ The 1.x `on_*` handlers were replaced in 2.0. See the [2.0 upgrade guide](https:
 
 ## Next Steps
 
-* [Chat]({% link _core_features/chat.md %}) - the core conversation interface these events fire on.
+* [Chat]({% link _getting_started/chat.md %}) - the core conversation interface these events fire on.
 * [Streaming]({% link _core_features/streaming.md %}) - stream chunks as the assistant generates them.
 * [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) - observe provider attempts independently from messages.
-* [Tools]({% link _core_features/tools.md %}) - define the tools whose calls and results these callbacks observe.
+* [Tools]({% link _getting_started/tools.md %}) - define the tools whose calls and results these callbacks observe.
 * [Error Handling]({% link _advanced/error-handling.md %}#model-fallbacks) - configure model fallbacks and fallback error handling.
-* [Rails Integration]({% link _advanced/rails.md %}) - see how persistence callbacks run alongside your own.
+* [Rails Integration]({% link _getting_started/rails.md %}) - see how persistence callbacks run alongside your own.

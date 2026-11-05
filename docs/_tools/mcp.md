@@ -1,7 +1,6 @@
 ---
 layout: default
 title: MCP Client
-parent: "Tools"
 nav_order: 3
 description: Connect your chats and agents to Model Context Protocol servers and use their tools, resources, and prompts
 ---
@@ -279,7 +278,7 @@ The server's tools stay callable as methods even when `only` hides them from the
 
 ### Requiring Approval
 
-Pause tools for a human decision with `requires_approval`. It uses the same flow as [tools that require approval]({% link _core_features/tool-execution.md %}#requiring-approval), including persisted decisions in Rails:
+Pause tools for a human decision with `requires_approval`. It uses the same flow as [tools that require approval]({% link _tools/tool-execution.md %}#requiring-approval), including persisted decisions in Rails:
 
 ```ruby
 requires_approval :create_issue, :merge_pull_request
@@ -298,7 +297,7 @@ defer :search_code, :list_workflows
 defer
 ```
 
-Without names, every tool is deferred. See [Tool Search]({% link _core_features/tool-search.md %}).
+Without names, every tool is deferred. See [Tool Search]({% link _tools/tool-search.md %}).
 
 Every name you declare must exist on the server. When a server stops offering one, RubyLLM raises `RubyLLM::ConfigurationError` as the tools load, instead of silently changing what the model sees.
 
@@ -321,7 +320,7 @@ chat.with_mcp(nil)
 
 Disconnecting closes the servers the chat built from a class, which stops a stdio server's process and ends an HTTP session. So does connecting another server under the same name. An instance you pass in stays open for the other chats that use it, until you call `close` on it.
 
-Two tools with the same name raise an `ArgumentError` when the chat collects its tools. Pass `defer: true` to `with_mcp` to defer every tool of the servers you connect; see [Tool Search]({% link _core_features/tool-search.md %}).
+Two tools with the same name raise an `ArgumentError` when the chat collects its tools. Pass `defer: true` to `with_mcp` to defer every tool of the servers you connect; see [Tool Search]({% link _tools/tool-search.md %}).
 
 ### Agents
 
@@ -414,7 +413,7 @@ end
 
 A form request describes what it asks for in `fields`, each with a `name`, `type`, `title`, `description`, `choices`, and `default`, and `required?`. Show each `default` in your form: the fields an answer leaves out take theirs. A URL request has a `url` for the user to visit; `answer` with no values means the user agreed to go. `decline` refuses either kind. RubyLLM then sends the answers and the server finishes the call.
 
-In a chat, a request no callback answers pauses the tool call, the way [tools that require approval]({% link _core_features/tool-execution.md %}#requiring-approval) pause. Show the requests to the user, record their answers, and resume:
+In a chat, a request no callback answers pauses the tool call, the way [tools that require approval]({% link _tools/tool-execution.md %}#requiring-approval) pause. Show the requests to the user, record their answers, and resume:
 
 ```ruby
 chat.ask "Deploy the release branch"
@@ -673,7 +672,7 @@ class Reports < RubyLLM::MCP
 end
 ```
 
-A chat never waits for a task. The tool call pauses, the way [tools that require approval]({% link _core_features/tool-execution.md %}#requiring-approval) and [input requests](#input-requests) do, and `complete` returns:
+A chat never waits for a task. The tool call pauses, the way [tools that require approval]({% link _tools/tool-execution.md %}#requiring-approval) and [input requests](#input-requests) do, and `complete` returns:
 
 ```ruby
 chat = RubyLLM.chat.with_mcp(Reports)
@@ -701,7 +700,7 @@ class CheckTasksJob < ApplicationJob
 end
 ```
 
-Your own tools can pause the same way by returning a `RubyLLM::Task`; see [Pausing a Tool Call]({% link _core_features/tools.md %}#pausing-a-tool-call).
+Your own tools can pause the same way by returning a `RubyLLM::Task`; see [Pausing a Tool Call]({% link _getting_started/tools.md %}#pausing-a-tool-call).
 
 `refresh` checks on a task without resuming the chat, which suits a progress indicator. `complete?`, `succeeded?`, `failed?`, and `cancelled?` tell where it stands, `result` is its `RubyLLM::MCP::Result` once it completes, and `expires_at` is when the server may forget it. Every check also reports the task's status message to `after_progress` and `after_tool_progress`.
 
@@ -903,7 +902,7 @@ Some defaults protect applications that connect to servers they do not control:
 * Redirects are never followed.
 * Request logs never include headers, so tokens stay out of your logs.
 
-RubyLLM does not check where a hostname resolves. When your users add servers, connect through a [context]({% link _getting_started/configuration-connection.md %}#contexts-isolated-configurations) whose `faraday_adapter` decides which addresses the app may reach. The context's connection settings carry every request to the server and every OAuth request its authorization makes, while chats keep the global ones:
+RubyLLM does not check where a hostname resolves. When your users add servers, connect through a [context]({% link _reference/configuration-connection.md %}#contexts-isolated-configurations) whose `faraday_adapter` decides which addresses the app may reach. The context's connection settings carry every request to the server and every OAuth request its authorization makes, while chats keep the global ones:
 
 ```ruby
 mcp_context = RubyLLM.context { |config| config.faraday_adapter = PublicAddressesOnly }
@@ -925,6 +924,6 @@ A server that answers with a protocol error raises `RubyLLM::MCP::Error`, whose 
 
 ## Next Steps
 
-* [Controlling Tool Execution]({% link _core_features/tool-execution.md %}) for approvals and concurrency
-* [Provider Tools]({% link _core_features/provider-tools.md %}) for MCP servers the provider connects to
-* [Agents]({% link _advanced/agents.md %}) for reusable chat configurations
+* [Controlling Tool Execution]({% link _tools/tool-execution.md %}) for approvals and concurrency
+* [Provider Tools]({% link _tools/provider-tools.md %}) for MCP servers the provider connects to
+* [Agents]({% link _getting_started/agents.md %}) for reusable chat configurations

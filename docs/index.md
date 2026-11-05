@@ -116,7 +116,7 @@ ruby_llm provider-gem Acme \
       <div class="home-step-text">
         <h3 class="home-step-title">Run code on your own servers</h3>
         <p class="home-step-desc">The model writes Ruby, Python, JavaScript, or shell to calculate and make files. Each run happens in a sandbox on your servers that cannot read your application or its secrets. The files it makes come back as attachments.</p>
-        <a class="home-step-link" href="{% link _core_features/code-execution.md %}">Code execution guide</a>
+        <a class="home-step-link" href="{% link _advanced/code-execution.md %}">Code execution guide</a>
       </div>
       <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
 
@@ -136,7 +136,7 @@ chat.messages.find(&:tool_result?).attachments
       <div class="home-step-text">
         <h3 class="home-step-title">Ask before reaching further</h3>
         <p class="home-step-desc">Describe wider sandboxes as Ruby classes and list the ones the model may ask for. A call that needs one waits for a person to approve it, runs once, and never turns into standing access.</p>
-        <a class="home-step-link" href="{% link _core_features/sandboxes.md %}#asking-for-a-wider-sandbox">Sandboxes guide</a>
+        <a class="home-step-link" href="{% link _advanced/sandboxes.md %}#asking-for-a-wider-sandbox">Sandboxes guide</a>
       </div>
       <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
 
@@ -160,7 +160,7 @@ chat.approve(chat.pending_approvals.first)
       <div class="home-step-text">
         <h3 class="home-step-title">Teach them your workflows</h3>
         <p class="home-step-desc">Write skills in the open Agent Skills format: instructions, scripts, and reference files in a folder. The model loads a skill only when a task needs it and runs its scripts in the sandbox.</p>
-        <a class="home-step-link" href="{% link _core_features/skills.md %}">Skills guide</a>
+        <a class="home-step-link" href="{% link _tools/skills.md %}">Skills guide</a>
       </div>
       <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
 
@@ -187,7 +187,7 @@ chat.ask "Bill order 1042 to ACME", with: "order.json"
       <div class="home-step-text">
         <h3 class="home-step-title">Connect them to your systems</h3>
         <p class="home-step-desc">Describe each MCP server as a Ruby class in <code>app/mcp</code>. Inputs pass in the current user, <code>only</code> picks the tools the model sees, and OAuth credentials are stored encrypted in your database.</p>
-        <a class="home-step-link" href="{% link _core_features/mcp.md %}">MCP client guide</a>
+        <a class="home-step-link" href="{% link _tools/mcp.md %}">MCP client guide</a>
       </div>
       <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
 
@@ -211,7 +211,7 @@ chat.with_mcp(Linear.new(user: current_user))
       <div class="home-step-text">
         <h3 class="home-step-title">Resume across jobs and deploys</h3>
         <p class="home-step-desc">A saved conversation is the agent's whole state. Any job can pick it up and continue, after a crash, a deploy, or a wait for approval.</p>
-        <a class="home-step-link" href="{% link _advanced/durable-agents.md %}">Durable agents guide</a>
+        <a class="home-step-link" href="{% link _advanced/durable-agents-overview.md %}">Durable agents guide</a>
       </div>
       <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
 
@@ -276,7 +276,7 @@ class IssueRefund < RubyLLM::Tool
   def execute(order_id:) = Refunds.issue!(order_id)
 end
 ```
-{: .home-code-card data-title="Require human approval" data-href="{% link _core_features/tool-execution.md %}#requiring-approval" data-doc-title="Requiring Approval" }
+{: .home-code-card data-title="Require human approval" data-href="{% link _tools/tool-execution.md %}#requiring-approval" data-doc-title="Requiring Approval" }
 
 ```ruby
 RubyLLM.chat(model: "{{ site.models.openai_current }}")
@@ -344,7 +344,7 @@ response = RubyLLM.chat
 
 response.citations
 ```
-{: .home-code-card data-title="Search the web with citations" data-href="{% link _core_features/provider-tools.md %}" data-doc-title="Provider Tools" }
+{: .home-code-card data-title="Search the web with citations" data-href="{% link _tools/provider-tools.md %}" data-doc-title="Provider Tools" }
 
 ```ruby
 class Urgency < RubyLLM::Judge
@@ -355,7 +355,7 @@ end
 judgment = Urgency.judge("My account is locked!")
 judgment.urgent.probability
 ```
-{: #judgment-models .home-code-card data-title="Ask for probabilities, choices, and scores" data-href="{% link _core_features/judgments.md %}" data-doc-title="Judgments" }
+{: #judgment-models .home-code-card data-title="Ask for probabilities, choices, and scores" data-href="{% link _advanced/judgments.md %}" data-doc-title="Judgments" }
 
 ```ruby
 chats = documents.map do |doc|
@@ -377,30 +377,30 @@ batch = RubyLLM.batch(chats)
 document = RubyLLM.ocr "scanned-contract.pdf"
 puts document.markdown
 ```
-{: .home-code-card data-title="Turn documents into Markdown" data-href="{% link _core_features/ocr.md %}" data-doc-title="Document OCR" }
+{: .home-code-card data-title="Turn documents into Markdown" data-href="{% link _getting_started/ocr.md %}" data-doc-title="Document OCR" }
 
 ```ruby
 transcript = RubyLLM.transcribe "meeting.wav"
 RubyLLM.speak(transcript.text).save "transcript.mp3"
 ```
-{: .home-code-card data-title="Transcribe audio and generate speech" data-href="{% link _core_features/text-to-speech.md %}" data-doc-title="Text to speech" }
+{: .home-code-card data-title="Transcribe audio and generate speech" data-href="{% link _getting_started/text-to-speech.md %}" data-doc-title="Text to speech" }
 
 ```ruby
 RubyLLM.paint "a watercolor sunset over mountains"
 RubyLLM.animate "a paper boat in a rainy gutter"
 ```
-{: .home-code-card data-title="Generate images and video" data-href="{% link _core_features/video-generation.md %}" data-doc-title="Video generation" }
+{: .home-code-card data-title="Generate images and video" data-href="{% link _advanced/video-generation.md %}" data-doc-title="Video generation" }
 
 ```ruby
 RubyLLM.moderate(comment.body).flagged?
 ```
-{: .home-code-card data-title="Moderate user content" data-href="{% link _core_features/moderation.md %}" data-doc-title="Moderation" }
+{: .home-code-card data-title="Moderate user content" data-href="{% link _getting_started/moderation.md %}" data-doc-title="Moderation" }
 
   </div>
 
   <div class="home-code-cta">
     <p>Give agents <a href="{% link _advanced/memory.md %}">memory</a>.
-      Use <a href="{% link _getting_started/configuration-connection.md %}#contexts-isolated-configurations">separate configurations for each tenant</a>
+      Use <a href="{% link _reference/configuration-connection.md %}#contexts-isolated-configurations">separate configurations for each tenant</a>
       and <a href="{% link _advanced/error-handling.md %}#automatic-retries">retries</a> when requests fail,
       or explore community gems for <a href="{% link _reference/ecosystem.md %}#rubyllmmonitoring">monitoring dashboards</a>.
     </p>
@@ -471,14 +471,14 @@ app/
 
   <div class="home-code-cta">
     <p><a href="{% link _advanced/rails-generators.md %}#generators">Generators</a> create each piece where Rails expects it.
-      Store files with <a href="{% link _advanced/rails-generators.md %}#setting-up-activestorage">Active Storage</a>
-      and write your prompts in <a href="{% link _advanced/agents.md %}#prompt-management-and-conventions">ERB templates</a>.
+      Store files with <a href="{% link _advanced/rails-generators.md %}#setting-up-active-storage">Active Storage</a>
+      and write your prompts in <a href="{% link _getting_started/agents.md %}#prompt-management-and-conventions">ERB templates</a>.
       Use <a href="{% link _advanced/rails-streaming.md %}#full-streaming-implementation">Turbo Streams</a> to show replies
       and <a href="{% link _advanced/durable-agents.md %}">Active Job</a> to run agents in the background,
-      one process per chat, with <a href="{% link _core_features/tool-execution.md %}#approval-in-rails">approvals</a> that survive restarts.
+      one process per chat, with <a href="{% link _tools/tool-execution.md %}#approval-in-rails">approvals</a> that survive restarts.
     </p>
     <div class="home-code-cta-actions">
-      <a class="home-button home-button--solid home-button--rails" href="{% link _advanced/rails.md %}">Read the Rails guide</a>
+      <a class="home-button home-button--solid home-button--rails" href="{% link _getting_started/rails.md %}">Read the Rails guide</a>
     </div>
   </div>
 </section>
@@ -496,7 +496,7 @@ app/
       <div class="home-step-text">
         <h3 class="home-step-title">Just ask</h3>
         <p class="home-step-desc">Ask a question, then ask again. The chat keeps the conversation history, so every follow-up has context.</p>
-        <a class="home-step-link" href="{% link _core_features/chat.md %}">Chat guide</a>
+        <a class="home-step-link" href="{% link _getting_started/chat.md %}">Chat guide</a>
       </div>
       <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
 
@@ -555,7 +555,7 @@ chat.ask "Recap this call", with: ["call.wav", "notes.pdf"]
       <div class="home-step-text">
         <h3 class="home-step-title">Give the model tools</h3>
         <p class="home-step-desc">Describe a tool in a Ruby class and implement <code>execute</code>. RubyLLM runs the tool calls and sends the results back to the model.</p>
-        <a class="home-step-link" href="{% link _core_features/tools.md %}">Tools guide</a>
+        <a class="home-step-link" href="{% link _getting_started/tools.md %}">Tools guide</a>
       </div>
       <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
 
@@ -607,7 +607,7 @@ response.parsed["features"]
       <div class="home-step-text">
         <h3 class="home-step-title">Define an agent</h3>
         <p class="home-step-desc">Give an agent its model, instructions, and tools in a Ruby class. In Rails, it saves its conversation, and <code>find</code> picks it up again in any request or job.</p>
-        <a class="home-step-link" href="{% link _advanced/agents.md %}">Agents guide</a>
+        <a class="home-step-link" href="{% link _getting_started/agents.md %}">Agents guide</a>
       </div>
       <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
 
@@ -652,7 +652,7 @@ gem exec skill add "$(bundle show ruby_llm)" --skill rubyllm --agents coding
 
     <p class="home-small-note">
       Run this from your application after installing RubyLLM. <code>--agents coding</code> installs it for the coding assistants your project uses, and keeps it out of your app's <code>app/skills</code>.
-      <a href="{% link _getting_started/ai-coding-assistants.md %}">Skill setup and updates</a>
+      <a href="{% link _reference/ai-coding-assistants.md %}">Skill setup and updates</a>
     </p>
   </div>
 </section>

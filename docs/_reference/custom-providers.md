@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Custom Providers and Protocols
-nav_order: 3
+nav_order: 4
 description: Teach RubyLLM to talk to a new AI service by writing a provider, a protocol, or both, and ship it as a gem.
 ---
 
@@ -315,5 +315,5 @@ RubyLLM.chat(model: model.id).ask('Hi')
 You can now teach RubyLLM to speak to any AI service, whether it reuses an existing wire format or needs a brand-new one. From here:
 
 * [How RubyLLM Works]({% link _getting_started/overview.md %}) - see where providers and protocols sit among the framework's components.
-* [Provider Setup and Custom Endpoints]({% link _getting_started/configuration-providers.md %}) - configure built-in providers and OpenAI-compatible endpoints.
+* [Provider Setup and Custom Endpoints]({% link _reference/configuration-providers.md %}) - configure built-in providers and OpenAI-compatible endpoints.
 * [RubyLLM Ecosystem]({% link _reference/ecosystem.md %}) - list your provider gem alongside other community extensions.

@@ -48,10 +48,10 @@ Read the relevant page instead of loading the entire documentation site:
 | Extract document text or moderate content | `ocr/`, `moderation/` |
 | Embed text or rank search results | `embeddings/`, `rerank/`, `rag/` |
 | Classify, score, or decide with typed answers (2.1) | `judgments/` |
-| Measure answer quality against a dataset (2.1) | `evaluations/`, `evaluation-datasets/`, `evaluation-evaluators/`, `evaluation-running/`, `evaluation-examples/` |
+| Measure answer quality against a dataset (2.1) | `evaluations/` |
 | Count tokens, upload provider files, or run hosted research | `tokenization/`, `files/`, `hosted-research/` |
 | Persist chats, attach files, or stream with Hotwire | `rails/`, `rails-persistence/`, `rails-streaming/`, `rails-generators/`, `rails-advanced-config/` |
-| Resume agents in background jobs | `durable-agents/` |
+| Resume agents in background jobs, pause for people, or run code | `durable-agents-overview/` (2.2), `durable-agents/` |
 | Track spend or handle failures | `cost-and-usage-tracking/`, `error-handling/` |
 | Observe calls, group workflows, or trace with OpenTelemetry | `instrumentation/`, `opentelemetry/` (2.1) |
 | Submit batches or drive the conversation loop | `batches/`, `agentic-workflows/` |
