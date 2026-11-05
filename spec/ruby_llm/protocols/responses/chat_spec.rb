@@ -400,6 +400,16 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       expect(message.content[citation.start_index...citation.end_index]).to eq(citation.text)
     end
 
+    it 'separates only the message items that carry text' do
+      response = response_with([
+                                 { 'type' => 'message', 'content' => [] },
+                                 { 'type' => 'message',
+                                   'content' => [{ 'type' => 'output_text', 'text' => '## Answer' }] }
+                               ])
+
+      expect(protocol.send(:parse_completion_response, response).content).to eq('## Answer')
+    end
+
     it 'surfaces refusal parts as content' do
       response = response_with([
                                  { 'type' => 'message',

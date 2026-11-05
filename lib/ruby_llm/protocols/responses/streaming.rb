@@ -13,7 +13,7 @@ module RubyLLM
         def stream_response(...)
           @citation_content_lengths = Hash.new(0)
           @reasoning_output_index = nil
-          @message_item_started = false
+          @text_output_index = nil
           super
         end
 
@@ -27,6 +27,8 @@ module RubyLLM
             build_reasoning_summary_part_chunk(data)
           when 'response.output_text.annotation.added'
             build_annotation_chunk(data)
+          when 'response.content_part.added'
+            build_content_part_added_chunk(data)
           when 'response.output_item.added'
             build_item_added_chunk(data)
           when 'response.function_call_arguments.delta'
@@ -71,7 +73,6 @@ module RubyLLM
 
         def build_item_added_chunk(data)
           item = data['item']
-          return build_message_added_chunk(data) if item['type'] == 'message'
           return chunk unless item['type'] == 'function_call'
 
           chunk tool_calls: {
@@ -80,13 +81,15 @@ module RubyLLM
           }
         end
 
-        def build_message_added_chunk(data)
-          earlier_message = @message_item_started
-          @message_item_started = true
-          return chunk unless earlier_message
+        def build_content_part_added_chunk(data)
+          return chunk unless Chat::MESSAGE_TEXT_KEYS.key?(data.dig('part', 'type'))
 
-          @citation_content_lengths ||= Hash.new(0)
-          @citation_content_lengths[[data.fetch('output_index', 0), -1]] += Chat::MESSAGE_SEPARATOR.length
+          output_index = data['output_index']
+          earlier_item = @text_output_index && @text_output_index != output_index
+          @text_output_index = output_index
+          return chunk unless earlier_item
+
+          @citation_content_lengths[[output_index, -1]] += Chat::MESSAGE_SEPARATOR.length
           chunk content: Chat::MESSAGE_SEPARATOR
         end
 
