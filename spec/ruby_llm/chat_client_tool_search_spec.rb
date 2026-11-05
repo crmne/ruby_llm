@@ -83,6 +83,7 @@ RSpec.describe RubyLLM::Chat do
       result = chat.tools[:tool_search].call(query: 'select:news_search, stock_price, missing')
 
       expect(result[:loaded]).to eq(%w[news_search stock_price])
+      expect(result[:not_loaded]).to eq(%w[missing])
     end
 
     it 'says which tools there are when nothing matches' do
@@ -167,9 +168,11 @@ RSpec.describe RubyLLM::Chat do
     end
     let(:search) { described_class.new(-> { tools }) }
 
-    it 'loads no more than the limit by name either' do
-      expect(search.call(query: 'select:news_search,clip_save,stock_price', limit: 2)[:loaded])
-        .to eq(%w[news_search clip_save])
+    it 'loads every tool named with select:, whatever the limit' do
+      result = search.call(query: 'select:news_search,clip_save,stock_price', limit: 2)
+
+      expect(result[:loaded]).to eq(%w[news_search clip_save stock_price])
+      expect(result).not_to have_key(:not_loaded)
     end
 
     it 'ranks a word of the name over part of it, and that over the description' do
