@@ -452,23 +452,23 @@ module RubyLLM
       result
     end
 
-    # Asks the user something while #execute runs, and returns their
+    # Asks a person something while #execute runs, and returns their
     # InputRequest::Answer. In a chat, the call pauses until Chat#answer or
     # Chat#decline settles the question (see Chat#pending_inputs), then runs
-    # again from the start, and this +ask+ returns the answer. Code before
+    # again from the start, and this +request_input+ returns the answer. Code before
     # it runs again too, so do work after asking. Pass the fields to ask for
     # as JSON Schema properties, with <tt>required: true</tt> on the ones
     # the user must fill, or +url:+ to ask them to visit a page.
     #
     #   def execute(question:)
-    #     answer = ask(question, answer: { type: "string", title: "Answer" })
+    #     answer = request_input(question, answer: { type: "string", title: "Answer" })
     #     answer.accepted? ? { answer: answer[:answer] } : { error: "Nobody answered." }
     #   end
     #
     # Each call may ask several questions, one after another. Outside a chat,
     # an unanswered question raises InputRequiredError. +url:+ is reserved
     # for the page, so name a form field for a URL something else.
-    def ask(message, url: nil, **fields)
+    def request_input(message, url: nil, **fields)
       raise ArgumentError, 'url: takes the page to visit; give a form field another name' if url.is_a?(Hash)
 
       state = (Fiber[ASKING] ||= { 'input' => nil, 'asked' => 0 })
@@ -587,7 +587,7 @@ module RubyLLM
       Fiber[ASKING] = previous
     end
 
-    # Runs a call again that paused on its questions (#ask), now answered or
+    # Runs a call again that paused on its questions (#request_input), now answered or
     # declined, with +input+, the state Chat saved for it.
     def answered(input, arguments, tool_call:) # :nodoc:
       Fiber[RESUMING] = input

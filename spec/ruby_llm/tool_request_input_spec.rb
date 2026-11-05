@@ -15,7 +15,7 @@ RSpec.describe RubyLLM::Tool do
       end
 
       def execute(question:)
-        answer = ask(question, answer: { type: 'string', title: 'Answer', required: true })
+        answer = request_input(question, answer: { type: 'string', title: 'Answer', required: true })
         answer.accepted? ? "Team says: #{answer[:answer]}" : 'Nobody answered'
       end
     end
@@ -28,8 +28,8 @@ RSpec.describe RubyLLM::Tool do
       description 'Ask twice'
 
       def execute
-        first = ask('Name?', name: { type: 'string' })
-        second = ask('Color?', color: { type: 'string', enum: %w[red blue] })
+        first = request_input('Name?', name: { type: 'string' })
+        second = request_input('Color?', color: { type: 'string', enum: %w[red blue] })
         "#{first[:name]} likes #{second[:color]}"
       end
     end
@@ -100,7 +100,7 @@ RSpec.describe RubyLLM::Tool do
       description 'Deploy after asking'
 
       def execute
-        target = ask('Where?', target: { type: 'string' })[:target]
+        target = request_input('Where?', target: { type: 'string' })[:target]
         RubyLLM::Task.new(status: :input_required, data: { 'target' => target })
       end
 
@@ -126,7 +126,7 @@ RSpec.describe RubyLLM::Tool do
       description 'Asks its own question'
 
       def execute
-        ask('Inner?', answer: { type: 'string' })
+        request_input('Inner?', answer: { type: 'string' })
         'Inner answered'
       end
     end
@@ -135,13 +135,13 @@ RSpec.describe RubyLLM::Tool do
 
       description 'Asks, calls another tool, and asks again'
       define_method(:execute) do
-        name = ask('Name?', name: { type: 'string' })[:name]
+        name = request_input('Name?', name: { type: 'string' })[:name]
         inner_result = begin
           inner.new.call
         rescue RubyLLM::InputRequiredError => e
           "Inner asked #{e.requests.map(&:message).join}"
         end
-        color = ask('Color?', color: { type: 'string' })[:color]
+        color = request_input('Color?', color: { type: 'string' })[:color]
         "#{name} likes #{color}. #{inner_result}"
       end
     end
@@ -163,10 +163,14 @@ RSpec.describe RubyLLM::Tool do
 
       description 'Asks for a repository'
 
-      def execute = ask('Which repository?', url: { type: 'string' })
+      def execute = request_input('Which repository?', url: { type: 'string' })
     end
 
     expect { tool.new.call }.to raise_error(ArgumentError, /give a form field another name/)
+  end
+
+  it 'leaves ask to chats, which ask the model' do
+    expect(ask_handler.new).not_to respond_to(:ask)
   end
 
   it 'raises outside a chat' do

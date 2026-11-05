@@ -225,7 +225,7 @@ MCP tools pause the same way when a server runs a call as a [task]({% link _tool
 
 ## Asking the User
 
-A tool can ask the user something while it runs, the way an MCP server asks for input. `ask` takes the question and the fields to fill, as JSON Schema properties (`required: true` on the ones the user must fill), or `url:` for a page to visit:
+A tool can ask the user something while it runs, the way an MCP server asks for input. `request_input` takes the question and the fields to fill, as JSON Schema properties (`required: true` on the ones the user must fill), or `url:` for a page to visit:
 
 ```ruby
 class AskTeam < RubyLLM::Tool
@@ -236,13 +236,13 @@ class AskTeam < RubyLLM::Tool
   end
 
   def execute(question:)
-    answer = ask(question, answer: { type: "string", title: "Answer", required: true })
+    answer = request_input(question, answer: { type: "string", title: "Answer", required: true })
     answer.accepted? ? { answer: answer[:answer] } : { error: "Nobody answered" }
   end
 end
 ```
 
-In a chat, the call pauses on the question as on a server's: the chat is `awaiting_input?`, `pending_inputs` lists it, and `answer` or `decline` settles it before `complete` resumes. Resuming runs `execute` again from the start, and this time `ask` returns the answer, so code before `ask` runs twice: ask first, then do the work. A call can ask several questions, one after another. Outside a chat, an unanswered `ask` raises `RubyLLM::InputRequiredError`, which `RubyLLM::MCP::InputRequiredError` now inherits from.
+In a chat, the call pauses on the question as on a server's: the chat is `awaiting_input?`, `pending_inputs` lists it, and `answer` or `decline` settles it before `complete` resumes. Resuming runs `execute` again from the start, and this time `request_input` returns the answer, so code before `request_input` runs twice: ask first, then do the work. A call can ask several questions, one after another. Outside a chat, an unanswered `request_input` raises `RubyLLM::InputRequiredError`, which `RubyLLM::MCP::InputRequiredError` now inherits from.
 
 ## Long Results
 
