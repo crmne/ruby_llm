@@ -30,12 +30,23 @@ RSpec.describe RubyLLM::Protocols::Responses::CitationMarkers do
 
   it 'keeps the words after an opening character that never closes' do
     expect(described_class.strip("Odd \u{E200}text here").first).to eq('Odd text here')
-    expect(described_class.strip("\u{E200}a \u{E200}b\u{E201}c").first).to eq('a c')
+    expect(described_class.strip("\u{E200}a \u{E200}b\u{E201}c").first).to eq('a bc')
   end
 
   it 'keeps a word after an opening character that ends the text without a citation' do
     expect(described_class.strip("Label \u{E200}report").first).to eq('Label report')
     expect(described_class.strip("Done. \u{E200}ci").first).to eq('Done. ')
+  end
+
+  it 'keeps the text of a closed pair that holds no citation' do
+    text, markers = described_class.strip("Label \u{E200}report\u{E201} end")
+
+    expect(text).to eq('Label report end')
+    expect(markers.shift(8)).to eq(7)
+  end
+
+  it 'removes other markers built the same way' do
+    expect(described_class.strip("See \u{E200}filecite\u{E202}turn0file0\u{E201}.").first).to eq('See .')
   end
 
   it 'stops holding text once it is longer than any marker' do

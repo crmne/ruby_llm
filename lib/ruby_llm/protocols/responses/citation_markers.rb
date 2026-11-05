@@ -81,17 +81,26 @@ module RubyLLM
             open_marker
           else
             @held << char
-            return drop(take_held) if char == CLOSE
+            return close_marker(output) if char == CLOSE
 
             release(take_held, output) if @held.length > MAX_LENGTH
           end
         end
 
-        def citation_prefix?(held)
-          word, *turns = held.delete_prefix(OPEN).split(SEPARATOR, -1)
-          return false unless CITE.start_with?(word) || (word == CITE && turns.any?)
+        def close_marker(output)
+          held = take_held
+          marker?(held.delete_suffix(CLOSE)) ? drop(held) : release(held, output)
+        end
 
-          turns.all? { |turn| turn.each_char.all? { |char| char.match?(/[[:alnum:]]/) } }
+        def citation_prefix?(held)
+          CITE.start_with?(held.delete_prefix(OPEN)) || marker?(held)
+        end
+
+        def marker?(held)
+          word, *turns = held.delete_prefix(OPEN).split(SEPARATOR, -1)
+          return true if word == CITE && turns.empty?
+
+          turns.any? && [word, *turns].all? { |part| part.each_char.all? { |char| char.match?(/[[:alnum:]_]/) } }
         end
 
         def take_held
