@@ -410,6 +410,38 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       expect(protocol.send(:parse_completion_response, response).content).to eq('## Answer')
     end
 
+    it 'drops citation markers the model wrote without annotations' do
+      marker = "\u{E200}cite\u{E202}turn0view0\u{E202}turn1view0\u{E201}"
+      response = response_with([
+                                 { 'type' => 'message', 'content' => [{
+                                   'type' => 'output_text', 'text' => "No other changes. #{marker}", 'annotations' => []
+                                 }] }
+                               ])
+
+      message = protocol.send(:parse_completion_response, response)
+
+      expect(message.content).to eq('No other changes. ')
+      expect(message.citations).to be_empty
+    end
+
+    it 'places citation spans against the text without citation markers' do
+      marker = "\u{E200}cite\u{E202}turn0search0\u{E201}"
+      response = response_with([
+                                 { 'type' => 'message', 'content' => [{
+                                   'type' => 'output_text', 'text' => "Matz #{marker}made Ruby", 'annotations' => [
+                                     { 'type' => 'url_citation', 'url' => 'https://ruby-lang.org',
+                                       'start_index' => 5 + marker.length, 'end_index' => 14 + marker.length }
+                                   ]
+                                 }] }
+                               ])
+
+      message = protocol.send(:parse_completion_response, response)
+      citation = message.citations.first
+
+      expect(message.content).to eq('Matz made Ruby')
+      expect(citation).to have_attributes(start_index: 5, end_index: 14, text: 'made Ruby')
+    end
+
     it 'surfaces refusal parts as content' do
       response = response_with([
                                  { 'type' => 'message',
