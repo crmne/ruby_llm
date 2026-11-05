@@ -1224,6 +1224,7 @@ module RubyLLM
     def with_context(context)
       @context = context
       @config = context&.config || RubyLLM.config
+      @file_references&.forget(@attachment_replacements)
       with_model(@model.id, provider: @provider.slug, protocol: @protocol, assume_model_exists: true)
       apply_tool_concurrency(nil) unless @concurrency_chosen
       self

@@ -344,6 +344,18 @@ RSpec.describe RubyLLM::Agent do
       expect(fixed.owner).to eq(:house)
     end
 
+    it 'sets the owner before the blocks that read it' do
+      agent = Class.new(described_class) do
+        model model_for(:openai, :temperature), provider: :openai
+        inputs :account
+
+        owner { account }
+        instructions { "Help #{chat.owner}." }
+      end
+
+      expect(agent.chat(account: 'acme').messages.first.content).to eq('Help acme.')
+    end
+
     it 'clears the owner when its block returns nil, and leaves it alone when no owner is declared' do
       agent = Class.new(described_class) do
         inputs :account

@@ -283,6 +283,17 @@ RSpec.describe RubyLLM::Chat do
       expect(rendered).not_to include('so only the start is shown')
     end
 
+    it 'converts again once the chat moves to a context with a converter' do
+      chat = described_class.new(model: model_for(:anthropic), provider: :anthropic).with_file_store
+      chat.add_message(role: :user, content: 'What is the codename?', attachments: [docx])
+      expect(chat.render.to_json).to include('is in this chat')
+
+      type = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+      chat.with_context(RubyLLM.context { |config| config.file_converters = { type => ->(_file) { 'Bluebird' } } })
+
+      expect(chat.render.to_json).to include('sample.docx, read as text:')
+    end
+
     it 'keeps what a convert_unsupported_attachments handler made when the store changes' do
       calls = 0
       chat = converting_chat('The codename is Bluebird.').convert_unsupported_attachments do
