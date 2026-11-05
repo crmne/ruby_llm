@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://rubyllm.services.ai.azure.com/openai/v1/decisions
+    uri: https://rubyllm.services.ai.azure.com/openai/v1/decisions?api-version=v1
     body:
       encoding: UTF-8
       string: '{"model":"gpt-6-luna","input":"I was charged twice. Please refund the
@@ -33,7 +33,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 05 Nov 2026 16:03:31 GMT
+      - Thu, 05 Nov 2026 16:32:10 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -43,13 +43,13 @@ http_interactions:
       Vary:
       - access-control-request-headers
       Server-Timing-Total:
-      - '354.183'
+      - '298.879'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Azureml-Served-By-Cluster:
-      - hyena-swedencentral-02
+      - hyena-swedencentral-01
       X-Http2-Stream-Id:
-      - '663'
+      - '573'
       Apim-Request-Id:
       - "<X_REQUEST_ID>"
       Strict-Transport-Security:
@@ -60,6 +60,6 @@ http_interactions:
       - Sweden Central
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-6-luna","answers":[{"type":"predicate","name":"urgent","probability":1.0},{"type":"choice","name":"department","choice":"billing","probabilities":[{"value":"billing","probability":1.0},{"value":"other","probability":0.0}],"confidence":1.0},{"type":"score","name":"frustration","score":0.02,"probabilities":[{"value":0,"label":"0","probability":0.98},{"value":1,"label":"1","probability":0.02}],"confidence":0.96}],"usage":{"input_tokens":389,"input_tokens_details":{"cached_tokens":0,"cache_write_tokens":0},"output_tokens":0,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":389}}'
-  recorded_at: Thu, 05 Nov 2026 16:03:31 GMT
+      string: '{"model":"gpt-6-luna","answers":[{"type":"predicate","name":"urgent","probability":1.0},{"type":"choice","name":"department","choice":"billing","probabilities":[{"value":"billing","probability":1.0},{"value":"other","probability":0.0}],"confidence":1.0},{"type":"score","name":"frustration","score":0.04,"probabilities":[{"value":0,"label":"0","probability":0.96},{"value":1,"label":"1","probability":0.04}],"confidence":0.92}],"usage":{"input_tokens":389,"input_tokens_details":{"cached_tokens":0,"cache_write_tokens":0},"output_tokens":0,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":389}}'
+  recorded_at: Thu, 05 Nov 2026 16:32:10 GMT
 recorded_with: VCR 6.4.1

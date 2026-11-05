@@ -6,7 +6,7 @@ RSpec.describe RubyLLM::Providers::Azure::Decisions do
   include_context 'with configured RubyLLM'
 
   let(:model_id) { model_for(:azure, :judgment) }
-  let(:decisions_url) { 'https://rubyllm.services.ai.azure.com/openai/v1/decisions' }
+  let(:decisions_url) { 'https://rubyllm.services.ai.azure.com/openai/v1/decisions?api-version=v1' }
   let(:questions) { { urgent: { type: :probability, instructions: 'Does this need attention today?' } } }
 
   def provider_for(api_base)
@@ -32,8 +32,19 @@ RSpec.describe RubyLLM::Providers::Azure::Decisions do
         https://res.openai.azure.com/openai/deployments/luna
       ].map { |base| described_class.new(provider_for(base)).judgment_url }
 
-      expect(urls).to all(eq('https://res.openai.azure.com/openai/v1/decisions'))
+      expect(urls).to all(eq('https://res.openai.azure.com/openai/v1/decisions?api-version=v1'))
     end
+  end
+
+  it 'names the v1 API version over a dated one the configured base carries' do
+    context = RubyLLM.context do |config|
+      config.azure_api_base = 'https://res.openai.azure.com/openai/deployments/luna/chat/completions?api-version=2024-05-01-preview'
+    end
+    stub = stub_request(:post, 'https://res.openai.azure.com/openai/v1/decisions?api-version=v1').to_return(decision(0.9))
+
+    context.judge('Please help today.', model: model_id, provider: :azure, questions:)
+
+    expect(stub).to have_been_requested.once
   end
 
   it 'routes judgments to Decisions even when chat uses a configured protocol' do
