@@ -24,6 +24,7 @@ After reading this guide, you will know:
 * How to keep a tool that shares state from running alongside others.
 * How to run each tool inside a block, such as a tenant.
 * How to keep tool results within the model's context window.
+* How a tool ends the turn without another model call.
 * How to chat with Kimi models on Moonshot AI.
 * How to chat with MiniMax's M3 models.
 * How to chat with GLM models on Z.ai.
@@ -255,6 +256,19 @@ chat.with_context_budget(per_result: 0.25, per_request: 0.7)
 ```
 
 `Message#with(content:)` returns a changed copy of a message, for shaping the transcript yourself. See [Keeping Tool Results in Budget]({% link _core_features/chat-request-control.md %}#keeping-tool-results-in-budget).
+
+## Ending the Turn from a Tool
+
+A tool that says the last word can end the turn without another model call:
+
+```ruby
+def execute(category:)
+  ticket.update!(category:)
+  halt "Filed as #{category}"
+end
+```
+
+The round finishes, `ask` returns the halted result, and the chat is `complete?`. See [Ending the Turn]({% link _tools/tool-execution.md %}#ending-the-turn).
 
 ## Moonshot AI
 

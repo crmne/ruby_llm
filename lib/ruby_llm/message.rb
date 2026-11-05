@@ -194,6 +194,12 @@ module RubyLLM
       end
     end
 
+    # Returns whether a tool ended the turn with this result, with
+    # Tool#halt. Its finish reason is +:halted+.
+    def halted?
+      finish_reason == :halted
+    end
+
     def with_attachments(attachments) # :nodoc:
       wrapped = Attachment.wrap(attachments, config: @config)
       dup.tap { |message| message.instance_variable_set(:@attachments, wrapped) }

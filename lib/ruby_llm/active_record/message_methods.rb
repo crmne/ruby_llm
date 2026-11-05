@@ -194,6 +194,12 @@ module RubyLLM
         payload_error_message(extract_content)
       end
 
+      # Returns whether a tool ended the turn with this result. See
+      # RubyLLM::Message#halted?.
+      def halted?
+        to_llm.halted?
+      end
+
       # Returns why the model stopped, as the Symbol RubyLLM::Message#finish_reason reports.
       def finish_reason
         optional_column(:finish_reason)&.to_sym

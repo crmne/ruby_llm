@@ -279,7 +279,7 @@ See [Usage by Workflow]({% link _core_features/cost-and-usage-tracking.md %}#usa
 * `run_tools` executes the tool calls the model asked for and appends their results (your move). It makes no model call and returns the chat.
 * `step` does whichever move is next: `run_tools` if tools are pending, otherwise `generate`. It returns the message that move produced, and `nil` once there is nothing left or the loop is parked for approval.
 * `complete` steps until done. This is what `ask` calls, and it returns the final response.
-* `complete?` is true when the model answered without calling a tool.
+* `complete?` is true when the model answered without calling a tool, or a tool [ended the turn]({% link _tools/tool-execution.md %}#ending-the-turn) with `halt`.
 
 So the agentic loop is `step` until `complete?`:
 
@@ -296,7 +296,9 @@ With Rails persistence, each method reads the saved transcript and skips tool ca
 
 Stop scheduling work while `waiting?` is true: the chat waits on something outside it. `awaiting_approval?` tells you it waits on an approval, so record one or a denial, then resume the loop. `awaiting_input?` and `awaiting_tasks?` cover [MCP servers]({% link _tools/mcp.md %}#input-requests) asking for input and running tasks. `awaiting_person?` is true when any of them needs a person to act, including a task that reports `input_required?`.
 
-[Batches]({% link _advanced/batches.md %}) are the same idea at scale: a batch is `generate` deferred for many chats at once, with `run_tools` run locally between rounds.
+When a tool calls `halt`, its round still finishes, and then `step` returns `nil`, `complete` returns the halted tool result, and the queue's messages join as they would after an answer.
+
+[Batches]({% link _advanced/batches.md %}) are the same idea at scale: a batch is `generate` deferred for many chats at once, with `run_tools` run locally between rounds. A chat whose tool halted is `complete?`, so leave it out of the next round, as you would a chat the model answered.
 
 ## Queueing Messages
 
