@@ -370,7 +370,7 @@ module RubyLLM
     #
     #   chat.queue "Use the EU file instead"
     #   chat.queue "Then email it to me", steer: false
-    #   chat.queue "Check this one too", with: "q3.pdf", owner: current_user
+    #   chat.queue "Check this one too", with: "q3.pdf", sender: current_user
     #
     # A message that steers, the default, joins the turn that is running:
     # after the next round of tool results, or once the model finishes its
@@ -384,12 +384,10 @@ module RubyLLM
     #
     # Nothing is taken while the chat is #waiting?, and #cancel leaves the
     # queue as it is. Queueing never runs the loop: when nothing is
-    # running, call #complete. +owner+ is stored with the message and
-    # handed back on it without RubyLLM interpreting it.
-    def queue(message = nil, with: nil, steer: true, owner: nil)
-      queued = @message_queue.push(content: message, attachments: with, steer:, owner:)
-      run_callbacks(:after_queue, queued)
-      queued
+    # running, call #complete. +sender+, whoever queued the message, is
+    # stored with it and handed back without RubyLLM interpreting it.
+    def queue(message = nil, with: nil, steer: true, sender: nil)
+      @message_queue.push(content: message, attachments: with, steer:, sender:)
     end
 
     # Returns the messages waiting in the queue, as QueuedMessage objects,
@@ -400,20 +398,19 @@ module RubyLLM
 
     # Takes +queued+, a QueuedMessage or its id, out of the queue before the
     # loop takes it. Returns +true+, or +false+ when it is no longer queued:
-    # the loop took it into the conversation, or it was unqueued already.
+    # the loop took it into the conversation, or it was withdrawn already.
+    # QueuedMessage#withdraw does the same from the message.
     #
-    #   chat.unqueue(queued) # => true
+    #   chat.withdraw(queued) # => true
     #
-    def unqueue(queued)
-      removed = @message_queue.delete(queued)
-      run_callbacks(:after_unqueue, removed) if removed
-      !removed.nil?
+    def withdraw(queued)
+      !@message_queue.delete(queued).nil?
     end
 
     # Adds every queued message to the conversation, without asking the
     # model, and returns the user Message objects they became, oldest
-    # first. Each message joins through #around_join and #after_join,
-    # whether it steers or not.
+    # first. Each message joins through #around_join and runs
+    # #after_message, whether it steers or not.
     #
     #   chat.queue "Use the EU file"
     #   chat.queue "Then email it to me", steer: false
@@ -428,15 +425,14 @@ module RubyLLM
 
     # Adds every queued message to the conversation, or with
     # <tt>steering_only: true</tt> only those that steer, and runs
-    # #after_join for each, or #after_unqueue for one an #around_join
-    # withdrew. Returns the joined messages.
+    # #after_message for each one that joined. Returns the joined messages.
     def take_queued_messages(steering_only: false) # :nodoc:
       joined = []
-      @message_queue.take(steering_only:) do |message, queued|
-        next run_callbacks(:after_unqueue, queued) unless message
+      @message_queue.take(steering_only:) do |message|
+        next unless message
 
         joined << message
-        run_callbacks(:after_join, message, queued)
+        run_callbacks(:after_message, messages.last)
       end
       joined
     end
@@ -1254,33 +1250,14 @@ module RubyLLM
       add_callback(:before_message, &)
     end
 
-    # Registers a callback that receives each assistant response and each
-    # tool result message once it has been appended. Returns +self+.
+    # Registers a callback that receives each assistant response, each
+    # tool result message, and each user message a queued message becomes,
+    # once it has been appended. Returns +self+.
     #
     #   chat.after_message { |message| puts message.content }
     #
     def after_message(&)
       add_callback(:after_message, &)
-    end
-
-    # Registers a callback that receives each QueuedMessage once #queue has
-    # added it. It runs in the thread that called #queue. Returns +self+.
-    #
-    #   chat.after_queue { |queued| puts "Queued: #{queued.content}" }
-    #
-    def after_queue(&)
-      add_callback(:after_queue, &)
-    end
-
-    # Registers a callback that receives each queued message as it joins
-    # the conversation: the user Message it became, then the QueuedMessage.
-    # It runs in the loop's thread, before the model is asked to answer it.
-    # Returns +self+.
-    #
-    #   chat.after_join { |message, queued| puts "Joined: #{message.content}" }
-    #
-    def after_join(&)
-      add_callback(:after_join, &)
     end
 
     # Registers a callback that wraps the moment each queued message joins
@@ -1290,14 +1267,14 @@ module RubyLLM
     #
     #   chat.around_join do |queued, join|
     #     message = join.call
-    #     audit_log << [queued.owner, message.content]
+    #     audit_log << [queued.sender, message.content]
     #   end
     #
     # A block that never calls +join+ withdraws the message: it leaves the
-    # queue without joining, #after_unqueue runs, and the turn goes on. A
-    # block that raises leaves the message queued and out of the
-    # conversation. Several blocks nest in the order they were registered,
-    # the first outermost, and #after_join runs once they all return.
+    # queue without joining, and the turn goes on. A block that raises
+    # leaves the message queued and out of the conversation. Several
+    # blocks nest in the order they were registered, the first outermost,
+    # and #after_message runs once they all return.
     # When an inner block withdraws the message, <tt>join.call</tt> in an
     # outer block returns +nil+.
     #
@@ -1311,13 +1288,6 @@ module RubyLLM
       return self if @callbacks[:around_join].include?(block)
 
       add_callback(:around_join, &block)
-    end
-
-    # Registers a callback that receives each QueuedMessage #unqueue takes
-    # out of the queue, or an #around_join withdraws. It runs in the thread
-    # that took it out. Returns +self+.
-    def after_unqueue(&)
-      add_callback(:after_unqueue, &)
     end
 
     # Registers a callback that receives each local ToolCall before the tool

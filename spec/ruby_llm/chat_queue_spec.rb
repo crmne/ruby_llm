@@ -45,9 +45,9 @@ RSpec.describe RubyLLM::Chat do
 
   describe '#queue' do
     it 'stores the message without touching the conversation' do
-      queued = chat.queue('Use the EU file', with: 'q3.pdf', owner: :alice)
+      queued = chat.queue('Use the EU file', with: 'q3.pdf', sender: :alice)
 
-      expect(queued).to have_attributes(content: 'Use the EU file', attachments: 'q3.pdf', owner: :alice,
+      expect(queued).to have_attributes(content: 'Use the EU file', attachments: 'q3.pdf', sender: :alice,
                                         steer?: true)
       expect(queued.id).to be_a(String)
       expect(queued.queued_at).to be_a(Time)
@@ -72,14 +72,6 @@ RSpec.describe RubyLLM::Chat do
       chat.queue('Now')
 
       expect(chat).not_to be_complete
-    end
-
-    it 'runs after_queue with the queued message' do
-      chat.after_queue { |queued| events << [:queued, queued.content] }
-
-      chat.queue('Hello')
-
-      expect(events).to eq([[:queued, 'Hello']])
     end
 
     it 'accepts messages from another thread while the loop runs' do
@@ -140,14 +132,17 @@ RSpec.describe RubyLLM::Chat do
       expect(requests.last.last(2)).to eq([[:user, 'First'], [:user, 'Second']])
     end
 
-    it 'runs after_join with the message and the queued message before before_message' do
-      chat.after_join { |message, queued| events << [:joined, message.role, message.content, queued.content] }
+    it 'runs after_message with the user message it becomes, before the next before_message' do
+      chat.after_message { |message| events << [:message, message.role, message.content] }
       chat.before_message { events << [:before_message] }
       during_request << -> { chat.queue('Steer') }
 
       chat.ask('Hello')
 
-      expect(events).to eq([[:before_message], [:joined, :user, 'Steer', 'Steer'], [:before_message]])
+      expect(events).to eq(
+        [[:before_message], [:message, :assistant, 'Done'], [:message, :user, 'Steer'],
+         [:before_message], [:message, :assistant, 'Done']]
+      )
     end
 
     it 'is never taken while the chat is waiting, and joins once the round is answered' do
@@ -210,7 +205,7 @@ RSpec.describe RubyLLM::Chat do
         message = join.call
         events << [:after, message.role, message.content]
       end
-      chat.after_join { |message, _queued| events << [:joined, message.content] }
+      chat.after_message { |message| events << [:joined, message.content] if message.role == :user }
       chat.queue('Steer')
 
       chat.complete
@@ -239,8 +234,7 @@ RSpec.describe RubyLLM::Chat do
 
     it 'withdraws a message whose callback never joins it, and the turn goes on' do
       chat.around_join { |queued, join| join.call unless queued.content == 'Never mind' }
-      chat.after_unqueue { |queued| events << [:unqueued, queued.content] }
-      chat.after_join { |message, _queued| events << [:joined, message.content] }
+      chat.after_message { |message| events << [:joined, message.content] if message.role == :user }
       chat.queue('Never mind')
       chat.queue('Keep this')
 
@@ -248,7 +242,7 @@ RSpec.describe RubyLLM::Chat do
 
       expect(response.content).to eq('Done')
       expect(transcript).to eq([[:user, 'Keep this'], [:assistant, 'Done']])
-      expect(events).to eq([[:unqueued, 'Never mind'], [:joined, 'Keep this']])
+      expect(events).to eq([[:joined, 'Keep this']])
       expect(chat.queued_messages).to be_empty
     end
 
@@ -266,8 +260,8 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'rejects attributes for join on a plain chat' do
-      chat.around_join { |queued, join| join.call(sender: queued.owner) }
-      chat.queue('Hello', owner: :alice)
+      chat.around_join { |queued, join| join.call(sender: queued.sender) }
+      chat.queue('Hello', sender: :alice)
 
       expect { chat.complete }.to raise_error(ArgumentError, /persisted chat/)
       expect(chat.queued_messages.map(&:content)).to eq(['Hello'])
@@ -293,7 +287,7 @@ RSpec.describe RubyLLM::Chat do
         events << :around
         join.call
       end
-      chat.after_join { |message, _queued| events << [:joined, message.content] }
+      chat.after_message { |message| events << [:joined, message.content] }
       chat.queue('Steer')
       chat.queue('Wait', steer: false)
 
@@ -378,9 +372,9 @@ RSpec.describe RubyLLM::Chat do
   end
 
   describe 'the next ask, complete, or step' do
-    it 'runs after_join for a message that joined before a later one failed' do
+    it 'runs after_message for a message that joined before a later one failed' do
       joined = []
-      chat.after_join { |message, _queued| joined << message.content }
+      chat.after_message { |message| joined << message.content }
       chat.queue 'First'
       chat.queue 'Second'
       allow(chat).to receive(:add_message).and_wrap_original do |add, **options|
@@ -394,8 +388,8 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.queued_messages.map(&:content)).to eq(['Second'])
     end
 
-    it 'keeps later messages queued, and the joined one out, when after_join raises' do
-      chat.after_join { |_message, _queued| raise IOError, 'callback failed' }
+    it 'keeps later messages queued, and the joined one out, when after_message raises' do
+      chat.after_message { |_message| raise IOError, 'callback failed' }
       chat.queue 'First'
       chat.queue 'Second'
 
@@ -492,15 +486,13 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
-  describe '#unqueue' do
-    it 'takes a message out of the queue and runs after_unqueue' do
-      chat.after_unqueue { |queued| events << queued.content }
+  describe '#withdraw' do
+    it 'takes a message out of the queue' do
       queued = chat.queue('Never mind')
 
-      expect(chat.unqueue(queued)).to be(true)
-      expect(chat.unqueue(queued.id)).to be(false)
+      expect(chat.withdraw(queued)).to be(true)
+      expect(chat.withdraw(queued.id)).to be(false)
       expect(chat.queued_messages).to be_empty
-      expect(events).to eq(['Never mind'])
 
       chat.complete
 
@@ -511,22 +503,41 @@ RSpec.describe RubyLLM::Chat do
       queued = chat.queue('Hello')
       chat.complete
 
-      expect(chat.unqueue(queued)).to be(false)
+      expect(chat.withdraw(queued)).to be(false)
     end
 
-    it 'lets exactly one of unqueue and the loop win a race' do
+    it 'lets exactly one of withdraw and the loop win a race' do
       100.times do
         racing = described_class.new(model: model_for(:anthropic))
         allow(racing.provider).to receive(:complete).and_return(answer('Done'))
         queued = racing.queue('Race')
-        unqueued = nil
-        thread = Thread.new { unqueued = racing.unqueue(queued) }
+        withdrawn = nil
+        thread = Thread.new { withdrawn = racing.withdraw(queued) }
         racing.step
         thread.join
 
         taken = racing.messages.count { |message| message.content == 'Race' }
-        expect([unqueued, taken]).to eq([true, 0]).or eq([false, 1])
+        expect([withdrawn, taken]).to eq([true, 0]).or eq([false, 1])
       end
+    end
+  end
+
+  describe 'QueuedMessage#withdraw' do
+    it 'takes the message out of the queue of the chat it was queued on' do
+      queued = chat.queue('Never mind')
+      kept = chat.queue('Keep this')
+
+      expect(queued.withdraw).to be(true)
+      expect(queued.withdraw).to be(false)
+      expect(chat.queued_messages).to eq([kept])
+    end
+
+    it 'returns false once the loop took the message' do
+      queued = chat.queue('Hello')
+      chat.complete
+
+      expect(queued.withdraw).to be(false)
+      expect(transcript.first).to eq([:user, 'Hello'])
     end
   end
 end

@@ -30,15 +30,20 @@ RSpec.describe RubyLLM::Agent do
     expect(Class.new(described_class).new(chat:).model_id).to eq(chat.model.id)
   end
 
-  it 'delegates the queue callbacks to the underlying chat' do
+  it 'delegates around_join to the underlying chat' do
     chat = RubyLLM.chat(model: model_for(:openai))
     agent = Class.new(described_class).new(chat:)
+    allow(chat).to receive(:around_join).and_return(chat)
 
-    %i[after_queue around_join after_join after_unqueue].each do |callback|
-      allow(chat).to receive(callback).and_return(chat)
+    expect(agent.around_join { nil }).to be(chat)
+  end
 
-      expect(agent.public_send(callback) { nil }).to be(chat)
-    end
+  it 'delegates withdraw to the underlying chat' do
+    chat = RubyLLM.chat(model: model_for(:openai))
+    queued = chat.queue('Hello')
+
+    expect(Class.new(described_class).new(chat:).withdraw(queued)).to be(true)
+    expect(chat.queued_messages).to be_empty
   end
 
   it 'delegates join_queued_messages to the underlying chat' do

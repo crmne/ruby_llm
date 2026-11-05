@@ -48,19 +48,16 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   end
 
   it 'stores queued messages in their own table, oldest first' do
-    owner = Chat.create!(model: model_for(:openai))
-    queued = []
-    chat.after_queue { |record| queued << record }
+    sender = Chat.create!(model: model_for(:openai))
 
-    first = chat.queue('Use the EU file', owner:)
+    first = chat.queue('Use the EU file', sender:)
     second = chat.queue('Then email it', steer: false)
 
     expect(first).to be_a(RubyLLM::ActiveRecord::QueuedMessage)
-    expect(first).to have_attributes(chat:, owner:, content: 'Use the EU file', steer?: true)
+    expect(first).to have_attributes(chat:, sender:, content: 'Use the EU file', steer?: true)
     expect(second.steer?).to be(false)
     expect(first.queued_at).to eq(first.created_at)
     expect(chat.queued_messages.to_a).to eq([first, second])
-    expect(queued).to eq([first, second])
     expect(chat.messages_association.count).to eq(0)
   end
 
@@ -128,25 +125,33 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(transcript(chat).first(2)).to eq([[:user, 'Queued first'], [:user, 'Then this']])
   end
 
-  it 'runs after_join with the message record and the queued record' do
-    queued = chat.queue('Hello')
+  it 'runs after_message with the user message it becomes, leaving the records as they were saved' do
+    chat.queue('Hello')
     job = job_for(chat)
-    joined = []
-    job.after_join { |message, record| joined << [message, record] }
+    seen = []
+    job.after_message { |message| seen << [message.role, message.content] }
 
     job.complete
 
-    expect(joined.size).to eq(1)
-    expect(joined.first.first).to eq(job.messages_association.first)
-    expect(joined.first.last.id).to eq(queued.id)
+    expect(seen).to eq([[:user, 'Hello'], [:assistant, 'Done']])
+    expect(transcript(chat)).to eq([[:user, 'Hello'], [:assistant, 'Done']])
   end
 
-  it 'runs after_join for a message that joined before a later one failed' do
+  it 'leaves the last assistant record alone when a message joins after it' do
+    job = job_for(chat)
+    job.ask('Hello')
+    chat.queue('Wait', steer: false)
+
+    expect(job.join_queued_messages.map(&:content)).to eq(['Wait'])
+    expect(transcript(chat)).to eq([[:user, 'Hello'], [:assistant, 'Done'], [:user, 'Wait']])
+  end
+
+  it 'runs after_message for a message that joined before a later one failed' do
     chat.queue('First')
     chat.queue('Second')
     job = job_for(chat)
     joined = []
-    job.after_join { |message, _record| joined << message.content }
+    job.after_message { |message| joined << message.content }
     allow(job).to receive(:persist_message).and_wrap_original do |persist, attributes, *rest|
       raise IOError, 'storage is down' if attributes[:content] == 'Second'
 
@@ -172,23 +177,22 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   describe '#around_join' do
     it 'saves the message with the attributes join is given, merged across nested callbacks' do
       with_sender_column do
-        owner = Chat.create!(model: model_for(:openai))
-        chat.queue('Hello', owner:)
+        sender = Chat.create!(model: model_for(:openai))
+        chat.queue('Hello', sender:)
         job = job_for(chat)
         seen = []
         job.around_join do |queued, join|
           seen << RubyLLM::ActiveRecord::QueuedMessage.exists?(queued.id)
-          seen << join.call(sender_id: queued.owner.id).sender_id
+          seen << join.call(sender_id: queued.sender.id).sender_id
         end
         job.around_join { |_queued, join| join.call(cache_until_here: true) }
-        job.after_join { |message, _queued| seen << message.persisted? }
 
         job.complete
 
         message = chat.messages_association.reload.first
-        expect(message).to have_attributes(role: 'user', content: 'Hello', sender_id: owner.id)
+        expect(message).to have_attributes(role: 'user', content: 'Hello', sender_id: sender.id)
         expect(message[:cache_until_here]).to be(true)
-        expect(seen).to eq([false, owner.id, true])
+        expect(seen).to eq([false, sender.id])
       end
     end
 
@@ -213,13 +217,10 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       withdrawn = chat.queue('Never mind', with: image_path)
       chat.queue('Keep this')
       job = job_for(chat)
-      unqueued = []
       job.around_join { |queued, join| join.call unless queued.content == 'Never mind' }
-      job.after_unqueue { |record| unqueued << record.content }
 
       expect(job.complete.content).to eq('Done')
       expect(transcript(chat)).to eq([[:user, 'Keep this'], [:assistant, 'Done']])
-      expect(unqueued).to eq(['Never mind'])
       expect(chat.queued_messages).to be_empty
       expect(ActiveStorage::Attachment.where(record_type: withdrawn.class.polymorphic_name, record_id: withdrawn.id))
         .to be_empty
@@ -281,29 +282,37 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(requests.last.first).to eq([:user, 'What is this?'])
   end
 
-  it 'unqueues a message before the loop takes it, and not after' do
-    unqueued = []
-    chat.after_unqueue { |record| unqueued << record.content }
+  it 'withdraws a message before the loop takes it, and not after' do
     withdrawn = chat.queue('Never mind', with: image_path)
     kept = chat.queue('Keep this')
 
-    expect(elsewhere(chat).unqueue(withdrawn.id)).to be(true)
-    expect(chat.unqueue(withdrawn)).to be(false)
+    expect(elsewhere(chat).withdraw(withdrawn.id)).to be(true)
+    expect(chat.withdraw(withdrawn)).to be(false)
     expect(ActiveStorage::Attachment.where(record_type: withdrawn.class.polymorphic_name, record_id: withdrawn.id))
       .to be_empty
 
     job_for(chat).complete
 
-    expect(chat.unqueue(kept)).to be(false)
-    expect(unqueued).to eq([])
+    expect(chat.withdraw(kept)).to be(false)
     expect(transcript(chat)).to eq([[:user, 'Keep this'], [:assistant, 'Done']])
+  end
+
+  it 'withdraws a queued record found through queued_messages' do
+    withdrawn = chat.queue('Never mind', with: image_path)
+    kept = chat.queue('Keep this')
+
+    expect(elsewhere(chat).queued_messages.find(withdrawn.id).withdraw).to be(true)
+    expect(withdrawn.withdraw).to be(false)
+    expect(chat.queued_messages.to_a).to eq([kept])
+    expect(ActiveStorage::Attachment.where(record_type: withdrawn.class.polymorphic_name, record_id: withdrawn.id))
+      .to be_empty
   end
 
   it 'leaves a message of another chat alone' do
     other = Chat.create!(model: model_for(:openai))
     queued = other.queue('Not yours')
 
-    expect(chat.unqueue(queued.id)).to be(false)
+    expect(chat.withdraw(queued.id)).to be(false)
     expect(other.queued_messages.to_a).to eq([queued])
   end
 

@@ -80,16 +80,16 @@ A turn starts once its question is in place. With no tool calls pending, every `
 
 * While the chat is `waiting?` on an approval, an input, or a task, nothing joins: the round's tool calls need their results first. Record the decision and call `complete`. The tools run, then the steering messages join. The resumed turn is the same turn, so messages queued with `steer: false` keep waiting for the next one.
 * `cancel` stops the loop and leaves the queue as it is. The next `ask` takes those messages as ordinary user messages. A `complete` instead continues the cancelled turn, so only the steering ones join until the model answers.
-* `unqueue` withdraws a message before the loop takes it. It returns `false` once the loop has taken it, so a Cancel button and the loop can race safely.
-* `queued_messages` lists what waits, oldest first, as `RubyLLM::QueuedMessage` values with `content`, `attachments`, `owner`, `queued_at`, and `steer?`.
+* `withdraw` takes a message back before the loop takes it. It returns `false` once the loop has taken it, so a Cancel button and the loop can race safely.
+* `queued_messages` lists what waits, oldest first, as `RubyLLM::QueuedMessage` values with `content`, `attachments`, `sender`, `queued_at`, and `steer?`.
 
 ```ruby
-queued = chat.queue "Also check this file", with: "q3.pdf", owner: current_user
+queued = chat.queue "Also check this file", with: "q3.pdf", sender: current_user
 chat.queued_messages # => [#<RubyLLM::QueuedMessage ...>]
-chat.unqueue(queued) # => true
+queued.withdraw      # => true
 ```
 
-`owner` is stored with the message and handed back on it. RubyLLM does not interpret it, so use it for whatever your application needs to know about who asked.
+`chat.withdraw(queued)` does the same by message or id. `sender` is stored with the message and handed back on it. RubyLLM does not interpret it, so use it for whatever your application needs to know about who asked.
 
 ### Joining Queued Messages
 
@@ -98,21 +98,21 @@ chat.unqueue(queued) # => true
 ```ruby
 chat.around_join do |queued, join|
   message = join.call
-  AuditLog.record(queued.owner, message.content)
+  AuditLog.record(queued.sender, message.content)
 end
 ```
 
-A block that never calls `join` withdraws the message. It leaves the queue without joining, `after_unqueue` runs for it, and the turn goes on without it:
+A block that never calls `join` withdraws the message. It leaves the queue without joining, and the turn goes on without it:
 
 ```ruby
 chat.around_join do |queued, join|
-  join.call unless queued.owner.blocked?
+  join.call unless queued.sender.blocked?
 end
 ```
 
 If the block raises, the message stays queued and out of the conversation, and the error reaches the caller of `complete`. Several `around_join` blocks nest in the order you register them, the first outermost, like Rails around callbacks. When an inner block withdraws the message, `join.call` in an outer block returns `nil`. Agents declare them with the `around_join` class macro.
 
-`join_queued_messages` joins everything waiting, steering or not, without asking the model. Each message goes through `around_join` and `after_join`, and you get back the messages that joined:
+`join_queued_messages` joins everything waiting, steering or not, without asking the model. Each message goes through `around_join` and `after_message`, and you get back the messages that joined:
 
 ```ruby
 chat.queue "Use the EU numbers"
@@ -122,7 +122,7 @@ chat.join_queued_messages.map(&:content) # => ["Use the EU numbers", "Then draft
 
 Like `ask_later`, it raises `RubyLLM::PendingToolCallsError` while tool calls wait for their results.
 
-[Queue events]({% link _core_features/chat-callbacks.md %}#queue-events) tell you when a message is queued, joins, or is withdrawn. With Rails, queued messages live in their own table, so a request can queue a message for a reply a job is running; see [Queued Messages]({% link _advanced/rails-persistence.md %}#queued-messages).
+`after_message` receives each message that joins; see [Queue Events]({% link _core_features/chat-callbacks.md %}#queue-events). With Rails, queued messages live in their own table, so a request can queue a message for a reply a job is running; see [Queued Messages]({% link _advanced/rails-persistence.md %}#queued-messages).
 
 ## Workflow Patterns
 

@@ -62,15 +62,15 @@ See [Reporting Progress]({% link _tools/tool-execution.md %}#reporting-progress)
 
 ## Queue Events
 
-[Queued messages]({% link _advanced/agentic-workflows.md %}#queueing-messages) wait outside the conversation until the loop takes them. Three callbacks follow them:
+[Queued messages]({% link _advanced/agentic-workflows.md %}#queueing-messages) wait outside the conversation until the loop takes them. One that joins becomes an ordinary user message, and `after_message` receives it in the loop's thread, before `before_message` runs for the reply that answers it:
 
 ```ruby
-chat.after_queue { |queued| puts "Queued: #{queued.content}" }
-chat.after_join { |message, queued| puts "Joined: #{message.content}" }
-chat.after_unqueue { |queued| puts "Withdrawn: #{queued.content}" }
+chat.after_message do |message|
+  puts "Joined: #{message.content}" if message.role == :user
+end
 ```
 
-`after_queue` runs once `queue` has stored the message, and `after_unqueue` once `unqueue` has taken it back, each in the thread that called it. `after_unqueue` also runs for a message an `around_join` block withdraws, which wraps each join; see [Joining Queued Messages]({% link _advanced/agentic-workflows.md %}#joining-queued-messages). `after_join` runs in the loop's thread when a queued message joins the conversation. It receives the user message it became, then the queued message, before `before_message` runs for the reply that answers it. On a persisted chat, each callback receives the records: the `RubyLLM::ActiveRecord::QueuedMessage`, and for `after_join` the message record first.
+To act at the moment a message joins, or to withdraw it instead, wrap the join with `around_join`. It receives the queued message and `join`. See [Joining Queued Messages]({% link _advanced/agentic-workflows.md %}#joining-queued-messages).
 
 ## Fallback Events
 
