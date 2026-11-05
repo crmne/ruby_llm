@@ -559,9 +559,10 @@ module RubyLLM
         # Effort alone never turns thinking on; Claude needs a thinking block.
         # Generations that take a budget get one sized from the effort with
         # the levels Bedrock publishes. Generations without a budget option
-        # think adaptively.
+        # think adaptively, and so does a bare switch, except on generations
+        # that only take a budget, which get the smallest one.
         def thinking_mode(thinking, model, effort, max_tokens)
-          return { type: 'adaptive' } if thinking.enabled == true
+          return toggle_mode(model) if thinking.enabled == true
 
           budget = thinking.budget || effort_budget(effort, model, max_tokens)
           mode = if budget
@@ -574,6 +575,13 @@ module RubyLLM
         end
 
         EFFORT_BUDGETS = { 'low' => 1024, 'medium' => 40_000, 'high' => 63_999 }.freeze
+
+        def toggle_mode(model)
+          budget = model.reasoning_option(:budget_tokens)
+          return { type: 'adaptive' } unless budget && !model.reasoning_option(:effort)
+
+          { type: 'enabled', budget_tokens: [budget[:min].to_i, EFFORT_BUDGETS['low']].max }
+        end
 
         def adaptive_thinking?(thinking, effort, model)
           return true if thinking.display

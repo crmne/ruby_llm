@@ -161,7 +161,8 @@ RSpec.describe RubyLLM::Chat, :live do
     before { skip_without_cassette_or_key('AWS_ACCESS_KEY_ID') }
 
     it 'caches a Claude turn that ends with Word and Excel documents' do
-      chat = RubyLLM.chat(model: model_for(:bedrock, :bedrock_claude), provider: :bedrock).with_caching
+      chat = RubyLLM.chat(model: model_for(:bedrock, :bedrock_claude), provider: :bedrock, protocol: :converse)
+                    .with_caching
       files = %w[sample.docx sample.xlsx].map { |name| File.expand_path("../fixtures/#{name}", __dir__) }
 
       response = chat.ask('Name the two file formats you received, in one short sentence.', with: files)

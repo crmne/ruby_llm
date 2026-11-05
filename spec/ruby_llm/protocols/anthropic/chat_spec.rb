@@ -628,6 +628,13 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       expect(payload[:thinking]).to eq(type: 'enabled', budget_tokens: 3999)
     end
 
+    it 'turns a bare switch into the smallest budget on generations that only take one' do
+      payload = render_payload(model_id: 'claude-haiku-4-5', thinking: RubyLLM::Thinking::Config.new(enabled: true),
+                               reasoning_options: [{ type: 'budget_tokens', min: 1024 }])
+
+      expect(payload[:thinking]).to eq(type: 'enabled', budget_tokens: 1024)
+    end
+
     it 'resolves a bare with_thinking to a request Claude honors' do
       model = RubyLLM::Model.new(
         id: 'claude-opus-4-8',

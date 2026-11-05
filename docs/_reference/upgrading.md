@@ -23,6 +23,7 @@ After reading this guide, you will know:
 * How `tool_calls` reads now that it is a collection of calls.
 * Which errors failed Responses requests raise, and why malformed tool arguments no longer do.
 * Why Bedrock batches report no request counts.
+* Why Claude on Bedrock now speaks the Anthropic Messages API, and how to keep Converse.
 * Which job predicates replace `done?` and `completed?`.
 * Why agents name their chat record with `chat_class`.
 
@@ -228,6 +229,27 @@ These chat options were dropped, or downgraded with a log line. They now raise w
 ## Bedrock Batches Report No Request Counts
 
 `Batch#request_counts` on Bedrock is now `nil`. It used to hold the job's submit and end timestamps under `submitted` and `completed`, which are not counts. Bedrock's job status reports no counts. A persisted batch keeps the old value until its next `refresh`.
+
+## Claude on Bedrock Speaks Anthropic Messages
+
+Bedrock sent Claude through the Converse API in 2.1. It now sends Claude through InvokeModel with the Anthropic Messages API, on the same host, credentials, and model IDs, including cross-region inference profiles such as `eu.anthropic.claude-sonnet-5-5`. Converse cannot carry Anthropic's tool search, so a chat with deferred tools used RubyLLM's own `tool_search` tool, and the call after each search missed the prompt cache. Claude now searches with Anthropic's tool search and keeps the cache.
+
+Other model families and application inference profile ARNs stay on Converse. For Claude, a few things change:
+
+* `before_request` hooks and `with_provider_options` see and take Anthropic Messages fields, such as `thinking` and `output_config`, instead of Converse fields such as `additionalModelRequestFields` and `guardrailConfig`.
+* Word, Excel, and other office documents raise `RubyLLM::UnsupportedAttachmentError`. The Anthropic Messages API reads images, PDFs, and text files, including CSV and HTML.
+* Batches of Claude chats run as InvokeModel jobs, with Anthropic Messages records.
+* A citation of an attached document takes the file name as its title, such as `facts.txt`, as it does on the Anthropic API.
+
+To keep Converse for a chat, pass `protocol: :converse`. To keep it for every Bedrock chat, configure it:
+
+```ruby
+RubyLLM.chat(model: "claude-sonnet-4-5", provider: :bedrock, protocol: :converse)
+
+RubyLLM.configure do |config|
+  config.bedrock_protocol = :converse
+end
+```
 
 ## MCP Prompts Take No Attachments
 

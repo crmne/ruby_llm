@@ -262,9 +262,9 @@ RSpec.describe RubyLLM::Chat, :live do # rubocop:disable RSpec/MultipleMemoizedH
   end
 
   describe 'document models' do # rubocop:disable RSpec/MultipleMemoizedHelpers
-    each_model(DOCUMENT_MODELS) do |provider, model|
+    each_model(DOCUMENT_MODELS) do |provider, model, info|
       it "#{provider}/#{model} understands DOCX documents" do
-        chat = RubyLLM.chat(model: model, provider: provider)
+        chat = RubyLLM.chat(model: model, provider: provider, protocol: info[:protocol])
         response = chat.ask('What is the project codename in this document? Answer with only the code.',
                             with: docx_path)
 
@@ -277,9 +277,9 @@ RSpec.describe RubyLLM::Chat, :live do # rubocop:disable RSpec/MultipleMemoizedH
   end
 
   describe 'spreadsheet models' do # rubocop:disable RSpec/MultipleMemoizedHelpers
-    each_model(SPREADSHEET_MODELS) do |provider, model|
+    each_model(SPREADSHEET_MODELS) do |provider, model, info|
       it "#{provider}/#{model} understands XLSX spreadsheets" do
-        chat = RubyLLM.chat(model: model, provider: provider)
+        chat = RubyLLM.chat(model: model, provider: provider, protocol: info[:protocol])
         response = chat.ask('What is the spreadsheet_code value in this spreadsheet? Answer with only the code.',
                             with: xlsx_path)
 

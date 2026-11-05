@@ -314,7 +314,7 @@ end
 
 ## Bedrock Converse and Mantle Endpoints
 
-RubyLLM selects the Bedrock endpoint from the model registry. Converse and Mantle use the same credentials and region.
+RubyLLM selects the Bedrock endpoint from the model registry. Converse and Mantle use the same credentials and region. Claude models speak the Anthropic Messages API through InvokeModel on the Converse host, so they keep Anthropic features such as tool search. Pass `protocol: :converse` on a chat, or set `config.bedrock_protocol = :converse`, to send Claude through Converse instead.
 
 For a custom endpoint, set `bedrock_api_base` for Converse or `bedrock_mantle_api_base` for Mantle. See [Model Resolution]({% link _reference/model-resolution.md %}) for protocol selection.
 

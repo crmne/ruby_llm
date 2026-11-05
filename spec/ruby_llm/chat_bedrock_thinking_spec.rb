@@ -12,7 +12,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
     response = chat.ask('Reply with the single word Hello.')
 
-    expect(payload.dig(:additionalModelRequestFields, :thinking)).to eq(type: 'between_tools')
+    expect(payload[:thinking]).to eq(type: 'between_tools')
     expect(response.content).to include('Hello')
     expect(response.tokens.output).to be_positive
   rescue RubyLLM::ForbiddenError => e

@@ -13,8 +13,8 @@ RSpec.describe RubyLLM::Protocols::Anthropic::BlockBinding do
                          thinking: RubyLLM::Thinking.build(text: 'Hm', signature: 'signed'))
   end
 
-  def chat_with_history(model, provider)
-    RubyLLM.chat(model:, provider:).tap do |chat|
+  def chat_with_history(model, provider, protocol: nil)
+    RubyLLM.chat(model:, provider:, protocol:).tap do |chat|
       chat.add_message(role: :user, content: 'First')
       chat.add_message(thought(model))
       chat.add_message(role: :user, content: 'Second')
@@ -65,19 +65,37 @@ RSpec.describe RubyLLM::Protocols::Anthropic::BlockBinding do
     end
   end
 
+  describe 'on Bedrock InvokeModel' do
+    let(:replayed_blocks) { { 'anthropic' => [{ 'type' => 'thinking', 'thinking' => 'Hm', 'signature' => 'signed' }] } }
+
+    it 'sends the binding and its beta in the body' do
+      body = nil
+      request = stub_request(:post, %r{/model/eu\.anthropic\.claude-opus-5-5/invoke\z})
+                .with { |sent| body = JSON.parse(sent.body) }
+                .to_return_json(body: { content: [{ type: 'text', text: 'Hi' }], usage: {} })
+
+      chat_with_history('eu.anthropic.claude-opus-5-5', :bedrock).complete
+
+      expect(request).to have_been_requested
+      expect(body['thinking']).to eq('type' => 'adaptive', 'block_binding' => drop.transform_keys(&:to_s))
+      expect(body['anthropic_beta']).to eq([described_class::BETA])
+    end
+  end
+
   describe 'on Bedrock Converse' do
     let(:replayed_blocks) do
       { 'converse' => [{ 'reasoningContent' => { 'reasoningText' => { 'text' => 'Hm', 'signature' => 'signed' } } }] }
     end
 
     it 'sends the binding and its beta in the additional fields' do
-      fields = chat_with_history('eu.anthropic.claude-opus-5-5', :bedrock).render[:additionalModelRequestFields]
+      fields = chat_with_history('eu.anthropic.claude-opus-5-5', :bedrock,
+                                 protocol: :converse).render[:additionalModelRequestFields]
 
       expect(fields).to eq(thinking: { type: 'adaptive', block_binding: drop }, anthropic_beta: [described_class::BETA])
     end
 
     it 'keeps its beta beside betas from provider options' do
-      chat = chat_with_history('eu.anthropic.claude-opus-5-5', :bedrock)
+      chat = chat_with_history('eu.anthropic.claude-opus-5-5', :bedrock, protocol: :converse)
              .with_provider_options(additionalModelRequestFields: { anthropic_beta: ['other-beta'] })
 
       expect(chat.render[:additionalModelRequestFields][:anthropic_beta]).to eq(['other-beta', described_class::BETA])
@@ -85,14 +103,14 @@ RSpec.describe RubyLLM::Protocols::Anthropic::BlockBinding do
 
     it 'keeps thinking off when the chat turned it off' do
       off = { reasoning_config: { type: 'disabled' } }
-      chat = chat_with_history('eu.anthropic.claude-opus-5-5', :bedrock)
+      chat = chat_with_history('eu.anthropic.claude-opus-5-5', :bedrock, protocol: :converse)
       messages = [{ content: [{ reasoningContent: {} }] }]
 
       expect(RubyLLM::Protocols::Converse::Chat.send(:bind_replayed_thinking, off, messages, chat.model)).to eq(off)
     end
 
     it 'leaves models that do not bind alone' do
-      expect(chat_with_history('eu.anthropic.claude-haiku-4-5-20251001-v1:0', :bedrock).render)
+      expect(chat_with_history('eu.anthropic.claude-haiku-4-5-20251001-v1:0', :bedrock, protocol: :converse).render)
         .not_to have_key(:additionalModelRequestFields)
     end
   end

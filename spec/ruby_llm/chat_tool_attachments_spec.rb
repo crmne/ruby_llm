@@ -87,7 +87,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'renders Converse toolResult blocks with text and image' do
-      chat = chat_with_tool_attachment(model_for(:bedrock, :structured_output), 'bedrock')
+      chat = chat_with_tool_attachment(model_for(:bedrock, :structured_output), 'bedrock', protocol: :converse)
 
       tool_result = chat.render[:messages].last[:content].first[:toolResult]
       expect(tool_result[:content].first).to eq({ text: 'Found it' })
