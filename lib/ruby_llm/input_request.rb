@@ -3,7 +3,7 @@
 module RubyLLM
   # A request for input from the user while a tool works on a call: an MCP
   # server's question, received by MCP.before_input_request callbacks, or a
-  # tool's own, from Tool#ask. A form request asks for values; a URL request
+  # tool's own, from Tool#request_input. A form request asks for values; a URL request
   # asks the user to visit a page, such as to connect an account.
   #
   #   before_input_request do |request|
@@ -20,7 +20,7 @@ module RubyLLM
   class InputRequest
     include Support::Inspectable
 
-    # What the user said to a tool's own question (Tool#ask): accepted with
+    # What the user said to a tool's own question (Tool#request_input): accepted with
     # values, or declined. Read a value with #[].
     class Answer
       def initialize(response) # :nodoc:
@@ -49,7 +49,7 @@ module RubyLLM
       end
     end
 
-    # A tool's own question (Tool#ask), the +index+th it asks in its call:
+    # A tool's own question (Tool#request_input), the +index+th it asks in its call:
     # a form for +fields+ (name to a JSON Schema property, plus
     # <tt>required: true</tt>), or, given +url:+, a page to visit.
     def self.ask(index, message, url: nil, fields: {}) # :nodoc:

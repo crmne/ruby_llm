@@ -3,7 +3,7 @@
 module RubyLLM
   # Raised when a tool needs input from the user and nothing answered it:
   # an MCP server's question (MCP::InputRequiredError), or a tool's own
-  # Tool#ask. Its message includes what was asked, and #requests has the
+  # Tool#request_input. Its message includes what was asked, and #requests has the
   # InputRequest objects. In a chat, the tool call pauses instead, and
   # Chat#pending_inputs returns the requests.
   class InputRequiredError < Error

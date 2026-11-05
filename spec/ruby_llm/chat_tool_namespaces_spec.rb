@@ -177,7 +177,7 @@ RSpec.describe RubyLLM::Chat do
     paused = local_tool('left_click', namespace: 'computer')
     log = executed
     paused.define_singleton_method(:execute) do
-      answer = ask('Unlock the display?', unlock: { type: 'boolean', required: true })
+      answer = request_input('Unlock the display?', unlock: { type: 'boolean', required: true })
       log << :click if answer.accepted?
       'OK'
     end
