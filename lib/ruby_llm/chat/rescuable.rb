@@ -41,6 +41,7 @@ module RubyLLM
       def initialize_copy(source)
         super
         @rescuing = false
+        @agent_callback_receivers = @agent_callback_receivers&.dup
       end
     end
   end

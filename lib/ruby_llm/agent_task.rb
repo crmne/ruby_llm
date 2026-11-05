@@ -32,7 +32,7 @@ module RubyLLM
     # and returns +self+.
     def cancel
       agent&.cancel
-      @tool&.forget(tool_call)
+      @tool&.forget(data['run'])
       self
     end
   end

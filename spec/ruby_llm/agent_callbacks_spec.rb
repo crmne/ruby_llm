@@ -136,6 +136,21 @@ RSpec.describe RubyLLM::Agent do
     expect(events).to eq(['second'])
   end
 
+  it 'leaves the original chat on its own agent when a copy is configured again' do
+    events = []
+    agent_class = Class.new(described_class) do
+      inputs :name
+      after_message { events << name }
+    end
+    chat = agent_class.chat(name: 'first')
+    agent_class.new(chat: chat.dup, name: 'second')
+    stub_answers(chat, answer)
+
+    chat.ask('Hi')
+
+    expect(events).to eq(['first'])
+  end
+
   it 'refuses a callback with both a method name and a block, or neither, and unknown options' do
     agent_class = Class.new(described_class)
 

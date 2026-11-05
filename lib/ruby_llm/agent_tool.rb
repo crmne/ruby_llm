@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'securerandom'
+
 module RubyLLM
   # The Tool an Agent class becomes when it goes wherever tools go, so a
   # model can hand work to it: a subagent. Agent::to_tool returns one, and
@@ -67,8 +69,9 @@ module RubyLLM
       agent = self.class.agent_class.new(**@inputs, **inputs.slice(*self.class.input_parameters))
       owner = Accounting::Usage.owner
       agent.with_owner(owner) unless owner.nil?
-      remember(tool_call, agent)
-      running(tool_call) { report(agent, agent.ask(task), tool_call) }
+      run = SecureRandom.uuid
+      @lock.synchronize { @agents[run] = agent }
+      running(run) { report(agent, agent.ask(task), run, tool_call) }
     end
 
     # Carries the agent on once nothing holds it, with Chat#complete, and
@@ -78,40 +81,39 @@ module RubyLLM
       return { error: "This agent's work was lost. Start it again with everything it needs." } unless agent
       return task if agent.awaiting_person?
 
-      running(task.tool_call) { report(agent, agent.complete, task.tool_call) }
+      run = task.data['run']
+      running(run) { report(agent, agent.complete, run, task.tool_call) }
     end
 
     # Returns the AgentTask the call paused on, with the agent it waits for.
     def task(state, tool_call: nil)
-      AgentTask.load(state, tool_call:, tool: self, agent: tool_call && @lock.synchronize { @agents[tool_call.id] })
+      run = state.dig('task', 'data', 'run')
+      AgentTask.load(state, tool_call:, tool: self, agent: @lock.synchronize { @agents[run] })
     end
 
-    # Lets go of the agent +tool_call+ ran, once the call is over.
-    def forget(tool_call) # :nodoc:
-      @lock.synchronize { @agents.delete(tool_call.id) } if tool_call
+    # Lets go of the agent of +run+, once its call is over.
+    def forget(run) # :nodoc:
+      @lock.synchronize { @agents.delete(run) }
     end
 
     private
 
-    def running(tool_call)
+    def running(run)
       yield
     rescue StandardError
-      forget(tool_call)
+      forget(run)
       raise
     end
 
-    def report(agent, message, tool_call)
+    def report(agent, message, run, tool_call)
       if agent.waiting?
         status = agent.awaiting_person? ? :input_required : :working
-        return AgentTask.new(status:, agent:, tool: self, tool_call:, data: { 'agent' => self.class.agent_class.name })
+        return AgentTask.new(status:, agent:, tool: self, tool_call:,
+                             data: { 'agent' => self.class.agent_class.name, 'run' => run })
       end
 
-      forget(tool_call)
+      forget(run)
       message&.content
-    end
-
-    def remember(tool_call, agent)
-      @lock.synchronize { @agents[tool_call.id] = agent } if tool_call
     end
   end
 end

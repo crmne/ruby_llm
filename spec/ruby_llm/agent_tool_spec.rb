@@ -113,10 +113,10 @@ RSpec.describe RubyLLM::AgentTool do
     allow(research_agent).to receive(:new).and_wrap_original do |new, **kwargs|
       new.call(**kwargs).tap { |agent| allow(agent.chat.provider).to receive(:complete).and_raise(IOError) }
     end
-    call = RubyLLM::ToolCall.new(id: 'call_1', name: 'research_agent', arguments: { 'task' => 'Go' })
+    allow(tool).to receive(:forget).and_call_original
 
-    expect { tool.call(task: 'Go', tool_call: call) }.to raise_error(IOError)
-    expect(tool.task({ 'task' => { 'status' => 'working' } }, tool_call: call).agent).to be_nil
+    expect { tool.call(task: 'Go') }.to raise_error(IOError)
+    expect(tool).to have_received(:forget).once
   end
 
   it 'goes wherever tools go, such as another agent' do
@@ -171,6 +171,22 @@ RSpec.describe RubyLLM::AgentTool do
       expect(chat.messages.find(&:tool_result?).content).to eq('Cache wiped.')
       expect(chat.messages.last.content).to eq('All done')
       expect(chat).not_to be_waiting
+    end
+
+    it 'keeps the agents of chats that share the tool apart, even when their call IDs match' do
+      research_agent.tools(wipe)
+      stub_subagents(research_agent)
+      sub_answers.push(calling('wipe', {}, id: 'sub_1'), calling('wipe', {}, id: 'sub_1'))
+      tool = research_agent.to_tool(region: 'EU')
+      chats = %w[First Second].map do |task|
+        parent_chat(calling('research_agent', { 'task' => task })).tap { |chat| chat.with_tools(tool).ask('Go') }
+      end
+
+      agents = chats.map { |chat| chat.pending_tasks.sole.agent }
+
+      expect(agents.uniq.size).to eq(2)
+      expect(agents.map { |agent| agent.messages.find { |message| message.role == :user }.content })
+        .to eq(%w[First Second])
     end
 
     it 'cancels the subagent when the chat that waits on it is cancelled' do
