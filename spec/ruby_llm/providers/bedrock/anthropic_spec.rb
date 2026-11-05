@@ -68,7 +68,8 @@ RSpec.describe RubyLLM::Providers::Bedrock::Anthropic do
         include('name' => 'bedrock_anthropic_weather', 'defer_loading' => true),
         'type' => 'tool_search_tool_bm25_20251119', 'name' => 'tool_search_tool_bm25'
       )
-      expect(body['anthropic_beta']).to eq(['tool-search-tool-2025-10-19'])
+      expect(body['anthropic_beta'])
+        .to contain_exactly('tool-search-tool-2025-10-19', RubyLLM::Protocols::Anthropic::BlockBinding::BETA)
       expect(body).not_to include('model', 'stream')
     end
 
@@ -82,7 +83,8 @@ RSpec.describe RubyLLM::Providers::Bedrock::Anthropic do
 
       chat.with_headers('anthropic-beta' => 'compact-2026-01-12').ask('Hi')
 
-      expect(body['anthropic_beta']).to eq(['compact-2026-01-12'])
+      expect(body['anthropic_beta'])
+        .to contain_exactly('compact-2026-01-12', RubyLLM::Protocols::Anthropic::BlockBinding::BETA)
       expect(headers.keys.map(&:downcase)).not_to include('anthropic-beta')
     end
 

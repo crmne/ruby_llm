@@ -106,24 +106,19 @@ module RubyLLM
           }
 
           add_thinking_fields(payload, thinking, model)
-          bind_replayed_thinking(payload, model)
+          bind_thinking(payload, model)
 
           payload
         end
 
-        def bind_replayed_thinking(payload, model)
-          return unless thinking_block_binding? && BlockBinding.binds?(model.id) && replays_thinking?(payload)
+        # The binding goes on every request, not only once thinking appears
+        # in the history: a thinking setting that changes mid-conversation
+        # invalidates the prompt cache.
+        def bind_thinking(payload, model)
+          return unless thinking_block_binding? && BlockBinding.binds?(model.id)
 
           bound = BlockBinding.apply(payload[:thinking])
           payload[:thinking] = bound if bound
-        end
-
-        def replays_thinking?(payload)
-          payload[:messages].any? do |message|
-            Array(message[:content]).any? do |block|
-              block.is_a?(Hash) && THINKING_BLOCK_TYPES.include?(block[:type] || block['type'])
-            end
-          end
         end
 
         # Hosts that don't take the binding's beta override this.
