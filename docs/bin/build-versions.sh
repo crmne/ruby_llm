@@ -38,6 +38,8 @@ prepare_version() {
   cp "$docs/_data/versions.yml" "$source/_data/versions.yml"
   cp "$docs/_includes/version_select.html" "$docs/_includes/version_banner.html" "$source/_includes/"
   cp "$docs/_plugins/versioned_docs.rb" "$source/_plugins/"
+  cp "$docs/_data/llms_areas.yml" "$source/_data/"
+  cp "$docs/_plugins/llms_discovery.rb" "$source/_plugins/"
   cp -R "$docs/_plugins/social_cards.rb" "$docs/_plugins/social_cards" "$source/_plugins/"
   sed -i.bak '/^ *- jekyll-og-image$/d' "$source/_config.yml" && rm "$source/_config.yml.bak"
   ruby "$docs/bin/prepare_versions.rb" "$source/_data/versions.yml" "$channel" "$BASE" "$stable_ref" "$onex_ref"

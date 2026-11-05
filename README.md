@@ -334,7 +334,14 @@ Give your coding assistant the RubyLLM API and documentation that match your app
 gem exec skill add "$(bundle show ruby_llm)" --skill rubyllm --agents coding
 ```
 
-`--agents coding` installs it for the coding assistants your project uses, not into your app's `app/skills`. See [AI Coding Assistants](https://rubyllm.com/ai-coding-assistants/) for setup and updates.
+`--agents coding` installs it for the coding assistants your project uses, not into your app's `app/skills`. In Claude Code, you can also install it as a plugin:
+
+```
+/plugin marketplace add crmne/ruby_llm
+/plugin install rubyllm@ruby_llm
+```
+
+See [AI Coding Assistants](https://rubyllm.com/ai-coding-assistants/) for setup and updates.
 
 ## Documentation
 
