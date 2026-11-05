@@ -465,6 +465,17 @@ RSpec.describe RubyLLM::Chat do
       expect(copy.queued_messages).to be_empty
     end
 
+    it 'withdraws a copied message from the chat it is listed on' do
+      chat.queue('Shared')
+      copy = chat.dup
+
+      expect(copy.queued_messages.first.withdraw).to be(true)
+      expect(copy.queued_messages).to be_empty
+      expect(chat.queued_messages.map(&:content)).to eq(['Shared'])
+      expect(chat.queued_messages.first.withdraw).to be(true)
+      expect(chat.queued_messages).to be_empty
+    end
+
     it 'gives the copy the around_join callbacks, and keeps its own to itself' do
       chat.around_join do |_queued, join|
         events << :shared

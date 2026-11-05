@@ -57,6 +57,14 @@ module RubyLLM
       !@queue&.delete(self).nil?
     end
 
+    # Returns a copy of the message that a copied chat's +queue+ holds, so
+    # #withdraw takes it out of that chat's queue.
+    def requeue(queue) # :nodoc:
+      copy = dup
+      copy.instance_variable_set(:@queue, queue)
+      copy
+    end
+
     private
 
     def inspect_attributes

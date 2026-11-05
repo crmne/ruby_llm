@@ -285,6 +285,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
 
       session.delete "#{chats_path}/\#{chat.id}/queued_messages/\#{queued.first.id}"
       abort "withdraw answered \#{session.response.status}" unless session.response.status == 303
+      session.delete "#{chats_path}/\#{chat.id}/queued_messages/\#{queued.first.id}"
+      abort "withdrawing again answered \#{session.response.status}" unless session.response.status == 303
       left = chat.queued_messages.map(&:content)
       abort "left queued \#{left}" unless left == [ "And Q4" ]
 
@@ -492,7 +494,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       queued_messages_controller_expectations: [
         'class QueuedMessagesController',
         '@chat = ChatAgent.find(params[:chat_id])',
-        '@chat.queued_messages.find(params[:id]).withdraw',
+        '@chat.queued_messages.find_by(id: params[:id])&.withdraw',
         'redirect_to @chat, status: :see_other'
       ],
       approvals_controller_path: 'app/controllers/approvals_controller.rb',
@@ -598,7 +600,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       queued_messages_controller_expectations: [
         'class Llm::QueuedMessagesController',
         '@llm_chat = Llm::ChatAgent.find(params[:chat_id])',
-        '@llm_chat.queued_messages.find(params[:id]).withdraw',
+        '@llm_chat.queued_messages.find_by(id: params[:id])&.withdraw',
         'redirect_to @llm_chat, status: :see_other'
       ],
       approvals_controller_path: 'app/controllers/llm/approvals_controller.rb',

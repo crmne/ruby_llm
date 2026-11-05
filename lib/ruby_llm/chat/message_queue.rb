@@ -10,7 +10,7 @@ module RubyLLM
     class MessageQueue # :nodoc:
       def initialize(messages = [], &add)
         @add = add
-        @messages = messages.dup
+        @messages = messages.map { |message| message.requeue(self) }
         @lock = Mutex.new
       end
 

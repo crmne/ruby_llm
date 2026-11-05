@@ -2,7 +2,7 @@ class <%= queued_message_controller_class_name %> < ApplicationController
   before_action :set_<%= chat_variable_name %>
 
   def destroy
-    @<%= chat_variable_name %>.queued_messages.find(params[:id]).withdraw
+    @<%= chat_variable_name %>.queued_messages.find_by(id: params[:id])&.withdraw
     redirect_to @<%= chat_variable_name %>, status: :see_other
   end
 
