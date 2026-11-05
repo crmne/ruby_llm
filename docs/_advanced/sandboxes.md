@@ -141,7 +141,7 @@ chat = RubyLLM.chat.with_code_execution(
 
 Each sandbox gets a name from its class: `WorkspaceSandbox` is `workspace` and `OnlineSandbox` is `online`. To choose the names yourself, pass a Hash such as `escalate_to: { files: WorkspaceSandbox }`.
 
-The `run_code` tool now takes two more arguments: `sandbox`, one of those names, and `reason`, why the code needs it. Its description tells the model what each sandbox allows. A call without `sandbox` runs in the default, without asking. A call that names one waits for a decision:
+With `escalate_to:`, the `run_code` tool takes two more arguments: `sandbox`, one of those names, and `reason`, why the code needs it. Its description tells the model what each sandbox allows. A call without `sandbox` runs in the default, without asking. A call that names one waits for a decision:
 
 ```ruby
 chat.ask "Add a changelog entry for the new export feature"

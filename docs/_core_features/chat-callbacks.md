@@ -13,7 +13,7 @@ description: Hook into the chat lifecycle with additive callbacks for UI updates
 After reading this guide, you will know:
 
 * Which lifecycle events you can register handlers for.
-* Why callbacks are additive and what replaced the 1.x `on_*` handlers.
+* Why callbacks are additive.
 * How chat callbacks differ from retry- and cancellation-safe usage instrumentation.
 * How to observe tool calls, their progress, and tool results as they happen.
 * How to run each tool inside a block, such as a tenant or `Current` attributes.
@@ -104,9 +104,6 @@ end
 ## Usage Events
 
 `after_message` observes transcript changes. A cancelled request may produce no message, so use `usage.ruby_llm` for accounting across provider attempts, including retries and cancellations. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) and [Instrumentation]({% link _advanced/instrumentation.md %}).
-
-The 1.x `on_*` handlers were replaced in 2.0. See the [2.0 upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.0.0/docs/_reference/upgrading.md#chat-callbacks) for the name changes.
-
 ## Next Steps
 
 * [Chat]({% link _getting_started/chat.md %}) - the core conversation interface these events fire on.

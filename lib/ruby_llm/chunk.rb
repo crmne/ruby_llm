@@ -11,6 +11,14 @@ module RubyLLM
   #     print chunk.content
   #   end
   #
+  # Streamed chunks always have the +:assistant+ role, and most carry the
+  # model ID. #finish_reason, with predicates such as #max_tokens?,
+  # #content_filtered?, #tool_call_stop?, and #stopped?, is usually set only
+  # on the final chunk. #tokens is often empty until then: +output+ counts
+  # the billable output tokens up to that chunk, including thinking tokens
+  # the provider bills as output, and providers differ in when they report
+  # it. Read final usage from the Message that Chat#ask returns.
+  #
   # Pass +index:+ to build one with its position, such as in a test:
   #
   #   RubyLLM::Chunk.new(role: :assistant, content: "Hel", index: 0)

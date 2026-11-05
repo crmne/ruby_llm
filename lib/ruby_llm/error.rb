@@ -233,7 +233,7 @@ module RubyLLM
 
   # The parent of ToolCallTruncatedError, the error RubyLLM raises for
   # tool-call arguments it cannot read. Other arguments that are not a JSON
-  # object no longer raise: the chat answers the call with an error result
+  # object do not raise: the chat answers the call with an error result
   # and the model calls the tool again.
   class ToolCallParseError < Error
     # Returns the normalized reason generation stopped, or +nil+.

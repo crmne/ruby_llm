@@ -26,36 +26,41 @@ After reading this guide, you will know:
 
 ## RubyLLM Error Hierarchy
 
-Provider/API operation errors inherit from `RubyLLM::Error`. Local setup and programming errors inherit from `StandardError` directly, so rescue them separately when you need to handle them.
+Provider operation errors inherit from `RubyLLM::Error`. RubyLLM maps the provider's HTTP status to a subclass, and reads the error message to refine it, so a 400 that reports a context overflow raises `ContextLengthExceededError`. Retries happen before the error reaches you, as described in [Automatic Retries](#automatic-retries).
 
-```ruby
-RubyLLM::Error                    # Base error class for provider-operation issues
-    RubyLLM::BadRequestError      # 400: Invalid request parameters
-    RubyLLM::ConnectionError      # The provider or an MCP server could not be reached or timed out
-    RubyLLM::UnauthorizedError    # 401: API key issues
-    RubyLLM::PaymentRequiredError # 402: Billing issues, such as an account out of credit
-    RubyLLM::ForbiddenError       # 403: Permission issues
-    RubyLLM::ContextLengthExceededError # Context/token limits exceeded (provider-specific)
-    RubyLLM::ContentFilterError   # Provider content filters blocked a transcription
-    RubyLLM::ToolCallParseError   # Parent of ToolCallTruncatedError; other malformed arguments go back to the model
-        RubyLLM::ToolCallTruncatedError # The output token limit cut off a tool call
-    RubyLLM::UnsupportedAttachmentError # Attachment cannot be sent to this provider/model
-    RubyLLM::UnsupportedServerToolError # Provider/protocol does not define this server tool
-    RubyLLM::RateLimitError       # 429: Rate limit exceeded
-    RubyLLM::ServerError          # 500: Provider server error
-    RubyLLM::ServiceUnavailableError # 502/503/504: Service unavailable
-    RubyLLM::OverloadedError      # 529: Service overloaded (Specific providers)
+| Class | HTTP status | Retried automatically? |
+| --- | --- | --- |
+| `RubyLLM::Error` | Any other failure status, such as a 413 that is not a context overflow | No |
+| `RubyLLM::BadRequestError` | 400 | No |
+| `RubyLLM::UnauthorizedError` | 401, or a 400 or 403 whose message reports an invalid key | No |
+| `RubyLLM::PaymentRequiredError` | 402, or a 400 whose message reports a billing problem | No |
+| `RubyLLM::ForbiddenError` | 403 | No |
+| `RubyLLM::ContextLengthExceededError` | 400, 413, or 429 whose message reports a context or token limit | No |
+| `RubyLLM::RateLimitError` | 429, or a 400 whose message reports a rate limit | Yes |
+| `RubyLLM::ServerError` | 500 | Yes |
+| `RubyLLM::ServiceUnavailableError` | 502, 503, 504 | Yes |
+| `RubyLLM::OverloadedError` | 529, or a 400 whose message reports an overload | Yes |
+| `RubyLLM::ConnectionError` | None: the provider or an MCP server could not be reached, or the request timed out | Yes, for provider requests |
+| `RubyLLM::ContentFilterError` | None: provider content filters blocked a transcription | No |
+| `RubyLLM::ToolCallParseError` | None: parent of `ToolCallTruncatedError`; other malformed arguments go back to the model | No |
+| `RubyLLM::ToolCallTruncatedError` | None: the output token limit cut off a tool call | No |
+| `RubyLLM::UnsupportedAttachmentError` | None: the attachment cannot be sent to this provider or model | No |
+| `RubyLLM::UnsupportedServerToolError` | None: the provider or protocol does not define this server tool | No |
 
-# Local Errors (inherit from StandardError)
-RubyLLM::ConfigurationError   # Missing required configuration (e.g., API key)
-RubyLLM::PromptNotFoundError  # Prompt file not found
-RubyLLM::ModelNotFoundError   # Requested model ID not found in registry
-RubyLLM::InvalidRoleError     # Invalid role symbol used for a message
-RubyLLM::InvalidToolChoiceError # Invalid tool choice option
-RubyLLM::PendingToolCallsError # A new question was staged before pending tools finished
-RubyLLM::ModelRegistryError   # Model registry could not be fetched, parsed, or persisted
-RubyLLM::CancelledError       # An in-flight chat operation was cancelled
-```
+Local setup and programming errors inherit from `StandardError` directly, so `rescue RubyLLM::Error` does not catch them. Rescue them separately when you need to handle them.
+
+| Class | Raised when |
+| --- | --- |
+| `RubyLLM::ConfigurationError` | Required configuration, such as an API key, is missing |
+| `RubyLLM::PromptNotFoundError` | A prompt file is not found |
+| `RubyLLM::ModelNotFoundError` | The requested model ID is not in the registry |
+| `RubyLLM::ModelRegistryError` | The model registry could not be fetched, parsed, or persisted |
+| `RubyLLM::InvalidRoleError` | A message uses an invalid role |
+| `RubyLLM::InvalidToolChoiceError` | The tool choice is neither a known mode nor a registered tool |
+| `RubyLLM::PendingToolCallsError` | A new question is staged before pending tool calls finish |
+| `RubyLLM::CancelledError` | An in-flight chat operation is cancelled |
+
+The [`RubyLLM::Error` reference]({{ '/api/RubyLLM/Error.html' | relative_url }}) documents the readers every provider error carries, such as `response`, `provider`, and `error_code`, and each subclass has its own page.
 
 ## Basic Error Handling
 
@@ -299,7 +304,7 @@ Retries are attempted for:
 *   Rate limit errors (`RubyLLM::RateLimitError`, often HTTP 429)
 *   Server-side errors (`RubyLLM::ServerError`, `RubyLLM::ServiceUnavailableError`, `RubyLLM::OverloadedError` / HTTP 500, 502, 503, 504, 529)
 
-`RubyLLM::ContextLengthExceededError` is not retried.
+`RubyLLM::ContextLengthExceededError` is not retried. Neither is a stream that fails after it has started delivering events, because the retry would replay them into the same response.
 
 RubyLLM honors `Retry-After` and `retry-after-ms` headers across providers. `Retry-After` takes precedence when both are present. Invalid millisecond delays fall back to provider-specific timing or the configured backoff. If the requested delay exceeds `retry_max_interval`, RubyLLM raises the error without retrying early.
 
