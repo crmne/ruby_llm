@@ -240,7 +240,7 @@ VIDEO_GENERATION_MODELS = [
 ].freeze
 
 image_generation_models = [
-  { provider: :openai, model: 'gpt-image-1', supports_size: false },
+  { provider: :openai, model: 'gpt-image-1-mini', supports_size: false },
   { provider: :gemini, model: 'gemini-3.1-flash-lite-image', supports_size: false },
   { provider: :vertexai, model: 'gemini-3.1-flash-lite-image', supports_size: false },
   { provider: :openrouter, model: 'google/gemini-3.1-flash-lite-image', supports_size: false },
