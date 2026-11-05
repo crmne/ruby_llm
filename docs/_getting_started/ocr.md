@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Document OCR
-nav_order: 9
+nav_order: 10
 description: Extract text, tables, and images from PDFs and scans as clean markdown
 ---
 
@@ -123,7 +123,7 @@ OCR extracts the text, then a chat model structures it. See [Structured Output](
 
 ## Reading Scans in a Chat
 
-A chat with a [file store]({% link _core_features/chat-files.md %}) reads scans and photos with OCR when you register the OCR converter for their types. The model then reads and searches them like any other file, and each file is read once:
+A chat with a [file store]({% link _advanced/chat-files.md %}) reads scans and photos with OCR when you register the OCR converter for their types. The model then reads and searches them like any other file, and each file is read once:
 
 ```ruby
 RubyLLM.configure do |config|
@@ -131,14 +131,14 @@ RubyLLM.configure do |config|
 end
 ```
 
-See [Scans and Photos]({% link _core_features/chat-files.md %}#scans-and-photos).
+See [PDFs, Scans, and Photos]({% link _advanced/chat-files.md %}#pdfs-scans-and-photos).
 
 ## Error Handling
 
-A provider without OCR support raises `RubyLLM::Error`. Rejected files or options raise `RubyLLM::BadRequestError`. See [Error Handling]({% link _advanced/error-handling.md %}) for retries and [Connection Settings]({% link _getting_started/configuration-connection.md %}#connection-settings) for longer document timeouts.
+A provider without OCR support raises `RubyLLM::Error`. Rejected files or options raise `RubyLLM::BadRequestError`. See [Error Handling]({% link _advanced/error-handling.md %}) for retries and [Connection Settings]({% link _reference/configuration-connection.md %}#connection-settings) for longer document timeouts.
 
 ## Next Steps
 
 *   [File Attachments]({% link _core_features/attachments.md %}): Send documents to chat models instead.
 *   [Structured Output]({% link _core_features/structured-output.md %}) - extract fields from document text.
-*   [Embeddings]({% link _core_features/embeddings.md %}) - make extracted documents searchable.
+*   [Embeddings]({% link _getting_started/embeddings.md %}) - make extracted documents searchable.

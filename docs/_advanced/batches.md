@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Batches
-nav_order: 4
+nav_order: 12
 description: Process chats and embeddings in batches, then collect their results when they are ready.
 ---
 
@@ -23,7 +23,7 @@ After reading this guide, you will know:
 
 Batches process requests in the background, often at lower prices than interactive calls. Use them for document summaries, evaluations, and backfills when nobody is waiting for an immediate answer. Prices and turnaround depend on the provider.
 
-Stage chats or embedding requests, submit them together, and collect their results later. Some providers need [additional setup]({% link _getting_started/configuration-providers.md %}#batch-processing).
+Stage chats or embedding requests, submit them together, and collect their results later. Some providers need [additional setup]({% link _reference/configuration-providers.md %}#batch-processing).
 
 ## Staging Questions
 
@@ -63,7 +63,7 @@ batch = RubyLLM::Batch.find(batch_id, provider: :anthropic)
 batch.complete? # => true
 ```
 
-`Batch.find` needs `provider:` when RubyLLM has not persisted the batch. Pass `context: ctx` to use an isolated [configuration context]({% link _getting_started/configuration-connection.md %}).
+`Batch.find` needs `provider:` when RubyLLM has not persisted the batch. Pass `context: ctx` to use an isolated [configuration context]({% link _reference/configuration-connection.md %}).
 
 `complete?` reads the batch's last known state without contacting the provider. In a long-running process, poll with `refresh`, which re-fetches the state from the provider and returns the batch:
 
@@ -132,7 +132,7 @@ chat.approve(chat.pending_approvals.first) # Or chat.deny(...)
 chat.run_tools
 ```
 
-Rails saves approval decisions so another process can resume. See [Tool Approvals]({% link _core_features/tool-execution.md %}#requiring-approval) and [Agentic Workflows]({% link _advanced/agentic-workflows.md %}).
+Rails saves approval decisions so another process can resume. See [Tool Approvals]({% link _tools/tool-execution.md %}#requiring-approval) and [Agentic Workflows]({% link _advanced/agentic-workflows.md %}).
 
 ## Batching Embeddings
 
@@ -162,7 +162,7 @@ end
 
 Failed slots are `nil` in `results`, and their requests keep a `nil` result; resubmit them in a fresh batch or embed them synchronously with `RubyLLM.embed`.
 
-A batch takes chats or embedding requests, not both; mixing them raises `ArgumentError`. `embed_later` stages text inputs; media attachments use the synchronous [embedding API]({% link _core_features/embeddings.md %}#embedding-images-and-other-media).
+A batch takes chats or embedding requests, not both; mixing them raises `ArgumentError`. `embed_later` stages text inputs; media attachments use the synchronous [embedding API]({% link _getting_started/embeddings.md %}#embedding-images-and-other-media).
 
 ## Rails Integration
 
@@ -210,10 +210,10 @@ The batch workflow above is shared. These differences affect which requests you 
 | OpenRouter | Requires a model with batch access. Batches accept text input and output, with one protocol per batch. Embedding task types and provider-routing preferences are unavailable. Cancellation is not supported. |
 | Vertex AI | Text embedding batches require matching dimensions and parameters across requests. |
 
-See [batch setup]({% link _getting_started/configuration-providers.md %}#batch-processing) for dependencies, cloud storage, and permissions. Bedrock and Vertex AI keep batch files in your configured bucket after processing or cancellation; your application controls their cleanup.
+See [batch setup]({% link _reference/configuration-providers.md %}#batch-processing) for dependencies, cloud storage, and permissions. Bedrock and Vertex AI keep batch files in your configured bucket after processing or cancellation; your application controls their cleanup.
 
 ## Next Steps
 
-* [Chatting with AI Models]({% link _core_features/chat.md %})
-* [Using Tools]({% link _core_features/tools.md %})
-* [Rails Integration]({% link _advanced/rails.md %})
+* [Chatting with AI Models]({% link _getting_started/chat.md %})
+* [Using Tools]({% link _getting_started/tools.md %})
+* [Rails Integration]({% link _getting_started/rails.md %})

@@ -62,6 +62,82 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
     expect(chunk.content).to eq('Hel')
   end
 
+  def text_part_added(output_index, content_index = 0)
+    { 'type' => 'response.content_part.added', 'output_index' => output_index, 'content_index' => content_index,
+      'part' => { 'type' => 'output_text', 'text' => '' } }
+  end
+
+  def text_delta(output_index, delta, content_index = 0)
+    { 'type' => 'response.output_text.delta', 'output_index' => output_index, 'content_index' => content_index,
+      'delta' => delta }
+  end
+
+  def streamed_content(events)
+    accumulator = RubyLLM::Protocol::StreamAccumulator.new
+    events.each { |event| accumulator.add(build_chunk(event)) }
+    accumulator.to_message(nil).content
+  end
+
+  it 'separates the text of a later message item from the one before it' do
+    events = [text_part_added(0), text_delta(0, 'Checking.'), text_part_added(1), text_delta(1, '## Answer')]
+
+    expect(streamed_content(events)).to eq("Checking.\n\n## Answer")
+  end
+
+  it 'starts the first text part without a separator' do
+    chunk = build_chunk(text_part_added(0))
+
+    expect(chunk.content).to be_nil
+  end
+
+  it 'joins the text parts of one message item without a separator' do
+    events = [text_part_added(0), text_delta(0, 'Hello'), text_part_added(0, 1), text_delta(0, ' world', 1)]
+
+    expect(streamed_content(events)).to eq('Hello world')
+  end
+
+  it 'separates only the items that carry text' do
+    events = [
+      { 'type' => 'response.output_item.added', 'output_index' => 0, 'item' => { 'type' => 'message' } },
+      { 'type' => 'response.output_item.added', 'output_index' => 1, 'item' => { 'type' => 'reasoning' } },
+      { 'type' => 'response.content_part.added', 'output_index' => 1, 'content_index' => 0,
+        'part' => { 'type' => 'reasoning_text', 'text' => '' } },
+      { 'type' => 'response.output_item.added', 'output_index' => 2, 'item' => { 'type' => 'message' } },
+      text_part_added(2), text_delta(2, '## Answer')
+    ]
+
+    expect(streamed_content(events)).to eq('## Answer')
+  end
+
+  it 'places citations of a later message item past the separator' do
+    accumulator = RubyLLM::Protocol::StreamAccumulator.new
+    events = [
+      text_part_added(0), text_delta(0, 'Café. '),
+      text_part_added(1), text_delta(1, 'Read '), text_part_added(1, 1), text_delta(1, 'Ruby', 1),
+      { 'type' => 'response.output_text.annotation.added', 'output_index' => 1, 'content_index' => 1,
+        'annotation' => { 'type' => 'url_citation', 'url' => 'https://ruby-lang.org',
+                          'start_index' => 0, 'end_index' => 4 } }
+    ]
+
+    events.each { |event| accumulator.add(build_chunk(event)) }
+    message = accumulator.to_message(nil)
+    citation = message.citations.first
+
+    expect(citation).to have_attributes(start_index: 13, end_index: 17)
+    expect(message.content[citation.start_index...citation.end_index]).to eq('Ruby')
+  end
+
+  it 'starts every stream without a separator' do
+    allow(protocol).to receive(:stream_events) do |*, &block|
+      [text_part_added(0), text_delta(0, 'Checking.'), text_part_added(1), text_delta(1, 'Ruby')].each(&block)
+      nil
+    end
+
+    2.times do
+      expect(protocol.send(:stream_response, {}, &:itself).content).to eq("Checking.\n\nRuby")
+    end
+  end
+
   it 'streams refusal deltas as content' do
     chunk = build_chunk({ 'type' => 'response.refusal.delta', 'delta' => 'I cannot help' })
 
@@ -83,9 +159,8 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
     annotation = { 'type' => 'container_file_citation', 'container_id' => 'container_1',
                    'file_id' => 'file_report', 'filename' => 'report.txt', 'start_index' => 0, 'end_index' => 4 }
     events = [
-      { 'type' => 'response.output_text.delta', 'output_index' => 0, 'content_index' => 0, 'delta' => 'Café. ' },
-      { 'type' => 'response.output_text.delta', 'output_index' => 1, 'content_index' => 0, 'delta' => 'Read ' },
-      { 'type' => 'response.output_text.delta', 'output_index' => 1, 'content_index' => 1, 'delta' => 'Ruby' },
+      text_part_added(0), text_delta(0, 'Café. '),
+      text_part_added(1), text_delta(1, 'Read '), text_part_added(1, 1), text_delta(1, 'Ruby', 1),
       { 'type' => 'response.output_text.annotation.added', 'output_index' => 1, 'content_index' => 1,
         'annotation' => annotation },
       { 'type' => 'response.completed', 'response' => { 'status' => 'completed', 'output' => [
@@ -101,7 +176,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
     citations = accumulator.to_message(nil).citations
 
     expect(citations.length).to eq(1)
-    expect(citations.first).to have_attributes(source_id: 'file_report', start_index: 11, end_index: 15, text: 'Ruby')
+    expect(citations.first).to have_attributes(source_id: 'file_report', start_index: 13, end_index: 17, text: 'Ruby')
   end
 
   it 'reads citations included only in the completed response' do

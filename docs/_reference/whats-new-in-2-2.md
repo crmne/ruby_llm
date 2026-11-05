@@ -1,7 +1,8 @@
 ---
 layout: default
 title: What's New in 2.2
-nav_order: 4
+parent: "Release History"
+nav_order: 0
 description: Let models run Ruby, Python, JavaScript, and shell code in sandboxes on your own servers, let them ask for a wider sandbox one call at a time, teach them your workflows with skills, and run each persisted chat in one process at a time, in RubyLLM 2.2.
 ---
 
@@ -95,7 +96,7 @@ Each run emits a `code_execution.ruby_llm` event with its language, duration, ex
 
 Besides an `MXC::Sandbox` class, a sandbox can be any class or object that answers `supported?` and `run`. Wrap a hosted sandbox service in that shape and set it as `config.sandbox`. To run code on the provider's servers instead, keep using `with_provider_tools(:code_execution)`.
 
-See [Code Execution]({% link _core_features/code-execution.md %}) for every option.
+See [Code Execution]({% link _advanced/code-execution.md %}) for every option.
 
 ## Asking for a Wider Sandbox
 
@@ -114,7 +115,7 @@ The model picks from the sandboxes you listed and says why. That one call waits 
 
 `approve(tool_call, remember: true)` stops asking about an ordinary tool for the rest of the chat, in every process.
 
-See [Sandboxes]({% link _core_features/sandboxes.md %}).
+See [Sandboxes]({% link _advanced/sandboxes.md %}).
 
 ## Skills
 
@@ -136,7 +137,7 @@ Every request lists each skill's name and description. The model loads a skill's
 
 `with_skills` with no arguments gives every skill in `app/skills`, engines add their own folders, and agents name theirs with `skills :invoices, :refunds`. A `SKILL.md` that breaks the specification raises when you configure the chat, not in the middle of a conversation. RubyLLM ships no skills and never downloads them.
 
-See [Skills]({% link _core_features/skills.md %}).
+See [Skills]({% link _tools/skills.md %}).
 
 ## Chat Files
 
@@ -152,7 +153,7 @@ The model sees the PDFs on the question they came with, and one line naming each
 
 Files live in memory, in a folder with `chat.with_file_store("tmp/work")`, or for a persisted chat in Active Storage, in the new `ruby_llm_chat_files` table. `chat.file_store` is the store, agents attach one with `file_store`, and a store of your own subclasses `RubyLLM::FileStore`.
 
-See [Chat Files]({% link _core_features/chat-files.md %}).
+See [Chat Files]({% link _advanced/chat-files.md %}).
 
 ## A Generator for Every Building Block
 
@@ -189,7 +190,7 @@ class RenderVideo < RubyLLM::Tool
 end
 ```
 
-If a process dies, its claims expire and another process picks the chat up. See [Durable Agents]({% link _advanced/durable-agents.md %}#one-process-at-a-time).
+If a process dies, its claims expire and another process picks the chat up. See [Agents in Background Jobs]({% link _advanced/durable-agents.md %}#one-process-at-a-time).
 
 ## Queued Messages
 
@@ -216,7 +217,7 @@ Moonshot AI joins the built-in providers, bringing the total to twenty. Its Kimi
 RubyLLM.chat(model: "kimi-k3").ask("Hello from Kimi")
 ```
 
-Set `moonshot_api_key` to a key from the Kimi platform. See [Provider Setup]({% link _getting_started/configuration-providers.md %}#moonshot-ai).
+Set `moonshot_api_key` to a key from the Kimi platform. See [Provider Setup]({% link _reference/configuration-providers.md %}#moonshot-ai).
 
 ## MiniMax
 
@@ -226,7 +227,7 @@ MiniMax joins the built-in providers, bringing the total to twenty-one. Its M3 m
 RubyLLM.chat(model: "MiniMax-M3.1-Flash").ask("Hello from MiniMax")
 ```
 
-Set `minimax_api_key` to a key from the MiniMax platform. See [Provider Setup]({% link _getting_started/configuration-providers.md %}#minimax).
+Set `minimax_api_key` to a key from the MiniMax platform. See [Provider Setup]({% link _reference/configuration-providers.md %}#minimax).
 
 ## Z.ai
 
@@ -236,7 +237,7 @@ Z.ai joins the built-in providers, bringing the total to twenty-two. It serves Z
 RubyLLM.chat(model: "glm-5.3").ask("Hello from Z.ai")
 ```
 
-Set `zai_api_key` to a key from Z.ai, or point `zai_api_base` at BigModel for Zhipu's platform in China. See [Provider Setup]({% link _getting_started/configuration-providers.md %}#zai).
+Set `zai_api_key` to a key from Z.ai, or point `zai_api_base` at BigModel for Zhipu's platform in China. See [Provider Setup]({% link _reference/configuration-providers.md %}#zai).
 
 ## Meta
 
@@ -246,7 +247,7 @@ Meta joins the built-in providers, bringing the total to twenty-three. Its Muse 
 RubyLLM.chat(model: "muse-spark-1.3").ask("Hello from Muse")
 ```
 
-Set `meta_api_key` to a key from dev.meta.ai. See [Provider Setup]({% link _getting_started/configuration-providers.md %}#meta).
+Set `meta_api_key` to a key from dev.meta.ai. See [Provider Setup]({% link _reference/configuration-providers.md %}#meta).
 
 ## Chirp 3: HD Voices on Vertex AI
 
@@ -257,11 +258,11 @@ RubyLLM.speak("Willkommen zurück.", model: "{{ site.models.speech_vertexai }}",
                                     voice: "de-DE-Chirp3-HD-Leda").save("welcome.mp3")
 ```
 
-See [Text to Speech]({% link _core_features/text-to-speech.md %}) and [Provider Setup]({% link _getting_started/configuration-providers.md %}#text-to-speech).
+See [Text to Speech]({% link _getting_started/text-to-speech.md %}) and [Provider Setup]({% link _reference/configuration-providers.md %}#text-to-speech).
 
 ## Judgments on OpenRouter
 
-OpenRouter's decision models now answer [judgments]({% link _core_features/judgments.md %}): Jev, Clef, and every other model it lists under decisions. Each judgment reports the exact cost OpenRouter charged:
+OpenRouter's decision models now answer [judgments]({% link _advanced/judgments.md %}): Jev, Clef, and every other model it lists under decisions. Each judgment reports the exact cost OpenRouter charged:
 
 ```ruby
 judgment = RubyLLM.judge("Please refund the duplicate charge today.",

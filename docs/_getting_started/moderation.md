@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Moderation
-nav_order: 10
+nav_order: 11
 description: Screen text and images for harmful content before it reaches your models
 redirect_from:
   - /guides/moderation
@@ -88,7 +88,7 @@ Set `default_moderation_model` in [Configuration]({% link _getting_started/confi
 
 ## Bedrock Guardrails
 
-Apply a [configured Bedrock guardrail]({% link _getting_started/configuration-providers.md %}#guardrails) without selecting a model:
+Apply a [configured Bedrock guardrail]({% link _reference/configuration-providers.md %}#guardrails) without selecting a model:
 
 ```ruby
 result = RubyLLM.moderate(user_input, provider: :bedrock)
@@ -142,6 +142,6 @@ A failed request gives you no moderation decision. Let the error reach your job'
 
 ## Next Steps
 
-* [Chat]({% link _core_features/chat.md %}) - check user input before starting a conversation.
-* [Rails Integration]({% link _advanced/rails.md %}) - work with application records and attachments.
-* [Image Generation]({% link _core_features/image-generation.md %}) - generate and edit images through the same framework.
+* [Chat]({% link _getting_started/chat.md %}) - check user input before starting a conversation.
+* [Rails Integration]({% link _getting_started/rails.md %}) - work with application records and attachments.
+* [Image Generation]({% link _getting_started/image-generation.md %}) - generate and edit images through the same framework.

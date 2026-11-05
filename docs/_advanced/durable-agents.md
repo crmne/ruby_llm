@@ -1,8 +1,8 @@
 ---
 layout: default
-title: Durable Agents
-parent: "Agents"
-nav_order: 3
+title: Agents in Background Jobs
+parent: "Durable Agents"
+nav_order: 1
 description: Run agent turns as background jobs that survive crashes, deploys, and the wait for a human decision.
 ---
 
@@ -74,7 +74,7 @@ ActiveJob's `step` and the chat's `step` are unrelated methods. The job step wra
 
 ## Parking for a Human Decision
 
-A tool declared with [`requires_approval`]({% link _core_features/tool-execution.md %}#requiring-approval) pauses the loop until someone decides. The pending call is saved in the database, and `complete` returns so the job can finish.
+A tool declared with [`requires_approval`]({% link _tools/tool-execution.md %}#requiring-approval) pauses the loop until someone decides. The pending call is saved in the database, and `complete` returns so the job can finish.
 
 ```ruby
 class CompleteJob < ApplicationJob
@@ -147,13 +147,13 @@ When the other process is alive, it finishes the work and the retry finds nothin
 
 ## At-Least-Once, Not Exactly-Once
 
-Claims keep two healthy processes from running the same tool call or asking the model the same question. Interruption still never gives you exactly-once execution. A job that dies after the model responds but before the message is saved repeats that model call once its claim expires, and a job that dies after a tool runs but before its result is saved runs that tool again. Write tools so that running them twice is safe: `find_or_create_by!` over `create!`, and idempotency keys on external calls. The same rule applies to [approval resolvers]({% link _core_features/tool-execution.md %}#requiring-approval), which may be consulted again on resume.
+Claims keep two healthy processes from running the same tool call or asking the model the same question. Interruption still never gives you exactly-once execution. A job that dies after the model responds but before the message is saved repeats that model call once its claim expires, and a job that dies after a tool runs but before its result is saved runs that tool again. Write tools so that running them twice is safe: `find_or_create_by!` over `create!`, and idempotency keys on external calls. The same rule applies to [approval resolvers]({% link _tools/tool-execution.md %}#requiring-approval), which may be consulted again on resume.
 
 [Batches]({% link _advanced/batches.md %}) are the same durability at scale: a batch is `generate` deferred for many chats at once, with `run_tools` run locally between rounds, and batch state persisted so any process can collect the results.
 
 ## Next Steps
 
 * [Agentic Workflows]({% link _advanced/agentic-workflows.md %}) - The loop verbs these jobs drive, and multi-agent patterns.
-* [Controlling Tool Execution]({% link _core_features/tool-execution.md %}) - Approval, tool choice, and concurrency.
+* [Controlling Tool Execution]({% link _tools/tool-execution.md %}) - Approval, tool choice, and concurrency.
 * [Persistence with acts_as]({% link _advanced/rails-persistence.md %}) - The transcript persistence durability builds on.
 * [Batches]({% link _advanced/batches.md %}) - Deferred provider-side generation for many chats, with provider-specific pricing.

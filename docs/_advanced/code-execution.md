@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Code Execution
-parent: "Tools"
-nav_order: 6
+parent: "Durable Agents"
+nav_order: 4
 description: Let the model run Ruby, Python, JavaScript, and shell code in a sandbox on your own servers and hand back the files it makes.
 ---
 
@@ -22,7 +22,7 @@ After reading this guide, you will know:
 
 ## Setting Up a Sandbox
 
-A model that can run code can calculate exactly, transform data, and produce files such as charts, spreadsheets, and PDFs. That code was written by a model, so it never runs in your application's process. It runs in a [sandbox]({% link _core_features/sandboxes.md %}) that cannot read your project, your home directory, or your secrets.
+A model that can run code can calculate exactly, transform data, and produce files such as charts, spreadsheets, and PDFs. That code was written by a model, so it never runs in your application's process. It runs in a [sandbox]({% link _advanced/sandboxes.md %}) that cannot read your project, your home directory, or your secrets.
 
 Add the [mxc gem](https://crmne.github.io/mxc/), define a sandbox, and make it the default:
 
@@ -45,7 +45,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-The sandbox decides what the code may read, write, and reach, and how long it runs. [Sandboxes]({% link _core_features/sandboxes.md %}) covers defining them, checking that they run on your servers, [what Linux needs]({% link _core_features/sandboxes.md %}#running-on-linux), and letting the model ask for a wider one.
+The sandbox decides what the code may read, write, and reach, and how long it runs. [Sandboxes]({% link _advanced/sandboxes.md %}) covers defining them, checking that they run on your servers, [what Linux needs]({% link _advanced/sandboxes.md %}#running-on-linux), and letting the model ask for a wider one.
 
 ## Running Code
 
@@ -56,7 +56,7 @@ chat = RubyLLM.chat.with_code_execution
 chat.ask "What is the 200th Fibonacci number?"
 ```
 
-The model gets one tool, `run_code`, that takes a language and a program. RubyLLM runs the program in the sandbox and sends the model its exit code, standard output, and standard error. The model can call it as many times as it needs, like any other [tool]({% link _core_features/tools.md %}).
+The model gets one tool, `run_code`, that takes a language and a program. RubyLLM runs the program in the sandbox and sends the model its exit code, standard output, and standard error. The model can call it as many times as it needs, like any other [tool]({% link _getting_started/tools.md %}).
 
 `with_code_execution` follows the same shape as `with_thinking` and `with_caching`: call it bare to turn it on, pass options to tune it, and pass `false` to turn it off:
 
@@ -86,7 +86,7 @@ Both belong to the sandbox, so a chat that needs longer runs or a package regist
 
 ### Following a Run
 
-A run that builds a report or installs packages can take a while. While it runs, `run_code` reports each line of its output as [progress]({% link _core_features/tool-execution.md %}#reporting-progress):
+A run that builds a report or installs packages can take a while. While it runs, `run_code` reports each line of its output as [progress]({% link _tools/tool-execution.md %}#reporting-progress):
 
 ```ruby
 chat.with_code_execution.after_tool_progress do |tool_call, progress|
@@ -98,11 +98,11 @@ chat.ask "Count to five, one number a second"
 # ...
 ```
 
-Output streams only when something listens for progress, and the model still receives it when the run ends, within the usual [limits](#limits). A [sandbox of your own]({% link _core_features/sandboxes.md %}#writing-your-own-sandbox) reports progress when its `run` yields each line of output as it arrives.
+Output streams only when something listens for progress, and the model still receives it when the run ends, within the usual [limits](#limits). A [sandbox of your own]({% link _advanced/sandboxes.md %}#writing-your-own-sandbox) reports progress when its `run` yields each line of output as it arrives.
 
 ## What the Code Can See
 
-Each call gets a new, empty run directory, which RubyLLM removes when the call ends. The code starts there unless its sandbox sets a [directory of its own]({% link _core_features/sandboxes.md %}#building-a-coding-agent), and `RUN_DIR` holds its path either way. Nothing carries over from one call to the next, except files, which work like this:
+Each call gets a new, empty run directory, which RubyLLM removes when the call ends. The code starts there unless its sandbox sets a [directory of its own]({% link _advanced/sandboxes.md %}#building-a-coding-agent), and `RUN_DIR` holds its path either way. Nothing carries over from one call to the next, except files, which work like this:
 
 * **Files in the conversation come in.** Every file attached to the conversation, and every file an earlier call returned, is copied into `attachments/` in the run directory, read-only. A file an earlier call returned keeps its path, so `out/chart.png` is at `attachments/out/chart.png`. A later file with the same path replaces an earlier one.
 * **Files the code writes go out.** Every file the code writes in the run directory comes back as an attachment on the tool result message.
@@ -115,7 +115,7 @@ result = chat.messages.find(&:tool_result?)
 result.attachments.first.filename # => "revenue.png"
 ```
 
-In a chat with a [file store]({% link _core_features/chat-files.md %}), runs work with the chat's files instead, so the model reads a chart it drew with `read_file`, edits the script it wrote with `edit_file`, and runs it again. With a store in a folder, code runs in that folder and changes the files in place. With any other store, the model names the files its code reads in `run_code`'s `files` argument, they are copied into the run directory, and what the code writes is saved back. The tool result lists the paths instead of carrying the files. See [Code Execution]({% link _core_features/chat-files.md %}#code-execution) in the Chat Files guide.
+In a chat with a [file store]({% link _advanced/chat-files.md %}), runs work with the chat's files instead, so the model reads a chart it drew with `read_file`, edits the script it wrote with `edit_file`, and runs it again. With a store in a folder, code runs in that folder and changes the files in place. With any other store, the model names the files its code reads in `run_code`'s `files` argument, they are copied into the run directory, and what the code writes is saved back. The tool result lists the paths instead of carrying the files. See [Code Execution]({% link _advanced/chat-files.md %}#code-execution) in the Chat Files guide.
 
 ```ruby
 chat = RubyLLM.chat
@@ -217,7 +217,7 @@ chat.approve(chat.pending_approvals.first)
 chat.complete
 ```
 
-The next call runs in the default sandbox again, and an escalated call is never remembered. [Sandboxes]({% link _core_features/sandboxes.md %}#asking-for-a-wider-sandbox) covers approving these calls, why they are safe, and how to build a coding agent from them.
+The next call runs in the default sandbox again, and an escalated call is never remembered. [Sandboxes]({% link _advanced/sandboxes.md %}#asking-for-a-wider-sandbox) covers approving these calls, why they are safe, and how to build a coding agent from them.
 
 ## Code Execution in Rails
 
@@ -228,7 +228,7 @@ chat = Chat.create!(model: "{{ site.models.default_chat }}").with_code_execution
 chat.ask "Turn this export into a PDF report", with: params[:export]
 ```
 
-The files a run returns are stored with Active Storage on the tool result message, like any other attachment, and later runs find them in `attachments/` after a reload or in another process. With `with_file_store`, they are saved to the chat's files in Active Storage instead. See [Chat Files]({% link _core_features/chat-files.md %}#files-in-rails).
+The files a run returns are stored with Active Storage on the tool result message, like any other attachment, and later runs find them in `attachments/` after a reload or in another process. With `with_file_store`, they are saved to the chat's files in Active Storage instead. See [Chat Files]({% link _advanced/chat-files.md %}#files-in-rails).
 
 ## Agents
 
@@ -273,7 +273,7 @@ The payload carries the `chat`, the `tool_call_id` of the call it answers, the `
 
 ## Running Code on the Provider's Servers
 
-Some providers run code in their own hosted containers. Use [Provider Tools]({% link _core_features/provider-tools.md %}) for that:
+Some providers run code in their own hosted containers. Use [Provider Tools]({% link _tools/provider-tools.md %}) for that:
 
 ```ruby
 chat.with_provider_tools(:code_execution)
@@ -283,8 +283,8 @@ Hosted code execution needs no sandbox on your servers, but your files go to the
 
 ## Next Steps
 
-* [Sandboxes]({% link _core_features/sandboxes.md %}) - Define what the code can do, and let the model ask for more.
-* [Tools]({% link _core_features/tools.md %}) - Write your own tools in Ruby.
-* [Controlling Tool Execution]({% link _core_features/tool-execution.md %}) - Approve calls, run them concurrently, and watch them with callbacks.
-* [Provider Tools]({% link _core_features/provider-tools.md %}) - Run code, search the web, and more on the provider's servers.
-* [Agents]({% link _advanced/agents.md %}) - Package code execution with instructions and tools.
+* [Sandboxes]({% link _advanced/sandboxes.md %}) - Define what the code can do, and let the model ask for more.
+* [Tools]({% link _getting_started/tools.md %}) - Write your own tools in Ruby.
+* [Controlling Tool Execution]({% link _tools/tool-execution.md %}) - Approve calls, run them concurrently, and watch them with callbacks.
+* [Provider Tools]({% link _tools/provider-tools.md %}) - Run code, search the web, and more on the provider's servers.
+* [Agents]({% link _getting_started/agents.md %}) - Package code execution with instructions and tools.

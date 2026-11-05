@@ -1,8 +1,7 @@
 ---
 layout: default
 title: Connection, Logging and Contexts
-parent: Configuration
-nav_order: 2
+nav_order: 3
 description: Timeouts, retries, proxies, connection reuse, logging, the model registry file, and isolated multi-tenant contexts.
 ---
 
@@ -241,6 +240,6 @@ tenant_b_service = TenantService.new(tenant_b)
 ## Next Steps
 
 - [Configuration]({% link _getting_started/configuration.md %}#full-reference) - the complete option list in one block.
-- [Provider Setup and Custom Endpoints]({% link _getting_started/configuration-providers.md %}) - per-provider keys and OpenAI-compatible endpoints.
+- [Provider Setup and Custom Endpoints]({% link _reference/configuration-providers.md %}) - per-provider keys and OpenAI-compatible endpoints.
 - [Instrumentation and Observability]({% link _advanced/instrumentation.md %}) - hook RubyLLM into your metrics and tracing stack.
 - [Model Registry]({% link _reference/models.md %}) - discover, select, and refresh models.

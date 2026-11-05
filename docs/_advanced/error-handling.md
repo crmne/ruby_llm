@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Error Handling
-nav_order: 7
+nav_order: 15
 description: Rescue provider errors, fall back to other models, and let automatic retries absorb transient failures
 redirect_from:
   - /guides/error-handling
@@ -277,7 +277,7 @@ When streaming has already yielded chunks before a fallback-worthy error, RubyLL
 
 ## Handling Errors Within Tools
 
-When building [Tools]({% link _core_features/tools.md %}), you need to decide how errors within the tool's `execute` method should be handled:
+When building [Tools]({% link _getting_started/tools.md %}), you need to decide how errors within the tool's `execute` method should be handled:
 
 1.  **Return Error to LLM:** If the error is something the LLM might be able to recover from (e.g., invalid parameters provided by the LLM, temporary lookup failure), return a Hash containing an `:error` key. The LLM will see this error message as the tool's output and may try again or use a different approach.
 
@@ -313,7 +313,7 @@ When building [Tools]({% link _core_features/tools.md %}), you need to decide ho
 
 ## Agent-Level Handlers
 
-When you use [Agents]({% link _advanced/agents.md %}), `rescue_from` moves error handling out of every call site and into the agent class:
+When you use [Agents]({% link _getting_started/agents.md %}), `rescue_from` moves error handling out of every call site and into the agent class:
 
 ```ruby
 class ApplicationAgent < RubyLLM::Agent
@@ -328,7 +328,7 @@ class ApplicationAgent < RubyLLM::Agent
 end
 ```
 
-Handlers cover the agent's chat operations (`ask`, `say`, `ask_later`, `complete`, `generate`, `run_tools`, `step`), run on the agent instance, and follow `ActiveSupport::Rescuable` semantics. See [Handling Errors with `rescue_from`]({% link _advanced/agents.md %}#handling-errors-with-rescue_from).
+Handlers cover the agent's chat operations (`ask`, `say`, `ask_later`, `complete`, `generate`, `run_tools`, `step`), run on the agent instance, and follow `ActiveSupport::Rescuable` semantics. See [Handling Errors with `rescue_from`]({% link _getting_started/agents.md %}#handling-errors-with-rescue_from).
 
 ## Automatic Retries
 
@@ -370,6 +370,6 @@ Debug logs show request and response headers and bodies, with API keys filtered.
 
 ## Next Steps
 
-*   [Using Tools]({% link _core_features/tools.md %})
+*   [Using Tools]({% link _getting_started/tools.md %})
 *   [Streaming Responses]({% link _core_features/streaming.md %})
-*   [Rails Integration]({% link _advanced/rails.md %})
+*   [Rails Integration]({% link _getting_started/rails.md %})

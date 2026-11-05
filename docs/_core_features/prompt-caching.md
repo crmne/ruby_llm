@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Prompt Caching
-parent: "Chat"
 nav_order: 7
 description: Reuse stable prompt prefixes with automatic or explicit prompt caching
 ---

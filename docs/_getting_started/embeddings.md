@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Embeddings
-nav_order: 3
+nav_order: 12
 description: Create vectors from text, images, audio, video, and documents for search and similarity
 redirect_from:
   - /guides/embeddings
@@ -117,7 +117,7 @@ embedding = RubyLLM.embed(
 
 Pass `nil` as the text to embed only the attachment. Combine attachments with one text at a time. Vertex AI's Gemini Embedding 2 accepts one input per request, including text-only requests.
 
-Cohere Embed v3 accepts one image per request without text. RubyLLM selects the image input type when you pass `nil` and `with:`. Embed v4 can combine text and images. The same calls work on Cohere and Azure deployments; see [Azure configuration]({% link _getting_started/configuration-providers.md %}#azure-deployments).
+Cohere Embed v3 accepts one image per request without text. RubyLLM selects the image input type when you pass `nil` and `with:`. Embed v4 can combine text and images. The same calls work on Cohere and Azure deployments; see [Azure configuration]({% link _reference/configuration-providers.md %}#azure-deployments).
 
 ## Provider Options
 
@@ -212,8 +212,8 @@ The `embedding` vector column must match your model's dimensions. This example g
 
 ## Next Steps
 
-*   [Reranking]({% link _core_features/rerank.md %}) to order your candidates by relevance before you use them.
+*   [Reranking]({% link _getting_started/rerank.md %}) to order your candidates by relevance before you use them.
 *   [Retrieval-Augmented Generation (RAG)]({% link _advanced/rag.md %}) to ground answers in your own documents.
-*   [Chatting with AI Models]({% link _core_features/chat.md %}) for interactive conversations.
-*   [Using Tools]({% link _core_features/tools.md %}) to extend AI capabilities.
+*   [Chatting with AI Models]({% link _getting_started/chat.md %}) for interactive conversations.
+*   [Using Tools]({% link _getting_started/tools.md %}) to extend AI capabilities.
 *   [Error Handling]({% link _advanced/error-handling.md %}) for retries and provider failures.

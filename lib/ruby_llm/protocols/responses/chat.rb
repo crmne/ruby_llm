@@ -207,7 +207,8 @@ module RubyLLM
 
         def parse_output_citations(output, content)
           offset = 0
-          output.select { |item| item['type'] == 'message' }.flat_map do |message|
+          text_messages(output).each_with_index.flat_map do |message, index|
+            offset += MESSAGE_SEPARATOR.length if index.positive?
             Array(message['content']).flat_map do |part|
               key = MESSAGE_TEXT_KEYS[part['type']]
               next [] unless key
@@ -484,16 +485,23 @@ module RubyLLM
         end
 
         MESSAGE_TEXT_KEYS = { 'output_text' => 'text', 'refusal' => 'refusal' }.freeze
+        MESSAGE_SEPARATOR = "\n\n"
 
         def parse_output_text(output)
-          texts = output.select { |item| item['type'] == 'message' }.flat_map do |message|
+          texts = text_messages(output).map do |message|
             Array(message['content']).filter_map do |part|
               key = MESSAGE_TEXT_KEYS[part['type']]
               part[key] if key
-            end
+            end.join
           end
 
-          texts.empty? ? nil : texts.join
+          texts.empty? ? nil : texts.join(MESSAGE_SEPARATOR)
+        end
+
+        def text_messages(output)
+          output.select do |item|
+            item['type'] == 'message' && Array(item['content']).any? { |part| MESSAGE_TEXT_KEYS.key?(part['type']) }
+          end
         end
 
         FINISH_REASONS = {

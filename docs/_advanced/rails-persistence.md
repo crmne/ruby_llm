@@ -1,8 +1,7 @@
 ---
 layout: default
 title: Persistence with acts_as
-parent: "Rails Integration"
-nav_order: 1
+nav_order: 7
 description: Persist application-owned chats and messages while RubyLLM manages its supporting records.
 ---
 
@@ -51,7 +50,7 @@ RubyLLM owns eight supporting tables under the `ruby_llm_` prefix:
 * `ruby_llm_mcp_credentials` for encrypted MCP OAuth credentials.
 * `ruby_llm_provider_files` for the provider uploads of stored attachments.
 * `ruby_llm_queued_messages` for user messages waiting to join a chat.
-* `ruby_llm_chat_files` for the files of chats with [files]({% link _core_features/chat-files.md %}#files-in-rails).
+* `ruby_llm_chat_files` for the files of chats with [files]({% link _advanced/chat-files.md %}#files-in-rails).
 
 They are regular tables installed by migrations, not a Rails engine. Each has a record class under `RubyLLM::ActiveRecord` that you can read and query like any model; [Querying RubyLLM's Records](#querying-rubyllms-records) shows how. RubyLLM writes the rows, so use the public RubyLLM APIs described below to change them.
 
@@ -94,7 +93,7 @@ chat.with_instructions("Use short bullet points.", append: true)
 chat.messages.where(role: :system)
 ```
 
-Runtime-only settings such as fallbacks, tools, temperature, and callbacks live on the memoized `to_llm` chat. Reapply them after loading a fresh record, or define them in an [Agent]({% link _advanced/agents.md %}).
+Runtime-only settings such as fallbacks, tools, temperature, and callbacks live on the memoized `to_llm` chat. Reapply them after loading a fresh record, or define them in an [Agent]({% link _getting_started/agents.md %}).
 
 ```ruby
 chat.with_fallbacks("gpt-4.1-mini", "claude-haiku-4-5")
@@ -104,7 +103,7 @@ chat.ask("Summarize this conversation.")
 
 ### Resuming Long Responses
 
-A [long response]({% link _core_features/chat.md %}#long-responses) saves its progress each time Gemini pauses: the assistant record holds the answer so far, its usage rows, and the newest token in `continuation`. If the process dies before the answer finishes, run the chat again and it continues from that point:
+A [long response]({% link _getting_started/chat.md %}#long-responses) saves its progress each time Gemini pauses: the assistant record holds the answer so far, its usage rows, and the newest token in `continuation`. If the process dies before the answer finishes, run the chat again and it continues from that point:
 
 ```ruby
 class ChatResponseJob < ApplicationJob

@@ -36,7 +36,7 @@ Each registry entry describes the model:
 *   **`context_window`**: Max input tokens (e.g., `128_000`).
 *   **`max_output_tokens`**: Max output tokens (e.g., `16_384`).
 *   **`supports?(:vision)`**: If it can process images and videos.
-*   **`supports?(:function_calling)`**: If it can use [Tools]({% link _core_features/tools.md %}).
+*   **`supports?(:function_calling)`**: If it can use [Tools]({% link _getting_started/tools.md %}).
 *   **`price(:input)`**: Cost in USD per 1 million input tokens.
 *   **`price(:output)`**: Cost in USD per 1 million output tokens.
 *   **`price(:cache_read)`**: Cost in USD per 1 million cache read tokens, when available.
@@ -101,7 +101,7 @@ The default plain Ruby cache locations are:
 * macOS: `~/Library/Caches/RubyLLM/models.json`
 * Windows: `%LOCALAPPDATA%\RubyLLM\Cache\models.json`
 
-Set `config.model_registry_file` to use another writable path. See [Connection, Logging and Contexts]({% link _getting_started/configuration-connection.md %}#model-registry-file).
+Set `config.model_registry_file` to use another writable path. See [Connection, Logging and Contexts]({% link _reference/configuration-connection.md %}#model-registry-file).
 
 `refresh` already saves to the active registry store. Use `save_to_json` separately when you want to export the currently loaded registry to another file:
 

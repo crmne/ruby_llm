@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Files
-nav_order: 11
+nav_order: 12
 description: Upload files once, reuse them in chats and batches, and download provider results.
 ---
 
@@ -96,7 +96,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-Automatic uploads require a provider that supports stored attachments. Vertex AI and Bedrock also need a [configured storage bucket]({% link _getting_started/configuration-providers.md %}#batch-processing). On Bedrock, only Amazon Nova models read attachments from S3, so other models receive them inline, where Bedrock applies the model's own limits. Uploading separately does not remove the model's input or context limits.
+Automatic uploads require a provider that supports stored attachments. Vertex AI and Bedrock also need a [configured storage bucket]({% link _reference/configuration-providers.md %}#batch-processing). On Bedrock, only Amazon Nova models read attachments from S3, so other models receive them inline, where Bedrock applies the model's own limits. Uploading separately does not remove the model's input or context limits.
 
 A chat uploads each file once and reuses the upload for later requests. In Rails, [persisted chats]({% link _advanced/rails-persistence.md %}#attachments-and-structured-output) also reuse it after they are loaded again, in any process. If the provider deletes an upload, the request that fails over it uploads the file again and runs once more, unless part of the reply already streamed.
 
@@ -129,7 +129,7 @@ image = RubyLLM.paint(
 image.save "mug.png"
 ```
 
-ElevenLabs media assets require the [Image & Video plan and permissions]({% link _getting_started/configuration-providers.md %}#media-generation). They are separate from voice-agent knowledge base documents.
+ElevenLabs media assets require the [Image & Video plan and permissions]({% link _reference/configuration-providers.md %}#media-generation). They are separate from voice-agent knowledge base documents.
 
 ## Cohere Datasets
 
@@ -164,7 +164,7 @@ file = response.attachments.first.source
 RubyLLM.download(file.id, provider: file.provider).save(file.filename)
 ```
 
-Keep the complete file ID and its provider when storing the reference. For generated images, [use `paint`]({% link _core_features/image-generation.md %}) to save the result directly.
+Keep the complete file ID and its provider when storing the reference. For generated images, [use `paint`]({% link _getting_started/image-generation.md %}) to save the result directly.
 
 ## Download Restrictions
 

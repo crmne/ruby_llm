@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Hosted Research
-nav_order: 8
+nav_order: 13
 description: Run a hosted research agent with remote tools and collect its report through a durable job ID
 ---
 
@@ -114,7 +114,7 @@ tools = {
 }
 ```
 
-Pass this Hash as `provider_tools: tools`. Allowed remote tools run without approval pauses; approval options raise an error. Use [chat tools]({% link _core_features/provider-tools.md %}) for interactive approvals or local Ruby tools.
+Pass this Hash as `provider_tools: tools`. Allowed remote tools run without approval pauses; approval options raise an error. Use [chat tools]({% link _tools/provider-tools.md %}) for interactive approvals or local Ruby tools.
 
 ## Cancel and Recover
 

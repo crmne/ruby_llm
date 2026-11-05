@@ -60,7 +60,7 @@ OTEL_EXPORTER_OTLP_HEADERS="x-api-key=your-key"
 
 RubyLLM depends only on `opentelemetry-api`, which the SDK includes, and loads it only when you call `enable`. It never configures, starts, flushes, or shuts down your SDK or exporters.
 
-`enable` applies to the whole process, including chats that already exist and [isolated contexts]({% link _getting_started/configuration-connection.md %}#contexts-isolated-configurations). Calling it twice is harmless. Your `config.instrumenter`, Rails notifications, and other subscribers keep receiving the same events. `RubyLLM::OpenTelemetry.disable` stops tracing new operations and lets running spans finish.
+`enable` applies to the whole process, including chats that already exist and [isolated contexts]({% link _reference/configuration-connection.md %}#contexts-isolated-configurations). Calling it twice is harmless. Your `config.instrumenter`, Rails notifications, and other subscribers keep receiving the same events. `RubyLLM::OpenTelemetry.disable` stops tracing new operations and lets running spans finish.
 
 ## What a Trace Looks Like
 
@@ -91,7 +91,7 @@ A few details:
 
 * A streaming call's span stays open until the final chunk or an error.
 * Retries happen inside one model call's span. Each fallback model gets its own span.
-* [Evaluations]({% link _advanced/evaluation-progress.md %}#tracing) run every trial as a workflow, so each trial appears as its own trace.
+* [Evaluations]({% link _advanced/evaluations.md %}#tracing) run every trial as a workflow, so each trial appears as its own trace.
 
 ## Spans
 
@@ -140,7 +140,7 @@ Token counts the provider did not report are left out, and reported zeroes stay 
 
 ## Context Across Threads and Jobs
 
-RubyLLM carries the trace context into the threads and fibers it starts for [concurrent tool execution]({% link _core_features/tool-execution.md %}), so those tools stay in the right trace. For threads, jobs, and tasks your application starts, propagate context with your OpenTelemetry instrumentation, such as `opentelemetry-instrumentation-active_job`.
+RubyLLM carries the trace context into the threads and fibers it starts for [concurrent tool execution]({% link _tools/tool-execution.md %}), so those tools stay in the right trace. For threads, jobs, and tasks your application starts, propagate context with your OpenTelemetry instrumentation, such as `opentelemetry-instrumentation-active_job`.
 
 ## Exported Data
 

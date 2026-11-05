@@ -17,13 +17,13 @@ After reading this guide, you will know:
 
 *   How to install RubyLLM.
 *   How to configure the providers you want to use.
-*   How to chat, stream responses, and ask about files.
-*   How to define tools, agents, and structured output.
+*   How to chat, stream responses, ask about files, get structured output, and read costs.
+*   How to define tools and agents.
 *   How to generate images, video, and speech, and transcribe audio.
 *   How to extract document text, moderate content, and search with embeddings and reranking.
-*   How to track costs and save conversations in Rails.
+*   How to save conversations in Rails.
 
-Each example shows one feature. Try the ones your application needs, then follow its guide for more options.
+Each example shows one feature. Try the ones your application needs, then follow its guide for more options. The Start Here guides that follow cover the same ground in this order.
 
 ## Installation
 
@@ -85,7 +85,7 @@ response = chat.ask "How do I create my first Rails app?"
 puts response.content
 ```
 
-See [Chatting with AI Models]({% link _core_features/chat.md %}) for choosing models and setting instructions.
+See [Chatting with AI Models]({% link _getting_started/chat.md %}) for choosing models and setting instructions.
 
 ## Streaming a Response
 
@@ -128,6 +128,19 @@ response.parsed
 
 Schematist comes with RubyLLM. See [Structured Output]({% link _core_features/structured-output.md %}) for nested objects, arrays, and optional fields.
 
+## Tracking Usage and Costs
+
+Read token counts and costs from the response:
+
+```ruby
+response = RubyLLM.chat.ask "Explain Ruby blocks in one paragraph."
+response.tokens.input
+response.tokens.output
+response.cost.total
+```
+
+See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) for cache usage, retries, and the Rails usage ledger. Use [Batches]({% link _advanced/batches.md %}) for bulk work that can run asynchronously.
+
 ## Giving the Model Tools
 
 Let the model call your Ruby code. Define a tool and implement `execute`:
@@ -145,7 +158,7 @@ response = RubyLLM.chat.with_tools(CurrentTime).ask "What day is it?"
 puts response.content
 ```
 
-RubyLLM runs the tool calls and returns their results to the model. See [Tools]({% link _core_features/tools.md %}) for parameters and [Tool Execution]({% link _core_features/tool-execution.md %}) for human approvals.
+RubyLLM runs the tool calls and returns their results to the model. See [Tools]({% link _getting_started/tools.md %}) for parameters and [Tool Execution]({% link _tools/tool-execution.md %}) for human approvals.
 
 ## Defining an Agent
 
@@ -162,7 +175,7 @@ response = PlanningAssistant.new.ask "Help me plan a three-day Ruby study schedu
 puts response.content
 ```
 
-See [Agents]({% link _advanced/agents.md %}) for reusable prompts, inputs, and Rails persistence, or [Agentic Workflows]({% link _advanced/agentic-workflows.md %}) for coordinating agents.
+See [Agents]({% link _getting_started/agents.md %}) for reusable prompts, inputs, and Rails persistence, or [Agentic Workflows]({% link _advanced/agentic-workflows.md %}) for coordinating agents.
 
 ## Generating an Image
 
@@ -173,7 +186,7 @@ image = RubyLLM.paint "A photorealistic red panda coding Ruby"
 image.save "red_panda.png"
 ```
 
-See [Image Generation]({% link _core_features/image-generation.md %}) for editing images, choosing sizes, and generating several at once.
+See [Image Generation]({% link _getting_started/image-generation.md %}) for editing images, choosing sizes, and generating several at once.
 
 ## Generating a Video
 
@@ -190,7 +203,7 @@ video = RubyLLM.animate "A red panda typing on a laptop, with rain at the window
 video.save "red_panda.mp4"
 ```
 
-`animate` waits for the video to finish. See [Video Generation]({% link _core_features/video-generation.md %}) for other providers, animating an image, and submitting jobs with `animate_later`.
+`animate` waits for the video to finish. See [Video Generation]({% link _advanced/video-generation.md %}) for other providers, animating an image, and submitting jobs with `animate_later`.
 
 ## Generating Speech
 
@@ -201,7 +214,7 @@ speech = RubyLLM.speak "Welcome to your first RubyLLM application."
 speech.save "welcome.mp3"
 ```
 
-See [Text to Speech]({% link _core_features/text-to-speech.md %}) for voices, languages, and audio formats.
+See [Text to Speech]({% link _getting_started/text-to-speech.md %}) for voices, languages, and audio formats.
 
 ## Transcribing Audio
 
@@ -212,7 +225,7 @@ transcript = RubyLLM.transcribe "meeting.wav"
 puts transcript.text
 ```
 
-See [Audio Transcription]({% link _core_features/audio-transcription.md %}) for timestamps, speaker identification, and streaming.
+See [Audio Transcription]({% link _getting_started/audio-transcription.md %}) for timestamps, speaker identification, and streaming.
 
 ## Extracting Text from Documents
 
@@ -229,7 +242,7 @@ document = RubyLLM.ocr "scanned-contract.pdf"
 puts document.markdown
 ```
 
-See [Document OCR]({% link _core_features/ocr.md %}) for extracting individual pages and working with tables.
+See [Document OCR]({% link _getting_started/ocr.md %}) for extracting individual pages and working with tables.
 
 ## Moderating Content
 
@@ -241,7 +254,7 @@ moderation.flagged?
 # => false
 ```
 
-See [Moderation]({% link _core_features/moderation.md %}) for categories, scores, and image moderation.
+See [Moderation]({% link _getting_started/moderation.md %}) for categories, scores, and image moderation.
 
 ## Creating an Embedding
 
@@ -252,7 +265,7 @@ embedding = RubyLLM.embed "Ruby is optimized for programmer happiness."
 vector = embedding.vector
 ```
 
-See [Embeddings]({% link _core_features/embeddings.md %}) for embedding multiple documents and [RAG]({% link _advanced/rag.md %}) for answering questions from your own content.
+See [Embeddings]({% link _getting_started/embeddings.md %}) for embedding multiple documents and [RAG]({% link _advanced/rag.md %}) for answering questions from your own content.
 
 ## Ranking Search Results
 
@@ -271,20 +284,7 @@ ranked = RubyLLM.rerank("How do I reset my password?", documents,
 puts ranked.results.first.document
 ```
 
-See [Reranking]({% link _core_features/rerank.md %}) for scores, result limits, and combining it with embeddings.
-
-## Tracking Usage and Costs
-
-Read token counts and costs from the response:
-
-```ruby
-response = RubyLLM.chat.ask "Explain Ruby blocks in one paragraph."
-response.tokens.input
-response.tokens.output
-response.cost.total
-```
-
-See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) for cache usage, retries, and the Rails usage ledger. Use [Batches]({% link _advanced/batches.md %}) for bulk work that can run asynchronously.
+See [Reranking]({% link _getting_started/rerank.md %}) for scores, result limits, and combining it with embeddings.
 
 ## Using It in Rails
 
@@ -307,17 +307,18 @@ The API stays the same, and each message persists automatically. Pass Active Sto
 bin/rails generate ruby_llm:chat_ui
 ```
 
-Then visit `http://localhost:3000/chats` to start chatting. See the [Rails Integration Guide]({% link _advanced/rails.md %}) for full details.
+Then visit `http://localhost:3000/chats` to start chatting. See the [Rails Integration Guide]({% link _getting_started/rails.md %}) for full details.
 
 ## What's Next?
 
-Continue with the guide for the feature you want to build:
+The Start Here guides take each of these concepts in turn:
 
-*   [Chatting with AI Models]({% link _core_features/chat.md %})
-*   [Models]({% link _reference/available-models.md %}) for comparing capabilities and pricing
-*   [Agents]({% link _advanced/agents.md %}) and [Agentic Workflows]({% link _advanced/agentic-workflows.md %})
-*   [Batches]({% link _advanced/batches.md %}) and [Prompt Caching]({% link _core_features/prompt-caching.md %})
-*   [Rails Integration]({% link _advanced/rails.md %})
-*   [AI Coding Assistants]({% link _getting_started/ai-coding-assistants.md %})
-*   [Configuration]({% link _getting_started/configuration.md %})
-*   [Error Handling]({% link _advanced/error-handling.md %})
+1.  [How RubyLLM Works]({% link _getting_started/overview.md %}): how the pieces fit together.
+2.  [Chat]({% link _getting_started/chat.md %}): conversations, instructions, models, and the messages they return.
+3.  [Tools]({% link _getting_started/tools.md %}): let the model call your Ruby code.
+4.  [Agents]({% link _getting_started/agents.md %}): reusable classes with a model, instructions, and tools.
+5.  [Configuration]({% link _getting_started/configuration.md %}): API keys, default models, and every setting.
+6.  The individual operations: [images]({% link _getting_started/image-generation.md %}), [speech]({% link _getting_started/text-to-speech.md %}), [transcription]({% link _getting_started/audio-transcription.md %}), [OCR]({% link _getting_started/ocr.md %}), [moderation]({% link _getting_started/moderation.md %}), [embeddings]({% link _getting_started/embeddings.md %}), and [reranking]({% link _getting_started/rerank.md %}).
+7.  [Rails Integration]({% link _getting_started/rails.md %}): `acts_as_chat` and `acts_as_message` on your own records.
+
+After that, go deeper where your application needs it: [Chat in Depth]({% link _core_features/streaming.md %}) and [Tools in Depth]({% link _tools/tool-parameters.md %}) for every chat and tool option, [Durable Agents]({% link _advanced/durable-agents-overview.md %}) for agents that run in jobs and wait for people, [Batches]({% link _advanced/batches.md %}) and [Prompt Caching]({% link _core_features/prompt-caching.md %}) for lower costs, [Error Handling]({% link _advanced/error-handling.md %}) for failures, and [Models]({% link _reference/available-models.md %}) for comparing capabilities and pricing. If you write code with an AI assistant, see [AI Coding Assistants]({% link _reference/ai-coding-assistants.md %}).

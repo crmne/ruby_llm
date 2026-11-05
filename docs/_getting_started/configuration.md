@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Configuration
-nav_order: 3
+nav_order: 6
 has_children: true
 description: Set provider credentials, choose default models, and share configuration across the RubyLLM API.
 redirect_from:
@@ -44,7 +44,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-Each provider has its own key (and sometimes region or project settings). For the full list of providers, organization headers, Vertex AI authentication, and OpenAI-compatible custom endpoints, see [Provider Setup and Custom Endpoints]({% link _getting_started/configuration-providers.md %}).
+Each provider has its own key (and sometimes region or project settings). For the full list of providers, organization headers, Vertex AI authentication, and OpenAI-compatible custom endpoints, see [Provider Setup and Custom Endpoints]({% link _reference/configuration-providers.md %}).
 
 > Attempting to use an unconfigured provider will raise `RubyLLM::ConfigurationError`. Only configure what you need.
 {: .note }
@@ -91,7 +91,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-See [Rails Integration]({% link _advanced/rails.md %}) for persistence, Active Storage attachments, streaming, and jobs.
+See [Rails Integration]({% link _getting_started/rails.md %}) for persistence, Active Storage attachments, streaming, and jobs.
 
 ## Full Reference
 
@@ -264,7 +264,7 @@ end
 
 ## Next Steps
 
-- [Provider Setup and Custom Endpoints]({% link _getting_started/configuration-providers.md %}) - every provider's keys, OpenAI organization headers, Vertex AI auth, and OpenAI-compatible endpoints.
-- [Connection, Logging and Contexts]({% link _getting_started/configuration-connection.md %}) - timeouts, retries, proxies, debug logging, the model registry file, and isolated per-tenant contexts.
-- [Start chatting with AI models]({% link _core_features/chat.md %}) - put your configuration to work.
-- [Set up Rails integration]({% link _advanced/rails.md %}) - persistence, streaming, and generators.
+- [Provider Setup and Custom Endpoints]({% link _reference/configuration-providers.md %}) - every provider's keys, OpenAI organization headers, Vertex AI auth, and OpenAI-compatible endpoints.
+- [Connection, Logging and Contexts]({% link _reference/configuration-connection.md %}) - timeouts, retries, proxies, debug logging, the model registry file, and isolated per-tenant contexts.
+- [Start chatting with AI models]({% link _getting_started/chat.md %}) - put your configuration to work.
+- [Set up Rails integration]({% link _getting_started/rails.md %}) - persistence, streaming, and generators.

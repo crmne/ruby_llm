@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Provider Tools
-parent: "Tools"
 nav_order: 4
 description: Search the web, run code, and connect remote MCP tools through the same chat API
 redirect_from:
@@ -36,7 +35,7 @@ puts response.content
 response.citations
 ```
 
-Enable several at once, or combine them with your own [Ruby tools]({% link _core_features/tools.md %}):
+Enable several at once, or combine them with your own [Ruby tools]({% link _getting_started/tools.md %}):
 
 ```ruby
 chat.with_provider_tools(:web_search, :code_execution)
@@ -231,7 +230,7 @@ Vertex AI connects remote MCP through a hosted Deep Research agent. Use the [Hos
 
 ### Self-Hosted Tool Servers
 
-Configure the MCP servers on your [GPUStack deployment]({% link _getting_started/configuration-providers.md %}#gpustack-deployments). Per-request URLs are not supported. Select Responses and explicitly allow execution:
+Configure the MCP servers on your [GPUStack deployment]({% link _reference/configuration-providers.md %}#gpustack-deployments). Per-request URLs are not supported. Select Responses and explicitly allow execution:
 
 ```ruby
 chat = RubyLLM.chat(model: ENV.fetch("GPUSTACK_MODEL"), provider: :gpustack,
@@ -244,7 +243,7 @@ The backend must supply the corresponding Python or browser tool. Page fetching 
 
 ### Remote Tool Approval
 
-OpenAI and Azure Responses can pause before executing an MCP call. Use the same approval API as [local tools]({% link _core_features/tool-execution.md %}#requiring-approval):
+OpenAI and Azure Responses can pause before executing an MCP call. Use the same approval API as [local tools]({% link _tools/tool-execution.md %}#requiring-approval):
 
 ```ruby
 chat = RubyLLM.chat(model: "{{ site.models.openai_mcp }}", provider: :openai)

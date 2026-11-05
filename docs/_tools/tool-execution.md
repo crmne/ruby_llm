@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Controlling Tool Execution
-parent: "Tools"
 nav_order: 2
 description: Choose tools, require approval, run calls concurrently, and observe their results
 ---
@@ -133,7 +132,7 @@ chat.approve(tool_call, remember: true)
 chat.complete
 ```
 
-Later calls to the same tool run without asking for the rest of the chat. Approving a call that already has a result remembers nothing. A [code execution]({% link _core_features/code-execution.md %}) call that asks for a wider sandbox is the exception: each one waits for its own approval, and `remember: true` raises `ArgumentError` for it. See [Sandboxes]({% link _core_features/sandboxes.md %}#asking-for-a-wider-sandbox).
+Later calls to the same tool run without asking for the rest of the chat. Approving a call that already has a result remembers nothing. A [code execution]({% link _advanced/code-execution.md %}) call that asks for a wider sandbox is the exception: each one waits for its own approval, and `remember: true` raises `ArgumentError` for it. See [Sandboxes]({% link _advanced/sandboxes.md %}#asking-for-a-wider-sandbox).
 
 If you [drive the loop yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself), stop when the chat is waiting: `chat.step until chat.complete? || chat.waiting?`. `waiting?` is true while every pending call waits on something outside the chat, such as an approval, and `awaiting_approval?` tells you an approval is what it waits on.
 
@@ -151,7 +150,7 @@ The resolver can run repeatedly while a call waits, including after a job resume
 
 ### Remote Tool Approval
 
-Providers can also request approval for a tool running on an MCP server. These requests appear in `chat.pending_approvals` with a `server` label. Use `approve`, `deny`, and `complete` as above; RubyLLM sends the decision to the provider instead of executing a Ruby tool. See [MCP servers]({% link _core_features/provider-tools.md %}#remote-tool-approval) for a working example.
+Providers can also request approval for a tool running on an MCP server. These requests appear in `chat.pending_approvals` with a `server` label. Use `approve`, `deny`, and `complete` as above; RubyLLM sends the decision to the provider instead of executing a Ruby tool. See [MCP servers]({% link _tools/provider-tools.md %}#remote-tool-approval) for a working example.
 
 ### Approval in Rails
 
@@ -206,9 +205,9 @@ A tool call record's `running?` is `true` while a process runs it, so a message'
 <% end %>
 ```
 
-Write approval-gated tools so running them twice is safe. A tool execution can die after its side effect succeeds but before the result is persisted, and the call runs again once its claim expires. See [Durable Agents]({% link _advanced/durable-agents.md %}#at-least-once-not-exactly-once).
+Write approval-gated tools so running them twice is safe. A tool execution can die after its side effect succeeds but before the result is persisted, and the call runs again once its claim expires. See [Agents in Background Jobs]({% link _advanced/durable-agents.md %}#at-least-once-not-exactly-once).
 
-[Durable Agents]({% link _advanced/durable-agents.md %}) covers jobs, restarts, and cancellation. A call without a result approved with `remember: true` is recorded as `remembered` on its tool call record, so later calls to that tool run without asking in every process.
+[Agents in Background Jobs]({% link _advanced/durable-agents.md %}) covers jobs, restarts, and cancellation. A call without a result approved with `remember: true` is recorded as `remembered` on its tool call record, so later calls to that tool run without asking in every process.
 
 ## Concurrent Tool Execution
 
@@ -349,7 +348,7 @@ chat.with_tools(ReadReport).after_tool_progress do |tool_call, progress|
 end
 ```
 
-`progress.value` and `progress.total` are set when the tool counts its work, and `progress.fraction` gives the share done. Tools from [MCP servers]({% link _core_features/mcp.md %}#progress-and-cancellation) report the server's progress through the same callback.
+`progress.value` and `progress.total` are set when the tool counts its work, and `progress.fraction` gives the share done. Tools from [MCP servers]({% link _tools/mcp.md %}#progress-and-cancellation) report the server's progress through the same callback.
 
 The callback runs in the thread or fiber that reports, before the tool's result. That includes threads and fibers the tool starts itself, such as a batch of downloads. With concurrent tool execution, callbacks for different tool calls can run at the same time, so keep shared state thread-safe. Tools can report as often as they like; throttle in the callback if you forward reports to a UI. Outside a chat, `progress` does nothing.
 
@@ -372,7 +371,7 @@ When the budget runs out the transcript is still valid, and calling `step` again
 
 ## Next Steps
 
-*   [Tool Parameters]({% link _core_features/tool-parameters.md %}) - Declare flat arguments, structured schemas, and provider-specific metadata.
-*   [Tools]({% link _core_features/tools.md %}) - The execution flow, error handling, and security overview.
+*   [Tool Parameters]({% link _tools/tool-parameters.md %}) - Declare flat arguments, structured schemas, and provider-specific metadata.
+*   [Tools]({% link _getting_started/tools.md %}) - The execution flow, error handling, and security overview.
 *   [Agentic Workflows]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself) - Drive the tool loop yourself for full control.
 *   [Chat Event Handlers]({% link _core_features/chat-callbacks.md %}) - Other lifecycle callbacks on a chat.

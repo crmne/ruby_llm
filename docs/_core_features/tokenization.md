@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Tokenization
-nav_order: 12
+nav_order: 11
 description: Inspect token IDs and count a conversation's input tokens before generating a response.
 ---
 
@@ -35,7 +35,7 @@ The result is a `RubyLLM::Tokenization`. `result.model` identifies the tokenizer
 
 Token IDs depend on the model. Use the same model when comparing tokenized inputs. Tokenization covers the supplied string; it excludes chat formatting, instructions, tools, and attachments.
 
-For GPUStack, enable the [model proxy]({% link _getting_started/configuration-providers.md %}#gpustack-deployments) and select the deployed model with `provider: :gpustack`.
+For GPUStack, enable the [model proxy]({% link _reference/configuration-providers.md %}#gpustack-deployments) and select the deployed model with `provider: :gpustack`.
 
 ## Counting a Chat Request
 

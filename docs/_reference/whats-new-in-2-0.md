@@ -69,7 +69,7 @@ chat.approve(chat.pending_approvals.first)
 chat.complete
 ```
 
-Use `deny` to reject a call. The model receives the decision and can respond to it. See [Tool Approvals]({% link _core_features/tool-execution.md %}#requiring-approval).
+Use `deny` to reject a call. The model receives the decision and can respond to it. See [Tool Approvals]({% link _tools/tool-execution.md %}#requiring-approval).
 
 You also get explicit control over the conversation loop. `ask_later` stages a question, `generate` asks the model for one response, `run_tools` executes pending tools, and `step` advances the conversation by one generation or tool execution. Use them to set limits, hand work to another agent, or run one turn per job. See [Agentic Workflows]({% link _advanced/agentic-workflows.md %}).
 
@@ -142,7 +142,7 @@ video = RubyLLM.animate "A red panda typing Ruby code, with rain at the window"
 video.save "red_panda.mp4"
 ```
 
-`animate` waits for the result. `animate_later` returns a job you can check and collect later. See [Video Generation]({% link _core_features/video-generation.md %}) for animating images and choosing a provider.
+`animate` waits for the result. `animate_later` returns a job you can check and collect later. See [Video Generation]({% link _advanced/video-generation.md %}) for animating images and choosing a provider.
 
 Turn text into speech, too:
 
@@ -151,7 +151,7 @@ speech = RubyLLM.speak "Welcome to the Ruby study group."
 speech.save "welcome.mp3"
 ```
 
-See [Text to Speech]({% link _core_features/text-to-speech.md %}) for voices and formats.
+See [Text to Speech]({% link _getting_started/text-to-speech.md %}) for voices and formats.
 
 ## Transcription, Speakers, and Timestamps
 
@@ -165,7 +165,7 @@ puts transcript.text
 transcript.words
 ```
 
-An empty `speaker_names` array asks the model to identify speakers without assigning known names. Supported models can also stream the transcript as it arrives. See [Audio Transcription]({% link _core_features/audio-transcription.md %}) for live transcription, speaker labels, and timing formats.
+An empty `speaker_names` array asks the model to identify speakers without assigning known names. Supported models can also stream the transcript as it arrives. See [Audio Transcription]({% link _getting_started/audio-transcription.md %}) for live transcription, speaker labels, and timing formats.
 
 ## OCR, Multimodal Embeddings, and Reranking
 
@@ -176,7 +176,7 @@ document = RubyLLM.ocr "scanned-contract.pdf"
 puts document.markdown
 ```
 
-Use [OCR]({% link _core_features/ocr.md %}) when you need the document's text for indexing, extraction, or later model calls.
+Use [OCR]({% link _getting_started/ocr.md %}) when you need the document's text for indexing, extraction, or later model calls.
 
 Reranking orders search results by how well they answer a question:
 
@@ -188,9 +188,9 @@ ranked = RubyLLM.rerank("How do I reset my password?", documents,
 puts ranked.results.first.document
 ```
 
-[Embeddings]({% link _core_features/embeddings.md %}) now accept media through `with:` on supported models. Combine embeddings, [reranking]({% link _core_features/rerank.md %}), and chats to build [search over your own content]({% link _advanced/rag.md %}).
+[Embeddings]({% link _getting_started/embeddings.md %}) now accept media through `with:` on supported models. Combine embeddings, [reranking]({% link _getting_started/rerank.md %}), and chats to build [search over your own content]({% link _advanced/rag.md %}).
 
-[Moderation]({% link _core_features/moderation.md %}) also supports configured Bedrock guardrails. Text checks use the existing `RubyLLM.moderate` API and report the guardrail's assessment and usage without requiring a generation model.
+[Moderation]({% link _getting_started/moderation.md %}) also supports configured Bedrock guardrails. Text checks use the existing `RubyLLM.moderate` API and report the guardrail's assessment and usage without requiring a generation model.
 
 ## Provider Tools
 
@@ -207,7 +207,7 @@ response = ResearchAgent.new.ask "What changed in the latest Ruby release?"
 response.citations.each { |citation| puts citation.url }
 ```
 
-Combine provider tools with tools that run your Ruby code. Both work with streaming and follow-up questions. See [Provider Tools]({% link _core_features/provider-tools.md %}).
+Combine provider tools with tools that run your Ruby code. Both work with streaming and follow-up questions. See [Provider Tools]({% link _tools/provider-tools.md %}).
 
 ## Hosted Research
 
