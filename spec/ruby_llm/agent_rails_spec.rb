@@ -23,6 +23,35 @@ RSpec.describe RubyLLM::Agent do
     expect(RubyLLM.config.openai_api_key).to be_nil
   end
 
+  it 'sets the owner of a found record after its context and protocol, before its instructions' do
+    RubyLLM.config.openai_api_key = nil
+    agent = Class.new(described_class) do
+      chat_class Chat
+      model model_for(:openai, :temperature), provider: :openai, protocol: :responses
+      owner { chat.id }
+      instructions { "Owner #{chat.owner}" }
+    end
+    agent.context do |config|
+      config.openai_api_key = 'agent-key'
+      config.openai_api_base = 'https://example.com/v1'
+    end
+    id = agent.create!.id
+    built = []
+    allow(Chat).to receive(:find).and_wrap_original do |find, *args|
+      find.call(*args).tap do |record|
+        allow(record).to receive(:build_llm_chat).and_wrap_original do |build|
+          build.call.tap { built << [record.context&.config&.openai_api_base, record.protocol] }
+        end
+      end
+    end
+
+    record = agent.find(id)
+
+    expect(built).to eq([['https://example.com/v1', :responses]])
+    expect(record.owner).to eq(id)
+    expect(record.to_llm.messages.first.content).to eq("Owner #{id}")
+  end
+
   describe 'rescue_from on records' do
     let(:agent) do
       Class.new(described_class) do
