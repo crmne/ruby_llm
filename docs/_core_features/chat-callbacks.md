@@ -16,6 +16,7 @@ After reading this guide, you will know:
 * Why callbacks are additive and what replaced the 1.x `on_*` handlers.
 * How chat callbacks differ from retry- and cancellation-safe usage instrumentation.
 * How to observe tool calls, their progress, and tool results as they happen.
+* How to run each tool inside a block, such as a tenant or `Current` attributes.
 * How to observe messages as they are queued, join the conversation, or are withdrawn.
 * How to observe model fallback attempts.
 * When callbacks fire for streaming versus non-streaming requests.
@@ -59,6 +60,20 @@ end
 ```
 
 See [Reporting Progress]({% link _tools/tool-execution.md %}#reporting-progress).
+
+### Wrapping Tool Calls
+
+`around_tool_call` runs each tool inside your block, like a Rails `around_action`. Call `run` where the tool should run:
+
+```ruby
+chat.around_tool_call do |call, &run|
+  ActsAsTenant.with_tenant(account, &run)
+end
+```
+
+The block runs in the thread or fiber that runs the tool, so a tenant, `Current` attributes, or fiber-local values you set there reach the tool, also with [concurrent tool execution]({% link _tools/tool-execution.md %}#concurrent-tool-execution). `run` returns the tool's result, and the conversation gets that result whatever your block returns. A block that never calls `run` skips the tool, and the model is told the call did not run.
+
+It runs after `before_tool_call` and before `after_tool_result`. Several blocks nest in the order you registered them, the first outermost.
 
 ## Queue Events
 

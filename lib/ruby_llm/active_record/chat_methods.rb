@@ -321,8 +321,8 @@ module RubyLLM
         with_end_user with_owner with_compaction with_code_execution with_skills
         with_provider_options with_headers with_schema
         convert_unsupported_attachments
-        before_request before_message after_message before_tool_call after_tool_result after_tool_progress
-        before_fallback after_fallback around_join after_file_write
+        before_request before_message after_message before_tool_call around_tool_call after_tool_result
+        after_tool_progress before_fallback after_fallback around_join after_file_write
       ].freeze
 
       ##
@@ -489,6 +489,12 @@ module RubyLLM
       # :call-seq: after_tool_result(&block)
       #
       # Applies Chat#after_tool_result and returns this record.
+
+      ##
+      # :method: around_tool_call
+      # :call-seq: around_tool_call(&block)
+      #
+      # Applies Chat#around_tool_call and returns this record.
 
       ##
       # :method: after_tool_progress

@@ -1023,6 +1023,26 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(reports).to eq([[chat.messages.second.tool_calls.keys.first, 'Working', 0.5]])
     end
 
+    it 'runs tools inside around_tool_call' do
+      stub_const('TenantTool', Class.new(RubyLLM::Tool) { def execute = Fiber[:spec_tenant].to_s })
+      chat = Chat.create!(model: model_id).with_tools(TenantTool).with_tool_options(concurrency: :threads)
+      call = tool_call(name: 'tenant')
+      allow(chat.to_llm.provider).to receive(:complete).and_return(
+        RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { call.id => call }),
+        RubyLLM::Message.new(role: :assistant, content: 'Finished')
+      )
+
+      in_tenant = lambda do |_call, &run|
+        Fiber[:spec_tenant] = 'acme'
+        run.call
+      end
+
+      expect(chat.around_tool_call(&in_tenant)).to eq(chat)
+      chat.ask('Use the tool')
+
+      expect(chat.messages.find_by(role: 'tool').content).to eq('acme')
+    end
+
     it 'defers tools registered with defer: true' do
       stub_const('DeferredTool', Class.new(RubyLLM::Tool) { def execute = 'done' })
       chat = Chat.create!(model: model_id).with_tools(DeferredTool, defer: true)
