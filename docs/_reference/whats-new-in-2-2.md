@@ -96,7 +96,7 @@ Programs under `/usr`, such as LibreOffice and Poppler's `pdftoppm`, work withou
 
 ### Measuring Runs
 
-Each run emits a `code_execution.ruby_llm` event with its language, duration, exit code, and whether it timed out, so you can meter and bill runs. With OpenTelemetry, each run becomes a span.
+Each run emits a `code_execution.ruby_llm` event with its language, duration, exit code, and whether it timed out, and adds a `code_execution` entry with its CPU seconds to the usage ledger, so you can meter and bill runs. With OpenTelemetry, each run becomes a span.
 
 ### Your Own Sandbox
 
@@ -285,6 +285,14 @@ See [Dropping Unsupported Parameters]({% link _advanced/error-handling.md %}#dro
 ## Cancelled Replies Keep Their Text
 
 A streamed reply you cancel now stays in the conversation as far as it got, marked `cancelled?`, so the model sees what the person read. See [Cancelling a Stream]({% link _core_features/streaming.md %}#cancelling-a-stream).
+
+## Smaller Additions
+
+A reply a fallback model wrote names it: `reply.model` and `reply.provider`, also on Rails records with those columns. See [Fallback Callbacks]({% link _advanced/error-handling.md %}#fallback-callbacks).
+
+`RubyLLM::Attachment.new(io, filename: "export.csv", mime_type: "text/csv")` takes a file's type when you know it. See [Automatic File Type Detection]({% link _core_features/attachments.md %}#automatic-file-type-detection).
+
+Vertex AI takes the `eu` and `us` multi-region locations.
 
 ## Moonshot AI
 

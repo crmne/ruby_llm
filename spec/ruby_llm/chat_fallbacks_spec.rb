@@ -220,10 +220,14 @@ RSpec.describe RubyLLM::Chat do
     allow(fallback_provider).to receive(:complete)
       .and_return(RubyLLM::Message.new(role: :assistant, content: 'from fallback', model: 'fallback-model'))
 
+    replies = []
+    chat.after_message { |message| replies << message }
     chat.ask_later('Hello')
 
     expect { chat.generate { chat.cancel } }.to raise_error(RubyLLM::CancelledError)
     expect(fallback_provider).not_to have_received(:complete)
+    expect(chat.messages.select(&:cancelled?).map(&:content)).to eq(['primary partial'])
+    expect(replies.map(&:content)).to eq(['primary partial'])
   end
 
   it 'does not fall back when the streaming block raises' do

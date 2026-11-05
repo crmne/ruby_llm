@@ -24,6 +24,43 @@ RSpec.describe RubyLLM::Attachment do
     expect(stdout.strip).to eq('ruby.txt,text/plain')
   end
 
+  it 'takes an explicit MIME type for an IO source, without detecting one' do
+    attachment = described_class.new(StringIO.new('{"a":1}'), filename: 'export.bin', mime_type: 'application/json')
+
+    expect(attachment.filename).to eq('export.bin')
+    expect(attachment.mime_type).to eq('application/json')
+    expect(attachment.content).to eq('{"a":1}')
+  end
+
+  it 'classifies an explicit MIME type without its parameters' do
+    attachment = described_class.new(StringIO.new('{"a":1}'), filename: 'export.bin',
+                                                              mime_type: 'Application/JSON; charset=utf-8')
+
+    expect(attachment.mime_type).to eq('application/json')
+    expect(attachment).to be_text
+  end
+
+  it 'reads binary text with the charset it was given' do
+    bytes = StringIO.new("caf\xE9".b)
+    attachment = described_class.new(bytes, filename: 'menu.txt', mime_type: 'text/plain; charset=iso-8859-1')
+
+    expect(attachment.mime_type).to eq('text/plain')
+    expect(attachment.content).to eq('café')
+    expect(described_class.from_h(attachment.to_h).mime_type).to eq('text/plain')
+  end
+
+  it 'reads text as UTF-8 when the charset is one Ruby does not know' do
+    attachment = described_class.new(StringIO.new('café'.b), filename: 'a.txt', mime_type: 'text/plain; charset=nope')
+
+    expect(attachment.content).to eq('café')
+  end
+
+  it 'keeps an explicit MIME type through serialization' do
+    attachment = described_class.new(StringIO.new('{"a":1}'), filename: 'export.bin', mime_type: 'application/json')
+
+    expect(described_class.from_h(attachment.to_h).mime_type).to eq('application/json')
+  end
+
   it 'normalizes text file content to UTF-8' do
     attachment = described_class.new(File.expand_path('../fixtures/ruby.txt', __dir__))
 

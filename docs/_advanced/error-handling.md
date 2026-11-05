@@ -255,6 +255,8 @@ end
 
 The callback receives a `RubyLLM::Fallback` with the configured target (`id`, `provider`, `model`) and the runtime attempt details (`from`, `to`, `error`, `attempt`, `response`, `fallback_error`, `dropped_parameter`, `streaming?`, and `chunks_yielded?`).
 
+A reply a fallback model wrote says so: `reply.model` is that model and `reply.provider` its provider. On a Rails message with `model_id` and `provider` columns of your own, RubyLLM saves them on those replies, and leaves them empty on replies from the chat's own model, so you can tell a stand-in's replies apart.
+
 When streaming has already yielded chunks before a fallback-worthy error, RubyLLM cannot take those chunks back. It starts a new assistant message lifecycle for the fallback response, and `fallback.chunks_yielded?` lets your UI or logs distinguish that case.
 
 ## Handling Errors Within Tools

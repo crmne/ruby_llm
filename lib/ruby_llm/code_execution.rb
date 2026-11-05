@@ -49,6 +49,8 @@ module RubyLLM
     ESCALATION_NAME = /\A[a-z][a-z0-9_]*\z/
     PROGRESS_LINE = 200
     MAX_CHECK_ERROR = 2000
+    USAGE_PROVIDER = 'sandbox' # :nodoc:
+    USAGE_COUNTER = 'code_execution_seconds' # :nodoc:
     LIMIT_ERRORS = {
       cpu_time: 'The code used up its CPU time and was stopped',
       memory: 'The code used more memory than it may and was stopped',
@@ -596,11 +598,40 @@ module RubyLLM
                   sandbox: name&.to_s, timeout: timeout_for(runner), network: setting(runner, :network) }
       started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
       config = @config.is_a?(Proc) ? @config.call : @config
+      status = :failed
       RubyLLM.instrument('code_execution.ruby_llm', payload, config:) do |event|
-        yield event
+        yield(event).tap { status = :succeeded }
+      rescue CancelledError
+        status = :cancelled
+        raise
       ensure
         event[:duration] = Process.clock_gettime(Process::CLOCK_MONOTONIC) - started
+        record_usage(runner, event, config, status)
       end
+    end
+
+    # A run spends the application's machines, not a provider's, so its
+    # entry names the sandbox class that ran it and prices nothing. A run
+    # that failed or was cancelled still used its seconds. A class without
+    # a name has nothing to name, so its runs have no entry.
+    def record_usage(runner, event, config, status)
+      model = sandbox_class(runner).name
+      return unless model
+
+      entry = Accounting::Usage::Entry.new(
+        operation: :code_execution, provider: USAGE_PROVIDER, model:, status:,
+        tokens: Tokens.new(server_tool_use: { USAGE_COUNTER => (event[:cpu_time] || event[:duration]).to_f }),
+        cost: Cost.new(amounts: {}, reported: true, total: 0), owner: Accounting::Usage.owner, workflow: Accounting::Usage.workflow
+      )
+      @chat ? @chat.add_usage_entry(entry) : Accounting::Usage.record(entry)
+      Accounting::Usage.instrument(entry, config:)
+    rescue StandardError => e
+      RubyLLM.logger.warn("RubyLLM could not record code execution usage: #{e.class}: #{e.message}")
+    end
+
+    def sandbox_class(runner)
+      sandbox = runner.respond_to?(:policy) ? runner.policy : runner
+      sandbox.is_a?(Module) ? sandbox : sandbox.class
     end
 
     def record(event, result, paths)

@@ -178,6 +178,7 @@ module RubyLLM
       @fallbacks = []
       @fallback_errors = Fallback::DEFAULT_ERRORS
       @drop_unsupported = false
+      @answering_fallback = false
       @callbacks = Hash.new { |callbacks, name| callbacks[name] = [] }
       @attachment_replacements = {}.compare_by_identity
       @cancelled = false
@@ -1896,6 +1897,7 @@ module RubyLLM
 
       reply = Message.new(role: :assistant, content: text, model: @model.id, finish_reason: :cancelled)
       link_completion_usage(reply, usage_start)
+      note_fallback(reply)
       add_message(reply)
       run_callbacks(:after_message, reply)
     end
@@ -1903,6 +1905,7 @@ module RubyLLM
     def record_generated_message(result, usage_start, announce: true, resumed: nil, keep_unfinished: false)
       raise_if_cancelled!
       link_completion_usage(result, usage_start, resumed)
+      note_fallback(result)
       run_callbacks(:before_message) if announce
       keep_unfinished ? add_message(result) : replace_unfinished(result)
       run_callbacks(:after_message, result)
@@ -1914,6 +1917,10 @@ module RubyLLM
       replace_unfinished(partial)
       raise_if_cancelled!
       @run.record_progress(partial)
+    end
+
+    def note_fallback(message)
+      message.stood_in(model: @model.id, provider: @provider.slug) if @answering_fallback
     end
 
     def replace_unfinished(message)
@@ -1996,6 +2003,7 @@ module RubyLLM
         end
       end
     ensure
+      @answering_fallback = false
       restore_parameters(drops)
     end
 
@@ -2095,6 +2103,7 @@ module RubyLLM
       fallback = switch_to_usable_fallback(fallback_queue)
       raise error unless fallback
 
+      @answering_fallback = true
       attempt += 1
       fallback = fallback.with_attempt(
         chat: self,

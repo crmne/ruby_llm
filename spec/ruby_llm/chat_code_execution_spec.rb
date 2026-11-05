@@ -41,6 +41,139 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  describe 'usage of a run' do
+    let(:sandbox) { FakeSandbox.new { FakeSandbox.result(cpu_time: 1.25) } }
+
+    def run_one_call
+      call = tool_call(code: 'puts 1')
+      chat.with_code_execution
+      allow(chat.provider).to receive(:complete).and_return(
+        RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { call.id => call }),
+        RubyLLM::Message.new(role: :assistant, content: 'done', input_tokens: 1, output_tokens: 1)
+      )
+      chat.ask('Run it')
+    end
+
+    it 'adds an entry with the CPU seconds it used' do
+      run_one_call
+
+      entry = chat.usage_entries.find { |usage| usage.operation == :code_execution }
+      expect(entry.provider).to eq('sandbox')
+      expect(entry.model).to eq('FakeSandbox')
+      expect(entry).to be_succeeded
+      expect(entry.tokens.server_tool_use).to eq('code_execution_seconds' => 1.25)
+    end
+
+    it 'falls back to the time the run took when the sandbox measures no CPU time' do
+      allow(sandbox).to receive(:run).and_return(FakeSandbox.result)
+
+      run_one_call
+
+      entry = chat.usage_entries.find { |usage| usage.operation == :code_execution }
+      expect(entry.tokens.server_tool_use['code_execution_seconds']).to be_a(Float).and be > 0
+    end
+
+    it 'attributes the entry to the owner of the chat, also with concurrent tools' do
+      owner = Object.new
+      chat.with_owner(owner).with_tool_options(concurrency: :threads)
+
+      run_one_call
+
+      expect(chat.usage_entries.find { |usage| usage.operation == :code_execution }.owner).to equal(owner)
+    end
+
+    it 'attributes the entry to the owner of the block' do
+      owner = Object.new
+
+      RubyLLM.with_owner(owner) { run_one_call }
+
+      expect(chat.usage_entries.find { |usage| usage.operation == :code_execution }.owner).to equal(owner)
+    end
+
+    context 'when the sandbox raises' do
+      let(:sandbox) { FakeSandbox.new { raise 'the sandbox broke' } }
+
+      it 'adds an entry for the failed run' do
+        chat.with_code_execution
+
+        expect { run_code('puts 1') }.to raise_error(RuntimeError, 'the sandbox broke')
+
+        entry = chat.usage_entries.find { |usage| usage.operation == :code_execution }
+        expect(entry).to be_failed
+        expect(entry.tokens.server_tool_use['code_execution_seconds']).to be_a(Float)
+      end
+    end
+
+    context 'when the run is cancelled' do
+      let(:sandbox) { FakeSandbox.new { raise RubyLLM::CancelledError } }
+
+      it 'adds an entry for the cancelled run' do
+        chat.with_code_execution
+
+        expect { run_code('puts 1') }.to raise_error(RubyLLM::CancelledError)
+
+        entry = chat.usage_entries.find { |usage| usage.operation == :code_execution }
+        expect(entry).to be_cancelled
+        expect(entry.tokens.server_tool_use['code_execution_seconds']).to be_a(Float)
+      end
+    end
+
+    context 'when the run times out' do
+      let(:sandbox) { FakeSandbox.new { FakeSandbox.result(timed_out: true, cpu_time: 3.5) } }
+
+      it 'adds an entry with the seconds it used' do
+        run_one_call
+
+        entry = chat.usage_entries.find { |usage| usage.operation == :code_execution }
+        expect(entry.tokens.server_tool_use['code_execution_seconds']).to eq(3.5)
+      end
+    end
+
+    it 'never breaks the run when the entry cannot be written' do
+      allow(chat).to receive(:add_usage_entry).and_raise(RuntimeError, 'ledger down')
+      chat.with_code_execution
+
+      expect(report(run_code('puts 1'))['exit_code']).to eq(0)
+    end
+
+    it 'adds no entry for a sandbox class without a name, rather than invent one' do
+      anonymous = Class.new(FakeSandbox) { def self.name = nil }.new
+      unnamed = RubyLLM.context do |config|
+        config.sandbox = anonymous
+        config.package_cache_dir = cache_dir
+      end.chat(model: model_for(:openai), provider: :openai).with_code_execution
+
+      unnamed.tools[:run_code].call(language: 'ruby', code: 'puts 1')
+
+      expect(unnamed.usage_entries).to be_empty
+      expect(anonymous.runs).not_to be_empty
+    end
+
+    it 'leaves what the chat cost alone' do
+      tokens = RubyLLM::Tokens.new(input: 1000, output: 1000)
+      priced = RubyLLM::Accounting::Usage::Entry.new(
+        operation: :chat, provider: 'openai', model: chat.model.id, status: :succeeded, tokens:,
+        cost: RubyLLM::Cost.new(amounts: { input: 0.5 }, reported: true, total: 0.5)
+      )
+      chat.with_code_execution
+      chat.add_usage_entry(priced)
+
+      run_code('puts 1')
+
+      expect(chat.usage_entries.map(&:operation)).to eq(%i[chat code_execution])
+      expect(chat.cost.total).to eq(0.5)
+    end
+
+    it 'names the class configured for an MXC sandbox, not the wrapper around it' do
+      stub_const('CodeSandbox', Class.new)
+      chat.with_code_execution
+      tool = chat.tools[:run_code]
+
+      expect(tool.send(:sandbox_class, RubyLLM::Sandbox::MXC.new(CodeSandbox))).to eq(CodeSandbox)
+      expect(tool.send(:sandbox_class, RubyLLM::Sandbox::MXC.new(CodeSandbox.new))).to eq(CodeSandbox)
+    end
+  end
+
   describe 'files a store refuses' do
     let(:sandbox) { writing("bad\nname.txt" => 'x', 'kept.txt' => 'y') }
 
@@ -440,7 +573,7 @@ RSpec.describe RubyLLM::Chat do
       events = []
       instrumenter = Object.new
       instrumenter.define_singleton_method(:instrument) do |name, payload, &block|
-        result = block.call(payload)
+        result = block&.call(payload)
         events << [name, payload.dup]
         result
       end
@@ -467,7 +600,7 @@ RSpec.describe RubyLLM::Chat do
       payloads = []
       instrumenter = Object.new
       instrumenter.define_singleton_method(:instrument) do |name, payload, &block|
-        result = block.call(payload)
+        result = block&.call(payload)
         payloads << payload.dup if name == 'code_execution.ruby_llm'
         result
       end
@@ -727,7 +860,7 @@ RSpec.describe RubyLLM::Chat do
       events = []
       instrumenter = Object.new
       instrumenter.define_singleton_method(:instrument) do |name, payload, &block|
-        result = block.call(payload)
+        result = block&.call(payload)
         events << payload.dup if name == 'code_execution.ruby_llm'
         result
       end

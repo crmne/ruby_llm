@@ -3,6 +3,13 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Tokens do
+  it 'keeps fractions in server tool counts, and sums them' do
+    tokens = described_class.new(server_tool_use: { code_execution_seconds: 1.5 })
+
+    expect(tokens.server_tool_use).to eq('code_execution_seconds' => 1.5)
+    expect(described_class.aggregate([tokens, tokens]).server_tool_use).to eq('code_execution_seconds' => 3.0)
+  end
+
   describe 'billing units' do
     it 'counts characters, audio seconds, and search units next to tokens' do
       tokens = described_class.new(characters: 31, audio_seconds: 9.5, search_units: 1)

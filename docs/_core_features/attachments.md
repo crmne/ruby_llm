@@ -272,6 +272,13 @@ response = chat.ask "Analyze these files", with: [
 - **Documents:** .pdf, .txt, .md, .csv, .json, .xml
 - **Code:** .rb, .py, .js, .html, .css (and many others)
 
+When you know a file's type already, such as for an IO whose bytes don't say, pass it with `mime_type:`, and RubyLLM uses it without looking:
+
+```ruby
+export = RubyLLM::Attachment.new(io, filename: "export.csv", mime_type: "text/csv")
+chat.ask "What stands out in this export?", with: export
+```
+
 ## Next Steps
 
 * [Chat]({% link _getting_started/chat.md %}) - continue a conversation about your files.

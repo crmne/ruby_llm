@@ -271,6 +271,13 @@ end
 
 The payload carries the `chat`, the `tool_call_id` of the call it answers, the `language`, the `sandbox` it asked for (`nil` for the default), the `timeout` and `network` the run had, and, once it finishes, its `duration` in seconds, `exit_code`, `timed_out`, `blocked_hosts`, the `cpu_time` it used and the `limit_exceeded` it hit when its sandbox sets resource limits, and the `files` it returned. With [OpenTelemetry]({% link _advanced/opentelemetry.md %}) enabled, each run becomes a `ruby_llm.code_execution` span under its tool span.
 
+Each run also adds an entry to the [usage ledger]({% link _core_features/cost-and-usage-tracking.md %}), with the rest of the chat's usage, so you can meter runs next to model calls. Its `operation` is `code_execution`, its `provider` is `sandbox`, its `model` is the sandbox's class name, and `server_tool_use` holds `code_execution_seconds`: the CPU time the sandbox measured, or the time the run took when it measures none. A run that fails or is cancelled has an entry too, since it used those seconds, and the entry goes to the owner the chat's other usage goes to. Metering names the sandbox class, so runs in a class without a name, such as `Class.new`, have no entry. RubyLLM can't price your machines, so the entry's cost is zero and it adds nothing to `chat.cost`. Sum the seconds yourself:
+
+```ruby
+RubyLLM::ActiveRecord::Usage.where(operation: "code_execution", owner: account)
+                            .sum { |usage| usage.server_tool_use["code_execution_seconds"] }
+```
+
 ## Running Code on the Provider's Servers
 
 Some providers run code in their own hosted containers. Use [Provider Tools]({% link _tools/provider-tools.md %}) for that:
