@@ -21,6 +21,7 @@ After reading this guide, you will know:
 * How skills teach the model your workflows, and run their scripts in the sandbox.
 * How persisted chats now run in one process at a time.
 * How to queue messages while a chat runs, and attribute them as they join.
+* How to keep a tool that shares state from running alongside others.
 * How to chat with Kimi models on Moonshot AI.
 * How to chat with MiniMax's M3 models.
 * How to chat with GLM models on Z.ai.
@@ -220,6 +221,18 @@ end
 ```
 
 A subagent that waits for an approval pauses the call, and the calling chat is `awaiting_person?`. Agents also declare chat callbacks once, `after_message :log_reply`, with `if:` and `unless:` like Rails. See [Subagents]({% link _getting_started/agents.md %}#subagents) and [Callbacks]({% link _getting_started/agents.md %}#callbacks).
+
+## Exclusive Tools
+
+Tools that share state, such as a browser page, can now run by themselves while the rest of a concurrent round runs in parallel:
+
+```ruby
+class BrowserClick < RubyLLM::Tool
+  exclusive
+end
+```
+
+See [Exclusive Tools]({% link _tools/tool-execution.md %}#exclusive-tools).
 
 ## Moonshot AI
 

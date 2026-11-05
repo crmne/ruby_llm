@@ -167,6 +167,21 @@ RSpec.describe RubyLLM::Chat::ToolConcurrency do
     expect(Array.new(2) { observed_contexts.pop }).to all(eq(workflow_context))
   end
 
+  %i[threads fibers].each do |mode|
+    it "does not start calls after an exclusive round that failed using #{mode}" do
+      started = Queue.new
+      calls = { read: :read, click: :click, type: :type }
+
+      expect do
+        described_class.run(mode, calls, exclusive: ->(call) { call != :read }) do |call|
+          started << call
+          raise ArgumentError, 'click failed' if call == :click
+        end
+      end.to raise_error(ArgumentError, 'click failed')
+      expect(Array.new(started.size) { started.pop }).to eq(%i[read click])
+    end
+  end
+
   it 'does nothing for an unknown concurrency mode' do
     expect(described_class.run(:processes, tool_calls) { |tool_call| tool_call }).to be_nil
   end
