@@ -512,8 +512,8 @@ module RubyLLM
     # implementation raises NotImplementedError.
     #
     #   def resume(task, **)
-    #     run = SubAgentRun.find(task.data["run_id"]).continue
-    #     run.finished? ? run.answer : task
+    #     envelope = Signatures.find(task.data["envelope_id"])
+    #     envelope.signed? ? "Signed on #{envelope.signed_on}" : task
     #   end
     #
     def resume(task, **arguments)
@@ -524,7 +524,7 @@ module RubyLLM
     # Task#to_h returned. Override it to return a Task subclass.
     #
     #   def task(state, tool_call: nil)
-    #     SubAgentTask.load(state, tool_call:)
+    #     SignatureTask.load(state, tool_call:)
     #   end
     #
     def task(state, tool_call: nil)

@@ -18,6 +18,8 @@ After reading this guide, you will know:
 * How runtime context works (`chat`, `inputs`, and lazy evaluation)
 * How prompt conventions work in `app/prompts`
 * Which methods are available on agent instances
+* How to declare callbacks once for every chat of an agent
+* How to hand work to another agent as a subagent
 * How to handle errors for a whole agent with `rescue_from`
 
 ## What Are Agents?
@@ -399,6 +401,63 @@ Delegated methods include:
 * `before_request`, `before_message`, `after_message`, `before_tool_call`, `after_tool_result`, `after_tool_progress`, `before_fallback`, `after_fallback`, `around_join`
 
 You can always access the wrapped chat object directly via `agent.chat`.
+
+## Callbacks
+
+Declare a [chat callback]({% link _core_features/chat-callbacks.md %}) once on the agent, and every chat it builds or finds gets it, including Rails records from `find`. Name a method, as a Rails model does, or pass a block:
+
+```ruby
+class SupportAgent < ApplicationAgent
+  inputs :ticket
+
+  after_message :log_reply, if: -> { ticket.urgent? }
+  before_tool_call { |tool_call| Rails.logger.info "Calling #{tool_call.name}" }
+
+  private
+
+  def log_reply(message)
+    ticket.notes.create!(body: message.content)
+  end
+end
+```
+
+The method or block runs on the agent instance, so it reads the agent's inputs and `chat`, and receives the callback's arguments when it takes them. `if:` and `unless:` take a method name, a lambda, or an array of them. Every chat callback has a macro: `before_request`, `before_message`, `after_message`, `before_tool_call`, `after_tool_result`, `after_tool_progress`, `before_fallback`, `after_fallback`, and `after_file_write`. Subclasses inherit the callbacks declared when they are defined, so an `ApplicationAgent` can declare the ones every agent shares. `around_join` works the same way for [queued messages]({% link _advanced/agentic-workflows.md %}#joining-queued-messages).
+
+## Subagents
+
+An agent class works wherever tools go. The model hands it a task, a fresh instance of the agent does the work in its own conversation, and only its answer comes back, so a long search through files or pages doesn't fill the calling chat:
+
+```ruby
+class ResearchAgent < ApplicationAgent
+  description "Researches a question across the docs and reports back with links"
+  inputs :product
+  tools SearchDocs, ReadPage
+end
+
+class SupportAgent < ApplicationAgent
+  tools LookupOrder, ResearchAgent
+end
+```
+
+The tool is named after the agent, `research_agent`, and the model reads its `description`. It takes a `task` and the agent's inputs as parameters. Fix inputs yourself with `to_tool`, and the model fills only the rest:
+
+```ruby
+chat.with_tools(ResearchAgent.to_tool(product: current_product))
+```
+
+Each call runs a new agent instance under the [owner]({% link _core_features/cost-and-usage-tracking.md %}#one-shot-operations) of the chat that called it, and returns the content of the agent's last answer.
+
+When the subagent waits on a person, for an approval or an answer, the call pauses on a `RubyLLM::AgentTask`, and the calling chat is `awaiting_person?`. The task's `agent` is the subagent, so you can settle what it waits for, then `complete` the calling chat to carry it on:
+
+```ruby
+chat.ask "Clear the cache for order 42"
+
+task = chat.pending_tasks.first
+task.agent.pending_approvals.each { |tool_call| task.agent.approve(tool_call) }
+chat.complete
+```
+
+The subagent lives in the process that ran it. A chat resumed in another process, such as a later job, reports the subagent's work as lost to the model, which can start it again.
 
 ## Handling Errors with `rescue_from`
 
