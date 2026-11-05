@@ -22,10 +22,21 @@
     {%- endunless %}
     {%- if include.fixed %}
     :root { --vp-layout-top-height: 38px; }
-    .rl-version-banner--fixed { position: fixed; top: 0; right: 0; left: 0; z-index: calc(var(--vp-z-index-nav, 30) + 1); display: flex; align-items: center; justify-content: center; box-sizing: border-box; height: var(--vp-layout-top-height); padding-top: 0; padding-bottom: 0; }
+    .rl-version-banner--fixed { position: fixed; top: 0; right: 0; left: 0; z-index: calc(var(--vp-z-index-nav, 30) + 1); display: flex; align-items: center; justify-content: center; box-sizing: border-box; min-height: 38px; }
     @media (max-width: 640px) {
       :root { --vp-layout-top-height: 56px; }
     }
     {%- endif %}
   </style>
+  {%- if include.fixed %}
+  <script>
+    (function () {
+      var banner = document.querySelector('.rl-version-banner--fixed');
+      if (!banner) return;
+      var fit = function () { document.documentElement.style.setProperty('--vp-layout-top-height', banner.offsetHeight + 'px'); };
+      fit();
+      if (window.ResizeObserver) new ResizeObserver(fit).observe(banner);
+    })();
+  </script>
+  {%- endif %}
 {%- endif -%}
