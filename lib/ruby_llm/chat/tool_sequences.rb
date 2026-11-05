@@ -46,6 +46,24 @@ module RubyLLM
         earlier_sequence_calls(call).any? { |candidate| tool_result_for(candidate).nil? }
       end
 
+      # An exclusive call waits for the calls before it, and the calls after
+      # it wait for it, also across rounds: a call held back by one that
+      # waits on an approval or a Task stays pending. Calls in +running+
+      # run in this round, in order, so they hold nothing back.
+      def exclusive_blocked?(call, running = {})
+        response = messages.reverse.find { |message| message.tool_calls.key?(call.id) }
+        return false unless response
+
+        exclusive = exclusive_call?(call)
+        response.tool_calls.take_while { |candidate| candidate.id != call.id }.any? do |earlier|
+          (exclusive || exclusive_call?(earlier)) && !running.key?(earlier.id) && tool_result_for(earlier).nil?
+        end
+      end
+
+      def exclusive_call?(call)
+        !call.remote? && tool_for(call)&.exclusive? == true
+      end
+
       def sequence_failed?(call)
         earlier_sequence_calls(call).any? { |candidate| tool_result_for(candidate)&.tool_error_message }
       end

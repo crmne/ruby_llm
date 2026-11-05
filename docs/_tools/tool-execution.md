@@ -269,7 +269,9 @@ class BrowserClick < RubyLLM::Tool
 end
 ```
 
-An exclusive call waits for the calls before it to finish, runs by itself, and the calls after it wait for it. The other tools still run in parallel. When the model asks for two searches, a click, and another search, the two searches run together, then the click, then the last search. Results reach the conversation as they do without `exclusive`. Sequential chats run one call at a time already, so the declaration only matters with concurrency enabled.
+An exclusive call waits for the calls before it to finish, runs by itself, and the calls after it wait for it. The other tools still run in parallel. When the model asks for two searches, a click, and another search, the two searches run together, then the click, then the last search. Results reach the conversation as they do without `exclusive`.
+
+The order holds across pauses too. When an exclusive call waits for an approval or returns a task, the calls after it stay pending, and run on the `complete` that finishes it. This applies with or without concurrency.
 
 In Rails, a tool call on another thread, or on another fiber when `config.active_support.isolation_level` is `:fiber`, runs as its own unit of work, as Rails expects of any work on another thread. It checks out its own database connection and doesn't see the caller's `Current` attributes. Give the tool what it needs when you create it:
 

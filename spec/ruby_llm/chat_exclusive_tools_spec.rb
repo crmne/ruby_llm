@@ -15,7 +15,7 @@ RSpec.describe RubyLLM::Chat do
       define_singleton_method(:tool_name) { name }
       define_method(:execute) do
         events << [:start, name]
-        sleep 0.05
+        sleep 0.1
         events << [:finish, name]
         name
       end
@@ -84,6 +84,45 @@ RSpec.describe RubyLLM::Chat do
         expect(log.index([:start, 'click'])).to be > log.index([:finish, 'read_a'])
         expect(log.index([:start, 'read_b'])).to be > log.index([:finish, 'click'])
         expect(chat.messages.select(&:tool_result?).map(&:content)).to eq(%w[read_a click read_b])
+      end
+
+      it 'holds the calls after an exclusive call that waits for approval' do
+        gated = tool('approve_click', alone: true)
+        gated.requires_approval
+        chat.with_tools(gated)
+        allow(chat.provider).to receive(:complete).and_return(calls('read_a', 'approve_click', 'read_b'), answer)
+
+        chat.ask('Go')
+
+        expect(chat).to be_awaiting_approval
+        expect(chat.messages.select(&:tool_result?).map(&:content)).to eq(%w[read_a])
+
+        chat.approve(chat.pending_approvals.first)
+        chat.complete
+
+        expect(chat.messages.select(&:tool_result?).map(&:content)).to eq(%w[read_a approve_click read_b])
+      end
+
+      it 'holds the calls after an exclusive call that paused on a task' do
+        finished = false
+        paused = Class.new(RubyLLM::Tool) do
+          exclusive
+          define_singleton_method(:tool_name) { 'wait' }
+          define_method(:execute) { RubyLLM::Task.new(data: {}) }
+          define_method(:resume) { |task, **| finished ? 'waited' : task }
+        end
+        chat.with_tools(paused)
+        allow(chat.provider).to receive(:complete).and_return(calls('read_a', 'wait', 'read_b'), answer)
+
+        chat.ask('Go')
+
+        expect(chat).to be_waiting
+        expect(chat.messages.select(&:tool_result?).map(&:content)).to eq(%w[read_a])
+
+        finished = true
+        chat.complete
+
+        expect(chat.messages.select(&:tool_result?).map(&:content)).to eq(%w[read_a waited read_b])
       end
     end
   end

@@ -216,7 +216,9 @@ module RubyLLM
       # tool calls concurrently (see Chat#with_tool_options), an exclusive
       # call waits for the calls before it to finish, and the calls after
       # it wait for it, while the other tools still run in parallel. Use it
-      # for tools that share state, such as a browser page.
+      # for tools that share state, such as a browser page. When an
+      # exclusive call waits for an approval or a Task, the calls after it
+      # stay pending until it finishes.
       #
       #   class BrowserClick < RubyLLM::Tool
       #     exclusive

@@ -8,13 +8,16 @@ module RubyLLM
 
       module_function
 
-      def run(mode, tool_calls, exclusive: nil, on_result: nil, &)
+      # Runs +tool_calls+ in rounds split by the calls +exclusive+ picks
+      # out. A round with a result +paused+ picks out stops the rounds
+      # after it, which wait for that call to finish.
+      def run(mode, tool_calls, exclusive: nil, paused: nil, on_result: nil, &)
         rounds = rounds(tool_calls, exclusive)
         case mode
         when :threads
-          run_with_threads(rounds, on_result:, &)
+          run_with_threads(rounds, paused:, on_result:, &)
         when :fibers
-          run_with_fibers(rounds, on_result:, &)
+          run_with_fibers(rounds, paused:, on_result:, &)
         end
       end
 
@@ -28,7 +31,7 @@ module RubyLLM
         indexed.chunk_while { |(first, _), (second, _)| !exclusive.call(first) && !exclusive.call(second) }.to_a
       end
 
-      def run_with_threads(rounds, on_result:, &execute)
+      def run_with_threads(rounds, paused:, on_result:, &execute)
         caller_context = execution_context
         workflow_context = Support::Instrumentation.current_workflow
         instrumentation_context = Support::Instrumentation.capture_context
@@ -48,13 +51,14 @@ module RubyLLM
           end
 
           collect_results(queue, threads.size, results, on_result:)
+          break if paused?(round, results, paused)
         ensure
           threads&.each(&:join)
         end
         results
       end
 
-      def run_with_fibers(rounds, on_result:, &execute)
+      def run_with_fibers(rounds, paused:, on_result:, &execute)
         require_async
         caller_context = execution_context
         contexts = { workflow_context: Support::Instrumentation.current_workflow,
@@ -66,6 +70,7 @@ module RubyLLM
           isolated(caller_context) do
             rounds.each do |round|
               run_fiber_round(task, round, results, caller_context, contexts, on_result:, &execute)
+              break if paused?(round, results, paused)
             end
           end
         end
@@ -99,6 +104,10 @@ module RubyLLM
         return if Gem.loaded_specs.fetch('async').version >= Gem::Version.new('2.0')
 
         raise LoadError, "The 'async' gem version 2.0 or newer is required for concurrent tool execution with fibers."
+      end
+
+      def paused?(round, results, paused)
+        paused && round.any? { |_tool_call, index| paused.call(results[index].last) }
       end
 
       def collect_results(queue, count, results, on_result:)
@@ -159,7 +168,7 @@ module RubyLLM
         defined?(Rails) && Rails.respond_to?(:application) && Rails.application&.executor
       end
 
-      private_class_method :rounds, :run_with_threads, :run_with_fibers, :run_fiber_round, :require_async,
+      private_class_method :rounds, :paused?, :run_with_threads, :run_with_fibers, :run_fiber_round, :require_async,
                            :collect_results, :capture_result, :thread_exited_error, :isolated,
                            :execution_context, :rails_executor
     end

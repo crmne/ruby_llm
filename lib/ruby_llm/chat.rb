@@ -515,7 +515,7 @@ module RubyLLM
       pending = pending_tool_calls(response)
       pending.any? && pending.all? do |tool_call|
         approval_pending?(tool_call) || paused?(tool_call) ||
-          running_elsewhere?(tool_call) || sequence_blocked?(tool_call)
+          running_elsewhere?(tool_call) || sequence_blocked?(tool_call) || exclusive_blocked?(tool_call)
       end
     end
 
@@ -2154,6 +2154,7 @@ module RubyLLM
       server_calls, local_calls = pending_tool_calls(response).to_h.partition { |_, call| call.remote? }.map(&:to_h)
       decisions = server_calls.transform_values { |tool_call| approval_decision(nil, tool_call) }.compact
       executable, denied = partition_pending_tool_calls(local_calls)
+      executable = executable.reject { |_id, tool_call| exclusive_blocked?(tool_call, executable) }
       claimed = claim_tool_calls(executable, server_calls.slice(*decisions.keys).merge(denied))
       answer_claimed_tool_calls(claimed, server_calls, decisions, executable, denied)
       @tool_prefs[:choice] = nil if forced_tool_choice?
@@ -2295,7 +2296,7 @@ module RubyLLM
 
     def handle_sequential_tool_calls(tool_calls)
       tool_calls.each_value do |tool_call|
-        next if sequence_blocked?(tool_call)
+        next if sequence_blocked?(tool_call) || exclusive_blocked?(tool_call)
 
         raise_if_cancelled!
         result = skipped_result(tool_call) || execute_tool_with_callbacks(tool_call)
@@ -2316,8 +2317,9 @@ module RubyLLM
     end
 
     def execute_tools_concurrently(tool_calls, &on_result)
-      exclusive = ->(tool_call) { tool_for(tool_call)&.exclusive? }
-      ToolConcurrency.run(concurrency, tool_calls, exclusive:, on_result:) do |tool_call|
+      exclusive = ->(tool_call) { exclusive_call?(tool_call) }
+      paused = ->(result) { result.equal?(PAUSED) }
+      ToolConcurrency.run(concurrency, tool_calls, exclusive:, paused:, on_result:) do |tool_call|
         execute_tool_with_callbacks(tool_call)
       end
     end
