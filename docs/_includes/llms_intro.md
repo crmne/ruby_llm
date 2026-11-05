@@ -1,4 +1,5 @@
-{% if site.docs_unreleased %}These docs cover unreleased RubyLLM from `main`.{% else %}These docs cover RubyLLM {{ site.gem_version }}.{% endif %} RubyLLM is the Ruby AI framework: chats, tools, agents, MCP, structured output, evaluations, images, video, audio, OCR, embeddings, reranking, and Rails integration behind one API across {{ site.provider_count }} providers.
+{%- assign release = site.gem_version | default: site.data.versions.current | remove: ' (stable)' -%}
+{% if site.docs_unreleased %}These docs cover unreleased RubyLLM from `main`.{% else %}These docs cover RubyLLM {{ release }}.{% endif %} RubyLLM is the Ruby AI framework: chats, tools, agents, MCP, structured output, evaluations, images, video, audio, OCR, embeddings, reranking, and Rails integration behind one API{% if site.provider_count %} across {{ site.provider_count }} providers{% endif %}.
 
 ## Quick Reference
 

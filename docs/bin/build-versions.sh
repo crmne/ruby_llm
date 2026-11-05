@@ -40,6 +40,8 @@ prepare_version() {
   cp "$docs/_plugins/versioned_docs.rb" "$source/_plugins/"
   cp "$docs/_data/llms_areas.yml" "$source/_data/"
   cp "$docs/_plugins/llms_discovery.rb" "$source/_plugins/"
+  # The quick reference shows the 2.x API, so the 1.x docs go without it.
+  [[ "$channel" == v1 ]] || cp "$docs/_includes/llms_intro.md" "$source/_includes/"
   cp -R "$docs/_plugins/social_cards.rb" "$docs/_plugins/social_cards" "$source/_plugins/"
   sed -i.bak '/^ *- jekyll-og-image$/d' "$source/_config.yml" && rm "$source/_config.yml.bak"
   ruby "$docs/bin/prepare_versions.rb" "$source/_data/versions.yml" "$channel" "$BASE" "$stable_ref" "$onex_ref"
