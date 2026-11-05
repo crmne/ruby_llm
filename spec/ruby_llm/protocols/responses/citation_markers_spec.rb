@@ -45,6 +45,11 @@ RSpec.describe RubyLLM::Protocols::Responses::CitationMarkers do
     expect(markers.shift(8)).to eq(7)
   end
 
+  it 'keeps a pair that has the shape of a marker but cites nothing' do
+    expect(described_class.strip("Label \u{E200}report\u{E202}draft\u{E201}").first).to eq('Label reportdraft')
+    expect(described_class.strip("Done. \u{E200}cite\u{E202}tu").first).to eq('Done. ')
+  end
+
   it 'removes other markers built the same way' do
     expect(described_class.strip("See \u{E200}filecite\u{E202}turn0file0\u{E201}.").first).to eq('See .')
   end

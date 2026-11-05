@@ -16,6 +16,7 @@ module RubyLLM
         SEPARATOR = "\u{E202}"
         MARKS = [OPEN, CLOSE, SEPARATOR].freeze
         CITE = 'cite'
+        TURN = 'turn'
         MAX_LENGTH = 256
 
         def self.strip(text)
@@ -98,9 +99,19 @@ module RubyLLM
 
         def marker?(held)
           word, *turns = held.delete_prefix(OPEN).split(SEPARATOR, -1)
-          return true if word == CITE && turns.empty?
+          return false unless word.to_s.end_with?(CITE) && word.each_char.all? { |char| alphanumeric?(char) }
 
-          turns.any? && [word, *turns].all? { |part| part.each_char.all? { |char| char.match?(/[[:alnum:]_]/) } }
+          turns.all? { |turn| turn?(turn) }
+        end
+
+        def turn?(reference)
+          return false unless reference.start_with?(TURN) || TURN.start_with?(reference)
+
+          reference.each_char.all? { |char| alphanumeric?(char) }
+        end
+
+        def alphanumeric?(char)
+          char.match?(/[[:alnum:]]/)
         end
 
         def take_held
