@@ -322,7 +322,7 @@ module RubyLLM
         with_provider_options with_headers with_schema
         convert_unsupported_attachments
         before_request before_message after_message before_tool_call after_tool_result after_tool_progress
-        before_fallback after_fallback after_queue around_join after_join after_unqueue after_file_write
+        before_fallback after_fallback around_join after_file_write
       ].freeze
 
       ##
@@ -501,13 +501,6 @@ module RubyLLM
       # Applies Chat#after_fallback and returns this record.
 
       ##
-      # :method: after_queue
-      # :call-seq: after_queue(&block)
-      #
-      # Applies Chat#after_queue and returns this record. The block
-      # receives the QueuedMessage record, in the process that queued it.
-
-      ##
       # :method: around_join
       # :call-seq: around_join(&block)
       #
@@ -519,27 +512,12 @@ module RubyLLM
       # record is saved with your own columns set:
       #
       #   chat.around_join do |queued, join|
-      #     join.call(sender: queued.owner)
+      #     join.call(sender: queued.sender)
       #   end
       #
       # When the block raises, the transaction rolls back and the message
       # stays queued. When it never calls +join+, the queued record is
       # deleted without joining.
-
-      ##
-      # :method: after_join
-      # :call-seq: after_join(&block)
-      #
-      # Applies Chat#after_join and returns this record. The block
-      # receives the message record and the QueuedMessage record, in the
-      # process that runs the chat.
-
-      ##
-      # :method: after_unqueue
-      # :call-seq: after_unqueue(&block)
-      #
-      # Applies Chat#after_unqueue and returns this record. The block
-      # receives the QueuedMessage record, in the process that unqueued it.
 
       ##
       # :method: caching
@@ -953,18 +931,18 @@ module RubyLLM
       # Queues +message+ in the chat's +ruby_llm_queued_messages+ table, as
       # RubyLLM::Chat#queue describes, and returns the QueuedMessage record.
       # Attachments given with +with:+ are stored with Active Storage and
-      # move to the message it becomes. +owner+ is any record, such as the
+      # move to the message it becomes. +sender+ is any record, such as the
       # user who asked; it is stored and handed back, never interpreted.
       #
       # Any process can queue a message. The process that runs the chat
       # takes it at its next step; when none is running, run #complete,
       # usually in a job.
       #
-      #   chat.queue params[:content], owner: Current.user
+      #   chat.queue params[:content], sender: Current.user
       #   ChatResponseJob.perform_later(chat.id) unless chat.running?
       #
-      def queue(message = nil, with: nil, steer: true, owner: nil)
-        to_llm.queue(message, with:, steer:, owner:)
+      def queue(message = nil, with: nil, steer: true, sender: nil)
+        to_llm.queue(message, with:, steer:, sender:)
       end
 
       # Returns the QueuedMessage records waiting in the queue, oldest
@@ -973,15 +951,16 @@ module RubyLLM
 
       # Takes +queued+, a QueuedMessage record or its id, out of the queue
       # and deletes its attachments. Returns +true+, or +false+ once the
-      # loop has taken it into the conversation or it was unqueued already.
-      # See RubyLLM::Chat#unqueue.
-      def unqueue(queued)
-        to_llm.unqueue(queued)
+      # loop has taken it into the conversation or it was withdrawn already.
+      # QueuedMessage#withdraw does the same from the record. See
+      # RubyLLM::Chat#withdraw.
+      def withdraw(queued)
+        to_llm.withdraw(queued)
       end
 
       # Persists every queued message as a user message record, without
       # calling the model, and returns the records, oldest first. Each joins
-      # through #around_join and #after_join, as
+      # through #around_join and runs #after_message, as
       # RubyLLM::Chat#join_queued_messages describes.
       #
       #   chat.join_queued_messages.map(&:content) # => ["Use the EU file"]
@@ -1178,7 +1157,7 @@ module RubyLLM
 
       def install_persistence_callbacks(chat)
         chat.before_message { persist_new_message }
-        chat.after_message { |msg| persist_message_completion(msg) }
+        chat.after_message { |msg| persist_message_completion(msg) unless msg&.role == :user }
         chat
       end
 

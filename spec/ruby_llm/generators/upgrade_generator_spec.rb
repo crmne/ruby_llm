@@ -73,7 +73,7 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
 
       ActiveRecord::Migration.suppress_messages { upgrade.migrate(:up) }
 
-      %w[chat_type chat_id owner_type owner_id content steer created_at updated_at].each do |column|
+      %w[chat_type chat_id sender_type sender_id content steer created_at updated_at].each do |column|
         expect(connection.column_exists?(:ruby_llm_queued_messages, column)).to be(true)
       end
       expect(connection.index_exists?(:ruby_llm_queued_messages, %i[chat_type chat_id])).to be(true)

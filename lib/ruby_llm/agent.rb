@@ -73,7 +73,7 @@ module RubyLLM
       with_end_user with_compaction with_caching with_code_execution with_skills with_file_store with_context
       with_provider_options with_headers with_schema with_fallbacks
       before_request before_message after_message before_tool_call after_tool_result after_tool_progress
-      before_fallback after_fallback after_queue around_join after_join after_unqueue after_file_write
+      before_fallback after_fallback around_join after_file_write
       convert_unsupported_attachments
       cancel approve deny answer decline cache_until_here
     ].freeze
@@ -85,7 +85,7 @@ module RubyLLM
       max_output_tokens skills file_store
       each complete? cancelled? waiting? awaiting_approval? pending_approvals awaiting_input? pending_inputs
       awaiting_tasks? pending_tasks add_message add_completion tokens cost render
-      queue queued_messages unqueue join_queued_messages
+      queue queued_messages withdraw join_queued_messages
     ].freeze
 
     COPIED_INHERITED_CONFIG = (%i[
@@ -1112,7 +1112,7 @@ module RubyLLM
     #
     #   class SupportAgent < RubyLLM::Agent
     #     around_join do |queued, join|
-    #       join.call(sender: queued.owner)
+    #       join.call(sender: queued.sender)
     #     end
     #   end
     #
@@ -1299,12 +1299,6 @@ module RubyLLM
     # Delegates to Chat#after_fallback. See that method for arguments and return values.
 
     ##
-    # :method: after_queue
-    # :call-seq: after_queue(&block)
-    #
-    # Delegates to Chat#after_queue. See that method for arguments and return values.
-
-    ##
     # :method: around_join
     # :call-seq: around_join(&block)
     #
@@ -1315,18 +1309,6 @@ module RubyLLM
     # :call-seq: join_queued_messages
     #
     # Delegates to Chat#join_queued_messages. See that method for arguments and return values.
-
-    ##
-    # :method: after_join
-    # :call-seq: after_join(&block)
-    #
-    # Delegates to Chat#after_join. See that method for arguments and return values.
-
-    ##
-    # :method: after_unqueue
-    # :call-seq: after_unqueue(&block)
-    #
-    # Delegates to Chat#after_unqueue. See that method for arguments and return values.
 
     ##
     # :method: after_file_write
@@ -1588,7 +1570,7 @@ module RubyLLM
 
     ##
     # :method: queue
-    # :call-seq: queue(message = nil, with: nil, steer: true, owner: nil)
+    # :call-seq: queue(message = nil, with: nil, steer: true, sender: nil)
     #
     # Delegates to Chat#queue. See that method for arguments and return values.
 
@@ -1599,10 +1581,10 @@ module RubyLLM
     # Delegates to Chat#queued_messages. See that method for arguments and return values.
 
     ##
-    # :method: unqueue
-    # :call-seq: unqueue(queued)
+    # :method: withdraw
+    # :call-seq: withdraw(queued)
     #
-    # Delegates to Chat#unqueue. See that method for arguments and return values.
+    # Delegates to Chat#withdraw. See that method for arguments and return values.
 
     ##
     # :method: tokens

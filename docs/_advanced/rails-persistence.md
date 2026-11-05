@@ -231,7 +231,7 @@ A message sent while a job runs the chat can't join the transcript yet: the repl
 class MessagesController < ApplicationController
   def create
     @chat = Chat.find(params[:chat_id])
-    @chat.queue(params[:content], owner: Current.user)
+    @chat.queue(params[:content], sender: Current.user)
     ChatResponseJob.perform_later(@chat.id) unless @chat.running?
 
     redirect_to @chat
@@ -239,7 +239,7 @@ class MessagesController < ApplicationController
 end
 ```
 
-`queue` returns a `RubyLLM::ActiveRecord::QueuedMessage` record with `content`, `attachments`, `owner`, `queued_at`, and `steer?`. `owner` is a polymorphic association to any record. RubyLLM stores it and hands it back, without interpreting it. Attachments are stored with Active Storage and move to the message the queued message becomes, without uploading them again.
+`queue` returns a `RubyLLM::ActiveRecord::QueuedMessage` record with `content`, `attachments`, `sender`, `queued_at`, and `steer?`. `sender` is a polymorphic association to any record. RubyLLM stores it and hands it back, without interpreting it. Attachments are stored with Active Storage and move to the message the queued message becomes, without uploading them again.
 
 Queue first and check `running?` after. A run that ends after your check still takes a steering message: before it gives up the chat, the run looks for messages that arrived and starts another loop for them. A job that finishes its turn with messages queued with `steer: false` should enqueue itself again, since they wait for the next `complete`:
 
@@ -253,20 +253,20 @@ class ChatResponseJob < ApplicationJob
 end
 ```
 
-`queued_messages` returns the waiting records, oldest first, ready to render. `unqueue` takes one back by record or id, and deletes its attachments:
+`queued_messages` returns the waiting records, oldest first, ready to render. `withdraw` takes one back and deletes its attachments:
 
 ```ruby
 chat.queued_messages.each { |queued| render queued }
-chat.unqueue(params[:id]) # => true, or false once the chat took it
+chat.queued_messages.find(params[:id]).withdraw # => true, or false once the chat took it
 ```
 
-Taking and unqueuing each delete the row, and only the process whose delete succeeds goes on, so a message joins once or is withdrawn, never both. Destroying a chat destroys its queued messages.
+`chat.withdraw(queued)` does the same by record or id. Taking and withdrawing each delete the row, and only the process whose delete succeeds goes on, so a message joins once or is withdrawn, never both. Destroying a chat destroys its queued messages.
 
 `around_join` runs inside the transaction that creates the message record and deletes the queued row. Pass attributes to `join.call` and the message is saved with them, so a column of your own is set before anyone sees the message:
 
 ```ruby
 class ChatAgent < ApplicationAgent
-  around_join { |queued, join| join.call(sender: queued.owner) }
+  around_join { |queued, join| join.call(sender: queued.sender) }
 end
 
 ChatAgent.find(chat_id).complete(&:broadcast)
@@ -274,7 +274,7 @@ ChatAgent.find(chat_id).complete(&:broadcast)
 
 Without an agent, call `around_join` on the chat record in your job, before `complete`.
 
-Attributes from nested `around_join` blocks merge, inner ones last. When the block raises, the transaction rolls back: the message is not created and the row stays queued. When it never calls `join`, the row is deleted, its attachments with it, and `after_unqueue` runs. `join_queued_messages` returns the message records.
+Attributes from nested `around_join` blocks merge, inner ones last. When the block raises, the transaction rolls back: the message is not created and the row stays queued. When it never calls `join`, the row is deleted, its attachments with it. `join_queued_messages` returns the message records.
 
 ## Batches
 
@@ -346,11 +346,11 @@ A message reaches its own calls through `ruby_llm_tool_calls`, and `to_llm` turn
 Find messages that are still queued, across chats:
 
 ```ruby
-RubyLLM::ActiveRecord::QueuedMessage.where(owner: current_user).includes(:chat)
+RubyLLM::ActiveRecord::QueuedMessage.where(sender: current_user).includes(:chat)
 RubyLLM::ActiveRecord::QueuedMessage.where(steer: false).where(created_at: ...10.minutes.ago)
 ```
 
-Read these records, but leave writing them to RubyLLM. Creating, updating, or deleting rows yourself can count an attempt twice, lose an approval, or hand a queued message to two processes. Use `queue` and `unqueue`, `approve` and `deny`, `RubyLLM::Batch`, and the MCP server's `deauthorize` to change them.
+Read these records, but leave writing them to RubyLLM. Creating, updating, or deleting rows yourself can count an attempt twice, lose an approval, or hand a queued message to two processes. Use `queue` and `withdraw`, `approve` and `deny`, `RubyLLM::Batch`, and the MCP server's `deauthorize` to change them.
 
 You can still add your own scopes and columns. Declare them when the application prepares, since RubyLLM's classes live in the gem:
 

@@ -446,7 +446,7 @@ end
 
 ## Rename Chat Columns Named After New Methods
 
-`acts_as_chat` records gain `code_execution`, `skills`, `file_store`, `with_code_execution`, `with_skills`, `with_file_store`, `queue`, `queued_messages`, `unqueue`, `join_queued_messages`, `after_queue`, `around_join`, `after_join`, `after_unqueue`, `after_file_write`, and the `ruby_llm_chat_files` association in 2.2. A column of your own with one of those names is hidden behind RubyLLM's method, so reading it returns RubyLLM's setting, usually `nil`, instead of your value. Rename such a column before you upgrade, for example a `code_execution` toggle to `runs_code`:
+`acts_as_chat` records gain `code_execution`, `skills`, `file_store`, `with_code_execution`, `with_skills`, `with_file_store`, `queue`, `queued_messages`, `withdraw`, `join_queued_messages`, `around_join`, `after_file_write`, and the `ruby_llm_chat_files` association in 2.2. A column of your own with one of those names is hidden behind RubyLLM's method, so reading it returns RubyLLM's setting, usually `nil`, instead of your value. Rename such a column before you upgrade, for example a `code_execution` toggle to `runs_code`:
 
 ```ruby
 rename_column :chats, :code_execution, :runs_code

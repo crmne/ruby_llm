@@ -3,19 +3,19 @@
 module RubyLLM
   class Chat
     # Holds a chat's queued messages in memory. Any thread may queue or
-    # unqueue while the conversation loop takes them, and each message is
-    # taken or unqueued once. A message that fails to join stays queued,
+    # withdraw while the conversation loop takes them, and each message is
+    # taken or withdrawn once. A message that fails to join stays queued,
     # with the ones taken after it, and those that joined are already
     # yielded.
     class MessageQueue # :nodoc:
       def initialize(messages = [], &add)
         @add = add
-        @messages = messages.dup
+        @messages = messages.map { |message| message.requeue(self) }
         @lock = Mutex.new
       end
 
-      def push(content:, attachments:, steer:, owner:)
-        queued = QueuedMessage.new(content:, attachments:, steer:, owner:)
+      def push(content:, attachments:, steer:, sender:)
+        queued = QueuedMessage.new(content:, attachments:, steer:, sender:, queue: self)
         @lock.synchronize { @messages << queued }
         queued
       end
