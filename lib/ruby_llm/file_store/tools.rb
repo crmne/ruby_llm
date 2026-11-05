@@ -13,7 +13,7 @@ module RubyLLM
       class << self
         # Returns +tools+, a name or an Array of them, as Symbols in the
         # order of GROUPS. Raises ArgumentError for a name it does not know,
-        # and for changes without reading.
+        # and without +:read+.
         def names(tools)
           names = Array(tools).map { |name| name.to_s.to_sym }
           unknown = names - GROUPS.keys
@@ -21,9 +21,9 @@ module RubyLLM
             raise ArgumentError,
                   "tools: takes :read, :write, :edit, and :delete, got #{unknown.map(&:inspect).join(', ')}"
           end
-          if names.intersect?(%i[write edit]) && !names.include?(:read)
-            raise ArgumentError, 'tools: needs :read with :write or :edit, since the model reads a file before it ' \
-                                 'changes it'
+          unless names.include?(:read)
+            raise ArgumentError,
+                  'tools: needs :read, since the model reads its files with it'
           end
 
           GROUPS.keys & names

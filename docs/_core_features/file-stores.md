@@ -48,7 +48,7 @@ class ReviewJob < ApplicationJob
 end
 ```
 
-The first question sends both contracts. On the next one, the model sees a line like `contract-v2.pdf (application/pdf, 2.1 MB) is in this chat's files`, searches the contracts for "termination", reads the twenty lines around the match, and adds what it found to `notes/contract-v2.md`. The notes are still there when the next job loads the chat.
+The first question sends both contracts. On the next one, the model sees a line like `contract-v2.pdf (application/pdf, 2.1 MB) is in this chat's files`. It reads each contract with `read_file`, which turns a PDF into text through the OCR converter you register (see [PDFs, Scans, and Photos](#pdfs-scans-and-photos)), searches that text for "termination", and adds what it found to `notes/contract-v2.md`. The notes and the extracted text are still there when the next job loads the chat.
 
 ### On a Computer
 
@@ -106,10 +106,9 @@ The model can read and write by default. Pass `tools:` to choose:
 chat.with_file_store(tools: :read)                         # list_files, read_file, search_files
 chat.with_file_store(tools: %i[read write edit])           # the default
 chat.with_file_store(tools: %i[read write edit delete])    # adds delete_file
-chat.with_file_store(tools: [])                            # no tools: files still keep attachments out of the conversation
 ```
 
-`:read` gives `list_files`, `read_file`, and `search_files`, and each other name gives its tool. A model that writes or edits must also read, since it reads a file before it changes it, so `:write` or `:edit` without `:read` raises `ArgumentError`.
+`:read` gives `list_files`, `read_file`, and `search_files`, and each other name gives its tool. Every store needs `:read`, since older attachments and long tool results reach the model only through it, and `tools:` without it raises `ArgumentError`.
 
 ### Reading Before Changing
 
@@ -123,7 +122,7 @@ This keeps the model from writing over a file from memory, or over a change some
 
 The store remembers the digest of what the model read, for each path. A persisted chat keeps it in the file's row, so it survives a reload and holds across processes. `Memory` and `Directory` stores remember for as long as the store object lives, so after a reload, the model reads a folder store's file again before it changes it.
 
-Each change locks the store while the tool reads the file, checks it, and writes it back, so two tool calls running at once never lose an edit. The Active Storage store locks the chat's row, and a `Directory` store locks its folder, which holds across processes on the same machine.
+Each change locks the store while the tool reads the file, checks it, and writes it back, so two `edit_file` calls running at once never lose an edit. Two `write_file` calls each write the whole file, so the later one wins. The Active Storage store locks the chat's row, and a `Directory` store locks its folder, which holds across processes on the same machine.
 
 ### Working with the Store
 

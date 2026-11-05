@@ -109,7 +109,6 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.with_file_store(tools: %i[read write edit delete]).tools.keys)
         .to eq([*read, :write_file, :edit_file, :delete_file])
       expect(chat.with_file_store(tools: %w[read edit]).tools.keys).to eq([*read, :edit_file])
-      expect(chat.with_file_store(tools: []).tools.keys).to be_empty
       expect(chat.with_file_store.tools.keys).to eq([*read, :write_file, :edit_file])
     end
 
@@ -117,12 +116,13 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.with_file_store(tools: :read).dup.tools.keys).to eq(%i[list_files read_file search_files])
     end
 
-    it 'refuses tools it does not know, and changes without reading' do
+    it 'refuses tools it does not know, and tools without reading' do
       expect { chat.with_file_store(tools: :rename) }
         .to raise_error(ArgumentError, 'tools: takes :read, :write, :edit, and :delete, got :rename')
-      expect { chat.with_file_store(tools: %i[write edit]) }
-        .to raise_error(ArgumentError, 'tools: needs :read with :write or :edit, since the model reads a file ' \
-                                       'before it changes it')
+      [%i[write edit], [], :delete].each do |tools|
+        expect { chat.with_file_store(tools:) }
+          .to raise_error(ArgumentError, 'tools: needs :read, since the model reads its files with it')
+      end
     end
 
     it 'removes the store and its tools with nil' do

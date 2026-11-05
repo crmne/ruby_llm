@@ -85,16 +85,18 @@ module RubyLLM
 
       # Returns whether +path+ matches the glob +pattern+. A pattern
       # without a slash matches the file name in any folder; one with a
-      # slash matches the path inside the folder +inside+, or the whole
-      # path. <tt>**</tt> matches any number of folders and
-      # <tt>{a,b}</tt> either.
+      # slash matches the whole path, or the path inside the folder
+      # +inside+. <tt>**</tt> matches any number of folders, a trailing
+      # <tt>/**</tt> everything under a folder, and <tt>{a,b}</tt> either.
       def match?(path, pattern, inside: nil) # :nodoc:
         pattern = pattern.to_s.delete_prefix('./').delete_prefix('/')
         flags = File::FNM_PATHNAME | File::FNM_EXTGLOB
         return File.fnmatch?(pattern, File.basename(path), flags) unless pattern.include?('/')
 
-        relative = inside.to_s.empty? ? path : path.delete_prefix("#{inside}/")
-        File.fnmatch?(pattern, relative, flags)
+        pattern = "#{pattern}/*" if pattern.end_with?('/**')
+        candidates = [path]
+        candidates << path.delete_prefix("#{inside}/") unless inside.to_s.empty?
+        candidates.any? { |candidate| File.fnmatch?(pattern, candidate, flags) }
       end
 
       # Returns a safe file name for an attachment called +name+.

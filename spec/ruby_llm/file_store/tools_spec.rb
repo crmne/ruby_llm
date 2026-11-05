@@ -430,6 +430,11 @@ RSpec.describe RubyLLM::FileStore::Tools do
       expect(paths(path: 'reports', pattern: '2026/*')).to eq(%w[reports/2026/q3.csv])
     end
 
+    it 'matches a whole path inside the folder too, and everything under a folder with a trailing **' do
+      expect(paths(path: 'reports', pattern: 'reports/2026/*.csv')).to eq(%w[reports/2026/q3.csv])
+      expect(paths(pattern: 'reports/**')).to eq(%w[reports/2026/q3.csv reports/notes.md reports/q2.csv])
+    end
+
     it 'says when nothing matches' do
       expect(call(:list_files, pattern: '**/*.pdf')).to eq('No files match **/*.pdf.')
       expect(call(:list_files, path: 'reports', pattern: '*.pdf')).to eq('No files in reports match *.pdf.')

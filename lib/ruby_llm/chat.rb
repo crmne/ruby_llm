@@ -1150,8 +1150,8 @@ module RubyLLM
     # +tools+ names the tools the model gets: +:read+ for +list_files+,
     # +read_file+, and +search_files+, and +:write+, +:edit+, and
     # +:delete+ for +write_file+, +edit_file+, and +delete_file+. Default:
-    # <tt>%i[read write edit]</tt>. Raises ArgumentError for +:write+ or
-    # +:edit+ without +:read+.
+    # <tt>%i[read write edit]</tt>. Raises ArgumentError without +:read+,
+    # since older attachments and long results reach the model through it.
     #
     # Pass +nil+ to remove the store and its tools. Returns +self+.
     #
