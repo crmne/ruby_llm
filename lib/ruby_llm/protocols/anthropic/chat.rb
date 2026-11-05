@@ -392,9 +392,13 @@ module RubyLLM
             thinking_tokens: usage_thinking_tokens(usage),
             server_tool_use: usage['server_tool_use'],
             finish_reason: normalize_finish_reason(data['stop_reason']),
-            model: data['model'],
+            model: parse_response_model_id(data),
             raw: raw
           )
+        end
+
+        def parse_response_model_id(data)
+          data['model']
         end
 
         # Stored thinking blocks replay whether or not this request asks for

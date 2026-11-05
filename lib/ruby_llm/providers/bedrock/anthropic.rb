@@ -40,6 +40,20 @@ module RubyLLM
           response.body['inputTokens']
         end
 
+        # The body names the foundation model; pricing and the transcript
+        # follow the inference profile or ARN that was called.
+        def parse_response_model_id(data)
+          called_model_id(super)
+        end
+
+        def parse_model_id(data)
+          called_model_id(super)
+        end
+
+        def called_model_id(named)
+          named && (@model&.id || named)
+        end
+
         def provider_file_references?
           false
         end

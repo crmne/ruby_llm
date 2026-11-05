@@ -22,8 +22,8 @@ module RubyLLM
             render_invoke_body(payload, beta_headers(request[:headers].to_h, payload))
           end
 
-          def parse_bedrock_model_output(body, **)
-            parse_completion_body(body, raw: body)
+          def parse_bedrock_model_output(body, model:)
+            parse_completion_body(body.merge('model' => model), raw: body)
           end
         end
       end
