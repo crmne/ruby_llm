@@ -32,6 +32,7 @@ Provider operation errors inherit from `RubyLLM::Error`. RubyLLM maps the provid
 | --- | --- | --- |
 | `RubyLLM::Error` | Any other failure status, such as a 413 that is not a context overflow | No |
 | `RubyLLM::BadRequestError` | 400 | No |
+| `RubyLLM::UnsupportedParameterError` | A 400 from OpenAI that names a parameter the model doesn't take, such as a temperature | No |
 | `RubyLLM::UnauthorizedError` | 401, or a 400 or 403 with a recognized invalid-credentials message, such as `Incorrect API key` | No |
 | `RubyLLM::PaymentRequiredError` | 402, or a 400 saying the credit balance is too low | No |
 | `RubyLLM::ForbiddenError` | Any other 403 | No |
@@ -216,6 +217,22 @@ chat.with_fallbacks(
 )
 ```
 
+### Dropping Unsupported Parameters
+
+Models differ in which settings they take: some reasoning models reject a temperature, and some reject a reasoning effort other than their default. When OpenAI says so, RubyLLM raises `RubyLLM::UnsupportedParameterError`, a `BadRequestError` whose `parameter` names what it rejected: `:temperature`, `:thinking`, or `:max_output_tokens` for RubyLLM's own settings, or the provider's name as a String, such as a key you passed to `with_provider_options`.
+
+To retry without it instead, opt in with `drop_unsupported: true`:
+
+```ruby
+chat = RubyLLM.chat(model: "{{ site.models.openai_current }}")
+              .with_temperature(0.2)
+              .with_fallbacks(drop_unsupported: true)
+```
+
+The request is retried once on the same model without that parameter, and then the fallback models, if any, take over as usual with every setting in place. The chat keeps its settings, so the next request sends the parameter again. `before_fallback` and `after_fallback` receive the retry, with `fallback.dropped_parameter` naming what was left out and `fallback.to` the same model as `fallback.from`, so you can log it and fix the setting. Nothing is ever dropped unless you opt in.
+
+`UnsupportedParameterError` and `drop_unsupported` only act on rejections RubyLLM can identify. Today those are OpenAI's, whose errors name the parameter. Other providers, including Anthropic and Gemini, describe these rejections only in free text, which RubyLLM doesn't guess from, so they raise `BadRequestError` and nothing is dropped.
+
 ### Fallback Callbacks
 
 Use `before_fallback` and `after_fallback` to observe each fallback attempt:
@@ -236,7 +253,7 @@ chat.after_fallback do |fallback|
 end
 ```
 
-The callback receives a `RubyLLM::Fallback` with the configured target (`id`, `provider`, `model`) and the runtime attempt details (`from`, `to`, `error`, `attempt`, `response`, `fallback_error`, `streaming?`, and `chunks_yielded?`).
+The callback receives a `RubyLLM::Fallback` with the configured target (`id`, `provider`, `model`) and the runtime attempt details (`from`, `to`, `error`, `attempt`, `response`, `fallback_error`, `dropped_parameter`, `streaming?`, and `chunks_yielded?`).
 
 When streaming has already yielded chunks before a fallback-worthy error, RubyLLM cannot take those chunks back. It starts a new assistant message lifecycle for the fallback response, and `fallback.chunks_yielded?` lets your UI or logs distinguish that case.
 

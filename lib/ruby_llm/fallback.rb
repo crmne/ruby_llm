@@ -55,6 +55,11 @@ module RubyLLM
     # The fallback attempt number, starting at 1.
     attr_reader :attempt
 
+    # The parameter a retry on the same model left out, as
+    # UnsupportedParameterError#parameter names it, or +nil+ for a fallback
+    # to another model. See Chat#with_fallbacks.
+    attr_reader :dropped_parameter
+
     # The response Message from a successful fallback attempt, or +nil+.
     attr_reader :response
 
@@ -94,6 +99,7 @@ module RubyLLM
       @chunks_yielded = attributes.fetch(:chunks_yielded, false)
       @response = attributes[:response]
       @fallback_error = attributes[:fallback_error]
+      @dropped_parameter = attributes[:dropped_parameter]
     end
 
     def with_attempt(**attributes) # :nodoc:

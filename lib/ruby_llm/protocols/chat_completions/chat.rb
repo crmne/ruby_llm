@@ -13,9 +13,40 @@ module RubyLLM
         OPENAI_INLINE_FILE_LIMIT = 50 * 1024 * 1024
         PROMPT_CACHE_OPTIONS = %i[key ttl mode retention].freeze
 
+        UNSUPPORTED_PARAMETER_CODES = %w[unsupported_parameter unsupported_value unknown_parameter].freeze
+        # The Responses API reports some of these, such as a temperature,
+        # with a +param+ and no +code+.
+        UNSUPPORTED_PARAMETER_MESSAGE = /\AUnsupported (?:parameter|value): /
+        PARAMETERS = {
+          'temperature' => :temperature, 'reasoning_effort' => :thinking,
+          'max_tokens' => :max_output_tokens, 'max_completion_tokens' => :max_output_tokens
+        }.freeze
+
         def completion_url
           'chat/completions'
         end
+
+        # OpenAI names the rejected parameter in +param+ and why in +code+.
+        def parse_unsupported_parameter(response)
+          body = response.body
+          body = JSON.parse(body) if body.is_a?(String)
+          error = body['error'] if body.is_a?(Hash)
+          return unless error.is_a?(Hash) && unsupported_parameter_error?(error)
+          return unless error['param'].is_a?(String) && !error['param'].empty?
+
+          wire_parameters.fetch(error['param'], error['param'])
+        rescue JSON::ParserError
+          nil
+        end
+
+        def unsupported_parameter_error?(error)
+          return UNSUPPORTED_PARAMETER_CODES.include?(error['code']) if error['code']
+
+          error['message'].to_s.match?(UNSUPPORTED_PARAMETER_MESSAGE)
+        end
+
+        # The wire parameters that carry RubyLLM settings, by name.
+        def wire_parameters = PARAMETERS
 
         module_function
 

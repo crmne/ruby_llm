@@ -21,6 +21,11 @@ module RubyLLM
           'responses'
         end
 
+        def wire_parameters
+          super.merge('reasoning' => :thinking, 'reasoning.effort' => :thinking,
+                      'max_output_tokens' => :max_output_tokens)
+        end
+
         OPENAI_INLINE_FILE_LIMIT = 50 * 1024 * 1024
         PROMPT_CACHE_OPTIONS = %i[key ttl mode retention].freeze
 
