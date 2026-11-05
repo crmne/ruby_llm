@@ -464,18 +464,29 @@ RSpec.describe RubyLLM::Chat do
   end
 
   describe '#each' do
-    it 'iterates through messages' do
+    it 'still iterates through messages while deprecated' do
       chat = described_class.new
       chat.add_message(role: :user, content: 'Message 1')
       chat.add_message(role: :assistant, content: 'Message 2')
+      allow(RubyLLM.deprecator).to receive(:deprecate)
 
       messages = chat.map do |msg|
         msg
       end
 
-      expect(messages.size).to eq(2)
-      expect(messages[0].content).to eq('Message 1')
-      expect(messages[1].content).to eq('Message 2')
+      expect(messages.map(&:content)).to eq(['Message 1', 'Message 2'])
+      expect(chat.each).to be_an(Enumerator)
+      expect(RubyLLM.deprecator).to have_received(:deprecate)
+        .with('Enumerable on RubyLLM::Chat', replacement: 'RubyLLM::Chat#messages', removal: '3.0').twice
+    end
+
+    it 'leaves messages free of deprecation warnings' do
+      chat = described_class.new
+      chat.add_message(role: :user, content: 'Message 1')
+      allow(RubyLLM.deprecator).to receive(:deprecate)
+
+      expect(chat.messages.map(&:content)).to eq(['Message 1'])
+      expect(RubyLLM.deprecator).not_to have_received(:deprecate)
     end
   end
 end

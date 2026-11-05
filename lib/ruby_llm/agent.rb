@@ -37,12 +37,12 @@ module RubyLLM
   # Agent instances delegate Chat's conversation API (#ask, #complete,
   # #with_tools, and so on) to the wrapped chat, which is available via
   # #chat. Direct transcript replacement stays on the wrapped chat because
-  # Rails-backed chat models own their message association. Agents are
-  # enumerable over their messages.
+  # Rails-backed chat models own their message association. Read the
+  # conversation through #messages.
   class Agent
     extend Forwardable
     singleton_class.prepend JoinCallbacks, Ownership, Callbacks, ToolConversion
-    include Enumerable
+    include Support::DeprecatedEnumerable
 
     DUPED_INHERITED_CONFIG = {
       :@chat_kwargs => {},
@@ -1509,7 +1509,9 @@ module RubyLLM
     # :method: cache_until_here
     # :call-seq: cache_until_here(ttl: nil)
     #
-    # Delegates to Chat#cache_until_here. See that method for arguments and return values.
+    # Deprecated: use Message#cache_until_here or
+    # <tt>with_instructions(cache_until_here:)</tt>. Delegates to
+    # Chat#cache_until_here, which warns. RubyLLM 3.0 removes it.
 
     ##
     # :method: model
@@ -1665,7 +1667,9 @@ module RubyLLM
     # :method: each
     # :call-seq: each(&block)
     #
-    # Delegates to Chat#each. See that method for arguments and return values.
+    # Deprecated: iterate #messages instead. Delegates to Chat#each, which
+    # warns, as do the Enumerable methods built on it. RubyLLM 3.0 removes
+    # them.
 
     ##
     # :method: model_id

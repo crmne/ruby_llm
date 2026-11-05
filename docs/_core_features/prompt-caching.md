@@ -74,33 +74,30 @@ Some providers cache repeated prompts implicitly and do not expose an off switch
 
 ## Explicit Cache Boundaries
 
-Use `cache_until_here` when you know the exact prefix that should be cached:
+When you know the exact prefix that should be cached, mark the message that ends it. Pass `cache_until_here: true` to `with_instructions` to end the prefix at your instructions:
 
 ```ruby
 chat = RubyLLM.chat(model: '{{ site.models.anthropic_latest }}')
 
 chat.with_instructions(
-  "You are a release-notes assistant. Always group changes by subsystem."
-).cache_until_here
+  "You are a release-notes assistant. Always group changes by subsystem.",
+  cache_until_here: true
+)
 
 response = chat.ask("Summarize the API changes in this diff.", with: "large_diff.patch")
 ```
 
-`cache_until_here` marks the latest message. That means these two forms are equivalent:
+Call `cache_until_here` on any other message, such as a long document you add to the conversation:
 
 ```ruby
-message = chat.add_message(role: :user, content: long_context)
-message.cache_until_here
-
-chat.add_message(role: :user, content: long_context)
-chat.cache_until_here
+chat.add_message(role: :user, content: long_context).cache_until_here
 ```
 
 Combine explicit boundaries with `with_caching` to cache a reusable prefix while automatic caching covers the growing conversation:
 
 ```ruby
 chat.with_caching(ttl: "1h")
-chat.with_instructions(large_policy_prompt).cache_until_here
+chat.with_instructions(large_policy_prompt, cache_until_here: true)
 chat.ask("Apply the policy to this request: #{request_text}")
 ```
 
@@ -110,14 +107,14 @@ A stable prefix and a growing conversation often deserve different lifetimes. A 
 
 ```ruby
 chat.with_caching
-chat.with_instructions(large_policy_prompt).cache_until_here(ttl: "1h")
+chat.with_instructions(large_policy_prompt, cache_until_here: { ttl: "1h" })
 chat.ask("Apply the policy to this request: #{request_text}")
 ```
 
-`with_instructions` accepts the same option:
+A message takes the same option:
 
 ```ruby
-chat.with_instructions(large_policy_prompt, cache_until_here: { ttl: "1h" })
+chat.add_message(role: :user, content: handbook).cache_until_here(ttl: "1h")
 ```
 
 A boundary without `ttl:` uses the lifetime from `with_caching`. Anthropic, OpenRouter, and Bedrock Converse set a lifetime per boundary; other providers keep their request-level lifetime. Anthropic requires longer lifetimes to come before shorter ones in the prompt.
@@ -179,7 +176,7 @@ For persisted Rails chats, explicit cache boundaries are stored on messages with
 ```ruby
 chat = Chat.create!(model: '{{ site.models.anthropic_current }}')
 chat.with_caching
-chat.with_instructions('Reusable analysis prompt').cache_until_here(ttl: "1h")
+chat.with_instructions('Reusable analysis prompt', cache_until_here: { ttl: "1h" })
 chat.add_message(role: :user, content: long_context).cache_until_here
 chat.ask("Today's request: #{summary}")
 ```

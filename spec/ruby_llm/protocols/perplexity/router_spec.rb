@@ -36,7 +36,7 @@ RSpec.describe RubyLLM::Protocols::Perplexity::Router do
 
   it 'renders required and named tool choices, parallel controls, schema and cache boundaries through Chat' do
     chat.with_tools(tool).with_tool_options(choice: :required, calls: :one).with_caching
-        .with_instructions('Use the documented arithmetic tools.').cache_until_here.ask_later('Add two and two.')
+        .with_instructions('Use the documented arithmetic tools.', cache_until_here: true).ask_later('Add two and two.')
     payload = chat.render
 
     expect(payload).to include(tool_choice: :required, parallel_tool_calls: false)
@@ -122,7 +122,7 @@ RSpec.describe RubyLLM::Protocols::Perplexity::Router do
   it 'requests a named tool with a cache boundary from the configured Router account', :live do
     skip_without_cassette_or_key('PERPLEXITY_API_KEY')
     response = chat.with_tools(tool).with_tool_options(choice: 'add', calls: :one).with_caching
-                   .with_instructions('Use arithmetic tools for arithmetic.').cache_until_here
+                   .with_instructions('Use arithmetic tools for arithmetic.', cache_until_here: true)
                    .ask_later('Add two and two.').generate
 
     expect(response.tool_calls.values.first).to have_attributes(name: 'add', arguments: { 'left' => 2, 'right' => 2 })

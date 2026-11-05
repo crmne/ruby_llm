@@ -20,21 +20,21 @@ RSpec.describe RubyLLM::Chat, :live do
 
       it 'gives a cache boundary the same spelling' do
         chat = RubyLLM.chat(model: model_for(:anthropic)).with_caching
-        chat.with_instructions('Stable policy').cache_until_here(ttl:)
+        chat.with_instructions('Stable policy', cache_until_here: { ttl: })
 
         expect(chat.render[:system].last[:cache_control]).to eq(type: 'ephemeral', ttl: '1h')
       end
 
       it 'sends Bedrock Converse the spelling its cachePoint takes' do
         chat = RubyLLM.chat(model: model_for(:bedrock), provider: :bedrock).with_caching(ttl:)
-        chat.with_instructions('Stable policy').cache_until_here
+        chat.with_instructions('Stable policy', cache_until_here: true)
 
         expect(chat.render[:system].last).to eq(cachePoint: { type: 'default', ttl: '1h' })
       end
 
       it 'sends OpenRouter the spelling its cache_control takes' do
         chat = RubyLLM.chat(model: model_for(:openrouter), provider: :openrouter).with_caching(ttl:)
-        chat.with_instructions('Stable policy').cache_until_here
+        chat.with_instructions('Stable policy', cache_until_here: true)
 
         expect(chat.render[:messages].first[:content].last[:cache_control]).to eq(type: 'ephemeral', ttl: '1h')
       end

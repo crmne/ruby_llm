@@ -109,7 +109,7 @@ Prompt caching now has a common API across supported providers. Enable it with `
 
 ```ruby
 chat = RubyLLM.chat(model: "{{ site.models.anthropic_latest }}").with_caching
-chat.with_instructions(File.read("support-policy.txt")).cache_until_here
+chat.with_instructions(File.read("support-policy.txt"), cache_until_here: true)
 
 chat.ask "Can I return an order after 20 days?"
 response = chat.ask "What if the item arrived damaged?"

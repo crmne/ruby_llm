@@ -77,8 +77,8 @@ RSpec.describe RubyLLM::Chat, :live do
 
     it 'omits RubyLLM cache controls and marked boundaries when disabled' do
       chat = RubyLLM.chat(model: model_for(:openai, :temperature))
-      chat.with_instructions('Stable instructions').cache_until_here
-      chat.ask_later('Hello').cache_until_here
+      chat.with_instructions('Stable instructions', cache_until_here: true)
+      chat.ask_later('Hello').messages.last.cache_until_here
       chat.with_caching(false)
 
       payload = chat.render
@@ -132,7 +132,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
     it 'renders explicit breakpoints for OpenAI cache boundaries' do
       chat = RubyLLM.chat(model: model_for(:openai, :temperature))
-      chat.ask_later('Long context').cache_until_here
+      chat.ask_later('Long context').messages.last.cache_until_here
 
       payload = chat.render
 
@@ -144,7 +144,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
     it 'sends cache-bounded instructions as input items on Responses' do
       chat = RubyLLM.chat(model: model_for(:openai, :temperature))
-      chat.with_instructions('Stable instructions').cache_until_here
+      chat.with_instructions('Stable instructions', cache_until_here: true)
       chat.ask_later('Hello')
 
       payload = chat.render
@@ -213,7 +213,7 @@ RSpec.describe RubyLLM::Chat, :live do
       allow(RubyLLM.logger).to receive(:debug)
 
       chat = RubyLLM.chat(model: model_for(:gemini), provider: :gemini)
-      chat.ask_later('Long context').cache_until_here
+      chat.ask_later('Long context').messages.last.cache_until_here
       chat.render
 
       expect(RubyLLM.logger).to have_received(:debug).with(/implicit caching.*RubyLLM\.cache/m).once
@@ -236,41 +236,17 @@ RSpec.describe RubyLLM::Chat, :live do
     end
   end
 
-  describe '#cache_until_here' do
+  describe 'cache boundaries' do
     let(:chat) { RubyLLM.chat }
-
-    it 'marks the last added message as a cache boundary' do
-      message = chat.add_message(role: :user, content: 'Long context')
-
-      expect(chat.cache_until_here).to eq(chat)
-      expect(message.cache_until_here?).to be true
-    end
-
-    it 'marks the staged user message from ask_later' do
-      chat.ask_later('Long context').cache_until_here
-
-      expect(chat.messages.last.cache_until_here?).to be true
-    end
 
     it 'marks the instruction added by with_instructions' do
       chat.add_message(role: :user, content: 'Existing message')
-      chat.with_instructions('Stable instructions').cache_until_here
+      chat.with_instructions('Stable instructions', cache_until_here: true)
 
       system_message = chat.messages.find { |msg| msg.role == :system }
       user_message = chat.messages.find { |msg| msg.role == :user }
       expect(system_message.cache_until_here?).to be true
       expect(user_message.cache_until_here?).to be false
-    end
-
-    it 'raises when the chat has no messages' do
-      expect { chat.cache_until_here }.to raise_error(ArgumentError, 'No messages to cache')
-    end
-
-    it 'gives the boundary its own lifetime' do
-      chat.with_instructions('Stable instructions').cache_until_here(ttl: '1h')
-
-      expect(chat.messages.last.cache_until_here?).to be true
-      expect(chat.messages.last.cache_ttl).to eq('1h')
     end
 
     it 'gives an instruction boundary its own lifetime from with_instructions' do
@@ -284,10 +260,17 @@ RSpec.describe RubyLLM::Chat, :live do
         .to raise_error(ArgumentError, /cache_until_here accepts true, false, or ttl:/)
     end
 
+    it 'marks the message add_message returned' do
+      message = chat.add_message(role: :user, content: 'Long context')
+
+      expect(message.cache_until_here(ttl: '1h')).to be(message)
+      expect(chat.messages.last).to have_attributes(cache_until_here?: true, cache_ttl: '1h')
+    end
+
     it 'renders the boundary lifetime ahead of the chat lifetime on Anthropic' do
       chat = RubyLLM.chat(model: model_for(:anthropic)).with_caching
-      chat.with_instructions('Stable policy').cache_until_here(ttl: '1h')
-      chat.ask_later('Long context').cache_until_here
+      chat.with_instructions('Stable policy', cache_until_here: { ttl: '1h' })
+      chat.ask_later('Long context').messages.last.cache_until_here
 
       payload = chat.render
 
@@ -303,6 +286,54 @@ RSpec.describe RubyLLM::Chat, :live do
 
       expect(restored.cache_until_here?).to be true
       expect(restored.cache_ttl).to eq('1h')
+    end
+
+    it 'places a boundary without a deprecation warning' do
+      allow(RubyLLM.deprecator).to receive(:deprecate)
+
+      chat.with_instructions('Stable instructions', cache_until_here: true)
+      chat.add_message(role: :user, content: 'Long context').cache_until_here
+
+      expect(RubyLLM.deprecator).not_to have_received(:deprecate)
+    end
+  end
+
+  describe '#cache_until_here' do
+    let(:chat) { RubyLLM.chat }
+
+    around do |example|
+      behavior = RubyLLM.config.deprecation_behavior
+      RubyLLM.config.deprecation_behavior = :silence
+      example.run
+    ensure
+      RubyLLM.config.deprecation_behavior = behavior
+    end
+
+    it 'is deprecated in favor of marking the message' do
+      chat.add_message(role: :user, content: 'Long context')
+      RubyLLM.config.deprecation_behavior = :raise
+
+      expect { chat.cache_until_here }.to raise_error(
+        RubyLLM::DeprecationError,
+        /RubyLLM::Chat#cache_until_here .*RubyLLM 3\.0.*Message#cache_until_here or with_instructions/
+      )
+    end
+
+    it 'marks the last added message as a cache boundary' do
+      message = chat.add_message(role: :user, content: 'Long context')
+
+      expect(chat.cache_until_here).to eq(chat)
+      expect(message.cache_until_here?).to be true
+    end
+
+    it 'marks the instruction added by with_instructions' do
+      chat.with_instructions('Stable instructions').cache_until_here(ttl: '1h')
+
+      expect(chat.messages.last).to have_attributes(cache_until_here?: true, cache_ttl: '1h')
+    end
+
+    it 'raises when the chat has no messages' do
+      expect { chat.cache_until_here }.to raise_error(ArgumentError, 'No messages to cache')
     end
   end
 
@@ -321,14 +352,12 @@ RSpec.describe RubyLLM::Chat, :live do
     each_model(cacheable_models) do |provider, model|
       it "#{provider}/#{model} writes then reads the prompt cache" do
         write_chat = RubyLLM.chat(model: model, provider: provider).with_caching
-        write_chat.with_instructions(cacheable_instructions)
-        write_chat.cache_until_here
+        write_chat.with_instructions(cacheable_instructions, cache_until_here: true)
         first = write_chat.ask('Reply with exactly: OK')
         expect(first.tokens.cache_write.to_i + first.tokens.cache_read.to_i).to be_positive
 
         read_chat = RubyLLM.chat(model: model, provider: provider).with_caching
-        read_chat.with_instructions(cacheable_instructions)
-        read_chat.cache_until_here
+        read_chat.with_instructions(cacheable_instructions, cache_until_here: true)
         second = read_chat.ask('Reply with exactly: OK')
         expect(second.tokens.cache_read).to be_positive
       end
@@ -358,7 +387,8 @@ RSpec.describe RubyLLM::Chat, :live do
 
     it "anthropic/#{model_for(:anthropic)} writes a one-hour boundary and prices it as one" do
       chat = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic).with_caching
-      chat.with_instructions("#{cacheable_instructions}\nKeep this prefix for an hour.").cache_until_here(ttl: '1h')
+      chat.with_instructions("#{cacheable_instructions}\nKeep this prefix for an hour.",
+                             cache_until_here: { ttl: '1h' })
 
       response = chat.ask('Reply with exactly: OK')
 
