@@ -1,7 +1,7 @@
 ---
 layout: default
 title: RubyLLM Ecosystem
-nav_order: 5
+nav_order: 6
 description: Extend RubyLLM with structured schemas, instrumentation, monitoring and community-built tools for production AI apps.
 ---
 
@@ -31,11 +31,11 @@ response = RubyLLM.chat.with_schema(TaskList).ask "Plan a first Ruby study sessi
 response.parsed["tasks"]
 ```
 
-See [Structured Output]({% link _core_features/structured-output.md %}) and [Tool Parameters]({% link _core_features/tool-parameters.md %}) for the built-in integration.
+See [Structured Output]({% link _core_features/structured-output.md %}) and [Tool Parameters]({% link _tools/tool-parameters.md %}) for the built-in integration.
 
 ## MCP
 
-RubyLLM includes an MCP client, `RubyLLM::MCP`. It connects to MCP servers, and chats and agents use their tools, resources, and prompts. See [MCP Client]({% link _core_features/mcp.md %}), and [Provider Tools]({% link _core_features/provider-tools.md %}#mcp-servers) for servers the provider connects to.
+RubyLLM includes an MCP client, `RubyLLM::MCP`. It connects to MCP servers, and chats and agents use their tools, resources, and prompts. See [MCP Client]({% link _tools/mcp.md %}), and [Provider Tools]({% link _tools/provider-tools.md %}#mcp-servers) for servers the provider connects to.
 
 The community [ruby_llm-mcp](https://github.com/patvice/ruby_llm-mcp) gem defines the same `RubyLLM::MCP` constant, so an application uses one or the other.
 

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Tools
-nav_order: 2
+nav_order: 4
 has_children: true
 description: Let AI call your Ruby code. Connect to databases, APIs, or any external system with function calling.
 redirect_from:
@@ -103,9 +103,9 @@ chat.with_tools(CustomerLookup)
 chat.tools[:crm_customer_lookup]
 ```
 
-The chat keys the tool by its namespace and name joined, `:crm_customer_lookup`, and raises an `ArgumentError` when another tool already has that name. The tool's own name stays `customer_lookup`, and `tool_call.namespace` names its group. RubyLLM routes calls and remembers approvals by both, including after a Rails reload. `namespace` is inherited; pass `nil` to remove an inherited namespace. Namespaced tools can be [deferred for tool search]({% link _core_features/tool-search.md %}) like any other.
+The chat keys the tool by its namespace and name joined, `:crm_customer_lookup`, and raises an `ArgumentError` when another tool already has that name. The tool's own name stays `customer_lookup`, and `tool_call.namespace` names its group. RubyLLM routes calls and remembers approvals by both, including after a Rails reload. `namespace` is inherited; pass `nil` to remove an inherited namespace. Namespaced tools can be [deferred for tool search]({% link _tools/tool-search.md %}) like any other.
 
-The Responses protocol sends each group as a function namespace, which needs a description. Every other protocol sends the tool under its joined name, `crm_customer_lookup`, and maps the model's calls back to the namespace. Anthropic's `computer` and `browser` namespaces are the members of its [native client toolsets]({% link _core_features/provider-tools.md %}#native-client-toolsets) instead. The Responses API reserves those two names and drops the functions in them, so RubyLLM raises `RubyLLM::Error` when a Responses request carries either.
+The Responses protocol sends each group as a function namespace, which needs a description. Every other protocol sends the tool under its joined name, `crm_customer_lookup`, and maps the model's calls back to the namespace. Anthropic's `computer` and `browser` namespaces are the members of its [native client toolsets]({% link _tools/provider-tools.md %}#native-client-toolsets) instead. The Responses API reserves those two names and drops the functions in them, so RubyLLM raises `RubyLLM::Error` when a Responses request carries either.
 
 You can force a namespaced tool with `with_tool_options(choice: CustomerLookup)` where it travels under its joined name. Responses namespaces and Anthropic's toolset members cannot be forced, so RubyLLM raises there; use `choice: :required` instead.
 
@@ -125,7 +125,7 @@ end
 
 Required keywords become required string parameters. Optional keywords become optional string parameters. A tool with `def execute` receives an empty object schema.
 
-Ruby method signatures do not expose reliable JSON Schema types or descriptions, so add explicit declarations when those details matter. For the `parameter` helper, the `parameters` DSL, and supplying JSON Schema manually, see [Tool Parameters]({% link _core_features/tool-parameters.md %}).
+Ruby method signatures do not expose reliable JSON Schema types or descriptions, so add explicit declarations when those details matter. For the `parameter` helper, the `parameters` DSL, and supplying JSON Schema manually, see [Tool Parameters]({% link _tools/tool-parameters.md %}).
 
 ## Using Tools in Chat
 
@@ -137,7 +137,7 @@ response = chat.ask "What's the weather in Berlin? Latitude 52.52, longitude 13.
 puts response.content
 ```
 
-Pass an instance when a tool needs application context, such as the current user. See [Custom Initialization]({% link _core_features/tool-parameters.md %}#custom-initialization).
+Pass an instance when a tool needs application context, such as the current user. See [Custom Initialization]({% link _tools/tool-parameters.md %}#custom-initialization).
 
 You can add, replace, or clear the available tools:
 
@@ -149,9 +149,9 @@ chat.with_tools(nil)
 
 The first call adds `CurrentTime` to the existing tools. The second replaces the set; the third clears it.
 
-For controlling which tools the model may use, how many calls it can make in one turn, concurrent execution, model compatibility, and callbacks, see [Controlling Tool Execution]({% link _core_features/tool-execution.md %}).
+For controlling which tools the model may use, how many calls it can make in one turn, concurrent execution, model compatibility, and callbacks, see [Controlling Tool Execution]({% link _tools/tool-execution.md %}).
 
-With dozens of tools, pass `defer: true` and let the model search for the ones it needs. See [Tool Search]({% link _core_features/tool-search.md %}).
+With dozens of tools, pass `defer: true` and let the model search for the ones it needs. See [Tool Search]({% link _tools/tool-search.md %}).
 
 ## The Tool Execution Flow
 
@@ -179,11 +179,11 @@ class GenerateReport < RubyLLM::Tool
 end
 ```
 
-A run that takes longer than its `max_run_time` counts as crashed, and another process may start the call again. MCP tools use `config.max_run_time`; tools that [pause their call](#pausing-a-tool-call), like MCP operations that run as [tasks]({% link _core_features/mcp.md %}#tasks), release their claim instead. See [Durable Agents]({% link _advanced/durable-agents.md %}#one-process-at-a-time) for how claims work.
+A run that takes longer than its `max_run_time` counts as crashed, and another process may start the call again. MCP tools use `config.max_run_time`; tools that [pause their call](#pausing-a-tool-call), like MCP operations that run as [tasks]({% link _tools/mcp.md %}#tasks), release their claim instead. See [Agents in Background Jobs]({% link _advanced/durable-agents.md %}#one-process-at-a-time) for how claims work.
 
 ## Pausing a Tool Call
 
-Some calls can't finish while the chat waits. A tool that hands a job to another agent may have to wait for a person to approve a change, and that can take hours. Return a `RubyLLM::Task` from `execute`, and the chat pauses the call the way it pauses for [an approval]({% link _core_features/tool-execution.md %}#requiring-approval), so no process waits for it. Then implement `resume`, which carries the call on:
+Some calls can't finish while the chat waits. A tool that hands a job to another agent may have to wait for a person to approve a change, and that can take hours. Return a `RubyLLM::Task` from `execute`, and the chat pauses the call the way it pauses for [an approval]({% link _tools/tool-execution.md %}#requiring-approval), so no process waits for it. Then implement `resume`, which carries the call on:
 
 ```ruby
 class RunSubAgent < RubyLLM::Tool
@@ -221,7 +221,7 @@ A task's `status` is `:working` while the work runs on its own, so you check aga
 
 `data` is what `resume` needs, as a Hash that serializes to JSON. In Rails, the task persists on its tool call, so one process can pause the chat and another can resume it, even after a deploy. To rebuild a task as your own subclass of `RubyLLM::Task`, override `task(state, tool_call:)` on the tool and return `YourTask.load(state, tool_call:)`. A subclass can override `refresh` to check on its work and `cancel` to stop it; cancelling the chat calls `cancel` on every task it waits on and drops the paused calls.
 
-MCP tools pause the same way when a server runs a call as a [task]({% link _core_features/mcp.md %}#tasks).
+MCP tools pause the same way when a server runs a call as a [task]({% link _tools/mcp.md %}#tasks).
 
 ## Asking the User
 
@@ -246,7 +246,7 @@ In a chat, the call pauses on the question as on a server's: the chat is `awaiti
 
 ## Long Results
 
-A tool that returns a lot, like a search with hundreds of hits, sends all of it to the model, and all of it stays in every later request. In a chat with a [file store]({% link _core_features/chat-files.md %}), a result longer than 10,000 characters is saved as a file instead, and the model gets its start and the file's path to read or search the rest. A tool can set its own limit, or send its results whole when it already returns them in pages, with `spill_to_file`: see [Long tool results]({% link _core_features/chat-files.md %}#what-the-model-sees) in the Chat Files guide.
+A tool that returns a lot, like a search with hundreds of hits, sends all of it to the model, and all of it stays in every later request. In a chat with a [file store]({% link _advanced/chat-files.md %}), a result longer than 10,000 characters is saved as a file instead, and the model gets its start and the file's path to read or search the rest. A tool can set its own limit, or send its results whole when it already returns them in pages, with `spill_to_file`: see [Long tool results]({% link _advanced/chat-files.md %}#what-the-model-sees) in the Chat Files guide.
 
 ## Error Handling in Tools
 
@@ -278,7 +278,7 @@ See the [Error Handling Guide]({% link _advanced/error-handling.md %}#handling-e
 
 ## Model Context Protocol (MCP) Support
 
-Connect an MCP server to your chat with `with_mcp`, and the model can call its tools like your own. See [MCP Client]({% link _core_features/mcp.md %}). When the provider should connect to a remote server instead, use [Provider Tools]({% link _core_features/provider-tools.md %}#mcp-servers).
+Connect an MCP server to your chat with `with_mcp`, and the model can call its tools like your own. See [MCP Client]({% link _tools/mcp.md %}). When the provider should connect to a remote server instead, use [Provider Tools]({% link _tools/provider-tools.md %}#mcp-servers).
 
 ## Debugging Tools
 
@@ -293,9 +293,9 @@ See the [Error Handling Guide]({% link _advanced/error-handling.md %}#debugging)
 
 ## Next Steps
 
-*   [Tool Parameters]({% link _core_features/tool-parameters.md %}) - Declare flat arguments, structured schemas, and provider-specific metadata.
-*   [Controlling Tool Execution]({% link _core_features/tool-execution.md %}) - Steer tool choice, call counts, approval, concurrency, and callbacks.
-*   [Tool Search]({% link _core_features/tool-search.md %}) - Keep large tool sets out of the model's context until it searches for them.
-*   [Code Execution]({% link _core_features/code-execution.md %}) - Let the model run Ruby, Python, JavaScript, and shell code in a sandbox.
-*   [Chatting with AI Models]({% link _core_features/chat.md %}) - The conversational core that tools plug into.
+*   [Tool Parameters]({% link _tools/tool-parameters.md %}) - Declare flat arguments, structured schemas, and provider-specific metadata.
+*   [Controlling Tool Execution]({% link _tools/tool-execution.md %}) - Steer tool choice, call counts, approval, concurrency, and callbacks.
+*   [Tool Search]({% link _tools/tool-search.md %}) - Keep large tool sets out of the model's context until it searches for them.
+*   [Code Execution]({% link _advanced/code-execution.md %}) - Let the model run Ruby, Python, JavaScript, and shell code in a sandbox.
+*   [Chatting with AI Models]({% link _getting_started/chat.md %}) - The conversational core that tools plug into.
 *   [Error Handling]({% link _advanced/error-handling.md %}) - Recover from failures across the whole stack.

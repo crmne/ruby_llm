@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Instrumentation and Observability
-nav_order: 6
+nav_order: 16
 has_children: true
 description: Observe RubyLLM model operations, provider attempts, tool calls, workflows, batches, and model refreshes
 redirect_from:
@@ -82,7 +82,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-You can also set `instrumenter` on a [context]({% link _getting_started/configuration-connection.md %}#contexts-isolated-configurations) when you only want instrumentation around a specific operation.
+You can also set `instrumenter` on a [context]({% link _reference/configuration-connection.md %}#contexts-isolated-configurations) when you only want instrumentation around a specific operation.
 
 ## OpenTelemetry
 
@@ -198,7 +198,7 @@ RubyLLM emits these events:
 *   `batch.ruby_llm` - one batch submission operation
 *   `chat.ruby_llm` - chat completion metadata including model, provider, messages, response, and token usage
 *   `tool_call.ruby_llm` - tool name, arguments, and result
-*   `code_execution.ruby_llm` - one [code execution]({% link _core_features/code-execution.md %}) run: language, duration, exit code, timeout, blocked hosts, and returned files
+*   `code_execution.ruby_llm` - one [code execution]({% link _advanced/code-execution.md %}) run: language, duration, exit code, timeout, blocked hosts, and returned files
 *   `embedding.ruby_llm` - embedding model, input, result, token usage, and vector dimensions
 *   `image.ruby_llm` - image generation model, prompt, size, and result
 *   `video.ruby_llm` - one blocking video generation, including the wait for the job and the resulting video
@@ -216,7 +216,7 @@ RubyLLM emits these events:
 
 Operations that expose normalized usage (`chat`, `embedding`, `image`, `moderation`, `rerank`, `speech`, and `transcription`) include `payload[:tokens]` and `payload[:cost]`. Both value objects are always present; their individual fields may be `nil` when the provider did not report usage or RubyLLM could not price it. Batch, OCR, and video events expose their operation-specific result and lifecycle fields instead.
 
-See [Evaluation Progress and Monitoring]({% link _advanced/evaluation-progress.md %}) for evaluation progress, run IDs, and report payloads.
+See [Progress and Monitoring]({% link _advanced/evaluations.md %}#progress-and-monitoring) in the Evaluations guide for evaluation progress, run IDs, and report payloads.
 
 ### Usage Events
 

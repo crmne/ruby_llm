@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Prompt Rendering
-parent: "Chat"
 nav_order: 6
 description: Render reusable ERB prompt templates from app/prompts with RubyLLM.render_prompt
 ---
@@ -263,7 +262,7 @@ class WorkAssistant < RubyLLM::Agent
 end
 ```
 
-For the full class-based conventions, see [Agents]({% link _advanced/agents.md %}#prompt-management-and-conventions).
+For the full class-based conventions, see [Agents]({% link _getting_started/agents.md %}#prompt-management-and-conventions).
 
 ## Safety Notes
 

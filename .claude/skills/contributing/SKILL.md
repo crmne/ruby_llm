@@ -50,7 +50,7 @@ Rules that bite:
 3. Thread the option through the `Provider` contract, never by referencing a concrete provider or protocol from `Chat`.
 4. Implement per protocol in `lib/ruby_llm/protocols/*` (`render_*` for request payloads, `parse_*` for responses).
 5. Spec it in `spec/ruby_llm/chat_<x>_spec.rb`; add live coverage over the matrix in `spec/support/models_to_test.rb` when providers differ.
-6. Document it on the matching page in `docs/_core_features/`.
+6. Document it on the matching chat page, in `docs/_getting_started/chat.md` or `docs/_core_features/`.
 
 ## Working on an individual AI operation
 
@@ -80,7 +80,7 @@ Then make it real:
 2. Replace the scaffold's example capabilities with the provider's real ones, and identify the model-catalog source.
 3. Register the provider in `lib/ruby_llm.rb` (the entrypoint is the only place concrete providers get wired in).
 4. Record cassettes covering normal chat and streaming chat at minimum.
-5. Document configuration in `docs/_getting_started/configuration-providers.md`.
+5. Document configuration in `docs/_reference/configuration-providers.md`.
 
 ## Rails work
 
@@ -92,7 +92,7 @@ Then make it real:
 
 ## Docs work
 
-- Pages live in `docs/` under `_getting_started`, `_core_features`, `_advanced`, and `_reference`. Preview with `docs/bin/serve.sh`.
+- Pages live in `docs/` under `_getting_started` (Start Here), `_core_features` (Chat in Depth), `_tools` (Tools in Depth), `_advanced` (Building Real Apps), and `_reference`. Preview with `docs/bin/serve.sh`.
 - Voice: Rails guides. Second person, present tense, show the code before explaining it, motivate each feature with the problem it solves in one sentence. No em dashes, no hype, no "simply".
 - Lead with short, working public API examples. Show how features combine when it helps the reader build something. Keep the title, description, and "After reading this guide" opening; introduce concepts before adding a summary table.
 - Front-matter `description` becomes the page's llms.txt entry and social card text: one compelling sentence, no `&`, `<`, or `>`.

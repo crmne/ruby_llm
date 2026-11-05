@@ -1,8 +1,7 @@
 ---
 layout: default
 title: Tokens and Costs
-parent: "Chat"
-nav_order: 9
+nav_order: 10
 description: Read normalized token counts and costs for every response, chat, and provider attempt, including retries and cancellations.
 redirect_from:
   - /chat-tokens/
@@ -179,7 +178,7 @@ Token prices in the registry come from [models.dev](https://models.dev), which h
 
 ## Pricing Tool Use
 
-Providers bill some [provider tools]({% link _core_features/provider-tools.md %}) per use instead of per token. A web search costs the same whether it returns two results or ten. Read how many times each tool ran from `tokens.server_tool_use`:
+Providers bill some [provider tools]({% link _tools/provider-tools.md %}) per use instead of per token. A web search costs the same whether it returns two results or ten. Read how many times each tool ran from `tokens.server_tool_use`:
 
 ```ruby
 response = chat.with_provider_tools(:web_search).ask "What changed in Rails this week?"
@@ -346,7 +345,7 @@ Instrumentation is an observer, not the source of truth for a persisted Rails ch
 
 ## Next Steps
 
-* [Chat]({% link _core_features/chat.md %}) - the core conversation interface these counts come from.
+* [Chat]({% link _getting_started/chat.md %}) - the core conversation interface these counts come from.
 * [Model Registry]({% link _reference/models.md %}) - explore the registry and the `RubyLLM::Model` pricing fields behind `cost_for`.
 * [Extended Thinking]({% link _core_features/thinking.md %}) - work with reasoning-capable models.
 * [Instrumentation and Observability]({% link _advanced/instrumentation.md %}) - configure subscribers and custom instrumenters.

@@ -1,8 +1,7 @@
 ---
 layout: default
 title: Stream Responses
-parent: "Chat"
-nav_order: 2
+nav_order: 1
 description: Learn how to display AI responses in real-time as they're generated
 redirect_from:
   - /guides/streaming
@@ -47,7 +46,7 @@ Key attributes of a `Chunk`:
 *   `chunk.content`: The text fragment received in this chunk (can be `nil` or empty for some chunks, especially those containing only metadata or tool calls).
 *   `chunk.role`: Always `:assistant` for streamed response chunks.
 *   `chunk.model`: The model generating the response (usually present).
-*   `chunk.tool_calls`: The partial or complete tool calls in this chunk when the model is invoking a [Tool]({% link _core_features/tools.md %}), empty otherwise. The arguments might be streamed incrementally.
+*   `chunk.tool_calls`: The partial or complete tool calls in this chunk when the model is invoking a [Tool]({% link _getting_started/tools.md %}), empty otherwise. The arguments might be streamed incrementally.
 *   `chunk.tokens.input`: Standard input tokens for the request (often `nil` until the final chunk). Cache reads and writes are exposed separately as `chunk.tokens.cache_read` and `chunk.tokens.cache_write` when providers report them.
 *   `chunk.tokens.output`: Cumulative billable output tokens *up to this chunk* (behavior varies by provider, often only accurate in the final chunk). Includes thinking/reasoning tokens when the provider bills them as output.
 *   `chunk.thinking`: Optional thinking output when providers stream it.
@@ -184,10 +183,10 @@ chat.ask "What's the weather in Berlin? Latitude 52.52, longitude 13.40." do |ch
 end
 ```
 
-`Weather` is defined in the [Tools guide]({% link _core_features/tools.md %}#creating-a-tool). Tool-call arguments can arrive in partial chunks, so use callbacks when you need the complete call. See [Chat Event Handlers]({% link _core_features/chat-callbacks.md %}).
+`Weather` is defined in the [Tools guide]({% link _getting_started/tools.md %}#creating-a-tool). Tool-call arguments can arrive in partial chunks, so use callbacks when you need the complete call. See [Chat Event Handlers]({% link _core_features/chat-callbacks.md %}).
 
 ## Next Steps
 
-*   [Using Tools]({% link _core_features/tools.md %})
-*   [Rails Integration]({% link _advanced/rails.md %})
+*   [Using Tools]({% link _getting_started/tools.md %})
+*   [Rails Integration]({% link _getting_started/rails.md %})
 *   [Error Handling]({% link _advanced/error-handling.md %})

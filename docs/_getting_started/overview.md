@@ -38,10 +38,10 @@ The conversation API provides:
 * **Messages and attachments** for text, images, audio, and documents the model supports.
 * **Streaming** to display a response as it arrives.
 * **Tools** that let the model call your Ruby code, with optional human approval before execution.
-* **MCP servers** whose tools a chat or agent can use, described in a Ruby class. See [MCP]({% link _core_features/mcp.md %}).
-* **Code execution** that lets the model run Ruby, Python, JavaScript, and shell code in a sandbox on your own servers and hand back the files it makes. See [Code Execution]({% link _core_features/code-execution.md %}).
-* **Chat files** that keep attachments and long tool results out of the conversation, so the model lists, reads, searches, and edits them with tools, and reads PDFs and scans with OCR. See [Chat Files]({% link _core_features/chat-files.md %}).
-* **Skills** that teach the model your workflows with folders of instructions, reference files, and scripts in the open Agent Skills format, loaded only when a task needs them. See [Skills]({% link _core_features/skills.md %}).
+* **MCP servers** whose tools a chat or agent can use, described in a Ruby class. See [MCP]({% link _tools/mcp.md %}).
+* **Code execution** that lets the model run Ruby, Python, JavaScript, and shell code in a sandbox on your own servers and hand back the files it makes. See [Code Execution]({% link _advanced/code-execution.md %}).
+* **Chat files** that keep attachments and long tool results out of the conversation, so the model lists, reads, searches, and edits them with tools, and reads PDFs and scans with OCR. See [Chat Files]({% link _advanced/chat-files.md %}).
+* **Skills** that teach the model your workflows with folders of instructions, reference files, and scripts in the open Agent Skills format, loaded only when a task needs them. See [Skills]({% link _tools/skills.md %}).
 * **Structured output** for results you read as a Hash through `response.parsed`.
 * **Agents** that put a model, instructions, tools, and other settings in a reusable Ruby class.
 * **Loop control** to generate a response, run tools, or advance one step at a time.
@@ -57,7 +57,7 @@ end
 response = StudyPlanner.new.ask "Plan a session about Ruby blocks."
 ```
 
-Use ordinary Ruby methods and jobs to coordinate agents. [Agentic Workflows]({% link _advanced/agentic-workflows.md %}) covers handoffs and explicit loop control; [Durable Agents]({% link _advanced/durable-agents.md %}) covers resuming work across jobs and deploys.
+Use ordinary Ruby methods and jobs to coordinate agents. [Agentic Workflows]({% link _advanced/agentic-workflows.md %}) covers handoffs and explicit loop control; [Durable Agents]({% link _advanced/durable-agents-overview.md %}) covers resuming work across jobs and deploys.
 
 ### Individual AI Operations
 
@@ -68,11 +68,11 @@ image = RubyLLM.paint "A watercolor illustration of a Ruby study group"
 image.save "study_group.png"
 ```
 
-Use `paint` for [images]({% link _core_features/image-generation.md %}), `animate` for [video]({% link _core_features/video-generation.md %}), and `speak` for [speech]({% link _core_features/text-to-speech.md %}). In the other direction, `transcribe` turns [audio into text]({% link _core_features/audio-transcription.md %}) and `ocr` extracts [document text]({% link _core_features/ocr.md %}).
+Use `paint` for [images]({% link _getting_started/image-generation.md %}), `animate` for [video]({% link _advanced/video-generation.md %}), and `speak` for [speech]({% link _getting_started/text-to-speech.md %}). In the other direction, `transcribe` turns [audio into text]({% link _getting_started/audio-transcription.md %}) and `ocr` extracts [document text]({% link _getting_started/ocr.md %}).
 
-For search, `embed` creates [vectors]({% link _core_features/embeddings.md %}) and `rerank` orders [candidate documents by relevance]({% link _core_features/rerank.md %}). Use `moderate` to check [content flags and categories]({% link _core_features/moderation.md %}).
+For search, `embed` creates [vectors]({% link _getting_started/embeddings.md %}) and `rerank` orders [candidate documents by relevance]({% link _getting_started/rerank.md %}). Use `moderate` to check [content flags and categories]({% link _getting_started/moderation.md %}).
 
-Use `judge` to ask typed questions about application data and receive [probabilities, choices, and scores]({% link _core_features/judgments.md %}). Define reusable questions in a `RubyLLM::Judge` class.
+Use `judge` to ask typed questions about application data and receive [probabilities, choices, and scores]({% link _advanced/judgments.md %}). Define reusable questions in a `RubyLLM::Judge` class.
 
 Each result has readers for its output, such as `transcription.text`, `document.markdown`, or `embedding.vectors`. Generated images, video, and speech have a `save` method.
 
@@ -196,7 +196,7 @@ Use [Hotwire]({% link _advanced/rails-streaming.md %}) to stream replies into a 
 
 The [generators]({% link _advanced/rails-generators.md %}) set up these pieces in conventional Rails directories. They create persistence, agents, tools, schemas, and an optional chat UI with streaming already connected.
 
-Individual operations such as `paint`, `transcribe`, and `ocr` also work directly in your Rails services and jobs. See [Rails Integration]({% link _advanced/rails.md %}) to get started.
+Individual operations such as `paint`, `transcribe`, and `ocr` also work directly in your Rails services and jobs. See [Rails Integration]({% link _getting_started/rails.md %}) to get started.
 
 ## How the Parts Fit Together
 
@@ -210,4 +210,4 @@ Individual operations such as `paint`, `transcribe`, and `ocr` also work directl
 
 ## Next Steps
 
-Try the examples in [Getting Started]({% link _getting_started/getting-started.md %}), then follow the guide for the feature you want to build.
+Try the examples in [Getting Started]({% link _getting_started/getting-started.md %}), then read the rest of Start Here in order: [Chat]({% link _getting_started/chat.md %}), [Tools]({% link _getting_started/tools.md %}), [Agents]({% link _getting_started/agents.md %}), [Configuration]({% link _getting_started/configuration.md %}), the individual operations, and [Rails Integration]({% link _getting_started/rails.md %}). Then follow the guide for the feature you want to build.

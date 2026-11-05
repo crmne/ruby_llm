@@ -38,7 +38,7 @@ RubyLLM 2.1 does less work on every call, and brings an MCP client, typed judgme
 
 Most of 2.1's speed comes without changing your code. Streams parse events with RubyLLM's own parser, append long text and reasoning in place, deduplicate the citations a provider repeats on every chunk in one pass, and compute the cost once, when the stream ends, instead of on every chunk. Requests pick their protocol once instead of once per message, derive tool names once, and parse a successful response once.
 
-A reply no longer keeps the request it answered, so a long chat holds one copy of its history instead of one per reply. If you read that request, see [Read Requests Before They Are Sent]({% link _reference/upgrading.md %}#read-requests-before-they-are-sent). The model registry loads once when several threads reach it together, and Vertex AI calls share one OAuth token instead of fetching their own. Persisted chats rebuild from the rows they already loaded, with fewer queries in applications that predate `automatic_scope_inversing`, and download a stored file only when a request sends it.
+A reply no longer keeps the request it answered, so a long chat holds one copy of its history instead of one per reply. If you read that request, see [Request Hooks]({% link _core_features/chat-request-control.md %}#request-hooks). The model registry loads once when several threads reach it together, and Vertex AI calls share one OAuth token instead of fetching their own. Persisted chats rebuild from the rows they already loaded, with fewer queries in applications that predate `automatic_scope_inversing`, and download a stored file only when a request sends it.
 
 These measurements compare 2.0.0 with 2.1 on the same machine. Providers answer from canned responses, so the times show RubyLLM's own work:
 
@@ -64,7 +64,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-Twenty calls to a local HTTPS server through `:net_http_persistent` took one handshake instead of twenty, and 0.4 ms each instead of 2.1 ms. Across a real network, each handshake you skip also saves its round trips. See [Connection Reuse]({% link _getting_started/configuration-connection.md %}#connection-reuse).
+Twenty calls to a local HTTPS server through `:net_http_persistent` took one handshake instead of twenty, and 0.4 ms each instead of 2.1 ms. Across a real network, each handshake you skip also saves its round trips. See [Connection Reuse]({% link _reference/configuration-connection.md %}#connection-reuse).
 
 In Rails, [run the 2.1 upgrade]({% link _reference/upgrading.md %}#upgrade-the-rails-schema) so chats remember the provider uploads of their stored files. A chat loaded in another process then sends the provider's copy of a large file instead of downloading the file and uploading it again. Five turns of a chat with a 30 MB PDF, each in a new process, uploaded 150 MB with 2.0 and nothing with 2.1.
 
@@ -115,7 +115,7 @@ end
 Handbook.new.listen(resources: ["handbook://policies"])
 ```
 
-See [Listening for Changes]({% link _core_features/mcp.md %}#listening-for-changes).
+See [Listening for Changes]({% link _tools/mcp.md %}#listening-for-changes).
 
 The client speaks the 2026-07-28 revision of the protocol and falls back for servers that predate it. OAuth follows the MCP authorization spec, and Rails keeps the credentials encrypted. Background jobs can connect as your app itself, with client credentials, a private key, or a workload identity token, and companies can authorize their people through their identity provider. Servers that require DPoP get tokens bound to a key.
 
@@ -129,7 +129,7 @@ class Reports < RubyLLM::MCP
 end
 ```
 
-Tools, results, and resources also expose the `_meta` that extensions write, and `log_level` brings a server's log messages into your logs. See [MCP Client]({% link _core_features/mcp.md %}).
+Tools, results, and resources also expose the `_meta` that extensions write, and `log_level` brings a server's log messages into your logs. See [MCP Client]({% link _tools/mcp.md %}).
 
 ## Tool Progress
 
@@ -152,7 +152,7 @@ chat.with_tools(ReadReport).after_tool_progress do |tool_call, progress|
 end
 ```
 
-MCP server tools report their progress through the same callback. It works with concurrent tool execution, on agents, and on Rails chat records. See [Reporting Progress]({% link _core_features/tool-execution.md %}#reporting-progress).
+MCP server tools report their progress through the same callback. It works with concurrent tool execution, on agents, and on Rails chat records. See [Reporting Progress]({% link _tools/tool-execution.md %}#reporting-progress).
 
 ## Tool Search
 
@@ -163,7 +163,7 @@ chat.with_mcp(GitHub, Linear, defer: true)
 chat.ask "Which open issues mention the flaky login spec?"
 ```
 
-`with_tools`, the agent `tools` and `mcp` macros, and Rails chat records take the same `defer:` option, and tool and MCP classes declare it with `defer`. Anthropic and OpenAI's Responses API search natively; other providers receive deferred tools as ordinary tools, so the same code runs everywhere. See [Tool Search]({% link _core_features/tool-search.md %}).
+`with_tools`, the agent `tools` and `mcp` macros, and Rails chat records take the same `defer:` option, and tool and MCP classes declare it with `defer`. Anthropic and OpenAI's Responses API search natively; other providers receive deferred tools as ordinary tools, so the same code runs everywhere. See [Tool Search]({% link _tools/tool-search.md %}).
 
 ## Switching Providers Mid-Conversation
 
@@ -179,7 +179,7 @@ chat.ask "Which of those changes affect Rails apps?"
 
 Thinking signatures, provider tool steps, compaction, and other provider-shaped content now go back only to the model that produced them. Another model receives the same conversation as text and tool calls, so it never sees blocks it cannot read. This matters inside one provider too: Bedrock, Vertex AI, Azure, and OpenRouter serve model families that refuse each other's reasoning. Gemini continues a tool round another provider began, such as a call that waited for an approval while the user switched models.
 
-A worker that dies mid-turn no longer leaves a conversation providers refuse. Requests leave out the blank reply it saved, and calls from a round the conversation has moved past reach the model as unfinished. See [Understanding the Persistence Flow]({% link _advanced/rails.md %}#understanding-the-persistence-flow).
+A worker that dies mid-turn no longer leaves a conversation providers refuse. Requests leave out the blank reply it saved, and calls from a round the conversation has moved past reach the model as unfinished. See [Understanding the Persistence Flow]({% link _getting_started/rails.md %}#understanding-the-persistence-flow).
 
 ## Files a Provider Cannot Read
 
@@ -249,9 +249,9 @@ judgment.urgent.probability
 judgment.department.choice
 ```
 
-Judges use `config.default_judgment_model` unless you override the model. They accept structured input, reusable definitions, and runtime procs. Choice and score answers include full distributions and confidence so your application can choose how to act. See [Judgments]({% link _core_features/judgments.md %}).
+Judges use `config.default_judgment_model` unless you override the model. They accept structured input, reusable definitions, and runtime procs. Choice and score answers include full distributions and confidence so your application can choose how to act. See [Judgments]({% link _advanced/judgments.md %}).
 
-TypeSafe joins the built-in providers, bringing the total to eighteen. Use its hosted Jev models or a [Jev-compatible local server]({% link _getting_started/configuration-providers.md %}#jev-compatible-apis) through the same judgment API. OpenAI's `{{ site.models.openai_judgment }}` answers the same questions through OpenAI Decisions, including questions about [images]({% link _core_features/judgments.md %}#images) passed with `with:`. To judge locally, run Cloudflare's Clef through [Ollama]({% link _core_features/judgments.md %}#local-decision-models) with `provider: :ollama`.
+TypeSafe joins the built-in providers, bringing the total to eighteen. Use its hosted Jev models or a [Jev-compatible local server]({% link _reference/configuration-providers.md %}#jev-compatible-apis) through the same judgment API. OpenAI's `{{ site.models.openai_judgment }}` answers the same questions through OpenAI Decisions, including questions about [images]({% link _advanced/judgments.md %}#images) passed with `with:`. To judge locally, run Cloudflare's Clef through [Ollama]({% link _advanced/judgments.md %}#local-decision-models) with `provider: :ollama`.
 
 ## Evaluations
 
@@ -298,7 +298,7 @@ Hetzner joins the built-in providers, bringing the total to nineteen. Its experi
 RubyLLM.chat(model: "Qwen3.8-27B", provider: :hetzner).ask("Hello from Hetzner")
 ```
 
-Set `hetzner_api_key` to a token from the Hetzner Console. See [Provider Setup]({% link _getting_started/configuration-providers.md %}#hetzner).
+Set `hetzner_api_key` to a token from the Hetzner Console. See [Provider Setup]({% link _reference/configuration-providers.md %}#hetzner).
 
 ## Azure Deployments
 
@@ -312,11 +312,11 @@ end
 RubyLLM.chat(model: "gpt-4o-global", provider: :azure)
 ```
 
-GPT-6 deployments run on the Responses API. See [Azure Deployments]({% link _getting_started/configuration-providers.md %}#azure-deployments).
+GPT-6 deployments run on the Responses API. See [Azure Deployments]({% link _reference/configuration-providers.md %}#azure-deployments).
 
 ## Perplexity on the Agent API
 
-Perplexity retires Sonar on September 27, 2026, so Perplexity chat now runs on its Agent API through presets such as `fast` and `high`. Chats that name a Sonar model keep working with the preset Perplexity recommends and a deprecation warning. See [Move Perplexity Chat to Presets]({% link _reference/upgrading.md %}#move-perplexity-chat-to-presets).
+Perplexity retires Sonar on September 27, 2026, so Perplexity chat now runs on its Agent API through presets such as `fast` and `high`. Chats that name a Sonar model keep working with the preset Perplexity recommends and a deprecation warning. See [Sonar Model Names No Longer Run Perplexity Presets]({% link _reference/upgrading.md %}#sonar-model-names-no-longer-run-perplexity-presets).
 
 ## Agent Configuration
 
@@ -335,7 +335,7 @@ end
 SupportAgent.chat(workspace: current_workspace)
 ```
 
-It works with `SupportAgent.chat` and with Rails-backed agents, where the block also sees the chat record. A block that takes the configuration, as before, still runs once when the class is defined. See [Configuration Contexts]({% link _advanced/agents.md %}#configuration-contexts).
+It works with `SupportAgent.chat` and with Rails-backed agents, where the block also sees the chat record. A block that takes the configuration, as before, still runs once when the class is defined. See [Configuration Contexts]({% link _getting_started/agents.md %}#configuration-contexts).
 
 ## A Secondary Database for RubyLLM
 

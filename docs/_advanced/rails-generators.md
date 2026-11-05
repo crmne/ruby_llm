@@ -1,8 +1,7 @@
 ---
 layout: default
 title: Generators and App Conventions
-parent: "Rails Integration"
-nav_order: 3
+nav_order: 9
 description: Scaffold chats, a chat UI, agents, tools, and schemas with RubyLLM's Rails generators and conventions.
 ---
 
@@ -112,7 +111,7 @@ bin/rails generate ruby_llm:chat_ui chat:Conversation message:ChatMessage
 
 ### Approvals and Attachments
 
-When a tool [requires approval]({% link _core_features/tool-execution.md %}#requiring-approval), the chat page shows a card for each call in `chat.pending_approvals`, with its arguments and Approve and Deny buttons. A `run_code` call that asks for a [wider sandbox]({% link _core_features/sandboxes.md %}) shows its reason, its code, and what that sandbox allows. Remote tool calls, such as those from MCP servers, get the same cards. While a call waits, the transcript hides its tool call entry so the call shows only as a card, and the message form gives way to a line asking for a decision. `MessagesController` redirects a message sent in the meantime back to the chat.
+When a tool [requires approval]({% link _tools/tool-execution.md %}#requiring-approval), the chat page shows a card for each call in `chat.pending_approvals`, with its arguments and Approve and Deny buttons. A `run_code` call that asks for a [wider sandbox]({% link _advanced/sandboxes.md %}) shows its reason, its code, and what that sandbox allows. Remote tool calls, such as those from MCP servers, get the same cards. While a call waits, the transcript hides its tool call entry so the call shows only as a card, and the message form gives way to a line asking for a decision. `MessagesController` redirects a message sent in the meantime back to the chat.
 
 Each button posts to `ApprovalsController#create`, which records the decision with `chat.approve` or `chat.deny`, replaces the cards with a Turbo Stream, and enqueues `ChatResponseJob` to continue the conversation. Decided calls show as ordinary tool calls with their results. When the job finishes or pauses for the next approval, the page refreshes with the new cards and the message form.
 
@@ -167,7 +166,7 @@ For prompt lookup, RubyLLM uses class name conventions:
 - `WorkAssistant` -> `app/prompts/work_assistant/instructions.txt.erb`
 - `Admin::SupportAgent` -> `app/prompts/admin/support_agent/instructions.txt.erb`
 
-See the [Agents guide]({% link _advanced/agents.md %}#default-instructions-prompt) for how agent instruction rendering works, or [Prompt Rendering]({% link _core_features/prompt-rendering.md %}) for direct `RubyLLM.render_prompt` usage.
+See the [Agents guide]({% link _getting_started/agents.md %}#default-instructions-prompt) for how agent instruction rendering works, or [Prompt Rendering]({% link _core_features/prompt-rendering.md %}) for direct `RubyLLM.render_prompt` usage.
 
 ## Generators
 
@@ -262,5 +261,5 @@ The ActiveStorage attachments you pass to `with:` from your own models can use a
 
 *   [Persistence with acts_as]({% link _advanced/rails-persistence.md %}) - what the generated models do once they `acts_as_chat`.
 *   [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}) - the streaming flow behind the generated chat UI.
-*   [Agents]({% link _advanced/agents.md %}) - build on the generated agent and prompt conventions.
+*   [Agents]({% link _getting_started/agents.md %}) - build on the generated agent and prompt conventions.
 *   [Advanced Rails Configuration]({% link _advanced/rails-advanced-config.md %}) - provider overrides and custom contexts for the generated app.

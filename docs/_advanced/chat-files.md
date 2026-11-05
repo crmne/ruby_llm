@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Chat Files
-parent: "Tools"
-nav_order: 9
+parent: "Durable Agents"
+nav_order: 2
 description: Give a chat its own files, so attachments and long tool results stop filling the conversation and the model reads only what it needs.
 ---
 
@@ -114,7 +114,7 @@ Each version of a file is converted once. A persisted chat keeps the text in the
 
 ### PDFs, Scans, and Photos
 
-The OCR converter, `RubyLLM::FileStore::Converters::OCR`, reads PDFs, scans, and photos with [`RubyLLM.ocr`]({% link _core_features/ocr.md %}), tables and all. Each file costs one OCR request the first time the model reads it, so OCR only runs where you register it. `search_files` never runs OCR; it searches the text a read already extracted:
+The OCR converter, `RubyLLM::FileStore::Converters::OCR`, reads PDFs, scans, and photos with [`RubyLLM.ocr`]({% link _getting_started/ocr.md %}), tables and all. Each file costs one OCR request the first time the model reads it, so OCR only runs where you register it. `search_files` never runs OCR; it searches the text a read already extracted:
 
 ```ruby
 RubyLLM.configure do |config|
@@ -123,7 +123,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-`OCR.new` takes the options [`RubyLLM.ocr`]({% link _core_features/ocr.md %}) does, such as `model:` and `provider:`.
+`OCR.new` takes the options [`RubyLLM.ocr`]({% link _getting_started/ocr.md %}) does, such as `model:` and `provider:`.
 
 `RubyLLM::FileStore::Converters::Text` reads a file as it is, for types that hold plain text but don't say so:
 
@@ -203,7 +203,7 @@ end
 
 ## Code Execution
 
-With [code execution]({% link _core_features/code-execution.md %}) on, `run_code` works with the chat's files instead of the read-only `attachments/` folder. How depends on the store, with nothing to configure.
+With [code execution]({% link _advanced/code-execution.md %}) on, `run_code` works with the chat's files instead of the read-only `attachments/` folder. How depends on the store, with nothing to configure.
 
 **A store in a folder** (`RubyLLM::FileStore::Directory`) works like a coding agent's workspace: code runs in the folder itself, reads the files where they are, and what it writes, changes, or deletes there is in the store at once. Nothing is copied in or out. The tool result lists the files the run created or changed, and `after_file_write` receives each of them:
 
@@ -281,8 +281,8 @@ The `ruby_llm:chat_ui` generator lists a chat's files on its page, with links to
 
 ## Next Steps
 
-* [Code Execution]({% link _core_features/code-execution.md %})
+* [Code Execution]({% link _advanced/code-execution.md %})
 * [Attachments]({% link _core_features/attachments.md %})
-* [OCR]({% link _core_features/ocr.md %})
-* [Tools]({% link _core_features/tools.md %})
-* [Rails Integration]({% link _advanced/rails.md %})
+* [OCR]({% link _getting_started/ocr.md %})
+* [Tools]({% link _getting_started/tools.md %})
+* [Rails Integration]({% link _getting_started/rails.md %})

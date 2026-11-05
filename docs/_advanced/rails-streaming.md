@@ -1,8 +1,7 @@
 ---
 layout: default
 title: Streaming with Hotwire/Turbo
-parent: "Rails Integration"
-nav_order: 2
+nav_order: 8
 description: Broadcast AI responses token by token to the browser with Turbo Streams and background jobs.
 ---
 

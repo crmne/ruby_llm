@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Image Generation
-nav_order: 5
+nav_order: 7
 description: Generate and edit images from text prompts, reference images, and masks
 redirect_from:
   - /guides/image-generation
@@ -129,7 +129,7 @@ RubyLLM.paint("A small red ruby on a white background",
               provider: :elevenlabs, assume_model_exists: true)
 ```
 
-Configure the required [Image & Video plan and permissions]({% link _getting_started/configuration-providers.md %}#media-generation). You can reuse [uploaded media assets]({% link _core_features/files.md %}#elevenlabs-media-assets) as inputs.
+Configure the required [Image & Video plan and permissions]({% link _reference/configuration-providers.md %}#media-generation). You can reuse [uploaded media assets]({% link _core_features/files.md %}#elevenlabs-media-assets) as inputs.
 
 ## Image Sizes
 
@@ -212,10 +212,10 @@ Use `save` or `to_blob` to read the image without branching on its delivery form
 
 Generation and downloads can fail, so let your job or request handle the error where it can retry or report the failure. RubyLLM raises `RubyLLM::BadRequestError` for rejected requests and other `RubyLLM::Error` subclasses for provider failures. See [Error Handling]({% link _advanced/error-handling.md %}) for retries and specific exceptions.
 
-Store generated images for reuse. For jobs that need a longer request timeout, see [Connection Settings]({% link _getting_started/configuration-connection.md %}#connection-settings).
+Store generated images for reuse. For jobs that need a longer request timeout, see [Connection Settings]({% link _reference/configuration-connection.md %}#connection-settings).
 
 ## Next Steps
 
-*   [Video Generation]({% link _core_features/video-generation.md %}) - animate an image you have generated.
+*   [Video Generation]({% link _advanced/video-generation.md %}) - animate an image you have generated.
 *   [Attachments]({% link _core_features/attachments.md %}) - ask a model about an image.
-*   [Rails Integration]({% link _advanced/rails.md %}) - use media generation in your application jobs.
+*   [Rails Integration]({% link _getting_started/rails.md %}) - use media generation in your application jobs.

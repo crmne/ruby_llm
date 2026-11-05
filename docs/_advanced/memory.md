@@ -1,8 +1,7 @@
 ---
 layout: default
 title: Memory
-parent: "Agents"
-nav_order: 4
+nav_order: 2
 description: Give agents short-term memory through the transcript and long-term memory your app owns, recalled by meaning.
 ---
 
@@ -23,7 +22,7 @@ After reading this guide, you will know:
 
 A chat includes its message history in each request. With [`acts_as_chat`]({% link _advanced/rails-persistence.md %}), that history is stored in your database and available when the agent is loaded again.
 
-When the transcript grows past what you want to send, compact it with [transcript replacement]({% link _core_features/chat.md %}#advanced-replacing-the-llm-transcript): summarize the old turns, keep the recent ones verbatim, and show the model the compacted version while your users keep the full history. Your application keeps the original messages.
+When the transcript grows past what you want to send, compact it with [transcript replacement]({% link _getting_started/chat.md %}#advanced-replacing-the-llm-transcript): summarize the old turns, keep the recent ones verbatim, and show the model the compacted version while your users keep the full history. Your application keeps the original messages.
 
 ## A Memories Table
 
@@ -127,6 +126,6 @@ Memories are your application records. Scope access through `user.memories`, let
 ## Next Steps
 
 * [Retrieval-Augmented Generation (RAG)]({% link _advanced/rag.md %}) - The same embeddings pattern over imported documents.
-* [Agents]({% link _advanced/agents.md %}) - The runtime inputs and instructions used above.
-* [Chat]({% link _core_features/chat.md %}) - Transcript replacement for compaction.
-* [Embeddings]({% link _core_features/embeddings.md %}) - Turning text into vectors.
+* [Agents]({% link _getting_started/agents.md %}) - The runtime inputs and instructions used above.
+* [Chat]({% link _getting_started/chat.md %}) - Transcript replacement for compaction.
+* [Embeddings]({% link _getting_started/embeddings.md %}) - Turning text into vectors.

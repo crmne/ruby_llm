@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Video Generation
-nav_order: 6
+nav_order: 14
 description: Generate, edit, and extend videos from prompts, images, and audio
 ---
 
@@ -114,7 +114,7 @@ video = RubyLLM.animate(
 )
 ```
 
-This Bedrock example requires a [configured S3 output prefix]({% link _getting_started/configuration-providers.md %}#media-generation).
+This Bedrock example requires a [configured S3 output prefix]({% link _reference/configuration-providers.md %}#media-generation).
 
 ## Editing a Video
 
@@ -190,7 +190,7 @@ video = RubyLLM.animate(
 )
 ```
 
-Configure a [region that serves Veo]({% link _getting_started/configuration-providers.md %}#media-generation). To store the output in Cloud Storage, pass `provider_options: { parameters: { storageUri: "gs://your-bucket/videos/" } }`.
+Configure a [region that serves Veo]({% link _reference/configuration-providers.md %}#media-generation). To store the output in Cloud Storage, pass `provider_options: { parameters: { storageUri: "gs://your-bucket/videos/" } }`.
 
 ## Animating a Character with Audio
 
@@ -207,9 +207,9 @@ video = RubyLLM.animate(
 video.save "character.mp4"
 ```
 
-This model requires ElevenLabs [Image & Video access]({% link _getting_started/configuration-providers.md %}#media-generation). Seedance models can also take image, audio, and video references, with additional model access from ElevenLabs.
+This model requires ElevenLabs [Image & Video access]({% link _reference/configuration-providers.md %}#media-generation). Seedance models can also take image, audio, and video references, with additional model access from ElevenLabs.
 
-For self-hosted video models, configure a [GPUStack model proxy]({% link _getting_started/configuration-providers.md %}#gpustack-deployments), then pass the deployed model name with `provider: :gpustack`.
+For self-hosted video models, configure a [GPUStack model proxy]({% link _reference/configuration-providers.md %}#gpustack-deployments), then pass the deployed model name with `provider: :gpustack`.
 
 ## Provider Options
 
@@ -352,6 +352,6 @@ See [Error Handling]({% link _advanced/error-handling.md %}) for specific except
 
 ## Next Steps
 
-*   [Image Generation]({% link _core_features/image-generation.md %}) - Generate the still images you can animate.
+*   [Image Generation]({% link _getting_started/image-generation.md %}) - Generate the still images you can animate.
 *   [Attachments]({% link _core_features/attachments.md %}) - Everything `with:` accepts across RubyLLM.
 *   [Instrumentation]({% link _advanced/instrumentation.md %}) - Subscribe to the `video.ruby_llm` and `video_job.ruby_llm` events.

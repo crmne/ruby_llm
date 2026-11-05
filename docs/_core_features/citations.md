@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Citations
-parent: "Chat"
 nav_order: 5
 description: Get verifiable answers with normalized citations pointing at documents and web sources, on every provider that supports them
 redirect_from:
@@ -105,7 +104,7 @@ RubyLLM sends `source_id` in place of `url`, so `citation.url` can be `nil`; loo
 
 `SearchResults` gives citable passages to Cohere and to Claude, on Anthropic and on Bedrock, including after a Rails conversation is reloaded. Other providers, other models on Bedrock, and Bedrock application inference profiles, which don't name their model, receive the results as JSON text.
 
-Tools can also return whole files as [attachments]({% link _core_features/tool-parameters.md %}#returning-attachments-from-tools). With `with_citations` on, the model cites them the same way it cites files you attach yourself:
+Tools can also return whole files as [attachments]({% link _tools/tool-parameters.md %}#returning-attachments-from-tools). With `with_citations` on, the model cites them the same way it cites files you attach yourself:
 
 ```ruby
 class PolicyLookup < RubyLLM::Tool
@@ -128,7 +127,7 @@ response.citations.first.start_page # => 3
 
 ## Citing the Web
 
-Search citations arrive automatically. Enable [web search]({% link _core_features/provider-tools.md %}) and read the returned sources:
+Search citations arrive automatically. Enable [web search]({% link _tools/provider-tools.md %}) and read the returned sources:
 
 ```ruby
 response = RubyLLM.chat(model: '{{ site.models.openai_mini }}')
@@ -232,6 +231,6 @@ Apps upgrading from 1.16 get the column from the [2.0 upgrade](https://github.co
 
 ## Next Steps
 
-* [Chatting with AI Models]({% link _core_features/chat.md %})
+* [Chatting with AI Models]({% link _getting_started/chat.md %})
 * [Streaming Responses]({% link _core_features/streaming.md %})
-* [Rails Integration]({% link _advanced/rails.md %})
+* [Rails Integration]({% link _getting_started/rails.md %})

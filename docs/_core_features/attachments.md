@@ -1,8 +1,7 @@
 ---
 layout: default
 title: Attachments
-parent: "Chat"
-nav_order: 1
+nav_order: 2
 description: Ask questions about images, recordings, videos, and documents through one attachment API.
 ---
 
@@ -90,7 +89,7 @@ response = chat.ask "What were the main action items discussed?"
 puts response.content
 ```
 
-For a transcript without a conversation, use [Audio Transcription]({% link _core_features/audio-transcription.md %}).
+For a transcript without a conversation, use [Audio Transcription]({% link _getting_started/audio-transcription.md %}).
 
 ### Working with Text Files
 
@@ -183,7 +182,7 @@ This handles formats the protocol cannot send. A model can still reject an attac
 
 ### Keeping Attachments Out of the Conversation
 
-Every attachment travels with the conversation, so a long PDF attached to the first question is sent again with every later one. With [chat files]({% link _core_features/chat-files.md %}), the model sees a file in full on the question it came with, and one line naming it after that. It reads the parts it needs with its `read_file` and `search_files` tools:
+Every attachment travels with the conversation, so a long PDF attached to the first question is sent again with every later one. With [chat files]({% link _advanced/chat-files.md %}), the model sees a file in full on the question it came with, and one line naming it after that. It reads the parts it needs with its `read_file` and `search_files` tools:
 
 ```ruby
 chat = RubyLLM.chat.with_file_store
@@ -275,7 +274,7 @@ response = chat.ask "Analyze these files", with: [
 
 ## Next Steps
 
-* [Chat]({% link _core_features/chat.md %}) - continue a conversation about your files.
+* [Chat]({% link _getting_started/chat.md %}) - continue a conversation about your files.
 * [Files]({% link _core_features/files.md %}) - upload files once and reuse them by provider-managed ID.
 * [Advanced Request Control]({% link _core_features/chat-request-control.md %}) - control model requests.
-* [Audio Transcription]({% link _core_features/audio-transcription.md %}) - turn recordings into transcripts.
+* [Audio Transcription]({% link _getting_started/audio-transcription.md %}) - turn recordings into transcripts.

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Chat
-nav_order: 1
+nav_order: 3
 has_children: true
 description: Start a conversation, give it instructions, and switch models while keeping the same Ruby API.
 redirect_from:
@@ -40,7 +40,7 @@ The `ask` method adds your message to the conversation history with the `:user` 
 
 The `say` method is an alias for `ask`, so you can use whichever feels more natural in your code.
 
-When the model uses [tools]({% link _core_features/tools.md %}), `ask` runs the conversation to completion: it calls the model, runs any tools the model asks for, and calls the model again until it answers without a tool. When you need to control that loop yourself, see [Driving the Loop Yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself).
+When the model uses [tools]({% link _getting_started/tools.md %}), `ask` runs the conversation to completion: it calls the model, runs any tools the model asks for, and calls the model again until it answers without a tool. When you need to control that loop yourself, see [Driving the Loop Yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself).
 
 ## Continuing the Conversation
 
@@ -107,7 +107,7 @@ Instructions are `:system` messages included in each request.
 
 For reusable instructions stored in `app/prompts`, render a template with [Prompt Rendering]({% link _core_features/prompt-rendering.md %}) and pass the result to `with_instructions`.
 
-When using the [Rails Integration]({% link _advanced/rails.md %}), system messages are persisted in your database along with user and assistant messages, maintaining the full conversation context.
+When using the [Rails Integration]({% link _getting_started/rails.md %}), system messages are persisted in your database along with user and assistant messages, maintaining the full conversation context.
 {: .note }
 
 ## Working with Different Models
@@ -267,7 +267,7 @@ This page covers the core `Chat` interface. Each facet of a conversation has its
 
 ## Next Steps
 
-* [Using Tools]({% link _core_features/tools.md %}) - enable the AI to call your Ruby code.
+* [Using Tools]({% link _getting_started/tools.md %}) - enable the AI to call your Ruby code.
 * [Model Registry]({% link _reference/models.md %}) - choose the best model and handle custom endpoints.
-* [Rails Integration]({% link _advanced/rails.md %}) - use the same API on your Active Record models.
+* [Rails Integration]({% link _getting_started/rails.md %}) - use the same API on your Active Record models.
 * [Error Handling]({% link _advanced/error-handling.md %}) - retry requests and fall back to another model.

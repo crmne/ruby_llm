@@ -25,6 +25,9 @@ collections:
   core_features:
     permalink: "/:name/"
     output: true
+  tools:
+    permalink: "/:name/"
+    output: true
   advanced:
     permalink: "/:name/"
     output: true
@@ -49,6 +52,11 @@ defaults:
   - scope:
       path: ""
       type: core_features
+    values:
+      layout: default
+  - scope:
+      path: ""
+      type: tools
     values:
       layout: default
   - scope:
