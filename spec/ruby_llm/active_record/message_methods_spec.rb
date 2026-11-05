@@ -182,7 +182,7 @@ RSpec.describe RubyLLM::ActiveRecord::MessageMethods do
       chat.ask('What is the total?')
       record = chat.messages.where(role: 'assistant').last.reload
 
-      expect(record.content).to eq('We read the total from the invoice.{"total":12.1}')
+      expect(record.content).to eq("We read the total from the invoice.\n\n{\"total\":12.1}")
       expect(record.parsed).to eq('total' => 12.1)
     end
 
