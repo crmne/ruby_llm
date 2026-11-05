@@ -13,6 +13,7 @@ module RubyLLM
         def stream_response(...)
           @citation_content_lengths = Hash.new(0)
           @reasoning_output_index = nil
+          @message_item_started = false
           super
         end
 
@@ -70,12 +71,23 @@ module RubyLLM
 
         def build_item_added_chunk(data)
           item = data['item']
+          return build_message_added_chunk(data) if item['type'] == 'message'
           return chunk unless item['type'] == 'function_call'
 
           chunk tool_calls: {
             data['output_index'] => ToolCall.new(provider_call_id: item['call_id'], name: item['name'],
                                                  namespace: item['namespace'], arguments: +'')
           }
+        end
+
+        def build_message_added_chunk(data)
+          earlier_message = @message_item_started
+          @message_item_started = true
+          return chunk unless earlier_message
+
+          @citation_content_lengths ||= Hash.new(0)
+          @citation_content_lengths[[data.fetch('output_index', 0), -1]] += Chat::MESSAGE_SEPARATOR.length
+          chunk content: Chat::MESSAGE_SEPARATOR
         end
 
         def build_item_done_chunk(data)

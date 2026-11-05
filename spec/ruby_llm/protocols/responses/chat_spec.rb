@@ -396,7 +396,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       message = protocol.send(:parse_completion_response, response)
       citation = message.citations.first
 
-      expect(citation).to have_attributes(start_index: 11, end_index: 15, text: 'Ruby')
+      expect(citation).to have_attributes(start_index: 13, end_index: 17, text: 'Ruby')
       expect(message.content[citation.start_index...citation.end_index]).to eq(citation.text)
     end
 
@@ -659,7 +659,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
 
         message = protocol.send(:parse_completion_response, response_with(output.insert(1, commentary)))
 
-        expect(message.content).to eq('Reading the total.{"total":12.1}')
+        expect(message.content).to eq("Reading the total.\n\n{\"total\":12.1}")
         expect(RubyLLM::Protocols::Responses.parse_answer_text(message)).to eq('{"total":12.1}')
       end
 

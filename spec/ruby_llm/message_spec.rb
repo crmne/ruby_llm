@@ -156,7 +156,7 @@ RSpec.describe RubyLLM::Message do
     it 'parses only the final answer' do
       response = ask
 
-      expect(response.content).to eq('We read the total from the invoice.{"total":12.1}')
+      expect(response.content).to eq("We read the total from the invoice.\n\n{\"total\":12.1}")
       expect(response.parsed).to eq('total' => 12.1)
     end
 
