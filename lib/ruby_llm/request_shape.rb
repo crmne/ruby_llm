@@ -20,7 +20,7 @@ module RubyLLM
   # file data, or setting values beyond thinking settings, so you can log it
   # and send it to an error tracker. A long conversation keeps its first 10
   # and last 50 turns.
-  class RequestShape
+  class RequestShape # :nodoc: all
     include Support::Inspectable
 
     # The provider's slug, such as <tt>"gemini"</tt>.

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  class RequestShape
+  class RequestShape # :nodoc: all
     # A ToolRound describes a model turn that called tools and the results
     # the request sends back before the next model turn: how many of each,
     # and whether they pair up the way the provider matches them.
@@ -12,7 +12,7 @@ module RubyLLM
     #   round.paired? # => false
     #   round.to_s    # => "tool round at #1: 2 calls, 1 result, not paired"
     #
-    class ToolRound
+    class ToolRound # :nodoc:
       include Support::Inspectable
 
       # The index of the turn that made the calls.

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  class RequestShape
+  class RequestShape # :nodoc: all
     # A Turn describes one entry of a request's conversation: a message, or
     # one item where the provider sends a model's reasoning and tool calls as
     # items of their own.
@@ -11,7 +11,7 @@ module RubyLLM
     #   turn.role  # => "user"
     #   turn.to_s  # => "#4 user: text (31 chars)"
     #
-    class Turn
+    class Turn # :nodoc:
       include Support::Inspectable
 
       # The turn's 0-indexed position in the request, the position a

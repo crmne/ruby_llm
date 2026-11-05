@@ -94,6 +94,7 @@ overcommit --install   # required: installs the git hooks that gate every commit
 - **Errors take the message first** and the response as a keyword: `Error.new("msg", response: response)`.
 - **Let the provider reject what the model can't do.** Raise before a request only when the protocol cannot express it, such as an operation the provider lacks or an attachment its wire format cannot carry. Don't check model capabilities, provider limits, or option values the API validates itself: its error is current, and a copy in RubyLLM goes stale. Don't silently downgrade an explicit request either. Trust the shape of a successful response; one rescue that turns a malformed body into a RubyLLM error is enough. Do check what maps a response back onto your inputs, such as indices, IDs, and positions: a wrong mapping corrupts results silently.
 - **Public means documented.** RDoc on the method, an example in `docs/`, and `:nodoc:` on everything that is internal.
+- **New concepts earn their place.** A new public class, `Chat` method, configuration option, or callback hook needs a second real consumer beyond the one application that asked for it, and a pull request that explains why an option on an existing setter, an existing hook, or a value object can't carry it. Otherwise it ships as an option on an existing method, or stays `:nodoc:`.
 
 ## Boundaries (enforced by Archspec.rb)
 

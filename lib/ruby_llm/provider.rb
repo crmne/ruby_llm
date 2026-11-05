@@ -504,7 +504,7 @@ module RubyLLM
     # <tt>"invalid_request_error"</tt>, from the body's +code+, +status+,
     # or +type+ under +error+, or its +code+ or +type+, or +nil+. Override
     # when the provider names its errors elsewhere.
-    def parse_error_code(response)
+    def parse_error_code(response) # :nodoc:
       body = parse_error_body(response)
       body = body.find { |part| part.is_a?(Hash) } if body.is_a?(Array)
       return unless body.is_a?(Hash)
@@ -606,7 +606,7 @@ module RubyLLM
 
       # Returns whether +operation+ requires an inference model. Override
       # for endpoints that operate on an explicitly configured resource.
-      def model_required?(**)
+      def model_required?(**) # :nodoc:
         true
       end
 
@@ -669,14 +669,14 @@ module RubyLLM
       # Resolves +model_id+ to the id the registry stores it under for this
       # provider. Defaults to the id unchanged; providers whose catalog ids
       # differ from their request ids (Bedrock's region prefixes) override it.
-      def resolve_registry_id(model_id, _models, _config = nil)
+      def resolve_registry_id(model_id, _models, _config = nil) # :nodoc:
         model_id
       end
 
       # Returns the id of the model that the deployment named +model_id+
       # runs, or +nil+ when +model_id+ is not a declared deployment.
       # Providers whose requests name deployments override it.
-      def deployed_model_id(_model_id, _config = nil)
+      def deployed_model_id(_model_id, _config = nil) # :nodoc:
         nil
       end
 

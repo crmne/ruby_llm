@@ -367,7 +367,7 @@ Providers report the same problem in different ways, and RubyLLM now raises the 
 
 Retries follow a provider's `retry-after-ms`, and Bedrock retries sign their requests again, so a slow first attempt no longer ends in an expired signature.
 
-When a provider rejects a conversation without saying why, `error.request_shape` lists each turn's parts and their sizes, never their contents, and the problems providers are known to refuse, such as a part with no data. See [Describing a Rejected Request]({% link _advanced/error-handling.md %}#describing-a-rejected-request).
+When a provider rejects a conversation without saying why, `error.request_shape` lists each turn's parts and their sizes, never their contents, and the problems providers are known to refuse, such as a part with no data.
 
 ## Upgrades, One Release at a Time
 

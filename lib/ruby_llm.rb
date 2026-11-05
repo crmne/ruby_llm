@@ -211,8 +211,7 @@ loader.setup
 # isolated settings for a request or tenant. Models finds, filters, and
 # describes the model catalog. Provider supplies endpoints, authentication,
 # and protocol selection; Protocol implements request and response formats.
-# Error subclasses normalize provider failures, and Error#request_shape
-# describes a refused conversation request as a RequestShape.
+# Error subclasses normalize provider failures.
 #
 # == Rails integration
 #
