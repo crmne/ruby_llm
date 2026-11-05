@@ -33,6 +33,11 @@ RSpec.describe RubyLLM::Protocols::Responses::CitationMarkers do
     expect(described_class.strip("\u{E200}a \u{E200}b\u{E201}c").first).to eq('a c')
   end
 
+  it 'keeps a word after an opening character that ends the text without a citation' do
+    expect(described_class.strip("Label \u{E200}report").first).to eq('Label report')
+    expect(described_class.strip("Done. \u{E200}ci").first).to eq('Done. ')
+  end
+
   it 'stops holding text once it is longer than any marker' do
     markers = described_class.new
     long = 'x' * described_class::MAX_LENGTH

@@ -15,6 +15,7 @@ module RubyLLM
         CLOSE = "\u{E201}"
         SEPARATOR = "\u{E202}"
         MARKS = [OPEN, CLOSE, SEPARATOR].freeze
+        CITE = 'cite'
         MAX_LENGTH = 256
 
         def self.strip(text)
@@ -41,7 +42,7 @@ module RubyLLM
 
           held = @held
           @held = nil
-          return drop(held) unless held.match?(/\s/)
+          return drop(held) if citation_prefix?(held)
 
           output = +''
           release(held, output)
@@ -84,6 +85,13 @@ module RubyLLM
 
             release(take_held, output) if @held.length > MAX_LENGTH
           end
+        end
+
+        def citation_prefix?(held)
+          word, *turns = held.delete_prefix(OPEN).split(SEPARATOR, -1)
+          return false unless CITE.start_with?(word) || (word == CITE && turns.any?)
+
+          turns.all? { |turn| turn.each_char.all? { |char| char.match?(/[[:alnum:]]/) } }
         end
 
         def take_held
