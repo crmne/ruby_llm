@@ -220,7 +220,7 @@ The messages are ordinary rows: you can query them, show them in a view, and joi
 
 ## Human Approval
 
-LangChain pauses tool calls with middleware, which needs a checkpointer to hold the interrupted graph:
+LangChain pauses tool calls with middleware, which needs a checkpointer to hold the interrupted graph. Its guide defines `write_file`, `execute_sql`, and `read_data` as tools earlier on the page:
 
 ```python
 from langchain.agents import create_agent
@@ -245,7 +245,7 @@ agent = create_agent(
 )
 ```
 
-You resume by invoking the agent again with a `Command` that maps each interrupt ID to a decision.
+You resume by invoking the agent again on the same thread with a `Command` that carries a decision for each paused call.
 
 In RubyLLM, the tool declares that it needs approval. `ApplicationAgent` is the base class the install generator writes, with `chat_class Chat`:
 
@@ -271,11 +271,11 @@ The decision is stored on the tool call's row, so another request, after a deplo
 
 ```ruby
 chat = DataAgent.find params[:id]
-chat.pending_approvals.each { |call| chat.approve call }
+chat.approve params[:tool_call_id]
 chat.complete
 ```
 
-`chat.deny call` sends the model a refusal instead. LangChain's middleware can also let the reviewer edit the arguments or answer in place of the tool. See [Controlling Tool Execution]({% link _tools/tool-execution.md %}).
+`chat.pending_approvals` lists the calls to show the reviewer, and `chat.deny` sends the model a refusal instead. LangChain's middleware can also let the reviewer edit the arguments or answer in place of the tool. See [Controlling Tool Execution]({% link _tools/tool-execution.md %}).
 
 ## Usage and Cost
 
@@ -296,7 +296,7 @@ with get_usage_metadata_callback() as cb:
 
 The result maps each model to its `input_tokens`, `output_tokens`, and token details. Prices are not part of it; LangChain's documentation points to LangSmith for tracing.
 
-RubyLLM prices every response from its model registry, in the same shape for every provider:
+RubyLLM prices responses from its model registry, in the same shape for every provider. When usage or a price is unknown, the cost is `nil`, never a misleading zero:
 
 ```ruby
 response = RubyLLM.chat(model: "{{ site.models.anthropic_latest }}").ask "Hello"
@@ -334,7 +334,7 @@ Chats and agents total their cost with `chat.cost.total`, and Rails apps get a u
 
 * **Your application is Ruby or Rails.** Agents are classes, chats are Active Record models, and loops run in Active Job, without a separate runtime or checkpoint store.
 * **You want plain Ruby control flow.** Workflows are methods, conditionals, and `Async` blocks, not a graph DSL. See [Agentic Workflows]({% link _advanced/agentic-workflows.md %}).
-* **You need cost in dollars** on every response, chat, and agent.
+* **You need cost in dollars** on responses, chats, and agents.
 * **You need more than chat.** Images, speech, transcription, OCR, moderation, embeddings, and reranking use the same configuration.
 
 ## Next Steps

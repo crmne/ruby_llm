@@ -25,7 +25,7 @@ After reading this guide, you will know:
 
 The `openai` and `anthropic` gems are generated from each vendor's API specification. Every endpoint and every parameter is there on the day it ships, with typed request and response models. Each gem speaks to one vendor.
 
-RubyLLM is a framework on top of the providers. It gives the same calls to OpenAI, Anthropic, Gemini, Bedrock, and the other [providers]({% link _reference/configuration-providers.md %}), runs the agent loop, stores conversations in Rails, and prices every response.
+RubyLLM is a framework on top of the providers. It gives the same calls to OpenAI, Anthropic, Gemini, Bedrock, and the other [providers]({% link _reference/configuration-providers.md %}), runs the agent loop, stores conversations in Rails, and prices responses from its model registry.
 
 ## A Request
 
@@ -136,7 +136,7 @@ class Calculator < RubyLLM::Tool
     string :operator, enum: %w[+ - * /]
   end
 
-  def execute(lhs:, rhs:, operator:) = lhs.public_send(operator, rhs)
+  def execute(lhs:, rhs:, operator:) = lhs.to_f.public_send(operator, rhs)
 end
 
 chat = RubyLLM.chat(model: "{{ site.models.anthropic_opus }}").with_tools Calculator
@@ -220,7 +220,7 @@ The same schema works with Anthropic, Gemini, and the other providers that suppo
 
 The SDKs stop at the HTTP response. Neither has a Rails integration, and both report token counts without a price: `message.usage` and `response.usage`.
 
-In RubyLLM, a chat can be an Active Record model, and every response carries its cost:
+In RubyLLM, a chat can be an Active Record model, and responses carry their cost, or `nil` when the price is unknown:
 
 ```ruby
 class Chat < ApplicationRecord

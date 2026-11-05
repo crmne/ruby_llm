@@ -56,7 +56,8 @@ RSpec.describe 'RubyLLM and LangChain guide', type: :task do
     expect(evaluate('class ExecuteSql')).to be(true)
     expect(provider_requests.size).to eq(1)
 
-    evaluate('chat.pending_approvals.each', params: { id: Chat.last.id })
+    chat = Chat.last
+    evaluate('chat.approve params', params: { id: chat.id, tool_call_id: chat.pending_approvals.first.tool_call_id })
 
     expect(Chat.last.messages.last.content).to eq('Deleted 42 test orders.')
     expect(provider_requests.last['messages'][-1]['content'].to_s).to include('Deleted 42 rows')

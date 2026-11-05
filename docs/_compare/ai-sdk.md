@@ -204,7 +204,7 @@ export async function POST(req: Request) {
 }
 ```
 
-Comments are removed, and the model matches the other examples. The guide's example `saveChat` writes JSON files and notes that a real application would use a database. A page component then loads the messages and passes them to a client component that calls `useChat`.
+Comments are removed, and the model matches the other examples. The route expects only the newest message, so the same guide configures the client transport's `prepareSendMessagesRequest` to send it, and adds `generateMessageId` so stored assistant messages get server-side IDs. Its example `saveChat` writes JSON files and notes that a real application would use a database. A page component then loads the messages and passes them to a client component that calls `useChat`.
 
 In Rails, two generators write the whole thing as your application's code:
 
@@ -246,7 +246,7 @@ See [Rails Integration]({% link _getting_started/rails.md %}), [Streaming with H
 
 The AI SDK reports tokens. `result.usage` has `inputTokens`, `outputTokens`, cache and reasoning details, and `totalTokens`, summed across steps. It has no cost field. Through Vercel's AI Gateway, you can look up a generation's cost with a second call to `gateway.getGenerationInfo`.
 
-RubyLLM reports tokens and dollars on every response and chat, priced from its model registry:
+RubyLLM reports tokens and dollars on responses and chats, priced from its model registry. When usage or a price is unknown, the cost is `nil`, never a misleading zero:
 
 ```ruby
 response = chat.ask "What is the weather in Berlin?"
@@ -285,7 +285,7 @@ With `acts_as_chat`, every billed attempt also lands in the `ruby_llm_usages` ta
 
 * **Your application is Ruby or Rails.** Chats are Active Record models, agents run in Active Job, and the chat UI is Hotwire code you own.
 * **Conversations must survive processes.** Approvals, cancellation, queued messages, and the loop itself read and write the database, so a deploy or a crashed worker loses nothing.
-* **You need to know what it costs.** Every response, chat, and agent reports dollars, and Rails apps get a usage ledger.
+* **You need to know what it costs.** Responses, chats, and agents report cost in dollars wherever the registry has a price, and Rails apps get a usage ledger.
 * **You need more than chat.** Images, video, speech, transcription, OCR, moderation, embeddings, and reranking come from the same gem with the same configuration.
 
 ## Next Steps
