@@ -28,7 +28,7 @@ After reading this guide, you will know:
 
 ## Reading Tokens and Costs
 
-Read token counts and costs directly from the response:
+RubyLLM prices every call from its model registry, so your application doesn't need a price table of its own. Read token counts and costs directly from the response:
 
 ```ruby
 chat = RubyLLM.chat
@@ -113,6 +113,8 @@ RubyLLM records each physical provider attempt internally. This changes the impl
 One response can require several physical attempts. If a transport request fails twice and the third attempt succeeds, the response's `tokens` and `cost` aggregate the reported usage from all three attempts.
 
 Fallbacks work the same way. When an initial model fails and a fallback produces the message, every attempt involved in that logical generation contributes to the resulting message's aggregates.
+
+To count cancelled and failed attempts yourself, subscribe to [`usage.ruby_llm`](#instrumentation) instead of adding up messages.
 
 A cancelled attempt may have no message to attach to. It still contributes to `chat.tokens` and `chat.cost` when RubyLLM has enough reported usage. If an attempt may have been billed but the provider supplied no defensible usage, the token fields for that attempt and `chat.cost.total` are `nil` rather than misleading zeroes. An attempt that provably never reached the provider, such as a refused connection or a failed TLS handshake, records zero tokens instead: it cannot have been billed, so it does not blank the total. So does an attempt the provider answered with an HTTP error before streaming anything, such as a 500 that a retry then recovered from. A connection that drops after the request was sent, including one reset in the middle of a stream, may have been billed and stays `nil`.
 
@@ -323,7 +325,7 @@ Run `bin/rails ruby_llm:refresh_models` from cron, or schedule the call with you
 
 ## Instrumentation
 
-Every finished physical attempt emits `usage.ruby_llm`. Use it when you need per-attempt detail for billing exports, metrics, or observability:
+Every finished physical attempt emits `usage.ruby_llm`, whether it succeeded, failed, or was cancelled. Use it when you need per-attempt detail for billing exports, metrics, or observability. Rails apps receive it out of the box; [outside Rails, set `config.instrumenter`]({% link _advanced/instrumentation.md %}) first:
 
 ```ruby
 ActiveSupport::Notifications.subscribe("usage.ruby_llm") do |event|
