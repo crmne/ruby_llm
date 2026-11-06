@@ -1,5 +1,6 @@
 ---
 layout: home
+provider_coverage: true
 title: RubyLLM
 nav_order: 1
 seo:
@@ -83,6 +84,13 @@ chat.ask "Hello!"
       &middot;
       <a href="{% link _core_features/cost-and-usage-tracking.md %}">Track usage and costs</a>
     </p>
+
+    <div class="home-coverage">
+      <h3 class="home-group-title">What each provider can do</h3>
+      <p class="home-step-desc">What each of {{ site.data.provider_coverage.providers.size }} providers supports, audited against its documentation. Open a cell for its notes and sources.</p>
+      {% include provider_coverage_matrix.html compact=true current=true %}
+      <a class="home-step-link" href="{% link _reference/provider-coverage.md %}">Full provider coverage</a>
+    </div>
 
     <div class="home-provider-gem home-step">
       <div>
