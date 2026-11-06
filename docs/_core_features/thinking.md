@@ -41,7 +41,7 @@ Pass keyword options or a Hash to configure thinking explicitly:
 
 ```ruby
 chat = RubyLLM.chat(model: "{{ site.models.anthropic_opus }}")
-  .with_thinking(effort: :high, budget: 8000)
+  .with_thinking(effort: :high)
 
 response = chat.ask "What is 15 * 23?"
 

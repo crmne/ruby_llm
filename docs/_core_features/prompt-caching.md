@@ -183,7 +183,7 @@ chat.ask "Today's request: #{summary}"
 
 A reloaded chat renders the same request bytes as the turn that wrote it, so the next turn reuses the cached prefix. Tool call arguments keep the key order PostgreSQL `jsonb` and MySQL `json` columns store.
 
-The install generator creates both columns. For an existing app, see [Upgrading]({% link _reference/upgrading.md %}#upgrade-the-rails-schema).
+The install generator creates both columns. For an existing app, start at the top of [Upgrading]({% link _reference/upgrading.md %}), which covers each release in turn.
 
 ## Next Steps
 
