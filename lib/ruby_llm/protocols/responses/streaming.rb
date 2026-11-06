@@ -12,6 +12,7 @@ module RubyLLM
 
         def stream_response(...)
           @citation_content_lengths = Hash.new(0)
+          @citation_markers = {}
           @reasoning_output_index = nil
           @text_output_index = nil
           super
@@ -25,6 +26,8 @@ module RubyLLM
             chunk thinking: Thinking.build(text: data['delta'])
           when 'response.reasoning_summary_part.added'
             build_reasoning_summary_part_chunk(data)
+          when 'response.output_text.done', 'response.refusal.done'
+            build_text_done_chunk(data)
           when 'response.output_text.annotation.added'
             build_annotation_chunk(data)
           when 'response.content_part.added'
@@ -45,9 +48,17 @@ module RubyLLM
         end
 
         def build_text_chunk(data)
+          text_content_chunk(data, citation_markers(data).feed(data['delta']))
+        end
+
+        def build_text_done_chunk(data)
+          text_content_chunk(data, citation_markers(data).finish)
+        end
+
+        def text_content_chunk(data, content)
           @citation_content_lengths ||= Hash.new(0)
-          @citation_content_lengths[citation_content_position(data)] += data['delta'].to_s.length
-          chunk content: data['delta']
+          @citation_content_lengths[citation_content_position(data)] += content.to_s.length
+          chunk content:
         end
 
         def build_annotation_chunk(data)
@@ -56,7 +67,18 @@ module RubyLLM
             (key <=> position).negative? ? length : 0
           end
 
-          chunk citations: offset_citations(parse_annotations([data['annotation']], nil), offset, nil)
+          chunk citations: offset_citations(parse_annotations([data['annotation']], nil), offset, nil,
+                                            citation_markers(data))
+        end
+
+        def citation_markers(data)
+          @citation_markers ||= {}
+          @citation_markers[citation_content_position(data)] ||= CitationMarkers.new
+        end
+
+        def stream_remainder
+          content = (@citation_markers || {}).values.filter_map(&:finish).join
+          chunk content: content unless content.empty?
         end
 
         def citation_content_position(data)
