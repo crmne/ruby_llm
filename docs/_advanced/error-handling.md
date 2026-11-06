@@ -36,7 +36,7 @@ Provider operation errors inherit from `RubyLLM::Error`. RubyLLM maps the provid
 | `RubyLLM::PaymentRequiredError` | 402, or a 400 saying the credit balance is too low | No |
 | `RubyLLM::ForbiddenError` | Any other 403 | No |
 | `RubyLLM::ContextLengthExceededError` | 400 or 413 with a recognized context or token limit message, or a 429 with one and no rate limit message | No |
-| `RubyLLM::RateLimitError` | 429, or a 400 with a recognized rate limit message, such as `quota exceeded` | Yes |
+| `RubyLLM::RateLimitError` | 429, or a 400 with a recognized rate limit message, such as `quota exceeded`, and no context or token limit message | Yes |
 | `RubyLLM::ServerError` | 500 | Yes |
 | `RubyLLM::ServiceUnavailableError` | 502, 503, 504 | Yes |
 | `RubyLLM::OverloadedError` | 529, or a 400 saying the service is `currently overloaded` | Yes |

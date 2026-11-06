@@ -18,28 +18,30 @@ Subscribe to these events as shown in [Instrumentation and Observability]({% lin
 | --- | --- | --- |
 | `workflow.ruby_llm` | Around one named `RubyLLM.workflow` block | `workflow_id`, `workflow_name` |
 | `workflow_step.ruby_llm` | Around one named code region within a workflow | `workflow_step_id`, `workflow_step_name` |
-| `evaluation.ruby_llm` | Around one evaluation run | Progress counts and the completed report |
-| `evaluation_trial.ruby_llm` | After one evaluation case and repetition completes | The trial result |
+| `evaluation.ruby_llm` | Around one evaluation run | `evaluation_id`, `evaluation_name`, `total`, `completed`, `started_at`, `report` |
+| `evaluation_trial.ruby_llm` | Around one evaluation case and repetition | `evaluation_id`, `evaluation_name`, `total`, `case`, `repetition`, `completed`, `trial` |
 | `request.ruby_llm` | Around one HTTP request to a provider, including its retries | `provider`, `method`, `url`, `status` |
 | `usage.ruby_llm` | After every finished provider attempt, including retries and cancellations | `operation`, `provider`, `model`, `status`, `tokens`, `cost`, `owner`, and the workflow fields |
 | `batch.ruby_llm` | Around one batch submission | `provider`, `provider_class`, `requests`, and `batch_id` after submission |
-| `chat.ruby_llm` | Around one chat completion | Model, provider, messages, response, `tokens`, `cost`, `response_tokens` |
+| `chat.ruby_llm` | Around one chat completion | `chat`, `provider`, `provider_class`, `model`, `model_info`, `input_messages`, `messages_after`, `response`, `streaming`, `tokens`, `cost`, `response_tokens` |
 | `tool_call.ruby_llm` | Around one tool execution | `tool_name`, `tool_arguments`, `tool_call_id`, `result` |
-| `code_execution.ruby_llm` | Around one [code execution]({% link _advanced/code-execution.md %}) run | Language, duration, exit code, timeout, blocked hosts, returned files |
-| `embedding.ruby_llm` | Around one embedding request | Model, input, result, `tokens`, `cost`, vector dimensions |
-| `image.ruby_llm` | Around one image generation | Model, prompt, size, result, `tokens`, `cost` |
-| `video.ruby_llm` | Around one blocking video generation, including the wait for the job | Model, prompt, the resulting video |
-| `video_job.ruby_llm` | Around one video job submission | Model, prompt, the provider's job ID |
+| `code_execution.ruby_llm` | Around one [code execution]({% link _advanced/code-execution.md %}) run | `tool_name`, `tool_call_id`, `language`, `sandbox`, `timeout`, `network`, `duration`, `exit_code`, `timed_out`, `blocked_hosts`, `files` |
+| `embedding.ruby_llm` | Around one embedding request | `input`, `dimensions`, `embedding_dimensions`, `embedding_count`, `tokens`, `cost` |
+| `image.ruby_llm` | Around one image generation | `prompt`, `size`, `count`, `tokens`, `cost` |
+| `video.ruby_llm` | Around one blocking video generation, including the wait for the job | `model`, `prompt`, `job_id`, `result`, `response_model`, `provider_options`, `metadata` |
+| `video_job.ruby_llm` | Around one video job submission | `prompt`, `job_id` |
 | `research_job.ruby_llm` | Around one hosted research job submission | `provider`, `agent`, `prompt`, `job_id`, `status` |
-| `moderation.ruby_llm` | Around one moderation request | Model, input, result, flagged status, `tokens`, `cost` |
-| `ocr.ruby_llm` | Around one OCR request | Model, provider options, the extracted document |
-| `rerank.ruby_llm` | Around one reranking request | Model, query, document count, result, `tokens`, `cost` |
-| `judgment.ruby_llm` | Around one judgment | Model, question count, attachment count, result, `tokens`, `cost`, application metadata |
-| `speech.ruby_llm` | Around one speech generation | Model, input, voice, format, audio byte size, `tokens`, `cost` |
-| `transcription.ruby_llm` | Around one transcription | Model, language, result, `tokens`, `cost` |
-| `tokenization.ruby_llm` | Around one tokenization | Model and result |
+| `moderation.ruby_llm` | Around one moderation request | `input`, `attachment_count`, `flagged`, `tokens`, `cost` |
+| `ocr.ruby_llm` | Around one OCR request | `pages` |
+| `rerank.ruby_llm` | Around one reranking request | `query`, `document_count`, `top_n`, `tokens`, `cost` |
+| `judgment.ruby_llm` | Around one judgment | `question_count`, `attachment_count`, `tokens`, `cost` |
+| `speech.ruby_llm` | Around one speech generation | `input`, `voice`, `format`, `streaming`, `audio_bytes`, `tokens`, `cost` |
+| `transcription.ruby_llm` | Around one transcription | `language`, `temperature`, `streaming`, `tokens`, `cost` |
+| `tokenization.ruby_llm` | Around one tokenization | `model`, `provider`, `result` |
 | `compaction.ruby_llm` | Around one provider-side compaction of a chat's history | The same fields as `chat.ruby_llm`, except `response_tokens` |
 | `models.refresh.ruby_llm` | Around one model registry refresh | `remote_only`, `model_count`, `failed_providers` |
+
+The `embedding`, `image`, `judgment`, `moderation`, `ocr`, `rerank`, `speech`, `transcription`, and `video_job` events also carry `provider`, `provider_class`, `model`, `model_info`, `provider_options`, and `metadata`. All of them except `video_job` add `result` and `response_model`.
 
 See [Progress and Monitoring]({% link _advanced/evaluations.md %}#progress-and-monitoring) in the Evaluations guide for evaluation progress, run IDs, and report payloads.
 
@@ -51,7 +53,7 @@ Operations that expose normalized usage (`chat`, `embedding`, `image`, `judgment
 
 ## Usage Events
 
-`usage.ruby_llm` fires once for every finished physical attempt. Video and research jobs are the exception: they report when a job object first sees the job finished, so another object that loads a finished job reports it again. Don't treat the event count as a request count. The payload contains `operation`, `provider`, `model`, `status`, `tokens`, and `cost`. The values use the same objects as the rest of RubyLLM; the internal usage record is not part of the public API. Both `tokens` and `cost` are always present, while their individual fields are `nil` when the provider supplied no defensible figure.
+`usage.ruby_llm` fires once for every finished physical attempt. Jobs and batches are the exceptions. Video and research jobs report when a job object first sees the job finished, so another object that loads a finished job reports it again. A batch reports when its results are collected, and one picked up with `Batch.find` without its chats or requests reports once per `Batch` object, so collecting it in two places reports it twice. Don't treat the event count as a request count. The payload contains `operation`, `provider`, `model`, `status`, `tokens`, and `cost`. The values use the same objects as the rest of RubyLLM; the internal usage record is not part of the public API. Both `tokens` and `cost` are always present, while their individual fields are `nil` when the provider supplied no defensible figure.
 
 `model` is `nil` for operations that do not select a model, so subscribers should accept a missing model. For a research job, it holds the hosted agent's ID rather than a registry model ID. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) for status semantics and Rails persistence.
 

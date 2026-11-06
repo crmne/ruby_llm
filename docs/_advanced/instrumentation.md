@@ -209,7 +209,7 @@ ActiveSupport::Notifications.subscribe('usage.ruby_llm') do |event|
 end
 ```
 
-The event fires once for every finished physical attempt. Video and research jobs report when a job object first sees the job finished, so loading a finished job again reports it again. `model` can be `nil`, or a hosted agent's ID for a research job. See [Usage Events]({% link _reference/instrumentation-events.md %}#usage-events) for its payload and [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) for status semantics and Rails persistence.
+The event fires once for every finished physical attempt. Video and research jobs report when a job object first sees the job finished, so loading a finished job again reports it again. Batches report when their results are collected, and collecting one by ID in two places reports it twice. `model` can be `nil`, or a hosted agent's ID for a research job. See [Usage Events]({% link _reference/instrumentation-events.md %}#usage-events) for its payload and [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) for status semantics and Rails persistence.
 
 ## Payloads
 
