@@ -4,8 +4,8 @@ module RubyLLM
   module Protocols
     class Responses
       # Removes the citation markers OpenAI's models write into their text:
-      # U+E200, then "cite" and the turns it cites, each after a U+E202,
-      # then U+E201. Only OpenAI's own tools turn them into annotations, so
+      # U+E200, then "cite" and the sources and line locators it cites, each
+      # after a U+E202, then U+E201. Only OpenAI's own tools turn them into annotations, so
       # a model that writes them without those tools leaves them in the
       # answer. Model output is untrusted: each character is read once, and
       # an unclosed marker holds back at most MAX_LENGTH characters. #shift
@@ -16,7 +16,7 @@ module RubyLLM
         SEPARATOR = "\u{E202}"
         MARKS = [OPEN, CLOSE, SEPARATOR].freeze
         CITE = 'cite'
-        TURN = 'turn'
+        REFERENCE = /\A[\w-]*\z/
         MAX_LENGTH = 256
 
         def self.strip(text)
@@ -98,20 +98,14 @@ module RubyLLM
         end
 
         def complete_marker?(held)
-          marker?(held) && held.split(SEPARATOR, -1).drop(1).all? { |turn| turn.start_with?(TURN) }
+          marker?(held) && held.split(SEPARATOR, -1).drop(1).none?(&:empty?)
         end
 
         def marker?(held)
-          word, *turns = held.delete_prefix(OPEN).split(SEPARATOR, -1)
+          word, *references = held.delete_prefix(OPEN).split(SEPARATOR, -1)
           return false unless word.to_s.end_with?(CITE) && word.each_char.all? { |char| alphanumeric?(char) }
 
-          turns.all? { |turn| turn?(turn) }
-        end
-
-        def turn?(reference)
-          return false unless reference.start_with?(TURN) || TURN.start_with?(reference)
-
-          reference.each_char.all? { |char| alphanumeric?(char) }
+          references.all? { |reference| reference.match?(REFERENCE) }
         end
 
         def alphanumeric?(char)

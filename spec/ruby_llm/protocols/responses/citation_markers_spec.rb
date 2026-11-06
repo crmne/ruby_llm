@@ -50,8 +50,19 @@ RSpec.describe RubyLLM::Protocols::Responses::CitationMarkers do
     expect(described_class.strip("Done. \u{E200}cite\u{E202}tu").first).to eq('Done. ')
   end
 
-  it 'keeps a closed pair whose turn reference is incomplete' do
-    expect(described_class.strip("Near \u{E200}cite\u{E202}tu\u{E201} miss").first).to eq('Near citetu miss')
+  it 'removes a citation with a line locator' do
+    expect(described_class.strip("Notes. \u{E200}cite\u{E202}turn0file0\u{E202}L8-L13\u{E201} End").first)
+      .to eq('Notes.  End')
+    expect(described_class.strip("Cut \u{E200}cite\u{E202}turn0file0\u{E202}L8-").first).to eq('Cut ')
+  end
+
+  it 'removes a citation of an injected block, whose id has no turn' do
+    expect(described_class.strip("Held. \u{E200}cite\u{E202}block5\u{E201} End").first).to eq('Held.  End')
+  end
+
+  it 'keeps a closed pair whose reference is empty or not an id' do
+    expect(described_class.strip("A \u{E200}cite\u{E202}\u{E201} B").first).to eq('A cite B')
+    expect(described_class.strip("A \u{E200}cite\u{E202}two words\u{E201} B").first).to eq('A citetwo words B')
   end
 
   it 'removes other markers built the same way' do
