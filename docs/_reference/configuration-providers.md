@@ -193,6 +193,8 @@ RubyLLM.models.by_provider(:ollama_cloud).map(&:id)
 
 Ollama Cloud does not support [structured output]({% link _core_features/structured-output.md %}); use local Ollama or another provider when you need a schema.
 
+[Judgments]({% link _advanced/judgments.md %}) on `clef:27b` need a paid Ollama plan or usage credits.
+
 ## Hetzner
 
 Hetzner Inference serves open-weight models from Hetzner's data centers. Create an API token in the Hetzner Console and set `hetzner_api_key`:
