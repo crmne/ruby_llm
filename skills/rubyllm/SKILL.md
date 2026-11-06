@@ -30,13 +30,29 @@ bin/rails generate ruby_llm:tool Weather
 bin/rails generate ruby_llm:agent Researcher
 ```
 
-Each takes one line in `app/agents/chat_agent.rb`, which is what the generated UI runs: `code_execution`, `mcp Linear`, `tools WeatherTool`, and `file_store` for files.
-
-For what cancel, a restart, and a failure each save and continue, see `durable-agents/#when-a-run-is-interrupted`. A dead process frees its chat within a minute, so never clear `claim_token` or `claimed_until` yourself, at boot or otherwise. Don't rebuild the transcript, don't keep a price table, and don't reopen or prepend onto RubyLLM's classes. If you think you need to, read the matching guide below first: `rails-persistence/`, `cost-and-usage-tracking/`, or the feature's own.
+Each takes one line in `app/agents/chat_agent.rb`, which is what the generated UI runs: `code_execution`, `mcp Linear`, `tools WeatherTool`, and `file_store` when the model should keep files. Don't rebuild the transcript, don't keep a price table, and don't reopen or prepend onto RubyLLM's classes. If you think you need to, read the matching guide below first: `rails-persistence/`, `cost-and-usage-tracking/`, or the feature's own.
 
 With `with_thinking` on, a stream can sit quiet for several seconds before text starts, while the model thinks. That is normal, not a stall.
 
-You don't need to read the generated files or `lib/ruby_llm` to use this. The generator prints what works and which file controls it: with the default `Chat` model, `app/jobs/chat_response_job.rb` runs the turn and shows errors, `ChatsController#cancel` is Stop, and `app/agents/chat_agent.rb` says what the model can do. Files attached to a chat reach `code_execution` in `attachments/`, and reach `file_store` as the chat's files. For anything else, read the one guide for that feature, and open source only when something fails or you need a signature.
+You don't need to read the generated files or `lib/ruby_llm` to use this. The generator prints what works and which file controls it: with the default `Chat` model, `app/jobs/chat_response_job.rb` runs the turn and shows errors, `ChatsController#cancel` is Stop, and `app/agents/chat_agent.rb` says what the model can do. For anything else, read the one guide for that feature, and open source only when something fails or you need a signature.
+
+### Where code finds a chat's files
+
+Choose by what the code should see. `file_store` changes where `run_code` looks, so adding one takes files away from code unless it is in a folder:
+
+| The agent declares | A run sees |
+| --- | --- |
+| `code_execution` | Every file in the conversation, earlier ones too, read-only in `attachments/<name>`. Later requests send the files again. |
+| `code_execution` and `file_store -> { Rails.root.join("storage/chat_files", chat.id.to_s).to_s }` | Runs in that folder, with every file there under its own name. Later requests send one line per file. |
+| `code_execution` and `file_store` | An empty folder, plus only the files the model names in `run_code`'s `files` argument. In Rails the store is Active Storage. |
+
+Python needs `languages: [:python]`: the default is Ruby and shell. Without a converter, the model gets a PDF as the file itself, so it needs no PDF gem. `per_result` and `per_request` in `context_budget` are shares of the model's context window, not sizes.
+
+### What a restart leaves
+
+Chats, messages, files, and cost are in the database and storage, so a server restart needs no boot script: the next message just works. A reply that was running when the process died loses its unsaved text, and its chat stays `running?` until the claim expires after `config.max_run_time`, ten minutes by default. The generated job checks again each minute and then starts the reply over, and a message sent in the meantime waits for that. Lower `max_run_time` to shorten the wait, keeping it above your slowest request without streaming.
+
+`claim_token`, `claimed_until`, and `cancelled` belong to RubyLLM, so read `chat.running?` and don't write them. `claim_token` stays set after a run ends, and a `cancelled` left set stops the next run. `durable-agents/#when-a-run-is-interrupted` says what cancel, a crash, and a failure each save and continue.
 
 RubyLLM's own suite covers streaming and reply assembly, persistence, the tool loop, usage and cost, retries, cancellation, and generated code; the official conformance suite covers its MCP client; and mxc's tests cover sandbox isolation. Don't probe those by hand. See [Verify](#verify-the-application-change) for the one command that checks the result.
 
@@ -54,7 +70,12 @@ For a 1.x application, use its version's documentation and keep the requested ch
 These are the signatures an application uses, for 2.2; on an older release, check the `with_file_store`, `with_code_execution`, and test helper lines against its guides. Use them, and don't write your own version of anything here: not persistence, a runner, a sandbox, an MCP client, or a price table.
 
 ```ruby
-chat = RubyLLM.chat(model: "...", provider: :openai)   # or Chat.create! with acts_as_chat
+RubyLLM.configure do |config|
+  config.anthropic_api_key = ENV["ANTHROPIC_API_KEY"]
+  config.anthropic_api_base = ENV["ANTHROPIC_BASE_URL"]   # no /v1/messages; openai_api_base ends in /v1, gemini_api_base in /v1beta
+end
+
+chat = RubyLLM.chat(model: "...")   # or Chat.create!(model: "...") with acts_as_chat
 message = chat.ask("Hi", with: "file.pdf") { |chunk| chunk.content }
 message.content; message.parsed; message.tokens.input; message.cost.total   # also chat.tokens, chat.cost
 chat.cancel    # any thread, and any process with acts_as_chat; raises RubyLLM::CancelledError in the running call
@@ -65,8 +86,11 @@ with_thinking with_caching with_citations with_compaction with_context_budget wi
 with_file_store with_code_execution with_skills with_provider_tools with_tool_options with_provider_options
 
 class ChatAgent < ApplicationAgent    # or RubyLLM::Agent
-  model "..."; instructions "..."; tools WeatherTool; mcp Linear; file_store; code_execution
+  model "..."; instructions "..."; tools WeatherTool; mcp Linear; code_execution languages: [:python]
+  context_budget per_result: 0.25, per_request: 0.7
 end
+ChatAgent.create!(model: "...")   # a chat keeps its model; ChatAgent.find applies the agent and leaves the model alone
+chat.with_model("...")            # saved on a record, and the next request uses it with the same history
 
 class WeatherTool < RubyLLM::Tool
   description "Looks up the weather"
@@ -93,7 +117,10 @@ RubyLLM.paint RubyLLM.animate RubyLLM.speak RubyLLM.transcribe RubyLLM.ocr RubyL
 require "ruby_llm/test_helper"
 include RubyLLM::TestHelper
 stub_replies tool_call(:weather, city: "Berlin"), "It is sunny.", cost: 0.01, interval: 0.05
+stub_replies RubyLLM::ServerError.new("The provider is down")
 ```
+
+A model ID is enough: the registry knows its provider, so `with_model`, `create!`, and a model picker need no table of providers. Pass `provider:` only for a model the registry doesn't list or one that several providers offer. An agent that declares `model "...", provider: :anthropic` pins that provider, so `create!(model:)` with another provider's model raises `ModelNotFoundError`.
 
 Outside Rails, all of this except the Rails records works on plain Ruby objects. The application stores the transcript itself and rebuilds a chat with `add_message`, which does not restore the usage ledger, so persist `usage.ruby_llm` events if it needs past spend.
 
@@ -107,6 +134,8 @@ Read the relevant page instead of loading the entire documentation site:
 | --- | --- |
 | Understand the framework's structure | `overview/` |
 | Configure a provider or select a model | `configuration/`, `configuration-providers/`, `models/` |
+| Script replies in tests | `testing/` |
+| Limit tool results, choose the wire protocol, or set request options | `chat-request-control/` |
 | Chat, stream, or attach files | `chat/`, `streaming/`, `attachments/` |
 | Declare tools or require approval | `tools/`, `tool-parameters/`, `tool-execution/` |
 | Let the model run code in a sandbox (2.2) | `code-execution/`, `sandboxes/` |
