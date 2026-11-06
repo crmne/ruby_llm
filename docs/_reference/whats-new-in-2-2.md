@@ -290,6 +290,26 @@ See [Dropping Unsupported Parameters]({% link _advanced/error-handling.md %}#dro
 
 A streamed reply you cancel now stays in the conversation as far as it got, marked `cancelled?`, so the model sees what the person read. See [Cancelling a Stream]({% link _core_features/streaming.md %}#cancelling-a-stream).
 
+## Tests Without a Provider
+
+`RubyLLM::TestHelper` scripts what the model replies, so your tests run your real chats, agents, and pages with no provider and no API key:
+
+```ruby
+require "ruby_llm/test_helper"
+
+class SupportAgentTest < ActiveSupport::TestCase
+  include RubyLLM::TestHelper
+
+  test "calls the tool and answers" do
+    stub_replies tool_call(:weather, city: "Berlin"), "It is sunny.", cost: 0.01
+
+    assert_equal "It is sunny.", SupportAgent.new.ask("Weather?").content
+  end
+end
+```
+
+Replies stream, and `interval:` slows them down so a test can press Stop. See [Testing]({% link _advanced/testing.md %}).
+
 ## Smaller Additions
 
 `response.web_sources` lists the pages a hosted web search returned, the same on OpenAI, Azure, Meta, xAI, Anthropic, Gemini, and Vertex AI. They come from the outside world, so don't treat them as an allowlist on their own. See [Web Sources]({% link _tools/provider-tools.md %}#web-sources).
