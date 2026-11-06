@@ -189,6 +189,27 @@ RSpec.describe RubyLLM::Chat, :live do
       expect(payload[:include]).to include('web_search_call.action.sources')
     end
 
+    it 'asks Meta for web search sources' do
+      payload = RubyLLM.chat(model: model_for(:meta), provider: :meta).with_provider_tools(:web_search).render
+
+      expect(payload[:include]).to include('web_search_call.action.sources')
+    end
+
+    it 'does not ask Bedrock Mantle for web search sources, which it rejects' do
+      payload = RubyLLM.chat(model: 'openai.gpt-oss-20b', provider: :bedrock).with_provider_tools(:web_search).render
+
+      expect(payload[:tools]).to include({ type: 'web_search' })
+      expect(payload[:include]).to eq(%w[reasoning.encrypted_content])
+    end
+
+    it 'does not ask xAI for web search sources, which it always returns' do
+      payload = RubyLLM.chat(model: model_for(:xai, :provider_tools), provider: :xai)
+                       .with_provider_tools(:web_search)
+                       .render
+
+      expect(payload[:include]).to eq(%w[reasoning.encrypted_content])
+    end
+
     it 'leaves the include list alone without web search' do
       payload = RubyLLM.chat(model: model_for(:openai, :reasoning_effort), provider: :openai)
                        .with_provider_tools(:code_execution)
@@ -370,6 +391,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
         expect(chunks).not_to be_empty
         expect(response.server_tool_calls.map(&:type)).to include('web_search_call')
+        expect(web_search_source_urls(response)).to include(start_with('https://'))
         expect(response.tokens.server_tool_use).to match('web_search_requests' => be_positive)
       end
     end
@@ -386,6 +408,19 @@ RSpec.describe RubyLLM::Chat, :live do
         expect(response.server_tool_calls.map(&:type)).to include('web_search_call')
         expect(web_search_source_urls(response)).to include(start_with('https://'))
         expect(response.tokens.server_tool_use).to match('web_search_requests' => be_positive)
+
+        followup = chat.ask('Thanks. Now just say OK.')
+        expect(followup.content).to be_present
+      end
+    end
+
+    context "with meta/#{model_for(:meta)}" do
+      let(:chat) { RubyLLM.chat(model: model_for(:meta), provider: :meta).with_provider_tools(:web_search) }
+
+      it 'searches, returns the sources, and replays them' do
+        response = chat.ask('Search the web: what is the latest stable Ruby version? Cite your source.')
+
+        expect(web_search_source_urls(response)).to include(start_with('https://'))
 
         followup = chat.ask('Thanks. Now just say OK.')
         expect(followup.content).to be_present

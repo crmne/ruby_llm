@@ -171,7 +171,7 @@ sources = searches.flat_map { |call| Array(call.result) }
 urls = sources.filter_map { |source| source["url"] if source.is_a?(Hash) }
 ```
 
-The result keeps the service's own shape. On the Responses API, each `web_search_call` lists Hashes with a `"url"`, and real-time feeds appear as `{"type" => "api", "name" => "oai-weather"}`. Anthropic's `web_search_tool_result` lists results with a `"url"` and a `"title"`. Gemini reports its search queries and grounds the answer through citations instead. In Rails, messages keep the sources in their `server_tool_calls` column, which the install generator creates.
+The result keeps the service's own shape. On OpenAI, Azure, Meta, and xAI, each `web_search_call` lists Hashes with a `"url"`. Anthropic's `web_search_tool_result` lists results with a `"url"` and a `"title"`. Gemini reports its search queries and grounds the answer through citations instead. In Rails, messages keep the sources in their `server_tool_calls` column, which the install generator creates.
 
 ### Google Search Suggestions
 

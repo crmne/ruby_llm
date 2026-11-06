@@ -580,8 +580,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
     end
 
     it 'puts the sources a web search found in the server tool call result' do
-      sources = [{ 'type' => 'url', 'url' => 'https://www.ruby-lang.org/en/downloads/' },
-                 { 'type' => 'api', 'name' => 'oai-weather' }]
+      sources = [{ 'type' => 'url', 'url' => 'https://www.ruby-lang.org/en/downloads/' }]
       action = { 'type' => 'search', 'query' => 'latest ruby', 'sources' => sources }
       response = response_with([
                                  { 'type' => 'web_search_call', 'id' => 'ws_1', 'status' => 'completed',

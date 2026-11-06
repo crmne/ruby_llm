@@ -68,13 +68,15 @@ module RubyLLM
           end)
         end
 
-        # A web search reports the pages it found only when the request
-        # asks for them.
+        # A web search reports the pages it found only when the request asks
+        # for them, and services on this wire format that lack this include
+        # value reject the whole request, so each one opts in.
         WEB_SEARCH_TOOL_TYPES = %w[web_search web_search_preview].freeze
         WEB_SEARCH_SOURCES = 'web_search_call.action.sources'
 
         def apply_provider_tools(*)
           payload = super
+          return payload unless web_search_sources?
           return payload unless Array(payload[:tools]).any? { |tool| web_search_tool?(tool) }
 
           payload.merge(include: Array(payload[:include]) | [WEB_SEARCH_SOURCES])
