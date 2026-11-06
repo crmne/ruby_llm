@@ -9,10 +9,18 @@ module RubyLLM
     # in Configuration#file_converters first, then reads text files,
     # including source code, CSV, JSON, and Markdown, as they are.
     #
-    # The OCR converter reads PDFs, scans, and photos with RubyLLM.ocr. It
-    # costs a request per file, so it only runs where you register it.
-    # Converters::Text reads a file as it is, for other types that hold
-    # plain text.
+    # Converters::Office reads Word, Excel, and PowerPoint files without
+    # any setup. The OCR converter reads PDFs, scans, and photos with
+    # RubyLLM.ocr. It costs a request per file, so it only runs where you
+    # register it. Converters::Text reads a file as it is, for other types
+    # that hold plain text.
+    #
+    # A converter that answers +local?+ with +true+ reads files on this
+    # machine for free, so a chat runs it as soon as it keeps an
+    # attachment, while it prepares the request, so keep it fast, and
+    # search_files finds the text without a read_file first. The others wait
+    # for read_file, or for a request that must send as text a file the
+    # provider cannot take.
     #
     #   RubyLLM.configure do |config|
     #     config.file_converters["image/*"] = RubyLLM::FileStore::Converters::OCR.new
@@ -27,8 +35,13 @@ module RubyLLM
       class << self
         # Returns the text the first converter for +attachment+ makes of it,
         # or +nil+ when none can read it.
-        def convert(attachment, config: RubyLLM.config) # :nodoc:
-          for_type(attachment.mime_type, config:).each do |converter|
+        # With <tt>local: true</tt>, stops at the first converter that does
+        # not run on this machine for free, so one that may cost money, or
+        # that was registered to go first, is never passed over.
+        def convert(attachment, config: RubyLLM.config, local: false) # :nodoc:
+          converters = for_type(attachment.mime_type, config:)
+          converters = converters.take_while { |converter| local?(converter) } if local
+          converters.each do |converter|
             text = converter.call(attachment)
             next unless text.is_a?(String)
 
@@ -46,6 +59,11 @@ module RubyLLM
                     .flat_map { |_, converters| Array(converters) } + built_in(type)
         end
 
+        # Returns whether +converter+ reads files on this machine for free.
+        def local?(converter) # :nodoc:
+          converter.respond_to?(:local?) && converter.local? == true
+        end
+
         private
 
         def matches?(pattern, type)
@@ -56,7 +74,9 @@ module RubyLLM
         end
 
         def built_in(type)
-          Files::MimeType.text?(type) ? [Text] : []
+          return [Text] if Files::MimeType.text?(type)
+
+          Office::TYPES.key?(type) ? [Office] : []
         end
       end
     end

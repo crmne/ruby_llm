@@ -7,40 +7,45 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What
         is the parking garage door code? It is in handbook.md in your files."}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"list_files","description":"Lists
-        the files in this chat''s file store, with their sizes and types: files people
-        attached, files tools returned, long tool results, and files you or your code
-        wrote. Pass path to list one folder.","input_schema":{"type":"object","properties":{"path":{"type":["string","null"],"description":"A
-        folder to list. Leave it out for every file"}},"additionalProperties":false}},{"name":"read_file","description":"Reads
-        a file from this chat''s file store. Text comes back with line numbers, 1000
-        lines or 20000 characters at a time: pass offset and limit to read further.
-        PDFs, Word, Excel, and PowerPoint files come back as their text, and images
-        as the image itself. With unit \"characters\", offset and limit count characters
-        instead of lines, for files with very long lines.","input_schema":{"type":"object","properties":{"path":{"type":"string","description":"The
+        the files, with sizes and types. Pass path for one folder, and pattern for
+        a glob: *.csv matches names in any folder, reports/**/*.csv matches paths.","input_schema":{"type":"object","properties":{"path":{"type":["string","null"],"description":"A
+        folder to list"},"pattern":{"type":["string","null"],"description":"A glob,
+        like *.md or reports/**/*.csv"}},"additionalProperties":false}},{"name":"read_file","description":"Reads
+        a file. Text comes back with line numbers, 1000 lines or 20000 characters
+        at a time: pass offset and limit to read further, and unit \"characters\"
+        for very long lines. After search_files, read just the lines around a match
+        with offset and limit. Documents a converter reads come back as text, and
+        other images and PDFs as the file itself.","input_schema":{"type":"object","properties":{"path":{"type":"string","description":"The
         file to read"},"offset":{"type":["integer","null"],"description":"The line
         to start at, from 1, or the character, from 0"},"limit":{"type":["integer","null"],"description":"How
         many lines or characters to read"},"unit":{"type":["string","null"],"enum":["lines","characters",null],"description":"lines
         (the default) or characters"}},"required":["path"],"additionalProperties":false}},{"name":"search_files","description":"Searches
-        the text of this chat''s files, PDFs and Office files included, for lines
-        matching a regular expression, ignoring case, and returns each match with
-        its path and line number. Read around a match with read_file and its offset.
-        Pass path to search one file or folder.","input_schema":{"type":"object","properties":{"query":{"type":"string","description":"A
+        the text of the files for lines matching a regular expression, like grep,
+        and returns path:line: text. Start with files_only to see which files match,
+        then read them with read_file. Files whose text read_file has not extracted
+        yet are skipped and named.","input_schema":{"type":"object","properties":{"query":{"type":"string","description":"A
         regular expression, or plain words"},"path":{"type":["string","null"],"description":"A
-        file or folder to search. Leave it out for all"}},"required":["query"],"additionalProperties":false}},{"name":"write_file","description":"Writes
-        a text file to this chat''s file store, replacing any file at that path. Use
-        it for notes, drafts, data, and results you want to keep or come back to.
-        To change part of a file, use edit_file.","input_schema":{"type":"object","properties":{"path":{"type":"string","description":"Where
+        file or folder to search"},"glob":{"type":["string","null"],"description":"Only
+        files matching this, like *.md"},"context":{"type":["integer","null"],"description":"Lines
+        to show around each match"},"case_sensitive":{"type":["boolean","null"],"description":"Match
+        case. Default: false"},"files_only":{"type":["boolean","null"],"description":"Return
+        only the matching paths"}},"required":["query"],"additionalProperties":false}},{"name":"write_file","description":"Writes
+        a text file, replacing any file at path. Read an existing file before you
+        replace it. To change part of a file, use edit_file.","input_schema":{"type":"object","properties":{"path":{"type":"string","description":"Where
         to write, such as notes/summary.md"},"content":{"type":"string","description":"The
         complete content of the file"}},"required":["path","content"],"additionalProperties":false}},{"name":"edit_file","description":"Changes
-        a text file in this chat''s file store by replacing old_text, which must appear
-        exactly once, with new_text. Include enough of the surrounding text to make
-        old_text unique, or set replace_all to replace every occurrence.","input_schema":{"type":"object","properties":{"path":{"type":"string","description":"The
-        file to change"},"old_text":{"type":"string","description":"The exact text
-        to replace"},"new_text":{"type":"string","description":"The text to put in
-        its place"},"replace_all":{"type":["boolean","null"],"description":"Replace
-        every occurrence"}},"required":["path","old_text","new_text"],"additionalProperties":false}}]}'
+        text files you have read by replacing old_text, which must appear exactly
+        once, with new_text. Include surrounding text to make old_text unique, or
+        set replace_all. Pass edits for several changes in one call, to one file or
+        several: they apply in order, all or none.","input_schema":{"type":"object","properties":{"path":{"type":["string","null"],"description":"The
+        file to change"},"old_text":{"type":["string","null"],"description":"The exact
+        text to replace"},"new_text":{"type":["string","null"],"description":"The
+        text to put in its place"},"replace_all":{"type":["boolean","null"],"description":"Replace
+        every occurrence"},"edits":{"type":["array","null"],"description":"Several
+        changes; each may name a path","items":{"type":"object","properties":{"path":{"type":["string","null"]},"old_text":{"type":"string"},"new_text":{"type":"string"},"replace_all":{"type":["boolean","null"]}},"required":["old_text","new_text"],"additionalProperties":false}}},"additionalProperties":false}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.0
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -57,7 +62,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sat, 17 Oct 2026 20:44:25 GMT
+      - Fri, 06 Nov 2026 02:31:18 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -69,31 +74,31 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '9999000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-10-17T20:44:24Z'
+      - '2026-11-06T02:31:18Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-10-17T20:44:24Z'
+      - '2026-11-06T02:31:18Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-10-17T20:44:24Z'
+      - '2026-11-06T02:31:18Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '11999000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-10-17T20:44:24Z'
+      - '2026-11-06T02:31:18Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-d1f455712f6bd2dc022f3e484c63fc2e-e82a141297778519-01
+      - 00-901188c82b30d2e5f7aed39944f7d2eb-990f281985dd3c31-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
@@ -104,6 +109,8 @@ http_interactions:
       - default-src 'none'; frame-ancestors 'none'
       Server:
       - cloudflare
+      Server-Timing:
+      - x-originResponse;dur=833
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -112,9 +119,9 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cg8TibA7sY6bFFNhEoyLz","type":"message","role":"assistant","content":[{"type":"text","text":"I''ll
-        search for the parking garage door code in the handbook.md file."},{"type":"tool_use","id":"toolu_01Q2CDVd4WgvzQ31aLuvrws7","name":"read_file","input":{"path":"handbook.md"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":1374,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":72,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
-  recorded_at: Sat, 17 Oct 2026 20:44:25 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CgktYGcQpccpBagfvwvRR","type":"message","role":"assistant","content":[{"type":"text","text":"I''ll
+        search for the parking garage door code in the handbook.md file."},{"type":"tool_use","id":"toolu_01PMA9qt4hdhSczatx44eHXb","name":"read_file","input":{"path":"handbook.md"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":1583,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":72,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
+  recorded_at: Fri, 06 Nov 2026 02:31:18 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -122,7 +129,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What
         is the parking garage door code? It is in handbook.md in your files."}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        search for the parking garage door code in the handbook.md file."},{"type":"tool_use","id":"toolu_01Q2CDVd4WgvzQ31aLuvrws7","name":"read_file","input":{"path":"handbook.md"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01Q2CDVd4WgvzQ31aLuvrws7","content":[{"type":"text","text":"handbook.md,
+        search for the parking garage door code in the handbook.md file."},{"type":"tool_use","id":"toolu_01PMA9qt4hdhSczatx44eHXb","name":"read_file","input":{"path":"handbook.md"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01PMA9qt4hdhSczatx44eHXb","content":[{"type":"text","text":"handbook.md,
         lines 1-401 of 401:\n     1\t1. Section 1 covers office policy number 1.\n     2\t2.
         Section 2 covers office policy number 2.\n     3\t3. Section 3 covers office
         policy number 3.\n     4\t4. Section 4 covers office policy number 4.\n     5\t5.
@@ -420,40 +427,45 @@ http_interactions:
         office policy number 397.\n   399\t398. Section 398 covers office policy number
         398.\n   400\t399. Section 399 covers office policy number 399.\n   401\t400.
         Section 400 covers office policy number 400."}]}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"list_files","description":"Lists
-        the files in this chat''s file store, with their sizes and types: files people
-        attached, files tools returned, long tool results, and files you or your code
-        wrote. Pass path to list one folder.","input_schema":{"type":"object","properties":{"path":{"type":["string","null"],"description":"A
-        folder to list. Leave it out for every file"}},"additionalProperties":false}},{"name":"read_file","description":"Reads
-        a file from this chat''s file store. Text comes back with line numbers, 1000
-        lines or 20000 characters at a time: pass offset and limit to read further.
-        PDFs, Word, Excel, and PowerPoint files come back as their text, and images
-        as the image itself. With unit \"characters\", offset and limit count characters
-        instead of lines, for files with very long lines.","input_schema":{"type":"object","properties":{"path":{"type":"string","description":"The
+        the files, with sizes and types. Pass path for one folder, and pattern for
+        a glob: *.csv matches names in any folder, reports/**/*.csv matches paths.","input_schema":{"type":"object","properties":{"path":{"type":["string","null"],"description":"A
+        folder to list"},"pattern":{"type":["string","null"],"description":"A glob,
+        like *.md or reports/**/*.csv"}},"additionalProperties":false}},{"name":"read_file","description":"Reads
+        a file. Text comes back with line numbers, 1000 lines or 20000 characters
+        at a time: pass offset and limit to read further, and unit \"characters\"
+        for very long lines. After search_files, read just the lines around a match
+        with offset and limit. Documents a converter reads come back as text, and
+        other images and PDFs as the file itself.","input_schema":{"type":"object","properties":{"path":{"type":"string","description":"The
         file to read"},"offset":{"type":["integer","null"],"description":"The line
         to start at, from 1, or the character, from 0"},"limit":{"type":["integer","null"],"description":"How
         many lines or characters to read"},"unit":{"type":["string","null"],"enum":["lines","characters",null],"description":"lines
         (the default) or characters"}},"required":["path"],"additionalProperties":false}},{"name":"search_files","description":"Searches
-        the text of this chat''s files, PDFs and Office files included, for lines
-        matching a regular expression, ignoring case, and returns each match with
-        its path and line number. Read around a match with read_file and its offset.
-        Pass path to search one file or folder.","input_schema":{"type":"object","properties":{"query":{"type":"string","description":"A
+        the text of the files for lines matching a regular expression, like grep,
+        and returns path:line: text. Start with files_only to see which files match,
+        then read them with read_file. Files whose text read_file has not extracted
+        yet are skipped and named.","input_schema":{"type":"object","properties":{"query":{"type":"string","description":"A
         regular expression, or plain words"},"path":{"type":["string","null"],"description":"A
-        file or folder to search. Leave it out for all"}},"required":["query"],"additionalProperties":false}},{"name":"write_file","description":"Writes
-        a text file to this chat''s file store, replacing any file at that path. Use
-        it for notes, drafts, data, and results you want to keep or come back to.
-        To change part of a file, use edit_file.","input_schema":{"type":"object","properties":{"path":{"type":"string","description":"Where
+        file or folder to search"},"glob":{"type":["string","null"],"description":"Only
+        files matching this, like *.md"},"context":{"type":["integer","null"],"description":"Lines
+        to show around each match"},"case_sensitive":{"type":["boolean","null"],"description":"Match
+        case. Default: false"},"files_only":{"type":["boolean","null"],"description":"Return
+        only the matching paths"}},"required":["query"],"additionalProperties":false}},{"name":"write_file","description":"Writes
+        a text file, replacing any file at path. Read an existing file before you
+        replace it. To change part of a file, use edit_file.","input_schema":{"type":"object","properties":{"path":{"type":"string","description":"Where
         to write, such as notes/summary.md"},"content":{"type":"string","description":"The
         complete content of the file"}},"required":["path","content"],"additionalProperties":false}},{"name":"edit_file","description":"Changes
-        a text file in this chat''s file store by replacing old_text, which must appear
-        exactly once, with new_text. Include enough of the surrounding text to make
-        old_text unique, or set replace_all to replace every occurrence.","input_schema":{"type":"object","properties":{"path":{"type":"string","description":"The
-        file to change"},"old_text":{"type":"string","description":"The exact text
-        to replace"},"new_text":{"type":"string","description":"The text to put in
-        its place"},"replace_all":{"type":["boolean","null"],"description":"Replace
-        every occurrence"}},"required":["path","old_text","new_text"],"additionalProperties":false}}]}'
+        text files you have read by replacing old_text, which must appear exactly
+        once, with new_text. Include surrounding text to make old_text unique, or
+        set replace_all. Pass edits for several changes in one call, to one file or
+        several: they apply in order, all or none.","input_schema":{"type":"object","properties":{"path":{"type":["string","null"],"description":"The
+        file to change"},"old_text":{"type":["string","null"],"description":"The exact
+        text to replace"},"new_text":{"type":["string","null"],"description":"The
+        text to put in its place"},"replace_all":{"type":["boolean","null"],"description":"Replace
+        every occurrence"},"edits":{"type":["array","null"],"description":"Several
+        changes; each may name a path","items":{"type":"object","properties":{"path":{"type":["string","null"]},"old_text":{"type":"string"},"new_text":{"type":"string"},"replace_all":{"type":["boolean","null"]}},"required":["old_text","new_text"],"additionalProperties":false}}},"additionalProperties":false}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.0
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -470,7 +482,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sat, 17 Oct 2026 20:44:26 GMT
+      - Fri, 06 Nov 2026 02:31:20 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -482,31 +494,31 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '9992000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-10-17T20:44:25Z'
+      - '2026-11-06T02:31:19Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-10-17T20:44:26Z'
+      - '2026-11-06T02:31:20Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-10-17T20:44:25Z'
+      - '2026-11-06T02:31:18Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '11992000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-10-17T20:44:25Z'
+      - '2026-11-06T02:31:19Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-aac4a1368c6ca51bcd109dee03dc49a0-d482b047aa77e62b-01
+      - 00-575332185086cfbc75eccf29a81fc74b-caef9e09213bd56e-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
@@ -517,6 +529,8 @@ http_interactions:
       - default-src 'none'; frame-ancestors 'none'
       Server:
       - cloudflare
+      Server-Timing:
+      - x-originResponse;dur=1105
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -525,8 +539,9 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cg8TigxsNJHTyKdHsgijB","type":"message","role":"assistant","content":[{"type":"text","text":"Found
-        it! The parking garage door code is **4471-KESTREL** (located on line 288
-        of the handbook)."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":8292,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":32,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
-  recorded_at: Sat, 17 Oct 2026 20:44:26 GMT
-recorded_with: VCR 6.4.0
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CgktYLVpqUQNTbMLeV4xt","type":"message","role":"assistant","content":[{"type":"text","text":"Perfect!
+        I found it. According to the handbook.md file, the parking garage door code
+        is:\n\n**4471-KESTREL**\n\nThis information is located on line 288 of the
+        handbook."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":8501,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":48,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
+  recorded_at: Fri, 06 Nov 2026 02:31:20 GMT
+recorded_with: VCR 6.4.1

@@ -89,14 +89,29 @@ The model gets these tools:
 | `read_file` | Reads a file with line numbers, 1,000 lines or 20,000 characters at a time |
 | `search_files` | Finds lines matching a regular expression, or only the files that have one |
 | `write_file` | Creates a text file, or replaces one the model has read |
-| `edit_file` | Replaces one exact span of a text file the model has read, or every occurrence |
+| `edit_file` | Replaces exact spans of text files the model has read, one or several in a call, all or none |
 | `delete_file` | Deletes one file. Only when you ask for it |
 
 `read_file` reads text files, and other formats through the converters you register, such as OCR for PDFs (see [Reading Files as Text](#reading-files-as-text)). An image, and a PDF no converter reads, come back as the file itself, so a model with vision sees it.
 
-`search_files` works like `grep`. It ignores case unless the model sets `case_sensitive`, narrows to a folder with `path` and to file names with `glob`, shows lines around each match with `context`, and with `files_only` names the files that match instead of the lines, which is how a model usually starts. Its output stops after 100 matches or 20,000 characters, and a slow regular expression stops instead of tying up the process. It never runs a converter, since one like OCR costs a request per file: it searches text files and the text `read_file` or `chat.file_store.text` already extracted, and names the files it skipped so the model can read them first.
+`search_files` works like `grep`. It ignores case unless the model sets `case_sensitive`, narrows to a folder with `path` and to file names with `glob`, shows lines around each match with `context`, and with `files_only` names the files that match instead of the lines, which is how a model usually starts. Its output stops after 100 matches or 20,000 characters, and a slow regular expression stops instead of tying up the process. It never runs a converter, since one like OCR costs a request per file: it searches text files and the text already extracted, by `read_file`, by `chat.file_store.text`, or by a local converter when the chat kept the attachment, and names the files it skipped so the model can read them first.
 
 A glob without a slash, like `*.md`, matches file names in any folder. One with a slash, like `reports/**/*.csv`, matches paths, inside the `path` folder when the model gives one. `**` matches any number of folders, and `{csv,tsv}` either extension.
+
+### Several Changes in One Call
+
+A rename or a refactor touches many spans, often in several files. `edit_file` takes them all at once in `edits`, applied in order. Each follows the same rules as a single edit: its `old_text` must appear once unless it sets `replace_all`. If any edit fails, none is written, and the error names it, like `Edit 3: old_text does not appear in app/models/user.rb.` If the store refuses a write partway, such as when it is full, the error names the files that already changed. An edit names its own `path`, or uses the call's:
+
+```json
+{
+  "edits": [
+    { "path": "app/models/user.rb", "old_text": "def full_name", "new_text": "def display_name" },
+    { "path": "app/views/users/show.html.erb", "old_text": "user.full_name", "new_text": "user.display_name", "replace_all": true }
+  ]
+}
+```
+
+The model reads each file first, as for any edit. One call instead of one per span saves the model a round trip for each change.
 
 ### Choosing the Tools
 
@@ -118,11 +133,11 @@ The model must read a file before `edit_file` or `write_file` changes it, and re
 notes/plan.md changed since you read it. Read it again.
 ```
 
-This keeps the model from writing over a file from memory, or over a change someone else made: a person editing the same draft, code that rewrote it, or another job. A new file needs no read, and the model can keep changing a file it wrote.
+This keeps the model from writing over a file from memory, or over a change someone else made: a person editing the same draft, code that rewrote it, or another job. A new file needs no read, and the model can keep changing a file it wrote with these tools. A file its code changed counts as changed, because the run's output doesn't show the model the new content, so `run_code` names those files in its result and the model reads them again.
 
 The store remembers the digest of what the model read, for each path. A persisted chat keeps it in the file's row, so it survives a reload and holds across processes. `Memory` and `Directory` stores remember for as long as the store object lives, so after a reload, the model reads a folder store's file again before it changes it.
 
-Each change locks the store while the tool reads the file, checks it, and writes it back, so `edit_file` calls running at once take turns, each on the file as the one before left it. An edit whose `old_text` the earlier one changed fails and says so, instead of writing over it. Two `write_file` calls each write the whole file, so the later one wins. Stores in the box also take the lock for every write and delete, so code execution saving its files, or your code writing one, never lands between a tool's check and its write. The Active Storage store locks the chat's row, and a `Directory` store locks its folder, which holds across processes on the same machine.
+Each change locks the store while the tool reads the file, checks it, and writes it back, so `edit_file` calls running at once take turns, each on the file as the one before left it. An edit whose `old_text` the earlier one changed fails and says so, instead of writing over it. Two `write_file` calls each write the whole file, so the later one wins. Stores in the box also take the lock for every write and delete, so code execution saving its files, or your code writing one, never lands between a tool's check and its write. The Active Storage store locks the chat's row, and a `Directory` store locks its folder, which holds across processes on the same machine. On SQLite before Rails 8, a thread waiting for the database holds Ruby's global lock, so the thread with the chat's lock can't finish, and the wait ends in `database is locked`. Run one thread per process there, or use Rails 8.
 
 ### Working with the Store
 
@@ -150,7 +165,7 @@ Each file is a `RubyLLM::StoredFile` with `path`, `filename`, `byte_size`, `cont
 
 **Attachments.** Every attachment is kept in the chat's files under its file name. The model sees the files attached to the latest question in full, as it would without files. From the next question on, it sees one line naming each of them, and opens them again with `read_file` when it needs to. Files that tools return, such as a PDF an MCP server fetched, become a line at once: the model reads them with `read_file`, which it sees in full until the next question.
 
-An attachment the provider cannot take, such as a Word file for most models, goes as its text instead of the request failing, when a converter you registered reads that format. The conversion runs when the request is prepared, so a paid converter such as OCR costs its request then. The store keeps the text it converted, so later requests usually reuse it, though a memory store keeps only its most recent conversions. The model sees up to `inline_limit` characters, 10,000 by default, and a note that the rest is in the chat's files. When no converter reads the file, it becomes that line on its own question, and the model reads it with code when it can run code. A `convert_unsupported_attachments` handler you register comes first.
+An attachment the provider cannot take, such as a Word file for most models, goes as its text instead of the request failing, when RubyLLM's Office converter or one you registered reads that format. The conversion runs when the request is prepared, so a paid converter such as OCR costs its request then. The store keeps the text it converted, so later requests usually reuse it, though a memory store keeps only its most recent conversions. The model sees up to `inline_limit` characters, 10,000 by default, and a note that the rest is in the chat's files. When no converter reads the file, it becomes that line on its own question, and the model reads it with code when it can run code. A `convert_unsupported_attachments` handler you register comes first.
 
 When two different files share a name, the second gets a number, like `report-2.pdf`. The same file attached twice is kept once.
 
@@ -181,9 +196,11 @@ end
 
 ## Reading Files as Text
 
-`read_file` and `chat.file_store.text` read a file through converters. Text files, including source code, CSV, JSON, YAML, and Markdown, are read as they are. Other formats need a converter you register; without one, `read_file` hands an image or a PDF to the model as the file itself, so a model with vision sees it, and says any other file has no text to read.
+`read_file` and `chat.file_store.text` read a file through converters. Text files, including source code, CSV, JSON, YAML, and Markdown, are read as they are, and Word, Excel, and PowerPoint files (`.docx`, `.xlsx`, `.pptx`) through `RubyLLM::FileStore::Converters::Office`, which reads them on your machine with no setup: a paragraph per line, a row per line with tabs between cells, and a heading for each sheet and slide. Other formats need a converter you register; without one, `read_file` hands an image or a PDF to the model as the file itself, so a model with vision sees it, and says any other file has no text to read.
 
 Each version of a file is converted once. A persisted chat keeps the text in the file's row, and the other stores keep it in memory, so the next read or search is free.
+
+A converter that runs on your machine for free, like the Office one, runs as soon as the chat keeps an attachment, so `search_files` finds a Word file someone attached on the first question without a `read_file` first. Converters that cost money, like OCR, wait until the model reads the file, or until a request has to send a file the provider cannot take as text, and `search_files` names the files it skipped for that: `read_file extracts it`.
 
 ### PDFs, Scans, and Photos
 
@@ -220,7 +237,23 @@ RubyLLM.configure do |config|
 end
 ```
 
-Types match exactly or by family, like `"image/*"`. `"*/*"` matches every file. Exact types run before families, a type can take an Array of converters, tried in order, and registered converters run before the text one RubyLLM ships.
+Answer `local?` with `true` from a converter that reads files on your machine for free, and the chat runs it as soon as it keeps a file, while it prepares the request, so keep it fast. Extraction stops at the first converter for a type that isn't local, so a local one placed after a paid one waits for `read_file`. Text files need no extraction: `search_files` reads them as they are, without their converters. A PDF text-layer reader is a good one to put before OCR: it reads PDFs with text at once, and a scan, where it finds no text, falls through to OCR when the model reads it:
+
+```ruby
+class PdfText
+  def self.call(file)
+    PDF::Reader.new(StringIO.new(file.content)).pages.map(&:text).join("\n\n")
+  end
+
+  def self.local? = true
+end
+
+RubyLLM.configure do |config|
+  config.file_converters["application/pdf"] = [PdfText, RubyLLM::FileStore::Converters::OCR.new]
+end
+```
+
+Types match exactly or by family, like `"image/*"`. `"*/*"` matches every file. Exact types run before families, a type can take an Array of converters, tried in order, and registered converters run before the text and Office ones RubyLLM ships.
 
 To share a converter, ship it as a gem named `ruby_llm-converters-<name>`, like the `ruby_llm-providers-<name>` gems for providers, with a line in its README that registers it.
 

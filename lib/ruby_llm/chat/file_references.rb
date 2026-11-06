@@ -13,7 +13,9 @@ module RubyLLM
     # tool result longer than the inline limit is saved as a file, and
     # the model gets its start and the path. An attachment the provider
     # cannot take, such as a Word file, goes as the text the store's
-    # converters read from it, or as that line when none can.
+    # converters read from it, or as that line when none can. An attachment
+    # a converter on this machine reads for free has its text extracted
+    # when it is kept, so search_files finds it at once.
     class FileReferences # :nodoc:
       INLINE_LIMIT = 10_000
       PREVIEW = 2_000
@@ -55,8 +57,9 @@ module RubyLLM
         end
       end
 
-      def initialize(store:, inline_limit:, written:, tools: FileStore::Tools::DEFAULT)
+      def initialize(store:, inline_limit:, written:, tools: FileStore::Tools::DEFAULT, config: -> { RubyLLM.config })
         @store = store
+        @config = config
         @inline_limit = inline_limit
         @tools = FileStore::Tools.names(tools)
         @written = written
@@ -87,7 +90,10 @@ module RubyLLM
       end
 
       def store_attachment(attachment)
-        @stored[attachment] ||= store.store_attachment(attachment) { |file| @written.call(file) }
+        @stored[attachment] ||= store.store_attachment(attachment) do |file|
+          @written.call(file)
+          extract(file)
+        end
       end
 
       def describe(attachment, config: RubyLLM.config)
@@ -102,6 +108,15 @@ module RubyLLM
       end
 
       private
+
+      def extract(file)
+        return if file.text? || store.cached_text(file)
+
+        text = FileStore::Converters.convert(store.attachment(file.path, file:), config: @config.call, local: true)
+        store.cache_text(file, text) if text
+      rescue StandardError => e
+        RubyLLM.logger.warn { "Could not extract the text of #{file.path}: #{e.class}" }
+      end
 
       def view_message(message, current:, reads:)
         read = (reads[message.tool_call_id] if message.tool_result?)

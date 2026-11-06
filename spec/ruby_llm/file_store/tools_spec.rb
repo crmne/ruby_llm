@@ -171,7 +171,7 @@ RSpec.describe RubyLLM::FileStore::Tools do
 
       expect(call(:search_files, query: 'orchid')).to eq(
         "a.md:2: the ORCHID line\n[Not searched, text not extracted yet: logo.png, sub/sheet.xlsx. " \
-        'Read a file with read_file to extract its text first.]'
+        'read_file extracts them.]'
       )
     end
 
@@ -296,6 +296,106 @@ RSpec.describe RubyLLM::FileStore::Tools do
 
       expect(call(:edit_file, path: 'logo.png', old_text: 'PNG', new_text: 'x')[:error]).to include('not a text file')
       expect(call(:edit_file, path: 'missing.md', old_text: 'a', new_text: 'b')[:error]).to include('There is no file')
+    end
+  end
+
+  describe 'edit_file with several edits' do
+    before do
+      files.write('a.md', "one two three\n")
+      files.write('b.md', "alpha beta\n")
+      call(:read_file, path: 'a.md')
+      call(:read_file, path: 'b.md')
+    end
+
+    it 'applies edits to one file in order' do
+      result = call(:edit_file, path: 'a.md', edits: [{ old_text: 'one', new_text: 'uno' },
+                                                      { old_text: 'uno two', new_text: 'uno dos' }])
+
+      expect(result).to eq('Replaced 2 occurrences in a.md.')
+      expect(files.read('a.md')).to eq("uno dos three\n")
+    end
+
+    it 'changes nothing when one edit fails, and names it' do
+      result = call(:edit_file, path: 'a.md', edits: [{ old_text: 'one', new_text: 'uno' },
+                                                      { old_text: 'four', new_text: 'cuatro' }])
+
+      expect(result).to eq(error: 'Edit 2: old_text does not appear in a.md.')
+      expect(files.read('a.md')).to eq("one two three\n")
+    end
+
+    it 'edits several files at once, all or none' do
+      expect(call(:edit_file, edits: [{ path: 'a.md', old_text: 'one', new_text: 'uno' },
+                                      { path: 'b.md', old_text: 'beta', new_text: 'gamma' }]))
+        .to eq('Replaced 2 occurrences in 2 files: a.md, b.md.')
+      expect([files.read('a.md'), files.read('b.md')]).to eq(["uno two three\n", "alpha gamma\n"])
+
+      files.write('c.md', 'unread')
+      expect(call(:edit_file, edits: [{ path: 'a.md', old_text: 'uno', new_text: 'one' },
+                                      { path: 'c.md', old_text: 'unread', new_text: 'read' }]))
+        .to eq(error: 'Edit 2: Read c.md before you change it.')
+      expect(files.read('a.md')).to eq("uno two three\n")
+    end
+
+    it 'tells the chat about each file it changed' do
+      written = []
+      chat.after_file_write { |file| written << file.path }
+
+      call(:edit_file, edits: [{ path: 'a.md', old_text: 'one', new_text: 'uno' },
+                               { path: 'b.md', old_text: 'beta', new_text: 'gamma' }])
+
+      expect(written).to eq(%w[a.md b.md])
+    end
+
+    it 'refuses an edit without new_text, and takes an empty one to delete' do
+      expect(call(:edit_file, path: 'a.md', old_text: 'one '))
+        .to eq(error: 'Pass new_text, or an empty string to delete old_text.')
+      expect(call(:edit_file, path: 'a.md', edits: [{ old_text: 'one ' }]))
+        .to eq(error: 'Edit 1: Pass new_text, or an empty string to delete old_text.')
+      expect(files.read('a.md')).to eq("one two three\n")
+
+      expect(call(:edit_file, path: 'a.md', old_text: 'one ', new_text: '')).to start_with('Replaced 1')
+      expect(files.read('a.md')).to eq("two three\n")
+    end
+
+    it 'says which files already changed when a later write fails, and tells the chat about them' do
+      written = []
+      chat.after_file_write { |file| written << file.path }
+      allow(files).to receive(:write).and_wrap_original do |original, path, content|
+        raise RubyLLM::FileStoreFullError, 'The files are full.' if path == 'b.md'
+
+        original.call(path, content)
+      end
+
+      expect(call(:edit_file, edits: [{ path: 'a.md', old_text: 'one', new_text: 'uno' },
+                                      { path: 'b.md', old_text: 'beta', new_text: 'gamma' }]))
+        .to eq(error: 'The files are full. These files already changed: a.md.')
+      expect(written).to eq(%w[a.md])
+      expect(call(:edit_file, path: 'a.md', old_text: 'uno', new_text: 'one')).to start_with('Replaced 1')
+    end
+
+    it 'answers a failed first write with the reason alone' do
+      allow(files).to receive(:write).and_raise(Errno::EACCES)
+
+      expect(call(:edit_file, path: 'a.md', old_text: 'one', new_text: 'uno')).to eq(error: 'Permission denied')
+    end
+
+    it 'applies replace_all and the uniqueness rule to each edit' do
+      files.write('d.md', 'x x y')
+      call(:read_file, path: 'd.md')
+
+      expect(call(:edit_file, path: 'd.md', edits: [{ old_text: 'x', new_text: 'z' }]))
+        .to eq(error: 'Edit 1: old_text appears 2 times in d.md. Add the text around it to make it unique, ' \
+                      'or set replace_all.')
+      expect(call(:edit_file, path: 'd.md', edits: [{ old_text: 'x', new_text: 'z', replace_all: true }]))
+        .to eq('Replaced 2 occurrences in d.md.')
+    end
+
+    it 'refuses edits mixed with old_text, and edits without a path' do
+      expect(call(:edit_file, path: 'a.md', old_text: 'one', new_text: 'uno',
+                              edits: [{ old_text: 'two', new_text: 'dos' }]))
+        .to eq(error: 'Pass old_text and new_text, or edits, not both.')
+      expect(call(:edit_file, edits: [{ old_text: 'one', new_text: 'uno' }]))
+        .to eq(error: 'Edit 1 has no path. Pass path, or a path in each edit.')
     end
   end
 

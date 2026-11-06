@@ -98,6 +98,25 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
     expect(described_class.new(chat).read('plan.md')).to eq("A\nB\n")
   end
 
+  it 'keeps the files an edit wrote, and says so, when a later write fails' do
+    tools = chat.with_file_store.to_llm.tools
+    files = chat.file_store
+    %w[a.md b.md].each do |path|
+      files.write(path, 'one')
+      tools[:read_file].call(path:)
+    end
+    allow(files).to receive(:write).and_wrap_original do |original, path, content|
+      raise RubyLLM::FileStoreFullError, 'The files are full.' if path == 'b.md'
+
+      original.call(path, content)
+    end
+
+    expect(tools[:edit_file].call(edits: [{ path: 'a.md', old_text: 'one', new_text: 'two' },
+                                          { path: 'b.md', old_text: 'one', new_text: 'two' }]))
+      .to eq(error: 'The files are full. These files already changed: a.md.')
+    expect(described_class.new(chat).read('a.md')).to eq('two')
+  end
+
   it 'lets the model change a file it read before the chat was reloaded' do
     chat.with_file_store.file_store.write('notes.md', 'one')
     chat.to_llm.tools[:read_file].call(path: 'notes.md')

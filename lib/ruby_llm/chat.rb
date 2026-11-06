@@ -1186,7 +1186,7 @@ module RubyLLM
       store = FileReferences.resolve(store)
       @file_references&.forget(@attachment_replacements)
       @file_references = if store
-                           FileReferences.new(store:, inline_limit:, tools:,
+                           FileReferences.new(store:, inline_limit:, tools:, config: -> { @config },
                                               written: ->(file) { run_callbacks(:after_file_write, file) })
                          end
       @file_tools = store ? build_file_tools : []

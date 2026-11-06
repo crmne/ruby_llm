@@ -487,7 +487,8 @@ module RubyLLM
         record(event, result, changed.map(&:path))
         unmounted = workspace.unmounted
         skipped = unnamed.map { |file| Workspace.invalid_name(file.path) }
-        report(result, changed.map(&:path), skipped, unmounted: (unmounted_note(unmounted) if unmounted.any?))
+        report(result, changed.map(&:path), skipped, unmounted: (unmounted_note(unmounted) if unmounted.any?),
+                                                     read_again: read_again_note(store, changed))
       end
     end
 
@@ -543,7 +544,22 @@ module RubyLLM
         saved << stored
         @written.call(stored)
       end
-      report(result, saved.map(&:path), skipped, unsaved_files: (unsaved if unsaved.any?), files_error: reason)
+      report(result, saved.map(&:path), skipped, unsaved_files: (unsaved if unsaved.any?), files_error: reason,
+                                                 read_again: read_again_note(store, saved))
+    end
+
+    # Names the files this run changed after the model read them, since
+    # edit_file refuses them until it reads them again.
+    def read_again_note(store, files)
+      paths = files.select { |file| changed_since_read?(store, file) }.map(&:path)
+      "This run changed files you had read: #{paths.join(', ')}. Read them before you edit them." if paths.any?
+    end
+
+    def changed_since_read?(store, file)
+      seen = store.read_digest(file.path)
+      seen && seen != (file.digest || FileStore.digest(store.read(file.path)))
+    rescue FileNotFoundError, SystemCallError
+      true
     end
 
     def run_in_sandbox(runner, command, workspace, readable:, directory: workspace.directory)

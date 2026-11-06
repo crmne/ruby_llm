@@ -127,8 +127,9 @@ module RubyLLM
             lines = @lines.empty? ? ["No lines match #{query}."] : @lines.dup
             lines << notice if @stopped
             if @skipped[:unextracted].any?
-              lines << "[Not searched, text not extracted yet: #{@skipped[:unextracted].join(', ')}. " \
-                       'Read a file with read_file to extract its text first.]'
+              unextracted = @skipped[:unextracted]
+              lines << "[Not searched, text not extracted yet: #{unextracted.join(', ')}. " \
+                       "read_file extracts #{unextracted.one? ? 'it' : 'them'}.]"
             end
             lines << "[Not searched, no text: #{@skipped[:none].join(', ')}]" if @skipped[:none].any?
             lines.join("\n")

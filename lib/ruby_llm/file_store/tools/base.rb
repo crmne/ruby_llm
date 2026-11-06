@@ -73,15 +73,16 @@ module RubyLLM
         end
 
         def guarded_write
-          written = nil
+          written = []
           result = guarded do
             yield(lambda do |path, content|
-              written = store.write(path, content)
-              store.record_read(written.path, written.digest || FileStore.digest(content))
-              written
+              file = store.write(path, content)
+              store.record_read(file.path, file.digest || FileStore.digest(content))
+              written << file
+              file
             end)
           end
-          @written.call(written) if written
+          written.each { |file| @written.call(file) }
           result
         end
 
