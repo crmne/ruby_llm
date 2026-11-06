@@ -6,6 +6,8 @@ module RubyLLM
   module Generators
     # Generator for sandbox classes that code execution runs model code in.
     class SandboxGenerator < Rails::Generators::NamedBase
+      INITIALIZER = 'config/initializers/ruby_llm.rb'
+
       source_root File.expand_path('templates', __dir__)
 
       namespace 'ruby_llm:sandbox'
@@ -25,8 +27,16 @@ module RubyLLM
         return unless File.exist?(gemfile)
         return if File.read(gemfile).match?(/^\s*gem\s+["']mxc["']/)
 
-        gem 'mxc'
+        gem 'mxc', '>= 0.4.1'
         say 'Run bundle install: sandboxes subclass MXC::Sandbox from the mxc gem.', :yellow
+      end
+
+      def default_to_new_sandbox
+        initializer = File.join(destination_root, INITIALIZER)
+        return unless File.exist?(initializer)
+        return if File.read(initializer).match?(/^\s*config\.sandbox\s*=/)
+
+        inject_into_file INITIALIZER, %(  config.sandbox = "#{sandbox_class_name}"\n), before: /^end\s*\z/
       end
 
       private

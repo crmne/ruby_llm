@@ -39,10 +39,15 @@ RSpec.describe RubyLLM::Generators::SandboxGenerator, :generator, type: :generat
 
       expect(File.read('app/sandboxes/workspace_sandbox.rb'))
         .to eq("class WorkspaceSandbox < MXC::Sandbox\n  timeout 120\nend\n")
-      expect(File.read('Gemfile')).to match(/^gem "mxc"$/)
+      expect(File.read('Gemfile')).to match(/^gem "mxc", ">= 0.4.1"$/)
+      expect(File.read('config/initializers/ruby_llm.rb')).to include('config.sandbox = "WorkspaceSandbox"')
       success, runner = run_rails_runner('require "mxc"; puts RubyLLM::Sandbox.resolve("WorkspaceSandbox").timeout')
       expect(success).to be(true), runner
       expect(runner).to include("120\n")
+
+      output, status = run_rails_generate('ruby_llm:sandbox', 'Online')
+      expect(status.success?).to be(true), output
+      expect(File.read('config/initializers/ruby_llm.rb')).not_to include('OnlineSandbox')
     end
   end
 end

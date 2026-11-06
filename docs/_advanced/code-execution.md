@@ -28,7 +28,7 @@ Add the [mxc gem](https://crmne.github.io/mxc/), define a sandbox, and make it t
 
 ```ruby
 # Gemfile
-gem "mxc"
+gem "mxc", ">= 0.4.1"
 ```
 
 ```ruby
