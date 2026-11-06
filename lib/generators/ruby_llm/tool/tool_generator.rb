@@ -31,7 +31,7 @@ module RubyLLM
       def explain_next_step
         return unless behavior == :invoke
 
-        say "Offer it with `tools #{tool_class_name}` in an agent, or with_tools(#{tool_class_name}) on a chat."
+        say "Offer it by adding #{tool_class_name} to `tools` in an agent, or with_tools(#{tool_class_name}) on a chat."
       end
 
       def create_tool_view_partials

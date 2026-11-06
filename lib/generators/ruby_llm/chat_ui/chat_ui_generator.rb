@@ -264,7 +264,7 @@ module RubyLLM
 
       def add_system_test_gems
         gemfile = File.read(File.join(destination_root, 'Gemfile'))
-        missing = %w[capybara selenium-webdriver].reject { |name| gemfile.match?(/^\s*gem\s+["']#{name}["']/) }
+        missing = %w[capybara selenium-webdriver].reject { |name| gemfile.match?(/^\s*gem[\s(]+["']#{name}["']/) }
         return if missing.empty?
 
         gem_group(:test) { missing.each { |name| gem name } }

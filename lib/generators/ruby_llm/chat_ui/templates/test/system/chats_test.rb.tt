@@ -4,8 +4,12 @@ require "ruby_llm/test_helper"
 class <%= chat_controller_class_name.delete_suffix("Controller") %>Test < ApplicationSystemTestCase
   include RubyLLM::TestHelper
 
-  setup { <%= chat_job_class_name %>.queue_adapter = :async }
-  teardown { <%= chat_job_class_name %>.queue_adapter = :test }
+  setup do
+    @queue_adapter = <%= chat_job_class_name %>.queue_adapter
+    <%= chat_job_class_name %>.queue_adapter = :async
+  end
+
+  teardown { <%= chat_job_class_name %>.queue_adapter = @queue_adapter }
 
   test "streaming a reply and showing its cost" do
     stub_replies "Hello from the model", cost: 0.01

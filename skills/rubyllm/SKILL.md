@@ -36,7 +36,7 @@ Don't rebuild the transcript, don't keep a price table, and don't reopen or prep
 
 With `with_thinking` on, a stream can sit quiet for several seconds before text starts, while the model thinks. That is normal, not a stall.
 
-You don't need to read the generated files or `lib/ruby_llm` to use this. The generator prints what works and which file controls it: `app/jobs/chat_response_job.rb` runs the turn and shows errors, `ChatsController#cancel` is Stop, and `app/agents/chat_agent.rb` says what the model can do. Files attached to a chat reach `code_execution` in `attachments/`, and reach `file_store` as the chat's files. For anything else, read the one guide for that feature, and open source only when something fails or you need a signature.
+You don't need to read the generated files or `lib/ruby_llm` to use this. The generator prints what works and which file controls it: with the default `Chat` model, `app/jobs/chat_response_job.rb` runs the turn and shows errors, `ChatsController#cancel` is Stop, and `app/agents/chat_agent.rb` says what the model can do. Files attached to a chat reach `code_execution` in `attachments/`, and reach `file_store` as the chat's files. For anything else, read the one guide for that feature, and open source only when something fails or you need a signature.
 
 RubyLLM's own suite covers streaming and reply assembly, persistence, the tool loop, usage and cost, retries, cancellation, and generated code; the official conformance suite covers its MCP client; and mxc's tests cover sandbox isolation. Don't probe those by hand. See [Verify](#verify-the-application-change) for the one command that checks the result.
 
@@ -57,7 +57,7 @@ These are the signatures an application uses. Use them, and don't write your own
 chat = RubyLLM.chat(model: "...", provider: :openai)   # or Chat.create! with acts_as_chat
 message = chat.ask("Hi", with: "file.pdf") { |chunk| chunk.content }
 message.content; message.parsed; message.tokens.input; message.cost.total   # also chat.tokens, chat.cost
-chat.cancel    # any thread or process; raises RubyLLM::CancelledError in the running call
+chat.cancel    # any thread, and any process with acts_as_chat; raises RubyLLM::CancelledError in the running call
 
 # Chainable on a chat. Each is also a macro without with_ on RubyLLM::Agent.
 with_instructions with_tools with_mcp with_model with_temperature with_max_output_tokens with_schema
@@ -172,4 +172,4 @@ Specs check code; evaluations check how often the model gets the answer right (2
 
 ## Verify the application change
 
-`bin/rails test:system` is the smoke test: the generated `test/system/chats_test.rb` checks streaming, Stop, cost, and errors in a real browser with scripted replies, in seconds, and needs Chrome. Add to it with `RubyLLM::TestHelper` rather than writing a stand-in provider, a fault proxy, or driving a browser by hand. Test your own tools, including a scripted `tool_call`, instructions, and wiring. Report which provider behavior you actually exercised, and keep the implementation within the requested feature.
+`bin/rails test:system` is the smoke test: the test the generator writes in `test/system`, for a Minitest app, checks streaming, Stop, cost, and errors in a real browser with scripted replies, in seconds, and needs Chrome. Add to it with `RubyLLM::TestHelper` rather than writing a stand-in provider, a fault proxy, or driving a browser by hand. Test your own tools, including a scripted `tool_call`, instructions, and wiring. Report which provider behavior you actually exercised, and keep the implementation within the requested feature.
