@@ -15,7 +15,7 @@ module RubyLLM
         names = @tool_deferrals.filter_map { |name, deferred| name if deferred }
         mcp.each do |server|
           explicit = @mcp_deferrals[server.name.to_sym]
-          server.tools.each do |tool|
+          MCP::Outages.tools(server).each do |tool|
             names << tool.name.to_sym if explicit.nil? ? server.defers?(tool) : explicit
           end
         end

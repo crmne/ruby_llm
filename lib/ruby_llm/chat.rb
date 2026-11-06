@@ -746,7 +746,7 @@ module RubyLLM
     def tools
       offered = @tools.reject { |_, tool| hidden_from_model?(tool) }
       built_in = [@code_execution_tool, (@skill_loader if skills.any?), *@file_tools, tool_search_tool]
-      [*built_in, *mcp.flat_map(&:tools)].compact.each_with_object(offered) do |tool, tools|
+      [*built_in, *mcp.reachable_tools].compact.each_with_object(offered) do |tool, tools|
         next if hidden_from_model?(tool)
 
         name = tool.qualified_name.to_sym
@@ -2192,6 +2192,16 @@ module RubyLLM
       list.dup.insert(index, Message.new(role: :system, content: @skill_loader.listing))
     end
 
+    def with_mcp_outages(list)
+      unreachable = mcp.unreachable
+      return list if unreachable.empty?
+
+      note = "These MCP servers can't be reached right now, so their tools are unavailable: " \
+             "#{unreachable.join(', ')}. If a request needs them, say so."
+      index = list.index { |message| message.role != :system } || list.size
+      list.dup.insert(index, Message.new(role: :system, content: note))
+    end
+
     def unsupported_attachment_handler
       callbacks = @callbacks[:unsupported_attachment]
       callbacks += [->(attachment) { @file_references.describe(attachment, config: @config) }] if @file_references
@@ -2248,7 +2258,7 @@ module RubyLLM
     def provider_completion(usage_recorder:, progress_recorder: nil, stream_tracker: nil, &)
       raise_if_cancelled!
 
-      request_messages = preprocessed_messages
+      request_messages = with_mcp_outages(preprocessed_messages)
       tool_call_ids = ToolCallIds.new
       streamed = false
       tracker = proc do |chunk|

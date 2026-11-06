@@ -916,6 +916,16 @@ Some defaults protect applications that connect to servers they do not control:
 * Redirects are never followed.
 * Request logs never include headers, so tokens stay out of your logs.
 
+### When a Server Is Down
+
+An MCP server that can't be reached doesn't stop the chat. When listing a server's tools raises `RubyLLM::ConnectionError`, because the connection is refused or the server never answers, the turn goes on without that server's tools. RubyLLM logs a warning, emits a `mcp_unreachable.ruby_llm` event, and adds a line to the request telling the model the server's tools are unavailable, so it can say so instead of guessing. That line never joins `chat.messages`.
+
+RubyLLM waits a minute before it tries that server again, across the whole process, so a server that never answers doesn't hold up every request. A server whose `url` or `command` is a block or method name, or that uses a `transport`, waits per object instead, since it may be a different server for each user. Tools that were already listed stay available in that chat. A tool error the server reports goes to the model, while a tool call that can't reach the server raises `RubyLLM::ConnectionError`.
+
+Calling the server directly, such as `linear.tools`, still raises. So does anything else a server answers with, such as `RubyLLM::UnauthorizedError`, since retrying won't fix those.
+
+### Which Addresses a Server May Reach
+
 RubyLLM does not check where a hostname resolves. When your users add servers, connect through a [context]({% link _reference/configuration-connection.md %}#contexts-isolated-configurations) whose `faraday_adapter` decides which addresses the app may reach. The context's connection settings carry every request to the server and every OAuth request its authorization makes, while chats keep the global ones:
 
 ```ruby

@@ -156,9 +156,7 @@ module RubyLLM
         @headers = headers.merge(name.to_s => block || value)
       end
 
-      def headers # :nodoc:
-        @headers || {}
-      end
+      def headers = @headers || {} # :nodoc:
 
       # Sets the bearer token sent in the +Authorization+ header. Pass the
       # token, a method name, or a block. Called with no argument, returns the
@@ -574,6 +572,8 @@ module RubyLLM
         definitions.filter_map { |definition| shape(definition) } + added_tools
       end
     end
+
+    def tools_listed? = !@tools.nil? # :nodoc:
 
     # Calls the server tool +name+ with +arguments+ and returns an
     # MCP::Result. Every server tool is also a method:
