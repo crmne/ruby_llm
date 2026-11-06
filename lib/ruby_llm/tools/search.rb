@@ -44,7 +44,9 @@ module RubyLLM
           'properties' => {
             'query' => { 'type' => 'string',
                          'description' => "A few words about the task, or #{SELECT} and tool names, comma-separated" },
-            'limit' => { 'type' => 'integer', 'description' => "How many tools to load, #{MAX_LIMIT} at most",
+            'limit' => { 'type' => 'integer',
+                         'description' => "How many matching tools to load, #{MAX_LIMIT} at most. " \
+                                          "#{SELECT} loads every tool it names",
                          'default' => DEFAULT_LIMIT, 'minimum' => 1, 'maximum' => MAX_LIMIT }
           },
           'required' => %w[query],
@@ -54,19 +56,25 @@ module RubyLLM
 
       def execute(query:, limit: DEFAULT_LIMIT)
         tools = @tools.call
-        found = matches(tools, query.to_s, limit.to_i.clamp(1, MAX_LIMIT))
-        if found.empty?
-          { loaded: [], error: "No tools match #{query}. Tools you can load: #{tools.keys.join(', ')}" }
-        else
-          { loaded: found.map(&:first),
-            tools: found.map { |name, tool| { name:, description: summary(tool) } } }
-        end
+        query = query.to_s
+        found = matches(tools, query, limit.to_i.clamp(1, MAX_LIMIT))
+        result = found.empty? ? nothing_found(tools, query) : loaded(found)
+        missing = query.start_with?(SELECT) ? requested(query) - result[:loaded] : []
+        missing.empty? ? result : result.merge(not_loaded: missing)
       end
 
       private
 
+      def nothing_found(tools, query)
+        { loaded: [], error: "No tools match #{query}. Tools you can load: #{tools.keys.join(', ')}" }
+      end
+
+      def loaded(found)
+        { loaded: found.map(&:first), tools: found.map { |name, tool| { name:, description: summary(tool) } } }
+      end
+
       def matches(tools, query, limit)
-        return selected(tools, query.delete_prefix(SELECT)).first(limit) if query.start_with?(SELECT)
+        return selected(tools, requested(query)) if query.start_with?(SELECT)
 
         terms = words(query)
         ranked = tools.each_with_index.filter_map do |(name, tool), index|
@@ -76,10 +84,12 @@ module RubyLLM
         ranked.sort.first(limit).map { |*, name| [name.to_s, tools[name]] }
       end
 
+      def requested(query)
+        query.delete_prefix(SELECT).split(',').map(&:strip).reject(&:empty?).uniq
+      end
+
       def selected(tools, names)
-        names.split(',').map { |name| name.strip.to_sym }.uniq.filter_map do |name|
-          [name.to_s, tools[name]] if tools.key?(name)
-        end
+        names.filter_map { |name| [name, tools[name.to_sym]] if tools.key?(name.to_sym) }
       end
 
       def score(name, tool, term)
