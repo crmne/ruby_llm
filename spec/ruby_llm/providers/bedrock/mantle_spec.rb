@@ -94,6 +94,27 @@ RSpec.describe RubyLLM::Providers::Bedrock::Mantle do
     end
   end
 
+  describe 'the OpenAI paths' do
+    def protocol(protocol_class, id)
+      protocol_class.new(provider, RubyLLM::Model.default(id, 'bedrock'))
+    end
+
+    it 'sends OpenAI GPT models under /openai/v1, which mantle requires of them' do
+      %w[openai.gpt-5.4 openai.gpt-5.4-2026-03-05 openai.gpt-5.6-luna openai.gpt-6-astra].each do |id|
+        expect(protocol(described_class::Responses, id).completion_url).to eq('openai/v1/responses')
+        expect(protocol(described_class::ChatCompletions, id).completion_url).to eq('openai/v1/chat/completions')
+      end
+    end
+
+    it 'keeps everything else under /v1, because /openai/v1 rejects those models' do
+      %w[openai.gpt-oss-20b openai.gpt-oss-safeguard-120b google.gemma-4-31b
+         mistral.voxtral-small-24b-2507].each do |id|
+        expect(protocol(described_class::Responses, id).completion_url).to eq('v1/responses')
+        expect(protocol(described_class::ChatCompletions, id).completion_url).to eq('v1/chat/completions')
+      end
+    end
+  end
+
   describe 'the model catalog' do
     let(:catalog) do
       instance_double(

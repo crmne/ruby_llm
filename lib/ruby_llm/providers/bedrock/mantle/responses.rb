@@ -11,7 +11,7 @@ module RubyLLM
           include Mantle
 
           def completion_url
-            'v1/responses'
+            "#{openai_api_path}/responses"
           end
 
           def provider_file_references?
