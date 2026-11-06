@@ -38,6 +38,8 @@ One `ask` runs the whole exchange:
 4. RubyLLM asks the model again. It may call more tools, or answer.
 5. When the model answers without calling a tool, `ask` returns that answer.
 
+A tool can also make the chat wait, for a person's approval or for work elsewhere. `ask` then returns early, and the chat picks up with `complete`. See [Tool Execution]({% link _tools/tool-execution.md %}#requiring-approval).
+
 You write the tool. RubyLLM handles the requests, the arguments, and the results. To run this loop one step at a time instead, for example one step per background job, see [Driving the Loop Yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself).
 
 ## Creating a Tool
@@ -107,7 +109,7 @@ The model chooses the arguments; your code chooses whose data it may see. Scope 
 
 ## Using Tools in a Chat
 
-`with_tools` adds tools to the ones the chat already has. Pass `nil` to remove them all, then add the ones you want to replace them:
+`with_tools` adds tools to the ones the chat already has. Pass `nil` to remove them, then add the ones you want instead. MCP servers and provider tools are separate, so `with_tools(nil)` leaves them in place:
 
 ```ruby
 chat.with_tools(SearchDocs)

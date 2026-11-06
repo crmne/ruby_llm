@@ -120,14 +120,14 @@ RubyLLM.configure do |config|
 end
 ```
 
-The controller saves the customer's message and hands the reply to a job:
+The controller queues the customer's message and starts a job, unless one is already running for this chat:
 
 ```ruby
 class MessagesController < ApplicationController
   def create
     chat = current_customer.chats.find(params[:chat_id])
-    chat.add_message(role: :user, content: params[:content])
-    SupportReplyJob.perform_later(chat.id)
+    chat.queue(params[:content])
+    SupportReplyJob.perform_later(chat.id) unless chat.running?
     head :accepted
   end
 end
@@ -151,7 +151,18 @@ The chat's page subscribes to its stream and renders its messages:
 <div id="messages"><%= render @chat.messages %></div>
 ```
 
-`complete` answers whatever the conversation is waiting for, and each chunk's `broadcast` appends it to the assistant message on the page. [Streaming with Hotwire]({% link _advanced/rails-streaming.md %}) covers the message partials, cancelling a reply, and messages sent while one streams.
+`complete` takes the queued message and answers it, and each chunk's `broadcast` appends it to the assistant message on the page. A message sent while a reply runs waits in the queue, and the running job takes it at its next step.
+
+`render @chat.messages` picks a partial per message: `messages/_system`, `_user`, `_assistant`, `_tool`, and `_tool_calls`. Write the ones your page shows. The assistant partial holds the target chunks land in:
+
+```erb
+<%# app/views/messages/_assistant.html.erb %>
+<div id="<%= dom_id(assistant) %>">
+  <div id="<%= dom_id(assistant) %>_stream"><%= assistant.content %></div>
+</div>
+```
+
+[Streaming with Hotwire]({% link _advanced/rails-streaming.md %}) covers cancelling a reply and message ordering.
 
 To skip the wiring, generate a working chat interface with controllers, views, and a job:
 
@@ -176,7 +187,7 @@ class SupportReplyJob < ApplicationJob
 end
 ```
 
-A rate limit or an outage passes, so retry later. A bad request fails the same way every time, so discard the job and report it. Retrying is safe because the controller already saved the customer's message: `complete` picks up where the conversation stopped instead of asking twice.
+A rate limit or an outage passes, so retry later. A bad request fails the same way every time, so discard the job and report it. Retrying is safe because the customer's message is already saved: `complete` picks up where the conversation stopped instead of asking twice.
 
 See [Error Handling]({% link _advanced/error-handling.md %}) for every error class, and [Durable Agents]({% link _advanced/durable-agents-overview.md %}) for jobs that pause for approvals and survive deploys.
 
@@ -202,7 +213,7 @@ When you call `ask`, RubyLLM saves the user message, calls the provider, and sav
 Allow assistant messages with empty content. Streaming starts before any text arrives, and a message that only calls tools has no text. A blanket `validates :content, presence: true` on `Message` breaks both.
 {: .warning }
 
-Only one process runs a chat at a time, and a crashed process's work resumes once its claim expires. Write tools so running them twice is safe. See [One Process at a Time]({% link _advanced/durable-agents.md %}#one-process-at-a-time) and [At-Least-Once, Not Exactly-Once]({% link _advanced/durable-agents.md %}#at-least-once-not-exactly-once).
+Only one process runs a chat at a time. A job that finds the chat claimed returns without doing anything, and a crashed job's claim lasts until it expires, so nothing resumes that work until another `complete` runs after that. Write tools so running them twice is safe. See [One Process at a Time]({% link _advanced/durable-agents.md %}#one-process-at-a-time), [Resuming a Crashed Run]({% link _advanced/durable-agents.md %}#resuming-a-crashed-run), and [At-Least-Once, Not Exactly-Once]({% link _advanced/durable-agents.md %}#at-least-once-not-exactly-once).
 
 ## Next Steps
 

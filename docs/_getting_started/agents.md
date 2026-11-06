@@ -95,7 +95,7 @@ agent = SupportAgent.new(customer: current_customer)
 agent.ask "Where is my order R-1042?"
 ```
 
-Blocks run each time the agent builds a chat, with every input available as a method, along with `chat`, the chat being configured. A value that depends on an input or on `chat` must sit in a block or lambda; a plain value is read once, when Ruby loads the class.
+Blocks run each time the agent builds a chat, with every input available as a method, along with `chat`, the chat being configured. A value that depends on an input or on `chat` must sit in a block or lambda; a plain value is read once, when Ruby loads the class. `temperature` and `max_output_tokens` take plain values only: to set them per customer, call `with_temperature` or `with_max_output_tokens` on the chat.
 {: .warning }
 
 `model` takes a block too, so an agent can pick a model from its inputs. The `model` block runs before the chat exists, so it reads inputs but not `chat`:

@@ -126,9 +126,10 @@ Every result knows its tokens and cost:
 response = chat.ask "Summarize our returns policy in one sentence."
 response.tokens.output
 response.cost.total
+chat.cost.total
 ```
 
-The cost covers every attempt the provider billed, so a successful answer includes the cost of retries before it. Unknown costs stay `nil`. In Rails, a usage ledger records each attempt. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}).
+A response's cost covers every attempt the provider billed for it, so a successful answer includes the cost of retries before it. A turn with tool calls has several responses, and `chat.cost` adds up the whole conversation. Unknown costs stay `nil`. In Rails, a usage ledger records each attempt. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}).
 
 [Instrumentation]({% link _advanced/instrumentation.md %}) reports every call, from chats, tools, and individual operations, and `RubyLLM.workflow` groups calls into a named unit. [OpenTelemetry]({% link _advanced/opentelemetry.md %}) sends them to your tracing backend, and [Evaluations]({% link _advanced/evaluations.md %}) grade your agents' answers against a dataset of cases.
 
