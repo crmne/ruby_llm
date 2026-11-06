@@ -16,6 +16,7 @@ After reading this guide, you will know:
 * How to set OpenAI organization and project headers.
 * How to authenticate with Bedrock credential providers and Vertex AI service accounts.
 * How to connect to OpenAI-compatible and Jev-compatible endpoints.
+* What each provider's base URL contains, so a custom one ends in the right place.
 
 ## API Keys
 
@@ -27,7 +28,7 @@ RubyLLM resolves the provider from the model registry. Pass `provider:` when you
 RubyLLM.configure do |config|
   # Anthropic
   config.anthropic_api_key = ENV["ANTHROPIC_API_KEY"]
-  config.anthropic_api_base = ENV["ANTHROPIC_API_BASE"] # optional custom Anthropic endpoint
+  config.anthropic_api_base = ENV["ANTHROPIC_API_BASE"] # Optional, defaults to https://api.anthropic.com, with no path
 
   # Azure
   config.azure_api_base = ENV["AZURE_API_BASE"] # Azure OpenAI or Foundry resource endpoint
@@ -67,7 +68,7 @@ RubyLLM.configure do |config|
 
   # Gemini
   config.gemini_api_key = ENV["GEMINI_API_KEY"]
-  config.gemini_api_base = ENV["GEMINI_API_BASE"] # optional API version override
+  config.gemini_api_base = ENV["GEMINI_API_BASE"] # Optional, defaults to https://generativelanguage.googleapis.com/v1beta
 
   # GPUStack
   config.gpustack_api_base = ENV["GPUSTACK_API_BASE"]
@@ -102,7 +103,7 @@ RubyLLM.configure do |config|
 
   # OpenAI
   config.openai_api_key = ENV["OPENAI_API_KEY"]
-  config.openai_api_base = ENV["OPENAI_API_BASE"] # Optional custom OpenAI-compatible endpoint
+  config.openai_api_base = ENV["OPENAI_API_BASE"] # Optional, defaults to https://api.openai.com/v1
   config.openai_organization_id = ENV["OPENAI_ORG_ID"] # optional, see Organization and Project Headers
   config.openai_project_id = ENV["OPENAI_PROJECT_ID"]
   # config.openai_use_system_role = true # optional, see System Role Compatibility
@@ -527,6 +528,31 @@ end
 ```
 
 Blank strings are treated as unset, so environment variables can be wired directly without causing invalid URL errors.
+
+RubyLLM adds each request's path to the base URL, and those paths differ by provider, so a base URL has to end where the provider's default ends. Some defaults stop at the host, and others include the API version:
+
+| Setting | Default | A chat request goes to |
+| --- | --- | --- |
+| `anthropic_api_base` | `https://api.anthropic.com` | `https://api.anthropic.com/v1/messages` |
+| `cohere_api_base` | `https://api.cohere.com` | `https://api.cohere.com/v2/chat` |
+| `deepseek_api_base` | `https://api.deepseek.com` | `https://api.deepseek.com/chat/completions` |
+| `gemini_api_base` | `https://generativelanguage.googleapis.com/v1beta` | `https://generativelanguage.googleapis.com/v1beta/models/MODEL:generateContent` |
+| `mistral_api_base` | `https://api.mistral.ai/v1` | `https://api.mistral.ai/v1/chat/completions` |
+| `openai_api_base` | `https://api.openai.com/v1` | `https://api.openai.com/v1/responses` |
+| `openrouter_api_base` | `https://openrouter.ai/api/v1` | `https://openrouter.ai/api/v1/chat/completions` |
+| `xai_api_base` | `https://api.x.ai/v1` | `https://api.x.ai/v1/responses` |
+
+So a gateway in front of Anthropic takes no version, and one in front of OpenAI or Gemini keeps it:
+
+```ruby
+RubyLLM.configure do |config|
+  config.anthropic_api_base = "https://gateway.example.com/anthropic"
+  config.openai_api_base = "https://gateway.example.com/openai/v1"
+  config.gemini_api_base = "https://gateway.example.com/gemini/v1beta"
+end
+```
+
+With `https://gateway.example.com/anthropic/v1`, a request goes to `/anthropic/v1/v1/messages`, a path Anthropic does not have.
 
 ## Next Steps
 
