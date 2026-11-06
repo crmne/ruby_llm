@@ -91,4 +91,47 @@ RSpec.describe RubyLLM::Chat do
       expect(payload.call(:cancelled)).to eq(payload.call(:stop))
     end
   end
+
+  context 'when a tool round was stopped' do
+    let(:tool) do
+      stopper = -> { chat.cancel }
+      Class.new(RubyLLM::Tool) do
+        description 'Stops the chat'
+        define_singleton_method(:tool_name) { 'stop' }
+        define_method(:execute) do
+          stopper.call
+          'stopped'
+        end
+      end
+    end
+    let(:round) do
+      calls = %w[call_1 call_2].to_h { |id| [id, RubyLLM::ToolCall.new(id:, name: 'stop', arguments: {})] }
+      RubyLLM::Message.new(role: :assistant, content: '', tool_calls: calls)
+    end
+
+    before do
+      chat.with_tools(tool)
+      allow(chat.provider).to receive(:complete).and_return(round)
+      begin
+        chat.ask('Go')
+      rescue RubyLLM::CancelledError
+        nil
+      end
+    end
+
+    it 'marks the closed call and stays stopped' do
+      expect(chat.messages.last).to be_cancelled
+      expect(chat).to be_complete
+
+      chat.complete
+
+      expect(chat.provider).to have_received(:complete).once
+    end
+
+    it 'goes on with the next question' do
+      allow(chat.provider).to receive(:complete).and_return(RubyLLM::Message.new(role: :assistant, content: 'Hi'))
+
+      expect(chat.ask('Again').content).to eq('Hi')
+    end
+  end
 end

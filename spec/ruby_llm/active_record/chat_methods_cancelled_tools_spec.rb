@@ -40,4 +40,38 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(runs).to eq([:stop])
     expect(Chat.find(chat_id).messages.where(role: 'tool').count).to eq(2)
   end
+
+  context 'when a later job runs a stopped chat' do
+    before do
+      record.with_tools(stop_tool)
+      allow(record.to_llm.provider).to receive(:complete).and_return(round)
+      begin
+        record.ask('Go')
+      rescue RubyLLM::CancelledError
+        nil
+      end
+    end
+
+    def reloaded
+      @reloaded ||= Chat.find(record.id).with_tools(stop_tool).tap do |chat|
+        allow(chat.to_llm.provider).to receive(:complete).and_return(answer)
+      end
+    end
+
+    it 'does not resume the stopped turn' do
+      reloaded.complete
+
+      expect(reloaded.to_llm.provider).not_to have_received(:complete)
+      expect(reloaded).to be_complete
+    end
+
+    it 'answers a message queued meanwhile' do
+      reloaded.queue('Use the EU file')
+
+      expect(reloaded.complete.content).to eq('Done')
+
+      expect(reloaded.to_llm.provider).to have_received(:complete).once
+      expect(reloaded.messages.where(role: 'user').order(:id).last.content).to eq('Use the EU file')
+    end
+  end
 end

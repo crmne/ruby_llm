@@ -120,7 +120,7 @@ RubyLLM checks for cancellation before model requests, before tool execution, an
 
 With `acts_as_chat`, a request from another process is read at most once a second at those same points.
 
-Tool calls that run concurrently each stop at their next checkpoint. A tool that already returned keeps its result, and every other pending tool call is closed as unfinished, so the next `ask` goes on.
+Tool calls that run concurrently each stop at their next checkpoint. After a stop, the turn stays stopped: `complete` asks the model again only for a new message, so a later job can't resume it. A tool that already returned keeps its result, and every other pending tool call is closed as unfinished, so the next `ask` goes on.
 
 ```ruby
 chat = RubyLLM.chat
