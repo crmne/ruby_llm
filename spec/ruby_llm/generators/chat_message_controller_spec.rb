@@ -139,6 +139,32 @@ RSpec.describe 'The chat UI message controller', :generator do # rubocop:disable
     expect(output_html).to include('abcd')
   end
 
+  it 'keeps a chunk that reaches the page before its message' do
+    open_message('', streaming: true)
+    browser.execute(<<~JS)
+      const stream = document.createElement("turbo-stream")
+      stream.setAttribute("action", "append")
+      stream.setAttribute("target", "message_2_stream")
+      const template = document.createElement("template")
+      template.innerHTML = '<span data-seq="0">Early</span>'
+      stream.templateContent = template.content
+      const event = new CustomEvent("turbo:before-stream-render", { detail: { render: () => {} } })
+      dispatchEvent(event)
+      event.detail.render(stream)
+    JS
+    browser.execute(<<~JS)
+      document.body.insertAdjacentHTML("beforeend", `
+        <div id="message_2" data-streaming>
+          <div id="message_2_stream" data-chat-message-target="source"><span data-seq="1" data-after="0"> late</span></div>
+          <div data-chat-message-target="output" id="message_2_output"></div>
+        </div>`)
+      new window.controller.constructor(document.getElementById("message_2")).connect()
+    JS
+    wait_for { browser.evaluate("document.getElementById('message_2_output').textContent").include?('Early late') }
+
+    expect(browser.evaluate("document.getElementById('message_2_output').textContent")).to include('Early late')
+  end
+
   it 'joins chunks across indexes that carried no content' do
     open_message('<span data-seq="5" data-after="2">c</span><span data-seq="2">ab</span>', streaming: true)
     wait_for { output_html.include?('abc') }
