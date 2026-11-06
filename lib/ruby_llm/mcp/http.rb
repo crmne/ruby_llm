@@ -4,8 +4,9 @@ module RubyLLM
   class MCP
     # Streamable HTTP. Every message is its own POST, answered with a JSON
     # body or with an event stream that carries the request's notifications
-    # before its response. Plain HTTP is only allowed on loopback addresses,
-    # URLs cannot carry credentials, and redirects are never followed. A cancelled chat closes the stream,
+    # before its response. Plain HTTP is only allowed on loopback addresses
+    # unless +allow_http+ opts in, URLs cannot carry credentials, and redirects
+    # are never followed. A cancelled chat closes the stream,
     # which is how 2026-07-28 cancels a request. Servers that predate it may
     # keep a session, which ends with a DELETE when the transport closes.
     #
@@ -52,10 +53,10 @@ module RubyLLM
       # The session of a server that predates 2026-07-28: the ID the server gave its session, or +nil+.
       attr_reader :session
 
-      def initialize(url, headers: {}, timeout: nil, unauthorized: nil, responded: nil, idempotent: nil,
-                     config: RubyLLM.config)
+      def initialize(url, allow_http: false, headers: {}, timeout: nil, unauthorized: nil, responded: nil,
+                     idempotent: nil, config: RubyLLM.config)
         @url = self.class.parse(url)
-        raise ArgumentError, 'MCP servers must use HTTPS without credentials in the URL' unless self.class.secure?(@url)
+        check_url(allow_http)
 
         @headers = headers
         @unauthorized = unauthorized
@@ -119,6 +120,14 @@ module RubyLLM
       end
 
       private
+
+      def check_url(allow_http)
+        raise ArgumentError, 'MCP server URLs cannot carry credentials' if @url.userinfo
+        return if self.class.secure?(@url) || (allow_http && @url.scheme == 'http')
+
+        raise ArgumentError, 'MCP servers must use HTTPS, or plain HTTP on a loopback address. ' \
+                             'For a server on a network you trust, pass allow_http: true with the url'
+      end
 
       def post(message, version:, timeout: nil, params: {}, connection: @connection, recovered: [], &on_notification)
         session = @session unless message[:method] == 'initialize'
