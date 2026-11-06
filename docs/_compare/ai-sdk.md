@@ -259,7 +259,7 @@ response.cost.total
 chat.cost.total
 ```
 
-With `acts_as_chat`, every billed attempt also lands in the `ruby_llm_usages` table, including failed and cancelled ones, and `RubyLLM.with_usage_owner` attributes each row to a user or account, so spend per customer is a SQL query. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}).
+With `acts_as_chat`, every billed attempt also lands in the `ruby_llm_usages` table, including failed and cancelled ones, and `RubyLLM.with_owner` attributes each row to a user or account, so spend per customer is a SQL query. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}).
 
 ## Concept Map
 

@@ -31,6 +31,10 @@ Each guide puts the same task side by side, with the other project's code taken 
 | --- | --- | --- |
 | Vercel AI SDK | JavaScript and TypeScript | [Vercel AI SDK]({% link _compare/ai-sdk.md %}) |
 | LangChain and LangGraph | Python | [LangChain and LangGraph]({% link _compare/langchain.md %}) |
+| OpenAI Agents SDK | Python | [OpenAI Agents SDK]({% link _compare/openai-agents.md %}) |
+| Pydantic AI | Python | [Pydantic AI]({% link _compare/pydantic-ai.md %}) |
+| CrewAI | Python | [CrewAI]({% link _compare/crewai.md %}) |
+| LlamaIndex | Python | [LlamaIndex]({% link _compare/llamaindex.md %}) |
 | The official `openai` and `anthropic` gems | Ruby | [Official Ruby SDKs]({% link _compare/official-sdks.md %}) |
 | `ruby-openai` | Ruby | [ruby-openai]({% link _compare/migrate-ruby-openai.md %}) |
 
