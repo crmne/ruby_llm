@@ -233,6 +233,7 @@ module RubyLLM
           backoff_factor: settings.retry_backoff_factor,
           methods: Faraday::Retry::Middleware::IDEMPOTENT_METHODS,
           retry_if: lambda { |env, _exception|
+            Support::Cancellation.check
             env[:method] == :post && idempotent?(env) && !stream_delivered?(env)
           },
           exceptions: retry_exceptions
