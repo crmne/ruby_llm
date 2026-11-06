@@ -351,6 +351,8 @@ ActiveSupport::Notifications.subscribe("usage.ruby_llm") do |event|
 end
 ```
 
+The event fires when an attempt ends, including on cancel and failure, so you don't need to read provider events to count those. A process killed mid-attempt never reports it. To watch a running attempt, read `chunk.tokens` in your streaming block: providers report usage at different points, and many only at the end.
+
 `status` is `succeeded`, `failed`, or `cancelled`. `tokens` and `cost` use the same value objects returned by responses. They are always present; individual fields are `nil` when the provider did not report enough information. A failed or cancelled attempt may contain the token counts observed before it stopped. An attempt interrupted from outside, such as a stopped Async task or a process shutdown, is recorded as `cancelled`.
 
 Instrumentation is an observer, not the source of truth for a persisted Rails chat. RubyLLM maintains the internal ledger and emits the same normalized facts for applications that need them elsewhere.

@@ -51,7 +51,7 @@ For a 1.x application, use its version's documentation and keep the requested ch
 
 ## API sheet
 
-These are the signatures an application uses. Use them, and don't write your own version of anything here: not persistence, a runner, a sandbox, an MCP client, or a price table.
+These are the signatures an application uses, for 2.2; on an older release, check the `with_file_store`, `with_code_execution`, and test helper lines against its guides. Use them, and don't write your own version of anything here: not persistence, a runner, a sandbox, an MCP client, or a price table.
 
 ```ruby
 chat = RubyLLM.chat(model: "...", provider: :openai)   # or Chat.create! with acts_as_chat
