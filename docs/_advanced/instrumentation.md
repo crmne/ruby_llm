@@ -187,7 +187,7 @@ RubyLLM includes that value as `payload[:metadata]` on the emitted event. It is 
 
 ## Events
 
-RubyLLM emits one event per operation, such as `chat.ruby_llm`, `tool_call.ruby_llm`, or `embedding.ruby_llm`, plus `request.ruby_llm` for each HTTP request, counting its retries as one, and `usage.ruby_llm` for each finished attempt of a tracked operation. [Instrumentation Events]({% link _reference/instrumentation-events.md %}) lists every event, when it fires, and the payload fields it carries.
+RubyLLM emits one event per operation, such as `chat.ruby_llm`, `tool_call.ruby_llm`, or `embedding.ruby_llm`, plus `request.ruby_llm` for each provider API request, counting its retries as one, and `usage.ruby_llm` for each finished attempt of a tracked operation. [Instrumentation Events]({% link _reference/instrumentation-events.md %}) lists every event, when it fires, and the payload fields it carries.
 
 ### Usage Events
 
