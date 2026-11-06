@@ -71,6 +71,13 @@ RSpec.describe RubyLLM::FileStore::Converters do
     expect(described_class.convert(fixture('sample.docx'), config:)).to be_nil
   end
 
+  it 'refuses an Office file whose part inflates past the size it declares' do
+    content = File.binread(File.expand_path('../../fixtures/sample.docx', __dir__))
+    content[content.rindex('word/document.xml') - 22, 4] = [10].pack('V')
+
+    expect(described_class.convert(text_file(content, 'lying.docx'), config:)).to be_nil
+  end
+
   it 'says which converters run on this machine for free' do
     expect([described_class::Text, described_class::Office]).to all(satisfy(&:local?))
     expect(described_class::OCR.new).not_to respond_to(:local?)

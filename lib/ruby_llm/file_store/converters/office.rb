@@ -142,7 +142,8 @@ module RubyLLM
           END_OF_DIRECTORY = "PK\x05\x06".b
           DIRECTORY_ENTRY = "PK\x01\x02".b
           LOCAL_ENTRY = "PK\x03\x04".b
-          private_constant :END_OF_DIRECTORY, :DIRECTORY_ENTRY, :LOCAL_ENTRY
+          INFLATE_STEP = 4096
+          private_constant :END_OF_DIRECTORY, :DIRECTORY_ENTRY, :LOCAL_ENTRY, :INFLATE_STEP
 
           def initialize(bytes)
             @bytes = bytes
@@ -204,8 +205,8 @@ module RubyLLM
           def inflate(data, size)
             inflater = Zlib::Inflate.new(-Zlib::MAX_WBITS)
             output = +''
-            inflater.inflate(data) do |chunk|
-              output << chunk
+            (0...data.bytesize).step(INFLATE_STEP) do |offset|
+              output << inflater.inflate(data.byteslice(offset, INFLATE_STEP))
               raise Error, 'entry larger than it says' if output.bytesize > size
             end
             output

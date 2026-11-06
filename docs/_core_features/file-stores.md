@@ -200,7 +200,7 @@ end
 
 Each version of a file is converted once. A persisted chat keeps the text in the file's row, and the other stores keep it in memory, so the next read or search is free.
 
-A converter that runs on your machine for free, like the Office one, runs as soon as the chat keeps an attachment, so `search_files` finds a Word file someone attached on the first question without a `read_file` first. Converters that cost money, like OCR, wait until the model reads the file, and `search_files` names the files it skipped for that: `read_file extracts it`.
+A converter that runs on your machine for free, like the Office one, runs as soon as the chat keeps an attachment, so `search_files` finds a Word file someone attached on the first question without a `read_file` first. Converters that cost money, like OCR, wait until the model reads the file, or until a request has to send a file the provider cannot take as text, and `search_files` names the files it skipped for that: `read_file extracts it`.
 
 ### PDFs, Scans, and Photos
 
@@ -237,7 +237,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-Answer `local?` with `true` from a converter that reads files on your machine for free, and the chat runs it as soon as it keeps a file, while it prepares the request, so keep it fast. A PDF text-layer reader is a good one to put before OCR: it reads PDFs with text at once, and a scan, where it finds no text, falls through to OCR when the model reads it:
+Answer `local?` with `true` from a converter that reads files on your machine for free, and the chat runs it as soon as it keeps a file, while it prepares the request, so keep it fast. Extraction stops at the first converter for a type that isn't local, so a local one placed after a paid one waits for `read_file`. Text files need no extraction: `search_files` reads them as they are, without their converters. A PDF text-layer reader is a good one to put before OCR: it reads PDFs with text at once, and a scan, where it finds no text, falls through to OCR when the model reads it:
 
 ```ruby
 class PdfText

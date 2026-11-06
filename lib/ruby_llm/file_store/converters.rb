@@ -19,7 +19,8 @@ module RubyLLM
     # machine for free, so a chat runs it as soon as it keeps an
     # attachment, while it prepares the request, so keep it fast, and
     # search_files finds the text without a read_file first. The others wait
-    # for read_file.
+    # for read_file, or for a request that must send as text a file the
+    # provider cannot take.
     #
     #   RubyLLM.configure do |config|
     #     config.file_converters["image/*"] = RubyLLM::FileStore::Converters::OCR.new
