@@ -129,4 +129,41 @@ RSpec.describe RubyLLM::Providers::Ollama do
         .to raise_error(RubyLLM::UnsupportedAttachmentError)
     end
   end
+
+  describe 'speech' do
+    let(:provider) { described_class.new(RubyLLM.config) }
+    let(:protocol) { described_class::ChatCompletions.new(provider, RubyLLM::Model.default('phonon', 'ollama')) }
+
+    it 'leaves the voice to the model, because Ollama answers alloy with a 400' do
+      payload = protocol.render_speech_payload('Hello', model: 'phonon', voice: nil, format: nil)
+
+      expect(payload).to eq(model: 'phonon', input: 'Hello')
+    end
+
+    it 'sends the voice and format it is given' do
+      payload = protocol.render_speech_payload('Hello', model: 'phonon', voice: 'Zoey', format: 'pcm')
+
+      expect(payload).to eq(model: 'phonon', input: 'Hello', voice: 'Zoey', response_format: 'pcm')
+    end
+
+    it 'labels the default answer as the WAV it is' do
+      response = instance_double(Faraday::Response, body: 'RIFF')
+
+      speech = protocol.parse_speech_response(response, model: 'phonon', voice: nil, format: nil)
+
+      expect(speech).to have_attributes(voice: 'default', format: 'wav', mime_type: 'audio/wav')
+    end
+
+    it 'raises what Ollama answers to a voice the model lacks' do
+      stub_request(:post, "#{RubyLLM.config.ollama_api_base.to_s.delete_suffix('/')}/audio/speech").to_return(
+        status: 400, headers: { 'Content-Type' => 'application/json; charset=utf-8' },
+        body: { error: { message: 'voice "alloy" not found; available voices: Alfie, Azgorath, Bryony',
+                         type: 'invalid_request_error', param: nil, code: nil } }.to_json
+      )
+
+      expect do
+        RubyLLM.speak('Hello', model: 'phonon', provider: :ollama, voice: 'alloy', assume_model_exists: true)
+      end.to raise_error(RubyLLM::BadRequestError, /voice "alloy" not found/)
+    end
+  end
 end

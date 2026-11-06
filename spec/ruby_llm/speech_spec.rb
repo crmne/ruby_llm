@@ -7,7 +7,8 @@ RSpec.describe RubyLLM::Speech, :live do
     each_model(SPEECH_MODELS) do |provider, model, model_info|
       it "#{provider}/#{model} can speak" do
         speech = RubyLLM.speak('Ruby is a programming language designed for developer happiness.',
-                               model: model, provider: provider, voice: model_info[:voice])
+                               model: model, provider: provider, voice: model_info[:voice],
+                               assume_model_exists: model_info.fetch(:assume_model_exists, false))
 
         expect(speech.data).to be_a(String)
         expect(speech.data.bytesize).to be > 1000
