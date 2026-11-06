@@ -1797,6 +1797,16 @@ module RubyLLM
       raise CancelledError if @cancelled
     end
 
+    # The transport retries through the checkpoint, so a cancelled request
+    # stops at its failure. A chat cancelled while a request failed was going
+    # to stop anyway, so the cancellation is what the caller hears about.
+    def cancellable_request(&)
+      Support::Cancellation.watch(-> { raise_if_cancelled! }, &)
+    rescue Error
+      raise_if_cancelled!
+      raise
+    end
+
     def build_message_queue(queued = [])
       MessageQueue.new(queued) do |message|
         run_around_join(message) do |**attributes|
@@ -2250,28 +2260,30 @@ module RubyLLM
       sent = request_messages
       response = replacing_missing_uploads(request_messages, -> { streamed }) do |sent_messages|
         sent = sent_messages
-        @provider.complete(
-          sent_messages,
-          tools: request_tools,
-          provider_tools: @provider_tools,
-          tool_prefs: @tool_prefs,
-          temperature: @temperature,
-          max_output_tokens: @max_output_tokens,
-          model: @model,
-          provider_options: Support::Utils.deep_dup(@provider_options),
-          headers: @headers,
-          schema: @schema,
-          thinking: resolved_thinking,
-          citations: @citations,
-          caching: @caching,
-          compaction: @compaction,
-          end_user: @end_user,
-          protocol: @protocol,
-          before_request: @callbacks[:before_request],
-          usage_recorder: usage_recorder,
-          progress_recorder: progress_recorder,
-          &on_chunk
-        )
+        cancellable_request do
+          @provider.complete(
+            sent_messages,
+            tools: request_tools,
+            provider_tools: @provider_tools,
+            tool_prefs: @tool_prefs,
+            temperature: @temperature,
+            max_output_tokens: @max_output_tokens,
+            model: @model,
+            provider_options: Support::Utils.deep_dup(@provider_options),
+            headers: @headers,
+            schema: @schema,
+            thinking: resolved_thinking,
+            citations: @citations,
+            caching: @caching,
+            compaction: @compaction,
+            end_user: @end_user,
+            protocol: @protocol,
+            before_request: @callbacks[:before_request],
+            usage_recorder: usage_recorder,
+            progress_recorder: progress_recorder,
+            &on_chunk
+          )
+        end
       end
       @file_references&.record_shown(sent)
       tool_call_ids.assign(response)
@@ -2279,11 +2291,13 @@ module RubyLLM
 
     def provider_compaction
       replacing_missing_uploads(preprocessed_messages) do |sent_messages|
-        @provider.compact(
-          sent_messages, model: @model, protocol: @protocol,
-                         headers: @headers, before_request: @callbacks[:before_request],
-                         usage_recorder: method(:record_usage_entry)
-        )
+        cancellable_request do
+          @provider.compact(
+            sent_messages, model: @model, protocol: @protocol,
+                           headers: @headers, before_request: @callbacks[:before_request],
+                           usage_recorder: method(:record_usage_entry)
+          )
+        end
       end
     end
 
