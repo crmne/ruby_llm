@@ -119,7 +119,7 @@ chat.messages.find { |message| message.attachments.any? }.attachments.first.file
 # => "invoice-1042.pdf"
 ```
 
-Every skill the chat has is mounted read-only in each run, at `skills/<name>/` in the working directory, so `python skills/invoices/scripts/build_invoice.py` works as written. The run sees the rest of its working directory as usual: the conversation's files in `attachments/`, temporary files in `$TMPDIR`, and every file the script writes to the working directory comes back as an attachment. A script cannot change its skill's folder.
+Every skill the chat has is mounted read-only in each run, at `skills/<name>/` in the working directory, so `python skills/invoices/scripts/build_invoice.py` works as written. The run sees the rest of its working directory as usual: the conversation's files in `attachments/`, temporary files in `$TMPDIR`, and every file the script writes to the working directory comes back as an attachment. A script cannot change its skill's folder. In a chat with a [file store]({% link _core_features/file-stores.md %}#code-execution), what it writes joins the chat's files, and a store in a folder has the conversation's files at their own paths instead of in `attachments/`.
 
 Install what the scripts import the way you would for any code the model runs: with `gems:`, `python:`, and `npm:`, or a prebuilt `gem_home:`, `virtualenv:`, and `node_modules:`. See [Packages]({% link _advanced/code-execution.md %}#packages).
 

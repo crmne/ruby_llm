@@ -259,8 +259,10 @@ module RubyLLM
         say "    Reply rendering:         app/views/#{message_model_name.underscore.pluralize}/_assistant.html.erb"
         say "    What the model can do:   app/agents/#{chat_agent_class_name.underscore}.rb"
         say "\n  Add to that agent, one line each, as you need them:"
-        say '    file_store          the model reads and edits files'
+        say "    file_store          the model reads, searches, and edits the chat's files with tools"
         say '    code_execution      the model runs code: bin/rails generate ruby_llm:sandbox Workspace first'
+        say '                        With file_store, code reads attachments in ./attachments, or in the folder of'
+        say "                        a store in a folder, and what it writes joins the chat's files."
         say '    mcp Linear          an MCP server: bin/rails generate ruby_llm:mcp Linear URL first'
         say '    tools WeatherTool   a tool: bin/rails generate ruby_llm:tool Weather first'
         say "\n  Check it with bin/rails test:system (needs Chrome)." if app_file?('test/test_helper.rb')

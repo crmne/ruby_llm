@@ -16,6 +16,18 @@ RSpec.describe RubyLLM::CodeExecution::Workspace do
     end
   end
 
+  it "copies a store's files to the inputs at their paths" do
+    store = RubyLLM::FileStore::Memory.new
+    files = [store.write('data/a.csv', 'nested'), store.write('b.csv', 'top')]
+
+    described_class.open do |workspace|
+      workspace.copy_stored_inputs(store, files)
+
+      expect(File.read(File.join(workspace.directory, 'attachments/data/a.csv'))).to eq('nested')
+      expect(File.read(File.join(workspace.directory, 'attachments/b.csv'))).to eq('top')
+    end
+  end
+
   it 'keeps both files that share a name, the newest under that name' do
     expect(copied(attachment('first'), attachment('second')))
       .to eq('report.txt' => 'second', 'report-2.txt' => 'first')

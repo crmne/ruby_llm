@@ -115,7 +115,7 @@ result = chat.messages.find(&:tool_result?)
 result.attachments.first.filename # => "revenue.png"
 ```
 
-In a chat with a [file store]({% link _core_features/file-stores.md %}), runs work with the chat's files instead, so the model reads a chart it drew with `read_file`, edits the script it wrote with `edit_file`, and runs it again. With a store in a folder, code runs in that folder and changes the files in place. With any other store, the model names the files its code reads in `run_code`'s `files` argument, they are copied into the run directory, and what the code writes is saved back. The tool result lists the paths instead of carrying the files. See [Code Execution]({% link _core_features/file-stores.md %}#code-execution) in the File Stores guide.
+In a chat with a [file store]({% link _core_features/file-stores.md %}), runs work with the chat's files instead, so the model reads a chart it drew with `read_file`, edits the script it wrote with `edit_file`, and runs it again. With a store in a folder, code runs in that folder, where a file someone attached is at its own path, and changes the files in place. With any other store, the conversation's files stay in read-only `attachments/`, the model names any other file its code needs in `run_code`'s `files` argument, and what the code writes is saved back. The tool result lists the paths instead of carrying the files. See [Code Execution]({% link _core_features/file-stores.md %}#code-execution) in the File Stores guide.
 
 ```ruby
 chat = RubyLLM.chat
@@ -228,7 +228,7 @@ chat = Chat.create!(model: "{{ site.models.default_chat }}").with_code_execution
 chat.ask "Turn this export into a PDF report", with: params[:export]
 ```
 
-The files a run returns are stored with Active Storage on the tool result message, like any other attachment, and later runs find them in `attachments/` after a reload or in another process. With `with_file_store`, they are saved to the chat's files in Active Storage instead. See [File Stores]({% link _core_features/file-stores.md %}#files-in-rails).
+The files a run returns are stored with Active Storage on the tool result message, like any other attachment, and later runs find them in `attachments/` after a reload or in another process. With `with_file_store`, they are saved to the chat's files in Active Storage instead, and later runs find the files people attached in `attachments/`. See [File Stores]({% link _core_features/file-stores.md %}#files-in-rails).
 
 ## Agents
 

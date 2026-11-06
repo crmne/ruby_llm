@@ -9,8 +9,8 @@ module RubyLLM
   class CodeExecution
     # The directories one run gets: a fresh working directory holding a
     # link, +attachments+, to read-only copies of the conversation's files
-    # beside it, or copies of files from a chat's FileStore, and links to
-    # read-only mounts, separate home and temporary directories, and the
+    # beside it, writable copies of the files named from a chat's FileStore,
+    # links to read-only mounts, separate home and temporary directories, and the
     # source file. Nothing read-only sits inside the writable working
     # directory, which Landlock could not keep read-only. Everything is
     # removed when the run ends. Links to mounts placed in a store's own
@@ -164,6 +164,16 @@ module RubyLLM
           File.binwrite(path, attachment.content.b)
         end
         {}
+      end
+
+      # Copies +files+, StoredFiles of the conversation's files, to
+      # +attachments/+ at their paths in +store+, where the model finds them.
+      def copy_stored_inputs(store, files)
+        files.each do |file|
+          path = File.join(inputs, file.path)
+          make_room(path, inputs)
+          File.binwrite(path, store.read(file.path))
+        end
       end
 
       def copy_files(store, files)

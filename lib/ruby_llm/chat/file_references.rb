@@ -114,6 +114,16 @@ module RubyLLM
         RubyLLM.logger.warn { "Could not record the files a request showed: #{e.class}" }
       end
 
+      # Returns the StoredFiles of the attachments on +list+, the chat's
+      # messages, as they are now, keeping any not kept yet. Leaves out
+      # read_file results: they show a file to whoever read it, and a store
+      # with an owner may not show that file to this one.
+      def attached_files(list)
+        reads = read_paths(list)
+        list.reject { |message| message.role == :tool && reads.key?(message.tool_call_id) }.flat_map(&:attachments)
+            .filter_map { |attachment| attached_file(attachment) }.uniq(&:path)
+      end
+
       # Removes the replacements #describe made from +replacements+, a
       # chat's memo, so another store or limit describes them again.
       def forget(replacements)
@@ -121,6 +131,13 @@ module RubyLLM
       end
 
       private
+
+      def attached_file(attachment)
+        store[store_attachment(attachment).path] unless attachment.provider_file?
+      rescue StandardError => e
+        RubyLLM.logger.warn { "Could not keep an attachment in the chat's files: #{e.class}" }
+        nil
+      end
 
       def record_read(attachment, file)
         seen = FileStore.digest(attachment.content.to_s.b)

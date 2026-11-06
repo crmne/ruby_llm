@@ -12,9 +12,9 @@ module RubyLLM
   # (see Chat#with_file_store), runs work with the chat's files instead.
   # With a store that keeps its files in a folder (FileStore#local_root),
   # such as FileStore::Directory, code runs in that folder and changes the
-  # files in place. With any other store, each run starts empty, copies in
-  # the files the model names in +files+, and what the code writes is saved
-  # back to the store.
+  # files in place. With any other store, each run has read-only copies of
+  # the conversation's files as usual, copies in the files the model names
+  # in +files+, and what the code writes is saved back to the store.
   #
   # Calls run in the chat's default sandbox. With +escalate_to:+, the model
   # may name a wider sandbox for one call and say why; that call waits for
@@ -64,8 +64,9 @@ module RubyLLM
     CHECKS_LOCK = Mutex.new
     FILES_PROPERTY = {
       'type' => %w[array null], 'items' => { 'type' => 'string' },
-      'description' => "Paths of this chat's files (see list_files) the code reads, copied into the run directory " \
-                       'at the same paths; a folder copies everything in it. null copies nothing'
+      'description' => "Paths of this chat's files (see list_files) to change, or to read when they are not in " \
+                       './attachments, copied into the run directory at the same paths; a folder copies everything ' \
+                       'in it. null copies nothing'
     }.freeze
     private_constant :CHECKS, :CHECKS_LOCK, :ESCALATION_NAME, :PROGRESS_LINE, :MAX_CHECK_ERROR, :LIMIT_ERRORS,
                      :FILES_PROPERTY
@@ -238,7 +239,9 @@ module RubyLLM
     # skill folders mounted there. +file_store+ returns the chat's
     # FileStore, or +nil+: with one, runs work with its files instead of
     # the attachments, in its folder when it has one, and each file a run
-    # writes or changes is passed to +written+. +mounts+ is a Hash of paths inside the
+    # writes or changes is passed to +written+. +attached_files+ returns
+    # the StoredFiles of the conversation's files, kept in that store, which
+    # a run without a folder has read-only. +mounts+ is a Hash of paths inside the
     # run directory to directories mounted there read-only, or a Proc called
     # before each run that returns one. +approval+ is called with the
     # ToolCall of each escalated run right before it runs, and the run goes
@@ -247,9 +250,9 @@ module RubyLLM
     # Configuration#sandbox from +config+. A Proc may return a new sandbox
     # instance each call: it stands for one sandbox, checked once.
     # Raises ConfigurationError without a sandbox.
-    def initialize(sandbox:, escalate_to: [], attachments: -> { [] }, file_store: -> {}, written: ->(_file) {},
-                   skills: -> { {} }, mounts: {}, approval: ->(_tool_call) { false }, chat: nil, config: nil,
-                   package_cache_dir: nil, languages: %i[ruby shell], **packages)
+    def initialize(sandbox:, escalate_to: [], attachments: -> { [] }, file_store: -> {}, attached_files: -> { [] },
+                   written: ->(_file) {}, skills: -> { {} }, mounts: {}, approval: ->(_tool_call) { false }, chat: nil,
+                   config: nil, package_cache_dir: nil, languages: %i[ruby shell], **packages)
       super()
       @sandbox = sandbox
       @config = config
@@ -257,6 +260,7 @@ module RubyLLM
       @escalate_to = self.class.escalations(escalate_to)
       @attachments = attachments
       @file_store = file_store
+      @attached_files = attached_files
       @written = written
       @skills = skills
       @mounts = mounts
@@ -376,9 +380,9 @@ module RubyLLM
       return { error: } if error
 
       store = @file_store.call
-      Workspace.open(attachments: store.nil?) do |workspace|
+      root = store&.local_root
+      Workspace.open(attachments: root.nil?) do |workspace|
         options = { runner:, name: sandbox, tool_call:, store: }
-        root = store&.local_root
         next run_in_place(Language[language], code, workspace, root:, **options) if root
 
         run(Language[language], code, workspace, names: files, **options)
@@ -458,11 +462,7 @@ module RubyLLM
 
     def run(language, code, workspace, runner:, name:, tool_call:, store:, names:)
       all_mounts = mounts.merge(@skills.call)
-      copied = if store
-                 workspace.copy_files(store, stored_files(store, names, all_mounts.keys))
-               else
-                 workspace.copy_in(@attachments.call)
-               end
+      copied = store ? copy_from_store(workspace, store, names, all_mounts.keys) : workspace.copy_in(@attachments.call)
       mounted = workspace.mount(all_mounts)
       script = prepare(workspace, language, code)
       instrument(language, runner, name, tool_call) do |event|
@@ -478,6 +478,7 @@ module RubyLLM
     # Runs in the store's own folder: the code reads and writes the files in
     # place, and each file it creates or changes is passed to +written+.
     def run_in_place(language, code, workspace, root:, runner:, name:, tool_call:, store:)
+      @attached_files.call
       mounted = workspace.mount(mounts.merge(@skills.call), into: root)
       script = prepare(workspace, language, code)
       before = snapshot(store)
@@ -492,6 +493,12 @@ module RubyLLM
         report(result, changed.map(&:path), skipped, unmounted: (unmounted_note(unmounted) if unmounted.any?),
                                                      read_again: read_again_note(store, changed))
       end
+    end
+
+    def copy_from_store(workspace, store, names, read_only)
+      named = stored_files(store, names, [Workspace::ATTACHMENTS, *read_only])
+      workspace.copy_stored_inputs(store, @attached_files.call)
+      workspace.copy_files(store, named)
     end
 
     def prepare(workspace, language, code)
@@ -686,13 +693,15 @@ module RubyLLM
       store = @file_store.call
       if store&.local_root
         ["Code runs in the folder that holds this chat's files, the ones list_files shows, and reads them " \
-         'there by their paths.',
+         'there by their paths, files attached to the conversation included.',
          'What it writes, changes, or deletes there changes the chat\'s files at once, for read_file and later runs.']
       elsif store
-        ['Each call gets a new empty run directory. To use files from this chat\'s files, the ones list_files ' \
-         'shows, name them in files and they are copied in at the same paths; a folder copies everything in it.',
-         'Files the code writes or changes there are saved to the chat\'s files when it ends, where read_file ' \
-         'and later runs find them. Deleting a file there does not delete it from the chat\'s files.']
+        ['Each call gets a new run directory. Files attached to the conversation are in ./attachments (read-only), ' \
+         'at the paths list_files shows.',
+         'To change one of this chat\'s files, or use one that is not in ./attachments, name it in files and it is ' \
+         'copied in at the same path; a folder copies everything in it.',
+         'Files the code writes or changes in the run directory are saved to the chat\'s files when it ends, where ' \
+         'read_file and later runs find them. Deleting a file there does not delete it from the chat\'s files.']
       else
         ['Each call gets a new empty run directory, and nothing carries over between calls.',
          "Files attached to the conversation, and files earlier calls returned, are in ./#{Workspace::ATTACHMENTS} " \

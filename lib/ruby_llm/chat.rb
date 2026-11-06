@@ -1101,8 +1101,10 @@ module RubyLLM
     # returns the output and every file the code writes there as
     # attachments on the tool result. With #with_file_store, runs work with
     # the chat's files instead: in the store's folder when it has one
-    # (FileStore#local_root), otherwise on copies of the files the model
-    # names, with what the code writes saved back. The options are:
+    # (FileStore#local_root), where attachments are at their own paths.
+    # Otherwise runs still have read-only copies of the conversation's files
+    # in +attachments/+, copy in the other files the model names, and what
+    # the code writes is saved back. The options are:
     #
     # +sandbox+:: the sandbox every call runs in. Default:
     #             Configuration#sandbox.
@@ -1148,6 +1150,7 @@ module RubyLLM
                                  sandbox: options[:sandbox],
                                  attachments: -> { messages.flat_map(&:attachments) },
                                  file_store: -> { file_store },
+                                 attached_files: -> { @file_references&.attached_files(messages).to_a },
                                  written: ->(file) { run_callbacks(:after_file_write, file) },
                                  skills: -> { skills.to_h { |skill| [Skill::Loader.mount_path(skill), skill.path] } },
                                  chat: self,
@@ -1203,8 +1206,9 @@ module RubyLLM
     #   it is now, so the model never writes over a change it hasn't seen.
     # * With #with_code_execution, code runs in the store's folder when it
     #   has one, such as FileStore::Directory, changing the files in place.
-    #   With other stores, each run copies in the files the model names,
-    #   and what the code writes is saved back to the store.
+    #   With other stores, each run has read-only copies of the attachments
+    #   in +attachments/+, copies in the files the model names to change or
+    #   read, and what the code writes is saved back to the store.
     #
     # +store+ is a folder path, for a FileStore::Directory, +:memory+, for a
     # new FileStore::Memory, or a FileStore. Without it, the chat gets a new
