@@ -13,29 +13,20 @@ module RubyLLM
       @retry_at = {}
 
       class << self
-        # The tools a chat offers the model: the server's, or none while it
-        # can't be reached.
         def tools(server)
           return [] if down?(server)
 
           server.tools
         rescue ConnectionError => e
-          record(server)
-          RubyLLM.logger.warn("MCP server #{server.name} is unreachable, so its tools sit out: #{e.message}")
-          RubyLLM.instrument('mcp_unreachable.ruby_llm', server: server.name, error: e.message)
+          report(server, e) if record(server)
           []
         end
 
         def down?(server)
-          key = key(server)
-          @lock.synchronize do
-            retry_at = @retry_at[key]
-            next false unless retry_at
-            next true if monotonic_now < retry_at
+          return false if server.tools_listed?
 
-            @retry_at.delete(key)
-            false
-          end
+          key = key(server)
+          @lock.synchronize { (@retry_at[key] || 0) > monotonic_now }
         end
 
         def clear
@@ -44,14 +35,31 @@ module RubyLLM
 
         private
 
+        def report(server, error)
+          RubyLLM.logger.warn("MCP server #{server.name} is unreachable, so its tools sit out: #{error.message}")
+          RubyLLM.instrument('mcp_unreachable.ruby_llm', server: server.name, error: error.message)
+        end
+
+        # Returns whether this caller started the backoff.
         def record(server)
-          @lock.synchronize { @retry_at[key(server)] = monotonic_now + BACKOFF }
+          key = key(server)
+          @lock.synchronize do
+            now = monotonic_now
+            @retry_at.delete_if { |_key, retry_at| retry_at <= now }
+            next false if @retry_at.key?(key)
+
+            @retry_at[key] = now + BACKOFF
+            true
+          end
         end
 
         # Settings, not classes, since RubyLLM.mcp builds a class per call.
+        # Settings that depend on runtime state can differ per object, so one
+        # tenant's server never sidelines another's.
         def key(server)
           settings = server.class
-          [settings.url, settings.command, settings.transport]
+          endpoint = [settings.url, *settings.command]
+          settings.transport || !endpoint.compact.all?(String) ? server : endpoint
         end
 
         def monotonic_now

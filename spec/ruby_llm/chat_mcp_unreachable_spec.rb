@@ -95,11 +95,17 @@ RSpec.describe RubyLLM::Chat do
     let(:silent) { TCPServer.new('127.0.0.1', 0) }
     let(:url) { "http://127.0.0.1:#{silent.addr[1]}/mcp" }
 
-    before do
-      stub_const('RubyLLM::MCP::Client::DISCOVERY_TIMEOUT', 0.3)
+    around do |example|
       accepted = []
-      Thread.new { loop { accepted << silent.accept } }
+      acceptor = Thread.new { loop { accepted << silent.accept } }
+      example.run
+    ensure
+      acceptor.kill.join
+      silent.close
+      accepted.each(&:close)
     end
+
+    before { stub_const('RubyLLM::MCP::Client::DISCOVERY_TIMEOUT', 0.3) }
 
     it_behaves_like 'a server the chat goes on without'
   end
@@ -120,6 +126,41 @@ RSpec.describe RubyLLM::Chat do
     expect(requests.last[:messages].map(&:role)).not_to include(:system)
   ensure
     server.close
+  end
+
+  it 'keeps the tools a chat already listed when another chat finds the server down' do
+    fixture = File.expand_path('../fixtures/mcp/server.rb', __dir__)
+    server = RubyLLM.mcp(command: [RbConfig.ruby, fixture], name: 'files')
+    chat.with_mcp(server).ask('Hi')
+    failing = RubyLLM.mcp(command: [RbConfig.ruby, fixture], name: 'files')
+    allow(failing).to receive(:tools).and_raise(RubyLLM::ConnectionError, 'down')
+    expect(RubyLLM::MCP::Outages.tools(failing)).to eq([])
+
+    chat.ask('Again')
+
+    expect(requests.last[:tools]).to include(:echo)
+  ensure
+    server.close
+  end
+
+  it 'keeps servers apart when their settings depend on runtime state' do
+    address = "http://127.0.0.1:#{closed_port}/mcp"
+    down = RubyLLM.mcp(url: -> { address }, name: 'linear')
+    other = down.class.new
+    RubyLLM::MCP::Outages.tools(down)
+
+    expect(RubyLLM::MCP::Outages.down?(down)).to be(true)
+    expect(RubyLLM::MCP::Outages.down?(other)).to be(false)
+  end
+
+  it 'reports an outage once when chats find it at the same time' do
+    server = RubyLLM.mcp(url: "http://127.0.0.1:#{closed_port}/mcp", name: 'linear')
+    allow(RubyLLM.logger).to receive(:warn).and_call_original
+    allow(RubyLLM::MCP::Outages).to receive(:down?).and_return(false)
+
+    2.times { RubyLLM::MCP::Outages.tools(server) }
+
+    expect(RubyLLM.logger).to have_received(:warn).with(/unreachable/).once
   end
 
   it 'still raises from a direct call to the server' do
