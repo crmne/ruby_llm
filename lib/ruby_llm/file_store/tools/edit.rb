@@ -14,8 +14,9 @@ module RubyLLM
 
         def description
           'Changes text files you have read by replacing old_text, which must appear exactly once, with ' \
-            'new_text. Include surrounding text to make old_text unique, or set replace_all. Pass edits for ' \
-            'several changes in one call, to one file or several: they apply in order, all or none.'
+            'new_text. A text file attached to the question counts as read, at its file name. Include ' \
+            'surrounding text to make old_text unique, or set replace_all. Pass edits for several changes in ' \
+            'one call, to one file or several: they apply in order, all or none.'
         end
 
         def parameters_schema

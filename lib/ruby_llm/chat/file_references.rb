@@ -101,6 +101,19 @@ module RubyLLM
         (as_text(file, config) || reference(file.path, file)).tap { |replacement| @described[replacement] = true }
       end
 
+      # Records a read for each text attachment in +list+, the messages a
+      # request sent, that went as itself and matches the file in the store.
+      # Anything else the provider got for it, a reference, converted text,
+      # or an upload, is a new object that was never stored here.
+      def record_shown(list)
+        list.flat_map(&:attachments).each do |attachment|
+          file = @stored[attachment]
+          record_read(attachment, file) if file && attachment.text?
+        end
+      rescue StandardError => e
+        RubyLLM.logger.warn { "Could not record the files a request showed: #{e.class}" }
+      end
+
       # Removes the replacements #describe made from +replacements+, a
       # chat's memo, so another store or limit describes them again.
       def forget(replacements)
@@ -108,6 +121,14 @@ module RubyLLM
       end
 
       private
+
+      def record_read(attachment, file)
+        seen = FileStore.digest(attachment.content.to_s.b)
+        current = store[file.path]
+        return unless current && seen == (current.digest || FileStore.digest(store.read(current.path)))
+
+        store.record_read(current.path, seen) unless store.read_digest(current.path) == seen
+      end
 
       def extract(file)
         return if file.text? || store.cached_text(file)

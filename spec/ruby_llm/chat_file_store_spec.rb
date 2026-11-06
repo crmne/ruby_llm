@@ -254,6 +254,114 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  describe 'an attachment the model saw whole' do
+    let(:notes) { RubyLLM::Attachment.new(StringIO.new('one two'), filename: 'notes.txt') }
+
+    def edit(old_text, new_text)
+      chat.tools[:edit_file].call(path: 'notes.txt', old_text:, new_text:)
+    end
+
+    def ask(attachment = notes)
+      respond_with(answer)
+      chat.add_message(role: :user, content: 'Look', attachments: [attachment])
+      chat.complete
+    end
+
+    before { chat.with_file_store }
+
+    it 'counts as read once the request went out, so the model edits it at once' do
+      ask
+
+      expect(edit('one', 'uno')).to eq('Replaced 1 occurrence in notes.txt.')
+      expect(chat.file_store.read('notes.txt')).to eq('uno two')
+    end
+
+    it 'counts past the inline limit, which only long tool results and converted text follow' do
+      chat.with_file_store(inline_limit: 3)
+      ask
+
+      expect(edit('one', 'uno')).to start_with('Replaced 1')
+    end
+
+    it 'still refuses once the file changes, on this request and the next' do
+      ask
+      chat.file_store.write('notes.txt', 'theirs')
+      refusal = { error: 'notes.txt changed since you read it. Read it again.' }
+
+      expect(edit('theirs', 'mine')).to eq(refusal)
+
+      respond_with(answer)
+      chat.complete
+      expect(edit('theirs', 'mine')).to eq(refusal)
+    end
+
+    it 'leaves what the model read or wrote later in place on the next request' do
+      ask
+      edit('one', 'uno')
+
+      respond_with(answer)
+      chat.complete
+
+      expect(edit('uno', 'eins')).to start_with('Replaced 1')
+    end
+
+    it 'does not count for a request that was only rendered, or that failed' do
+      chat.add_message(role: :user, content: 'Look', attachments: [notes])
+      chat.render
+      refusal = { error: 'Read notes.txt before you change it.' }
+      expect(edit('one', 'uno')).to eq(refusal)
+
+      allow(chat.provider).to receive(:complete).and_raise(RubyLLM::Error, 'down')
+      expect { chat.complete }.to raise_error(RubyLLM::Error)
+      expect(edit('one', 'uno')).to eq(refusal)
+    end
+
+    it 'does not count when the provider got something else for it, such as an upload' do
+      allow(chat.provider).to receive(:preprocess_messages).and_wrap_original do |original, list, **options|
+        original.call(list, **options).map do |message|
+          message.with_attachments(message.attachments.map do |item|
+            RubyLLM::Attachment.new(StringIO.new('x'), filename: item.filename)
+          end)
+        end
+      end
+      ask
+
+      expect(edit('one', 'uno')).to eq(error: 'Read notes.txt before you change it.')
+    end
+
+    it 'does not count for a file that is not text' do
+      ask(image_path)
+
+      expect(chat.tools[:write_file].call(path: 'ruby.png', content: 'x'))
+        .to eq(error: 'Read ruby.png before you change it.')
+    end
+
+    it 'does not count converted text for the file it came from' do
+      docx = File.expand_path('../fixtures/sample.docx', __dir__)
+      chat = RubyLLM.context { |config| config.file_converters = {} }
+                    .chat(model: model_for(:anthropic), provider: :anthropic).with_file_store
+      allow(chat.provider).to receive(:complete).and_return(answer)
+      chat.add_message(role: :user, content: 'Look', attachments: [docx])
+      chat.complete
+
+      expect(chat.tools[:write_file].call(path: 'sample.docx', content: 'x'))
+        .to eq(error: 'Read sample.docx before you change it.')
+    end
+
+    it 'does not count a numbered copy for the file with the same name' do
+      chat.file_store.write('notes.txt', 'older')
+      ask
+
+      expect(edit('older', 'x')).to eq(error: 'Read notes.txt before you change it.')
+      expect(chat.tools[:edit_file].call(path: 'notes-2.txt', old_text: 'one',
+                                         new_text: 'uno')).to start_with('Replaced 1')
+    end
+
+    it 'tells the model a text attachment is in its files and counts as read' do
+      expect(chat.tools[:edit_file].description).to include('A text file attached to the question counts as read')
+    end
+  end
+
   describe 'attachments the provider cannot take' do
     let(:chat) { described_class.new(model: model_for(:anthropic), provider: :anthropic) }
     let(:docx) { File.expand_path('../fixtures/sample.docx', __dir__) }

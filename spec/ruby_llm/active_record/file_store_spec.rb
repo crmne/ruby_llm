@@ -117,6 +117,32 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
     expect(described_class.new(chat).read('a.md')).to eq('two')
   end
 
+  context 'with a text attachment the model saw whole' do
+    let(:notes) { RubyLLM::Attachment.new(StringIO.new('one'), filename: 'notes.txt') }
+
+    before do
+      chat.with_file_store
+      llm = chat.to_llm
+      allow(llm.provider).to receive(:complete).and_return(answer('Done'))
+      llm.add_message(role: :user, content: 'Look', attachments: [notes])
+      llm.complete
+    end
+
+    def edit_after_reload(old_text)
+      Chat.find(chat.id).with_file_store.to_llm.tools[:edit_file].call(path: 'notes.txt', old_text:, new_text: 'two')
+    end
+
+    it 'counts as read after a reload' do
+      expect(edit_after_reload('one')).to eq('Replaced 1 occurrence in notes.txt.')
+    end
+
+    it 'still refuses after a reload once the file changes' do
+      described_class.new(chat).write('notes.txt', 'theirs')
+
+      expect(edit_after_reload('theirs')).to eq(error: 'notes.txt changed since you read it. Read it again.')
+    end
+  end
+
   it 'lets the model change a file it read before the chat was reloaded' do
     chat.with_file_store.file_store.write('notes.md', 'one')
     chat.to_llm.tools[:read_file].call(path: 'notes.md')
