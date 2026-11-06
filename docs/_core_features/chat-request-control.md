@@ -146,6 +146,20 @@ class ResearchAgent < RubyLLM::Agent
 end
 ```
 
+When the window depends on the chat, such as an agent that runs on a model the registry doesn't know, pass a block. It runs for each chat with the agent's inputs and `chat` in scope, and returns the options, or `nil` for no budget:
+
+```ruby
+class UtilityAgent < RubyLLM::Agent
+  inputs :model_window
+
+  context_budget { { window: model_window, per_request: 0.7 } if model_window }
+end
+```
+
+The budget errs on the side of leaving results out. It estimates at two characters a token, so with `per_request: 0.7` a request starts losing results at 140% of the window in characters. Prose runs closer to four characters a token, so that's about 35% of the real window, and a round that would have fit can lose results. Raise `per_request` if your tools return mostly prose.
+
+It only cuts the text of tool results, and it only measures text and tool call arguments. A request can still overflow from what it can't cut or doesn't count: attachments, including those on tool results, long tool call arguments, a long question, and your tool definitions. A provider that refuses such a request raises `RubyLLM::ContextLengthExceededError`.
+
 For a model the registry has no window for, such as one behind your own endpoint, say what it is with `window:`, in tokens. It wins over the registry's window, so set it for one model at a time rather than across [fallbacks]({% link _advanced/error-handling.md %}#model-fallbacks) with very different windows:
 
 ```ruby

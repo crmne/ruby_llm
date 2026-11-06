@@ -310,7 +310,12 @@ module RubyLLM
       #   context_budget per_result: 0.25, per_request: 0.7
       #   context_budget window: 128_000, per_request: 0.7
       #
-      def context_budget(budget = {}, **) = (@context_budget = Chat::ContextBudget.normalize(budget, **))
+      # A block is evaluated for each chat, with the agent's inputs and
+      # +chat+ in scope, and returns the options, or +nil+ for no budget.
+      #
+      #   context_budget { { window: model_window, per_request: 0.7 } if model_window }
+      #
+      def context_budget(budget = {}, **, &) = (@context_budget = context_budget_option(budget, **, &))
 
       # Lets chats this agent builds run code in the configured sandbox,
       # applied via Chat#with_code_execution. Accepts the same options as
