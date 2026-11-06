@@ -120,6 +120,20 @@ RSpec.describe RubyLLM::Providers::Bedrock::Connection do
       expect_signed_request('/bedrock/inference-profiles?nextToken=a%2Bb%3D&typeEquals=SYSTEM_DEFINED')
     end
 
+    it 'signs a query on the base of a control plane request' do
+      base = "http://#{host}/bedrock?tenant=a"
+
+      provider_for(bedrock_api_base: base).signed_get(base, '/foundation-models')
+
+      expect_signed_request('/bedrock/foundation-models?tenant=a')
+    end
+
+    it 'signs a query on the base of a connection request' do
+      provider_for(bedrock_api_base: "http://#{host}/bedrock?tenant=a").connection.post('/rerank', '{}')
+
+      expect_signed_request('/bedrock/rerank?tenant=a')
+    end
+
     it 'keeps the path on the mantle connection' do
       provider.mantle_connection.post('v1/chat/completions', '{}')
 
