@@ -14,6 +14,7 @@ RSpec.describe RubyLLM::Agent do
                   .with_fallbacks(model_for(:openai, :alternate_chat))
     chat.add_message(role: :user, content: 'Hello')
     agent = Class.new(described_class).new(chat:)
+    allow(RubyLLM.deprecator).to receive(:deprecate)
 
     expect(agent.provider).to be(chat.provider)
     expect(agent.provider_tools).to eq(chat.provider_tools)
@@ -24,6 +25,20 @@ RSpec.describe RubyLLM::Agent do
     expect(agent.fallbacks).to eq(chat.fallbacks)
     expect(agent.cache_until_here).to be(chat)
     expect(agent).not_to be_waiting
+    expect(RubyLLM.deprecator).to have_received(:deprecate)
+      .with('RubyLLM::Chat#cache_until_here', replacement: /Message#cache_until_here/, removal: '3.0')
+  end
+
+  it 'delegates deprecated enumeration to the chat, which warns' do
+    chat = RubyLLM.chat(model: model_for(:openai, :temperature))
+    chat.add_message(role: :user, content: 'Hello')
+    agent = Class.new(described_class).new(chat:)
+    allow(RubyLLM.deprecator).to receive(:deprecate)
+
+    expect(agent.map(&:content)).to eq(['Hello'])
+    expect(agent.messages.map(&:content)).to eq(['Hello'])
+    expect(RubyLLM.deprecator).to have_received(:deprecate)
+      .with('Enumerable on RubyLLM::Chat', replacement: 'RubyLLM::Chat#messages', removal: '3.0').once
   end
 
   it 'delegates model_id to the underlying chat' do

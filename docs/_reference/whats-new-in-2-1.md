@@ -211,7 +211,7 @@ A stable prefix and a growing conversation often deserve different cache lifetim
 
 ```ruby
 chat = RubyLLM.chat.with_caching
-chat.with_instructions(policy).cache_until_here(ttl: "1h")
+chat.with_instructions(policy, cache_until_here: { ttl: "1h" })
 chat.ask "Summarize today's tickets."
 ```
 

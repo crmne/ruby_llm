@@ -283,6 +283,8 @@ module RubyLLM
     #   chat.add_message(role: :user, content: long_context).cache_until_here
     #   chat.add_message(role: :user, content: handbook).cache_until_here(ttl: "1h")
     #
+    # To mark system instructions, pass +cache_until_here:+ to
+    # Chat#with_instructions.
     def cache_until_here(ttl: nil)
       @cache_until_here = true
       @cache_ttl = ttl

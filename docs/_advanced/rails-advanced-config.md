@@ -157,7 +157,7 @@ Prompt caching configuration is applied to the underlying LLM chat, and explicit
 ```ruby
 chat = Chat.create!(model: 'claude-sonnet-4-5')
 chat.with_caching
-chat.with_instructions('Reusable analysis prompt').cache_until_here(ttl: "1h")
+chat.with_instructions('Reusable analysis prompt', cache_until_here: { ttl: "1h" })
 chat.add_message(role: :user, content: long_context).cache_until_here
 chat.ask("Today's request: #{summary}")
 ```

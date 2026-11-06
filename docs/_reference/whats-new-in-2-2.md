@@ -332,6 +332,8 @@ It is off by default, and a context can turn it on for one server. See [Reasonin
 
 `bin/rails generate ruby_llm:upgrade` in 2.2 adds the columns chats and tool calls use for their claims, the tables for queued messages and chat files, and any of the conventional `app/` folders your application lacks, such as `app/skills` and `app/sandboxes`. Applications on 2.0 upgrade to 2.1 first. See [Upgrading]({% link _reference/upgrading.md %}).
 
+2.2 deprecates iterating a chat directly and `chat.cache_until_here` in favor of `chat.messages` and marking the message itself. Both still work and warn, and RubyLLM 3.0 removes them. See [Read a Conversation Through `messages`]({% link _reference/upgrading.md %}#read-a-conversation-through-messages).
+
 Provider gems and custom providers that override protocol methods rename them: methods that build a request start with `render_`, methods that read a response start with `parse_`, and the capability predicates drop `supports_` ([#1136](https://github.com/crmne/ruby_llm/pull/1136)). See [Rename Protocol Method Overrides]({% link _reference/upgrading.md %}#rename-protocol-method-overrides).
 
 ## Try 2.2

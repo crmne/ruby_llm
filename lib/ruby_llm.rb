@@ -79,7 +79,7 @@ loader.setup
 # - Chat#with_thinking sets thinking effort, budget, or display preferences.
 # - Chat#with_citations requests source citations, read through Message#citations.
 # - Chat#with_fallbacks tries other models when a request fails.
-# - Chat#with_caching enables prompt caching; Chat#cache_until_here marks
+# - Chat#with_caching enables prompt caching; Message#cache_until_here marks
 #   a reusable prefix. Chat#with_compaction manages long conversations.
 #
 # Subclass Tool and implement +execute+ to give the model an application
