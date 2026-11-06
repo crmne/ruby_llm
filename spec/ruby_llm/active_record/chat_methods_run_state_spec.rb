@@ -92,6 +92,42 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(overtaken).to be_complete
     end
 
+    it 'rereads an unfinished reply even when nothing shows another run' do
+      chat = question_chat
+      chat.add_message(RubyLLM::Message.new(role: :assistant, content: 'Part', continuation: 'resume-1'))
+      job = job_for(chat)
+      allow(job).to receive(:resync_messages).and_call_original
+
+      job.complete
+
+      expect(job).to have_received(:resync_messages).once
+    end
+
+    it 'counts usage before it reads the token, so a run starting between them still shows' do
+      chat = question_chat
+      job = job_for(chat)
+      reads = []
+      record = lambda do |*, payload|
+        reads << :usage if payload[:sql].include?('ruby_llm_usages') && payload[:sql].include?('COUNT')
+        reads << :token if payload[:sql].include?('claim_token') && payload[:sql].start_with?('SELECT')
+      end
+
+      ActiveSupport::Notifications.subscribed(record, 'sql.active_record') { job.send(:snapshot_run_claim) }
+
+      expect(reads).to eq(%i[usage token])
+    end
+
+    it 'frees the chat when counting usage at the end of a run fails' do
+      chat = question_chat
+      failure = ActiveRecord::StatementInvalid.new('count failed')
+      job = job_for(chat) { allow(job).to receive(:usage_row_count).and_raise(failure) }
+
+      expect { job.complete }.to raise_error(failure)
+
+      expect(row(chat)).to have_attributes(claim_token: nil, claimed_until: nil)
+      expect(job.instance_variable_get(:@run_claim_token)).to be_nil
+    end
+
     it 'rereads usage another process recorded on a run that added no message' do
       chat = question_chat
       job = job_for(chat)
@@ -238,6 +274,56 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       row(chat).deny(call_id)
 
       expect(row(chat)).not_to be_cancelled
+    end
+
+    it 'stays when an approval repeats a decision already recorded' do
+      chat = question_chat
+      chat.add_message(tool_call_message)
+      row(chat).approve(call_id)
+      row(chat).cancel
+
+      row(chat).approve(call_id)
+
+      expect(row(chat)).to be_cancelled
+    end
+
+    it 'stays when a decision cannot be recorded on a running call' do
+      chat = question_chat
+      chat.add_message(tool_call_message)
+      RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call_id).update!(claimed_until: 10.minutes.from_now)
+      flag(chat)
+
+      expect { row(chat).deny(call_id) }.to raise_error(RubyLLM::ToolCallRunningError)
+
+      expect(row(chat)).to be_cancelled
+    end
+
+    it 'stays when the message that followed it fails to save' do
+      chat = question_chat
+      flag(chat)
+
+      expect { row(chat).persist_message({ role: :user, content: 'Nope' }, { no_such_column: 1 }) }
+        .to raise_error(ActiveModel::UnknownAttributeError)
+
+      expect(row(chat)).to be_cancelled
+    end
+
+    it 'stays when the queued message that followed it fails to save' do
+      chat = question_chat
+      flag(chat)
+
+      expect { row(chat).queue('Nope', sender: Object.new) }.to raise_error(StandardError)
+
+      expect(row(chat)).to be_cancelled
+    end
+
+    it 'stays when an assistant message is saved' do
+      chat = question_chat
+      flag(chat)
+
+      row(chat).add_message(role: :assistant, content: 'Noted')
+
+      expect(row(chat)).to be_cancelled
     end
 
     it 'clears on the record that recorded the new work' do

@@ -99,11 +99,13 @@ module RubyLLM
       end
 
       # A released claim leaves no token behind, so what another process's
-      # run wrote is the only sign of it. Continuing an unfinished reply
-      # keeps its id, and a failed attempt adds no message, but each model
-      # call adds a usage row.
+      # run wrote is the only sign of it. A failed attempt adds no message,
+      # but each model call adds a usage row. Continuing an unfinished reply
+      # keeps its id and may lose its usage row, so such a reply is always
+      # read again: repeating it would bill the model twice.
       def run_finished_elsewhere?
-        latest_message_id != @last_message_id || usage_row_count != @synced_usage_count
+        @chat.messages.last&.continuation || latest_message_id != @last_message_id ||
+          usage_row_count != @synced_usage_count
       end
 
       def usage_row_count
@@ -114,9 +116,13 @@ module RubyLLM
         token = @run_claim_token
         return unless token
 
-        @synced_usage_count = (usage_row_count if completed)
-        @synced_run_claim_token = nil
-        @run_claim_token = nil
+        @synced_usage_count = @synced_run_claim_token = @run_claim_token = nil
+        @synced_usage_count = usage_row_count if completed
+      ensure
+        free_chat_row(token) if token
+      end
+
+      def free_chat_row(token)
         cancellable = has_attribute?(:cancelled)
         released = { claim_token: nil, claimed_until: nil }
         released[:cancelled] = false if cancellable
@@ -173,8 +179,10 @@ module RubyLLM
       def snapshot_run_claim
         return unless run_claims?
 
-        @synced_run_claim_token = self.class.uncached { chat_row.pick(:claim_token) }
+        # Counting first means a run that starts after the token is read
+        # still changes the count this process compares against.
         @synced_usage_count = usage_row_count
+        @synced_run_claim_token = self.class.uncached { chat_row.pick(:claim_token) }
       end
 
       def tool_call_claimed?(tool_call_id, row, seconds, executing)
@@ -215,7 +223,10 @@ module RubyLLM
         now = Time.current
         scope = RubyLLM::ActiveRecord::ToolCall.where(id: record.id, result_id: nil)
         scope = unclaimed(scope, now) if record.has_attribute?(:claimed_until)
-        scope.update_all(approval: decision, updated_at: now) == 1
+        transaction do
+          forget_stale_cancellation
+          scope.update_all(approval: decision, updated_at: now) == 1 || raise(::ActiveRecord::Rollback)
+        end
       end
 
       def discard_superseded_message

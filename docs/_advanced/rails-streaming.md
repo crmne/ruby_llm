@@ -127,7 +127,7 @@ A request is for the run holding the chat, or for the run about to answer a mess
 
 * A request that arrives as the job finishes is cleared with its run.
 * `cancel` does nothing when no run holds the chat and nothing waits to run, and `cancelled?` stays `false`.
-* A message, an approval, or an answer to a tool's question recorded after the request, while no run holds the chat, clears it. That includes a request set by writing the `cancelled` column yourself.
+* A message, a new decision on a tool call, or an answer to a tool's question recorded after the request, while no run holds the chat, clears it. That includes a request set by writing the `cancelled` column yourself.
 * A run that finds nothing waiting clears a request left on the chat.
 
 These rules rely on the `claim_token` and `claimed_until` columns. Without them, `cancel` always records the request, and one that arrives as the job finishes cancels the next reply.

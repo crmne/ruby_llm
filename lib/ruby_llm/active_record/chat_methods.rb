@@ -1018,8 +1018,10 @@ module RubyLLM
       private
 
       def create_message_record(llm_message, record_attributes)
-        forget_stale_cancellation if llm_message.role == :user
-        messages_association.create!(message_attributes(llm_message).merge(record_attributes))
+        transaction do
+          forget_stale_cancellation if llm_message.role == :user
+          messages_association.create!(message_attributes(llm_message).merge(record_attributes))
+        end
       end
 
       def broadcasts_messages?
