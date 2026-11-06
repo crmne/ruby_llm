@@ -21,16 +21,32 @@ bin/rails ruby_llm:load_models
 bin/rails generate ruby_llm:chat_ui
 ```
 
-That is persistence, streaming, a chat UI, and a usage ledger with no code of your own. Add only the pieces the application needs:
+That gives you saved chats and history, a streaming chat UI with a Stop button, background jobs, and usage and cost per reply, with no code of your own. Then change only what is specific to the application. Add only the pieces it needs:
 
 ```bash
-bin/rails generate ruby_llm:sandbox Workspace   # then bundle install, and set config.sandbox = "WorkspaceSandbox"
+bin/rails generate ruby_llm:sandbox Workspace   # then bundle install
 bin/rails generate ruby_llm:mcp Linear https://mcp.linear.app/mcp
 bin/rails generate ruby_llm:tool Weather
 bin/rails generate ruby_llm:agent Researcher
 ```
 
 Each takes one line in `app/agents/chat_agent.rb`, the agent behind the generated UI: `code_execution`, `mcp Linear`, `tools WeatherTool`, and `file_store` for files.
+
+To let the model run code, you need no sandbox of your own, in Rails or plain Ruby:
+
+```ruby
+class WorkspaceSandbox < MXC::Sandbox   # gem "mxc", ">= 0.4.1"
+  timeout 120
+end
+
+RubyLLM.configure { |config| config.sandbox = "WorkspaceSandbox" }
+
+RubyLLM.chat.with_code_execution.ask "What is the 200th Fibonacci number?"
+```
+
+Don't rebuild the transcript, don't keep a price table, and don't reopen or prepend onto RubyLLM's classes. If you think you need to, read the matching guide below first: `rails-persistence/`, `cost-and-usage-tracking/`, or the feature's own.
+
+With `with_thinking` on, a stream can sit quiet for several seconds before text starts, while the model thinks. That is normal, not a stall.
 
 RubyLLM's own test suite covers streaming and reply assembly, chat and message persistence, the tool loop, usage and cost calculation, retries, and generated code; the official conformance suite covers its MCP client; and the mxc gem's tests cover sandbox isolation. Don't write tests for those, or probe them by hand. Test your own tools, instructions, and wiring as usual, and run the feature once end to end.
 
@@ -128,7 +144,7 @@ Markdown guides use the same name with `.md`, such as `chat.md`. The API referen
 
 ## Integrate with Rails
 
-For a new integration, use `bin/rails generate ruby_llm:install`, review its migrations, and follow the application's migration workflow. Load packaged model data with `bin/rails ruby_llm:load_models`. `RubyLLM.models.refresh` performs a network refresh and persists the result.
+To add RubyLLM to an existing application, use `bin/rails generate ruby_llm:install`, review its migrations, and follow the application's migration workflow. A new application starts from the commands at the top. Load packaged model data with `bin/rails ruby_llm:load_models`. `RubyLLM.models.refresh` performs a network refresh and persists the result.
 
 Applications own their chat and message models, declared with `acts_as_chat` and `acts_as_message`. RubyLLM owns the supporting model, tool-call, usage, and batch tables, plus MCP credential and provider file tables from 2.1. Do not generate application `Model` or `ToolCall` classes from 1.x examples. Pass custom chat and message mappings to the generators when the application uses different names.
 
