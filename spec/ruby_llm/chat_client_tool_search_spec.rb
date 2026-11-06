@@ -86,6 +86,14 @@ RSpec.describe RubyLLM::Chat do
       expect(result[:not_loaded]).to eq(%w[missing])
     end
 
+    it 'reports the names it could not load when select: matches nothing' do
+      result = chat.tools[:tool_search].call(query: 'select:missing')
+
+      expect(result[:loaded]).to eq([])
+      expect(result[:not_loaded]).to eq(%w[missing])
+      expect(result[:error]).to include('weather_lookup')
+    end
+
     it 'says which tools there are when nothing matches' do
       result = chat.tools[:tool_search].call(query: 'calendar')
 

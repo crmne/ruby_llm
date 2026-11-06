@@ -58,17 +58,20 @@ module RubyLLM
         tools = @tools.call
         query = query.to_s
         found = matches(tools, query, limit.to_i.clamp(1, MAX_LIMIT))
-        if found.empty?
-          return { loaded: [],
-                   error: "No tools match #{query}. Tools you can load: #{tools.keys.join(', ')}" }
-        end
-
-        result = { loaded: found.map(&:first), tools: found.map { |name, tool| { name:, description: summary(tool) } } }
+        result = found.empty? ? nothing_found(tools, query) : loaded(found)
         missing = query.start_with?(SELECT) ? requested(query) - result[:loaded] : []
         missing.empty? ? result : result.merge(not_loaded: missing)
       end
 
       private
+
+      def nothing_found(tools, query)
+        { loaded: [], error: "No tools match #{query}. Tools you can load: #{tools.keys.join(', ')}" }
+      end
+
+      def loaded(found)
+        { loaded: found.map(&:first), tools: found.map { |name, tool| { name:, description: summary(tool) } } }
+      end
 
       def matches(tools, query, limit)
         return selected(tools, requested(query)) if query.start_with?(SELECT)
