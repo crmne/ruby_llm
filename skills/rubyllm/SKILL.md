@@ -36,23 +36,9 @@ With `with_thinking` on, a stream can sit quiet for several seconds before text 
 
 You don't need to read the generated files or `lib/ruby_llm` to use this. The generator prints what works and which file controls it: with the default `Chat` model, `app/jobs/chat_response_job.rb` runs the turn and shows errors, `ChatsController#cancel` is Stop, and `app/agents/chat_agent.rb` says what the model can do. For anything else, read the one guide for that feature, and open source only when something fails or you need a signature.
 
-### Where code finds a chat's files
+Code reads a chat's attachments, earlier ones too, at `./attachments/<name>`, or at `./<name>` with a store in a folder. Python needs `languages: [:python]`: the default is Ruby and shell. Without a converter, the model gets a PDF as the file itself, so it needs no PDF gem. `per_result` and `per_request` in `context_budget` are shares of the model's context window, not sizes.
 
-Choose by what the code should see. `file_store` changes where `run_code` looks, so adding one takes files away from code unless it is in a folder:
-
-| The agent declares | A run sees |
-| --- | --- |
-| `code_execution` | Every file in the conversation, earlier ones too, read-only in `attachments/<name>`. Later requests send the files again. |
-| `code_execution` and `file_store -> { Rails.root.join("storage/chat_files", chat.id.to_s).to_s }` | Runs in that folder, with every file there under its own name. Later requests send one line per file. |
-| `code_execution` and `file_store` | An empty folder, plus only the files the model names in `run_code`'s `files` argument. In Rails the store is Active Storage. |
-
-Python needs `languages: [:python]`: the default is Ruby and shell. Without a converter, the model gets a PDF as the file itself, so it needs no PDF gem. `per_result` and `per_request` in `context_budget` are shares of the model's context window, not sizes.
-
-### What a restart leaves
-
-Chats, messages, files, and cost are in the database and storage, so a server restart needs no boot script: the next message just works. A reply that was running when the process died loses its unsaved text, and its chat stays `running?` until the claim expires after `config.max_run_time`, ten minutes by default. The generated job checks again each minute and then starts the reply over, and a message sent in the meantime waits for that. Lower `max_run_time` to shorten the wait, keeping it above your slowest request without streaming.
-
-`claim_token`, `claimed_until`, and `cancelled` belong to RubyLLM, so read `chat.running?` and don't write them. `claim_token` stays set after a run ends, and a `cancelled` left set stops the next run. `durable-agents/#when-a-run-is-interrupted` says what cancel, a crash, and a failure each save and continue.
+Chats, messages, files, and cost live in the database and storage, so they survive a restart. A process that dies mid-reply loses that reply's unsaved text, and the chat stays `running?` until `config.max_run_time` passes, ten minutes by default. `claim_token`, `claimed_until`, and `cancelled` belong to RubyLLM: `claim_token` stays set after a run ends, so read `chat.running?`, and a `cancelled` left set stops the next run. `durable-agents/#when-a-run-is-interrupted` says what cancel, a crash, and a failure each save and continue.
 
 RubyLLM's own suite covers streaming and reply assembly, persistence, the tool loop, usage and cost, retries, cancellation, and generated code; the official conformance suite covers its MCP client; and mxc's tests cover sandbox isolation. Don't probe those by hand. See [Verify](#verify-the-application-change) for the one command that checks the result.
 
@@ -72,7 +58,7 @@ These are the signatures an application uses, for 2.2; on an older release, chec
 ```ruby
 RubyLLM.configure do |config|
   config.anthropic_api_key = ENV["ANTHROPIC_API_KEY"]
-  config.anthropic_api_base = ENV["ANTHROPIC_BASE_URL"]   # no /v1/messages; openai_api_base ends in /v1, gemini_api_base in /v1beta
+  config.anthropic_api_base = ENV["ANTHROPIC_BASE_URL"]   # see configuration-providers/ for what each base contains
 end
 
 chat = RubyLLM.chat(model: "...")   # or Chat.create!(model: "...") with acts_as_chat
@@ -120,7 +106,7 @@ stub_replies tool_call(:weather, city: "Berlin"), "It is sunny.", cost: 0.01, in
 stub_replies RubyLLM::ServerError.new("The provider is down")
 ```
 
-A model ID is enough: the registry knows its provider, so `with_model`, `create!`, and a model picker need no table of providers. Pass `provider:` only for a model the registry doesn't list or one that several providers offer. An agent that declares `model "...", provider: :anthropic` pins that provider, so `create!(model:)` with another provider's model raises `ModelNotFoundError`.
+A model ID is enough: the registry knows its provider, so `with_model`, `create!`, and a model picker need no table of providers. Pass `provider:` only for a model the registry doesn't list or one that several providers offer.
 
 Outside Rails, all of this except the Rails records works on plain Ruby objects. The application stores the transcript itself and rebuilds a chat with `add_message`, which does not restore the usage ledger, so persist `usage.ruby_llm` events if it needs past spend.
 
