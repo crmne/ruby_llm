@@ -16,7 +16,7 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
 
     it 'normalizes cached prompt tokens out of input tokens' do
       response_body = {
-        'model' => 'openai/gpt-4.1-nano',
+        'model' => 'openai/gpt-5.4-nano',
         'choices' => [
           {
             'message' => {
@@ -110,7 +110,7 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
       chunk = provider.send(
         :build_chunk,
         {
-          'model' => 'openai/gpt-4.1-nano',
+          'model' => 'openai/gpt-5.4-nano',
           'choices' => [
             { 'delta' => { 'content' => '' }, 'finish_reason' => 'tool_calls' }
           ]
@@ -136,7 +136,7 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
       chunk = provider.send(
         :build_chunk,
         {
-          'model' => 'openai/gpt-4.1-nano',
+          'model' => 'openai/gpt-5.4-nano',
           'choices' => [],
           'usage' => {
             'prompt_tokens' => 13,

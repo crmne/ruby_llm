@@ -1,0 +1,432 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k3","messages":[{"role":"user","content":"What''s the
+        weather in Berlin? (52.5200, 13.4050)"}],"stream":true,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"stream_options":{"include_usage":true}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:42:44 GMT
+      Content-Type:
+      - text/event-stream
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Cache-Control:
+      - no-cache
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 16612c31-da01-11f1-9141-00163e17f23b
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '0'
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 125c1b41e98f8710d059bf3fc7eb8514
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":"The"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":" user is"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":" asking about"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":" the weather in Berlin"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":" with"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":" specific"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":" coordinates (52."},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":"5200, "},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":"13.4050"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":"). I have a"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":" weather tool available that"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":" takes latitude and longitude"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":"."},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":" Let"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":" me call it"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":" with these"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":" coordinates."},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":""},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"id":"weather_0_1656e9e1","type":"function","function":{"name":"weather","arguments":""}}]},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"{"}}]},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\"latitude\":\""}}]},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"52.5200"}}]},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\""}}]},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":",\"longitude\":\"13."}}]},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"4050"}}]},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\"}"}}]},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[{"index":0,"delta":{},"finish_reason":"tool_calls","usage":{"prompt_tokens":222,"completion_tokens":116,"total_tokens":338,"completion_tokens_details":{"reasoning_tokens":44},"prompt_tokens_details":{"cache_write_tokens":0}}}]}
+
+        data: {"id":"chatcmpl-ce784295-305e-9a65-bcfb-ca6fc2e11b55","object":"chat.completion.chunk","created":1793983363,"model":"kimi-k3","choices":[],"usage":{"prompt_tokens":222,"completion_tokens":116,"total_tokens":338,"completion_tokens_details":{"reasoning_tokens":44},"prompt_tokens_details":{"cache_write_tokens":0}}}
+
+        data: [DONE]
+
+  recorded_at: Fri, 06 Nov 2026 16:42:46 GMT
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k3","messages":[{"role":"user","content":"What''s the
+        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"weather_0_1656e9e1","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning_content":"The
+        user is asking about the weather in Berlin with specific coordinates (52.5200,
+        13.4050). I have a weather tool available that takes latitude and longitude.
+        Let me call it with these coordinates."},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"weather_0_1656e9e1"}],"stream":true,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"stream_options":{"include_usage":true}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:42:47 GMT
+      Content-Type:
+      - text/event-stream
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Cache-Control:
+      - no-cache
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 1859659b-da01-11f1-9890-00163e7a3687
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '256'
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 7fc5a8ce05fcd69c2404559cfac9f790
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ZGF0YTogeyJpZCI6ImNoYXRjbXBsLTVhY2EyYzY2LTI1OTctOTAxMC05YWU0LTA3MzNlMTI1MDRiMCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3OTM5ODMzNjYsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IiJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtNWFjYTJjNjYtMjU5Ny05MDEwLTlhZTQtMDczM2UxMjUwNGIwIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc5Mzk4MzM2NiwibW9kZWwiOiJraW1pLWszIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7InJlYXNvbmluZ19jb250ZW50IjoiVGhlIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC01YWNhMmM2Ni0yNTk3LTkwMTAtOWFlNC0wNzMzZTEyNTA0YjAiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzkzOTgzMzY2LCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsicmVhc29uaW5nX2NvbnRlbnQiOiIgd2VhdGhlciB0b29sIHJldHVybmVkIHRoZSJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtNWFjYTJjNjYtMjU5Ny05MDEwLTlhZTQtMDczM2UxMjUwNGIwIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc5Mzk4MzM2NiwibW9kZWwiOiJraW1pLWszIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7InJlYXNvbmluZ19jb250ZW50IjoiIGN1cnJlbnQgd2VhdGhlciBmb3IifSwiZmluaXNoX3JlYXNvbiI6bnVsbH1dfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLTVhY2EyYzY2LTI1OTctOTAxMC05YWU0LTA3MzNlMTI1MDRiMCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3OTM5ODMzNjYsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJyZWFzb25pbmdfY29udGVudCI6IiBCZXJsaW4uIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC01YWNhMmM2Ni0yNTk3LTkwMTAtOWFlNC0wNzMzZTEyNTA0YjAiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzkzOTgzMzY2LCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsicmVhc29uaW5nX2NvbnRlbnQiOiIgTGV0IG1lIHByZXNlbnQifSwiZmluaXNoX3JlYXNvbiI6bnVsbH1dfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLTVhY2EyYzY2LTI1OTctOTAxMC05YWU0LTA3MzNlMTI1MDRiMCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3OTM5ODMzNjYsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJyZWFzb25pbmdfY29udGVudCI6IiB0aGlzIHRvIHRoZSB1c2VyIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC01YWNhMmM2Ni0yNTk3LTkwMTAtOWFlNC0wNzMzZTEyNTA0YjAiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzkzOTgzMzY2LCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsicmVhc29uaW5nX2NvbnRlbnQiOiIgaW4gYSBmcmllbmRseSwifSwiZmluaXNoX3JlYXNvbiI6bnVsbH1dfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLTVhY2EyYzY2LTI1OTctOTAxMC05YWU0LTA3MzNlMTI1MDRiMCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3OTM5ODMzNjYsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJyZWFzb25pbmdfY29udGVudCI6IiBjb25jaXNlIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC01YWNhMmM2Ni0yNTk3LTkwMTAtOWFlNC0wNzMzZTEyNTA0YjAiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzkzOTgzMzY2LCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsicmVhc29uaW5nX2NvbnRlbnQiOiIgd2F5LiJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtNWFjYTJjNjYtMjU5Ny05MDEwLTlhZTQtMDczM2UxMjUwNGIwIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc5Mzk4MzM2NiwibW9kZWwiOiJraW1pLWszIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7InJlYXNvbmluZ19jb250ZW50IjoiIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC01YWNhMmM2Ni0yNTk3LTkwMTAtOWFlNC0wNzMzZTEyNTA0YjAiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzkzOTgzMzY2LCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IkhlcmUncyB0aGUgY3VycmVudCB3ZWF0aGVyIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC01YWNhMmM2Ni0yNTk3LTkwMTAtOWFlNC0wNzMzZTEyNTA0YjAiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzkzOTgzMzY2LCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBpbiBCZXJsaW4gKDUyIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC01YWNhMmM2Ni0yNTk3LTkwMTAtOWFlNC0wNzMzZTEyNTA0YjAiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzkzOTgzMzY2LCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6Ii41MjAifSwiZmluaXNoX3JlYXNvbiI6bnVsbH1dfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLTVhY2EyYzY2LTI1OTctOTAxMC05YWU0LTA3MzNlMTI1MDRiMCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3OTM5ODMzNjYsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiMCwgMTMifSwiZmluaXNoX3JlYXNvbiI6bnVsbH1dfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLTVhY2EyYzY2LTI1OTctOTAxMC05YWU0LTA3MzNlMTI1MDRiMCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3OTM5ODMzNjYsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiLjQwNTApOlxuXG4ifSwiZmluaXNoX3JlYXNvbiI6bnVsbH1dfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLTVhY2EyYzY2LTI1OTctOTAxMC05YWU0LTA3MzNlMTI1MDRiMCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3OTM5ODMzNjYsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiLSAqKlRlbXBlcmF0dXJlOioqIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC01YWNhMmM2Ni0yNTk3LTkwMTAtOWFlNC0wNzMzZTEyNTA0YjAiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzkzOTgzMzY2LCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiAxNcKwQ1xuIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC01YWNhMmM2Ni0yNTk3LTkwMTAtOWFlNC0wNzMzZTEyNTA0YjAiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzkzOTgzMzY2LCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6Ii0gKipXaW5kOioqIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC01YWNhMmM2Ni0yNTk3LTkwMTAtOWFlNC0wNzMzZTEyNTA0YjAiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzkzOTgzMzY2LCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiAxMCBrbS9oIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC01YWNhMmM2Ni0yNTk3LTkwMTAtOWFlNC0wNzMzZTEyNTA0YjAiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzkzOTgzMzY2LCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IlxuXG5BIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC01YWNhMmM2Ni0yNTk3LTkwMTAtOWFlNC0wNzMzZTEyNTA0YjAiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzkzOTgzMzY2LCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBtaWxkIGRheSB3aXRoIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC01YWNhMmM2Ni0yNTk3LTkwMTAtOWFlNC0wNzMzZTEyNTA0YjAiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzkzOTgzMzY2LCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBhIGxpZ2h0IGJyZWV6ZSEifSwiZmluaXNoX3JlYXNvbiI6bnVsbH1dfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLTVhY2EyYzY2LTI1OTctOTAxMC05YWU0LTA3MzNlMTI1MDRiMCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3OTM5ODMzNjYsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIExldCBtZSBrbm93IGlmIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC01YWNhMmM2Ni0yNTk3LTkwMTAtOWFlNC0wNzMzZTEyNTA0YjAiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzkzOTgzMzY2LCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiB5b3UnZCBsaWtlIHdlYXRoZXIifSwiZmluaXNoX3JlYXNvbiI6bnVsbH1dfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLTVhY2EyYzY2LTI1OTctOTAxMC05YWU0LTA3MzNlMTI1MDRiMCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3OTM5ODMzNjYsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIGluZm8gZm9yIGFueXdoZXJlIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC01YWNhMmM2Ni0yNTk3LTkwMTAtOWFlNC0wNzMzZTEyNTA0YjAiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzkzOTgzMzY2LCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBlbHNlLiDwn4ykIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC01YWNhMmM2Ni0yNTk3LTkwMTAtOWFlNC0wNzMzZTEyNTA0YjAiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzkzOTgzMzY2LCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6Iu+4jyJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtNWFjYTJjNjYtMjU5Ny05MDEwLTlhZTQtMDczM2UxMjUwNGIwIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc5Mzk4MzM2NiwibW9kZWwiOiJraW1pLWszIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7fSwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjozODksImNvbXBsZXRpb25fdG9rZW5zIjo5OSwidG90YWxfdG9rZW5zIjo0ODgsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MjR9LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVfd3JpdGVfdG9rZW5zIjoyNTZ9fX1dfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLTVhY2EyYzY2LTI1OTctOTAxMC05YWU0LTA3MzNlMTI1MDRiMCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3OTM5ODMzNjYsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOltdLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjozODksImNvbXBsZXRpb25fdG9rZW5zIjo5OSwidG90YWxfdG9rZW5zIjo0ODgsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MjR9LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVfd3JpdGVfdG9rZW5zIjoyNTZ9fX0KCmRhdGE6IFtET05FXQoK
+  recorded_at: Fri, 06 Nov 2026 16:42:49 GMT
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: "{\"model\":\"kimi-k3\",\"messages\":[{\"role\":\"user\",\"content\":\"What's
+        the weather in Berlin? (52.5200, 13.4050)\"},{\"role\":\"assistant\",\"content\":\"\",\"tool_calls\":[{\"id\":\"weather_0_1656e9e1\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"52.5200\\\",\\\"longitude\\\":\\\"13.4050\\\"}\"}}],\"reasoning_content\":\"The
+        user is asking about the weather in Berlin with specific coordinates (52.5200,
+        13.4050). I have a weather tool available that takes latitude and longitude.
+        Let me call it with these coordinates.\"},{\"role\":\"tool\",\"content\":\"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"weather_0_1656e9e1\"},{\"role\":\"assistant\",\"content\":\"Here's
+        the current weather in Berlin (52.5200, 13.4050):\\n\\n- **Temperature:**
+        15°C\\n- **Wind:** 10 km/h\\n\\nA mild day with a light breeze! Let me know
+        if you'd like weather info for anywhere else. \U0001F324️\",\"reasoning_content\":\"The
+        weather tool returned the current weather for Berlin. Let me present this
+        to the user in a friendly, concise way.\"},{\"role\":\"user\",\"content\":\"What's
+        the weather in Paris? (48.8575, 2.3514)\"}],\"stream\":true,\"tools\":[{\"type\":\"function\",\"function\":{\"name\":\"weather\",\"description\":\"Gets
+        current weather for a location\",\"parameters\":{\"type\":\"object\",\"properties\":{\"latitude\":{\"type\":\"string\",\"description\":\"Latitude
+        (e.g., 52.5200)\"},\"longitude\":{\"type\":\"string\",\"description\":\"Longitude
+        (e.g., 13.4050)\"}},\"required\":[\"latitude\",\"longitude\"],\"additionalProperties\":false,\"strict\":true}}}],\"stream_options\":{\"include_usage\":true}}"
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:42:51 GMT
+      Content-Type:
+      - text/event-stream
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Cache-Control:
+      - no-cache
+      Msh-Context-Cache-Token-Saved:
+      - '256'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 1a2af01e-da01-11f1-aee7-00163e5443c0
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '256'
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - e89d0915a7573dadbff7c53a5e6f04f8
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"id":"chatcmpl-ba3f4360-7964-9205-880b-aa872af9df75","object":"chat.completion.chunk","created":1793983369,"model":"kimi-k3","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ba3f4360-7964-9205-880b-aa872af9df75","object":"chat.completion.chunk","created":1793983369,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":"The"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ba3f4360-7964-9205-880b-aa872af9df75","object":"chat.completion.chunk","created":1793983369,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":" user is asking for"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ba3f4360-7964-9205-880b-aa872af9df75","object":"chat.completion.chunk","created":1793983369,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":" the weather in Paris"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ba3f4360-7964-9205-880b-aa872af9df75","object":"chat.completion.chunk","created":1793983369,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":" with coordinates "},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ba3f4360-7964-9205-880b-aa872af9df75","object":"chat.completion.chunk","created":1793983369,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":"48.8575"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ba3f4360-7964-9205-880b-aa872af9df75","object":"chat.completion.chunk","created":1793983369,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":", 2."},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ba3f4360-7964-9205-880b-aa872af9df75","object":"chat.completion.chunk","created":1793983369,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":"3514. I"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ba3f4360-7964-9205-880b-aa872af9df75","object":"chat.completion.chunk","created":1793983369,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":" should"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ba3f4360-7964-9205-880b-aa872af9df75","object":"chat.completion.chunk","created":1793983369,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":" call the weather tool"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ba3f4360-7964-9205-880b-aa872af9df75","object":"chat.completion.chunk","created":1793983369,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":" with these coordinates."},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ba3f4360-7964-9205-880b-aa872af9df75","object":"chat.completion.chunk","created":1793983369,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":""},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ba3f4360-7964-9205-880b-aa872af9df75","object":"chat.completion.chunk","created":1793983369,"model":"kimi-k3","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"id":"weather_1_e45cc0d9","type":"function","function":{"name":"weather","arguments":""}}]},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ba3f4360-7964-9205-880b-aa872af9df75","object":"chat.completion.chunk","created":1793983369,"model":"kimi-k3","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"{"}}]},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ba3f4360-7964-9205-880b-aa872af9df75","object":"chat.completion.chunk","created":1793983369,"model":"kimi-k3","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\"latitude\":\"48."}}]},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ba3f4360-7964-9205-880b-aa872af9df75","object":"chat.completion.chunk","created":1793983369,"model":"kimi-k3","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"8575"}}]},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ba3f4360-7964-9205-880b-aa872af9df75","object":"chat.completion.chunk","created":1793983369,"model":"kimi-k3","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\""}}]},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ba3f4360-7964-9205-880b-aa872af9df75","object":"chat.completion.chunk","created":1793983369,"model":"kimi-k3","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":",\"longitude\":\""}}]},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ba3f4360-7964-9205-880b-aa872af9df75","object":"chat.completion.chunk","created":1793983369,"model":"kimi-k3","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"2.3514"}}]},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ba3f4360-7964-9205-880b-aa872af9df75","object":"chat.completion.chunk","created":1793983369,"model":"kimi-k3","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\""}}]},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ba3f4360-7964-9205-880b-aa872af9df75","object":"chat.completion.chunk","created":1793983369,"model":"kimi-k3","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"}"}}]},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-ba3f4360-7964-9205-880b-aa872af9df75","object":"chat.completion.chunk","created":1793983369,"model":"kimi-k3","choices":[{"index":0,"delta":{},"finish_reason":"tool_calls","usage":{"prompt_tokens":524,"completion_tokens":105,"total_tokens":629,"cached_tokens":256,"completion_tokens_details":{"reasoning_tokens":33},"prompt_tokens_details":{"cached_tokens":256,"cache_write_tokens":256}}}]}
+
+        data: {"id":"chatcmpl-ba3f4360-7964-9205-880b-aa872af9df75","object":"chat.completion.chunk","created":1793983369,"model":"kimi-k3","choices":[],"usage":{"prompt_tokens":524,"completion_tokens":105,"total_tokens":629,"cached_tokens":256,"completion_tokens_details":{"reasoning_tokens":33},"prompt_tokens_details":{"cached_tokens":256,"cache_write_tokens":256}}}
+
+        data: [DONE]
+
+  recorded_at: Fri, 06 Nov 2026 16:42:52 GMT
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: "{\"model\":\"kimi-k3\",\"messages\":[{\"role\":\"user\",\"content\":\"What's
+        the weather in Berlin? (52.5200, 13.4050)\"},{\"role\":\"assistant\",\"content\":\"\",\"tool_calls\":[{\"id\":\"weather_0_1656e9e1\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"52.5200\\\",\\\"longitude\\\":\\\"13.4050\\\"}\"}}],\"reasoning_content\":\"The
+        user is asking about the weather in Berlin with specific coordinates (52.5200,
+        13.4050). I have a weather tool available that takes latitude and longitude.
+        Let me call it with these coordinates.\"},{\"role\":\"tool\",\"content\":\"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"weather_0_1656e9e1\"},{\"role\":\"assistant\",\"content\":\"Here's
+        the current weather in Berlin (52.5200, 13.4050):\\n\\n- **Temperature:**
+        15°C\\n- **Wind:** 10 km/h\\n\\nA mild day with a light breeze! Let me know
+        if you'd like weather info for anywhere else. \U0001F324️\",\"reasoning_content\":\"The
+        weather tool returned the current weather for Berlin. Let me present this
+        to the user in a friendly, concise way.\"},{\"role\":\"user\",\"content\":\"What's
+        the weather in Paris? (48.8575, 2.3514)\"},{\"role\":\"assistant\",\"content\":\"\",\"tool_calls\":[{\"id\":\"weather_1_e45cc0d9\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"48.8575\\\",\\\"longitude\\\":\\\"2.3514\\\"}\"}}],\"reasoning_content\":\"The
+        user is asking for the weather in Paris with coordinates 48.8575, 2.3514.
+        I should call the weather tool with these coordinates.\"},{\"role\":\"tool\",\"content\":\"Current
+        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"weather_1_e45cc0d9\"}],\"stream\":true,\"tools\":[{\"type\":\"function\",\"function\":{\"name\":\"weather\",\"description\":\"Gets
+        current weather for a location\",\"parameters\":{\"type\":\"object\",\"properties\":{\"latitude\":{\"type\":\"string\",\"description\":\"Latitude
+        (e.g., 52.5200)\"},\"longitude\":{\"type\":\"string\",\"description\":\"Longitude
+        (e.g., 13.4050)\"}},\"required\":[\"latitude\",\"longitude\"],\"additionalProperties\":false,\"strict\":true}}}],\"stream_options\":{\"include_usage\":true}}"
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:42:55 GMT
+      Content-Type:
+      - text/event-stream
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Cache-Control:
+      - no-cache
+      Msh-Context-Cache-Token-Saved:
+      - '512'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 1c339d9b-da01-11f1-8fe3-00163e09d8c2
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '0'
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 3eddd8a568a021984ba72209270721c9
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ZGF0YTogeyJpZCI6ImNoYXRjbXBsLTMxOGNhY2Y0LWQ1YjctOWM0MS04YzhlLTBiODFhYmMyZjZmNSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3OTM5ODMzNzIsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IiJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtMzE4Y2FjZjQtZDViNy05YzQxLThjOGUtMGI4MWFiYzJmNmY1Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc5Mzk4MzM3MiwibW9kZWwiOiJraW1pLWszIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7InJlYXNvbmluZ19jb250ZW50IjoiVGhlIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC0zMThjYWNmNC1kNWI3LTljNDEtOGM4ZS0wYjgxYWJjMmY2ZjUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzkzOTgzMzcyLCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsicmVhc29uaW5nX2NvbnRlbnQiOiIgdG9vbCJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtMzE4Y2FjZjQtZDViNy05YzQxLThjOGUtMGI4MWFiYzJmNmY1Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc5Mzk4MzM3MiwibW9kZWwiOiJraW1pLWszIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7InJlYXNvbmluZ19jb250ZW50IjoiIHJldHVybmVkIHRoZSJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtMzE4Y2FjZjQtZDViNy05YzQxLThjOGUtMGI4MWFiYzJmNmY1Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc5Mzk4MzM3MiwibW9kZWwiOiJraW1pLWszIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7InJlYXNvbmluZ19jb250ZW50IjoiIHdlYXRoZXIgZm9yIFBhcmlzLiJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtMzE4Y2FjZjQtZDViNy05YzQxLThjOGUtMGI4MWFiYzJmNmY1Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc5Mzk4MzM3MiwibW9kZWwiOiJraW1pLWszIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7InJlYXNvbmluZ19jb250ZW50IjoiIExldCBtZSBwcmVzZW50IGl0In0sImZpbmlzaF9yZWFzb24iOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC0zMThjYWNmNC1kNWI3LTljNDEtOGM4ZS0wYjgxYWJjMmY2ZjUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzkzOTgzMzcyLCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsicmVhc29uaW5nX2NvbnRlbnQiOiIgdG8gdGhlIHVzZXIuIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC0zMThjYWNmNC1kNWI3LTljNDEtOGM4ZS0wYjgxYWJjMmY2ZjUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzkzOTgzMzcyLCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsicmVhc29uaW5nX2NvbnRlbnQiOiIifSwiZmluaXNoX3JlYXNvbiI6bnVsbH1dfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLTMxOGNhY2Y0LWQ1YjctOWM0MS04YzhlLTBiODFhYmMyZjZmNSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3OTM5ODMzNzIsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiSGVyZSdzIHRoZSJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtMzE4Y2FjZjQtZDViNy05YzQxLThjOGUtMGI4MWFiYzJmNmY1Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc5Mzk4MzM3MiwibW9kZWwiOiJraW1pLWszIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgY3VycmVudCB3ZWF0aGVyIGluIFBhcmlzIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC0zMThjYWNmNC1kNWI3LTljNDEtOGM4ZS0wYjgxYWJjMmY2ZjUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzkzOTgzMzcyLCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiAoNDguODU3In0sImZpbmlzaF9yZWFzb24iOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC0zMThjYWNmNC1kNWI3LTljNDEtOGM4ZS0wYjgxYWJjMmY2ZjUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzkzOTgzMzcyLCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IjUsIDIifSwiZmluaXNoX3JlYXNvbiI6bnVsbH1dfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLTMxOGNhY2Y0LWQ1YjctOWM0MS04YzhlLTBiODFhYmMyZjZmNSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3OTM5ODMzNzIsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiLjM1MTQpOlxuXG4ifSwiZmluaXNoX3JlYXNvbiI6bnVsbH1dfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLTMxOGNhY2Y0LWQ1YjctOWM0MS04YzhlLTBiODFhYmMyZjZmNSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3OTM5ODMzNzIsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiLSAqKlRlbXBlcmF0dXJlOioqIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC0zMThjYWNmNC1kNWI3LTljNDEtOGM4ZS0wYjgxYWJjMmY2ZjUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzkzOTgzMzcyLCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiAxNcKwQ1xuIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC0zMThjYWNmNC1kNWI3LTljNDEtOGM4ZS0wYjgxYWJjMmY2ZjUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzkzOTgzMzcyLCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6Ii0gKipXaW5kOioqIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC0zMThjYWNmNC1kNWI3LTljNDEtOGM4ZS0wYjgxYWJjMmY2ZjUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzkzOTgzMzcyLCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiAxMCBrbS9oIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC0zMThjYWNmNC1kNWI3LTljNDEtOGM4ZS0wYjgxYWJjMmY2ZjUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzkzOTgzMzcyLCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IlxuXG5TYW1lIG1pbGQgY29uZGl0aW9ucyJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtMzE4Y2FjZjQtZDViNy05YzQxLThjOGUtMGI4MWFiYzJmNmY1Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc5Mzk4MzM3MiwibW9kZWwiOiJraW1pLWszIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgYXMgQmVybGluIHJpZ2h0In0sImZpbmlzaF9yZWFzb24iOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC0zMThjYWNmNC1kNWI3LTljNDEtOGM4ZS0wYjgxYWJjMmY2ZjUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzkzOTgzMzcyLCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBub3chIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC0zMThjYWNmNC1kNWI3LTljNDEtOGM4ZS0wYjgxYWJjMmY2ZjUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzkzOTgzMzcyLCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBMZXQifSwiZmluaXNoX3JlYXNvbiI6bnVsbH1dfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLTMxOGNhY2Y0LWQ1YjctOWM0MS04YzhlLTBiODFhYmMyZjZmNSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3OTM5ODMzNzIsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIG1lIGtub3cgaWYgeW91J2QifSwiZmluaXNoX3JlYXNvbiI6bnVsbH1dfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLTMxOGNhY2Y0LWQ1YjctOWM0MS04YzhlLTBiODFhYmMyZjZmNSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3OTM5ODMzNzIsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIGxpa2UgdG8gY2hlY2sgYW5vdGhlciJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtMzE4Y2FjZjQtZDViNy05YzQxLThjOGUtMGI4MWFiYzJmNmY1Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc5Mzk4MzM3MiwibW9kZWwiOiJraW1pLWszIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgY2l0eS4g8J+XvCJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtMzE4Y2FjZjQtZDViNy05YzQxLThjOGUtMGI4MWFiYzJmNmY1Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc5Mzk4MzM3MiwibW9kZWwiOiJraW1pLWszIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7fSwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo2ODAsImNvbXBsZXRpb25fdG9rZW5zIjo4OSwidG90YWxfdG9rZW5zIjo3NjksImNhY2hlZF90b2tlbnMiOjUxMiwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjoxNn0sInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjo1MTIsImNhY2hlX3dyaXRlX3Rva2VucyI6MH19fV19CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtMzE4Y2FjZjQtZDViNy05YzQxLThjOGUtMGI4MWFiYzJmNmY1Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc5Mzk4MzM3MiwibW9kZWwiOiJraW1pLWszIiwiY2hvaWNlcyI6W10sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjY4MCwiY29tcGxldGlvbl90b2tlbnMiOjg5LCJ0b3RhbF90b2tlbnMiOjc2OSwiY2FjaGVkX3Rva2VucyI6NTEyLCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjE2fSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjUxMiwiY2FjaGVfd3JpdGVfdG9rZW5zIjowfX19CgpkYXRhOiBbRE9ORV0KCg==
+  recorded_at: Fri, 06 Nov 2026 16:42:56 GMT
+recorded_with: VCR 6.4.1

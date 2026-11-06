@@ -1,0 +1,384 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"Call file_fetch
+        to get ruby.txt, then repeat the contents of the attached file."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"file_fetch","description":"Fetches
+        a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:32:22 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID, Server-Timing-Total
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '1090'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '2000000'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_01e5c75312d95141016aee0114f84887d2ab1b19d884ad2d90",
+          "object": "response",
+          "created_at": 1793982741,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1793982741,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5.6-luna",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_01e5c75312d95141016aee011599a087d2aee05979e38577c8",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABq7gEWzOoWi_oAQ7ceT0rD8HXvweB1LQrU7C3uOM9iqYzNJbQ-B8NIo20RkpBxSWvtcZKNXNs3OeQGkxZZOhnyf-_sHCI5lSHE9UWzMruA3yqE5Vgd59LsCGvr_wliG3NF8X000xJdvxFDfUB91JN5KLwsixKUPBpKmhG0HbAouqSDNyOLsNKgv_xH52NGysq3HZDmHQTeSEvbVpOdYSP9KgRxNTDKIWABXXHlny5-bFKUyoyH9-pjv7CYNBA5Mc6MACGaLnn-Qw0ycwCt5CXXEfvnq8Hzm9-hCKNG6GDk4Ou8xt4mhdI3LqQswXfSdfqg3Fn8HHX6A-fwFWAVq4Gg4GfTv_ZXwF4J-ujxbiKGoi7ZNN34ovryKkEaYaNT3TX_87zvp1PdFfUAR7qwnHVUy1pKzpwiX_upIfy6jGEMpBwpYeaRSbhi6w-iSm_YNr9sUAta0l-A8u3Tr2DQHChXJSg9kId7ZT6bXaZwc70_QSQXV_BZ9zPc9iorutn7cD534VLub1XcczxmYmaapnV0xVUki6vMguzEbBsGhfn1qiE0p6-qdC-qoed00flAVa5Tm1pRNVQI24D9RFusafZ8fegP-HkOfRUiKHKgYQ2czz-JTGOEqNvo50x525exnXWl07Nnzj67SGfamOfkqDrbTAyAk5CjgHTNG99x_lUXOMrvlreQC1UsKyVBBMl_vI_8L6BBNNVaFaaucIWOmViMNYkfnAJoWWbMVdV2F4S0WSfnpUoFCEZHlkKSLihw2Ksr0qZ4vEtXuWJyC3JYwOiLETCPj0CpTUcEs1ty7XvKMyiz6pl7zsCgYio0OY71PDmNlB6oXoPXG4ciXbHUt6plKhq_zo-hK7uUMc_RsnYdd2su8PAIi-pM9NPPDSnFTiOJd5r7dnBa9AMIwv1usjLNuHYKd7LZLxBdVtVCvpZt0SZkDzMXjuUDhKrJwYTcQIIJwssL5VZC-u4ZEOuJfEbA9CJNAByU5-gGYeLNMbzF6KjCSiaLVLwRbErHSMIUu45PnloqIH-uk1efSC7V6RyofjQb97EV0Rcjg1EBIx7yf9BPprxKjAx1EZGbixZQIqKWIBPthR0n8xOwy3KDlZ1F9QAx_sGvUPdieSo9PPcktFvtPooeoOSePH3ft5OAdqEQnafMSfIbzetH4vKmHMJDV394tPOUsSvbq5qJ2AZJgnNWTNKt1p6QlFtl9unStxeI6XySA5Ua4gqK9JsYRMvOR2-oVw7_DGuaD8heQvGN0GAiiQAbi5yqYq6PGpquK1IdXoJlTbTxs3Hc7Ops9hsnCFfuk_VHIxTPwGoo78EWmeOAEkEAppDzSJWFatKeDqbLW6tzMSwLvZUhdJywbsP4DvoT8BNH-Wu2pH3vbXz9NW1lauzVuaLD2k4nc17byngMU2Xjw-yCGYMc8iuF9XXL22h7Jvn7D4UIz3uxweNofMBR-kOBNB2pd2QFDmCQxkJ6vDiG2NNeZxZSZVscCtbMgbQU-Mn1Osqx3jPI86PE_1rrWj5393UoT5L2qzWnPHmlUhIp",
+              "summary": []
+            },
+            {
+              "id": "fc_01e5c75312d95141016aee0115d64087d2927ee68067560453",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{}",
+              "call_id": "call_x4t6JN7K3sjc7uvvrO8TOxLs",
+              "name": "file_fetch"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "24h",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "function",
+              "description": "Fetches a sample text file named ruby.txt",
+              "name": "file_fetch",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": false
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 0.98,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 57,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 26,
+            "output_tokens_details": {
+              "reasoning_tokens": 10
+            },
+            "total_tokens": 83
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Fri, 06 Nov 2026 16:32:22 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"Call file_fetch
+        to get ruby.txt, then repeat the contents of the attached file."},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABq7gEWzOoWi_oAQ7ceT0rD8HXvweB1LQrU7C3uOM9iqYzNJbQ-B8NIo20RkpBxSWvtcZKNXNs3OeQGkxZZOhnyf-_sHCI5lSHE9UWzMruA3yqE5Vgd59LsCGvr_wliG3NF8X000xJdvxFDfUB91JN5KLwsixKUPBpKmhG0HbAouqSDNyOLsNKgv_xH52NGysq3HZDmHQTeSEvbVpOdYSP9KgRxNTDKIWABXXHlny5-bFKUyoyH9-pjv7CYNBA5Mc6MACGaLnn-Qw0ycwCt5CXXEfvnq8Hzm9-hCKNG6GDk4Ou8xt4mhdI3LqQswXfSdfqg3Fn8HHX6A-fwFWAVq4Gg4GfTv_ZXwF4J-ujxbiKGoi7ZNN34ovryKkEaYaNT3TX_87zvp1PdFfUAR7qwnHVUy1pKzpwiX_upIfy6jGEMpBwpYeaRSbhi6w-iSm_YNr9sUAta0l-A8u3Tr2DQHChXJSg9kId7ZT6bXaZwc70_QSQXV_BZ9zPc9iorutn7cD534VLub1XcczxmYmaapnV0xVUki6vMguzEbBsGhfn1qiE0p6-qdC-qoed00flAVa5Tm1pRNVQI24D9RFusafZ8fegP-HkOfRUiKHKgYQ2czz-JTGOEqNvo50x525exnXWl07Nnzj67SGfamOfkqDrbTAyAk5CjgHTNG99x_lUXOMrvlreQC1UsKyVBBMl_vI_8L6BBNNVaFaaucIWOmViMNYkfnAJoWWbMVdV2F4S0WSfnpUoFCEZHlkKSLihw2Ksr0qZ4vEtXuWJyC3JYwOiLETCPj0CpTUcEs1ty7XvKMyiz6pl7zsCgYio0OY71PDmNlB6oXoPXG4ciXbHUt6plKhq_zo-hK7uUMc_RsnYdd2su8PAIi-pM9NPPDSnFTiOJd5r7dnBa9AMIwv1usjLNuHYKd7LZLxBdVtVCvpZt0SZkDzMXjuUDhKrJwYTcQIIJwssL5VZC-u4ZEOuJfEbA9CJNAByU5-gGYeLNMbzF6KjCSiaLVLwRbErHSMIUu45PnloqIH-uk1efSC7V6RyofjQb97EV0Rcjg1EBIx7yf9BPprxKjAx1EZGbixZQIqKWIBPthR0n8xOwy3KDlZ1F9QAx_sGvUPdieSo9PPcktFvtPooeoOSePH3ft5OAdqEQnafMSfIbzetH4vKmHMJDV394tPOUsSvbq5qJ2AZJgnNWTNKt1p6QlFtl9unStxeI6XySA5Ua4gqK9JsYRMvOR2-oVw7_DGuaD8heQvGN0GAiiQAbi5yqYq6PGpquK1IdXoJlTbTxs3Hc7Ops9hsnCFfuk_VHIxTPwGoo78EWmeOAEkEAppDzSJWFatKeDqbLW6tzMSwLvZUhdJywbsP4DvoT8BNH-Wu2pH3vbXz9NW1lauzVuaLD2k4nc17byngMU2Xjw-yCGYMc8iuF9XXL22h7Jvn7D4UIz3uxweNofMBR-kOBNB2pd2QFDmCQxkJ6vDiG2NNeZxZSZVscCtbMgbQU-Mn1Osqx3jPI86PE_1rrWj5393UoT5L2qzWnPHmlUhIp"},{"type":"function_call","call_id":"call_x4t6JN7K3sjc7uvvrO8TOxLs","name":"file_fetch","arguments":"{}"},{"type":"function_call_output","call_id":"call_x4t6JN7K3sjc7uvvrO8TOxLs","output":"Fetched
+        the file."},{"role":"user","content":[{"type":"input_text","text":"Attachments
+        from tool call call_x4t6JN7K3sjc7uvvrO8TOxLs:"},{"type":"input_text","text":"<file
+        name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"file_fetch","description":"Fetches
+        a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:32:22 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID, Server-Timing-Total
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '770'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '2000000'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_06722c1b9e872f02016aee011624ec87d2a62a973483dc458d",
+          "object": "response",
+          "created_at": 1793982742,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1793982742,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5.6-luna",
+          "moderation": null,
+          "output": [
+            {
+              "id": "msg_06722c1b9e872f02016aee0116bf2087d29b944d6f3f53150e",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "Ruby is the best."
+                }
+              ],
+              "phase": "final_answer",
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "24h",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "function",
+              "description": "Fetches a sample text file named ruby.txt",
+              "name": "file_fetch",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": false
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 0.98,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 145,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 9,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 154
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Fri, 06 Nov 2026 16:32:22 GMT
+recorded_with: VCR 6.4.1

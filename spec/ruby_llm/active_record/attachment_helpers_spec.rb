@@ -22,7 +22,7 @@ RSpec.describe RubyLLM::ActiveRecord::AttachmentHelpers do
   end
 
   def message_with_attachment
-    chat = Chat.create!(model: 'gpt-4.1-nano')
+    chat = Chat.create!(model: 'gpt-5.4-nano')
     message = chat.messages.create!(role: 'user', content: 'see attached')
     message.attachments.attach(blob)
     message

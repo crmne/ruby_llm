@@ -4,7 +4,7 @@ require 'spec_helper'
 require 'timeout'
 
 RSpec.describe RubyLLM::Models::Lookup do
-  let(:original) { RubyLLM::Model.new(id: 'gpt-5-nano', provider: 'openai', name: 'Original') }
+  let(:original) { RubyLLM::Model.new(id: 'gpt-5.6-luna', provider: 'openai', name: 'Original') }
   let(:replacement) { RubyLLM::Model.new(id: original.id, provider: 'openai', name: 'Updated') }
   let(:retired) { RubyLLM::Model.new(id: 'gpt-4.1', provider: 'openai') }
   let(:registry) { RubyLLM::Models.new([original, retired]) }
@@ -171,7 +171,7 @@ RSpec.describe RubyLLM::Models::Lookup do
   describe '#find_configured' do
     let(:config) { RubyLLM::Configuration.new.tap { |config| config.openrouter_api_key = 'test' } }
 
-    def aggregated = @aggregated ||= RubyLLM::Model.new(id: 'openai/gpt-5-nano', provider: 'openrouter')
+    def aggregated = @aggregated ||= RubyLLM::Model.new(id: 'openai/gpt-5.6-luna', provider: 'openrouter')
     def first_party = @first_party ||= RubyLLM::Model.new(id: aggregated.id, provider: 'perplexity')
     def models = RubyLLM::Models.new([aggregated, first_party])
 

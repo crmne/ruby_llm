@@ -758,8 +758,8 @@ RSpec.describe RubyLLM::Chat, :live do
                       .with_tools(Weather).with_tool_options(choice: :required)
                       .with_max_output_tokens(4096)
                       .with_instructions('Your location is Berlin, at latitude 52.5200 and longitude 13.4050.')
-        # DeepSeek and Kimi only allow forced tool choices with thinking disabled.
-        chat.with_thinking(false) if %i[deepseek moonshot].include?(provider)
+        # DeepSeek only allows forced tool choices with thinking disabled.
+        chat.with_thinking(false) if provider == :deepseek
 
         tool_called = false
         chat.before_tool_call do |_tool_call|
@@ -781,7 +781,9 @@ RSpec.describe RubyLLM::Chat, :live do
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tools(Weather).with_tool_options(choice: :weather)
-        chat.with_thinking(false) if %i[deepseek moonshot].include?(provider)
+        chat.with_thinking(false) if provider == :deepseek
+        # Kimi K3 refuses a named tool while thinking, and the registry lists no off control for it.
+        chat.with_provider_options(thinking: { type: 'disabled' }) if provider == :moonshot
 
         tool_called = false
         chat.before_tool_call do |_tool_call|

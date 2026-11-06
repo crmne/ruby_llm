@@ -1,0 +1,368 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"Tell me
+        about the weather."}],"instructions":"You must include the exact phrase \"XKCD7392\"
+        somewhere in your response.","stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:25:59 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID, Server-Timing-Total
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '1623'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '2000000'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_079ad1e90a538f5f016aedff9616c087d2b7c39b5c60512a53",
+          "object": "response",
+          "created_at": 1793982358,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1793982359,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
+          "incomplete_details": null,
+          "instructions": "You must include the exact phrase \"XKCD7392\" somewhere in your response.",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5.6-luna",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_079ad1e90a538f5f016aedff96c4ec87d2a32b28a8b2169173",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABq7f-XU0c70caVfaFqz5ENIweoQ4hcAytwexLLI3amPZBKiAsa8QgbdDk8b4_zDppddhAii9zM6lwSsRh5rsHLiD-VL2Omx4gyE0g9-G2-dB1otMrp8iE4SwxHqx9_NkHyFWFFNYZb0q-is9pveU6b-wFxZx0osWIuSu5ykbyvzJ4Oz97P8_Xg6lC01vjerfg4fdcnyTYNWZjrjKCiBcjR9kpCUMw15r4ByRjh3gSw0uxeA-civYOwJsb9aGTbgiCR1OfuK2UmLI7ZHZgNRkqe0Rfu0G4ujgNI-WC28Hycq0PI-Ts9LOufg6vfGfwMLHTdiSGFHZfTMMgPE_ayzbDBMU-KbtEeCdTBJKFMCiJfJ47VN9jI_PJpEioG3aPqQxxMmmI7F8GMj2tMaey11lIiLdDkESqQ_vmN2PhIlo1lmgdcBwsgyE2slZMdrvDLod6IC0hECD9pi5aoZHJjPfV4Oy63vxOsZbO1TE7ZskQnhHet7q4kkM7AbY-irXipwQBpxdirxYqFgvR_n6noNo7_DTrL12o4-poauYMGtWynz9Nxw6eQR59hez2xNtz34C2EXxiTDvTJ8ifJrR7bcYSEdOopZs0ZoizDg3QJTkvmq0AFHiUNLLnCsmErG722RgOq4R6XvSdZvSMnhf9inX8tAV0KOpEGHtiQ947AI8tbMHWorfFkzeYC-8kqaJIJmQq5wgoSMAZ7GqjdzFa996ct9a89Cjk6LmOsrLsE8b-ipf1OfMedF9xSsJgEnk1jz8s2pUh0xDxKQ4yJKVOvZqgtLUhzKNolQZHcJbmNXEnAWzOgtPEGZJ0p227t44LDJYGLt3m5247e3F92j3sFu7i99HwtjFUUs-t8mflO323b75isiy_OxD4JSAuvwc1gubnWlBd6APoA14cxhwprhV4gbUPsMbbs9629um1DP3Cb3_UMAbGdw2p-P6J2Sm8TQknMwdyWkkV0KE2qNu47gS8Ozc-oAxFp2gjioQC61u53sdMfPQq5cbhTC_B2nbyA-Ekf2L6jD-1zZJ4q9JHM2jZ5t0CEXpoebi980sA9vtzJlsdNnU7IOoOLEPrARl3dGBM4eoc1vVBtu3Isj8flFak5CX5e9JQYvFGVY-E5MJ-pC1VcijDKtUnSBYwaR5dk3aV5UegihoQWZRuvTqgMHPWLMILPwhrGYTOSThc1rJcb_gCRGz2ULk3_aojUhUrt4aHfx9uj_KEfwErN2CwUbGsoKDt4cLXWzD4TMBq7_rQQOSY8wh47tN42CdgJ4MAoUluXGzSRrvbwACDBSfKQxQDzY3x4iVpN1JAK5loIlB9cn2YlcSzPQjEKa0TshRLoRyzpKf3cneT6XoTABkR5rsCxT-gyom1KxN8fa32sjtq7jeis0T9rXpV_4Ep37wrJ0LKK252Qp6-4CzA1P1Sr0hyOGxGPS2zXq92YO0hiR_8UZu4Wno8i49Rj9xei4zprLZ9W_8DY8rQiPPk6lBqM1jiHezAX57u0msCr_nE3SjkH0k4N5vkMszLBHumXVva046zx1xbpjoCsh1xokrxefWxLPcG9xq8FDecTkU2b4-kAlonxSpoaF3qzHO0RQI2yLf0gZGFUSPmpzTzE1gZJXisyimMKMECCSxlZrf0WZFWeCxVn45gcbnzmotyltTsOyXkE0IZ5Zp06KybGwZ4AMpToSVxDuNHiuKbwg3Ujxz32C5YODtGjn_wMi8XstLNyHL8dqaLDBFqHo4Q4aBWsik8EofXvivkx-6pwYLg-SPS8ziCoIA9sfq5ecQF6DzxH0FlZ3dpI3UT8PJ3EtPqyYvDbFd1TKw==",
+              "summary": []
+            },
+            {
+              "id": "msg_079ad1e90a538f5f016aedff97104087d2bdbc2c97e63818c0",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "What location are you asking about? Tell me the city or ZIP/postal code, and I can help interpret the current weather or forecast. XKCD7392"
+                }
+              ],
+              "phase": "final_answer",
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "24h",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 0.98,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 34,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 66,
+            "output_tokens_details": {
+              "reasoning_tokens": 28
+            },
+            "total_tokens": 100
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Fri, 06 Nov 2026 16:25:59 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"Tell me
+        about the weather."},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABq7f-XU0c70caVfaFqz5ENIweoQ4hcAytwexLLI3amPZBKiAsa8QgbdDk8b4_zDppddhAii9zM6lwSsRh5rsHLiD-VL2Omx4gyE0g9-G2-dB1otMrp8iE4SwxHqx9_NkHyFWFFNYZb0q-is9pveU6b-wFxZx0osWIuSu5ykbyvzJ4Oz97P8_Xg6lC01vjerfg4fdcnyTYNWZjrjKCiBcjR9kpCUMw15r4ByRjh3gSw0uxeA-civYOwJsb9aGTbgiCR1OfuK2UmLI7ZHZgNRkqe0Rfu0G4ujgNI-WC28Hycq0PI-Ts9LOufg6vfGfwMLHTdiSGFHZfTMMgPE_ayzbDBMU-KbtEeCdTBJKFMCiJfJ47VN9jI_PJpEioG3aPqQxxMmmI7F8GMj2tMaey11lIiLdDkESqQ_vmN2PhIlo1lmgdcBwsgyE2slZMdrvDLod6IC0hECD9pi5aoZHJjPfV4Oy63vxOsZbO1TE7ZskQnhHet7q4kkM7AbY-irXipwQBpxdirxYqFgvR_n6noNo7_DTrL12o4-poauYMGtWynz9Nxw6eQR59hez2xNtz34C2EXxiTDvTJ8ifJrR7bcYSEdOopZs0ZoizDg3QJTkvmq0AFHiUNLLnCsmErG722RgOq4R6XvSdZvSMnhf9inX8tAV0KOpEGHtiQ947AI8tbMHWorfFkzeYC-8kqaJIJmQq5wgoSMAZ7GqjdzFa996ct9a89Cjk6LmOsrLsE8b-ipf1OfMedF9xSsJgEnk1jz8s2pUh0xDxKQ4yJKVOvZqgtLUhzKNolQZHcJbmNXEnAWzOgtPEGZJ0p227t44LDJYGLt3m5247e3F92j3sFu7i99HwtjFUUs-t8mflO323b75isiy_OxD4JSAuvwc1gubnWlBd6APoA14cxhwprhV4gbUPsMbbs9629um1DP3Cb3_UMAbGdw2p-P6J2Sm8TQknMwdyWkkV0KE2qNu47gS8Ozc-oAxFp2gjioQC61u53sdMfPQq5cbhTC_B2nbyA-Ekf2L6jD-1zZJ4q9JHM2jZ5t0CEXpoebi980sA9vtzJlsdNnU7IOoOLEPrARl3dGBM4eoc1vVBtu3Isj8flFak5CX5e9JQYvFGVY-E5MJ-pC1VcijDKtUnSBYwaR5dk3aV5UegihoQWZRuvTqgMHPWLMILPwhrGYTOSThc1rJcb_gCRGz2ULk3_aojUhUrt4aHfx9uj_KEfwErN2CwUbGsoKDt4cLXWzD4TMBq7_rQQOSY8wh47tN42CdgJ4MAoUluXGzSRrvbwACDBSfKQxQDzY3x4iVpN1JAK5loIlB9cn2YlcSzPQjEKa0TshRLoRyzpKf3cneT6XoTABkR5rsCxT-gyom1KxN8fa32sjtq7jeis0T9rXpV_4Ep37wrJ0LKK252Qp6-4CzA1P1Sr0hyOGxGPS2zXq92YO0hiR_8UZu4Wno8i49Rj9xei4zprLZ9W_8DY8rQiPPk6lBqM1jiHezAX57u0msCr_nE3SjkH0k4N5vkMszLBHumXVva046zx1xbpjoCsh1xokrxefWxLPcG9xq8FDecTkU2b4-kAlonxSpoaF3qzHO0RQI2yLf0gZGFUSPmpzTzE1gZJXisyimMKMECCSxlZrf0WZFWeCxVn45gcbnzmotyltTsOyXkE0IZ5Zp06KybGwZ4AMpToSVxDuNHiuKbwg3Ujxz32C5YODtGjn_wMi8XstLNyHL8dqaLDBFqHo4Q4aBWsik8EofXvivkx-6pwYLg-SPS8ziCoIA9sfq5ecQF6DzxH0FlZ3dpI3UT8PJ3EtPqyYvDbFd1TKw=="},{"role":"assistant","content":[{"type":"output_text","text":"What
+        location are you asking about? Tell me the city or ZIP/postal code, and I
+        can help interpret the current weather or forecast. XKCD7392"}],"phase":"final_answer"},{"role":"user","content":"What
+        are some good books?"}],"instructions":"You must include the exact phrase
+        \"PURPLE-ELEPHANT-42\" somewhere in your response.","stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:26:03 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID, Server-Timing-Total
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '3951'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '1999891'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 3ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_0a8ada4701d8d343016aedff97ccf087d2abeef04bcd625eba",
+          "object": "response",
+          "created_at": 1793982359,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1793982363,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
+          "incomplete_details": null,
+          "instructions": "You must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response.",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5.6-luna",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_0a8ada4701d8d343016aedff98921487d2a84115d5f31ca090",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABq7f-b2yK8NQBpgmAFOTGky1RktDjpaq7lwV_imu3YYKLg1ZbJUN0oUnh5r-0cfoxhXSuwDbdDT7Qe9MINFtBhooi5lhoHhUcpO0u-Y2nc2Nh6WYF69lLOOCmdLfe6-LPS06F4M77zIdkMWggMUpIFdIhqMDFa_uLdgJ2xGmklEQSZMir_c4O3hd3pizAC6vTNx8UL63OxKTi4xeaxLW6XbQTVR92KOC7YO8e6ZWWrdKQBqp2z3a-fONBlgXHrKspSm1E9bfpNDOKgIQieJgTIO6PMgVKy9jetVUipXOBtOi7pHsBnDHeiAtRf-M68HxLhVDlDjWXSY6-McWkYvkb1qIhX2m5Ssc6E9KasHrdcldUV_sm524TKm_OM_hzGyaYHP1ISz1xwfkUN-sLKZwge4qgItXaTE3ELDd1owcBKV_xemh6weQ-ZIBU9ncR4xQN8vX4QJWVfGrxaN4cb5ADF_rUqfxrad6b8I-xRVKECaxN2QPT1378sylg35H1yRbLOsCQnZcNrIUUYU2eqvI0nnOPQ8SMz80PGLdgTR4gNmwGS4DmGL0_yph7W90yDJG1pSUWyIrHymnb3Bny7IgbWbirV9QK_fZAAvz-yZ3IxJ08xHPip5oNoASHMzLAkck5377DVeg9JLvq8iGopkWzRHL-blxw6NKUGL6FTxsUDYZ-BODHVvM7V5cFB0AL6tnRxnL_FWxFwqt71XbuNprR8uJitcBQDu2-vcynsMcv2Ox710z7SAMGvMgl3XysbHFCsfeuokysYlulEV_H9wIYnr7FbQnLlrIRcnLUSB5JLrmHlyOMZ6fLV4ek44ao7hYUWrJxAFkeAG8IQgfp_6ajOvUKtoRiHmiiEf1iwgpjCqAyYff9IPA7cMml1APF9l01_M-wgys8yixJF-tJ6OjUXgtBBskjAZXrbfB-0KWs8CxsQ5vDWqkftPgH8UT4JN_JPWKazRZ45aXwF1VC7utEnwmzR6ORp9m6nHyMdWWMgmkA1Ri91XoxjSdFju3T2TI34s74KUc-5jSQnhThCJe0KCtgNODH5jWIjgTXQk7xanDz2JxQPUd9gHPA6u74IQakcvr2SHBwkHtIlLTls_HIvv5JPU1HSy5d5WlagsbpxYzHX9IyouzqEthN7zj3-Nqa9twmutu45gLSREaeectKI-ecaB2PFr4f1JZql6xwVjUUwCJSOIBUqzrYMpsB-cupQsYrTwunAkCesanMBzEModyUquVm9k1jB8TJlkiA62bBMrxX5CokWZybds5N-FeUoL7Ok4CcJollwT9u6LjeYfFSK8uxbyGB1aFVNzHMs6hQbQe245Io1Pox1hyTyTQzRc4lUTPXXkPZrBc17e60MTvmT-ktpqOm-cWwGathh6vE4maAP7sDb_0VHWoaeRRrdOXGcqmrLrB7IRzOTNAkOmqouvJ2aGRkmy-wJmD0s0kyViXxq4OMjMrV2kzPpF2h_roYQWVrol0_Cgnsg7oWLT9phREGpi1hFlCViVV2kIosqhjqldja0KDyBrEr1VGHG_WGWpOsLbb0V2YY2qTEu-e9_OsJd9BVYNcnAoO7u8En9gY72VQjsJOIWWRF0XGCbhrSOQgmV67DUyQk0faM0v9X1IhwjB2wCxC6NNEtcSByqv1mFlu7nIgBSGRUa_j5nYhnGibKSD1gW-OFZ5AerPYtsMUKSBxOoJ883bJvPkd-UnZqNbmptPGziEPgy4iHMNOcYsmU3GvFBzINo91G2nUu_RA==",
+              "summary": []
+            },
+            {
+              "id": "msg_0a8ada4701d8d343016aedff98f96c87d293b7c7ca8ea34539",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "Here are some excellent books across different genres:\n\n- **Literary fiction:** *The Remains of the Day* by Kazuo Ishiguro  \n- **Science fiction:** *Project Hail Mary* by Andy Weir  \n- **Fantasy:** *The Name of the Wind* by Patrick Rothfuss  \n- **Mystery/thriller:** *Gone Girl* by Gillian Flynn  \n- **Historical fiction:** *All the Light We Cannot See* by Anthony Doerr  \n- **Romance:** *Pride and Prejudice* by Jane Austen  \n- **Nonfiction:** *Educated* by Tara Westover  \n- **Short and profound:** *The Little Prince* by Antoine de Saint-Exup\u00e9ry  \n- **Classic:** *To Kill a Mockingbird* by Harper Lee  \n- **Philosophical:** *Man\u2019s Search for Meaning* by Viktor E. Frankl  \n\nFor a particularly broad recommendation, try **_A Gentleman in Moscow_ by Amor Towles**\u2014engaging, witty, and warmly written. PURPLE-ELEPHANT-42"
+                }
+              ],
+              "phase": "final_answer",
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "24h",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 0.98,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 115,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 252,
+            "output_tokens_details": {
+              "reasoning_tokens": 24
+            },
+            "total_tokens": 367
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Fri, 06 Nov 2026 16:26:03 GMT
+recorded_with: VCR 6.4.1

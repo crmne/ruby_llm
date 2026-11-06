@@ -1,0 +1,177 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k3","messages":[{"role":"user","content":"What''s the
+        fall of Rome?"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":{"type":"function","function":{"name":"weather"}},"thinking":{"type":"disabled"}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:45:59 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 81d4181f-da01-11f1-a890-00163e49fa2f
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '0'
+      X-Msh-Trace-Id:
+      - 833ea7aff5cabc135574d3b80c230c98
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTlhZDEzODI5LTEwYzYtOTg2NS04ZDBiLTBhMDdmMGI2Nzk3NCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTM5ODM1NDMsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlICoqRmFsbCBvZiBSb21lKiogcmVmZXJzIHRvIHRoZSBjb2xsYXBzZSBvZiB0aGUgKipXZXN0ZXJuIFJvbWFuIEVtcGlyZSoqIGluICoqNDc2IEFEKiosIG1hcmtpbmcgdGhlIGVuZCBvZiBhbmNpZW50IFJvbWFuIHBvbGl0aWNhbCB1bml0eSBpbiBXZXN0ZXJuIEV1cm9wZSBhbmQgdHJhZGl0aW9uYWxseSBzaWduYWxpbmcgdGhlIHRyYW5zaXRpb24gZnJvbSBhbnRpcXVpdHkgdG8gdGhlIE1pZGRsZSBBZ2VzLlxuXG4jIyBXaGF0IEFjdHVhbGx5IEhhcHBlbmVkXG5UaGUgXCJmYWxsXCIgd2Fzbid0IGEgc2luZ2xlIGV2ZW50LCBidXQgYSAqKmNlbnR1cnktbG9uZyBwcm9jZXNzKiogb2YgZnJhZ21lbnRhdGlvbi4gVGhlIGNvbnZlbnRpb25hbCBlbmRwb2ludCBjYW1lIGluICoqNDc2IEFEKiogd2hlbiB0aGUgR2VybWFuaWMgY2hpZWZ0YWluICoqT2RvYWNlcioqIGRlcG9zZWQgdGhlIHlvdW5nIGVtcGVyb3IgKipSb211bHVzIEF1Z3VzdHVsdXMqKiAoaXJvbmljYWxseSBuYW1lZCBhZnRlciBSb21lJ3MgZm91bmRlcikuIE9kb2FjZXIgZGlkbid0IGNsYWltIHRoZSB0aXRsZSBvZiBlbXBlcm9yIGZvciBoaW1zZWxmIGJ1dCBzZW50IHRoZSBpbXBlcmlhbCByZWdhbGlhIHRvIENvbnN0YW50aW5vcGxlLCBlZmZlY3RpdmVseSBkZWNsYXJpbmcgdGhlIFdlc3Rlcm4gRW1waXJlIGRlZnVuY3QuXG5cbiMjIFdoeSBJdCBIYXBwZW5lZFxuSGlzdG9yaWFucyBkZWJhdGUgdGhlIGNhdXNlcywgYnV0IGtleSBmYWN0b3JzIGluY2x1ZGU6XG5cbioqTWlsaXRhcnkgUHJlc3N1cmVzKipcbi0gSW52YXNpb25zIGJ5IEdvdGhpYyB0cmliZXMgKFZpc2lnb3RocyBzYWNrZWQgUm9tZSBpbiA0MTA7IFZhbmRhbHMgaW4gNDU1KVxuLSBUaGUgSHVucycgd2VzdHdhcmQgbWlncmF0aW9uIHB1c2hlZCBvdGhlciBncm91cHMgaW50byBSb21hbiB0ZXJyaXRvcnlcbi0gUmVsaWFuY2Ugb24gXCJiYXJiYXJpYW5cIiBtZXJjZW5hcmllcyAoZm9lZGVyYXRpKSB3aG8gZXZlbnR1YWxseSB0dXJuZWQgYWdhaW5zdCBSb21hbiBhdXRob3JpdHlcblxuKipFY29ub21pYyBTdHJhaW4qKlxuLSBEZWJhc2VtZW50IG9mIGN1cnJlbmN5IGNhdXNpbmcgaHlwZXJpbmZsYXRpb25cbi0gSGVhdnkgdGF4YXRpb24gY3J1c2hpbmcgdGhlIG1pZGRsZSBjbGFzc1xuLSBUcmFkZSBkaXNydXB0aW9uIGFuZCBhZ3JpY3VsdHVyYWwgZGVjbGluZVxuXG4qKlBvbGl0aWNhbCBJbnN0YWJpbGl0eSoqXG4tIFRoZSBcIkNyaXNpcyBvZiB0aGUgVGhpcmQgQ2VudHVyeVwiICgyMzXigJMyODQgQUQpIHNhdyBvdmVyIDIwIGVtcGVyb3JzIGluIDUwIHllYXJzXG4tIENvbnN0YW50IGNpdmlsIHdhcnMgZHJhaW5lZCByZXNvdXJjZXNcbi0gVGhlIGVtcGlyZSBiZWNhbWUgdG9vIGxhcmdlIHRvIGdvdmVybiBlZmZlY3RpdmVseSBmcm9tIG9uZSBjZW50ZXJcblxuKipBZG1pbmlzdHJhdGl2ZSBEaXZpc2lvbioqXG4tIEVtcGVyb3IgRGlvY2xldGlhbiBzcGxpdCB0aGUgZW1waXJlIGludG8gRWFzdGVybiBhbmQgV2VzdGVybiBoYWx2ZXMgKDI4NOKAkzMwNSBBRCkgZm9yIG1hbmFnZWFiaWxpdHlcbi0gVGhlIEVhc3Rlcm4gUm9tYW4gRW1waXJlIChCeXphbnRpbmUgRW1waXJlKSBzdXJ2aXZlZCBhbmQgdGhyaXZlZCBmb3IgYW5vdGhlciAxLDAwMCB5ZWFycywgZmFsbGluZyBvbmx5IGluICoqMTQ1MyBBRCoqIHRvIHRoZSBPdHRvbWFuIFR1cmtzXG5cbiMjIExlZ2FjeVxuVGhlIGZhbGwgZGlkbid0IG1lYW4gaW5zdGFudCBkYXJrbmVzc+KAlFJvbWFuIGxhdywgbGFuZ3VhZ2UgKExhdGluKSwgYXJjaGl0ZWN0dXJlLCBhbmQgQ2hyaXN0aWFuIGluc3RpdHV0aW9ucyBwZXJzaXN0ZWQgdGhyb3VnaCB0aGUgbWVkaWV2YWwgcGVyaW9kLiBIb3dldmVyLCBpdCBkaWQgbWFyayB0aGUgZW5kIG9mIGNlbnRyYWxpemVkIE1lZGl0ZXJyYW5lYW4gdW5pdHksIGxlYWRpbmcgdG8gdGhlIGZyYWdtZW50ZWQgZmV1ZGFsIGtpbmdkb21zIG9mIG1lZGlldmFsIEV1cm9wZS5cblxuKipBbHRlcm5hdGl2ZSB2aWV3OioqIFNvbWUgaGlzdG9yaWFucyBhcmd1ZSBSb21lIFwidHJhbnNmb3JtZWRcIiByYXRoZXIgdGhhbiBmZWxsLCBub3RpbmcgdGhhdCBHZXJtYW5pYyBraW5nZG9tcyBhZG9wdGVkIFJvbWFuIGN1c3RvbXMgYW5kIHRoZSBFYXN0ZXJuIEVtcGlyZSBwcmVzZXJ2ZWQgUm9tYW4gY2l2aWxpemF0aW9uIGZvciBjZW50dXJpZXMuXG5cbldvdWxkIHlvdSBsaWtlIHRvIGV4cGxvcmUgYW55IHNwZWNpZmljIGFzcGVjdOKAlGxpa2UgdGhlIG1pbGl0YXJ5IHRhY3RpY3MsIHRoZSByb2xlIG9mIENocmlzdGlhbml0eSwgb3IgaG93IHRoZSBFYXN0ZXJuIEVtcGlyZSBkaWZmZXJlZD8iLCJ0b29sX2NhbGxzIjpbeyJpbmRleCI6MCwiaWQiOiJ3ZWF0aGVyXzBfZmYyNjhkOWYiLCJ0eXBlIjoiZnVuY3Rpb24iLCJmdW5jdGlvbiI6eyJuYW1lIjoid2VhdGhlciIsImFyZ3VtZW50cyI6IntcImxhdGl0dWRlXCI6XCI0MS45MDI4XCIsXCJsb25naXR1ZGVcIjpcIjEyLjQ5NjRcIn0ifX1dfSwiZmluaXNoX3JlYXNvbiI6InRvb2xfY2FsbHMifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjE0MywiY29tcGxldGlvbl90b2tlbnMiOjU1OCwidG90YWxfdG9rZW5zIjo3MDEsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZV93cml0ZV90b2tlbnMiOjB9fX0=
+  recorded_at: Fri, 06 Nov 2026 16:45:59 GMT
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k3","messages":[{"role":"user","content":"What''s the
+        fall of Rome?"},{"role":"assistant","content":"The **Fall of Rome** refers
+        to the collapse of the **Western Roman Empire** in **476 AD**, marking the
+        end of ancient Roman political unity in Western Europe and traditionally signaling
+        the transition from antiquity to the Middle Ages.\n\n## What Actually Happened\nThe
+        \"fall\" wasn''t a single event, but a **century-long process** of fragmentation.
+        The conventional endpoint came in **476 AD** when the Germanic chieftain **Odoacer**
+        deposed the young emperor **Romulus Augustulus** (ironically named after Rome''s
+        founder). Odoacer didn''t claim the title of emperor for himself but sent
+        the imperial regalia to Constantinople, effectively declaring the Western
+        Empire defunct.\n\n## Why It Happened\nHistorians debate the causes, but key
+        factors include:\n\n**Military Pressures**\n- Invasions by Gothic tribes (Visigoths
+        sacked Rome in 410; Vandals in 455)\n- The Huns'' westward migration pushed
+        other groups into Roman territory\n- Reliance on \"barbarian\" mercenaries
+        (foederati) who eventually turned against Roman authority\n\n**Economic Strain**\n-
+        Debasement of currency causing hyperinflation\n- Heavy taxation crushing the
+        middle class\n- Trade disruption and agricultural decline\n\n**Political Instability**\n-
+        The \"Crisis of the Third Century\" (235–284 AD) saw over 20 emperors in 50
+        years\n- Constant civil wars drained resources\n- The empire became too large
+        to govern effectively from one center\n\n**Administrative Division**\n- Emperor
+        Diocletian split the empire into Eastern and Western halves (284–305 AD) for
+        manageability\n- The Eastern Roman Empire (Byzantine Empire) survived and
+        thrived for another 1,000 years, falling only in **1453 AD** to the Ottoman
+        Turks\n\n## Legacy\nThe fall didn''t mean instant darkness—Roman law, language
+        (Latin), architecture, and Christian institutions persisted through the medieval
+        period. However, it did mark the end of centralized Mediterranean unity, leading
+        to the fragmented feudal kingdoms of medieval Europe.\n\n**Alternative view:**
+        Some historians argue Rome \"transformed\" rather than fell, noting that Germanic
+        kingdoms adopted Roman customs and the Eastern Empire preserved Roman civilization
+        for centuries.\n\nWould you like to explore any specific aspect—like the military
+        tactics, the role of Christianity, or how the Eastern Empire differed?","tool_calls":[{"id":"weather_0_ff268d9f","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"weather_0_ff268d9f"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"thinking":{"type":"disabled"}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:46:09 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 8b56690d-da01-11f1-b31d-00163e59531e
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '512'
+      X-Msh-Trace-Id:
+      - 0ebbe07acea5edefe832ff4bfc9cc6d1
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTJjMDY0OTZjLTNiMDMtOTVmZS1iOGY0LWYzOTYwNGE3MDg5ZCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTM5ODM1NTksIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlICoqRmFsbCBvZiBSb21lKiogcmVmZXJzIHRvIHRoZSBjb2xsYXBzZSBvZiB0aGUgKipXZXN0ZXJuIFJvbWFuIEVtcGlyZSoqIGluICoqNDc2IEFEKiosIG1hcmtpbmcgdGhlIGVuZCBvZiBhbmNpZW50IFJvbWFuIHBvbGl0aWNhbCB1bml0eSBpbiBXZXN0ZXJuIEV1cm9wZSBhbmQgdHJhZGl0aW9uYWxseSBzaWduYWxpbmcgdGhlIHRyYW5zaXRpb24gZnJvbSBhbnRpcXVpdHkgdG8gdGhlIE1pZGRsZSBBZ2VzLlxuXG4jIyBXaGF0IEFjdHVhbGx5IEhhcHBlbmVkXG5UaGUgXCJmYWxsXCIgd2Fzbid0IGEgc2luZ2xlIGV2ZW50LCBidXQgYSAqKmNlbnR1cnktbG9uZyBwcm9jZXNzKiogb2YgZnJhZ21lbnRhdGlvbi4gVGhlIGNvbnZlbnRpb25hbCBlbmRwb2ludCBjYW1lIGluICoqNDc2IEFEKiogd2hlbiB0aGUgR2VybWFuaWMgY2hpZWZ0YWluICoqT2RvYWNlcioqIGRlcG9zZWQgdGhlIHlvdW5nIGVtcGVyb3IgKipSb211bHVzIEF1Z3VzdHVsdXMqKiAoaXJvbmljYWxseSBuYW1lZCBhZnRlciBSb21lJ3MgZm91bmRlcikuIE9kb2FjZXIgZGlkbid0IGNsYWltIHRoZSB0aXRsZSBvZiBlbXBlcm9yIGZvciBoaW1zZWxmIGJ1dCBzZW50IHRoZSBpbXBlcmlhbCByZWdhbGlhIHRvIENvbnN0YW50aW5vcGxlLCBlZmZlY3RpdmVseSBkZWNsYXJpbmcgdGhlIFdlc3Rlcm4gRW1waXJlIGRlZnVuY3QuXG5cbiMjIFdoeSBJdCBIYXBwZW5lZFxuSGlzdG9yaWFucyBkZWJhdGUgdGhlIGNhdXNlcywgYnV0IGtleSBmYWN0b3JzIGluY2x1ZGU6XG5cbioqTWlsaXRhcnkgUHJlc3N1cmVzKipcbi0gSW52YXNpb25zIGJ5IEdvdGhpYyB0cmliZXMgKFZpc2lnb3RocyBzYWNrZWQgUm9tZSBpbiA0MTA7IFZhbmRhbHMgaW4gNDU1KVxuLSBUaGUgSHVucycgd2VzdHdhcmQgbWlncmF0aW9uIHB1c2hlZCBvdGhlciBncm91cHMgaW50byBSb21hbiB0ZXJyaXRvcnlcbi0gUmVsaWFuY2Ugb24gXCJiYXJiYXJpYW5cIiBtZXJjZW5hcmllcyAoZm9lZGVyYXRpKSB3aG8gZXZlbnR1YWxseSB0dXJuZWQgYWdhaW5zdCBSb21hbiBhdXRob3JpdHlcblxuKipFY29ub21pYyBTdHJhaW4qKlxuLSBEZWJhc2VtZW50IG9mIGN1cnJlbmN5IGNhdXNpbmcgaHlwZXJpbmZsYXRpb25cbi0gSGVhdnkgdGF4YXRpb24gY3J1c2hpbmcgdGhlIG1pZGRsZSBjbGFzc1xuLSBUcmFkZSBkaXNydXB0aW9uIGFuZCBhZ3JpY3VsdHVyYWwgZGVjbGluZVxuXG4qKlBvbGl0aWNhbCBJbnN0YWJpbGl0eSoqXG4tIFRoZSBcIkNyaXNpcyBvZiB0aGUgVGhpcmQgQ2VudHVyeVwiICgyMzXigJMyODQgQUQpIHNhdyBvdmVyIDIwIGVtcGVyb3JzIGluIDUwIHllYXJzXG4tIENvbnN0YW50IGNpdmlsIHdhcnMgZHJhaW5lZCByZXNvdXJjZXNcbi0gVGhlIGVtcGlyZSBiZWNhbWUgdG9vIGxhcmdlIHRvIGdvdmVybiBlZmZlY3RpdmVseSBmcm9tIG9uZSBjZW50ZXJcblxuKipBZG1pbmlzdHJhdGl2ZSBEaXZpc2lvbioqXG4tIEVtcGVyb3IgRGlvY2xldGlhbiBzcGxpdCB0aGUgZW1waXJlIGludG8gRWFzdGVybiBhbmQgV2VzdGVybiBoYWx2ZXMgKDI4NOKAkzMwNSBBRCkgZm9yIG1hbmFnZWFiaWxpdHlcbi0gVGhlIEVhc3Rlcm4gUm9tYW4gRW1waXJlIChCeXphbnRpbmUgRW1waXJlKSBzdXJ2aXZlZCBhbmQgdGhyaXZlZCBmb3IgYW5vdGhlciAxLDAwMCB5ZWFycywgZmFsbGluZyBvbmx5IGluICoqMTQ1MyBBRCoqIHRvIHRoZSBPdHRvbWFuIFR1cmtzXG5cbiMjIExlZ2FjeVxuVGhlIGZhbGwgZGlkbid0IG1lYW4gaW5zdGFudCBkYXJrbmVzc+KAlFJvbWFuIGxhdywgbGFuZ3VhZ2UgKExhdGluKSwgYXJjaGl0ZWN0dXJlLCBhbmQgQ2hyaXN0aWFuIGluc3RpdHV0aW9ucyBwZXJzaXN0ZWQgdGhyb3VnaCB0aGUgbWVkaWV2YWwgcGVyaW9kLiBIb3dldmVyLCBpdCBkaWQgbWFyayB0aGUgZW5kIG9mIGNlbnRyYWxpemVkIE1lZGl0ZXJyYW5lYW4gdW5pdHksIGxlYWRpbmcgdG8gdGhlIGZyYWdtZW50ZWQgZmV1ZGFsIGtpbmdkb21zIG9mIG1lZGlldmFsIEV1cm9wZS5cblxuKipBbHRlcm5hdGl2ZSB2aWV3OioqIFNvbWUgaGlzdG9yaWFucyBhcmd1ZSBSb21lIFwidHJhbnNmb3JtZWRcIiByYXRoZXIgdGhhbiBmZWxsLCBub3RpbmcgdGhhdCBHZXJtYW5pYyBraW5nZG9tcyBhZG9wdGVkIFJvbWFuIGN1c3RvbXMgYW5kIHRoZSBFYXN0ZXJuIEVtcGlyZSBwcmVzZXJ2ZWQgUm9tYW4gY2l2aWxpemF0aW9uIGZvciBjZW50dXJpZXMuXG5cbldvdWxkIHlvdSBsaWtlIHRvIGV4cGxvcmUgYW55IHNwZWNpZmljIGFzcGVjdOKAlGxpa2UgdGhlIG1pbGl0YXJ5IHRhY3RpY3MsIHRoZSByb2xlIG9mIENocmlzdGlhbml0eSwgb3IgaG93IHRoZSBFYXN0ZXJuIEVtcGlyZSBkaWZmZXJlZD8ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjc1NSwiY29tcGxldGlvbl90b2tlbnMiOjUwMiwidG90YWxfdG9rZW5zIjoxMjU3LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVfd3JpdGVfdG9rZW5zIjo1MTJ9fX0=
+  recorded_at: Fri, 06 Nov 2026 16:46:09 GMT
+recorded_with: VCR 6.4.1

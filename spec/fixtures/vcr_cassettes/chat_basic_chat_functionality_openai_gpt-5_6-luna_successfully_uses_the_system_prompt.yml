@@ -1,0 +1,184 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"Tell me
+        about the weather."}],"instructions":"You must include the exact phrase \"XKCD7392\"
+        somewhere in your response.","stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:25:57 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID, Server-Timing-Total
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '1410'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '2000000'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_00d3dfdc2ea9b4b5016aedff94955887d281034b06c9492434",
+          "object": "response",
+          "created_at": 1793982356,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1793982357,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
+          "incomplete_details": null,
+          "instructions": "You must include the exact phrase \"XKCD7392\" somewhere in your response.",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5.6-luna",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_00d3dfdc2ea9b4b5016aedff956e4c87d2b89b6dfdd6621c83",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABq7f-V_C6l5ViRdJoEhrcK0TgqBKX6_gsQw6yHYYTRARqa83jcaxy8jABkc91_VtFsX2KxFtB-qgA6KPUelNzhS40SesCPq2G0TLndrxboRaPj8k5-Tlf3Ke7UIGIVVIpf2Lh1sOlGiciPSe9LCOdsYPr9qnxJajzvAS7iF88NpLQjhoDHeo3pb8aTi1A17TvOKGWga2pG_MO40aqmLO362Dvuvy0bLP1sp-CiCq18HX1M8kMUcUVUPDvNHDe7PuTv2MCAFruCxFxtoV7p9bADfg7g-lDSzrrF96Eurq1MWrtIs_uZLpGoAH_HqpjZRaOrxUDFm3WIkThP1Or5pgAFm7SwA1GUnLr-V9WdSc5gt53jG0xQBPGd5UZbsf3mFAbHy81aHqYcob75qZvSJVtFPl13ni8XkIxqqF3cUFiIkMHPkE7o4Yz9vSsQJN_R8anQmB89OuNSulLWJdSzrjJ7iC_N-_gmqukMDr8ylfBaIPeaq3THQ2HSMqUo7GwVVRE_hss3O1spG-UbH0JKZZYVu7Y1mNB-TTTRtPT_AtHRPhD_rwrLjoG4TNWPYhTe7zK1b0b1IpX7bTYePiD14DOU_BYjeRRTriXr1XeDvIztWopTFeYIPWzphDBaOmjGnSYF0A1lWyINFYaXgdQik5NIXOPU-m_JGIBdOqrR7bADtC3nOEEk2DfJRcH_VxFjPGwkZKv0NFXKjbC0pHl-L1yae4MkHKl9Qpa0v9KWSgh4XQhEdWKAoNNw38p8GD0BQ-6WynxmZkUHkEREeA8Jp_qV2gpOFW1_6-9s2A3XVmlcJ28PRlwb7eUgS2-wKPKwB0wQ4tPQU2rKzRTZrfre248pSuE7pucoh-J_0Haj-d3ocQt9vGtRB_JXgUhqV8fb-SYqFHd2wGcl4yCjMsr4oksLkMWRYYOD-CDRSTzpZg8keTL7O_kIWOhY-XHQQqT1bd7Nv4NDQniOFAo1QJD97Y6kFzBKTBOKM6nPz5xYiIXX5D4D5E9P7WiwHoGDiEWwEdjrx_WV08OvtwGetnSzXXrkxV_E5bDPX5uYda1HiGf_0lGlEmDItQaM_arGlKYEwacExoTGb0W-wL8CHbq_9Ccs7lNXl7ex7r7cgsvpvwrIuG0LuEy0Jcdm1J5s8mDecnvJ9ymKurRHXuc5uAtIfjlS303pCieIo19IYa4x5wdQNSMgMq4P7ByLNX-lwdQ10lbirM8moiLf6y7Okl0-6Fp_IE41k0DDG1XzPRxNfu7Var6eOoGDbwkGDupKLLgS86Lx6OxOZET2RJ-l_SHe3zee95y0cdcugv4A0V4AKA0ao0wpXf37SXYMJmulRaZqdlKgVpHtrsZFls4CJETirtwFt1efhw3wWkCfC_PLHOY7IlHXTiQDRDjSY5MeQIZd8svhSfxPqxnAsyw0rKvBDGBUmvoFnWR4dcrJ-lbxo_j9sU4W8IHksxaMwR1F-0vN3S-LHm86ewtKRYOSIyyWFWWBvMo5CSB7MYFpRrVt6yWopTu6S9nkm1ynagHG579fpy0puQYv3cij2jTWZgpx7w2t66ak-EFB5AdduSb2IkvIdKt6Au4QXMkq7DhulrwqmfVlfmuoNLXhPwMzoPooIMsdvjOKWBFAaMqxjv5GxCcFJTITZFGaVxX2qE7cmLAKYaHDyU9J2kppd_V3aTKtF6xg2r5Yzg==",
+              "summary": []
+            },
+            {
+              "id": "msg_00d3dfdc2ea9b4b5016aedff95a54887d2bf2f2321ff24092d",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "Sure\u2014what city or region should I check the weather for? XKCD7392"
+                }
+              ],
+              "phase": "final_answer",
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "24h",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 0.98,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 34,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 44,
+            "output_tokens_details": {
+              "reasoning_tokens": 21
+            },
+            "total_tokens": 78
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Fri, 06 Nov 2026 16:25:58 GMT
+recorded_with: VCR 6.4.1

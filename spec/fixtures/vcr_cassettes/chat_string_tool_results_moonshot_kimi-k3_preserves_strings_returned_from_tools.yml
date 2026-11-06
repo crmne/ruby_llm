@@ -1,0 +1,164 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k3","messages":[{"role":"user","content":"Process this
+        query: test data"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
+        to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:32:37 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - ab34c8e1-d9ff-11f1-95e0-00163e76c0c3
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '0'
+      X-Msh-Trace-Id:
+      - dd48eab508248fe0a004e80d71a29d40
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-f57210de-f4a7-95b8-94ef-99063bc75a01","object":"chat.completion","created":1793982754,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"content_returning_0_f3320818","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}],"reasoning_content":"The user is asking me to \"Process this query:
+        test data\" and I have a tool called \"content_returning\" available. The
+        instruction says I should process the query \"test data\" using the available
+        tool.\n\nLet me think about this. The tool is called \"content_returning\"
+        with a parameter \"query\" which is described as \"Query to process\". The
+        user''s request is to process \"test data\".\n\nThis seems like a simple,
+        benign request - likely someone testing the system. I should use the tool
+        with the query \"test data\"."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":183,"completion_tokens":165,"total_tokens":348,"completion_tokens_details":{"reasoning_tokens":111},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Fri, 06 Nov 2026 16:32:37 GMT
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k3","messages":[{"role":"user","content":"Process this
+        query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"content_returning_0_f3320818","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}],"reasoning_content":"The user is asking me to \"Process this query:
+        test data\" and I have a tool called \"content_returning\" available. The
+        instruction says I should process the query \"test data\" using the available
+        tool.\n\nLet me think about this. The tool is called \"content_returning\"
+        with a parameter \"query\" which is described as \"Query to process\". The
+        user''s request is to process \"test data\".\n\nThis seems like a simple,
+        benign request - likely someone testing the system. I should use the tool
+        with the query \"test data\"."},{"role":"tool","content":"Processed: test
+        data","tool_call_id":"content_returning_0_f3320818"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
+        to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:32:40 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - adcc0b40-d9ff-11f1-b871-00163e05d0f4
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '256'
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - a97a6c92cbc44784930467e52570a037
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-16e89a99-eb85-9e18-90ed-9c1cf8a3eded","object":"chat.completion","created":1793982758,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        query has been processed successfully. Here''s the result:\n\n**Processed:**
+        test data\n\nIt looks like the system is working as expected. Is there anything
+        specific you''d like to test or any other query you''d like me to process?","reasoning_content":"The
+        tool returned \"Processed: test data\". I should relay this result to the
+        user."},"finish_reason":"stop"}],"usage":{"prompt_tokens":380,"completion_tokens":79,"total_tokens":459,"completion_tokens_details":{"reasoning_tokens":18},"prompt_tokens_details":{"cache_write_tokens":256}}}'
+  recorded_at: Fri, 06 Nov 2026 16:32:40 GMT
+recorded_with: VCR 6.4.1

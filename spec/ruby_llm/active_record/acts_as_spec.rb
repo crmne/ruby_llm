@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe RubyLLM::ActiveRecord::ActsAs, :live do
-  let(:model) { 'gpt-4.1-nano' }
+  let(:model) { 'gpt-5.4-nano' }
 
   def usage_tracker(provider, recorder, config: RubyLLM.config)
     RubyLLM::Accounting::Usage::Tracker.new(

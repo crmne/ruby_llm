@@ -1,0 +1,146 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k3","messages":[{"role":"user","content":"Use the best_language_to_learn
+        tool to tell me which language to learn."}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:29:22 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 37ddd4bc-d9ff-11f1-90f2-00163e0dbb14
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '0'
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 0d6df82bcd8471000c2af614f9946203
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-f5b86a65-62b3-9c62-bb41-27072b42b80f","object":"chat.completion","created":1793982560,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        check for you!","tool_calls":[{"index":0,"id":"best_language_to_learn_0_bc7197e4","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
+        user wants me to use the best_language_to_learn tool to tell them which language
+        to learn. Let me call the tool."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":183,"completion_tokens":72,"total_tokens":255,"completion_tokens_details":{"reasoning_tokens":27},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Fri, 06 Nov 2026 16:29:22 GMT
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k3","messages":[{"role":"user","content":"Use the best_language_to_learn
+        tool to tell me which language to learn."},{"role":"assistant","content":"I''ll
+        check for you!","tool_calls":[{"id":"best_language_to_learn_0_bc7197e4","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
+        user wants me to use the best_language_to_learn tool to tell them which language
+        to learn. Let me call the tool."},{"role":"tool","content":"Ruby","tool_call_id":"best_language_to_learn_0_bc7197e4"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:29:26 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 3962b7fe-d9ff-11f1-a777-00163e2ecc0c
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '256'
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 01da1c3af09d5a6c1334ab8e25a26c93
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTJjNTU3YzY3LTY2MjQtOTk2Zi1hOGJiLTVkZjA5YjM4NjdjMSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTM5ODI1NjIsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiQWNjb3JkaW5nIHRvIHRoZSB0b29sLCB0aGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybiBpcyAqKlJ1YnkqKiEg8J+SjlxuXG5SdWJ5IGlzIGtub3duIGZvcjpcbi0gKipFbGVnYW50LCByZWFkYWJsZSBzeW50YXgqKiDigJQgaXQgcmVhZHMgYWxtb3N0IGxpa2UgRW5nbGlzaFxuLSAqKlJ1Ynkgb24gUmFpbHMqKiDigJQgdGhlIHBvcHVsYXIgd2ViIGZyYW1ld29yayB0aGF0IHBvd2VyZWQgc2l0ZXMgbGlrZSBHaXRIdWIsIFNob3BpZnksIGFuZCBBaXJibmJcbi0gKipCZWdpbm5lci1mcmllbmRsaW5lc3MqKiDigJQgZGVzaWduZWQgd2l0aCBwcm9ncmFtbWVyIGhhcHBpbmVzcyBpbiBtaW5kXG4tICoqU3Ryb25nIGNvbW11bml0eSoqIOKAlCBsb3RzIG9mIGdlbXMgKGxpYnJhcmllcykgYW5kIGhlbHBmdWwgcmVzb3VyY2VzXG5cbldvdWxkIHlvdSBsaWtlIHRpcHMgb24gaG93IHRvIGdldCBzdGFydGVkIGxlYXJuaW5nIFJ1Ynk/IiwicmVhc29uaW5nX2NvbnRlbnQiOiJUaGUgdG9vbCByZXR1cm5lZCBcIlJ1YnlcIiBhcyB0aGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybi4gSSdsbCBzaGFyZSB0aGlzIHdpdGggdGhlIHVzZXIgYW5kIGNhbiBhZGQgc29tZSBjb250ZXh0IGFib3V0IFJ1YnkgdG8gYmUgaGVscGZ1bC4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjI4NiwiY29tcGxldGlvbl90b2tlbnMiOjE1MSwidG90YWxfdG9rZW5zIjo0MzcsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MzB9LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVfd3JpdGVfdG9rZW5zIjoyNTZ9fX0=
+  recorded_at: Fri, 06 Nov 2026 16:29:26 GMT
+recorded_with: VCR 6.4.1

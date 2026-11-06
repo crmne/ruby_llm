@@ -63,7 +63,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Streaming do
     chunk = protocol.send(
       :build_chunk,
       {
-        'model' => 'gpt-4.1-nano',
+        'model' => 'gpt-5.4-nano',
         'choices' => [
           {
             'delta' => { 'content' => '' },

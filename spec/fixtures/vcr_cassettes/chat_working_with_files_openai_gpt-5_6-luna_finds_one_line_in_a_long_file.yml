@@ -1,0 +1,1324 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"What is
+        the parking garage door code? It is in handbook.md in your files."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"list_files","description":"Lists
+        the files, with sizes and types. Pass path for one folder, and pattern for
+        a glob: *.csv matches names in any folder, reports/**/*.csv matches paths.","parameters":{"type":"object","properties":{"path":{"type":["string","null"],"description":"A
+        folder to list"},"pattern":{"type":["string","null"],"description":"A glob,
+        like *.md or reports/**/*.csv"}},"additionalProperties":false},"strict":false},{"type":"function","name":"read_file","description":"Reads
+        a file. Text comes back with line numbers, 1000 lines or 20000 characters
+        at a time: pass offset and limit to read further, and unit \"characters\"
+        for very long lines. After search_files, read just the lines around a match
+        with offset and limit. Documents a converter reads come back as text, and
+        other images and PDFs as the file itself.","parameters":{"type":"object","properties":{"path":{"type":"string","description":"The
+        file to read"},"offset":{"type":["integer","null"],"description":"The line
+        to start at, from 1, or the character, from 0"},"limit":{"type":["integer","null"],"description":"How
+        many lines or characters to read"},"unit":{"type":["string","null"],"enum":["lines","characters",null],"description":"lines
+        (the default) or characters"}},"required":["path"],"additionalProperties":false},"strict":false},{"type":"function","name":"search_files","description":"Searches
+        the text of the files for lines matching a regular expression, like grep,
+        and returns path:line: text. Start with files_only to see which files match,
+        then read them with read_file. Files whose text read_file has not extracted
+        yet are skipped and named.","parameters":{"type":"object","properties":{"query":{"type":"string","description":"A
+        regular expression, or plain words"},"path":{"type":["string","null"],"description":"A
+        file or folder to search"},"glob":{"type":["string","null"],"description":"Only
+        files matching this, like *.md"},"context":{"type":["integer","null"],"description":"Lines
+        to show around each match"},"case_sensitive":{"type":["boolean","null"],"description":"Match
+        case. Default: false"},"files_only":{"type":["boolean","null"],"description":"Return
+        only the matching paths"}},"required":["query"],"additionalProperties":false},"strict":false},{"type":"function","name":"write_file","description":"Writes
+        a text file, replacing any file at path. Read an existing file before you
+        replace it. To change part of a file, use edit_file.","parameters":{"type":"object","properties":{"path":{"type":"string","description":"Where
+        to write, such as notes/summary.md"},"content":{"type":"string","description":"The
+        complete content of the file"}},"required":["path","content"],"additionalProperties":false},"strict":false},{"type":"function","name":"edit_file","description":"Changes
+        text files you have read by replacing old_text, which must appear exactly
+        once, with new_text. A text file attached to the question counts as read,
+        at its file name. Include surrounding text to make old_text unique, or set
+        replace_all. Pass edits for several changes in one call, to one file or several:
+        they apply in order, all or none.","parameters":{"type":"object","properties":{"path":{"type":["string","null"],"description":"The
+        file to change"},"old_text":{"type":["string","null"],"description":"The exact
+        text to replace"},"new_text":{"type":["string","null"],"description":"The
+        text to put in its place"},"replace_all":{"type":["boolean","null"],"description":"Replace
+        every occurrence"},"edits":{"type":["array","null"],"description":"Several
+        changes; each may name a path","items":{"type":"object","properties":{"path":{"type":["string","null"]},"old_text":{"type":"string"},"new_text":{"type":"string"},"replace_all":{"type":["boolean","null"]}},"required":["old_text","new_text"],"additionalProperties":false}}},"additionalProperties":false},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:23:26 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID, Server-Timing-Total
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '1407'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '2000000'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_0738bd01189a7bc8016aedfefd71f487d2a53eb2f63cddbf40",
+          "object": "response",
+          "created_at": 1793982205,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1793982206,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5.6-luna",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_0738bd01189a7bc8016aedfefe26c087d2950afbd4bde0d246",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABq7f7-Z24ywQiRrOctY_Z9g5PlaTArSSXJruuR4AxX9LVvVAjD6D9Um1GHWzFoXxCivg7FrDM_pxO5_JHkR6cbWaycoKtrJVXWU8VBOEA-roKEg32qvG4pvxvFEpBkFUb7rZ24ZLWX-lgZGFhfF5UNG4IFddZif7cXMJ402_GmN96MoxhGdqlEetZH0wO3zPy3CU7wSHslGuYZSNjUYPphI4CjBTaCoxyDfZkksdYhyp2rA1VBYMHpqB_w1Gu_GfmgA2gY82zJzE_Ilt_vjlxnqXItYPf1KBA66yQBLFupI32PnXDAGAOoxQ1yaieFqYwpf20IMKdWPrmXLjBNGGnQMsBPdkJeUX1LBFkpARhUChxgoSfRwc7HlWWCzVTBpVVIYUxP2vltnCK7ytdh0has2vGAWjerpzeLYWcZ4qVy_hoPsSFfNp9eNtrzFvZUEuFr2AOVQ0PccSCRcgTtBAsUC5AYUwjZMPU-nYufMeBr8KGw_VWdou5SJvNu7-FjcCiuxl-oq_5ErS965X0bYp3NNXwXOFUXXkfp1xpl82mOU3eREgeJGWB2gVPR1-XMyzU-ZnAoKLYCG_n09gVJ6Os0pRgzc73qyS6RJ3I3eJdMOYX-SLjsbUi4rwSSKChjiOzTP068WcbDlCbCm5aN7SpwUjIb_ELZmr_zq57PCW_SbTfEDPs8AZgPLcwcO5l_wUVlF_r5MJtRQL0sDcFgvK-VslFPlATZ1i_2RRaYYIsSSdMSxnZ1SJXR9AbTCy3FuuV0aEQ-1wy_u6xduQ852tqCewGYjcLUAdWW-FYxeuhxovJq1g3rrJjeBsKm4AejTB5ZH4MWpf54R8U9gbOScWJoqA-xYCsK6CNZsME9NOjhpFbeXqf6Zs7s1VXW8BHlSV0jkp-Hhk9DkWIS_GkPojP_tzDXfiqhl1iUsjgfPrI2KVOXpKY3Ue5SQfwPTNKBg7E2CXWHsVVDtAAIjv0VtrRVkaMEtOjhu3_B5Ggcq08PkbD8HQW9K7hZ_dai0H1ZzXdnVu8-13XibqUG1zFn3Xs828xJjZWo56PTmlnSfBOvG6CxPUh9hh-8rU_PELQJN_V2Qr1mFn-p4kSi9_LEQxNOFo2RLjWE8aBZuqKnedCZhto-7p3r2gu7WthaHUcF1sxxqtNlXhmwJtVtcjJJibqElWKNf1wHVsq4kpJQhhqVplzg5qw9gecO6LpcntuuVnz2byWcBVd01P97KFcP3O7iwXVC65VcritSv9YU7DDVlRX2UJgZIz03DNiJoriNCqPOZndUR8svq7KY8yxfor3BK4RcgFnERbkY9qjuhY2_-sPbV2UIVo0-uhPc1XMG9MqM7gpZGPU2yMSWz1Au5P68UGsGSu8FzBN8rcv6N93M_Zkj4wQPYUaC6qWoGjxwTyztPhON_MkQ-fx47f4sMjFdykh2mHpztxI-zXqfEq3X8hEMJiGKyuglctgME-h68bdf8kIhrOk7FnWBbj8RoxtCOyBpgHuhNROwOJJgoOPR9qsEZePj-ja3qW1f5w_D1tkn1uC0",
+              "summary": []
+            },
+            {
+              "id": "fc_0738bd01189a7bc8016aedfefe56f887d2997bd51376d9d5c1",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{\"pattern\":\"handbook.md\"}",
+              "call_id": "call_Yj3DCoearurLpfW5ssABiMS8",
+              "name": "list_files"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "24h",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "function",
+              "description": "Lists the files, with sizes and types. Pass path for one folder, and pattern for a glob: *.csv matches names in any folder, reports/**/*.csv matches paths.",
+              "name": "list_files",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "A folder to list"
+                  },
+                  "pattern": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "A glob, like *.md or reports/**/*.csv"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "strict": false
+            },
+            {
+              "type": "function",
+              "description": "Reads a file. Text comes back with line numbers, 1000 lines or 20000 characters at a time: pass offset and limit to read further, and unit \"characters\" for very long lines. After search_files, read just the lines around a match with offset and limit. Documents a converter reads come back as text, and other images and PDFs as the file itself.",
+              "name": "read_file",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "description": "The file to read"
+                  },
+                  "offset": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "description": "The line to start at, from 1, or the character, from 0"
+                  },
+                  "limit": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "description": "How many lines or characters to read"
+                  },
+                  "unit": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "enum": [
+                      "lines",
+                      "characters",
+                      null
+                    ],
+                    "description": "lines (the default) or characters"
+                  }
+                },
+                "required": [
+                  "path"
+                ],
+                "additionalProperties": false
+              },
+              "strict": false
+            },
+            {
+              "type": "function",
+              "description": "Searches the text of the files for lines matching a regular expression, like grep, and returns path:line: text. Start with files_only to see which files match, then read them with read_file. Files whose text read_file has not extracted yet are skipped and named.",
+              "name": "search_files",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "description": "A regular expression, or plain words"
+                  },
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "A file or folder to search"
+                  },
+                  "glob": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Only files matching this, like *.md"
+                  },
+                  "context": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "description": "Lines to show around each match"
+                  },
+                  "case_sensitive": {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ],
+                    "description": "Match case. Default: false"
+                  },
+                  "files_only": {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ],
+                    "description": "Return only the matching paths"
+                  }
+                },
+                "required": [
+                  "query"
+                ],
+                "additionalProperties": false
+              },
+              "strict": false
+            },
+            {
+              "type": "function",
+              "description": "Writes a text file, replacing any file at path. Read an existing file before you replace it. To change part of a file, use edit_file.",
+              "name": "write_file",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "description": "Where to write, such as notes/summary.md"
+                  },
+                  "content": {
+                    "type": "string",
+                    "description": "The complete content of the file"
+                  }
+                },
+                "required": [
+                  "path",
+                  "content"
+                ],
+                "additionalProperties": false
+              },
+              "strict": false
+            },
+            {
+              "type": "function",
+              "description": "Changes text files you have read by replacing old_text, which must appear exactly once, with new_text. A text file attached to the question counts as read, at its file name. Include surrounding text to make old_text unique, or set replace_all. Pass edits for several changes in one call, to one file or several: they apply in order, all or none.",
+              "name": "edit_file",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The file to change"
+                  },
+                  "old_text": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The exact text to replace"
+                  },
+                  "new_text": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The text to put in its place"
+                  },
+                  "replace_all": {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ],
+                    "description": "Replace every occurrence"
+                  },
+                  "edits": {
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "description": "Several changes; each may name a path",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "old_text": {
+                          "type": "string"
+                        },
+                        "new_text": {
+                          "type": "string"
+                        },
+                        "replace_all": {
+                          "type": [
+                            "boolean",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "old_text",
+                        "new_text"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "additionalProperties": false
+              },
+              "strict": false
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 0.98,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 658,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 32,
+            "output_tokens_details": {
+              "reasoning_tokens": 10
+            },
+            "total_tokens": 690
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Fri, 06 Nov 2026 16:23:26 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"What is
+        the parking garage door code? It is in handbook.md in your files."},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABq7f7-Z24ywQiRrOctY_Z9g5PlaTArSSXJruuR4AxX9LVvVAjD6D9Um1GHWzFoXxCivg7FrDM_pxO5_JHkR6cbWaycoKtrJVXWU8VBOEA-roKEg32qvG4pvxvFEpBkFUb7rZ24ZLWX-lgZGFhfF5UNG4IFddZif7cXMJ402_GmN96MoxhGdqlEetZH0wO3zPy3CU7wSHslGuYZSNjUYPphI4CjBTaCoxyDfZkksdYhyp2rA1VBYMHpqB_w1Gu_GfmgA2gY82zJzE_Ilt_vjlxnqXItYPf1KBA66yQBLFupI32PnXDAGAOoxQ1yaieFqYwpf20IMKdWPrmXLjBNGGnQMsBPdkJeUX1LBFkpARhUChxgoSfRwc7HlWWCzVTBpVVIYUxP2vltnCK7ytdh0has2vGAWjerpzeLYWcZ4qVy_hoPsSFfNp9eNtrzFvZUEuFr2AOVQ0PccSCRcgTtBAsUC5AYUwjZMPU-nYufMeBr8KGw_VWdou5SJvNu7-FjcCiuxl-oq_5ErS965X0bYp3NNXwXOFUXXkfp1xpl82mOU3eREgeJGWB2gVPR1-XMyzU-ZnAoKLYCG_n09gVJ6Os0pRgzc73qyS6RJ3I3eJdMOYX-SLjsbUi4rwSSKChjiOzTP068WcbDlCbCm5aN7SpwUjIb_ELZmr_zq57PCW_SbTfEDPs8AZgPLcwcO5l_wUVlF_r5MJtRQL0sDcFgvK-VslFPlATZ1i_2RRaYYIsSSdMSxnZ1SJXR9AbTCy3FuuV0aEQ-1wy_u6xduQ852tqCewGYjcLUAdWW-FYxeuhxovJq1g3rrJjeBsKm4AejTB5ZH4MWpf54R8U9gbOScWJoqA-xYCsK6CNZsME9NOjhpFbeXqf6Zs7s1VXW8BHlSV0jkp-Hhk9DkWIS_GkPojP_tzDXfiqhl1iUsjgfPrI2KVOXpKY3Ue5SQfwPTNKBg7E2CXWHsVVDtAAIjv0VtrRVkaMEtOjhu3_B5Ggcq08PkbD8HQW9K7hZ_dai0H1ZzXdnVu8-13XibqUG1zFn3Xs828xJjZWo56PTmlnSfBOvG6CxPUh9hh-8rU_PELQJN_V2Qr1mFn-p4kSi9_LEQxNOFo2RLjWE8aBZuqKnedCZhto-7p3r2gu7WthaHUcF1sxxqtNlXhmwJtVtcjJJibqElWKNf1wHVsq4kpJQhhqVplzg5qw9gecO6LpcntuuVnz2byWcBVd01P97KFcP3O7iwXVC65VcritSv9YU7DDVlRX2UJgZIz03DNiJoriNCqPOZndUR8svq7KY8yxfor3BK4RcgFnERbkY9qjuhY2_-sPbV2UIVo0-uhPc1XMG9MqM7gpZGPU2yMSWz1Au5P68UGsGSu8FzBN8rcv6N93M_Zkj4wQPYUaC6qWoGjxwTyztPhON_MkQ-fx47f4sMjFdykh2mHpztxI-zXqfEq3X8hEMJiGKyuglctgME-h68bdf8kIhrOk7FnWBbj8RoxtCOyBpgHuhNROwOJJgoOPR9qsEZePj-ja3qW1f5w_D1tkn1uC0"},{"type":"function_call","call_id":"call_Yj3DCoearurLpfW5ssABiMS8","name":"list_files","arguments":"{\"pattern\":\"handbook.md\"}"},{"type":"function_call_output","call_id":"call_Yj3DCoearurLpfW5ssABiMS8","output":"handbook.md\t19.3
+        KB\ttext/markdown"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"list_files","description":"Lists
+        the files, with sizes and types. Pass path for one folder, and pattern for
+        a glob: *.csv matches names in any folder, reports/**/*.csv matches paths.","parameters":{"type":"object","properties":{"path":{"type":["string","null"],"description":"A
+        folder to list"},"pattern":{"type":["string","null"],"description":"A glob,
+        like *.md or reports/**/*.csv"}},"additionalProperties":false},"strict":false},{"type":"function","name":"read_file","description":"Reads
+        a file. Text comes back with line numbers, 1000 lines or 20000 characters
+        at a time: pass offset and limit to read further, and unit \"characters\"
+        for very long lines. After search_files, read just the lines around a match
+        with offset and limit. Documents a converter reads come back as text, and
+        other images and PDFs as the file itself.","parameters":{"type":"object","properties":{"path":{"type":"string","description":"The
+        file to read"},"offset":{"type":["integer","null"],"description":"The line
+        to start at, from 1, or the character, from 0"},"limit":{"type":["integer","null"],"description":"How
+        many lines or characters to read"},"unit":{"type":["string","null"],"enum":["lines","characters",null],"description":"lines
+        (the default) or characters"}},"required":["path"],"additionalProperties":false},"strict":false},{"type":"function","name":"search_files","description":"Searches
+        the text of the files for lines matching a regular expression, like grep,
+        and returns path:line: text. Start with files_only to see which files match,
+        then read them with read_file. Files whose text read_file has not extracted
+        yet are skipped and named.","parameters":{"type":"object","properties":{"query":{"type":"string","description":"A
+        regular expression, or plain words"},"path":{"type":["string","null"],"description":"A
+        file or folder to search"},"glob":{"type":["string","null"],"description":"Only
+        files matching this, like *.md"},"context":{"type":["integer","null"],"description":"Lines
+        to show around each match"},"case_sensitive":{"type":["boolean","null"],"description":"Match
+        case. Default: false"},"files_only":{"type":["boolean","null"],"description":"Return
+        only the matching paths"}},"required":["query"],"additionalProperties":false},"strict":false},{"type":"function","name":"write_file","description":"Writes
+        a text file, replacing any file at path. Read an existing file before you
+        replace it. To change part of a file, use edit_file.","parameters":{"type":"object","properties":{"path":{"type":"string","description":"Where
+        to write, such as notes/summary.md"},"content":{"type":"string","description":"The
+        complete content of the file"}},"required":["path","content"],"additionalProperties":false},"strict":false},{"type":"function","name":"edit_file","description":"Changes
+        text files you have read by replacing old_text, which must appear exactly
+        once, with new_text. A text file attached to the question counts as read,
+        at its file name. Include surrounding text to make old_text unique, or set
+        replace_all. Pass edits for several changes in one call, to one file or several:
+        they apply in order, all or none.","parameters":{"type":"object","properties":{"path":{"type":["string","null"],"description":"The
+        file to change"},"old_text":{"type":["string","null"],"description":"The exact
+        text to replace"},"new_text":{"type":["string","null"],"description":"The
+        text to put in its place"},"replace_all":{"type":["boolean","null"],"description":"Replace
+        every occurrence"},"edits":{"type":["array","null"],"description":"Several
+        changes; each may name a path","items":{"type":"object","properties":{"path":{"type":["string","null"]},"old_text":{"type":"string"},"new_text":{"type":"string"},"replace_all":{"type":["boolean","null"]}},"required":["old_text","new_text"],"additionalProperties":false}}},"additionalProperties":false},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:23:28 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID, Server-Timing-Total
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '1098'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '2000000'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_0cc0ff155a60d64e016aedfefeea3087d2bd43aebafc6ae687",
+          "object": "response",
+          "created_at": 1793982206,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1793982207,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5.6-luna",
+          "moderation": null,
+          "output": [
+            {
+              "id": "fc_0cc0ff155a60d64e016aedfeffb7a887d288b0be0d0c8daee5",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{\"query\":\"parking garage|garage door|door code|code\",\"path\":\"handbook.md\",\"context\":2,\"case_sensitive\":false}",
+              "call_id": "call_DhHoQtjewMrwU63cUMb5R31d",
+              "name": "search_files"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "24h",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "function",
+              "description": "Lists the files, with sizes and types. Pass path for one folder, and pattern for a glob: *.csv matches names in any folder, reports/**/*.csv matches paths.",
+              "name": "list_files",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "A folder to list"
+                  },
+                  "pattern": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "A glob, like *.md or reports/**/*.csv"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "strict": false
+            },
+            {
+              "type": "function",
+              "description": "Reads a file. Text comes back with line numbers, 1000 lines or 20000 characters at a time: pass offset and limit to read further, and unit \"characters\" for very long lines. After search_files, read just the lines around a match with offset and limit. Documents a converter reads come back as text, and other images and PDFs as the file itself.",
+              "name": "read_file",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "description": "The file to read"
+                  },
+                  "offset": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "description": "The line to start at, from 1, or the character, from 0"
+                  },
+                  "limit": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "description": "How many lines or characters to read"
+                  },
+                  "unit": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "enum": [
+                      "lines",
+                      "characters",
+                      null
+                    ],
+                    "description": "lines (the default) or characters"
+                  }
+                },
+                "required": [
+                  "path"
+                ],
+                "additionalProperties": false
+              },
+              "strict": false
+            },
+            {
+              "type": "function",
+              "description": "Searches the text of the files for lines matching a regular expression, like grep, and returns path:line: text. Start with files_only to see which files match, then read them with read_file. Files whose text read_file has not extracted yet are skipped and named.",
+              "name": "search_files",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "description": "A regular expression, or plain words"
+                  },
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "A file or folder to search"
+                  },
+                  "glob": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Only files matching this, like *.md"
+                  },
+                  "context": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "description": "Lines to show around each match"
+                  },
+                  "case_sensitive": {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ],
+                    "description": "Match case. Default: false"
+                  },
+                  "files_only": {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ],
+                    "description": "Return only the matching paths"
+                  }
+                },
+                "required": [
+                  "query"
+                ],
+                "additionalProperties": false
+              },
+              "strict": false
+            },
+            {
+              "type": "function",
+              "description": "Writes a text file, replacing any file at path. Read an existing file before you replace it. To change part of a file, use edit_file.",
+              "name": "write_file",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "description": "Where to write, such as notes/summary.md"
+                  },
+                  "content": {
+                    "type": "string",
+                    "description": "The complete content of the file"
+                  }
+                },
+                "required": [
+                  "path",
+                  "content"
+                ],
+                "additionalProperties": false
+              },
+              "strict": false
+            },
+            {
+              "type": "function",
+              "description": "Changes text files you have read by replacing old_text, which must appear exactly once, with new_text. A text file attached to the question counts as read, at its file name. Include surrounding text to make old_text unique, or set replace_all. Pass edits for several changes in one call, to one file or several: they apply in order, all or none.",
+              "name": "edit_file",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The file to change"
+                  },
+                  "old_text": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The exact text to replace"
+                  },
+                  "new_text": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The text to put in its place"
+                  },
+                  "replace_all": {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ],
+                    "description": "Replace every occurrence"
+                  },
+                  "edits": {
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "description": "Several changes; each may name a path",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "old_text": {
+                          "type": "string"
+                        },
+                        "new_text": {
+                          "type": "string"
+                        },
+                        "replace_all": {
+                          "type": [
+                            "boolean",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "old_text",
+                        "new_text"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "additionalProperties": false
+              },
+              "strict": false
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 0.98,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 712,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 42,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 754
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Fri, 06 Nov 2026 16:23:28 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"What is
+        the parking garage door code? It is in handbook.md in your files."},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABq7f7-Z24ywQiRrOctY_Z9g5PlaTArSSXJruuR4AxX9LVvVAjD6D9Um1GHWzFoXxCivg7FrDM_pxO5_JHkR6cbWaycoKtrJVXWU8VBOEA-roKEg32qvG4pvxvFEpBkFUb7rZ24ZLWX-lgZGFhfF5UNG4IFddZif7cXMJ402_GmN96MoxhGdqlEetZH0wO3zPy3CU7wSHslGuYZSNjUYPphI4CjBTaCoxyDfZkksdYhyp2rA1VBYMHpqB_w1Gu_GfmgA2gY82zJzE_Ilt_vjlxnqXItYPf1KBA66yQBLFupI32PnXDAGAOoxQ1yaieFqYwpf20IMKdWPrmXLjBNGGnQMsBPdkJeUX1LBFkpARhUChxgoSfRwc7HlWWCzVTBpVVIYUxP2vltnCK7ytdh0has2vGAWjerpzeLYWcZ4qVy_hoPsSFfNp9eNtrzFvZUEuFr2AOVQ0PccSCRcgTtBAsUC5AYUwjZMPU-nYufMeBr8KGw_VWdou5SJvNu7-FjcCiuxl-oq_5ErS965X0bYp3NNXwXOFUXXkfp1xpl82mOU3eREgeJGWB2gVPR1-XMyzU-ZnAoKLYCG_n09gVJ6Os0pRgzc73qyS6RJ3I3eJdMOYX-SLjsbUi4rwSSKChjiOzTP068WcbDlCbCm5aN7SpwUjIb_ELZmr_zq57PCW_SbTfEDPs8AZgPLcwcO5l_wUVlF_r5MJtRQL0sDcFgvK-VslFPlATZ1i_2RRaYYIsSSdMSxnZ1SJXR9AbTCy3FuuV0aEQ-1wy_u6xduQ852tqCewGYjcLUAdWW-FYxeuhxovJq1g3rrJjeBsKm4AejTB5ZH4MWpf54R8U9gbOScWJoqA-xYCsK6CNZsME9NOjhpFbeXqf6Zs7s1VXW8BHlSV0jkp-Hhk9DkWIS_GkPojP_tzDXfiqhl1iUsjgfPrI2KVOXpKY3Ue5SQfwPTNKBg7E2CXWHsVVDtAAIjv0VtrRVkaMEtOjhu3_B5Ggcq08PkbD8HQW9K7hZ_dai0H1ZzXdnVu8-13XibqUG1zFn3Xs828xJjZWo56PTmlnSfBOvG6CxPUh9hh-8rU_PELQJN_V2Qr1mFn-p4kSi9_LEQxNOFo2RLjWE8aBZuqKnedCZhto-7p3r2gu7WthaHUcF1sxxqtNlXhmwJtVtcjJJibqElWKNf1wHVsq4kpJQhhqVplzg5qw9gecO6LpcntuuVnz2byWcBVd01P97KFcP3O7iwXVC65VcritSv9YU7DDVlRX2UJgZIz03DNiJoriNCqPOZndUR8svq7KY8yxfor3BK4RcgFnERbkY9qjuhY2_-sPbV2UIVo0-uhPc1XMG9MqM7gpZGPU2yMSWz1Au5P68UGsGSu8FzBN8rcv6N93M_Zkj4wQPYUaC6qWoGjxwTyztPhON_MkQ-fx47f4sMjFdykh2mHpztxI-zXqfEq3X8hEMJiGKyuglctgME-h68bdf8kIhrOk7FnWBbj8RoxtCOyBpgHuhNROwOJJgoOPR9qsEZePj-ja3qW1f5w_D1tkn1uC0"},{"type":"function_call","call_id":"call_Yj3DCoearurLpfW5ssABiMS8","name":"list_files","arguments":"{\"pattern\":\"handbook.md\"}"},{"type":"function_call_output","call_id":"call_Yj3DCoearurLpfW5ssABiMS8","output":"handbook.md\t19.3
+        KB\ttext/markdown"},{"type":"function_call","call_id":"call_DhHoQtjewMrwU63cUMb5R31d","name":"search_files","arguments":"{\"path\":\"handbook.md\",\"query\":\"parking
+        garage|garage door|door code|code\",\"context\":2,\"case_sensitive\":false}"},{"type":"function_call_output","call_id":"call_DhHoQtjewMrwU63cUMb5R31d","output":"handbook.md-286-
+        286. Section 286 covers office policy number 286.\nhandbook.md-287- 287. Section
+        287 covers office policy number 287.\nhandbook.md:288: 288. The parking garage
+        door code is 4471-KESTREL.\nhandbook.md-289- 288. Section 288 covers office
+        policy number 288.\nhandbook.md-290- 289. Section 289 covers office policy
+        number 289."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"list_files","description":"Lists
+        the files, with sizes and types. Pass path for one folder, and pattern for
+        a glob: *.csv matches names in any folder, reports/**/*.csv matches paths.","parameters":{"type":"object","properties":{"path":{"type":["string","null"],"description":"A
+        folder to list"},"pattern":{"type":["string","null"],"description":"A glob,
+        like *.md or reports/**/*.csv"}},"additionalProperties":false},"strict":false},{"type":"function","name":"read_file","description":"Reads
+        a file. Text comes back with line numbers, 1000 lines or 20000 characters
+        at a time: pass offset and limit to read further, and unit \"characters\"
+        for very long lines. After search_files, read just the lines around a match
+        with offset and limit. Documents a converter reads come back as text, and
+        other images and PDFs as the file itself.","parameters":{"type":"object","properties":{"path":{"type":"string","description":"The
+        file to read"},"offset":{"type":["integer","null"],"description":"The line
+        to start at, from 1, or the character, from 0"},"limit":{"type":["integer","null"],"description":"How
+        many lines or characters to read"},"unit":{"type":["string","null"],"enum":["lines","characters",null],"description":"lines
+        (the default) or characters"}},"required":["path"],"additionalProperties":false},"strict":false},{"type":"function","name":"search_files","description":"Searches
+        the text of the files for lines matching a regular expression, like grep,
+        and returns path:line: text. Start with files_only to see which files match,
+        then read them with read_file. Files whose text read_file has not extracted
+        yet are skipped and named.","parameters":{"type":"object","properties":{"query":{"type":"string","description":"A
+        regular expression, or plain words"},"path":{"type":["string","null"],"description":"A
+        file or folder to search"},"glob":{"type":["string","null"],"description":"Only
+        files matching this, like *.md"},"context":{"type":["integer","null"],"description":"Lines
+        to show around each match"},"case_sensitive":{"type":["boolean","null"],"description":"Match
+        case. Default: false"},"files_only":{"type":["boolean","null"],"description":"Return
+        only the matching paths"}},"required":["query"],"additionalProperties":false},"strict":false},{"type":"function","name":"write_file","description":"Writes
+        a text file, replacing any file at path. Read an existing file before you
+        replace it. To change part of a file, use edit_file.","parameters":{"type":"object","properties":{"path":{"type":"string","description":"Where
+        to write, such as notes/summary.md"},"content":{"type":"string","description":"The
+        complete content of the file"}},"required":["path","content"],"additionalProperties":false},"strict":false},{"type":"function","name":"edit_file","description":"Changes
+        text files you have read by replacing old_text, which must appear exactly
+        once, with new_text. A text file attached to the question counts as read,
+        at its file name. Include surrounding text to make old_text unique, or set
+        replace_all. Pass edits for several changes in one call, to one file or several:
+        they apply in order, all or none.","parameters":{"type":"object","properties":{"path":{"type":["string","null"],"description":"The
+        file to change"},"old_text":{"type":["string","null"],"description":"The exact
+        text to replace"},"new_text":{"type":["string","null"],"description":"The
+        text to put in its place"},"replace_all":{"type":["boolean","null"],"description":"Replace
+        every occurrence"},"edits":{"type":["array","null"],"description":"Several
+        changes; each may name a path","items":{"type":"object","properties":{"path":{"type":["string","null"]},"old_text":{"type":"string"},"new_text":{"type":"string"},"replace_all":{"type":["boolean","null"]}},"required":["old_text","new_text"],"additionalProperties":false}}},"additionalProperties":false},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:23:29 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID, Server-Timing-Total
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '1034'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '2000000'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_006c1545710c395c016aedff00134487d2880a05113897a712",
+          "object": "response",
+          "created_at": 1793982208,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1793982209,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5.6-luna",
+          "moderation": null,
+          "output": [
+            {
+              "id": "msg_006c1545710c395c016aedff00d39487d28f41971ce7d7b5d8",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "The parking garage door code is **4471-KESTREL**."
+                }
+              ],
+              "phase": "final_answer",
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "24h",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "function",
+              "description": "Lists the files, with sizes and types. Pass path for one folder, and pattern for a glob: *.csv matches names in any folder, reports/**/*.csv matches paths.",
+              "name": "list_files",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "A folder to list"
+                  },
+                  "pattern": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "A glob, like *.md or reports/**/*.csv"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "strict": false
+            },
+            {
+              "type": "function",
+              "description": "Reads a file. Text comes back with line numbers, 1000 lines or 20000 characters at a time: pass offset and limit to read further, and unit \"characters\" for very long lines. After search_files, read just the lines around a match with offset and limit. Documents a converter reads come back as text, and other images and PDFs as the file itself.",
+              "name": "read_file",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "description": "The file to read"
+                  },
+                  "offset": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "description": "The line to start at, from 1, or the character, from 0"
+                  },
+                  "limit": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "description": "How many lines or characters to read"
+                  },
+                  "unit": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "enum": [
+                      "lines",
+                      "characters",
+                      null
+                    ],
+                    "description": "lines (the default) or characters"
+                  }
+                },
+                "required": [
+                  "path"
+                ],
+                "additionalProperties": false
+              },
+              "strict": false
+            },
+            {
+              "type": "function",
+              "description": "Searches the text of the files for lines matching a regular expression, like grep, and returns path:line: text. Start with files_only to see which files match, then read them with read_file. Files whose text read_file has not extracted yet are skipped and named.",
+              "name": "search_files",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "description": "A regular expression, or plain words"
+                  },
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "A file or folder to search"
+                  },
+                  "glob": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Only files matching this, like *.md"
+                  },
+                  "context": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "description": "Lines to show around each match"
+                  },
+                  "case_sensitive": {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ],
+                    "description": "Match case. Default: false"
+                  },
+                  "files_only": {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ],
+                    "description": "Return only the matching paths"
+                  }
+                },
+                "required": [
+                  "query"
+                ],
+                "additionalProperties": false
+              },
+              "strict": false
+            },
+            {
+              "type": "function",
+              "description": "Writes a text file, replacing any file at path. Read an existing file before you replace it. To change part of a file, use edit_file.",
+              "name": "write_file",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "description": "Where to write, such as notes/summary.md"
+                  },
+                  "content": {
+                    "type": "string",
+                    "description": "The complete content of the file"
+                  }
+                },
+                "required": [
+                  "path",
+                  "content"
+                ],
+                "additionalProperties": false
+              },
+              "strict": false
+            },
+            {
+              "type": "function",
+              "description": "Changes text files you have read by replacing old_text, which must appear exactly once, with new_text. A text file attached to the question counts as read, at its file name. Include surrounding text to make old_text unique, or set replace_all. Pass edits for several changes in one call, to one file or several: they apply in order, all or none.",
+              "name": "edit_file",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The file to change"
+                  },
+                  "old_text": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The exact text to replace"
+                  },
+                  "new_text": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The text to put in its place"
+                  },
+                  "replace_all": {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ],
+                    "description": "Replace every occurrence"
+                  },
+                  "edits": {
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "description": "Several changes; each may name a path",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "old_text": {
+                          "type": "string"
+                        },
+                        "new_text": {
+                          "type": "string"
+                        },
+                        "replace_all": {
+                          "type": [
+                            "boolean",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "old_text",
+                        "new_text"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "additionalProperties": false
+              },
+              "strict": false
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 0.98,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 864,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 19,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 883
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Fri, 06 Nov 2026 16:23:29 GMT
+recorded_with: VCR 6.4.1

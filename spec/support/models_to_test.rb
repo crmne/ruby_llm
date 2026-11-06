@@ -59,12 +59,12 @@ chat_models = [
   { provider: :meta, model: META_TEST_MODEL },
   { provider: :minimax, model: 'MiniMax-M3.1-Flash' },
   { provider: :mistral, model: 'mistral-small-latest' },
-  { provider: :moonshot, model: 'kimi-k2.6' },
+  { provider: :moonshot, model: 'kimi-k3' },
   { provider: :ollama, model: 'qwen3' },
   { provider: :ollama_cloud, model: 'gpt-oss:120b' },
-  { provider: :openai, model: 'gpt-5-nano' },
+  { provider: :openai, model: 'gpt-5.6-luna' },
   { provider: :openrouter, model: 'claude-haiku-4-5' },
-  { provider: :perplexity, model: 'openai/gpt-5-mini' },
+  { provider: :perplexity, model: 'openai/gpt-5.6-luna' },
   { provider: :vertexai, model: 'gemini-2.5-flash' },
   { provider: :xai, model: 'grok-4-1-fast-non-reasoning' },
   { provider: :zai, model: 'glm-5.3-flash' }
@@ -80,7 +80,7 @@ structured_output_models = [
   { provider: :meta, model: META_TEST_MODEL },
   { provider: :mistral, model: 'mistral-small-latest' },
   { provider: :moonshot, model: 'kimi-k3' },
-  { provider: :openai, model: 'gpt-5-nano' },
+  { provider: :openai, model: 'gpt-5.6-luna' },
   { provider: :openrouter, model: 'claude-haiku-4-5' },
   { provider: :vertexai, model: 'gemini-3-flash-preview' },
   { provider: :xai, model: 'grok-4-1-fast-non-reasoning' },
@@ -90,7 +90,7 @@ STRUCTURED_OUTPUT_MODELS = filter_local_providers(structured_output_models).free
 
 thinking_models = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
-  { provider: :azure, model: 'gpt-5-nano' },
+  { provider: :azure, model: 'gpt-5.6-luna' },
   { provider: :bedrock, model: 'claude-haiku-4-5' },
   { provider: :cohere, model: 'command-a-reasoning-08-2025' },
   { provider: :gemini, model: 'gemini-3-flash-preview' },
@@ -98,7 +98,7 @@ thinking_models = [
   { provider: :meta, model: META_TEST_MODEL },
   { provider: :minimax, model: 'MiniMax-M3.1-Flash' },
   { provider: :mistral, model: 'mistral-small-latest' },
-  { provider: :moonshot, model: 'kimi-k2.6' },
+  { provider: :moonshot, model: 'kimi-k3' },
   { provider: :ollama, model: 'qwen3' },
   { provider: :openai, model: 'gpt-5.4' },
   { provider: :openrouter, model: 'claude-haiku-4-5' },
@@ -122,7 +122,7 @@ MULTIMODAL_TOOL_RESULT_MODELS = [
   { provider: :gemini, model: 'gemini-3-flash-preview' },
   { provider: :gemini, model: 'gemini-2.5-flash' },
   { provider: :mistral, model: 'mistral-small-latest', pdf: false },
-  { provider: :openai, model: 'gpt-5-nano' },
+  { provider: :openai, model: 'gpt-5.6-luna' },
   { provider: :openrouter, model: 'gemini-2.5-flash' },
   { provider: :vertexai, model: 'gemini-3-flash-preview' },
   { provider: :vertexai, model: 'gemini-2.5-flash' },
@@ -133,16 +133,16 @@ PDF_MODELS = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
   { provider: :bedrock, model: 'claude-sonnet-4-5' },
   { provider: :gemini, model: 'gemini-2.5-flash' },
-  { provider: :openai, model: 'gpt-5-nano' },
+  { provider: :openai, model: 'gpt-5.6-luna' },
   { provider: :openrouter, model: 'gemini-2.5-flash' },
   { provider: :perplexity, model: 'openai/gpt-5.4-mini' },
   { provider: :vertexai, model: 'gemini-2.5-flash' }
 ].freeze
 
 DOCUMENT_URL_MODELS = [
-  { provider: :azure, model: 'gpt-5-nano', protocol: :responses },
+  { provider: :azure, model: 'gpt-5.6-luna', protocol: :responses },
   { provider: :meta, model: META_TEST_MODEL },
-  { provider: :openai, model: 'gpt-5-nano' },
+  { provider: :openai, model: 'gpt-5.6-luna' },
   { provider: :openrouter, model: 'gemini-2.5-flash', protocol: :responses },
   { provider: :xai, model: 'grok-4-1-fast-non-reasoning' }
 ].freeze
@@ -150,12 +150,12 @@ DOCUMENT_URL_MODELS = [
 DOCUMENT_MODELS = [
   { provider: :bedrock, model: 'claude-sonnet-4-5', protocol: :converse },
   { provider: :mistral, model: 'mistral-small-latest' },
-  { provider: :openai, model: 'gpt-5-nano' }
+  { provider: :openai, model: 'gpt-5.6-luna' }
 ].freeze
 
 SPREADSHEET_MODELS = [
   { provider: :bedrock, model: 'claude-sonnet-4-5', protocol: :converse },
-  { provider: :openai, model: 'gpt-5-nano' }
+  { provider: :openai, model: 'gpt-5.6-luna' }
 ].freeze
 
 vision_models = [
@@ -169,9 +169,9 @@ vision_models = [
   { provider: :meta, model: META_TEST_MODEL },
   { provider: :minimax, model: 'MiniMax-M3.1-Flash' },
   { provider: :mistral, model: 'pixtral-12b' },
-  { provider: :moonshot, model: 'kimi-k2.6' },
+  { provider: :moonshot, model: 'kimi-k3' },
   { provider: :ollama, model: 'gemma4' },
-  { provider: :openai, model: 'gpt-5-nano' },
+  { provider: :openai, model: 'gpt-5.6-luna' },
   { provider: :openrouter, model: 'claude-haiku-4-5' },
   { provider: :vertexai, model: 'gemini-2.5-flash' },
   { provider: :xai, model: 'grok-4-1-fast-non-reasoning' },
@@ -243,7 +243,7 @@ VIDEO_GENERATION_MODELS = [
 ].freeze
 
 image_generation_models = [
-  { provider: :openai, model: 'gpt-image-1-mini', supports_size: false },
+  { provider: :openai, model: 'gpt-image-2.6-flare', supports_size: false },
   { provider: :gemini, model: 'gemini-3.1-flash-lite-image', supports_size: false },
   { provider: :vertexai, model: 'gemini-3.1-flash-lite-image', supports_size: false },
   { provider: :openrouter, model: 'google/gemini-3.1-flash-lite-image', supports_size: false },
@@ -282,16 +282,16 @@ TEST_MODELS = {
   elevenlabs_image: [{ provider: :elevenlabs, model: 'gemini-3.1-flash-lite-image', assume_model_exists: true }],
   elevenlabs_video: [{ provider: :elevenlabs, model: 'veo-3.1-fast-generate-001', assume_model_exists: true }],
   vertexai_video: [{ provider: :vertexai, model: 'veo-3.1-fast-generate-001' }],
-  azure_image: [{ provider: :azure, model: 'gpt-image-1-mini' }],
+  azure_image: [{ provider: :azure, model: 'gpt-image-2' }],
   bedrock_image: [{ provider: :bedrock, model: 'stability.sd3-5-large-v1:0' }],
   bedrock_image_edit: [{ provider: :bedrock, model: 'us.stability.stable-image-inpaint-v1:0' }],
   bedrock_transcription: [{ provider: :bedrock, model: 'mistral.voxtral-small-24b-2507' }],
   azure_speech: [{ provider: :azure, model: 'gpt-4o-mini-tts' }],
   azure_transcription: [{ provider: :azure, model: 'gpt-4o-mini-transcribe' }],
   parallel_tools: [{ provider: :openrouter, model: 'upstage/solar-pro4' }],
-  temperature: [{ provider: :openai, model: 'gpt-4.1-nano' }, { provider: :perplexity, model: 'perplexity/sonar' }],
+  temperature: [{ provider: :openai, model: 'gpt-5.4-nano' }, { provider: :perplexity, model: 'perplexity/sonar' }],
   alternate_chat: [{ provider: :openai, model: 'gpt-4.1-mini' }],
-  alternate_batch: [{ provider: :openai, model: 'gpt-5-mini' }],
+  alternate_batch: [{ provider: :openai, model: 'gpt-5.6-terra' }],
   alternate_embedding: [{ provider: :openai, model: 'text-embedding-3-large' }],
   alternate_speech: [{ provider: :openai, model: 'tts-1' }],
   reasoning_effort: [{ provider: :openai, model: 'gpt-5.2' }],
@@ -299,13 +299,13 @@ TEST_MODELS = {
   compaction: [{ provider: :anthropic, model: 'claude-sonnet-4-6' }],
   citations: [{ provider: :openrouter, model: 'perplexity/sonar' }, { provider: :perplexity, model: 'fast' }],
   router: [{ provider: :perplexity, model: 'perplexity/kimi-k3' }],
-  agent: [{ provider: :perplexity, model: 'openai/gpt-5-mini' }],
+  agent: [{ provider: :perplexity, model: 'openai/gpt-5.6-luna' }],
   mcp: [
-    { provider: :openai, model: 'gpt-5-nano', protocol: :responses, approval: true },
-    { provider: :azure, model: 'gpt-5-nano', protocol: :responses, approval: true },
+    { provider: :openai, model: 'gpt-5.6-luna', protocol: :responses, approval: true },
+    { provider: :azure, model: 'gpt-5.6-luna', protocol: :responses, approval: true },
     { provider: :gemini, model: 'gemini-3.8-flash', protocol: :interactions, approval: false }
   ],
-  always_thinking: [{ provider: :minimax, model: 'MiniMax-M2.7' }],
+  always_thinking: [{ provider: :moonshot, model: 'kimi-k2.7-code' }],
   thinking_signatures: [
     { provider: :gemini, model: 'gemini-3.1-pro-preview' },
     { provider: :vertexai, model: 'gemini-3.1-pro-preview' }

@@ -5,11 +5,11 @@ http_interactions:
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","input":[{"role":"user","content":"What''s
+      string: '{"model":"gpt-5.4-nano","input":[{"role":"user","content":"What''s
         your favorite Ruby feature?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:58 GMT
+      - Fri, 06 Nov 2026 16:19:21 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -44,11 +44,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID
+      - X-Request-ID, Server-Timing-Total
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '658'
+      - '1664'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -60,7 +60,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999968'
+      - '2000000'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
@@ -75,27 +75,30 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_03df44443bf147da016acbfa71b02887d296fb4ec5537b958f",
+          "id": "resp_097e4b7d556265ca016aedfe07e74887d29fadddf38f95dcab",
           "object": "response",
-          "created_at": 1791752817,
+          "created_at": 1793981959,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1791752818,
+          "completed_at": 1793981961,
           "error": null,
           "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
           "incomplete_details": null,
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
-          "model": "gpt-4.1-nano-2025-04-14",
+          "model": "gpt-5.4-nano-2026-03-17",
           "moderation": null,
           "output": [
             {
-              "id": "msg_03df44443bf147da016acbfa71f82887d2ae5d9aa45380007c",
+              "id": "msg_097e4b7d556265ca016aedfe0883c487d2b375a6c4577b5bc8",
               "type": "message",
               "status": "completed",
               "content": [
@@ -103,9 +106,10 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "I find the ability to use blocks with methods to be one of Ruby's most powerful and elegant features. It allows for concise and readable code, especially when performing operations like iteration, callbacks, or creating DSLs (Domain-Specific Languages). Ruby's blocks, along with features like `yield`, `Proc`, and `lambda`, make it easy to write flexible and expressive code.\n\nDo you have a favorite Ruby feature or something you're currently exploring?"
+                  "text": "My favorite Ruby feature is **blocks + yield (and the whole \u201cRuby-style iteration\u201d syntax)**\u2014especially because they make it easy to express control flow in a readable way.\n\nFor example:\n\n```ruby\n[1, 2, 3].map { |n| n * 2 }\n```\n\nThat `{ ... }` block is super flexible: it works with `map`, `each`, `select`, `File.open`, custom methods using `yield`, etc., and it keeps the intent clear without tons of ceremony."
                 }
               ],
+              "phase": "final_answer",
               "role": "assistant"
             }
           ],
@@ -113,10 +117,11 @@ http_interactions:
           "presence_penalty": 0.0,
           "previous_response_id": null,
           "prompt_cache_key": null,
-          "prompt_cache_retention": "in_memory",
+          "prompt_cache_retention": "24h",
           "reasoning": {
-            "context": null,
-            "effort": null,
+            "context": "current_turn",
+            "effort": "none",
+            "mode": "standard",
             "summary": null
           },
           "safety_identifier": null,
@@ -150,22 +155,22 @@ http_interactions:
           },
           "tools": [],
           "top_logprobs": 0,
-          "top_p": 1.0,
+          "top_p": 0.98,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 13,
+            "input_tokens": 12,
             "input_tokens_details": {
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 90,
+            "output_tokens": 112,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 103
+            "total_tokens": 124
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 11 Oct 2026 21:06:58 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Fri, 06 Nov 2026 16:19:21 GMT
+recorded_with: VCR 6.4.1

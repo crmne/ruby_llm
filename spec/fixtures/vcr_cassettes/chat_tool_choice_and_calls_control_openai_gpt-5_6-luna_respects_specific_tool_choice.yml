@@ -1,0 +1,413 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"What''s
+        the fall of Rome?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}],"tool_choice":{"type":"function","name":"weather"}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:32:54 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID, Server-Timing-Total
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '1093'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '2000000'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_018283f455aaedc6016aee013537f487d2be7ed3e5be44d405",
+          "object": "response",
+          "created_at": 1793982773,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1793982774,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5.6-luna",
+          "moderation": null,
+          "output": [
+            {
+              "id": "fc_018283f455aaedc6016aee0135e0a487d29ad67b3aee054197",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}",
+              "call_id": "call_9DqUZh8whHvanQzqav0abKov",
+              "name": "weather"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "24h",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": {
+            "type": "function",
+            "name": "weather"
+          },
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "function",
+              "description": "Gets current weather for a location",
+              "name": "weather",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "latitude": {
+                    "type": "string",
+                    "description": "Latitude (e.g., 52.5200)"
+                  },
+                  "longitude": {
+                    "type": "string",
+                    "description": "Longitude (e.g., 13.4050)"
+                  }
+                },
+                "required": [
+                  "latitude",
+                  "longitude"
+                ],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": false
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 0.98,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 75,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 27,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 102
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Fri, 06 Nov 2026 16:32:54 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"What''s
+        the fall of Rome?"},{"type":"function_call","call_id":"call_9DqUZh8whHvanQzqav0abKov","name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"},{"type":"function_call_output","call_id":"call_9DqUZh8whHvanQzqav0abKov","output":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:32:57 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID, Server-Timing-Total
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '3098'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '2000000'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_09920d80a6e6c834016aee0136626087d2b9427d68b6d096ad",
+          "object": "response",
+          "created_at": 1793982774,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1793982777,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5.6-luna",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_09920d80a6e6c834016aee0136fd3487d281d99d58710a7273",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABq7gE5B85EDgmT9bBOZgE8tY08j-jswjv5RedbMtgDyQI1VxzwpVZOfUTEIgwdYzbfxdJPfRddqmOAHwIoKrdPA_opqgmTbxbYIxlUtypmeB7WNn0erIxi0LiBO3l-0ozA07lj_eupYvbTN-CxUyB1cazDXGueFVxOC4DapzFKh0yDMtZKwhqAx93mxjsahgCpb7MVg6y4FwmZZnoYOfaEwDP2dOj8Sil3WmQ0glYo57IV_LmQeQx7-YExC2hTa8cie-MApHaChGE9j0bi0hkNWEbAiWncIZsHZP2jLPRklKVJWyTwpZLOHiIOgLHzB1sfA1h6rqcQxPlJeI8ql14SSiQip1u6tqWDQXY271lGxxGOY2iu8HwdLbHowV55vuc0MWuJZB0rmeTa80OgVnasIs0V0_Dv3ZLpu8GfooecJNLQHRqgU1mPbzonV41OPJYVUw06vUljnWsapwsAo686f_TZ9lyZ6daXu2KOYsWeBRbuDgevYJik8HqTV8jk15oSxwumfKYyHiTkvt1IPIXD2xr_RxRxKoYIO19khbJWfCoeDEwOH5fC6wCh7g8UuNdOkCUQK0xUXligVWFt370w-FTzluUGbkabe_9EpCpUAmoq5pteuodKYwsFxe7cHV4HImgWo9x-_BCEzzj8KHCh6d9P-bOleBFnsjwvWc-JJIFwz3UXAFh7-xrTMEmjJBPyBJyUmmGE7Fzx-VXsxdWdnHBMZ3epRjXFVPYemEmfX5nFTwnOwcRou0Mr7XcTXU-8wXJ2uRGIPUr4iGO_pCWfwm-ZOudmvikSDyQQeD8IsGOer5pxvUTGnp3Ow27dLPktNkwoDzLztT0fXN4qJI70z4Cuy8dKTm1pitPmW1rACnw7zxASeGhw0iTH4HhnUuMqclUbQOX5Z_SEZf0etcGQbnn1gwgwCGuFQjXsG9iwh-CODlSASjq-G20MaGiE5qi84oGjBCtcnMcNnP8MhsJb9PRLcWXTpUKlxb0Hg5M8yCca-GUOvA20h1FUzJsKX3J5nWaBm2NBfgG36RUKcfhKDdVnek6FTgsHz02o13rjImzxTzvfYKn5rt5c9nKR-B2X4Ofk7JtTBdehzEE_I2BhRKE1WSYz-KGK5WZL2pbe3_qtvNruTrWDQmNGm2HnrHNja786dHS8COh-eqElOICvYR-wATTCbwW0UwD4Hu8YgHGUNJ6zcW90WpbQWgtDk0PD15MsjqREvz-YbiZWnCGYf9Bq-6P0nc10Ese8lqFqfGhJnMH-3aOjLxSct7aesIxGxaMRSOyAOz2y-SfgTDRaH0Wu4mvRLznZDCQbeGB2KTYWWNgNeWsVsSrfS0_0a9ntCfxQW2UviujdIN_8Hyx4XHCCNZ8-pOdqWDhLXfJzgr5QML0offBg3kF4U6jsT-kwsVgtWtAsR4OAUKg2LuwNV6WoEf9penrWzwbIc-l3s3JUrn16azC41NSrxIJrn-ThB0IMeE68-MxMEmo-ZoU8Dklgf5q5eEwDpzR8Y7e8XTTobKVrE7n3IzYKL1ZqRu4-uxWf7l4gEJYAXRLG616R4GzD3V0HRsGWaD4CIuORyafLwqchU_S7VvKbzPCEa6Z9jMXeVgyigdgi3TXWobEHwSIFgu1gfzMiO1Sy4eIdB2q0ykhqOSvdcSqK5lroTElcs1T_GpKcr-DSBBPW_RLaxL36sP3va9VzQeiFU3k-4WqpqcKTwGRSdcLmdUFmxQrMQA12gCCRAkl2ggctl6CKkCG4D3B2iRyF-ANNDVy7c1W_ESRvMYhULhTP9-_kK51ZOS7fBqwDQkUle2ikn-2ud3sCVx2BkcARk3klW1st5B6yH9pGePYS2dKxFh4HmlgwnvGYfzuY-N1_hbbHquFc3mQIJIDwsqPLcyqTky2ReGNfXbrvlLwORgTnlU8nZvKzQYidMq2s4HsHRYPjzc_5lZYkVu45MZkXR85xj0JLYOYseK4tHtkya-Wjbf7g50zFCd4-",
+              "summary": []
+            },
+            {
+              "id": "msg_09920d80a6e6c834016aee013784f087d29b3b510f57c6746e",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "The **fall of Rome** usually refers to the collapse of the **Western Roman Empire**, traditionally dated to **476 CE**, when the Germanic leader **Odoacer deposed the last western emperor, Romulus Augustulus**.\n\nIt was not a single event but a long decline influenced by:\n\n- Political instability and civil wars  \n- Economic troubles, heavy taxation, and inflation  \n- Difficulty defending the vast borders  \n- Reliance on\u2014and conflict with\u2014Germanic armies and migrants  \n- Epidemics and population decline  \n- The weakening of central authority  \n\nThe **Eastern Roman Empire**, known later as the **Byzantine Empire**, survived until **1453**, when Constantinople fell to the Ottoman Turks. Some historians therefore date Rome\u2019s broader decline to various points between the **3rd and 5th centuries**, rather than to 476 alone."
+                }
+              ],
+              "phase": "final_answer",
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "24h",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "function",
+              "description": "Gets current weather for a location",
+              "name": "weather",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "latitude": {
+                    "type": "string",
+                    "description": "Latitude (e.g., 52.5200)"
+                  },
+                  "longitude": {
+                    "type": "string",
+                    "description": "Longitude (e.g., 13.4050)"
+                  }
+                },
+                "required": [
+                  "latitude",
+                  "longitude"
+                ],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": false
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 0.98,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 137,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 222,
+            "output_tokens_details": {
+              "reasoning_tokens": 43
+            },
+            "total_tokens": 359
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Fri, 06 Nov 2026 16:32:57 GMT
+recorded_with: VCR 6.4.1

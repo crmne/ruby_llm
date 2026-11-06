@@ -1,0 +1,630 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/openai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"Search the
+        web: what is the latest stable Ruby version? Cite your source."}],"stream":false,"store":false,"include":["reasoning.encrypted_content","web_search_call.action.sources"],"tools":[{"type":"web_search"}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '13361'
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 06 Nov 2026 16:24:04 GMT
+      Server:
+      - istio-envoy
+      Vary:
+      - Origin
+      X-Ms-Aoai-Configured-Data-Retention-Days:
+      - '30'
+      Skip-Error-Remapping:
+      - 'true'
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - gpt-5.6-luna
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '24624'
+      X-Ratelimit-Reset-Tokens:
+      - '30'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'True'
+      Azureai-Fe-Offer-Type:
+      - paygo
+      X-Ms-Served-Model:
+      - gpt-5.6-luna-2026-07-09
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Apim-Request-Id:
+      - 4ad7534f-164e-4057-b2ec-73bb616d0814
+      X-Http2-Stream-Id:
+      - '665'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "resp_0004b64d8b4cc2c6016aedff2589d88194a25fa7178da16f25",
+          "object": "response",
+          "created_at": 1793982245,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "completed_at": 1793982253,
+          "content_filters": [
+            {
+              "blocked": false,
+              "source_type": "prompt",
+              "content_filter_raw": [],
+              "content_filter_results": {
+                "hate": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "sexual": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "violence": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "self_harm": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "jailbreak": {
+                  "detected": false,
+                  "filtered": false
+                }
+              },
+              "content_filter_offsets": {
+                "start_offset": 0,
+                "end_offset": 18406,
+                "check_offset": 0
+              }
+            },
+            {
+              "blocked": false,
+              "source_type": "completion",
+              "content_filter_raw": [],
+              "content_filter_results": {
+                "protected_material_code": {
+                  "detected": false,
+                  "filtered": false
+                },
+                "protected_material_text": {
+                  "detected": false,
+                  "filtered": false
+                },
+                "hate": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "sexual": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "violence": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "self_harm": {
+                  "filtered": false,
+                  "severity": "safe"
+                }
+              },
+              "content_filter_offsets": {
+                "start_offset": 0,
+                "end_offset": 17736,
+                "check_offset": 0
+              }
+            }
+          ],
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5.6-luna",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_0004b64d8b4cc2c6016aedff261898819488b8128261857154",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABq7f8tsZ5a6IKyx4Fn-pxn0XFxKWmi8BqpBhUuMm139yANw4lkoRwazPXQOtvUHi91KqHnRXJ378oK4qxxx9qlJ3zSO6a41FmTQmKVEEzT4JNfxlyr6BlI4EcMs55oBXekXwU89h-7VdJGgUVUvzO95CNz6WEHFSjA1jMs-R0a4vhh8Y6E_gscRfHHbc1qUIFjgA0D5mMc5zHHy4LiPOCcRjqcd6IqSVidj6LTXNpG0DTopexumRLbqA8uB3Hr3CxiruDn56v3tzjzWp_N_7nR9w9Nf6N1d2RnD1Sn9SufF1xohXPuoxVpxd-o7BYu45KHRtNRpJj0boGUVCnk3e3WUk3DOvsTpF0nJqT10HuNW6Kh8J1NFXpvslqN_XdnfW2YbihLgLeYT866uZMGmtN5stgupFdJuVBnbPcNyIIQaqysWoJLAS7c1NO9ceVVs41gE-uBlFsdQAcVyMnr4JaDEBKgVmUYqtiM322zfOF3p_DpCOvFlYVmJBGmL_EAMCD3mLJKrHl_lsJmCCWlBngD05NeqWGxQlSTiWu59GAtV9ZqafJfZKBUks7AeT-mJI4Q6MsZCBUHpJyVvyuEsPwxguXyspMFW8DqZ0VVUuOxaXc0TWb6r8JD4z53eggE4RAPveGjcanBtqQNgWverUcWgTOKhERE0OLHb7EazKlTXxnzthtBZy2UijDhmwlUkhAnlSQylY-lxMVa_EyEyHpe4V7K87n6DthCdW4aQMa2Hq4l-HqEZBINGqbw_8o7B2dYvOftr4YWlLkAkrZOcSjI8R2JAF1U5sDk5opWND5_jCYZ5_6CCjlTZWbgdpbnXqZaXdyl2khZ7cpP4TVRH0kqF8uBI3oATvnxV659EKsNUrbJhE5gOmakD2mVANoBxbId3-RClHKi_xYW6L3kEOwaXVYRoiWVDPx-tG96VbieFmGNksKY1L_VdBk5Vw5LOW5j-CU_0ADK4CKyDo6feFYLFECtxgm5sH6JQ-844vCdd7ZSmC06lMSz3qSy3f1CDYEdI5x4gu8SC0pKmw-LOC5tr_csIiYA9wFDrqPldf3ry_WgKD2Tws8z9B2MqJ1cPelSp_zlOgJjKVmGlPVTnTMs53FVTRMGN_vf_1c_UOCY71UBBkCvXwSYESvIGz4JXsQjVyJ-aI38gH1cJStRxE8iMFGZU6N-S2aPNobCwKvwUhekccVhk5zGwsW2dyOHeK6EEIaPZx9gGfVSI2aeUmAi7ctRKs3vMoJSf3ta6havqP7MQwtXO6jlWfJB81RjtZXUNIGfHUHMcmKyElkewzbPx-J_egAlT8cj6uUMQWC1qtg5-TzAbbUHThXHWBaWPy2zcPbHtn9wsm26ztt7WeJfDMydwzlLl-J4t9q2yIkFpfE-kyqfBxrPjUhgw2tONV3yXVQ6kFKW5BTJDJCk2RvL5t7bVOt6Hbky2fQ9-rzqOo7pNPl01oxFVUP5HlDjCEEN_H3LVtj-xow7Xj9BBoq9dbNk46Tf_aZck9EPKaOh7ZwnmabbbSMI2uQ7EDiFyUAZnaqwuL91g--_Tzjcijmj0HCZvyAFEezvVhPRZwO72v6Ql_513o4LchPBGZLJmQzaKU85OCRoBsbVjxNPLotI48Z6DOm4vlt_Ut9c_UcIuaMb1wIJAF9wgE_mQ42OQzAB7BJYe68mPebkNbPm_afQzzNDyySTy3VkPms3ETZSetJU1ntNhxvQ8MMLBhIIq_LFYH5d3oM7l24rzUwdi4ubaYmXbDkHTmXUKISiv321rJAHlD43RahVK9EXKVK1pVgVF1SHAfHjo9A4Xn42m6OibCJxy2EJvV9e3JAYrgKcnbVYSNUyoZ2rHyDpRlDHA89h1ijSC1xXKzVG8ECc-FHhW5ZjCcTt-DMbmQeUhjvrpfGQUXqNLPY89ReGEr2xtwA079zvp5jXKNoa-o-tIl15e8rT4NudJXga_WPePlXdEpguJZ7116dBa73gQ7gE8V6w6rLDus1OfL_fiR6m5SAGdBKQjVeMC8mwAvVPx-FECoieoqZbIS-_AUn06cYzbOyaJDFq35sjiPcvxTuuGS475YDwPdtJbIjFrgy9--8Ww_X-zd8gvsJHOWDBQbQahe9S4AhbAK4rIj7it2PXDZtBp7XVGtkNAjmCzcqFDtUhGidH0JeIVrvbXSLNsuCDHOF3dXdbFduRg2SAf1hsDTYMl4TUaUkdtvwoYb2bBaXWJKIaE0MkdHQBbubw-JHRnpUIr8ifEtLy8X2wQSDN4Vn6Xb123hiIRLOfMTM1VKYQa_h2NTpvvGRpNFuKSCDPXTcG8dhA-wL6hQaw-AWUQL2sNhaWQv_VuOEayXY9XccrvBs5spRng2wzD6hTWRgwohjWgJsaowOygxjlZG553x7UcT-VybcmJO357ocR6Ffx-h3-FHSGEqC6_Qh2g0YTizmrpwV-_Ta2cBJYAetgO_UdvcZFT0Ap6gcXO4_1D_5UEozzEV0tWul0e8dpqYs31nNQFGrr3yjx1XOKmkGcldU_UKoJFBrCQ2Ha-gX684KctYp_Q1ttWM0hzHPiSZr7JV-cyyLgpprxdTrrfBnViJVqJvhuqQOes3Gi3HVA_HnwzUTSmP0DkI6Wln2UIdOSeXotqlwl",
+              "summary": []
+            },
+            {
+              "id": "ws_0004b64d8b4cc2c6016aedff26e7d4819480e3821f3369c593",
+              "type": "web_search_call",
+              "status": "completed",
+              "action": {
+                "type": "search",
+                "queries": [
+                  "site:ruby-lang.org latest stable Ruby version release"
+                ],
+                "query": "site:ruby-lang.org latest stable Ruby version release",
+                "sources": [
+                  {
+                    "type": "url",
+                    "url": "https://www.ruby-lang.org/en/downloads/releases/"
+                  },
+                  {
+                    "type": "url",
+                    "url": "https://www.ruby-lang.org/en/downloads/"
+                  },
+                  {
+                    "type": "url",
+                    "url": "https://cache.ruby-lang.org/pub/ruby/"
+                  },
+                  {
+                    "type": "url",
+                    "url": "https://docs.ruby-lang.org/en/"
+                  },
+                  {
+                    "type": "url",
+                    "url": "https://cache.ruby-lang.org/pub/ruby/3.3/"
+                  },
+                  {
+                    "type": "url",
+                    "url": "https://www.ruby-lang.org/en/news/2026/09/15/ruby-4-0-7-released/"
+                  },
+                  {
+                    "type": "url",
+                    "url": "https://www.ruby-lang.org/en/news/2025/09/16/ruby-3-4-6-released/"
+                  },
+                  {
+                    "type": "url",
+                    "url": "https://www.ruby-lang.org/en/news/2025/10/07/ruby-3-4-7-released/"
+                  },
+                  {
+                    "type": "url",
+                    "url": "https://www.ruby-lang.org/en/news/2025/07/15/ruby-3-4-5-released/"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "rs_0004b64d8b4cc2c6016aedff29882481948297eeec5baef201",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABq7f8tqesC6JG2LmLKMNjFFaGuOoev7O59gjvKJUq6XvJ9uRHWblBMjP-DI9svMTdvfNxN64W-EuRyx17McXO9glv1MQd0R2zXMSmNbz6QFOuI-cbNoT5cKxXQ4s7paDiwKhDJE35dHqvktNisMauj-avikH8CSmC4F_rvsO73E8aHhT4MKqtuz5RNwaw6Lr589NHDONcAbH8td_O0xbpulcDMhtu038nSCXFsxA4dsrF7SN6ROKgmptgLwpaOnG617-fP7gQ7F2ykMeLK-jU8ezC5A0eBjct6SR70jvPgrQ9mjC0UoyfAvgV9bEyxBGF9-SeRX6XmOnE_V95yHoHXeTU4dMYwDt01jm4S_a9Ow0_ERgW-C3FCGtQXluWY5sCNdjX9tXY-hYS2ZZJeVOrRDqYBGiYHFmfVrDsCS9b7f2OXvoyC2Te9WIiZz8PoL6dQFCcRYpIRKE1T2TJX6JL_YR_Bw5S6URbNckkFl15Y7qQUF_cE_cXMmeSPVsbla2dR3V7Bw2o3tfSJIi3gTsatUFknMbK0YcLR0d5dvM_ylNVFtN1W2eDGw5yYTRKpOSGnqZyDD589n224EV3RQt6J1cd6ffuSpsZWOVvURCf5QZOUHj7x9NxaT-r0Alpc4VDw4LDTis7pMYKdkmQQET1KBRhh-HA2CU9sn3ADfNi_43g3OjVDHCfa3U7M-Tl1vuD8Ts5uq1lSwxYz3y3dj1agmDK6pZCghs6isf9lHQ6GHEM4TTq1056F2Wross0vCVdy-a_KsO7AAy1e2vL7G3JFiBdoruCEp4f08q-j8qbqfqf2im9UDs3LdE6JEkBi3X8Fm7K0su8X5VIou6CYfg60jy3rMFZxtoENzRPTkJW7qVEasCZz53knh-VzBBazYJRG_eoxEOh8iF4s1_K9lvdZ1IP_2864vjthvCSaUY9pQtMHyIeezVaPfhJQHyeK0TYeOgmAWNIp-4zk96-Bz07lNPgYSt4EvWm777cfSCAHCjJGDqokhG4MRtMwXXzQ9l2udBG98mhoMGOQRz7HA-1EvGOXkD4P1bGf440f2uWFJMNAH87Xjx34KgbosFdnwDKZFTOj9zezyAojnmk81erzONHNT4sdC3NYPscogv22kc0zM06AliPemZL2uazdaSNlN-7fBozLyliL95MYf2YpQR9U5jxFJwO4a9duv4Ovvudp_BN9yr408gEziqRkMVqV6-_q_aPR7kzu5fyea_v5JzuVZHcXQJ5uWMkrxQNATmgZd6IODNt_OtYK9M_HxUCklOTXEka9wUg_NE0nAKiy_2l74M_huwCgXSNA903HEnq5Y1n4yu_JPDhx-pcFVHAy70wdnfDzvJQZ4e8vDStH47IFi4kys5mAgW6PNk2Ag_7_fXuo3Q_HKf1uFDvQoqA39XqswJ1zLojHs0u1hFgi6bkhRV7p4MCP2fhe_7ka5d5Unneyyn9-UYXqT3JLeY562Pdanl6WsE7KXf10V1YJ9O78t9DFQZ65SZy8wz4zRonBantSm2aDQ-Z0zFdguP4famAn8jZ2X7HVwfxpawr8Zwu9ZNJmgr6HLmkmhSqPGiTgWfMHiFchQiCPy3GVW556UxvTtiTBlQx1U5NzQ4hy3B3m4nRMFxzSlQgdWrFliTpaYOWEo7yoWkHNjB9i5Y-p3xd48vlLWPK4c6l_Xgyuyr_TCPtAXtwfYpdnVRF4w1PTODK3hIXOZTgmPt3H8iGQjdvc09rWv4Q-jqDmBqMnFpzXYekMnFdcl6rXdeHeDXR4Nn_4odpedVtM8hcixGq0US-weSI0EiVJMATC0pN4nx3dJiTrOrUTdps60BzAgZ8AaLcwTD7SeUTgaC3V-dItzaptGeB-2ZE9HXJkOI620B1RsfBOi9YX_kHPGge9ZcfCuzYo8OrSqnPX-AX87WPIXbi2KSwvLjuXzLf5La6BN0Fcs9sUfFmL3vVJnKnCEbbSIqsJ2FI_cVMC4NsGhCccRLn-YE-brxUQ8J01o9H9PtDJ6oFwMWmm9viaPxSc3EjK8g_B1qgh0ahW_xepmAcxpEYcNQ9GYqG0TYZELcC9MjfMqmKpUxbwUvIn2AlHeU1stWg=",
+              "summary": []
+            },
+            {
+              "id": "ws_0004b64d8b4cc2c6016aedff2a13f081948fb7407a03901c63",
+              "type": "web_search_call",
+              "status": "completed",
+              "action": {
+                "type": "search",
+                "queries": [
+                  "site:ruby-lang.org/en/news/2026 Ruby 4.0.8 released",
+                  "site:cache.ruby-lang.org/pub/ruby/4.0 ruby-4.0.8"
+                ],
+                "query": "site:ruby-lang.org/en/news/2026 Ruby 4.0.8 released"
+              }
+            },
+            {
+              "id": "rs_0004b64d8b4cc2c6016aedff2b921c81948cc9343a7edb97f2",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABq7f8tqCwYUELz_cs99TBzEni7RwcOA8WOAxZ-s60yB76KcrtwoutenyVb3bZh3mUh4tTofolxTlt61IOkUSxmHcxahPiKyu7gtpagujjegch6lsYqwecfIDdOSDHCvTYM2K344RDESm6XrpgUrGy0prXaOpngtZ5EIJq3JwxhKMvCUnVAiqkU7wiA77d4yatpr3ZJnQPjOhCbvByp3cZIfsfR4CI0FcKjudy_gcWn9ZoR6rINtFzn9F1E0DELUv7AG61aIO6-PmJGEyCzlYXJosIBNGdTTwHPOMCJxrErD2vpzx4tmK_RlNW9fPo9w_QS8sM6bekh8eNvj47en9dc5y1eT1CuTFcgt1EWjRCSRuToK7tvrFoNHuRMF_rayEp8q7zL-bWWy3LhThKQN6N4mH8eP16mi0YrYjgLWWi_lDoDDOuQHw5_qCpmdQRSRHoVOI1c96SotBQsJbrwDyerOrMvF4j8YEWLxi8I_HqsezBwImyIAz143sXg6OjpRkxeyxMW0Y9OZYdClDfjIcvTlnaDvRKG4QRzbQFUw7YAK80hhrNgnCEzDd3RLu93i41SbW-ClfdoQvvrCD7jAKluXKTxtmH9zE28-HvpRKwg5fyUL9k3LP4iX-Kq4Icldc-bjriiwAhNIoC8KiwlcgAYduw0uzJjbXJIGUR3FUC-iEOf6hB7WYrsHMOrMNhoiKvFZEOJvcMgD0AnmpXvpkmvda5eVum0pCKxqpuDkCdisVJPRSUECclgFlkIwxNz-GRFRNsl82c-bn0tJPW5ywps8vYD529BPGPuMIAdA_Kzzr3G0T6A_gA0V1CA_uHeU87d5P_Vsmb7htZkxGACbCsQDONU5lzx4x1DHLLs8H004Wv7r3Lm0smcDQNpYXI8iCIRZXVdSIksMoBUGUHpqXaWCRAoX7ZkX0diVQsW9Adtelk_75knth3SyhiW1dXcAy5kXkliwvpJRxOAcP0bBY7rvJdZ58nwGi6BEv9KxEO6qQTlYKnHsfYdxtGUKciBc53k422HcIoGm-sFtq-OyDPShsrtZaJP_-VWncAdkx5o95kXi8S2SUjEIziTIU2XnMmP81Swp5nhClW5mhBfl4JBTaS7862DNeRlO7RAUG7wdXj-kK466DYdSZxfrc8CetpfEVmK4rUCO-EgPsPMySnGmpTBmvDr-ZNDBhZNNxFn6e9SIDFkKB4ktD9gsxUd_3W50s1pPZUtvCPnE526CSVVuVXuRL0ynK-VKuNcEQ4KBPkzsLpw-qYqEnM02sgU_k-6yvQfdtsz7P2bDSbopUW-P2YHNMu3CGBwHVXqjj8N2uXMp8HODiRyeK5GEKkIP4_ajZ3IuqtuzlhwfyERei8osZtlR2N310egdf6L7JUPb_t7eJEFd-52BWJ9cpGWYgZnLn1i2G83ZGi87JO0jDaY2Fneak96ryGggkbCciuV9BisO_tyfRDVtpe5-ezddJTV2a6zyuQRhV-S9EejUF-cpjWTs6Y-6WY-NeeIzNZ_c2LQa2_QwpRmqhFuyOkV-NKh0kAx",
+              "summary": []
+            },
+            {
+              "id": "ws_0004b64d8b4cc2c6016aedff2baf808194b48a195ce0b7fb80",
+              "type": "web_search_call",
+              "status": "completed",
+              "action": {
+                "type": "open_page",
+                "url": "https://www.ruby-lang.org/en/downloads/"
+              }
+            },
+            {
+              "id": "msg_0004b64d8b4cc2c6016aedff2c9ca48194aa90408e5cef00d0",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [
+                    {
+                      "type": "url_citation",
+                      "end_index": 142,
+                      "start_index": 84,
+                      "title": "Download Ruby | Ruby",
+                      "url": "https://www.ruby-lang.org/en/downloads/"
+                    }
+                  ],
+                  "logprobs": [],
+                  "text": "The latest stable Ruby version is **Ruby 4.0.9**, released on **October 23, 2026**. ([ruby-lang.org](https://www.ruby-lang.org/en/downloads/))"
+                }
+              ],
+              "phase": "final_answer",
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "24h",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 3
+            }
+          },
+          "tools": [
+            {
+              "type": "web_search",
+              "return_token_budget": "default",
+              "search_content_types": [
+                "text"
+              ],
+              "search_context_size": "medium",
+              "user_location": {
+                "type": "approximate",
+                "city": null,
+                "country": "US",
+                "region": null,
+                "timezone": null
+              }
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 0.98,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 10710,
+            "input_tokens_details": {
+              "cache_write_tokens": 4035,
+              "cached_tokens": 0
+            },
+            "output_tokens": 378,
+            "output_tokens_details": {
+              "reasoning_tokens": 326
+            },
+            "total_tokens": 11088
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Fri, 06 Nov 2026 16:24:13 GMT
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/openai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"Search the
+        web: what is the latest stable Ruby version? Cite your source."},{"id":"rs_0004b64d8b4cc2c6016aedff261898819488b8128261857154","type":"reasoning","content":[],"encrypted_content":"gAAAAABq7f8tsZ5a6IKyx4Fn-pxn0XFxKWmi8BqpBhUuMm139yANw4lkoRwazPXQOtvUHi91KqHnRXJ378oK4qxxx9qlJ3zSO6a41FmTQmKVEEzT4JNfxlyr6BlI4EcMs55oBXekXwU89h-7VdJGgUVUvzO95CNz6WEHFSjA1jMs-R0a4vhh8Y6E_gscRfHHbc1qUIFjgA0D5mMc5zHHy4LiPOCcRjqcd6IqSVidj6LTXNpG0DTopexumRLbqA8uB3Hr3CxiruDn56v3tzjzWp_N_7nR9w9Nf6N1d2RnD1Sn9SufF1xohXPuoxVpxd-o7BYu45KHRtNRpJj0boGUVCnk3e3WUk3DOvsTpF0nJqT10HuNW6Kh8J1NFXpvslqN_XdnfW2YbihLgLeYT866uZMGmtN5stgupFdJuVBnbPcNyIIQaqysWoJLAS7c1NO9ceVVs41gE-uBlFsdQAcVyMnr4JaDEBKgVmUYqtiM322zfOF3p_DpCOvFlYVmJBGmL_EAMCD3mLJKrHl_lsJmCCWlBngD05NeqWGxQlSTiWu59GAtV9ZqafJfZKBUks7AeT-mJI4Q6MsZCBUHpJyVvyuEsPwxguXyspMFW8DqZ0VVUuOxaXc0TWb6r8JD4z53eggE4RAPveGjcanBtqQNgWverUcWgTOKhERE0OLHb7EazKlTXxnzthtBZy2UijDhmwlUkhAnlSQylY-lxMVa_EyEyHpe4V7K87n6DthCdW4aQMa2Hq4l-HqEZBINGqbw_8o7B2dYvOftr4YWlLkAkrZOcSjI8R2JAF1U5sDk5opWND5_jCYZ5_6CCjlTZWbgdpbnXqZaXdyl2khZ7cpP4TVRH0kqF8uBI3oATvnxV659EKsNUrbJhE5gOmakD2mVANoBxbId3-RClHKi_xYW6L3kEOwaXVYRoiWVDPx-tG96VbieFmGNksKY1L_VdBk5Vw5LOW5j-CU_0ADK4CKyDo6feFYLFECtxgm5sH6JQ-844vCdd7ZSmC06lMSz3qSy3f1CDYEdI5x4gu8SC0pKmw-LOC5tr_csIiYA9wFDrqPldf3ry_WgKD2Tws8z9B2MqJ1cPelSp_zlOgJjKVmGlPVTnTMs53FVTRMGN_vf_1c_UOCY71UBBkCvXwSYESvIGz4JXsQjVyJ-aI38gH1cJStRxE8iMFGZU6N-S2aPNobCwKvwUhekccVhk5zGwsW2dyOHeK6EEIaPZx9gGfVSI2aeUmAi7ctRKs3vMoJSf3ta6havqP7MQwtXO6jlWfJB81RjtZXUNIGfHUHMcmKyElkewzbPx-J_egAlT8cj6uUMQWC1qtg5-TzAbbUHThXHWBaWPy2zcPbHtn9wsm26ztt7WeJfDMydwzlLl-J4t9q2yIkFpfE-kyqfBxrPjUhgw2tONV3yXVQ6kFKW5BTJDJCk2RvL5t7bVOt6Hbky2fQ9-rzqOo7pNPl01oxFVUP5HlDjCEEN_H3LVtj-xow7Xj9BBoq9dbNk46Tf_aZck9EPKaOh7ZwnmabbbSMI2uQ7EDiFyUAZnaqwuL91g--_Tzjcijmj0HCZvyAFEezvVhPRZwO72v6Ql_513o4LchPBGZLJmQzaKU85OCRoBsbVjxNPLotI48Z6DOm4vlt_Ut9c_UcIuaMb1wIJAF9wgE_mQ42OQzAB7BJYe68mPebkNbPm_afQzzNDyySTy3VkPms3ETZSetJU1ntNhxvQ8MMLBhIIq_LFYH5d3oM7l24rzUwdi4ubaYmXbDkHTmXUKISiv321rJAHlD43RahVK9EXKVK1pVgVF1SHAfHjo9A4Xn42m6OibCJxy2EJvV9e3JAYrgKcnbVYSNUyoZ2rHyDpRlDHA89h1ijSC1xXKzVG8ECc-FHhW5ZjCcTt-DMbmQeUhjvrpfGQUXqNLPY89ReGEr2xtwA079zvp5jXKNoa-o-tIl15e8rT4NudJXga_WPePlXdEpguJZ7116dBa73gQ7gE8V6w6rLDus1OfL_fiR6m5SAGdBKQjVeMC8mwAvVPx-FECoieoqZbIS-_AUn06cYzbOyaJDFq35sjiPcvxTuuGS475YDwPdtJbIjFrgy9--8Ww_X-zd8gvsJHOWDBQbQahe9S4AhbAK4rIj7it2PXDZtBp7XVGtkNAjmCzcqFDtUhGidH0JeIVrvbXSLNsuCDHOF3dXdbFduRg2SAf1hsDTYMl4TUaUkdtvwoYb2bBaXWJKIaE0MkdHQBbubw-JHRnpUIr8ifEtLy8X2wQSDN4Vn6Xb123hiIRLOfMTM1VKYQa_h2NTpvvGRpNFuKSCDPXTcG8dhA-wL6hQaw-AWUQL2sNhaWQv_VuOEayXY9XccrvBs5spRng2wzD6hTWRgwohjWgJsaowOygxjlZG553x7UcT-VybcmJO357ocR6Ffx-h3-FHSGEqC6_Qh2g0YTizmrpwV-_Ta2cBJYAetgO_UdvcZFT0Ap6gcXO4_1D_5UEozzEV0tWul0e8dpqYs31nNQFGrr3yjx1XOKmkGcldU_UKoJFBrCQ2Ha-gX684KctYp_Q1ttWM0hzHPiSZr7JV-cyyLgpprxdTrrfBnViJVqJvhuqQOes3Gi3HVA_HnwzUTSmP0DkI6Wln2UIdOSeXotqlwl","summary":[]},{"id":"ws_0004b64d8b4cc2c6016aedff26e7d4819480e3821f3369c593","type":"web_search_call","status":"completed","action":{"type":"search","queries":["site:ruby-lang.org
+        latest stable Ruby version release"],"query":"site:ruby-lang.org latest stable
+        Ruby version release","sources":[{"type":"url","url":"https://www.ruby-lang.org/en/downloads/releases/"},{"type":"url","url":"https://www.ruby-lang.org/en/downloads/"},{"type":"url","url":"https://cache.ruby-lang.org/pub/ruby/"},{"type":"url","url":"https://docs.ruby-lang.org/en/"},{"type":"url","url":"https://cache.ruby-lang.org/pub/ruby/3.3/"},{"type":"url","url":"https://www.ruby-lang.org/en/news/2026/09/15/ruby-4-0-7-released/"},{"type":"url","url":"https://www.ruby-lang.org/en/news/2025/09/16/ruby-3-4-6-released/"},{"type":"url","url":"https://www.ruby-lang.org/en/news/2025/10/07/ruby-3-4-7-released/"},{"type":"url","url":"https://www.ruby-lang.org/en/news/2025/07/15/ruby-3-4-5-released/"}]}},{"id":"rs_0004b64d8b4cc2c6016aedff29882481948297eeec5baef201","type":"reasoning","content":[],"encrypted_content":"gAAAAABq7f8tqesC6JG2LmLKMNjFFaGuOoev7O59gjvKJUq6XvJ9uRHWblBMjP-DI9svMTdvfNxN64W-EuRyx17McXO9glv1MQd0R2zXMSmNbz6QFOuI-cbNoT5cKxXQ4s7paDiwKhDJE35dHqvktNisMauj-avikH8CSmC4F_rvsO73E8aHhT4MKqtuz5RNwaw6Lr589NHDONcAbH8td_O0xbpulcDMhtu038nSCXFsxA4dsrF7SN6ROKgmptgLwpaOnG617-fP7gQ7F2ykMeLK-jU8ezC5A0eBjct6SR70jvPgrQ9mjC0UoyfAvgV9bEyxBGF9-SeRX6XmOnE_V95yHoHXeTU4dMYwDt01jm4S_a9Ow0_ERgW-C3FCGtQXluWY5sCNdjX9tXY-hYS2ZZJeVOrRDqYBGiYHFmfVrDsCS9b7f2OXvoyC2Te9WIiZz8PoL6dQFCcRYpIRKE1T2TJX6JL_YR_Bw5S6URbNckkFl15Y7qQUF_cE_cXMmeSPVsbla2dR3V7Bw2o3tfSJIi3gTsatUFknMbK0YcLR0d5dvM_ylNVFtN1W2eDGw5yYTRKpOSGnqZyDD589n224EV3RQt6J1cd6ffuSpsZWOVvURCf5QZOUHj7x9NxaT-r0Alpc4VDw4LDTis7pMYKdkmQQET1KBRhh-HA2CU9sn3ADfNi_43g3OjVDHCfa3U7M-Tl1vuD8Ts5uq1lSwxYz3y3dj1agmDK6pZCghs6isf9lHQ6GHEM4TTq1056F2Wross0vCVdy-a_KsO7AAy1e2vL7G3JFiBdoruCEp4f08q-j8qbqfqf2im9UDs3LdE6JEkBi3X8Fm7K0su8X5VIou6CYfg60jy3rMFZxtoENzRPTkJW7qVEasCZz53knh-VzBBazYJRG_eoxEOh8iF4s1_K9lvdZ1IP_2864vjthvCSaUY9pQtMHyIeezVaPfhJQHyeK0TYeOgmAWNIp-4zk96-Bz07lNPgYSt4EvWm777cfSCAHCjJGDqokhG4MRtMwXXzQ9l2udBG98mhoMGOQRz7HA-1EvGOXkD4P1bGf440f2uWFJMNAH87Xjx34KgbosFdnwDKZFTOj9zezyAojnmk81erzONHNT4sdC3NYPscogv22kc0zM06AliPemZL2uazdaSNlN-7fBozLyliL95MYf2YpQR9U5jxFJwO4a9duv4Ovvudp_BN9yr408gEziqRkMVqV6-_q_aPR7kzu5fyea_v5JzuVZHcXQJ5uWMkrxQNATmgZd6IODNt_OtYK9M_HxUCklOTXEka9wUg_NE0nAKiy_2l74M_huwCgXSNA903HEnq5Y1n4yu_JPDhx-pcFVHAy70wdnfDzvJQZ4e8vDStH47IFi4kys5mAgW6PNk2Ag_7_fXuo3Q_HKf1uFDvQoqA39XqswJ1zLojHs0u1hFgi6bkhRV7p4MCP2fhe_7ka5d5Unneyyn9-UYXqT3JLeY562Pdanl6WsE7KXf10V1YJ9O78t9DFQZ65SZy8wz4zRonBantSm2aDQ-Z0zFdguP4famAn8jZ2X7HVwfxpawr8Zwu9ZNJmgr6HLmkmhSqPGiTgWfMHiFchQiCPy3GVW556UxvTtiTBlQx1U5NzQ4hy3B3m4nRMFxzSlQgdWrFliTpaYOWEo7yoWkHNjB9i5Y-p3xd48vlLWPK4c6l_Xgyuyr_TCPtAXtwfYpdnVRF4w1PTODK3hIXOZTgmPt3H8iGQjdvc09rWv4Q-jqDmBqMnFpzXYekMnFdcl6rXdeHeDXR4Nn_4odpedVtM8hcixGq0US-weSI0EiVJMATC0pN4nx3dJiTrOrUTdps60BzAgZ8AaLcwTD7SeUTgaC3V-dItzaptGeB-2ZE9HXJkOI620B1RsfBOi9YX_kHPGge9ZcfCuzYo8OrSqnPX-AX87WPIXbi2KSwvLjuXzLf5La6BN0Fcs9sUfFmL3vVJnKnCEbbSIqsJ2FI_cVMC4NsGhCccRLn-YE-brxUQ8J01o9H9PtDJ6oFwMWmm9viaPxSc3EjK8g_B1qgh0ahW_xepmAcxpEYcNQ9GYqG0TYZELcC9MjfMqmKpUxbwUvIn2AlHeU1stWg=","summary":[]},{"id":"ws_0004b64d8b4cc2c6016aedff2a13f081948fb7407a03901c63","type":"web_search_call","status":"completed","action":{"type":"search","queries":["site:ruby-lang.org/en/news/2026
+        Ruby 4.0.8 released","site:cache.ruby-lang.org/pub/ruby/4.0 ruby-4.0.8"],"query":"site:ruby-lang.org/en/news/2026
+        Ruby 4.0.8 released"}},{"id":"rs_0004b64d8b4cc2c6016aedff2b921c81948cc9343a7edb97f2","type":"reasoning","content":[],"encrypted_content":"gAAAAABq7f8tqCwYUELz_cs99TBzEni7RwcOA8WOAxZ-s60yB76KcrtwoutenyVb3bZh3mUh4tTofolxTlt61IOkUSxmHcxahPiKyu7gtpagujjegch6lsYqwecfIDdOSDHCvTYM2K344RDESm6XrpgUrGy0prXaOpngtZ5EIJq3JwxhKMvCUnVAiqkU7wiA77d4yatpr3ZJnQPjOhCbvByp3cZIfsfR4CI0FcKjudy_gcWn9ZoR6rINtFzn9F1E0DELUv7AG61aIO6-PmJGEyCzlYXJosIBNGdTTwHPOMCJxrErD2vpzx4tmK_RlNW9fPo9w_QS8sM6bekh8eNvj47en9dc5y1eT1CuTFcgt1EWjRCSRuToK7tvrFoNHuRMF_rayEp8q7zL-bWWy3LhThKQN6N4mH8eP16mi0YrYjgLWWi_lDoDDOuQHw5_qCpmdQRSRHoVOI1c96SotBQsJbrwDyerOrMvF4j8YEWLxi8I_HqsezBwImyIAz143sXg6OjpRkxeyxMW0Y9OZYdClDfjIcvTlnaDvRKG4QRzbQFUw7YAK80hhrNgnCEzDd3RLu93i41SbW-ClfdoQvvrCD7jAKluXKTxtmH9zE28-HvpRKwg5fyUL9k3LP4iX-Kq4Icldc-bjriiwAhNIoC8KiwlcgAYduw0uzJjbXJIGUR3FUC-iEOf6hB7WYrsHMOrMNhoiKvFZEOJvcMgD0AnmpXvpkmvda5eVum0pCKxqpuDkCdisVJPRSUECclgFlkIwxNz-GRFRNsl82c-bn0tJPW5ywps8vYD529BPGPuMIAdA_Kzzr3G0T6A_gA0V1CA_uHeU87d5P_Vsmb7htZkxGACbCsQDONU5lzx4x1DHLLs8H004Wv7r3Lm0smcDQNpYXI8iCIRZXVdSIksMoBUGUHpqXaWCRAoX7ZkX0diVQsW9Adtelk_75knth3SyhiW1dXcAy5kXkliwvpJRxOAcP0bBY7rvJdZ58nwGi6BEv9KxEO6qQTlYKnHsfYdxtGUKciBc53k422HcIoGm-sFtq-OyDPShsrtZaJP_-VWncAdkx5o95kXi8S2SUjEIziTIU2XnMmP81Swp5nhClW5mhBfl4JBTaS7862DNeRlO7RAUG7wdXj-kK466DYdSZxfrc8CetpfEVmK4rUCO-EgPsPMySnGmpTBmvDr-ZNDBhZNNxFn6e9SIDFkKB4ktD9gsxUd_3W50s1pPZUtvCPnE526CSVVuVXuRL0ynK-VKuNcEQ4KBPkzsLpw-qYqEnM02sgU_k-6yvQfdtsz7P2bDSbopUW-P2YHNMu3CGBwHVXqjj8N2uXMp8HODiRyeK5GEKkIP4_ajZ3IuqtuzlhwfyERei8osZtlR2N310egdf6L7JUPb_t7eJEFd-52BWJ9cpGWYgZnLn1i2G83ZGi87JO0jDaY2Fneak96ryGggkbCciuV9BisO_tyfRDVtpe5-ezddJTV2a6zyuQRhV-S9EejUF-cpjWTs6Y-6WY-NeeIzNZ_c2LQa2_QwpRmqhFuyOkV-NKh0kAx","summary":[]},{"id":"ws_0004b64d8b4cc2c6016aedff2baf808194b48a195ce0b7fb80","type":"web_search_call","status":"completed","action":{"type":"open_page","url":"https://www.ruby-lang.org/en/downloads/"}},{"id":"msg_0004b64d8b4cc2c6016aedff2c9ca48194aa90408e5cef00d0","type":"message","status":"completed","content":[{"type":"output_text","annotations":[{"type":"url_citation","end_index":142,"start_index":84,"title":"Download
+        Ruby | Ruby","url":"https://www.ruby-lang.org/en/downloads/"}],"logprobs":[],"text":"The
+        latest stable Ruby version is **Ruby 4.0.9**, released on **October 23, 2026**.
+        ([ruby-lang.org](https://www.ruby-lang.org/en/downloads/))"}],"phase":"final_answer","role":"assistant"},{"role":"user","content":"Thanks.
+        Now just say OK."}],"stream":false,"store":false,"include":["reasoning.encrypted_content","web_search_call.action.sources"],"tools":[{"type":"web_search"}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '3930'
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 06 Nov 2026 16:24:13 GMT
+      Server:
+      - istio-envoy
+      Vary:
+      - Origin
+      X-Ms-Aoai-Configured-Data-Retention-Days:
+      - '30'
+      Skip-Error-Remapping:
+      - 'true'
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - gpt-5.6-luna
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '25374'
+      X-Ratelimit-Reset-Tokens:
+      - '29'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
+      X-Ms-Served-Model:
+      - gpt-5.6-luna-2026-07-09
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Apim-Request-Id:
+      - 72c50b0f-c7a3-4259-a001-81568850bac1
+      X-Http2-Stream-Id:
+      - '557'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "resp_0004b64d8b4cc2c6016aedff2d6e848194ae2040f1704895d9",
+          "object": "response",
+          "created_at": 1793982253,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "completed_at": 1793982254,
+          "content_filters": [
+            {
+              "blocked": false,
+              "source_type": "prompt",
+              "content_filter_raw": [],
+              "content_filter_results": {
+                "hate": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "sexual": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "violence": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "self_harm": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "jailbreak": {
+                  "detected": false,
+                  "filtered": false
+                }
+              },
+              "content_filter_offsets": {
+                "start_offset": 0,
+                "end_offset": 19601,
+                "check_offset": 0
+              }
+            },
+            {
+              "blocked": false,
+              "source_type": "completion",
+              "content_filter_raw": [],
+              "content_filter_results": {
+                "protected_material_code": {
+                  "detected": false,
+                  "filtered": false
+                },
+                "protected_material_text": {
+                  "detected": false,
+                  "filtered": false
+                },
+                "hate": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "sexual": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "violence": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "self_harm": {
+                  "filtered": false,
+                  "severity": "safe"
+                }
+              },
+              "content_filter_offsets": {
+                "start_offset": 0,
+                "end_offset": 2,
+                "check_offset": 0
+              }
+            }
+          ],
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5.6-luna",
+          "moderation": null,
+          "output": [
+            {
+              "id": "msg_0004b64d8b4cc2c6016aedff2de35c81949d8f1bdf8d692c56",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "OK"
+                }
+              ],
+              "phase": "final_answer",
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "24h",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "web_search",
+              "return_token_budget": "default",
+              "search_content_types": [
+                "text"
+              ],
+              "search_context_size": "medium",
+              "user_location": {
+                "type": "approximate",
+                "city": null,
+                "country": "US",
+                "region": null,
+                "timezone": null
+              }
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 0.98,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 4433,
+            "input_tokens_details": {
+              "cache_write_tokens": 395,
+              "cached_tokens": 4035
+            },
+            "output_tokens": 5,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 4438
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Fri, 06 Nov 2026 16:24:14 GMT
+recorded_with: VCR 6.4.1

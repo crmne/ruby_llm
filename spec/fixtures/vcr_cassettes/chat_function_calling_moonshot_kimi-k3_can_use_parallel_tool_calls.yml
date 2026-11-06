@@ -1,0 +1,159 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k3","messages":[{"role":"user","content":"What''s the
+        weather in Berlin (52.5200, 13.4050) and what''s the best language to learn?"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:28:56 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 22bf24a8-d9ff-11f1-8633-00163e2b0d23
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '256'
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - ca9e370b2014eb4cf2e8ad7ee83fed62
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-2f2e01c44838a31edfdb8d1ed","object":"chat.completion","created":1793982525,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        check both of those for you right now.","tool_calls":[{"index":0,"id":"weather_0_4362fbb4","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
+        \"52.5200\", \"longitude\": \"13.4050\"}"}},{"index":1,"id":"best_language_to_learn_1_5b3a4f67","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
+        user is asking two independent questions:\n1. Weather in Berlin at coordinates
+        (52.5200, 13.4050)\n2. What''s the best language to learn\n\nThese are independent,
+        so I should make both calls in the same block."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":274,"completion_tokens":148,"total_tokens":422,"completion_tokens_details":{"reasoning_tokens":51},"prompt_tokens_details":{"cache_write_tokens":256}}}'
+  recorded_at: Fri, 06 Nov 2026 16:28:56 GMT
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k3","messages":[{"role":"user","content":"What''s the
+        weather in Berlin (52.5200, 13.4050) and what''s the best language to learn?"},{"role":"assistant","content":"I''ll
+        check both of those for you right now.","tool_calls":[{"id":"weather_0_4362fbb4","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"best_language_to_learn_1_5b3a4f67","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
+        user is asking two independent questions:\n1. Weather in Berlin at coordinates
+        (52.5200, 13.4050)\n2. What''s the best language to learn\n\nThese are independent,
+        so I should make both calls in the same block."},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"weather_0_4362fbb4"},{"role":"tool","content":"Ruby","tool_call_id":"best_language_to_learn_1_5b3a4f67"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:29:06 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Context-Cache-Token-Saved:
+      - '256'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 29b5dfb2-d9ff-11f1-9890-00163e7a3687
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '0'
+      X-Msh-Trace-Id:
+      - 9b06c422c2149ad19b55fe913b645296
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTJmMmUwMDY3ZjcyM2U4ODI0NWI3ZDNiMDQiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzkzOTgyNTM3LCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkhlcmUncyB3aGF0IEkgZm91bmQ6XG5cbioq8J+MpO+4jyBXZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCk6Kipcbi0gVGVtcGVyYXR1cmU6IDE1wrBDXG4tIFdpbmQ6IDEwIGttL2hcblxuQSBtaWxkIGRheSBpbiBCZXJsaW4gd2l0aCBhIGxpZ2h0IGJyZWV6ZSFcblxuKirwn5K7IEJlc3QgTGFuZ3VhZ2UgdG8gTGVhcm46Kipcbi0gKipSdWJ5Kiog4oCUIGtub3duIGZvciBpdHMgZWxlZ2FudCwgcmVhZGFibGUgc3ludGF4IGFuZCBiZWdpbm5lci1mcmllbmRseSBkZXNpZ24sIFJ1YnkgaXMgYSBncmVhdCBjaG9pY2UgKGVzcGVjaWFsbHkgcG9wdWxhciBmb3Igd2ViIGRldmVsb3BtZW50IHdpdGggUnVieSBvbiBSYWlscykuXG5cbklzIHRoZXJlIGFueXRoaW5nIGVsc2UgeW91J2QgbGlrZSB0byBrbm93IGFib3V0IGVpdGhlciBvZiB0aGVzZT8iLCJyZWFzb25pbmdfY29udGVudCI6IlRoZSB1c2VyIGFza2VkIHR3byB0aGluZ3M6XG4xLiBXZWF0aGVyIGluIEJlcmxpbiBhdCAoNTIuNTIwMCwgMTMuNDA1MCkgLSBJIGdvdDogMTXCsEMsIFdpbmQ6IDEwIGttL2hcbjIuIEJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4gLSBJIGdvdDogUnVieVxuXG5MZXQgbWUgcHJlc2VudCBib3RoIHJlc3VsdHMgY2xlYXJseS4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjUwMCwiY29tcGxldGlvbl90b2tlbnMiOjE3NiwidG90YWxfdG9rZW5zIjo2NzYsImNhY2hlZF90b2tlbnMiOjI1NiwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjo1OH0sInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoyNTYsImNhY2hlX3dyaXRlX3Rva2VucyI6MH19fQ==
+  recorded_at: Fri, 06 Nov 2026 16:29:06 GMT
+recorded_with: VCR 6.4.1

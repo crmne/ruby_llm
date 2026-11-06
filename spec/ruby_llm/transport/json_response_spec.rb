@@ -25,9 +25,9 @@ RSpec.describe RubyLLM::Transport::JsonResponse do
   end
 
   it 'passes parser options as keywords when reading model catalogs' do
-    response = response_for('[{"id":"gpt-5-nano"}]', parser_options: { symbolize_names: true })
+    response = response_for('[{"id":"gpt-5.6-luna"}]', parser_options: { symbolize_names: true })
 
-    expect(response.body).to eq([{ id: 'gpt-5-nano' }])
+    expect(response.body).to eq([{ id: 'gpt-5.6-luna' }])
   end
 
   it 'returns nil for an empty response' do

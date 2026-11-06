@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe RubyLLM::ActiveRecord::ActsAs do
-  let(:model) { 'gpt-4.1-nano' }
+  let(:model) { 'gpt-5.4-nano' }
 
   describe 'when global configuration is missing' do
     around do |example|
@@ -37,24 +37,24 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       chat = Chat.create!(model: model_for(:openrouter), provider: :openrouter, context: context)
       chat.to_llm
 
-      chat.with_model('gpt-5-nano')
+      chat.with_model('gpt-5.6-luna')
 
-      expect(chat.model).to have_attributes(model_id: 'openai/gpt-5-nano', provider: 'openrouter')
-      expect(chat.to_llm.model).to have_attributes(id: 'openai/gpt-5-nano', provider: 'openrouter')
+      expect(chat.model).to have_attributes(model_id: 'openai/gpt-5.6-luna', provider: 'openrouter')
+      expect(chat.to_llm.model).to have_attributes(id: 'openai/gpt-5.6-luna', provider: 'openrouter')
     end
 
     it 'switches the live chat when switching models' do
       context = RubyLLM.context { |config| config.openrouter_api_key = 'test' }
       chat = Chat.create!(model: model_for(:openrouter), provider: :openrouter, context: context)
 
-      expect { chat.with_model('openai/gpt-5-nano', provider: :perplexity) }
+      expect { chat.with_model('openai/gpt-5.6-luna', provider: :perplexity) }
         .to raise_error(RubyLLM::ConfigurationError, /Perplexity provider is not configured/)
     end
 
     it 'stores the configured provider that carries the model' do
       context = RubyLLM.context { |config| config.openrouter_api_key = 'test' }
 
-      chat = Chat.create!(model: 'openai/gpt-5-nano', context: context)
+      chat = Chat.create!(model: 'openai/gpt-5.6-luna', context: context)
 
       expect(chat.model.provider).to eq('openrouter')
     end

@@ -32,8 +32,8 @@ RSpec.describe RubyLLM::Protocols::Responses::Batches do
       protocol.create_batch([
                               {
                                 custom_id: '0',
-                                model: 'gpt-5-nano',
-                                payload: { model: 'gpt-5-nano', input: 'hi', stream: false }
+                                model: 'gpt-5.6-luna',
+                                payload: { model: 'gpt-5.6-luna', input: 'hi', stream: false }
                               }
                             ])
 
@@ -52,8 +52,8 @@ RSpec.describe RubyLLM::Protocols::Responses::Batches do
 
     it 'rejects mixed-model batches' do
       requests = [
-        { custom_id: '0', model: 'gpt-5-nano', payload: { model: 'gpt-5-nano', input: 'hi' } },
-        { custom_id: '1', model: 'gpt-5-mini', payload: { model: 'gpt-5-mini', input: 'hi' } }
+        { custom_id: '0', model: 'gpt-5.6-luna', payload: { model: 'gpt-5.6-luna', input: 'hi' } },
+        { custom_id: '1', model: 'gpt-5.6-terra', payload: { model: 'gpt-5.6-terra', input: 'hi' } }
       ]
 
       expect { protocol.create_batch(requests) }.to raise_error(RubyLLM::Error, /one model/)

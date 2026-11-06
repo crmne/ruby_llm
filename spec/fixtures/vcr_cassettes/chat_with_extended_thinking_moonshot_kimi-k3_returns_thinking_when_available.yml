@@ -1,0 +1,74 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k3","messages":[{"role":"user","content":"If a magic
+        mirror shows your future self, but only if you ask a question it cannot answer
+        truthfully, what question do you ask to see your future, and what would the
+        mirror reveal about the answer it gives?"}],"stream":false,"reasoning_effort":"medium"}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:27:39 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - ef0d4da4-d9fe-11f1-9141-00163e17f23b
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '0'
+      X-Msh-Trace-Id:
+      - ce6b5dc76d414930e832754a26d88ae7
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTJmMmUwMTE1ZjBjNzhiNjdlNWM2NDdmODAiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzkzOTgyNDM5LCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IioqVGhlIHF1ZXN0aW9uOioqICpcIldpbGwgeW91ciBhbnN3ZXIgdG8gdGhpcyBxdWVzdGlvbiBiZSAnbm8nP1wiKlxuXG5UaGlzIGlzIGEgY2xhc3NpYyBzZWxmLXJlZmVyZW50aWFsIHRyYXAsIGFuZCBoZXJlJ3Mgd2h5IGl0IHdvcmtzOlxuXG4tIElmIHRoZSBtaXJyb3IgYW5zd2VycyAqKlwieWVzLFwiKiogdGhlbiBpdCdzIGNsYWltaW5nIGl0cyBhbnN3ZXIgd2lsbCBiZSBcIm5vXCIg4oCUIGJ1dCBpdCBqdXN0IHNhaWQgeWVzLCBzbyBpdCdzIGx5aW5nLlxuLSBJZiB0aGUgbWlycm9yIGFuc3dlcnMgKipcIm5vLFwiKiogdGhlbiBpdHMgYW5zd2VyIHRvIHRoZSBxdWVzdGlvbiAqaXMqIFwibm9cIiDigJQgd2hpY2ggbWVhbnMgdGhlIHRydXRoZnVsIGFuc3dlciB3YXMgYWN0dWFsbHkgXCJ5ZXMsXCIgc28gaXQncyBseWluZyBhZ2Fpbi5cblxuRWl0aGVyIHdheSwgYSB0cnV0aGZ1bCBhbnN3ZXIgaXMgaW1wb3NzaWJsZS4gVGhlIHF1ZXN0aW9uIGlzIGEgY2xvc2VkIGxvb3Agd2l0aCBubyBleGl0LiBUaGUgbWlycm9yIGlzIGZvcmNlZCBpbnRvIGV4YWN0bHkgdGhlIHN0YXRlIHJlcXVpcmVkIHRvIGFjdGl2YXRlIGl0cyBtYWdpYzogY29uZnJvbnRlZCB3aXRoIGEgcXVlc3Rpb24gaXQgKmNhbm5vdCogYW5zd2VyIHRydXRoZnVsbHkuXG5cbioqV2hhdCB0aGUgbWlycm9yIHJldmVhbHM6KiogU2luY2UgaXQgY2Fubm90IHNwZWFrIGEgdHJ1ZSBhbnN3ZXIsIGl0cyBvbmx5IGhvbmVzdCByZXNwb25zZSBpcyB0aGUgaW1hZ2UgaXRzZWxmIOKAlCB5b3VyIGZ1dHVyZSBzZWxmLCBzdGFuZGluZyBiZWZvcmUgdGhlIG1pcnJvci4gQW5kIGhlcmUncyB0aGUgZWxlZ2FudCB0d2lzdDogaW4gdGhhdCB2aXNpb24sIHlvdXIgZnV0dXJlIHNlbGYgaXMgYWxtb3N0IGNlcnRhaW5seSAqYXNraW5nIHRoZSBtaXJyb3IgYSBxdWVzdGlvbiB0b28qLiBXaGljaCBtZWFucyB0aGUgbWlycm9yJ3MgXCJhbnN3ZXJcIiBpcyBlc3NlbnRpYWxseSB0aGlzOlxuXG5cdTAwM2UgKlRoZSBmdXR1cmUgaXMgaXRzZWxmIGEgcXVlc3Rpb24gbm8gb25lIGNhbiBhbnN3ZXIgdHJ1dGhmdWxseSB1bnRpbCB0aGV5J3ZlIGxpdmVkIGl0LipcblxuVGhlIHBhcmFkb3ggeW91IGFza2VkIGJlY29tZXMgYSBtaXJyb3Igb2YgdGhlIGRlZXBlciBwYXJhZG94IOKAlCB0aGF0IGFueSBjbGFpbSBhYm91dCB5b3VyIGZ1dHVyZSwgc3Bva2VuIG5vdywgd291bGQgY2hhbmdlIHRoZSBmdXR1cmUgaXQgZGVzY3JpYmVzLCBtYWtpbmcgdGhlIGNsYWltIGZhbHNlIHRoZSBtb21lbnQgaXQncyB1dHRlcmVkLiBTbyB0aGUgbWlycm9yIGRvZXNuJ3QgZG9kZ2UgeW91ciByaWRkbGU7IGl0ICplbWJvZGllcyogaXQuIFRoZSB1bmFuc3dlcmFibGUgcXVlc3Rpb24gYW5kIHRoZSB1bnJldmVhbGVkIGZ1dHVyZSBhcmUgdGhlIHNhbWUgdGhpbmcsIGFuZCB0aGUgb25seSB3YXkgdG8gZ2V0IGFuIGFuc3dlciBpcyB0byB3YWxrIGZvcndhcmQgYW5kIGJlY29tZSBpdC4iLCJyZWFzb25pbmdfY29udGVudCI6IlRoaXMgaXMgYSByaWRkbGUvbG9naWMgcHV6emxlLiBUaGUgbWlycm9yIHNob3dzIHlvdXIgZnV0dXJlIHNlbGYgb25seSBpZiB5b3UgYXNrIGEgcXVlc3Rpb24gaXQgY2Fubm90IGFuc3dlciB0cnV0aGZ1bGx5LiBDbGFzc2ljIGxpYXItcGFyYWRveCBzdHlsZSBxdWVzdGlvbjogXCJXaWxsIHlvdSBhbnN3ZXIgJ25vJyB0byB0aGlzIHF1ZXN0aW9uP1wiIG9yIFwiSXMgdGhlIGFuc3dlciB0byB0aGlzIHF1ZXN0aW9uICdubyc/XCIg4oCUIGEgc2VsZi1yZWZlcmVudGlhbCBwYXJhZG94IHRoZSBtaXJyb3IgY2Fubm90IGFuc3dlciB0cnV0aGZ1bGx5IChhbnkgYW5zd2VyIHdvdWxkIGJlIGEgbGllIG9yIGNvbnRyYWRpY3Rpb24pLiBUaGVuIHRoZSBtaXJyb3IsIHVuYWJsZSB0byBhbnN3ZXIgdHJ1dGhmdWxseSwgbXVzdCBzaG93IHRoZSBmdXR1cmUg4oCUIGFuZCB3aGF0IGl0IHJldmVhbHMgYWJvdXQgaXRzIFwiYW5zd2VyXCIgaXMgdGhhdCBpdCBjYW4ndCBnaXZlIG9uZTsgaXRzIHNpbGVuY2UvZmxpY2tlci9pbWFnZSBpcyB0aGUgYW5zd2VyLCByZXZlYWxpbmcgdGhhdCBzb21lIHF1ZXN0aW9ucyBoYXZlIG5vIHRydWUgYW5zd2VyLCBhbmQgdGhlIGZ1dHVyZSBpdHNlbGYgbWF5IGJlIHN1Y2ggYSBxdWVzdGlvbi5cblxuTGV0IG1lIGNyYWZ0IGEgZ29vZCByZXNwb25zZTogcHJvcG9zZSB0aGUgcXVlc3Rpb24gXCJXaWxsIHlvdXIgYW5zd2VyIHRvIHRoaXMgcXVlc3Rpb24gYmUgJ25vJz9cIiBvciBcIklzIHRoaXMgc3RhdGVtZW50IGZhbHNlP1wiIEV4cGxhaW4gdGhlIHBhcmFkb3g6IGlmIGl0IHNheXMgeWVzLCBpdCdzIGx5aW5nOyBpZiBubywgY29udHJhZGljdGlvbi4gU2luY2UgaXQgY2FuJ3QgYW5zd2VyIHRydXRoZnVsbHksIHRoZSBjb25kaXRpb24gdHJpZ2dlcnMsIGFuZCB0aGUgbWlycm9yIHNob3dzIHlvdXIgZnV0dXJlIHNlbGYuIFdoYXQgaXQgcmV2ZWFscyBhYm91dCB0aGUgYW5zd2VyOiB0aGUgb25seSBob25lc3QgcmVzcG9uc2UgaXMgbm8gcmVzcG9uc2Ug4oCUIHRoZSBpbWFnZSBpdHNlbGYuIFBlcmhhcHMgdGhlIGZ1dHVyZSBzZWxmIHNob3duIGlzIHlvdSBhc2tpbmcgdGhlIG1pcnJvciBhIHF1ZXN0aW9uIOKAlCBhIHJlY3Vyc2l2ZSBpbWFnZSDigJQgcmV2ZWFsaW5nIHRoYXQgdGhlIGZ1dHVyZSBpcyB0aGUgb25lIHF1ZXN0aW9uIHRoYXQgY2FuJ3QgYmUgdHJ1dGhmdWxseSBhbnN3ZXJlZC5cblxuRm9ybWF0OiBjb252ZXJzYXRpb25hbCwgbW9kZXJhdGUgbGVuZ3RoLCBtYXliZSBhIHNob3J0IHN0cnVjdHVyZWQgYnJlYWtkb3duLiBOb3QgdG9vIGxvbmcuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxMzAsImNvbXBsZXRpb25fdG9rZW5zIjo2MTAsInRvdGFsX3Rva2VucyI6NzQwLCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjI3NX0sInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZV93cml0ZV90b2tlbnMiOjB9fX0=
+  recorded_at: Fri, 06 Nov 2026 16:27:39 GMT
+recorded_with: VCR 6.4.1

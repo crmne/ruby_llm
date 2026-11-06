@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::Responses::Chat do
   let(:protocol) { RubyLLM::Protocols::Responses.allocate }
-  let(:model) { instance_double(RubyLLM::Model, id: 'gpt-5-nano') }
+  let(:model) { instance_double(RubyLLM::Model, id: 'gpt-5.6-luna') }
 
   def render_payload(messages, tools: {}, stream: false, **options)
     protocol.send(:render_payload, messages, tools:, temperature: nil, model:, stream:, tool_prefs: nil, **options)
@@ -74,7 +74,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
 
     it 'replays reasoning, tool calls, and tool outputs as items' do
       protocol.instance_variable_set(:@provider, RubyLLM::Providers::OpenAI.allocate)
-      usage = RubyLLM::Accounting::Usage::Entry.new(operation: :chat, provider: 'openai', model: 'gpt-5-nano',
+      usage = RubyLLM::Accounting::Usage::Entry.new(operation: :chat, provider: 'openai', model: 'gpt-5.6-luna',
                                                     status: :succeeded)
       messages = [
         RubyLLM::Message.new(role: :user, content: 'weather?'),
@@ -337,7 +337,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
     def response_with(output, usage: {})
       instance_double(
         Faraday::Response,
-        body: { 'model' => 'gpt-5-nano', 'output' => output, 'usage' => usage, 'status' => 'completed' }
+        body: { 'model' => 'gpt-5.6-luna', 'output' => output, 'usage' => usage, 'status' => 'completed' }
       )
     end
 
@@ -351,7 +351,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       message = protocol.send(:parse_completion_response, response)
 
       expect(message.content).to eq('Hello world')
-      expect(message.model).to eq('gpt-5-nano')
+      expect(message.model).to eq('gpt-5.6-luna')
     end
 
     it 'preserves web, file-search and container-file citations' do
@@ -468,7 +468,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
 
     it 'reads null function-call arguments as none and keeps other values that are not objects as malformed' do
       parse = lambda do |arguments|
-        body = { 'model' => 'gpt-5-nano', 'status' => 'completed',
+        body = { 'model' => 'gpt-5.6-luna', 'status' => 'completed',
                  'output' => [{ 'type' => 'function_call', 'call_id' => 'call_1', 'name' => 'now',
                                 'arguments' => arguments }] }
         protocol.send(:parse_completion_response, instance_double(Faraday::Response, body:))
@@ -479,7 +479,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
     end
 
     it 'keeps function-call arguments that are not valid JSON on a call with empty arguments' do
-      body = { 'model' => 'gpt-5-nano', 'status' => 'completed',
+      body = { 'model' => 'gpt-5.6-luna', 'status' => 'completed',
                'output' => [{ 'type' => 'function_call', 'call_id' => 'call_1', 'name' => 'weather',
                               'arguments' => '{"city":"Berlin"' }] }
       call = protocol.send(:parse_completion_response, instance_double(Faraday::Response, body:)).tool_calls['call_1']
@@ -489,7 +489,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
     end
 
     it 'keeps approval request arguments that are not valid JSON on a remote call with empty arguments' do
-      body = { 'model' => 'gpt-5-nano', 'status' => 'completed',
+      body = { 'model' => 'gpt-5.6-luna', 'status' => 'completed',
                'output' => [{ 'type' => 'mcp_approval_request', 'id' => 'mcpr_1', 'name' => 'deploy',
                               'server_label' => 'ops', 'arguments' => '{"env":' }] }
       call = protocol.send(:parse_completion_response, instance_double(Faraday::Response, body:)).tool_calls['mcpr_1']
@@ -502,7 +502,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       response = instance_double(
         Faraday::Response,
         body: {
-          'model' => 'gpt-5-nano',
+          'model' => 'gpt-5.6-luna',
           'output' => [
             { 'type' => 'function_call', 'call_id' => 'call_1', 'name' => 'weather',
               'arguments' => '{"city":"Berlin"' }
@@ -759,7 +759,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       response = instance_double(
         Faraday::Response,
         body: {
-          'model' => 'gpt-5-nano',
+          'model' => 'gpt-5.6-luna',
           'output' => [],
           'status' => 'incomplete',
           'incomplete_details' => { 'reason' => 'max_output_tokens' }

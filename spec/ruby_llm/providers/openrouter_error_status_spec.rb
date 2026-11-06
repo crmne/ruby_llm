@@ -9,7 +9,7 @@ RSpec.describe RubyLLM::Providers::OpenRouter do
   let(:headers) { { 'Content-Type' => 'application/json' } }
   let(:failure) { JSON.generate(error: { code: 502, message: 'Provider returned error' }) }
   let(:answer) do
-    JSON.generate(model: 'openai/gpt-5-nano', usage: { prompt_tokens: 1, completion_tokens: 1 },
+    JSON.generate(model: 'openai/gpt-5.6-luna', usage: { prompt_tokens: 1, completion_tokens: 1 },
                   choices: [{ finish_reason: 'stop',
                               message: { role: 'assistant', content: 'The "error" was fixed' } }])
   end
@@ -20,7 +20,7 @@ RSpec.describe RubyLLM::Providers::OpenRouter do
   end
 
   def chat
-    RubyLLM.chat(model: 'openai/gpt-5-nano', provider: :openrouter, assume_model_exists: true)
+    RubyLLM.chat(model: 'openai/gpt-5.6-luna', provider: :openrouter, assume_model_exists: true)
   end
 
   it 'retries an error sent with HTTP 200' do

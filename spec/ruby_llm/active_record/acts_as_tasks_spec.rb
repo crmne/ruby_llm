@@ -18,7 +18,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   end
 
   def paused_chat
-    chat = Chat.create!(model: 'gpt-4.1-nano').with_tools(sub_agent_tool)
+    chat = Chat.create!(model: 'gpt-5.4-nano').with_tools(sub_agent_tool)
     chat.add_message(
       RubyLLM::Message.new(role: :assistant, content: '',
                            tool_calls: { call_id => RubyLLM::ToolCall.new(id: call_id, name: 'sub_agent',

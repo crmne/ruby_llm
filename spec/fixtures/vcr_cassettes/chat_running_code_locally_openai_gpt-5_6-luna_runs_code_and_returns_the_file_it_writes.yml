@@ -1,0 +1,430 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"Use run_code
+        once to compute the sum of the squares of 1 to 100, and write squares.csv
+        with the columns n and square for n from 1 to 10. Then tell me the sum."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"run_code","description":"Runs
+        Ruby code in a sandbox and returns its exit code, output, and the files it
+        writes. Each call gets a new empty run directory, and nothing carries over
+        between calls. Files attached to the conversation, and files earlier calls
+        returned, are in ./attachments (read-only). Write files to the run directory
+        to return them to the user. No network access. Stops after 120 seconds.","parameters":{"type":"object","properties":{"language":{"type":"string","enum":["ruby"],"description":"The
+        language the code is written in"},"code":{"type":"string","description":"The
+        complete program to run"}},"required":["language","code"],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:21:04 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID, Server-Timing-Total
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '2179'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '2000000'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_009b57d56ec031aa016aedfe6e51a487d2a32ae5de3c700631",
+          "object": "response",
+          "created_at": 1793982062,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1793982064,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5.6-luna",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_009b57d56ec031aa016aedfe6f487087d2a8806b51eff3f9ff",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABq7f5wA4ZgAd5unyXseNEUAwe9Ec4Tn1pHLR1u3vMYw9dqypoaABiM9yWXxQK--QxmnNmqtHX7CKST1s6QEuE19Wk2_fnNanpLTYM6deu92HcQN2oSO3PG0NNlphQSVwPYLiaY1j7bJWxBKbs4eMP_AIulFk-fy1w84aW7TiLP6cmgUbd4Gq5w2herCM6EMMYKt40DQ5jCxqlf1Z_vWRbTAqZtL_Zjcozxq4bj2aWTfu8WtHBQGj6VjzFEzVKo-c_n6sFpUtXv3kiD8chV0wCpFsGuz7Kq17rV2re-MwPqvcuaQsAo3HlKW2kvb0dY7cALtL5iB4bbdrwDSgFfwKnV11M363tDfIDoJpXv4IOxLY2x7Kjw2qE8OQcvVkKm_J0MBWWr24SFgBm4BbeMEfDxfvgrNOZuJOWFbggMpiLuiye8T1jbpzK0XnbTuPQHAmzMoKOpcb_Xj_fZPx6hSOPw0Y_R_UBE2AcaA032F20W_6Cxe9bVikpAc9zunoE4fEO2n9BvSneuDzzCsOH1ivgul9ofElCbIxmNM8dz8eFHR4VvYNtAyO2BVgL0Wn2Ij-BJbVK_7YnBwm58L0eJYUP41R72Bcr15kMnWcblOKjicftGk2_IXatBpNIaZwl2vf6UBV3bgA3rK8kLBmBWUUrsm2yMXWcNRACNoi76-W_e1YTBEEYmoybGEKorSZnlIDC0_JMiMZMsA1PWM21axUtnzhcIBQAegdC4ab8OAUcA3yVHU4r_cGhkZXy6q-c6eU7YZ5tvlVdcvZ3Ji4qsdxqV0651YFM-YGfqaFsc12T4OH6VkhO8gWJppPUuZfxG-qCGwg5PQeaGT9FqfwlvehJgeZvLTPTpLna_Ea-Z_zvyIHmprJ5ZIKp3irNa-PpO7ssltVoCKjR--dHZgdE63UDAGhImHeRLMmNEuqJwzVaS3nhYZrjVPuoZsZW8bropBKIYXIaEE4MLlhFXBS1rNrUOW-k845KbgeohaFVwthmsZKbbFVcbMyAVpzxHhlxntP2DIfggdoZ4Hkg_U2Pto786AX-pkWAtZxUSHDddH45TmRe0zlCYphqUEF_nPRlEi70jzCdI-OxecXHU1bjKSx392OFwdcNWH9tu8nPVH4aPlxVxN6ha8UfoiRRfxSJEEjiKlUlZO7FjmKIjBKzjQ3kMbug9JK22q1pyZxHDyMygroGvd_4ZznBoKgpYJhaFC5s6xCjJu5V9WUfmxohgO3gin0BrS0QFpUh0xEKUDSAe5yCTjC78iqflllW3L_osd7bHXX9GsLL5Qim07uWnXubjxDX1MQ11gpaT_dEVVXY4DjZ1hBQoH0Oc1hk_S-LdmyTyDJovh7DUfkS3V9T5SLw8Mg3QA1rBqUgOPkPk6e45ajvtgCNhgnhuzG29eLrBtG6TADGknYXNhUtaGctIdQoz8TeaPJ_QRzUO0pZiw7Iw97kAXKQMumCNvCrLVhZ4c69_H--NFF-Cg9rcbYRESj2HrWGk07LheskUKFtyk0mpkWw1g9v48q9L-B4mvPiDxvuz0e75IrU2aBIEPqgfGqaQC011o9ksZIAJbqdvNAVSvH9PbpPTv8mQ7cajoFKhCDmso3111_bXfCOp8qzHiwUtJebtpQ==",
+              "summary": []
+            },
+            {
+              "id": "fc_009b57d56ec031aa016aedfe6f97a087d2be0371ad405d8c68",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{\"language\":\"ruby\",\"code\":\"require 'csv'\\n\\nsum = (1..100).sum { |n| n * n }\\nCSV.open('squares.csv', 'w') do |csv|\\n  csv << ['n', 'square']\\n  (1..10).each { |n| csv << [n, n * n] }\\nend\\nputs sum\"}",
+              "call_id": "call_Hdef5YhYHOX7tysw2sd0onIk",
+              "name": "run_code"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "24h",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "function",
+              "description": "Runs Ruby code in a sandbox and returns its exit code, output, and the files it writes. Each call gets a new empty run directory, and nothing carries over between calls. Files attached to the conversation, and files earlier calls returned, are in ./attachments (read-only). Write files to the run directory to return them to the user. No network access. Stops after 120 seconds.",
+              "name": "run_code",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "language": {
+                    "type": "string",
+                    "enum": [
+                      "ruby"
+                    ],
+                    "description": "The language the code is written in"
+                  },
+                  "code": {
+                    "type": "string",
+                    "description": "The complete program to run"
+                  }
+                },
+                "required": [
+                  "language",
+                  "code"
+                ],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": false
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 0.98,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 178,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 116,
+            "output_tokens_details": {
+              "reasoning_tokens": 18
+            },
+            "total_tokens": 294
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Fri, 06 Nov 2026 16:21:04 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"Use run_code
+        once to compute the sum of the squares of 1 to 100, and write squares.csv
+        with the columns n and square for n from 1 to 10. Then tell me the sum."},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABq7f5wA4ZgAd5unyXseNEUAwe9Ec4Tn1pHLR1u3vMYw9dqypoaABiM9yWXxQK--QxmnNmqtHX7CKST1s6QEuE19Wk2_fnNanpLTYM6deu92HcQN2oSO3PG0NNlphQSVwPYLiaY1j7bJWxBKbs4eMP_AIulFk-fy1w84aW7TiLP6cmgUbd4Gq5w2herCM6EMMYKt40DQ5jCxqlf1Z_vWRbTAqZtL_Zjcozxq4bj2aWTfu8WtHBQGj6VjzFEzVKo-c_n6sFpUtXv3kiD8chV0wCpFsGuz7Kq17rV2re-MwPqvcuaQsAo3HlKW2kvb0dY7cALtL5iB4bbdrwDSgFfwKnV11M363tDfIDoJpXv4IOxLY2x7Kjw2qE8OQcvVkKm_J0MBWWr24SFgBm4BbeMEfDxfvgrNOZuJOWFbggMpiLuiye8T1jbpzK0XnbTuPQHAmzMoKOpcb_Xj_fZPx6hSOPw0Y_R_UBE2AcaA032F20W_6Cxe9bVikpAc9zunoE4fEO2n9BvSneuDzzCsOH1ivgul9ofElCbIxmNM8dz8eFHR4VvYNtAyO2BVgL0Wn2Ij-BJbVK_7YnBwm58L0eJYUP41R72Bcr15kMnWcblOKjicftGk2_IXatBpNIaZwl2vf6UBV3bgA3rK8kLBmBWUUrsm2yMXWcNRACNoi76-W_e1YTBEEYmoybGEKorSZnlIDC0_JMiMZMsA1PWM21axUtnzhcIBQAegdC4ab8OAUcA3yVHU4r_cGhkZXy6q-c6eU7YZ5tvlVdcvZ3Ji4qsdxqV0651YFM-YGfqaFsc12T4OH6VkhO8gWJppPUuZfxG-qCGwg5PQeaGT9FqfwlvehJgeZvLTPTpLna_Ea-Z_zvyIHmprJ5ZIKp3irNa-PpO7ssltVoCKjR--dHZgdE63UDAGhImHeRLMmNEuqJwzVaS3nhYZrjVPuoZsZW8bropBKIYXIaEE4MLlhFXBS1rNrUOW-k845KbgeohaFVwthmsZKbbFVcbMyAVpzxHhlxntP2DIfggdoZ4Hkg_U2Pto786AX-pkWAtZxUSHDddH45TmRe0zlCYphqUEF_nPRlEi70jzCdI-OxecXHU1bjKSx392OFwdcNWH9tu8nPVH4aPlxVxN6ha8UfoiRRfxSJEEjiKlUlZO7FjmKIjBKzjQ3kMbug9JK22q1pyZxHDyMygroGvd_4ZznBoKgpYJhaFC5s6xCjJu5V9WUfmxohgO3gin0BrS0QFpUh0xEKUDSAe5yCTjC78iqflllW3L_osd7bHXX9GsLL5Qim07uWnXubjxDX1MQ11gpaT_dEVVXY4DjZ1hBQoH0Oc1hk_S-LdmyTyDJovh7DUfkS3V9T5SLw8Mg3QA1rBqUgOPkPk6e45ajvtgCNhgnhuzG29eLrBtG6TADGknYXNhUtaGctIdQoz8TeaPJ_QRzUO0pZiw7Iw97kAXKQMumCNvCrLVhZ4c69_H--NFF-Cg9rcbYRESj2HrWGk07LheskUKFtyk0mpkWw1g9v48q9L-B4mvPiDxvuz0e75IrU2aBIEPqgfGqaQC011o9ksZIAJbqdvNAVSvH9PbpPTv8mQ7cajoFKhCDmso3111_bXfCOp8qzHiwUtJebtpQ=="},{"type":"function_call","call_id":"call_Hdef5YhYHOX7tysw2sd0onIk","name":"run_code","arguments":"{\"code\":\"require
+        ''csv''\\n\\nsum = (1..100).sum { |n| n * n }\\nCSV.open(''squares.csv'',
+        ''w'') do |csv|\\n  csv << [''n'', ''square'']\\n  (1..10).each { |n| csv
+        << [n, n * n] }\\nend\\nputs sum\",\"language\":\"ruby\"}"},{"type":"function_call_output","call_id":"call_Hdef5YhYHOX7tysw2sd0onIk","output":"{\"exit_code\":0,\"stdout\":\"338350\\n\",\"stderr\":\"\",\"files\":[\"squares.csv\"]}"},{"role":"user","content":[{"type":"input_text","text":"Attachments
+        from tool call call_Hdef5YhYHOX7tysw2sd0onIk:"},{"type":"input_text","text":"<file
+        name=''squares.csv'' mime_type=''text/csv''>n,square\n1,1\n2,4\n3,9\n4,16\n5,25\n6,36\n7,49\n8,64\n9,81\n10,100\n</file>"}]}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"run_code","description":"Runs
+        Ruby code in a sandbox and returns its exit code, output, and the files it
+        writes. Each call gets a new empty run directory, and nothing carries over
+        between calls. Files attached to the conversation, and files earlier calls
+        returned, are in ./attachments (read-only). Write files to the run directory
+        to return them to the user. No network access. Stops after 120 seconds.","parameters":{"type":"object","properties":{"language":{"type":"string","enum":["ruby"],"description":"The
+        language the code is written in"},"code":{"type":"string","description":"The
+        complete program to run"}},"required":["language","code"],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:21:05 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID, Server-Timing-Total
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '1024'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '2000000'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_0cec4a6f558b1c80016aedfe70bbac87d282ba538375da28db",
+          "object": "response",
+          "created_at": 1793982064,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1793982065,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5.6-luna",
+          "moderation": null,
+          "output": [
+            {
+              "id": "msg_0cec4a6f558b1c80016aedfe71677887d2af66b110ecd87fbb",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "The sum of the squares of 1 to 100 is **338,350**."
+                }
+              ],
+              "phase": "final_answer",
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "24h",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "function",
+              "description": "Runs Ruby code in a sandbox and returns its exit code, output, and the files it writes. Each call gets a new empty run directory, and nothing carries over between calls. Files attached to the conversation, and files earlier calls returned, are in ./attachments (read-only). Write files to the run directory to return them to the user. No network access. Stops after 120 seconds.",
+              "name": "run_code",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "language": {
+                    "type": "string",
+                    "enum": [
+                      "ruby"
+                    ],
+                    "description": "The language the code is written in"
+                  },
+                  "code": {
+                    "type": "string",
+                    "description": "The complete program to run"
+                  }
+                },
+                "required": [
+                  "language",
+                  "code"
+                ],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": false
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 0.98,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 413,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 22,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 435
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Fri, 06 Nov 2026 16:21:05 GMT
+recorded_with: VCR 6.4.1

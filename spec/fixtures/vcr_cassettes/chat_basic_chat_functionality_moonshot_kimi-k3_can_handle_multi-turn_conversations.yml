@@ -1,0 +1,190 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k3","messages":[{"role":"user","content":"Who is the
+        creator of the programming language Ruby?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:25:06 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 97a01cc7-d9fe-11f1-91eb-00163e1c1a55
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '0'
+      X-Msh-Trace-Id:
+      - b8e20da47276bfd2ad30785e70ad4e3c
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-2f2e0dc5a4884d3e8151d68b4","object":"chat.completion","created":1793982292,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"Ruby
+        was created by **Yukihiro Matsumoto**, often known by his nickname \"Matz.\"
+        He began developing the language in 1993 in Japan, and the first public release
+        was in 1995. Matz designed Ruby with an emphasis on programmer happiness and
+        productivity, blending influences from languages like Perl, Smalltalk, Eiffel,
+        and Lisp.","reasoning_content":"The user is asking a simple factual question
+        about the creator of the Ruby programming language. This is a well-known fact
+        that I can answer directly from my knowledge.\n\nRuby was created by Yukihiro
+        Matsumoto, commonly known as \"Matz\". He started developing Ruby in 1993,
+        and it was first released publicly in 1995. He is Japanese, and Ruby was developed
+        in Japan.\n\nSome additional context that might be relevant:\n- Yukihiro \"Matz\"
+        Matsumoto created Ruby\n- Development began in 1993\n- First public release
+        was in 1995\n- Matz was inspired by languages like Perl, Smalltalk, Eiffel,
+        Ada, and Lisp\n- He wanted a language that was more powerful than Perl and
+        more object-oriented than Python\n- The famous design philosophy: Ruby is
+        designed for programmer productivity and fun (Matz has said he wanted to make
+        programmers happy)\n\nThis is a simple factual question, so my answer should
+        be concise. I should give the answer directly without excessive elaboration,
+        though a tiny bit of context (like the year or his nickname) adds value without
+        being excessive.\n\nFormat: This should be a short, direct answer. No need
+        for markdown headers or lists. Just a sentence or two."},"finish_reason":"stop"}],"usage":{"prompt_tokens":95,"completion_tokens":343,"total_tokens":438,"completion_tokens_details":{"reasoning_tokens":256},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Fri, 06 Nov 2026 16:25:06 GMT
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k3","messages":[{"role":"user","content":"Who is the
+        creator of the programming language Ruby?"},{"role":"assistant","content":"Ruby
+        was created by **Yukihiro Matsumoto**, often known by his nickname \"Matz.\"
+        He began developing the language in 1993 in Japan, and the first public release
+        was in 1995. Matz designed Ruby with an emphasis on programmer happiness and
+        productivity, blending influences from languages like Perl, Smalltalk, Eiffel,
+        and Lisp.","reasoning_content":"The user is asking a simple factual question
+        about the creator of the Ruby programming language. This is a well-known fact
+        that I can answer directly from my knowledge.\n\nRuby was created by Yukihiro
+        Matsumoto, commonly known as \"Matz\". He started developing Ruby in 1993,
+        and it was first released publicly in 1995. He is Japanese, and Ruby was developed
+        in Japan.\n\nSome additional context that might be relevant:\n- Yukihiro \"Matz\"
+        Matsumoto created Ruby\n- Development began in 1993\n- First public release
+        was in 1995\n- Matz was inspired by languages like Perl, Smalltalk, Eiffel,
+        Ada, and Lisp\n- He wanted a language that was more powerful than Perl and
+        more object-oriented than Python\n- The famous design philosophy: Ruby is
+        designed for programmer productivity and fun (Matz has said he wanted to make
+        programmers happy)\n\nThis is a simple factual question, so my answer should
+        be concise. I should give the answer directly without excessive elaboration,
+        though a tiny bit of context (like the year or his nickname) adds value without
+        being excessive.\n\nFormat: This should be a short, direct answer. No need
+        for markdown headers or lists. Just a sentence or two."},{"role":"user","content":"What
+        year did he create Ruby?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:25:21 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - a0a4928d-d9fe-11f1-a777-00163e2ecc0c
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '256'
+      X-Msh-Trace-Id:
+      - 26f948103e33d9ff05b2b52708f77787
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-2f2e09afbfc45c247b885f08d","object":"chat.completion","created":1793982307,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"Matsumoto
+        began developing Ruby in **1993**, and the first public version (Ruby 0.95)
+        was released in **1995**.","reasoning_content":"The user is asking a follow-up
+        question about what year Yukihiro Matsumoto created Ruby. I actually already
+        mentioned this in my previous response - he began development in 1993, and
+        the first public release was in 1995.\n\nI should answer this directly. Since
+        I already covered this in my previous response, I can briefly restate it.
+        The answer is:\n- Development began in 1993\n- First public release (Ruby
+        0.95) was in 1995\n\nThis should be a concise answer. No need for lengthy
+        explanation since it''s a simple factual follow-up, and the information was
+        already partially provided."},"finish_reason":"stop"}],"usage":{"prompt_tokens":466,"completion_tokens":173,"total_tokens":639,"completion_tokens_details":{"reasoning_tokens":129},"prompt_tokens_details":{"cache_write_tokens":256}}}'
+  recorded_at: Fri, 06 Nov 2026 16:25:21 GMT
+recorded_with: VCR 6.4.1
