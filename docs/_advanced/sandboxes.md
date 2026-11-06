@@ -31,7 +31,7 @@ A sandbox is a class. RubyLLM's sandboxes come from the [mxc gem](https://crmne.
 
 ```ruby
 # Gemfile
-gem "mxc"
+gem "mxc", ">= 0.4.1"
 ```
 
 Subclass `MXC::Sandbox` and declare its policy with class macros. In Rails, each sandbox is a class in `app/sandboxes`:
