@@ -237,9 +237,57 @@ tenant_b_service = TenantService.new(tenant_b)
 - **Thread Safety**: Each context is independent and thread-safe
 - **Connections**: Contexts with the same connection settings share connections, as described in [Connection Reuse](#connection-reuse)
 
+## All Other Settings
+
+Every setting that isn't a provider's, with its default. Provider keys and endpoints are in [Provider Setup]({% link _reference/configuration-providers.md %}#api-keys), and the [Configuration API reference]({{ '/api/RubyLLM/Configuration.html' | relative_url }}) documents each one.
+
+| Setting | Default | What it does |
+| --- | --- | --- |
+| `default_model` | `"{{ site.models.default_chat }}"` | Model for `RubyLLM.chat` and agents. |
+| `default_embedding_model` | `"{{ site.models.default_embedding }}"` | Model for `RubyLLM.embed`. |
+| `default_image_model` | `"{{ site.models.default_image }}"` | Model for `RubyLLM.paint`. |
+| `default_video_model` | `"{{ site.models.default_video }}"` | Model for `RubyLLM.animate`. |
+| `default_speech_model` | `"{{ site.models.default_speech }}"` | Model for `RubyLLM.speak`. |
+| `default_transcription_model` | `"{{ site.models.default_transcription }}"` | Model for `RubyLLM.transcribe`. |
+| `default_ocr_model` | `"{{ site.models.default_ocr }}"` | Model for `RubyLLM.ocr`. |
+| `default_moderation_model` | `"{{ site.models.default_moderation }}"` | Model for `RubyLLM.moderate`. |
+| `default_judgment_model` | `"{{ site.models.judgment }}"` | Model for `RubyLLM.judge`. |
+| `model_registry_file` | OS user cache directory | Path of the writable registry cache. |
+| `model_registry_store` | `nil` | Object that answers `read`, and optionally `write(registry)`. |
+| `request_timeout` | `300` | Seconds before a request times out. |
+| `video_generation_timeout` | `600` | Seconds `animate` waits for a video. |
+| `video_generation_poll_interval` | `5` | Seconds between checks on a video job. |
+| `max_retries` | `3` | Retries after a transient failure. |
+| `retry_interval` | `0.1` | Seconds before the first retry. |
+| `retry_backoff_factor` | `2` | Multiplier for each later retry. |
+| `retry_interval_randomness` | `0.5` | Random jitter factor applied to retry delays. |
+| `retry_max_interval` | `30` | Longest wait between retries, in seconds. |
+| `http_proxy` | `nil` | Proxy URL. |
+| `faraday_adapter` | `:net_http` | Faraday adapter for requests. |
+| `auto_upload_large_files` | `true` | Upload attachments too large to send inline. |
+| `tool_concurrency` | `false` | `true` or `:threads`, or `:fibers`, to run tool calls at once. |
+| `max_run_time` | `600` | Seconds before a persisted chat's run counts as crashed. |
+| `broadcast_messages` | `false` | `acts_as_message` broadcasts chats with Turbo. The chat UI generator turns it on. |
+| `split_think_tags` | `false` | `true` moves a leading `<think>` block into thinking on Chat Completions. |
+| `mcp_credential_store` | `nil` | Store for MCP OAuth credentials. Rails apps use a table automatically; otherwise they stay in memory. |
+| `mcp_client_name` | `"RubyLLM"` | Client name RubyLLM registers with an MCP server's authorization server. |
+| `mcp_client_id` | `nil` | HTTPS URL of your OAuth client metadata document. |
+| `file_converters` | `{}` | MIME types and the converters that turn a chat's files into text. |
+| `sandbox` | `nil` | The name of an `MXC::Sandbox` class, or your own sandbox. |
+| `sandbox_backend` | `:bubblewrap` | Or `:landlock`, which isolates less. Linux only. |
+| `package_cache_dir` | OS user cache directory | Where declared gems and Python packages are kept. |
+| `logger` | `nil` | A `Logger`. When set, it overrides `log_file` and `log_level`. |
+| `log_file` | `$stdout`, or `RUBYLLM_LOG_FILE` | Destination of the built-in logger: a path or an IO. |
+| `log_level` | `Logger::INFO`, or `DEBUG` with `RUBYLLM_DEBUG` | Severity of the built-in logger. |
+| `log_stream_debug` | on with `RUBYLLM_STREAM_DEBUG` | Log raw streaming chunks. |
+| `log_regexp_timeout` | `Regexp.timeout`, or `1.0` | Timeout in seconds for the regular expressions that scrub logged payloads. |
+| `instrumenter` | `nil` | Object that answers `instrument(name, payload) { ... }`. |
+| `deprecation_behavior` | `:warn` | `:warn`, `:silence`, or `:raise`. |
+| `redact_error_messages` | `false` | `true` leaves what providers wrote out of error messages. |
+
 ## Next Steps
 
-- [Configuration]({% link _getting_started/configuration.md %}#full-reference) - the complete option list in one block.
+- [Configuration]({% link _getting_started/configuration.md %}) - API keys, default models, and the Rails initializer.
 - [Provider Setup and Custom Endpoints]({% link _reference/configuration-providers.md %}) - per-provider keys and OpenAI-compatible endpoints.
 - [Instrumentation and Observability]({% link _advanced/instrumentation.md %}) - hook RubyLLM into your metrics and tracing stack.
 - [Model Registry]({% link _reference/models.md %}) - discover, select, and refresh models.

@@ -83,6 +83,7 @@ Each chunk a persisted chat streams knows its record: `chunk.message` is the ass
 </div>
 
 <%# app/views/messages/_assistant.html.erb %>
+<% assistant ||= local_assigns[:message] %>
 <div id="<%= dom_id(assistant) %>">
   <div id="<%= dom_id(assistant) %>_stream"><%= assistant.content %></div>
 </div>

@@ -22,6 +22,7 @@ After reading this guide, you will know:
 * How to observe tool calls and results with callbacks.
 * How to report what a slow tool is doing while it runs.
 * How to cap tool usage to prevent runaway loops.
+* How to run tools that take longer than a request, pause until something happens, or ask the user a question.
 
 By default RubyLLM lets the model decide when to call tools and runs them sequentially. When you need tighter control, these options let you steer tool choice, parallelism, and observability per chat.
 
@@ -397,6 +398,90 @@ end
 ```
 
 When the budget runs out the transcript is still valid, and calling `step` again resumes where it stopped. See [Driving the Loop Yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself).
+
+## Long-Running Tools
+
+A persisted chat claims each tool call while it runs, so no other process runs it at the same time. The claim lasts `config.max_run_time`, ten minutes by default. If the process running a tool dies, another process runs the call again once the claim expires. Give a tool that legitimately runs longer its own limit:
+
+```ruby
+class GenerateReport < RubyLLM::Tool
+  description "Builds the quarterly report"
+  max_run_time 2.hours
+
+  def execute(quarter:)
+    Reports.build!(quarter)
+  end
+end
+```
+
+A run that takes longer than its `max_run_time` counts as crashed, and another process may start the call again. MCP tools use `config.max_run_time`. Tools that [pause their call](#pausing-a-tool-call), like MCP operations that run as [tasks]({% link _tools/mcp.md %}#tasks), release their claim instead. See [One Process at a Time]({% link _advanced/durable-agents.md %}#one-process-at-a-time) for how claims work.
+
+## Pausing a Tool Call
+
+Some calls can't finish while the chat waits. A contract sent for signature may wait days for a person to sign it. Return a `RubyLLM::Task` from `execute`, and the chat pauses the call the way it pauses for [an approval](#requiring-approval), so no process waits for it. Then implement `resume`, which carries the call on:
+
+```ruby
+class RequestSignature < RubyLLM::Tool
+  description "Sends a contract for signature and reports when it is signed"
+
+  def execute(contract_id:, tool_call:)
+    envelope = Signatures.find_or_send(Contract.find(contract_id), key: tool_call.id)
+    RubyLLM::Task.new(status: :input_required, status_message: "Waiting for the signature",
+                      data: { "envelope_id" => envelope.id })
+  end
+
+  def resume(task, contract_id:)
+    envelope = Signatures.find(task.data["envelope_id"])
+    envelope.signed? ? "Signed on #{envelope.signed_on}" : task
+  end
+end
+```
+
+`ask` and `complete` return while the call waits. The chat is `waiting?` and `awaiting_tasks?`, and `pending_tasks` returns the tasks:
+
+```ruby
+chat = RubyLLM.chat.with_tools(RequestSignature)
+chat.ask "Send contract 42 for signature"
+
+chat.awaiting_tasks?               # => true
+task = chat.pending_tasks.first
+task.status_message                # => "Waiting for the signature"
+task.input_required?               # => true
+```
+
+Each `complete` calls `resume` once for every paused call, with the task and the call's arguments. Return the call's result to finish it, or a task to keep it paused. Once every call has a result, the model carries on.
+
+A task's `status` is `:working` while the work runs on its own, so you check again after its `poll_interval`, and `:input_required` while it waits on a person, so nothing changes until they act. Call `complete` after they do, such as from the controller that records their decision.
+
+The call can run again if the process dies before the task is saved, so `execute` keys the request on `tool_call.id` to avoid sending it twice. `data` is what `resume` needs, as a Hash that serializes to JSON. In Rails, the task persists on its tool call, so one process can pause the chat and another can resume it, even after a deploy. To rebuild a task as your own subclass of `RubyLLM::Task`, override `task(state, tool_call:)` on the tool and return `YourTask.load(state, tool_call:)`. A subclass can override `refresh` to check on its work and `cancel` to stop it; cancelling the chat calls `cancel` on every task it waits on and drops the paused calls.
+
+MCP tools pause the same way when a server runs a call as a [task]({% link _tools/mcp.md %}#tasks), and so do [subagents]({% link _getting_started/agents.md %}#subagents) while they wait on a person.
+
+## Asking the User
+
+A tool can ask the user something while it runs, the way an MCP server asks for input. `request_input` takes the question and the fields to fill, as JSON Schema properties (`required: true` on the ones the user must fill), or `url:` for a page to visit:
+
+```ruby
+class AskTeam < RubyLLM::Tool
+  description "Ask the team something you can't answer from the docs"
+
+  parameters do
+    string :question, description: "Written for a colleague"
+  end
+
+  def execute(question:)
+    answer = request_input(question, answer: { type: "string", title: "Answer", required: true })
+    answer.accepted? ? { answer: answer[:answer] } : { error: "Nobody answered" }
+  end
+end
+```
+
+In a chat, the call pauses on the question as on a server's: the chat is `awaiting_input?`, `pending_inputs` lists it, and `answer` or `decline` settles it before `complete` resumes.
+
+Resuming runs `execute` again from the start, and this time `request_input` returns the answer, so code before `request_input` runs twice. Ask first, then do the work.
+{: .warning }
+
+A call can ask several questions, one after another. Outside a chat, an unanswered `request_input` raises `RubyLLM::InputRequiredError`. `RubyLLM::MCP::InputRequiredError` is a subclass, so one `rescue` covers both.
 
 ## Next Steps
 

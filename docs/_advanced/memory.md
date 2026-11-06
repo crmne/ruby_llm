@@ -22,7 +22,7 @@ After reading this guide, you will know:
 
 A chat includes its message history in each request. With [`acts_as_chat`]({% link _advanced/rails-persistence.md %}), that history is stored in your database and available when the agent is loaded again.
 
-When the transcript grows past what you want to send, compact it with [transcript replacement]({% link _getting_started/chat.md %}#advanced-replacing-the-llm-transcript): summarize the old turns, keep the recent ones verbatim, and show the model the compacted version while your users keep the full history. Your application keeps the original messages.
+When the transcript grows past what you want to send, compact it with [transcript replacement]({% link _getting_started/chat.md %}#replacing-the-models-transcript): summarize the old turns, keep the recent ones verbatim, and show the model the compacted version while your users keep the full history. Your application keeps the original messages.
 
 ## A Memories Table
 

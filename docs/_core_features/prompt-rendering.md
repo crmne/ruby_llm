@@ -262,7 +262,7 @@ class WorkAssistant < RubyLLM::Agent
 end
 ```
 
-For the full class-based conventions, see [Agents]({% link _getting_started/agents.md %}#prompt-management-and-conventions).
+For the full class-based conventions, see [Agents]({% link _getting_started/agents.md %}#keeping-instructions-in-prompt-templates).
 
 ## Safety Notes
 

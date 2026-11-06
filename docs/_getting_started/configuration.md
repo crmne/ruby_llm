@@ -3,7 +3,7 @@ layout: default
 title: Configuration
 nav_order: 6
 has_children: true
-description: Set provider credentials, choose default models, and share configuration across the RubyLLM API.
+description: Set provider credentials, choose default models, and give parts of your application their own settings.
 redirect_from:
   - /configuration-reference/
 ---
@@ -15,256 +15,113 @@ redirect_from:
 
 After reading this guide, you will know:
 
-* How to configure API keys for the providers you use.
-* How to set default models for conversations, media, and document processing.
-* How to wire RubyLLM into a Rails initializer.
-* Where to find provider, connection, and reference details.
+* How to configure the providers you use.
+* How to set default models for chats and individual operations.
+* How to configure RubyLLM in a Rails initializer.
+* How to give an agent or a tenant its own credentials with a context.
+* Where to find every setting.
 
-## Quick Start
+## Configuring Providers
 
-Configure a provider to start using its models:
-
-```ruby
-RubyLLM.configure do |config|
-  config.openai_api_key = ENV.fetch('OPENAI_API_KEY')
-end
-```
-
-RubyLLM uses its defaults for models, timeouts, and retries. Set only what your application needs.
-
-## API Keys
-
-Configure API keys only for the providers you use. RubyLLM won't complain about missing keys for providers you never touch.
+`RubyLLM.configure` sets your application's credentials and defaults. Configure each provider you use with its API key:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.openai_api_key = ENV['OPENAI_API_KEY']
-  config.anthropic_api_key = ENV['ANTHROPIC_API_KEY']
-  config.gemini_api_key = ENV['GEMINI_API_KEY']
+  config.openai_api_key = ENV.fetch("OPENAI_API_KEY")
+  config.anthropic_api_key = ENV.fetch("ANTHROPIC_API_KEY")
 end
 ```
 
-Each provider has its own key (and sometimes region or project settings). For the full list of providers, organization headers, Vertex AI authentication, and OpenAI-compatible custom endpoints, see [Provider Setup and Custom Endpoints]({% link _reference/configuration-providers.md %}).
+That's all most applications need. RubyLLM chooses default models, timeouts, and retries, and you change only what your application needs.
 
-> Attempting to use an unconfigured provider will raise `RubyLLM::ConfigurationError`. Only configure what you need.
-{: .note }
+Configure only the providers you use. RubyLLM doesn't ask for the others, and raises `RubyLLM::ConfigurationError` when you use a provider without its required credentials. See [Provider Setup]({% link _reference/configuration-providers.md %}) for every provider's settings, including regions, projects, Bedrock and Vertex AI authentication, and OpenAI-compatible endpoints.
 
-## Default Models
+## Configuring RubyLLM in Rails
 
-Set defaults for the operations you use:
-
-```ruby
-RubyLLM.configure do |config|
-  config.default_model = '{{ site.models.anthropic_current }}'           # For RubyLLM.chat
-  config.default_embedding_model = '{{ site.models.embedding_large }}'  # For RubyLLM.embed
-  config.default_image_model = '{{ site.models.default_image }}'        # For RubyLLM.paint
-  config.default_video_model = '{{ site.models.default_video }}'        # For RubyLLM.animate
-  config.default_speech_model = '{{ site.models.default_speech }}'       # For RubyLLM.speak
-  config.default_transcription_model = '{{ site.models.default_transcription }}' # For RubyLLM.transcribe
-  config.default_ocr_model = '{{ site.models.default_ocr }}'              # For RubyLLM.ocr
-  config.default_moderation_model = '{{ site.models.default_moderation }}' # For RubyLLM.moderate
-  config.default_judgment_model = '{{ site.models.judgment }}'            # For RubyLLM.judge and RubyLLM::Judge
-end
-```
-
-Defaults if not configured:
-- Chat: `gpt-6.1-sol`
-- Embeddings: `{{ site.models.default_embedding }}`
-- Images: `{{ site.models.default_image }}`
-- Videos: `grok-imagine-video-1.5`
-- Speech: `{{ site.models.default_speech }}`
-- Moderation: `omni-moderation-latest`
-- Transcription: `gpt-transcribe`
-- OCR: `mistral-ocr-latest`
-- Judgments: `{{ site.models.judgment }}`
-
-`rerank` requires `model:` on each call; it has no default model setting.
-
-## Rails Integration
-
-Put the same configuration in `config/initializers/ruby_llm.rb`. For example, with Rails credentials:
+In Rails, the install generator writes `config/initializers/ruby_llm.rb`. Read keys from your credentials and send RubyLLM's logs to the Rails log:
 
 ```ruby
+# config/initializers/ruby_llm.rb
 RubyLLM.configure do |config|
   config.openai_api_key = Rails.application.credentials.openai_api_key
+  config.anthropic_api_key = Rails.application.credentials.anthropic_api_key
+  config.default_model = "{{ site.models.anthropic_current }}"
   config.logger = Rails.logger
 end
 ```
 
-See [Rails Integration]({% link _getting_started/rails.md %}) for persistence, Active Storage attachments, streaming, and jobs.
+See [Rails Integration]({% link _getting_started/rails.md %}) for persistence, attachments, streaming, and jobs.
 
-## Full Reference
+## Default Models
 
-Here's a complete reference of all configuration options:
+`RubyLLM.chat` and each individual operation use a default model when you don't pass `model:`. Set the defaults your application needs:
 
 ```ruby
 RubyLLM.configure do |config|
-  # Anthropic
-  config.anthropic_api_key = String
-  config.anthropic_api_base = String
-
-  # Azure
-  config.azure_api_base = String
-  config.azure_api_key = String
-  config.azure_ai_auth_token = String
-  config.azure_deployments = Hash # deployment name => model id
-
-  # Bedrock
-  config.bedrock_api_key = String
-  config.bedrock_secret_key = String
-  config.bedrock_region = String
-  config.bedrock_session_token = String
-  config.bedrock_credential_provider = Object # Aws::CredentialProvider
-  config.bedrock_api_base = String
-  config.bedrock_mantle_api_base = String
-  config.bedrock_batch_s3_uri = String   # s3://bucket/prefix for batches and large attachments
-  config.bedrock_batch_role_arn = String # IAM role Bedrock assumes to run batch jobs
-  config.bedrock_video_s3_uri = String # s3://bucket/prefix for generated videos
-  config.bedrock_guardrail_id = String
-  config.bedrock_guardrail_version = String
-
-  # Cohere
-  config.cohere_api_key = String
-  config.cohere_api_base = String
-
-  # Deepgram
-  config.deepgram_api_key = String
-  config.deepgram_api_base = String
-
-  # TypeSafe
-  config.typesafe_api_key = String
-  config.typesafe_api_base = String
-
-  # DeepSeek
-  config.deepseek_api_key = String
-  config.deepseek_api_base = String
-
-  # ElevenLabs
-  config.elevenlabs_api_key = String
-  config.elevenlabs_api_base = String
-
-  # Gemini
-  config.gemini_api_key = String
-  config.gemini_api_base = String
-
-  # GPUStack
-  config.gpustack_api_base = String
-  config.gpustack_api_key = String
-
-  # Hetzner
-  config.hetzner_api_key = String
-  config.hetzner_api_base = String
-
-  # Meta
-  config.meta_api_key = String
-  config.meta_api_base = String
-  # MiniMax
-  config.minimax_api_key = String
-  config.minimax_api_base = String
-
-  # Mistral
-  config.mistral_api_key = String
-  config.mistral_api_base = String
-
-  # Moonshot AI
-  config.moonshot_api_key = String
-  config.moonshot_api_base = String
-
-  # Ollama
-  config.ollama_api_base = String
-  config.ollama_api_key = String
-
-  # Ollama Cloud
-  config.ollama_cloud_api_key = String
-  config.ollama_cloud_api_base = String
-
-  # OpenAI
-  config.openai_api_key = String
-  config.openai_api_base = String
-  config.openai_organization_id = String
-  config.openai_project_id = String
-  config.openai_use_system_role = Boolean
-  config.openai_protocol = Symbol # Every provider exposes <provider>_protocol
-
-  # OpenRouter
-  config.openrouter_api_key = String
-  config.openrouter_api_base = String
-  config.openrouter_app_url = String   # App attribution URL sent as HTTP-Referer
-  config.openrouter_app_name = String  # App attribution name sent as X-OpenRouter-Title
-
-  # Perplexity
-  config.perplexity_api_key = String
-  config.perplexity_api_base = String
-
-  # Vertex AI
-  config.vertexai_project_id = String  # GCP project ID
-  config.vertexai_location = String     # e.g., 'us-central1'
-  config.vertexai_service_account_key = String # Optional: service account JSON key (ADC used when unset)
-  config.vertexai_api_base = String
-  config.vertexai_batch_gcs_uri = String # gs://bucket/prefix for batches and large attachments
-  config.vertexai_ranking_api_base = String # Optional Discovery Engine endpoint
-  config.vertexai_ranking_config = String # Optional full rankingConfig resource name
-
-  # xAI
-  config.xai_api_key = String
-  config.xai_api_base = String
-
-  # Z.ai
-  config.zai_api_key = String
-  config.zai_api_base = String
-
-  # Default Models
-  config.default_model = String
-  config.default_embedding_model = String
-  config.default_image_model = String
-  config.default_video_model = String
-  config.default_speech_model = String
-  config.default_moderation_model = String
-  config.default_transcription_model = String
-  config.default_ocr_model = String
-  config.default_judgment_model = String
-
-  # Model Registry
-  config.model_registry_file = String  # Writable registry cache; defaults to the OS user cache directory
-  config.model_registry_store = Object # Responds to read, optionally write(registry)
-
-  # Connection Settings
-  config.request_timeout = Integer
-  config.video_generation_timeout = Integer
-  config.video_generation_poll_interval = Integer
-  config.max_retries = Integer
-  config.retry_interval = Float
-  config.retry_backoff_factor = Integer
-  config.retry_interval_randomness = Float
-  config.retry_max_interval = Integer
-  config.http_proxy = String
-  config.faraday_adapter = Symbol # Defaults to :net_http
-  config.auto_upload_large_files = Boolean
-  config.tool_concurrency = false # true/:threads or :fibers
-  config.max_run_time = Integer # Seconds before a persisted chat's run counts as crashed; defaults to 600
-  config.broadcast_messages = false # acts_as_message broadcasts chats with Turbo; the chat UI generator turns it on
-  config.split_think_tags = false # true moves a leading <think> block into thinking on Chat Completions
-
-  # Code Execution
-  config.sandbox = "ApplicationSandbox" # The name of an MXC::Sandbox class or your own sandbox; defaults to nil
-  config.sandbox_backend = :bubblewrap # Or :landlock, which isolates less; Linux only
-  config.package_cache_dir = String # Declared gems and Python packages; defaults to the OS user cache directory
-
-  # Logging
-  config.logger = Logger
-  config.instrumenter = Object # Responds to instrument(name, payload) { ... }
-  config.deprecation_behavior = :warn # :warn, :silence, or :raise
-  config.redact_error_messages = false # true leaves what providers wrote out of error messages
-  config.log_file = String
-  config.log_level = Symbol
-  config.log_stream_debug = Boolean
-  config.log_regexp_timeout = Numeric
+  config.default_model = "{{ site.models.anthropic_current }}"                     # RubyLLM.chat and agents
+  config.default_embedding_model = "{{ site.models.embedding_large }}"            # RubyLLM.embed
+  config.default_image_model = "{{ site.models.default_image }}"                  # RubyLLM.paint
+  config.default_video_model = "{{ site.models.default_video }}"                  # RubyLLM.animate
+  config.default_speech_model = "{{ site.models.default_speech }}"                # RubyLLM.speak
+  config.default_transcription_model = "{{ site.models.default_transcription }}"  # RubyLLM.transcribe
+  config.default_ocr_model = "{{ site.models.default_ocr }}"                      # RubyLLM.ocr
+  config.default_moderation_model = "{{ site.models.default_moderation }}"        # RubyLLM.moderate
+  config.default_judgment_model = "{{ site.models.judgment }}"                    # RubyLLM.judge
 end
 ```
 
+Without them, RubyLLM uses these models:
+
+| Setting | Default |
+| --- | --- |
+| `default_model` | `{{ site.models.default_chat }}` |
+| `default_embedding_model` | `{{ site.models.default_embedding }}` |
+| `default_image_model` | `{{ site.models.default_image }}` |
+| `default_video_model` | `{{ site.models.default_video }}` |
+| `default_speech_model` | `{{ site.models.default_speech }}` |
+| `default_transcription_model` | `{{ site.models.default_transcription }}` |
+| `default_ocr_model` | `{{ site.models.default_ocr }}` |
+| `default_moderation_model` | `{{ site.models.default_moderation }}` |
+| `default_judgment_model` | `{{ site.models.judgment }}` |
+
+`rerank` has no default: pass `model:` on each call.
+
+## Giving Part of Your Application Its Own Settings
+
+Global configuration suits most of an application. Sometimes one part needs different settings: the support desk bills its model usage to a separate OpenAI project, or each store on your platform brings its own key. A context is a copy of the configuration with your changes, and it has the same entry points as `RubyLLM`:
+
+```ruby
+store_ai = RubyLLM.context do |config|
+  config.openai_api_key = store.openai_api_key
+  config.request_timeout = 180
+end
+
+store_ai.chat.ask "Do you ship to Canada?"
+store_ai.transcribe "voicemail.mp3"
+```
+
+An agent takes a context with the `context` macro, so every chat it builds uses it:
+
+```ruby
+class SupportAgent < RubyLLM::Agent
+  context do |config|
+    config.openai_api_key = Rails.application.credentials.support_openai_api_key
+  end
+end
+```
+
+See [Contexts]({% link _reference/configuration-connection.md %}#contexts-isolated-configurations) for multi-tenant applications and how contexts share connections.
+
+## Every Setting
+
+The reference pages list every setting:
+
+* [Provider Setup and Custom Endpoints]({% link _reference/configuration-providers.md %}): each provider's keys, endpoints, regions, and authentication.
+* [Connection, Logging and Contexts]({% link _reference/configuration-connection.md %}): timeouts, retries, proxies, logging, the model registry file, and [every other setting]({% link _reference/configuration-connection.md %}#all-other-settings) in one block.
+* The [Configuration API reference]({{ '/api/RubyLLM/Configuration.html' | relative_url }}) documents each setting's type and default.
+
 ## Next Steps
 
-- [Provider Setup and Custom Endpoints]({% link _reference/configuration-providers.md %}) - every provider's keys, OpenAI organization headers, Vertex AI auth, and OpenAI-compatible endpoints.
-- [Connection, Logging and Contexts]({% link _reference/configuration-connection.md %}) - timeouts, retries, proxies, debug logging, the model registry file, and isolated per-tenant contexts.
-- [Start chatting with AI models]({% link _getting_started/chat.md %}) - put your configuration to work.
-- [Set up Rails integration]({% link _getting_started/rails.md %}) - persistence, streaming, and generators.
+* [Rails Integration]({% link _getting_started/rails.md %}): the support desk on your own records and jobs.
+* [Provider Setup and Custom Endpoints]({% link _reference/configuration-providers.md %}): every provider's settings.
+* [Model Registry]({% link _reference/models.md %}): find models and refresh the registry.
