@@ -32,7 +32,7 @@ Provider operation errors inherit from `RubyLLM::Error`. RubyLLM maps the provid
 | --- | --- | --- |
 | `RubyLLM::Error` | Any other failure status, such as a 413 that is not a context overflow | No |
 | `RubyLLM::BadRequestError` | 400 | No |
-| `RubyLLM::UnsupportedParameterError` | A 400 from OpenAI that names a parameter the model doesn't take, such as a temperature | No |
+| `RubyLLM::UnsupportedParameterError` | A 400 to a chat request, in OpenAI's error format, that names a parameter the model doesn't take, such as a temperature. Other operations raise `BadRequestError` for it | No |
 | `RubyLLM::UnauthorizedError` | 401, or a 400 or 403 with a recognized invalid-credentials message, such as `Incorrect API key` | No |
 | `RubyLLM::PaymentRequiredError` | 402, or a 400 saying the credit balance is too low | No |
 | `RubyLLM::ForbiddenError` | Any other 403 | No |
@@ -55,12 +55,18 @@ Local setup and programming errors inherit from `StandardError` directly, so `re
 | Class | Raised when |
 | --- | --- |
 | `RubyLLM::ConfigurationError` | Required configuration, such as an API key, is missing |
+| `RubyLLM::DeprecationError` | A deprecated API is called while `config.deprecation_behavior` is `:raise` |
 | `RubyLLM::PromptNotFoundError` | A prompt file is not found |
+| `RubyLLM::SkillNotFoundError` | A skill named by `with_skills` or `Skill.find` is missing |
+| `RubyLLM::InvalidSkillError` | A skill's `SKILL.md` breaks the Agent Skills specification |
+| `RubyLLM::FileNotFoundError` | A file store has no file at the path asked for |
+| `RubyLLM::FileStoreFullError` | A write would take a file store past its limit. The file tools and `run_code` hand its message to the model instead of failing the reply |
 | `RubyLLM::ModelNotFoundError` | The requested model ID is not in the registry |
 | `RubyLLM::ModelRegistryError` | The model registry could not be fetched, parsed, or persisted |
 | `RubyLLM::InvalidRoleError` | A message uses an invalid role |
 | `RubyLLM::InvalidToolChoiceError` | The tool choice is neither a known mode nor a registered tool |
 | `RubyLLM::PendingToolCallsError` | A new question is staged before pending tool calls finish |
+| `RubyLLM::ToolCallRunningError` | A persisted tool call is denied after it started running. The call keeps running, and the model receives its result |
 | `RubyLLM::CancelledError` | An in-flight chat operation is cancelled |
 
 The [`RubyLLM::Error` reference]({{ '/api/RubyLLM/Error.html' | relative_url }}) documents the readers every provider error carries, such as `response`, `provider`, and `error_code`, and each subclass has its own page.

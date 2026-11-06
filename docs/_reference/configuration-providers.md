@@ -167,7 +167,7 @@ RubyLLM.configure do |config|
   config.ollama_cloud_api_key = ENV["OLLAMA_CLOUD_API_KEY"] # ollama.com/settings/keys
 end
 
-RubyLLM.chat(model: "gpt-oss:120b", provider: :ollama_cloud).ask("Hello from Ollama Cloud")
+RubyLLM.chat(model: "gpt-oss:120b", provider: :ollama_cloud).ask "Hello from Ollama Cloud"
 ```
 
 Because `:ollama` and `:ollama_cloud` are separate providers, you can point one at your own machine and the other at the hosted service in the same process:
@@ -202,7 +202,7 @@ RubyLLM.configure do |config|
   config.hetzner_api_key = ENV["HETZNER_API_KEY"]
 end
 
-RubyLLM.chat(model: "Qwen3.8-27B", provider: :hetzner).ask("Hello from Hetzner")
+RubyLLM.chat(model: "Qwen3.8-27B", provider: :hetzner).ask "Hello from Hetzner"
 ```
 
 The service is experimental and changes its model selection often. RubyLLM accepts any model ID you give `:hetzner` without a registry entry, and `refresh` pulls the live catalog:
@@ -223,7 +223,7 @@ RubyLLM.configure do |config|
   config.meta_api_key = ENV["META_API_KEY"]
 end
 
-RubyLLM.chat(model: "muse-spark-1.3").ask("Hello from Muse")
+RubyLLM.chat(model: "muse-spark-1.3").ask "Hello from Muse"
 ```
 
 RubyLLM talks to Meta through its Responses API, which carries the model's encrypted reasoning from one turn to the next, so tool loops keep their chain of thought. Meta runs web search as a provider tool, `with_provider_tools(:web_search)`, and caches prompts by itself. `with_caching` takes `key:` and a `ttl:` of `"in_memory"` or `"24h"`.
@@ -241,7 +241,7 @@ RubyLLM.configure do |config|
   config.minimax_api_key = ENV["MINIMAX_API_KEY"]
 end
 
-RubyLLM.chat(model: "MiniMax-M3.1-Flash").ask("Hello from MiniMax")
+RubyLLM.chat(model: "MiniMax-M3.1-Flash").ask "Hello from MiniMax"
 ```
 
 Keys from MiniMax's China platform only work on its own endpoint. Point `minimax_api_base` at it:
@@ -264,7 +264,7 @@ RubyLLM.configure do |config|
   config.moonshot_api_key = ENV["MOONSHOT_API_KEY"]
 end
 
-RubyLLM.chat(model: "kimi-k3").ask("Hello from Kimi")
+RubyLLM.chat(model: "kimi-k3").ask "Hello from Kimi"
 ```
 
 Keys from Moonshot's China platform only work on its own endpoint. Point `moonshot_api_base` at it:
@@ -287,7 +287,7 @@ RubyLLM.configure do |config|
   config.zai_api_key = ENV["ZAI_API_KEY"]
 end
 
-RubyLLM.chat(model: "glm-5.3").ask("Hello from Z.ai")
+RubyLLM.chat(model: "glm-5.3").ask "Hello from Z.ai"
 ```
 
 BigModel, Zhipu's platform in China, serves the same API with its own keys. Point `zai_api_base` at it:

@@ -299,7 +299,7 @@ Vertex AI takes the `eu` and `us` multi-region locations.
 Moonshot AI joins the built-in providers, bringing the total to twenty. Its Kimi models read text and images, think before they answer, and call tools:
 
 ```ruby
-RubyLLM.chat(model: "kimi-k3").ask("Hello from Kimi")
+RubyLLM.chat(model: "kimi-k3").ask "Hello from Kimi"
 ```
 
 Set `moonshot_api_key` to a key from the Kimi platform. See [Provider Setup]({% link _reference/configuration-providers.md %}#moonshot-ai).
@@ -309,7 +309,7 @@ Set `moonshot_api_key` to a key from the Kimi platform. See [Provider Setup]({% 
 MiniMax joins the built-in providers, bringing the total to twenty-one. Its M3 models read text and images, think before they answer, and call tools:
 
 ```ruby
-RubyLLM.chat(model: "MiniMax-M3.1-Flash").ask("Hello from MiniMax")
+RubyLLM.chat(model: "MiniMax-M3.1-Flash").ask "Hello from MiniMax"
 ```
 
 Set `minimax_api_key` to a key from the MiniMax platform. See [Provider Setup]({% link _reference/configuration-providers.md %}#minimax).
@@ -319,7 +319,7 @@ Set `minimax_api_key` to a key from the MiniMax platform. See [Provider Setup]({
 Z.ai joins the built-in providers, bringing the total to twenty-two. It serves Zhipu's GLM models, which think before they answer, call tools, and, in GLM-5.3 Flash and FlashX and the vision models, read images:
 
 ```ruby
-RubyLLM.chat(model: "glm-5.3").ask("Hello from Z.ai")
+RubyLLM.chat(model: "glm-5.3").ask "Hello from Z.ai"
 ```
 
 Set `zai_api_key` to a key from Z.ai, or point `zai_api_base` at BigModel for Zhipu's platform in China. See [Provider Setup]({% link _reference/configuration-providers.md %}#zai).
@@ -329,7 +329,7 @@ Set `zai_api_key` to a key from Z.ai, or point `zai_api_base` at BigModel for Zh
 Meta joins the built-in providers, bringing the total to twenty-three. Its Muse models read text, images, and PDFs, think before they answer, call tools, and search the web:
 
 ```ruby
-RubyLLM.chat(model: "muse-spark-1.3").ask("Hello from Muse")
+RubyLLM.chat(model: "muse-spark-1.3").ask "Hello from Muse"
 ```
 
 Set `meta_api_key` to a key from dev.meta.ai. See [Provider Setup]({% link _reference/configuration-providers.md %}#meta).

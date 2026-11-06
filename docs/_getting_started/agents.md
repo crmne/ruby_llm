@@ -67,6 +67,7 @@ Feature macros such as `thinking`, `caching`, `citations`, and `compaction` foll
 | `code_execution`, `file_store` | `with_code_execution`, `with_file_store` | [Code Execution]({% link _advanced/code-execution.md %}), [File Stores]({% link _core_features/file-stores.md %}#agents) |
 | `schema` | `with_schema` | [Structured Answers](#structured-answers) |
 | `temperature`, `max_output_tokens` | `with_temperature`, `with_max_output_tokens` | [Chat]({% link _getting_started/chat.md %}#controlling-responses) |
+| `context_budget` | `with_context_budget` | [Request Control]({% link _core_features/chat-request-control.md %}#keeping-tool-results-in-budget) |
 | `thinking`, `citations`, `caching`, `compaction` | `with_thinking`, `with_citations`, `with_caching`, `with_compaction` | [Thinking]({% link _core_features/thinking.md %}), [Citations]({% link _core_features/citations.md %}), [Prompt Caching]({% link _core_features/prompt-caching.md %}), [Request Control]({% link _core_features/chat-request-control.md %}#compacting-long-conversations) |
 | `provider_options`, `headers` | `with_provider_options`, `with_headers` | [Request Control]({% link _core_features/chat-request-control.md %}) |
 | `end_user`, `owner` | `with_end_user`, `with_owner` | [Request Control]({% link _core_features/chat-request-control.md %}#identifying-end-users), [Usage]({% link _core_features/cost-and-usage-tracking.md %}#one-shot-operations) |
