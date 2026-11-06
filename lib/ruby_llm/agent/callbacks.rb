@@ -12,8 +12,8 @@ module RubyLLM
     # or Agent::find is bound to it without running +initialize+.
     module Callbacks # :nodoc:
       HOOKS = %i[
-        before_request before_message after_message before_tool_call after_tool_result after_tool_progress
-        before_fallback after_fallback after_file_write
+        before_request before_message after_message before_tool_call around_tool_call after_tool_result
+        after_tool_progress before_fallback after_fallback after_file_write
       ].freeze
 
       # A declared callback: a method name or a block, with the +if:+ and
@@ -32,22 +32,34 @@ module RubyLLM
           @unless = Array(conditions[:unless])
         end
 
-        def run(agent, args)
-          return unless @if.all? { |condition| call(agent, condition, args) }
-          return if @unless.any? { |condition| call(agent, condition, args) }
+        # Runs the handler with +args+, passing +block+ on to it, as an
+        # around callback's +run+. A skipped around callback runs +block+.
+        def run(agent, args, &block)
+          return block&.call unless @if.all? { |condition| call(agent, condition, args) }
+          return block&.call if @unless.any? { |condition| call(agent, condition, args) }
 
-          call(agent, @handler, args)
+          call(agent, @handler, args, &block)
         end
 
         private
 
-        def call(agent, handler, args)
+        def call(agent, handler, args, &block)
           if handler.is_a?(Symbol) || handler.is_a?(String)
             method = agent.method(handler)
-            return method.arity.zero? ? method.call : method.call(*args)
+            return method.arity.zero? ? method.call(&block) : method.call(*args, &block)
+          end
+          if block
+            method = bound(handler)
+            return method.arity.zero? ? method.bind_call(agent, &block) : method.bind_call(agent, *args, &block)
           end
 
           handler.lambda? && handler.arity.zero? ? agent.instance_exec(&handler) : agent.instance_exec(*args, &handler)
+        end
+
+        # instance_exec cannot pass a block on, so a handler that takes one
+        # runs as a method of the agent instead.
+        def bound(handler)
+          @bound ||= Module.new { define_method(:callback, &handler) }.instance_method(:callback)
         end
       end
 
@@ -77,7 +89,7 @@ module RubyLLM
           next if registered
 
           chat_callbacks.each do |hook, callback|
-            chat.public_send(hook) { |*args| callback.run(receivers[self], args) }
+            chat.public_send(hook) { |*args, &run| callback.run(receivers[self], args, &run) }
           end
         end
       end

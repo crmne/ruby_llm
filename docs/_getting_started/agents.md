@@ -400,7 +400,7 @@ Delegated methods include:
 * `cache_until_here`, `with_tools`, `with_provider_tools`, `with_tool_options`
 * `with_model`, `with_instructions`, `with_temperature`, `with_max_output_tokens`, `with_thinking`, `with_citations`, `with_end_user`, `with_owner`, `with_compaction`, `with_context`
 * `with_caching`, `with_provider_options`, `with_headers`, `with_schema`, `with_fallbacks`
-* `before_request`, `before_message`, `after_message`, `before_tool_call`, `after_tool_result`, `after_tool_progress`, `before_fallback`, `after_fallback`, `around_join`
+* `before_request`, `before_message`, `after_message`, `before_tool_call`, `around_tool_call`, `after_tool_result`, `after_tool_progress`, `before_fallback`, `after_fallback`, `around_join`
 
 You can always access the wrapped chat object directly via `agent.chat`.
 
@@ -423,7 +423,23 @@ class SupportAgent < ApplicationAgent
 end
 ```
 
-The method or block runs on the agent instance, so it reads the agent's inputs and `chat`, and receives the callback's arguments when it takes them. `if:` and `unless:` take a method name, a lambda, or an array of them. Every chat callback has a macro: `before_request`, `before_message`, `after_message`, `before_tool_call`, `after_tool_result`, `after_tool_progress`, `before_fallback`, `after_fallback`, and `after_file_write`. Subclasses inherit the callbacks declared when they are defined, so an `ApplicationAgent` can declare the ones every agent shares. For chats from `SupportAgent.chat` and `SupportAgent.find`, the agent the callbacks run on is set up without calling `initialize`, as for `rescue_from`, so read inputs and `chat` rather than instance variables your `initialize` sets. `around_join` works the same way for [queued messages]({% link _advanced/agentic-workflows.md %}#joining-queued-messages).
+The method or block runs on the agent instance, so it reads the agent's inputs and `chat`, and receives the callback's arguments when it takes them. `if:` and `unless:` take a method name, a lambda, or an array of them. Every chat callback has a macro: `before_request`, `before_message`, `after_message`, `before_tool_call`, `around_tool_call`, `after_tool_result`, `after_tool_progress`, `before_fallback`, `after_fallback`, and `after_file_write`. Subclasses inherit the callbacks declared when they are defined, so an `ApplicationAgent` can declare the ones every agent shares. For chats from `SupportAgent.chat` and `SupportAgent.find`, the agent the callbacks run on is set up without calling `initialize`, as for `rescue_from`, so read inputs and `chat` rather than instance variables your `initialize` sets. `around_tool_call` takes the tool as a block: a method yields to it, and a block takes it as `&run`:
+
+```ruby
+class SupportAgent < ApplicationAgent
+  inputs :account
+
+  around_tool_call :in_tenant
+
+  private
+
+  def in_tenant(tool_call, &)
+    ActsAsTenant.with_tenant(account, &)
+  end
+end
+```
+
+When `if:` or `unless:` skips it, the tool runs without it. `around_join` works the same way for [queued messages]({% link _advanced/agentic-workflows.md %}#joining-queued-messages).
 
 ## Subagents
 

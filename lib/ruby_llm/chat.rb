@@ -1335,6 +1335,23 @@ module RubyLLM
       add_callback(:before_tool_call, &)
     end
 
+    # Registers a callback that wraps each local tool's execution. It
+    # receives the ToolCall and a block, +run+, that runs the tool and
+    # returns its result. Returns +self+.
+    #
+    #   chat.around_tool_call { |tool_call, &run| ActsAsTenant.with_tenant(account, &run) }
+    #
+    # The block runs in the thread or fiber that runs the tool, so
+    # fiber-local state, +Current+ attributes, and tenants it sets reach the
+    # tool, also with concurrent tool execution. It runs after
+    # #before_tool_call and before #after_tool_result. Several blocks nest
+    # in the order they were registered, the first outermost. The result is
+    # the tool's, whatever the block returns. A block that never calls
+    # +run+ skips the tool, and the model is told the call did not run.
+    def around_tool_call(&)
+      add_callback(:around_tool_call, &)
+    end
+
     # Registers a callback that receives each local tool's result after
     # execution. Returns +self+.
     def after_tool_result(&)
@@ -2327,11 +2344,30 @@ module RubyLLM
     def execute_tool_with_callbacks(tool_call)
       raise_if_cancelled!
       run_callbacks(:before_tool_call, tool_call)
-      result = execute_tool tool_call
+      result = run_around_tool_call(tool_call) { execute_tool tool_call }
       return result if result.equal?(PAUSED)
 
       run_callbacks(:after_tool_result, result)
       result
+    end
+
+    def run_around_tool_call(tool_call, &execute)
+      ran = false
+      result = nil
+      innermost = lambda do
+        result = execute.call unless ran
+        ran = true
+        result
+      end
+      outcome = -> { ran ? result : { error: "The #{tool_call.name} call did not run." } }
+      chain = @callbacks[:around_tool_call].reverse.reduce(innermost) do |inner, callback|
+        lambda do
+          callback.call(tool_call) { inner.call }
+          outcome.call
+        end
+      end
+      chain.call
+      outcome.call
     end
 
     def add_tool_result_message(tool_call, result)

@@ -292,6 +292,13 @@ end
 chat.with_tools(SearchDocuments.new(account: Current.account)).with_tool_options(concurrency: :fibers)
 ```
 
+Or set the state the tools need around each call, in the thread or fiber that runs it, with [`around_tool_call`]({% link _core_features/chat-callbacks.md %}#wrapping-tool-calls):
+
+```ruby
+account = Current.account
+chat.around_tool_call { |_call, &run| Current.set(account:, &run) }
+```
+
 ## Accessing the Current Tool Call
 
 A tool sometimes needs to know which invocation triggered it, for example to attribute an audit log entry or an outbound API call to the exact tool call. Declare an optional `tool_call:` keyword on `execute` and RubyLLM fills it with the executing `ToolCall`:

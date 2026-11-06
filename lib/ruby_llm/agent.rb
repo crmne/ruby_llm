@@ -72,8 +72,8 @@ module RubyLLM
       with_temperature with_max_output_tokens with_thinking with_citations
       with_end_user with_owner with_compaction with_caching with_code_execution with_skills with_file_store with_context
       with_provider_options with_headers with_schema with_fallbacks
-      before_request before_message after_message before_tool_call after_tool_result after_tool_progress
-      before_fallback after_fallback around_join after_file_write
+      before_request before_message after_message before_tool_call around_tool_call after_tool_result
+      after_tool_progress before_fallback after_fallback around_join after_file_write
       convert_unsupported_attachments
       cancel approve deny answer decline cache_until_here
     ].freeze
@@ -1168,7 +1168,7 @@ module RubyLLM
     #
     # The other chat callbacks have macros of the same name and shape:
     # ::before_request, ::before_message, ::before_tool_call,
-    # ::after_tool_result, ::after_tool_progress, ::before_fallback,
+    # ::around_tool_call, ::after_tool_result, ::after_tool_progress, ::before_fallback,
     # ::after_fallback, and ::after_file_write. Raises ArgumentError for
     # both a method name and a block, neither, or another option.
 
@@ -1192,6 +1192,27 @@ module RubyLLM
     #
     # Registers a Chat#before_tool_call callback on every chat the agent builds or
     # finds. See ::after_message.
+
+    ##
+    # :singleton-method: around_tool_call
+    # :call-seq: around_tool_call(method_name = nil, if: nil, unless: nil, &block)
+    #
+    # Registers a Chat#around_tool_call callback on every chat the agent builds
+    # or finds. The method or block receives the ToolCall and a block that
+    # runs the tool. A method yields to it; a block takes it as +&run+:
+    #
+    #   class SupportAgent < RubyLLM::Agent
+    #     inputs :account
+    #
+    #     around_tool_call :in_tenant
+    #
+    #     private
+    #
+    #     def in_tenant(tool_call, &) = ActsAsTenant.with_tenant(account, &)
+    #   end
+    #
+    # When +if:+ or +unless:+ skips the callback, the tool runs without it.
+    # See ::after_message.
 
     ##
     # :singleton-method: after_tool_result
@@ -1411,6 +1432,12 @@ module RubyLLM
     # :call-seq: after_tool_result(&block)
     #
     # Delegates to Chat#after_tool_result. See that method for arguments and return values.
+
+    ##
+    # :method: around_tool_call
+    # :call-seq: around_tool_call(&block)
+    #
+    # Delegates to Chat#around_tool_call. See that method for arguments and return values.
 
     ##
     # :method: after_tool_progress

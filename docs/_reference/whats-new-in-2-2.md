@@ -22,6 +22,7 @@ After reading this guide, you will know:
 * How persisted chats now run in one process at a time.
 * How to queue messages while a chat runs, and attribute them as they join.
 * How to keep a tool that shares state from running alongside others.
+* How to run each tool inside a block, such as a tenant.
 * How to chat with Kimi models on Moonshot AI.
 * How to chat with MiniMax's M3 models.
 * How to chat with GLM models on Z.ai.
@@ -233,6 +234,16 @@ end
 ```
 
 See [Exclusive Tools]({% link _tools/tool-execution.md %}#exclusive-tools).
+
+## Wrapping Tool Calls
+
+`around_tool_call` runs each tool inside your block, in the thread or fiber that runs it, so tenants and `Current` attributes reach tools that run concurrently:
+
+```ruby
+chat.around_tool_call { |call, &run| ActsAsTenant.with_tenant(account, &run) }
+```
+
+Agents declare it once, `around_tool_call :in_tenant`, and Rails chat records take it too. See [Wrapping Tool Calls]({% link _core_features/chat-callbacks.md %}#wrapping-tool-calls).
 
 ## Moonshot AI
 
