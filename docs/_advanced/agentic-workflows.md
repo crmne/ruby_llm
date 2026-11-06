@@ -117,6 +117,8 @@ class Handoff < RubyLLM::Tool
   attr_reader :specialist
 
   def execute(specialist:)
+    return { error: "Choose billing or shipping" } unless %w[billing shipping].include?(specialist)
+
     @specialist = specialist
     "The #{specialist} team is taking over."
   end
@@ -232,11 +234,11 @@ class PolicyCheckedReply
     writer = SupportAgent.new(customer: customer)
     reply = writer.ask(question).content
 
-    MAX_ROUNDS.times do
+    MAX_ROUNDS.times do |round|
       review = PolicyCritic.new.ask("Question:\n#{question}\n\nReply:\n#{reply}").parsed
       return reply if review["verdict"] == "pass"
 
-      reply = writer.ask("Revise your reply. #{review['feedback']}").content
+      reply = writer.ask("Revise your reply. #{review['feedback']}").content if round < MAX_ROUNDS - 1
     end
 
     nil

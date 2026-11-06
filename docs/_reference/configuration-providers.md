@@ -105,8 +105,8 @@ RubyLLM.configure do |config|
   config.openai_api_base = ENV['OPENAI_API_BASE'] # Optional custom OpenAI-compatible endpoint
   config.openai_organization_id = ENV['OPENAI_ORG_ID'] # optional, see Organization and Project Headers
   config.openai_project_id = ENV['OPENAI_PROJECT_ID']
-  config.openai_use_system_role = true # optional, see System Role Compatibility
-  config.openai_protocol = :chat_completions # optional; every provider has a <provider>_protocol setting
+  # config.openai_use_system_role = true # optional, see System Role Compatibility
+  # config.openai_protocol = :chat_completions # only to use Chat Completions by default; every provider has a <provider>_protocol setting
 
   # OpenRouter
   config.openrouter_api_key = ENV['OPENROUTER_API_KEY']
