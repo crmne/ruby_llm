@@ -133,7 +133,7 @@ The model must read a file before `edit_file` or `write_file` changes it, and re
 notes/plan.md changed since you read it. Read it again.
 ```
 
-This keeps the model from writing over a file from memory, or over a change someone else made: a person editing the same draft, code that rewrote it, or another job. A new file needs no read, and the model can keep changing a file it wrote.
+This keeps the model from writing over a file from memory, or over a change someone else made: a person editing the same draft, code that rewrote it, or another job. A new file needs no read, and the model can keep changing a file it wrote with these tools. A file its code changed counts as changed, because the run's output doesn't show the model the new content, so `run_code` names those files in its result and the model reads them again.
 
 The store remembers the digest of what the model read, for each path. A persisted chat keeps it in the file's row, so it survives a reload and holds across processes. `Memory` and `Directory` stores remember for as long as the store object lives, so after a reload, the model reads a folder store's file again before it changes it.
 

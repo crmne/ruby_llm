@@ -74,6 +74,20 @@ RSpec.describe RubyLLM::Chat do
       expect(written).to eq(%w[notes.md out/chart.svg])
     end
 
+    it 'tells the model when a run changed a file it had read' do
+      chat.tools[:read_file].call(path: 'notes.md')
+      chat.tools[:read_file].call(path: 'keep.txt')
+
+      report = JSON.parse(run_code(files: %w[notes.md keep.txt]))
+
+      expect(report['read_again']).to eq('This run changed files you had read: notes.md. Read them before ' \
+                                         'you edit them.')
+    end
+
+    it 'says nothing about files the model has not read' do
+      expect(JSON.parse(run_code(files: %w[notes.md]))).not_to have_key('read_again')
+    end
+
     it 'saves what fits when the store fills up, and tells the model what was left out' do
       written = []
       chat.after_file_write { |file| written << file.path }
@@ -159,6 +173,23 @@ RSpec.describe RubyLLM::Chat do
     end
 
     after { FileUtils.rm_rf(root) }
+
+    it 'tells the model when a run in the folder changed a file it had read' do
+      chat.tools[:read_file].call(path: 'notes.md')
+
+      expect(JSON.parse(run_code)['read_again']).to eq('This run changed files you had read: notes.md. Read ' \
+                                                       'them before you edit them.')
+      chat.tools[:read_file].call(path: 'notes.md')
+      expect(chat.tools[:edit_file].call(path: 'notes.md', old_text: 'changed', new_text: 'mine'))
+        .to start_with('Replaced 1')
+    end
+
+    it 'says nothing when a run in the folder rewrites a file it read with the same content' do
+      store.write('notes.md', 'changed')
+      chat.tools[:read_file].call(path: 'notes.md')
+
+      expect(JSON.parse(run_code)).not_to have_key('read_again')
+    end
 
     it "runs in the store's folder, which it can change, and reports what it created or changed" do
       written = []
