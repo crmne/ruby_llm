@@ -20,7 +20,7 @@ Subscribe to these events as shown in [Instrumentation and Observability]({% lin
 | `workflow_step.ruby_llm` | Around one named code region within a workflow | `workflow_step_id`, `workflow_step_name` |
 | `evaluation.ruby_llm` | Around one evaluation run | `evaluation_id`, `evaluation_name`, `total`, `completed`, `started_at`, `report` |
 | `evaluation_trial.ruby_llm` | Around one evaluation case and repetition | `evaluation_id`, `evaluation_name`, `total`, `case`, `repetition`, `completed`, `trial` |
-| `request.ruby_llm` | Around one provider API request, including its retries, but not a download of a generated file | `provider`, `method`, `url`, and `status` unless the request raises |
+| `request.ruby_llm` | Around one request through a provider's connection, including its retries | `provider`, `method`, `url`, and `status` unless the request raises |
 | `usage.ruby_llm` | After every finished attempt of a tracked operation, including retries and cancellations | `operation`, `provider`, `model`, `status`, `tokens`, `cost`, `owner`, and the workflow fields |
 | `batch.ruby_llm` | Around one batch submission | `provider`, `provider_class`, `requests`, and `batch_id` after submission |
 | `chat.ruby_llm` | Around one chat completion | `chat`, `provider`, `provider_class`, `model`, `model_info`, `input_messages`, `messages_after`, `response`, `streaming`, `tokens`, `cost`, `response_tokens` |
@@ -56,7 +56,7 @@ Operations that expose normalized usage (`chat`, `embedding`, `image`, `judgment
 `usage.ruby_llm` fires once for every finished physical attempt of a tracked operation. Tokenization is not tracked and emits no usage event. Jobs and batches report differently, so don't treat the event count as a request count:
 
 *   A video or research job reports when a job object first sees it finished, so another object that loads the finished job reports it again.
-*   A batch reports when its results are collected: one event per successful result, and one for a failed slot only when the provider billed it. A batch picked up with `Batch.find` without its chats or requests reports once per `Batch` object, so collecting it in two places reports it twice.
+*   A batch reports when its results are collected, under the workflow active then: one event per successful result, and one for a failed slot only when the provider billed it. A batch picked up with `Batch.find` without its chats or requests reports once per `Batch` object, so collecting it in two places reports it twice.
 
 The payload contains `operation`, `provider`, `model`, `status`, `tokens`, and `cost`. The values use the same objects as the rest of RubyLLM; the internal usage record is not part of the public API. Both `tokens` and `cost` are always present. Their individual fields are `nil` when an attempt may have been billed and the provider supplied no defensible figure. When an operation has a resolved model, an attempt that cannot have been billed, such as one that never reached the provider, reports zero input and output tokens. Without a resolved model, those fields stay `nil`. `cost` uses the provider's reported amount when there is one, and otherwise calculates it from the tokens and registry pricing.
 
@@ -64,7 +64,7 @@ The payload contains `operation`, `provider`, `model`, `status`, `tokens`, and `
 
 ## Workflow Fields
 
-Every event inside a [workflow]({% link _advanced/instrumentation.md %}#workflows-and-steps) carries these fields when they apply. A `usage.ruby_llm` event reports the workflow its attempt started in, even when it finishes outside that block, such as a polled video job. An attempt that started outside any workflow reports the workflow it finishes in, if any.
+Every event inside a [workflow]({% link _advanced/instrumentation.md %}#workflows-and-steps) carries these fields when they apply. A `usage.ruby_llm` event reports the workflow its attempt started in, even when it finishes outside that block, such as a polled video job. An attempt that started outside any workflow reports the workflow it finishes in, if any. To attribute a batch collected later to its original workflow, [re-enter that workflow]({% link _advanced/instrumentation.md %}#workflows-and-steps) when you collect it.
 
 | Field | Present |
 | --- | --- |
