@@ -12,6 +12,8 @@ RSpec.describe 'RubyLLM and the OpenAI Agents SDK guide', type: :task do
   let(:doc_page) { '_compare/openai-agents.md' }
   let(:fact) { 'Sharks are older than trees.' }
 
+  before { RubyLLM.config.default_model = doc_model('default_chat') }
+
   it 'answers through the agent and its tool' do
     stub_openai(tool_turn('history_fun_fact'), fact)
 
