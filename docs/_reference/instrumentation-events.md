@@ -20,7 +20,7 @@ Subscribe to these events as shown in [Instrumentation and Observability]({% lin
 | `workflow_step.ruby_llm` | Around one named code region within a workflow | `workflow_step_id`, `workflow_step_name` |
 | `evaluation.ruby_llm` | Around one evaluation run | `evaluation_id`, `evaluation_name`, `total`, `completed`, `started_at`, `report` |
 | `evaluation_trial.ruby_llm` | Around one evaluation case and repetition | `evaluation_id`, `evaluation_name`, `total`, `case`, `repetition`, `completed`, `trial` |
-| `request.ruby_llm` | Around one HTTP request to a provider, including its retries | `provider`, `method`, `url`, `status` |
+| `request.ruby_llm` | Around one HTTP request to a provider, including its retries | `provider`, `method`, `url`, and `status` unless the request raises |
 | `usage.ruby_llm` | After every finished attempt of a tracked operation, including retries and cancellations | `operation`, `provider`, `model`, `status`, `tokens`, `cost`, `owner`, and the workflow fields |
 | `batch.ruby_llm` | Around one batch submission | `provider`, `provider_class`, `requests`, and `batch_id` after submission |
 | `chat.ruby_llm` | Around one chat completion | `chat`, `provider`, `provider_class`, `model`, `model_info`, `input_messages`, `messages_after`, `response`, `streaming`, `tokens`, `cost`, `response_tokens` |
@@ -60,11 +60,11 @@ Operations that expose normalized usage (`chat`, `embedding`, `image`, `judgment
 
 The payload contains `operation`, `provider`, `model`, `status`, `tokens`, and `cost`. The values use the same objects as the rest of RubyLLM; the internal usage record is not part of the public API. Both `tokens` and `cost` are always present. Their individual fields are `nil` when an attempt may have been billed and the provider supplied no defensible figure. An attempt that cannot have been billed, such as one that never reached the provider, reports zero input and output tokens. `cost` uses the provider's reported amount when there is one, and otherwise calculates it from the tokens and registry pricing.
 
-`model` is `nil` for operations that do not select a model, so subscribers should accept a missing model. For a research job, it holds the hosted agent's ID rather than a registry model ID. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) for status semantics and Rails persistence.
+`model` is `nil` for operations that do not select a model, so subscribers should accept a missing model. It can also hold the provider's own resource identifier rather than a registry model ID: the hosted agent's ID for a research job, or the guardrail's `id:version` for Bedrock moderation. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) for status semantics and Rails persistence.
 
 ## Workflow Fields
 
-Every event inside a [workflow]({% link _advanced/instrumentation.md %}#workflows-and-steps) carries these fields when they apply:
+Every event inside a [workflow]({% link _advanced/instrumentation.md %}#workflows-and-steps) carries these fields when they apply. A `usage.ruby_llm` event reports the workflow its attempt started in, even when it finishes outside that block, such as a polled video job.
 
 | Field | Present |
 | --- | --- |
