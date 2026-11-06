@@ -9,10 +9,20 @@ module RubyLLM
         include OllamaCloud::Models
       end
 
+      # Ollama Cloud's dialect of the System One API for decision models such as Clef.
+      class SystemOne < Ollama::SystemOne
+      end
+
       protocol :chat_completions, ChatCompletions
+      protocol :system_one, SystemOne
 
       def api_base
         @config.ollama_cloud_api_base || 'https://ollama.com/v1'
+      end
+
+      def resolve_protocol(name, model, operation: nil, **options)
+        name ||= :system_one if operation == :judge
+        super
       end
 
       def headers
