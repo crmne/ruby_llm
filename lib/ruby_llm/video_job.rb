@@ -82,7 +82,7 @@ module RubyLLM
     end
 
     def initialize(id:, protocol:, model: nil, status: :pending, raw: nil, error: nil, # :nodoc:
-                   reported_cost: nil, duration: nil, resolution: nil)
+                   reported_cost: nil, tokens: nil, duration: nil, resolution: nil)
       @id = id
       @protocol = protocol
       @model = model
@@ -90,6 +90,7 @@ module RubyLLM
       @raw = raw
       @error = error
       @reported_cost = reported_cost
+      @tokens = tokens
       @duration = duration
       @resolution = resolution
       @usage_owner = Accounting::Usage.owner
@@ -128,6 +129,7 @@ module RubyLLM
       @raw = state[:raw]
       @error = state[:error]
       @reported_cost = state[:reported_cost]
+      @tokens = state[:tokens]
       record_usage
       self
     end
@@ -140,7 +142,7 @@ module RubyLLM
     #   job.cost.total # => 0.05
     #
     def cost
-      Cost.new(tokens: usage_tokens)
+      Cost.new(tokens: usage_tokens, model: (@protocol.model if @tokens))
     end
 
     # Polls the job until it finishes, then returns self. Raises Error
@@ -190,7 +192,7 @@ module RubyLLM
     end
 
     def usage_tokens
-      Tokens.new(reported_cost: @reported_cost)
+      @tokens || Tokens.new(reported_cost: @reported_cost)
     end
 
     def monotonic_time

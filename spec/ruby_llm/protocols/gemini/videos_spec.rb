@@ -86,22 +86,6 @@ RSpec.describe RubyLLM::Protocols::Gemini::Videos do
     end
   end
 
-  it 'extends a freshly generated Veo video through the public API', :live do
-    context = RubyLLM.context do |config|
-      config.video_generation_poll_interval = VCR.current_cassette&.recording? ? 5 : 0
-    end
-    model = model_for(:gemini, :video_extension)
-    original = context.animate('A calm ocean wave at sunset', model:, provider: :gemini, assume_model_exists: true,
-                                                              provider_options: { parameters: { durationSeconds: 4 } })
-    job = context.animate_later('The wave gently reaches the sandy shore', model:, provider: :gemini,
-                                                                           assume_model_exists: true, extend: original)
-
-    expect(job.wait(timeout: 240)).to be_succeeded
-    expect(job.video.mime_type).to eq('video/mp4')
-    expect(job.video.to_blob.bytesize).to be > 1000
-    expect(job.video.raw['done']).to be(true)
-  end
-
   describe '#video_job_url' do
     it 'uses the operation name' do
       job = RubyLLM::VideoJob.new(id: 'models/veo/operations/abc123', protocol: protocol)

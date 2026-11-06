@@ -54,7 +54,7 @@ module RubyLLM
     # instrumentation payload. +owner:+ attributes the usage to a record,
     # such as a user, and wins over RubyLLM.with_owner.
     #
-    #   video = RubyLLM.animate("a hummingbird in slow motion", model: "veo-3.1-fast-generate-preview")
+    #   video = RubyLLM.animate("a hummingbird in slow motion", model: "gemini-omni-1.2-flash")
     #
     #   RubyLLM.animate(
     #     "Make the waterfall crash down",

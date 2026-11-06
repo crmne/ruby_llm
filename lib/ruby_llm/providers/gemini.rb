@@ -10,6 +10,7 @@ module RubyLLM
       protocol :files, Protocols::Gemini::Files
 
       def protocol_for(model, operation: nil, **)
+        return protocols[:interactions] if operation == :animate
         return protocols[:interactions] if operation == :transcribe && model.id == 'gemini-3.5-transcribe'
         return protocols[:live_transcription] if operation == :transcribe && model.id == 'gemini-3.5-transcribe-live'
 
