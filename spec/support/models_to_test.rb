@@ -135,6 +135,7 @@ PDF_MODELS = [
   { provider: :gemini, model: 'gemini-2.5-flash' },
   { provider: :openai, model: 'gpt-5-nano' },
   { provider: :openrouter, model: 'gemini-2.5-flash' },
+  { provider: :perplexity, model: 'openai/gpt-5.4-mini' },
   { provider: :vertexai, model: 'gemini-2.5-flash' }
 ].freeze
 

@@ -23,14 +23,6 @@ module RubyLLM
           payload.merge(preset: model.id)
         end
 
-        def render_document(document)
-          raise UnsupportedAttachmentError, document.mime_type
-        end
-
-        def supported_attachment?(attachment)
-          attachment.provider_file? || (%i[image text].include?(attachment.type) && super)
-        end
-
         private
 
         def default_max_output_tokens(model)

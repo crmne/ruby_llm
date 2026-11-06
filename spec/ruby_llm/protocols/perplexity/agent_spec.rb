@@ -232,10 +232,13 @@ RSpec.describe RubyLLM::Protocols::Perplexity::Agent do
     expect(response.content).to eq('DHH')
   end
 
-  it 'rejects documents, which the Agent API does not accept' do
+  it 'sends documents as input_file parts, which the Agent API reads' do
     pdf = File.expand_path('../../../fixtures/sample.pdf', __dir__)
     chat.add_message(role: :user, content: 'Summarize this.', attachments: [pdf])
 
-    expect { chat.render }.to raise_error(RubyLLM::UnsupportedAttachmentError, %r{application/pdf})
+    part = chat.render[:input].first[:content].last
+
+    expect(part).to include(type: 'input_file', filename: 'sample.pdf')
+    expect(part[:file_data]).to start_with('data:application/pdf;base64,')
   end
 end
