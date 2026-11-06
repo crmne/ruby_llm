@@ -110,7 +110,17 @@ end
 
 ## Cancelling a Stream
 
-Call `cancel` to stop the current in-flight chat operation. RubyLLM checks for cancellation before model requests, before tool execution, and while streaming chunks. When cancellation is observed, it raises `RubyLLM::CancelledError` and clears the cancellation flag so the chat can be reused. Tool calls that run concurrently each stop at their next checkpoint. A tool that already returned keeps its result, and every other pending tool call is closed as unfinished, so the next `ask` goes on.
+Call `cancel` to stop the current in-flight chat operation. You can call it from any thread, and with `acts_as_chat` from any process. Use it rather than `Thread#raise`, which can land anywhere, including inside `ensure` blocks and connection handling, and can't reach another process.
+
+RubyLLM checks for cancellation before model requests, before tool execution, and at every event in a stream. When cancellation is observed, it raises `RubyLLM::CancelledError` and clears the cancellation flag so the chat can be reused. So `cancel` takes effect:
+
+* At the next event, while a reply streams. A stream that only sends pings stops at the next ping.
+* When the tool returns, while a tool or a sandbox run is working. RubyLLM can't safely interrupt Ruby code, so a run goes on until it finishes or its timeout.
+* At `request_timeout` and its retries, while a request receives nothing at all. Lower `request_timeout` and `max_retries` to bound how long a stalled provider can hold a chat.
+
+With `acts_as_chat`, a request from another process is read at most once a second at those same points.
+
+Tool calls that run concurrently each stop at their next checkpoint. A tool that already returned keeps its result, and every other pending tool call is closed as unfinished, so the next `ask` goes on.
 
 ```ruby
 chat = RubyLLM.chat

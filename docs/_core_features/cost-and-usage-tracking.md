@@ -28,7 +28,7 @@ After reading this guide, you will know:
 
 ## Reading Tokens and Costs
 
-RubyLLM prices tokens from its model registry, so your application doesn't need a table of token prices. The one charge you may add yourself is a [tool billed per use](#pricing-tool-use). Read token counts and costs directly from the response:
+RubyLLM prices tokens from its model registry, so your application doesn't need a table of token prices. A model the registry has no price for reports a `nil` cost, and a [tool billed per use](#pricing-tool-use) may be a charge you add yourself. Read token counts and costs directly from the response:
 
 ```ruby
 chat = RubyLLM.chat
@@ -325,7 +325,7 @@ Run `bin/rails ruby_llm:refresh_models` from cron, or schedule the call with you
 
 ## Instrumentation
 
-Every finished physical attempt emits `usage.ruby_llm`, whether it succeeded, failed, or was cancelled. Use it when you need per-attempt detail for billing exports, metrics, or observability. Rails apps receive it out of the box; [outside Rails, set `config.instrumenter`]({% link _advanced/instrumentation.md %}) first:
+Every finished physical attempt emits `usage.ruby_llm`, whether it succeeded, failed, or was cancelled. Use it when you need per-attempt detail for billing exports, metrics, or observability. Rails apps receive it out of the box; [outside Rails, set `config.instrumenter`]({% link _advanced/instrumentation.md %}) first. [Jobs and batches report differently]({% link _reference/instrumentation-events.md %}#usage-events), so read that before you sum events for billing:
 
 ```ruby
 ActiveSupport::Notifications.subscribe("usage.ruby_llm") do |event|

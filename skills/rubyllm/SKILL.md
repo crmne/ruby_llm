@@ -28,9 +28,31 @@ RubyLLM already ships these. Use them instead of writing your own version, and r
 | The model reading, searching, and editing files | `with_file_store` (2.2) | `file-stores/` |
 | Tools from an MCP server | a `RubyLLM::MCP` subclass with `with_mcp` (2.1) | `mcp/` |
 | Another model when one fails | `with_fallbacks` | `error-handling/` |
+| A Stop button | `chat.cancel`, from any thread or process | `streaming/` |
 | Prices and spend | `message.cost`, `chat.cost`, and `usage.ruby_llm` for every attempt | `cost-and-usage-tracking/` |
 
-For a new web application, Rails with these generators is the shortest path: they give it persistence, streaming, and a usage ledger with no code of your own. Outside Rails, the chat, tool, code execution, file store, MCP, and cost APIs work the same on plain Ruby objects. The application stores the transcript itself and rebuilds a chat from it with `add_message`.
+A new web application means Rails and these generators, in this order. They write persistence, streaming, a chat UI, and a usage ledger, so there is little left to write yourself:
+
+```bash
+bundle add ruby_llm
+bin/rails generate ruby_llm:install
+bin/rails db:migrate
+bin/rails ruby_llm:load_models
+bin/rails generate ruby_llm:chat_ui
+```
+
+Add only the pieces the application needs:
+
+```bash
+bin/rails generate ruby_llm:sandbox Workspace   # then bundle install, and set config.sandbox = "WorkspaceSandbox"
+bin/rails generate ruby_llm:mcp Linear https://mcp.linear.app/mcp
+bin/rails generate ruby_llm:tool Weather
+bin/rails generate ruby_llm:agent Researcher
+```
+
+Each takes one line in `app/agents/chat_agent.rb`, the agent behind the generated UI: `code_execution`, `mcp Linear`, `tools WeatherTool`, and `file_store` for files.
+
+Outside Rails, the chat, tool, code execution, file store, MCP, and cost APIs work the same on plain Ruby objects. The application stores the transcript itself and rebuilds a chat from it with `add_message`, which does not restore the usage ledger, so persist `usage.ruby_llm` events if it needs past spend.
 
 ## Choose the API for the task
 
@@ -53,7 +75,7 @@ Read the relevant page instead of loading the entire documentation site:
 | Chat, stream, or attach files | `chat/`, `streaming/`, `attachments/` |
 | Declare tools or require approval | `tools/`, `tool-parameters/`, `tool-execution/` |
 | Let the model run code in a sandbox (2.2) | `code-execution/`, `sandboxes/` |
-| Let the model read, search, write, and edit files, and keep attachments and long tool results out of the conversation (2.2) | `file-stores/` |
+| Let the model read, search, write, and edit files, and keep past attachments and long tool results out of later requests (2.2) | `file-stores/` |
 | Use tools from MCP servers (2.1) | `mcp/` |
 | Use provider-hosted tools such as web search | `provider-tools/`, `citations/` |
 | Parse structured output | `structured-output/` |
@@ -85,14 +107,15 @@ Markdown guides use the same name with `.md`, such as `chat.md`. The API referen
 - Subclass `RubyLLM::Tool`. Use `description`, `parameter`, or a `parameters` block, and keyword arguments on `execute`. Register tools with `with_tools`; configure choice and concurrency with `with_tool_options`. Keep application authorization in the tool or underlying service. Use `requires_approval` when the product needs a user's decision before execution. Call `halt(result)` in a tool that says the last word, so the turn ends without another model call (2.2). Declare `exclusive` on tools that share state, such as a browser page, so they run alone in a concurrent round (2.2). With large tool sets, pass `defer: true` to `with_tools` or `with_mcp` (or declare `defer` on the class) so the model searches for tools instead of receiving them all (2.1).
 - Use `with_thinking`, `with_caching`, `with_compaction`, and `with_citations` without arguments to enable them and `false` to disable them. They reject `nil`. Read the relevant guide for supported options and model requirements.
 - To let the model run code, use `with_code_execution` (or the agent `code_execution` macro) rather than writing a tool that shells out or a sandbox of your own (2.2). Add the `mxc` gem, define an `MXC::Sandbox` subclass (in Rails, `bin/rails generate ruby_llm:sandbox Workspace`), and set `config.sandbox`. RubyLLM never runs model code outside a sandbox.
-- To let the model work on files, use `with_file_store` (or the agent `file_store` macro) rather than writing file tools or pasting text into prompts (2.2): the model lists, searches, reads, writes, and edits files with its own tools, and only what it reads goes into the conversation, so large attachments stay out too. `chat.file_store` is the store. Pass a folder path or `:memory` to choose the store. Only text files are read as text out of the box: register `config.file_converters` for more, such as `RubyLLM::FileStore::Converters::OCR.new` for PDFs and images. To keep tool results from overflowing the context window, use `with_context_budget(per_result:, per_request:)` (or the agent `context_budget` macro) rather than overriding private methods to trim requests (2.2).
+- To let the model work on files, use `with_file_store` (or the agent `file_store` macro) rather than writing file tools or pasting text into prompts (2.2): the model lists, searches, reads, writes, and edits files with its own tools. It sees attachments on the latest question in full, then one line for each until it reads them again. `chat.file_store` is the store. Pass a folder path or `:memory` to choose the store. Text, Word, Excel, and PowerPoint files are read as text out of the box: register `config.file_converters` for more, such as `RubyLLM::FileStore::Converters::OCR.new` for PDFs and images. To keep tool results from overflowing the context window, use `with_context_budget(per_result:, per_request:)` (or the agent `context_budget` macro) rather than overriding private methods to trim requests (2.2).
 - Connect MCP servers by subclassing `RubyLLM::MCP` (`url` or `command`, then `only` and `requires_approval` to shape tools) and attach them with `chat.with_mcp(...)` or the agent `mcp` macro (2.1). Do not add a separate MCP client gem.
 - For a yes/no probability, a choice, or a score about application data, subclass `RubyLLM::Judge` and call `.judge(input)` instead of parsing free text from a chat (2.1). Backends are TypeSafe's Jev, OpenAI Decisions, and local decision models such as Clef with `provider: :ollama`.
 - When tools need a tenant, `Current` attributes, or other per-request state, set it with `around_tool_call` (or the agent macro), which runs in the tool's own thread or fiber (2.2), rather than passing the chat into every tool.
 - Use `with_fallbacks` for alternate models, `with_provider_tools` for provider-hosted tools, and `progress` inside a long-running tool with `after_tool_progress` on the chat (2.1) to report it.
 - Use `RubyLLM.context` for per-tenant credentials or endpoints, and an agent `context` block when the configuration depends on the agent's inputs (2.1).
 - Use shared RubyLLM options when available. Reserve `provider_options` for provider-specific request fields. Do not add a second provider SDK for functionality RubyLLM already supplies.
-- RubyLLM prices tokens from its model registry, so read cost through `message.cost.total` and `chat.cost.total`. Do not keep a table of token prices in the application, and do not copy them from another skill, an article, or memory: those go stale, and a table beside `cost` gives two answers. If a price looks wrong, check the provider's pricing page and refresh the registry with `RubyLLM.models.refresh`. Unknown cost is `nil`, not zero. The exception is a provider tool billed per use, such as web search, when the provider doesn't report the request's price: `cost.total` covers tokens only, so add that charge from the provider's rate (see `cost-and-usage-tracking/`).
+- To stop a reply, call `chat.cancel`, from any thread or process, and never `Thread#raise` or kill the thread. It takes effect at the next event from the provider, or when the running tool or sandbox run returns, and then raises `RubyLLM::CancelledError`. The text streamed so far stays as a reply that is `cancelled?`, and the chat stays usable. A request that receives nothing only ends at `request_timeout` and its retries, so lower those to bound a stalled provider.
+- RubyLLM prices tokens from its model registry, so read cost through `message.cost.total` and `chat.cost.total`. Do not keep a table of token prices in the application, and do not copy them from another skill, an article, or memory: those go stale, and a table beside `cost` gives two answers. If a price looks wrong, check the provider's pricing page and refresh the registry with `RubyLLM.models.refresh`. Unknown cost is `nil`, not zero, and a total can leave out what the provider didn't report. The exception to the rule is a provider tool billed per use, such as web search, when the provider doesn't report the request's price: `cost.total` covers tokens only, so add that charge from the provider's rate (see `cost-and-usage-tracking/`).
 - Read tokens through `message.tokens.input`, `.output`, `.cache_read`, `.cache_write`, and `.thinking`. The ledger includes individual attempts; a successful answer can include earlier failed attempts.
 - To count cancelled and failed attempts, which may have no message, subscribe to `usage.ruby_llm`. It fires when each attempt finishes, with `status`, `tokens`, and `cost`. Rails also writes a row per attempt to `ruby_llm_usages`. Outside Rails, set `config.instrumenter` to receive it. Do not patch protocols or parse provider events for usage. Attribute usage with `owner:` on individual operations or `RubyLLM.with_owner` (2.1). Persisted chat usage keeps both its chat and owner associations.
 - Group related calls with `RubyLLM.workflow` and `workflow.step` for instrumentation. To send traces to an existing OpenTelemetry setup, call `RubyLLM::OpenTelemetry.enable` after configuring the SDK (2.1). RubyLLM never configures the SDK or exporters, and does not export prompts or responses.
