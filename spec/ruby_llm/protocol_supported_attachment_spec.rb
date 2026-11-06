@@ -20,7 +20,7 @@ RSpec.describe RubyLLM::Protocol, '#supported_attachment?' do
     [RubyLLM::Providers::Ollama::ChatCompletions, :ollama, %w[png wav txt]],
     [RubyLLM::Providers::OpenRouter::ChatCompletions, :openrouter, %w[png wav mov pdf txt]],
     [RubyLLM::Providers::Perplexity::ChatCompletions, :perplexity, %w[png pdf docx pptx txt]],
-    [RubyLLM::Protocols::Perplexity::Agent, :perplexity, %w[png txt]],
+    [RubyLLM::Protocols::Perplexity::Agent, :perplexity, %w[png pdf docx pptx txt]],
     [RubyLLM::Providers::DeepSeek::ChatCompletions, :deepseek, %w[png txt]],
     [RubyLLM::Providers::DeepSeek::Responses, :deepseek, %w[png txt]],
     [RubyLLM::Providers::Hetzner::ChatCompletions, :hetzner, %w[png txt]],
