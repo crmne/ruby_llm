@@ -46,6 +46,67 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
     expect(store.cached_text(stale)).to be_nil
   end
 
+  it 'remembers what the model read in the row, for every store of the chat' do
+    store.write('notes.md', 'one')
+    store.record_read('notes.md', 'abc123')
+
+    expect(chat.ruby_llm_chat_files.sole.read_digest).to eq('abc123')
+    expect(described_class.new(chat).read_digest('notes.md')).to eq('abc123')
+    expect(described_class.new(Chat.create!(model: model_for(:openai))).read_digest('notes.md')).to be_nil
+  end
+
+  it 'locks the chat and reads past the query cache inside with_lock' do
+    store.write('notes.md', 'one')
+    RubyLLM::ActiveRecord::ChatFile.cache do
+      store['notes.md']
+      write_elsewhere('notes.md', 'theirs').join
+
+      expect(store.with_lock { store.read('notes.md') }).to eq('theirs')
+    end
+  end
+
+  it 'uploads the content before the transaction that writes the row commits' do
+    RubyLLM::ActiveRecord::ChatFile.transaction do
+      store.write('notes.md', 'one')
+
+      key = chat.ruby_llm_chat_files.sole.file.key
+      expect(ActiveStorage::Blob.service.exist?(key)).to be(true)
+    end
+    expect(store.read('notes.md')).to eq('one')
+  end
+
+  it 'applies concurrent edits of one file from two processes one after the other' do
+    if Chat.connection.adapter_name.match?(/sqlite/i) && ActiveRecord.version < Gem::Version.new('7.2')
+      skip 'Before Rails 7.2, SQLite waits for a lock holding the GVL, so threads in one process cannot take turns'
+    end
+
+    store.write('plan.md', "a\nb\n")
+    store.record_read('plan.md', RubyLLM::FileStore.digest("a\nb\n"))
+    allow_any_instance_of(described_class).to receive(:read).and_wrap_original do |original, *arguments| # rubocop:disable RSpec/AnyInstance
+      original.call(*arguments).tap { sleep 0.1 }
+    end
+
+    edits = [%w[a A], %w[b B]].map do |old_text, new_text|
+      Thread.new do
+        Chat.connection_pool.with_connection do
+          Chat.find(chat.id).with_file_store.to_llm.tools[:edit_file].call(path: 'plan.md', old_text:, new_text:)
+        end
+      end
+    end
+
+    expect(edits.map(&:value)).to all(start_with('Replaced 1'))
+    expect(described_class.new(chat).read('plan.md')).to eq("A\nB\n")
+  end
+
+  it 'lets the model change a file it read before the chat was reloaded' do
+    chat.with_file_store.file_store.write('notes.md', 'one')
+    chat.to_llm.tools[:read_file].call(path: 'notes.md')
+    reloaded = Chat.find(chat.id).with_file_store
+
+    expect(reloaded.to_llm.tools[:edit_file].call(path: 'notes.md', old_text: 'one', new_text: 'two'))
+      .to eq('Replaced 1 occurrence in notes.md.')
+  end
+
   it 'declares its attachment once' do
     allow(RubyLLM::ActiveRecord::ChatFile).to receive(:has_one_attached)
 
@@ -84,10 +145,26 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
 
     ActiveSupport::Notifications.subscribed(record, 'sql.active_record') { store.write('a.txt', 'mine') }
 
-    chat_lock = queries.index { |sql| sql.match?(/\ASELECT .* FROM ["`]?chats["`]?/) }
+    chat_lock = queries.index { |sql| sql.match?(/\A(SELECT .* FROM|UPDATE) ["`]?chats["`]?/) }
     lookup = queries.index { |sql| sql.match?(/\ASELECT .* FROM ["`]?ruby_llm_chat_files["`]?/) }
     expect(chat_lock).to be < lookup
     expect(queries[chat_lock]).to include('FOR UPDATE') unless Chat.connection.adapter_name.match?(/sqlite/i)
+  end
+
+  { 'delete' => ->(store) { store.delete('a.txt') },
+    'delete_folder' => ->(store) { store.delete_folder('reports') } }.each do |name, deletion|
+    it "locks the chat row before #{name} looks the files up" do
+      store.write('a.txt', 'mine')
+      store.write('reports/q3.md', 'Q3')
+      queries = []
+      record = ->(*, payload) { queries << payload[:sql] unless payload[:name] == 'SCHEMA' }
+
+      ActiveSupport::Notifications.subscribed(record, 'sql.active_record') { deletion.call(store) }
+
+      chat_lock = queries.index { |sql| sql.match?(/\A(SELECT .* FROM|UPDATE) ["`]?chats["`]?/) }
+      lookup = queries.index { |sql| sql.match?(/\ASELECT .* FROM ["`]?ruby_llm_chat_files["`]?/) }
+      expect(chat_lock).to be < lookup
+    end
   end
 
   it 'finds a row another process wrote after the query cache saw none' do
@@ -124,7 +201,7 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
     store.write('reports/a.md', 'lower')
     store.write('Reports/b.md', 'upper')
 
-    expect(store.delete('reports', recursive: true).map(&:path)).to eq(%w[reports/a.md])
+    expect(store.delete_folder('reports').map(&:path)).to eq(%w[reports/a.md])
     expect(store.list.map(&:path)).to eq(%w[Reports/b.md])
     expect(store.delete('reports')).to be_nil
   end
@@ -157,7 +234,7 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
       expect(alices.find('alice.md').owner).to eq(alice)
       expect(bobs.list.map(&:path)).to eq(%w[report.md shared.md])
       expect(bobs.read('report.md')).to eq('shared report')
-      expect(bobs.find('alice.md')).to be_nil
+      expect(bobs['alice.md']).to be_nil
       expect(store.list.map(&:path)).to eq(%w[report.md shared.md])
     end
 
@@ -165,7 +242,7 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
       store.write('shared.md', 'everyone')
 
       expect(described_class.new(chat, owner: alice).delete('shared.md')).to be_nil
-      expect(store.exists?('shared.md')).to be(true)
+      expect(store.exist?('shared.md')).to be(true)
     end
 
     it 'deletes only its own files from a folder' do
@@ -173,7 +250,7 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
       alices = described_class.new(chat, owner: alice)
       alices.write('reports/alice.md', 'private')
 
-      expect(alices.delete('reports', recursive: true).map(&:path)).to eq(%w[reports/alice.md])
+      expect(alices.delete_folder('reports').map(&:path)).to eq(%w[reports/alice.md])
       expect(alices.list.map(&:path)).to eq(%w[reports/shared.md])
     end
 
@@ -193,8 +270,8 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
 
       memory = RubyLLM::FileStore::Memory.new
       expect(chat.with_file_store(memory).file_store).to be(memory)
-      expect(chat.with_file_store(spill_to_file: 5).file_store).to be_a(described_class)
-      expect(chat.to_llm.instance_variable_get(:@file_references).spill_to_file).to eq(5)
+      expect(chat.with_file_store(inline_limit: 5).file_store).to be_a(described_class)
+      expect(chat.to_llm.instance_variable_get(:@file_references).inline_limit).to eq(5)
       expect(chat.with_file_store(nil).file_store).to be_nil
       expect(chat.with_file_store(owner: chat).file_store.owner).to eq(chat)
       expect { chat.with_file_store(memory, owner: chat) }.to raise_error(ArgumentError, /owner: applies/)

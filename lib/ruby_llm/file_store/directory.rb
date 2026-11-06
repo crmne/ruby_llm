@@ -38,7 +38,7 @@ module RubyLLM
       # Returns the files inside the folder +prefix+, or every file.
       def list(prefix = nil)
         start = prefix.to_s.empty? ? root : full_path(FileStore.path(prefix))
-        return [find(prefix)].compact unless File.lstat(start).directory?
+        return [self[prefix]].compact unless File.lstat(start).directory?
 
         walk(start).sort_by(&:path)
       rescue SystemCallError
@@ -46,7 +46,7 @@ module RubyLLM
       end
 
       # Returns the StoredFile at +path+, or +nil+.
-      def find(path)
+      def [](path)
         full = full_path(FileStore.path(path))
         stat = File.lstat(full)
         stored_file(full, stat) if stat.file?
@@ -66,42 +66,65 @@ module RubyLLM
       # ArgumentError when +path+ is a folder.
       def write(path, content, content_type: nil)
         path = FileStore.path(path)
-        raise ArgumentError, "#{path} is a folder, not a file" if folder?(path)
-
-        full = full_path(path)
-        make_room(full)
-        content = FileStore.bytes(content)
-        temporary = File.join(File.dirname(full), ".#{SecureRandom.hex(16)}.tmp")
-        File.open(temporary, WRITE_FLAGS, binmode: true) { |io| io.write(content) }
-        File.rename(temporary, full)
-        file = stored_file(full, File.lstat(full))
-        return file unless content_type
-
-        StoredFile.new(**file.to_h, content_type:)
-      ensure
-        FileUtils.rm_f(temporary) if temporary
+        file = with_lock { write_file(path, FileStore.bytes(content)) }
+        content_type ? StoredFile.new(**file.to_h, content_type:) : file
       end
 
       # Deletes the file at +path+ and returns its StoredFile, or +nil+.
-      # With <tt>recursive: true</tt>, deletes the folder +path+ with
-      # everything in it, hidden files included, and returns the deleted
-      # StoredFile objects. Links are removed, never followed.
-      def delete(path, recursive: false)
+      def delete(path)
         path = FileStore.path(path)
-        return delete_folder(path, recursive:) if folder?(path)
+        with_lock do
+          refuse_folder(path) if folder?(path)
 
-        file = find(path)
-        File.delete(full_path(path)) if file
-        recursive ? [file].compact : file
+          file = self[path]
+          File.delete(full_path(path)) if file
+          file
+        end
+      end
+
+      # Deletes the folder +path+ with everything in it, hidden files
+      # included, and returns the deleted StoredFile objects. Links are
+      # removed, never followed.
+      def delete_folder(path)
+        path = FileStore.path(path)
+        with_lock do
+          refuse_file(path) if self[path]
+          next [] unless folder?(path)
+
+          full = full_path(path)
+          walk(full).sort_by(&:path).tap { FileUtils.rm_r(full) }
+        end
+      end
+
+      # Runs the block with the store locked, against other threads and,
+      # through a lock on #root, other processes, and returns its value.
+      def with_lock
+        super do
+          next yield if @locked
+
+          File.open(root, File::RDONLY) do |folder|
+            folder.flock(File::LOCK_EX)
+            @locked = true
+            yield
+          ensure
+            @locked = false
+          end
+        end
       end
 
       private
 
-      def delete_folder(path, recursive:)
-        refuse_folder(path) unless recursive
+      def write_file(path, content)
+        raise ArgumentError, "#{path} is a folder, not a file" if folder?(path)
 
         full = full_path(path)
-        walk(full).sort_by(&:path).tap { FileUtils.rm_r(full) }
+        make_room(full)
+        temporary = File.join(File.dirname(full), ".#{SecureRandom.hex(16)}.tmp")
+        File.open(temporary, WRITE_FLAGS, binmode: true) { |io| io.write(content) }
+        File.rename(temporary, full)
+        stored_file(full, File.lstat(full))
+      ensure
+        FileUtils.rm_f(temporary) if temporary
       end
 
       def full_path(path)

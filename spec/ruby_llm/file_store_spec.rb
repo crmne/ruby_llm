@@ -39,7 +39,7 @@ RSpec.describe RubyLLM::FileStore do
   it 'leaves the five operations to subclasses' do
     store = Class.new(described_class).new
 
-    %i[list find read delete].each do |operation|
+    %i[list [] read delete].each do |operation|
       arguments = operation == :list ? [] : ['a.txt']
       expect { store.public_send(operation, *arguments) }.to raise_error(NotImplementedError, /must implement/)
     end
@@ -52,6 +52,16 @@ RSpec.describe RubyLLM::FileStore do
     expect(described_class.content_type_for('notes.md', '')).to eq('text/markdown')
     expect(described_class.content_type_for('logo', png)).to eq('image/png')
     expect(described_class.content_type_for('blob', '')).to eq('application/octet-stream')
+  end
+
+  it 'deletes a folder file by file unless a subclass does better' do
+    store = RubyLLM::FileStore::Memory.new
+    store.write('reports/a.md', 'a')
+    allow(store).to receive(:delete).and_call_original
+
+    expect(described_class.instance_method(:delete_folder).bind_call(store, 'reports').map(&:path))
+      .to eq(%w[reports/a.md])
+    expect(store).to have_received(:delete).with('reports/a.md')
   end
 
   it 'keeps a bounded number of conversions in memory, forgetting the oldest' do
@@ -70,6 +80,7 @@ RSpec.describe RubyLLM::FileStore do
     let(:store) { described_class.new }
 
     it_behaves_like 'a file store'
+    it_behaves_like 'a file store that writes under its lock'
 
     it 'records a SHA-256 digest and the time of each write' do
       file = store.write('a.txt', 'hello')

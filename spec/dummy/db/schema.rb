@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ActiveRecord::Schema[7.1].define(version: 20_261_103_120_000) do
+ActiveRecord::Schema[7.1].define(version: 20_261_105_120_000) do
   create_table 'action_text_rich_texts', force: :cascade do |t|
     t.string 'name', null: false
     t.text 'body'
@@ -86,6 +86,7 @@ ActiveRecord::Schema[7.1].define(version: 20_261_103_120_000) do
     t.text 'text'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.string 'read_digest'
     t.index %w[chat_type chat_id path], name: 'index_ruby_llm_chat_files_on_chat_type_and_chat_id_and_path'
     t.index %w[owner_type owner_id], name: 'index_ruby_llm_chat_files_on_owner_type_and_owner_id'
   end

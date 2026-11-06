@@ -1,9 +1,10 @@
 ---
 layout: default
-title: Chat Files
-parent: "Durable Agents"
-nav_order: 2
-description: Give a chat its own files, so attachments and long tool results stop filling the conversation and the model reads only what it needs.
+title: File Stores
+nav_order: 13
+description: Give an agent its own files to find, read, search, and edit, in a Rails app or on a computer, without filling the conversation.
+redirect_from:
+  - /chat-files/
 ---
 
 # {{ page.title }}
@@ -13,71 +14,143 @@ description: Give a chat its own files, so attachments and long tool results sto
 
 After reading this guide, you will know:
 
-* How to attach a file store to a chat, and the five tools the model gets to work with it.
+* How to give an agent files in a Rails app and on a computer.
+* The tools the model gets, and how to choose them.
+* Why the model reads a file before it changes it.
 * What the model sees of attachments and long tool results.
 * How converters turn PDFs, scans, and other formats into text the model can read and search.
 * Where the files live: in memory, in a folder, or in Active Storage.
 * How code execution reads and writes the same files.
 
-## Why Files
+## An Agent with Files
 
-Attachments and tool results usually travel with the conversation. A 40-page PDF someone attached on the first question is sent again with every later question, and a search that returns 30,000 characters stays in every request after it. The model pays for all of it, and its attention spreads thin.
+A file store gives an agent its own files. The model finds them with `list_files`, searches them with `search_files`, reads the part it needs with `read_file`, and writes and changes them with `write_file` and `edit_file`. Files reach the model only when it asks for them, so a 40-page PDF attached on the first question doesn't travel with every question after it.
 
-A chat with files keeps them out of the conversation instead. Each file is kept once, the model sees one line naming it, and reads the part it needs when it needs it:
+### In a Rails App
+
+A persisted chat keeps its files in Active Storage. Declare `file_store` on the agent, and every chat it builds gets the files of its own record:
 
 ```ruby
-chat = RubyLLM.chat.with_file_store
-chat.ask "Which clauses changed?", with: ["contract-v1.pdf", "contract-v2.pdf"]
-chat.ask "Quote the new termination clause"
+# app/agents/contract_reviewer.rb
+class ContractReviewer < ApplicationAgent
+  instructions "You review contracts. Keep a summary of each one in notes/."
+  file_store
+end
 ```
 
-The first question sends both PDFs. For the second, the model sees two lines like `contract-v2.pdf (application/pdf, 2.1 MB) is in this chat's files`, searches them for "termination", and reads the twenty lines around the match.
+```ruby
+# app/jobs/review_job.rb
+class ReviewJob < ApplicationJob
+  def perform(chat_id, question, blob_ids)
+    chat = ContractReviewer.find(chat_id)
+    chat.ask question, with: ActiveStorage::Blob.find(blob_ids)
+  end
+end
+```
+
+The first question sends both contracts. On the next one, the model sees a line like `contract-v2.pdf (application/pdf, 2.1 MB) is in this chat's files`. It reads each contract with `read_file`, which turns a PDF into text through the OCR converter you register (see [PDFs, Scans, and Photos](#pdfs-scans-and-photos)), searches that text for "termination", and adds what it found to `notes/contract-v2.md`. The notes and the extracted text are still there when the next job loads the chat.
+
+### On a Computer
+
+A folder path gives the agent a folder on disk. Files already in the folder are its files too, so a coding or writing agent works on them where they are:
+
+```ruby
+class DocsEditor < RubyLLM::Agent
+  inputs :folder
+  instructions "You edit the Markdown guides in your files. Keep each change small."
+  file_store -> { folder }
+end
+
+DocsEditor.new(folder: "docs").ask "Fix the broken links in the guides"
+```
+
+The model asks `search_files` which files link to a missing page, reads each one, and fixes the links with `edit_file`.
 
 ## Giving a Chat Files
 
-`with_file_store` attaches a store to the chat, like `with_tools` attaches tools and `with_schema` a schema. Call it bare for the default store, pass a folder path or `:memory`, and pass `nil` to remove it:
+`with_file_store` attaches a store to a chat, like `with_tools` attaches tools and `with_schema` a schema. Call it bare for the default store, pass a folder path or `:memory`, and pass `nil` to remove it:
 
 ```ruby
 chat.with_file_store
 chat.with_file_store("tmp/chats/42")
-chat.with_file_store(:memory, spill_to_file: 20_000)
+chat.with_file_store(:memory, inline_limit: 20_000)
 chat.with_file_store(nil)
 ```
 
-The default store keeps files in memory, or for a persisted chat, in Active Storage (see [Files in Rails](#files-in-rails)).
+The default store keeps files in memory, or for a persisted chat, in Active Storage (see [Files in Rails](#files-in-rails)). Agents take the same arguments with the `file_store` macro (see [Agents](#agents)).
 
-The model gets five tools:
+### The Tools
+
+The model gets these tools:
 
 | Tool | What it does |
 | --- | --- |
-| `list_files` | Lists the files, or one folder, with sizes and types |
-| `read_file` | Reads a file by lines or by characters, 1,000 lines or 20,000 characters at a time |
-| `search_files` | Finds lines matching a regular expression across the files, with paths and line numbers |
-| `write_file` | Writes a text file, replacing any file at that path |
-| `edit_file` | Replaces one exact span of a text file, or every occurrence with `replace_all` |
+| `list_files` | Lists the files, in one folder or matching a glob such as `reports/**/*.csv` |
+| `read_file` | Reads a file with line numbers, 1,000 lines or 20,000 characters at a time |
+| `search_files` | Finds lines matching a regular expression, or only the files that have one |
+| `write_file` | Creates a text file, or replaces one the model has read |
+| `edit_file` | Replaces one exact span of a text file the model has read, or every occurrence |
+| `delete_file` | Deletes one file. Only when you ask for it |
 
-`read_file` reads text files, and other formats through the converters you register, such as OCR for PDFs (see [Reading Files as Text](#reading-files-as-text)). `search_files` never runs a converter, since one like OCR costs a request per file: it searches text files and the text `read_file` or `chat.file_store.text` already extracted, and names the files it skipped so the model can read them first. An image, and a PDF no converter reads, come back from `read_file` as the file itself, so a model with vision sees it.
+`read_file` reads text files, and other formats through the converters you register, such as OCR for PDFs (see [Reading Files as Text](#reading-files-as-text)). An image, and a PDF no converter reads, come back as the file itself, so a model with vision sees it.
+
+`search_files` works like `grep`. It ignores case unless the model sets `case_sensitive`, narrows to a folder with `path` and to file names with `glob`, shows lines around each match with `context`, and with `files_only` names the files that match instead of the lines, which is how a model usually starts. Its output stops after 100 matches or 20,000 characters, and a slow regular expression stops instead of tying up the process. It never runs a converter, since one like OCR costs a request per file: it searches text files and the text `read_file` or `chat.file_store.text` already extracted, and names the files it skipped so the model can read them first.
+
+A glob without a slash, like `*.md`, matches file names in any folder. One with a slash, like `reports/**/*.csv`, matches paths, inside the `path` folder when the model gives one. `**` matches any number of folders, and `{csv,tsv}` either extension.
+
+### Choosing the Tools
+
+The model can read and write by default. Pass `tools:` to choose:
+
+```ruby
+chat.with_file_store(tools: :read)                         # list_files, read_file, search_files
+chat.with_file_store(tools: %i[read write edit])           # the default
+chat.with_file_store(tools: %i[read write edit delete])    # adds delete_file
+```
+
+`:read` gives `list_files`, `read_file`, and `search_files`, and each other name gives its tool. Every store needs `:read`, since older attachments and long tool results reach the model only through it, and `tools:` without it raises `ArgumentError`.
+
+### Reading Before Changing
+
+The model must read a file before `edit_file` or `write_file` changes it, and read it again when it changed since. Otherwise the tool refuses with a message the model acts on:
+
+```
+notes/plan.md changed since you read it. Read it again.
+```
+
+This keeps the model from writing over a file from memory, or over a change someone else made: a person editing the same draft, code that rewrote it, or another job. A new file needs no read, and the model can keep changing a file it wrote.
+
+The store remembers the digest of what the model read, for each path. A persisted chat keeps it in the file's row, so it survives a reload and holds across processes. `Memory` and `Directory` stores remember for as long as the store object lives, so after a reload, the model reads a folder store's file again before it changes it.
+
+Each change locks the store while the tool reads the file, checks it, and writes it back, so `edit_file` calls running at once take turns, each on the file as the one before left it. An edit whose `old_text` the earlier one changed fails and says so, instead of writing over it. Two `write_file` calls each write the whole file, so the later one wins. Stores in the box also take the lock for every write and delete, so code execution saving its files, or your code writing one, never lands between a tool's check and its write. The Active Storage store locks the chat's row, and a `Directory` store locks its folder, which holds across processes on the same machine.
+
+### Working with the Store
 
 `chat.file_store` returns the store, so your code works with the same files:
 
 ```ruby
-chat.file_store.write("brief.md", brief)
-chat.file_store.list   # => [#<RubyLLM::StoredFile path: "brief.md", byte_size: 812, content_type: "text/markdown">]
-chat.file_store.read("brief.md")
-chat.file_store.text("contract-v2.pdf") # => "## Page 1\n\nThis agreement..."
-chat.file_store.delete("brief.md")
-chat.file_store.delete("reports", recursive: true) # => [#<RubyLLM::StoredFile path: "reports/q3.pdf", ...>]
+store = chat.file_store
+
+store.write("brief.md", brief)
+store.list                    # => [#<RubyLLM::StoredFile path: "brief.md", byte_size: 812, content_type: "text/markdown">]
+store.find("brief.md")        # => #<RubyLLM::StoredFile path: "brief.md", ...>
+store["missing.md"]           # => nil
+store.exist?("brief.md")      # => true
+store.read("brief.md")        # => "# Brief\n..."
+store.text("contract-v2.pdf") # => "## Page 1\n\nThis agreement..."
+store.delete("brief.md")
+store.delete_folder("reports") # => [#<RubyLLM::StoredFile path: "reports/q3.pdf", ...>]
 ```
 
-Each file is a `RubyLLM::StoredFile` with `path`, `filename`, `byte_size`, `content_type`, `digest`, and `updated_at`. Paths are relative, with forward slashes, like `reports/q3.pdf`. A path with `..` raises `ArgumentError`, and reading a missing file raises `RubyLLM::FileNotFoundError`.
+Each file is a `RubyLLM::StoredFile` with `path`, `filename`, `byte_size`, `content_type`, `digest`, and `updated_at`. Paths are relative, with forward slashes, like `reports/q3.pdf`. A path with `..` raises `ArgumentError`.
 
-`delete` removes one file and returns it, or `nil` when there is none. A folder raises `ArgumentError` unless you pass `recursive: true`, which removes everything in it and returns the deleted files. Only your code deletes this way: the model's file tools can't delete anything.
+`find`, `read`, and `text` raise `RubyLLM::FileNotFoundError` when there is no file, and `store[path]` returns `nil`. `delete` removes one file and returns it, or `nil` when there is none, and raises `ArgumentError` for a folder. `delete_folder` removes everything in a folder and returns the deleted files.
 
 ## What the Model Sees
 
 **Attachments.** Every attachment is kept in the chat's files under its file name. The model sees the files attached to the latest question in full, as it would without files. From the next question on, it sees one line naming each of them, and opens them again with `read_file` when it needs to. Files that tools return, such as a PDF an MCP server fetched, become a line at once: the model reads them with `read_file`, which it sees in full until the next question.
 
-An attachment the provider cannot take, such as a Word file for most models, goes as its text instead of the request failing, when a converter you registered reads that format. The conversion runs when the request is prepared, so a paid converter such as OCR costs its request then. The store keeps the text it converted, so later requests usually reuse it, though a memory store keeps only its most recent conversions. The model sees up to `spill_to_file` characters, 10,000 by default, and a note that the rest is in the chat's files. When no converter reads the file, it becomes that line on its own question, and the model reads it with code when it can run code. A `convert_unsupported_attachments` handler you register comes first.
+An attachment the provider cannot take, such as a Word file for most models, goes as its text instead of the request failing, when a converter you registered reads that format. The conversion runs when the request is prepared, so a paid converter such as OCR costs its request then. The store keeps the text it converted, so later requests usually reuse it, though a memory store keeps only its most recent conversions. The model sees up to `inline_limit` characters, 10,000 by default, and a note that the rest is in the chat's files. When no converter reads the file, it becomes that line on its own question, and the model reads it with code when it can run code. A `convert_unsupported_attachments` handler you register comes first.
 
 When two different files share a name, the second gets a number, like `report-2.pdf`. The same file attached twice is kept once.
 
@@ -94,15 +167,15 @@ results/search_drive-8f3a2b1c.json: read more with read_file, or search it with 
 
 JSON is saved pretty printed, one value per line, so the model can read and search it by line. The message keeps only what the model saw, so a persisted chat stores the start too.
 
-Change the limit with `spill_to_file:`, or send every result whole with `spill_to_file: false`. A tool that already returns what it finds in pages can opt out, and a tool with very long results can set its own limit:
+Change the limit with `inline_limit:`, the characters a result may have and still go to the model whole, or send every result whole with `inline_limit: false`. A tool that already returns what it finds in pages can opt out, and a tool with very long results can set its own limit:
 
 ```ruby
 class SearchDocs < RubyLLM::Tool
-  spill_to_file false
+  inline_limit false
 end
 
 class ExportOrders < RubyLLM::Tool
-  spill_to_file 50_000
+  inline_limit 50_000
 end
 ```
 
@@ -158,7 +231,7 @@ A store is any `RubyLLM::FileStore`. RubyLLM ships three:
 | Store | Attach it with | Keeps files | Use it for |
 | --- | --- | --- | --- |
 | `RubyLLM::FileStore::Memory` | `:memory` | In memory, for as long as the chat lives | Scripts, tests, and the default in plain Ruby |
-| `RubyLLM::FileStore::Directory` | A folder path | In a folder on disk | A chat that lives across runs, or a folder you share with other tools |
+| `RubyLLM::FileStore::Directory` | A folder path | In a folder on disk | An agent on a computer, a chat that lives across runs, or a folder you share with other tools |
 | `RubyLLM::ActiveRecord::FileStore` | No store, on an `acts_as_chat` record | In `ruby_llm_chat_files`, with their content in Active Storage | Persisted chats, by default; see [Rails](#files-in-rails) |
 
 `with_file_store` also takes a store you built yourself, such as `RubyLLM::FileStore::Directory.new("tmp/work")`. `Directory` creates its folder when it is missing. The Active Storage store needs RubyLLM's Rails integration and Active Storage, and raises `RubyLLM::ConfigurationError` without them.
@@ -178,18 +251,20 @@ class BucketStore < RubyLLM::FileStore
   end
 
   def list(prefix = nil) = ...                         # StoredFiles inside the folder, sorted by path
-  def find(path) = ...                                 # a StoredFile, or nil
+  def [](path) = ...                                   # a StoredFile, or nil
   def read(path) = ...                                 # the bytes, or raise RubyLLM::FileNotFoundError
   def write(path, content, content_type: nil) = ...    # content is a String or an IO; returns the StoredFile
-  def delete(path, recursive: false) = ...             # the StoredFile or nil; with recursive, an Array of them
+  def delete(path) = ...                               # the deleted StoredFile, or nil
 end
 ```
+
+`find`, `exist?`, and `delete_folder` come from these. Override `delete_folder` when your storage removes a folder faster than file by file.
 
 To share a store, ship it as a gem named `ruby_llm-file_stores-<name>`, like the `ruby_llm-providers-<name>` gems for providers.
 
 A store with a limit raises `RubyLLM::FileStoreFullError` from `write` when a file wouldn't fit. Its message goes to the model, so say what to do, such as "This chat's files are full: delete or overwrite files." The file tools answer with it as an error, `run_code` saves what fits and lists the rest under `unsaved_files` with the message as `files_error`, and a long tool result that can't be saved goes to the model whole.
 
-RubyLLM passes only paths `RubyLLM::FileStore.path` accepts. A store that keeps its files in a folder on disk can also define `local_root`, returning the folder, so code execution runs there instead of copying files (see [Code Execution](#code-execution)). Conversions are kept in memory unless the store overrides `cached_text(file)` and `cache_text(file, text)`. Give your `StoredFile`s a `digest` when you can: it tells RubyLLM a file changed without reading it.
+RubyLLM passes only paths `RubyLLM::FileStore.path` accepts. A store that keeps its files in a folder on disk can also define `local_root`, returning the folder, so code execution runs there instead of copying files (see [Code Execution](#code-execution)). Conversions are kept in memory unless the store overrides `cached_text(file)` and `cache_text(file, text)`, and what the model read unless it overrides `read_digest(path)` and `record_read(path, digest)`. A store that several processes share should override `with_lock` to lock across them. Give your `StoredFile`s a `digest` when you can: it tells RubyLLM a file changed without reading it.
 
 ## Following Writes
 
@@ -220,7 +295,7 @@ The sandbox can read and write everything in the folder, hidden files included, 
 
 **Any other store** (memory, Active Storage, or your own) has each run start in an empty directory. The model names the files its code reads in `run_code`'s `files` argument, after finding them with `list_files`, and they are copied in at the same paths; a folder copies everything in it. A name with no file is an error the model sees. What the code writes or changes is saved back to the store when the run ends, and the tool result lists the paths instead of carrying the files. Deleting a file in the run directory leaves it in the store.
 
-Either way, the model can then read a chart back with `read_file`, change a script it wrote with `edit_file`, and run it again.
+Either way, the model can then read a chart back with `read_file`, change a script it wrote with `edit_file` after reading it again, and run it again.
 
 A store of your own that keeps its files in a folder gets the first behavior by returning the folder from `local_root`.
 
@@ -230,7 +305,7 @@ Agents attach a store with the `file_store` macro, which takes the same argument
 
 ```ruby
 class ResearchAgent < RubyLLM::Agent
-  file_store spill_to_file: 20_000
+  file_store inline_limit: 20_000, tools: :read
 end
 
 class ProjectAgent < RubyLLM::Agent
@@ -256,7 +331,7 @@ chat.ruby_llm_chat_files.with_attached_file # the rows, for your views
 
 An attachment already in Active Storage is kept by its blob, so a message's attachment and the chat's file share one copy. Destroying the chat destroys its files.
 
-The row keeps the text a converter made of the file in its `text` column. If your application encrypts what the model reads, encrypt it too:
+The row keeps the text a converter made of the file in its `text` column, and the digest of what the model last read in `read_digest`. If your application encrypts what the model reads, encrypt the text too:
 
 ```ruby
 # config/initializers/ruby_llm.rb

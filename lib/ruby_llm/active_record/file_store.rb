@@ -18,7 +18,10 @@ module RubyLLM
     #
     #   chat.with_file_store(owner: Current.user)
     #
-    # Converted text is kept in the row's +text+ column. Encrypt it, like
+    # What the model last read of a file is kept in the row's
+    # +read_digest+ column, so it holds across processes, and #with_lock
+    # locks the chat's row. Converted text is kept in the row's +text+
+    # column. Encrypt it, like
     # anything else the model reads, with
     # <tt>RubyLLM::ActiveRecord::ChatFile.encrypts :text</tt>.
     class FileStore < RubyLLM::FileStore
@@ -55,7 +58,7 @@ module RubyLLM
       end
 
       # Returns the StoredFile at +path+, or +nil+.
-      def find(path)
+      def [](path)
         row(path)&.to_stored_file
       end
 
@@ -70,23 +73,61 @@ module RubyLLM
         content = RubyLLM::FileStore.bytes(content)
         path = path(path)
         type = content_type || RubyLLM::FileStore.content_type_for(path, content)
-        save(path, content.bytesize, type, RubyLLM::FileStore.digest(content)) do |record|
-          record.file.attach(io: StringIO.new(content), filename: File.basename(path), content_type: type)
+        blob = ::ActiveStorage::Blob.create_and_upload!(io: StringIO.new(content), filename: File.basename(path),
+                                                        content_type: type, identify: false)
+        save(path, content.bytesize, type, RubyLLM::FileStore.digest(content)) { |record| record.file.attach(blob) }
+      end
+
+      # Deletes the file at +path+ and returns its StoredFile, or +nil+. A
+      # store with an owner deletes only that owner's files.
+      def delete(path)
+        path = path(path)
+        with_lock do
+          record = owned.find_by(path:)
+          refuse_folder(path) if record.nil? && rows_in_folder(path).any? { |row| row.path != path }
+          record&.destroy
+          record&.to_stored_file
         end
       end
 
-      # Deletes the file at +path+ and returns its StoredFile, or +nil+.
-      # With <tt>recursive: true</tt>, deletes everything inside the folder
-      # +path+ too and returns the deleted StoredFile objects. A store
-      # with an owner deletes only that owner's files.
-      def delete(path, recursive: false)
+      # Deletes everything inside the folder +path+ and returns the deleted
+      # StoredFile objects. A store with an owner deletes only that
+      # owner's files.
+      def delete_folder(path)
         path = path(path)
-        return delete_folder(path) if recursive
+        with_lock do
+          refuse_file(path) if row(path)
 
-        record = owned.find_by(path:)
-        refuse_folder(path) if record.nil? && rows_in_folder(path).any? { |row| row.path != path }
-        record&.destroy
-        record&.to_stored_file
+          rows_in_folder(path, owned).each(&:destroy).map(&:to_stored_file)
+        end
+      end
+
+      # Returns the digest of what the model last read at +path+, from the
+      # file's row, or +nil+.
+      def read_digest(path)
+        return super unless read_digests?
+
+        row(path)&.read_digest
+      end
+
+      # Keeps +digest+ as what the model read at +path+, in the file's row.
+      def record_read(path, digest)
+        return super unless read_digests?
+
+        row(path)&.update_columns(read_digest: digest)
+      end
+
+      # Runs the block in a transaction that locks the chat's row, past
+      # the query cache, so other processes wait for it.
+      def with_lock
+        super do
+          ChatFile.uncached do
+            ChatFile.transaction do
+              lock_chat
+              yield
+            end
+          end
+        end
       end
 
       # Returns the text kept for +file+, or +nil+.
@@ -113,10 +154,8 @@ module RubyLLM
 
       private
 
-      def delete_folder(folder)
-        ChatFile.transaction do
-          rows_in_folder(folder, owned).each(&:destroy).map(&:to_stored_file)
-        end
+      def read_digests?
+        ChatFile.column_names.include?('read_digest')
       end
 
       def rows_in_folder(folder, scope = visible)
@@ -145,8 +184,16 @@ module RubyLLM
         end
       end
 
+      # SQLite has no row locks, and a deferred transaction that reads
+      # first fails when it later writes beside another writer, so it takes
+      # the write lock at once with a no-op update.
       def lock_chat
-        @chat.class.unscoped.where(@chat.class.primary_key => @chat.id).lock.pick(@chat.class.primary_key)
+        key = @chat.class.primary_key
+        scope = @chat.class.unscoped.where(key => @chat.id)
+        return scope.lock.pick(key) unless @chat.class.connection.adapter_name.match?(/sqlite/i)
+
+        column = @chat.class.connection.quote_column_name(key)
+        scope.update_all("#{column} = #{column}")
       end
 
       def row(path)

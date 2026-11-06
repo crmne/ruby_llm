@@ -142,6 +142,7 @@ class <%= create_migration_class_name('ruby_llm_records') %> < ActiveRecord::Mig
       t.bigint :byte_size
       t.string :digest
       t.text :text<%= ', size: :long' if mysql? %>
+      t.string :read_digest
       t.timestamps
 
       t.index [ :chat_type, :chat_id, :path ]

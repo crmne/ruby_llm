@@ -9,39 +9,61 @@ RSpec.shared_examples 'a file store' do
     expect(file).to have_attributes(path: 'notes/plan.md', byte_size: 7, content_type: 'text/markdown',
                                     filename: 'plan.md')
     expect(store.find('notes/plan.md')).to have_attributes(path: 'notes/plan.md', byte_size: 7)
+    expect(store['notes/plan.md']).to have_attributes(path: 'notes/plan.md', byte_size: 7)
     expect(store.read('notes/plan.md')).to eq("# Plan\n")
     expect(store.read('notes/plan.md').encoding).to eq(Encoding::BINARY)
     expect(store).to exist('notes/plan.md')
     expect(store.delete('notes/plan.md')).to have_attributes(path: 'notes/plan.md')
-    expect(store.find('notes/plan.md')).to be_nil
+    expect(store['notes/plan.md']).to be_nil
+    expect(store.exist?('notes/plan.md')).to be(false)
     expect(store.delete('notes/plan.md')).to be_nil
   end
 
-  it 'refuses to delete a folder without recursive: true' do
-    store.write('reports/q3.md', 'Q3')
-
-    expect { store.delete('reports') }.to raise_error(ArgumentError, /reports is a folder.*recursive: true/)
-    expect(store.exists?('reports/q3.md')).to be(true)
+  it 'raises FileNotFoundError from find, and returns nil from [], for a missing file' do
+    expect { store.find('missing.md') }.to raise_error(RubyLLM::FileNotFoundError, 'No file at missing.md')
+    expect(store['missing.md']).to be_nil
   end
 
-  it 'deletes a folder and returns its files with recursive: true' do
+  it 'refuses to delete a folder with delete' do
+    store.write('reports/q3.md', 'Q3')
+
+    expect { store.delete('reports') }.to raise_error(ArgumentError, /reports is a folder.*delete_folder/)
+    expect(store.exist?('reports/q3.md')).to be(true)
+  end
+
+  it 'deletes a folder and returns its files with delete_folder' do
     store.write('reports/q3.md', 'Q3')
     store.write('reports/2026/q4.md', 'Q4')
     store.write('reportsy.md', 'beside the folder')
 
-    expect(store.delete('reports', recursive: true).map(&:path)).to eq(%w[reports/2026/q4.md reports/q3.md])
+    expect(store.delete_folder('reports').map(&:path)).to eq(%w[reports/2026/q4.md reports/q3.md])
     expect(store.list.map(&:path)).to eq(%w[reportsy.md])
+    expect(store.delete_folder('reports')).to eq([])
   end
 
-  it 'returns an Array from every recursive delete' do
+  it 'refuses to delete a file with delete_folder' do
     store.write('notes.md', 'hello')
 
-    expect(store.delete('notes.md', recursive: true).map(&:path)).to eq(%w[notes.md])
-    expect(store.delete('notes.md', recursive: true)).to eq([])
+    expect { store.delete_folder('notes.md') }.to raise_error(ArgumentError, /notes.md is a file.*delete/)
+    expect(store.exist?('notes.md')).to be(true)
   end
 
   it 'refuses to delete everything at once' do
-    expect { store.delete('.', recursive: true) }.to raise_error(ArgumentError, /not a path inside/)
+    expect { store.delete_folder('.') }.to raise_error(ArgumentError, /not a path inside/)
+  end
+
+  it 'remembers the digest of what the model read at a path' do
+    store.write('notes.md', 'hello')
+    expect(store.read_digest('notes.md')).to be_nil
+
+    store.record_read('notes.md', 'abc123')
+
+    expect(store.read_digest('notes.md')).to eq('abc123')
+    expect(store.read_digest('./notes.md')).to eq('abc123')
+  end
+
+  it 'runs a block under its lock, reentrantly, and returns its value' do
+    expect(store.with_lock { store.with_lock { 42 } }).to eq(42)
   end
 
   it 'replaces a file written twice' do
@@ -145,5 +167,27 @@ RSpec.shared_examples 'a file store' do
     end
 
     expect(written).to eq(['a.txt'])
+  end
+end
+
+# Stores that keep their lock in the process, Memory and Directory, take
+# it for every write and delete, so a direct write never lands between a
+# tool's check and its write.
+RSpec.shared_examples 'a file store that writes under its lock' do
+  it 'waits for its lock to write or delete' do
+    store.write('notes.md', 'one')
+    locked = Queue.new
+    holder = Thread.new do
+      store.with_lock do
+        locked << true
+        sleep 0.2
+        store.write('notes.md', 'held')
+      end
+    end
+    locked.pop
+    store.write('notes.md', 'waited')
+    holder.join
+
+    expect(store.read('notes.md')).to eq('waited')
   end
 end

@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 
 require 'digest'
+require 'monitor'
 require 'stringio'
 
 module RubyLLM
   # A FileStore keeps a chat's files: what people attach, what tools
   # return, long tool results, and what code writes. Chat#with_file_store gives
-  # a chat one, and the model works with it through five tools that list,
-  # read, search, write, and edit its files, so a file reaches the model
-  # only when the model asks for it.
+  # a chat one, and the model works with it through tools that list, read,
+  # search, write, and edit its files, so a file reaches the model only
+  # when the model asks for it.
   #
   #   chat = RubyLLM.chat.with_file_store
   #   chat.ask "Which clauses changed?", with: ["contract-v1.pdf", "contract-v2.pdf"]
@@ -21,7 +22,7 @@ module RubyLLM
   #   chat.with_file_store("tmp/work")
   #
   # Write your own store by subclassing FileStore and implementing #list,
-  # #find, #read, #write, and #delete. RubyLLM only ever passes them paths
+  # #[], #read, #write, and #delete. RubyLLM only ever passes them paths
   # FileStore.path accepts: relative, with forward slashes, and without
   # empty, <tt>.</tt>, or <tt>..</tt> parts.
   #
@@ -33,13 +34,23 @@ module RubyLLM
   #     end
   #
   #     def list(prefix = nil) = ...
-  #     def find(path) = ...
+  #     def [](path) = ...
   #     def read(path) = ...
   #     def write(path, content, content_type: nil) = ...
-  #     def delete(path, recursive: false) = ...
+  #     def delete(path) = ...
   #   end
+  #
+  # The model must read a file before its tools change it, and a file that
+  # changed since it read it must be read again. The store remembers what
+  # the model read with #record_read, in memory unless the store overrides
+  # it and #read_digest, and #with_lock keeps two changes to the files
+  # from interleaving. Override #with_lock in a store that several
+  # processes share.
   class FileStore
     include Enumerable
+
+    # Raised by #delete for a path that is a folder.
+    class FolderError < ArgumentError; end # :nodoc:
 
     # Converted texts each store keeps in memory, by default.
     CACHED_TEXTS = 100
@@ -75,6 +86,22 @@ module RubyLLM
         path == folder || path.start_with?("#{folder}/")
       end
 
+      # Returns whether +path+ matches the glob +pattern+. A pattern
+      # without a slash matches the file name in any folder; one with a
+      # slash matches the whole path, or the path inside the folder
+      # +inside+. <tt>**</tt> matches any number of folders, a trailing
+      # <tt>/**</tt> everything under a folder, and <tt>{a,b}</tt> either.
+      def match?(path, pattern, inside: nil) # :nodoc:
+        pattern = pattern.to_s.delete_prefix('./').delete_prefix('/')
+        flags = File::FNM_PATHNAME | File::FNM_EXTGLOB
+        return File.fnmatch?(pattern, File.basename(path), flags) unless pattern.include?('/')
+
+        pattern = "#{pattern}/*" if pattern.end_with?('/**')
+        candidates = [path]
+        candidates << path.delete_prefix("#{inside}/") unless inside.to_s.empty?
+        candidates.any? { |candidate| File.fnmatch?(pattern, candidate, flags) }
+      end
+
       # Returns a safe file name for an attachment called +name+.
       def filename(name) # :nodoc:
         base = File.basename(name.to_s.tr('\\', '/')).gsub(UNSAFE_CHARACTERS, '_').strip.sub(/\A\.+/, '')
@@ -103,6 +130,9 @@ module RubyLLM
     def initialize # :nodoc:
       @texts = {}
       @texts_lock = Mutex.new
+      @reads = {}
+      @reads_lock = Mutex.new
+      @store_lock = Monitor.new
     end
 
     # Returns the files inside the folder +prefix+, or every file, as
@@ -113,9 +143,19 @@ module RubyLLM
       raise NotImplementedError, "#{self.class} must implement list"
     end
 
-    # Returns the StoredFile at +path+, or +nil+.
+    # Returns the StoredFile at +path+, or +nil+ when there is none.
+    #
+    #   chat.file_store["notes/plan.md"] # => #<RubyLLM::StoredFile path: "notes/plan.md", ...>
+    def [](path)
+      raise NotImplementedError, "#{self.class} must implement []"
+    end
+
+    # Returns the StoredFile at +path+. Raises FileNotFoundError when there
+    # is none.
+    #
+    #   chat.file_store.find("notes/plan.md")
     def find(path)
-      raise NotImplementedError, "#{self.class} must implement find"
+      self[path] || raise(FileNotFoundError, "No file at #{FileStore.path(path)}")
     end
 
     # Returns the content of the file at +path+ as a binary String.
@@ -136,14 +176,21 @@ module RubyLLM
     # Deletes the file at +path+ and returns its StoredFile, or +nil+ when
     # there was none. Raises ArgumentError when +path+ is a folder.
     #
-    # With <tt>recursive: true</tt>, also deletes everything inside the
-    # folder +path+ and returns an Array of the deleted StoredFile objects,
-    # sorted by path.
-    #
     #   chat.file_store.delete("notes/plan.md")
-    #   chat.file_store.delete("reports", recursive: true)
-    def delete(path, recursive: false)
+    def delete(path)
       raise NotImplementedError, "#{self.class} must implement delete"
+    end
+
+    # Deletes everything inside the folder +path+ and returns the deleted
+    # StoredFile objects, sorted by path. Raises ArgumentError when +path+
+    # is a file.
+    #
+    #   chat.file_store.delete_folder("reports") # => [#<RubyLLM::StoredFile path: "reports/q3.pdf", ...>]
+    def delete_folder(path)
+      path = FileStore.path(path)
+      refuse_file(path) if self[path]
+
+      list(path).filter_map { |file| delete(file.path) }
     end
 
     # Returns the folder on disk that holds the files, or +nil+. A store
@@ -162,8 +209,30 @@ module RubyLLM
     end
 
     # Returns whether there is a file at +path+.
-    def exists?(path)
-      !find(path).nil?
+    def exist?(path)
+      !self[path].nil?
+    end
+
+    # Returns the digest of the content the model last read at +path+, or
+    # +nil+ when it has not read it. The file tools compare it with the
+    # file's digest before they change the file.
+    def read_digest(path)
+      @reads_lock.synchronize { @reads[FileStore.path(path)] }
+    end
+
+    # Remembers that the model read +digest+, a digest of the content, at
+    # +path+. Stores keep it in memory unless they override this and
+    # #read_digest.
+    def record_read(path, digest)
+      @reads_lock.synchronize { @reads[FileStore.path(path)] = digest }
+    end
+
+    # Runs the block with the store locked and returns its value, so a tool
+    # that reads a file and writes it back sees no other change in
+    # between. It is reentrant. Stores lock within this process unless
+    # they override it.
+    def with_lock(&)
+      @store_lock.synchronize(&)
     end
 
     # Returns the text of the file at +path+: its content when it is text,
@@ -176,7 +245,7 @@ module RubyLLM
     #
     # See Configuration#file_converters for adding converters.
     def text(path, config: nil)
-      file = find(path) || raise(FileNotFoundError, "No file at #{path}")
+      file = find(path)
       cached = cached_text(file)
       return cached if cached
 
@@ -188,7 +257,7 @@ module RubyLLM
     # Returns the file at +path+ as an Attachment, to send it to a model.
     # Raises FileNotFoundError when there is none.
     def attachment(path, file: nil)
-      file ||= find(path) || raise(FileNotFoundError, "No file at #{path}")
+      file ||= find(path)
       Attachment.new(StringIO.new(read(file.path)), filename: file.filename)
     end
 
@@ -215,7 +284,7 @@ module RubyLLM
       content = attachment.content.to_s.b
       digest = self.class.digest(content)
       candidates(self.class.filename(attachment.filename)).each do |path|
-        existing = find(path)
+        existing = self[path]
         return existing if existing && same_content?(existing, content, digest)
         next if existing || folder?(path)
 
@@ -232,7 +301,11 @@ module RubyLLM
     end
 
     def refuse_folder(path)
-      raise ArgumentError, "#{path} is a folder: delete it with recursive: true"
+      raise FolderError, "#{path} is a folder: delete it with delete_folder"
+    end
+
+    def refuse_file(path)
+      raise ArgumentError, "#{path} is a file: delete it with delete"
     end
 
     def write_attachment(path, attachment, content)

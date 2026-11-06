@@ -93,7 +93,7 @@ RSpec.describe RubyLLM::Chat do
                                             'files_error' => 'The files are full.')
       expect(JSON.parse(result)).not_to have_key('error')
       expect(written).to eq(%w[notes.md])
-      expect(store.exists?('out/chart.svg')).to be(false)
+      expect(store.exist?('out/chart.svg')).to be(false)
     end
 
     it 'refuses a name with no file, a path that leaves the store, and a file under a read-only folder' do
@@ -171,7 +171,7 @@ RSpec.describe RubyLLM::Chat do
       expect(report).to include('stdout' => 'done', 'files' => %w[notes.md out/chart.svg])
       expect(written).to eq(%w[notes.md out/chart.svg])
       expect(store.read('notes.md')).to eq('changed')
-      expect(store.exists?('keep.txt')).to be(false)
+      expect(store.exist?('keep.txt')).to be(false)
     end
 
     it 'names a file whose name is not valid UTF-8 as skipped, because the run already happened' do

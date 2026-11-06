@@ -40,7 +40,7 @@ The conversation API provides:
 * **Tools** that let the model call your Ruby code, with optional human approval before execution.
 * **MCP servers** whose tools a chat or agent can use, described in a Ruby class. See [MCP]({% link _tools/mcp.md %}).
 * **Code execution** that lets the model run Ruby, Python, JavaScript, and shell code in a sandbox on your own servers and hand back the files it makes. See [Code Execution]({% link _advanced/code-execution.md %}).
-* **Chat files** that keep attachments and long tool results out of the conversation, so the model lists, reads, searches, and edits them with tools, and reads PDFs and scans with OCR. See [Chat Files]({% link _advanced/chat-files.md %}).
+* **File stores** that give an agent its own files, in Active Storage or a folder on disk, and keep attachments and long tool results out of the conversation, so the model finds, reads, searches, and edits them with tools, and reads PDFs and scans with OCR. See [File Stores]({% link _core_features/file-stores.md %}).
 * **Skills** that teach the model your workflows with folders of instructions, reference files, and scripts in the open Agent Skills format, loaded only when a task needs them. See [Skills]({% link _tools/skills.md %}).
 * **Structured output** for results you read as a Hash through `response.parsed`.
 * **Agents** that put a model, instructions, tools, and other settings in a reusable Ruby class.

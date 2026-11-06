@@ -10,9 +10,8 @@ module RubyLLM
         end
 
         def description
-          "Changes a text file in this chat's file store by replacing old_text, which must appear exactly " \
-            'once, with new_text. Include enough of the surrounding text to make old_text unique, or set ' \
-            'replace_all to replace every occurrence.'
+          'Changes a text file you have read by replacing old_text, which must appear exactly once, with ' \
+            'new_text. Include surrounding text to make old_text unique, or set replace_all.'
         end
 
         def parameters_schema
@@ -31,22 +30,29 @@ module RubyLLM
 
         def execute(path:, old_text:, new_text:, replace_all: false)
           guarded_write do |write|
-            file = file_at(path)
-            content = text_of(file)
-            count = old_text.to_s.empty? ? 0 : content.scan(old_text.to_s).size
-            raise ToolError, "old_text does not appear in #{file.path}." if count.zero?
-            if count > 1 && !replace_all
-              raise ToolError, "old_text appears #{count} times in #{file.path}. Add the text around it to make " \
-                               'it unique, or set replace_all.'
-            end
+            path = file_at(path).path
+            changing(path) do |file|
+              raise ToolError, "There is no file at #{path}." unless file
 
-            replace = replace_all ? :gsub : :sub
-            write.call(file.path, content.public_send(replace, old_text.to_s) { new_text.to_s })
-            "Replaced #{count} #{count == 1 ? 'occurrence' : 'occurrences'} in #{file.path}."
+              replace(file, write, old_text.to_s, new_text.to_s, replace_all)
+            end
           end
         end
 
         private
+
+        def replace(file, write, old_text, new_text, replace_all)
+          content = text_of(file)
+          count = old_text.empty? ? 0 : content.scan(old_text).size
+          raise ToolError, "old_text does not appear in #{file.path}." if count.zero?
+          if count > 1 && !replace_all
+            raise ToolError, "old_text appears #{count} times in #{file.path}. Add the text around it to make " \
+                             'it unique, or set replace_all.'
+          end
+
+          write.call(file.path, content.public_send(replace_all ? :gsub : :sub, old_text) { new_text })
+          "Replaced #{count} #{count == 1 ? 'occurrence' : 'occurrences'} in #{file.path}."
+        end
 
         def text_of(file)
           content = store.read(file.path).dup.force_encoding(Encoding::UTF_8)

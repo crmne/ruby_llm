@@ -99,6 +99,7 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator do
     expect(files).to include('t.references :owner, polymorphic: true, type: :bigint, index: false')
     expect(files).to include('t.string :path, null: false')
     expect(files).to include('t.text :text')
+    expect(files).to include('t.string :read_digest')
     expect(files).to include('t.index [ :chat_type, :chat_id, :path ]')
   end
 

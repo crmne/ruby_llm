@@ -141,7 +141,7 @@ Every request lists each skill's name and description. The model loads a skill's
 
 See [Skills]({% link _tools/skills.md %}).
 
-## Chat Files
+## File Stores
 
 A 40-page PDF attached to the first question used to travel with every question after it, and a search that returned 30,000 characters stayed in every request. A chat with a file store keeps them out of the conversation:
 
@@ -151,11 +151,11 @@ chat.ask "Which clauses changed?", with: ["contract-v1.pdf", "contract-v2.pdf"]
 chat.ask "Quote the new termination clause"
 ```
 
-The model sees the PDFs on the question they came with, and one line naming each after that. It works with them through five tools, `list_files`, `read_file`, `search_files`, `write_file`, and `edit_file`, which read text files as they are, and PDFs, scans, and photos once you register the OCR converter, `RubyLLM::FileStore::Converters::OCR`. Other formats take a converter of your own, a few lines registered in `config.file_converters`. A tool result longer than 10,000 characters is saved as a file, and the model gets its start and the path. With code execution, code runs in the store's folder when it has one, like a coding agent's workspace, and otherwise copies in the files the model names and saves what it writes back.
+The model sees the PDFs on the question they came with, and one line naming each after that. It works with them through tools shaped like a coding agent's: `list_files` finds files by folder or glob, `search_files` greps them, `read_file` reads them with line numbers, and `write_file` and `edit_file` change them, refusing a file the model hasn't read or that changed since it read it. `with_file_store(tools: :read)` gives a read-only agent, and `delete_file` is there when you ask for it. The tools read text files as they are, and PDFs, scans, and photos once you register the OCR converter, `RubyLLM::FileStore::Converters::OCR`. Other formats take a converter of your own, a few lines registered in `config.file_converters`. A tool result longer than its `inline_limit`, 10,000 characters by default, is saved as a file, and the model gets its start and the path. With code execution, code runs in the store's folder when it has one, like a coding agent's workspace, and otherwise copies in the files the model names and saves what it writes back.
 
 Files live in memory, in a folder with `chat.with_file_store("tmp/work")`, or for a persisted chat in Active Storage, in the new `ruby_llm_chat_files` table. `chat.file_store` is the store, agents attach one with `file_store`, and a store of your own subclasses `RubyLLM::FileStore`.
 
-See [Chat Files]({% link _advanced/chat-files.md %}).
+See [File Stores]({% link _core_features/file-stores.md %}).
 
 ## A Generator for Every Building Block
 

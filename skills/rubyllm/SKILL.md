@@ -37,7 +37,7 @@ Read the relevant page instead of loading the entire documentation site:
 | Configure a provider or select a model | `configuration/`, `configuration-providers/`, `models/` |
 | Chat, stream, or attach files | `chat/`, `streaming/`, `attachments/` |
 | Declare tools or require approval | `tools/`, `tool-parameters/`, `tool-execution/` |
-| Keep attachments and long tool results out of the conversation (2.2) | `chat-files/` |
+| Give agents files, and keep attachments and long tool results out of the conversation (2.2) | `file-stores/` |
 | Use tools from MCP servers (2.1) | `mcp/` |
 | Use provider-hosted tools such as web search | `provider-tools/`, `citations/` |
 | Parse structured output | `structured-output/` |

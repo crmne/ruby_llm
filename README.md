@@ -104,7 +104,7 @@ These are on `main` and documented under [rubyllm.com/next](https://rubyllm.com/
 
 * **Code execution:** Let the model run Ruby, Python, JavaScript, and shell in a sandbox on your servers with [`with_code_execution`](https://rubyllm.com/next/code-execution/)
 * **Skills:** Teach the model your workflows with folders of instructions and scripts in the Agent Skills format with [`with_skills`](https://rubyllm.com/next/skills/)
-* **Chat files:** Keep attachments and long tool results out of the conversation with [`with_file_store`](https://rubyllm.com/next/chat-files/)
+* **File stores:** Keep attachments and long tool results out of the conversation with [`with_file_store`](https://rubyllm.com/next/file-stores/)
 * **Message queueing:** Add messages while a chat runs with `queue`
 * **More providers:** Meta, MiniMax, Moonshot AI, and Z.ai
 

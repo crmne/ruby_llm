@@ -72,7 +72,7 @@ Each piece has its own guide. Read the ones your agent needs.
 | Input requests | Let a tool or an MCP server ask the user a question in the middle of a call. | [Asking the User]({% link _getting_started/tools.md %}#asking-the-user), [MCP Input Requests]({% link _tools/mcp.md %}#input-requests) |
 | Tasks | Pause a tool call while slow work runs elsewhere, then resume it. | [Pausing a Tool Call]({% link _getting_started/tools.md %}#pausing-a-tool-call), [MCP Tasks]({% link _tools/mcp.md %}#tasks) |
 | Queued messages | Accept new messages while a job runs the chat, and decide when they join. | [Queueing Messages]({% link _advanced/agentic-workflows.md %}#queueing-messages), [Queued Messages in Rails]({% link _advanced/rails-persistence.md %}#queued-messages) |
-| File stores | Keep attachments and long tool results as files the model reads when it needs them. | [Chat Files]({% link _advanced/chat-files.md %}) |
+| File stores | Keep attachments and long tool results as files the model reads when it needs them. | [File Stores]({% link _core_features/file-stores.md %}) |
 | Sandboxes | Decide what code from a model can read, write, and reach. | [Sandboxes]({% link _advanced/sandboxes.md %}) |
 | Code execution | Let the model run code in a sandbox and hand back the files it makes. | [Code Execution]({% link _advanced/code-execution.md %}) |
 

@@ -19,7 +19,7 @@ RSpec.describe RubyLLM::Chat do
 
   class ShortSpill < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
     description 'Returns sixty characters'
-    spill_to_file 50
+    inline_limit 50
 
     def execute
       'x' * 60
@@ -28,7 +28,7 @@ RSpec.describe RubyLLM::Chat do
 
   class NeverSpill < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
     description 'Returns a long page'
-    spill_to_file false
+    inline_limit false
 
     def execute
       'y' * 20_000
@@ -70,12 +70,12 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.tools.keys).to include(:list_files, :read_file, :search_files, :write_file, :edit_file)
     end
 
-    it 'takes a store and a spill_to_file limit' do
+    it 'takes a store and an inline_limit' do
       store = RubyLLM::FileStore::Memory.new
 
       expect(chat.with_file_store(store).file_store).to be(store)
-      expect(chat.with_file_store(store, spill_to_file: 20).file_store).to be(store)
-      expect(chat.instance_variable_get(:@file_references).spill_to_file).to eq(20)
+      expect(chat.with_file_store(store, inline_limit: 20).file_store).to be(store)
+      expect(chat.instance_variable_get(:@file_references).inline_limit).to eq(20)
     end
 
     it 'keeps files in the folder at a path' do
@@ -96,10 +96,33 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.with_file_store(:memory).file_store).not_to be(first)
     end
 
-    it 'keeps the spill_to_file limit with a path or :memory' do
-      chat.with_file_store(:memory, spill_to_file: 20)
+    it 'keeps the inline_limit with a path or :memory' do
+      chat.with_file_store(:memory, inline_limit: 20)
 
-      expect(chat.instance_variable_get(:@file_references).spill_to_file).to eq(20)
+      expect(chat.instance_variable_get(:@file_references).inline_limit).to eq(20)
+    end
+
+    it 'gives the model the tools named with tools:' do
+      read = %i[list_files read_file search_files]
+
+      expect(chat.with_file_store(tools: :read).tools.keys).to eq(read)
+      expect(chat.with_file_store(tools: %i[read write edit delete]).tools.keys)
+        .to eq([*read, :write_file, :edit_file, :delete_file])
+      expect(chat.with_file_store(tools: %w[read edit]).tools.keys).to eq([*read, :edit_file])
+      expect(chat.with_file_store.tools.keys).to eq([*read, :write_file, :edit_file])
+    end
+
+    it 'keeps the tools it was given when the chat is copied' do
+      expect(chat.with_file_store(tools: :read).dup.tools.keys).to eq(%i[list_files read_file search_files])
+    end
+
+    it 'refuses tools it does not know, and tools without reading' do
+      expect { chat.with_file_store(tools: :rename) }
+        .to raise_error(ArgumentError, 'tools: takes :read, :write, :edit, and :delete, got :rename')
+      [%i[write edit], [], :delete].each do |tools|
+        expect { chat.with_file_store(tools:) }
+          .to raise_error(ArgumentError, 'tools: needs :read, since the model reads its files with it')
+      end
     end
 
     it 'removes the store and its tools with nil' do
@@ -111,8 +134,8 @@ RSpec.describe RubyLLM::Chat do
 
     it 'rejects unknown options, bad limits, and stores that are none' do
       expect { chat.with_file_store(quota: 1) }.to raise_error(ArgumentError, /unknown keyword: :quota/)
-      expect { chat.with_file_store(spill_to_file: 0) }.to raise_error(ArgumentError, /positive number/)
-      expect { chat.with_file_store(spill_to_file: nil) }.to raise_error(ArgumentError, /positive number/)
+      expect { chat.with_file_store(inline_limit: 0) }.to raise_error(ArgumentError, /positive number/)
+      expect { chat.with_file_store(inline_limit: nil) }.to raise_error(ArgumentError, /positive number/)
       expect { chat.with_file_store(:redis) }.to raise_error(ArgumentError, /takes a folder path.*got :redis/)
       expect { chat.with_file_store(false) }.to raise_error(ArgumentError, /takes a folder path/)
       expect { chat.with_file_store(Object.new) }.to raise_error(ArgumentError, /takes a folder path/)
@@ -176,7 +199,7 @@ RSpec.describe RubyLLM::Chat do
       tool_result(tool_call, ['Here it is', RubyLLM::Attachment.new(image_path)])
 
       expect(request_view.last.attachments.first.content).to start_with('ruby.png (image/png,')
-      expect(chat.file_store.exists?('ruby.png')).to be(true)
+      expect(chat.file_store.exist?('ruby.png')).to be(true)
     end
 
     it 'shows what read_file returns until the next question, without keeping it twice' do
@@ -241,7 +264,7 @@ RSpec.describe RubyLLM::Chat do
 
       expect(chat.render.to_json).to include('sample.docx (application/vnd.openxmlformats-officedocument.' \
                                              'wordprocessingml.document, ')
-      expect(chat.file_store.exists?('sample.docx')).to be(true)
+      expect(chat.file_store.exist?('sample.docx')).to be(true)
     end
 
     def converting_chat(text)
@@ -258,7 +281,7 @@ RSpec.describe RubyLLM::Chat do
       rendered = chat.render.to_json
       expect(rendered).to include('sample.docx, read as text:', 'The codename is Bluebird.')
       expect(rendered).not_to include('wordprocessingml')
-      expect(chat.file_store.exists?('sample.docx')).to be(true)
+      expect(chat.file_store.exist?('sample.docx')).to be(true)
     end
 
     it 'prefers a convert_unsupported_attachments handler to the converters' do
@@ -276,7 +299,7 @@ RSpec.describe RubyLLM::Chat do
       chat.add_message(role: :user, content: 'Summarize', attachments: [docx])
       expect(chat.render.to_json).to include('so only the start is shown')
 
-      chat.with_file_store(chat.file_store, spill_to_file: false)
+      chat.with_file_store(chat.file_store, inline_limit: false)
 
       rendered = chat.render.to_json
       expect(rendered).to include("sample.docx, read as text:\\n\\n#{'word ' * 2_999}word")
@@ -303,7 +326,7 @@ RSpec.describe RubyLLM::Chat do
       chat.add_message(role: :user, content: 'What is the codename?', attachments: [docx])
       chat.render
 
-      chat.with_file_store(chat.file_store, spill_to_file: false)
+      chat.with_file_store(chat.file_store, inline_limit: false)
       chat.render
 
       expect(calls).to eq(1)
@@ -349,7 +372,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'saves long JSON pretty printed, so lines can be read and searched' do
-      chat.with_file_store(spill_to_file: 10)
+      chat.with_file_store(inline_limit: 10)
 
       tool_result(tool_call, { 'items' => [1, 2] })
 
@@ -386,10 +409,10 @@ RSpec.describe RubyLLM::Chat do
       expect(tool_result(tool_call, 'w' * 20_000).content).to eq('w' * 20_000)
     end
 
-    it 'sends every result whole with spill_to_file: false, or without files' do
+    it 'sends every result whole with inline_limit: false, or without files' do
       expect(tool_result(tool_call, 'z' * 20_000).content.length).to eq(20_000)
 
-      chat.with_file_store(spill_to_file: false)
+      chat.with_file_store(inline_limit: false)
       expect(tool_result(tool_call, 'z' * 20_000).content.length).to eq(20_000)
     end
   end

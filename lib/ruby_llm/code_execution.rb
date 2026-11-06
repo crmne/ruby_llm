@@ -513,7 +513,7 @@ module RubyLLM
       mount = read_only.find { |folder| FileStore.inside?(path, folder) || FileStore.inside?(folder, path) }
       raise Workspace::Unavailable, "#{name} is in the read-only folder #{mount}, which every run has" if mount
 
-      files = [store.find(path)].compact
+      files = [store[path]].compact
       files = store.list(path) if files.empty?
       raise Workspace::Unavailable, "No file or folder #{name} in this chat's files. See list_files." if files.empty?
 
