@@ -127,14 +127,14 @@ Claims rely on the database to make them visible to other processes, so call the
 
 ## When a Run Is Interrupted
 
-| | Stopped with `cancel` | Process dies | Request or tool fails |
-|---|---|---|---|
-| The job | Raises `RubyLLM::CancelledError` at the next event, or when the running tool returns | Is gone | Raises the error |
-| The reply so far | Kept as a reply that is `cancelled?`, if any text streamed | Lost: a blank placeholder stays, and requests leave it out | Removed if blank |
-| Tool calls | A finished one keeps its result. The rest close as unfinished | A finished one keeps its result. The rest run again once the claim expires | The call stays pending, unless the tool turned the error into its result |
-| What continues | Nothing, until a new message: `complete` asks the model nothing | The next `complete` after the claim expires, up to `config.max_run_time` later | The next `complete` or message |
-| The person | Sees the partial reply, and the page stops streaming | Sees "Thinking…" until a job runs again | Sees what your job shows them |
-| Usage | Recorded as `:cancelled`, with the tokens seen | Lost for that attempt | Recorded as `:failed` |
+| | Stopped with `cancel` | Process dies | Request fails | Tool raises |
+|---|---|---|---|---|
+| The job | Raises `RubyLLM::CancelledError` at the next event, or when the running tool returns | Is gone | Raises the error | Raises the error |
+| The reply so far | Kept as a reply that is `cancelled?`, if any text streamed | Lost: a blank placeholder stays, and requests leave it out | Removed if blank | Not affected |
+| Tool calls | A finished one keeps its result. The rest close as unfinished | A finished one keeps its result. The rest run again once the claims expire | Not affected | The incomplete round can be removed, with its finished results, so the model is asked again |
+| What continues | Nothing after a stop in a tool round or a kept reply, until a new message. A stop before any text left the question unanswered, so a later `complete` asks it again | The next `complete` once the chat and tool claims expire | The next `complete` or message | The next `complete` or message |
+| The person | Sees the partial reply, and the page stops streaming | Sees "Thinking…" until a job runs again | Sees what your job shows them | Sees what your job shows them |
+| Provider usage | An interrupted request is recorded as `:cancelled` with the tokens seen. One that already finished stays `:succeeded` | Lost for that attempt | Recorded as `:failed` | The request that finished stays `:succeeded` |
 
 The generated chat UI handles each of these: its job rescues the cancel, shows failures on the page and raises, and checks again every minute while a dead process still holds the chat. With a queue that loses jobs on a crash, such as development's `:async`, a run only resumes when the next message arrives.
 
