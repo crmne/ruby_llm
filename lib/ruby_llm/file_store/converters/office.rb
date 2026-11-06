@@ -20,7 +20,8 @@ module RubyLLM
         MAX_SIZE = 50 * 1024 * 1024 # :nodoc:
         ENTITIES = { 'amp' => '&', 'lt' => '<', 'gt' => '>', 'quot' => '"', 'apos' => "'" }.freeze
         PREFIX = '(?:[\w.-]+:)?'
-        private_constant :ENTITIES, :PREFIX
+        MAX_COLUMN = 16_384
+        private_constant :ENTITIES, :PREFIX, :MAX_COLUMN
 
         class << self
           # Returns the text of +attachment+, or +nil+ when it is not a
@@ -47,9 +48,15 @@ module RubyLLM
 
           def workbook(zip)
             strings = zip['xl/sharedStrings.xml'].to_s.scan(element('si')).map { |(item)| runs(item) }
+            size = 0
             parts(zip, 'xl', 'workbook.xml', 'sheet', %r{\Axl/worksheets/[^/]+\.xml\z})
               .each_with_index.map do |(part, tag), index|
-                rows = zip[part].to_s.scan(element('row')).map { |(row)| cells(row, strings).join("\t") }
+                rows = zip[part].to_s.scan(element('row')).map do |(row)|
+                  cells(row, strings).join("\t").tap do |text|
+                    size += text.bytesize
+                    raise Zip::Error, 'workbook too large' if size > MAX_SIZE
+                  end
+                end
                 ["## #{unescape(tag.to_s[/\bname="([^"]*)"/, 1] || "Sheet #{index + 1}")}", *rows].join("\n")
               end.join("\n\n")
           end
@@ -105,8 +112,9 @@ module RubyLLM
           end
 
           def column_of(attributes)
-            letters = attributes[/\br="([A-Z]+)\d+"/, 1]
-            letters&.each_char&.inject(0) { |sum, letter| (sum * 26) + letter.ord - 64 }&.pred
+            letters = attributes[/\br="([A-Z]{1,3})\d+"/, 1]
+            column = letters&.each_char&.inject(0) { |sum, letter| (sum * 26) + letter.ord - 64 }
+            column.pred if column && column <= MAX_COLUMN
           end
 
           def cell(attributes, body, strings)

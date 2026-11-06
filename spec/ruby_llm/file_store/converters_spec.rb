@@ -44,6 +44,18 @@ RSpec.describe RubyLLM::FileStore::Converters do
       .to eq("## Second\ninline\n\n## First\nORCHID-97\t7")
   end
 
+  it 'ignores a cell reference past the last column a sheet can have' do
+    expect(described_class::Office.send(:cells, '<c r="XFE1"><v>1</v></c>', [])).to eq(['1'])
+    expect(described_class::Office.send(:cells, '<c r="XFD1"><v>1</v></c>', []).size).to eq(16_384)
+  end
+
+  it 'gives up on a workbook whose text passes the limit, as padding can without inflating much' do
+    expect(described_class.convert(fixture('sample-wide.xlsx'), config:).size).to be > 16_000
+
+    stub_const('RubyLLM::FileStore::Converters::Office::MAX_SIZE', 2_000)
+    expect(described_class.convert(fixture('sample-wide.xlsx'), config:)).to be_nil
+  end
+
   it 'reads the entities XML defines and no others' do
     expect(described_class::Office.send(:unescape, '&amp;lt; &#233; &#xe9; &nbsp;')).to eq('&lt; é é &nbsp;')
   end
