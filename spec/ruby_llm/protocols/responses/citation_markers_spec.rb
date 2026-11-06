@@ -50,6 +50,10 @@ RSpec.describe RubyLLM::Protocols::Responses::CitationMarkers do
     expect(described_class.strip("Done. \u{E200}cite\u{E202}tu").first).to eq('Done. ')
   end
 
+  it 'keeps a closed pair whose turn reference is incomplete' do
+    expect(described_class.strip("Near \u{E200}cite\u{E202}tu\u{E201} miss").first).to eq('Near citetu miss')
+  end
+
   it 'removes other markers built the same way' do
     expect(described_class.strip("See \u{E200}filecite\u{E202}turn0file0\u{E201}.").first).to eq('See .')
   end

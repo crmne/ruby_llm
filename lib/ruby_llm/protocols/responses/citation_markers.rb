@@ -90,11 +90,15 @@ module RubyLLM
 
         def close_marker(output)
           held = take_held
-          marker?(held.delete_suffix(CLOSE)) ? drop(held) : release(held, output)
+          complete_marker?(held.delete_suffix(CLOSE)) ? drop(held) : release(held, output)
         end
 
         def citation_prefix?(held)
           CITE.start_with?(held.delete_prefix(OPEN)) || marker?(held)
+        end
+
+        def complete_marker?(held)
+          marker?(held) && held.split(SEPARATOR, -1).drop(1).all? { |turn| turn.start_with?(TURN) }
         end
 
         def marker?(held)
