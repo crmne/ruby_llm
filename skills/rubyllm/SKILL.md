@@ -8,6 +8,32 @@ metadata:
 
 # Build with RubyLLM
 
+## Start from the generators
+
+Less hand-written code means less to verify, so install and generate first, and only then change what is specific to the task. A new web application is a plain `rails new`, not `--minimal`, which leaves out the Active Job, Action Cable, Active Storage, and Hotwire the chat UI runs on:
+
+```bash
+rails new my_app && cd my_app
+bundle add ruby_llm
+bin/rails generate ruby_llm:install
+bin/rails db:migrate
+bin/rails ruby_llm:load_models
+bin/rails generate ruby_llm:chat_ui
+```
+
+That is persistence, streaming, a chat UI, and a usage ledger with no code of your own. Add only the pieces the application needs:
+
+```bash
+bin/rails generate ruby_llm:sandbox Workspace   # then bundle install, and set config.sandbox = "WorkspaceSandbox"
+bin/rails generate ruby_llm:mcp Linear https://mcp.linear.app/mcp
+bin/rails generate ruby_llm:tool Weather
+bin/rails generate ruby_llm:agent Researcher
+```
+
+Each takes one line in `app/agents/chat_agent.rb`, the agent behind the generated UI: `code_execution`, `mcp Linear`, `tools WeatherTool`, and `file_store` for files.
+
+RubyLLM's own test suite covers streaming and reply assembly, chat and message persistence, the tool loop, usage and cost calculation, retries, and generated code; the official conformance suite covers its MCP client; and the mxc gem's tests cover sandbox isolation. Don't write tests for those, or probe them by hand. Test your own tools, instructions, and wiring as usual, and run the feature once end to end.
+
 Use the application's installed RubyLLM version and existing conventions. This skill describes the 2.x API; features marked 2.1 or 2.2 need that release or later. Check which version the application uses before choosing an API:
 
 ```bash
@@ -30,27 +56,6 @@ RubyLLM already ships these. Use them instead of writing your own version, and r
 | Another model when one fails | `with_fallbacks` | `error-handling/` |
 | A Stop button | `chat.cancel`, from any thread or process | `streaming/` |
 | Prices and spend | `message.cost`, `chat.cost`, and `usage.ruby_llm` for every attempt | `cost-and-usage-tracking/` |
-
-A new web application means Rails and these generators, in this order. They write persistence, streaming, a chat UI, and a usage ledger, so there is little left to write yourself:
-
-```bash
-bundle add ruby_llm
-bin/rails generate ruby_llm:install
-bin/rails db:migrate
-bin/rails ruby_llm:load_models
-bin/rails generate ruby_llm:chat_ui
-```
-
-Add only the pieces the application needs:
-
-```bash
-bin/rails generate ruby_llm:sandbox Workspace   # then bundle install, and set config.sandbox = "WorkspaceSandbox"
-bin/rails generate ruby_llm:mcp Linear https://mcp.linear.app/mcp
-bin/rails generate ruby_llm:tool Weather
-bin/rails generate ruby_llm:agent Researcher
-```
-
-Each takes one line in `app/agents/chat_agent.rb`, the agent behind the generated UI: `code_execution`, `mcp Linear`, `tools WeatherTool`, and `file_store` for files.
 
 Outside Rails, the chat, tool, code execution, file store, MCP, and cost APIs work the same on plain Ruby objects. The application stores the transcript itself and rebuilds a chat from it with `add_message`, which does not restore the usage ledger, so persist `usage.ruby_llm` events if it needs past spend.
 
