@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe RubyLLM::ActiveRecord::ActsAs, :live do
-  let(:model) { 'gpt-5.4-nano' }
+  let(:model) { model_for(:openai, :temperature) }
 
   def usage_tracker(provider, recorder, config: RubyLLM.config)
     RubyLLM::Accounting::Usage::Tracker.new(

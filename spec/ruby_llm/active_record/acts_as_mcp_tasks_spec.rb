@@ -17,7 +17,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   after { reports.close }
 
   def paused_chat(tool = 'report')
-    chat = Chat.create!(model: 'gpt-5.4-nano').with_mcp(reports)
+    chat = Chat.create!(model: model_for(:openai, :temperature)).with_mcp(reports)
     chat.add_message(
       RubyLLM::Message.new(role: :assistant, content: '',
                            tool_calls: { call_id => RubyLLM::ToolCall.new(id: call_id, name: tool, arguments: {}) })

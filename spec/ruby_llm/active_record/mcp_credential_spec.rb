@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe RubyLLM::ActiveRecord::MCPCredential do
-  let(:owner) { Chat.create!(model: 'gpt-5.4-nano') }
+  let(:owner) { Chat.create!(model: model_for(:openai, :temperature)) }
 
   it 'is the credential store in Rails' do
     expect(RubyLLM.config.mcp_credential_store).to be(described_class)

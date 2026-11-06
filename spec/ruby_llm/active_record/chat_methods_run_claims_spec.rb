@@ -51,7 +51,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   end
 
   it 'observes a cancellation another process requested on a copy of the underlying chat' do
-    chat = Chat.create!(model: 'gpt-5.4-nano')
+    chat = Chat.create!(model: model_for(:openai, :temperature))
     copy = chat.to_llm.dup
     Chat.where(id: chat.id).update_all(cancelled: true)
 
@@ -60,14 +60,15 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   end
 
   it 'records usage on the record from a copy of the underlying chat' do
-    chat = Chat.create!(model: 'gpt-5.4-nano')
-    entry = RubyLLM::Accounting::Usage::Entry.new(operation: :chat, provider: 'openai', model: 'gpt-5.4-nano')
+    chat = Chat.create!(model: model_for(:openai, :temperature))
+    entry = RubyLLM::Accounting::Usage::Entry.new(operation: :chat, provider: 'openai',
+                                                  model: model_for(:openai, :temperature))
 
     expect { chat.to_llm.dup.__send__(:record_usage_entry, entry) }.to change { chat.ruby_llm_usages.reset.size }.by(1)
   end
 
   it 'binds a copy of the record to its own run' do
-    chat = Chat.create!(model: 'gpt-5.4-nano')
+    chat = Chat.create!(model: model_for(:openai, :temperature))
     chat.to_llm
 
     copy = chat.dup

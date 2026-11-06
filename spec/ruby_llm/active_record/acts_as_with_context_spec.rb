@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe RubyLLM::ActiveRecord::ActsAs do
-  let(:model) { 'gpt-5.4-nano' }
+  let(:model) { model_for(:openai, :temperature) }
 
   describe 'when global configuration is missing' do
     around do |example|

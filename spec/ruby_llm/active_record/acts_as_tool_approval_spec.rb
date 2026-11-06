@@ -17,7 +17,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   end
 
   def parked_chat
-    chat = Chat.create!(model: 'gpt-5.4-nano')
+    chat = Chat.create!(model: model_for(:openai, :temperature))
     chat.with_tools(approval_tool)
     chat.add_message(
       RubyLLM::Message.new(
@@ -70,7 +70,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   it 'reloads parallel calls in the order the model made them' do
     ids = [call_id, "call_#{SecureRandom.hex(6)}"]
-    chat = Chat.create!(model: 'gpt-5.4-nano')
+    chat = Chat.create!(model: model_for(:openai, :temperature))
     chat.add_message(
       RubyLLM::Message.new(
         role: :assistant,
@@ -87,7 +87,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   it 'returns pending approvals in the order the model made them' do
     ids = ["#{call_id}_1", "#{call_id}_2"]
-    chat = Chat.create!(model: 'gpt-5.4-nano')
+    chat = Chat.create!(model: model_for(:openai, :temperature))
     chat.with_tools(approval_tool)
     chat.add_message(
       RubyLLM::Message.new(
@@ -115,7 +115,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       mcp_server = server_class
       Class.new(RubyLLM::Agent) do
         chat_class Chat
-        model 'gpt-5.4-nano'
+        model model_for(:openai, :temperature)
         mcp { [mcp_server] }
       end
     end
@@ -123,7 +123,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     after { server.close }
 
     def park_mcp_calls
-      chat = Chat.create!(model: 'gpt-5.4-nano').with_mcp(server)
+      chat = Chat.create!(model: model_for(:openai, :temperature)).with_mcp(server)
       calls = { "#{call_id}_1" => 'delete_everything', "#{call_id}_2" => 'echo' }
       tool_calls = calls.to_h { |id, name| [id, RubyLLM::ToolCall.new(id:, name:, arguments: {})] }
       chat.add_message(RubyLLM::Message.new(role: :assistant, content: '', tool_calls:))

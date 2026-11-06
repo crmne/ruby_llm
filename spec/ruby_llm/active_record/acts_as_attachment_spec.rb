@@ -6,7 +6,7 @@ require 'stringio'
 RSpec.describe RubyLLM::ActiveRecord::ActsAs, :live do
   let(:image_path) { File.expand_path('../../fixtures/ruby.png', __dir__) }
   let(:pdf_path) { File.expand_path('../../fixtures/sample.pdf', __dir__) }
-  let(:model) { 'gpt-5.4-nano' }
+  let(:model) { model_for(:openai, :temperature) }
 
   def uploaded_file(path, type)
     filename = File.basename(path)
