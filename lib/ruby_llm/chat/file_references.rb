@@ -143,7 +143,7 @@ module RubyLLM
         read = (reads[message.tool_call_id] if message.tool_result?)
         shown = current && (!message.tool_result? || read)
         attachments = message.attachments.map { |attachment| view_of(attachment, shown:, read:) }
-        shown ? message : message.with_attachments(attachments)
+        attachments == message.attachments ? message : message.with_attachments(attachments)
       end
 
       def view_of(attachment, shown:, read:)
@@ -151,25 +151,39 @@ module RubyLLM
         return (shown ? attachment : reference(read, nil)) if read
 
         file = store_attachment(attachment)
-        shown ? attachment : reference(file.path, file)
+        return reference(file.path, file) unless shown
+
+        too_long?(attachment) ? start_of(attachment, file) : attachment
       rescue StandardError => e
         RubyLLM.logger.warn { "Could not keep an attachment in the chat's files: #{e.class}" }
         attachment
+      end
+
+      def too_long?(attachment)
+        @inline_limit && attachment.text? && attachment.content.to_s.length > @inline_limit
+      end
+
+      def start_of(attachment, file)
+        text_attachment(file, attachment.content.to_s)
       end
 
       def as_text(file, config)
         text = store.text(file.path, config:)
         return if text.nil? || text.strip.empty?
 
-        if @inline_limit && text.length > @inline_limit
-          text = "#{text[0, @inline_limit]}\n\n[#{file.path} has #{text.length} characters, so only the start " \
-                 'is shown. Read more with read_file, or search it with search_files.]'
-        end
-        Attachment.new(StringIO.new("#{file.path}, read as text:\n\n#{text}"),
-                       filename: "#{File.basename(file.path)}.txt")
+        text_attachment(file, text)
       rescue StandardError => e
         RubyLLM.logger.warn { "Could not read #{file.path} as text: #{e.class}" }
         nil
+      end
+
+      def text_attachment(file, text)
+        if @inline_limit && text.length > @inline_limit
+          text = "#{text[0, @inline_limit]}\n\n[#{file.path} has #{text.length} characters, so only the start " \
+                 'is shown, and you have not seen the rest. Read more with read_file, or search it with search_files.]'
+        end
+        Attachment.new(StringIO.new("#{file.path}, read as text:\n\n#{text}"),
+                       filename: "#{File.basename(file.path)}.txt")
       end
 
       def reference(path, file)
