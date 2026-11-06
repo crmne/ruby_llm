@@ -14,6 +14,7 @@ After reading this guide, you will know:
 
 * How to identify end users to a provider's abuse tooling with `with_end_user`.
 * How to compact long conversations automatically or when you choose.
+* How to keep tool results within the model's context window.
 * How to pass options in the provider's request vocabulary with `with_provider_options`.
 * How to choose the wire protocol a provider speaks.
 * How to modify the final request payload with `before_request`.
@@ -124,6 +125,28 @@ Manual compaction works with xAI, OpenAI, and Azure through their Responses APIs
 The same call works on an agent or a Rails chat. Rails persists the compacted context and usage, and `Agent.find` or a reloaded chat can continue from it without deleting earlier messages. Finish any pending tool calls, including approval decisions, before compacting.
 
 Compaction uses the current HTTP headers and `before_request` hooks. Generation options such as tools, temperature, and `provider_options` are not forwarded to the compaction endpoint. Keep the conversation on a provider and model that can read its compacted context.
+
+## Keeping Tool Results in Budget
+
+Tools return as much as they find: a page of campaigns with their HTML, a whole spreadsheet, a log. One such result can fill the model's context window, and a few smaller ones add up over a long turn until requests fail. `with_context_budget` keeps tool results within shares of the model's context window:
+
+```ruby
+chat = RubyLLM.chat.with_context_budget(per_result: 0.25, per_request: 0.7)
+```
+
+With `per_result`, a tool result longer than that share is cut when it is added, ending with a note telling the model how much it saw and to ask for a narrower query or the next page. The transcript keeps the cut result, so a persisted chat stores it too.
+
+With `per_request`, a request that would take more than that share leaves out the oldest tool results, each replaced by a one-line note telling the model to call the tool again if it needs it. Only the request changes: `chat.messages` keeps every result. The results of the latest round always go out, since the model hasn't seen them yet. The cut point moves in steps of about 15% of the budget rather than one result at a time, so the start of the request stays the same for many rounds and the provider's prompt cache keeps working.
+
+Shares are of the context window the model registry lists for the model, and sizes are estimated from characters, at two a token, which is how dense JSON and HTML run. Without a known context window the budget does nothing. Set either share alone, and pass `nil` to remove the budget. Agents declare it with a macro:
+
+```ruby
+class ResearchAgent < RubyLLM::Agent
+  context_budget per_result: 0.25, per_request: 0.7
+end
+```
+
+With a [file store]({% link _core_features/file-stores.md %}), long results are saved as files first, and the model gets their start and the path, which already fits. The budget still cuts results of tools that opt out with `inline_limit false`.
 
 ## Provider Options
 

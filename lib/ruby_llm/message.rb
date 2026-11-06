@@ -162,6 +162,38 @@ module RubyLLM
       @parsed ||= JSON.parse(text)
     end
 
+    # Returns a copy of the message with the given fields changed, like
+    # Data#with. The message itself is left alone. Change +content+ or
+    # +attachments+:
+    #
+    #   message.with(content: "[left out]")
+    #
+    # New content also drops what holds the old text: on an assistant
+    # message its thinking, citations, server tool calls, raw response, and
+    # native response blocks, and on a tool result its MCP result. Raises
+    # ArgumentError for another field.
+    def with(**changes)
+      unknown = changes.keys - %i[content attachments]
+      raise ArgumentError, "Message#with cannot change #{unknown.join(', ')}" if unknown.any?
+
+      changes.reduce(self) do |message, (field, value)|
+        field == :content ? message.with_content(value) : message.with_attachments(value)
+      end
+    end
+
+    def with_content(content) # :nodoc:
+      (role == :assistant ? without_native_content : dup).tap do |message|
+        message.instance_variable_set(:@content, normalize_content(content))
+        message.instance_variable_set(:@mcp_result, nil)
+        if role == :assistant
+          message.instance_variable_set(:@citations, [])
+          message.instance_variable_set(:@server_tool_calls, [])
+          message.instance_variable_set(:@raw, nil)
+        end
+        message.remove_instance_variable(:@parsed) if message.instance_variable_defined?(:@parsed)
+      end
+    end
+
     def with_attachments(attachments) # :nodoc:
       wrapped = Attachment.wrap(attachments, config: @config)
       dup.tap { |message| message.instance_variable_set(:@attachments, wrapped) }

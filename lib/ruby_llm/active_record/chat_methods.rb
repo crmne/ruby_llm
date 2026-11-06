@@ -318,7 +318,7 @@ module RubyLLM
       CHAINABLE_CHAT_DELEGATES = %i[
         with_tools with_mcp with_tool_options with_provider_tools with_fallbacks with_temperature answer decline
         with_max_output_tokens with_thinking with_citations with_caching
-        with_end_user with_owner with_compaction with_code_execution with_skills
+        with_end_user with_owner with_compaction with_context_budget with_code_execution with_skills
         with_provider_options with_headers with_schema
         convert_unsupported_attachments
         before_request before_message after_message before_tool_call around_tool_call after_tool_result
@@ -411,6 +411,12 @@ module RubyLLM
       # Applies Chat#with_owner and returns this record. The owner is not
       # persisted, so set it, or let the agent's +owner+ set it, on each
       # record you load.
+
+      ##
+      # :method: with_context_budget
+      # :call-seq: with_context_budget(budget = {}, per_result: nil, per_request: nil)
+      #
+      # Applies Chat#with_context_budget and returns this record.
 
       ##
       # :method: with_compaction
@@ -570,6 +576,12 @@ module RubyLLM
       # Delegates to Chat#compaction. See that method for arguments and return values.
 
       ##
+      # :method: context_budget
+      # :call-seq: context_budget
+      #
+      # Delegates to Chat#context_budget. See that method for arguments and return values.
+
+      ##
       # :method: concurrency
       # :call-seq: concurrency
       #
@@ -703,9 +715,9 @@ module RubyLLM
       # The public methods behave as documented on RubyLLM::Chat.
 
       PASSTHROUGH_CHAT_DELEGATES = %i[
-        caching citations code_execution compaction concurrency end_user owner fallbacks headers max_output_tokens
-        provider_options schema provider_tools temperature thinking tool_options tools deferred_tools mcp
-        skills file_store
+        caching citations code_execution compaction context_budget concurrency end_user owner fallbacks headers
+        max_output_tokens provider_options schema provider_tools temperature thinking tool_options tools deferred_tools
+        mcp skills file_store
         awaiting_input? pending_inputs awaiting_tasks? pending_tasks awaiting_person? add_completion count_tokens
         render
       ].freeze
