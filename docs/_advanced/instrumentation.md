@@ -18,7 +18,7 @@ After reading this guide, you will know:
 *   How to subscribe to RubyLLM events in Rails.
 *   How to connect RubyLLM instrumentation outside Rails.
 *   How to enable optional OpenTelemetry tracing.
-*   Which events RubyLLM emits.
+*   Where to find the events RubyLLM emits and their payloads.
 *   Which payload fields may contain sensitive application data.
 
 ## Rails
@@ -187,36 +187,7 @@ RubyLLM includes that value as `payload[:metadata]` on the emitted event. It is 
 
 ## Events
 
-RubyLLM emits these events:
-
-*   `workflow.ruby_llm` - one named workflow block and its correlation ID
-*   `workflow_step.ruby_llm` - one named code region within a workflow
-*   `evaluation.ruby_llm` - one evaluation run, its progress counts, and completed report
-*   `evaluation_trial.ruby_llm` - one completed evaluation case and repetition, including its trial result
-*   `request.ruby_llm` - HTTP request metadata such as provider, method, URL, and status
-*   `usage.ruby_llm` - one finished provider attempt, including retries and cancellations, with status, tokens, cost, owner, and workflow
-*   `batch.ruby_llm` - one batch submission operation
-*   `chat.ruby_llm` - chat completion metadata including model, provider, messages, response, and token usage
-*   `tool_call.ruby_llm` - tool name, arguments, and result
-*   `code_execution.ruby_llm` - one [code execution]({% link _advanced/code-execution.md %}) run: language, duration, exit code, timeout, blocked hosts, and returned files
-*   `embedding.ruby_llm` - embedding model, input, result, token usage, and vector dimensions
-*   `image.ruby_llm` - image generation model, prompt, size, and result
-*   `video.ruby_llm` - one blocking video generation, including the wait for the job and the resulting video
-*   `video_job.ruby_llm` - one video job submission with model, prompt, and the provider's job id
-*   `research_job.ruby_llm` - one hosted research job submission with the provider's job id
-*   `moderation.ruby_llm` - moderation model, input, result, and flagged status
-*   `ocr.ruby_llm` - OCR model, provider options, and extracted document result
-*   `rerank.ruby_llm` - reranking model, query, document count, result, token usage, and cost
-*   `judgment.ruby_llm` - judgment model, question count, attachment count, result, token usage, cost, and application metadata
-*   `speech.ruby_llm` - speech generation model, input, voice, format, and audio byte size
-*   `transcription.ruby_llm` - transcription model, language, result, and token usage
-*   `tokenization.ruby_llm` - tokenization model and result
-*   `compaction.ruby_llm` - one provider-side compaction of a chat's history
-*   `models.refresh.ruby_llm` - model registry refresh metadata
-
-Operations that expose normalized usage (`chat`, `embedding`, `image`, `moderation`, `rerank`, `speech`, and `transcription`) include `payload[:tokens]` and `payload[:cost]`. Both value objects are always present; their individual fields may be `nil` when the provider did not report usage or RubyLLM could not price it. Batch, OCR, and video events expose their operation-specific result and lifecycle fields instead.
-
-See [Progress and Monitoring]({% link _advanced/evaluations.md %}#progress-and-monitoring) in the Evaluations guide for evaluation progress, run IDs, and report payloads.
+RubyLLM emits one event per operation, such as `chat.ruby_llm`, `tool_call.ruby_llm`, or `embedding.ruby_llm`, plus `request.ruby_llm` for each provider API request, counting its retries as one, and `usage.ruby_llm` for each finished attempt of a tracked operation. [Instrumentation Events]({% link _reference/instrumentation-events.md %}) lists every event, when it fires, and the payload fields it carries.
 
 ### Usage Events
 
@@ -238,14 +209,10 @@ ActiveSupport::Notifications.subscribe('usage.ruby_llm') do |event|
 end
 ```
 
-This event fires once for every finished physical attempt. Its payload contains `operation`, `provider`, `model`, `status`, `tokens`, and `cost`. The values use the same objects as the rest of RubyLLM; the internal usage record is not part of the public API. Both objects are always present, while individual fields are `nil` when the provider supplied no defensible figure. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) for status semantics and Rails persistence.
-
-`model` is `nil` for operations that do not select a model, so event subscribers should accept a missing model.
+The event fires once for every finished physical attempt of a tracked operation. See [Usage Events]({% link _reference/instrumentation-events.md %}#usage-events) for its payload, what `model` can hold, and how jobs and batches report differently, and [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) for status semantics and Rails persistence.
 
 ## Payloads
 
 Payloads include the Ruby objects needed by observability adapters, but message content, tool arguments, and provider responses may be sensitive. Only export or log those fields when your application policy allows it.
-
-`chat.ruby_llm` also includes `response_tokens`, the usage for that model call before earlier fallback attempts are attached to the returned message. On failure it contains any usage recorded for that call. The existing `tokens` field retains its response-level meaning.
 
 Non-Rails instrumenters control their own error payload behavior. If your instrumenter records exceptions, keep those payloads consistent with the rest of your observability stack.

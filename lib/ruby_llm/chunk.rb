@@ -5,11 +5,20 @@ module RubyLLM
   # yielded to the block passed to Chat#ask or Chat#complete when streaming.
   # A Chunk is a Message, so it responds to the same readers, but it holds
   # only the data received in that part of the stream, such as a piece of
-  # content, partial tool calls, or the finish reason on the final chunk.
+  # content, partial tool calls, or the finish reason.
   #
   #   chat.ask "Write a haiku about Ruby" do |chunk|
   #     print chunk.content
   #   end
+  #
+  # Streamed chunks always have the +:assistant+ role, and most carry the
+  # model ID. #finish_reason, with predicates such as #max_tokens?,
+  # #content_filtered?, #tool_call_stop?, and #stopped?, arrives near the end
+  # of the stream, not necessarily on the last chunk. #tokens is often empty
+  # until then: +output+ counts the billable output tokens up to that chunk,
+  # including thinking tokens the provider bills as output, and providers
+  # differ in when they report it. Read the final reason and usage from the
+  # Message that Chat#ask returns.
   #
   # Pass +index:+ to build one with its position, such as in a test:
   #

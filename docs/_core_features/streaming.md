@@ -39,19 +39,13 @@ RubyLLM normalizes different provider streaming formats (like Server-Sent Events
 
 ## Understanding Chunks
 
-Each object yielded to the block is an instance of `RubyLLM::Chunk`, which inherits from `RubyLLM::Message`. It contains the partial information received in that specific part of the stream.
+Each object yielded to the block is a `RubyLLM::Chunk`, a `RubyLLM::Message` that holds only what arrived in that part of the stream. Most applications read three things:
 
-Key attributes of a `Chunk`:
+*   `chunk.content` is the text fragment. It can be `nil` or empty on chunks that carry only metadata or tool calls.
+*   `chunk.thinking` is the model's reasoning, when the provider streams it.
+*   `chunk.tool_calls` holds the partial or complete calls when the model invokes a [Tool]({% link _getting_started/tools.md %}). Their arguments may arrive incrementally.
 
-*   `chunk.content`: The text fragment received in this chunk (can be `nil` or empty for some chunks, especially those containing only metadata or tool calls).
-*   `chunk.role`: Always `:assistant` for streamed response chunks.
-*   `chunk.model`: The model generating the response (usually present).
-*   `chunk.tool_calls`: The partial or complete tool calls in this chunk when the model is invoking a [Tool]({% link _getting_started/tools.md %}), empty otherwise. The arguments might be streamed incrementally.
-*   `chunk.tokens.input`: Standard input tokens for the request (often `nil` until the final chunk). Cache reads and writes are exposed separately as `chunk.tokens.cache_read` and `chunk.tokens.cache_write` when providers report them.
-*   `chunk.tokens.output`: Cumulative billable output tokens *up to this chunk* (behavior varies by provider, often only accurate in the final chunk). Includes thinking/reasoning tokens when the provider bills them as output.
-*   `chunk.thinking`: Optional thinking output when providers stream it.
-*   `chunk.index`: The chunk's position within its response, starting at 0. Each response in a loop with tool calls starts again at 0, so you can put chunks back in order after they travel over a channel that may reorder them.
-*   `chunk.finish_reason`: Provider-reported reason the model stopped, usually only present on the final chunk. Chunks also support finish-reason predicates such as `chunk.max_tokens?`, `chunk.content_filtered?`, `chunk.tool_call_stop?`, and `chunk.stopped?`.
+`chunk.index` is the chunk's position within its response, starting at 0. Each response in a loop with tool calls starts again at 0, so to put chunks back in order after they cross a channel that may reorder them, carry your own response identifier along with the index. The [`RubyLLM::Chunk` reference]({{ '/api/RubyLLM/Chunk.html' | relative_url }}) covers every reader, including `role`, `model`, `tokens`, and `finish_reason` with its predicates.
 
 > Do not rely on token counts being present or accurate in every chunk. They are typically finalized only in the last chunk or the final returned message.
 {: .warning }
