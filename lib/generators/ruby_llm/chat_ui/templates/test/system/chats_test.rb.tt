@@ -23,6 +23,7 @@ class <%= chat_controller_class_name.delete_suffix("Controller") %>Test < Applic
     assert_text "word1"
     click_on "Stop"
 
+    assert_no_selector "[data-streaming]", wait: 5
     assert_no_button "Stop"
     assert_text "word1"
     assert_no_text "word200"
