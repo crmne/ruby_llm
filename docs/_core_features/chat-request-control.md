@@ -118,7 +118,7 @@ summary.cost.total
 chat.messages # includes the original conversation and the compaction message
 ```
 
-Manual compaction works with xAI, OpenAI, and Azure through their Responses APIs. For Azure deployments using Chat Completions by default, pass `protocol: :responses` when creating the chat. It is separate from `with_compaction`, which asks the provider to compact automatically during generation.
+Manual compaction works with xAI, OpenAI, and Azure through their Responses APIs. For Azure deployments using Chat Completions by default, pass `protocol: :responses` when creating the chat. Other providers, Anthropic included, raise `RubyLLM::Error`; use `with_compaction` there. It is separate from `with_compaction`, which asks the provider to compact automatically during generation.
 
 `compact` returns a `Message` whose text can be empty. Later requests use its compacted context while your transcript keeps the original messages. You can still change instructions with `with_instructions`. The returned message and `chat.tokens` include compaction usage.
 
