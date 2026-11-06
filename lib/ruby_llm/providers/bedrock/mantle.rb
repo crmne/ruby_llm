@@ -30,6 +30,13 @@ module RubyLLM
 
         private
 
+        # OpenAI's GPT models answer only under /openai/v1, and every other
+        # model, gpt-oss included, only under /v1.
+        def openai_api_path
+          id = @model&.id.to_s
+          id.start_with?('openai.') && !id.start_with?('openai.gpt-oss') ? 'openai/v1' : 'v1'
+        end
+
         def sync_response(payload, additional_headers = {})
           parse_completion_response signed_post(completion_url, payload, additional_headers)
         end
