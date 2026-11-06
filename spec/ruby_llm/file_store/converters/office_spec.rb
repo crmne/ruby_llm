@@ -95,9 +95,9 @@ RSpec.describe RubyLLM::FileStore::Converters::Office do
     end
   end
 
-  it 'finds parts through a relationship id under any prefix' do
-    files = { 'xl/workbook.xml' => '<workbook><sheets><sheet name="B" ns1:id="rId2"/><sheet name="A" ns1:id="rId1"/>' \
-                                   '</sheets></workbook>',
+  it 'finds parts through a relationship id under any prefix, in either quote' do
+    sheets = %(<sheet name="B" ns1:id='rId2'/><sheet name="A" ns1:id="rId1"/>)
+    files = { 'xl/workbook.xml' => "<workbook><sheets>#{sheets}</sheets></workbook>",
               'xl/_rels/workbook.xml.rels' => '<Relationships>' \
                                               '<Relationship Id="rId1" Target="worksheets/sheet1.xml"/>' \
                                               '<Relationship Id="rId2" Target="worksheets/sheet2.xml"/>' \
