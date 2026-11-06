@@ -126,7 +126,11 @@ module RubyLLM
       #
       # A +model:+ passed to ::chat, ::new, ::create, or ::create! replaces
       # the declared model and its options, so the caller's model resolves
-      # on its own provider unless the caller also passes +provider:+.
+      # on its own provider unless the caller also passes +provider:+. Options
+      # declared without a model stay. Later, ::find, ::new with +chat:+, and
+      # ::sync_instructions apply the options only to a record on the declared
+      # model, and always when a block declares it, since the block's choice
+      # is unknown until it runs.
       #
       # The block runs before the chat exists, so it can read inputs but not
       # +chat+.
@@ -739,10 +743,11 @@ module RubyLLM
         input_values:,
         persist_instructions:,
         resolved_context: UNRESOLVED_CONTEXT,
-        agent: nil
+        agent: nil,
+        chat_options: {}
       )
         runtime = runtime_context(chat:, inputs: input_values)
-        apply_chat_options(chat)
+        apply_chat_options(chat, chat_options)
         apply_context(chat, runtime, resolved_context:)
         apply_instructions(chat, runtime, inputs: input_values, persist: persist_instructions)
         apply_tools(chat, runtime)
@@ -820,7 +825,7 @@ module RubyLLM
         record = resolved_chat_class.public_send(
           method_name, **resolved_chat_kwargs(inputs: input_values, options: chat_options)
         )
-        apply_configuration(record, input_values:, persist_instructions: true) if record&.persisted?
+        apply_configuration(record, input_values:, persist_instructions: true, chat_options:) if record&.persisted?
         record
       end
 

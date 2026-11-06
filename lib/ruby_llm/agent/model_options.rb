@@ -4,7 +4,8 @@ module RubyLLM
   class Agent
     # Decides what the Agent::model macro's options apply to. They belong to
     # the declared model, so a caller's +model:+ replaces them along with it,
-    # and a record on another model does not take them.
+    # and a record on another model does not take them. A record being created
+    # knows what its caller passed; a later one is judged by its saved model.
     module ModelOptions # :nodoc:
       DECLARED_WITH_MODEL = %i[provider protocol assume_model_exists].freeze
 
@@ -18,11 +19,12 @@ module RubyLLM
         chat_kwargs.merge(model: evaluate(chat_kwargs[:model], runtime_context(chat: nil, inputs:))).merge(options)
       end
 
-      def apply_chat_options(chat)
-        return unless rails_chat_record?(chat) && declared_model_on?(chat)
+      def apply_chat_options(chat, options = {})
+        return if options.key?(:model) || !rails_chat_record?(chat) || !declared_model_on?(chat)
 
-        chat.assume_model_exists = chat_kwargs[:assume_model_exists] if chat_kwargs.key?(:assume_model_exists)
-        chat.protocol ||= chat_kwargs[:protocol] if chat_kwargs.key?(:protocol)
+        declared = chat_kwargs.except(*options.keys)
+        chat.assume_model_exists = declared[:assume_model_exists] if declared.key?(:assume_model_exists)
+        chat.protocol ||= declared[:protocol] if declared.key?(:protocol)
       end
 
       def declared_model_on?(record)
@@ -39,7 +41,9 @@ module RubyLLM
 
       def declared_id_on?(record)
         declared = chat_kwargs[:model]
+        declared = declared.id if declared.is_a?(Model)
         return true if declared.nil? || declared.is_a?(Proc) || declared == record.model_id
+        return true if Models::Aliases.resolve(declared, record.provider) == record.model_id
 
         Models.find(declared, provider: record.provider).id == record.model_id
       rescue ModelNotFoundError

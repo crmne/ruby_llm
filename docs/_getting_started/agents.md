@@ -110,12 +110,13 @@ end
 
 Options stay beside the block: `model(provider: :openai) { ... }`.
 
-A `model:` you pass when you build a chat replaces the declared model and its options. RubyLLM finds the new model's provider, unless you pass `provider:` too. This works the same on a plain chat and on a record:
+A `model:` you pass when you build a chat replaces the declared model and its options. RubyLLM finds the new model's provider, unless you pass `provider:` too:
 
 ```ruby
-SupportAgent.chat(model: "{{ site.models.anthropic_current }}")
-SupportAgent.create!(model: "{{ site.models.anthropic_current }}", customer: current_customer)
+SupportAgent.chat(model: "{{ site.models.anthropic_current }}", customer: current_customer)
 ```
+
+An agent that declares a provider but no model keeps that provider.
 
 ## Structured Answers
 
@@ -363,7 +364,7 @@ chat = SupportAgent.create!(customer: current_customer)
 SupportAgent.find(chat.id).ask "Where is my order R-1042?"
 ```
 
-`bin/rails generate ruby_llm:agent Support` writes the class to start from. Keywords that aren't declared inputs, such as `customer:` here, go to `Chat.create!`.
+`bin/rails generate ruby_llm:agent Support` writes the class to start from. Keywords that aren't declared inputs, such as `customer:` here, go to `Chat.create!`. A `model:` replaces the declared model and its options, as it does on a plain chat.
 
 `create` and `create!` save the agent's instructions with the new chat. `find` applies them in memory without saving, so a changed prompt reaches old chats without rewriting their history. `SupportAgent.sync_instructions(chat)` saves the current instructions explicitly. When you already have the record, `SupportAgent.new(chat: chat)` configures it without loading it again.
 

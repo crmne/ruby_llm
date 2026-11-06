@@ -658,6 +658,58 @@ RSpec.describe RubyLLM::Agent do
       expect(llm_protocol(created)).to eq(:chat_completions)
     end
 
+    it 'drops the declared options when the caller passes the declared model' do
+      declared = Class.new(described_class) do
+        chat_class Chat
+        model model_for(:openai), provider: :openai, protocol: :responses
+      end
+
+      expect(llm_protocol(declared.create!(model: model_for(:openai)))).to be_nil
+    end
+
+    it 'does not apply a model block protocol when creating with a replacement' do
+      declared = Class.new(described_class) do
+        chat_class Chat
+        model(protocol: :anthropic) { model_for(:anthropic) }
+      end
+
+      created = declared.create!(model: model_for(:openai))
+
+      expect(created.provider).to eq('openai')
+      expect(llm_protocol(created)).to be_nil
+    end
+
+    it 'keeps an explicit nil protocol for the declared model' do
+      declared = Class.new(described_class) do
+        chat_class Chat
+        model model_for(:openai), provider: :openai, protocol: :responses
+      end
+
+      expect(llm_protocol(declared.create!(protocol: nil))).to be_nil
+    end
+
+    it 'applies declared options to a found record when the macro declares a Model' do
+      declared_model = RubyLLM.models.find(model_for(:openai), provider: :openai)
+      declared = Class.new(described_class) do
+        chat_class Chat
+        model declared_model, protocol: :chat_completions
+      end
+      created = Chat.create!(model: model_for(:openai), provider: :openai)
+
+      expect(llm_protocol(declared.find(created.id))).to eq(:chat_completions)
+    end
+
+    it 'applies declared options to a found alias record missing from the registry' do
+      declared = Class.new(described_class) do
+        chat_class Chat
+        model 'claude-sonnet-5', provider: :openrouter, assume_model_exists: true
+      end
+      created = declared.create!
+      allow(RubyLLM::Models).to receive(:find).and_raise(RubyLLM::ModelNotFoundError, 'gone')
+
+      expect(declared.find(created.id).assume_model_exists).to be(true)
+    end
+
     it 'keeps a protocol the caller passes for the declared model' do
       declared = Class.new(described_class) do
         chat_class Chat
