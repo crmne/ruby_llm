@@ -311,7 +311,7 @@ end
 
 ## Code Execution
 
-With [code execution]({% link _advanced/code-execution.md %}) on, `run_code` works with the chat's files instead of the read-only `attachments/` folder. How depends on the store, with nothing to configure.
+With [code execution]({% link _advanced/code-execution.md %}) on, `run_code` works with the chat's files. How depends on the store, with nothing to configure, and the tool description tells the model which applies.
 
 **A store in a folder** (`RubyLLM::FileStore::Directory`) works like a coding agent's workspace: code runs in the folder itself, reads the files where they are, and what it writes, changes, or deletes there is in the store at once. Nothing is copied in or out. The tool result lists the files the run created or changed, and `after_file_write` receives each of them:
 
@@ -326,7 +326,11 @@ chat.file_store.list.map(&:path) # => ["revenue.csv", "revenue.png"]
 
 The sandbox can read and write everything in the folder, hidden files included, so give each store a folder of its own, never one that holds anything else. Skills and mounted folders are linked into the folder for the run, read-only, and removed after it. Where the folder has its own file or folder at that path, the run sees that instead, and the tool result says so.
 
-**Any other store** (memory, Active Storage, or your own) has each run start in an empty directory. The model names the files its code reads in `run_code`'s `files` argument, after finding them with `list_files`, and they are copied in at the same paths; a folder copies everything in it. A name with no file is an error the model sees. What the code writes or changes is saved back to the store when the run ends, and the tool result lists the paths instead of carrying the files. Deleting a file in the run directory leaves it in the store.
+A file someone attached is in that folder at the path `list_files` shows, such as `sales.csv`. There is no `attachments/` folder here, since the code already reads and changes each file where it is.
+
+**Any other store** (memory, Active Storage, or your own) has each run start in a new directory with the conversation's files in `attachments/`, read-only, as a chat without a store does. A CSV someone attached to an earlier message is at `attachments/sales.csv`, without the model naming it. The path under `attachments/` is the path `list_files` shows, the content is what the store holds when the run starts, and only attachments on this chat's own messages come in. A file shown only by `read_file` stays out, so a store with an owner keeps that owner's files.
+
+To change a file, or to read one nobody attached, such as what an earlier run wrote, the model names it in `run_code`'s `files` argument, after finding it with `list_files`, and it is copied into the run directory at the same path; a folder copies everything in it. A name with no file, or one inside `attachments/`, is an error the model sees. What the code writes or changes in the run directory is saved back to the store when the run ends, and the tool result lists the paths instead of carrying the files. Deleting a file in the run directory leaves it in the store.
 
 Either way, the model can then read a chart back with `read_file`, change a script it wrote with `edit_file` after reading it again, and run it again.
 

@@ -29,7 +29,8 @@ RSpec.describe RubyLLM::Chat do
       FakeSandbox.new do |run|
         directory = run[:directory]
         seen[:files] = files_in(directory)
-        seen[:attachments] = File.exist?(File.join(directory, 'attachments'))
+        attachments = File.join(directory, 'attachments')
+        seen[:attachments] = files_in("#{attachments}/").to_h { |path| [path, File.read(File.join(attachments, path))] }
         seen[:templates] = File.symlink?(File.join(directory, 'templates'))
         File.write(File.join(directory, 'notes.md'), 'changed') if File.exist?(File.join(directory, 'notes.md'))
         FileUtils.mkdir_p(File.join(directory, 'out'))
@@ -47,11 +48,82 @@ RSpec.describe RubyLLM::Chat do
       chat.file_store.write('data/b.csv', "c,d\n")
     end
 
-    it 'copies in nothing unless the model names files, and has no attachments folder' do
+    def attach(name, content)
+      file = RubyLLM::Attachment.new(StringIO.new(content), filename: name)
+      chat.add_message(role: :user, content: 'Here', attachments: [file])
+    end
+
+    it 'copies in nothing unless the model names files, and has an empty attachments folder' do
       run_code
 
       expect(seen[:files]).to be_empty
-      expect(seen[:attachments]).to be(false)
+      expect(seen[:attachments]).to be_empty
+    end
+
+    it "gives every run the conversation's files in attachments, and only those" do
+      attach('sales.csv', "a,b\n")
+
+      run_code
+
+      expect(seen[:attachments]).to eq('sales.csv' => "a,b\n")
+      expect(seen[:files]).to be_empty
+      expect(chat.file_store.read('sales.csv')).to eq("a,b\n")
+    end
+
+    it 'finds an attachment at the path list_files shows, as it is in the store now' do
+      attach('sales.csv', 'first')
+      attach('sales.csv', 'second')
+      run_code
+      expect(seen[:attachments]).to eq('sales.csv' => 'first', 'sales-2.csv' => 'second')
+      expect(chat.file_store.list.map(&:path)).to include('sales.csv', 'sales-2.csv')
+
+      chat.file_store.write('sales.csv', 'edited')
+      chat.file_store.delete('sales-2.csv')
+      run_code
+
+      expect(seen[:attachments]).to eq('sales.csv' => 'edited')
+    end
+
+    it 'reports only what the run wrote, not the attachments it was given' do
+      written = []
+      chat.after_file_write { |file| written << file.path }
+      attach('sales.csv', "a,b\n")
+
+      report = JSON.parse(run_code)
+
+      expect(report['files']).to eq(%w[out/chart.svg])
+      expect(written).to eq(%w[sales.csv out/chart.svg])
+    end
+
+    it 'leaves out a file only read_file showed' do
+      call = RubyLLM::ToolCall.new(id: 'read_1', name: 'read_file', arguments: { 'path' => 'private.txt' })
+      chat.add_message(role: :assistant, content: '', tool_calls: { call.id => call })
+      shown = RubyLLM::Attachment.new(StringIO.new('someone else'), filename: 'shown.txt')
+      chat.add_message(role: :tool, content: 'read', tool_call_id: call.id, attachments: [shown])
+
+      run_code
+
+      expect(seen[:attachments]).to be_empty
+      expect(chat.file_store.exist?('shown.txt')).to be(false)
+    end
+
+    it 'runs without an attachment the store cannot keep' do
+      attach('sales.csv', "a,b\n")
+      allow(chat.file_store).to receive(:store_attachment).and_raise(RubyLLM::FileStoreFullError, 'full')
+      allow(RubyLLM.logger).to receive(:warn)
+
+      expect(JSON.parse(run_code)).to include('stdout' => 'done')
+      expect(seen[:attachments]).to be_empty
+      expect(RubyLLM.logger).to have_received(:warn).once
+    end
+
+    it 'refuses a name in the attachments folder, which every run has' do
+      attach('sales.csv', "a,b\n")
+
+      expect(run_code(files: ['attachments/sales.csv'])[:error])
+        .to eq('attachments/sales.csv is in the read-only folder attachments, which every run has')
+      expect(run_code(files: ['attachments'])[:error]).to include('read-only folder attachments')
+      expect(seen).to be_empty
     end
 
     it 'copies in the files named, and every file in a folder named' do
@@ -128,8 +200,9 @@ RSpec.describe RubyLLM::Chat do
 
       expect(tool.parameters_schema['properties']).to include('files')
       expect(tool.parameters_schema['required']).to include('files')
-      expect(tool.description).to include('name them in files').and include('list_files')
-      expect(tool.description).not_to include('./attachments')
+      expect(tool.description).to include('name it in files').and include('list_files')
+      expect(tool.description).to include('attached to the conversation are in ./attachments (read-only)')
+      expect(tool.parameters_schema.dig('properties', 'files', 'description')).to include('./attachments')
     end
 
     it 'keeps mounted folders in their place' do
@@ -229,11 +302,25 @@ RSpec.describe RubyLLM::Chat do
       expect(written).to eq(['kept.txt'])
     end
 
+    it 'finds an attachment at its own path in the folder, with no attachments folder' do
+      file = RubyLLM::Attachment.new(StringIO.new("a,b\n"), filename: 'sales.csv')
+      chat.add_message(role: :user, content: 'Here', attachments: [file])
+      chat.with_code_execution(sandbox: FakeSandbox.new do |run|
+        seen[:sales] = File.read(File.join(run[:directory], 'sales.csv'))
+        seen[:attachments] = File.exist?(File.join(run[:directory], 'attachments'))
+        FakeSandbox.result
+      end)
+
+      expect(JSON.parse(run_code)).not_to have_key('files')
+      expect(seen).to include(sales: "a,b\n", attachments: false)
+    end
+
     it 'copies nothing and takes no files argument' do
       tool = chat.tools[:run_code]
 
       expect(tool.parameters_schema['properties']).not_to include('files')
       expect(tool.description).to include("runs in the folder that holds this chat's files")
+      expect(tool.description).to include('files attached to the conversation')
       expect(Dir.children(root).sort).to eq(%w[keep.txt notes.md same.csv])
     end
 

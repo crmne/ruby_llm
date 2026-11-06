@@ -42,6 +42,23 @@ RSpec.describe RubyLLM::Chat do
     expect(report).not_to have_key('files')
   end
 
+  it "finds the conversation's files in attachments, which it cannot change, and saves nothing from there" do
+    file = RubyLLM::Attachment.new(StringIO.new("id,total\n1,10\n"), filename: 'sales.csv')
+    chat.add_message(role: :user, content: 'Here', attachments: [file])
+
+    report = JSON.parse(chat.tools[:run_code].call(
+                          language: 'shell',
+                          code: 'cat attachments/sales.csv; echo x >> attachments/sales.csv; ' \
+                                'echo y > attachments/new.txt; true'
+                        ))
+
+    expect(report).to include('exit_code' => 0, 'stdout' => "id,total\n1,10\n")
+    expect(report['stderr']).to match(/Read-only file system|Operation not permitted|Permission denied/)
+    expect(report).not_to have_key('files')
+    expect(chat.file_store.list.map(&:path)).to eq(['sales.csv'])
+    expect(chat.file_store.read('sales.csv')).to eq("id,total\n1,10\n")
+  end
+
   context 'with a store in a folder' do
     let(:root) { Dir.mktmpdir('ruby_llm-store') }
 
@@ -60,6 +77,15 @@ RSpec.describe RubyLLM::Chat do
       expect(File.read(File.join(root, 'total.txt'))).to eq("42\n")
       expect(File.read(File.join(root, 'data/orders.csv'))).to end_with("changed\n")
       expect(written).to eq(%w[data/orders.csv total.txt])
+    end
+
+    it 'finds an attachment at its own path' do
+      file = RubyLLM::Attachment.new(StringIO.new("id,total\n1,10\n"), filename: 'sales.csv')
+      chat.add_message(role: :user, content: 'Here', attachments: [file])
+
+      report = JSON.parse(chat.tools[:run_code].call(language: 'shell', code: 'cat sales.csv'))
+
+      expect(report).to include('exit_code' => 0, 'stdout' => "id,total\n1,10\n")
     end
 
     it 'reads a read-only folder linked in for the run, which it cannot change' do

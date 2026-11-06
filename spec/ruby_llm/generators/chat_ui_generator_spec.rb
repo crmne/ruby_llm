@@ -751,6 +751,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
                 expect(status.success?).to be(true), output
                 expect(output).to include('Works now:', 'app/jobs/chat_response_job.rb', 'ChatsController#cancel',
                                           'app/agents/chat_agent.rb', 'code_execution', 'file_store', 'mcp Linear')
+                expect(output).to include('With file_store, code reads attachments in ./attachments')
               end
             end
           end

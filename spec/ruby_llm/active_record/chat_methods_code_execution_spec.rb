@@ -63,4 +63,77 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
     expect(seen).to eq(%w[chart.png rows.csv])
   end
+
+  context 'with files in Active Storage' do
+    let(:seen) { {} }
+    let(:sandbox) do
+      seen = self.seen
+      FakeSandbox.new do |run|
+        attachments = File.join(run[:directory], 'attachments')
+        seen[:attachments] = Dir.glob('**/*', base: "#{attachments}/")
+                                .select { |path| File.file?(File.join(attachments, path)) }.sort
+        seen[:sales] = File.read(File.join(attachments, 'sales.csv')) if seen[:attachments].include?('sales.csv')
+        seen[:readable] = run[:readable]
+        seen[:writable] = run[:writable]
+        FakeSandbox.result
+      end
+    end
+
+    def chat_with_sales(**)
+      chat = Chat.create!(model: model_for(:anthropic), provider: :anthropic)
+      chat.with_code_execution.with_file_store(**).tap do
+        file = RubyLLM::Attachment.new(StringIO.new("a,b\n"), filename: 'sales.csv')
+        chat.to_llm.add_message(role: :user, content: 'Here', attachments: [file])
+      end
+    end
+
+    def run_code(chat)
+      chat.to_llm.tools[:run_code].call(language: 'ruby', code: 'read')
+    end
+
+    it "gives a run the conversation's files, read-only, without naming them" do
+      run_code(chat_with_sales)
+
+      expect(seen[:attachments]).to eq(%w[sales.csv])
+      expect(seen[:sales]).to eq("a,b\n")
+      inputs = seen[:readable].find { |path| path.end_with?('/inputs') }
+      expect(inputs).not_to be_nil
+      expect(seen[:writable]).not_to include(inputs)
+    end
+
+    it 'gives a reloaded chat the attachments of its stored messages' do
+      chat = Chat.create!(model: model_for(:anthropic), provider: :anthropic)
+      chat.messages.create!(role: 'user', content: 'Here').attachments.attach(
+        io: StringIO.new("a,b\n"), filename: 'sales.csv', content_type: 'text/csv'
+      )
+
+      run_code(Chat.find(chat.id).with_code_execution.with_file_store)
+
+      expect(seen[:attachments]).to eq(%w[sales.csv])
+    end
+
+    it "keeps another chat's files out of the run" do
+      other = Chat.create!(model: model_for(:anthropic), provider: :anthropic).with_file_store
+      other.file_store.write('other.csv', 'theirs')
+
+      run_code(chat_with_sales)
+
+      expect(seen[:attachments]).to eq(%w[sales.csv])
+    end
+
+    it "keeps a file only another owner's read_file showed out of the run" do
+      alice = Chat.create!(model: model_for(:openai))
+      bob = Chat.create!(model: model_for(:openai))
+      chat = chat_with_sales(owner: alice)
+      chat.file_store.write('private.txt', 'alice only')
+      call = RubyLLM::ToolCall.new(id: 'read_1', name: 'read_file', arguments: { 'path' => 'private.txt' })
+      chat.to_llm.add_message(role: :assistant, content: '', tool_calls: { call.id => call })
+      shown = RubyLLM::Attachment.new(StringIO.new('alice only'), filename: 'private.txt')
+      chat.to_llm.add_message(role: :tool, content: 'read', tool_call_id: call.id, attachments: [shown])
+
+      run_code(chat.with_file_store(owner: bob))
+
+      expect(seen[:attachments]).to eq(%w[sales.csv])
+    end
+  end
 end
