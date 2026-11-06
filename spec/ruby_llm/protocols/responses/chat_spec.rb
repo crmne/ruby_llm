@@ -579,6 +579,21 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       expect(message).not_to be_stopped
     end
 
+    it 'puts the sources a web search found in the server tool call result' do
+      sources = [{ 'type' => 'url', 'url' => 'https://www.ruby-lang.org/en/downloads/' }]
+      action = { 'type' => 'search', 'query' => 'latest ruby', 'sources' => sources }
+      response = response_with([
+                                 { 'type' => 'web_search_call', 'id' => 'ws_1', 'status' => 'completed',
+                                   'action' => action },
+                                 { 'type' => 'message', 'content' => [{ 'type' => 'output_text', 'text' => 'Done' }] }
+                               ])
+
+      call = protocol.send(:parse_completion_response, response).server_tool_calls.first
+
+      expect(call.input).to eq(action)
+      expect(call.result).to eq(sources)
+    end
+
     it 'reports a normal stop when the provider ran every tool itself' do
       response = response_with([
                                  { 'type' => 'web_search_call', 'id' => 'ws_1', 'status' => 'completed' },

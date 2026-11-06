@@ -192,12 +192,16 @@ module RubyLLM
         end
 
         # Result payloads differ by item type; compaction items carry an
-        # opaque encrypted_content instead of a readable result.
+        # opaque encrypted_content instead of a readable result, and a web
+        # search keeps the sources it found in its action.
         SERVER_TOOL_RESULT_KEYS = %w[result results outputs output encrypted_content].freeze
 
         def server_tool_result(item)
           key = SERVER_TOOL_RESULT_KEYS.find { |candidate| item[candidate] }
-          item[key] if key
+          return item[key] if key
+
+          action = item['action']
+          action['sources'] if action.is_a?(Hash)
         end
 
         def parse_citations(data, output, content)

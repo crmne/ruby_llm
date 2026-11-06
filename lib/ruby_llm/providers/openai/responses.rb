@@ -11,6 +11,10 @@ module RubyLLM
         def document_urls?
           true
         end
+
+        def web_search_sources?
+          true
+        end
       end
     end
   end

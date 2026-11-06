@@ -43,6 +43,10 @@ module RubyLLM
       def tool_search?
         true
       end
+
+      def web_search_sources? # :nodoc:
+        false
+      end
     end
   end
 end
