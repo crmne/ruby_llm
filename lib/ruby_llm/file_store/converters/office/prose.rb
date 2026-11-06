@@ -51,6 +51,7 @@ module RubyLLM
             when 'tc' then @sinks << []
             when 'sp' then open_shape
             when 'ph' then placeholder(tag)
+            when 'tab', 'br', 'cr' then @paragraphs.last&.<<(BREAKS[name])
             end
           end
 

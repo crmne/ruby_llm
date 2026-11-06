@@ -223,6 +223,12 @@ RSpec.describe RubyLLM::FileStore::Converters::Office do
         .to eq("## Slide 1\n\nRevenue\n\nSpeaker notes:\nSay the number")
     end
 
+    it 'keeps a line break that carries run properties' do
+      paragraph = '<a:p><a:r><a:t>One</a:t></a:r><a:br><a:rPr lang="en-US"/></a:br><a:r><a:t>Two</a:t></a:r></a:p>'
+
+      expect(deck("<p:sp><p:txBody>#{paragraph}</p:txBody></p:sp>")).to end_with("Speaker notes:\nOne\nTwo")
+    end
+
     it 'adds no notes section when the notes are empty' do
       expect(deck(shape('7', 'sldNum'))).to eq("## Slide 1\n\nRevenue")
     end
