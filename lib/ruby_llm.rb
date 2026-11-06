@@ -90,7 +90,7 @@ loader.setup
 # Chat#with_provider_tools enables provider-executed tools such as web
 # search, code execution, and remote MCP.
 # Their calls appear as ServerToolCall values, with Citation values for what the
-# answer cites and WebSource values for the pages a search used.
+# answer cites and WebSource values for the pages a search returned.
 # MCP is a Model Context Protocol client: describe a server to connect to
 # in an MCP class, and Chat#with_mcp gives the model its tools. RubyLLM.mcp
 # connects to one inline.

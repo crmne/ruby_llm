@@ -145,7 +145,7 @@ module RubyLLM
         Array(optional_column(:server_tool_calls)).map { |call| RubyLLM::ServerToolCall.from_h(call) }
       end
 
-      # Returns the pages a hosted web search used, as an array of
+      # Returns the pages a hosted web search returned, as an array of
       # RubyLLM::WebSource. See RubyLLM::Message#web_sources.
       def web_sources
         to_llm.web_sources

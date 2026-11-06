@@ -1,13 +1,16 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  # A WebSource is a page a hosted web search used to answer. They appear on
+  # A WebSource is a page a hosted web search returned. They appear on
   # Message#web_sources, normalized across providers. A Citation is different:
   # it links a span of the answer to what supports it, so a search usually
   # has more sources than citations.
   #
   #   response = chat.with_provider_tools(:web_search).ask "What changed in Ruby 4.0?"
   #   response.web_sources.map(&:url) # => ["https://www.ruby-lang.org/en/news/", ...]
+  #
+  # An address here comes from the outside world. See Message#web_sources
+  # before treating one as safe to open.
   #
   class WebSource
     include Support::Inspectable

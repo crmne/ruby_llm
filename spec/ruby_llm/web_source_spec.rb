@@ -45,13 +45,26 @@ RSpec.describe RubyLLM::WebSource do
 
   describe 'Message#web_sources' do
     %w[openai azure meta xai].each do |provider|
-      it "lists what a #{provider} search found and opened, each address once" do
+      it "lists what a #{provider} search returned, each address once" do
         expect(responses_message(provider).web_sources.map(&:url)).to eq(
           %w[https://www.ruby-lang.org/en/downloads/branches/
-             https://www.ruby-lang.org/en/downloads/releases/
-             https://www.ruby-lang.org/en/downloads/]
+             https://www.ruby-lang.org/en/downloads/releases/]
         )
       end
+    end
+
+    it 'leaves out an address the model chose to open, which the search did not return' do
+      chosen = 'https://collect.example/open?d=acme-q3-margin-41pct'
+      responses_output.push(
+        { 'type' => 'web_search_call', 'id' => 'ws_4', 'status' => 'completed',
+          'action' => { 'type' => 'open_page', 'url' => chosen } },
+        { 'type' => 'web_search_call', 'id' => 'ws_5', 'status' => 'completed',
+          'action' => { 'type' => 'find_in_page', 'pattern' => 'margin', 'url' => chosen } }
+      )
+      message = responses_message
+
+      expect(message.web_sources.map(&:url)).not_to include(chosen)
+      expect(message.server_tool_calls.filter_map { |call| call.input['url'] }).to include(chosen)
     end
 
     it 'gives no title where the Responses API reports none' do
@@ -83,6 +96,45 @@ RSpec.describe RubyLLM::WebSource do
              title: 'ruby-lang.org' }]
         )
       end
+    end
+
+    it 'leaves out an address the model chose to read through url_context' do
+      chosen = 'https://example.com/?ref=rubyllm-open-probe-7f3a'
+      gemini_response.dig('candidates', 0, 'groundingMetadata', 'groundingChunks')
+                     .unshift('web' => { 'uri' => chosen, 'title' => 'Example Domain' })
+      gemini_response.dig('candidates', 0)['urlContextMetadata'] = {
+        'urlMetadata' => [{ 'retrievedUrl' => chosen, 'urlRetrievalStatus' => 'URL_RETRIEVAL_STATUS_SUCCESS' }]
+      }
+      calls = RubyLLM::Protocols::Gemini.allocate.send(:metadata_server_tool_calls, gemini_response)
+      message = message_from('gemini', calls)
+
+      expect(message.web_sources.map(&:title)).to eq(['ruby-lang.org'])
+      expect(message.server_tool_calls.map(&:result).to_s).to include(chosen)
+    end
+
+    it 'leaves out the page an Anthropic web fetch read' do
+      fetched = { 'type' => 'web_fetch_tool_result', 'tool_use_id' => 'srvtoolu_2',
+                  'content' => { 'type' => 'web_fetch_result', 'url' => 'https://collect.example/open?d=acme' } }
+      calls = RubyLLM::Protocols::Anthropic::Chat.parse_server_tool_calls([anthropic_result, fetched])
+
+      expect(message_from('anthropic', calls).web_sources.map(&:title)).to eq(['Ruby 4.0.5 Released'])
+    end
+
+    it "leaves out a link to Google's results page, whose query the model could choose" do
+      gemini_response.dig('candidates', 0, 'groundingMetadata', 'groundingChunks')
+                     .push('web' => { 'uri' => 'https://www.google.com/search?q=weather+in+Chicago,+IL',
+                                      'title' => 'Weather information for Chicago, IL' })
+      calls = RubyLLM::Protocols::Gemini.allocate.send(:metadata_server_tool_calls, gemini_response)
+
+      expect(message_from('gemini', calls).web_sources.map(&:title)).to eq(['ruby-lang.org'])
+    end
+
+    it 'skips a Gemini web chunk that has no address' do
+      gemini_response.dig('candidates', 0, 'groundingMetadata', 'groundingChunks')
+                     .push('web' => { 'title' => 'no-address.example' })
+      calls = RubyLLM::Protocols::Gemini.allocate.send(:metadata_server_tool_calls, gemini_response)
+
+      expect(message_from('gemini', calls).web_sources.map(&:title)).to eq(['ruby-lang.org'])
     end
 
     it 'leaves out document chunks that ground a Gemini answer' do

@@ -209,12 +209,12 @@ module RubyLLM
           action['sources'] if action.is_a?(Hash)
         end
 
-        # A search lists what it found in sources, where the service reports
-        # them, and opening a page or searching within one names that page.
+        # Only what a search returned. The address in an open_page or
+        # find_in_page action is the model's own choice and need not be a
+        # result, so text the model read could steer it there.
         def parse_web_sources(message)
-          actions = message.server_tool_calls.select { |call| call.type == 'web_search_call' }
-                           .filter_map { |call| call.raw['action'] }
-          actions.flat_map { |action| Array(action['sources']) + [action] }.filter_map do |source|
+          searches = message.server_tool_calls.select { |call| call.type == 'web_search_call' }
+          searches.flat_map { |call| Array(call.raw.dig('action', 'sources')) }.filter_map do |source|
             WebSource.new(url: source['url'], title: source['title']) if source['url']
           end
         end
