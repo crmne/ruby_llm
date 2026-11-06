@@ -28,7 +28,7 @@ After reading this guide, you will know:
 
 ## Reading Tokens and Costs
 
-RubyLLM prices every call from its model registry, so your application doesn't need a price table of its own. Read token counts and costs directly from the response:
+RubyLLM prices tokens from its model registry, so your application doesn't need a table of token prices. The one charge you may add yourself is a [tool billed per use](#pricing-tool-use). Read token counts and costs directly from the response:
 
 ```ruby
 chat = RubyLLM.chat
