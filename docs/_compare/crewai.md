@@ -561,7 +561,8 @@ CrewAI ships these as framework features:
 | `allow_delegation=True` | `tools OtherAgent` |
 | `Flow`, `@start`, and `@listen` | A Ruby class with one method |
 | `@router` | `if` or `case` |
-| `and_` and `or_` | `Async` blocks and `wait` |
+| `and_` | `Async` blocks, waiting for each |
+| `or_` | `Async` blocks, acting on the first to finish |
 | `@persist` and `checkpoint` | `acts_as_chat` and [one step per job]({% link _advanced/durable-agents.md %}) |
 | `@human_feedback` | `requires_approval`, `approve`, and `deny` |
 | `output_pydantic` and `response_format` | `schema` |

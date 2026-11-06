@@ -22,7 +22,7 @@ After reading this guide, you will know:
 * Where Pydantic AI has something RubyLLM doesn't.
 * When to choose Pydantic AI and when to choose RubyLLM.
 
-> **Last checked** on 6 November 2026 against RubyLLM 2.2 and the Python package `pydantic-ai` 2.66.0. The Python code comes from Pydantic AI's documentation: [Bank Support](https://pydantic.dev/docs/ai/examples/conversational-agents/bank-support/), [Agents](https://pydantic.dev/docs/ai/core-concepts/agent/), [Persistence](https://pydantic.dev/docs/ai/core-concepts/persistence/), and [Going to Production](https://pydantic.dev/docs/ai/production/). Model names match the RubyLLM examples, and comments are removed.
+> **Last checked** on 6 November 2026 against RubyLLM 2.2 and the Python package `pydantic-ai` 2.66.0. The Python code comes from Pydantic AI's documentation: [Bank Support](https://pydantic.dev/docs/ai/examples/conversational-agents/bank-support/), [Agents](https://pydantic.dev/docs/ai/core-concepts/agent/), [Persistence](https://pydantic.dev/docs/ai/core-concepts/persistence/), and [Going to Production](https://pydantic.dev/docs/ai/production/). Model names match the RubyLLM examples, comments are removed, and the streaming example adds `asyncio.run` so it runs as a script.
 
 ## Two Frameworks for the Same Job
 
@@ -143,6 +143,8 @@ The outputs differ too. `result.output` is a validated `SupportOutput` instance.
 Pydantic AI streams through an async context manager:
 
 ```python
+import asyncio
+
 from pydantic_ai import Agent
 
 agent = Agent('anthropic:{{ site.models.anthropic_latest }}')
@@ -152,6 +154,9 @@ async def main():
     async with agent.run_stream('What is the capital of the UK?') as response:
         async for text in response.stream_text():
             print(text)
+
+
+asyncio.run(main())
 ```
 
 Each `text` is the answer so far, and `stream_text(delta=True)` gives you the new part only. [The agent has a separate method](https://pydantic.dev/docs/ai/core-concepts/agent/) for each way of running: `run`, `run_sync`, `run_stream`, `run_stream_sync`, `run_stream_events`, and `iter`. `run_stream` treats the first output that matches the output type as final, so by default, tool calls the model makes alongside that text do not run. To keep the loop going, the documentation points you to `run_stream_events` or `iter`.
