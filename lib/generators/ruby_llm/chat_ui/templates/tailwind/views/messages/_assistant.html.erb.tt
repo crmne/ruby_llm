@@ -18,5 +18,8 @@
 
   <div>
     <span class="text-sm text-gray-600"><%%= assistant.created_at&.strftime("%I:%M %p") %></span>
+    <%% if assistant.cost.total&.positive? %>
+      <span class="text-sm text-gray-600">· <%%= number_to_currency(assistant.cost.total, precision: 4) %></span>
+    <%% end %>
   </div>
 </div>

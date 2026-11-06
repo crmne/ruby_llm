@@ -1,5 +1,5 @@
 class <%= chat_controller_class_name %> < ApplicationController
-  before_action :set_<%= chat_variable_name %>, only: [ :show, :destroy ]
+  before_action :set_<%= chat_variable_name %>, only: [ :show, :destroy, :cancel ]
 
   def index
     @<%= chat_table_name %> = <%= chat_model_name %>.order(created_at: :desc)
@@ -32,6 +32,11 @@ class <%= chat_controller_class_name %> < ApplicationController
 
   def show
     @<%= message_variable_name %> = <%= message_model_name %>.new
+  end
+
+  def cancel
+    @<%= chat_variable_name %>.cancel if @<%= chat_variable_name %>.running?
+    redirect_to @<%= chat_variable_name %>, status: :see_other
   end
 
   def destroy

@@ -13,5 +13,8 @@
   <%%= render "<%= message_model_name.underscore.pluralize %>/attachments", message: assistant %>
   <div style="font-size: 0.85em; color: #666; margin-top: 5px;">
     <%%= assistant.created_at&.strftime("%I:%M %p") %>
+    <%% if assistant.cost.total&.positive? %>
+      · <%%= number_to_currency(assistant.cost.total, precision: 4) %>
+    <%% end %>
   </div>
 </div>
