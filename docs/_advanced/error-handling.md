@@ -36,7 +36,7 @@ Provider operation errors inherit from `RubyLLM::Error`. RubyLLM maps the provid
 | `RubyLLM::PaymentRequiredError` | 402, or a 400 saying the credit balance is too low | No |
 | `RubyLLM::ForbiddenError` | Any other 403 | No |
 | `RubyLLM::ContextLengthExceededError` | 400 or 413 with a recognized context or token limit message, or a 429 with one and no rate limit message | No |
-| `RubyLLM::RateLimitError` | 429, or a 400 with a recognized rate limit message, such as `quota exceeded`, and no context or token limit message | Yes |
+| `RubyLLM::RateLimitError` | Any other 429, or a 400 with a recognized rate limit message, such as `quota exceeded`, and no context or token limit message | Yes |
 | `RubyLLM::ServerError` | 500 | Yes |
 | `RubyLLM::ServiceUnavailableError` | 502, 503, 504 | Yes |
 | `RubyLLM::OverloadedError` | 529, or a 400 saying the service is `currently overloaded` | Yes |
@@ -47,7 +47,7 @@ Provider operation errors inherit from `RubyLLM::Error`. RubyLLM maps the provid
 | `RubyLLM::UnsupportedAttachmentError` | None: the attachment cannot be sent to this provider or model | No |
 | `RubyLLM::UnsupportedServerToolError` | None: the provider or protocol does not define this server tool | No |
 
-Yes means the error is eligible for a retry. Requests that create something on the provider's side, such as file uploads, and streams that have started delivering events are not retried.
+Yes means the error is eligible for a retry. [Automatic Retries](#automatic-retries) lists the requests that are never retried, such as file uploads and streams that have started delivering events.
 
 Local setup and programming errors inherit from `StandardError` directly, so `rescue RubyLLM::Error` does not catch them. Rescue them separately when you need to handle them.
 
@@ -310,7 +310,7 @@ Retries are attempted for:
 
 RubyLLM honors `Retry-After` and `retry-after-ms` headers across providers. `Retry-After` takes precedence when both are present. Invalid millisecond delays fall back to provider-specific timing or the configured backoff. If the requested delay exceeds `retry_max_interval`, RubyLLM raises the error without retrying early.
 
-Requests that create something on the provider's side are never retried: batch submissions, video generation jobs, file uploads, and content caches. When such a request reaches the provider but its response is lost, retrying would create a second job you still pay for, so RubyLLM raises the error and lets you decide whether to submit again.
+Batch submissions, video generation jobs, file uploads, and content caches are never retried, because each creates something on the provider's side. When such a request reaches the provider but its response is lost, retrying would create a second job you still pay for, so RubyLLM raises the error and lets you decide whether to submit again.
 
 You can configure retry behavior via `RubyLLM.configure`:
 

@@ -21,7 +21,7 @@ Subscribe to these events as shown in [Instrumentation and Observability]({% lin
 | `evaluation.ruby_llm` | Around one evaluation run | `evaluation_id`, `evaluation_name`, `total`, `completed`, `started_at`, `report` |
 | `evaluation_trial.ruby_llm` | Around one evaluation case and repetition | `evaluation_id`, `evaluation_name`, `total`, `case`, `repetition`, `completed`, `trial` |
 | `request.ruby_llm` | Around one HTTP request to a provider, including its retries | `provider`, `method`, `url`, `status` |
-| `usage.ruby_llm` | After every finished provider attempt, including retries and cancellations | `operation`, `provider`, `model`, `status`, `tokens`, `cost`, `owner`, and the workflow fields |
+| `usage.ruby_llm` | After every finished attempt of a tracked operation, including retries and cancellations | `operation`, `provider`, `model`, `status`, `tokens`, `cost`, `owner`, and the workflow fields |
 | `batch.ruby_llm` | Around one batch submission | `provider`, `provider_class`, `requests`, and `batch_id` after submission |
 | `chat.ruby_llm` | Around one chat completion | `chat`, `provider`, `provider_class`, `model`, `model_info`, `input_messages`, `messages_after`, `response`, `streaming`, `tokens`, `cost`, `response_tokens` |
 | `tool_call.ruby_llm` | Around one tool execution | `tool_name`, `tool_arguments`, `tool_call_id`, `result` |
@@ -41,7 +41,7 @@ Subscribe to these events as shown in [Instrumentation and Observability]({% lin
 | `compaction.ruby_llm` | Around one provider-side compaction of a chat's history | The same fields as `chat.ruby_llm`, except `response_tokens` |
 | `models.refresh.ruby_llm` | Around one model registry refresh | `remote_only`, `model_count`, `failed_providers` |
 
-The `embedding`, `image`, `judgment`, `moderation`, `ocr`, `rerank`, `speech`, `transcription`, and `video_job` events also carry `provider`, `provider_class`, `model`, `model_info`, `provider_options`, and `metadata`. All of them except `video_job` add `result` and `response_model`.
+The `embedding`, `image`, `judgment`, `moderation`, `ocr`, `rerank`, `speech`, `transcription`, and `video_job` events also carry `provider`, `provider_class`, `model`, `model_info`, `provider_options`, and `metadata`. All of them except `video_job` add `result` and `response_model` when the call succeeds.
 
 See [Progress and Monitoring]({% link _advanced/evaluations.md %}#progress-and-monitoring) in the Evaluations guide for evaluation progress, run IDs, and report payloads.
 
@@ -53,7 +53,12 @@ Operations that expose normalized usage (`chat`, `embedding`, `image`, `judgment
 
 ## Usage Events
 
-`usage.ruby_llm` fires once for every finished physical attempt. Jobs and batches are the exceptions. Video and research jobs report when a job object first sees the job finished, so another object that loads a finished job reports it again. A batch reports when its results are collected, and one picked up with `Batch.find` without its chats or requests reports once per `Batch` object, so collecting it in two places reports it twice. Don't treat the event count as a request count. The payload contains `operation`, `provider`, `model`, `status`, `tokens`, and `cost`. The values use the same objects as the rest of RubyLLM; the internal usage record is not part of the public API. Both `tokens` and `cost` are always present, while their individual fields are `nil` when the provider supplied no defensible figure.
+`usage.ruby_llm` fires once for every finished physical attempt of a tracked operation. Tokenization is not tracked and emits no usage event. Jobs and batches report differently, so don't treat the event count as a request count:
+
+*   A video or research job reports when a job object first sees it finished, so another object that loads the finished job reports it again.
+*   A batch reports when its results are collected: one event per successful result, and one for a failed slot only when the provider billed it. A batch picked up with `Batch.find` without its chats or requests reports once per `Batch` object, so collecting it in two places reports it twice.
+
+The payload contains `operation`, `provider`, `model`, `status`, `tokens`, and `cost`. The values use the same objects as the rest of RubyLLM; the internal usage record is not part of the public API. Both `tokens` and `cost` are always present, while their individual fields are `nil` when the provider supplied no defensible figure.
 
 `model` is `nil` for operations that do not select a model, so subscribers should accept a missing model. For a research job, it holds the hosted agent's ID rather than a registry model ID. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) for status semantics and Rails persistence.
 
