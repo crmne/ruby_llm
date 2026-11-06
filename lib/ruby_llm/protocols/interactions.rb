@@ -10,6 +10,7 @@ module RubyLLM
       include Interactions::Tools
       include Interactions::Streaming
       include Interactions::Transcription
+      include Interactions::Videos
 
       public :render
 
