@@ -49,6 +49,7 @@ loader.ignore("#{__dir__}/tasks")
 loader.ignore("#{__dir__}/generators")
 loader.ignore("#{__dir__}/ruby_llm/active_record")
 loader.ignore("#{__dir__}/ruby_llm/railtie.rb")
+loader.ignore("#{__dir__}/ruby_llm/test_helper.rb")
 loader.setup
 
 # RubyLLM is an AI framework for Ruby and Rails. Build conversations and
