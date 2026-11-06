@@ -41,6 +41,7 @@ module RubyLLM
   # conversation through #messages.
   class Agent
     extend Forwardable
+    extend ModelOptions
     singleton_class.prepend JoinCallbacks, Ownership, Callbacks, ToolConversion, ContextBudget
     include Support::DeprecatedEnumerable
 
@@ -122,6 +123,10 @@ module RubyLLM
       #   model "gpt-6-luna"
       #   model "gpt-6.1-sol", provider: :openai, protocol: :responses
       #   model { quality == :high ? "gpt-6.1-sol" : "gpt-6-luna" }
+      #
+      # A +model:+ passed to ::chat, ::new, ::create, or ::create! replaces
+      # the declared model and its options, so the caller's model resolves
+      # on its own provider unless the caller also passes +provider:+.
       #
       # The block runs before the chat exists, so it can read inputs but not
       # +chat+.
@@ -625,16 +630,9 @@ module RubyLLM
         evaluate(value, runtime_context(chat: nil, inputs:))
       end
 
-      def resolved_chat_kwargs(inputs: {}) # :nodoc:
-        kwargs = chat_kwargs
-        return kwargs unless kwargs[:model].is_a?(Proc)
-
-        kwargs.merge(model: evaluate(kwargs[:model], runtime_context(chat: nil, inputs: inputs)))
-      end
-
       def build_chat(inputs:, options:, resolved_context: UNRESOLVED_CONTEXT) # :nodoc:
         context_value = resolved_context.equal?(UNRESOLVED_CONTEXT) ? self.resolved_context(inputs:) : resolved_context
-        (context_value || RubyLLM).chat(**resolved_chat_kwargs(inputs:), **options)
+        (context_value || RubyLLM).chat(**resolved_chat_kwargs(inputs:, options:))
       end
 
       # Builds a Chat configured with this agent's declarations and returns
@@ -702,8 +700,7 @@ module RubyLLM
 
         input_values, = partition_inputs(kwargs)
         record = chat_or_id.is_a?(resolved_chat_class) ? chat_or_id : resolved_chat_class.find(chat_or_id)
-        apply_assume_model_exists(record)
-        apply_protocol(record)
+        apply_chat_options(record)
         runtime = runtime_context(chat: record, inputs: input_values)
         apply_context(record, runtime)
         apply_instructions(
@@ -821,7 +818,7 @@ module RubyLLM
 
         input_values, chat_options = partition_inputs(kwargs)
         record = resolved_chat_class.public_send(
-          method_name, **resolved_chat_kwargs(inputs: input_values), **chat_options
+          method_name, **resolved_chat_kwargs(inputs: input_values, options: chat_options)
         )
         apply_configuration(record, input_values:, persist_instructions: true) if record&.persisted?
         record
@@ -984,23 +981,6 @@ module RubyLLM
         return evaluate(value, runtime) if value.lambda?
 
         Schematist::Schema.create(&value)
-      end
-
-      def apply_chat_options(chat)
-        apply_assume_model_exists(chat)
-        apply_protocol(chat)
-      end
-
-      def apply_assume_model_exists(chat_object)
-        return unless chat_kwargs.key?(:assume_model_exists) && rails_chat_record?(chat_object)
-
-        chat_object.assume_model_exists = chat_kwargs[:assume_model_exists]
-      end
-
-      def apply_protocol(chat_object)
-        return unless chat_kwargs.key?(:protocol) && rails_chat_record?(chat_object)
-
-        chat_object.protocol = chat_kwargs[:protocol]
       end
 
       def evaluate(value, runtime)

@@ -565,6 +565,136 @@ RSpec.describe RubyLLM::Agent do
     expect(found.to_llm.instance_variable_get(:@protocol)).to eq(:chat_completions)
   end
 
+  context 'when the caller passes a model' do
+    let(:agent_class) do
+      Class.new(described_class) do
+        chat_class Chat
+        model model_for(:anthropic), provider: :anthropic
+        instructions 'Hello'
+      end
+    end
+    let(:declared_with_options) do
+      Class.new(described_class) do
+        chat_class Chat
+        model 'unlisted-model', provider: :anthropic, protocol: :anthropic, assume_model_exists: true
+      end
+    end
+
+    def model_and_provider(record)
+      [record.model_id, record.provider, record.to_llm.model.id, record.to_llm.provider.slug]
+    end
+
+    def llm_protocol(record)
+      record.to_llm.instance_variable_get(:@protocol)
+    end
+
+    it 'replaces the declared model and its provider on create!' do
+      created = agent_class.create!(model: model_for(:openai))
+
+      expect(model_and_provider(created)).to eq([model_for(:openai), 'openai', model_for(:openai), 'openai'])
+    end
+
+    it 'replaces the declared model and its provider on create' do
+      created = agent_class.create(model: model_for(:openai))
+
+      expect(created).to be_persisted
+      expect(model_and_provider(created)).to eq([model_for(:openai), 'openai', model_for(:openai), 'openai'])
+    end
+
+    it 'keeps the replacement when the record is found again' do
+      created = agent_class.create!(model: model_for(:openai))
+
+      found = agent_class.find(created.id)
+
+      expect(model_and_provider(found)).to eq([model_for(:openai), 'openai', model_for(:openai), 'openai'])
+    end
+
+    it 'uses a provider the caller also passes' do
+      created = agent_class.create!(model: 'unlisted-model', provider: :openai, assume_model_exists: true)
+
+      expect(created.model.provider).to eq('openai')
+      expect(created.to_llm.provider.slug).to eq('openai')
+    end
+
+    it 'does not apply options declared for the replaced model when creating' do
+      created = declared_with_options.create!(model: model_for(:openai))
+
+      expect(model_and_provider(created)).to eq([model_for(:openai), 'openai', model_for(:openai), 'openai'])
+      expect(created.assume_model_exists).to be_nil
+      expect(llm_protocol(created)).to be_nil
+    end
+
+    it 'does not apply options declared for the replaced model when finding' do
+      created = declared_with_options.create!(model: model_for(:openai))
+
+      found = declared_with_options.find(created.id)
+
+      expect(found.assume_model_exists).to be_nil
+      expect(llm_protocol(found)).to be_nil
+    end
+
+    it 'does not apply options declared for the replaced model when binding or syncing a record' do
+      created = declared_with_options.create!(model: model_for(:openai))
+
+      bound = declared_with_options.new(chat: Chat.find(created.id)).chat
+      synced = declared_with_options.sync_instructions(created.id)
+
+      expect(llm_protocol(bound)).to be_nil
+      expect(llm_protocol(synced)).to be_nil
+    end
+
+    it 'does not apply options declared for the model a found record switched away from' do
+      created = declared_with_options.create!.with_model(model_for(:openai))
+
+      found = declared_with_options.find(created.id)
+
+      expect(llm_protocol(created)).to be_nil
+      expect(llm_protocol(found)).to be_nil
+    end
+
+    it 'keeps a protocol the caller passes alongside the model' do
+      created = declared_with_options.create!(model: model_for(:openai), protocol: :chat_completions)
+
+      expect(llm_protocol(created)).to eq(:chat_completions)
+    end
+
+    it 'keeps a protocol the caller passes for the declared model' do
+      declared = Class.new(described_class) do
+        chat_class Chat
+        model model_for(:openai), provider: :openai, protocol: :responses
+      end
+
+      created = declared.create!(protocol: :chat_completions)
+
+      expect(llm_protocol(created)).to eq(:chat_completions)
+    end
+
+    it 'applies declared options to a found record whose model is an alias of the declared one' do
+      declared = Class.new(described_class) do
+        chat_class Chat
+        model 'claude-sonnet-5', provider: :openrouter, protocol: :chat_completions
+      end
+      created = declared.create!
+
+      found = declared.find(created.id)
+
+      expect(found.model_id).to eq('anthropic/claude-sonnet-5')
+      expect(llm_protocol(found)).to eq(:chat_completions)
+    end
+
+    it 'keeps a declared provider when the agent declares no model' do
+      declared = Class.new(described_class) do
+        chat_class Chat
+        model provider: :openai, assume_model_exists: true
+      end
+
+      created = declared.create!(model: 'unlisted-model')
+
+      expect(created.model.provider).to eq('openai')
+      expect(created.to_llm.provider.slug).to eq('openai')
+    end
+  end
+
   it 'raises when .sync_instructions is used without chat_class' do
     agent_class = Class.new(RubyLLM::Agent) do
       model model_for(:openai, :temperature)

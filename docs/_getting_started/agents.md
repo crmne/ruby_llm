@@ -110,6 +110,13 @@ end
 
 Options stay beside the block: `model(provider: :openai) { ... }`.
 
+A `model:` you pass when you build a chat replaces the declared model and its options. RubyLLM finds the new model's provider, unless you pass `provider:` too. This works the same on a plain chat and on a record:
+
+```ruby
+SupportAgent.chat(model: "{{ site.models.anthropic_current }}")
+SupportAgent.create!(model: "{{ site.models.anthropic_current }}", customer: current_customer)
+```
+
 ## Structured Answers
 
 Give an agent a `schema`, and every answer comes back as data you read with `parsed`. This one triages incoming support email:
