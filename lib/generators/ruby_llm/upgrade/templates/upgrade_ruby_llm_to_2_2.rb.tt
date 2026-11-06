@@ -90,6 +90,10 @@ class <%= 'upgrade_ruby_llm_to_2_2'.camelize %> < ActiveRecord::Migration<%= mig
     unless column_exists?(:ruby_llm_chat_files, :read_digest)
       add_column :ruby_llm_chat_files, :read_digest, :string
     end
+
+    allow_code_execution_usage unless usage_accepts_code_execution?
+    # Asks again: a check of the application's may still refuse the row.
+    warn_about_code_execution_usage unless usage_accepts_code_execution?
   end
 
   def down
@@ -110,5 +114,46 @@ class <%= 'upgrade_ruby_llm_to_2_2'.camelize %> < ActiveRecord::Migration<%= mig
     remove_column :<%= chat_table_name %>, :claimed_until
     remove_column :<%= chat_table_name %>, :claim_token
     remove_column :ruby_llm_tool_calls, :provider_call_id
+  end
+
+  private
+
+  # Asks the database, since each one prints a check differently: a check
+  # refusing the row leaves code runs unmetered, with only a warning at run time.
+  def usage_accepts_code_execution?
+    connection.transaction(requires_new: true) do
+      execute <<~SQL.squish
+        INSERT INTO ruby_llm_usages (operation, provider, model, status, created_at, updated_at)
+        VALUES ('code_execution', 'sandbox', 'upgrade check', 'succeeded', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+      SQL
+      raise ActiveRecord::Rollback
+    end
+    true
+  rescue ActiveRecord::StatementInvalid
+    false
+  end
+
+  def allow_code_execution_usage
+    lists = check_constraints(:ruby_llm_usages).select { |check| operation_list?(check.expression) }
+    lists.each { |check| remove_check_constraint :ruby_llm_usages, name: check.name }
+    return if lists.empty?
+
+    add_check_constraint :ruby_llm_usages, "operation<%= '::text' if postgresql? %> IN (<%= usage_operations_sql %>)"
+  end
+
+  # The list the install generator wrote, as each database prints it. A check
+  # with other conditions is the application's, and stays.
+  def operation_list?(expression)
+    names = expression.scan(/'(\w+)'/).flatten
+    expression.match?(/\A\(*[`"]?operation[`"]?\)*(?:::\w+)?\s*(?:in\b|=\s*any\b)/i) &&
+      !expression.match?(/\b(?:and|or|not)\b|<>|!=/i) && names.size > 1 && (names - %w[<%= ::RubyLLM::Accounting::Usage::Entry::OPERATIONS.join(' ') %>]).empty?
+  end
+
+  def warn_about_code_execution_usage
+    checks = check_constraints(:ruby_llm_usages).select { |check| check.expression.match?(/\boperation\b/) }
+                                                 .map(&:name).join(', ')
+    say "RubyLLM: ruby_llm_usages refuses 'code_execution' rows, so code runs will go unmetered with only a " \
+        "warning in the log. Check these constraints, or any NOT NULL column you added: #{checks}. Allow the " \
+        'value in a new migration: see "Code Runs Write Usage Rows" in the upgrading guide.'
   end
 end
