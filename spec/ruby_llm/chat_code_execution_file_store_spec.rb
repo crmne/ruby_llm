@@ -107,6 +107,18 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.file_store.exist?('shown.txt')).to be(false)
     end
 
+    it 'tells a read_file result from a question when the read has no id' do
+      attach('sales.csv', "a,b\n")
+      call = RubyLLM::ToolCall.new(id: nil, name: 'read_file', arguments: { 'path' => 'private.txt' })
+      chat.add_message(role: :assistant, content: '', tool_calls: { 'read' => call })
+      shown = RubyLLM::Attachment.new(StringIO.new('someone else'), filename: 'shown.txt')
+      chat.add_message(role: :tool, content: 'read', attachments: [shown])
+
+      run_code
+
+      expect(seen[:attachments].keys).to eq(%w[sales.csv])
+    end
+
     it 'runs without an attachment the store cannot keep' do
       attach('sales.csv', "a,b\n")
       allow(chat.file_store).to receive(:store_attachment).and_raise(RubyLLM::FileStoreFullError, 'full')

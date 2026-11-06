@@ -120,7 +120,7 @@ module RubyLLM
       # with an owner may not show that file to this one.
       def attached_files(list)
         reads = read_paths(list)
-        list.reject { |message| reads.key?(message.tool_call_id) }.flat_map(&:attachments)
+        list.reject { |message| message.role == :tool && reads.key?(message.tool_call_id) }.flat_map(&:attachments)
             .filter_map { |attachment| attached_file(attachment) }.uniq(&:path)
       end
 
