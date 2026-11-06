@@ -125,6 +125,19 @@ Set `config.max_run_time` above your slowest model request without streaming. A 
 
 Claims rely on the database to make them visible to other processes, so call these methods outside your own transactions. Inside a transaction, the claim stays invisible until it commits, and the transaction stays open while the model and tools run.
 
+## When a Run Is Interrupted
+
+| | Stopped with `cancel` | Process dies | Request or tool fails |
+|---|---|---|---|
+| The job | Raises `RubyLLM::CancelledError` at the next event, or when the running tool returns | Is gone | Raises the error |
+| The reply so far | Kept as a reply that is `cancelled?`, if any text streamed | Lost: a blank placeholder stays, and requests leave it out | Removed if blank |
+| Tool calls | A finished one keeps its result. The rest close as unfinished | A finished one keeps its result. The rest run again once the claim expires | The call stays pending, unless the tool turned the error into its result |
+| What continues | Nothing, until a new message: `complete` asks the model nothing | The next `complete` after the claim expires, up to `config.max_run_time` later | The next `complete` or message |
+| The person | Sees the partial reply, and the page stops streaming | Sees "Thinking…" until a job runs again | Sees what your job shows them |
+| Usage | Recorded as `:cancelled`, with the tokens seen | Lost for that attempt | Recorded as `:failed` |
+
+The generated chat UI handles each of these: its job rescues the cancel, shows failures on the page and raises, and checks again every minute while a dead process still holds the chat. With a queue that loses jobs on a crash, such as development's `:async`, a run only resumes when the next message arrives.
+
 ## Resuming a Crashed Run
 
 A process that dies keeps its claims until they expire. Until then, `complete` in another process returns without doing anything and `chat.running?` stays `true`. Check it after `complete` and try again later, so the conversation resumes once the claim expires:
