@@ -5,11 +5,11 @@ http_interactions:
     uri: https://rubyllm.services.ai.azure.com/openai/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"What is
-        5 + 3?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"reasoning":{"effort":"medium"}}'
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"What is 2
+        + 2? Just the number."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -24,11 +24,11 @@ http_interactions:
       message: OK
     headers:
       Content-Length:
-      - '3580'
+      - '5352'
       Content-Type:
       - application/json
       Date:
-      - Fri, 06 Nov 2026 16:27:13 GMT
+      - Sun, 11 Oct 2026 21:07:44 GMT
       Server:
       - istio-envoy
       Vary:
@@ -40,23 +40,23 @@ http_interactions:
       X-Ms-Is-Spilled-Over:
       - 'false'
       X-Ratelimit-Key:
-      - gpt-5.6-luna
+      - gpt-5-nano
       X-Ratelimit-Remaining-Requests:
-      - '49'
+      - '249'
       X-Ratelimit-Reset-Requests:
-      - '1'
+      - '0'
       X-Ratelimit-Limit-Requests:
-      - '50'
+      - '250'
       X-Ratelimit-Renewalperiod-Requests:
       - '60'
       X-Ratelimit-Abusepenalty-Active:
       - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '49997'
+      - '249993'
       X-Ratelimit-Reset-Tokens:
       - '0'
       X-Ratelimit-Limit-Tokens:
-      - '50000'
+      - '250000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
       Azureai-Fe-Is-Streaming:
@@ -64,13 +64,11 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       X-Ms-Served-Model:
-      - gpt-5.6-luna-2026-07-09
+      - gpt-5-nano-2025-08-07
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Apim-Request-Id:
-      - b185b858-e4bf-4f56-8d5c-a8f8cd37c57d
-      X-Http2-Stream-Id:
-      - '665'
+      - 483b6a73-6323-40d3-a479-76283599387b
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -81,13 +79,12 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "resp_07486f899a46b65d016aedffe25f788197a7e0aabb5443d26d",
+          "id": "resp_0b2838d5f0be4627016acbfaa192188197993ae45ec69442d0",
           "object": "response",
-          "created_at": 1793982434,
+          "created_at": 1791752865,
           "status": "completed",
-          "access_programs": null,
           "background": false,
-          "completed_at": 1793982435,
+          "completed_at": 1791752866,
           "content_filters": [
             {
               "blocked": false,
@@ -117,7 +114,7 @@ http_interactions:
               },
               "content_filter_offsets": {
                 "start_offset": 0,
-                "end_offset": 792,
+                "end_offset": 1164,
                 "check_offset": 0
               }
             },
@@ -126,11 +123,11 @@ http_interactions:
               "source_type": "completion",
               "content_filter_raw": [],
               "content_filter_results": {
-                "protected_material_text": {
+                "protected_material_code": {
                   "detected": false,
                   "filtered": false
                 },
-                "protected_material_code": {
+                "protected_material_text": {
                   "detected": false,
                   "filtered": false
                 },
@@ -153,7 +150,7 @@ http_interactions:
               },
               "content_filter_offsets": {
                 "start_offset": 0,
-                "end_offset": 1,
+                "end_offset": 361,
                 "check_offset": 0
               }
             }
@@ -164,11 +161,18 @@ http_interactions:
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
-          "model": "gpt-5.6-luna",
+          "model": "gpt-5-nano",
           "moderation": null,
           "output": [
             {
-              "id": "msg_07486f899a46b65d016aedffe3465081978fbb00ce8e84494e",
+              "id": "rs_0b2838d5f0be4627016acbfaa2307c81979374072459923b47",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqy_qiPFhf2n8MmIiqJpOtk2V1HHr5at6x2oVEh7NSJk_kDegxVYJ4ilykLurwm3EbAxeIapyQJSrDbSa2ZsV3kE_NmJZiP7bMexJ8Dc6Ujtl45kjTcQvavE1v25eAxp59nL6Q5lmv5BxWuW2yMXKDmn3tF5rtPd1nome_opyCcvRutljxvkx3_hbQQzBB3e37wwdC_PfOHzYuJqCBm1BJCuTYy9eACmdJDqCjYskcgIonaoyuKmv2fyvUe-p92XgBiLqNms9bO9qnFwmSJKG3ECoE-KZ9SPruRMJeiYDE7tm3sX4VSAotkYzPAGocCqOgRmougrX-ZunYhFoQPqgWeIFnWNzc61cOVPn04tJR6ZRYFVqaFMOCpYElOrA7Qkxb2u32a_c8rQNYSTOHDCqj0lHm84bKhuCA2pjtvL2Z74dnIMbAOrVNcADUthjcmZudJUuxMN65-RAMYBeMvbKiaL1I5bh0IGKbXdpWJS97rB_o1xgjOmVnUyRPA8Ao6ZuKGTCo8pR-tkIDew_DKxKZjRyIR0aGJG0MqkC93fjeH2Dk-l7Vu2Psi1YflqlaW3I2Yit1TJw3vVyNrzzbYy_04znhqDrc3ST_V_IHeQciI73QxMkzF5ixrlbFTCGnBYu6JRRkBT8xuJTjrpEz08Yn94PcBd4SR0RZkeXFZ1wtQnXX4dcyWFb888IlcSIOVMg79w_pxs6FvDKS0W_Fj26ykXvGL9hQIA0inkUpnTXdXJ3DBmKSAQZGrEKTaeQj65RfcqqLA19AQJiGkF9JDPEa5-zrmzK4b-aFVrolJfrNIEZOLhD_b2R-XU0TDJz0jfhe7m29CidZLAvoLMF5FY8uZ_fFHY-TCHYcSauOpU7fzREiJ2XyIyhzsJSvixp4NTGjvgVtt5_NFaS-0-ExFJrDT68azlzo5KfRRb5YmgME_kVlTsHG9hbPse_Ja_MdvM9x1B3vkjRa9D360wRsldzzM6gKtlxbLcAInDXLOFYpemOBrN61Yo6WGFj0kO-fURZP_ZDdGYBhIduIaqqgHm2yyQqjsRF3iyq-Cwvs4CckC-aL0qqC3LShHOMSzgCseJ7hh-FbaK49Pn6xQzTztE1abp8ZrM0qHcmu8ztW632Eqj3_DNohKsdgI8uADbt2yW9zVGQQ_nmoVgDO40I6X4QotRO6N39cxgIpezwiqz3cgoNmdJ35_NT62woRXuihc4h-Jpm3TlVH4MjGQR7ICVHRHUtPHWjq26UA6_LpDa-fLAsn7-bZ1EYX71Z9fAd59zQ5A8Bm-Ue11e0P5jif8OVwaxzxECk1BimdMTuSITdha45kgv4S3Pv8bZKTt-NzrySIWBJJ_-CZYx7RfxnUC4Nng5lRJBxQmIrbb1vMoXJrEPMxroaJj0BJB6NuULDMhPzYbMhlZ8L_pNnD3hfWGNlCMWakUnhXpxQLItndZQi7Gq6prIYKZCgV0bD3wO1LUYL5Uj_rnddZzxBOhuKYKn_DwxhmdfdeKYxnEsJLF6-NR-tXNXjJcn3R4axUkIQRjZWekODZd28RKsHZFE8VmkRR3dveFWlP-8Do-UeDzPlN6msILwGu2vBIlidxGl2pOPiPi_DIiOIWAHpIPqmvN3A9n5pCgA==",
+              "summary": []
+            },
+            {
+              "id": "msg_0b2838d5f0be4627016acbfaa288508197b9a443dac0c689fd",
               "type": "message",
               "status": "completed",
               "content": [
@@ -176,10 +180,9 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "8"
+                  "text": "4"
                 }
               ],
-              "phase": "final_answer",
               "role": "assistant"
             }
           ],
@@ -187,9 +190,9 @@ http_interactions:
           "presence_penalty": 0.0,
           "previous_response_id": null,
           "prompt_cache_key": null,
-          "prompt_cache_retention": "24h",
+          "prompt_cache_retention": "in_memory",
           "reasoning": {
-            "context": "all_turns",
+            "context": "current_turn",
             "effort": "medium",
             "mode": "standard",
             "summary": null
@@ -225,35 +228,35 @@ http_interactions:
           },
           "tools": [],
           "top_logprobs": 0,
-          "top_p": 0.98,
+          "top_p": 1.0,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 14,
+            "input_tokens": 18,
             "input_tokens_details": {
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 5,
+            "output_tokens": 103,
             "output_tokens_details": {
-              "reasoning_tokens": 0
+              "reasoning_tokens": 64
             },
-            "total_tokens": 19
+            "total_tokens": 121
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 06 Nov 2026 16:27:15 GMT
+  recorded_at: Sun, 11 Oct 2026 21:07:46 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/openai/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"What is
-        5 + 3?"},{"role":"assistant","content":[{"type":"output_text","text":"8"}],"phase":"final_answer"},{"role":"user","content":"Now
-        multiply that by 2"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"reasoning":{"effort":"medium"}}'
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"What is 2
+        + 2? Just the number."},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABqy_qiPFhf2n8MmIiqJpOtk2V1HHr5at6x2oVEh7NSJk_kDegxVYJ4ilykLurwm3EbAxeIapyQJSrDbSa2ZsV3kE_NmJZiP7bMexJ8Dc6Ujtl45kjTcQvavE1v25eAxp59nL6Q5lmv5BxWuW2yMXKDmn3tF5rtPd1nome_opyCcvRutljxvkx3_hbQQzBB3e37wwdC_PfOHzYuJqCBm1BJCuTYy9eACmdJDqCjYskcgIonaoyuKmv2fyvUe-p92XgBiLqNms9bO9qnFwmSJKG3ECoE-KZ9SPruRMJeiYDE7tm3sX4VSAotkYzPAGocCqOgRmougrX-ZunYhFoQPqgWeIFnWNzc61cOVPn04tJR6ZRYFVqaFMOCpYElOrA7Qkxb2u32a_c8rQNYSTOHDCqj0lHm84bKhuCA2pjtvL2Z74dnIMbAOrVNcADUthjcmZudJUuxMN65-RAMYBeMvbKiaL1I5bh0IGKbXdpWJS97rB_o1xgjOmVnUyRPA8Ao6ZuKGTCo8pR-tkIDew_DKxKZjRyIR0aGJG0MqkC93fjeH2Dk-l7Vu2Psi1YflqlaW3I2Yit1TJw3vVyNrzzbYy_04znhqDrc3ST_V_IHeQciI73QxMkzF5ixrlbFTCGnBYu6JRRkBT8xuJTjrpEz08Yn94PcBd4SR0RZkeXFZ1wtQnXX4dcyWFb888IlcSIOVMg79w_pxs6FvDKS0W_Fj26ykXvGL9hQIA0inkUpnTXdXJ3DBmKSAQZGrEKTaeQj65RfcqqLA19AQJiGkF9JDPEa5-zrmzK4b-aFVrolJfrNIEZOLhD_b2R-XU0TDJz0jfhe7m29CidZLAvoLMF5FY8uZ_fFHY-TCHYcSauOpU7fzREiJ2XyIyhzsJSvixp4NTGjvgVtt5_NFaS-0-ExFJrDT68azlzo5KfRRb5YmgME_kVlTsHG9hbPse_Ja_MdvM9x1B3vkjRa9D360wRsldzzM6gKtlxbLcAInDXLOFYpemOBrN61Yo6WGFj0kO-fURZP_ZDdGYBhIduIaqqgHm2yyQqjsRF3iyq-Cwvs4CckC-aL0qqC3LShHOMSzgCseJ7hh-FbaK49Pn6xQzTztE1abp8ZrM0qHcmu8ztW632Eqj3_DNohKsdgI8uADbt2yW9zVGQQ_nmoVgDO40I6X4QotRO6N39cxgIpezwiqz3cgoNmdJ35_NT62woRXuihc4h-Jpm3TlVH4MjGQR7ICVHRHUtPHWjq26UA6_LpDa-fLAsn7-bZ1EYX71Z9fAd59zQ5A8Bm-Ue11e0P5jif8OVwaxzxECk1BimdMTuSITdha45kgv4S3Pv8bZKTt-NzrySIWBJJ_-CZYx7RfxnUC4Nng5lRJBxQmIrbb1vMoXJrEPMxroaJj0BJB6NuULDMhPzYbMhlZ8L_pNnD3hfWGNlCMWakUnhXpxQLItndZQi7Gq6prIYKZCgV0bD3wO1LUYL5Uj_rnddZzxBOhuKYKn_DwxhmdfdeKYxnEsJLF6-NR-tXNXjJcn3R4axUkIQRjZWekODZd28RKsHZFE8VmkRR3dveFWlP-8Do-UeDzPlN6msILwGu2vBIlidxGl2pOPiPi_DIiOIWAHpIPqmvN3A9n5pCgA=="},{"role":"assistant","content":[{"type":"output_text","text":"4"}]},{"role":"user","content":"Now
+        multiply that by 3. Just the number."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -268,11 +271,11 @@ http_interactions:
       message: OK
     headers:
       Content-Length:
-      - '3581'
+      - '5329'
       Content-Type:
       - application/json
       Date:
-      - Fri, 06 Nov 2026 16:27:15 GMT
+      - Sun, 11 Oct 2026 21:07:45 GMT
       Server:
       - istio-envoy
       Vary:
@@ -284,23 +287,23 @@ http_interactions:
       X-Ms-Is-Spilled-Over:
       - 'false'
       X-Ratelimit-Key:
-      - gpt-5.6-luna
+      - gpt-5-nano
       X-Ratelimit-Remaining-Requests:
-      - '49'
+      - '249'
       X-Ratelimit-Reset-Requests:
-      - '1'
+      - '0'
       X-Ratelimit-Limit-Requests:
-      - '50'
+      - '250'
       X-Ratelimit-Renewalperiod-Requests:
       - '60'
       X-Ratelimit-Abusepenalty-Active:
       - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '49991'
+      - '249982'
       X-Ratelimit-Reset-Tokens:
       - '0'
       X-Ratelimit-Limit-Tokens:
-      - '50000'
+      - '250000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
       Azureai-Fe-Is-Streaming:
@@ -308,13 +311,11 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       X-Ms-Served-Model:
-      - gpt-5.6-luna-2026-07-09
+      - gpt-5-nano-2025-08-07
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Apim-Request-Id:
-      - 7f39b558-42f4-4cf9-9477-1352cc8c281f
-      X-Http2-Stream-Id:
-      - '565'
+      - e33c7f18-6698-4fff-8b03-5dec6eed9e8e
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -325,13 +326,12 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "resp_09ee007503e59e55016aedffe3cf8c8197a3e14b12658bfa32",
+          "id": "resp_05e474f6bd548613016acbfaa2ce788193bf6fbf9a140fc080",
           "object": "response",
-          "created_at": 1793982435,
+          "created_at": 1791752866,
           "status": "completed",
-          "access_programs": null,
           "background": false,
-          "completed_at": 1793982437,
+          "completed_at": 1791752867,
           "content_filters": [
             {
               "blocked": false,
@@ -361,7 +361,7 @@ http_interactions:
               },
               "content_filter_offsets": {
                 "start_offset": 0,
-                "end_offset": 886,
+                "end_offset": 1276,
                 "check_offset": 0
               }
             },
@@ -370,11 +370,11 @@ http_interactions:
               "source_type": "completion",
               "content_filter_raw": [],
               "content_filter_results": {
-                "protected_material_text": {
+                "protected_material_code": {
                   "detected": false,
                   "filtered": false
                 },
-                "protected_material_code": {
+                "protected_material_text": {
                   "detected": false,
                   "filtered": false
                 },
@@ -397,7 +397,7 @@ http_interactions:
               },
               "content_filter_offsets": {
                 "start_offset": 0,
-                "end_offset": 2,
+                "end_offset": 348,
                 "check_offset": 0
               }
             }
@@ -408,11 +408,18 @@ http_interactions:
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
-          "model": "gpt-5.6-luna",
+          "model": "gpt-5-nano",
           "moderation": null,
           "output": [
             {
-              "id": "msg_09ee007503e59e55016aedffe4d49081979fe2c446baeb814c",
+              "id": "rs_05e474f6bd548613016acbfaa361d48193b5c110f73ebb53aa",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqy_qjfpjOeDjgDeQ2NYKZ9m_QGH1GdjC1QZknpc2EcqZ2LCY99faFO9o1tkNgy3UpCzcB2HGjVEfxvYmgrkLCJrovM_TXNQl-NxYEuCR-Zd0KEZitGlDgiz6vHGWQxe0_stHeSbn7HdA0XJkjVW-EbaTffjyeLAzUJbalrhRN9N_tA49eWwNLYKuGXVyz25BJPzAvpTC462ED3WrkmT5IsjYyXRjQ5iJJVfbHYbNc0pZRL-7EknXMqGdq85DBHiv5312VIgHyqS0DhdgDV53M1qm6RrDIjmavIEcxdzqQuqDmTs1M0YmJjYrzbivABNriLZ7Mpcfg70l0gm0RSB31J9n6WQ26H2CmIK3YxDMGGAWEw3dKNNelbcsb6SsZ0q5rrRJbeqHmrkGw0fR69pl-8a5born-aGyHmRpo-YRhZtX4WN6Y_F1gxgF-W5-amO-YbCo9bw9amDJymED5SGpxgrK4jf--cR5jnjXEcob-jD4KJkLww6y9-Utq_hYs8NXOA2bps_lXn42y7DbASneFRDIUEhQXhaZF7kaQg8CKnsDXAOSQiXVyx9-kGO8vjAAtDXLJKGLARjzGzvkBylYd8-bZCbeyldpbXFqAyXh_1clkyGFH8IC9owpcUtBpzOjubSqVsHUsgdRgS3slPM-90ybYaGQoSN8l5UHUYluJi55DNYSaXTPHha78S0VnPMvC8sbXckNGHJrGOOz-6vwsdjMfX2ym64nywMTD5D0cxeA36A7lZ5Ri8lc8gC5MT4kfW2EIG0ckA_dZR2vOaioGpOQGe_FuZ8fHMil2ftf85rlnUKoLILlZE5Cw-6Wx9DUM8qcVwLPIxo1AEiB4WfxlMVTWiNnDSRU8UUGDOAADUl96hMQlrpHWtaTthpFCmUI4YGVgYm4djSufQXSZtf50Hbwm9kiorDwvG_SQiaGmJ0SSrCEIDBStjz1IMFuDcojOEaHXUxVyzvspIg2IxIfHjkhZF_N3XSdTrb2PmSmFmZuRnqtDT7HJ8_oqmELois9kH3H2sl2MFVldmgyd5i5eWEAsJ2c-XA2gLVaYSLO9LHFau5WRsoQxvEHwSRDv3_eicsWRJU6yD7H_htV0oIqQlpYezC4yl5Hl6fBwcoNFbKl4VwR7udZLpH_lBbEJ2gcG3Seqfx8ld4E9X1pQyROsBfOik2a0c2gcIQ9LGJvSWBwJd4dETvoTzp2j8QtVgMvoBogVpjPGTL6JsTYaSi_41J82ad3lAeYOd_q9qWYKtbeA5SADh-iNxWiEOfKT2Gp1CYk-9nTcfqBhbVjusHgc85JVOBScd16klK9nVo944l3v5vNOmZyldJszlfMOGFPvkO8c0-6Og8ioluEV9-XzY9cUXgP1gcUTIhwJ4YchAHhs1EC-oLSOeAYKVF7crj3sdYdFRPwDCaf_q_Fsl76C44d__g22cyuCEGLyt-zKgF_XbbT4mwQd7kUIxsD4tLSuyHeLWktJE4hxrPe2W_1VsdF460LDjBZTy7oRCE9Au4CfRzRf6JqckYeVW9G3yQrszKYr8mqHlBMJdcDUof4HRSqlurl4qgsmQ3jw-HZGdX283jHEWsrOoeIFQf6CLkMDSp0d",
+              "summary": []
+            },
+            {
+              "id": "msg_05e474f6bd548613016acbfaa3bac481938e916c67391c5afb",
               "type": "message",
               "status": "completed",
               "content": [
@@ -420,10 +427,9 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "16"
+                  "text": "12"
                 }
               ],
-              "phase": "final_answer",
               "role": "assistant"
             }
           ],
@@ -431,9 +437,9 @@ http_interactions:
           "presence_penalty": 0.0,
           "previous_response_id": null,
           "prompt_cache_key": null,
-          "prompt_cache_retention": "24h",
+          "prompt_cache_retention": "in_memory",
           "reasoning": {
-            "context": "all_turns",
+            "context": "current_turn",
             "effort": "medium",
             "mode": "standard",
             "summary": null
@@ -469,22 +475,22 @@ http_interactions:
           },
           "tools": [],
           "top_logprobs": 0,
-          "top_p": 0.98,
+          "top_p": 1.0,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 31,
+            "input_tokens": 40,
             "input_tokens_details": {
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 5,
+            "output_tokens": 111,
             "output_tokens_details": {
-              "reasoning_tokens": 0
+              "reasoning_tokens": 64
             },
-            "total_tokens": 36
+            "total_tokens": 151
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 06 Nov 2026 16:27:17 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 11 Oct 2026 21:07:47 GMT
+recorded_with: VCR 6.4.0

@@ -5,14 +5,14 @@ http_interactions:
     uri: https://rubyllm.services.ai.azure.com/openai/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"What''s
-        the weather at 52.5200, 13.4050?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"What''s the
+        weather at 52.5200, 13.4050?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -27,11 +27,11 @@ http_interactions:
       message: OK
     headers:
       Content-Length:
-      - '4172'
+      - '6227'
       Content-Type:
       - application/json
       Date:
-      - Fri, 06 Nov 2026 16:24:16 GMT
+      - Sun, 11 Oct 2026 21:07:48 GMT
       Server:
       - istio-envoy
       Vary:
@@ -43,23 +43,23 @@ http_interactions:
       X-Ms-Is-Spilled-Over:
       - 'false'
       X-Ratelimit-Key:
-      - gpt-5.6-luna
+      - gpt-5-nano
       X-Ratelimit-Remaining-Requests:
-      - '49'
+      - '249'
       X-Ratelimit-Reset-Requests:
-      - '1'
+      - '0'
       X-Ratelimit-Limit-Requests:
-      - '50'
+      - '250'
       X-Ratelimit-Renewalperiod-Requests:
       - '60'
       X-Ratelimit-Abusepenalty-Active:
       - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '28622'
+      - '249991'
       X-Ratelimit-Reset-Tokens:
-      - '25'
+      - '0'
       X-Ratelimit-Limit-Tokens:
-      - '50000'
+      - '250000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
       Azureai-Fe-Is-Streaming:
@@ -67,13 +67,11 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       X-Ms-Served-Model:
-      - gpt-5.6-luna-2026-07-09
+      - gpt-5-nano-2025-08-07
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Apim-Request-Id:
-      - 87077cb0-6c3b-479d-8364-8bdb97f01a8b
-      X-Http2-Stream-Id:
-      - '981'
+      - ddef1d2b-fb32-4884-8387-2572ebeb1ada
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -84,13 +82,12 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "resp_0f846d660b297fe6016aedff315efc819798f04af4e18a9982",
+          "id": "resp_09f37d430ad6d0bf016acbfaa5263081939963ce37dd7d226c",
           "object": "response",
-          "created_at": 1793982257,
+          "created_at": 1791752869,
           "status": "completed",
-          "access_programs": null,
           "background": false,
-          "completed_at": 1793982258,
+          "completed_at": 1791752870,
           "content_filters": [
             {
               "blocked": false,
@@ -156,7 +153,7 @@ http_interactions:
               },
               "content_filter_offsets": {
                 "start_offset": 0,
-                "end_offset": 44,
+                "end_offset": 586,
                 "check_offset": 0
               }
             }
@@ -167,15 +164,22 @@ http_interactions:
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
-          "model": "gpt-5.6-luna",
+          "model": "gpt-5-nano",
           "moderation": null,
           "output": [
             {
-              "id": "fc_0f846d660b297fe6016aedff3278e081979f903868e39b36d4",
+              "id": "rs_09f37d430ad6d0bf016acbfaa5de508193b95e293e3def23e3",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqy_qmOy7IvG6Wk8AzAXAL40OzFABMJdj55w2muBWZhE4UW7rOhV6Z1ZUK41j20GILNCAglFzUMoWQ3ceQIyfRlpjwt62Er9mHRwX7-YODPSj0kCEW_6zJuwjMWbRWAc8Kvzd0aINbrNboIUINQf9-QGU3U8JtoAF1CuIy-n2T2nr9t7UfRoYlm1na7jIZJW2XrPaqHqTXI367HTZH9iw85dGGyMWIECbkPe6xNHyYAOHCX09gpmqIZT63ZcQJamwlULMoPWi6BfSqwgTKzou7nRDBIkmBU-zMkQROKGfTl7ibnaExugaz1_ZQdKzIrzRzsH_nV28q7pHkCZJgzg1eX6XNMr2nrM3uSDC1OOATK4m2YTCZGMINZWsYTx5WLKgl0Bbh8Njb9VdMVdsmQgKkPbXgJOA3Ld0JYUyC5oApeXG_iyd-ZDclOrcpj1tVby6N-9NyXrcnudQkfPZj6TYj2TqfSG4CBL-pSvhOF27vwcb3h403FchKkhVx-ZPygVBWqr6kcIdCEVaXpwjn_IhsH8mUsmGcPdwIhvHSCjzwt9ox2hYgMybrxopThuX5xYZUG8C1vAU7fRpUg779BoefhsPq535e8rSCNIc27yypwytMqBiSpS-88NWJBAmfHkwMGiw47Cy4-yIWCYtJ52rCQaeRS32i8CKE-bP3lQOUQEPyfj3LA0eBySk9xPjk0smuFMFdS4sPCtRx8bCL_00XGOHC-F_P3OOAkGWOQzHMg_g7SBKV71t98dUPPR1kRNhTirApB4QGeaJXOHXt_cGIzDoE2DYw-sr1pIUl4klvWW9eqplKNR5KVk_Rn5AMFAonyBGjzrgPPWo3UWa10SjQQgEPUWt1As_wmdFsNY8TF1xHjxNOqrK1ahxEvTOXqW_bUtVwIHBfwUHQdh5i44BXySYuDV0vklp5asylLQhzKJcf4zWVifJgtZk8p9LSgrhVbuXOkwrbcTDiqQG3VUxVxIF92mFZCHm2mTPmbzMyitMFLRwvE12PnZCo-DJsyRx6WLebJIN98Q6v4GJIcHFy-j0HTwFwbOkvspA_Mo1S1SQkSs_GGSdd6NHBtXiS1fLBy1j5pTzEf4k3y10qiuKS--g_9vfHNywsYVXU48IJ4gdRId_xEaUWrANQ98VDt3jvd0PIDUHckMq-v3RGQboPJ4h7oGh8JrnOYTRmCzFDX4rD8Jv4Q2Sut08BPTL095eKfMeIdWMgPQVyC7ss6twpf4tPyoAuoWzRGBJJSS4QMqpauYF0wWeTPNCe1smlmj3bHqStMvDZFNSRpJoszmaKJzbXdwGnoN80I7CezshEySSdZaBckP2wGyIGqsYE-DeY17glG3tDQSw4mrtNDXuFpPYuFMccUKiU5bKZkBt4HJNK88f0Hisn7qbSAoqC0zZmmb0GY1LsBM_JUKciCJX0BrKSC65BN0GjEg4erIxaQ4xre1vBAdG_IsT4Ql3rFNBtUX7CeHjNoPzTP3JDRsxeyVKEnONniDeqCkcwYjFnRubE1cWbqnDxsK7sLDh9TDnz6puCJnGbMVC2l6KnsF_dQXybrbpqz6ml0V0bZ9s8kKVtBBGNo9NhHFS6J-6wshsLTuz9vDV0e6AwZzCXyMRgPUpqJTiGMBV1ciEh7tCp3MvopSmOAlrTLu1nMmdwAfF9QaixWHqnBGqV8nEsG6U1ljoMq8muN1Ushiy6dhY0C4oNfXqyR5fJBG6z2icTqZ0W6XdU6fkEGZLIq_Tuc_zvvSkmgxbLYjqwUQj7RK1t4WrC70EsLNTFF4Zh5_r4ohnE9e8MMBsI_g0eVkLp95lUVIxoXX8UkZaxoCMY0KWt1IpnBw9qioIWgWIxR75t58zDzBt--eeW1lrvbaLeoPrcE-OT4A==",
+              "summary": []
+            },
+            {
+              "id": "fc_09f37d430ad6d0bf016acbfaa675fc8193831708a9744a28ee",
               "type": "function_call",
               "status": "completed",
               "arguments": "{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}",
-              "call_id": "call_mDskXEtr8d70TkAQzJiM7ArF",
+              "call_id": "call_IsUBMmSdn541uMtkPQeUJji0",
               "name": "weather"
             }
           ],
@@ -183,9 +187,9 @@ http_interactions:
           "presence_penalty": 0.0,
           "previous_response_id": null,
           "prompt_cache_key": null,
-          "prompt_cache_retention": "24h",
+          "prompt_cache_retention": "in_memory",
           "reasoning": {
-            "context": "all_turns",
+            "context": "current_turn",
             "effort": "medium",
             "mode": "standard",
             "summary": null
@@ -248,7 +252,7 @@ http_interactions:
             }
           ],
           "top_logprobs": 0,
-          "top_p": 0.98,
+          "top_p": 1.0,
           "truncation": "disabled",
           "usage": {
             "input_tokens": 85,
@@ -256,30 +260,30 @@ http_interactions:
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 27,
+            "output_tokens": 146,
             "output_tokens_details": {
-              "reasoning_tokens": 0
+              "reasoning_tokens": 64
             },
-            "total_tokens": 112
+            "total_tokens": 231
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 06 Nov 2026 16:24:18 GMT
+  recorded_at: Sun, 11 Oct 2026 21:07:50 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/openai/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"What''s
-        the weather at 52.5200, 13.4050?"},{"type":"function_call","call_id":"call_mDskXEtr8d70TkAQzJiM7ArF","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call_mDskXEtr8d70TkAQzJiM7ArF","output":"Current
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"What''s the
+        weather at 52.5200, 13.4050?"},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABqy_qmOy7IvG6Wk8AzAXAL40OzFABMJdj55w2muBWZhE4UW7rOhV6Z1ZUK41j20GILNCAglFzUMoWQ3ceQIyfRlpjwt62Er9mHRwX7-YODPSj0kCEW_6zJuwjMWbRWAc8Kvzd0aINbrNboIUINQf9-QGU3U8JtoAF1CuIy-n2T2nr9t7UfRoYlm1na7jIZJW2XrPaqHqTXI367HTZH9iw85dGGyMWIECbkPe6xNHyYAOHCX09gpmqIZT63ZcQJamwlULMoPWi6BfSqwgTKzou7nRDBIkmBU-zMkQROKGfTl7ibnaExugaz1_ZQdKzIrzRzsH_nV28q7pHkCZJgzg1eX6XNMr2nrM3uSDC1OOATK4m2YTCZGMINZWsYTx5WLKgl0Bbh8Njb9VdMVdsmQgKkPbXgJOA3Ld0JYUyC5oApeXG_iyd-ZDclOrcpj1tVby6N-9NyXrcnudQkfPZj6TYj2TqfSG4CBL-pSvhOF27vwcb3h403FchKkhVx-ZPygVBWqr6kcIdCEVaXpwjn_IhsH8mUsmGcPdwIhvHSCjzwt9ox2hYgMybrxopThuX5xYZUG8C1vAU7fRpUg779BoefhsPq535e8rSCNIc27yypwytMqBiSpS-88NWJBAmfHkwMGiw47Cy4-yIWCYtJ52rCQaeRS32i8CKE-bP3lQOUQEPyfj3LA0eBySk9xPjk0smuFMFdS4sPCtRx8bCL_00XGOHC-F_P3OOAkGWOQzHMg_g7SBKV71t98dUPPR1kRNhTirApB4QGeaJXOHXt_cGIzDoE2DYw-sr1pIUl4klvWW9eqplKNR5KVk_Rn5AMFAonyBGjzrgPPWo3UWa10SjQQgEPUWt1As_wmdFsNY8TF1xHjxNOqrK1ahxEvTOXqW_bUtVwIHBfwUHQdh5i44BXySYuDV0vklp5asylLQhzKJcf4zWVifJgtZk8p9LSgrhVbuXOkwrbcTDiqQG3VUxVxIF92mFZCHm2mTPmbzMyitMFLRwvE12PnZCo-DJsyRx6WLebJIN98Q6v4GJIcHFy-j0HTwFwbOkvspA_Mo1S1SQkSs_GGSdd6NHBtXiS1fLBy1j5pTzEf4k3y10qiuKS--g_9vfHNywsYVXU48IJ4gdRId_xEaUWrANQ98VDt3jvd0PIDUHckMq-v3RGQboPJ4h7oGh8JrnOYTRmCzFDX4rD8Jv4Q2Sut08BPTL095eKfMeIdWMgPQVyC7ss6twpf4tPyoAuoWzRGBJJSS4QMqpauYF0wWeTPNCe1smlmj3bHqStMvDZFNSRpJoszmaKJzbXdwGnoN80I7CezshEySSdZaBckP2wGyIGqsYE-DeY17glG3tDQSw4mrtNDXuFpPYuFMccUKiU5bKZkBt4HJNK88f0Hisn7qbSAoqC0zZmmb0GY1LsBM_JUKciCJX0BrKSC65BN0GjEg4erIxaQ4xre1vBAdG_IsT4Ql3rFNBtUX7CeHjNoPzTP3JDRsxeyVKEnONniDeqCkcwYjFnRubE1cWbqnDxsK7sLDh9TDnz6puCJnGbMVC2l6KnsF_dQXybrbpqz6ml0V0bZ9s8kKVtBBGNo9NhHFS6J-6wshsLTuz9vDV0e6AwZzCXyMRgPUpqJTiGMBV1ciEh7tCp3MvopSmOAlrTLu1nMmdwAfF9QaixWHqnBGqV8nEsG6U1ljoMq8muN1Ushiy6dhY0C4oNfXqyR5fJBG6z2icTqZ0W6XdU6fkEGZLIq_Tuc_zvvSkmgxbLYjqwUQj7RK1t4WrC70EsLNTFF4Zh5_r4ohnE9e8MMBsI_g0eVkLp95lUVIxoXX8UkZaxoCMY0KWt1IpnBw9qioIWgWIxR75t58zDzBt--eeW1lrvbaLeoPrcE-OT4A=="},{"type":"function_call","call_id":"call_IsUBMmSdn541uMtkPQeUJji0","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call_IsUBMmSdn541uMtkPQeUJji0","output":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.1
+      - Faraday v2.14.3
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -294,11 +298,11 @@ http_interactions:
       message: OK
     headers:
       Content-Length:
-      - '4322'
+      - '7381'
       Content-Type:
       - application/json
       Date:
-      - Fri, 06 Nov 2026 16:24:17 GMT
+      - Sun, 11 Oct 2026 21:07:49 GMT
       Server:
       - istio-envoy
       Vary:
@@ -310,23 +314,23 @@ http_interactions:
       X-Ms-Is-Spilled-Over:
       - 'false'
       X-Ratelimit-Key:
-      - gpt-5.6-luna
+      - gpt-5-nano
       X-Ratelimit-Remaining-Requests:
-      - '49'
+      - '249'
       X-Ratelimit-Reset-Requests:
-      - '1'
+      - '0'
       X-Ratelimit-Limit-Requests:
-      - '50'
+      - '250'
       X-Ratelimit-Renewalperiod-Requests:
       - '60'
       X-Ratelimit-Abusepenalty-Active:
       - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '29855'
+      - '249830'
       X-Ratelimit-Reset-Tokens:
-      - '24'
+      - '0'
       X-Ratelimit-Limit-Tokens:
-      - '50000'
+      - '250000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
       Azureai-Fe-Is-Streaming:
@@ -334,13 +338,11 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       X-Ms-Served-Model:
-      - gpt-5.6-luna-2026-07-09
+      - gpt-5-nano-2025-08-07
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Apim-Request-Id:
-      - 4640296d-5a33-4b43-ad06-efa3b4e1f1cd
-      X-Http2-Stream-Id:
-      - '143'
+      - a60a90e5-777e-4c89-b13c-f7b21235b4ef
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -351,13 +353,12 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "resp_0809a3d571d294c6016aedff32e048819597ff9eeb70e02091",
+          "id": "resp_036cfdb0988b7936016acbfaa6dfa481969a13c0e1bae9752c",
           "object": "response",
-          "created_at": 1793982258,
+          "created_at": 1791752870,
           "status": "completed",
-          "access_programs": null,
           "background": false,
-          "completed_at": 1793982260,
+          "completed_at": 1791752873,
           "content_filters": [
             {
               "blocked": false,
@@ -387,7 +388,7 @@ http_interactions:
               },
               "content_filter_offsets": {
                 "start_offset": 0,
-                "end_offset": 161,
+                "end_offset": 751,
                 "check_offset": 0
               }
             },
@@ -423,7 +424,7 @@ http_interactions:
               },
               "content_filter_offsets": {
                 "start_offset": 0,
-                "end_offset": 83,
+                "end_offset": 1396,
                 "check_offset": 0
               }
             }
@@ -434,11 +435,18 @@ http_interactions:
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
-          "model": "gpt-5.6-luna",
+          "model": "gpt-5-nano",
           "moderation": null,
           "output": [
             {
-              "id": "msg_0809a3d571d294c6016aedff33de70819597595ef998db20bd",
+              "id": "rs_036cfdb0988b7936016acbfaa75ee88196b37ab65123816ca5",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqy_qp2R1Vq4L83Ys_qZ1qaK24zrdN4iVFCJxRbwSrLVigKvEWXABJzOkSNYAS9ub4X8PjbOKQWObwjFGBo8nN92pGZVfQGi03RsWfs-Tse2Qm2LbE4TBwXc9u4pol4aSBWRFO86U_mas_zbFwj6Fr254qUD5e1HZL1JmpLoDFSBXyot2hPOFC2qM_HBr0Wu0vZOwGln3Zu_Ws2b00C3pEHstThKlgbzkjCZABq9YKyPS7Igv-WcK3DtFJs4cm3Tz1xqFjNh7Ztc6lJzpSC0ZPFVzmvPnn_z8RiDCdSvyLVm8tMVrHaWQv7FQZaWdR9P0KRld16_m_-DWCECvM294W1l5k_AYPWiAo9GAz-_FKxxO1oVzwUkF_AbVwx5YTF1xhe1LWQxQJVFcihUkAQV5SrcmT6VoZnupaAuNSxEXCsAl54DBX1KbRtMdSZMujMCoXm2Idu-iv-yht_4M2uCVBC01lACg3vmwf3592mocUd6CcmKupl9gOK7KJktdubREKZXOkqXordD_-rJJZxeI_4Xncf20K8fu6yCxqadEa_MdAFuGmujN8DLFsiPahn7cGZcAagCpbHJrbB9ciDnFUl03ESmYRd_W6HbfCee3NUhbgPpdvt__ukCuv88xz0lDTkqsMgSxRmKdiLJrBoWkFqB-WF7tq5IAhijkkgge4PM6d79xqlQhaA2dPyYU30oSwDkrNERXnW9w10ijtv-meSn1M7KBF_u1gJuoGj4_HMKBgW2jA3rnDU0zsL543VTiNwPeTR1yXLY75aSoWXLayRzY_rmy_7Ag1iqxrAIAJbyFRuNDVFkeElxh7K_lYmTjKX9POrzB9fRPbBTQ0WEmkciOzrPAS6sLsylpw7WLOlFuflamqs0lUyLWvZvrnGFcXZcKCGzl_YH2a8nf1Hgb0Jr7KoyOD3qm3VlNvjIDdt7cL-4PrLvqgI765mnWBOsR0aDrhUvQWJs2GX0vMp0QeLLvE5ohcsTVPMGSuPje88DEYwbP2avkI5wEcUmUiMky5ic5TIO89B6iZjfsYrSory5YGXPrp3a4IRALRyE0fMoiueScVQEFOVkV35-GFoqZYy_jALpPjnt72I3PjzaNRQAzCS2ox5JdcAYf5-ySgDHYjnB_6X8xtoAcFhAYRD8pQsIufAgrHGqZ1n-BQD8Awz2alwbDqd7c1KJWsXTr2YCH68beYeVQYHyyWzdo3-Aw4LFkaUr9zxpp2-TR_KYc6Rpicvh5F0wOY3T4Bwjq9HASEwjZS0eXL8NulI0bGgdNEVKSqWxiAK7NDpjHwdRJgL0R1BuFlIXVGgX05P5h-wyM8Vy2jtMpNLT6nAZ4KKWtV5nXblz-Uj-Whvw5SV-aYG7HjLgftg-_geqoERgnDSY6mqxfsL3VX2wcjhJGkTnxaenRuJaemaOw6Iv8Pek07BBfex8Ozdk2ZeJUnhx0k1tTV2I78vhFZlkbQQfgYRVESvFiEyT4fNCMIsBy8cptUu3kFVOTPCqOaVsPZP1SNqLye-MaQ2EXsb6552HaPd2ELbPLdxoC3xOwthhlpZi7o8eQAJK-xu0EvLv8X8PKvOO98TP53L0puFrKyqxDJEOPHdfZM07Lggh3ir2cNfQYX5zgOeBHDqvcpYjZkCXzxp53eAx5MJQREoOEMYAiYpCMGUY6nlVCEad2230lcXfwVAJts1uy8cB1rm2Ds2VvC__7LEtpEtSYhyOxIcgj_ewSv2Gb_YliBxY3ynKOcN_Jmbuw2-FW7MgXSM7werqeh_GtJPzE3mHgrmkHYvRHvPAD-4HNJnXelNJ1whxKdzWKw9hqQfGxDsPXy2sI8rfuwknbc5ltyBdW7nPPoMTe9GvrhK6oLH0UrICZ7eofP0pQNVtLuZJ735kaS4y2___nYPI51z3mqKNxqlyswe_bnFbG_weABoslct5pv5H5D0hNIe0MqkEiWqGppRUDdNjlWwPtcPLdpm-GeuBtnoRBTYrTIkSlsKKyLtiX8FpyCPrM6Sg4JF26HA3q2PItF2I5LShE1NnLfbIcm7GGcZWIXPJSfDvISwM1Z18j1xZj2banI28EbyabZ3Fm6B_RhKstucxrhry3M1honUFA1Z4juar-9Cjnh8Biqh3Sk_LiPYkjPCfItfmt4xf-AMBPGQUlcQjPv3Pb9tV9OfJiTgA9HQr6UWybY5Dm2UYG0oPCyBnfw5-hbvnPrF6CZOoiHA9zF92QkGrZkMwJiWPdn1NWRgRmGtKfBc8C4yhg9D0NlemU5kFbp__G0YD_97BV3Rwz4T-E6Zms_KHZY3MSMd-Ij1z5-__QlSQBXhbzWKFR-FNypNYtLH_Wqh3FZ20gDzdrzcMhZuBuCMbRaI289mRiYObd8MeIndmt7NXIq5E7b9X0AlPkaIesbgvejIrHdK4kfxcLqphz_dijLnH4pHxGVDq9w6dxfXVDZKcR3oyX4AErJdraP1cATBm5_z9z-uHjeco0fKbHXC93ET7XloySxHAeGyuvKAWTRX25dxg4U484Qa-Sju596DbhrgbskwuTAZU1BI4ggY28gGQqLr1g4F6Dv0kHs24EtSByy-V8Ew3xBq0q9HOuV6Ki4E_d-vAvqB4VsTYu2nnK6cEkMCWLBGJIOuPeHLMyQd02Z278lje-Z7UEcPTaKExY8eC0eials4b3mBpFGE4vKant4jBOYXJMgbO-LcfxCa7KJSAgdr_JncOOPRDiHRiCeoxIZ_7PgpRmOKVVNXXrkuCSQr_3yrqCTX82p7J4uq9_H0gfZrRwhDxXPomAHuWT5sVubDsGWZTSCwy05s01sPMrEwW0EbwfsRl_JJ_GImdp1vdYhTld0AGl10ughHKzVRZKkoivzD2f3mbg=",
+              "summary": []
+            },
+            {
+              "id": "msg_036cfdb0988b7936016acbfaa8cd648196882ae9067370d3d5",
               "type": "message",
               "status": "completed",
               "content": [
@@ -446,10 +454,9 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "The current weather at **52.5200, 13.4050** is **15\u00b0C**, with winds at **10 km/h**."
+                  "text": "Current weather at 52.5200, 13.4050 (Berlin): 15\u00b0C with a wind of 10 km/h.\n\nWant a forecast or more details (humidity, precipitation)?"
                 }
               ],
-              "phase": "final_answer",
               "role": "assistant"
             }
           ],
@@ -457,9 +464,9 @@ http_interactions:
           "presence_penalty": 0.0,
           "previous_response_id": null,
           "prompt_cache_key": null,
-          "prompt_cache_retention": "24h",
+          "prompt_cache_retention": "in_memory",
           "reasoning": {
-            "context": "all_turns",
+            "context": "current_turn",
             "effort": "medium",
             "mode": "standard",
             "summary": null
@@ -522,22 +529,22 @@ http_interactions:
             }
           ],
           "top_logprobs": 0,
-          "top_p": 0.98,
+          "top_p": 1.0,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 147,
+            "input_tokens": 263,
             "input_tokens_details": {
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 34,
+            "output_tokens": 385,
             "output_tokens_details": {
-              "reasoning_tokens": 0
+              "reasoning_tokens": 320
             },
-            "total_tokens": 181
+            "total_tokens": 648
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 06 Nov 2026 16:24:20 GMT
-recorded_with: VCR 6.4.1
+  recorded_at: Sun, 11 Oct 2026 21:07:53 GMT
+recorded_with: VCR 6.4.0

@@ -90,7 +90,7 @@ STRUCTURED_OUTPUT_MODELS = filter_local_providers(structured_output_models).free
 
 thinking_models = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
-  { provider: :azure, model: 'gpt-5.6-luna' },
+  { provider: :azure, model: 'gpt-5-nano' },
   { provider: :bedrock, model: 'claude-haiku-4-5' },
   { provider: :cohere, model: 'command-a-reasoning-08-2025' },
   { provider: :gemini, model: 'gemini-3-flash-preview' },

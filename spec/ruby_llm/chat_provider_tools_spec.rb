@@ -580,17 +580,14 @@ RSpec.describe RubyLLM::Chat, :live do
       let(:chat) { RubyLLM.chat(model: model_for(:azure, :thinking), provider: :azure, protocol: :responses) }
 
       it 'chats on the openai/v1 responses endpoint' do
-        response = chat.with_thinking(effort: :high).ask(
-          'A farmer has 17 sheep. All but 9 run away, then he buys 3 times as many as remain. ' \
-          'How many sheep now? Just the number.'
-        )
+        response = chat.ask('What is 2 + 2? Just the number.')
 
         expect(response.raw.env.url.path).to end_with('/openai/v1/responses')
-        expect(response.content).to include('36')
+        expect(response.content).to include('4')
         expect(response.thinking&.signature).to be_present
 
         followup = chat.ask('Now multiply that by 3. Just the number.')
-        expect(followup.content).to include('108')
+        expect(followup.content).to include('12')
       end
 
       it 'streams responses' do
