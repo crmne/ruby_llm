@@ -187,7 +187,7 @@ RubyLLM includes that value as `payload[:metadata]` on the emitted event. It is 
 
 ## Events
 
-RubyLLM emits one event per operation, such as `chat.ruby_llm`, `tool_call.ruby_llm`, or `embedding.ruby_llm`, plus `request.ruby_llm` for each HTTP request and `usage.ruby_llm` for each provider attempt. [Instrumentation Events]({% link _reference/instrumentation-events.md %}) lists every event, when it fires, and the payload fields it carries.
+RubyLLM emits one event per operation, such as `chat.ruby_llm`, `tool_call.ruby_llm`, or `embedding.ruby_llm`, plus `request.ruby_llm` for each HTTP request, counting its retries as one, and `usage.ruby_llm` for each provider attempt. [Instrumentation Events]({% link _reference/instrumentation-events.md %}) lists every event, when it fires, and the payload fields it carries.
 
 ### Usage Events
 
@@ -209,7 +209,7 @@ ActiveSupport::Notifications.subscribe('usage.ruby_llm') do |event|
 end
 ```
 
-The event fires once for every finished physical attempt, and `model` is `nil` for operations that do not select a model. See [Usage Events]({% link _reference/instrumentation-events.md %}#usage-events) for its payload and [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) for status semantics and Rails persistence.
+The event fires once for every finished physical attempt. Video and research jobs report when a job object first sees the job finished, so loading a finished job again reports it again. `model` can be `nil`, or a hosted agent's ID for a research job. See [Usage Events]({% link _reference/instrumentation-events.md %}#usage-events) for its payload and [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) for status semantics and Rails persistence.
 
 ## Payloads
 

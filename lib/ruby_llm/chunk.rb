@@ -13,11 +13,12 @@ module RubyLLM
   #
   # Streamed chunks always have the +:assistant+ role, and most carry the
   # model ID. #finish_reason, with predicates such as #max_tokens?,
-  # #content_filtered?, #tool_call_stop?, and #stopped?, is usually set only
-  # on the final chunk. #tokens is often empty until then: +output+ counts
-  # the billable output tokens up to that chunk, including thinking tokens
-  # the provider bills as output, and providers differ in when they report
-  # it. Read final usage from the Message that Chat#ask returns.
+  # #content_filtered?, #tool_call_stop?, and #stopped?, arrives near the end
+  # of the stream, not necessarily on the last chunk. #tokens is often empty
+  # until then: +output+ counts the billable output tokens up to that chunk,
+  # including thinking tokens the provider bills as output, and providers
+  # differ in when they report it. Read the final reason and usage from the
+  # Message that Chat#ask returns.
   #
   # Pass +index:+ to build one with its position, such as in a test:
   #

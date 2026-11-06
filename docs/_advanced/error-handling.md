@@ -32,20 +32,22 @@ Provider operation errors inherit from `RubyLLM::Error`. RubyLLM maps the provid
 | --- | --- | --- |
 | `RubyLLM::Error` | Any other failure status, such as a 413 that is not a context overflow | No |
 | `RubyLLM::BadRequestError` | 400 | No |
-| `RubyLLM::UnauthorizedError` | 401, or a 400 or 403 whose message reports an invalid key | No |
-| `RubyLLM::PaymentRequiredError` | 402, or a 400 whose message reports a billing problem | No |
-| `RubyLLM::ForbiddenError` | 403 | No |
-| `RubyLLM::ContextLengthExceededError` | 400, 413, or 429 whose message reports a context or token limit | No |
-| `RubyLLM::RateLimitError` | 429, or a 400 whose message reports a rate limit | Yes |
+| `RubyLLM::UnauthorizedError` | 401, or a 400 or 403 with a recognized invalid-credentials message, such as `Incorrect API key` | No |
+| `RubyLLM::PaymentRequiredError` | 402, or a 400 saying the credit balance is too low | No |
+| `RubyLLM::ForbiddenError` | Any other 403 | No |
+| `RubyLLM::ContextLengthExceededError` | 400 or 413 with a recognized context or token limit message, or a 429 with one and no rate limit message | No |
+| `RubyLLM::RateLimitError` | 429, or a 400 with a recognized rate limit message, such as `quota exceeded` | Yes |
 | `RubyLLM::ServerError` | 500 | Yes |
 | `RubyLLM::ServiceUnavailableError` | 502, 503, 504 | Yes |
-| `RubyLLM::OverloadedError` | 529, or a 400 whose message reports an overload | Yes |
+| `RubyLLM::OverloadedError` | 529, or a 400 saying the service is `currently overloaded` | Yes |
 | `RubyLLM::ConnectionError` | None: the provider or an MCP server could not be reached, or the request timed out | Yes, for provider requests |
 | `RubyLLM::ContentFilterError` | None: provider content filters blocked a transcription | No |
 | `RubyLLM::ToolCallParseError` | None: parent of `ToolCallTruncatedError`; other malformed arguments go back to the model | No |
 | `RubyLLM::ToolCallTruncatedError` | None: the output token limit cut off a tool call | No |
 | `RubyLLM::UnsupportedAttachmentError` | None: the attachment cannot be sent to this provider or model | No |
 | `RubyLLM::UnsupportedServerToolError` | None: the provider or protocol does not define this server tool | No |
+
+Yes means the error is eligible for a retry. Requests that create something on the provider's side, such as file uploads, and streams that have started delivering events are not retried.
 
 Local setup and programming errors inherit from `StandardError` directly, so `rescue RubyLLM::Error` does not catch them. Rescue them separately when you need to handle them.
 

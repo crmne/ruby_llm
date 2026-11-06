@@ -45,7 +45,7 @@ Each object yielded to the block is a `RubyLLM::Chunk`, a `RubyLLM::Message` tha
 *   `chunk.thinking` is the model's reasoning, when the provider streams it.
 *   `chunk.tool_calls` holds the partial or complete calls when the model invokes a [Tool]({% link _getting_started/tools.md %}). Their arguments may arrive incrementally.
 
-`chunk.index` is the chunk's position within its response, so you can put chunks back in order after they cross a channel that may reorder them. The [`RubyLLM::Chunk` reference]({{ '/api/RubyLLM/Chunk.html' | relative_url }}) covers every reader, including `role`, `model`, `tokens`, and `finish_reason` with its predicates.
+`chunk.index` is the chunk's position within its response, starting at 0. Each response in a loop with tool calls starts again at 0, so to put chunks back in order after they cross a channel that may reorder them, carry your own response identifier along with the index. The [`RubyLLM::Chunk` reference]({{ '/api/RubyLLM/Chunk.html' | relative_url }}) covers every reader, including `role`, `model`, `tokens`, and `finish_reason` with its predicates.
 
 > Do not rely on token counts being present or accurate in every chunk. They are typically finalized only in the last chunk or the final returned message.
 {: .warning }
