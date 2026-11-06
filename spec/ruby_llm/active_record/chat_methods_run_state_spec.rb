@@ -469,6 +469,23 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(seen).to be(true)
     end
 
+    it 'keeps the stop when the run joins a message after its claim expired' do
+      stub_const("#{described_class}::CANCELLATION_POLL_INTERVAL", 3600.0)
+      chat = question_chat
+      seen = nil
+      job = job_for(chat) do
+        next if seen.present?
+
+        Chat.where(id: chat.id).update_all(claimed_until: 1.minute.ago, cancelled: true)
+        job.add_message(role: :user, content: 'Joined')
+        seen = [row(chat)[:cancelled]]
+      end
+
+      job.complete
+
+      expect(seen).to eq([true])
+    end
+
     it 'keeps the stop when a message arrives after it' do
       stub_const("#{described_class}::CANCELLATION_POLL_INTERVAL", 3600.0)
       chat = question_chat

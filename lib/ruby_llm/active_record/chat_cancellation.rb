@@ -14,7 +14,7 @@ module RubyLLM
       end
 
       def forget_stale_cancellation # :nodoc:
-        return unless run_claims? && has_attribute?(:cancelled)
+        return if @run_claim_token || !run_claims? || !has_attribute?(:cancelled)
 
         requested = unclaimed(chat_row.where(cancelled: true), Time.current)
         remember_cancellation(false) if requested.update_all(cancelled: false) == 1

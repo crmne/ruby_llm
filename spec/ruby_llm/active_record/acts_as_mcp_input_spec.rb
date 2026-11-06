@@ -91,6 +91,17 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     expect(Chat.find(chat.id)).to be_cancelled
   end
 
+  it 'keeps a cancel when an answer changes nothing' do
+    chat = paused_chat
+    Chat.where(id: chat.id).update_all(cancelled: true)
+    state = Chat.find(chat.id).with_mcp(files).to_llm.instance_variable_get(:@tool_call_state)
+    tool_call = RubyLLM::ToolCall.new(id: call_id, name: 'deploy', arguments: {})
+
+    state.record_input(tool_call, tool_call_record.mcp_state)
+
+    expect(Chat.find(chat.id)).to be_cancelled
+  end
+
   it 'resumes from another process after the user answers' do
     chat = paused_chat
     answering = Chat.find(chat.id).with_mcp(files)
