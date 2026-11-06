@@ -214,6 +214,7 @@ speech_models = [
   { provider: :deepgram, model: 'aura-2-thalia-en' },
   { provider: :gemini, model: 'gemini-2.5-flash-preview-tts' },
   { provider: :mistral, model: 'voxtral-mini-tts-latest', voice: 'en_paul_neutral' },
+  { provider: :ollama, model: 'phonon', assume_model_exists: true },
   { provider: :openai, model: 'gpt-4o-mini-tts' },
   { provider: :openrouter, model: 'hexgrad/kokoro-82m', voice: 'af_bella' },
   { provider: :xai, model: 'grok-tts' }
