@@ -14,7 +14,7 @@
   <div style="font-size: 0.85em; color: #666; margin-top: 5px;">
     <%%= assistant.created_at&.strftime("%I:%M %p") %>
     <%% if assistant.cost.total&.positive? %>
-      · <%%= number_to_currency(assistant.cost.total, precision: 4) %>
+      · <%%= cost_label(assistant.cost) %>
     <%% end %>
   </div>
 </div>

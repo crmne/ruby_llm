@@ -3,6 +3,11 @@ module <%= message_helper_module_name %>
     "Default: #{RubyLLM.models.find(RubyLLM.config.default_model).label}"
   end
 
+  # Costs are always in US dollars, whatever the app's locale.
+  def cost_label(cost)
+    number_to_currency(cost.total, unit: "$", precision: 4)
+  end
+
   def tool_result_partial(message)
     name = message.respond_to?(:parent_tool_call) ? message.parent_tool_call&.name.to_s : ""
     partial_for(prefix: "<%= message_model_name.underscore.pluralize %>/tool_results", name: name)

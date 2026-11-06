@@ -12,11 +12,11 @@
 <p>Using <strong><%%= @<%= chat_variable_name %>.model&.label || default_model_display_name %></strong></p>
 
 <%% if @<%= chat_variable_name %>.cost.total&.positive? %>
-  <p>Cost so far: <%%= number_to_currency(@<%= chat_variable_name %>.cost.total, precision: 4) %></p>
+  <p>Cost so far: <%%= cost_label(@<%= chat_variable_name %>.cost) %></p>
 <%% end %>
 
 <div id="<%= message_table_name %>">
-  <%% @<%= chat_variable_name %>.<%= message_table_name %>.each do |<%= message_variable_name %>| %>
+  <%% @<%= chat_variable_name %>.<%= message_table_name %>.includes(:ruby_llm_usages).each do |<%= message_variable_name %>| %>
     <%%= render <%= message_variable_name %> %>
   <%% end %>
 </div>

@@ -294,6 +294,12 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       left = chat.queued_messages.map(&:content)
       abort "left queued \#{left}" unless left == [ "And Q4" ]
 
+      abort "a chat with no cost shows one" if #{controller}.render(:show, assigns: #{assigns}).include?("Cost so far")
+      reply = chat.add_message(role: :assistant, content: "Priced")
+      chat.ruby_llm_usages.create!(operation: "chat", provider: "openai", model: "gpt-test", status: "succeeded",
+                                   message: reply, total_cost: 0.0123)
+      priced = #{controller}.render(:show, assigns: #{assigns})
+      abort "the page lacks the costs" unless priced.scan("$0.0123").size == 2
       abort "running page lacks Stop" unless #{controller}.render(:show, assigns: #{assigns}).match?(/>Stop<|value="Stop"/)
       session.post "#{chats_path}/\#{chat.id}/cancel"
       abort "stop answered \#{session.response.status}" unless session.response.status == 303

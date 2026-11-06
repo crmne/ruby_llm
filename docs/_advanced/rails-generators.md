@@ -97,6 +97,8 @@ class ChatResponseJob < ApplicationJob
     chat = ChatAgent.find(chat_id)
     chat.complete(&:broadcast)
     self.class.perform_later(chat_id) if chat.queued_messages.any? && !chat.waiting?
+  rescue RubyLLM::CancelledError
+    nil
   end
 end
 ```
