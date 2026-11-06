@@ -40,6 +40,8 @@
 
   <%%= render "<%= chat_model_name.underscore.pluralize %>/files", <%= chat_model_name.demodulize.underscore %>: @<%= chat_variable_name %> %>
 
+  <div id="reply_error" data-turbo-permanent></div>
+
   <%% if @<%= chat_variable_name %>.running? %>
     <%%= button_to "Stop", cancel_<%= chat_variable_name %>_path(@<%= chat_variable_name %>), class: "rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium cursor-pointer" %>
   <%% end %>

@@ -1,9 +1,15 @@
 class <%= chat_job_class_name %> < ApplicationJob
   def perform(<%= chat_variable_name %>_id)
     <%= chat_variable_name %> = <%= chat_agent_class_name %>.find(<%= chat_variable_name %>_id)
+    Turbo::StreamsChannel.broadcast_update_to <%= chat_variable_name %>, target: "reply_error", html: ""
     <%= chat_variable_name %>.complete(&:broadcast)
     self.class.perform_later(<%= chat_variable_name %>_id) if <%= chat_variable_name %>.queued_messages.any? && !<%= chat_variable_name %>.waiting?
+    self.class.set(wait: 1.minute).perform_later(<%= chat_variable_name %>_id) if <%= chat_variable_name %>.running?
   rescue RubyLLM::CancelledError
     nil
+  rescue StandardError => error
+    Turbo::StreamsChannel.broadcast_update_to <%= chat_variable_name %>, target: "reply_error",
+      partial: "<%= chat_model_name.underscore.pluralize %>/reply_error", locals: { error: }
+    raise
   end
 end

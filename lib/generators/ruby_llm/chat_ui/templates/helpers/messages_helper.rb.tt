@@ -8,6 +8,12 @@ module <%= message_helper_module_name %>
     number_to_currency(cost.total, unit: "$", precision: 4)
   end
 
+  def reply_error_message(error)
+    return "This conversation is too long for the model. Start a new chat." if error.is_a?(RubyLLM::ContextLengthExceededError)
+
+    "The reply failed. Send your message again."
+  end
+
   def tool_result_partial(message)
     name = message.respond_to?(:parent_tool_call) ? message.parent_tool_call&.name.to_s : ""
     partial_for(prefix: "<%= message_model_name.underscore.pluralize %>/tool_results", name: name)

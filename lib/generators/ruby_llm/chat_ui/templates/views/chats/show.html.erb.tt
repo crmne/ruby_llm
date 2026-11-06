@@ -32,6 +32,8 @@
 
 <%%= render "<%= chat_model_name.underscore.pluralize %>/files", <%= chat_model_name.demodulize.underscore %>: @<%= chat_variable_name %> %>
 
+<div id="reply_error" data-turbo-permanent></div>
+
 <%% if @<%= chat_variable_name %>.running? %>
   <%%= button_to "Stop", cancel_<%= chat_variable_name %>_path(@<%= chat_variable_name %>) %>
 <%% end %>
