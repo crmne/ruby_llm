@@ -8,7 +8,10 @@ module RubyLLM
       # after a U+E202, then U+E201. Only OpenAI's own tools turn them into annotations, so
       # a model that writes them without those tools leaves them in the
       # answer. Model output is untrusted: each character is read once, and
-      # an unclosed marker holds back at most MAX_LENGTH characters. #shift
+      # an unclosed marker holds back at most MAX_LENGTH characters. A space
+      # before a removed marker goes too when punctuation, a space, or the end
+      # of the text follows. Only a marker holds a space past the end of a
+      # stream chunk, so text keeps its order across content parts. #shift
       # maps an index into the text as sent onto the text without markers.
       class CitationMarkers # :nodoc:
         OPEN = "\u{E200}"
@@ -17,6 +20,8 @@ module RubyLLM
         MARKS = [OPEN, CLOSE, SEPARATOR].freeze
         CITE = 'cite'
         REFERENCE = /\A[\w-]*\z/
+        SPACE = ' '
+        BOUNDARY = /[[:space:].,;:!?)\]}]/
         MAX_LENGTH = 256
 
         def self.strip(text)
@@ -28,6 +33,8 @@ module RubyLLM
           @held = nil
           @seen = 0
           @removed = []
+          @space_at = nil
+          @after_marker = false
         end
 
         def feed(text)
@@ -35,19 +42,20 @@ module RubyLLM
 
           output = +''
           text.each_char { |char| read(char, output) }
+          settle_space(output, boundary: false) unless @held || @after_marker
           output.empty? ? nil : output
         end
 
         def finish
-          return unless @held
-
-          held = @held
-          @held = nil
-          return drop(held) if citation_prefix?(held)
-
           output = +''
-          release(held, output)
-          output
+          held = take_held
+          if held && !citation_prefix?(held)
+            release(held, output)
+          else
+            drop(held) if held
+            settle_space(output, boundary: true)
+          end
+          output.empty? ? nil : output
         end
 
         def shift(index)
@@ -66,9 +74,28 @@ module RubyLLM
           elsif MARKS.include?(char)
             @removed << [@seen, 1]
           else
-            output << char
+            write(char, output)
           end
           @seen += 1
+        end
+
+        def write(char, output)
+          settle_space(output, boundary: char.match?(BOUNDARY))
+          if char == SPACE
+            @space_at = @seen
+          else
+            output << char
+          end
+        end
+
+        def settle_space(output, boundary:)
+          if @space_at && @after_marker && boundary
+            @removed << [@space_at, 1]
+          elsif @space_at
+            output << SPACE
+          end
+          @space_at = nil
+          @after_marker = false
         end
 
         def open_marker
@@ -120,10 +147,12 @@ module RubyLLM
 
         def drop(held)
           @removed << [@held_at, held.length]
+          @after_marker = true
           nil
         end
 
         def release(held, output)
+          settle_space(output, boundary: false)
           held.each_char.with_index do |char, index|
             if MARKS.include?(char)
               @removed << [@held_at + index, 1]

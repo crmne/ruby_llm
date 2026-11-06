@@ -222,8 +222,8 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
 
     response = protocol.send(:stream_response, {}) { |chunk| chunks << chunk }
 
-    expect(chunks.map(&:content)).to eq(['Two are urgent ', nil, '. Next '])
-    expect(response.content).to eq('Two are urgent . Next ')
+    expect(chunks.map(&:content)).to eq(['Two are urgent', nil, '. Next'])
+    expect(response.content).to eq('Two are urgent. Next')
   end
 
   it 'gives back held text that turns out not to be a citation marker' do

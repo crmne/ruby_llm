@@ -420,7 +420,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
 
       message = protocol.send(:parse_completion_response, response)
 
-      expect(message.content).to eq('No other changes. ')
+      expect(message.content).to eq('No other changes.')
       expect(message.citations).to be_empty
     end
 
