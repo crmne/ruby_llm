@@ -66,6 +66,28 @@ RSpec.describe 'Support desk handoffs in the Agentic Workflows guide', type: :ta
     expect(provider_requests.last['model']).to eq(doc_model('default_chat'))
   end
 
+  it 'lets the model correct a handoff to an unknown specialist' do
+    define_specialists
+    evaluate('class SupportDesk')
+    stub_openai(tool_turn('handoff', specialist: 'legal'), tool_turn('handoff', specialist: 'billing'), 'Billing here.')
+
+    answer = SupportDesk.new.call(chat.id, 'Why was I charged twice?')
+
+    expect(answer.content).to eq('Billing here.')
+    first_result = provider_requests[1]['input'].find { |item| item['type'] == 'function_call_output' }
+    expect(first_result['output']).to include('Choose billing or shipping')
+  end
+
+  it 'gives up on a reply the critic never passes, after two revisions' do
+    use_page '_advanced/agentic-workflows.md'
+    evaluate('class PolicyCritic')
+    revise = '{"verdict":"revise","feedback":"Mention store credit."}'
+    stub_openai('Draft.', revise, 'Second draft.', revise, 'Third draft.', revise)
+
+    expect(PolicyCheckedReply.new.call(customer, 'Can I return this after 40 days?')).to be_nil
+    expect(provider_requests.size).to eq(6)
+  end
+
   it 'answers without a handoff when the model does not call the tool' do
     define_specialists
     evaluate('class SupportDesk')
