@@ -8,16 +8,48 @@ module RubyLLM
     module Streaming # :nodoc: all
       MAX_JSON_BODY_BYTES = 1024 * 1024
 
-      StreamState = Struct.new(:parser, :buffer, :json_body) do
+      StreamState = Struct.new(:parser, :buffer, :json_body, :stray_json, :stray_error) do
         def initialize
           super
           reset
         end
 
         def reset
-          self.parser = Transport::EventStreamParser.new
+          self.parser = Transport::EventStreamParser.new(on_unknown_line: method(:keep_stray_line))
           self.buffer = +''
           self.json_body = nil
+          self.stray_json = +''
+          self.stray_error = nil
+        end
+
+        # A provider can answer in the middle of a stream with a bare JSON
+        # error, which is not an event. Only a line that starts with "{" can
+        # open one, so other lines the stream doesn't understand can't hide it.
+        # Each object is read as its last line arrives, because more lines can
+        # follow it in the same read.
+        def keep_stray_line(line)
+          return if stray_error
+
+          self.stray_json = +'' if line.start_with?('{')
+          return if stray_json.empty? && !line.start_with?('{')
+          if stray_json.bytesize + line.bytesize > MAX_JSON_BODY_BYTES
+            raise Error, "Streaming JSON response exceeds #{MAX_JSON_BODY_BYTES} bytes"
+          end
+
+          text = line.force_encoding(Encoding::UTF_8).scrub
+          stray_json << text << "\n"
+          read_stray_json if text.rstrip.end_with?('}')
+        end
+
+        private
+
+        # A complete object without an error is a line to ignore, and an
+        # incomplete one may finish on a later line.
+        def read_stray_json
+          self.stray_error = stray_json if JSON.parse(stray_json)['error']
+          self.stray_json = +''
+        rescue JSON::ParserError
+          nil
         end
       end
 
@@ -118,7 +150,12 @@ module RubyLLM
         else
           keep_for_failure(chunk, state)
           handle_sse(chunk, state.parser, env, progress, &)
+          raise_stray_error(state, env)
         end
+      end
+
+      def raise_stray_error(state, env)
+        raise_stream_error(state.stray_error, JSON.parse(state.stray_error), env) if state.stray_error
       end
 
       # Faraday 1 knows the status only once the response ends, so a failure
@@ -155,6 +192,8 @@ module RubyLLM
       # Runs once the response has ended, when a body that never parsed as
       # JSON is the only account of the failure.
       def raise_stream_failure(state, env)
+        state.parser.finish
+        raise_stray_error(state, env)
         raise_buffered_error(state, env)
         return unless failed_http_status(env) && !state.buffer.empty?
 

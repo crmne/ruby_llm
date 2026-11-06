@@ -6,6 +6,8 @@ module RubyLLM
     # whatever pieces the network delivers. Each dispatched event is yielded
     # as its type, data, and last event ID. The last event ID and the
     # reconnection time the server asked for stay readable between events.
+    # The standard ignores a line that names no known field; +on_unknown_line+
+    # receives each one, undecoded, for a caller that wants to look at it.
     class EventStreamParser # :nodoc:
       BOM = "\xEF\xBB\xBF".b.freeze
       LINE_BREAK = /[\r\n]/
@@ -16,7 +18,8 @@ module RubyLLM
 
       attr_reader :last_event_id, :reconnection_time
 
-      def initialize
+      def initialize(on_unknown_line: nil)
+        @on_unknown_line = on_unknown_line
         @buffer = String.new(encoding: Encoding::BINARY)
         @position = 0
         @searched = 0
@@ -41,6 +44,16 @@ module RubyLLM
           process_line(line, &)
         end
         @searched = @buffer.bytesize
+      end
+
+      # Reads a last line the stream ended without a line break. It can't
+      # complete an event, which needs a blank line after it.
+      def finish
+        return if @position >= @buffer.bytesize
+
+        line = @buffer.byteslice(@position, @buffer.bytesize - @position)
+        @position = @searched = @buffer.bytesize
+        process_line(line)
       end
 
       private
@@ -85,18 +98,19 @@ module RubyLLM
         return if line.start_with?(':')
 
         colon = line.index(':')
-        return process_field(line, +'') unless colon
+        return process_field(line, +'', line) unless colon
 
         offset = line.getbyte(colon + 1) == SPACE ? colon + 2 : colon + 1
-        process_field(line.byteslice(0, colon), line.byteslice(offset, line.bytesize - offset))
+        process_field(line.byteslice(0, colon), line.byteslice(offset, line.bytesize - offset), line)
       end
 
-      def process_field(field, value)
+      def process_field(field, value, line)
         case field
         when 'event' then @event_type = decode(value)
         when 'data' then @data << decode(value) << "\n"
         when 'id' then @id_buffer = decode(value) unless value.include?("\0")
         when 'retry' then @reconnection_time = value.to_i if value.match?(DIGITS)
+        else @on_unknown_line&.call(line)
         end
       end
 
