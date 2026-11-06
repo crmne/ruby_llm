@@ -219,7 +219,7 @@ speech_models = [
   { provider: :openrouter, model: 'hexgrad/kokoro-82m', voice: 'af_bella' },
   { provider: :xai, model: 'grok-tts' }
 ].freeze
-SPEECH_MODELS = filter_unrecorded_providers(speech_models).freeze
+SPEECH_MODELS = filter_local_providers(speech_models).freeze
 
 transcription_models = [
   { provider: :cohere, model: 'cohere-transcribe-03-2026' },

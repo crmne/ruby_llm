@@ -155,7 +155,7 @@ RSpec.describe RubyLLM::Providers::Ollama do
     end
 
     it 'raises what Ollama answers to a voice the model lacks' do
-      stub_request(:post, 'http://localhost:11434/v1/audio/speech').to_return(
+      stub_request(:post, "#{RubyLLM.config.ollama_api_base.to_s.delete_suffix('/')}/audio/speech").to_return(
         status: 400, headers: { 'Content-Type' => 'application/json; charset=utf-8' },
         body: { error: { message: 'voice "alloy" not found; available voices: Alfie, Azgorath, Bryony',
                          type: 'invalid_request_error', param: nil, code: nil } }.to_json
