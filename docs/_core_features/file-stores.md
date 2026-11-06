@@ -94,13 +94,13 @@ The model gets these tools:
 
 `read_file` reads text files, and other formats through the converters you register, such as OCR for PDFs (see [Reading Files as Text](#reading-files-as-text)). An image, and a PDF no converter reads, come back as the file itself, so a model with vision sees it.
 
-`search_files` works like `grep`. It ignores case unless the model sets `case_sensitive`, narrows to a folder with `path` and to file names with `glob`, shows lines around each match with `context`, and with `files_only` names the files that match instead of the lines, which is how a model usually starts. Its output stops after 100 matches or 20,000 characters, and a slow regular expression stops instead of tying up the process. It never runs a converter, since one like OCR costs a request per file: it searches text files and the text `read_file` or `chat.file_store.text` already extracted, and names the files it skipped so the model can read them first.
+`search_files` works like `grep`. It ignores case unless the model sets `case_sensitive`, narrows to a folder with `path` and to file names with `glob`, shows lines around each match with `context`, and with `files_only` names the files that match instead of the lines, which is how a model usually starts. Its output stops after 100 matches or 20,000 characters, and a slow regular expression stops instead of tying up the process. It never runs a converter, since one like OCR costs a request per file: it searches text files and the text already extracted, by `read_file`, by `chat.file_store.text`, or by a local converter when the chat kept the attachment, and names the files it skipped so the model can read them first.
 
 A glob without a slash, like `*.md`, matches file names in any folder. One with a slash, like `reports/**/*.csv`, matches paths, inside the `path` folder when the model gives one. `**` matches any number of folders, and `{csv,tsv}` either extension.
 
 ### Several Changes in One Call
 
-A rename or a refactor touches many spans, often in several files. `edit_file` takes them all at once in `edits`, applied in order. Each follows the same rules as a single edit: its `old_text` must appear once unless it sets `replace_all`. If any edit fails, none is written, and the error names it, like `Edit 3: old_text does not appear in app/models/user.rb.` An edit names its own `path`, or uses the call's:
+A rename or a refactor touches many spans, often in several files. `edit_file` takes them all at once in `edits`, applied in order. Each follows the same rules as a single edit: its `old_text` must appear once unless it sets `replace_all`. If any edit fails, none is written, and the error names it, like `Edit 3: old_text does not appear in app/models/user.rb.` If the store refuses a write partway, such as when it is full, the error names the files that already changed. An edit names its own `path`, or uses the call's:
 
 ```json
 {
@@ -237,7 +237,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-Answer `local?` with `true` from a converter that reads files on your machine for free, and the chat runs it as soon as it keeps a file. A PDF text-layer reader is a good one to put before OCR: it reads PDFs with text at once, and a scan, where it finds no text, falls through to OCR when the model reads it:
+Answer `local?` with `true` from a converter that reads files on your machine for free, and the chat runs it as soon as it keeps a file, while it prepares the request, so keep it fast. A PDF text-layer reader is a good one to put before OCR: it reads PDFs with text at once, and a scan, where it finds no text, falls through to OCR when the model reads it:
 
 ```ruby
 class PdfText

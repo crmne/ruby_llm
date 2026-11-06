@@ -40,8 +40,7 @@ module RubyLLM
             changes = changes_for(path, old_text, new_text, replace_all, edits)
             store.with_lock do
               files = apply(changes)
-              files.each { |file_path, (content, _count)| write.call(file_path, content) }
-              report(files)
+              write_all(files, write) || report(files)
             end
           end
         end
@@ -93,6 +92,22 @@ module RubyLLM
           end
         end
 
+        # Returns the error once a write fails after others landed, instead
+        # of raising, so a store's transaction keeps what the answer reports.
+        def write_all(files, write)
+          changed = []
+          files.each do |path, (content, _count)|
+            write.call(path, content)
+            changed << path
+          end
+          nil
+        rescue FileStoreFullError, SystemCallError => e
+          raise if changed.empty?
+
+          reason = e.is_a?(SystemCallError) ? SystemCallError.new(e.errno).message : e.message
+          { error: "#{reason} These files already changed: #{changed.join(', ')}." }
+        end
+
         def labelled(change)
           yield
         rescue ToolError => e
@@ -106,6 +121,8 @@ module RubyLLM
         end
 
         def replace(content, path, change)
+          raise ToolError, 'Pass new_text, or an empty string to delete old_text.' if change.new_text.nil?
+
           old_text = change.old_text.to_s
           count = old_text.empty? ? 0 : content.scan(old_text).size
           raise ToolError, "old_text does not appear in #{path}." if count.zero?

@@ -346,6 +346,39 @@ RSpec.describe RubyLLM::FileStore::Tools do
       expect(written).to eq(%w[a.md b.md])
     end
 
+    it 'refuses an edit without new_text, and takes an empty one to delete' do
+      expect(call(:edit_file, path: 'a.md', old_text: 'one '))
+        .to eq(error: 'Pass new_text, or an empty string to delete old_text.')
+      expect(call(:edit_file, path: 'a.md', edits: [{ old_text: 'one ' }]))
+        .to eq(error: 'Edit 1: Pass new_text, or an empty string to delete old_text.')
+      expect(files.read('a.md')).to eq("one two three\n")
+
+      expect(call(:edit_file, path: 'a.md', old_text: 'one ', new_text: '')).to start_with('Replaced 1')
+      expect(files.read('a.md')).to eq("two three\n")
+    end
+
+    it 'says which files already changed when a later write fails, and tells the chat about them' do
+      written = []
+      chat.after_file_write { |file| written << file.path }
+      allow(files).to receive(:write).and_wrap_original do |original, path, content|
+        raise RubyLLM::FileStoreFullError, 'The files are full.' if path == 'b.md'
+
+        original.call(path, content)
+      end
+
+      expect(call(:edit_file, edits: [{ path: 'a.md', old_text: 'one', new_text: 'uno' },
+                                      { path: 'b.md', old_text: 'beta', new_text: 'gamma' }]))
+        .to eq(error: 'The files are full. These files already changed: a.md.')
+      expect(written).to eq(%w[a.md])
+      expect(call(:edit_file, path: 'a.md', old_text: 'uno', new_text: 'one')).to start_with('Replaced 1')
+    end
+
+    it 'answers a failed first write with the reason alone' do
+      allow(files).to receive(:write).and_raise(Errno::EACCES)
+
+      expect(call(:edit_file, path: 'a.md', old_text: 'one', new_text: 'uno')).to eq(error: 'Permission denied')
+    end
+
     it 'applies replace_all and the uniqueness rule to each edit' do
       files.write('d.md', 'x x y')
       call(:read_file, path: 'd.md')

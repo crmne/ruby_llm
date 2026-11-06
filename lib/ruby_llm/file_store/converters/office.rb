@@ -15,8 +15,8 @@ module RubyLLM
           'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => :document,
           'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => :workbook,
           'application/vnd.openxmlformats-officedocument.presentationml.presentation' => :deck
-        }.freeze
-        MAX_SIZE = 50 * 1024 * 1024
+        }.freeze # :nodoc:
+        MAX_SIZE = 50 * 1024 * 1024 # :nodoc:
         ENTITIES = { 'amp' => '&', 'lt' => '<', 'gt' => '>', 'quot' => '"', 'apos' => "'" }.freeze
         private_constant :ENTITIES
 
@@ -137,7 +137,7 @@ module RubyLLM
         # It inflates at most MAX_SIZE in all, so a small archive cannot
         # fill the memory.
         class Zip # :nodoc:
-          class Error < StandardError; end
+          class Error < StandardError; end # :nodoc:
 
           END_OF_DIRECTORY = "PK\x05\x06".b
           DIRECTORY_ENTRY = "PK\x01\x02".b

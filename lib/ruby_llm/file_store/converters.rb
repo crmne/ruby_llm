@@ -17,8 +17,9 @@ module RubyLLM
     #
     # A converter that answers +local?+ with +true+ reads files on this
     # machine for free, so a chat runs it as soon as it keeps an
-    # attachment, and search_files finds the text without a read_file
-    # first. The others wait for read_file.
+    # attachment, while it prepares the request, so keep it fast, and
+    # search_files finds the text without a read_file first. The others wait
+    # for read_file.
     #
     #   RubyLLM.configure do |config|
     #     config.file_converters["image/*"] = RubyLLM::FileStore::Converters::OCR.new
