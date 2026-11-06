@@ -1,12 +1,14 @@
 ---
 layout: default
-title: RubyLLM and the Official SDKs
+title: Official Ruby SDKs
+seo:
+  title: RubyLLM and the Official SDKs
 nav_order: 3
 description: Compare RubyLLM with the official openai and anthropic gems on requests, streaming, the tool loop, structured output, Rails, and cost.
 permalink: /compare/official-sdks/
 ---
 
-# {{ page.title }}
+# RubyLLM and the Official SDKs
 
 {{ page.description }}
 {: .fs-6 .fw-300 }
