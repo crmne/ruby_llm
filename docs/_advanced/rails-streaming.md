@@ -175,7 +175,7 @@ Render what waits beside the transcript, with a way to take it back:
 </div>
 ```
 
-When a queued message joins, its message saves and the page refreshes, so the queued entry gives way to the message in the transcript. A cancelled reply leaves the queue alone: the next `complete` takes those messages. See [Queued Messages]({% link _advanced/rails-persistence.md %}#queued-messages) for the job that runs messages queued with `steer: false`.
+When a queued message joins, its message saves and the page refreshes, so the queued entry gives way to the message in the transcript. A cancelled reply leaves the queue alone, and the next `complete` takes those messages, so a job that rescues `RubyLLM::CancelledError` should start one when the queue isn't empty, as the generated job does. A stopped turn stays stopped: `complete` with nothing queued asks the model nothing. See [Queued Messages]({% link _advanced/rails-persistence.md %}#queued-messages) for the job that runs messages queued with `steer: false`.
 
 ## Message Ordering Issues
 

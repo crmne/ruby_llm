@@ -240,10 +240,15 @@ module RubyLLM
     end
 
     # Returns whether this is the part of a streamed reply the chat kept
-    # when it was cancelled (see Chat#cancel). Its finish reason is
-    # +:cancelled+.
+    # when it was cancelled (see Chat#cancel), or the result that closed a
+    # tool call it left unfinished. Its finish reason is +:cancelled+.
     def cancelled?
       finish_reason == :cancelled
+    end
+
+    def mark_cancelled # :nodoc:
+      @finish_reason = :cancelled
+      self
     end
 
     def with_attachments(attachments) # :nodoc:

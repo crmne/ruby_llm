@@ -1854,7 +1854,7 @@ module RubyLLM
       case last&.role
       when nil then true
       when :user then false
-      when :tool then !halted_result.nil?
+      when :tool then !halted_result.nil? || last.cancelled?
       else !last.tool_call? && !unfinished?(last)
       end
     end
@@ -2709,7 +2709,7 @@ module RubyLLM
 
         record_tool_call_input(tool_call, nil) if tool_call_input(tool_call)
         run_callbacks(:before_message)
-        run_callbacks(:after_message, add_message(unfinished_result(tool_call)))
+        run_callbacks(:after_message, add_message(unfinished_result(tool_call).mark_cancelled))
       end
     end
 

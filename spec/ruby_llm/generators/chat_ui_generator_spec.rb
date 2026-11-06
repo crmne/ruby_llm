@@ -308,8 +308,10 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       abort "stop did not cancel" unless chat.reload[:cancelled]
 
       chat.update_columns(claim_token: nil, claimed_until: nil)
+      ActiveJob::Base.queue_adapter.enqueued_jobs.clear
       #{job}.perform_now(chat.id)
       abort "the job left the request" if chat.reload[:cancelled]
+      abort "a message queued during the stop has no job" unless jobs.call.map { |job| job["arguments"] } == [ [ chat.id ] ]
       session.post "#{chats_path}/\#{chat.id}/cancel"
       abort "stopping an idle chat cancelled its next reply" if chat.reload[:cancelled]
       html = #{controller}.render(:show, assigns: #{assigns})

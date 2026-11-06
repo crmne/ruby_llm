@@ -6,7 +6,7 @@ class <%= chat_job_class_name %> < ApplicationJob
     self.class.perform_later(<%= chat_variable_name %>_id) if <%= chat_variable_name %>.queued_messages.any? && !<%= chat_variable_name %>.waiting?
     self.class.set(wait: 1.minute).perform_later(<%= chat_variable_name %>_id) if <%= chat_variable_name %>.running?
   rescue RubyLLM::CancelledError
-    nil
+    self.class.perform_later(<%= chat_variable_name %>_id) if <%= chat_variable_name %>.queued_messages.any?
   rescue StandardError => error
     Turbo::StreamsChannel.broadcast_update_to <%= chat_variable_name %>, target: "reply_error",
       partial: "<%= chat_model_name.underscore.pluralize %>/reply_error", locals: { error: }
