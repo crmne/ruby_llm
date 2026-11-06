@@ -10,9 +10,10 @@ module RubyLLM
         class Prose # :nodoc:
           SKIPPED = %w[tabs tabLst pPrChange rPr tblPr tcPr trPr sectPr Fallback].freeze
           BREAKS = { 'tab' => "\t", 'br' => "\n", 'cr' => "\n" }.freeze
+          BLANK = /\A[[:space:]]*\z/
           UNREAD_PLACEHOLDERS = %w[sldNum hdr ftr dt sldImg].freeze
           Paragraph = Struct.new(:text, :style, :list, :level, :outline, :marked)
-          private_constant :SKIPPED, :BREAKS, :UNREAD_PLACEHOLDERS, :Paragraph
+          private_constant :SKIPPED, :BREAKS, :BLANK, :UNREAD_PLACEHOLDERS, :Paragraph
 
           def self.lines(xml, outline: nil)
             new(outline).read(xml)
@@ -107,8 +108,11 @@ module RubyLLM
 
           def emit(paragraph)
             marker = marker_of(paragraph)
-            @sinks.last << "#{marker}#{paragraph.text}" unless paragraph.text.empty?
+            text = paragraph.text
             paragraph.text = +''
+            return if text.empty? || (marker && !marker.empty? && text.match?(BLANK))
+
+            @sinks.last << "#{marker}#{text}"
           end
 
           # A list item counts wherever it is, but a table row keeps to one

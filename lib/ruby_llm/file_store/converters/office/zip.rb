@@ -76,7 +76,7 @@ module RubyLLM
             method, compressed, size, name_length, extra_length, comment_length =
               slice(offset + 10, 24).unpack('vx8VVvvv')
             local = slice(offset + 42, 4).unpack1('V')
-            name = slice(offset + 46, name_length).force_encoding(Encoding::UTF_8)
+            name = slice(offset + 46, name_length).tr('\\', '/').force_encoding(Encoding::UTF_8)
             extra = slice(offset + 46 + name_length, extra_length)
             entries[name] = { method:, **sizes(extra, size:, compressed:, local:) }
             offset + 46 + name_length + extra_length + comment_length

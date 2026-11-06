@@ -90,6 +90,7 @@ module RubyLLM
           end
 
           def resolve(folder, target)
+            target = target.tr('\\', '/')
             base = target.start_with?('/') ? [] : folder.split('/')
             segments = target.split('/').each_with_object(base) do |segment, path|
               next if segment.empty? || segment == '.'
