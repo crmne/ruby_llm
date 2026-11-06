@@ -41,6 +41,15 @@ module RubyLLM
         ERROR
       end
 
+      def check_hotwire
+        return if File.read(File.join(destination_root, 'Gemfile')).match?(/^\s*gem[\s(]+["']turbo-rails["']/)
+
+        say "\n  The chat UI runs on Hotwire, and this app doesn't have it, so its pages raise until you add it:", :red
+        say '    bundle add turbo-rails stimulus-rails importmap-rails'
+        say '    bin/rails importmap:install turbo:install stimulus:install'
+        say '  An app from a plain rails new has them.', :red
+      end
+
       def create_views
         # Design contract:
         # - `scaffold` should stay close to Rails scaffold ERB output.
@@ -116,6 +125,16 @@ module RubyLLM
 
       def create_jobs
         template 'jobs/chat_response_job.rb', "app/jobs/#{variable_name_for(chat_model_name)}_response_job.rb"
+      end
+
+      def create_system_test
+        return unless app_file?('test/test_helper.rb')
+
+        add_system_test_gems
+        unless app_file?('test/application_system_test_case.rb')
+          template 'test/application_system_test_case.rb', 'test/application_system_test_case.rb'
+        end
+        template 'test/system/chats_test.rb', "test/system/#{chat_model_name.underscore.pluralize}_test.rb"
       end
 
       def create_helpers
@@ -233,11 +252,33 @@ module RubyLLM
 
         say "\n  ✅ Chat UI installed!", :green
         say "  UI template: #{ui_variant}", :cyan
+        say "\n  Works now: streaming replies, Stop, file attachments, cost per reply, errors on the page."
+        say "\n  Where it lives:"
+        say "    The turn and its errors: app/jobs/#{variable_name_for(chat_model_name)}_response_job.rb"
+        say "    Stop:                    #{chat_controller_class_name}#cancel"
+        say "    Reply rendering:         app/views/#{message_model_name.underscore.pluralize}/_assistant.html.erb"
+        say "    What the model can do:   app/agents/#{chat_agent_class_name.underscore}.rb"
+        say "\n  Add to that agent, one line each, as you need them:"
+        say '    file_store          the model reads and edits files'
+        say '    code_execution      the model runs code: bin/rails generate ruby_llm:sandbox Workspace first'
+        say '    mcp Linear          an MCP server: bin/rails generate ruby_llm:mcp Linear URL first'
+        say '    tools WeatherTool   a tool: bin/rails generate ruby_llm:tool Weather first'
+        say "\n  Check it with bin/rails test:system (needs Chrome)." if app_file?('test/test_helper.rb')
+        say '  Use RubyLLM::TestHelper in your own tests, with no provider or key.'
         say "\n  Start your server and visit http://localhost:3000/#{url_path}", :cyan
         say "\n"
       end
 
       private
+
+      def add_system_test_gems
+        gemfile = File.read(File.join(destination_root, 'Gemfile'))
+        missing = %w[capybara selenium-webdriver].reject { |name| gemfile.match?(/^\s*gem[\s(]+["']#{name}["']/) }
+        return if missing.empty?
+
+        gem_group(:test) { missing.each { |name| gem name } }
+        Bundler.with_original_env { run 'bundle install --quiet' } if behavior == :invoke
+      end
 
       def javascript_packages = "marked@#{MARKED_VERSION} dompurify@#{DOMPURIFY_VERSION}"
       def app_file?(path) = File.exist?(File.join(destination_root, path))

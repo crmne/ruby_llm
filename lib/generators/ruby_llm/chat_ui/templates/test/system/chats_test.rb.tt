@@ -1,0 +1,61 @@
+require "application_system_test_case"
+require "ruby_llm/test_helper"
+
+class <%= chat_controller_class_name.delete_suffix("Controller") %>Test < ApplicationSystemTestCase
+  include RubyLLM::TestHelper
+
+  driven_by :selenium, using: :headless_chrome
+
+  setup do
+    @queue_adapter = <%= chat_job_class_name %>.queue_adapter
+    <%= chat_job_class_name %>.queue_adapter = :async
+  end
+
+  teardown { <%= chat_job_class_name %>.queue_adapter = @queue_adapter }
+
+  test "streaming a reply and showing its cost" do
+    stub_replies "Hello from the model", cost: 0.01
+
+    start_chat
+
+    assert_text "Hello from the model"
+    assert_text "$0.0100"
+  end
+
+  test "stopping a reply keeps what it showed" do
+    stub_replies (1..200).map { |word| "word#{word}" }.join(" "), interval: 0.05
+
+    start_chat
+    assert_text "word1"
+    click_on "Stop"
+
+    assert_no_selector "[data-streaming]", wait: 5
+    assert_no_button "Stop"
+    assert_text "word1"
+    assert_no_text "word200"
+  end
+
+  test "showing an error when a reply fails" do
+    stub_replies RubyLLM::ServerError.new("The provider is down")
+
+    start_chat
+
+    assert_text "The reply failed"
+  end
+
+  test "saying so when the model returns no reply" do
+    stub_replies ""
+
+    start_chat
+
+    assert_text "The model returned no reply"
+  end
+
+  private
+
+  def start_chat
+    visit new_<%= chat_variable_name %>_path
+    fill_in "<%= chat_variable_name %>_prompt", with: "Hi"
+    click_on "Start new <%= chat_table_name.singularize.humanize.downcase %>"
+  end
+end

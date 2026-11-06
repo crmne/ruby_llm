@@ -33,6 +33,12 @@ RSpec.describe RubyLLM::TestHelper do
     end
   end
 
+  it 'leaves other operations their connection' do
+    stub_replies 'Hello'
+
+    expect(RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic).provider.connection).not_to be_nil
+  end
+
   it 'streams word by word' do
     stub_replies 'Hello there friend'
     chunks = []
@@ -84,6 +90,12 @@ RSpec.describe RubyLLM::TestHelper do
 
     expect(reply.content).to eq('It is sunny.')
     expect(chat.messages.find(&:tool_result?).content).to eq('Sunny in Berlin')
+  end
+
+  it 'fails a request with a scripted exception' do
+    stub_replies RubyLLM::ServerError.new('The provider is down')
+
+    expect { chat.ask('Hi') }.to raise_error(RubyLLM::ServerError, 'The provider is down')
   end
 
   it 'works on a persisted chat, across threads, and writes the ledger' do

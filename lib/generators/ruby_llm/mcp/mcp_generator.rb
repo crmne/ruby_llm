@@ -37,6 +37,12 @@ module RubyLLM
         template 'mcp.rb.tt', File.join('app/mcp', class_path, "#{file_name}.rb")
       end
 
+      def explain_next_step
+        return unless behavior == :invoke
+
+        say "Connect it by adding #{class_name} to `mcp` in an agent, or with_mcp(#{class_name}) on a chat."
+      end
+
       private
 
       def command_arguments

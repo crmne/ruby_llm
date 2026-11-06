@@ -47,6 +47,10 @@ module RubyLLM
         inject_into_file INITIALIZER, %(  config.sandbox = "#{sandbox_class_name}"\n), after: CONFIGURE_BLOCK
       end
 
+      def explain_next_step
+        say 'Turn it on with `code_execution` in an agent, or with_code_execution on a chat.' if behavior == :invoke
+      end
+
       private
 
       def warn_about_mxc_constraint(line)

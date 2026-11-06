@@ -728,6 +728,43 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       end
 
       if description == 'with default model names'
+        it 'says what an app without Hotwire needs' do
+          within_test_app(app_path) do
+            Dir.mktmpdir do |destination|
+              FileUtils.cp_r("#{app_path}/.", destination)
+              within_test_app(destination) do
+                gemfile = File.read('Gemfile').lines.reject { |line| line.include?('turbo-rails') }.join
+                File.write('Gemfile', gemfile)
+                output, = run_rails_generate('ruby_llm:chat_ui', '--skip', chdir: destination)
+                expect(output).to include('runs on Hotwire', 'bundle add turbo-rails')
+              end
+            end
+          end
+        end
+
+        it 'says what works, where it lives, and what comes next' do
+          within_test_app(app_path) do
+            Dir.mktmpdir do |destination|
+              FileUtils.cp_r("#{app_path}/.", destination)
+              within_test_app(destination) do
+                output, status = run_rails_generate('ruby_llm:chat_ui', '--skip', chdir: destination)
+                expect(status.success?).to be(true), output
+                expect(output).to include('Works now:', 'app/jobs/chat_response_job.rb', 'ChatsController#cancel',
+                                          'app/agents/chat_agent.rb', 'code_execution', 'file_store', 'mcp Linear')
+              end
+            end
+          end
+        end
+
+        it 'generates a system test that uses the test helper' do
+          within_test_app(app_path) do
+            test_file = File.read('test/system/chats_test.rb')
+            expect(test_file).to include('include RubyLLM::TestHelper', 'click_on "Stop"',
+                                         'ChatResponseJob.queue_adapter')
+            expect(File.exist?('test/application_system_test_case.rb')).to be(true)
+          end
+        end
+
         it 'adds yield :head to a layout without it, once' do
           Dir.mktmpdir do |destination|
             FileUtils.cp_r("#{app_path}/.", destination)
