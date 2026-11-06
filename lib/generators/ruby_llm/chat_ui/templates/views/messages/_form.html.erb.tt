@@ -15,11 +15,11 @@
     <%% end %>
 
     <div>
-      <%%= form.text_field :content, style: "width: 100%; max-width: 600px;", placeholder: "Message...", autofocus: true %>
+      <%%= form.text_field :content, style: "width: 100%; max-width: 600px;", placeholder: "Message...", autofocus: true, data: { turbo_permanent: true } %>
     </div>
 
     <div>
-      <%%= form.file_field :attachments, multiple: true %>
+      <%%= form.file_field :attachments, multiple: true, data: { turbo_permanent: true } %>
     </div>
 
     <div>

@@ -35,6 +35,31 @@ class <%= chat_controller_class_name.delete_suffix("Controller") %>Test < Applic
     assert_no_text "word200"
   end
 
+  test "answering a message sent right after Stop" do
+    stub_replies (1..200).map { |word| "word#{word}" }.join(" "), "Answered after stopping", interval: 0.05
+
+    start_chat
+    assert_text "word1"
+    click_on "Stop"
+    fill_in "<%= message_variable_name %>_content", with: "One more thing"
+    click_on "Send <%= message_table_name.singularize.humanize.downcase %>"
+
+    assert_text "Answered after stopping", wait: 10
+  end
+
+  test "keeping what a person is typing when the page refreshes" do
+    stub_replies "Hello"
+
+    start_chat
+    assert_text "Hello"
+    fill_in "<%= message_variable_name %>_content", with: "Half a thought"
+    find("h1").click
+    page.execute_script("Turbo.visit(location.href, { action: 'replace' })")
+    assert_no_selector "html[aria-busy]"
+
+    assert_field "<%= message_variable_name %>_content", with: "Half a thought"
+  end
+
   test "showing an error when a reply fails" do
     stub_replies RubyLLM::ServerError.new("The provider is down")
 

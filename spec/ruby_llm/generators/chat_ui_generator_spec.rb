@@ -318,6 +318,14 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       abort "finished page still thinks" if html.include?("Thinking…")
       abort "finished page still offers Stop" if html.match?(/>Stop<|value="Stop"/)
       abort "finished page lacks the form" unless html.include?('name="#{message_key}[content]"')
+      answers = [ true, false ]
+      chat.class.prepend(Module.new { define_method(:running?) { answers.empty? ? super() : answers.shift } })
+      ActiveJob::Base.queue_adapter.enqueued_jobs.clear
+      session.post "#{chats_path}/\#{chat.id}/messages", params: { #{message_key}: { content: "As the run ends" } }
+      released = jobs.call.map { |job| job["scheduled_at"].to_s }
+      soon = released.size == 1 && (released.first.empty? || Time.zone.parse(released.first) < 10.seconds.from_now)
+      abort "a message queued as the run ended waits a minute: \#{released}" unless soon
+
       ActiveJob::Base.queue_adapter.enqueued_jobs.clear
       session.post "#{chats_path}/\#{chat.id}/messages", params: { #{message_key}: { content: "Hi" } }
       abort "idle message enqueued \#{jobs.call}" unless jobs.call.map { |job| job["arguments"] } == [ [ chat.id ] ]
@@ -520,7 +528,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         'if @chat.pending_approvals.any?',
         'if @chat.running?',
         '@queued_message = @chat.queue(content.presence, with: attachments)',
-        'ChatResponseJob.set(wait: 1.minute).perform_later(@chat.id)',
+        'wait = @chat.running? ? 1.minute : 0',
+        'ChatResponseJob.set(wait:).perform_later(@chat.id)',
         'if content.present? || attachments',
         '@chat.ask_later(content.presence, with: attachments)',
         'ChatResponseJob.perform_later(@chat.id)',
@@ -626,7 +635,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         'if @llm_chat.pending_approvals.any?',
         'if @llm_chat.running?',
         '@queued_message = @llm_chat.queue(content.presence, with: attachments)',
-        'LlmChatResponseJob.set(wait: 1.minute).perform_later(@llm_chat.id)',
+        'wait = @llm_chat.running? ? 1.minute : 0',
+        'LlmChatResponseJob.set(wait:).perform_later(@llm_chat.id)',
         'if content.present? || attachments',
         '@llm_chat.ask_later(content.presence, with: attachments)',
         'LlmChatResponseJob.perform_later(@llm_chat.id)',
