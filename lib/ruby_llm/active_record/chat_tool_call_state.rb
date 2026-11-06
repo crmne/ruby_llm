@@ -18,8 +18,13 @@ module RubyLLM
       end
 
       def record_input(tool_call, input)
-        record = @chat.find_tool_call(tool_call.id)
-        record.update!(mcp_state: input) if record&.has_attribute?(:mcp_state)
+        record = RubyLLM::ActiveRecord::ToolCall.uncached { @chat.find_tool_call(tool_call.id) }
+        return if !record&.has_attribute?(:mcp_state) || record.mcp_state == input
+
+        @chat.transaction do
+          @chat.forget_stale_cancellation
+          record.update!(mcp_state: input)
+        end
       end
 
       def decision(tool_call)

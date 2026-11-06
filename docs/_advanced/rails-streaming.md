@@ -121,7 +121,16 @@ end
 
 ## Cancelling a Background Stream
 
-`acts_as_chat` stores cancellation requests on the chat record. A stop button can call `cancel` from the web process while the background job is streaming. The job observes the request, clears it, and raises `RubyLLM::CancelledError`. When your chats table has the `claim_token` and `claimed_until` columns, a request that arrives as the job finishes is cleared with its run, so it never cancels the next reply. Without them, such a request cancels the next reply.
+`acts_as_chat` stores cancellation requests on the chat record. A stop button can call `cancel` from the web process while the background job is streaming. The job observes the request, clears it, and raises `RubyLLM::CancelledError`.
+
+A request is for the run holding the chat, or for the run about to answer a message that waits. So a stop pressed after `ask_later` or `queue`, before the job claims the chat, stops that reply, whichever process each runs in. A stale request never cancels a later reply:
+
+* A request that arrives as the job finishes is cleared with its run.
+* `cancel` does nothing when no run holds the chat and nothing waits to run, and `cancelled?` stays `false`.
+* A user message, a new decision on a tool call, or an answer to a tool's question saved after the request, while no run holds the chat, clears it. That includes a request set by writing the `cancelled` column yourself.
+* A run that finds nothing waiting clears a request left on the chat.
+
+These rules rely on the `claim_token` and `claimed_until` columns. Without them, `cancel` always records the request, and one that arrives as the job finishes cancels the next reply.
 
 ```ruby
 # app/controllers/chats_controller.rb

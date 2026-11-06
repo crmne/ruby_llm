@@ -19,6 +19,7 @@ module RubyLLM
 
       def push(content:, attachments:, steer:, sender:)
         QueuedMessage.transaction do
+          @chat.forget_stale_cancellation
           queued = rows.create!(content:, steer:, sender:)
           persist_content(queued, attachments) unless attachments.nil?
           queued

@@ -14,7 +14,7 @@ module RubyLLM
       RUN_STATE = %i[
         @chat @message @last_message_id @last_cancellation_poll_at @unpersisted_instructions
         @usage_records_by_entry @run_claim_token @run_claimed_until @run_claim_renewed_at
-        @synced_run_claim_token @tool_call_claims
+        @synced_run_claim_token @synced_usage_count @tool_call_claims
       ].freeze
       private_constant :RUN_STATE
 
@@ -69,6 +69,7 @@ module RubyLLM
       end
 
       def holding_run_claim(busy)
+        settle_cancellation_request
         result = yield
         completed = true
         result
@@ -93,19 +94,39 @@ module RubyLLM
         @run_claim_token = claim[:claim_token]
         @run_claimed_until = claim[:claimed_until]
         @run_claim_renewed_at = now
-        resync_messages if @chat && (stale || latest_message_id != @last_message_id)
+        resync_messages if @chat && (stale || run_finished_elsewhere?)
         true
+      end
+
+      # A released claim leaves no token behind, so what another process's
+      # run wrote is the only sign of it. A failed attempt adds no message,
+      # but each model call adds a usage row. Continuing an unfinished reply
+      # keeps its id and may lose its usage row, so such a reply is always
+      # read again: repeating it would bill the model twice.
+      def run_finished_elsewhere?
+        @chat.messages.last&.continuation || latest_message_id != @last_message_id ||
+          usage_row_count != @synced_usage_count
+      end
+
+      def usage_row_count
+        ruby_llm_usages.klass.uncached { ruby_llm_usages.count }
       end
 
       def release_run_claim(completed)
         token = @run_claim_token
         return unless token
 
-        @run_claim_token = nil
+        @synced_usage_count = @synced_run_claim_token = @run_claim_token = nil
+        @synced_usage_count = usage_row_count if completed
+      ensure
+        free_chat_row(token) if token
+      end
+
+      def free_chat_row(token)
         cancellable = has_attribute?(:cancelled)
-        released = cancellable ? { claimed_until: nil, cancelled: false } : { claimed_until: nil }
+        released = { claim_token: nil, claimed_until: nil }
+        released[:cancelled] = false if cancellable
         self[:cancelled] = false if chat_row.where(claim_token: token).update_all(released) == 1 && cancellable
-        @synced_run_claim_token = completed ? token : nil
       end
 
       def renew_run_claim(force: false)
@@ -156,7 +177,12 @@ module RubyLLM
       end
 
       def snapshot_run_claim
-        @synced_run_claim_token = self.class.uncached { chat_row.pick(:claim_token) } if run_claims?
+        return unless run_claims?
+
+        # Counting first means a run that starts after the token is read
+        # still changes the count this process compares against.
+        @synced_usage_count = usage_row_count
+        @synced_run_claim_token = self.class.uncached { chat_row.pick(:claim_token) }
       end
 
       def tool_call_claimed?(tool_call_id, row, seconds, executing)
@@ -197,7 +223,10 @@ module RubyLLM
         now = Time.current
         scope = RubyLLM::ActiveRecord::ToolCall.where(id: record.id, result_id: nil)
         scope = unclaimed(scope, now) if record.has_attribute?(:claimed_until)
-        scope.update_all(approval: decision, updated_at: now) == 1
+        transaction do
+          forget_stale_cancellation
+          scope.update_all(approval: decision, updated_at: now) == 1 || raise(::ActiveRecord::Rollback)
+        end
       end
 
       def discard_superseded_message
