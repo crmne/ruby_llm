@@ -209,6 +209,16 @@ module RubyLLM
           action['sources'] if action.is_a?(Hash)
         end
 
+        # A search lists what it found in sources, where the service reports
+        # them, and opening a page or searching within one names that page.
+        def parse_web_sources(message)
+          actions = message.server_tool_calls.select { |call| call.type == 'web_search_call' }
+                           .filter_map { |call| call.raw['action'] }
+          actions.flat_map { |action| Array(action['sources']) + [action] }.filter_map do |source|
+            WebSource.new(url: source['url'], title: source['title']) if source['url']
+          end
+        end
+
         def parse_citations(data, output, content)
           citations = parse_output_citations(output, content)
           citations.any? ? citations : parse_root_citations(data)

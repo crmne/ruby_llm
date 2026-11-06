@@ -288,6 +288,8 @@ A streamed reply you cancel now stays in the conversation as far as it got, mark
 
 ## Smaller Additions
 
+`response.web_sources` lists the pages a hosted web search used, the same on OpenAI, Azure, Meta, xAI, Anthropic, Gemini, and Vertex AI. See [Web Sources]({% link _tools/provider-tools.md %}#web-sources).
+
 A reply a fallback model wrote names it: `reply.model` and `reply.provider`, also on Rails records with those columns. See [Fallback Callbacks]({% link _advanced/error-handling.md %}#fallback-callbacks).
 
 `RubyLLM::Attachment.new(io, filename: "export.csv", mime_type: "text/csv")` takes a file's type when you know it. See [Automatic File Type Detection]({% link _core_features/attachments.md %}#automatic-file-type-detection).

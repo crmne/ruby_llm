@@ -183,6 +183,20 @@ module RubyLLM
       @parsed ||= JSON.parse(text)
     end
 
+    # Returns the pages a hosted web search used for this message, as an array
+    # of WebSource objects with each address once. Reads what the message
+    # keeps, so a restored message answers the same. Empty when the message
+    # ran no search or its provider reports no sources.
+    #
+    #   response = chat.with_provider_tools(:web_search).ask "What changed in Ruby 4.0?"
+    #   response.web_sources.map(&:url)
+    #
+    def web_sources
+      return [] if server_tool_calls.empty? || provider.nil?
+
+      Array(Provider.resolve(provider)&.web_sources(self)).uniq(&:url)
+    end
+
     # Returns a copy of the message with the given fields changed, like
     # Data#with. The message itself is left alone. Change +content+ or
     # +attachments+:

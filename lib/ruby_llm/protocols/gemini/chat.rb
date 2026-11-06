@@ -306,6 +306,7 @@ module RubyLLM
           queries = candidate.dig('groundingMetadata', 'webSearchQueries')
           if queries&.any?
             calls << ServerToolCall.new(type: 'google_search', input: { 'queries' => queries },
+                                        result: web_grounding_chunks(candidate),
                                         raw: { 'webSearchQueries' => queries },
                                         search_suggestions: candidate.dig('groundingMetadata', 'searchEntryPoint',
                                                                           'renderedContent'))
@@ -314,6 +315,13 @@ module RubyLLM
           url_metadata = candidate['urlContextMetadata']
           calls << ServerToolCall.new(type: 'url_context', result: url_metadata, raw: url_metadata) if url_metadata
           calls
+        end
+
+        # Grounding on a store of documents reports retrievedContext chunks,
+        # which are not web pages.
+        def web_grounding_chunks(candidate)
+          chunks = Array(candidate.dig('groundingMetadata', 'groundingChunks')).select { |chunk| chunk['web'] }
+          chunks unless chunks.empty?
         end
 
         # Normalizes grounding metadata (Google Search grounding) into citations.

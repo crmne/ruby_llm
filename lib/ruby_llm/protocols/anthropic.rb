@@ -41,6 +41,11 @@ module RubyLLM
         end
       }.freeze
 
+      # Returns the pages the message's web searches used, as WebSource objects.
+      def self.parse_web_sources(message)
+        Chat.parse_web_sources(message)
+      end
+
       def self.mcp_tool_filter(options) # :nodoc:
         approval = options[:require_approval]
         unless approval.nil? || approval.to_s == 'never'

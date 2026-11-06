@@ -304,6 +304,14 @@ module RubyLLM
           end
         end
 
+        # A failed search holds one error object instead of a list of results.
+        def parse_web_sources(message)
+          blocks = message.server_tool_calls.select { |call| call.type == 'web_search_tool_result' }
+          blocks.flat_map { |call| call.result.is_a?(Array) ? call.result : [] }.filter_map do |result|
+            WebSource.new(url: result['url'], title: result['title']) if result['type'] == 'web_search_result'
+          end
+        end
+
         def parse_text_and_citations(blocks)
           text = +''
           citations = []
