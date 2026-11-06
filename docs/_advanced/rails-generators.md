@@ -101,7 +101,7 @@ class ChatResponseJob < ApplicationJob
     self.class.set(wait: 1.minute).perform_later(chat_id) if chat.running?
   rescue RubyLLM::CancelledError
     nil
-  rescue RubyLLM::Error => error
+  rescue StandardError => error
     Turbo::StreamsChannel.broadcast_update_to chat, target: "reply_error",
       partial: "chats/reply_error", locals: { error: }
     raise

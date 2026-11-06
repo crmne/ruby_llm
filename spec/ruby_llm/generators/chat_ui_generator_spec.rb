@@ -328,6 +328,10 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       attached = chat.reload.to_llm.messages.last.attachments.map(&:filename)
       abort "attached \#{attached}" unless attached == [ "q4.txt" ]
 
+      session.post "#{chats_path}/\#{chat.id}/messages", params: { #{message_key}: { content: "Steal", attachments: [ "/etc/passwd" ] } }
+      leaked = chat.reload.to_llm.messages.last
+      abort "a path became an attachment" if leaked.content == "Steal" && leaked.attachments.any?
+
       too_long = ApplicationController.render(partial: "#{chats_path.delete_prefix('/')}/reply_error", locals: { error: RubyLLM::ContextLengthExceededError.new("no") })
       abort "error lacks advice: \#{too_long}" unless too_long.include?("too long")
     RUBY
@@ -498,8 +502,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         '@chat = Chat.new',
         '@chat_models = available_chat_models',
         'prompt = params.dig(:chat, :prompt)',
-        'if prompt.present?',
-        '@chat.ask_later(prompt, with: Array(params.dig(:chat, :attachments)).compact_blank.presence)',
+        'if prompt.present? || attachments',
+        '@chat.ask_later(prompt.presence, with: attachments)',
         'ChatResponseJob.set(wait: 1.second).perform_later(@chat.id)',
         'provider, model = params.dig(:chat, :model).to_s.split(":", 2)',
         '@chat = ChatAgent.create!(**{ model: model.presence, provider: provider.presence }.compact)',
@@ -513,10 +517,10 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         'content = params.dig(:message, :content)',
         'if @chat.pending_approvals.any?',
         'if @chat.running?',
-        '@queued_message = @chat.queue(content, with: attachments)',
+        '@queued_message = @chat.queue(content.presence, with: attachments)',
         'ChatResponseJob.set(wait: 1.minute).perform_later(@chat.id)',
-        'if content.present?',
-        '@chat.ask_later(content, with: attachments)',
+        'if content.present? || attachments',
+        '@chat.ask_later(content.presence, with: attachments)',
         'ChatResponseJob.perform_later(@chat.id)',
         'format.turbo_stream',
         '@message = @chat.messages.build',
@@ -606,7 +610,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         '@llm_chat = Llm::Chat.new',
         '@chat_models = available_chat_models',
         'prompt = params.dig(:llm_chat, :prompt)',
-        'if prompt.present?',
+        'if prompt.present? || attachments',
         'provider, model = params.dig(:llm_chat, :model).to_s.split(":", 2)',
         '@llm_chat = Llm::ChatAgent.create!(**{ model: model.presence, provider: provider.presence }.compact)',
         '@llm_chat.errors.add(:prompt, "can\'t be blank")',
@@ -619,10 +623,10 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         'content = params.dig(:llm_message, :content)',
         'if @llm_chat.pending_approvals.any?',
         'if @llm_chat.running?',
-        '@queued_message = @llm_chat.queue(content, with: attachments)',
+        '@queued_message = @llm_chat.queue(content.presence, with: attachments)',
         'LlmChatResponseJob.set(wait: 1.minute).perform_later(@llm_chat.id)',
-        'if content.present?',
-        '@llm_chat.ask_later(content, with: attachments)',
+        'if content.present? || attachments',
+        '@llm_chat.ask_later(content.presence, with: attachments)',
         'LlmChatResponseJob.perform_later(@llm_chat.id)',
         'format.turbo_stream',
         '@llm_message = @llm_chat.llm_messages.build',
