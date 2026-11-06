@@ -35,7 +35,7 @@ class LanguagesSchema < Schematist::Schema
 end
 
 response = RubyLLM.chat.with_schema(LanguagesSchema)
-                  .ask("List 3 programming languages with their year created.")
+                  .ask "List 3 programming languages with their year created."
 response.parsed["languages"]
 # => [{"name" => "Ruby", "year" => 1995}, ...]
 ```
@@ -54,7 +54,7 @@ class PersonSchema < Schematist::Schema
 end
 
 chat = RubyLLM.chat
-response = chat.with_schema(PersonSchema).ask("Generate a person named Alice who is 30 years old")
+response = chat.with_schema(PersonSchema).ask "Generate a person named Alice who is 30 years old"
 
 puts response.parsed # => {"name" => "Alice", "age" => 30}
 puts response.content # => '{"name":"Alice","age":30}'
@@ -69,21 +69,21 @@ If you prefer not to use Schematist, you can provide a JSON Schema directly:
 
 ```ruby
 person_schema = {
-  type: 'object',
+  type: "object",
   properties: {
-    name: { type: 'string' },
-    age: { type: 'integer' },
+    name: { type: "string" },
+    age: { type: "integer" },
     hobbies: {
-      type: 'array',
-      items: { type: 'string' }
+      type: "array",
+      items: { type: "string" }
     }
   },
-  required: ['name', 'age', 'hobbies'],
+  required: ["name", "age", "hobbies"],
   additionalProperties: false  # Required for OpenAI structured output
 }
 
 chat = RubyLLM.chat
-response = chat.with_schema(person_schema).ask("Generate a person who likes Ruby")
+response = chat.with_schema(person_schema).ask "Generate a person who likes Ruby"
 
 puts response.parsed
 # => {"name" => "Bob", "age" => 25, "hobbies" => ["Ruby programming", "Open source"]}
@@ -97,20 +97,20 @@ By default, schemas are named 'response' in API requests. You can provide a cust
 
 ```ruby
 person_schema = {
-  name: 'PersonSchema',
+  name: "PersonSchema",
   schema: {
-    type: 'object',
+    type: "object",
     properties: {
-      name: { type: 'string' },
-      age: { type: 'integer' }
+      name: { type: "string" },
+      age: { type: "integer" }
     },
-    required: ['name', 'age'],
+    required: ["name", "age"],
     additionalProperties: false
   }
 }
 
 chat = RubyLLM.chat
-response = chat.with_schema(person_schema).ask("Generate a person")
+response = chat.with_schema(person_schema).ask "Generate a person"
 ```
 
 ### Complex Nested Schemas
@@ -136,10 +136,10 @@ class CompanySchema < Schematist::Schema
 end
 
 chat = RubyLLM.chat
-response = chat.with_schema(CompanySchema).ask("Generate a small tech startup")
+response = chat.with_schema(CompanySchema).ask "Generate a small tech startup"
 
 response.parsed["employees"].each do |employee|
-  puts "#{employee['name']} - #{employee['role']}"
+  puts "#{employee["name"]} - #{employee["role"]}"
 end
 ```
 
@@ -148,7 +148,7 @@ end
 Not every model supports structured output. Ask the registry before you rely on it:
 
 ```ruby
-RubyLLM.models.find('{{ site.models.default_chat }}').supports?(:structured_output) # => true
+RubyLLM.models.find("{{ site.models.default_chat }}").supports?(:structured_output) # => true
 RubyLLM.models.chat_models.select { |model| model.supports?(:structured_output) }
 ```
 
@@ -158,7 +158,7 @@ DeepSeek requires `protocol: :responses` to enforce a schema. Its default Chat C
 
 ```ruby
 chat = RubyLLM.chat(model: "{{ site.models.deepseek_chat }}", provider: :deepseek, protocol: :responses)
-response = chat.with_schema(PersonSchema).ask("Alice is 30 and lives in Rome.")
+response = chat.with_schema(PersonSchema).ask "Alice is 30 and lives in Rome."
 ```
 
 ### Multi-turn Conversations with Schemas
@@ -168,11 +168,11 @@ You can add or remove schemas during a conversation:
 ```ruby
 chat = RubyLLM.chat
 chat.with_schema(PersonSchema)
-person = chat.ask("Generate a person")
+person = chat.ask "Generate a person"
 
 # Remove the schema for free-form responses
 chat.with_schema(nil)
-analysis = chat.ask("Tell me about this person's potential career paths")
+analysis = chat.ask "Tell me about this person's potential career paths"
 
 class CareerPlanSchema < Schematist::Schema
   string :title
@@ -181,7 +181,7 @@ class CareerPlanSchema < Schematist::Schema
 end
 
 chat.with_schema(CareerPlanSchema)
-career = chat.ask("Now structure a career plan")
+career = chat.ask "Now structure a career plan"
 
 person.parsed
 analysis.content
@@ -193,7 +193,7 @@ career.parsed
 Use JSON mode when you need valid JSON without a particular schema. This OpenAI example uses the default Responses protocol:
 
 ```ruby
-chat = RubyLLM.chat.with_provider_options(text: { format: { type: 'json_object' } })
+chat = RubyLLM.chat.with_provider_options(text: { format: { type: "json_object" } })
 response = chat.ask "List three programming languages. Return JSON."
 response.parsed
 ```

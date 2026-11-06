@@ -124,11 +124,11 @@ Instances of `RubyLLM::Error` (and its subclasses related to API responses) hold
 
 ```ruby
 begin
-  chat = RubyLLM.chat(model: '{{ site.models.default_chat }}') # Assume this requires a specific org sometimes
+  chat = RubyLLM.chat(model: "{{ site.models.default_chat }}") # Assume this requires a specific org sometimes
   response = chat.ask "Some specific query"
 rescue RubyLLM::ForbiddenError => e
   puts "Access forbidden: #{e.message}"
-  if e.response&.body&.include?('invalid_organization')
+  if e.response&.body&.include?("invalid_organization")
     puts "Hint: Check if your API key is enabled for the correct OpenAI organization."
   end
   puts "Status Code: #{e.response&.status}"
@@ -189,10 +189,10 @@ Your block will execute for chunks received *before* the error. Because `ask` ra
 Use `with_fallbacks` when you want RubyLLM to try another model after the current model fails with a transient provider or network error.
 
 ```ruby
-chat = RubyLLM.chat(model: "gpt-4.1")
-              .with_fallbacks("gpt-4.1-mini", "claude-haiku-4-5")
+chat = RubyLLM.chat(model: "{{ site.models.default_chat }}")
+              .with_fallbacks("{{ site.models.openai_mini }}", "{{ site.models.anthropic_haiku }}")
 
-response = chat.ask("Summarize this incident report.")
+response = chat.ask "Summarize this incident report."
 ```
 
 Fallbacks are tried in order. The fallback only applies to that generation attempt; after the response finishes or the error bubbles up, the chat returns to its original model.
@@ -201,7 +201,7 @@ By default, fallbacks handle rate limits, server errors, service unavailable err
 
 ```ruby
 chat.with_fallbacks(
-  "gpt-4.1-mini",
+  "{{ site.models.openai_mini }}",
   on: [RubyLLM::RateLimitError, RubyLLM::ServiceUnavailableError]
 )
 ```
@@ -212,7 +212,7 @@ Fallbacks can be model IDs or `RubyLLM::Model` objects:
 
 ```ruby
 chat.with_fallbacks(
-  RubyLLM.models.find("claude-haiku-4-5", provider: :anthropic)
+  RubyLLM.models.find("{{ site.models.anthropic_haiku }}", provider: :anthropic)
 )
 ```
 

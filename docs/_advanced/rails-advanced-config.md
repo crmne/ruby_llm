@@ -76,11 +76,11 @@ Route models through different providers dynamically:
 
 ```ruby
 chat = Chat.create!(
-  model: '{{ site.models.anthropic_current }}',
-  provider: 'bedrock'  # Route this model through AWS Bedrock
+  model: "{{ site.models.anthropic_current }}",
+  provider: "bedrock"  # Route this model through AWS Bedrock
 )
 
-chat.ask("Hello!")
+chat.ask "Hello!"
 ```
 
 ## Custom Contexts and Dynamic Models
@@ -91,11 +91,11 @@ Use different API keys per chat in multi-tenant applications:
 
 ```ruby
 custom_context = RubyLLM.context do |config|
-  config.openai_api_key = 'sk-customer-specific-key'
+  config.openai_api_key = "sk-customer-specific-key"
 end
 
 chat = Chat.create!(
-  model: '{{ site.models.openai_standard }}',
+  model: "{{ site.models.openai_standard }}",
   context: custom_context
 )
 ```
@@ -107,7 +107,7 @@ Context is not persisted. Set it after reloading chats.
 # Later, in a different request or after restart
 chat = Chat.find(chat_id)
 chat.context = custom_context  # Must set this!
-chat.ask("Continue our conversation")
+chat.ask "Continue our conversation"
 ```
 
 For multi-tenant apps, consider using an `after_find` callback:
@@ -136,7 +136,7 @@ When using models not in the registry (e.g., new OpenRouter models), pass `assum
 ```ruby
 chat = Chat.create!(
   model: ENV.fetch("OPENROUTER_MODEL"),
-  provider: 'openrouter',
+  provider: "openrouter",
   assume_model_exists: true  # Skips registry validation
 )
 ```
@@ -147,7 +147,7 @@ Like context, `assume_model_exists` is not persisted.
 ```ruby
 # When switching to another dynamic model later
 chat = Chat.find(chat_id)
-chat.with_model(ENV.fetch("OPENROUTER_FALLBACK_MODEL"), provider: 'openrouter', assume_model_exists: true)
+chat.with_model(ENV.fetch("OPENROUTER_FALLBACK_MODEL"), provider: "openrouter", assume_model_exists: true)
 ```
 
 ## Working with Prompt Caching
@@ -155,11 +155,11 @@ chat.with_model(ENV.fetch("OPENROUTER_FALLBACK_MODEL"), provider: 'openrouter', 
 Prompt caching configuration is applied to the underlying LLM chat, and explicit boundaries are persisted on messages. Mark the stable part of the conversation, then continue normally:
 
 ```ruby
-chat = Chat.create!(model: 'claude-sonnet-4-5')
+chat = Chat.create!(model: "{{ site.models.anthropic_current }}")
 chat.with_caching
-chat.with_instructions('Reusable analysis prompt', cache_until_here: { ttl: "1h" })
+chat.with_instructions("Reusable analysis prompt", cache_until_here: { ttl: "1h" })
 chat.add_message(role: :user, content: long_context).cache_until_here
-chat.ask("Today's request: #{summary}")
+chat.ask "Today's request: #{summary}"
 ```
 
 Existing apps get `cache_until_here`, `cache_ttl`, and the other current persistence columns by following [Upgrading]({% link _reference/upgrading.md %}) for each release. New apps get the proper columns from the install generator.

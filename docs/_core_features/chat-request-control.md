@@ -154,13 +154,13 @@ Different providers offer unique features and request fields. The `with_provider
 
 ```ruby
 # JSON object mode on the Responses API (OpenAI's default protocol)
-chat = RubyLLM.chat.with_provider_options(text: { format: { type: 'json_object' } })
+chat = RubyLLM.chat.with_provider_options(text: { format: { type: "json_object" } })
 response = chat.ask "What is the square root of 64? Answer with a JSON object with the key `result`."
 puts JSON.parse(response.content)
 
 # The same option on Chat Completions providers like :ollama and :deepseek
-chat = RubyLLM.chat(model: 'qwen3', provider: :ollama)
-              .with_provider_options(response_format: { type: 'json_object' })
+chat = RubyLLM.chat(model: "qwen3", provider: :ollama)
+              .with_provider_options(response_format: { type: "json_object" })
 ```
 
 `with_provider_options` can override any part of the request payload, including the model, token limits, and tools, and RubyLLM passes it through without validation. Available options vary by provider and model, so consult the provider's documentation before overriding anything. To see the exact request being sent, set `RUBYLLM_DEBUG=true`.
@@ -173,8 +173,8 @@ RubyLLM normally selects the protocol for your model and operation. Choose one e
 Override it per chat with the `protocol:` model option, or app-wide with configuration:
 
 ```ruby
-chat = RubyLLM.chat(model: 'gpt-6.1-sol', protocol: :chat_completions)
-chat = RubyLLM.chat(model: 'gpt-6.1-sol').with_model('gpt-6.1-sol', protocol: :chat_completions)
+chat = RubyLLM.chat(model: "{{ site.models.default_chat }}", protocol: :chat_completions)
+chat = RubyLLM.chat(model: "{{ site.models.default_chat }}").with_model("{{ site.models.default_chat }}", protocol: :chat_completions)
 
 RubyLLM.configure do |config|
   config.openai_protocol = :chat_completions
@@ -221,9 +221,9 @@ Most of the time you can rely on RubyLLM to format messages for each provider. W
 ```ruby
 chat = RubyLLM.chat
 chat.before_request do |payload|
-  payload[:messages].last[:content] << { type: 'custom_context', data: provider_specific_payload }
+  payload[:messages].last[:content] << { type: "custom_context", data: provider_specific_payload }
 end
-chat.ask('Analyze this request using the provider-native block above.')
+chat.ask "Analyze this request using the provider-native block above."
 ```
 
 Hooks mutate the payload in place; return values are ignored (use `payload.replace(new_payload)` to swap it wholesale). Use hooks sparingly: they operate on the provider's wire format, so it is your responsibility to match what the provider expects, and switching providers means revisiting the hook. Nothing a hook adds is persisted; it is applied fresh on each request. For prompt reuse, prefer [Prompt Caching]({% link _core_features/prompt-caching.md %}).
@@ -237,7 +237,7 @@ class ChangelogTool < RubyLLM::Tool
   description "Formats commits into human-readable changelog entries."
   parameter :commits, type: :array, description: "List of commits to summarize"
 
-  provider_options cache_control: { type: 'ephemeral' }
+  provider_options cache_control: { type: "ephemeral" }
 
   def execute(commits:)
     # ...
@@ -262,8 +262,8 @@ payload[:service_tier] # => "flex"
 Some providers offer beta features or special capabilities through custom HTTP headers. Use `with_headers` to add them to your requests.
 
 ```ruby
-chat = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
-      .with_headers('anthropic-beta' => 'fine-grained-tool-streaming-2025-05-14')
+chat = RubyLLM.chat(model: "{{ site.models.anthropic_current }}")
+      .with_headers("anthropic-beta" => "fine-grained-tool-streaming-2025-05-14")
 
 response = chat.ask "Tell me about the weather"
 ```

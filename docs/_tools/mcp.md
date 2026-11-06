@@ -508,7 +508,7 @@ class Handbook < RubyLLM::MCP
 
   def announce(change)
     case change
-    when :tools then puts "Tools now: #{tools.map(&:name).join(', ')}"
+    when :tools then puts "Tools now: #{tools.map(&:name).join(", ")}"
     when RubyLLM::MCP::Resource then puts "#{change.uri} now reads: #{change.content}"
     end
   end

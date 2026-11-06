@@ -37,7 +37,7 @@ If you need to target an endpoint that uses the **OpenAI API format** but has a 
 ```ruby
 # config/initializers/ruby_llm.rb
 RubyLLM.configure do |config|
-  config.openai_api_key = ENV['GATEWAY_API_KEY'] # Key for your endpoint
+  config.openai_api_key = ENV["GATEWAY_API_KEY"] # Key for your endpoint
   config.openai_api_base = "https://ai-gateway.internal.example.com/v1" # Your endpoint
 end
 ```
@@ -57,7 +57,7 @@ chat = RubyLLM.chat(
   provider: :openai,                # MUST specify provider
   assume_model_exists: true         # Bypass registry check
 )
-response = chat.ask("Internal knowledge query...")
+response = chat.ask "Internal knowledge query..."
 puts response.content
 
 # You can also use it in .with_model

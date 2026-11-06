@@ -238,7 +238,7 @@ class PolicyCheckedReply
       review = PolicyCritic.new.ask("Question:\n#{question}\n\nReply:\n#{reply}").parsed
       return reply if review["verdict"] == "pass"
 
-      reply = writer.ask("Revise your reply. #{review['feedback']}").content if round < MAX_ROUNDS - 1
+      reply = writer.ask("Revise your reply. #{review["feedback"]}").content if round < MAX_ROUNDS - 1
     end
 
     nil
@@ -257,7 +257,7 @@ RubyLLM.workflow("Voicemail", id: "voicemail-#{voicemail.id}") do |workflow|
   transcript = workflow.step("Transcribe") { RubyLLM.transcribe(voicemail.audio) }
   triage = workflow.step("Triage") { TriageAgent.new.ask(transcript.text).parsed }
   reply = workflow.step("Reply") do
-    SupportAgent.new(customer: voicemail.customer).ask("Reply to this voicemail:\n#{transcript.text}")
+    SupportAgent.new(customer: voicemail.customer).ask "Reply to this voicemail:\n#{transcript.text}"
   end
   workflow.step("Speak") { RubyLLM.speak(reply.content).save("reply-#{voicemail.id}.mp3") }
 end

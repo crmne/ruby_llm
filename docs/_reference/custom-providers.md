@@ -63,18 +63,18 @@ module RubyLLM
       # Acme's dialect of the Chat Completions API.
       class ChatCompletions < Protocols::ChatCompletions
         def models_url
-          'models'
+          "models"
         end
       end
 
       protocol :chat_completions, ChatCompletions
 
       def api_base
-        @config.acme_api_base || 'https://api.acme.ai/v1'
+        @config.acme_api_base || "https://api.acme.ai/v1"
       end
 
       def headers
-        { 'Authorization' => "Bearer #{@config.acme_api_key}" }
+        { "Authorization" => "Bearer #{@config.acme_api_key}" }
       end
 
       class << self
@@ -123,7 +123,7 @@ class Ollama < Provider
   def headers
     return {} unless @config.ollama_api_key
 
-    { 'Authorization' => "Bearer #{@config.ollama_api_key}" }
+    { "Authorization" => "Bearer #{@config.ollama_api_key}" }
   end
 end
 ```
@@ -189,7 +189,7 @@ If Acme exposes completions at a non-standard path, override the endpoint seam i
 # lib/ruby_llm/providers/acme/chat.rb (excerpt)
 module Chat
   def completion_url
-    'v2/chat'
+    "v2/chat"
   end
 end
 ```
@@ -204,7 +204,7 @@ def rejected_options(operation)
 end
 ```
 
-> A protocol instance is constructed against a live provider with `protocol_class.new(provider, model)`. Inside a protocol you have `provider`, `config`, `connection`, and `model` available - the protocol borrows the provider's Faraday connection, so you never build HTTP yourself.
+A protocol instance is constructed against a live provider with `protocol_class.new(provider, model)`. Inside a protocol you have `provider`, `config`, `connection`, and `model` available - the protocol borrows the provider's Faraday connection, so you never build HTTP yourself.
 {: .note }
 
 ### Declaring Multiple Protocols
@@ -257,16 +257,16 @@ That one call does three things: it sets `Acme.slug` to `"acme"` (which is how `
 
 ```ruby
 RubyLLM.configure do |config|
-  config.acme_api_key = ENV['ACME_API_KEY']
+  config.acme_api_key = ENV["ACME_API_KEY"]
 end
 
-chat = RubyLLM.chat(model: ENV.fetch('ACME_MODEL'), provider: :acme, assume_model_exists: true)
-chat.ask('Hello from a custom provider!')
+chat = RubyLLM.chat(model: ENV.fetch("ACME_MODEL"), provider: :acme, assume_model_exists: true)
+chat.ask "Hello from a custom provider!"
 ```
 
 Pass `assume_model_exists: true` for models that aren't in the registry, or have your protocol's `list_models` populate the catalog from the service's models endpoint.
 
-> The slug RubyLLM uses everywhere comes from the symbol you pass to `register`, not from the class name. Register as `:acme` and your config keys are `acme_api_key`, `acme_api_base`, and `acme_protocol`. Keep the symbol, the `configuration_options` prefix, and the keys you read off `@config` in agreement, or configuration silently returns `nil`.
+The slug RubyLLM uses everywhere comes from the symbol you pass to `register`, not from the class name. Register as `:acme` and your config keys are `acme_api_key`, `acme_api_base`, and `acme_protocol`. Keep the symbol, the `configuration_options` prefix, and the keys you read off `@config` in agreement, or configuration silently returns `nil`.
 {: .warning }
 
 ## Packaging as a Gem
@@ -287,12 +287,12 @@ RubyLLM's own autoloader (`Zeitwerk::Loader.for_gem`) is scoped to the RubyLLM g
 
 ```ruby
 # lib/ruby_llm/providers/acme.rb
-require 'ruby_llm'
+require "ruby_llm"
 
 # Provider class definition from above.
 
 RubyLLM::Provider.register :acme, RubyLLM::Providers::Acme,
-                           models: File.expand_path('../../../models.json', __dir__)
+                           models: File.expand_path("../../../models.json", __dir__)
 ```
 
 `__dir__` is the directory containing `lib/ruby_llm/providers/acme.rb`, not the process working directory. The registered path therefore finds the gem-root `models.json` wherever the application starts. RubyLLM loads this catalog after the application's main registry, so the main registry wins when both carry the same model.
@@ -302,17 +302,17 @@ The generated `rake models` task calls Acme and rewrites this packaged catalog. 
 Now anyone who adds your gem and requires it gets a fully wired provider:
 
 ```ruby
-require 'ruby_llm/providers/acme'
+require "ruby_llm/providers/acme"
 
-RubyLLM.configure { |config| config.acme_api_key = ENV['ACME_API_KEY'] }
+RubyLLM.configure { |config| config.acme_api_key = ENV["ACME_API_KEY"] }
 model = RubyLLM.models.by_provider(:acme).chat_models.first
-RubyLLM.chat(model: model.id).ask('Hi')
+RubyLLM.chat(model: model.id).ask "Hi"
 ```
 
-> If your provider uses an acronym or mixed-case constant (like `OpenAI` or `XAI`), Zeitwerk needs an inflection rule to map the file name to the constant. With explicit `require_relative` calls as shown, you sidestep autoloading entirely and avoid the inflection setup.
+If your provider uses an acronym or mixed-case constant (like `OpenAI` or `XAI`), Zeitwerk needs an inflection rule to map the file name to the constant. With explicit `require_relative` calls as shown, you sidestep autoloading entirely and avoid the inflection setup.
 {: .note }
 
-## What's Next?
+## Next Steps
 
 You can now teach RubyLLM to speak to any AI service, whether it reuses an existing wire format or needs a brand-new one. From here:
 

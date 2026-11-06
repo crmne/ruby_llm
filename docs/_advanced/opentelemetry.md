@@ -69,7 +69,7 @@ Wrap related work in a [workflow]({% link _advanced/instrumentation.md %}#workfl
 ```ruby
 RubyLLM.workflow("Answer question") do |workflow|
   workflow.step("Generate answer") do
-    SupportAgent.new.ask("Where is order 42?")
+    SupportAgent.new.ask "Where is order 42?"
   end
 end
 ```
@@ -177,3 +177,9 @@ RubyLLM::OpenTelemetry.enable(content: ENV["OTEL_INSTRUMENTATION_GENAI_CAPTURE_M
 ```
 
 Calling `enable` again without `content: true` stops recording content for new spans.
+
+## Next Steps
+
+* [Instrumentation]({% link _advanced/instrumentation.md %}): subscribe to RubyLLM's events directly.
+* [Evaluations]({% link _advanced/evaluations.md %}): grade your agents against a dataset.
+* [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}): total what each run cost.

@@ -82,3 +82,8 @@ response.cost.total
 ```
 
 See [Tokens and Costs]({% link _core_features/cost-and-usage-tracking.md %}) for cache buckets, thinking tokens, and accounting across retries.
+
+## Next Steps
+
+* [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}): read the tokens a response used.
+* [Prompt Caching]({% link _core_features/prompt-caching.md %}): pay less for prompts you repeat.

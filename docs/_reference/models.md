@@ -59,7 +59,7 @@ The call has the same meaning in every environment. It replaces the in-memory re
 
 RubyLLM does not refresh automatically. Network access and provider credentials remain explicit application concerns, and a missing-model lookup never triggers network I/O.
 
-### How refresh Works
+### How Refresh Works
 
 The `refresh` method performs the following steps:
 
@@ -106,7 +106,7 @@ Set `config.model_registry_file` to use another writable path. See [Connection, 
 `refresh` already saves to the active registry store. Use `save_to_json` separately when you want to export the currently loaded registry to another file:
 
 ```ruby
-RubyLLM.models.save_to_json('/tmp/models.json')
+RubyLLM.models.save_to_json("/tmp/models.json")
 ```
 
 ### For Gem Maintainers
@@ -156,15 +156,15 @@ Handle the lookup where you resolve a model:
 def chat_for(record)
   record.to_llm
 rescue RubyLLM::ModelNotFoundError
-  record.with_model('{{ site.models.anthropic_current }}')
+  record.with_model("{{ site.models.anthropic_current }}")
 end
 ```
 
 Or migrate the records once, after a refresh:
 
 ```ruby
-Chat.joins(:model).where(ruby_llm_models: { model_id: 'claude-3-opus-20240229' }).find_each do |chat|
-  chat.with_model('claude-opus-4-5')
+Chat.joins(:model).where(ruby_llm_models: { model_id: "claude-3-opus-20240229" }).find_each do |chat|
+  chat.with_model("claude-opus-4-5")
 end
 ```
 
@@ -183,7 +183,7 @@ RubyLLM.models.chat_models
 Resolving by id does not. `find` still returns an unlisted model, so the chats that point at one keep working:
 
 ```ruby
-RubyLLM.models.find('claude-3-opus-20240229')  # resolves while the row is there
+RubyLLM.models.find("claude-3-opus-20240229")  # resolves while the row is there
 Chat.last.to_llm                               # so an old chat does not raise
 ```
 
@@ -196,7 +196,7 @@ RubyLLM.models.refresh
 
 RubyLLM::ActiveRecord::Model.unlisted.find_each do |model|
   Chat.where(model: model).find_each do |chat|
-    chat.with_model('claude-opus-4-5')
+    chat.with_model("claude-opus-4-5")
   end
 end
 ```
@@ -222,7 +222,7 @@ embedding_models = RubyLLM.models.embedding_models
 openai_models = RubyLLM.models.by_provider(:openai) # or 'openai'
 
 # Filter by model family (e.g., all Claude Sonnet variants)
-claude_sonnet_family = RubyLLM.models.by_family('claude-sonnet')
+claude_sonnet_family = RubyLLM.models.by_family("claude-sonnet")
 
 # Chain filters and use Enumerable methods
 openai_vision_models = RubyLLM.models.by_provider(:openai)
@@ -236,7 +236,7 @@ puts "Found #{openai_vision_models.count} OpenAI vision models."
 Use `find` to get a `RubyLLM::Model` object containing details about a specific model.
 
 ```ruby
-model_info = RubyLLM.models.find('{{ site.models.openai_tools }}')
+model_info = RubyLLM.models.find("{{ site.models.openai_tools }}")
 
 puts "Model: #{model_info.name}"
 puts "Provider: #{model_info.provider}"
@@ -252,7 +252,7 @@ Aliases in `lib/ruby_llm/aliases.json` map a short name to each provider's exact
 
 ```ruby
 # 'claude-haiku-4-5' maps to Bedrock's exact ID
-chat = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :bedrock)
+chat = RubyLLM.chat(model: "claude-haiku-4-5", provider: :bedrock)
 puts chat.model.id # => "anthropic.claude-haiku-4-5-20251001-v1:0"
 ```
 
@@ -263,9 +263,9 @@ When you call `find` without a provider, RubyLLM resolves the alias and then pic
 Specify the provider if the same alias exists across multiple providers.
 
 ```ruby
-model_anthropic = RubyLLM.models.find('{{ site.models.anthropic_current }}', provider: :anthropic)
+model_anthropic = RubyLLM.models.find("{{ site.models.anthropic_current }}", provider: :anthropic)
 
-model_bedrock = RubyLLM.models.find('{{ site.models.anthropic_current }}', provider: :bedrock)
+model_bedrock = RubyLLM.models.find("{{ site.models.anthropic_current }}", provider: :bedrock)
 ```
 
 When you pass a provider, RubyLLM resolves aliases first. For Bedrock, it then applies region/inference-profile resolution (for example `us.` prefixes) before falling back to an exact ID match. See [Model Resolution]({% link _reference/model-resolution.md %}) for the exact order, step by step.

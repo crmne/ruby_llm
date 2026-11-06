@@ -331,7 +331,7 @@ RubyLLM will attempt to use tools with any model. If the model doesn't support f
 You can monitor tool execution using additive callbacks to track when tools are called and what they return.
 
 ```ruby
-chat = RubyLLM.chat(model: '{{ site.models.openai_tools }}')
+chat = RubyLLM.chat(model: "{{ site.models.openai_tools }}")
       .with_tools(Weather)
       .before_tool_call do |tool_call|
         puts "Calling tool: #{tool_call.name}"
@@ -387,7 +387,7 @@ The callback runs in the thread or fiber that reports, before the tool's result.
 To cap a runaway loop, give the loop a step budget instead of raising inside a callback:
 
 ```ruby
-chat = RubyLLM.chat(model: '{{ site.models.openai_tools }}')
+chat = RubyLLM.chat(model: "{{ site.models.openai_tools }}")
               .with_tools(Weather)
               .ask_later("Check weather for every major city...")
 

@@ -83,7 +83,7 @@ Pass an uploaded file through `with:` to reuse it by provider-managed ID or URI:
 file = RubyLLM.upload("large-report.pdf", provider: :openai, purpose: "user_data")
 
 chat = RubyLLM.chat(model: "{{ site.models.openai_current }}", provider: :openai)
-chat.ask("Summarize the financial risks.", with: file)
+chat.ask "Summarize the financial risks.", with: file
 ```
 
 ## Large Chat Attachments
@@ -158,7 +158,7 @@ A conversation can return generated files as attachments:
 response = RubyLLM.chat(model: "{{ site.models.mistral_provider_tools }}",
                         provider: :mistral, protocol: :conversations)
                  .with_provider_tools(:code_execution)
-                 .ask("Create a CSV of the first ten squares as a downloadable file.")
+                 .ask "Create a CSV of the first ten squares as a downloadable file."
 
 file = response.attachments.first.source
 RubyLLM.download(file.id, provider: file.provider).save(file.filename)
@@ -171,3 +171,9 @@ Keep the complete file ID and its provider when storing the reference. For gener
 DeepSeek does not allow downloading uploaded images. Perplexity supports downloads of generated Agent files, without general file uploads.
 
 Downloads depend on the provider. Anthropic and OpenRouter only allow downloading files created server-side; uploaded files are not downloadable through their Files APIs.
+
+## Next Steps
+
+* [Attachments]({% link _core_features/attachments.md %}): send files with a message.
+* [File Stores]({% link _core_features/file-stores.md %}): give a chat its own files.
+* [Batches]({% link _advanced/batches.md %}): process many requests at a lower price.

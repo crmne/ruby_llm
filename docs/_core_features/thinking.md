@@ -21,7 +21,7 @@ After reading this guide, you will know:
 * How to separate reasoning that a server leaves inside the answer
 * How to persist thinking data with ActiveRecord
 
-## What is Extended Thinking?
+## What Is Extended Thinking?
 
 Extended Thinking gives supported models more time and a larger computation budget to deliberate before answering. It can improve results on multi-step tasks like coding, math, and logic, at the expense of latency and cost. Some providers can also return a thinking trace or signature alongside the final answer.
 
@@ -30,7 +30,7 @@ Extended Thinking gives supported models more time and a larger computation budg
 Call `with_thinking` without options to enable thinking with the current model's registered controls:
 
 ```ruby
-chat = RubyLLM.chat(model: 'claude-opus-4-5').with_thinking
+chat = RubyLLM.chat(model: "{{ site.models.anthropic_opus }}").with_thinking
 ```
 
 RubyLLM resolves those controls when it builds the request, so it follows later model changes and fallbacks. The registry may select an effort, a token budget, a provider toggle, or no request option for a model that always thinks. If the registry does not know how to enable thinking for the selected model, RubyLLM raises an `ArgumentError` instead of guessing. The error comes with the request. Reading `chat.thinking` never raises: for such a model it returns `{ enabled: true }`, or `{ enabled: false }` after `with_thinking(false)`.
@@ -40,10 +40,10 @@ When the registry lists several controls, RubyLLM prefers an explicit default, t
 Pass keyword options or a Hash to configure thinking explicitly:
 
 ```ruby
-chat = RubyLLM.chat(model: 'claude-opus-4-5')
-  .with_thinking(effort: :high, budget: 8000)
+chat = RubyLLM.chat(model: "{{ site.models.anthropic_opus }}")
+  .with_thinking(effort: :high)
 
-response = chat.ask("What is 15 * 23?")
+response = chat.ask "What is 15 * 23?"
 
 response.thinking&.text
 response.thinking&.signature
@@ -91,7 +91,7 @@ chat.with_thinking(effort: :high, display: :omitted)     # think, but return no 
 Thinking content is delivered alongside normal content in streaming chunks:
 
 ```ruby
-chat = RubyLLM.chat(model: 'claude-opus-5')
+chat = RubyLLM.chat(model: "{{ site.models.anthropic_opus }}")
   .with_thinking(effort: :medium, display: :summarized)
 
 chat.ask("Solve this step by step: What is 127 * 43?") do |chunk|
@@ -116,7 +116,7 @@ RubyLLM.configure do |config|
 end
 
 chat = RubyLLM.chat(model: "qwen3", provider: :openai, assume_model_exists: true)
-response = chat.ask("What is 15 * 23?")
+response = chat.ask "What is 15 * 23?"
 response.content        # => "345"
 response.thinking.text  # => "15 * 20 is 300, and 15 * 3 is 45..."
 ```
@@ -146,7 +146,7 @@ When using `acts_as_chat` and `acts_as_message`, thinking content is persisted w
 # t.text :thinking_text
 # t.text :thinking_signature
 
-response = chat_record.ask("Explain quantum entanglement")
+response = chat_record.ask "Explain quantum entanglement"
 response.thinking&.text
 response.tokens.thinking
 ```

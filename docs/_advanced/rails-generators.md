@@ -31,7 +31,7 @@ bin/rails generate ruby_llm:install
 The generator:
 
 - Creates application migrations and models for Chat and Message
-- Creates one migration for RubyLLM's internal model, tool-call, usage, and batch tables
+- Creates one migration for RubyLLM's eight supporting tables: models, tool calls, usages, queued messages, chat files, batches, MCP credentials, and provider files
 - Adds the `acts_as_chat` and `acts_as_message` declarations
 - Installs Active Storage, which `acts_as_message` uses for attachments
 - Creates an initializer for provider configuration

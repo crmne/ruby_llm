@@ -332,7 +332,7 @@ RubyLLM.configure do |config|
 end
 
 chat = RubyLLM.chat(model: "qwen3", provider: :openai, assume_model_exists: true)
-response = chat.ask("What is 15 * 23?")
+response = chat.ask "What is 15 * 23?"
 response.content        # => "345"
 response.thinking.text  # => "15 * 20 is 300, and 15 * 3 is 45..."
 ```

@@ -128,3 +128,9 @@ Only the provider's response confirms cancellation. Cancelling execution does no
 The blocking `RubyLLM.research` helper attempts a bounded cancellation if waiting times out, is interrupted, or fails before returning a handle. `RubyLLM::ResearchJob::Error` and `RubyLLM::ResearchJob::InterruptedError` retain the job. If cancellation cannot be confirmed, `error.job.cancellation_error` records that failure; use the saved ID to retrieve the task again.
 
 Vertex AI retains research task data according to its service policy. See the [Deep Research documentation](https://docs.cloud.google.com/gemini-enterprise-agent-platform/agents/use-deep-research) for current retention, access requirements, and provider-specific agent options.
+
+## Next Steps
+
+* [Agentic Workflows]({% link _advanced/agentic-workflows.md %}): combine research with your own agents.
+* [Provider Tools]({% link _tools/provider-tools.md %}): search the web from an ordinary chat.
+* [Citations]({% link _core_features/citations.md %}): read the sources behind an answer.

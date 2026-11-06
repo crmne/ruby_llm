@@ -114,7 +114,7 @@ end
 
 text = RubyLLM.ocr("invoice.pdf").markdown
 response = RubyLLM.chat.with_schema(InvoiceSchema)
-                  .ask("Extract the invoice details:\n#{text}")
+                  .ask "Extract the invoice details:\n#{text}"
 response.parsed
 # => {"invoice_number" => "INV-1042", "currency" => "EUR", "total" => 120.0}
 ```

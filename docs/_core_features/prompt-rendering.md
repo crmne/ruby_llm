@@ -43,7 +43,7 @@ instructions = RubyLLM.render_prompt(
 
 chat = RubyLLM.chat
 chat.with_instructions(instructions)
-chat.ask("How do I update my invoice email?")
+chat.ask "How do I update my invoice email?"
 ```
 
 `RubyLLM.render_prompt("support/instructions")` resolves to:
@@ -269,3 +269,8 @@ For the full class-based conventions, see [Agents]({% link _getting_started/agen
 ERB templates execute Ruby code, so prompt files should be trusted application code. Do not pass untrusted user input as the prompt name; keep prompt names as application-controlled constants or map user choices to known prompt names.
 
 Locals are inserted exactly as rendered by ERB. If your prompt format needs escaping or quoting, do that before passing the local or inside the template.
+
+## Next Steps
+
+* [Agents]({% link _getting_started/agents.md %}#keeping-instructions-in-prompt-templates): give an agent its own templates.
+* [Prompt Caching]({% link _core_features/prompt-caching.md %}): reuse long, stable prompts for less.

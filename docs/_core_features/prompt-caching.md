@@ -23,10 +23,10 @@ After reading this guide, you will know:
 Use `with_caching` when the provider should cache the stable prompt prefix automatically. Calling it with no arguments enables provider-default prompt caching:
 
 ```ruby
-chat = RubyLLM.chat(model: '{{ site.models.anthropic_latest }}').with_caching
+chat = RubyLLM.chat(model: "{{ site.models.anthropic_latest }}").with_caching
 
 chat.with_instructions("You are a careful code reviewer.")
-response = chat.ask("Summarize the public API changes.", with: "large_diff.patch")
+response = chat.ask "Summarize the public API changes.", with: "large_diff.patch"
 ```
 
 Keep reusable instructions and documents at the beginning of the conversation. Changing that prefix can prevent a cache hit. Read the result through `response.tokens.cache_read` and `response.tokens.cache_write`.
@@ -77,14 +77,14 @@ Some providers cache repeated prompts implicitly and do not expose an off switch
 When you know the exact prefix that should be cached, mark the message that ends it. Pass `cache_until_here: true` to `with_instructions` to end the prefix at your instructions:
 
 ```ruby
-chat = RubyLLM.chat(model: '{{ site.models.anthropic_latest }}')
+chat = RubyLLM.chat(model: "{{ site.models.anthropic_latest }}")
 
 chat.with_instructions(
   "You are a release-notes assistant. Always group changes by subsystem.",
   cache_until_here: true
 )
 
-response = chat.ask("Summarize the API changes in this diff.", with: "large_diff.patch")
+response = chat.ask "Summarize the API changes in this diff.", with: "large_diff.patch"
 ```
 
 Call `cache_until_here` on any other message, such as a long document you add to the conversation:
@@ -98,7 +98,7 @@ Combine explicit boundaries with `with_caching` to cache a reusable prefix while
 ```ruby
 chat.with_caching(ttl: "1h")
 chat.with_instructions(large_policy_prompt, cache_until_here: true)
-chat.ask("Apply the policy to this request: #{request_text}")
+chat.ask "Apply the policy to this request: #{request_text}"
 ```
 
 RubyLLM sends both controls. The provider applies its cache behavior and breakpoint limits. On supported OpenAI-compatible models, use `with_caching(mode: "explicit")` when you want only explicit breakpoints.
@@ -108,7 +108,7 @@ A stable prefix and a growing conversation often deserve different lifetimes. A 
 ```ruby
 chat.with_caching
 chat.with_instructions(large_policy_prompt, cache_until_here: { ttl: "1h" })
-chat.ask("Apply the policy to this request: #{request_text}")
+chat.ask "Apply the policy to this request: #{request_text}"
 ```
 
 A message takes the same option:
@@ -130,7 +130,7 @@ On Gemini and Vertex AI, create an explicit cache to reuse the same documents ac
 ```ruby
 cache = RubyLLM.cache(
   File.read("handbook.md"),
-  model: '{{ site.models.gemini_current }}',
+  model: "{{ site.models.gemini_current }}",
   instructions: "You are a meticulous release engineer.",
   ttl: 1.hour
 )
@@ -143,7 +143,7 @@ cache.expires_at # => 2026-08-11 12:34:56 UTC
 Pass file attachments with `with:`, the same way `ask` accepts them:
 
 ```ruby
-cache = RubyLLM.cache("Reference material:", model: '{{ site.models.gemini_current }}', with: "manual.pdf")
+cache = RubyLLM.cache("Reference material:", model: "{{ site.models.gemini_current }}", with: "manual.pdf")
 ```
 
 The content must meet the model's minimum cacheable size. `ttl:` accepts a Duration, seconds, or a duration string such as `"300s"`, and defaults to one hour.
@@ -151,8 +151,8 @@ The content must meet the model's minimum cacheable size. `ttl:` accepts a Durat
 Attach the cache by passing the `CachedContent` to `with_caching`, or its name with `id:`:
 
 ```ruby
-chat = RubyLLM.chat(model: '{{ site.models.gemini_current }}').with_caching(cache)
-response = chat.ask("What does the handbook say about cassette hygiene?")
+chat = RubyLLM.chat(model: "{{ site.models.gemini_current }}").with_caching(cache)
+response = chat.ask "What does the handbook say about cassette hygiene?"
 response.tokens.cache_read # => 7809
 ```
 
@@ -174,13 +174,19 @@ Use the same model and provider when creating and using a cache.
 For persisted Rails chats, explicit cache boundaries are stored on messages with `cache_until_here`, their lifetimes in `cache_ttl`, and both are replayed with conversation history:
 
 ```ruby
-chat = Chat.create!(model: '{{ site.models.anthropic_current }}')
+chat = Chat.create!(model: "{{ site.models.anthropic_current }}")
 chat.with_caching
-chat.with_instructions('Reusable analysis prompt', cache_until_here: { ttl: "1h" })
+chat.with_instructions("Reusable analysis prompt", cache_until_here: { ttl: "1h" })
 chat.add_message(role: :user, content: long_context).cache_until_here
-chat.ask("Today's request: #{summary}")
+chat.ask "Today's request: #{summary}"
 ```
 
 A reloaded chat renders the same request bytes as the turn that wrote it, so the next turn reuses the cached prefix. Tool call arguments keep the key order PostgreSQL `jsonb` and MySQL `json` columns store.
 
-Apps upgrading from 1.16 get `cache_until_here` from the [2.0 upgrade](https://github.com/crmne/ruby_llm/blob/v2.0.0/docs/_reference/upgrading.md), and apps on 2.0 get `cache_ttl` from the [2.1 upgrade]({% link _reference/upgrading.md %}#upgrade-the-rails-schema). New apps get both columns from the install generator.
+The install generator creates both columns. For an existing app, see [Upgrading]({% link _reference/upgrading.md %}), which links to the guide for each older release.
+
+## Next Steps
+
+* [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}): read cached tokens and what they saved.
+* [Prompt Rendering]({% link _core_features/prompt-rendering.md %}): keep long prompts in templates.
+* [Advanced Request Control]({% link _core_features/chat-request-control.md %}): compact long conversations.

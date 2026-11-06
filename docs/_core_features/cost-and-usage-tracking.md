@@ -118,8 +118,8 @@ A cancelled attempt may have no message to attach to. It still contributes to `c
 Once a model is in the registry, RubyLLM can turn token usage into a `RubyLLM::Cost` object so you can attach a dollar figure to any usage payload:
 
 ```ruby
-model = RubyLLM.models.find('{{ site.models.default_chat }}')
-response = RubyLLM.chat(model: model.id, provider: model.provider).ask("Summarize Ruby's object model.")
+model = RubyLLM.models.find("{{ site.models.default_chat }}")
+response = RubyLLM.chat(model: model.id, provider: model.provider).ask "Summarize Ruby's object model."
 
 cost = model.cost_for(response.tokens)
 puts cost.input
@@ -245,7 +245,7 @@ An operation's `owner:` wins over the block's owner, and a nested block restores
 A chat takes its own owner with `with_owner`. Every attempt it makes is attributed to it: each request, the tools it runs and the model calls they make, the file converters it triggers, and compaction, including failed or cancelled attempts that produce no message:
 
 ```ruby
-chat.with_owner(current_user).ask("Summarize the latest reviews.")
+chat.with_owner(current_user).ask "Summarize the latest reviews."
 ```
 
 A chat's owner wins over `RubyLLM.with_owner`, which still applies to a chat without one. Agents declare it with the `owner` macro, which takes a block evaluated when the chat is built:
@@ -309,7 +309,7 @@ In a Rails app with the database-backed registry, the same refresh call writes t
 ```ruby
 # lib/tasks/ruby_llm.rake
 namespace :ruby_llm do
-  desc 'Refresh the model registry pricing and capabilities'
+  desc "Refresh the model registry pricing and capabilities"
   task refresh_models: :environment do
     RubyLLM.models.refresh
   end
