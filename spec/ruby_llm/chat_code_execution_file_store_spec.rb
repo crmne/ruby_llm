@@ -184,6 +184,16 @@ RSpec.describe RubyLLM::Chat do
         .to start_with('Replaced 1')
     end
 
+    it 'keeps the report when it cannot read back a file the run changed' do
+      chat.tools[:read_file].call(path: 'notes.md')
+      allow(store).to receive(:read).and_raise(RubyLLM::FileNotFoundError, 'gone')
+
+      report = JSON.parse(run_code)
+
+      expect(report).to include('stdout' => 'done')
+      expect(report['read_again']).to include('notes.md')
+    end
+
     it 'says nothing when a run in the folder rewrites a file it read with the same content' do
       store.write('notes.md', 'changed')
       chat.tools[:read_file].call(path: 'notes.md')

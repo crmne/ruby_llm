@@ -558,6 +558,8 @@ module RubyLLM
     def changed_since_read?(store, file)
       seen = store.read_digest(file.path)
       seen && seen != (file.digest || FileStore.digest(store.read(file.path)))
+    rescue FileNotFoundError, SystemCallError
+      true
     end
 
     def run_in_sandbox(runner, command, workspace, readable:, directory: workspace.directory)

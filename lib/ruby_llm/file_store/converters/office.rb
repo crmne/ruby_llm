@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'pathname'
 require 'zlib'
 
 module RubyLLM
@@ -18,7 +19,8 @@ module RubyLLM
         }.freeze # :nodoc:
         MAX_SIZE = 50 * 1024 * 1024 # :nodoc:
         ENTITIES = { 'amp' => '&', 'lt' => '<', 'gt' => '>', 'quot' => '"', 'apos' => "'" }.freeze
-        private_constant :ENTITIES
+        PREFIX = '(?:[\w.-]+:)?'
+        private_constant :ENTITIES, :PREFIX
 
         class << self
           # Returns the text of +attachment+, or +nil+ when it is not a
@@ -40,11 +42,11 @@ module RubyLLM
           private
 
           def document(zip)
-            paragraphs(zip['word/document.xml'], 'w')
+            paragraphs(zip['word/document.xml'])
           end
 
           def workbook(zip)
-            strings = zip['xl/sharedStrings.xml'].to_s.scan(%r{<si>(.*?)</si>}m).map { |(item)| runs(item, '') }
+            strings = zip['xl/sharedStrings.xml'].to_s.scan(element('si')).map { |(item)| runs(item) }
             parts(zip, 'xl', 'workbook.xml', 'sheet', %r{\Axl/worksheets/[^/]+\.xml\z})
               .each_with_index.map do |(part, tag), index|
                 rows = zip[part].to_s.scan(element('row')).map { |(row)| cells(row, strings).join("\t") }
@@ -53,9 +55,9 @@ module RubyLLM
           end
 
           def deck(zip)
-            parts(zip, 'ppt', 'presentation.xml', 'p:sldId', %r{\Appt/slides/[^/]+\.xml\z})
+            parts(zip, 'ppt', 'presentation.xml', 'sldId', %r{\Appt/slides/[^/]+\.xml\z})
               .each_with_index.map do |(part, _tag), index|
-                "## Slide #{index + 1}\n\n#{paragraphs(zip[part], 'a')}"
+                "## Slide #{index + 1}\n\n#{paragraphs(zip[part])}"
               end.join("\n\n")
           end
 
@@ -64,9 +66,9 @@ module RubyLLM
           # when the listing doesn't resolve.
           def parts(zip, folder, owner, tag, fallback)
             targets = relationships(zip, "#{folder}/_rels/#{owner}.rels", folder)
-            listed = zip["#{folder}/#{owner}"].to_s.scan(/<#{tag}\b[^>]*>/).filter_map do |element|
-              part = targets[element[/\br:id="([^"]*)"/, 1]]
-              [part, element] if part && zip.names.include?(part)
+            listed = zip["#{folder}/#{owner}"].to_s.scan(/<#{PREFIX}#{tag}\b[^>]*>/).filter_map do |listing|
+              part = targets[listing[/\s[\w.-]+:id="([^"]*)"/, 1]]
+              [part, listing] if part && zip.names.include?(part)
             end
             return listed if listed.any?
 
@@ -74,28 +76,28 @@ module RubyLLM
           end
 
           def relationships(zip, path, folder)
-            zip[path].to_s.scan(/<Relationship\b[^>]*>/).to_h do |relationship|
+            zip[path].to_s.scan(/<#{PREFIX}Relationship\b[^>]*>/o).to_h do |relationship|
               target = relationship[/\bTarget="([^"]*)"/, 1].to_s
-              [relationship[/\bId="([^"]*)"/, 1],
-               target.start_with?('/') ? target.delete_prefix('/') : "#{folder}/#{target}"]
+              part = target.start_with?('/') ? target.delete_prefix('/') : "#{folder}/#{target}"
+              [relationship[/\bId="([^"]*)"/, 1], Pathname(part).cleanpath.to_s]
             end
           end
 
           def element(name)
-            %r{<#{name}(?:\s[^>]*[^/>])?>(.*?)</#{name}>}m
+            %r{<#{PREFIX}#{name}(?:\s[^>]*[^/>])?>(.*?)</#{PREFIX}#{name}>}m
           end
 
-          def paragraphs(xml, prefix)
-            xml.to_s.scan(element("#{prefix}:p")).map { |(paragraph)| runs(paragraph, "#{prefix}:") }
-               .reject(&:empty?).join("\n")
+          def paragraphs(xml)
+            xml.to_s.scan(element('p')).map { |(paragraph)| runs(paragraph) }.reject(&:empty?).join("\n")
           end
 
-          def runs(xml, prefix)
-            xml.scan(element("#{prefix}t")).map { |(text)| unescape(text) }.join
+          def runs(xml)
+            xml.scan(element('t')).map { |(text)| unescape(text) }.join
           end
 
           def cells(row, strings)
-            row.scan(%r{<c\b([^>]*?)(?:/>|>(.*?)</c>)}m).each_with_object([]) do |(attributes, body), values|
+            pattern = %r{<#{PREFIX}c\b([^>]*?)(?:/>|>(.*?)</#{PREFIX}c>)}mo
+            row.scan(pattern).each_with_object([]) do |(attributes, body), values|
               column = column_of(attributes)
               values.fill('', values.size...column) if column
               values << cell(attributes, body.to_s, strings)
@@ -108,10 +110,10 @@ module RubyLLM
           end
 
           def cell(attributes, body, strings)
-            value = body[%r{<v>(.*?)</v>}m, 1]
+            value = body[element('v'), 1]
             case attributes[/\bt="([^"]*)"/, 1]
             when 's' then strings[value.to_i].to_s
-            when 'inlineStr' then runs(body, '')
+            when 'inlineStr' then runs(body)
             else unescape(value.to_s)
             end
           end

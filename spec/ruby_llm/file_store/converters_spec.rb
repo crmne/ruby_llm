@@ -39,6 +39,11 @@ RSpec.describe RubyLLM::FileStore::Converters do
     expect(described_class.convert(fixture('sample.pptx'), config:)).to start_with("## Slide 1\n\nQuarterly review")
   end
 
+  it 'reads an Office file that uses other prefixes and relative part paths' do
+    expect(described_class.convert(fixture('sample-prefixed.xlsx'), config:))
+      .to eq("## Second\ninline\n\n## First\nORCHID-97\t7")
+  end
+
   it 'reads the entities XML defines and no others' do
     expect(described_class::Office.send(:unescape, '&amp;lt; &#233; &#xe9; &nbsp;')).to eq('&lt; é é &nbsp;')
   end
