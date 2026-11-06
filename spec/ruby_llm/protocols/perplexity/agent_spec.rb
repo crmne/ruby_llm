@@ -19,7 +19,7 @@ RSpec.describe RubyLLM::Protocols::Perplexity::Agent do
 
   def response_body(text = 'Rails was created by David Heinemeier Hansson.[1]')
     {
-      id: 'resp_1', object: 'response', status: 'completed', model: 'openai/gpt-5-mini',
+      id: 'resp_1', object: 'response', status: 'completed', model: 'openai/gpt-5.6-luna',
       output: [
         { type: 'search_results', queries: ['rails creator'],
           results: [
@@ -203,7 +203,7 @@ RSpec.describe RubyLLM::Protocols::Perplexity::Agent do
       .to_return(event_stream({ type: 'response.output_item.added', output_index: 0, item: call },
                               { type: 'response.output_item.done', output_index: 0, item: call },
                               { type: 'response.completed',
-                                response: { model: 'openai/gpt-5-mini', status: 'completed', output: [call] } }))
+                                response: { model: 'openai/gpt-5.6-luna', status: 'completed', output: [call] } }))
       .then.to_return(event_stream({ type: 'response.output_text.delta', delta: '3' },
                                    { type: 'response.completed', response: answer }))
     arguments = []

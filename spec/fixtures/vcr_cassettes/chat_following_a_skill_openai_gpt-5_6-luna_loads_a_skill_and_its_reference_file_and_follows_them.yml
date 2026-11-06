@@ -1,0 +1,652 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"What is
+        the ticket code for ticket 6?"}],"instructions":"You have skills: folders
+        of instructions, scripts, and files for specific tasks. When a task matches
+        a skill, call load_skill with its name and follow the instructions it returns.
+        Load the files the instructions mention with load_skill as well, one at a
+        time.\n\nThis conversation cannot run code, so skill scripts cannot run. Follow
+        the rest of their instructions.\n\n<skills>\n- csv-report: Summarizes a CSV
+        file into a Markdown report. Use when someone asks for a report on a CSV file.\n-
+        ticket-codes: Builds the official code for a support ticket number. Use whenever
+        someone asks for a ticket code.\n</skills>","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"load_skill","description":"Loads
+        a skill''s instructions, or a file inside a skill''s folder that its instructions
+        mention. Call it with only skill to get the instructions before following
+        a skill, and with file, a path relative to the skill folder, to read one of
+        its files.","parameters":{"type":"object","properties":{"skill":{"type":"string","description":"The
+        name of the skill"},"file":{"type":"string","description":"A file path relative
+        to the skill folder. Leave it out for the instructions"}},"required":["skill"],"additionalProperties":false},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:24:31 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID, Server-Timing-Total
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '1471'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '2000000'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_0ab576fe0899407a016aedff3e529087d2a8e5d1b4aaea35d7",
+          "object": "response",
+          "created_at": 1793982270,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1793982271,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
+          "incomplete_details": null,
+          "instructions": "You have skills: folders of instructions, scripts, and files for specific tasks. When a task matches a skill, call load_skill with its name and follow the instructions it returns. Load the files the instructions mention with load_skill as well, one at a time.\n\nThis conversation cannot run code, so skill scripts cannot run. Follow the rest of their instructions.\n\n<skills>\n- csv-report: Summarizes a CSV file into a Markdown report. Use when someone asks for a report on a CSV file.\n- ticket-codes: Builds the official code for a support ticket number. Use whenever someone asks for a ticket code.\n</skills>",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5.6-luna",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_0ab576fe0899407a016aedff3ef7d487d2aaa9da0c08d27b60",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABq7f8_-6l3-W1Dw8f2NR55qkbSbkFQjJkPHaRGj_Y-Bn10EwOdJvT43CpFtFMuWg5QpbIr0m5vUXiRFdMykK6eA8mHNwKLf_KEGEnV5BLNkd_6PW3OWfLY9qNbjgWT90O3EmGIhmJR1dlJcHS5N3Btoc-kAra9EKVYyfLBI9FecysS89meo_eAqKs-KR1Zn6oVg-zUkatQka37hEInQt2InxYT4ziB1J7GyLE8OOcF99y_KhgC2swrdkmHg2ELwFDKaDsHGanjkw-2j_LB88wKo2XrrgV4gdf8uUKgBjetLRCIPQ4PnsWFwes-cOGnOKXzpMGkVZ4L4nxFIDhUtKMs-gcxDkhbJBNWRiMCkk0u_sTfTEehRpztFmaFDXzbNmgjxxjOLNHkKkP4ub5NIp_Lrsc-UZXaXi3YSPGvlR1WvflyBRPeH66oO3GCyMKJMWD15oWJMOIl0CZoVI3ytfL8CQLuEjkReaenSTeJekW62PjdLeZ2Q6oY-3kjXYNNxkBo3s2ZthVcVzDwI7JZB9z4cySPXOCeX1JQhIMMvLXtMXJk5sKs-DJniFjjwdQkizGOMLkol6yGzlqznoxjqiJxK9lqlw6G5fy_iQLJ-ABR3wB3o_A-m3TCo6LK1amqajWLtsIh4_lcIvOpqKwei7_gmTNny6G314sPDLPRain0Rj3gStHvEF3mSLhxdJiK0hNQaS1JjTX3uzdZCGJZQoUhOq_SqtVBhz3K8WbtP8R_TI_w4bdNohFwm8gMUx60wvjtlighguf6e1t99GfjVAl1YG-gioIWgDPoEWK5E6YXHx4ZOjoIBskXYZgvv5KZ5pSEmxXzWnFnGeXxwoQhIubSQPjy54W56oFaIhR1erOuL5z240-nppu4C9VFQJhHatdSZWDsvB1FFLK_n4i2DoO85IEP4URZyqBOAek5VR2waIy7FfdzNHL_t_8oFk9rP09eYj9ktyHFzHrNbhw9Gn_cFsHs_JJ4tniL3xzyQg5CEQwtK7jeHI4jRRX0iOatBUkApcFqI4KIO9UflLfD60RQ3T_P8A0YuuYf7yOGKXzxJBm407o5miCvsTFZ-8wqam8Y-uPP2lSL-r0R8LrBvOtvkR6hhvfculTgWmokrqro7fyIQAvB6jo0L4ToetcW7lNJ97sp1X436GUJG6dAtPmI0Tx7VIte_ndg8DuBEzQOkEEJJcIVoqPk2nd3o03hEjruDZGXTeSsgPpg_HYCXWjHW3kqTRfSaj3cbUQgh4F_ikBW-xYw81BVxVC0ZhrlI7tnLvhYEDND2BVWfbVfywxiMjOsERRpJjfW6dteFy9k_o9To3geLc-fb4fsywzRQeIIrgdK3j5uh9P3z95I1CfCff2sZmUf40_NEd8BWDb1Ev2RZ37XK7ZzXudZ3XQvq9PSi-bhML79vMUPWQcJxoGxVa1N-hGVT0tqgYfTqNS_wQjtPVA7rcBf5gCDDnNdm-mvB08U8DSvgo-D0VyN9Kuhh9euJ2czl-m7Gd4iJYpV7Es0NKxqUbgNytkZNwjOqL9sKi_5",
+              "summary": []
+            },
+            {
+              "id": "fc_0ab576fe0899407a016aedff3f2d6487d2a782d87c9fd20b49",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{\"skill\":\"ticket-codes\"}",
+              "call_id": "call_1Utg3QHGrKzGNfHr1LFbWRFM",
+              "name": "load_skill"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "24h",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "function",
+              "description": "Loads a skill's instructions, or a file inside a skill's folder that its instructions mention. Call it with only skill to get the instructions before following a skill, and with file, a path relative to the skill folder, to read one of its files.",
+              "name": "load_skill",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "skill": {
+                    "type": "string",
+                    "description": "The name of the skill"
+                  },
+                  "file": {
+                    "type": "string",
+                    "description": "A file path relative to the skill folder. Leave it out for the instructions"
+                  }
+                },
+                "required": [
+                  "skill"
+                ],
+                "additionalProperties": false
+              },
+              "strict": false
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 0.98,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 258,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 32,
+            "output_tokens_details": {
+              "reasoning_tokens": 10
+            },
+            "total_tokens": 290
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Fri, 06 Nov 2026 16:24:31 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"What is
+        the ticket code for ticket 6?"},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABq7f8_-6l3-W1Dw8f2NR55qkbSbkFQjJkPHaRGj_Y-Bn10EwOdJvT43CpFtFMuWg5QpbIr0m5vUXiRFdMykK6eA8mHNwKLf_KEGEnV5BLNkd_6PW3OWfLY9qNbjgWT90O3EmGIhmJR1dlJcHS5N3Btoc-kAra9EKVYyfLBI9FecysS89meo_eAqKs-KR1Zn6oVg-zUkatQka37hEInQt2InxYT4ziB1J7GyLE8OOcF99y_KhgC2swrdkmHg2ELwFDKaDsHGanjkw-2j_LB88wKo2XrrgV4gdf8uUKgBjetLRCIPQ4PnsWFwes-cOGnOKXzpMGkVZ4L4nxFIDhUtKMs-gcxDkhbJBNWRiMCkk0u_sTfTEehRpztFmaFDXzbNmgjxxjOLNHkKkP4ub5NIp_Lrsc-UZXaXi3YSPGvlR1WvflyBRPeH66oO3GCyMKJMWD15oWJMOIl0CZoVI3ytfL8CQLuEjkReaenSTeJekW62PjdLeZ2Q6oY-3kjXYNNxkBo3s2ZthVcVzDwI7JZB9z4cySPXOCeX1JQhIMMvLXtMXJk5sKs-DJniFjjwdQkizGOMLkol6yGzlqznoxjqiJxK9lqlw6G5fy_iQLJ-ABR3wB3o_A-m3TCo6LK1amqajWLtsIh4_lcIvOpqKwei7_gmTNny6G314sPDLPRain0Rj3gStHvEF3mSLhxdJiK0hNQaS1JjTX3uzdZCGJZQoUhOq_SqtVBhz3K8WbtP8R_TI_w4bdNohFwm8gMUx60wvjtlighguf6e1t99GfjVAl1YG-gioIWgDPoEWK5E6YXHx4ZOjoIBskXYZgvv5KZ5pSEmxXzWnFnGeXxwoQhIubSQPjy54W56oFaIhR1erOuL5z240-nppu4C9VFQJhHatdSZWDsvB1FFLK_n4i2DoO85IEP4URZyqBOAek5VR2waIy7FfdzNHL_t_8oFk9rP09eYj9ktyHFzHrNbhw9Gn_cFsHs_JJ4tniL3xzyQg5CEQwtK7jeHI4jRRX0iOatBUkApcFqI4KIO9UflLfD60RQ3T_P8A0YuuYf7yOGKXzxJBm407o5miCvsTFZ-8wqam8Y-uPP2lSL-r0R8LrBvOtvkR6hhvfculTgWmokrqro7fyIQAvB6jo0L4ToetcW7lNJ97sp1X436GUJG6dAtPmI0Tx7VIte_ndg8DuBEzQOkEEJJcIVoqPk2nd3o03hEjruDZGXTeSsgPpg_HYCXWjHW3kqTRfSaj3cbUQgh4F_ikBW-xYw81BVxVC0ZhrlI7tnLvhYEDND2BVWfbVfywxiMjOsERRpJjfW6dteFy9k_o9To3geLc-fb4fsywzRQeIIrgdK3j5uh9P3z95I1CfCff2sZmUf40_NEd8BWDb1Ev2RZ37XK7ZzXudZ3XQvq9PSi-bhML79vMUPWQcJxoGxVa1N-hGVT0tqgYfTqNS_wQjtPVA7rcBf5gCDDnNdm-mvB08U8DSvgo-D0VyN9Kuhh9euJ2czl-m7Gd4iJYpV7Es0NKxqUbgNytkZNwjOqL9sKi_5"},{"type":"function_call","call_id":"call_1Utg3QHGrKzGNfHr1LFbWRFM","name":"load_skill","arguments":"{\"skill\":\"ticket-codes\"}"},{"type":"function_call_output","call_id":"call_1Utg3QHGrKzGNfHr1LFbWRFM","output":"#
+        Skill: ticket-codes\n\nPaths in these instructions are relative to the skill
+        folder. This conversation cannot run code, so the skill''s scripts cannot
+        run: follow the rest of the instructions, and say so when a step needs a script.\n\n#
+        Ticket codes\n\n1. Read references/FORMAT.md for the format of a ticket code.\n2.
+        Build the code for the ticket number you were given.\n3. Answer with the code
+        and nothing else."}],"instructions":"You have skills: folders of instructions,
+        scripts, and files for specific tasks. When a task matches a skill, call load_skill
+        with its name and follow the instructions it returns. Load the files the instructions
+        mention with load_skill as well, one at a time.\n\nThis conversation cannot
+        run code, so skill scripts cannot run. Follow the rest of their instructions.\n\n<skills>\n-
+        csv-report: Summarizes a CSV file into a Markdown report. Use when someone
+        asks for a report on a CSV file.\n- ticket-codes: Builds the official code
+        for a support ticket number. Use whenever someone asks for a ticket code.\n</skills>","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"load_skill","description":"Loads
+        a skill''s instructions, or a file inside a skill''s folder that its instructions
+        mention. Call it with only skill to get the instructions before following
+        a skill, and with file, a path relative to the skill folder, to read one of
+        its files.","parameters":{"type":"object","properties":{"skill":{"type":"string","description":"The
+        name of the skill"},"file":{"type":"string","description":"A file path relative
+        to the skill folder. Leave it out for the instructions"}},"required":["skill"],"additionalProperties":false},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:24:32 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID, Server-Timing-Total
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '909'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '2000000'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_0517ed84d0a68d7c016aedff3fd25487d2b2bb074e92155b5e",
+          "object": "response",
+          "created_at": 1793982271,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1793982272,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
+          "incomplete_details": null,
+          "instructions": "You have skills: folders of instructions, scripts, and files for specific tasks. When a task matches a skill, call load_skill with its name and follow the instructions it returns. Load the files the instructions mention with load_skill as well, one at a time.\n\nThis conversation cannot run code, so skill scripts cannot run. Follow the rest of their instructions.\n\n<skills>\n- csv-report: Summarizes a CSV file into a Markdown report. Use when someone asks for a report on a CSV file.\n- ticket-codes: Builds the official code for a support ticket number. Use whenever someone asks for a ticket code.\n</skills>",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5.6-luna",
+          "moderation": null,
+          "output": [
+            {
+              "id": "fc_0517ed84d0a68d7c016aedff4067f887d2855ca1013d3bd328",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{\"skill\":\"ticket-codes\",\"file\":\"references/FORMAT.md\"}",
+              "call_id": "call_ux1IqOdCZmAFRmktfSAbEbJu",
+              "name": "load_skill"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "24h",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "function",
+              "description": "Loads a skill's instructions, or a file inside a skill's folder that its instructions mention. Call it with only skill to get the instructions before following a skill, and with file, a path relative to the skill folder, to read one of its files.",
+              "name": "load_skill",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "skill": {
+                    "type": "string",
+                    "description": "The name of the skill"
+                  },
+                  "file": {
+                    "type": "string",
+                    "description": "A file path relative to the skill folder. Leave it out for the instructions"
+                  }
+                },
+                "required": [
+                  "skill"
+                ],
+                "additionalProperties": false
+              },
+              "strict": false
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 0.98,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 392,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 27,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 419
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Fri, 06 Nov 2026 16:24:32 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"What is
+        the ticket code for ticket 6?"},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABq7f8_-6l3-W1Dw8f2NR55qkbSbkFQjJkPHaRGj_Y-Bn10EwOdJvT43CpFtFMuWg5QpbIr0m5vUXiRFdMykK6eA8mHNwKLf_KEGEnV5BLNkd_6PW3OWfLY9qNbjgWT90O3EmGIhmJR1dlJcHS5N3Btoc-kAra9EKVYyfLBI9FecysS89meo_eAqKs-KR1Zn6oVg-zUkatQka37hEInQt2InxYT4ziB1J7GyLE8OOcF99y_KhgC2swrdkmHg2ELwFDKaDsHGanjkw-2j_LB88wKo2XrrgV4gdf8uUKgBjetLRCIPQ4PnsWFwes-cOGnOKXzpMGkVZ4L4nxFIDhUtKMs-gcxDkhbJBNWRiMCkk0u_sTfTEehRpztFmaFDXzbNmgjxxjOLNHkKkP4ub5NIp_Lrsc-UZXaXi3YSPGvlR1WvflyBRPeH66oO3GCyMKJMWD15oWJMOIl0CZoVI3ytfL8CQLuEjkReaenSTeJekW62PjdLeZ2Q6oY-3kjXYNNxkBo3s2ZthVcVzDwI7JZB9z4cySPXOCeX1JQhIMMvLXtMXJk5sKs-DJniFjjwdQkizGOMLkol6yGzlqznoxjqiJxK9lqlw6G5fy_iQLJ-ABR3wB3o_A-m3TCo6LK1amqajWLtsIh4_lcIvOpqKwei7_gmTNny6G314sPDLPRain0Rj3gStHvEF3mSLhxdJiK0hNQaS1JjTX3uzdZCGJZQoUhOq_SqtVBhz3K8WbtP8R_TI_w4bdNohFwm8gMUx60wvjtlighguf6e1t99GfjVAl1YG-gioIWgDPoEWK5E6YXHx4ZOjoIBskXYZgvv5KZ5pSEmxXzWnFnGeXxwoQhIubSQPjy54W56oFaIhR1erOuL5z240-nppu4C9VFQJhHatdSZWDsvB1FFLK_n4i2DoO85IEP4URZyqBOAek5VR2waIy7FfdzNHL_t_8oFk9rP09eYj9ktyHFzHrNbhw9Gn_cFsHs_JJ4tniL3xzyQg5CEQwtK7jeHI4jRRX0iOatBUkApcFqI4KIO9UflLfD60RQ3T_P8A0YuuYf7yOGKXzxJBm407o5miCvsTFZ-8wqam8Y-uPP2lSL-r0R8LrBvOtvkR6hhvfculTgWmokrqro7fyIQAvB6jo0L4ToetcW7lNJ97sp1X436GUJG6dAtPmI0Tx7VIte_ndg8DuBEzQOkEEJJcIVoqPk2nd3o03hEjruDZGXTeSsgPpg_HYCXWjHW3kqTRfSaj3cbUQgh4F_ikBW-xYw81BVxVC0ZhrlI7tnLvhYEDND2BVWfbVfywxiMjOsERRpJjfW6dteFy9k_o9To3geLc-fb4fsywzRQeIIrgdK3j5uh9P3z95I1CfCff2sZmUf40_NEd8BWDb1Ev2RZ37XK7ZzXudZ3XQvq9PSi-bhML79vMUPWQcJxoGxVa1N-hGVT0tqgYfTqNS_wQjtPVA7rcBf5gCDDnNdm-mvB08U8DSvgo-D0VyN9Kuhh9euJ2czl-m7Gd4iJYpV7Es0NKxqUbgNytkZNwjOqL9sKi_5"},{"type":"function_call","call_id":"call_1Utg3QHGrKzGNfHr1LFbWRFM","name":"load_skill","arguments":"{\"skill\":\"ticket-codes\"}"},{"type":"function_call_output","call_id":"call_1Utg3QHGrKzGNfHr1LFbWRFM","output":"#
+        Skill: ticket-codes\n\nPaths in these instructions are relative to the skill
+        folder. This conversation cannot run code, so the skill''s scripts cannot
+        run: follow the rest of the instructions, and say so when a step needs a script.\n\n#
+        Ticket codes\n\n1. Read references/FORMAT.md for the format of a ticket code.\n2.
+        Build the code for the ticket number you were given.\n3. Answer with the code
+        and nothing else."},{"type":"function_call","call_id":"call_ux1IqOdCZmAFRmktfSAbEbJu","name":"load_skill","arguments":"{\"file\":\"references/FORMAT.md\",\"skill\":\"ticket-codes\"}"},{"type":"function_call_output","call_id":"call_ux1IqOdCZmAFRmktfSAbEbJu","output":"#
+        Ticket code format\n\nA ticket code is `TKT-`, then the ticket number multiplied
+        by 7, then `-ZX`.\n\nFor ticket 3, the code is TKT-21-ZX.\n"}],"instructions":"You
+        have skills: folders of instructions, scripts, and files for specific tasks.
+        When a task matches a skill, call load_skill with its name and follow the
+        instructions it returns. Load the files the instructions mention with load_skill
+        as well, one at a time.\n\nThis conversation cannot run code, so skill scripts
+        cannot run. Follow the rest of their instructions.\n\n<skills>\n- csv-report:
+        Summarizes a CSV file into a Markdown report. Use when someone asks for a
+        report on a CSV file.\n- ticket-codes: Builds the official code for a support
+        ticket number. Use whenever someone asks for a ticket code.\n</skills>","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"load_skill","description":"Loads
+        a skill''s instructions, or a file inside a skill''s folder that its instructions
+        mention. Call it with only skill to get the instructions before following
+        a skill, and with file, a path relative to the skill folder, to read one of
+        its files.","parameters":{"type":"object","properties":{"skill":{"type":"string","description":"The
+        name of the skill"},"file":{"type":"string","description":"A file path relative
+        to the skill folder. Leave it out for the instructions"}},"required":["skill"],"additionalProperties":false},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:24:33 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID, Server-Timing-Total
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '1112'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '2000000'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_0a7bd044bcf3092b016aedff40c9a487d28df89f0f78aab1ce",
+          "object": "response",
+          "created_at": 1793982272,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1793982273,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
+          "incomplete_details": null,
+          "instructions": "You have skills: folders of instructions, scripts, and files for specific tasks. When a task matches a skill, call load_skill with its name and follow the instructions it returns. Load the files the instructions mention with load_skill as well, one at a time.\n\nThis conversation cannot run code, so skill scripts cannot run. Follow the rest of their instructions.\n\n<skills>\n- csv-report: Summarizes a CSV file into a Markdown report. Use when someone asks for a report on a CSV file.\n- ticket-codes: Builds the official code for a support ticket number. Use whenever someone asks for a ticket code.\n</skills>",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5.6-luna",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_0a7bd044bcf3092b016aedff4149bc87d2af06519a78876e1f",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABq7f9BKmscy1oTnErqEkjQfT5p-uYVkOOZANiTfBKvwMLPlCqqk-4OGx_MJ1jVFX_WEq72cdmj5G4FzxFInNtT5XQJDPy6jGL_rZ_90f11CKNCQ1ETod33Y2EbmsV1fq88PssI8Rpau71PysZlXte-97Wv85aDGk3q60-nDz15MwmLuHgxyPVDcL_KbVpOJ53o9JVT-bvnGBcgL9sjfB-CxpsbTZkTIAsIko-wfZXZ8H-bVlYbw9Y6vmp0rFjUSZ5xJ8MDGl1MQv5mONPtSRsWAlitHoxDwa3IqVHZXebIH0j6n1KHZXAhbXiwjUJ_h9nQH8gjOcgh-mAPD0VBORXc-mz_P6m5JutvPSrYVUFdaDHYRa-f1kS9BcRnhyBCA9_sgeiG7e1dZ7K3HgJfwLMVijcCEoD12giDZ_mhG6I3zL7O--oN6bupaDiJWgwJR1V2OBCrJwsly6yb_Xk4oXToqGhrqdW3DD6Ln_lmD07RteuAv2YUMnSbI0ak4KiQPjKLuhhFKb2HU5aJTSo0NeenV3hUYyX0ik7lqn-y8AuuyOs_Rfsf5crUHqYPtwVayL2CIlhKD0mjbiSWCW1iGuWRvjDqoUbkm414JPMVLnDW1-giwjE2ycYVwi4MUbP5GIkWMJs3xtnqiFtlod79SKGoRx02HPlt4nVe8HcClbyc5A8h_qLTQ5GfpwdB5QBTAcPPdkBqeS613fzBU4_159w1n67Uo3nUCEL3afjfKmupSY2AvvMXkLyVZCq-xC_3HXiKqtbvkQ2YO-pPQ-hb0JqowCQBz0O55SpWbOxpcu0zA4Z2Voz48Y_jUrLkt-GG2NCiFtSEG8aVRzncUMOflK7f0KLoLUZ3N0hwGAMpnaLKFKp7Mr1G8rVWojI5tDFLukB-uM6PA-ODruAp9_VCy9tGeT1u36dqFF_Ejfi0GUS4KzKNu-qGy8cHz5dqkqmhoR3zz3DVCImlYaMw_cT57pXEsNEJk0-rrCOHoL-zxXUyTQmcT2Mjh0u_GVZTLHY5Yb5eQqf1H6NePC8u6f2pD-yltQMQ_AtD4RGd_pVLBqezcXH-67GgwVWNYNDGeL3GMiA2zmTw9Qyd_ZdYnoRS_YS1BkjRI0sl4G-a1pYT24n9fXSyFtH2S8OihyqIrP3apoF29HfPSUyO_B5oomUXgkxpRF2yniUf2vRyparJNTon7jnilMH_cwb_dDlXl372VN6NyeHGK70wzWPfTT3CZlMcXHs_7jAdKp1iLA1irMBmfssmNWpApyYu14VmJKHbOUkPJ_DPx-VZSKciI0ggYaUx0JJ5tCyp8sur0iCudUccZBjDaAO1WoGvcncAUWSrY2ffWqLdFnloUbtfi46r9zPrV2cQf0RryLwfTDVkz3DvfwDDUqC8HfTmPJZlRooisqAB-siIg4CNytp7O9fZy7OD2JTAkmK_sMwUZgMJJU-9u0xyFpasSQpq8MXYZjUE05Kbusqcvy8REtlCJUZ_XivZQTDqt6_N7NlVaimGbqFe7NXg13-k5N4KLmv5k-6M6ju-pH04FMY47Z3PaMg9tcqXyYLj04-ENAmyens79z9wlmrcReI=",
+              "summary": []
+            },
+            {
+              "id": "msg_0a7bd044bcf3092b016aedff416cec87d2a06dba9fec7c3c37",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "TKT-42-ZX"
+                }
+              ],
+              "phase": "final_answer",
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "24h",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "function",
+              "description": "Loads a skill's instructions, or a file inside a skill's folder that its instructions mention. Call it with only skill to get the instructions before following a skill, and with file, a path relative to the skill folder, to read one of its files.",
+              "name": "load_skill",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "skill": {
+                    "type": "string",
+                    "description": "The name of the skill"
+                  },
+                  "file": {
+                    "type": "string",
+                    "description": "A file path relative to the skill folder. Leave it out for the instructions"
+                  }
+                },
+                "required": [
+                  "skill"
+                ],
+                "additionalProperties": false
+              },
+              "strict": false
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 0.98,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 473,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 28,
+            "output_tokens_details": {
+              "reasoning_tokens": 16
+            },
+            "total_tokens": 501
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Fri, 06 Nov 2026 16:24:33 GMT
+recorded_with: VCR 6.4.1

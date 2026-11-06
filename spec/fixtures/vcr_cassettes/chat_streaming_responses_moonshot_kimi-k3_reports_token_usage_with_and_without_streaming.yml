@@ -1,0 +1,182 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k3","messages":[{"role":"user","content":"Reply with
+        exactly: 1, 2, 3"}],"stream":true,"stream_options":{"include_usage":true}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:26:28 GMT
+      Content-Type:
+      - text/event-stream
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Cache-Control:
+      - no-cache
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - d0dd023a-d9fe-11f1-9890-00163e7a3687
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '0'
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 11e75e68c448dccf780c7776f6021ebd
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"id":"chatcmpl-82c04285-aadc-9914-813b-ac7c370aa6aa","object":"chat.completion.chunk","created":1793982387,"model":"kimi-k3","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-82c04285-aadc-9914-813b-ac7c370aa6aa","object":"chat.completion.chunk","created":1793982387,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":"The"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-82c04285-aadc-9914-813b-ac7c370aa6aa","object":"chat.completion.chunk","created":1793982387,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":" user wants me"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-82c04285-aadc-9914-813b-ac7c370aa6aa","object":"chat.completion.chunk","created":1793982387,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":" to reply with exactly"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-82c04285-aadc-9914-813b-ac7c370aa6aa","object":"chat.completion.chunk","created":1793982387,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":" \"1, "},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-82c04285-aadc-9914-813b-ac7c370aa6aa","object":"chat.completion.chunk","created":1793982387,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":"2, 3"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-82c04285-aadc-9914-813b-ac7c370aa6aa","object":"chat.completion.chunk","created":1793982387,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":"\". This is a"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-82c04285-aadc-9914-813b-ac7c370aa6aa","object":"chat.completion.chunk","created":1793982387,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":" simple formatting instruction."},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-82c04285-aadc-9914-813b-ac7c370aa6aa","object":"chat.completion.chunk","created":1793982387,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":" I should just"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-82c04285-aadc-9914-813b-ac7c370aa6aa","object":"chat.completion.chunk","created":1793982387,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":" output that"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-82c04285-aadc-9914-813b-ac7c370aa6aa","object":"chat.completion.chunk","created":1793982387,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":" exact text"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-82c04285-aadc-9914-813b-ac7c370aa6aa","object":"chat.completion.chunk","created":1793982387,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":"."},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-82c04285-aadc-9914-813b-ac7c370aa6aa","object":"chat.completion.chunk","created":1793982387,"model":"kimi-k3","choices":[{"index":0,"delta":{"reasoning_content":""},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-82c04285-aadc-9914-813b-ac7c370aa6aa","object":"chat.completion.chunk","created":1793982387,"model":"kimi-k3","choices":[{"index":0,"delta":{"content":"1, 2,"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-82c04285-aadc-9914-813b-ac7c370aa6aa","object":"chat.completion.chunk","created":1793982387,"model":"kimi-k3","choices":[{"index":0,"delta":{"content":" 3"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-82c04285-aadc-9914-813b-ac7c370aa6aa","object":"chat.completion.chunk","created":1793982387,"model":"kimi-k3","choices":[{"index":0,"delta":{},"finish_reason":"stop","usage":{"prompt_tokens":97,"completion_tokens":55,"total_tokens":152,"completion_tokens_details":{"reasoning_tokens":32},"prompt_tokens_details":{"cache_write_tokens":0}}}]}
+
+        data: {"id":"chatcmpl-82c04285-aadc-9914-813b-ac7c370aa6aa","object":"chat.completion.chunk","created":1793982387,"model":"kimi-k3","choices":[],"usage":{"prompt_tokens":97,"completion_tokens":55,"total_tokens":152,"completion_tokens_details":{"reasoning_tokens":32},"prompt_tokens_details":{"cache_write_tokens":0}}}
+
+        data: [DONE]
+
+  recorded_at: Fri, 06 Nov 2026 16:26:29 GMT
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k3","messages":[{"role":"user","content":"Reply with
+        exactly: 1, 2, 3"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:26:32 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - d1fea0fe-d9fe-11f1-b871-00163e05d0f4
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '0'
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - ace4cb5746f94f785b809b246686fa36
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-7a9870d7-a87e-9a41-aa58-1debca95701d","object":"chat.completion","created":1793982389,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"1,
+        2, 3","reasoning_content":"The user has asked me to reply with exactly \"1,
+        2, 3\". This is a simple instruction with no ambiguity, no ethical concerns,
+        nothing problematic. They just want me to output that specific text.\n\nThe
+        instruction is clear: \"Reply with exactly: 1, 2, 3\"\n\nSo I should just
+        output:\n1, 2, 3\n\nNo preamble, no explanation, no additional formatting.
+        Just exactly what they asked for."},"finish_reason":"stop"}],"usage":{"prompt_tokens":97,"completion_tokens":116,"total_tokens":213,"completion_tokens_details":{"reasoning_tokens":94},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Fri, 06 Nov 2026 16:26:32 GMT
+recorded_with: VCR 6.4.1
+...

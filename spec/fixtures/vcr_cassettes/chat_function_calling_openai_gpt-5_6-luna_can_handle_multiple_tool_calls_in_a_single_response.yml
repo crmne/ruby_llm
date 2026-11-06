@@ -1,0 +1,399 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"Roll the
+        dice 3 times"}],"instructions":"You must call the dice_roll tool exactly 3
+        times when asked to roll dice 3 times.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:31:09 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID, Server-Timing-Total
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '1578'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '2000000'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_00d3588cdbd427bd016aee00cc018487d28c12e644e0d4de73",
+          "object": "response",
+          "created_at": 1793982668,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1793982669,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
+          "incomplete_details": null,
+          "instructions": "You must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5.6-luna",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_00d3588cdbd427bd016aee00ccb3cc87d284a6ebe393e57d94",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABq7gDN_dMDlc33097iMQdLkMcRbv-NX7Rbin0jnqTB4trP-1xxuSUWsyH5cNO-M_dB1pzzvr4k-5TS93iDOOXS0-qomStusIODs0--OmVJpt6AumPUWlwmNssPyi6oRhxlBRNHFCkRasxZWIazniA9ddEuoy7mBjj1wxGCsWUKxX3zUK1QB1EDbZV3PA3qogbYSWeiVkSsSVEI9fq44uafWJ9Q1AdqV0Qlx0aK16aID948Mi2hmjoS9indxp1lXYBQO2-LHAKY-gAelmckipjlo2wrKqLLcoohLtBK96xXYRAD2TRqk3E77E5vK2TYvozILmQ__o0kO4ToZBh_PTumgmIgcw3QzxguWUyHi2EoRUlT4TrXAmFfbR0Al8rHUX-IXu3YWlorBgeq6_27A0Uym2-zsPs6-jPgijfjvDcQ1v2tCVejrQ4Ckb26P1JFensORYU2MuUs7exuGv445rca2MT0s_di1kQDp5Ontdyn4fxbPQJSWi9rtRqoSEK7Inb65kTKk2Q2Gag_hKxJdrWltVBsir857SQvbA0dF_W6hHWiz48nSdAsMHXBqzwRFSPLBOrHEAeLz_H100tDMsehyiJuyZHQyKQZpGKUVTrOC7gnUrx-aCN8x90BXEbYY3-VIlekkQbnyVIIjnc9a07jBqRBF_cDBa7M_KX0X7eIYgQWc_8JdCBx0I3jvaIxppFrIveUhmA1_mg28ElDCNPZNZm0QtXnefcWTSiyDLKMZ5fAku9ewpcZr_l0X4RHK4DNLCeQh9L0LAfT6hUObR-lXMmEfVPXHOqDso4kuETEqAQJGmLNLzMecVgnXKhECvtE4t6P8uSSa1KhCw_pl-kxD7WL4GsvCKMExjkXflTEoGDGMGEmppQU8A3RQ5klneB0NOHr72rkU-tvSi8dl5g8Y67XeopQQXAI3c28gskpbaXlWzpOmp0DGNLWPYnBF6H59unNzWrKvsD5SMKMYipsMfncv6FA8k_ao3G-SJVAnifmmKYKcPrEsmDe4i0s9qKTF2zbI0JRjrtSt48F2ve9RQSwVnj5RkVvHm1hV-P1sudXipHHyk5OUNjYqTzrNp2_Dfyf1rxuW06NvDTHJZv2A75wx7LnMuRmpuhKLOoO3fVk3CbY-hsrr6olPlEAXQ9lDNTuuELuzpfGYqP0kf1OMobccxsvBmdOe1-8QpibT98eo0atYM232cM6-zHhyWVTgZ2tggh-l50IRPrXkFU196UHhMxddkXTbeEksqbFWunkDC_uG74ZmvN2gFmUcmQXLmD3CpbcPXJfuvCDYuLoqDQ1w4YUWl_2UisgSum9JR9XZKng7mdVZyheIuojYYrE1_FlWXLxFPuh5NdbqsAs2E7EMN8slr7NcmFgVlvkbUn2ookjwkv1wnRsZq5rCTPYUGrBi8pVTIju0F04hVMAsGS0PGnCV7cIJQcFujPDJE05-WfYuO9lEUFKfuB3rPs6AQzcwugnS2_9wzQB3S0srhzs2hhhOCYbG68J__ZLnvObR2y5Wvxggv_Ilb68l9_bwJurQRrst-mcRAT7Lgqi1mN2I1bYAbYpN4HRXl_bQ-QKOwCa2_vyK1fHVOtQ8OVF_zOUGKPCWWG36Y74IVIuDQuieYSxihwOS63YeXhoQVfYV3c=",
+              "summary": []
+            },
+            {
+              "id": "fc_00d3588cdbd427bd016aee00cd4b9c87d2bb13ab7b4197ec1d",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{}",
+              "call_id": "call_vDTsdXbuwSCm4IBs3S1KM78D",
+              "name": "dice_roll"
+            },
+            {
+              "id": "fc_00d3588cdbd427bd016aee00cd4bb487d286029720d73cbc3b",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{}",
+              "call_id": "call_3AFE0vxM2dibPQt8qW9i5wQy",
+              "name": "dice_roll"
+            },
+            {
+              "id": "fc_00d3588cdbd427bd016aee00cd4bc487d2858e0e7c1706749c",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{}",
+              "call_id": "call_8PdtmCBYsmx294G25U6RIAh4",
+              "name": "dice_roll"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "24h",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "function",
+              "description": "Rolls a single six-sided die and returns the result",
+              "name": "dice_roll",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": false
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 0.98,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 71,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 77,
+            "output_tokens_details": {
+              "reasoning_tokens": 18
+            },
+            "total_tokens": 148
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Fri, 06 Nov 2026 16:31:09 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"Roll the
+        dice 3 times"},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABq7gDN_dMDlc33097iMQdLkMcRbv-NX7Rbin0jnqTB4trP-1xxuSUWsyH5cNO-M_dB1pzzvr4k-5TS93iDOOXS0-qomStusIODs0--OmVJpt6AumPUWlwmNssPyi6oRhxlBRNHFCkRasxZWIazniA9ddEuoy7mBjj1wxGCsWUKxX3zUK1QB1EDbZV3PA3qogbYSWeiVkSsSVEI9fq44uafWJ9Q1AdqV0Qlx0aK16aID948Mi2hmjoS9indxp1lXYBQO2-LHAKY-gAelmckipjlo2wrKqLLcoohLtBK96xXYRAD2TRqk3E77E5vK2TYvozILmQ__o0kO4ToZBh_PTumgmIgcw3QzxguWUyHi2EoRUlT4TrXAmFfbR0Al8rHUX-IXu3YWlorBgeq6_27A0Uym2-zsPs6-jPgijfjvDcQ1v2tCVejrQ4Ckb26P1JFensORYU2MuUs7exuGv445rca2MT0s_di1kQDp5Ontdyn4fxbPQJSWi9rtRqoSEK7Inb65kTKk2Q2Gag_hKxJdrWltVBsir857SQvbA0dF_W6hHWiz48nSdAsMHXBqzwRFSPLBOrHEAeLz_H100tDMsehyiJuyZHQyKQZpGKUVTrOC7gnUrx-aCN8x90BXEbYY3-VIlekkQbnyVIIjnc9a07jBqRBF_cDBa7M_KX0X7eIYgQWc_8JdCBx0I3jvaIxppFrIveUhmA1_mg28ElDCNPZNZm0QtXnefcWTSiyDLKMZ5fAku9ewpcZr_l0X4RHK4DNLCeQh9L0LAfT6hUObR-lXMmEfVPXHOqDso4kuETEqAQJGmLNLzMecVgnXKhECvtE4t6P8uSSa1KhCw_pl-kxD7WL4GsvCKMExjkXflTEoGDGMGEmppQU8A3RQ5klneB0NOHr72rkU-tvSi8dl5g8Y67XeopQQXAI3c28gskpbaXlWzpOmp0DGNLWPYnBF6H59unNzWrKvsD5SMKMYipsMfncv6FA8k_ao3G-SJVAnifmmKYKcPrEsmDe4i0s9qKTF2zbI0JRjrtSt48F2ve9RQSwVnj5RkVvHm1hV-P1sudXipHHyk5OUNjYqTzrNp2_Dfyf1rxuW06NvDTHJZv2A75wx7LnMuRmpuhKLOoO3fVk3CbY-hsrr6olPlEAXQ9lDNTuuELuzpfGYqP0kf1OMobccxsvBmdOe1-8QpibT98eo0atYM232cM6-zHhyWVTgZ2tggh-l50IRPrXkFU196UHhMxddkXTbeEksqbFWunkDC_uG74ZmvN2gFmUcmQXLmD3CpbcPXJfuvCDYuLoqDQ1w4YUWl_2UisgSum9JR9XZKng7mdVZyheIuojYYrE1_FlWXLxFPuh5NdbqsAs2E7EMN8slr7NcmFgVlvkbUn2ookjwkv1wnRsZq5rCTPYUGrBi8pVTIju0F04hVMAsGS0PGnCV7cIJQcFujPDJE05-WfYuO9lEUFKfuB3rPs6AQzcwugnS2_9wzQB3S0srhzs2hhhOCYbG68J__ZLnvObR2y5Wvxggv_Ilb68l9_bwJurQRrst-mcRAT7Lgqi1mN2I1bYAbYpN4HRXl_bQ-QKOwCa2_vyK1fHVOtQ8OVF_zOUGKPCWWG36Y74IVIuDQuieYSxihwOS63YeXhoQVfYV3c="},{"type":"function_call","call_id":"call_vDTsdXbuwSCm4IBs3S1KM78D","name":"dice_roll","arguments":"{}"},{"type":"function_call","call_id":"call_3AFE0vxM2dibPQt8qW9i5wQy","name":"dice_roll","arguments":"{}"},{"type":"function_call","call_id":"call_8PdtmCBYsmx294G25U6RIAh4","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_vDTsdXbuwSCm4IBs3S1KM78D","output":"{\"roll\":1}"},{"type":"function_call_output","call_id":"call_3AFE0vxM2dibPQt8qW9i5wQy","output":"{\"roll\":2}"},{"type":"function_call_output","call_id":"call_8PdtmCBYsmx294G25U6RIAh4","output":"{\"roll\":3}"}],"instructions":"You
+        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:31:10 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID, Server-Timing-Total
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '897'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '2000000'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_0bcde7d2aae59618016aee00cda75887d2b03265640c0ba8ec",
+          "object": "response",
+          "created_at": 1793982669,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1793982670,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
+          "incomplete_details": null,
+          "instructions": "You must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5.6-luna",
+          "moderation": null,
+          "output": [
+            {
+              "id": "msg_0bcde7d2aae59618016aee00ce490887d2aea3e137528203d5",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "Rolls: **1, 2, 3**"
+                }
+              ],
+              "phase": "final_answer",
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "24h",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "function",
+              "description": "Rolls a single six-sided die and returns the result",
+              "name": "dice_roll",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": false
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 0.98,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 195,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 16,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 211
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Fri, 06 Nov 2026 16:31:10 GMT
+recorded_with: VCR 6.4.1

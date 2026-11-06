@@ -498,7 +498,7 @@ RSpec.describe RubyLLM::Cost do
 
   describe 'model resolution' do
     it 'prices against a model looked up by id' do
-      cost = described_class.new(tokens: RubyLLM::Tokens.new(input: 1_000_000), model: 'gpt-4.1-nano')
+      cost = described_class.new(tokens: RubyLLM::Tokens.new(input: 1_000_000), model: 'gpt-5.4-nano')
 
       expect(cost.input).to be_positive
     end

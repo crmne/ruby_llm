@@ -65,7 +65,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Batches do
   describe '#single_batch_model!' do
     it 'rejects mixed-model batches' do
       requests = [
-        { custom_id: '0', model: 'gpt-5-nano', payload: { input: 'hi' } },
+        { custom_id: '0', model: 'gpt-5.6-luna', payload: { input: 'hi' } },
         { custom_id: '1', model: 'gpt-4o', payload: { input: 'hi' } }
       ]
 
@@ -95,7 +95,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Batches do
   describe '#parse_batch_completion_response' do
     it 'parses chat completion rows with the chat completions parser' do
       body = {
-        'model' => 'gpt-5-nano',
+        'model' => 'gpt-5.6-luna',
         'choices' => [
           {
             'message' => {
@@ -110,7 +110,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Batches do
       message = protocol.send(:parse_batch_completion_response, body)
 
       expect(message.content).to eq('Hello')
-      expect(message.model).to eq('gpt-5-nano')
+      expect(message.model).to eq('gpt-5.6-luna')
       expect(message.tokens.input).to eq(2)
       expect(message.raw).to eq(body)
     end

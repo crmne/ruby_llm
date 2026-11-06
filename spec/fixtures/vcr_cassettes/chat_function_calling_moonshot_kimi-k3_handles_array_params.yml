@@ -1,0 +1,75 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k3","messages":[{"role":"user","content":"Call the array
+        params tool with tags [\"red\",\"blue\"] and tell me the combined tags."}],"stream":false,"tools":[{"type":"function","function":{"name":"array_params","description":"Uses
+        params DSL array support","parameters":{"type":"object","properties":{"tags":{"type":"array","description":"List
+        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:30:36 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 62f595bc-d9ff-11f1-aab3-00163e6508e0
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '0'
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 46ae3996174a0aedd969bbd0f10d5cf2
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-29209952-ae3b-9af5-9e2a-c523300bd987","object":"chat.completion","created":1793982632,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        call the array_params tool with those tags.","tool_calls":[{"index":0,"id":"array_params_0_8053b159","type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}],"reasoning_content":"The
+        user wants me to call the array_params tool with tags [\"red\",\"blue\"] and
+        then report the combined tags. Let me make the tool call."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":199,"completion_tokens":97,"total_tokens":296,"completion_tokens_details":{"reasoning_tokens":31},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Fri, 06 Nov 2026 16:30:36 GMT
+recorded_with: VCR 6.4.1

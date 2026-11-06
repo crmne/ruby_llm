@@ -1,0 +1,182 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k3","messages":[{"role":"system","content":"Your location
+        is Berlin, at latitude 52.5200 and longitude 13.4050."},{"role":"user","content":"When
+        was the fall of Rome?"}],"stream":false,"max_completion_tokens":4096,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":"required"}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:44:25 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 477f78bf-da01-11f1-b5a2-00163e6a1e31
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '256'
+      X-Msh-Trace-Id:
+      - dbc242c0cdd1ec0b88f6322ce5cac34d
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTJmMmUwZDVjMTRmYjY5NjVmMDEyOGU5ZjIiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzkzOTgzNDQ2LCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBmYWxsIG9mIFJvbWUgaXMgdHJhZGl0aW9uYWxseSBkYXRlZCB0byAqKjQ3NiBDRSoqLCB3aGVuIHRoZSBHZXJtYW5pYyBjaGllZnRhaW4gT2RvYWNlciBkZXBvc2VkIFJvbXVsdXMgQXVndXN0dWx1cywgdGhlIGxhc3QgZW1wZXJvciBvZiB0aGUgV2VzdGVybiBSb21hbiBFbXBpcmUuXG5cbkEgZmV3IHRoaW5ncyB3b3J0aCBrbm93aW5nIGZvciBjb250ZXh0OlxuXG4tICoqVGhlIGZhbGwgd2FzIGdyYWR1YWwqKiwgbm90IGEgc2luZ2xlIGV2ZW50LiBSb21lIGhhZCBiZWVuIGRlY2xpbmluZyBmb3IgZGVjYWRlcywgZmFjaW5nIGVjb25vbWljIHRyb3VibGVzLCBwb2xpdGljYWwgaW5zdGFiaWxpdHksIGFuZCBwcmVzc3VyZSBmcm9tIG1pZ3JhdGluZyBwZW9wbGVzLiBOb3RhYmxlIGVhcmxpZXIgYmxvd3MgaW5jbHVkZWQgdGhlIHNhY2sgb2YgUm9tZSBieSB0aGUgVmlzaWdvdGhzIGluIDQxMCBDRSBhbmQgYnkgdGhlIFZhbmRhbHMgaW4gNDU1IENFLlxuXG4tICoqT25seSB0aGUgV2VzdGVybiBFbXBpcmUgZmVsbC4qKiBUaGUgRWFzdGVybiBSb21hbiBFbXBpcmXigJRiZXR0ZXIga25vd24gYXMgdGhlIEJ5emFudGluZSBFbXBpcmXigJRjb250aW51ZWQgZm9yIG5lYXJseSBhbm90aGVyIHRob3VzYW5kIHllYXJzLCB1bnRpbCBDb25zdGFudGlub3BsZSBmZWxsIHRvIHRoZSBPdHRvbWFuIFR1cmtzIGluICoqMTQ1MyBDRSoqLlxuXG4tICoqSGlzdG9yaWFucyBkZWJhdGUgdGhlIGZyYW1pbmcuKiogU29tZSBhcmd1ZSBcImZhbGxcIiBpcyBtaXNsZWFkaW5nIGFuZCBwcmVmZXIgdG8gZGVzY3JpYmUgaXQgYXMgYSBncmFkdWFsIHRyYW5zZm9ybWF0aW9uIGludG8gbWVkaWV2YWwgRXVyb3BlYW4gYW5kIEJ5emFudGluZSBzb2NpZXRpZXMuXG5cblNvIHRoZSBzaG9ydCBhbnN3ZXIgaXMgNDc2IENFIGZvciB0aGUgV2VzdGVybiBSb21hbiBFbXBpcmUsIHRob3VnaCB0aGUgZnVsbCBzdG9yeSBpcyBtdWNoIG1vcmUgY29tcGxleCEiLCJ0b29sX2NhbGxzIjpbeyJpbmRleCI6MCwiaWQiOiJ3ZWF0aGVyXzBfMjAyNGIwOTgiLCJ0eXBlIjoiZnVuY3Rpb24iLCJmdW5jdGlvbiI6eyJuYW1lIjoid2VhdGhlciIsImFyZ3VtZW50cyI6IntcImxhdGl0dWRlXCI6IFwiNDEuOTAyOFwiLCBcImxvbmdpdHVkZVwiOiBcIjEyLjQ5NjRcIn0ifX1dLCJyZWFzb25pbmdfY29udGVudCI6IlRoZSB1c2VyIGlzIGFza2luZyBhYm91dCB0aGUgZmFsbCBvZiBSb21lLCB3aGljaCBpcyBhIGhpc3RvcmljYWwgcXVlc3Rpb24uIFRoaXMgZG9lc24ndCByZXF1aXJlIHdlYXRoZXIgaW5mb3JtYXRpb24gb3IgYW55IHRvb2xzIC0gaXQncyBhIGdlbmVyYWwga25vd2xlZGdlIHF1ZXN0aW9uLlxuXG5UaGUgZmFsbCBvZiBSb21lIGlzIHR5cGljYWxseSBkYXRlZCB0byA0NzYgQ0UsIHdoZW4gdGhlIEdlcm1hbmljIGxlYWRlciBPZG9hY2VyIGRlcG9zZWQgdGhlIGxhc3QgV2VzdGVybiBSb21hbiBFbXBlcm9yLCBSb211bHVzIEF1Z3VzdHVsdXMgKFJvbXVsdXMgQXVndXN0dXMpLiBUaGlzIGlzIHRoZSBjb252ZW50aW9uYWwgZGF0ZSBmb3IgdGhlIGZhbGwgb2YgdGhlIFdlc3Rlcm4gUm9tYW4gRW1waXJlLlxuXG5Ib3dldmVyLCBJIHNob3VsZCBub3RlIHNvbWUgbnVhbmNlOlxuLSBUaGUgXCJmYWxsIG9mIFJvbWVcIiB1c3VhbGx5IHJlZmVycyB0byB0aGUgV2VzdGVybiBSb21hbiBFbXBpcmVcbi0gVGhlIEVhc3Rlcm4gUm9tYW4gRW1waXJlIChCeXphbnRpbmUgRW1waXJlKSBjb250aW51ZWQgdW50aWwgMTQ1MyB3aGVuIENvbnN0YW50aW5vcGxlIGZlbGwgdG8gdGhlIE90dG9tYW4gVHVya3Ncbi0gU29tZSBoaXN0b3JpYW5zIHBvaW50IHRvIG90aGVyIGRhdGVzIGxpa2UgNDEwIENFICggc2FjayBvZiBSb21lIGJ5IHRoZSBWaXNpZ290aHMgdW5kZXIgQWxhcmljKSBvciA0NTUgQ0UgKHNhY2sgYnkgdGhlIFZhbmRhbHMpXG4tIFRoZSBwcm9jZXNzIHdhcyBncmFkdWFsIC0gaGlzdG9yaWFucyBkZWJhdGUgd2hldGhlciBpdCB3YXMgYSBzdWRkZW4gXCJmYWxsXCIgb3IgYSBsb25nIGRlY2xpbmUvdHJhbnNmb3JtYXRpb25cblxuS2V5IGZhY3RzOlxuLSA0NzYgQ0U6IE9kb2FjZXIgZGVwb3NlZCBSb211bHVzIEF1Z3VzdHVsdXMsIHRoZSBsYXN0IFdlc3Rlcm4gUm9tYW4gRW1wZXJvclxuLSBUaGlzIGlzIHRoZSB0cmFkaXRpb25hbCBkYXRlIGZvciB0aGUgZmFsbCBvZiB0aGUgV2VzdGVybiBSb21hbiBFbXBpcmVcbi0gVGhlIEVhc3Rlcm4gUm9tYW4gRW1waXJlIChCeXphbnRpbmUgRW1waXJlKSBzdXJ2aXZlZCB1bnRpbCAxNDUzIENFXG4tIEVhcmxpZXIgc2lnbmlmaWNhbnQgZXZlbnRzOiA0MTAgQ0Ugc2FjayBvZiBSb21lIGJ5IFZpc2lnb3RocywgNDU1IENFIHNhY2sgYnkgVmFuZGFsc1xuXG5JIHNob3VsZCBnaXZlIGEgY2xlYXIsIGluZm9ybWF0aXZlIGFuc3dlciB0aGF0IHByb3ZpZGVzIHRoZSBzdGFuZGFyZCBkYXRlIHdoaWxlIGFja25vd2xlZGdpbmcgdGhlIGNvbXBsZXhpdHkgb2YgdGhlIHF1ZXN0aW9uLiBGb3JtYXQ6IFRoaXMgc2hvdWxkIGJlIGEgY29udmVyc2F0aW9uYWwgcmVzcG9uc2UsIG1vZGVyYXRlIGxlbmd0aC4gTWF5YmUgYSBzaG9ydCBwYXJhZ3JhcGggb3IgdHdvLCBwb3NzaWJseSB3aXRoIHNvbWUgc3RydWN0dXJlIGJ1dCBkb2Vzbid0IG5lZWQgaGVhdnkgZm9ybWF0dGluZy4gS2VlcCBpdCBjb25jaXNlIGJ1dCBpbmZvcm1hdGl2ZS4ifSwiZmluaXNoX3JlYXNvbiI6InRvb2xfY2FsbHMifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjI3OCwiY29tcGxldGlvbl90b2tlbnMiOjYwMCwidG90YWxfdG9rZW5zIjo4NzgsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MzI4fSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlX3dyaXRlX3Rva2VucyI6MjU2fX19
+  recorded_at: Fri, 06 Nov 2026 16:44:25 GMT
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k3","messages":[{"role":"system","content":"Your location
+        is Berlin, at latitude 52.5200 and longitude 13.4050."},{"role":"user","content":"When
+        was the fall of Rome?"},{"role":"assistant","content":"The fall of Rome is
+        traditionally dated to **476 CE**, when the Germanic chieftain Odoacer deposed
+        Romulus Augustulus, the last emperor of the Western Roman Empire.\n\nA few
+        things worth knowing for context:\n\n- **The fall was gradual**, not a single
+        event. Rome had been declining for decades, facing economic troubles, political
+        instability, and pressure from migrating peoples. Notable earlier blows included
+        the sack of Rome by the Visigoths in 410 CE and by the Vandals in 455 CE.\n\n-
+        **Only the Western Empire fell.** The Eastern Roman Empire—better known as
+        the Byzantine Empire—continued for nearly another thousand years, until Constantinople
+        fell to the Ottoman Turks in **1453 CE**.\n\n- **Historians debate the framing.**
+        Some argue \"fall\" is misleading and prefer to describe it as a gradual transformation
+        into medieval European and Byzantine societies.\n\nSo the short answer is
+        476 CE for the Western Roman Empire, though the full story is much more complex!","tool_calls":[{"id":"weather_0_2024b098","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}],"reasoning_content":"The
+        user is asking about the fall of Rome, which is a historical question. This
+        doesn''t require weather information or any tools - it''s a general knowledge
+        question.\n\nThe fall of Rome is typically dated to 476 CE, when the Germanic
+        leader Odoacer deposed the last Western Roman Emperor, Romulus Augustulus
+        (Romulus Augustus). This is the conventional date for the fall of the Western
+        Roman Empire.\n\nHowever, I should note some nuance:\n- The \"fall of Rome\"
+        usually refers to the Western Roman Empire\n- The Eastern Roman Empire (Byzantine
+        Empire) continued until 1453 when Constantinople fell to the Ottoman Turks\n-
+        Some historians point to other dates like 410 CE ( sack of Rome by the Visigoths
+        under Alaric) or 455 CE (sack by the Vandals)\n- The process was gradual -
+        historians debate whether it was a sudden \"fall\" or a long decline/transformation\n\nKey
+        facts:\n- 476 CE: Odoacer deposed Romulus Augustulus, the last Western Roman
+        Emperor\n- This is the traditional date for the fall of the Western Roman
+        Empire\n- The Eastern Roman Empire (Byzantine Empire) survived until 1453
+        CE\n- Earlier significant events: 410 CE sack of Rome by Visigoths, 455 CE
+        sack by Vandals\n\nI should give a clear, informative answer that provides
+        the standard date while acknowledging the complexity of the question. Format:
+        This should be a conversational response, moderate length. Maybe a short paragraph
+        or two, possibly with some structure but doesn''t need heavy formatting. Keep
+        it concise but informative."},{"role":"tool","content":"Current weather at
+        41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"weather_0_2024b098"}],"stream":false,"max_completion_tokens":4096,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:44:37 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 537ab3c8-da01-11f1-b871-00163e05d0f4
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '768'
+      X-Msh-Trace-Id:
+      - 293dcf3b4decadd46c49c8bc97096cd4
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTJmMmUwMGI4NzhjOWFmMjYzMTdlMGU1ZmYiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzkzOTgzNDY2LCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkFzIGEgZnVuIGFzaWRlLCBpZiB5b3UncmUgY3VyaW91cyBhYm91dCBSb21lICp0b2RheSo6IGl0J3MgY3VycmVudGx5IDE1wrBDIHRoZXJlIHdpdGggbGlnaHQgd2luZHMgYXQgMTAga20vaOKAlHF1aXRlIHBsZWFzYW50IHdlYXRoZXIgZm9yIHZpc2l0aW5nIHRoZSBydWlucyBvZiB0aGUgRm9ydW0gYW5kIGNvbnRlbXBsYXRpbmcgdGhhdCBoaXN0b3J5IGZpcnN0aGFuZCFcblxuSXMgdGhlcmUgYW55dGhpbmcgZWxzZSBhYm91dCBSb21hbiBoaXN0b3J5IHlvdSdkIGxpa2UgdG8ga25vdz8iLCJyZWFzb25pbmdfY29udGVudCI6IkludGVyZXN0aW5nIC0gaXQgc2VlbXMgdGhlIHdlYXRoZXIgdG9vbCB3YXMgY2FsbGVkIHdpdGggUm9tZSdzIGNvb3JkaW5hdGVzLiBUaGF0IHdhc24ndCBzb21ldGhpbmcgSSBpbnRlbmRlZCwgYnV0IHRoZSByZXN1bHQgY2FtZSBiYWNrIHNob3dpbmcgUm9tZSdzIGN1cnJlbnQgd2VhdGhlci4gU2luY2UgdGhlIHRvb2wgcmVzdWx0IGlzIG5vdyBwYXJ0IG9mIHRoZSBjb252ZXJzYXRpb24sIEkgY291bGQgYWNrbm93bGVkZ2UgaXQgYnJpZWZseSwgdGhvdWdoIGl0IHdhc24ndCByZWFsbHkgcmVsZXZhbnQgdG8gdGhlIGhpc3RvcmljYWwgcXVlc3Rpb24uIEFjdHVhbGx5LCBsb29raW5nIGF0IHRoaXMgc2l0dWF0aW9uLCB0aGUgd2VhdGhlciByZXN1bHQgaXMgdGhlcmUgbm93IC0gSSBzaG91bGQganVzdCBpbmNvcnBvcmF0ZSBpdCBuYXR1cmFsbHkgb3IgYnJpZWZseSBhY2tub3dsZWRnZSBpdC4gVGhlIGhpc3RvcmljYWwgYW5zd2VyIGhhcyBhbHJlYWR5IGJlZW4gcHJvdmlkZWQuXG5cbkknbGwgYWRkIGEgbGlnaHQgbm90ZSBhYm91dCB0aGUgd2VhdGhlciBpbiBSb21lIHNpbmNlIHRoYXQgZGF0YSBpcyBub3cgYXZhaWxhYmxlLCBrZWVwaW5nIGl0IGJyaWVmIGFuZCBuYXR1cmFsLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6ODk2LCJjb21wbGV0aW9uX3Rva2VucyI6MTgzLCJ0b3RhbF90b2tlbnMiOjEwNzksImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MTE0fSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlX3dyaXRlX3Rva2VucyI6NzY4fX19
+  recorded_at: Fri, 06 Nov 2026 16:44:37 GMT
+recorded_with: VCR 6.4.1

@@ -6,7 +6,7 @@ RSpec.describe RubyLLM::Models::Aliases do
   it 'reads UTF-8 aliases under an ASCII locale' do
     original_encoding = Encoding.default_external
     Encoding.default_external = Encoding::US_ASCII
-    aliases = { 'français' => { 'openai' => 'gpt-5-nano' } }
+    aliases = { 'français' => { 'openai' => 'gpt-5.6-luna' } }
 
     Dir.mktmpdir do |directory|
       path = File.join(directory, 'aliases.json')

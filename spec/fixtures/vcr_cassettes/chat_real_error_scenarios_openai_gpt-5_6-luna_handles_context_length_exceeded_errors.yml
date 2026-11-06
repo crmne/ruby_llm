@@ -1,0 +1,73 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":[{"type":"output_text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":[{"type":"output_text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":[{"type":"output_text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":[{"type":"output_text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":[{"type":"output_text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":"Hi"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:23:19 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '228'
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID, Server-Timing-Total
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '1298'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "error": {
+            "message": "Your input exceeds the context window of this model. Please adjust your input and try again.",
+            "type": "invalid_request_error",
+            "param": "input",
+            "code": "context_length_exceeded"
+          }
+        }
+  recorded_at: Fri, 06 Nov 2026 16:23:19 GMT
+recorded_with: VCR 6.4.1

@@ -1,0 +1,71 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k3","messages":[{"role":"user","content":"What is the
+        capital of France?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:24:51 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 926a6299-d9fe-11f1-8fe3-00163e09d8c2
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '0'
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - fd14b099ecd7579541ee39ece0368b91
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTJmMmUwNjc5MTBjN2QxMjA5MTk0YmU3Y2UiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzkzOTgyMjgzLCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBjYXBpdGFsIG9mIEZyYW5jZSBpcyAqKlBhcmlzKiouIiwicmVhc29uaW5nX2NvbnRlbnQiOiJUaGUgdXNlciBpcyBhc2tpbmcgYSBzaW1wbGUgZmFjdHVhbCBxdWVzdGlvbjogXCJXaGF0IGlzIHRoZSBjYXBpdGFsIG9mIEZyYW5jZT9cIlxuXG5UaGlzIGlzIG9uZSBvZiB0aGUgbW9zdCBiYXNpYyBmYWN0dWFsIHF1ZXN0aW9ucyBwb3NzaWJsZS4gVGhlIGFuc3dlciBpcyBQYXJpcy4gVGhpcyByZXF1aXJlcyBubyBkZWVwIHRoaW5raW5nLCBubyBudWFuY2UsIG5vIGNhdmVhdHMuIEl0J3MgYSBzdHJhaWdodGZvcndhcmQgZmFjdHVhbCBxdWVzdGlvbiB3aXRoIGEgc2luZ2xlLCB1bmFtYmlndW91cyBhbnN3ZXIuXG5cbkFjY29yZGluZyB0byBteSBndWlkZWxpbmVzLCBmb3Igc2ltcGxlIGZhY3R1YWwgcXVlc3Rpb25zLCBJIHNob3VsZCBrZWVwIG15IHJlc3BvbnNlIHNob3J04oCUaWRlYWxseSBqdXN0IGFuc3dlcmluZyB0aGUgcXVlc3Rpb24uIEEgb25lLXNlbnRlbmNlIGFuc3dlciBpcyBhcHByb3ByaWF0ZSBoZXJlLiBJIHNob3VsZG4ndCBwYWQgaXQgd2l0aCB1bm5lY2Vzc2FyeSBpbmZvcm1hdGlvbi5cblxuVGhlIGFuc3dlciBpcyBzaW1wbHk6IFBhcmlzLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6OTIsImNvbXBsZXRpb25fdG9rZW5zIjoxMzAsInRvdGFsX3Rva2VucyI6MjIyLCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjEwOX0sInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZV93cml0ZV90b2tlbnMiOjB9fX0=
+  recorded_at: Fri, 06 Nov 2026 16:24:51 GMT
+recorded_with: VCR 6.4.1

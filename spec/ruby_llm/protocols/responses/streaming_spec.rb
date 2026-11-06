@@ -391,7 +391,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
     chunk = build_chunk({
                           'type' => 'response.completed',
                           'response' => {
-                            'model' => 'gpt-5-nano',
+                            'model' => 'gpt-5.6-luna',
                             'status' => 'completed',
                             'usage' => {
                               'input_tokens' => 10,
@@ -402,7 +402,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
                           }
                         })
 
-    expect(chunk.model).to eq('gpt-5-nano')
+    expect(chunk.model).to eq('gpt-5.6-luna')
     expect(chunk.tokens.input).to eq(6)
     expect(chunk.tokens.output).to eq(7)
     expect(chunk.tokens.cache_read).to eq(4)
@@ -426,7 +426,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
 
   it 'reads usage from a completed event that arrives split across reads' do
     completed = { type: 'response.completed',
-                  response: { model: 'gpt-5-nano', status: 'completed', error: nil,
+                  response: { model: 'gpt-5.6-luna', status: 'completed', error: nil,
                               usage: { input_tokens: 10, output_tokens: 7 } } }
     event = "event: response.completed\ndata: #{JSON.generate(completed)}\n\n"
     split = event.index('{"model"')
@@ -443,7 +443,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
     chunk = build_chunk({
                           'type' => 'response.completed',
                           'response' => {
-                            'model' => 'gpt-5-nano',
+                            'model' => 'gpt-5.6-luna',
                             'status' => 'completed',
                             'output' => [
                               { 'type' => 'function_call', 'call_id' => 'call_1', 'name' => 'weather',
@@ -461,7 +461,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
     chunk = build_chunk({
                           'type' => 'response.completed',
                           'response' => {
-                            'model' => 'gpt-5-nano',
+                            'model' => 'gpt-5.6-luna',
                             'status' => 'completed',
                             'output' => [
                               { 'type' => 'web_search_call', 'id' => 'ws_1', 'status' => 'completed' },
@@ -593,7 +593,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
     chunk = build_chunk({
                           'type' => 'response.completed',
                           'response' => {
-                            'model' => 'gpt-5-nano',
+                            'model' => 'gpt-5.6-luna',
                             'status' => 'incomplete',
                             'incomplete_details' => { 'reason' => 'max_output_tokens' }
                           }

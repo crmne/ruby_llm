@@ -190,7 +190,7 @@ RSpec.describe 'RubyLLM::Accounting::Usage::Tracker' do
       config: RubyLLM.config
     )
     entry = tracker.start
-    result = RubyLLM::Message.new(role: :assistant, content: 'hi', model: 'gpt-4.1-nano-2099-01-01',
+    result = RubyLLM::Message.new(role: :assistant, content: 'hi', model: 'gpt-5.4-nano-2099-01-01',
                                   input_tokens: 10, output_tokens: 4)
 
     tracker.succeed(result)

@@ -17,7 +17,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   after { weather.close }
 
   def answered_chat(tool_name, arguments)
-    chat = Chat.create!(model: 'gpt-4.1-nano').with_mcp(weather)
+    chat = Chat.create!(model: model_for(:openai, :temperature)).with_mcp(weather)
     chat.add_message(
       RubyLLM::Message.new(role: :assistant, content: '',
                            tool_calls: { call_id => RubyLLM::ToolCall.new(id: call_id, name: tool_name, arguments:) })
@@ -42,7 +42,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   end
 
   it 'keeps the result of a tool with a UI when a tool result is added to the chat' do
-    chat = Chat.create!(model: 'gpt-4.1-nano')
+    chat = Chat.create!(model: model_for(:openai, :temperature))
     tool_call = RubyLLM::ToolCall.new(id: call_id, name: 'forecast', arguments: {})
     chat.add_message(RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { call_id => tool_call }))
     result = RubyLLM::MCP::Result.new({ 'content' => [{ 'type' => 'text', 'text' => 'Sunny' }] }, 'ui://spec/forecast')

@@ -5,10 +5,10 @@ http_interactions:
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","input":[{"role":"user","content":"hello"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"max_output_tokens":-1}'
+      string: '{"model":"gpt-5.4-nano","input":[{"role":"user","content":"hello"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"max_output_tokens":-1}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:29 GMT
+      - Fri, 06 Nov 2026 16:33:48 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -43,11 +43,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID
+      - X-Request-ID, Server-Timing-Total
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '24'
+      - '16'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -69,5 +69,5 @@ http_interactions:
             "code": "integer_below_min_value"
           }
         }
-  recorded_at: Sun, 11 Oct 2026 21:06:29 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Fri, 06 Nov 2026 16:33:48 GMT
+recorded_with: VCR 6.4.1

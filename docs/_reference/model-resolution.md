@@ -92,12 +92,12 @@ To pin a different provider, name it:
 RubyLLM.chat(model: "claude-opus-4", provider: :vertexai)
 ```
 
-Preference only ranks the providers you have configured. With only an OpenRouter key, `openai/gpt-5-nano` resolves to OpenRouter, even though Perplexity, which outranks it, carries the same ID:
+Preference only ranks the providers you have configured. With only an OpenRouter key, `openai/gpt-5.6-luna` resolves to OpenRouter, even though Perplexity, which outranks it, carries the same ID:
 
 ```ruby
 RubyLLM.configure { |config| config.openrouter_api_key = ENV["OPENROUTER_API_KEY"] }
 
-RubyLLM.chat(model: "openai/gpt-5-nano").model.provider  # => "openrouter"
+RubyLLM.chat(model: "openai/gpt-5.6-luna").model.provider  # => "openrouter"
 ```
 
 Each configured provider resolves the name the way it would if you had passed `provider:`, through its own alias and registry ID. With only Bedrock configured, `claude-haiku-4-5` resolves to Bedrock's Claude Haiku 4.5. A local provider such as Ollama or GPUStack counts as configured once you set its API base. When none of your configured providers carries the model, RubyLLM picks the most preferred provider anyway, so the `RubyLLM::ConfigurationError` names the provider and the settings it needs.

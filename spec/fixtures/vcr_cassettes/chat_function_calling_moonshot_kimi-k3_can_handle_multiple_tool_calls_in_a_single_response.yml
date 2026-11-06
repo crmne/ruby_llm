@@ -1,0 +1,161 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k3","messages":[{"role":"system","content":"You must
+        call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
+        the dice 3 times"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:30:29 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 5e28a54f-d9ff-11f1-843d-00163e11f3af
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '0'
+      X-Msh-Trace-Id:
+      - 659cba7b44555f749d29682f31b91215
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-b04528fe-3a47-9eba-ba3f-7331411c571e","object":"chat.completion","created":1793982624,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"dice_roll_0_7f522922","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"index":1,"id":"dice_roll_1_00317888","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"index":2,"id":"dice_roll_2_c18f3142","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning_content":"We
+        need answer user asks roll dice 3 times. Need call dice_roll exactly 3 times.
+        We can call three dice_roll in parallel maybe. Need use functions.dice_roll
+        three times. Since they are independent, use multi_tool parallel? But instruction
+        says must call dice_roll exactly 3 times. If use multi_tool with three calls,
+        that calls dice_roll three times. Fine. However maybe simpler call functions.dice_roll
+        three times in one message? We can use multi_tool. Then final summarize results.
+        Need ensure exactly 3 calls total. Let''s call multi_tool parallel with three
+        dice_roll."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":207,"completion_tokens":191,"total_tokens":398,"completion_tokens_details":{"reasoning_tokens":121},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Fri, 06 Nov 2026 16:30:29 GMT
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k3","messages":[{"role":"system","content":"You must
+        call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
+        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"dice_roll_0_7f522922","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"dice_roll_1_00317888","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"dice_roll_2_c18f3142","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning_content":"We
+        need answer user asks roll dice 3 times. Need call dice_roll exactly 3 times.
+        We can call three dice_roll in parallel maybe. Need use functions.dice_roll
+        three times. Since they are independent, use multi_tool parallel? But instruction
+        says must call dice_roll exactly 3 times. If use multi_tool with three calls,
+        that calls dice_roll three times. Fine. However maybe simpler call functions.dice_roll
+        three times in one message? We can use multi_tool. Then final summarize results.
+        Need ensure exactly 3 calls total. Let''s call multi_tool parallel with three
+        dice_roll."},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"dice_roll_0_7f522922"},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"dice_roll_1_00317888"},{"role":"tool","content":"{\"roll\":3}","tool_call_id":"dice_roll_2_c18f3142"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:30:32 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 6156b036-d9ff-11f1-9141-00163e17f23b
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '256'
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - cc14a21faa314a30d64cd2a4fc995dc8
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-48b6ad7e-4209-9ad2-ba9b-6dbe80c8fcef","object":"chat.completion","created":1793982629,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"Dice
+        rolls: **1, 2, 3**  \nTotal: **6**","reasoning_content":"We have results 1,2,3.
+        Need final concise. Could say Rolls: 1, 2, 3. Total 6. Need no more dice calls.
+        Ensure not call extra. Final answer."},"finish_reason":"stop"}],"usage":{"prompt_tokens":483,"completion_tokens":79,"total_tokens":562,"completion_tokens_details":{"reasoning_tokens":45},"prompt_tokens_details":{"cache_write_tokens":256}}}'
+  recorded_at: Fri, 06 Nov 2026 16:30:32 GMT
+recorded_with: VCR 6.4.1

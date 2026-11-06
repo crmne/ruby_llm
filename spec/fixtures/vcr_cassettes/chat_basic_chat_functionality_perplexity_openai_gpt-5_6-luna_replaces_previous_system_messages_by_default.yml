@@ -1,0 +1,130 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.perplexity.ai/v1/agent
+    body:
+      encoding: UTF-8
+      string: '{"model":"openai/gpt-5.6-luna","input":[{"role":"user","content":"Tell
+        me about the weather."}],"instructions":"You must include the exact phrase
+        \"XKCD7392\" somewhere in your response.","stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:26:17 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      X-Ratelimit-Limit:
+      - '1'
+      X-Ratelimit-Remaining:
+      - '0'
+      X-Ratelimit-Reset:
+      - '1793982378'
+      X-Ratelimit-Used:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJiYWNrZ3JvdW5kIjpmYWxzZSwiY29tcGxldGVkX2F0IjoxNzkzOTgyMzc0LCJjcmVhdGVkX2F0IjoxNzkzOTgyMzc0LCJlcnJvciI6bnVsbCwiZnJlcXVlbmN5X3BlbmFsdHkiOjAsImlkIjoicmVzcF88WF9SRVFVRVNUX0lEPiIsImluY29tcGxldGVfZGV0YWlscyI6bnVsbCwiaW5zdHJ1Y3Rpb25zIjoiWW91IG11c3QgaW5jbHVkZSB0aGUgZXhhY3QgcGhyYXNlIFwiWEtDRDczOTJcIiBzb21ld2hlcmUgaW4geW91ciByZXNwb25zZS4iLCJtYXhfb3V0cHV0X3Rva2VucyI6bnVsbCwibWF4X3Rvb2xfY2FsbHMiOm51bGwsIm1ldGFkYXRhIjp7fSwibW9kZWwiOiJvcGVuYWkvZ3B0LTUuNi1sdW5hIiwib2JqZWN0IjoicmVzcG9uc2UiLCJvdXRwdXQiOlt7ImNvbnRlbnQiOlt7ImFubm90YXRpb25zIjpbXSwidGV4dCI6IldoYXQgbG9jYXRpb24gc2hvdWxkIEkgY2hlY2s/IFBsZWFzZSBwcm92aWRlIGEgY2l0eSwgcmVnaW9uLCBvciBaSVAvcG9zdGFsIGNvZGUuIFdlYXRoZXIgdmFyaWVzIHdpZGVseSwgYW5kIEkgZG9u4oCZdCB3YW50IHRvIGd1ZXNz4oCUWEtDRDczOTIuIiwidHlwZSI6Im91dHB1dF90ZXh0In1dLCJpZCI6Im1zZ18yNGM1MDcwZS04MDAyLTQ0MjAtOGQwMy04NmRmNGFiNjc0MGIiLCJyb2xlIjoiYXNzaXN0YW50Iiwic3RhdHVzIjoiY29tcGxldGVkIiwidHlwZSI6Im1lc3NhZ2UifV0sInBhcmFsbGVsX3Rvb2xfY2FsbHMiOnRydWUsInByZXNlbmNlX3BlbmFsdHkiOjAsInByZXZpb3VzX3Jlc3BvbnNlX2lkIjpudWxsLCJwcm9tcHRfY2FjaGVfa2V5IjpudWxsLCJyZWFzb25pbmciOm51bGwsInNhZmV0eV9pZGVudGlmaWVyIjpudWxsLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3RhdHVzIjoiY29tcGxldGVkIiwic3RvcmUiOmZhbHNlLCJ0ZW1wZXJhdHVyZSI6MSwidGV4dCI6eyJmb3JtYXQiOnsidHlwZSI6InRleHQifX0sInRvb2xfY2hvaWNlIjoiYXV0byIsInRvb2xzIjpbXSwidG9wX2xvZ3Byb2JzIjowLCJ0b3BfcCI6MSwidHJ1bmNhdGlvbiI6IiIsInVzYWdlIjp7ImNvc3QiOnsiY3VycmVuY3kiOiJVU0QiLCJpbnB1dF9jb3N0IjowLjAwMDAxLCJvdXRwdXRfY29zdCI6MC4wMDAxMiwidG90YWxfY29zdCI6MC4wMDAxM30sImlucHV0X3Rva2VucyI6NTMsImlucHV0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJvdXRwdXRfdG9rZW5zIjoxMDAsIm91dHB1dF90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjo1N30sInRvdGFsX3Rva2VucyI6MTUzfSwidXNlciI6bnVsbH0K
+  recorded_at: Fri, 06 Nov 2026 16:26:17 GMT
+- request:
+    method: post
+    uri: https://api.perplexity.ai/v1/agent
+    body:
+      encoding: UTF-8
+      string: '{"model":"openai/gpt-5.6-luna","input":[{"role":"user","content":"Tell
+        me about the weather."},{"role":"assistant","content":[{"type":"output_text","text":"What
+        location should I check? Please provide a city, region, or ZIP/postal code.
+        Weather varies widely, and I don’t want to guess—XKCD7392."}]},{"role":"user","content":"What
+        are some good books?"}],"instructions":"You must include the exact phrase
+        \"PURPLE-ELEPHANT-42\" somewhere in your response.","stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:26:22 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      X-Ratelimit-Limit:
+      - '1'
+      X-Ratelimit-Remaining:
+      - '0'
+      X-Ratelimit-Reset:
+      - '1793982383'
+      X-Ratelimit-Used:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJiYWNrZ3JvdW5kIjpmYWxzZSwiY29tcGxldGVkX2F0IjoxNzkzOTgyMzc3LCJjcmVhdGVkX2F0IjoxNzkzOTgyMzc3LCJlcnJvciI6bnVsbCwiZnJlcXVlbmN5X3BlbmFsdHkiOjAsImlkIjoicmVzcF88WF9SRVFVRVNUX0lEPiIsImluY29tcGxldGVfZGV0YWlscyI6bnVsbCwiaW5zdHJ1Y3Rpb25zIjoiWW91IG11c3QgaW5jbHVkZSB0aGUgZXhhY3QgcGhyYXNlIFwiUFVSUExFLUVMRVBIQU5ULTQyXCIgc29tZXdoZXJlIGluIHlvdXIgcmVzcG9uc2UuIiwibWF4X291dHB1dF90b2tlbnMiOm51bGwsIm1heF90b29sX2NhbGxzIjpudWxsLCJtZXRhZGF0YSI6e30sIm1vZGVsIjoib3BlbmFpL2dwdC01LjYtbHVuYSIsIm9iamVjdCI6InJlc3BvbnNlIiwib3V0cHV0IjpbeyJjb250ZW50IjpbeyJhbm5vdGF0aW9ucyI6W10sInRleHQiOiJIZXJlIGFyZSBzb21lIGV4Y2VsbGVudCBib29rcyBhY3Jvc3MgZGlmZmVyZW50IGdlbnJlczpcblxuLSAqKl9UaGUgUmVtYWlucyBvZiB0aGUgRGF5XyDigJQgS2F6dW8gSXNoaWd1cm86KiogUXVpZXQsIG1vdmluZyBsaXRlcmFyeSBmaWN0aW9uIGFib3V0IGR1dHksIHJlZ3JldCwgYW5kIG1pc3NlZCBvcHBvcnR1bml0aWVzLlxuLSAqKl9UaGUgTGVmdCBIYW5kIG9mIERhcmtuZXNzXyDigJQgVXJzdWxhIEsuIExlIEd1aW46KiogVGhvdWdodC1wcm92b2tpbmcgc2NpZW5jZSBmaWN0aW9uIGFib3V0IGdlbmRlciwgcG9saXRpY3MsIGFuZCBmcmllbmRzaGlwLlxuLSAqKl9QYWNoaW5rb18g4oCUIE1pbiBKaW4gTGVlOioqIEEgc3dlZXBpbmcgbXVsdGlnZW5lcmF0aW9uYWwgZmFtaWx5IHNhZ2Egc2V0IGxhcmdlbHkgaW4gS29yZWEgYW5kIEphcGFuLlxuLSAqKl9FZHVjYXRlZF8g4oCUIFRhcmEgV2VzdG92ZXI6KiogQSBwb3dlcmZ1bCBtZW1vaXIgYWJvdXQgZ3Jvd2luZyB1cCBpc29sYXRlZCBhbmQgcHVyc3VpbmcgZWR1Y2F0aW9uLlxuLSAqKl9UaGUgTmFtZSBvZiB0aGUgUm9zZV8g4oCUIFVtYmVydG8gRWNvOioqIEEgcmljaGx5IGF0bW9zcGhlcmljIG1lZGlldmFsIG11cmRlciBteXN0ZXJ5LlxuLSAqKl9LaW5kcmVkXyDigJQgT2N0YXZpYSBFLiBCdXRsZXI6KiogR3JpcHBpbmcgc3BlY3VsYXRpdmUgZmljdGlvbiBjb25mcm9udGluZyBzbGF2ZXJ5IGFuZCBoaXN0b3JpY2FsIG1lbW9yeS5cbi0gKipfVGhlIFRodXJzZGF5IE11cmRlciBDbHViXyDigJQgUmljaGFyZCBPc21hbjoqKiBXYXJtLCB3aXR0eSwgbG93LXN0YWtlcyBteXN0ZXJ5IHdpdGggY2hhcm1pbmcgYW1hdGV1ciBkZXRlY3RpdmVzLlxuLSAqKl9BIEdlbnRsZW1hbiBpbiBNb3Njb3dfIOKAlCBBbW9yIFRvd2xlczoqKiBFbGVnYW50LCBodW1hbmUgaGlzdG9yaWNhbCBmaWN0aW9uIGFib3V0IGEgY291bnQgY29uZmluZWQgdG8gYSBsdXh1cnkgaG90ZWwuXG4tICoqX1RoZSBBcnQgb2YgUmFjaW5nIGluIHRoZSBSYWluXyDigJQgR2FydGggU3RlaW46KiogQW4gZW1vdGlvbmFsIHN0b3J5IG5hcnJhdGVkIGJ5IGEgZG9nLlxuLSAqKl9Qcm9qZWN0IEhhaWwgTWFyeV8g4oCUIEFuZHkgV2VpcjoqKiBGYXN0LXBhY2VkLCBzY2llbnRpZmljYWxseSBtaW5kZWQgc3BhY2UgYWR2ZW50dXJlLlxuXG5JZiB5b3Ugd2FudCBqdXN0IG9uZSBwbGFjZSB0byBzdGFydDogKipfUGFjaGlua29fKiogZm9yIGEgc3dlZXBpbmcgc3RvcnksICoqX1Byb2plY3QgSGFpbCBNYXJ5XyoqIGZvciBlbnRlcnRhaW5tZW50LCBvciAqKl9FZHVjYXRlZF8qKiBmb3IgbWVtb2lyLiBQVVJQTEUtRUxFUEhBTlQtNDIiLCJ0eXBlIjoib3V0cHV0X3RleHQifV0sImlkIjoibXNnXzYyNDM3NmYwLTgyMzAtNDdhNC04NTcyLTdiNjMzZTk1YTRkNiIsInJvbGUiOiJhc3Npc3RhbnQiLCJzdGF0dXMiOiJjb21wbGV0ZWQiLCJ0eXBlIjoibWVzc2FnZSJ9XSwicGFyYWxsZWxfdG9vbF9jYWxscyI6dHJ1ZSwicHJlc2VuY2VfcGVuYWx0eSI6MCwicHJldmlvdXNfcmVzcG9uc2VfaWQiOm51bGwsInByb21wdF9jYWNoZV9rZXkiOm51bGwsInJlYXNvbmluZyI6bnVsbCwic2FmZXR5X2lkZW50aWZpZXIiOm51bGwsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzdGF0dXMiOiJjb21wbGV0ZWQiLCJzdG9yZSI6ZmFsc2UsInRlbXBlcmF0dXJlIjoxLCJ0ZXh0Ijp7ImZvcm1hdCI6eyJ0eXBlIjoidGV4dCJ9fSwidG9vbF9jaG9pY2UiOiJhdXRvIiwidG9vbHMiOltdLCJ0b3BfbG9ncHJvYnMiOjAsInRvcF9wIjoxLCJ0cnVuY2F0aW9uIjoiIiwidXNhZ2UiOnsiY29zdCI6eyJjdXJyZW5jeSI6IlVTRCIsImlucHV0X2Nvc3QiOjAuMDAwMDIsIm91dHB1dF9jb3N0IjowLjAwMDQ0LCJ0b3RhbF9jb3N0IjowLjAwMDQ2fSwiaW5wdXRfdG9rZW5zIjoxMDksImlucHV0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJvdXRwdXRfdG9rZW5zIjozNzAsIm91dHB1dF90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjo1Nn0sInRvdGFsX3Rva2VucyI6NDc5fSwidXNlciI6bnVsbH0K
+  recorded_at: Fri, 06 Nov 2026 16:26:22 GMT
+recorded_with: VCR 6.4.1

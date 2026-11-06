@@ -1,0 +1,167 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k3","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:21:18 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 13702142-d9fe-11f1-90f2-00163e0dbb14
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '0'
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 6f232ccbb9182c74d13937c6fa08d37a
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-2f2e0a694070ce42b0808a582","object":"chat.completion","created":1793982070,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file contains a single line of text:\n\n\u003e Ruby is the best.","reasoning_content":"The
+        user is asking a simple question about a file that''s been shared. The file
+        is called \"ruby.txt\" and its content is simply \"Ruby is the best.\"\n\nThis
+        is a trivially simple question. The file contains one sentence. I should just
+        tell them what''s in it. No need for extensive analysis or anything complicated
+        here.\n\nThe format should be brief - just answer the question directly. Maybe
+        a one-liner response. I could note that it''s a text file containing a single
+        sentence. Keep it short and simple."},"finish_reason":"stop"}],"usage":{"prompt_tokens":109,"completion_tokens":132,"total_tokens":241,"completion_tokens_details":{"reasoning_tokens":104},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Fri, 06 Nov 2026 16:21:18 GMT
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k3","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]},{"role":"assistant","content":"The file contains a
+        single line of text:\n\n> Ruby is the best.","reasoning_content":"The user
+        is asking a simple question about a file that''s been shared. The file is
+        called \"ruby.txt\" and its content is simply \"Ruby is the best.\"\n\nThis
+        is a trivially simple question. The file contains one sentence. I should just
+        tell them what''s in it. No need for extensive analysis or anything complicated
+        here.\n\nThe format should be brief - just answer the question directly. Maybe
+        a one-liner response. I could note that it''s a text file containing a single
+        sentence. Keep it short and simple."},{"role":"user","content":[{"type":"text","text":"and
+        in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
+        is the best</truism></file>"}]}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:21:27 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 1905f595-d9fe-11f1-b5a2-00163e6a1e31
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Msh-Usage-Cache-Write-Tokens-1h:
+      - '0'
+      Msh-Usage-Cache-Write-Tokens-5m:
+      - '256'
+      X-Msh-Trace-Id:
+      - d71d8025ec26e664043f873c9b02ad41
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-2f2e07778a5959b28bc5c1724","object":"chat.completion","created":1793982079,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"This
+        one contains the same statement, but wrapped in XML markup:\n\n```xml\n\u003ctruism\u003eRuby
+        is the best\u003c/truism\u003e\n```\n\nIt''s a single XML element named `truism`
+        whose text content is \"Ruby is the best\".","reasoning_content":"The user
+        is asking about another file, this time an XML file called ''ruby.xml''. The
+        content is:\n\n```xml\n\u003ctruism\u003eRuby is the best\u003c/truism\u003e\n```\n\nThis
+        is a simple XML file with a single root element called `truism` containing
+        the text \"Ruby is the best\". I should describe this briefly and accurately.
+        Maybe show the content and note the structure briefly. Keep it short since
+        it''s a simple question."},"finish_reason":"stop"}],"usage":{"prompt_tokens":292,"completion_tokens":152,"total_tokens":444,"completion_tokens_details":{"reasoning_tokens":90},"prompt_tokens_details":{"cache_write_tokens":256}}}'
+  recorded_at: Fri, 06 Nov 2026 16:21:27 GMT
+recorded_with: VCR 6.4.1

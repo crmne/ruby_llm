@@ -5,10 +5,10 @@ http_interactions:
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"Say hi"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
+      string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"Say hi"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:54 GMT
+      - Fri, 06 Nov 2026 16:21:02 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -43,11 +43,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID
+      - X-Request-ID, Server-Timing-Total
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1198'
+      - '681'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -59,11 +59,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999050'
+      - '2000000'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 28ms
+      - 0s
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Set-Cookie:
@@ -74,34 +74,30 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_07496e31bb94627a016acbfa6d30d887d2a5bdb86a96d313ee",
+          "id": "resp_0bc21068922de6f6016aedfe6d4e5c87d2bd7229f8053da24f",
           "object": "response",
-          "created_at": 1791752813,
+          "created_at": 1793982061,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1791752814,
+          "completed_at": 1793982061,
           "error": null,
           "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
           "incomplete_details": null,
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
-          "model": "gpt-5-nano-2025-08-07",
+          "model": "gpt-5.6-luna",
           "moderation": null,
           "output": [
             {
-              "id": "rs_07496e31bb94627a016acbfa6d636087d2aad693802bd20f8a",
-              "type": "reasoning",
-              "content": [],
-              "encrypted_content": "gAAAAABqy_puIRhzV1wJuEOSaezR3U4XRZsLoGbFcuJ9FXs_SvhfSz844e7EXY6akkZF9KwBjBFayW0vt-2D6MmmBkjB63eg0M03bCFn-CFEWpi7z7_GcjrIURczJq_0BUvs7G76KaXxYcSiGnEvVOEbP2AndqLl4TIE7J7Mu0hn9UUjqHzESbuzdsiphjcOe7OzIQdujw-OqrnbRsGOuGpn9wm6RK76QlKdDY1tiVMs-O37j3OEqSJoz9Vy8j2cQffGt06hdjO-JyQ60qCG7yb6mYaOkKhE2mJjeyxHyjOBU7tPTFiUtq6CqaZjk_S_fgb5JPXrAazeTO5SKicConST3gknQK0Vk04Uq-Id-Ll-D9JfcZHRxaPq56h3iZFkKyDSDhgX7bwGRY_VzIG-UhQY2tLEqIf_vCxOYuB28X5frq4T0p7bX43nL5jeP3ENYYQJvPVqVyHK2O-BoDVAKV4ez7Y41OIs2Rg17_1zphiME1HzPB5GP63jE-WSO6Xvmn83gJabKV2D2C69KvHgO1VmlncACsCrHaIeOnxvVy1oJRXB5C38TOABws6wY7NBOQj5lQz8ZI5ikfL1huSmeJ5kvNz6A7Nmr_8gHxZ8ERMh_uoB1oT6LpWq9O0yvonrBeWQoQeO_UObmihMPP7FwDJcxBBGdQfDFZyqgjjyLyaXbNagH7BedhQC9irf-NXJiRBz1mTlJJfg3rydd0_AL1OLDbTljJ5HQXQ17B2cJzOj4G7m-2a_n-HfHvckOXmwFvWePOMHmvdZmLtGbYIGbzRKpzlwQdhu-J_mZ6qorKU8d6hiw4-qCnETIQkY5-DIMCNLW8MholdeM_IP-sJNlCw-Bj9dwM3-4Q8oVmkON5F3e43EgvJYkOToTQBDZnuycsXYBS56toGm0iLvSDXegoJnb0MnbS4T0KDBS22jrYVmqXjsAklDaTB2P23-asIxxYsjctgde8pDEuyF7umBFc1hkhltX6kQ7zrD7gRWVc3qEJILnNxcnDqCkDgj9A-4AAJ676qzilugi0tyNCDIX7OcihRUFtZrCaKbwsJBMALfj0hZy_mZOwtjFDK7tYaEukhQt23Vtv_57uBOcJ2EbHyeY-yr-us_JX47zjCevoRKvLcZg5Hr5vwOfBHd5Xlf0uIdIGwRoi-czzSPzctoYlX9bRrpaxawkqocagV7Y6WJ0hd8_9otMwDTsr-Rfo2VrukzjDRSDrPE53IfuK9iao9K2DZf54cL_WI10mePXd0ZoCs8nQ1DzvOslEZ5s6ybHYLua3tgtuRYAkyIfi-Fod_fukfusNDAnyePdS6VmmJLA-hy9ONy_J_8HcflPJMk0owKpbwUgtxZvU3ZGp4gDCm_QvvCQHTMyEVlZ7e_Ts1goyQRz_2Kgh_Vnd-oB2iUGWEgp8mLDcfaUYn6YmmFAFj0T5dSxrIakeYUnFTw_M0AyHNiNx_YIaIXkkL8vZnSSolvx_zx4Q9bOXcFviK_sIUJVuOXQC_8qPRFfswgkh3VV6LyCzXvGnb_FeYX7R9IzuEbzl4uUzhipK0HGOEOyx4h3jg4dviTZdyL50F7W49OlcSJnmR-dkrrh3JQaINxjhLgbOCfOrFT5BrRGS1sZlyWRSTv7EjBpvG7rVf_C0g8hOolQDShCToz5wS-aswUwTSKyrOC4RqmAEykzfkHIF86xM1O9cAwQQqNX7N12iYcRAH-THuUxax4DE9SSkL8Uf3DKIi6yZxxw02kJ_kHrg3ItNMoB7RSSxaBPgwCoFH842rFiBVmsBK4X4cPB1741Gp2g2ggki4hdwr_dQ1_a5af4EDaWZeVl4xLBCQXoeCqK95bqj0Q0Ht3UEyHIn7bfxfbW9MPXsvfMUnaZfxQBZC6nn4LrSyB0qLdHXxhT6Z--sDVDoxWq9HQaE0YitdMUrr4U30oBcSojPFCSqC7UJrgUC6eClsXg2-FFz8azAQQjJ4RmFUux3LJM9OBaaW7MHX-AiD1pOJy6zl2HUg3ws-xBZF0x_QfzHrLH5FTkTZHXvhGaKySplEINZzsYP-Jhs-DSzY4tb1oVqaxmU_06o_RA4bb96FR1cw5YIUZ-IdU4wIZO833b4Q5vFTW7EFVYtnDGaYwcI7cASpISlOG-hHlqwQAVW7xmg5vY2tBoK9EvU1VpvYG6T9FqUu31l3mYZ2naRCJ1Pnhucr9mjW6DPf8MVzl12n6C22tga-JYCPrJs3MhfTupYnhZ5j30L6KRUIfmsSF2uPkeqoDhsqaqRz5LHp5l406OlRmJaTP4aZuj2GnP_yeweBn_5D-i3TY8WzuA8BRkDjeesrW9s_fawfKPqd7z7OEiFwVrZ-PrBs7NnDzjaCHCLJQ5Jw_Y1GUgWgqFeRddcJ-70dh_tjskQ4FcpWHy3E8Ega0a1m0k4flx5gNp8VktnhSnqef7TbTt-Mnmb56a9xUV_gzYR9H_n4_2ZJsitNSXM6ZfmPCm_HZ_8Xdc-HCzmScfb5hZOSPvwG97JQZeAEc0VkyYjcr59XGwATpTM5B6wy8ZnDA6dbjcZtv0xFQ3vLvra8ol3DYFO8DUSCK7IO8snf_HxWzRcMwE1dygGElAKpPwgs6j_qD61z4sX1vEF1qF1KeAKShir7ihOltWta6-s7VOaDuC49vpnmqQpPaqBmCbvNLqB_41KMsDXMZ4rOVYB52ZuyMZpK2mHbq7Jy9jtXJMV7IGO9Ncj3IYwogiO6WnyOsE9WneH9ZQZNXAZJtoSEGBkZrcPizFv6f1N8Fld7y3z2_OtHh_ptPaJ_JUlOq967VSj2Xkry0aPs2v8olBpBr4_e3yo12WTqOOS5F19i0IV0sIAnLrTdEKvR7PdD1H2fqtqtCSApLjHJ5W2V57s4II3YU7HIs5aACaNHmnSdG_OzXvjpDwPMy0HdyJvCeVFW7MbiGt6Er84jTpFNuwhrcPZ1i26jDrJQ5c0nrumrQlR0rqZR6diXM6MLhkpCErd4bIJBdIniNHOu5FLR3qJvplmvOvPBDTWRcaYNGaw9FtDIVuQ9qVa3b3iDcmaAfwHgQ7z5IMuZJZkAx8DBHs9IKtGv7YWHFevS6elI-hlZ4ZuHf4MQaaAv0PeDSeIBGAFgX_jYyTV2kcIwvokrZVq166CF3TIcFARJ6aUlauoV0eQgUr8UgcgjJzSyEYbpSew5Sz-IL_iocdhoz4DgYuG8asgeoSRU6lzpij5iP3IjZlUaaH5l93QhKInxP0qUe6_1NIn7DfTEFVGkyUPsLZxoDbUbxpBWimIYMGHphsStN3wUydK2OtGg0L4hmVbvJ_eY1qoNuItml-hRs8qAhTxxCoOuJcauKiecXuy-PaUumaaIhoxMK73clUoiLpTfdVpd4HWkn-39zB_tQwi3N-X1v8zZQm6t6tmNo7HzzSNvLZkLm6Iu9KCXGoxj5yk3Y0Wrsr659oQAg-zItSrfWeygC4Id-r30xgxx9HDFVunGfP81v80vXbdWz4liPlIudd784ZQYmkj80QIrywfT_hTCOsD58671UHJXUupcaYfMH0aUKsKWFF4Lh_u7nnttUap-c2kpxV43wibNGE-A2Wg2qRaW0M2hWZLM8B8HbwQfmBfeCeAyUMhansepWR5MY3AWsoVB1G9q-xwMg-LgRME1Wz2If76lSBbWJ1uQo",
-              "summary": []
-            },
-            {
-              "id": "msg_07496e31bb94627a016acbfa6e411087d2b50b866d55cdea29",
+              "id": "msg_0bc21068922de6f6016aedfe6dde1087d28dfcf7ac97907a39",
               "type": "message",
               "status": "completed",
               "content": [
@@ -109,9 +105,10 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "Hi there! How can I help today?"
+                  "text": "Hi!"
                 }
               ],
+              "phase": "final_answer",
               "role": "assistant"
             }
           ],
@@ -119,9 +116,9 @@ http_interactions:
           "presence_penalty": 0.0,
           "previous_response_id": null,
           "prompt_cache_key": null,
-          "prompt_cache_retention": "in_memory",
+          "prompt_cache_retention": "24h",
           "reasoning": {
-            "context": "current_turn",
+            "context": "all_turns",
             "effort": "medium",
             "mode": "standard",
             "summary": null
@@ -157,7 +154,7 @@ http_interactions:
           },
           "tools": [],
           "top_logprobs": 0,
-          "top_p": 1.0,
+          "top_p": 0.98,
           "truncation": "disabled",
           "usage": {
             "input_tokens": 8,
@@ -165,14 +162,14 @@ http_interactions:
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 193,
+            "output_tokens": 6,
             "output_tokens_details": {
-              "reasoning_tokens": 128
+              "reasoning_tokens": 0
             },
-            "total_tokens": 201
+            "total_tokens": 14
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 11 Oct 2026 21:06:54 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Fri, 06 Nov 2026 16:21:02 GMT
+recorded_with: VCR 6.4.1

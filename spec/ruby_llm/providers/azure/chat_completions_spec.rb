@@ -200,7 +200,7 @@ RSpec.describe RubyLLM::Providers::Azure::ChatCompletions do
     end
 
     it 'subtracts cache reads from the prompt tokens of other models' do
-      gpt = RubyLLM.models.find('gpt-5-nano', provider: :azure)
+      gpt = RubyLLM.models.find('gpt-5.6-luna', provider: :azure)
 
       expect(completion_tokens(gpt, openai_usage)).to have_attributes(input: 1_024, cache_read: 1_024)
     end

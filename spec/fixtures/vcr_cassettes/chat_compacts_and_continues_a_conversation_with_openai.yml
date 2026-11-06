@@ -5,13 +5,13 @@ http_interactions:
     uri: https://api.openai.com/v1/responses/compact
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"The project
+      string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"The project
         codename is Thimble. We write it in Ruby."},{"role":"assistant","content":[{"type":"output_text","text":"I
         will remember the Thimble project and Ruby."}]}],"instructions":"Answer in
         one short sentence."}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:08:09 GMT
+      - Fri, 06 Nov 2026 16:21:07 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -46,123 +46,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID
+      - X-Request-ID, Server-Timing-Total
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '7728'
-      Openai-Project:
-      - "<OPENAI_PROJECT>"
-      Openai-Version:
-      - '2020-10-01'
-      X-Ratelimit-Limit-Requests:
-      - '5000'
-      X-Ratelimit-Limit-Tokens:
-      - '2000000'
-      X-Ratelimit-Remaining-Requests:
-      - '4999'
-      X-Ratelimit-Remaining-Tokens:
-      - '1998767'
-      X-Ratelimit-Reset-Requests:
-      - 12ms
-      X-Ratelimit-Reset-Tokens:
-      - 36ms
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      Set-Cookie:
-      - "<COOKIE>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "id": "resp_02d01ffe5f957dea016acbfab20a2c87d2a99adc190af60a96",
-          "object": "response.compaction",
-          "created_at": 1791752889,
-          "output": [
-            {
-              "id": "msg_02d01ffe5f957dea016acbfab20fc887d2a859eb8e1479ac67",
-              "type": "message",
-              "status": "completed",
-              "content": [
-                {
-                  "type": "input_text",
-                  "text": "The project codename is Thimble. We write it in Ruby."
-                }
-              ],
-              "role": "user"
-            },
-            {
-              "id": "cmp_02d01ffe5f957dea016acbfab8fad887d2a836dc71a56eb73d",
-              "type": "compaction",
-              "encrypted_content": "gAAAAABqy_q5hOV0ZnWNlBuC3BK0fI4hRnvsTi72FivXBoPOZmNfgc7u0CBtCVhb9OasQCfle4svNxeW-W50TYoyXbM54dRuRorcjdn3rV_3Z3MFFL_M4e9I66ryUUvZ_lqTBd7848YAtHhMGVdw1fcMVksXl-c_otZPnEXt91Cp_9GZ_-NwLWiUVnTND7iiHIgIzTekCoHJLE7KkvjCy-CZmPyP_UWhiS_-njVmNr5IFALE28xK4AWW0EqJLMA_Zj6tVCPDNw2x58Wcn3cZrKR2MCZABB4OA-HU-Kd6AJvduF-rI1MXjQUbo8SW-0IRtl7WN6aZXT4zozvNTzBtvNPu_9HIFuOClvstUCZXD8twgH3mc0-CySe3-DEXcNRxG63TXQnKgA0SawHUgHADIyu6oG2FdZC3YbFcgCD_vtFHQv1ddCrffcpYGc2J0xdEQ-I6V5HinaAWIfhro5-bDVIO5pCU_9XHOJGlKolqC42O6iePlIbGi3QdTyMl9KEgbanqEPI8O72AxBZLdwoEaTyB6fBBkRLzSuuIraKDSm2GKMpPJNyyiyreVcpGzB4plYllrdhtdh2gNXPYySmR2jd30GiNrMUEpr7bO03EjrJkbDLDPtMdBaA90NkcmDftKNijmXBG9iRzDduksee7V-HXWdnArErA55tm5R39is8UdE6hGOrHCluJVu6k2e8FMl-iqX7wdAnw6nhPbxNIag5L1ZJKcv-da35YP2TP-MEQtPZFI-zXXpSr3hTs5rD-4pyRo45_LFjmBeiER1W-2ps0KKXoVmyYQhw-QTFzLjOfqUwFXVpxek3lwmqO1331cr3ueRpkhFz3rYCMpWvItsah0TYpkczFoGhDTrjmDPhptMCrhdTvvM2tIMuCbz1oZnKTkNJG23N2NKguA7geUOSNG2omVC4TRgfq1tpZVXigTB6mLWFJg-zDsppqvJqwEWdZ_umKvMnAulrjOV2rkrCW9_7hFxs0aYZINLefzp_xHCwHkOtd1nzXU9m4Uk4eMy5Qvn6WL2f_Cc-x7EWnYe5uQ4Iq3Qjf2-syL5a_zdNFlxBDRdbg68qCchMv9rFgUTy9iqXZ_Z-Ktet6gM-612ys4fvLYW1PI-2IbIqc9fKHGw1CZTi9hxXJv6zpLJb63JkS71G1flURAsE-P_xCqioDRAG7gE5ZLfe480jgvhsek5fPs3Yxv9-5uc9KZVNtUjSMbCA_yu0HGXNBhzWw5kultV7mnQMo8CcCDASFvJL1pi6hOO_kcB_NGso2HFbKBcnxsvs4HcWRCOLUtl9_Xi9xI3grGoTtTi3hPGIIVPxX6f07bbNGuxYnGLBt9kZZwa_yTJUmAqoBcod_M5rl5pp66uz98Ck-wCGqhYoGKvO7h5IIvFI18crHsDBf3i1T0raJty3myBMZ3VsB3orqywXW_r3HPScuO-LhODt4-DGbSNbe1mRyB9cYCMHrC07vrFkvqwzhFGiU8YsO1izcl8ZRO-sE--dwas2YVpLhzSGGWfeCd8pnlHIw40XEpurvqamYtWnjUZD4fKm_tY_IYIyHwn__oICQDkSoLDZZLMdAwc8XQ1p1VEl6016v5UNQaTd4Kouaf5X3r1TNCSC8CENxub0SWzEKQ5CXJuHnmT9e6VQfahSCtHOnCz-D_9D4ojaC5CdX_SaMzPcaueyCYHbzRDmF_TiF1r2haQ1UhbP1B84CNnYatrhjI7y6Nz9V4lDSJdf5VigOqmR-Z43iidH1ph62GJIuuhevF1cTf9fz3o5Npa1exLBzBjdjNtjZtHpiN0W7ERSMRVNZT0XbdMvq553ka1Gx7nPeT1EdL4eoOSU7tysn2at6M3INhL0LF80kSD6fj1kUF9WTh9dG8g6o7Jyi7b26I5g_DSmYY1OKnPyHOWu0R9q_UhHEtoKJu0mogamMyR3A1xCvnVeIdJ3BRuKU_XqPJeI3uq9UhHehGzo3mvseusPujRpWIJ1HzuOLogFyhZ9S3rz0hITPXZxMMtvAU7AumQMgxA8ZbkIqMU1ihSsPJYbZIUtEFHQJmuDK5QCiOfBLjhg1nct_8KYSZZm9jr3D7h1Lut4sLhkVDxgLCqt52CbHZJao5mXMMUYQLrOURtd5gif2R-nWZk1lcgpA7wwq1p24Elu12EOA_CyeGfRv4UG7rns_z5W7vWo2i8CTfZTQOCeimoNu5-7OAO0r2qXowNHHLLyYTJKobwDMljjFHGZYGD7epbMCdfSmZcczTKCE31lqgnpY8qEJ_i9MBGu7iGFaDFbFT7QJdrdZ9NnEbbIPJmhvFufOxmnm7BGbFnO5lKXWESzzfthb6gLeHKS4EplpEi5u-akF4QmdfDsq6de0gNtY1TsptX21jsS7LHbJOTPXPSfSWyRPEhvGhPHsDiX90awNvmt2vkl8P7H6HtSpJH2vBR_RVDD2ElpdUA9PKHVwyQ9qf5do7BGGg5qvbv_U1qbzTk71iM7aKVKTJbrkTnCwDN0s9ifcnVQHK1AbtGG5Id1WJ5WmbCwTy7wo9KY8w4MQzfvrlLdSzVbwjMdZ6RS0it7NhIXDsb0o2n-lUKqWkTt6bsUwUyJAU2BYTj8F9jFuWZSKyfGwuHi5g98fZXx0vWl3oczKbykMI9nkt5yDOP7n-hw2o1sybqRV1Xv6sLFEP4gZjxyjw399DbFvxLZKG_wkSIMf7l_dnbN-QhrUx78PAZM9o2wLh5KTaOwv3g21FVns6Gq0bPRc6gRpsy11VeAeydZHx-QrPkYr70xG3iIPgXFg2qy_kzHfM4GdLw70IS54YRNmDb9sPdDirxB3JN1h8kucg5x7tTyj7-Rj6giKt550FGhTPT4vPWDMeJHW05pXIY_JWoB7VGOXsGZJ0CDZUJTo1MeLZm4p3JHn6azbVabE4ux02DKv9S4Z0yj3zSVGVXGL7976ZLBWoSzR0D66SSYDzYa-2klTYIMgl1ED1REJs49rav_YYroPH6308wZVc8BKJA3O-uJiGnowb6zT2x0aO9SSL0P_lPp3pj3Bq__Hn8V0SiaCKKfFS8HuLseM9bAlLAFRmkkS4a6tfTVzPQzZEc857eyiUYoktxNOgg1t8NYBpDOtzdSIay82gNU1u-tTF27qD5WwkJbOy6DI3e0xqsFOutH0"
-            }
-          ],
-          "usage": {
-            "input_tokens": 141,
-            "input_tokens_details": {
-              "cache_write_tokens": 0,
-              "cached_tokens": 0
-            },
-            "output_tokens": 1450,
-            "output_tokens_details": {
-              "reasoning_tokens": 1280
-            },
-            "total_tokens": 1591
-          }
-        }
-  recorded_at: Sun, 11 Oct 2026 21:08:09 GMT
-- request:
-    method: post
-    uri: https://api.openai.com/v1/responses
-    body:
-      encoding: UTF-8
-      string: '{"model":"gpt-5-nano","input":[{"id":"msg_02d01ffe5f957dea016acbfab20fc887d2a859eb8e1479ac67","type":"message","status":"completed","content":[{"type":"input_text","text":"The
-        project codename is Thimble. We write it in Ruby."}],"role":"user"},{"id":"cmp_02d01ffe5f957dea016acbfab8fad887d2a836dc71a56eb73d","type":"compaction","encrypted_content":"gAAAAABqy_q5hOV0ZnWNlBuC3BK0fI4hRnvsTi72FivXBoPOZmNfgc7u0CBtCVhb9OasQCfle4svNxeW-W50TYoyXbM54dRuRorcjdn3rV_3Z3MFFL_M4e9I66ryUUvZ_lqTBd7848YAtHhMGVdw1fcMVksXl-c_otZPnEXt91Cp_9GZ_-NwLWiUVnTND7iiHIgIzTekCoHJLE7KkvjCy-CZmPyP_UWhiS_-njVmNr5IFALE28xK4AWW0EqJLMA_Zj6tVCPDNw2x58Wcn3cZrKR2MCZABB4OA-HU-Kd6AJvduF-rI1MXjQUbo8SW-0IRtl7WN6aZXT4zozvNTzBtvNPu_9HIFuOClvstUCZXD8twgH3mc0-CySe3-DEXcNRxG63TXQnKgA0SawHUgHADIyu6oG2FdZC3YbFcgCD_vtFHQv1ddCrffcpYGc2J0xdEQ-I6V5HinaAWIfhro5-bDVIO5pCU_9XHOJGlKolqC42O6iePlIbGi3QdTyMl9KEgbanqEPI8O72AxBZLdwoEaTyB6fBBkRLzSuuIraKDSm2GKMpPJNyyiyreVcpGzB4plYllrdhtdh2gNXPYySmR2jd30GiNrMUEpr7bO03EjrJkbDLDPtMdBaA90NkcmDftKNijmXBG9iRzDduksee7V-HXWdnArErA55tm5R39is8UdE6hGOrHCluJVu6k2e8FMl-iqX7wdAnw6nhPbxNIag5L1ZJKcv-da35YP2TP-MEQtPZFI-zXXpSr3hTs5rD-4pyRo45_LFjmBeiER1W-2ps0KKXoVmyYQhw-QTFzLjOfqUwFXVpxek3lwmqO1331cr3ueRpkhFz3rYCMpWvItsah0TYpkczFoGhDTrjmDPhptMCrhdTvvM2tIMuCbz1oZnKTkNJG23N2NKguA7geUOSNG2omVC4TRgfq1tpZVXigTB6mLWFJg-zDsppqvJqwEWdZ_umKvMnAulrjOV2rkrCW9_7hFxs0aYZINLefzp_xHCwHkOtd1nzXU9m4Uk4eMy5Qvn6WL2f_Cc-x7EWnYe5uQ4Iq3Qjf2-syL5a_zdNFlxBDRdbg68qCchMv9rFgUTy9iqXZ_Z-Ktet6gM-612ys4fvLYW1PI-2IbIqc9fKHGw1CZTi9hxXJv6zpLJb63JkS71G1flURAsE-P_xCqioDRAG7gE5ZLfe480jgvhsek5fPs3Yxv9-5uc9KZVNtUjSMbCA_yu0HGXNBhzWw5kultV7mnQMo8CcCDASFvJL1pi6hOO_kcB_NGso2HFbKBcnxsvs4HcWRCOLUtl9_Xi9xI3grGoTtTi3hPGIIVPxX6f07bbNGuxYnGLBt9kZZwa_yTJUmAqoBcod_M5rl5pp66uz98Ck-wCGqhYoGKvO7h5IIvFI18crHsDBf3i1T0raJty3myBMZ3VsB3orqywXW_r3HPScuO-LhODt4-DGbSNbe1mRyB9cYCMHrC07vrFkvqwzhFGiU8YsO1izcl8ZRO-sE--dwas2YVpLhzSGGWfeCd8pnlHIw40XEpurvqamYtWnjUZD4fKm_tY_IYIyHwn__oICQDkSoLDZZLMdAwc8XQ1p1VEl6016v5UNQaTd4Kouaf5X3r1TNCSC8CENxub0SWzEKQ5CXJuHnmT9e6VQfahSCtHOnCz-D_9D4ojaC5CdX_SaMzPcaueyCYHbzRDmF_TiF1r2haQ1UhbP1B84CNnYatrhjI7y6Nz9V4lDSJdf5VigOqmR-Z43iidH1ph62GJIuuhevF1cTf9fz3o5Npa1exLBzBjdjNtjZtHpiN0W7ERSMRVNZT0XbdMvq553ka1Gx7nPeT1EdL4eoOSU7tysn2at6M3INhL0LF80kSD6fj1kUF9WTh9dG8g6o7Jyi7b26I5g_DSmYY1OKnPyHOWu0R9q_UhHEtoKJu0mogamMyR3A1xCvnVeIdJ3BRuKU_XqPJeI3uq9UhHehGzo3mvseusPujRpWIJ1HzuOLogFyhZ9S3rz0hITPXZxMMtvAU7AumQMgxA8ZbkIqMU1ihSsPJYbZIUtEFHQJmuDK5QCiOfBLjhg1nct_8KYSZZm9jr3D7h1Lut4sLhkVDxgLCqt52CbHZJao5mXMMUYQLrOURtd5gif2R-nWZk1lcgpA7wwq1p24Elu12EOA_CyeGfRv4UG7rns_z5W7vWo2i8CTfZTQOCeimoNu5-7OAO0r2qXowNHHLLyYTJKobwDMljjFHGZYGD7epbMCdfSmZcczTKCE31lqgnpY8qEJ_i9MBGu7iGFaDFbFT7QJdrdZ9NnEbbIPJmhvFufOxmnm7BGbFnO5lKXWESzzfthb6gLeHKS4EplpEi5u-akF4QmdfDsq6de0gNtY1TsptX21jsS7LHbJOTPXPSfSWyRPEhvGhPHsDiX90awNvmt2vkl8P7H6HtSpJH2vBR_RVDD2ElpdUA9PKHVwyQ9qf5do7BGGg5qvbv_U1qbzTk71iM7aKVKTJbrkTnCwDN0s9ifcnVQHK1AbtGG5Id1WJ5WmbCwTy7wo9KY8w4MQzfvrlLdSzVbwjMdZ6RS0it7NhIXDsb0o2n-lUKqWkTt6bsUwUyJAU2BYTj8F9jFuWZSKyfGwuHi5g98fZXx0vWl3oczKbykMI9nkt5yDOP7n-hw2o1sybqRV1Xv6sLFEP4gZjxyjw399DbFvxLZKG_wkSIMf7l_dnbN-QhrUx78PAZM9o2wLh5KTaOwv3g21FVns6Gq0bPRc6gRpsy11VeAeydZHx-QrPkYr70xG3iIPgXFg2qy_kzHfM4GdLw70IS54YRNmDb9sPdDirxB3JN1h8kucg5x7tTyj7-Rj6giKt550FGhTPT4vPWDMeJHW05pXIY_JWoB7VGOXsGZJ0CDZUJTo1MeLZm4p3JHn6azbVabE4ux02DKv9S4Z0yj3zSVGVXGL7976ZLBWoSzR0D66SSYDzYa-2klTYIMgl1ED1REJs49rav_YYroPH6308wZVc8BKJA3O-uJiGnowb6zT2x0aO9SSL0P_lPp3pj3Bq__Hn8V0SiaCKKfFS8HuLseM9bAlLAFRmkkS4a6tfTVzPQzZEc857eyiUYoktxNOgg1t8NYBpDOtzdSIay82gNU1u-tTF27qD5WwkJbOy6DI3e0xqsFOutH0"},{"role":"user","content":"What
-        is the project codename?"}],"instructions":"Answer in one short sentence.","stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Sun, 11 Oct 2026 21:08:12 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Cf-Ray:
-      - "<CF_RAY>"
-      Cf-Cache-Status:
-      - DYNAMIC
-      Server:
-      - cloudflare
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Access-Control-Expose-Headers:
-      - CF-Ray
-      - CF-Ray
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '832'
+      - '1596'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -189,34 +77,145 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_02d01ffe5f957dea016acbfabb64a887d297f69d079e6409d7",
+          "id": "resp_0e205dc08cc2ec6a016aedfe72141887d2b8a6a00b9d393d10",
+          "object": "response.compaction",
+          "created_at": 1793982067,
+          "image": {
+            "context_compression": "disabled"
+          },
+          "output": [
+            {
+              "id": "msg_0e205dc08cc2ec6a016aedfe721b4087d2b6fd318dd8d74a24",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "input_text",
+                  "text": "The project codename is Thimble. We write it in Ruby."
+                }
+              ],
+              "role": "user"
+            },
+            {
+              "id": "cmp_0e205dc08cc2ec6a016aedfe72d62c87d2b4e52a8051d19f0e",
+              "type": "compaction",
+              "encrypted_content": "gAAAAABq7f5z-C3aQxkUlme6Uh_ZxFYJqqipu2fhkaq-j-pHSqO6S4E5xzHxd7MTkGhflvsTuWoN1G4QrGGBEwFBdC3dN02R8G4_5bt6nin287WOWEj0IW-agCayKMYCunH5cKLBSR_If5kD0L3N5cAykMtemJY8i2q3jl1bIrICKC98S4EOdIK_1jBNjdbTRmHAXhb9sZaQ_iJs1lij0vgPC-8Mg4Qtsv-R19V3z8eud_EDYlOlEy_Ydk4WHb4mmS97urJO558gr11YZXZJwxefAOvjO6NszkhZlnUBVjBqIisoXMkTPwftBKoTLwAR1WZmcbLcXPq_IhdiqH-1wtMabGgcl0dO8lZF7pUwHUvD96T8_RdtxO3DtGmrYeD-vKDlEJS3KBRyTJTUprZzNsaJEhSLmyvx9gJL6HrpjyTR1Nt-UDjLgmq2q7NkyQEQnhwVZG9VUBJnzjaGqymffMBs2sKKBtjm9IH76j0G_Qv3huQkNHVNyQi6hoju7oLdjP3cZvnmOErK6pSHsaLetEOdatTFKIz3HsmVhSPEudegDEpNjthKJ73lf50mlnCMuycp7X0P8rtlbYDGu4hQFA7mc3Uozzp_soSx7LvaDlh_w4XQMF764hg3Ds3NaroHbPo56e_MCZ4StBYgBRHOn6TE6sNNYN2xy5zRdyKXx3b-JTNBs-A3zy81mj_ixc3cz9B4NvXMRQFsED6hWxiP2MhpJ-2DHrfqhcnQPKU9_sdber9nNP8XNjv9Ec0bQvsMrdz07VuG0MZcK9Ss0Cj1DWFxPQDCj4MeOx0Bosa92arqImNuAcOOqvMB2h9_fltmp4SVLtYt9zS6FZ19k0OEidlAFIqNIxlULlNZh1qlSuhJw6EAOARhImi_XGf1RaemFT_A6jc0AyqaG5mgU8urGRMGyUNySXtuSCzkmUjPJIG2wz53Tw-5wNTlaeZZJIPkF41rsokqSPMB2_eRcLLcY5QxNsuk6JD9L8RWKILuk0PtriPJ3tWvZfpvivrsEutZybbitXDeA3C-RbXo2gAS4XlcyoecicD_9hSbYYCGegtiNj2lxB_SKr5G9OPNgWFn0oyuvimMH1aPr6BQHh0ImNLy20WrOXu7VXrXr2xOgEyC78rsczCDhYv2Mnj9THIzMkgRwOHKJ8xAli4pvxCFHua4hKljljquKrn0xb8eHP1c1aJ5q5SO7c25lTqELZB28ZwimsQQqyOkkA66g-a47GRgh3yZlW3gdoUV43s4XufP9if-e1eaDIQPtpxxTkvF7W2iqAxlQG0kXCJ5ke553pQiFpigtU4Z3Nw2SNBHy717MrXPWbIJbt1_A20NOkf1hxzfth0_LBbARgZtKUNOazp5QbRI5MOQWEm0AdED44Vw402UADEuLMrQUOaGknU2DbhGtgGtUlCIHNlAwMHxLN-J-UY-pSMjpUgkZ_3fxLk06DRGIuJtgIXOQSBBjOQe_ROknmRHVe_BMXMV99peEujlBkSXU_LNFP6FvdqyBBwunoPjLBddktrohpjoCdprMBBa545S6JxG0BUw_ctw_IYeG9O0r9l9EHV2JDTCW8ofPlpTJl3hEZtnoh_vmUVWR_ZtEg2kollhusIezGvDW1zSNPNveYj6pvL38pE2XDXmtRRtFmLs_FaA3DkNgzAfQheFp3-9IKfyXUHrsAm312a43nPKWhvl7rXXvn22CBXu3rnrebyof5Y_uApUcuicswq7QqjY-3AbfBCErgTC9F2JnmUC0vZKYurdgiOU1G_ok-nwa8-gvqEXuPIkbFPIBIBhM_DnvVAuY9E17cX5jp6mRNk0zvznFj9DFRdELQjGO2XkWtEfUyWMAt8lth66QzI2jTL3dAJrexMDlIsY9Izs-jq_RM8ksQE4QtQKk_v6005tG6Swy-nW0U6s9o-56b4EBRVYy6vQGKQ8sAKae4Y-dZPR30_zp9RWS5K1HaXwOE67shE_AzvPCKmz9bwSjcJMy5ycTWSOcebhgbDpu2XfP_mmphPFsprE4TwlnfeQKsRC560nsCGZ0rUC9VTCyzN4L-sRxpXyrInCKUVYW_EU8usRRVu2zg=="
+            }
+          ],
+          "usage": {
+            "input_tokens": 66,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 58,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 124
+          }
+        }
+  recorded_at: Fri, 06 Nov 2026 16:21:07 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5.6-luna","input":[{"id":"msg_0e205dc08cc2ec6a016aedfe721b4087d2b6fd318dd8d74a24","type":"message","status":"completed","content":[{"type":"input_text","text":"The
+        project codename is Thimble. We write it in Ruby."}],"role":"user"},{"id":"cmp_0e205dc08cc2ec6a016aedfe72d62c87d2b4e52a8051d19f0e","type":"compaction","encrypted_content":"gAAAAABq7f5z-C3aQxkUlme6Uh_ZxFYJqqipu2fhkaq-j-pHSqO6S4E5xzHxd7MTkGhflvsTuWoN1G4QrGGBEwFBdC3dN02R8G4_5bt6nin287WOWEj0IW-agCayKMYCunH5cKLBSR_If5kD0L3N5cAykMtemJY8i2q3jl1bIrICKC98S4EOdIK_1jBNjdbTRmHAXhb9sZaQ_iJs1lij0vgPC-8Mg4Qtsv-R19V3z8eud_EDYlOlEy_Ydk4WHb4mmS97urJO558gr11YZXZJwxefAOvjO6NszkhZlnUBVjBqIisoXMkTPwftBKoTLwAR1WZmcbLcXPq_IhdiqH-1wtMabGgcl0dO8lZF7pUwHUvD96T8_RdtxO3DtGmrYeD-vKDlEJS3KBRyTJTUprZzNsaJEhSLmyvx9gJL6HrpjyTR1Nt-UDjLgmq2q7NkyQEQnhwVZG9VUBJnzjaGqymffMBs2sKKBtjm9IH76j0G_Qv3huQkNHVNyQi6hoju7oLdjP3cZvnmOErK6pSHsaLetEOdatTFKIz3HsmVhSPEudegDEpNjthKJ73lf50mlnCMuycp7X0P8rtlbYDGu4hQFA7mc3Uozzp_soSx7LvaDlh_w4XQMF764hg3Ds3NaroHbPo56e_MCZ4StBYgBRHOn6TE6sNNYN2xy5zRdyKXx3b-JTNBs-A3zy81mj_ixc3cz9B4NvXMRQFsED6hWxiP2MhpJ-2DHrfqhcnQPKU9_sdber9nNP8XNjv9Ec0bQvsMrdz07VuG0MZcK9Ss0Cj1DWFxPQDCj4MeOx0Bosa92arqImNuAcOOqvMB2h9_fltmp4SVLtYt9zS6FZ19k0OEidlAFIqNIxlULlNZh1qlSuhJw6EAOARhImi_XGf1RaemFT_A6jc0AyqaG5mgU8urGRMGyUNySXtuSCzkmUjPJIG2wz53Tw-5wNTlaeZZJIPkF41rsokqSPMB2_eRcLLcY5QxNsuk6JD9L8RWKILuk0PtriPJ3tWvZfpvivrsEutZybbitXDeA3C-RbXo2gAS4XlcyoecicD_9hSbYYCGegtiNj2lxB_SKr5G9OPNgWFn0oyuvimMH1aPr6BQHh0ImNLy20WrOXu7VXrXr2xOgEyC78rsczCDhYv2Mnj9THIzMkgRwOHKJ8xAli4pvxCFHua4hKljljquKrn0xb8eHP1c1aJ5q5SO7c25lTqELZB28ZwimsQQqyOkkA66g-a47GRgh3yZlW3gdoUV43s4XufP9if-e1eaDIQPtpxxTkvF7W2iqAxlQG0kXCJ5ke553pQiFpigtU4Z3Nw2SNBHy717MrXPWbIJbt1_A20NOkf1hxzfth0_LBbARgZtKUNOazp5QbRI5MOQWEm0AdED44Vw402UADEuLMrQUOaGknU2DbhGtgGtUlCIHNlAwMHxLN-J-UY-pSMjpUgkZ_3fxLk06DRGIuJtgIXOQSBBjOQe_ROknmRHVe_BMXMV99peEujlBkSXU_LNFP6FvdqyBBwunoPjLBddktrohpjoCdprMBBa545S6JxG0BUw_ctw_IYeG9O0r9l9EHV2JDTCW8ofPlpTJl3hEZtnoh_vmUVWR_ZtEg2kollhusIezGvDW1zSNPNveYj6pvL38pE2XDXmtRRtFmLs_FaA3DkNgzAfQheFp3-9IKfyXUHrsAm312a43nPKWhvl7rXXvn22CBXu3rnrebyof5Y_uApUcuicswq7QqjY-3AbfBCErgTC9F2JnmUC0vZKYurdgiOU1G_ok-nwa8-gvqEXuPIkbFPIBIBhM_DnvVAuY9E17cX5jp6mRNk0zvznFj9DFRdELQjGO2XkWtEfUyWMAt8lth66QzI2jTL3dAJrexMDlIsY9Izs-jq_RM8ksQE4QtQKk_v6005tG6Swy-nW0U6s9o-56b4EBRVYy6vQGKQ8sAKae4Y-dZPR30_zp9RWS5K1HaXwOE67shE_AzvPCKmz9bwSjcJMy5ycTWSOcebhgbDpu2XfP_mmphPFsprE4TwlnfeQKsRC560nsCGZ0rUC9VTCyzN4L-sRxpXyrInCKUVYW_EU8usRRVu2zg=="},{"role":"user","content":"What
+        is the project codename?"}],"instructions":"Answer in one short sentence.","stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Nov 2026 16:21:08 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID, Server-Timing-Total
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '730'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '2000000'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_0e205dc08cc2ec6a016aedfe73f41c87d29a4383d9e382d105",
           "object": "response",
-          "created_at": 1791752891,
+          "created_at": 1793982067,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1791752892,
+          "completed_at": 1793982068,
           "error": null,
           "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
           "incomplete_details": null,
           "instructions": "Answer in one short sentence.",
           "max_output_tokens": null,
           "max_tool_calls": null,
-          "model": "gpt-5-nano-2025-08-07",
+          "model": "gpt-5.6-luna",
           "moderation": null,
           "output": [
             {
-              "id": "rs_02d01ffe5f957dea016acbfabbae7887d28d78e7714e2ca143",
-              "type": "reasoning",
-              "content": [],
-              "encrypted_content": "gAAAAABqy_q8g8UwPlmhnN2iEmyyg2iXj174jeV6wZsEjBdnbFuzT-OK0nAP7WLk3dNdLsF89RhMB1F0NpqNZaofWTwrwt0Si5shI_BlrIkhMkIa7s6QNQLU6NDyS37nsfeztDYvnwiK04ZwuTQKOU5MchBfUMB6wr40HhgunS7NED63N668L-dKnB4VUSkp9QJy0IedmdOZ6DxxiBcQJCdzW7qYxT6EkGYtVA9iOqyTpx5GwCPDI3HnAiZ7Hl4aRnwe83jPGlcAEXXIZu3PHZiv5WAFYrOmgqEIP8O0xc_ktTno0shIa_Q_MCTkh9VoNY6dDxcKDr7luUgguVuuaYS2CzySb8IEZmExPM-yxhAaSYzWhbYxb1kAh_JhbQ47K7EcK1cLj_p1WpdVjbBfHG2Vn_xVksVjXAXcFSq-umwvV2vacqYNh2hefqaUivtnsuBbfxQHqxBUNULgp0zFDaeJ6-xtxui_U6aqpyyGJutecISFU0A_SmSREXwnM2NSGRkhZmYdDuZdFfgvJUW2MXWyFFIhT2xo2SHCS-UuRNOysoQKi5ciwnwvXI9mbjG_lJThKfcDsDScjCvKuKtv4WivGRqIfBUxN4EK_LWemES2xrZKrSU1V3-IHu5KqCio11PH5PXRaR7dcR1RyUKq28xEQyv6RkkpUVvEN33Nlx9VS9rJOG6mHhO7rvN9V7pE3FE245-x77-GuHzcOATYTR7LD9h_rjATIoZZwh7Oi_DqnHJANmjzjGTjGlI6hntt7aL-BZbhmvDjkTWATkbnHuDFOjJOFRmgetICSrjxd5ewiDeSfvDA2ONVc2sGJKOsqRn-B8ACnfPm73oVBPI4eLeFAC_H9eZYI2GJWwZvJM7SWEBtrfdp9wICO06t8acRMY_ZuXd_joQLrH-VGLE9zjJblfEEeVrZ3qp0Bvh9KzUGf1vU58Tl0UBQbK6fsGj91ZRtraAkZ_9Z9B51pbQVabeiHD_RZgA7rLUnRgT8TPgUV_iJzk9LhQH-ncqQGwgHv4AQEKoc-3x5XE22SWCZ9LF5D2NZUyAEjoP1g7IRi21GD2v2QflgN7qkohPvxkgz3Dp0IgIqvD_gHGqBFaAnKZdq3V35egF61tzvsen4xlgITtDqAt60JLTQwaypZjXSUi6CyvdA6Tj8rJaydcMlVMJZ2zK9LKmY8d3A8RDn3kAktRck1XdmjHGunOvvO6b9BAFDugP38iPDN0KswYB29RyhLv4wDf8CJ3X0f10ognap5yiPBkh4t2kuhDPdXz53yAMtMAkS9nTXEKCN7bVy6bFwzUtYOS_j1nHTY9f2A36ANcwxZ_VXZnxp6LtL1cA_bIxBpv-WvjDAIRFYJM30scFVMjZO_dpsA8Lj1df685gZ0B5BPvMobxbGlfTBEykOvxS_7yinGYGyY6nkEL8rCxPtnruJZ7sqWwtIVGI-8sfl8PeeMxTHZuKimPQtqLJmRg5QzhXNmj3cJarX9ALwiR8TTbh-51sXWdrH7yIucnUd1mQO00CYzk1WsxCCEBotCUbC6GFRdJ8Ku6TOBAWEqTW7fuFrLZru9gaLoNa1ManxcaMb1CTxXEcZv2fEYLOUkQQnNzPiRnWev_jdY8-MFjm4Qf86yY3OTTAjeEfPuxoTZUXTSNuhY5u2to_PXATswQnFMIx4Icoq7fXOouVp-zceS0MFQbG-EvLdN0yp_QWoFxQgTAGuceKS8ya0A585OXr8nrFJJWYlwJI-LUDytIUCZNMSB2DdqSs4t75jvtVlx5Q7Shui1w9hVmol03_8CXTw6bBrBLZfNIWAKO7Ys3r5ur-1yCNinoK5m8jgxKd8pBGmWK1se3guBcqTaDmNp3Joc9umeiib7zfkxS93gidKJP7nEImR5Gg6LpP9dA8QkCR85lbLS1xcvc9FD7_99zK985itxNSYSUP320NzOo-3FJG6geZ6dMu8QTbam6JwAVh1kbD7vl87ClgZfq4eFDMkRWYOAbBIBNynaRx8FD63IhXn9Jq1RFosOGh_6DZrWNMFTtu5ivOp7mWSrorkQPTyuODKHixcpot1LX0qhh_pleH-adwyo9FhTo7RLSXXsQ6AfFAwRZ_KeGqE_ursjhnNfXe9uUXMQ0jMLEXYvpIFlRa26b-w3a8Aaq8gDg2HRFAcmt-8xbkmnZyvJaYjJgon4nFBYDByj_0RfxL5YyLd73Wrc3Kr2GjvCssr9FwTDdTtNkI4gtJaDMV8KJD_uiKD7EQiAk9mV9Vw-LzR5h1n18IShCEQF5v4IvpEmnFd6OjIFZaGg7syjpprV17sadlJ8LKizgkxAexBmufq9AzHX83P4N8QIFUbJ9mTHqnKSfBhdQiHn-qGlJBE_-yneZkOpk7bvkq9Yab2dz3gEU2-rXqUa_dFZPaMSY4wMr1yIxKRxvAj9dPrWCZ62p__b5HuMr6o64aUqSZq8sNSRtrbWtGCI_nPIbu-S4Ifpd3-j03xc0oEJCTxMCEc8suiC7fIrGSgdyvlussSzHd1f_nB36icUpLp_JL9PjGWEElBdZ-YRiSb8EOq2u82zbCFx0SJ4YDpDLMRkv055ndqnXaYGZOwAecK_7uVDEIsnAjkfXSOPARmWz4=",
-              "summary": []
-            },
-            {
-              "id": "msg_02d01ffe5f957dea016acbfabc16c887d2878523f08f6dd432",
+              "id": "msg_0e205dc08cc2ec6a016aedfe74760887d2ab843e495ee6fbd5",
               "type": "message",
               "status": "completed",
               "content": [
@@ -227,6 +226,7 @@ http_interactions:
                   "text": "The project codename is Thimble."
                 }
               ],
+              "phase": "final_answer",
               "role": "assistant"
             }
           ],
@@ -234,9 +234,9 @@ http_interactions:
           "presence_penalty": 0.0,
           "previous_response_id": null,
           "prompt_cache_key": null,
-          "prompt_cache_retention": "in_memory",
+          "prompt_cache_retention": "24h",
           "reasoning": {
-            "context": "current_turn",
+            "context": "all_turns",
             "effort": "medium",
             "mode": "standard",
             "summary": null
@@ -272,22 +272,22 @@ http_interactions:
           },
           "tools": [],
           "top_logprobs": 0,
-          "top_p": 1.0,
+          "top_p": 0.98,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 267,
+            "input_tokens": 102,
             "input_tokens_details": {
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 107,
+            "output_tokens": 13,
             "output_tokens_details": {
-              "reasoning_tokens": 64
+              "reasoning_tokens": 0
             },
-            "total_tokens": 374
+            "total_tokens": 115
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 11 Oct 2026 21:08:12 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Fri, 06 Nov 2026 16:21:08 GMT
+recorded_with: VCR 6.4.1
