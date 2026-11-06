@@ -35,6 +35,17 @@ module RubyLLM
         each { |server| release(server, chat) }
       end
 
+      # The tools of the servers that can be reached.
+      def reachable_tools # :nodoc:
+        flat_map { |server| Outages.tools(server) }
+      end
+
+      # The names of the servers that can't be reached.
+      def unreachable # :nodoc:
+        reachable_tools
+        select { |server| Outages.down?(server) }.map(&:name)
+      end
+
       # Returns the server named +name+, or +nil+.
       def [](name)
         @servers[name.to_sym]
