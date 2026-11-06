@@ -307,6 +307,64 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  describe 'the Agent macro with a block' do
+    let(:agent_class) do
+      Class.new(RubyLLM::Agent) do
+        inputs :window
+        context_budget { { window:, per_request: 0.7 } if window }
+      end
+    end
+
+    it 'evaluates it for each chat, with the inputs in scope' do
+      expect(agent_class.chat(window: 10_000).context_budget).to eq(window: 10_000, per_request: 0.7)
+      expect(agent_class.new(window: 20_000).chat.context_budget).to eq(window: 20_000, per_request: 0.7)
+    end
+
+    it 'sets no budget when the block returns nil' do
+      expect(agent_class.chat(window: nil).context_budget).to be_nil
+    end
+
+    it 'clears the budget of an existing chat when the block returns nil' do
+      existing = described_class.new(model: model_for(:anthropic)).with_context_budget(per_request: 0.5)
+
+      expect(agent_class.new(chat: existing, window: nil).chat.context_budget).to be_nil
+    end
+
+    it 'leaves the budget of an existing chat alone when the agent declares none' do
+      existing = described_class.new(model: model_for(:anthropic)).with_context_budget(per_request: 0.5)
+
+      expect(Class.new(RubyLLM::Agent).new(chat: existing).chat.context_budget).to eq(per_request: 0.5)
+    end
+
+    it 'sees the chat, so it can read the model the agent ended up on' do
+      seen = nil
+      agent = Class.new(RubyLLM::Agent) do
+        context_budget do
+          seen = chat.model.id
+          { per_request: 0.7 }
+        end
+      end
+
+      expect(agent.chat.context_budget).to eq(per_request: 0.7)
+      expect(seen).to eq(agent.chat.model.id)
+    end
+
+    it 'is inherited by subclasses' do
+      expect(Class.new(agent_class).chat(window: 10_000).context_budget).to eq(window: 10_000, per_request: 0.7)
+    end
+
+    it 'checks what the block returns' do
+      agent = Class.new(RubyLLM::Agent) { context_budget { { per_request: 2 } } }
+
+      expect { agent.chat }.to raise_error(ArgumentError, /per_request/)
+    end
+
+    it 'takes options or a block, not both' do
+      expect { Class.new(RubyLLM::Agent) { context_budget(per_request: 0.7) { { per_request: 0.5 } } } }
+        .to raise_error(ArgumentError, /options or a block/)
+    end
+  end
+
   describe 'a budget without a known window' do
     before { allow(chat.model).to receive(:context_window).and_return(nil) }
 
