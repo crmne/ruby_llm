@@ -48,7 +48,7 @@ module RubyLLM
         return true if Models::Aliases.resolve(declared, provider) == record.model_id
 
         Models.find(declared, provider:).id == record.model_id
-      rescue ModelNotFoundError
+      rescue ModelNotFoundError, ConfigurationError
         false
       end
     end

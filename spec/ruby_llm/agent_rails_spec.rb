@@ -721,6 +721,17 @@ RSpec.describe RubyLLM::Agent do
       expect(declared.sync_instructions(record).protocol).to be_nil
     end
 
+    it 'does not match a found record when the declared deployment has no target' do
+      declared = Class.new(described_class) do
+        chat_class Chat
+        model 'unlisted-deployment', provider: :openai, protocol: :responses
+      end
+      created = Chat.create!(model: model_for(:openai), provider: :openai)
+      allow(RubyLLM::Models).to receive(:find).and_raise(RubyLLM::ConfigurationError, 'no target')
+
+      expect(declared.find(created.id).protocol).to be_nil
+    end
+
     it 'keeps a protocol the caller passes for the declared model' do
       declared = Class.new(described_class) do
         chat_class Chat
