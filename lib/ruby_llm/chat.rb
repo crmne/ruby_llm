@@ -21,10 +21,10 @@ module RubyLLM
   # or #deny followed by #complete. #queue adds a message from anywhere,
   # even while the loop runs, and the loop takes it between two moves.
   #
-  # A Chat is Enumerable over its messages.
+  # Read the conversation through #messages.
   class Chat # rubocop:disable Metrics/ClassLength
-    include Enumerable
     include Support::Inspectable
+    include Support::DeprecatedEnumerable
     include ToolSearch
     include ToolSequences
     prepend Rescuable
@@ -1434,10 +1434,17 @@ module RubyLLM
       add_callback(:unsupported_attachment, &)
     end
 
-    # Yields each Message in the conversation. Returns an Enumerator when
-    # no block is given. Chat includes Enumerable, so the usual collection
-    # methods are available.
+    # Deprecated: iterate #messages instead. Yields each Message in the
+    # conversation, or returns an Enumerator without a block. The
+    # Enumerable methods built on it, such as +map+ and +count+, are
+    # deprecated with it. Warns through RubyLLM.deprecator. RubyLLM 3.0
+    # removes them.
+    #
+    #   chat.messages.each { |message| puts message.content }
+    #
     def each(&)
+      RubyLLM.deprecator.deprecate("Enumerable on #{self.class}", replacement: "#{self.class}#messages",
+                                                                  removal: '3.0')
       messages.each(&)
     end
 
@@ -1553,15 +1560,19 @@ module RubyLLM
       ToolCallIds.new.assign(message)
     end
 
-    # Marks the latest message as an explicit prompt cache boundary, asking
-    # the provider to cache everything up to this point. Pass +ttl:+ to give
-    # this boundary its own cache lifetime, as Message#cache_until_here
-    # describes. Returns +self+.
+    # Deprecated: mark the message itself with Message#cache_until_here, or
+    # pass +cache_until_here:+ to #with_instructions. Marks the latest
+    # message as an explicit prompt cache boundary. Warns through
+    # RubyLLM.deprecator. RubyLLM 3.0 removes it. Returns +self+.
     #
-    #   chat.with_instructions(policy).cache_until_here(ttl: "1h")
+    #   chat.with_instructions(policy, cache_until_here: { ttl: "1h" })
+    #   chat.add_message(role: :user, content: handbook).cache_until_here
     #
     # Raises ArgumentError if the chat has no messages.
     def cache_until_here(ttl: nil)
+      RubyLLM.deprecator.deprecate("#{self.class}#cache_until_here",
+                                   replacement: 'Message#cache_until_here or with_instructions(cache_until_here:)',
+                                   removal: '3.0')
       message = messages.last
       raise ArgumentError, 'No messages to cache' unless message
 

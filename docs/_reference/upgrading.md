@@ -27,6 +27,7 @@ After reading this guide, you will know:
 * Which job predicates replace `done?` and `completed?`.
 * Why agents name their chat record with `chat_class`.
 * Which APIs left the documentation but keep working.
+* What replaces iterating a chat directly and `chat.cache_until_here`.
 
 This guide covers **2.1 to 2.2**. Coming from 2.0? Follow the [2.1 upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.1.1/docs/_reference/upgrading.md) with RubyLLM 2.1 first.
 
@@ -480,6 +481,46 @@ RubyLLM.with_usage_owner(current_user) { chat.ask "Summarize this thread" }
 # After
 chat.with_owner(current_user).ask "Summarize this thread"
 ```
+
+## Read a Conversation Through `messages`
+
+Chats, agents, and `acts_as_chat` records were Enumerable over their messages, so `chat.map`, `chat.count`, and `chat.first` read the conversation. On a record those names already mean something else in Rails, so iterate `messages` instead. `each` and the Enumerable methods built on it still work and warn through `RubyLLM.deprecator`. RubyLLM 3.0 removes them, and chats stop being Enumerable.
+
+```ruby
+# Before
+chat.each { |message| puts message.content }
+chat.map(&:role)
+
+# After
+chat.messages.each { |message| puts message.content }
+chat.messages.map(&:role)
+```
+
+On a record, use its message association, which is `messages` unless you configured another name, such as `acts_as_chat messages: :chat_messages`. It returns your message records and leaves out instructions kept with `persist: false`. The deprecated methods yielded `RubyLLM::Message` objects, including those instructions. Use `chat.to_llm.messages` when you need exactly what they yielded, which is also what the warning on a record names. An agent wrapping a record reads the same way through `agent.chat`.
+
+## Mark the Message That Ends a Cached Prefix
+
+`chat.cache_until_here` marked whichever message happened to be the latest, and on a record with saved messages that meant the latest saved one, not instructions kept with `persist: false`. Mark the message itself instead: pass `cache_until_here:` to `with_instructions`, or call `cache_until_here` on the message. `chat.cache_until_here` still works on chats, agents, and records and warns through `RubyLLM.deprecator`. RubyLLM 3.0 removes it. `with_caching` and `Message#cache_until_here` do not change.
+
+```ruby
+# Before
+chat.with_instructions(policy).cache_until_here(ttl: "1h")
+chat.add_message(role: :user, content: handbook)
+chat.cache_until_here
+
+# After
+chat.with_instructions(policy, cache_until_here: { ttl: "1h" })
+chat.add_message(role: :user, content: handbook).cache_until_here
+```
+
+Marking the instructions ends the cached prefix at them. If saved messages follow the instructions on a record, that prefix is shorter than the one `chat.cache_until_here` marked. To keep the old boundary, leave `cache_until_here:` off `with_instructions` and mark the latest saved message instead, through your message association and with the `ttl:` you passed before:
+
+```ruby
+chat.with_instructions(policy)
+chat.messages.order(:id).last.cache_until_here(ttl: "1h")
+```
+
+If your message association has no inverse, call `chat.reload` after marking the message, so a chat you already used sees the boundary.
 
 ## Rename Chat Columns Named After New Methods
 

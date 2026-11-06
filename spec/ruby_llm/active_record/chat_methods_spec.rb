@@ -731,6 +731,33 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   end
 
   describe '#cache_until_here' do
+    around do |example|
+      behavior = RubyLLM.config.deprecation_behavior
+      RubyLLM.config.deprecation_behavior = :silence
+      example.run
+    ensure
+      RubyLLM.config.deprecation_behavior = behavior
+    end
+
+    it 'is deprecated in favor of marking the message' do
+      chat = Chat.create!(model: model_id)
+      chat.add_message(role: :user, content: 'Reusable prompt')
+      RubyLLM.config.deprecation_behavior = :raise
+
+      expect { chat.cache_until_here }
+        .to raise_error(RubyLLM::DeprecationError, /Chat#cache_until_here .*RubyLLM 3\.0.*Message#cache_until_here/)
+    end
+
+    it 'warns once when it marks an in-memory message' do
+      chat = Chat.create!(model: model_id)
+      chat.to_llm.add_message(role: :user, content: 'Reusable prompt')
+      allow(RubyLLM.deprecator).to receive(:deprecate)
+
+      chat.cache_until_here
+
+      expect(RubyLLM.deprecator).to have_received(:deprecate).once
+    end
+
     it 'marks the last persisted message' do
       chat = Chat.create!(model: model_id)
       chat.add_message(role: :user, content: 'Reusable prompt')
@@ -831,6 +858,29 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(chat.changes).to eq('cancelled' => [false, true])
     end
 
+    it 'applies a boundary marked on the latest saved message of the association' do
+      chat = Chat.create!(model: model_id)
+      chat.to_llm
+      chat.add_message(role: :user, content: 'Reusable prompt')
+      allow(RubyLLM.deprecator).to receive(:deprecate)
+
+      chat.messages.order(:id).last.cache_until_here(ttl: '1h')
+
+      expect(chat.to_llm.messages.last.cache_ttl).to eq('1h')
+      expect(RubyLLM.deprecator).not_to have_received(:deprecate)
+    end
+
+    it 'skips a built message when marking the latest saved one' do
+      chat = Chat.create!(model: model_id)
+      saved = chat.add_message(role: :user, content: 'Reusable prompt')
+      unsaved = chat.messages.build(role: :user, content: 'Draft')
+
+      chat.messages.order(:id).last.cache_until_here
+
+      expect(saved.reload.cache_until_here?).to be(true)
+      expect(unsaved).to be_new_record
+    end
+
     context 'when the associations have no inverse' do
       before do
         stub_const('ThreadChat', Class.new(ApplicationRecord) do
@@ -858,6 +908,17 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
         chat.to_llm
 
         chat.add_message(role: :user, content: 'Reusable prompt').cache_until_here(ttl: '1h')
+
+        expect(chat.to_llm.messages.last.cache_ttl).to eq('1h')
+      end
+
+      it 'sees a boundary marked through the association after a reload' do
+        chat = ThreadChat.create!(model: model_id)
+        chat.to_llm
+        chat.add_message(role: :user, content: 'Reusable prompt')
+
+        chat.messages.order(:id).last.cache_until_here(ttl: '1h')
+        chat.reload
 
         expect(chat.to_llm.messages.last.cache_ttl).to eq('1h')
       end
@@ -1058,13 +1119,26 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(chat.messages.reload.last.content).to eq('Batch response')
     end
 
-    it 'is enumerable over persisted messages' do
+    it 'still enumerates persisted messages while deprecated' do
       chat = Chat.create!(model: model_id)
       chat.add_message(role: :user, content: 'First')
       chat.add_message(role: :assistant, content: 'Second')
+      allow(RubyLLM.deprecator).to receive(:deprecate)
 
       expect(chat.each).to be_an(Enumerator)
       expect(chat.map(&:content)).to eq(%w[First Second])
+      expect(chat.count).to eq(2)
+      expect(RubyLLM.deprecator).to have_received(:deprecate)
+        .with('Enumerable on Chat', replacement: 'Chat#to_llm.messages', removal: '3.0').exactly(3).times
+    end
+
+    it 'keeps as_json on the record while Enumerable is deprecated' do
+      chat = Chat.create!(model: model_id)
+      chat.add_message(role: :user, content: 'First')
+      allow(RubyLLM.deprecator).to receive(:deprecate)
+
+      expect(chat.as_json).to include('id' => chat.id)
+      expect(RubyLLM.deprecator).not_to have_received(:deprecate)
     end
 
     it 'classifies every method defined on Chat' do

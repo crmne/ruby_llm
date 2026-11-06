@@ -290,8 +290,7 @@ RubyLLM.chat(model: "{{ site.models.openai_current }}")
 ```ruby
 chat = RubyLLM.chat(model: "{{ site.models.anthropic_current }}")
   .with_caching
-chat.with_instructions(File.read("review.md"))
-  .cache_until_here
+chat.with_instructions(File.read("review.md"), cache_until_here: true)
 chat.ask "Review this diff", with: "changes.patch"
 ```
 {: .home-code-card data-title="Cache repeated prompts" data-href="{% link _core_features/prompt-caching.md %}" data-doc-title="Prompt Caching" }

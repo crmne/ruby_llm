@@ -27,7 +27,7 @@ module RubyLLM
     #
     module ChatMethods
       extend ActiveSupport::Concern
-      include Enumerable
+      include RubyLLM::Support::DeprecatedEnumerable
       include AttachmentHelpers
       include RunClaims
       include ChatApprovals
@@ -707,7 +707,7 @@ module RubyLLM
         provider_options schema provider_tools temperature thinking tool_options tools deferred_tools mcp
         skills file_store
         awaiting_input? pending_inputs awaiting_tasks? pending_tasks awaiting_person? add_completion count_tokens
-        each render
+        render
       ].freeze
 
       ##
@@ -716,12 +716,6 @@ module RubyLLM
       #
       # Returns the number of input tokens the next request would carry,
       # counted by the provider over the persisted conversation.
-
-      ##
-      # :method: each
-      # :call-seq: each(&block)
-      #
-      # Yields each message in the conversation. Returns an Enumerator without a block.
 
       ##
       # :method: render
@@ -791,20 +785,25 @@ module RubyLLM
         bind_message_chat(message_record)
       end
 
-      # Marks the latest persisted message as a prompt cache boundary, or the
-      # latest in-memory message when none is persisted yet. Pass +ttl:+ to
-      # give the boundary its own cache lifetime. Returns +self+.
+      # Deprecated: mark the message itself, or pass +cache_until_here:+ to
+      # #with_instructions. Marks the latest persisted message as a prompt
+      # cache boundary, or the latest in-memory message when none is
+      # persisted yet. Warns through RubyLLM.deprecator. RubyLLM 3.0 removes
+      # it. Returns +self+.
       #
-      #   chat.with_instructions('Reusable analysis prompt').cache_until_here
-      #   chat.with_instructions('Reusable analysis prompt').cache_until_here(ttl: "1h")
+      #   chat.with_instructions('Reusable analysis prompt', cache_until_here: { ttl: "1h" })
+      #   chat.add_message(role: :user, content: long_context).cache_until_here
       #
       # Raises ArgumentError if the chat has no messages.
       def cache_until_here(ttl: nil)
+        RubyLLM.deprecator.deprecate("#{self.class}#cache_until_here",
+                                     replacement: 'Message#cache_until_here or with_instructions(cache_until_here:)',
+                                     removal: '3.0')
         message_record = messages_association.order(:id).last
         if message_record
           bind_message_chat(message_record).cache_until_here(ttl:)
         elsif @chat&.messages&.any?
-          @chat.cache_until_here(ttl:)
+          @chat.messages.last.cache_until_here(ttl:)
         else
           raise ArgumentError, 'No messages to cache'
         end
@@ -851,6 +850,18 @@ module RubyLLM
       end
 
       alias say ask
+
+      # Deprecated: iterate <tt>to_llm.messages</tt> for the same objects, or
+      # the message association for your records. Yields each RubyLLM::Message
+      # in the conversation, or returns an Enumerator without a block. The
+      # Enumerable methods built on it, such as +map+ and +count+, are
+      # deprecated with it. Warns through RubyLLM.deprecator. RubyLLM 3.0
+      # removes them.
+      def each(&)
+        RubyLLM.deprecator.deprecate("Enumerable on #{self.class}", replacement: "#{self.class}#to_llm.messages",
+                                                                    removal: '3.0')
+        to_llm.messages.each(&)
+      end
 
       # Persists +message+ as a user message without calling the model, so
       # #complete can run later. Every queued message (see #queue) is
