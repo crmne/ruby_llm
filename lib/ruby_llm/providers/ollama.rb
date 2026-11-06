@@ -9,6 +9,7 @@ module RubyLLM
         include Ollama::Chat
         include Ollama::Media
         include Ollama::Models
+        include Ollama::Speech
       end
 
       # Ollama's dialect of the System One API for decision models such as Clef.

@@ -262,6 +262,8 @@ Urgency.judge("Please refund the duplicate charge today.").urgent.probability
 
 `clef-flash` (9B) is built for low latency; `clef` (27B) is the larger model. Both accept images through `with:`. Clef needs a current Ollama release. `RubyLLM.models.refresh` lists your local decision models as judgment models. Set `ollama_api_base` as described in [Provider Setup]({% link _reference/configuration-providers.md %}#api-keys).
 
+Ollama Cloud serves the larger model too. Pick `clef:27b` with `provider: :ollama_cloud`. See [Ollama Cloud setup]({% link _reference/configuration-providers.md %}#ollama-cloud).
+
 ## Configuration and Usage
 
 Read the actual model, token usage, and cost from the result:

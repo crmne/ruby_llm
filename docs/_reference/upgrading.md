@@ -187,6 +187,10 @@ In 2.1, two processes that completed the same persisted chat at the same time co
 
 The process that holds the claim continues with approvals and questions recorded while it ran. See [One Process at a Time]({% link _advanced/durable-agents.md %}#one-process-at-a-time).
 
+## Bedrock Mantle Adds the OpenAI Path
+
+OpenAI GPT models on Bedrock Mantle now post under `/openai/v1`, as AWS requires. If you set `bedrock_mantle_api_base` to a URL ending in `/openai` to reach them, remove that suffix.
+
 ## Crashed Runs Resume After Their Claim Expires
 
 In 2.1, `complete` ran the unfinished tool calls of a crashed job right away. In 2.2, a crashed job keeps its claims for `config.max_run_time`, ten minutes by default, and `complete` in another process returns until they expire. A job retried within that time finds the chat `running?` and does nothing. Check `running?` after `complete` and enqueue the job again later, as [Resuming a Crashed Run]({% link _advanced/durable-agents.md %}#resuming-a-crashed-run) shows.

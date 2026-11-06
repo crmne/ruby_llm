@@ -24,6 +24,47 @@ RSpec.describe RubyLLM::Protocols::Gemini::Images do
       )
     end
 
+    it 'uses generateContent for Gemini Nano Banana models' do
+      payload = protocol.render_image_payload('a red ball', model: 'gemini-nano-banana-2.1', size: nil)
+
+      expect(protocol.images_url).to eq('models/gemini-nano-banana-2.1:generateContent')
+      expect(payload).to eq(
+        contents: [{ role: 'user', parts: [{ text: 'a red ball' }] }],
+        generationConfig: { responseModalities: %w[TEXT IMAGE] }
+      )
+    end
+
+    it 'reads the image a Gemini Nano Banana model returns' do
+      body = {
+        'candidates' => [{
+          'content' => {
+            'parts' => [
+              { 'text' => 'Here is an image of a red ball on a grassy field:', 'thoughtSignature' => 'c2ln' },
+              { 'inlineData' => { 'mimeType' => 'image/jpeg', 'data' => 'aW1hZ2U=' }, 'thoughtSignature' => 'c2ln' }
+            ],
+            'role' => 'model'
+          },
+          'finishReason' => 'STOP',
+          'index' => 0
+        }],
+        'usageMetadata' => {
+          'promptTokenCount' => 4, 'candidatesTokenCount' => 1336, 'totalTokenCount' => 1786,
+          'promptTokensDetails' => [{ 'modality' => 'TEXT', 'tokenCount' => 4 }],
+          'candidatesTokensDetails' => [{ 'modality' => 'IMAGE', 'tokenCount' => 1120 }],
+          'thoughtsTokenCount' => 446, 'serviceTier' => 'standard'
+        },
+        'modelVersion' => 'gemini-nano-banana-2.1',
+        'responseId' => 'PPXtaoegD6y4vdIPg-rjsAg'
+      }
+      response = instance_double(Faraday::Response, body:)
+
+      image = protocol.parse_image_response(response, model: 'gemini-nano-banana-2.1')
+
+      expect(image.mime_type).to eq('image/jpeg')
+      expect(image.model).to eq('gemini-nano-banana-2.1')
+      expect(image.to_blob).to eq('image')
+    end
+
     it 'turns size into the Imagen aspect ratio' do
       payload = protocol.render_image_payload('a cat', model: 'imagen-4.0-generate-001', size: '1536x864')
 

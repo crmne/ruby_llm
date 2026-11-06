@@ -171,7 +171,7 @@ module RubyLLM
 
         def gemini_image_model?(model)
           id = model_id(model).downcase
-          return true if id.start_with?('nano-banana', 'nanobanana')
+          return true if id.start_with?('nano-banana', 'nanobanana', 'gemini-nano-banana')
 
           id.start_with?('gemini-') && id.include?('-image')
         end

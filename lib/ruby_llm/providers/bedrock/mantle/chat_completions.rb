@@ -10,7 +10,7 @@ module RubyLLM
           include Mantle
 
           def completion_url
-            'v1/chat/completions'
+            "#{openai_api_path}/chat/completions"
           end
 
           def provider_file_references?
