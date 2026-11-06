@@ -728,6 +728,20 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       end
 
       if description == 'with default model names'
+        it 'says what an app without Hotwire needs' do
+          within_test_app(app_path) do
+            Dir.mktmpdir do |destination|
+              FileUtils.cp_r("#{app_path}/.", destination)
+              within_test_app(destination) do
+                gemfile = File.read('Gemfile').lines.reject { |line| line.include?('turbo-rails') }.join
+                File.write('Gemfile', gemfile)
+                output, = run_rails_generate('ruby_llm:chat_ui', '--skip', chdir: destination)
+                expect(output).to include('runs on Hotwire', 'bundle add turbo-rails')
+              end
+            end
+          end
+        end
+
         it 'says what works, where it lives, and what comes next' do
           within_test_app(app_path) do
             Dir.mktmpdir do |destination|
@@ -748,7 +762,6 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
             expect(test_file).to include('include RubyLLM::TestHelper', 'click_on "Stop"',
                                          'ChatResponseJob.queue_adapter')
             expect(File.exist?('test/application_system_test_case.rb')).to be(true)
-            expect(File.read('config/cable.yml')).not_to match(/^test:\n\s+adapter: test/)
           end
         end
 

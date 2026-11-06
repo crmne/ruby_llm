@@ -4,6 +4,8 @@ require "ruby_llm/test_helper"
 class <%= chat_controller_class_name.delete_suffix("Controller") %>Test < ApplicationSystemTestCase
   include RubyLLM::TestHelper
 
+  driven_by :selenium, using: :headless_chrome
+
   setup do
     @queue_adapter = <%= chat_job_class_name %>.queue_adapter
     <%= chat_job_class_name %>.queue_adapter = :async

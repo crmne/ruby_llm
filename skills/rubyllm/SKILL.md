@@ -75,7 +75,7 @@ class WeatherTool < RubyLLM::Tool
 end
 
 class Linear < RubyLLM::MCP
-  url "https://mcp.linear.app/mcp"   # plain HTTP off loopback: url "http://tools:4011/mcp", allow_http: true
+  url "https://mcp.linear.app/mcp"   # on a trusted network: url "http://tools:4011/mcp", allow_http: true
   bearer_token ENV.fetch("LINEAR_API_KEY")
 end
 

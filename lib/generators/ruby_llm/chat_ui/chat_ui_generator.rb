@@ -41,6 +41,15 @@ module RubyLLM
         ERROR
       end
 
+      def check_hotwire
+        return if File.read(File.join(destination_root, 'Gemfile')).match?(/^\s*gem[\s(]+["']turbo-rails["']/)
+
+        say "\n  The chat UI runs on Hotwire, and this app doesn't have it, so its pages raise until you add it:", :red
+        say '    bundle add turbo-rails stimulus-rails importmap-rails'
+        say '    bin/rails importmap:install turbo:install stimulus:install'
+        say '  An app from a plain rails new has them.', :red
+      end
+
       def create_views
         # Design contract:
         # - `scaffold` should stay close to Rails scaffold ERB output.
@@ -126,7 +135,6 @@ module RubyLLM
           template 'test/application_system_test_case.rb', 'test/application_system_test_case.rb'
         end
         template 'test/system/chats_test.rb', "test/system/#{chat_model_name.underscore.pluralize}_test.rb"
-        gsub_file 'config/cable.yml', /^(test:\n\s+adapter:\s*)test[ \t]*$/, '\1async' if app_file?('config/cable.yml')
       end
 
       def create_helpers
@@ -255,7 +263,8 @@ module RubyLLM
         say '    code_execution      the model runs code: bin/rails generate ruby_llm:sandbox Workspace first'
         say '    mcp Linear          an MCP server: bin/rails generate ruby_llm:mcp Linear URL first'
         say '    tools WeatherTool   a tool: bin/rails generate ruby_llm:tool Weather first'
-        say "\n  Check it with bin/rails test:system (needs Chrome), and use RubyLLM::TestHelper in your own tests."
+        say "\n  Check it with bin/rails test:system (needs Chrome)." if app_file?('test/test_helper.rb')
+        say '  Use RubyLLM::TestHelper in your own tests, with no provider or key.'
         say "\n  Start your server and visit http://localhost:3000/#{url_path}", :cyan
         say "\n"
       end
