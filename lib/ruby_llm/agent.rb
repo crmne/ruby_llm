@@ -479,13 +479,14 @@ module RubyLLM
       #
       #   fallbacks "gpt-4.1-mini", "claude-haiku-4-5"
       #   fallbacks "gpt-4.1-mini", on: [RubyLLM::RateLimitError]
+      #   fallbacks drop_unsupported: true
       #
-      def fallbacks(*models, on: Fallback::DEFAULT_ERRORS)
-        return @fallbacks || [] if models.empty? && on.equal?(Fallback::DEFAULT_ERRORS)
-        raise ArgumentError, 'To set fallback options, provide at least one fallback model' if models.empty?
+      def fallbacks(*models, on: Fallback::DEFAULT_ERRORS, drop_unsupported: false)
+        return @fallbacks || [] if (bare = models.empty? && !drop_unsupported) && on.equal?(Fallback::DEFAULT_ERRORS)
+        raise ArgumentError, 'To set fallback options, provide at least one fallback model' if bare
 
         @fallbacks = models.flatten.compact
-        @fallback_options = { on: }
+        @fallback_options = { on:, drop_unsupported: }
       end
 
       def fallback_options
@@ -962,7 +963,7 @@ module RubyLLM
       end
 
       def apply_fallbacks(chat)
-        chat.with_fallbacks(*fallbacks, **fallback_options) if fallbacks.any?
+        chat.with_fallbacks(*fallbacks, **fallback_options) if fallbacks.any? || fallback_options[:drop_unsupported]
       end
 
       def apply_rescue_handlers(chat, agent, input_values)
@@ -1407,7 +1408,7 @@ module RubyLLM
 
     ##
     # :method: with_fallbacks
-    # :call-seq: with_fallbacks(*models, on: Fallback::DEFAULT_ERRORS)
+    # :call-seq: with_fallbacks(*models, on: Fallback::DEFAULT_ERRORS, drop_unsupported: false)
     #
     # Delegates to Chat#with_fallbacks. See that method for arguments and return values.
 

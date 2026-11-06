@@ -364,7 +364,7 @@ module RubyLLM
 
       ##
       # :method: with_fallbacks
-      # :call-seq: with_fallbacks(*models, on: Fallback::DEFAULT_ERRORS)
+      # :call-seq: with_fallbacks(*models, on: Fallback::DEFAULT_ERRORS, drop_unsupported: false)
       #
       # Applies Chat#with_fallbacks and returns this record.
 

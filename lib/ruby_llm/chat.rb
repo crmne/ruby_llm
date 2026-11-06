@@ -177,6 +177,7 @@ module RubyLLM
       @end_user = nil
       @fallbacks = []
       @fallback_errors = Fallback::DEFAULT_ERRORS
+      @drop_unsupported = false
       @callbacks = Hash.new { |callbacks, name| callbacks[name] = [] }
       @attachment_replacements = {}.compare_by_identity
       @cancelled = false
@@ -280,7 +281,7 @@ module RubyLLM
     def generate(&)
       raise_if_cancelled!
 
-      return generate_once(&) if fallbacks.empty?
+      return generate_once(&) if fallbacks.empty? && !@drop_unsupported
 
       with_model_restored { generate_with_fallbacks(&) }
     rescue CancelledError
@@ -892,10 +893,22 @@ module RubyLLM
     #   chat.with_fallbacks("gpt-4.1-mini", "claude-haiku-4-5")
     #   chat.with_fallbacks(nil)
     #
-    def with_fallbacks(*models, on: Fallback::DEFAULT_ERRORS)
+    # With <tt>drop_unsupported: true</tt>, a request the provider rejects
+    # with UnsupportedParameterError is first retried once on the same
+    # model without that parameter: the temperature, thinking, the output
+    # cap, citations, or a key of #with_provider_options. The chat keeps
+    # its settings for later requests. #before_fallback and
+    # #after_fallback receive the retry as a Fallback whose
+    # Fallback#dropped_parameter names the parameter. Without the option,
+    # nothing is ever dropped.
+    #
+    #   chat.with_temperature(0.2).with_fallbacks(drop_unsupported: true)
+    #
+    def with_fallbacks(*models, on: Fallback::DEFAULT_ERRORS, drop_unsupported: false)
       fallback_models = models.flatten.compact
       @fallbacks = fallback_models.map { |model| Fallback.build(model) }
       @fallback_errors = fallback_models.empty? ? Fallback::DEFAULT_ERRORS : Array(on).flatten.compact
+      @drop_unsupported = drop_unsupported
       self
     end
 
@@ -1939,6 +1952,7 @@ module RubyLLM
         raise
       end
 
+      drops = []
       loop do
         chunks_yielded = false
 
@@ -1948,17 +1962,73 @@ module RubyLLM
           return result
         rescue StandardError => e
           finish_fallback(active_fallback, fallback_error: e)
-          raise e if block_failed || unfinished?(messages.last) || !fallback_error?(e)
+          raise e if block_failed || unfinished?(messages.last)
 
-          active_fallback, attempt = fallback_to_next_model!(
-            fallback_queue,
-            error: e,
-            attempt: attempt,
-            streaming: streaming,
-            chunks_yielded: chunks_yielded
-          )
+          active_fallback, attempt = next_attempt!(fallback_queue, drops, error: e, attempt:, streaming:,
+                                                                          chunks_yielded:)
         end
       end
+    ensure
+      restore_parameters(drops)
+    end
+
+    # Retries once on the same model without a parameter it rejected, when
+    # the chat opted in, then moves on to the fallback models.
+    def next_attempt!(fallback_queue, drops, error:, **details)
+      if drops.empty? && (restore = drop_unsupported_parameter(error))
+        drops << restore
+        return retry_without_parameter!(error:, **details)
+      end
+      restore_parameters(drops)
+      raise error unless fallback_error?(error)
+
+      fallback_to_next_model!(fallback_queue, error:, **details)
+    end
+
+    DROPPED_VALUES = { temperature: nil, max_output_tokens: nil, thinking: nil, citations: false }.freeze
+    private_constant :DROPPED_VALUES
+
+    # Clears the setting +error+ names for one retry, and returns how to put
+    # it back, or +nil+ when the chat did not opt in or never set it.
+    def drop_unsupported_parameter(error)
+      return unless @drop_unsupported && error.is_a?(UnsupportedParameterError)
+
+      parameter = error.parameter
+      return drop_provider_option(parameter) unless parameter.is_a?(Symbol)
+      return unless DROPPED_VALUES.key?(parameter)
+
+      name = :"@#{parameter}"
+      original = instance_variable_get(name)
+      return if original.nil? || original == false
+
+      instance_variable_set(name, DROPPED_VALUES[parameter])
+      -> { instance_variable_set(name, original) }
+    end
+
+    def drop_provider_option(parameter)
+      key = @provider_options.keys.find { |candidate| candidate.to_s == parameter.to_s }
+      return unless key
+
+      original = @provider_options
+      @provider_options = original.except(key)
+      -> { @provider_options = original }
+    end
+
+    def restore_parameters(drops)
+      drops&.map! do |restore|
+        restore.call if restore.respond_to?(:call)
+        :restored
+      end
+    end
+
+    def retry_without_parameter!(error:, attempt:, streaming:, chunks_yielded:)
+      attempt += 1
+      fallback = Fallback.new(model: @model).with_attempt(
+        chat: self, error:, from: @model, to: @model, attempt:, streaming:, chunks_yielded:,
+        dropped_parameter: error.parameter
+      )
+      run_callbacks(:before_fallback, fallback)
+      [fallback, attempt]
     end
 
     def with_model_restored

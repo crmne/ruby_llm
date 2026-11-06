@@ -215,6 +215,24 @@ module RubyLLM
     end
   end
 
+  # Raised when the provider rejects a request because the model does not
+  # take one of its parameters, such as a temperature on a reasoning model.
+  # Chat#with_fallbacks can retry without it with <tt>drop_unsupported: true</tt>.
+  class UnsupportedParameterError < BadRequestError
+    # The parameter the provider rejected: a Symbol naming the RubyLLM
+    # setting, such as +:temperature+, +:thinking+, or +:max_output_tokens+,
+    # or the provider's own name as a String for anything else, such as a
+    # key of Chat#with_provider_options.
+    attr_reader :parameter
+
+    # Creates the error for +parameter+. Takes the other arguments of
+    # Error.new.
+    def initialize(message = nil, parameter: nil, **)
+      @parameter = parameter
+      super(message, **)
+    end
+  end
+
   # Raised for HTTP 403 responses when the API key lacks permission for the
   # requested resource.
   class ForbiddenError < Error

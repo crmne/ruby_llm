@@ -25,6 +25,7 @@ After reading this guide, you will know:
 * How to run each tool inside a block, such as a tenant.
 * How to keep tool results within the model's context window.
 * How a tool ends the turn without another model call.
+* How to retry without a parameter the model doesn't take.
 * How to chat with Kimi models on Moonshot AI.
 * How to chat with MiniMax's M3 models.
 * How to chat with GLM models on Z.ai.
@@ -269,6 +270,16 @@ end
 ```
 
 The round finishes, `ask` returns the halted result, and the chat is `complete?`. See [Ending the Turn]({% link _tools/tool-execution.md %}#ending-the-turn).
+
+## Dropping Unsupported Parameters
+
+When an OpenAI model doesn't take a parameter, such as a temperature, the rejection now raises `RubyLLM::UnsupportedParameterError`, with `parameter` naming it. Opt in, and the chat retries once without it before its fallback models. Other providers' rejections stay `BadRequestError`:
+
+```ruby
+chat.with_temperature(0.2).with_fallbacks(drop_unsupported: true)
+```
+
+See [Dropping Unsupported Parameters]({% link _advanced/error-handling.md %}#dropping-unsupported-parameters).
 
 ## Moonshot AI
 

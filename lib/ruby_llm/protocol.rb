@@ -151,12 +151,22 @@ module RubyLLM
         end
       end
     rescue Error => e
-      claim_error(e, payload) unless yielding
-      raise
+      raise e if yielding
+
+      e = unsupported_parameter_error(e)
+      claim_error(e, payload)
+      raise e
     rescue NotImplementedError
       raise if yielding
 
       raise Error, "#{@provider.name} doesn't support chat"
+    end
+
+    # Returns the parameter a rejected request named as one the model does
+    # not take, as UnsupportedParameterError#parameter describes, or +nil+.
+    # Protocols whose errors say so in structured fields override it.
+    def parse_unsupported_parameter(_response)
+      nil
     end
 
     def render(messages, tools:, temperature:, provider_options: {}, schema: nil, thinking: nil,
@@ -588,6 +598,17 @@ module RubyLLM
     end
 
     private
+
+    def unsupported_parameter_error(error)
+      return error unless error.instance_of?(BadRequestError) && error.response
+
+      parameter = parse_unsupported_parameter(error.response)
+      return error unless parameter
+
+      UnsupportedParameterError.new(nil, parameter:, response: error.response, provider: error.provider,
+                                         provider_message: error.provider_message, error_code: error.error_code,
+                                         redact: @provider.config&.redact_error_messages)
+    end
 
     # An error raised before the request went out answers no request.
     def claim_error(error, payload)
