@@ -53,6 +53,41 @@ RSpec.describe RubyLLM::Protocol::Streaming do
         expect { chat.ask('Hi') { |_chunk| nil } }.to raise_error(RubyLLM::RateLimitError, /Slow down/)
       end
 
+      ["not an event\n", %({"note": "still working"}\n), %(data: {"candidates": []}\n\n)].each do |line|
+        it "keeps the error when #{line.inspect} follows it in the same read" do
+          stream(event + error + line)
+
+          expect { chat.ask('Hi') { |_chunk| nil } }.to raise_error(RubyLLM::ServerError, /Internal error encountered/)
+        end
+      end
+
+      it 'raises rather than drop a bare JSON body too large to read' do
+        stream(%(#{event}{"error": {"message": "#{'x' * described_class::MAX_JSON_BODY_BYTES}"}}\n))
+
+        expect { chat.ask('Hi') { |_chunk| nil } }.to raise_error(RubyLLM::Error, /exceeds/)
+      end
+
+      it 'ignores a line that is not valid UTF-8' do
+        finished = %(data: {"candidates": [{"content": {"parts": [{"text": "!"}]},"finishReason": "STOP"}]}\n\n)
+        stream("#{event}{\xFF\xFE\n#{finished}".b)
+
+        expect(chat.ask('Hi') { |_chunk| nil }.content).to eq(' Cui!')
+      end
+
+      it 'raises the error wherever the reads are cut' do
+        provider = chat.instance_variable_get(:@provider)
+        protocol = provider.protocol_for(chat.model).new(provider, chat.model)
+        body = event + error
+
+        (1...body.bytesize).each do |cut|
+          handler = protocol.send(:build_on_data_handler) { |_event| nil }
+          reads = [body.byteslice(0, cut), body.byteslice(cut, body.bytesize)]
+
+          expect { reads.each { |read| handler.call(read, read.bytesize, nil) } }
+            .to raise_error(RubyLLM::ServerError, /Internal error encountered/), "cut at byte #{cut}"
+        end
+      end
+
       it 'finds the error after other lines the stream does not understand' do
         stream("#{event}not an event\n{\"note\": \"still working\"}\n#{error}")
 
@@ -68,20 +103,6 @@ RSpec.describe RubyLLM::Protocol::Streaming do
           expect(chat.ask('Hi') { |_chunk| nil }.content).to eq(' Cui!')
         end
       end
-    end
-  end
-
-  it 'raises the error wherever the reads are cut' do
-    provider = chat.instance_variable_get(:@provider)
-    protocol = provider.protocol_for(chat.model).new(provider, chat.model)
-    body = event + error
-
-    (1...body.bytesize).each do |cut|
-      handler = protocol.send(:build_on_data_handler) { |_event| nil }
-      reads = [body.byteslice(0, cut), body.byteslice(cut, body.bytesize)]
-
-      expect { reads.each { |read| handler.call(read, read.bytesize, nil) } }
-        .to raise_error(RubyLLM::ServerError, /Internal error encountered/), "cut at byte #{cut}"
     end
   end
 

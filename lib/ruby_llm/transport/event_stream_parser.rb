@@ -7,7 +7,7 @@ module RubyLLM
     # as its type, data, and last event ID. The last event ID and the
     # reconnection time the server asked for stay readable between events.
     # The standard ignores a line that names no known field; +on_unknown_line+
-    # receives each one for a caller that wants to look at it.
+    # receives each one, undecoded, for a caller that wants to look at it.
     class EventStreamParser # :nodoc:
       BOM = "\xEF\xBB\xBF".b.freeze
       LINE_BREAK = /[\r\n]/
@@ -110,7 +110,7 @@ module RubyLLM
         when 'data' then @data << decode(value) << "\n"
         when 'id' then @id_buffer = decode(value) unless value.include?("\0")
         when 'retry' then @reconnection_time = value.to_i if value.match?(DIGITS)
-        else @on_unknown_line&.call(decode(line.dup))
+        else @on_unknown_line&.call(line)
         end
       end
 
