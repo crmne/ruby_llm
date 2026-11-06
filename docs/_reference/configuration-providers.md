@@ -529,7 +529,7 @@ end
 
 Blank strings are treated as unset, so environment variables can be wired directly without causing invalid URL errors.
 
-RubyLLM adds each request's path to the base URL, and those paths differ by provider, so a base URL has to end where the provider's default ends. Some defaults stop at the host, and others include the API version:
+RubyLLM adds each request's path to the base URL. These providers' defaults stop in different places, some at the host and others after the API version, and the path RubyLLM adds starts from there:
 
 | Setting | Default | A chat request goes to |
 | --- | --- | --- |
@@ -542,7 +542,7 @@ RubyLLM adds each request's path to the base URL, and those paths differ by prov
 | `openrouter_api_base` | `https://openrouter.ai/api/v1` | `https://openrouter.ai/api/v1/chat/completions` |
 | `xai_api_base` | `https://api.x.ai/v1` | `https://api.x.ai/v1/responses` |
 
-So a gateway in front of Anthropic takes no version, and one in front of OpenAI or Gemini keeps it:
+A custom base URL takes the default's place, and RubyLLM adds the same path to it. For a gateway that strips its own prefix and forwards the rest, that means the prefix followed by whatever the default has after the host:
 
 ```ruby
 RubyLLM.configure do |config|
@@ -552,7 +552,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-With `https://gateway.example.com/anthropic/v1`, a request goes to `/anthropic/v1/v1/messages`, a path Anthropic does not have.
+Through that gateway, `https://gateway.example.com/anthropic/v1` would forward `/v1/v1/messages`, a path Anthropic does not have. A gateway that routes another way, including one whose own prefix ends in `/v1`, needs whichever URL makes it forward the path in the table.
 
 ## Next Steps
 
