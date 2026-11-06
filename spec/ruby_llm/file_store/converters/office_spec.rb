@@ -108,6 +108,41 @@ RSpec.describe RubyLLM::FileStore::Converters::Office do
     expect(text_of(zip_of(files), 'a.xlsx')).to eq("## B\n\n## A")
   end
 
+  describe 'entry names with backslashes' do
+    it 'finds the parts of an archive written with them' do
+      parts = { 'xl\\workbook.xml' => '<workbook><sheets><sheet name="Data" r:id="rId1"/></sheets></workbook>',
+                'xl\\_rels\\workbook.xml.rels' => '<Relationships><Relationship Id="rId1" ' \
+                                                  'Target="worksheets\\sheet1.xml"/></Relationships>',
+                'xl\\worksheets\\sheet1.xml' => '<worksheet><sheetData><row r="1"><c r="A1"><v>7</v></c></row>' \
+                                                '</sheetData></worksheet>' }
+
+      expect(text_of(zip_of(parts), 'a.xlsx')).to eq("## Data\n7")
+    end
+
+    it 'prefers the exact name when another normalizes to it, in either order' do
+      exact = '<w:p><w:r><w:t>exact</w:t></w:r></w:p>'
+      alias_ = '<w:p><w:r><w:t>alias</w:t></w:r></w:p>'
+
+      expect(text_of(zip_of({ 'word/document.xml' => exact, 'word\\document.xml' => alias_ }), 'a.docx')).to eq('exact')
+      expect(text_of(zip_of({ 'word\\document.xml' => alias_, 'word/document.xml' => exact }), 'a.docx')).to eq('exact')
+    end
+
+    it 'never lets a climbing name stand in for a part' do
+      document = '<w:document><w:body><w:p><w:r><w:t>x</w:t></w:r></w:p></w:body></w:document>'
+
+      expect(text_of(zip_of({ '..\\..\\word\\document.xml' => document }), 'a.docx')).to be_nil
+      expect(text_of(zip_of({ 'word\\..\\word\\document.xml' => document }), 'a.docx')).to be_nil
+    end
+
+    it 'finds nothing but its own entries through a climbing target' do
+      parts = { 'xl/workbook.xml' => '<workbook><sheets><sheet name="A" r:id="rId1"/></sheets></workbook>',
+                'xl/_rels/workbook.xml.rels' => '<Relationships><Relationship Id="rId1" ' \
+                                                'Target="..\\..\\..\\etc\\passwd"/></Relationships>' }
+
+      expect(text_of(zip_of(parts), 'a.xlsx')).to be_nil
+    end
+  end
+
   describe 'hostile files' do
     it 'reads nothing from a relationship target holding a NUL' do
       parts = { 'xl/workbook.xml' => '<workbook><sheets><sheet name="A" r:id="rId1"/></sheets></workbook>',
@@ -324,6 +359,21 @@ RSpec.describe RubyLLM::FileStore::Converters::Office do
                     paragraph('B', "#{style('H1')}<w:outlineLvl w:val=\"9\"/>"), styles:)).to eq("### A\nB")
       end
 
+      it 'skips the marker and the line for a heading with only whitespace' do
+        styles = paragraph_style('H1', named('heading 1'))
+        body = paragraph(" \t", style('H1')) + paragraph("\u00A0", style('H1')) + paragraph('Real', style('H1'))
+
+        expect(word(body, styles:)).to eq('# Real')
+      end
+
+      it 'keeps the Title style plain, as it has no outline level in Word' do
+        styles = paragraph_style('Title', named('Title')) +
+                 paragraph_style('Cover', named('Cover'), based_on('Title'), outline(0))
+
+        expect(word(paragraph('Report', style('Title')) + paragraph('Cover', style('Cover')), styles:))
+          .to eq("Report\n# Cover")
+      end
+
       it 'leaves levels past six, and a heading in a table cell, as plain text' do
         styles = paragraph_style('H7', named('heading 7')) + paragraph_style('H1', named('heading 1'))
         cell = "<w:tbl><w:tr><w:tc>#{paragraph('In a cell', style('H1'))}</w:tc></w:tr></w:tbl>"
@@ -398,6 +448,19 @@ RSpec.describe RubyLLM::FileStore::Converters::Office do
       it 'continues across lists that share a definition, and restarts where one overrides the start' do
         expect(lines(['A', 2], ['B', 3])).to eq("1. A\n2. B")
         expect(lines(['A', 2], ['B', 4], ['C', 4])).to eq("1. A\n1. B\n2. C")
+      end
+
+      it 'counts an item with only whitespace, without a marker or a line for it' do
+        body = paragraph('A', list(2)) + paragraph(' ', list(2)) + paragraph('B', list(2))
+
+        expect(word(body, numbering:)).to eq("1. A\n3. B")
+      end
+
+      it 'keeps the marker for the text after whitespace and a text box, counting once' do
+        box = "<w:txbxContent>#{paragraph('Box')}</w:txbxContent>"
+        item = "<w:p><w:pPr>#{list(2)}</w:pPr>#{run('<w:t> </w:t>')}#{run(box)}#{run('<w:t>After</w:t>')}</w:p>"
+
+        expect(word(item + paragraph('Next', list(2)), numbering:)).to eq("Box\n1. After\n2. Next")
       end
 
       it 'keeps counting through text between the items' do
