@@ -95,7 +95,7 @@ chat.before_fallback do |fallback|
 end
 
 chat.after_fallback do |fallback|
-  puts "#{fallback.to.id}: #{fallback.succeeded? ? 'succeeded' : 'failed'}"
+  puts "#{fallback.to.id}: #{fallback.succeeded? ? "succeeded" : "failed"}"
 end
 ```
 

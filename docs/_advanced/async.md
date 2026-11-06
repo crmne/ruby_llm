@@ -104,8 +104,8 @@ Fiber mode was contributed by RubyLLM's author, Carmine Paolino, and shipped in 
 Wrap independent calls in Async tasks:
 
 ```ruby
-require 'async'
-require 'ruby_llm'
+require "async"
+require "ruby_llm"
 
 questions = ["What is a Ruby block?", "What is a Ruby symbol?", "What is a module?"]
 
@@ -167,11 +167,11 @@ Run multiple analyses concurrently:
 def analyze_document(content)
   Async do
     summary_task = Async do
-      RubyLLM.chat.ask("Summarize in one sentence: #{content}")
+      RubyLLM.chat.ask "Summarize in one sentence: #{content}"
     end
 
     sentiment_task = Async do
-      RubyLLM.chat.ask("Is this positive or negative: #{content}")
+      RubyLLM.chat.ask "Is this positive or negative: #{content}"
     end
 
     {
@@ -243,8 +243,8 @@ The processor supplies the Async context independently of your web server. For R
 A semaphore limits the number of requests in flight:
 
 ```ruby
-require 'async'
-require 'async/semaphore'
+require "async"
+require "async/semaphore"
 
 answers = Async do
   semaphore = Async::Semaphore.new(5)

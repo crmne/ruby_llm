@@ -47,7 +47,7 @@ Each object yielded to the block is a `RubyLLM::Chunk`, a `RubyLLM::Message` tha
 
 `chunk.index` is the chunk's position within its response, starting at 0. Each response in a loop with tool calls starts again at 0, so to put chunks back in order after they cross a channel that may reorder them, carry your own response identifier along with the index. The [`RubyLLM::Chunk` reference]({{ '/api/RubyLLM/Chunk.html' | relative_url }}) covers every reader, including `role`, `model`, `tokens`, and `finish_reason` with its predicates.
 
-> Do not rely on token counts being present or accurate in every chunk. They are typically finalized only in the last chunk or the final returned message.
+Do not rely on token counts being present or accurate in every chunk. They are typically finalized only in the last chunk or the final returned message.
 {: .warning }
 
 ## Accumulated Response
@@ -86,12 +86,12 @@ The generator writes a controller, an Active Job, and Turbo Stream views into yo
 SSE is a natural fit for streaming text responses.
 
 ```ruby
-require 'sinatra'
-require 'ruby_llm'
+require "sinatra"
+require "ruby_llm"
 # ... configuration ...
 
-get '/stream_chat' do
-  content_type 'text/event-stream'
+get "/stream_chat" do
+  content_type "text/event-stream"
   stream(:keep_open) do |out|
     chat = RubyLLM.chat
     begin

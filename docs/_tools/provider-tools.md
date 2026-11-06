@@ -304,3 +304,9 @@ ResearchAgent.chat(domains: ["ruby-lang.org"])
 ```
 
 Tool history and approval decisions survive `Agent.find` and worker restarts. Apps upgrading from 1.16 get the required message and tool-call columns from the [2.0 upgrade](https://github.com/crmne/ruby_llm/blob/v2.0.0/docs/_reference/upgrading.md).
+
+## Next Steps
+
+* [Tools]({% link _getting_started/tools.md %}): write tools that run your own Ruby code.
+* [MCP]({% link _tools/mcp.md %}): connect a server from your own process.
+* [Citations]({% link _core_features/citations.md %}): read the sources behind search answers.

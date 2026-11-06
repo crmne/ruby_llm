@@ -20,7 +20,7 @@ After reading this guide, you will know:
 * Which citation fields your application can use
 * How to persist citations with ActiveRecord
 
-## What are Citations?
+## What Are Citations?
 
 Citations link spans of a model's answer back to the source material that supports them - a document you attached, or a web page found through search or grounding. They let readers inspect the source behind a claim. A citation points to evidence; your application or reader still needs to assess whether it supports the answer.
 
@@ -31,7 +31,7 @@ Read citations as `RubyLLM::Citation` objects on `response.citations`. Available
 Use `with_citations` to make attached documents citable. The response can then include citations to your files:
 
 ```ruby
-chat = RubyLLM.chat(model: '{{ site.models.anthropic_current }}').with_citations
+chat = RubyLLM.chat(model: "{{ site.models.anthropic_current }}").with_citations
 
 response = chat.ask "Who created Ruby?", with: "facts.txt"
 
@@ -81,7 +81,7 @@ class KnowledgeBase < RubyLLM::Tool
   end
 end
 
-response = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
+response = RubyLLM.chat(model: "{{ site.models.anthropic_current }}")
   .with_tools(KnowledgeBase)
   .ask "Who created Ruby? Cite your sources."
 
@@ -117,7 +117,7 @@ class PolicyLookup < RubyLLM::Tool
   end
 end
 
-response = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
+response = RubyLLM.chat(model: "{{ site.models.anthropic_current }}")
   .with_tools(PolicyLookup)
   .with_citations
   .ask "How many vacation days do I get?"
@@ -130,7 +130,7 @@ response.citations.first.start_page # => 3
 Search citations arrive automatically. Enable [web search]({% link _tools/provider-tools.md %}) and read the returned sources:
 
 ```ruby
-response = RubyLLM.chat(model: '{{ site.models.openai_mini }}')
+response = RubyLLM.chat(model: "{{ site.models.openai_mini }}")
   .with_provider_tools(:web_search)
   .ask "What's the latest stable Ruby version?"
 
@@ -145,7 +145,7 @@ Models that search by default, such as Perplexity's presets, need no tool settin
 OpenAI and Azure return file citations when you use file search. Pass an existing vector store to the server tool:
 
 ```ruby
-response = RubyLLM.chat(model: '{{ site.models.openai_mini }}')
+response = RubyLLM.chat(model: "{{ site.models.openai_mini }}")
   .with_provider_tools(file_search: { vector_store_ids: [vector_store_id] })
   .ask "What does our refund policy cover?"
 
@@ -201,7 +201,7 @@ footnotes = sources.map.with_index(1) { |url, i| "[^#{i}]: #{url}" }
 Citations arrive in streaming chunks alongside content, and the final message accumulates all of them:
 
 ```ruby
-chat = RubyLLM.chat(model: '{{ site.models.anthropic_current }}').with_citations
+chat = RubyLLM.chat(model: "{{ site.models.anthropic_current }}").with_citations
 
 response = chat.ask("Who created Ruby?", with: "facts.txt") do |chunk|
   chunk.citations.each { |citation| puts "Cited: #{citation.cited_text || citation.url}" }
@@ -220,7 +220,7 @@ When using `acts_as_chat` and `acts_as_message`, citations are persisted to the 
 # Migration (generated automatically with new installs)
 # t.json :citations
 
-chat_record = Chat.create!(model: '{{ site.models.anthropic_current }}')
+chat_record = Chat.create!(model: "{{ site.models.anthropic_current }}")
 chat_record.with_citations
 response = chat_record.ask "Who created Ruby?", with: "facts.txt"
 

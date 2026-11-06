@@ -166,7 +166,7 @@ embedding.sparse_vectors # => { 1037 => 0.25, 2003 => 0.5 }
 A primary use case for embeddings is measuring the semantic similarity between texts. Cosine similarity is a common metric.
 
 ```ruby
-require 'matrix' # Ruby's built-in Vector class requires 'matrix'
+require "matrix" # Ruby's built-in Vector class requires 'matrix'
 
 embedding = RubyLLM.embed(["I love Ruby programming", "Ruby is my favorite language"])
 vector1, vector2 = embedding.vectors.map { |values| Vector.elements(values) }

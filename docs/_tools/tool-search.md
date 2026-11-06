@@ -13,7 +13,7 @@ redirect_from:
 {{ page.description }}
 {: .fs-6 .fw-300 }
 
-## Table of contents
+## Table of Contents
 {: .no_toc .text-delta }
 
 1. TOC

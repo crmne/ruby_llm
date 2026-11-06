@@ -30,7 +30,7 @@ Long-term memory, the kind that survives across conversations, is your applicati
 
 ```ruby
 # Gemfile
-gem 'neighbor'
+gem "neighbor"
 
 class CreateMemories < ActiveRecord::Migration[7.1]
   def change

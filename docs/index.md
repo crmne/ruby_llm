@@ -283,7 +283,7 @@ end
 ```ruby
 RubyLLM.chat(model: "{{ site.models.openai_current }}")
   .with_fallbacks("{{ site.models.anthropic_current }}")
-  .ask("Explain Ruby blocks")
+  .ask "Explain Ruby blocks"
 ```
 {: .home-code-card data-title="Fall back to another model" data-href="{% link _advanced/error-handling.md %}#model-fallbacks" data-doc-title="Model Fallbacks" }
 

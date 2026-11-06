@@ -83,3 +83,8 @@ Every event inside a [workflow]({% link _advanced/instrumentation.md %}#workflow
 | `exception`, `exception_object` | When an instrumented block raises and the instrumenter is `ActiveSupport::Notifications` |
 
 Non-Rails instrumenters control their own error payload behavior.
+
+## Next Steps
+
+* [Instrumentation]({% link _advanced/instrumentation.md %}): subscribe to these events.
+* [OpenTelemetry]({% link _advanced/opentelemetry.md %}): send them to your tracing backend.

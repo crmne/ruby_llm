@@ -102,7 +102,7 @@ RubyLLM.chat(model: "openai/gpt-5-nano").model.provider  # => "openrouter"
 
 Each configured provider resolves the name the way it would if you had passed `provider:`, through its own alias and registry ID. With only Bedrock configured, `claude-haiku-4-5` resolves to Bedrock's Claude Haiku 4.5. A local provider such as Ollama or GPUStack counts as configured once you set its API base. When none of your configured providers carries the model, RubyLLM picks the most preferred provider anyway, so the `RubyLLM::ConfigurationError` names the provider and the settings it needs.
 
-> `RubyLLM.models.find` searches the whole registry and ranks every provider, configured or not. Only resolution, the step behind `RubyLLM.chat` and the other `model:` entry points, prefers configured providers.
+`RubyLLM.models.find` searches the whole registry and ranks every provider, configured or not. Only resolution, the step behind `RubyLLM.chat` and the other `model:` entry points, prefers configured providers.
 {: .note }
 
 ## Resolving With a Provider
@@ -155,7 +155,7 @@ For a model the registry doesn't list, RubyLLM falls back to reading the ID: an 
 Point `bedrock_mantle_api_base` at a different host to override the mantle endpoint, the same way `bedrock_api_base` overrides the Converse one.
 
 ```ruby
-RubyLLM.chat(model: 'openai.gpt-oss-20b', provider: :bedrock).ask('Hello')
+RubyLLM.chat(model: "openai.gpt-oss-20b", provider: :bedrock).ask("Hello")
 ```
 
 ## Models the Registry Doesn't List
@@ -179,7 +179,7 @@ chat.model.metadata      # => { warning: "Assuming model exists, capabilities ma
 
 You are responsible for using only the features the model actually supports. The same flag works on `RubyLLM.embed`, `RubyLLM.paint`, and `with_model`.
 
-> Local providers like Ollama and GPUStack assume models exist automatically. You can pull and run any model name without registering it first, and you don't need to pass the flag. Ollama Cloud and Hetzner do the same, because their catalogs change faster than the registry. So does Azure, because you name your own deployments.
+Local providers like Ollama and GPUStack assume models exist automatically. You can pull and run any model name without registering it first, and you don't need to pass the flag. Ollama Cloud and Hetzner do the same, because their catalogs change faster than the registry. So does Azure, because you name your own deployments.
 {: .note }
 
 ## When Resolution Fails

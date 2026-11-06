@@ -90,7 +90,7 @@ end
 Words and segments are `RubyLLM::Transcription::Segment` objects with `text`, `speaker`, `start`, and `end` readers. Use `[]` for any other field, under the provider's own name, such as `word["confidence"]`. Depending on the model, speaker labels appear on words or segments. OpenAI's diarization model returns segments:
 
 ```ruby
-transcription = RubyLLM.transcribe("meeting.wav", model: "gpt-4o-transcribe-diarize")
+transcription = RubyLLM.transcribe("meeting.wav", model: "{{ site.models.transcription_openai_diarize }}")
 
 transcription.segments.each do |segment|
   puts "#{segment.speaker}: #{segment.text}"
@@ -107,7 +107,7 @@ OpenAI's diarization models can match speakers against 2–10 second reference c
 ```ruby
 transcription = RubyLLM.transcribe(
   "team-meeting.wav",
-  model: "gpt-4o-transcribe-diarize",
+  model: "{{ site.models.transcription_openai_diarize }}",
   speaker_names: ["Alice", "Bob"],
   speaker_references: ["alice-voice.wav", "bob-voice.wav"]
 )
@@ -155,7 +155,7 @@ Formats use the provider's names. Leave `format:` unset to get the model's defau
 Pass a block to receive text as it is transcribed. The call returns the completed `Transcription`:
 
 ```ruby
-transcription = RubyLLM.transcribe("meeting.wav", model: "gpt-4o-transcribe") do |chunk|
+transcription = RubyLLM.transcribe("meeting.wav", model: "{{ site.models.transcription_openai_streaming }}") do |chunk|
   print chunk.delta if chunk.delta?
 end
 
@@ -174,7 +174,7 @@ puts transcription.text
 Diarization models can stream speaker segments:
 
 ```ruby
-RubyLLM.transcribe("meeting.wav", model: "gpt-4o-transcribe-diarize") do |chunk|
+RubyLLM.transcribe("meeting.wav", model: "{{ site.models.transcription_openai_diarize }}") do |chunk|
   next unless chunk.segment?
 
   puts "#{chunk.segment.speaker}: #{chunk.segment.text}"

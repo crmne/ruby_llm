@@ -32,7 +32,7 @@ Set `model_registry_file` only when your application needs a specific persistent
 
 ```ruby
 RubyLLM.configure do |config|
-  config.model_registry_file = '/var/app/models.json'
+  config.model_registry_file = "/var/app/models.json"
 end
 
 RubyLLM.models.refresh
@@ -40,7 +40,7 @@ RubyLLM.models.refresh
 
 RubyLLM falls back to its bundled snapshot until the configured file exists. The first successful refresh creates the file, and later refreshes replace it. Use `RubyLLM.models.save_to_json('/another/path/models.json')` only when you want to export the currently loaded registry elsewhere.
 
-> With the Active Record integration, RubyLLM's internal `ruby_llm_models` table is the registry. `RubyLLM.models.refresh` updates it automatically. While the table is empty, RubyLLM falls back to the registry file, then to the bundled snapshot.
+With the Active Record integration, RubyLLM's internal `ruby_llm_models` table is the registry. `RubyLLM.models.refresh` updates it automatically. While the table is empty, RubyLLM falls back to the registry file, then to the bundled snapshot.
 {: .note }
 
 ## Connection Settings
@@ -122,7 +122,7 @@ Contexts share connections when their connection settings match. Credentials tra
 
 ```ruby
 RubyLLM.configure do |config|
-  config.log_file = '/var/log/ruby_llm.log'  # Or set RUBYLLM_LOG_FILE
+  config.log_file = "/var/log/ruby_llm.log"  # Or set RUBYLLM_LOG_FILE
   config.log_level = :info  # :debug, :info, :warn
 
   # Or use Rails logger
@@ -141,7 +141,7 @@ Log levels:
 
 Debug logging is also enabled automatically when the `RUBYLLM_DEBUG=true` environment variable is set. No configuration change is needed.
 
-> Setting `config.logger` overrides `log_file` and `log_level` settings.
+Setting `config.logger` overrides `log_file` and `log_level` settings.
 {: .note }
 
 ### Advanced Logging Options
@@ -178,17 +178,17 @@ Use a context for a tenant's credentials or a task's defaults without changing g
 ```ruby
 # Global config uses production OpenAI
 RubyLLM.configure do |config|
-  config.openai_api_key = ENV['OPENAI_PROD_KEY']
+  config.openai_api_key = ENV["OPENAI_PROD_KEY"]
 end
 
 ctx = RubyLLM.context do |config|
-  config.openai_api_key = ENV['ANOTHER_PROVIDER_KEY']
+  config.openai_api_key = ENV["ANOTHER_PROVIDER_KEY"]
   config.openai_api_base = "https://another-provider.com"
   config.request_timeout = 180
 end
 
-ctx_chat = ctx.chat(model: '{{ site.models.openai_standard }}')
-response = ctx_chat.ask("Process this with another provider...")
+ctx_chat = ctx.chat(model: "{{ site.models.openai_standard }}")
+response = ctx_chat.ask "Process this with another provider..."
 
 regular_chat = RubyLLM.chat  # Still uses production OpenAI
 ```

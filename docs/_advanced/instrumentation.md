@@ -27,7 +27,7 @@ Rails apps automatically emit RubyLLM events through `ActiveSupport::Notificatio
 
 ```ruby
 # config/initializers/ruby_llm_instrumentation.rb
-ActiveSupport::Notifications.subscribe('chat.ruby_llm') do |event|
+ActiveSupport::Notifications.subscribe("chat.ruby_llm") do |event|
   payload = event.payload
   Rails.logger.info(
     provider: payload[:provider],
@@ -45,8 +45,8 @@ When an instrumented block raises, Rails adds the standard `:exception` and `:ex
 You can use the same subscribers outside Rails. Add `activesupport` to your bundle, then configure its notifications module:
 
 ```ruby
-require 'active_support'
-require 'active_support/notifications'
+require "active_support"
+require "active_support/notifications"
 
 RubyLLM.configure do |config|
   config.instrumenter = ActiveSupport::Notifications
@@ -194,7 +194,7 @@ RubyLLM emits one event per operation, such as `chat.ruby_llm`, `tool_call.ruby_
 Subscribe to `usage.ruby_llm` for cost and usage tracking that survives transport retries and chat cancellation:
 
 ```ruby
-ActiveSupport::Notifications.subscribe('usage.ruby_llm') do |event|
+ActiveSupport::Notifications.subscribe("usage.ruby_llm") do |event|
   payload = event.payload
 
   Rails.logger.info(
@@ -216,3 +216,9 @@ The event fires once for every finished physical attempt of a tracked operation.
 Payloads include the Ruby objects needed by observability adapters, but message content, tool arguments, and provider responses may be sensitive. Only export or log those fields when your application policy allows it.
 
 Non-Rails instrumenters control their own error payload behavior. If your instrumenter records exceptions, keep those payloads consistent with the rest of your observability stack.
+
+## Next Steps
+
+* [Instrumentation Events]({% link _reference/instrumentation-events.md %}): every event, when it fires, and its key fields.
+* [OpenTelemetry]({% link _advanced/opentelemetry.md %}): send these calls to your tracing backend.
+* [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}): total what your application spends.

@@ -66,9 +66,9 @@ Do not validate message content as always present. Streaming creates an empty as
 An `acts_as_chat` record exposes the regular chat API and persists transcript changes automatically:
 
 ```ruby
-chat = Chat.create!(model: '{{ site.models.default_chat }}', user: current_user)
+chat = Chat.create!(model: "{{ site.models.default_chat }}", user: current_user)
 
-response = chat.ask("What is the capital of France?")
+response = chat.ask "What is the capital of France?"
 
 response.content          # => "The capital of France is Paris."
 chat.messages.last.content
@@ -98,9 +98,9 @@ chat.messages.where(role: :system)
 Runtime-only settings such as fallbacks, tools, temperature, and callbacks live on the memoized `to_llm` chat. Reapply them after loading a fresh record, or define them in an [Agent]({% link _getting_started/agents.md %}).
 
 ```ruby
-chat.with_fallbacks("gpt-4.1-mini", "claude-haiku-4-5")
+chat.with_fallbacks("{{ site.models.openai_mini }}", "{{ site.models.anthropic_haiku }}")
 chat.with_temperature(0.2)
-chat.ask("Summarize this conversation.")
+chat.ask "Summarize this conversation."
 ```
 
 ### Resuming Long Responses
@@ -124,7 +124,7 @@ The finished answer replaces the record's content and clears `continuation`. Rea
 The chat belongs to a model record in RubyLLM's internal registry. The familiar readers still expose the provider-facing identity:
 
 ```ruby
-chat = Chat.create!(model: '{{ site.models.openai_standard }}')
+chat = Chat.create!(model: "{{ site.models.openai_standard }}")
 
 chat.model_id             # => "{{ site.models.openai_standard }}"
 chat.provider             # => "openai"
@@ -135,7 +135,7 @@ chat.model.context_window
 The registry itself is persisted internally. Query and refresh it through `RubyLLM.models`:
 
 ```ruby
-RubyLLM.models.find('{{ site.models.openai_standard }}', provider: :openai)
+RubyLLM.models.find("{{ site.models.openai_standard }}", provider: :openai)
 RubyLLM.models.by_provider(:anthropic)
 RubyLLM.models.refresh
 ```
@@ -162,7 +162,7 @@ response.reload.truncated? # => true if a token limit stopped the response
 Usage belongs to provider work, not to the transcript. RubyLLM therefore persists one normalized entry for every physical attempt, including automatic retries and cancelled streams that never produced a message.
 
 ```ruby
-response = chat.ask("Explain Ruby fibers.")
+response = chat.ask "Explain Ruby fibers."
 
 response.tokens.input    # aggregate of the attempts that produced it
 response.tokens.output
@@ -178,7 +178,7 @@ Token buckets and cost components are numeric columns in `ruby_llm_usages`; cost
 Attribute each chat attempt to a record with `with_owner`. Its usage rows keep both the chat and owner associations. One-shot operations write to the same ledger, with no chat, and accept `owner:`, or take the owner of a surrounding `RubyLLM.with_owner` block. Query an owner's spend through its own association:
 
 ```ruby
-chat.with_owner(current_user).ask("Summarize the latest reviews.")
+chat.with_owner(current_user).ask "Summarize the latest reviews."
 
 RubyLLM.with_owner(current_user) do
   RubyLLM.transcribe("memo.m4a")
@@ -209,7 +209,7 @@ class Weather < RubyLLM::Tool
 end
 
 chat.with_tools(Weather)
-chat.ask("What is the weather in Berlin?")
+chat.ask "What is the weather in Berlin?"
 ```
 
 RubyLLM persists provider tool requests in `ruby_llm_tool_calls` and exposes `RubyLLM::ToolCall` values from the message:
@@ -285,7 +285,7 @@ Submitting persisted chats automatically stores the provider batch state interna
 
 ```ruby
 chats = tickets.map do |ticket|
-  Chat.create!(model: "claude-haiku-4-5").ask_later(ticket.body)
+  Chat.create!(model: "{{ site.models.anthropic_haiku }}").ask_later(ticket.body)
 end
 
 batch = RubyLLM.batch(chats)
@@ -390,7 +390,7 @@ Active Record cannot read a plain-text value from an encrypted column. When the 
 uploaded_file = params[:uploaded_file]
 return head :bad_request unless uploaded_file.is_a?(ActionDispatch::Http::UploadedFile)
 
-chat.ask("What is in this file?", with: uploaded_file)
+chat.ask "What is in this file?", with: uploaded_file
 ```
 
 An upload field can arrive as a String, Array, or Hash. Strong parameters permit Strings, so permitting the field does not prove that it contains a file. Validate every entry when accepting multiple uploads. See [Attachment Security]({% link _core_features/attachments.md %}#attachment-security) for how RubyLLM handles file paths and URLs.
@@ -398,7 +398,7 @@ An upload field can arrive as a String, Array, or Hash. Strong parameters permit
 You can also pass stored attachments that the current user is authorized to access:
 
 ```ruby
-chat.ask("Compare these", with: project.documents)
+chat.ask "Compare these", with: project.documents
 ```
 
 Stored files stay in Active Storage until a request needs their bytes. Loading a chat, checking `awaiting_approval?`, or listing `pending_approvals` downloads nothing, and each file downloads once, when a request first sends it. RubyLLM takes the file's type from the blob's content type.
@@ -413,7 +413,7 @@ class PersonSchema < Schematist::Schema
   integer :age
 end
 
-response = chat.with_schema(PersonSchema).ask("Generate a person")
+response = chat.with_schema(PersonSchema).ask "Generate a person"
 response.parsed                  # => {"name" => "Ada", "age" => 36}
 response.content                 # => '{"name":"Ada","age":36}', what the row stores
 chat.messages.last.parsed        # the same Hash, read back from the record

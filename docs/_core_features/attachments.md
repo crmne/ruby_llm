@@ -47,7 +47,7 @@ For browser uploads, validate that each value is an actual uploaded file before 
 Vision-capable models can analyze images, answer questions about visual content, and even compare multiple images.
 
 ```ruby
-chat = RubyLLM.chat(model: '{{ site.models.openai_vision }}')
+chat = RubyLLM.chat(model: "{{ site.models.openai_vision }}")
 
 response = chat.ask "Describe this logo.", with: "path/to/ruby_logo.png"
 puts response.content
@@ -64,7 +64,7 @@ puts response.content
 Ask a video-capable model about local videos or URLs:
 
 ```ruby
-chat = RubyLLM.chat(model: '{{ site.models.gemini_current }}')
+chat = RubyLLM.chat(model: "{{ site.models.gemini_current }}")
 response = chat.ask "What happens in this video?", with: "path/to/demo.mp4"
 puts response.content
 
@@ -80,7 +80,7 @@ puts response.content
 Audio-capable models can answer questions about a recording:
 
 ```ruby
-chat = RubyLLM.chat(model: '{{ site.models.openai_audio }}')
+chat = RubyLLM.chat(model: "{{ site.models.openai_audio }}")
 
 response = chat.ask "Please transcribe this meeting recording.", with: "path/to/meeting.mp3"
 puts response.content
@@ -96,7 +96,7 @@ For a transcript without a conversation, use [Audio Transcription]({% link _gett
 You can provide text files directly to models for analysis, summarization, or question answering. This works with any text-based format including plain text, code files, CSV, JSON, and more.
 
 ```ruby
-chat = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
+chat = RubyLLM.chat(model: "{{ site.models.anthropic_current }}")
 
 response = chat.ask "Summarize the key points in this document.", with: "path/to/document.txt"
 puts response.content
@@ -112,7 +112,7 @@ RubyLLM marks where a text file starts and ends, and neither its name nor its co
 Ask about a report, manual, or research paper with a model that accepts PDFs:
 
 ```ruby
-chat = RubyLLM.chat(model: '{{ site.models.anthropic_newest }}')
+chat = RubyLLM.chat(model: "{{ site.models.anthropic_newest }}")
 
 response = chat.ask "Summarize the key findings in this research paper.", with: "path/to/paper.pdf"
 puts response.content
@@ -132,7 +132,7 @@ Documents still have to fit the model's context limit, even when uploaded separa
 RubyLLM usually downloads a URL attachment and sends its bytes. Through the Responses API on OpenAI, Azure, xAI, OpenRouter, and Meta, it sends the URL of a PDF or Office document instead, and the provider downloads the file itself. The file never passes through your application, and the request stays small:
 
 ```ruby
-chat = RubyLLM.chat(model: '{{ site.models.openai_current }}')
+chat = RubyLLM.chat(model: "{{ site.models.openai_current }}")
 
 url = report.file.url(expires_in: 10.minutes)
 response = chat.ask "Summarize this report.", with: RubyLLM::Attachment.new(url, filename: "report.pdf")
@@ -148,7 +148,7 @@ The provider must be able to reach the URL. A URL on a private network, or one t
 Word documents, presentations, and spreadsheets attach the same way when the selected model and provider support them:
 
 ```ruby
-chat = RubyLLM.chat(model: '{{ site.models.openai_current }}')
+chat = RubyLLM.chat(model: "{{ site.models.openai_current }}")
 
 response = chat.ask "What is the project codename in this document?", with: "brief.docx"
 response = chat.ask "Which region had the highest revenue?", with: "sales.xlsx"
@@ -251,7 +251,7 @@ Gemini's default protocol does not accept the steps back, so the model navigates
 RubyLLM automatically detects file types based on extensions and content, so you can pass files directly without specifying the type:
 
 ```ruby
-chat = RubyLLM.chat(model: '{{ site.models.gemini_current }}')
+chat = RubyLLM.chat(model: "{{ site.models.gemini_current }}")
 
 response = chat.ask "What's in this file?", with: "path/to/document.pdf"
 

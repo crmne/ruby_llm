@@ -26,122 +26,122 @@ RubyLLM resolves the provider from the model registry. Pass `provider:` when you
 ```ruby
 RubyLLM.configure do |config|
   # Anthropic
-  config.anthropic_api_key = ENV['ANTHROPIC_API_KEY']
-  config.anthropic_api_base = ENV['ANTHROPIC_API_BASE'] # optional custom Anthropic endpoint
+  config.anthropic_api_key = ENV["ANTHROPIC_API_KEY"]
+  config.anthropic_api_base = ENV["ANTHROPIC_API_BASE"] # optional custom Anthropic endpoint
 
   # Azure
-  config.azure_api_base = ENV['AZURE_API_BASE'] # Azure OpenAI or Foundry resource endpoint
-  config.azure_api_key = ENV['AZURE_API_KEY'] # use this or
-  config.azure_ai_auth_token = ENV['AZURE_AI_AUTH_TOKEN'] # this
+  config.azure_api_base = ENV["AZURE_API_BASE"] # Azure OpenAI or Foundry resource endpoint
+  config.azure_api_key = ENV["AZURE_API_KEY"] # use this or
+  config.azure_ai_auth_token = ENV["AZURE_AI_AUTH_TOKEN"] # this
   # config.azure_deployments = { 'gpt-4o-global' => 'gpt-4o' } # optional deployment names
 
   # Bedrock
-  config.bedrock_api_key = ENV['AWS_ACCESS_KEY_ID']
-  config.bedrock_secret_key = ENV['AWS_SECRET_ACCESS_KEY']
-  config.bedrock_region = ENV['AWS_REGION'] # Required for Bedrock
-  config.bedrock_session_token = ENV['AWS_SESSION_TOKEN'] # For temporary credentials
+  config.bedrock_api_key = ENV["AWS_ACCESS_KEY_ID"]
+  config.bedrock_secret_key = ENV["AWS_SECRET_ACCESS_KEY"]
+  config.bedrock_region = ENV["AWS_REGION"] # Required for Bedrock
+  config.bedrock_session_token = ENV["AWS_SESSION_TOKEN"] # For temporary credentials
   # config.bedrock_credential_provider = Aws::InstanceProfileCredentials.new # Optional Aws::CredentialProvider
-  config.bedrock_api_base = ENV['BEDROCK_API_BASE'] # optional custom Bedrock endpoint
-  config.bedrock_mantle_api_base = ENV['BEDROCK_MANTLE_API_BASE'] # optional custom bedrock-mantle endpoint
-  config.bedrock_batch_s3_uri = ENV['BEDROCK_BATCH_S3_URI'] # s3://bucket/prefix for batches and large attachments
-  config.bedrock_batch_role_arn = ENV['BEDROCK_BATCH_ROLE_ARN'] # IAM role Bedrock assumes for batch jobs
-  config.bedrock_video_s3_uri = ENV['BEDROCK_VIDEO_S3_URI'] # s3://bucket/prefix for generated videos
-  config.bedrock_guardrail_id = ENV['BEDROCK_GUARDRAIL_ID'] # optional, see Guardrails below
-  config.bedrock_guardrail_version = ENV['BEDROCK_GUARDRAIL_VERSION']
+  config.bedrock_api_base = ENV["BEDROCK_API_BASE"] # optional custom Bedrock endpoint
+  config.bedrock_mantle_api_base = ENV["BEDROCK_MANTLE_API_BASE"] # optional custom bedrock-mantle endpoint
+  config.bedrock_batch_s3_uri = ENV["BEDROCK_BATCH_S3_URI"] # s3://bucket/prefix for batches and large attachments
+  config.bedrock_batch_role_arn = ENV["BEDROCK_BATCH_ROLE_ARN"] # IAM role Bedrock assumes for batch jobs
+  config.bedrock_video_s3_uri = ENV["BEDROCK_VIDEO_S3_URI"] # s3://bucket/prefix for generated videos
+  config.bedrock_guardrail_id = ENV["BEDROCK_GUARDRAIL_ID"] # optional, see Guardrails below
+  config.bedrock_guardrail_version = ENV["BEDROCK_GUARDRAIL_VERSION"]
 
   # Cohere
-  config.cohere_api_key = ENV['COHERE_API_KEY']
-  config.cohere_api_base = ENV['COHERE_API_BASE'] # optional custom Cohere endpoint
+  config.cohere_api_key = ENV["COHERE_API_KEY"]
+  config.cohere_api_base = ENV["COHERE_API_BASE"] # optional custom Cohere endpoint
 
   # Deepgram
-  config.deepgram_api_key = ENV['DEEPGRAM_API_KEY']
-  config.deepgram_api_base = ENV['DEEPGRAM_API_BASE'] # Optional, for self-hosted deployments
+  config.deepgram_api_key = ENV["DEEPGRAM_API_KEY"]
+  config.deepgram_api_base = ENV["DEEPGRAM_API_BASE"] # Optional, for self-hosted deployments
 
   # DeepSeek
-  config.deepseek_api_key = ENV['DEEPSEEK_API_KEY']
-  config.deepseek_api_base = ENV['DEEPSEEK_API_BASE'] # optional custom DeepSeek endpoint
+  config.deepseek_api_key = ENV["DEEPSEEK_API_KEY"]
+  config.deepseek_api_base = ENV["DEEPSEEK_API_BASE"] # optional custom DeepSeek endpoint
 
   # ElevenLabs
-  config.elevenlabs_api_key = ENV['ELEVENLABS_API_KEY']
-  config.elevenlabs_api_base = ENV['ELEVENLABS_API_BASE'] # Optional, for the regional residency endpoints
+  config.elevenlabs_api_key = ENV["ELEVENLABS_API_KEY"]
+  config.elevenlabs_api_base = ENV["ELEVENLABS_API_BASE"] # Optional, for the regional residency endpoints
 
   # Gemini
-  config.gemini_api_key = ENV['GEMINI_API_KEY']
-  config.gemini_api_base = ENV['GEMINI_API_BASE'] # optional API version override
+  config.gemini_api_key = ENV["GEMINI_API_KEY"]
+  config.gemini_api_base = ENV["GEMINI_API_BASE"] # optional API version override
 
   # GPUStack
-  config.gpustack_api_base = ENV['GPUSTACK_API_BASE']
-  config.gpustack_api_key = ENV['GPUSTACK_API_KEY']
+  config.gpustack_api_base = ENV["GPUSTACK_API_BASE"]
+  config.gpustack_api_key = ENV["GPUSTACK_API_KEY"]
 
   # Hetzner
-  config.hetzner_api_key = ENV['HETZNER_API_KEY'] # Token from the Hetzner Console
-  config.hetzner_api_base = ENV['HETZNER_API_BASE'] # Optional, defaults to https://inference.hetzner.com/v1
+  config.hetzner_api_key = ENV["HETZNER_API_KEY"] # Token from the Hetzner Console
+  config.hetzner_api_base = ENV["HETZNER_API_BASE"] # Optional, defaults to https://inference.hetzner.com/v1
 
   # Meta
-  config.meta_api_key = ENV['META_API_KEY'] # Key from dev.meta.ai
-  config.meta_api_base = ENV['META_API_BASE'] # Optional, defaults to https://api.meta.ai/v1
+  config.meta_api_key = ENV["META_API_KEY"] # Key from dev.meta.ai
+  config.meta_api_base = ENV["META_API_BASE"] # Optional, defaults to https://api.meta.ai/v1
   # MiniMax
-  config.minimax_api_key = ENV['MINIMAX_API_KEY']
-  config.minimax_api_base = ENV['MINIMAX_API_BASE'] # Optional, defaults to https://api.minimax.io/anthropic
+  config.minimax_api_key = ENV["MINIMAX_API_KEY"]
+  config.minimax_api_base = ENV["MINIMAX_API_BASE"] # Optional, defaults to https://api.minimax.io/anthropic
 
   # Mistral
-  config.mistral_api_key = ENV['MISTRAL_API_KEY']
-  config.mistral_api_base = ENV['MISTRAL_API_BASE'] # optional custom Mistral endpoint
+  config.mistral_api_key = ENV["MISTRAL_API_KEY"]
+  config.mistral_api_base = ENV["MISTRAL_API_BASE"] # optional custom Mistral endpoint
 
   # Moonshot AI
-  config.moonshot_api_key = ENV['MOONSHOT_API_KEY']
-  config.moonshot_api_base = ENV['MOONSHOT_API_BASE'] # Optional, defaults to https://api.moonshot.ai/v1
+  config.moonshot_api_key = ENV["MOONSHOT_API_KEY"]
+  config.moonshot_api_base = ENV["MOONSHOT_API_BASE"] # Optional, defaults to https://api.moonshot.ai/v1
 
   # Ollama
-  config.ollama_api_base = 'http://localhost:11434/v1'
-  config.ollama_api_key = ENV['OLLAMA_API_KEY'] # optional for authenticated/remote Ollama endpoints
+  config.ollama_api_base = "http://localhost:11434/v1"
+  config.ollama_api_key = ENV["OLLAMA_API_KEY"] # optional for authenticated/remote Ollama endpoints
 
   # Ollama Cloud
-  config.ollama_cloud_api_key = ENV['OLLAMA_CLOUD_API_KEY'] # Key from ollama.com/settings/keys
-  config.ollama_cloud_api_base = ENV['OLLAMA_CLOUD_API_BASE'] # Optional, defaults to https://ollama.com/v1
+  config.ollama_cloud_api_key = ENV["OLLAMA_CLOUD_API_KEY"] # Key from ollama.com/settings/keys
+  config.ollama_cloud_api_base = ENV["OLLAMA_CLOUD_API_BASE"] # Optional, defaults to https://ollama.com/v1
 
   # OpenAI
-  config.openai_api_key = ENV['OPENAI_API_KEY']
-  config.openai_api_base = ENV['OPENAI_API_BASE'] # Optional custom OpenAI-compatible endpoint
-  config.openai_organization_id = ENV['OPENAI_ORG_ID'] # optional, see Organization and Project Headers
-  config.openai_project_id = ENV['OPENAI_PROJECT_ID']
+  config.openai_api_key = ENV["OPENAI_API_KEY"]
+  config.openai_api_base = ENV["OPENAI_API_BASE"] # Optional custom OpenAI-compatible endpoint
+  config.openai_organization_id = ENV["OPENAI_ORG_ID"] # optional, see Organization and Project Headers
+  config.openai_project_id = ENV["OPENAI_PROJECT_ID"]
   # config.openai_use_system_role = true # optional, see System Role Compatibility
   # config.openai_protocol = :chat_completions # only to use Chat Completions by default; every provider has a <provider>_protocol setting
 
   # OpenRouter
-  config.openrouter_api_key = ENV['OPENROUTER_API_KEY']
-  config.openrouter_api_base = ENV['OPENROUTER_API_BASE'] # optional custom OpenRouter endpoint
-  config.openrouter_app_url = 'https://myapp.com' # Optional app attribution for OpenRouter rankings
-  config.openrouter_app_name = 'My App' # Optional app display name in OpenRouter rankings
+  config.openrouter_api_key = ENV["OPENROUTER_API_KEY"]
+  config.openrouter_api_base = ENV["OPENROUTER_API_BASE"] # optional custom OpenRouter endpoint
+  config.openrouter_app_url = "https://myapp.com" # Optional app attribution for OpenRouter rankings
+  config.openrouter_app_name = "My App" # Optional app display name in OpenRouter rankings
 
   # Perplexity
-  config.perplexity_api_key = ENV['PERPLEXITY_API_KEY']
-  config.perplexity_api_base = ENV['PERPLEXITY_API_BASE'] # optional custom Perplexity endpoint
+  config.perplexity_api_key = ENV["PERPLEXITY_API_KEY"]
+  config.perplexity_api_base = ENV["PERPLEXITY_API_BASE"] # optional custom Perplexity endpoint
 
   # TypeSafe
-  config.typesafe_api_key = ENV['TYPESAFE_API_KEY']
-  config.typesafe_api_base = ENV['TYPESAFE_API_BASE'] # optional custom endpoint
+  config.typesafe_api_key = ENV["TYPESAFE_API_KEY"]
+  config.typesafe_api_base = ENV["TYPESAFE_API_BASE"] # optional custom endpoint
 
   # Vertex AI
-  config.vertexai_project_id = ENV['GOOGLE_CLOUD_PROJECT']
-  config.vertexai_location = ENV['GOOGLE_CLOUD_LOCATION']
-  config.vertexai_service_account_key = ENV['VERTEXAI_SERVICE_ACCOUNT_KEY'] # Optional: service account JSON key
-  config.vertexai_api_base = ENV['VERTEXAI_API_BASE'] # optional custom Vertex AI endpoint
-  config.vertexai_ranking_api_base = ENV['VERTEXAI_RANKING_API_BASE'] # optional Discovery Engine endpoint
-  config.vertexai_ranking_config = ENV['VERTEXAI_RANKING_CONFIG'] # optional full rankingConfig resource name
-  config.vertexai_batch_gcs_uri = ENV['VERTEXAI_BATCH_GCS_URI'] # gs://bucket/prefix for batches and large attachments
+  config.vertexai_project_id = ENV["GOOGLE_CLOUD_PROJECT"]
+  config.vertexai_location = ENV["GOOGLE_CLOUD_LOCATION"]
+  config.vertexai_service_account_key = ENV["VERTEXAI_SERVICE_ACCOUNT_KEY"] # Optional: service account JSON key
+  config.vertexai_api_base = ENV["VERTEXAI_API_BASE"] # optional custom Vertex AI endpoint
+  config.vertexai_ranking_api_base = ENV["VERTEXAI_RANKING_API_BASE"] # optional Discovery Engine endpoint
+  config.vertexai_ranking_config = ENV["VERTEXAI_RANKING_CONFIG"] # optional full rankingConfig resource name
+  config.vertexai_batch_gcs_uri = ENV["VERTEXAI_BATCH_GCS_URI"] # gs://bucket/prefix for batches and large attachments
 
   # xAI
-  config.xai_api_key = ENV['XAI_API_KEY']
-  config.xai_api_base = ENV['XAI_API_BASE'] # optional custom xAI endpoint
+  config.xai_api_key = ENV["XAI_API_KEY"]
+  config.xai_api_base = ENV["XAI_API_BASE"] # optional custom xAI endpoint
 
   # Z.ai
-  config.zai_api_key = ENV['ZAI_API_KEY']
-  config.zai_api_base = ENV['ZAI_API_BASE'] # Optional, defaults to https://api.z.ai/api/paas/v4
+  config.zai_api_key = ENV["ZAI_API_KEY"]
+  config.zai_api_base = ENV["ZAI_API_BASE"] # Optional, defaults to https://api.z.ai/api/paas/v4
 end
 ```
 
-> Attempting to use an unconfigured provider will raise `RubyLLM::ConfigurationError`. Only configure what you need.
+Attempting to use an unconfigured provider will raise `RubyLLM::ConfigurationError`. Only configure what you need.
 {: .note }
 
 ## TypeSafe
@@ -164,22 +164,22 @@ Ollama Cloud runs the large open models on Ollama's servers. It speaks the same 
 
 ```ruby
 RubyLLM.configure do |config|
-  config.ollama_cloud_api_key = ENV['OLLAMA_CLOUD_API_KEY'] # ollama.com/settings/keys
+  config.ollama_cloud_api_key = ENV["OLLAMA_CLOUD_API_KEY"] # ollama.com/settings/keys
 end
 
-RubyLLM.chat(model: 'gpt-oss:120b', provider: :ollama_cloud).ask('Hello from Ollama Cloud')
+RubyLLM.chat(model: "gpt-oss:120b", provider: :ollama_cloud).ask("Hello from Ollama Cloud")
 ```
 
 Because `:ollama` and `:ollama_cloud` are separate providers, you can point one at your own machine and the other at the hosted service in the same process:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.ollama_api_base = 'http://localhost:11434/v1'
-  config.ollama_cloud_api_key = ENV['OLLAMA_CLOUD_API_KEY']
+  config.ollama_api_base = "http://localhost:11434/v1"
+  config.ollama_cloud_api_key = ENV["OLLAMA_CLOUD_API_KEY"]
 end
 
-RubyLLM.chat(model: 'qwen3', provider: :ollama)              # your GPU
-RubyLLM.chat(model: 'gpt-oss:120b', provider: :ollama_cloud) # Ollama's GPUs
+RubyLLM.chat(model: "qwen3", provider: :ollama)              # your GPU
+RubyLLM.chat(model: "gpt-oss:120b", provider: :ollama_cloud) # Ollama's GPUs
 ```
 
 Model names differ between the two. Locally, cloud models carry a `-cloud` suffix (`gpt-oss:120b-cloud`) because your Ollama offloads them; the hosted API serves the plain name (`gpt-oss:120b`). Use the plain name with `:ollama_cloud`.
@@ -199,10 +199,10 @@ Hetzner Inference serves open-weight models from Hetzner's data centers. Create 
 
 ```ruby
 RubyLLM.configure do |config|
-  config.hetzner_api_key = ENV['HETZNER_API_KEY']
+  config.hetzner_api_key = ENV["HETZNER_API_KEY"]
 end
 
-RubyLLM.chat(model: 'Qwen3.8-27B', provider: :hetzner).ask('Hello from Hetzner')
+RubyLLM.chat(model: "Qwen3.8-27B", provider: :hetzner).ask("Hello from Hetzner")
 ```
 
 The service is experimental and changes its model selection often. RubyLLM accepts any model ID you give `:hetzner` without a registry entry, and `refresh` pulls the live catalog:
@@ -220,10 +220,10 @@ Meta's Model API serves the Muse models. Create an API key at dev.meta.ai and se
 
 ```ruby
 RubyLLM.configure do |config|
-  config.meta_api_key = ENV['META_API_KEY']
+  config.meta_api_key = ENV["META_API_KEY"]
 end
 
-RubyLLM.chat(model: 'muse-spark-1.3').ask('Hello from Muse')
+RubyLLM.chat(model: "muse-spark-1.3").ask("Hello from Muse")
 ```
 
 RubyLLM talks to Meta through its Responses API, which carries the model's encrypted reasoning from one turn to the next, so tool loops keep their chain of thought. Meta runs web search as a provider tool, `with_provider_tools(:web_search)`, and caches prompts by itself. `with_caching` takes `key:` and a `ttl:` of `"in_memory"` or `"24h"`.
@@ -238,18 +238,18 @@ MiniMax serves its M3 models through an Anthropic-compatible API. Create a key o
 
 ```ruby
 RubyLLM.configure do |config|
-  config.minimax_api_key = ENV['MINIMAX_API_KEY']
+  config.minimax_api_key = ENV["MINIMAX_API_KEY"]
 end
 
-RubyLLM.chat(model: 'MiniMax-M3.1-Flash').ask('Hello from MiniMax')
+RubyLLM.chat(model: "MiniMax-M3.1-Flash").ask("Hello from MiniMax")
 ```
 
 Keys from MiniMax's China platform only work on its own endpoint. Point `minimax_api_base` at it:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.minimax_api_key = ENV['MINIMAX_API_KEY']
-  config.minimax_api_base = 'https://api.minimax.cn/anthropic'
+  config.minimax_api_key = ENV["MINIMAX_API_KEY"]
+  config.minimax_api_base = "https://api.minimax.cn/anthropic"
 end
 ```
 
@@ -261,18 +261,18 @@ Moonshot AI serves the Kimi models. Create an API key on the Kimi platform and s
 
 ```ruby
 RubyLLM.configure do |config|
-  config.moonshot_api_key = ENV['MOONSHOT_API_KEY']
+  config.moonshot_api_key = ENV["MOONSHOT_API_KEY"]
 end
 
-RubyLLM.chat(model: 'kimi-k3').ask('Hello from Kimi')
+RubyLLM.chat(model: "kimi-k3").ask("Hello from Kimi")
 ```
 
 Keys from Moonshot's China platform only work on its own endpoint. Point `moonshot_api_base` at it:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.moonshot_api_key = ENV['MOONSHOT_API_KEY']
-  config.moonshot_api_base = 'https://api.moonshot.cn/v1'
+  config.moonshot_api_key = ENV["MOONSHOT_API_KEY"]
+  config.moonshot_api_base = "https://api.moonshot.cn/v1"
 end
 ```
 
@@ -284,18 +284,18 @@ Z.ai serves Zhipu's GLM models. Create an API key on the Z.ai platform and set `
 
 ```ruby
 RubyLLM.configure do |config|
-  config.zai_api_key = ENV['ZAI_API_KEY']
+  config.zai_api_key = ENV["ZAI_API_KEY"]
 end
 
-RubyLLM.chat(model: 'glm-5.3').ask('Hello from Z.ai')
+RubyLLM.chat(model: "glm-5.3").ask("Hello from Z.ai")
 ```
 
 BigModel, Zhipu's platform in China, serves the same API with its own keys. Point `zai_api_base` at it:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.zai_api_key = ENV['BIGMODEL_API_KEY']
-  config.zai_api_base = 'https://open.bigmodel.cn/api/paas/v4'
+  config.zai_api_key = ENV["BIGMODEL_API_KEY"]
+  config.zai_api_base = "https://open.bigmodel.cn/api/paas/v4"
 end
 ```
 
@@ -308,10 +308,10 @@ GLM-5.3 Flash always thinks, so `with_thinking(false)` raises, and it takes only
 For IAM roles, assume-role flows, and rotating credentials, configure an AWS SDK credential provider instead of static keys:
 
 ```ruby
-require 'aws-sdk-core'
+require "aws-sdk-core"
 
 RubyLLM.configure do |config|
-  config.bedrock_region = 'us-east-1'
+  config.bedrock_region = "us-east-1"
   config.bedrock_credential_provider = Aws::InstanceProfileCredentials.new
 end
 ```
@@ -341,9 +341,9 @@ For OpenAI users with multiple organizations or projects:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.openai_api_key = ENV['OPENAI_API_KEY']
-  config.openai_organization_id = ENV['OPENAI_ORG_ID']  # Billing organization
-  config.openai_project_id = ENV['OPENAI_PROJECT_ID']    # Usage tracking
+  config.openai_api_key = ENV["OPENAI_API_KEY"]
+  config.openai_organization_id = ENV["OPENAI_ORG_ID"]  # Billing organization
+  config.openai_project_id = ENV["OPENAI_PROJECT_ID"]    # Usage tracking
 end
 ```
 
@@ -446,7 +446,7 @@ Connect to any OpenAI-compatible API endpoint, including local models, proxies, 
 ```ruby
 RubyLLM.configure do |config|
   # API key - use what your server expects
-  config.openai_api_key = ENV['CUSTOM_API_KEY']  # Or 'dummy-key' if not required
+  config.openai_api_key = ENV["CUSTOM_API_KEY"]  # Or 'dummy-key' if not required
 
   config.openai_api_base = "http://localhost:8080/v1"  # vLLM, LiteLLM, etc.
 end
@@ -503,8 +503,8 @@ Gemini offers two API versions: `v1` (stable) and `v1beta` (early access). RubyL
 
 ```ruby
 RubyLLM.configure do |config|
-  config.gemini_api_key = ENV['GEMINI_API_KEY']
-  config.gemini_api_base = 'https://generativelanguage.googleapis.com/v1'
+  config.gemini_api_key = ENV["GEMINI_API_KEY"]
+  config.gemini_api_base = "https://generativelanguage.googleapis.com/v1"
 end
 ```
 
@@ -516,11 +516,11 @@ Every provider exposes a provider-specific `*_api_base` setting. Use these when 
 
 ```ruby
 RubyLLM.configure do |config|
-  config.perplexity_api_base = ENV['PERPLEXITY_API_BASE']
-  config.mistral_api_base = ENV['MISTRAL_API_BASE']
-  config.xai_api_base = ENV['XAI_API_BASE']
-  config.bedrock_api_base = ENV['BEDROCK_API_BASE']
-  config.vertexai_api_base = ENV['VERTEXAI_API_BASE']
+  config.perplexity_api_base = ENV["PERPLEXITY_API_BASE"]
+  config.mistral_api_base = ENV["MISTRAL_API_BASE"]
+  config.xai_api_base = ENV["XAI_API_BASE"]
+  config.bedrock_api_base = ENV["BEDROCK_API_BASE"]
+  config.vertexai_api_base = ENV["VERTEXAI_API_BASE"]
 end
 ```
 
