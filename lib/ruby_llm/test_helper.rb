@@ -59,10 +59,14 @@ module RubyLLM
 
     # Answers requests from the script, once #stub_replies has been called.
     module StubbedProvider # :nodoc:
-      # Skips the API key check, which some providers define for themselves,
-      # and the connection, which a stubbed request never uses.
+      # Skips the API key check, which some providers define for themselves.
       def initialize(config)
-        Script.active? ? @config = config : super
+        if Script.active?
+          @config = config
+          @connection = Transport::Connection.new(self, config)
+        else
+          super
+        end
       end
 
       def complete(messages, usage_recorder: nil, progress_recorder: nil, **options, &)

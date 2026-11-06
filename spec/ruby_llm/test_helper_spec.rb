@@ -33,6 +33,12 @@ RSpec.describe RubyLLM::TestHelper do
     end
   end
 
+  it 'leaves other operations their connection' do
+    stub_replies 'Hello'
+
+    expect(RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic).provider.connection).not_to be_nil
+  end
+
   it 'streams word by word' do
     stub_replies 'Hello there friend'
     chunks = []
