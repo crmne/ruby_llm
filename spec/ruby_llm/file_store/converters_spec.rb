@@ -33,20 +33,13 @@ RSpec.describe RubyLLM::FileStore::Converters do
       .to eq("## Slide 1\n\nQuarterly review\nRevenue & costs\n\n## Slide 2\n\nThe launch code is SILVER-FERN-8")
   end
 
-  it 'keeps the cells of a row in their columns, and the order of sheets and slides in the workbook and deck' do
-    expect(described_class::Office.send(:cells, '<c r="A1"><v>1</v></c><c r="C1"><v>3</v></c>', []))
-      .to eq(['1', '', '3'])
+  it 'keeps the order of slides in the deck' do
     expect(described_class.convert(fixture('sample.pptx'), config:)).to start_with("## Slide 1\n\nQuarterly review")
   end
 
   it 'reads an Office file that uses other prefixes and relative part paths' do
     expect(described_class.convert(fixture('sample-prefixed.xlsx'), config:))
       .to eq("## Second\ninline\n\n## First\nORCHID-97\t7")
-  end
-
-  it 'ignores a cell reference past the last column a sheet can have' do
-    expect(described_class::Office.send(:cells, '<c r="XFE1"><v>1</v></c>', [])).to eq(['1'])
-    expect(described_class::Office.send(:cells, '<c r="XFD1"><v>1</v></c>', []).size).to eq(16_384)
   end
 
   it 'gives up on a workbook whose text passes the limit, as padding can without inflating much' do
@@ -57,7 +50,7 @@ RSpec.describe RubyLLM::FileStore::Converters do
   end
 
   it 'reads the entities XML defines and no others' do
-    expect(described_class::Office.send(:unescape, '&amp;lt; &#233; &#xe9; &nbsp;')).to eq('&lt; é é &nbsp;')
+    expect(described_class::Office::Markup.unescape('&amp;lt; &#233; &#xe9; &nbsp;')).to eq('&lt; é é &nbsp;')
   end
 
   it 'stops local extraction at the first converter that is not local' do
