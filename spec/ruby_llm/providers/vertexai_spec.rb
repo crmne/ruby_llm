@@ -84,6 +84,16 @@ RSpec.describe RubyLLM::Providers::VertexAI do
   end
 
   describe '#api_base' do
+    %w[eu us].each do |multi_region|
+      context "with the #{multi_region} multi-region location" do
+        let(:location) { multi_region }
+
+        it 'uses its multi-region endpoint' do
+          expect(provider.api_base).to eq("https://aiplatform.#{multi_region}.rep.googleapis.com/v1beta1")
+        end
+      end
+    end
+
     context 'when location is global' do
       let(:location) { 'global' }
 

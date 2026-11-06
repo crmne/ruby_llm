@@ -1316,7 +1316,13 @@ module RubyLLM
         assign_supported_attribute(attrs, :finish_reason, message.finish_reason)
         assign_supported_attribute(attrs, :cache_until_here, message.cache_until_here?)
         assign_supported_attribute(attrs, :cache_ttl, message.cache_ttl)
+        assign_fallback_attributes(attrs, message) if message.stood_in?
         attrs
+      end
+
+      def assign_fallback_attributes(attributes, message)
+        assign_supported_attribute(attributes, :model_id, message.model_id)
+        assign_supported_attribute(attributes, :provider, message.provider)
       end
 
       def assign_supported_attribute(attributes, name, value)

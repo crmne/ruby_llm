@@ -208,7 +208,7 @@ RSpec.describe RubyLLM::Chat do
       payloads = []
       instrumenter = Object.new
       instrumenter.define_singleton_method(:instrument) do |name, payload, &block|
-        result = block.call(payload)
+        result = block&.call(payload)
         payloads << payload.dup if name == 'code_execution.ruby_llm'
         result
       end

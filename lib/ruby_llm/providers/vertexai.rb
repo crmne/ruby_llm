@@ -132,10 +132,10 @@ module RubyLLM
       def api_base_for(location)
         return @config.vertexai_api_base if @config.vertexai_api_base
 
-        if location.to_s == 'global'
-          'https://aiplatform.googleapis.com/v1beta1'
-        else
-          "https://#{location}-aiplatform.googleapis.com/v1beta1"
+        case location.to_s
+        when 'global' then 'https://aiplatform.googleapis.com/v1beta1'
+        when 'eu', 'us' then "https://aiplatform.#{location}.rep.googleapis.com/v1beta1"
+        else "https://#{location}-aiplatform.googleapis.com/v1beta1"
         end
       end
 

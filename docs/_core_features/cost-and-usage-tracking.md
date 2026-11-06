@@ -185,7 +185,7 @@ response = chat.with_provider_tools(:web_search).ask "What changed in Rails this
 response.tokens.server_tool_use # => {"web_search_requests" => 2}
 ```
 
-Web searches are `web_search_requests` on every provider that reports them. Other tools follow the same form, such as `web_fetch_requests` and `code_execution_requests`. Tools that did not run are left out, so a response that used none returns `nil`. `chat.tokens.server_tool_use` sums the whole conversation, retries included.
+Web searches are `web_search_requests` on every provider that reports them. Other tools follow the same form, such as `web_fetch_requests` and `code_execution_requests`. [Code you run in your own sandbox]({% link _advanced/code-execution.md %}#measuring-runs) has an entry of its own, with `code_execution_seconds`. Tools that did not run are left out, so a response that used none returns `nil`. `chat.tokens.server_tool_use` sums the whole conversation, retries included.
 
 Price the searches at your provider's published rate:
 

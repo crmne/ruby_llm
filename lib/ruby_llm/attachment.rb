@@ -84,7 +84,8 @@ module RubyLLM
 
     def self.from_h(data, config: nil) # :nodoc:
       data = data.transform_keys(&:to_sym)
-      new(data.fetch(:source), filename: data[:filename], resolution: data[:resolution]&.to_sym,
+      new(data.fetch(:source), filename: data[:filename], mime_type: data[:mime_type],
+                               resolution: data[:resolution]&.to_sym,
                                processing: data[:processing]&.to_sym, config:)
     end
 
@@ -109,6 +110,13 @@ module RubyLLM
     #
     #   RubyLLM::Attachment.new("lecture.mp4", processing: :agentic)
     #
+    # +mime_type:+ states the file's type, for a source RubyLLM cannot tell
+    # it from, such as an IO, instead of detecting it. A <tt>charset</tt>
+    # says how to read binary text; #mime_type leaves parameters out. A
+    # Rails attachment's type comes from its blob, so set it there for one.
+    #
+    #   RubyLLM::Attachment.new(io, filename: "export.csv", mime_type: "text/csv")
+    #
     # +config:+ is the Configuration a URL source is downloaded with. It
     # defaults to that of the chat or operation the attachment is given to,
     # then to the global one.
@@ -117,7 +125,7 @@ module RubyLLM
     # They can be read or fetched during construction to detect the MIME type.
     # Validate upload parameters before passing them here: an unchecked String
     # can access local files or internal network endpoints.
-    def initialize(source, filename: nil, resolution: nil, processing: nil, config: nil)
+    def initialize(source, filename: nil, mime_type: nil, resolution: nil, processing: nil, config: nil)
       check_option(:resolution, resolution, RESOLUTIONS)
       check_option(:processing, processing, PROCESSING_MODES)
 
@@ -128,7 +136,9 @@ module RubyLLM
       @source = source_type_cast
       @filename = filename || source_filename
 
-      determine_mime_type
+      @given_mime_type = mime_type
+      @mime_type = media_type(mime_type)
+      determine_mime_type unless @mime_type
     end
 
     def config # :nodoc:
@@ -278,7 +288,8 @@ module RubyLLM
     end
 
     def to_h # :nodoc:
-      { type: type, source: @source, filename: filename, resolution: resolution, processing: processing }.compact
+      { type: type, source: @source, filename: filename, mime_type: @given_mime_type, resolution: resolution,
+        processing: processing }.compact
     end
 
     def byte_size # :nodoc:
@@ -352,8 +363,20 @@ module RubyLLM
     def normalize_text_encoding
       return unless text? && @content.is_a?(String)
 
-      @content = @content.dup.force_encoding(Encoding::UTF_8) if @content.encoding == Encoding::ASCII_8BIT
+      @content = decoded_text(@content) if @content.encoding == Encoding::ASCII_8BIT
       @content = @content.scrub unless @content.valid_encoding?
+    end
+
+    def decoded_text(bytes)
+      charset = @given_mime_type.to_s[/charset="?([^";\s]+)/i, 1] || Encoding::UTF_8
+      bytes.dup.force_encoding(charset).encode(Encoding::UTF_8, invalid: :replace, undef: :replace)
+    rescue ArgumentError, EncodingError
+      bytes.dup.force_encoding(Encoding::UTF_8)
+    end
+
+    def media_type(mime_type)
+      type = mime_type.to_s.split(';').first.to_s.strip.downcase
+      type unless type.empty?
     end
 
     def determine_mime_type

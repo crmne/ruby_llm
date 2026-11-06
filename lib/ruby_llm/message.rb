@@ -38,6 +38,26 @@ module RubyLLM
 
     attr_writer :model_info # :nodoc:
 
+    # Returns the slug of the provider that produced the message, from its
+    # last successful attempt, or +nil+ when none is recorded, as on user
+    # messages. A reply from a model given to Chat#with_fallbacks names that
+    # model's provider.
+    def provider
+      @provider || ruby_llm_usage_entries.reverse.find(&:succeeded?)&.provider
+    end
+
+    # Marks the message as the work of a fallback model.
+    def stood_in(model:, provider:) # :nodoc:
+      @model ||= model
+      @provider = provider
+      @stood_in = true
+      self
+    end
+
+    def stood_in? # :nodoc:
+      @stood_in || false
+    end
+
     # The tool calls the assistant requested, as an Enumerable of ToolCall
     # objects in provider order, also readable by call ID. Empty when there
     # are none.
@@ -116,6 +136,7 @@ module RubyLLM
       @config = options[:config]
       @attachments = Attachment.wrap(options[:attachments], config: @config)
       @model = options[:model]
+      @provider = options[:provider]
       @supplied_cost = coerce_value(options[:cost], Cost)
       @tool_call_id = options[:tool_call_id]
       @provider_call_id = options[:provider_call_id] || options[:provider_tool_call_id]
@@ -366,6 +387,7 @@ module RubyLLM
         content: content,
         attachments: list_to_h(attachments),
         model: model,
+        provider: provider,
         cost: @supplied_cost && cost.to_h,
         reported_cost: tokens.reported_cost,
         tool_calls: tool_calls.empty? ? nil : tool_calls.transform_values(&:to_h),

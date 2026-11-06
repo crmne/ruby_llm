@@ -1084,6 +1084,49 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(reports).to eq([[chat.messages.second.tool_calls.keys.first, 'Working', 0.5]])
     end
 
+    it 'writes a code run to the usage ledger with the chat' do
+      sandbox = FakeSandbox.new { FakeSandbox.result(cpu_time: 2.5) }
+      allow(RubyLLM.config).to receive(:sandbox).and_return(sandbox)
+      chat = Chat.create!(model: model_id).with_code_execution
+      arguments = { 'language' => 'ruby', 'code' => 'p 1' }
+      call = RubyLLM::ToolCall.new(id: 'call_run', name: 'run_code', arguments:)
+      allow(chat.to_llm.provider).to receive(:complete).and_return(
+        RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { call.id => call }),
+        RubyLLM::Message.new(role: :assistant, content: 'done')
+      )
+
+      chat.ask('Run it')
+
+      row = chat.ruby_llm_usages.find_by(operation: 'code_execution')
+      expect(row.provider).to eq('sandbox')
+      expect(row.model).to eq('FakeSandbox')
+      expect(row.server_tool_use).to eq('code_execution_seconds' => 2.5)
+    end
+
+    it 'keeps the owner on the ledger row of a code run, and writes the row of a failed run' do
+      sandbox = FakeSandbox.new { raise 'the sandbox broke' }
+      allow(RubyLLM.config).to receive(:sandbox).and_return(sandbox)
+      owner = Chat.create!(model: model_id)
+      chat = Chat.create!(model: model_id).with_owner(owner).with_code_execution
+      arguments = { 'language' => 'ruby', 'code' => 'p 1' }
+      call = RubyLLM::ToolCall.new(id: 'call_run', name: 'run_code', arguments:)
+      allow(chat.to_llm.provider).to receive(:complete).and_return(
+        RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { call.id => call }),
+        RubyLLM::Message.new(role: :assistant, content: 'done')
+      )
+
+      begin
+        chat.ask('Run it')
+      rescue StandardError
+        nil
+      end
+
+      row = RubyLLM::ActiveRecord::Usage.find_by(operation: 'code_execution', chat: chat)
+      expect(row.status).to eq('failed')
+      expect(row.owner).to eq(owner)
+      expect(row.server_tool_use['code_execution_seconds']).to be_a(Float)
+    end
+
     it 'keeps a halted turn ended after a reload' do
       stub_const('ConcludeTool', Class.new(RubyLLM::Tool) { def execute = halt('Filed') })
       chat = Chat.create!(model: model_id).with_tools(ConcludeTool)

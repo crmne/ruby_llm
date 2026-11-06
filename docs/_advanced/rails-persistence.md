@@ -142,10 +142,11 @@ RubyLLM.models.refresh
 
 There is no application-owned `Model` class or configurable registry model class. `acts_as_chat` defines the `model` association against RubyLLM's private record, preserving referential integrity without putting provider metadata in your application models.
 
-On a message, `model` returns the ID from the last successful provider attempt. `model_info` looks up that ID in the registry:
+On a message, `model` returns the ID from the last successful provider attempt, and `provider` that attempt's provider. `model_info` looks up that ID in the registry:
 
 ```ruby
 response.model           # => "{{ site.models.openai_standard }}"
+response.provider        # => "openai"
 response.model_info.name
 ```
 

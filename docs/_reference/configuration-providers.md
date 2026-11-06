@@ -124,7 +124,7 @@ RubyLLM.configure do |config|
 
   # Vertex AI
   config.vertexai_project_id = ENV["GOOGLE_CLOUD_PROJECT"]
-  config.vertexai_location = ENV["GOOGLE_CLOUD_LOCATION"]
+  config.vertexai_location = ENV["GOOGLE_CLOUD_LOCATION"] # a region, "global", or the multi-regions "eu" and "us"
   config.vertexai_service_account_key = ENV["VERTEXAI_SERVICE_ACCOUNT_KEY"] # Optional: service account JSON key
   config.vertexai_api_base = ENV["VERTEXAI_API_BASE"] # optional custom Vertex AI endpoint
   config.vertexai_ranking_api_base = ENV["VERTEXAI_RANKING_API_BASE"] # optional Discovery Engine endpoint

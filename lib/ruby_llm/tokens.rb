@@ -151,7 +151,7 @@ module RubyLLM
 
     def self.aggregate_counts(tokens, reader) # :nodoc:
       tokens.filter_map(&reader).each_with_object({}) do |counters, total|
-        counters.each { |key, count| total[key] = total.fetch(key, 0) + count.to_i }
+        counters.each { |key, count| total[key] = total.fetch(key, 0) + (count.is_a?(Float) ? count : count.to_i) }
       end
     end
     private_class_method :aggregate_counts
@@ -200,7 +200,8 @@ module RubyLLM
     private
 
     def positive_counts(counts)
-      used = counts.to_h.to_h { |key, count| [key.to_s, count.to_i] }.select { |_, count| count.positive? }
+      used = counts.to_h.to_h { |key, count| [key.to_s, count.is_a?(Float) ? count : count.to_i] }
+                   .select { |_, count| count.positive? }
       used unless used.empty?
     end
   end

@@ -33,6 +33,7 @@ module RubyLLM
       # recorded cost, so RubyLLM::Message#to_h exports it.
       def to_llm
         entries = ruby_llm_usage_entries
+        succeeded = entries.reverse.find(&:succeeded?)
         RubyLLM::Message.new(
           role: role.to_sym,
           content: extract_content,
@@ -51,11 +52,19 @@ module RubyLLM
           provider_call_id: parent_tool_call&.provider_call_id,
           mcp_result: mcp_result,
           finish_reason: optional_column(:finish_reason),
-          model: entries.reverse.find(&:succeeded?)&.model,
+          model: succeeded&.model || stand_in_column(:model_id),
+          provider: (stand_in_column(:provider) unless succeeded),
           cache_until_here: cache_until_here?,
           cache_ttl: cache_ttl
         )
       end
+
+      # The fallback a reply with no successful attempt, such as a cancelled
+      # one, came from. On other roles these columns are the application's.
+      def stand_in_column(name)
+        optional_column(name) if role.to_s == 'assistant'
+      end
+      private :stand_in_column
 
       def ruby_llm_usage_entries # :nodoc:
         ruby_llm_usage_records.map(&:to_entry)
@@ -74,6 +83,14 @@ module RubyLLM
       # does, or a +model_id+ column the application keeps, or +nil+.
       def model_id
         to_llm.model_id || optional_column(:model_id)
+      end
+
+      # Returns the slug of the provider that produced the message, from its
+      # last successful attempt, or a +provider+ column the application keeps,
+      # or +nil+. RubyLLM writes +model_id+ and +provider+ columns, when the
+      # table has them, on replies a fallback model wrote.
+      def provider
+        to_llm.provider || optional_column(:provider)
       end
 
       # Returns the model from the registry, or +nil+ if it is unknown.
