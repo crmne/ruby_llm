@@ -2241,10 +2241,10 @@ module RubyLLM
               .map { |tool_call| unfinished_result(tool_call) }
     end
 
-    def unfinished_result(tool_call, finish_reason: nil)
+    def unfinished_result(tool_call)
       (remote_refusal(tool_call) if tool_call.remote?) ||
         Message.new(role: :tool, content: UNFINISHED_TOOL_RESULT, tool_call_id: tool_call.id,
-                    provider_call_id: tool_call.provider_call_id, finish_reason:)
+                    provider_call_id: tool_call.provider_call_id)
     end
 
     # A provider-executed call is closed with the refusal its provider
@@ -2709,7 +2709,7 @@ module RubyLLM
 
         record_tool_call_input(tool_call, nil) if tool_call_input(tool_call)
         run_callbacks(:before_message)
-        run_callbacks(:after_message, add_message(unfinished_result(tool_call, finish_reason: :cancelled)))
+        run_callbacks(:after_message, add_message(unfinished_result(tool_call).mark_cancelled))
       end
     end
 

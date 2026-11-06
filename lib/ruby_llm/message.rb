@@ -246,6 +246,11 @@ module RubyLLM
       finish_reason == :cancelled
     end
 
+    def mark_cancelled # :nodoc:
+      @finish_reason = :cancelled
+      self
+    end
+
     def with_attachments(attachments) # :nodoc:
       wrapped = Attachment.wrap(attachments, config: @config)
       dup.tap { |message| message.instance_variable_set(:@attachments, wrapped) }

@@ -128,6 +128,22 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.provider).to have_received(:complete).once
     end
 
+    it 'marks the refusal that closes a remote call' do
+      remote = RubyLLM::ToolCall.new(id: 'call_r', name: 'search', arguments: {}, remote: true)
+      local = RubyLLM::ToolCall.new(id: 'call_l', name: 'stop', arguments: {})
+      refusal = RubyLLM::Message.new(role: :tool, content: 'Denied', tool_call_id: 'call_r')
+      allow(chat.provider).to receive_messages(
+        complete: RubyLLM::Message.new(role: :assistant, content: '',
+                                       tool_calls: { 'call_l' => local, 'call_r' => remote }),
+        tool_approval_response: refusal
+      )
+
+      expect { chat.ask('Go on') }.to raise_error(RubyLLM::CancelledError)
+
+      expect(chat.messages.last).to be_cancelled
+      expect(chat).to be_complete
+    end
+
     it 'goes on with the next question' do
       allow(chat.provider).to receive(:complete).and_return(RubyLLM::Message.new(role: :assistant, content: 'Hi'))
 
