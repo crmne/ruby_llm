@@ -23,7 +23,7 @@ module RubyLLM
           payload_hash = Digest::SHA256.hexdigest(body)
 
           headers = {
-            'host' => URI.parse(base_url).host,
+            'host' => signed_host(base_url),
             'x-amz-content-sha256' => payload_hash,
             'x-amz-date' => amz_date
           }
@@ -85,10 +85,19 @@ module RubyLLM
           end
 
           conn.url_prefix = base_url
+          path = url.delete_prefix('/')
+          sent = conn.build_exclusive_url(path).request_uri
 
-          conn.public_send(method, url, payload) do |req|
-            req.headers.merge!(sign_headers(method.to_s.upcase, url, body, base_url:, service:))
+          conn.public_send(method, path, payload) do |req|
+            req.headers.merge!(sign_headers(method.to_s.upcase, sent, body, base_url:, service:))
           end
+        end
+
+        # HTTP clients send the port in the Host header unless it is the
+        # scheme's default.
+        def signed_host(base_url)
+          uri = URI.parse(base_url)
+          uri.port == uri.default_port ? uri.host : "#{uri.host}:#{uri.port}"
         end
 
         def canonical_query_string(raw_query)

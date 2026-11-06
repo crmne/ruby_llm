@@ -236,7 +236,7 @@ module RubyLLM
           signed = sign_headers(env.method.to_s.upcase, env.url.request_uri, env.body.to_s, base_url:, service:)
           { 'X-Amz-Security-Token' => nil }.merge(signed)
         end
-        Transport::Connection.new(self, @config, api_base: base_url, signer:)
+        Connection.new(self, @config, api_base: base_url, signer:)
       end
 
       def voxtral_transcription?(operation, model_id)
