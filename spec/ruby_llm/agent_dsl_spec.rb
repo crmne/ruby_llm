@@ -322,6 +322,71 @@ RSpec.describe RubyLLM::Agent do
       expect(agent.new(inputs: { quality: :low }).model.id).to eq(model_for(:openai, :temperature))
     end
 
+    context 'when the caller passes a model' do
+      let(:agent) do
+        Class.new(described_class) do
+          model model_for(:anthropic), provider: :anthropic
+        end
+      end
+
+      it 'replaces the declared model and its provider on a built chat' do
+        chat = agent.chat(model: model_for(:openai))
+
+        expect([chat.model.id, chat.provider.slug]).to eq([model_for(:openai), 'openai'])
+      end
+
+      it 'replaces the declared model and its provider on an agent instance' do
+        built = agent.new(model: model_for(:openai))
+
+        expect([built.model.id, built.provider.slug]).to eq([model_for(:openai), 'openai'])
+      end
+
+      it 'uses a provider the caller also passes' do
+        chat = agent.chat(model: 'unlisted-model', provider: :openai, assume_model_exists: true)
+
+        expect([chat.model.id, chat.provider.slug]).to eq(%w[unlisted-model openai])
+      end
+
+      it 'drops the protocol and registry options declared for the replaced model' do
+        declared = Class.new(described_class) do
+          model 'unlisted-model', provider: :anthropic, protocol: :anthropic, assume_model_exists: true
+        end
+
+        chat = declared.chat(model: model_for(:openai))
+
+        expect([chat.model.id, chat.provider.slug]).to eq([model_for(:openai), 'openai'])
+        expect(chat.instance_variable_get(:@protocol)).to be_nil
+      end
+
+      it 'does not run a model block' do
+        declared = Class.new(described_class) do
+          model(provider: :anthropic) { raise 'replaced model block ran' }
+        end
+
+        expect(declared.chat(model: model_for(:openai)).provider.slug).to eq('openai')
+      end
+
+      it 'keeps a declared provider when the agent declares no model' do
+        declared = Class.new(described_class) do
+          model provider: :openai, assume_model_exists: true
+        end
+
+        chat = declared.chat(model: 'unlisted-model')
+
+        expect([chat.model.id, chat.provider.slug]).to eq(%w[unlisted-model openai])
+      end
+    end
+
+    it 'keeps the declared model when the caller passes only a provider' do
+      agent = Class.new(described_class) do
+        model 'unlisted-model', provider: :anthropic, assume_model_exists: true
+      end
+
+      chat = agent.chat(provider: :openai)
+
+      expect([chat.model.id, chat.provider.slug]).to eq(%w[unlisted-model openai])
+    end
+
     it 'resolves the safety identifier from the agent inputs' do
       agent = Class.new(described_class) do
         model model_for(:openai, :temperature), provider: :openai

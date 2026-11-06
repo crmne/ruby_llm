@@ -110,6 +110,14 @@ end
 
 Options stay beside the block: `model(provider: :openai) { ... }`.
 
+A `model:` you pass when you build a chat replaces the declared model and its options. RubyLLM finds the new model's provider, unless you pass `provider:` too:
+
+```ruby
+SupportAgent.chat(model: "{{ site.models.anthropic_current }}", customer: current_customer)
+```
+
+An agent that declares a provider but no model keeps that provider.
+
 ## Structured Answers
 
 Give an agent a `schema`, and every answer comes back as data you read with `parsed`. This one triages incoming support email:
@@ -356,9 +364,11 @@ chat = SupportAgent.create!(customer: current_customer)
 SupportAgent.find(chat.id).ask "Where is my order R-1042?"
 ```
 
-`bin/rails generate ruby_llm:agent Support` writes the class to start from. Keywords that aren't declared inputs, such as `customer:` here, go to `Chat.create!`.
+`bin/rails generate ruby_llm:agent Support` writes the class to start from. Keywords that aren't declared inputs, such as `customer:` here, go to `Chat.create!`. A `model:` replaces the declared model and its options, as it does on a plain chat.
 
 `create` and `create!` save the agent's instructions with the new chat. `find` applies them in memory without saving, so a changed prompt reaches old chats without rewriting their history. `SupportAgent.sync_instructions(chat)` saves the current instructions explicitly. When you already have the record, `SupportAgent.new(chat: chat)` configures it without loading it again.
+
+`find`, `new(chat:)`, and `sync_instructions` apply the options declared with `model` only to a record on the declared model. A `model` block is the exception: its choice is unknown until it runs, so they always apply its options unless its declared provider differs from the record's.
 
 `create`, `create!`, and `find` raise without a `chat_class`. See [Durable Agents]({% link _advanced/durable-agents-overview.md %}) for agents that run in jobs and wait for people.
 
