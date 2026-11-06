@@ -30,9 +30,9 @@ The examples assume you have [configured the providers you use]({% link _getting
 
 Red cells show built-in support added in 2.0. Gray cells were already supported in 1.16. Outlined cells with a × mark missing integrations; use “Missing in 2.0” to find them. Select a cell for its sources and implementation notes.
 
-{% include provider_coverage_matrix.html compact=true %}
+{% include provider_coverage_matrix.html compact=true coverage=site.data.provider_coverage_2_0 coverage_url='/provider-coverage-2-0.json' %}
 
-The [Provider API Coverage]({% link _reference/provider-coverage.md %}) page records support at the audit date, with source references and remaining gaps. The comparison above uses the provider features documented at that date for both versions, so it includes features providers introduced after 1.16. It predates TypeSafe support, which arrived with [typed judgments in 2.1]({% link _reference/whats-new-in-2-1.md %}#typed-judgments).
+This comparison is the audit from 7 September 2026, kept as it was for this release. It uses the provider features documented at that date for both versions, so it includes features providers introduced after 1.16. It predates TypeSafe support, which arrived with [typed judgments in 2.1]({% link _reference/whats-new-in-2-1.md %}#typed-judgments). The [Provider API Coverage]({% link _reference/provider-coverage.md %}) page records current support, with source references and remaining gaps.
 
 ## Providers and Protocols
 
