@@ -31,14 +31,15 @@ module RubyLLM
 
       # Search results arrive as Google's redirect links. A page the model
       # chose to read through url_context arrives in the same list under its
-      # own address, and need not be a result.
+      # own address, and need not be a result. That rules out the links to
+      # Google's own results page too, whose query the model could choose.
       SEARCH_RESULT_LINK = 'https://vertexaisearch.cloud.google.com/grounding-api-redirect/'
 
       # Returns the pages the message's searches returned, as WebSource objects.
       def self.parse_web_sources(message)
         searches = message.server_tool_calls.select { |call| call.type == 'google_search' }
         pages = searches.flat_map { |call| Array(call.result) }.map { |chunk| chunk['web'] }
-        pages.select { |page| page['uri'].start_with?(SEARCH_RESULT_LINK) }.map do |page|
+        pages.select { |page| page['uri'].to_s.start_with?(SEARCH_RESULT_LINK) }.map do |page|
           WebSource.new(url: page['uri'], title: page['title'])
         end
       end

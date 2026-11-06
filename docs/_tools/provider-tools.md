@@ -176,13 +176,13 @@ Each `WebSource` has a `url` and, where the provider gives one, a `title`. The l
 | Anthropic | The page | The page title |
 | Gemini, Vertex AI | A Google redirect link that leads to the page | The site's domain |
 
-`web_sources` is empty on other providers and on Gemini's Interactions protocol. RubyLLM does not build the list from citations, which name only what the answer cites.
+`web_sources` is empty on other providers and on Gemini's Interactions protocol. RubyLLM does not build the list from citations, which name only what the answer cites. On Gemini and Vertex AI it holds only Google's redirect links, so a link to Google's own results page, which some answers about the weather include, isn't listed.
 
 Sources come from the outside world, so don't use them as an allowlist on their own. Before you let a chat act on an address from this list, such as opening it without asking, keep these in mind:
 
 * Anyone can publish a page that a search returns, and text the model reads can steer what it searches for.
 * OpenAI can list a page the model opened beside the pages its search found, and its API doesn't mark which is which. Text the model read can name that page, so an address carrying data can reach this list.
-* The list reports what already happened. The provider fetched those pages itself before your code saw them, so a page's address has already reached its site.
+* The list reports what already happened and blocks nothing. If the model opened a page, the provider may have requested it before your code saw the list, so check an address before your app opens it, and don't count on the list to stop a request.
 
 Citations can name a page the model chose in the same way.
 

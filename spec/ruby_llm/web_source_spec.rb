@@ -120,6 +120,23 @@ RSpec.describe RubyLLM::WebSource do
       expect(message_from('anthropic', calls).web_sources.map(&:title)).to eq(['Ruby 4.0.5 Released'])
     end
 
+    it "leaves out a link to Google's results page, whose query the model could choose" do
+      gemini_response.dig('candidates', 0, 'groundingMetadata', 'groundingChunks')
+                     .push('web' => { 'uri' => 'https://www.google.com/search?q=weather+in+Chicago,+IL',
+                                      'title' => 'Weather information for Chicago, IL' })
+      calls = RubyLLM::Protocols::Gemini.allocate.send(:metadata_server_tool_calls, gemini_response)
+
+      expect(message_from('gemini', calls).web_sources.map(&:title)).to eq(['ruby-lang.org'])
+    end
+
+    it 'skips a Gemini web chunk that has no address' do
+      gemini_response.dig('candidates', 0, 'groundingMetadata', 'groundingChunks')
+                     .push('web' => { 'title' => 'no-address.example' })
+      calls = RubyLLM::Protocols::Gemini.allocate.send(:metadata_server_tool_calls, gemini_response)
+
+      expect(message_from('gemini', calls).web_sources.map(&:title)).to eq(['ruby-lang.org'])
+    end
+
     it 'leaves out document chunks that ground a Gemini answer' do
       gemini_response.dig('candidates', 0, 'groundingMetadata', 'groundingChunks') << {
         'retrievedContext' => { 'uri' => 'fileSearchStores/store/documents/doc', 'title' => 'doc.pdf' }
