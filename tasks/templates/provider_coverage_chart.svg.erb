@@ -1,0 +1,32 @@
+<%-
+  scale = 410.0 / (((totals['maximum'] + 9) / 20) * 20).clamp(20, nil)
+  ticks = (0..((totals['maximum'] + 9) / 20)).map { |index| index * 20 }
+  rows = totals['groups']
+  height = 150 + rows.size * 50
+-%>
+<svg xmlns="http://www.w3.org/2000/svg" width="756" height="<%= height %>" viewBox="0 0 756 <%= height %>" font-family="Liberation Sans, Arial, Helvetica, sans-serif" role="img" aria-labelledby="coverage-chart-title coverage-chart-description">
+  <title id="coverage-chart-title">RubyLLM current provider API coverage</title>
+  <desc id="coverage-chart-description">Source audit of <%= totals['feature_count'] %> shared feature rows across <%= data['providers'].size %> providers on <%= data['audited_on'] %>. RubyLLM counts exclude partial and raw-options integrations; the outlined bar counts verified offerings within the scope. Full evidence: rubyllm.com/provider-coverage/</desc>
+  <rect width="756" height="<%= height %>" fill="#f7f3f1"/>
+  <text x="45" y="32" font-size="24" font-weight="700" fill="#2c2825">RubyLLM provider API coverage</text>
+  <text x="45" y="54" font-size="13" fill="#5c5551">Current support · <%= data['version'] %> · <%= data['providers'].size %> providers · <%= totals['feature_count'] %> shared feature rows</text>
+  <rect x="490" y="56" width="22" height="8" fill="#b30000"/>
+  <text x="522" y="65" font-size="12" fill="#2c2825">Built in</text>
+  <rect x="582" y="56" width="22" height="8" fill="none" stroke="#8a817c"/>
+  <text x="614" y="65" font-size="12" fill="#2c2825">Provider offers</text>
+<%- ticks.each do |tick| -%>
+  <line x1="<%= (197 + tick * scale).round(1) %>" y1="84" x2="<%= (197 + tick * scale).round(1) %>" y2="<%= 84 + rows.size * 50 %>" stroke="#e5dfdb"/>
+  <text x="<%= (197 + tick * scale).round(1) %>" y="<%= 104 + rows.size * 50 %>" font-size="11" text-anchor="middle" fill="#5c5551"><%= tick %></text>
+<%- end -%>
+<%- rows.each_with_index do |row, index| -%>
+<%- top = 98 + index * 50 -%>
+  <text x="186" y="<%= top + 11 %>" font-size="12" text-anchor="end" fill="#5c5551"><%= row['name'] %></text>
+  <rect x="197" y="<%= top %>" width="<%= (row['v2'] * scale).round(1) %>" height="9" fill="#b30000"/>
+  <text x="<%= (203 + row['v2'] * scale).round(1) %>" y="<%= top + 9 %>" font-size="12" fill="#2c2825"><%= row['v2'] %></text>
+  <rect x="197" y="<%= top + 12 %>" width="<%= (row['offered'] * scale).round(1) %>" height="9" fill="none" stroke="#8a817c"/>
+  <text x="<%= (203 + row['offered'] * scale).round(1) %>" y="<%= top + 21 %>" font-size="12" fill="#2c2825"><%= row['offered'] %></text>
+<%- end -%>
+  <text x="446" y="<%= 122 + rows.size * 50 %>" font-size="11" text-anchor="middle" fill="#5c5551">Feature/provider pairs</text>
+  <text x="45" y="<%= 136 + rows.size * 50 %>" font-size="10" fill="#5c5551">One count = one feature on one provider. The outlined bar shows verified offerings within the scope.</text>
+  <text x="45" y="<%= 148 + rows.size * 50 %>" font-size="9.5" fill="#5c5551">Source audit: <%= data['audited_on'] %>. Selected features, not an API completeness percentage. rubyllm.com/provider-coverage/</text>
+</svg>

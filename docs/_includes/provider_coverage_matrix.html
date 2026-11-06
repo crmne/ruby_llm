@@ -1,7 +1,8 @@
-{% assign coverage = site.data.provider_coverage %}
+{% assign coverage = include.coverage | default: site.data.provider_coverage %}
+{% assign coverage_url = include.coverage_url | default: '/provider-coverage.json' %}
 {% assign additional_count = coverage.features.size | minus: coverage.summary.feature_count %}
 {% capture coverage_method_url %}{% link _reference/provider-coverage.md %}#coverage-method{% endcapture %}
-<section class="coverage-explorer{% if include.compact %} coverage-compact{% endif %}" data-coverage-url="{{ '/provider-coverage.json' | relative_url }}" data-current="{% if include.current %}true{% else %}false{% endif %}" data-view="{% if include.current %}v2{% else %}compare{% endif %}" aria-label="Provider feature matrix">
+<section class="coverage-explorer{% if include.compact %} coverage-compact{% endif %}" data-coverage-url="{{ coverage_url | relative_url }}" data-current="{% if include.current %}true{% else %}false{% endif %}" data-view="{% if include.current %}v2{% else %}compare{% endif %}" aria-label="Provider feature matrix">
 {% if include.additional %}
 <p class="coverage-scope">These {{ additional_count }} rows cover additional provider APIs and service boundaries. <a href="{% link _reference/provider-coverage.md %}#coverage-matrix-heading">View the {{ coverage.summary.feature_count }} shared features</a>.</p>
 {% else %}
