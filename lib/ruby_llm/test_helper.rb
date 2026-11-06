@@ -69,17 +69,23 @@ module RubyLLM
         return super unless Script.active?
 
         reply, settings = Script.next_reply
+        raise reply if reply.is_a?(Exception)
+
         tool_call = reply if reply.is_a?(ToolCall)
         text = tool_call ? '' : reply.to_s
-        if block_given?
-          text.scan(/\S+\s*|\s+/).each do |word|
-            sleep settings[:interval] if settings[:interval]
-            yield Chunk.new(role: :assistant, content: word, model_id: options[:model].id)
-          end
-        end
+        stream(text, settings, options[:model], &) if block_given?
         Message.new(role: :assistant, content: text, model_id: options[:model].id,
                     tool_calls: tool_call && { tool_call.id => tool_call }, input_tokens: 1, output_tokens: 1,
                     reported_cost: settings[:cost])
+      end
+
+      private
+
+      def stream(text, settings, model)
+        text.scan(/\S+\s*|\s+/).each do |word|
+          sleep settings[:interval] if settings[:interval]
+          yield Chunk.new(role: :assistant, content: word, model_id: model.id)
+        end
       end
     end
 
@@ -96,7 +102,8 @@ module RubyLLM
 
     # Makes every chat answer with +replies+ until the test ends, in order,
     # repeating the last, instead of calling a provider. A String streams
-    # word by word, and #tool_call asks the conversation loop to run a tool.
+    # word by word, #tool_call asks the conversation loop to run a tool, and
+    # an exception such as RubyLLM::ServerError fails the request.
     # +cost:+ is what each reply reports, in dollars. +interval:+ is the
     # seconds between words, so a test can press Stop while a reply streams.
     #

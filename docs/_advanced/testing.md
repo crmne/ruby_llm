@@ -57,6 +57,16 @@ reply = chat.with_tools(Weather).ask("Weather in Berlin?")
 assert_equal "It is sunny.", reply.content
 ```
 
+## Testing Failures
+
+An exception makes the request fail, so a test can check what your app does then:
+
+```ruby
+stub_replies RubyLLM::ServerError.new("The provider is down")
+
+assert_raises(RubyLLM::ServerError) { chat.ask("Hi") }
+```
+
 ## Testing Streaming and Stop
 
 A reply streams word by word to any block. `interval:` sets the seconds between words, so a test has time to cancel:

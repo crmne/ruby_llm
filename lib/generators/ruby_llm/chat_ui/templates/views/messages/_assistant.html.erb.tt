@@ -10,6 +10,9 @@
     <style>#<%%= dom_id(assistant) %>_stream:not(:empty) ~ .thinking { display: none; }</style>
   <%% end %>
   <div data-chat-message-target="output"></div>
+  <%% if assistant.content.blank? && !streaming && assistant.tool_calls.none? %>
+    <p style="color: #666;">The model returned no reply.</p>
+  <%% end %>
   <%%= render "<%= message_model_name.underscore.pluralize %>/attachments", message: assistant %>
   <div style="font-size: 0.85em; color: #666; margin-top: 5px;">
     <%%= assistant.created_at&.strftime("%I:%M %p") %>

@@ -86,6 +86,12 @@ RSpec.describe RubyLLM::TestHelper do
     expect(chat.messages.find(&:tool_result?).content).to eq('Sunny in Berlin')
   end
 
+  it 'fails a request with a scripted exception' do
+    stub_replies RubyLLM::ServerError.new('The provider is down')
+
+    expect { chat.ask('Hi') }.to raise_error(RubyLLM::ServerError, 'The provider is down')
+  end
+
   it 'works on a persisted chat, across threads, and writes the ledger' do
     stub_replies 'Saved', cost: 0.5
     record = Chat.create!(model: model_for(:anthropic))

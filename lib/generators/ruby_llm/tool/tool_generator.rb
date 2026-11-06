@@ -28,6 +28,12 @@ module RubyLLM
         template 'tool.rb.tt', File.join('app/tools', class_path, "#{tool_file_name}.rb")
       end
 
+      def explain_next_step
+        return unless behavior == :invoke
+
+        say "Offer it with `tools #{tool_class_name}` in an agent, or with_tools(#{tool_class_name}) on a chat."
+      end
+
       def create_tool_view_partials
         template ui_template('tool_call.html.erb'),
                  File.join(message_view_path, 'tool_calls', "_#{tool_partial_name}.html.erb")
