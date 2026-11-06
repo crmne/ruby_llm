@@ -65,6 +65,16 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
     end
   end
 
+  it 'uploads the content before the transaction that writes the row commits' do
+    RubyLLM::ActiveRecord::ChatFile.transaction do
+      store.write('notes.md', 'one')
+
+      key = chat.ruby_llm_chat_files.sole.file.key
+      expect(ActiveStorage::Blob.service.exist?(key)).to be(true)
+    end
+    expect(store.read('notes.md')).to eq('one')
+  end
+
   it 'applies concurrent edits of one file from two processes one after the other' do
     if Chat.connection.adapter_name.match?(/sqlite/i) && ActiveRecord.version < Gem::Version.new('7.2')
       skip 'Before Rails 7.2, SQLite waits for a lock holding the GVL, so threads in one process cannot take turns'

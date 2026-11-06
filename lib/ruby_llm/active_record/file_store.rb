@@ -73,9 +73,9 @@ module RubyLLM
         content = RubyLLM::FileStore.bytes(content)
         path = path(path)
         type = content_type || RubyLLM::FileStore.content_type_for(path, content)
-        save(path, content.bytesize, type, RubyLLM::FileStore.digest(content)) do |record|
-          record.file.attach(io: StringIO.new(content), filename: File.basename(path), content_type: type)
-        end
+        blob = ::ActiveStorage::Blob.create_and_upload!(io: StringIO.new(content), filename: File.basename(path),
+                                                        content_type: type, identify: false)
+        save(path, content.bytesize, type, RubyLLM::FileStore.digest(content)) { |record| record.file.attach(blob) }
       end
 
       # Deletes the file at +path+ and returns its StoredFile, or +nil+. A
