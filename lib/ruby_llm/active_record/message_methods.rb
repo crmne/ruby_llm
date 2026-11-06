@@ -200,6 +200,12 @@ module RubyLLM
         to_llm.halted?
       end
 
+      # Returns whether this is the part of a streamed reply the chat kept
+      # when it was cancelled. See RubyLLM::Message#cancelled?.
+      def cancelled?
+        to_llm.cancelled?
+      end
+
       # Returns why the model stopped, as the Symbol RubyLLM::Message#finish_reason reports.
       def finish_reason
         optional_column(:finish_reason)&.to_sym

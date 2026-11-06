@@ -26,6 +26,7 @@ After reading this guide, you will know:
 * How to keep tool results within the model's context window.
 * How a tool ends the turn without another model call.
 * How to retry without a parameter the model doesn't take.
+* What a cancelled reply keeps.
 * How to chat with Kimi models on Moonshot AI.
 * How to chat with MiniMax's M3 models.
 * How to chat with GLM models on Z.ai.
@@ -280,6 +281,10 @@ chat.with_temperature(0.2).with_fallbacks(drop_unsupported: true)
 ```
 
 See [Dropping Unsupported Parameters]({% link _advanced/error-handling.md %}#dropping-unsupported-parameters).
+
+## Cancelled Replies Keep Their Text
+
+A streamed reply you cancel now stays in the conversation as far as it got, marked `cancelled?`, so the model sees what the person read. See [Cancelling a Stream]({% link _core_features/streaming.md %}#cancelling-a-stream).
 
 ## Moonshot AI
 

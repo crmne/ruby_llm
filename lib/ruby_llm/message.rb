@@ -200,6 +200,13 @@ module RubyLLM
       finish_reason == :halted
     end
 
+    # Returns whether this is the part of a streamed reply the chat kept
+    # when it was cancelled (see Chat#cancel). Its finish reason is
+    # +:cancelled+.
+    def cancelled?
+      finish_reason == :cancelled
+    end
+
     def with_attachments(attachments) # :nodoc:
       wrapped = Attachment.wrap(attachments, config: @config)
       dup.tap { |message| message.instance_variable_set(:@attachments, wrapped) }

@@ -125,6 +125,13 @@ rescue RubyLLM::CancelledError
 end
 ```
 
+The text streamed before the cancel stays in the conversation as an assistant message, so what the person read is what the model sees next. It is marked `cancelled?`, with the finish reason `:cancelled`, and goes to the model like any other reply. Tool calls the reply had not finished and its partial thinking are left out, and a reply that streamed no text adds nothing. To drop the partial reply instead, remove it after the cancel:
+
+```ruby
+chat.messages.pop if chat.messages.last&.cancelled?           # a plain chat
+chat.messages.last.destroy if chat.messages.last&.cancelled?  # a Rails chat
+```
+
 With `acts_as_chat`, `cancel` records the cancellation in the chat record's `cancelled` column. That lets a controller stop a generation running in a background job:
 
 ```ruby

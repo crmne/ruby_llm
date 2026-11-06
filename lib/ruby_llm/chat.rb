@@ -658,7 +658,9 @@ module RubyLLM
     # the chat can be reused. The tasks that pending tool calls wait on are
     # cancelled then too; see #pending_tasks. Tool calls left without a
     # result are closed as unfinished, so the next #ask can go on and no
-    # tool runs twice. A tool that already returned keeps its result.
+    # tool runs twice. A tool that already returned keeps its result. The
+    # text a cancelled stream showed stays as a reply that is
+    # Message#cancelled?.
     def cancel
       @cancelled = true
       self
@@ -1845,12 +1847,25 @@ module RubyLLM
       messages.reverse_each.take_while(&:tool_result?).find(&:halted?)
     end
 
-    def generate_once(stream_tracker: nil, usage_start: nil, &block)
+    def generate_once(stream_tracker: nil, usage_start: nil, &)
+      usage_start ||= usage_entries.length
+      resumed = unfinished?(messages.last)
+      streamed = +''
+      tracker = proc do |chunk|
+        streamed << chunk.content if chunk.content.is_a?(String)
+        stream_tracker&.call(chunk)
+      end
+      generate_attempt(stream_tracker: tracker, usage_start:, &)
+    rescue CancelledError
+      keep_cancelled_reply(streamed, usage_start) unless resumed
+      raise
+    end
+
+    def generate_attempt(stream_tracker:, usage_start:, &block)
       raise_if_cancelled!
 
       result = nil
       entries_before = usage_entries.length
-      usage_start ||= entries_before
       payload = instrumentation_payload(streaming: block_given?)
       announced = block_given?
       resumed = messages.last if unfinished?(messages.last)
@@ -1871,6 +1886,18 @@ module RubyLLM
         event[:response_tokens] ||= Tokens.aggregate(usage_entries[entries_before..].map(&:tokens))
       end
       result
+    end
+
+    # Keeps the text a cancelled stream showed, as a reply marked
+    # cancelled. Tool calls it had not finished and its thinking, whose
+    # signature would not verify, are left out.
+    def keep_cancelled_reply(text, usage_start)
+      return if text.nil? || text.strip.empty?
+
+      reply = Message.new(role: :assistant, content: text, model: @model.id, finish_reason: :cancelled)
+      link_completion_usage(reply, usage_start)
+      add_message(reply)
+      run_callbacks(:after_message, reply)
     end
 
     def record_generated_message(result, usage_start, announce: true, resumed: nil, keep_unfinished: false)

@@ -177,6 +177,10 @@ Give tools that legitimately run longer than ten minutes their own limit with [`
 
 In 2.1, a cancelled chat left its unanswered tool calls open: `ask` raised `PendingToolCallsError` and `complete` ran them, which ran a tool a second time if the cancel arrived after it returned. A tool that returned now keeps its result, and `RubyLLM::CancelledError` closes every other pending call as unfinished, including calls waiting for approval or input, so the next `ask` goes on. Code that checks for pending calls after a cancel finds none.
 
+## Cancelled Streams Keep Their Text
+
+In 2.1, cancelling a streamed reply discarded it: a plain chat added nothing, and a Rails chat deleted the reply record whose chunks it had broadcast. In 2.2, the text streamed so far stays as an assistant message whose `cancelled?` is `true` and whose finish reason is `:cancelled`, and the next request sends it. `after_message` runs for it, and a Rails chat saves it. To keep the old behavior, remove it after the cancel, as [Cancelling a Stream]({% link _core_features/streaming.md %}#cancelling-a-stream) shows.
+
 ## Empty Streams Raise
 
 A streamed request whose response holds no events, such as an empty body or a plain JSON body from a gateway that ignores `stream: true`, returned a blank assistant message in 2.1. It now raises `RubyLLM::Error` and adds nothing to the transcript.
