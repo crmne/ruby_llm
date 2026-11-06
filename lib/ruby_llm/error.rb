@@ -4,9 +4,8 @@ module RubyLLM
   # Error is the base class for provider-operation errors raised by
   # RubyLLM, including API, network, capability, and provider response-shape
   # failures. When an HTTP response is available, it wraps that response and
-  # normalizes the message across providers. When the provider refuses a
-  # conversation, #request_shape describes what it was sent. Subclasses map
-  # common HTTP status codes: BadRequestError (400), UnauthorizedError (401),
+  # normalizes the message across providers. Subclasses map common HTTP
+  # status codes: BadRequestError (400), UnauthorizedError (401),
   # PaymentRequiredError (402), ForbiddenError (403), RateLimitError (429),
   # ServerError (500), ServiceUnavailableError (502 to 504), and
   # OverloadedError (529).
@@ -93,7 +92,7 @@ module RubyLLM
     #     Rails.logger.error("#{e.message}\n#{e.request_shape}")
     #     Rails.error.report(e, context: { request_shape: e.request_shape&.to_h })
     #
-    def request_shape
+    def request_shape # :nodoc:
       return unless request_protocol
       return @request_shape if defined?(@request_shape)
 

@@ -26,6 +26,7 @@ After reading this guide, you will know:
 * Why Claude on Bedrock now speaks the Anthropic Messages API, and how to keep Converse.
 * Which job predicates replace `done?` and `completed?`.
 * Why agents name their chat record with `chat_class`.
+* Which APIs left the documentation but keep working.
 
 This guide covers **2.1 to 2.2**. Coming from 2.0? Follow the [2.1 upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.1.1/docs/_reference/upgrading.md) with RubyLLM 2.1 first.
 
@@ -531,6 +532,10 @@ end
 Calls to the shared modules change the same way, so `Protocols::ChatCompletions::Media.format_content` becomes `Protocols::ChatCompletions::Media.render_content`.
 
 A few methods keep their names: `format_cache_option_keys`, `format_for`, `extract_capabilities`, `extract_citations` in Chat Completions, and `extract_tool_calls` in the Anthropic, Cohere, and Converse streams.
+
+## Request Shapes Are No Longer Documented
+
+`error.request_shape` and `RubyLLM::RequestShape`, with its `Part`, `Problem`, `ToolRound`, and `Turn` classes, are no longer part of the documented API. They keep working through 2.x, so code that logs `e.request_shape` or reports `e.request_shape&.to_h` needs no change.
 
 ## Deploy Without Mixing Versions
 

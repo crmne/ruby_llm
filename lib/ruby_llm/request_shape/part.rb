@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  class RequestShape
+  class RequestShape # :nodoc: all
     # A Part describes one piece of a turn by its kind and size, never by
     # its content.
     #
@@ -12,7 +12,7 @@ module RubyLLM
     #   part.signed? # => true
     #   part.to_s    # => "call find_tasks (args 42 chars), signed"
     #
-    class Part
+    class Part # :nodoc:
       include Support::Inspectable
 
       TEXT_KINDS = %i[text thinking].freeze

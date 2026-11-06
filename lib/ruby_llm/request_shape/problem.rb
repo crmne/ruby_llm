@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  class RequestShape
+  class RequestShape # :nodoc: all
     # A Problem is something in a request that providers are known to
     # reject, found by the protocol that rendered it: a part with no data, a
     # tool round whose calls and results do not pair up, a step that lacks
@@ -12,7 +12,7 @@ module RubyLLM
     #   problem.part    # => 0
     #   problem.to_s    # => "problem at #3, part 0: thinking part carries no data"
     #
-    class Problem
+    class Problem # :nodoc:
       include Support::Inspectable
 
       # What is wrong: +:part_without_data+, +:empty_turn+,
