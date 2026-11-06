@@ -368,6 +368,8 @@ SupportAgent.find(chat.id).ask "Where is my order R-1042?"
 
 `create` and `create!` save the agent's instructions with the new chat. `find` applies them in memory without saving, so a changed prompt reaches old chats without rewriting their history. `SupportAgent.sync_instructions(chat)` saves the current instructions explicitly. When you already have the record, `SupportAgent.new(chat: chat)` configures it without loading it again.
 
+`find`, `new(chat:)`, and `sync_instructions` apply the options declared with `model` only to a record on the declared model. A `model` block is the exception: its choice is unknown until it runs, so they always apply its options unless its declared provider differs from the record's.
+
 `create`, `create!`, and `find` raise without a `chat_class`. See [Durable Agents]({% link _advanced/durable-agents-overview.md %}) for agents that run in jobs and wait for people.
 
 ## Using an Agent

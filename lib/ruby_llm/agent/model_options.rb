@@ -43,9 +43,11 @@ module RubyLLM
         declared = chat_kwargs[:model]
         declared = declared.id if declared.is_a?(Model)
         return true if declared.nil? || declared.is_a?(Proc) || declared == record.model_id
-        return true if Models::Aliases.resolve(declared, record.provider) == record.model_id
 
-        Models.find(declared, provider: record.provider).id == record.model_id
+        provider = record.provider || chat_kwargs[:provider]
+        return true if Models::Aliases.resolve(declared, provider) == record.model_id
+
+        Models.find(declared, provider:).id == record.model_id
       rescue ModelNotFoundError
         false
       end

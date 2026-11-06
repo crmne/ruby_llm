@@ -705,9 +705,20 @@ RSpec.describe RubyLLM::Agent do
         model 'claude-sonnet-5', provider: :openrouter, assume_model_exists: true
       end
       created = declared.create!
+      expect(created.model_id).to eq('anthropic/claude-sonnet-5')
       allow(RubyLLM::Models).to receive(:find).and_raise(RubyLLM::ModelNotFoundError, 'gone')
 
       expect(declared.find(created.id).assume_model_exists).to be(true)
+    end
+
+    it 'does not match a pending record to an alias on another provider' do
+      declared = Class.new(described_class) do
+        chat_class Chat
+        model 'claude-opus-4-1', provider: :vertexai, protocol: :anthropic
+      end
+      record = Chat.new(model: 'anthropic.claude-opus-4-1-20250805-v1:0')
+
+      expect(declared.sync_instructions(record).protocol).to be_nil
     end
 
     it 'keeps a protocol the caller passes for the declared model' do
