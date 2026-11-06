@@ -37,7 +37,8 @@ module RubyLLM
 
         def report(server, error)
           RubyLLM.logger.warn("MCP server #{server.name} is unreachable, so its tools sit out: #{error.message}")
-          RubyLLM.instrument('mcp_unreachable.ruby_llm', server: server.name, error: error.message)
+          RubyLLM.instrument('mcp_unreachable.ruby_llm', { server: server.name, error: error.message },
+                             config: server.send(:config))
         end
 
         # Returns whether this caller started the backoff.

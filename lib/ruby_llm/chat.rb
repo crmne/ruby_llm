@@ -2166,7 +2166,7 @@ module RubyLLM
       list = request_history(list)
       list = @file_references.view(list) if @file_references
       list = context_budget_for_model.fit(list) if @context_budget
-      list = CodeExecution.for_model(with_mcp_outages(with_skill_listing(list)))
+      list = CodeExecution.for_model(with_skill_listing(list))
       return list unless @provider
 
       @provider.preprocess_messages(list, model: @model, protocol: @protocol,
@@ -2258,7 +2258,7 @@ module RubyLLM
     def provider_completion(usage_recorder:, progress_recorder: nil, stream_tracker: nil, &)
       raise_if_cancelled!
 
-      request_messages = preprocessed_messages
+      request_messages = with_mcp_outages(preprocessed_messages)
       tool_call_ids = ToolCallIds.new
       streamed = false
       tracker = proc do |chunk|
