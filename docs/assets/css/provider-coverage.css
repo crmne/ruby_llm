@@ -96,3 +96,8 @@
   .coverage-definitions { grid-template-columns: 1fr; gap: 4px; }
   .coverage-definitions dd { margin-bottom: 12px; }
 }
+.home-coverage { margin: 48px 0; }
+.home-coverage .coverage-scope, .home-coverage .coverage-controls, .home-coverage .coverage-results { display: none; }
+.home-coverage .coverage-table thead th { height: 132px; }
+.home-coverage-skip { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.home-coverage-skip:focus { position: static; width: auto; height: auto; overflow: visible; clip-path: none; }
