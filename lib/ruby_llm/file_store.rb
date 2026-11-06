@@ -49,6 +49,9 @@ module RubyLLM
   class FileStore
     include Enumerable
 
+    # Raised by #delete for a path that is a folder.
+    class FolderError < ArgumentError; end # :nodoc:
+
     # Converted texts each store keeps in memory, by default.
     CACHED_TEXTS = 100
 
@@ -298,7 +301,7 @@ module RubyLLM
     end
 
     def refuse_folder(path)
-      raise ArgumentError, "#{path} is a folder: delete it with delete_folder"
+      raise FolderError, "#{path} is a folder: delete it with delete_folder"
     end
 
     def refuse_file(path)

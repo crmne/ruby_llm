@@ -494,6 +494,12 @@ RSpec.describe RubyLLM::FileStore::Tools do
                               new_text: 'b')[:error]).to eq(".notes is not inside the chat's files")
     end
 
+    it 'answers delete_file with the reason for a hidden path, not as a folder' do
+      chat.with_file_store(root, tools: %i[read delete])
+
+      expect(call(:delete_file, path: '.notes')[:error]).to eq(".notes is not inside the chat's files")
+    end
+
     it 'answers a write the file system refuses, without naming the folder on the host' do
       expect(call(:write_file, path: "#{'a' * 300}.md", content: 'x')[:error]).to eq('File name too long')
     end

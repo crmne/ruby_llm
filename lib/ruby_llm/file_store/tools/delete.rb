@@ -39,7 +39,7 @@ module RubyLLM
           raise ToolError, "There is no file at #{path}. List the files with list_files." unless file
 
           "Deleted #{file.path}."
-        rescue ArgumentError
+        rescue FolderError
           raise ToolError, "#{path} is a folder. Delete its files one by one."
         end
       end
