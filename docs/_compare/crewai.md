@@ -334,7 +334,7 @@ Flows give you things a method doesn't. `and_` and `or_` combine triggers, sever
 
 The [`@persist`](https://docs.crewai.com/edge/en/concepts/flows#flow-persistence) decorator saves a flow's state to SQLite by default, and `kickoff(inputs={"id": ...})` loads the latest snapshot and continues. You can write your own `FlowPersistence` for other storage. A crew can [checkpoint](https://docs.crewai.com/edge/en/concepts/crews#checkpointing) to JSON files after each task and resume from one.
 
-RubyLLM saves conversations, not workflow objects. A local variable in a workflow class is gone when the process ends. An agent's chat, with `chat_class Chat` set to an `acts_as_chat` model, is rows in your application's database, so a job can run one move and enqueue the next:
+RubyLLM saves conversations, not workflow objects. A local variable in a workflow class is gone when the process ends. Add `chat_class Chat` to `Researcher`, with an `acts_as_chat` model, and its chat is rows in your application's database, so a job can run one move and enqueue the next:
 
 ```ruby
 class ResearchTurnJob < ApplicationJob
@@ -418,7 +418,7 @@ def on_slack_feedback(flow_id: str, slack_message: str):
     return result
 ```
 
-The reviewer writes free text, and the model in `llm` turns it into one of the outcomes in `emit`.
+`post_to_slack` stands for your own notification code, as it does in the documentation. The reviewer writes free text, and the model in `llm` turns it into one of the outcomes in `emit`.
 
 In RubyLLM, the tool declares that it needs approval. `ApplicationAgent` is the base class the install generator writes, with `chat_class Chat`:
 
@@ -448,7 +448,7 @@ chat.approve params[:tool_call_id]
 chat.complete
 ```
 
-`chat.pending_approvals` lists the calls to show the reviewer, and `chat.deny` sends the model a refusal instead.
+You still scope the lookup and authorize the reviewer in your controller, as you would for any other action. `chat.pending_approvals` lists the calls to show the reviewer, and `chat.deny` sends the model a refusal instead.
 
 The two gate different things. CrewAI reviews what a step produced, and routes on what the reviewer said. RubyLLM stops an action before it happens, and takes a yes or a no. It doesn't read free text into an outcome, and notifying the reviewer is your application's code, such as a mailer or a Slack call. See [Controlling Tool Execution]({% link _tools/tool-execution.md %}).
 
@@ -531,6 +531,8 @@ end
 
 RubyLLM::ActiveRecord::Usage.where(workflow_id: "article-42").sum(:total_cost)
 ```
+
+`sum` skips an attempt whose cost is unknown, so check `where(total_cost: nil)` when you need the whole bill.
 
 See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}).
 

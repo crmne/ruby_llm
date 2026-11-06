@@ -20,7 +20,7 @@ RSpec.describe 'RubyLLM and Pydantic AI guide', type: :task do
   it 'answers for the customer through its tool and returns the schema' do
     stub_anthropic(tool_turn('customer_balance'), JSON.generate(advice))
 
-    expect { evaluate('class CustomerBalance') }.to output(/"block_card" => false/).to_stdout
+    expect { evaluate('class CustomerBalance') }.to output(/"block_card"\s*=>\s*false/).to_stdout
 
     first = provider_requests.first
     expect(first['model']).to eq(model)

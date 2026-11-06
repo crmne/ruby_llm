@@ -142,6 +142,13 @@ RSpec.describe 'RubyLLM and LlamaIndex guide', type: :task do
       expect(result.to_s).to include('search_result', source_id, policy)
     end
 
+    it 'tells the model when no article matches' do
+      silently { evaluate('class SearchDocs') }
+      allow(Article).to receive(:search).and_return([])
+
+      expect(SearchDocs.new.execute(query: 'nothing')).to eq('No articles found')
+    end
+
     it 'reads citations that point back at the record' do
       silently { evaluate('class SearchDocs') }
       allow(GlobalID::Locator).to receive(:locate).and_call_original

@@ -252,6 +252,7 @@ class SearchDocs < RubyLLM::Tool
     results = Article.search(query).map do |article|
       { title: article.title, source_id: article.to_global_id.to_s, text: article.body }
     end
+    return "No articles found" if results.empty?
 
     RubyLLM::SearchResults.new(*results)
   end
@@ -395,7 +396,7 @@ chat.approve params[:tool_call_id]
 chat.complete
 ```
 
-Nothing is serialized by hand, and the pending call survives a deploy. An approval is a decision on a tool call, `approve` or `deny`. See [Controlling Tool Execution]({% link _tools/tool-execution.md %}) and [Agents in Background Jobs]({% link _advanced/durable-agents.md %}).
+Nothing is serialized by hand, and the pending call survives a deploy. An approval is a decision on a tool call, `approve` or `deny`. You still scope the lookup and authorize the reviewer in your controller, as you would for any other action. See [Controlling Tool Execution]({% link _tools/tool-execution.md %}) and [Agents in Background Jobs]({% link _advanced/durable-agents.md %}).
 
 ## Workflows
 
