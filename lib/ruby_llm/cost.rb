@@ -182,7 +182,8 @@ module RubyLLM
     # Returns the sum of all components in US dollars, or the exact amount
     # the provider reported when it reported one. Returns +nil+ when there
     # is no token usage, or when pricing is missing for tokens that were
-    # used and the provider reported no cost.
+    # used and the provider reported no cost. A calculated total covers only
+    # the counts the provider reported, so partial usage can leave out charges.
     def total
       return nil unless @complete
       return nil unless tokens?
