@@ -84,4 +84,35 @@ RSpec.describe RubyLLM::Providers::OllamaCloud do
       expect(models.first.modalities.input).to eq(%w[text])
     end
   end
+
+  describe 'judgments' do
+    let(:model) { RubyLLM::Model.default('clef:27b', 'ollama_cloud') }
+    let(:question) { { urgent: { type: :probability, instructions: 'Is this urgent?' } } }
+
+    before do
+      RubyLLM.configure { |config| config.ollama_cloud_api_key = 'test' }
+    end
+
+    it 'judges through System One' do
+      provider = described_class.new(RubyLLM.config)
+
+      expect(provider.send(:resolve_protocol, nil, model, operation: :judge)).to eq(described_class::SystemOne)
+    end
+
+    it 'posts to systemone and raises what the API answers' do
+      request = stub_request(:post, 'https://ollama.com/v1/systemone').to_return(
+        status: 402, headers: { 'Content-Type' => 'application/json' },
+        body: { error: 'this model is not included in your free usage, add usage credits to pay as you go: ' \
+                       'https://ollama.com/settings or upgrade for included usage: https://ollama.com/upgrade. ' \
+                       'Try gemma4:31b-cloud, which is in the Free plan. ' \
+                       '(ref: 13ef7e0b-7246-4bc2-89e4-c4fff83c1c84)' }.to_json
+      )
+
+      expect do
+        RubyLLM.judge('Help', model: 'clef:27b', provider: :ollama_cloud, assume_model_exists: true,
+                              questions: question)
+      end.to raise_error(RubyLLM::PaymentRequiredError, /not included in your free usage/)
+      expect(request).to have_been_requested
+    end
+  end
 end
