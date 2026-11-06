@@ -12,6 +12,7 @@ RSpec.describe RubyLLM::Chat do
   ensure
     WebMock.enable!
     server.close
+    sockets.each(&:close)
   end
 
   let(:server) { TCPServer.new('127.0.0.1', 0) }
@@ -20,10 +21,12 @@ RSpec.describe RubyLLM::Chat do
     RubyLLM.context do |config|
       config.anthropic_api_base = "http://127.0.0.1:#{port}"
       config.request_timeout = 1
+      config.max_retries = 1
       config.retry_interval = 0.01
     end
   end
   let(:requests) { Queue.new }
+  let(:sockets) { [] }
 
   def ask(text)
     chat.ask(text) { |_chunk| nil }
@@ -46,6 +49,7 @@ RSpec.describe RubyLLM::Chat do
     Thread.new do
       loop do
         socket = server.accept
+        sockets << socket
         head = socket.gets("\r\n\r\n")
         socket.read(head[/^content-length: (\d+)/i, 1].to_i)
         requests << true
@@ -56,11 +60,11 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
-  def cancel_during_stall(cancel)
+  def cancel_during_stall
     Thread.new do
       requests.pop
       sleep 0.2
-      cancel.call
+      cancel_chat
     end
   end
 
@@ -78,7 +82,7 @@ RSpec.describe RubyLLM::Chat do
   shared_examples 'a stalled request' do
     it 'stops retrying and raises CancelledError at the timeout' do
       stall
-      cancel_during_stall(cancel)
+      cancel_during_stall
 
       expect { ask('Hi') }.to raise_error(RubyLLM::CancelledError)
       expect(requests.size).to eq(0)
@@ -87,7 +91,7 @@ RSpec.describe RubyLLM::Chat do
 
     it 'keeps the partial reply when text streamed before the stall' do
       stall(text_events)
-      cancel_during_stall(cancel)
+      cancel_during_stall
 
       expect { ask('Hi') }.to raise_error(RubyLLM::CancelledError)
 
@@ -99,7 +103,7 @@ RSpec.describe RubyLLM::Chat do
     it 'keeps the attempt on the ledger' do
       usage = usage_events
       stall(text_events)
-      cancel_during_stall(cancel)
+      cancel_during_stall
 
       expect { ask('Hi') }.to raise_error(RubyLLM::CancelledError)
 
@@ -109,7 +113,7 @@ RSpec.describe RubyLLM::Chat do
 
     it 'leaves the chat usable' do
       stall
-      cancel_during_stall(cancel)
+      cancel_during_stall
       expect { ask('Hi') }.to raise_error(RubyLLM::CancelledError)
 
       llm = chat.respond_to?(:to_llm) ? chat.to_llm : chat
@@ -122,30 +126,34 @@ RSpec.describe RubyLLM::Chat do
 
   context 'with a plain chat' do
     let(:chat) { context.chat(model: model_for(:anthropic), provider: :anthropic) }
-    let(:cancel) { -> { chat.cancel } }
+
+    def cancel_chat
+      chat.cancel
+    end
 
     it_behaves_like 'a stalled request'
 
     it 'stops retrying a request that waits for its whole response' do
       stall
-      cancel_during_stall(cancel)
+      cancel_during_stall
 
       expect { chat.ask('Hi') }.to raise_error(RubyLLM::CancelledError)
       expect(requests.size).to eq(0)
     end
 
-    it 'still raises the timeout on a chat nobody cancelled' do
+    it 'still retries and raises the timeout on a chat nobody cancelled' do
       stall
 
       expect { chat.ask('Hi') { |_chunk| nil } }.to raise_error(RubyLLM::ConnectionError)
+      expect(requests.size).to eq(2)
     end
   end
 
   context 'with a record cancelled from elsewhere' do
     let(:chat) { Chat.create!(model: model_for(:anthropic)).with_context(context) }
-    let(:cancel) do
-      id = chat.id
-      -> { Chat.connection_pool.with_connection { Chat.where(id:).update_all(cancelled: true) } }
+
+    def cancel_chat
+      Chat.connection_pool.with_connection { Chat.where(id: chat.id).update_all(cancelled: true) }
     end
 
     it_behaves_like 'a stalled request'
