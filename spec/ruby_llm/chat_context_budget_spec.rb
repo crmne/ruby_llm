@@ -250,6 +250,116 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  describe 'window:' do
+    before { allow(chat.model).to receive(:context_window).and_return(nil) }
+
+    it 'reads back with the shares, and resets with nil' do
+      chat.with_context_budget(window: 10_000, per_request: 0.7)
+
+      expect(chat.context_budget).to eq(window: 10_000, per_request: 0.7)
+      expect(chat.with_context_budget(nil).context_budget).to be_nil
+    end
+
+    it 'gives the shares a window for a model the registry does not know' do
+      chat.with_tools(tool_returning('fetch', 'y' * 100_000)).with_context_budget(window: 10_000, per_result: 0.25)
+      allow(chat.provider).to receive(:complete).and_return(call_message('fetch'), answer)
+
+      chat.ask('Fetch')
+
+      expect(chat.messages.find(&:tool_result?).content.length).to be < 100_000
+    end
+
+    it 'leaves results out of a request by that window' do
+      chat.with_context_budget(window: 10_000, per_request: 0.7)
+      6.times { |index| add_round(index, 3_000) }
+      sent = sent_messages
+
+      chat.complete
+
+      expect(sent.first.find(&:tool_result?).content).to include('left out')
+    end
+
+    it 'wins over the window the registry knows' do
+      allow(chat.model).to receive(:context_window).and_return(1_000_000)
+      chat.with_context_budget(window: 10_000, per_request: 0.7)
+      6.times { |index| add_round(index, 3_000) }
+      sent = sent_messages
+
+      chat.complete
+
+      expect(sent.first.find(&:tool_result?).content).to include('left out')
+    end
+
+    it 'rejects anything but a positive whole number' do
+      [0, -1, 1.5, '128000'].each do |window|
+        expect { chat.with_context_budget(window:, per_request: 0.7) }.to raise_error(ArgumentError, /window/)
+      end
+    end
+
+    it 'needs a share to apply it to' do
+      expect { chat.with_context_budget(window: 10_000) }.to raise_error(ArgumentError, /per_result/)
+    end
+
+    it 'is taken by the Agent macro' do
+      agent = Class.new(RubyLLM::Agent) { context_budget window: 10_000, per_request: 0.7 }
+
+      expect(agent.chat.context_budget).to eq(window: 10_000, per_request: 0.7)
+    end
+  end
+
+  describe 'a budget without a known window' do
+    before { allow(chat.model).to receive(:context_window).and_return(nil) }
+
+    def warnings
+      logged = []
+      allow(RubyLLM.logger).to receive(:warn) { |message = nil, &block| logged << (message || block.call) }
+      logged
+    end
+
+    it 'warns once, naming the model and the option' do
+      logged = warnings
+      chat.with_context_budget(per_request: 0.7)
+      2.times { |index| add_round(index, 10) }
+      sent_messages
+
+      2.times { chat.complete }
+
+      expect(logged.grep(/context budget/).size).to eq(1)
+      expect(logged.grep(/context budget/).first).to include(chat.model.id).and include('window:')
+    end
+
+    it 'warns when a result is added, before any request' do
+      logged = warnings
+      chat.with_tools(tool_returning('fetch', 'y' * 100)).with_context_budget(per_result: 0.25)
+      allow(chat.provider).to receive(:complete).and_return(call_message('fetch'), answer)
+
+      chat.ask('Fetch')
+
+      expect(logged.grep(/context budget/).size).to eq(1)
+    end
+
+    it 'says nothing when a window is given or known' do
+      logged = warnings
+      chat.with_context_budget(window: 10_000, per_request: 0.7)
+      add_round(0, 10)
+      sent_messages
+
+      chat.complete
+
+      expect(logged.grep(/context budget/)).to be_empty
+    end
+
+    it 'says nothing without a budget' do
+      logged = warnings
+      add_round(0, 10)
+      sent_messages
+
+      chat.complete
+
+      expect(logged.grep(/context budget/)).to be_empty
+    end
+  end
+
   describe 'Message#with' do
     it 'returns a copy with changed fields, leaving the original alone' do
       message = RubyLLM::Message.new(role: :tool, content: 'long', tool_call_id: 'call_1')

@@ -257,6 +257,8 @@ Long tool results no longer overflow the context window. `with_context_budget` c
 chat.with_context_budget(per_result: 0.25, per_request: 0.7)
 ```
 
+For a model the registry has no window for, pass it: `chat.with_context_budget(window: 128_000, per_request: 0.7)`.
+
 `Message#with(content:)` returns a changed copy of a message, for shaping the transcript yourself. See [Keeping Tool Results in Budget]({% link _core_features/chat-request-control.md %}#keeping-tool-results-in-budget).
 
 ## Ending the Turn from a Tool

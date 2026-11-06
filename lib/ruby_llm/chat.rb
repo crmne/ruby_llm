@@ -1078,14 +1078,20 @@ module RubyLLM
     #                 the request prefix, and the provider's prompt cache,
     #                 hold for many rounds.
     #
+    # +window+:: the context window in tokens, for a model the registry
+    #            has no window for. It wins over the registry's.
+    #
     #   chat.with_context_budget(per_result: 0.25, per_request: 0.7)
+    #   chat.with_context_budget(window: 128_000, per_request: 0.7)
     #
     # Shares are above 0 and at most 1. Sizes are estimated from
     # characters, at two a token. A result a file store already saved as
     # a file (see #with_file_store) is short enough to keep. Without a
-    # known context window the budget does nothing.
+    # known window the budget does nothing, and the chat logs a warning
+    # once.
     def with_context_budget(budget = {}, **shares)
       @context_budget = ContextBudget.normalize(budget, **shares)
+      @context_budget_warned = false
       self
     end
 
@@ -2158,7 +2164,15 @@ module RubyLLM
     end
 
     def context_budget_for_model
-      ContextBudget.new(@context_budget, @model&.context_window)
+      ContextBudget.new(@context_budget, @model&.context_window).tap do |budget|
+        warn_about_unknown_window unless budget.window? || @context_budget_warned
+      end
+    end
+
+    def warn_about_unknown_window
+      @context_budget_warned = true
+      RubyLLM.logger.warn("RubyLLM has no context window for #{@model&.id}, so this chat's context budget does " \
+                          'nothing. Pass window: to with_context_budget.')
     end
 
     def with_skill_listing(list)
