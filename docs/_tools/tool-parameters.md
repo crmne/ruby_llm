@@ -225,7 +225,7 @@ chat.with_tools(CustomerLookup)
 chat.tools[:crm_customer_lookup]
 ```
 
-The chat keys the tool by its namespace and name joined, `:crm_customer_lookup`, and raises an `ArgumentError` when another tool already has that name. The tool's own name stays `customer_lookup`, and `tool_call.namespace` names its group. RubyLLM routes calls and remembers approvals by both, including after a Rails reload. `namespace` is inherited; pass `nil` to remove an inherited namespace. Namespaced tools can be [deferred for tool search]({% link _tools/tool-search.md %}) like any other.
+The chat keys the tool by its namespace and name joined, `:crm_customer_lookup`, and raises an `ArgumentError` when a tool with a different namespace and name joins to the same key. A tool with the same namespace and name replaces the earlier one. The tool's own name stays `customer_lookup`, and `tool_call.namespace` names its group. RubyLLM routes calls and remembers approvals by both, including after a Rails reload. `namespace` is inherited; pass `nil` to remove an inherited namespace. Namespaced tools can be [deferred for tool search]({% link _tools/tool-search.md %}) like any other.
 
 How a namespace reaches the model depends on the protocol:
 

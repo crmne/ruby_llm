@@ -48,7 +48,7 @@ end
 
 See [Configuration]({% link _getting_started/configuration.md %}) for other providers and defaults.
 
-JSON 3 needs Rails 8.1.4 or later. On older Rails versions, keep JSON 2 in your Gemfile with `gem "json", "< 3"`.
+JSON 3 rejects an option that older Rails versions pass to it. Rails 7.2.4 and 8.1.3 removed that option. On earlier versions, and on Rails 8.0, keep JSON 2 in your Gemfile with `gem "json", "< 3"`.
 {: .note }
 
 ## The Same API on Your Records

@@ -44,7 +44,7 @@ bundle add ruby_llm --version 2.1.1
 For an existing 1.x application, use the [1.x docs]({{ legacy_docs.url }}) or follow the [upgrade guide]({% link _reference/upgrading.md %}) before switching versions.
 {: .warning }
 
-RubyLLM works with JSON 2 and JSON 3. In Rails, JSON 3 needs Rails 8.1.4 or later, so on older Rails versions keep JSON 2 in your Gemfile:
+RubyLLM works with JSON 2 and JSON 3. JSON 3 rejects an option that older Rails versions pass to it. Rails 7.2.4 and 8.1.3 removed that option. On earlier versions, and on Rails 8.0, keep JSON 2 in your Gemfile:
 
 ```ruby
 gem "json", "< 3"

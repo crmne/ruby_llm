@@ -91,7 +91,7 @@ end
 
 ### Agent Handoffs
 
-Routing picks an agent for one message. A handoff gives the *same conversation* to another agent, so the specialist sees the whole history and the customer keeps one thread. `Agent.find(chat_id)` makes this work: it loads a saved chat and applies another agent's instructions and tools, leaving the messages as they are.
+Routing picks an agent for one message. A handoff gives the *same conversation* to another agent, so the specialist sees the whole history and the customer keeps one thread. `Agent.new(chat:)` makes this work: it applies another agent's instructions and tools to a saved chat, and the conversation carries on.
 
 The simplest handoff routes each new message, and the specialist answers in the saved chat:
 
@@ -100,37 +100,51 @@ class SupportHandoff
   SPECIALISTS = { "billing" => BillingAgent, "shipping" => ShippingAgent }
 
   def call(chat_id, message)
+    chat = Chat.find(chat_id)
     category = TriageAgent.new.ask(message).parsed["category"]
-    SPECIALISTS.fetch(category, SupportAgent).find(chat_id).ask(message)
+    SPECIALISTS.fetch(category, SupportAgent).new(chat: chat, customer: chat.customer).ask(message)
   end
 end
 ```
 
-`find` needs [Rails-backed agents]({% link _getting_started/agents.md %}#rails-backed-agents), which read the customer from `chat`. Outside Rails, pass the chat object with `BillingAgent.new(chat: chat, customer: customer)` instead.
-
-To let the agent decide in the middle of a conversation, give it a tool that names the specialist, and switch agents in the [loop](#driving-the-loop-yourself) when a tool result names one:
+To let the agent decide in the middle of a conversation, give it a tool that names the specialist. Run the [loop](#driving-the-loop-yourself) yourself, and stop when the tool has been called:
 
 ```ruby
 class Handoff < RubyLLM::Tool
   description "Hands the conversation to the specialist who should answer next"
   parameter :specialist, description: "billing or shipping"
 
-  def execute(specialist:) = specialist
+  attr_reader :specialist
+
+  def execute(specialist:)
+    @specialist = specialist
+    "The #{specialist} team is taking over."
+  end
 end
 
-AGENTS = { "billing" => BillingAgent, "shipping" => ShippingAgent }
+class SupportDesk
+  SPECIALISTS = { "billing" => BillingAgent, "shipping" => ShippingAgent }
 
-agent = SupportAgent.find(chat_id).with_tools(Handoff)
-agent.ask_later(message)
+  def call(chat_id, message)
+    handoff = Handoff.new
+    chat = Chat.find(chat_id)
+    SupportAgent.new(chat: chat, customer: chat.customer)
+    chat.with_tools(handoff).ask_later(message)
 
-until agent.complete? || agent.waiting?
-  agent.step
-  last = agent.messages.reload.last
-  agent = AGENTS[last.content].find(chat_id).with_tools(Handoff) if last.role == "tool" && AGENTS.key?(last.content)
+    chat.step until chat.complete? || chat.waiting? || handoff.specialist
+    return chat.messages.last unless handoff.specialist
+
+    chat = Chat.find(chat_id)
+    SPECIALISTS.fetch(handoff.specialist).new(chat: chat, customer: chat.customer)
+    chat.complete
+  end
 end
 ```
 
-The switch belongs in the loop, not the tool: a tool's `execute` never receives the chat, so it can't reconfigure it.
+The switch belongs in the workflow, not the tool: a tool's `execute` never receives the chat, so it can't reconfigure it. Loading the chat again drops the first agent's tools, so the specialist starts with only its own.
+
+A saved chat keeps its model: an agent's `model` applies when it creates a chat. Call `chat.with_model` to move the conversation to the specialist's model.
+{: .note }
 
 ### Subagents
 
@@ -225,12 +239,12 @@ class PolicyCheckedReply
       reply = writer.ask("Revise your reply. #{review['feedback']}").content
     end
 
-    reply
+    nil
   end
 end
 ```
 
-Each round costs a review and a revision. Cap the rounds, and use this pattern where a wrong answer costs more than the extra calls. To grade agents offline instead of on every request, see [Evaluations]({% link _advanced/evaluations.md %}).
+A `nil` means the rounds ran out without a passing reply, so pass the ticket to a person. Each round costs a review and a revision. Cap the rounds, and use this pattern where a wrong answer costs more than the extra calls. To grade agents offline instead of on every request, see [Evaluations]({% link _advanced/evaluations.md %}).
 
 ## Grouping a Workflow's Calls
 
@@ -288,10 +302,12 @@ People keep typing while an agent works. `queue` adds a user message without tou
 
 ```ruby
 chat = SupportAgent.chat(customer: customer)
-worker = Thread.new { chat.ask "Where is my order R-1042?" }
+chat.ask_later "Where is my order R-1042?"
+worker = Thread.new { chat.complete }
 
 chat.queue "Actually, it's R-1043"
 worker.join
+chat.complete if chat.queued_messages.any?
 ```
 
 By default a queued message steers the turn that is running. It joins after the next round of tool results, so the model reads it on its next request, still inside its tool loop. If the model is writing its final answer, the message waits for the answer to finish, and the loop then asks the model again so it answers the new message too. Nothing is cut short.

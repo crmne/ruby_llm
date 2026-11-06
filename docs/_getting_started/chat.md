@@ -63,11 +63,11 @@ chat.messages.count   # => 4
 refund.messages.count # => 6
 ```
 
-The copy starts with the same messages, tools, and options. From then on, each chat keeps its own.
+The copy starts with the same messages, tools, and options. From then on, each chat keeps its own messages and settings. Both chats share the same tool instances, so give each branch a fresh instance of a tool that keeps state.
 
 ## Giving the Model Instructions
 
-Instructions, also called a system prompt, tell the model who it is and how to behave for the whole conversation:
+Instructions tell the model who it is and how to behave for the whole conversation:
 
 ```ruby
 chat = RubyLLM.chat

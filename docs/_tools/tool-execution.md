@@ -424,8 +424,8 @@ Some calls can't finish while the chat waits. A contract sent for signature may 
 class RequestSignature < RubyLLM::Tool
   description "Sends a contract for signature and reports when it is signed"
 
-  def execute(contract_id:)
-    envelope = Signatures.send_for_signature(Contract.find(contract_id))
+  def execute(contract_id:, tool_call:)
+    envelope = Signatures.find_or_send(Contract.find(contract_id), key: tool_call.id)
     RubyLLM::Task.new(status: :input_required, status_message: "Waiting for the signature",
                       data: { "envelope_id" => envelope.id })
   end
@@ -453,7 +453,7 @@ Each `complete` calls `resume` once for every paused call, with the task and the
 
 A task's `status` is `:working` while the work runs on its own, so you check again after its `poll_interval`, and `:input_required` while it waits on a person, so nothing changes until they act. Call `complete` after they do, such as from the controller that records their decision.
 
-`data` is what `resume` needs, as a Hash that serializes to JSON. In Rails, the task persists on its tool call, so one process can pause the chat and another can resume it, even after a deploy. To rebuild a task as your own subclass of `RubyLLM::Task`, override `task(state, tool_call:)` on the tool and return `YourTask.load(state, tool_call:)`. A subclass can override `refresh` to check on its work and `cancel` to stop it; cancelling the chat calls `cancel` on every task it waits on and drops the paused calls.
+The call can run again if the process dies before the task is saved, so `execute` keys the request on `tool_call.id` to avoid sending it twice. `data` is what `resume` needs, as a Hash that serializes to JSON. In Rails, the task persists on its tool call, so one process can pause the chat and another can resume it, even after a deploy. To rebuild a task as your own subclass of `RubyLLM::Task`, override `task(state, tool_call:)` on the tool and return `YourTask.load(state, tool_call:)`. A subclass can override `refresh` to check on its work and `cancel` to stop it; cancelling the chat calls `cancel` on every task it waits on and drops the paused calls.
 
 MCP tools pause the same way when a server runs a call as a [task]({% link _tools/mcp.md %}#tasks), and so do [subagents]({% link _getting_started/agents.md %}#subagents) while they wait on a person.
 

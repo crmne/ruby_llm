@@ -34,7 +34,7 @@ end
 
 That's all most applications need. RubyLLM chooses default models, timeouts, and retries, and you change only what your application needs.
 
-Configure only the providers you use. RubyLLM doesn't ask for the others, and raises `RubyLLM::ConfigurationError` when you use a provider without its key. See [Provider Setup]({% link _reference/configuration-providers.md %}) for every provider's settings, including regions, projects, Bedrock and Vertex AI authentication, and OpenAI-compatible endpoints.
+Configure only the providers you use. RubyLLM doesn't ask for the others, and raises `RubyLLM::ConfigurationError` when you use a provider without its required credentials. See [Provider Setup]({% link _reference/configuration-providers.md %}) for every provider's settings, including regions, projects, Bedrock and Vertex AI authentication, and OpenAI-compatible endpoints.
 
 ## Configuring RubyLLM in Rails
 
