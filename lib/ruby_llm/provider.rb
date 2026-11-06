@@ -640,6 +640,15 @@ module RubyLLM
         end.first
       end
 
+      # Returns the pages hosted web searches used for +message+, as read by
+      # each of the provider's protocols that reports them. Such a protocol
+      # defines +parse_web_sources(message)+ as a class method.
+      def web_sources(message) # :nodoc:
+        protocols.each_value.flat_map do |protocol|
+          protocol.respond_to?(:parse_web_sources) ? protocol.parse_web_sources(message) : []
+        end
+      end
+
       # Registers +provider_class+ under the slug +name+, making it
       # available to RubyLLM.chat and the other top-level helpers.
       # Stamps the class's slug, adds it to ::providers, and defines a

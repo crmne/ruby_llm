@@ -29,6 +29,14 @@ module RubyLLM
         web_fetch: ->(options) { { tool: { url_context: Support::Utils.deep_symbolize_keys(options) } } }
       ).freeze
 
+      # Returns the pages the message's searches used, as WebSource objects.
+      def self.parse_web_sources(message)
+        searches = message.server_tool_calls.select { |call| call.type == 'google_search' }
+        searches.flat_map { |call| Array(call.result) }.map do |chunk|
+          WebSource.new(url: chunk.dig('web', 'uri'), title: chunk.dig('web', 'title'))
+        end
+      end
+
       def server_tool_aliases
         SERVER_TOOL_ALIASES
       end

@@ -16,7 +16,7 @@ redirect_from:
 After reading this guide, you will know:
 
 * How to enable provider-executed tools with `with_provider_tools`.
-* How to read results, citations, and usage.
+* How to read results, citations, web sources, and usage.
 * How to show Google's search suggestions with a grounded answer.
 * How to connect a search store or MCP server.
 * How to approve remote tool calls and resume them in Rails.
@@ -157,21 +157,26 @@ Streaming and follow-up questions use the normal `ask` API. Read the completed m
 
 Providers can charge for each tool use as well as for the tokens in the results. `tokens.server_tool_use` counts the uses, such as `{"web_search_requests" => 2}`; see [Pricing Tool Use]({% link _core_features/cost-and-usage-tracking.md %}#pricing-tool-use).
 
-### Search Sources
+### Web Sources
 
-Sources and citations answer different questions. Sources are every page a web search found. Citations are the passages the answer quotes, so there are usually fewer of them. Read the sources from the search's `result`:
+Sources and citations answer different questions. Sources are the pages a web search used. Citations link parts of the answer to what supports them, so there are usually fewer of them. Read the sources from `web_sources`:
 
 ```ruby
 response = chat.with_provider_tools(:web_search).ask "What changed in the latest Ruby release?"
 
-searches = response.server_tool_calls.select do |call|
-  %w[web_search_call web_search_tool_result].include?(call.type)
-end
-sources = searches.flat_map { |call| Array(call.result) }
-urls = sources.filter_map { |source| source["url"] if source.is_a?(Hash) }
+response.web_sources.map(&:url)
+response.web_sources.first.title
 ```
 
-The result keeps the service's own shape. On OpenAI, Azure, Meta, and xAI, each `web_search_call` lists Hashes with a `"url"`. Anthropic's `web_search_tool_result` lists results with a `"url"` and a `"title"`. Gemini reports its search queries and grounds the answer through citations instead. In Rails, messages keep the sources in their `server_tool_calls` column, which the install generator creates.
+Each `WebSource` has a `url` and, where the provider gives one, a `title`. The list holds each address once, and works the same on streamed replies and on Rails records after a reload.
+
+| Provider | `url` | `title` |
+| --- | --- | --- |
+| OpenAI, Azure, Meta, xAI | The page | `nil` |
+| Anthropic | The page | The page title |
+| Gemini, Vertex AI | A Google redirect link that leads to the page | The site's domain |
+
+`web_sources` is empty on other providers and on Gemini's Interactions protocol. RubyLLM does not build the list from citations, which name only what the answer cites.
 
 ### Google Search Suggestions
 
@@ -192,7 +197,7 @@ if suggestions.present?
 end
 ```
 
-RubyLLM never stores search suggestions. Google's terms allow storing them only "for the minimum time necessary to comply with applicable law or regulations", so persisted chats keep the answer, its citations, and its search queries, but not the suggestions. A reloaded conversation shows the answer without them; display them from the live response.
+RubyLLM never stores search suggestions. Google's terms allow storing them only "for the minimum time necessary to comply with applicable law or regulations", so persisted chats keep the answer, its citations, its search queries, and its web sources, but not the suggestions. A reloaded conversation shows the answer without them; display them from the live response.
 
 ## Search Your Documents
 

@@ -328,11 +328,6 @@ RSpec.describe RubyLLM::Chat, :live do
   end
 
   describe 'web search' do
-    def web_search_source_urls(response)
-      response.server_tool_calls.select { |call| call.type == 'web_search_call' }
-              .flat_map { |call| Array(call.result) }.filter_map { |source| source['url'] }
-    end
-
     context "with anthropic/#{model_for(:anthropic)}" do
       let(:chat) { RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic).with_provider_tools(:web_search) }
 
@@ -343,6 +338,8 @@ RSpec.describe RubyLLM::Chat, :live do
         expect(response.server_tool_calls.map(&:type)).to include('server_tool_use')
         expect(response.server_tool_calls.map(&:type)).to include('web_search_tool_result')
         expect(response.citations).not_to be_empty
+        expect(response.web_sources.map(&:url)).to include(start_with('https://'))
+        expect(response.web_sources.map(&:title)).to all(be_present)
         expect(response.tokens.server_tool_use).to match('web_search_requests' => be_positive)
         expect(response.raw_content).to be_an(Array)
       end
@@ -360,6 +357,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
         expect(chunks).not_to be_empty
         expect(response.server_tool_calls.map(&:type)).to include('server_tool_use')
+        expect(response.web_sources.map(&:url)).to include(start_with('https://'))
         expect(response.tokens.server_tool_use).to match('web_search_requests' => be_positive)
         expect(response.raw_content).to be_an(Array)
 
@@ -377,7 +375,7 @@ RSpec.describe RubyLLM::Chat, :live do
         response = chat.ask('Search the web: what is the latest stable Ruby version? Cite your source.')
 
         expect(response.server_tool_calls.map(&:type)).to include('web_search_call')
-        expect(web_search_source_urls(response)).to include(start_with('https://'))
+        expect(response.web_sources.map(&:url)).to include(start_with('https://'))
         expect(response.tokens.server_tool_use).to match('web_search_requests' => be_positive)
         expect(response.raw_content).to be_an(Array)
 
@@ -391,7 +389,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
         expect(chunks).not_to be_empty
         expect(response.server_tool_calls.map(&:type)).to include('web_search_call')
-        expect(web_search_source_urls(response)).to include(start_with('https://'))
+        expect(response.web_sources.map(&:url)).to include(start_with('https://'))
         expect(response.tokens.server_tool_use).to match('web_search_requests' => be_positive)
       end
     end
@@ -406,7 +404,7 @@ RSpec.describe RubyLLM::Chat, :live do
         response = chat.ask('Search the web: what is the latest stable Ruby version? Cite your source.')
 
         expect(response.server_tool_calls.map(&:type)).to include('web_search_call')
-        expect(web_search_source_urls(response)).to include(start_with('https://'))
+        expect(response.web_sources.map(&:url)).to include(start_with('https://'))
         expect(response.tokens.server_tool_use).to match('web_search_requests' => be_positive)
 
         followup = chat.ask('Thanks. Now just say OK.')
@@ -420,7 +418,7 @@ RSpec.describe RubyLLM::Chat, :live do
       it 'searches, returns the sources, and replays them' do
         response = chat.ask('Search the web: what is the latest stable Ruby version? Cite your source.')
 
-        expect(web_search_source_urls(response)).to include(start_with('https://'))
+        expect(response.web_sources.map(&:url)).to include(start_with('https://'))
 
         followup = chat.ask('Thanks. Now just say OK.')
         expect(followup.content).to be_present
@@ -437,6 +435,9 @@ RSpec.describe RubyLLM::Chat, :live do
 
         expect(response.server_tool_calls.map(&:type)).to include('google_search')
         expect(response.citations).not_to be_empty
+        expect(response.web_sources).not_to be_empty
+        expect(response.web_sources.map(&:url)).to all(include('grounding-api-redirect'))
+        expect(response.web_sources.map(&:title)).to all(be_present)
         expect(response.tokens.server_tool_use).to match('web_search_requests' => be_positive)
         expect(response.server_tool_calls.filter_map(&:search_suggestions).join).to include('<style>')
       end
@@ -450,8 +451,27 @@ RSpec.describe RubyLLM::Chat, :live do
         expect(chunks).not_to be_empty
         expect(response.server_tool_calls.map(&:type)).to include('google_search')
         expect(response.citations).not_to be_empty
+        expect(response.web_sources.map(&:url)).to include(start_with('https://'))
         expect(response.tokens.server_tool_use).to match('web_search_requests' => be_positive)
         expect(chunks.flat_map(&:server_tool_calls).filter_map(&:search_suggestions).join).to include('<style>')
+      end
+    end
+
+    context "with vertexai/#{model_for(:vertexai)}" do
+      let(:chat) { RubyLLM.chat(model: model_for(:vertexai), provider: :vertexai).with_provider_tools(:web_search) }
+
+      it 'grounds the answer and lists the pages it used' do
+        response = chat.ask('Search the web: what is the latest stable Ruby version? Cite your source.')
+
+        expect(response.web_sources).not_to be_empty
+        expect(response.web_sources.map(&:url)).to all(include('grounding-api-redirect'))
+      end
+
+      it 'streams the grounding and lists the pages it used' do
+        response = chat.ask('Search the web: what is the latest stable Ruby version? Cite your source.') { |_| nil }
+
+        expect(response.web_sources).not_to be_empty
+        expect(response.web_sources.map(&:url)).to all(include('grounding-api-redirect'))
       end
     end
 
@@ -490,7 +510,7 @@ RSpec.describe RubyLLM::Chat, :live do
         response = chat.ask('Search the web: what is the latest stable Ruby version? Cite your source.')
 
         expect(response.server_tool_calls).not_to be_empty
-        expect(web_search_source_urls(response)).to include(start_with('https://'))
+        expect(response.web_sources.map(&:url)).to include(start_with('https://'))
         expect(response.citations).not_to be_empty
         expect(response.tokens.server_tool_use).to match('web_search_requests' => be_positive)
         expect(response.raw_content).to be_an(Array)
@@ -500,6 +520,7 @@ RSpec.describe RubyLLM::Chat, :live do
         response = chat.ask('Search the web: what is the latest stable Ruby version?') { |_chunk| nil }
 
         expect(response.citations).not_to be_empty
+        expect(response.web_sources.map(&:url)).to include(start_with('https://'))
         expect(response.tokens.server_tool_use).to match('web_search_requests' => be_positive)
       end
 

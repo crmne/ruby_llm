@@ -36,6 +36,11 @@ module RubyLLM
         Chat.parse_answer_text(message)
       end
 
+      # Returns the pages the message's web searches used, as WebSource objects.
+      def self.parse_web_sources(message)
+        Chat.parse_web_sources(message)
+      end
+
       def server_tool_aliases
         SERVER_TOOL_ALIASES
       end
