@@ -29,16 +29,19 @@ RSpec.describe 'Provider coverage data', type: :task do
   end
 
   it 'totals the summary from the cells' do
-    shared_groups.zip(data['summary']['groups']).each do |group_id, summary|
-      group = group_cells(group_id)
+    groups = data['groups'].select { |group| group['summary'] }.map do |group|
+      cells = group_cells(group['id'])
 
-      expect(summary).to include(
-        'id' => group_id,
-        'v1' => group.count { |cell| cell['v1'] == 'native' },
-        'v2' => group.count { |cell| cell['v2'] == 'native' },
-        'offered' => group.count { |cell| cell['offered'] == true && cell['v2'] != 'out_of_scope' }
-      ), 'Run rake docs:coverage to recalculate the summary'
+      { 'id' => group['id'], 'name' => group['name'],
+        'v1' => cells.count { |cell| cell['v1'] == 'native' },
+        'v2' => cells.count { |cell| cell['v2'] == 'native' },
+        'offered' => cells.count { |cell| cell['offered'] == true && cell['v2'] != 'out_of_scope' } }
     end
+    feature_count = data['features'].count { |feature| shared_groups.include?(feature['group']) }
+
+    expect(data['summary']).to eq(
+      { 'feature_count' => feature_count, 'groups' => groups, 'maximum' => groups.map { |group| group['offered'] }.max }
+    ), 'Run rake docs:coverage to recalculate the summary'
   end
 
   it 'draws the chart from the summary' do
@@ -46,7 +49,10 @@ RSpec.describe 'Provider coverage data', type: :task do
 
     expect(chart).to include("across #{data['providers'].size} providers on #{data['audited_on']}")
     data['summary']['groups'].each do |group|
-      expect(chart).to match(/>#{group['v2']}<.*>#{group['offered']}</m)
+      expect(chart).to match(
+        %r{>#{Regexp.escape(group['name'])}</text>\s*<rect[^>]*/>\s*<text[^>]*>#{group['v2']}</text>\s*
+           <rect[^>]*/>\s*<text[^>]*>#{group['offered']}</text>}x
+      )
     end
   end
 
