@@ -157,7 +157,7 @@ chat = Chat.create!(customer: current_customer, model: "{{ site.models.default_c
 chat.ask "Where is my order R-1042?"
 ```
 
-Your application owns its chats and messages, with their customers, permissions, and anything else you add. RubyLLM owns eight supporting tables: the model registry, tool calls, usage, queued messages, files, batches, MCP credentials, and provider files. It can change them between releases without touching your models.
+Your application owns its chats and messages, with their customers, permissions, and anything else you add. RubyLLM owns eight supporting tables: the model registry, tool calls, usage, queued messages, chat files, batches, MCP credentials, and provider files. It can change them between releases without touching your models.
 
 Rails integration adds:
 
