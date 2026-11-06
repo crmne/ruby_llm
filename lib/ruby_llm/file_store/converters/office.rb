@@ -72,7 +72,7 @@ module RubyLLM
           def parts(zip, owner, tag, fallback)
             targets = relationships(zip, owner).to_h { |relationship| relationship.values_at(:id, :target) }
             listed = Markup.tags(zip[owner], tag).filter_map do |element|
-              part = targets[Markup.attribute(element, 'r:id')]
+              part = targets[element[/\s[\w.-]+:id="([^"]*)"/, 1]]
               [part, element] if part && zip.include?(part)
             end
             return listed if listed.any?

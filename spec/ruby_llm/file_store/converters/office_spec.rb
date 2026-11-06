@@ -82,9 +82,30 @@ RSpec.describe RubyLLM::FileStore::Converters::Office do
       expect(docx(paragraph, zip64: true, declared: 10**15)).to eq('x')
     end
 
+    it 'refuses a part cut off before its deflate stream ends' do
+      bytes = zip_of({ 'word/document.xml' => paragraph * 100 })
+      position = bytes.rindex('word/document.xml') - 26
+      bytes[position, 4] = [bytes[position, 4].unpack1('V') - 2].pack('V')
+
+      expect(text_of(bytes, 'a.docx')).to be_nil
+    end
+
     it 'refuses a part that inflates past the size it declares' do
       expect(docx(paragraph, zip64: true, declared: 5)).to be_nil
     end
+  end
+
+  it 'finds parts through a relationship id under any prefix' do
+    files = { 'xl/workbook.xml' => '<workbook><sheets><sheet name="B" ns1:id="rId2"/><sheet name="A" ns1:id="rId1"/>' \
+                                   '</sheets></workbook>',
+              'xl/_rels/workbook.xml.rels' => '<Relationships>' \
+                                              '<Relationship Id="rId1" Target="worksheets/sheet1.xml"/>' \
+                                              '<Relationship Id="rId2" Target="worksheets/sheet2.xml"/>' \
+                                              '</Relationships>',
+              'xl/worksheets/sheet1.xml' => '<worksheet><sheetData/></worksheet>',
+              'xl/worksheets/sheet2.xml' => '<worksheet><sheetData/></worksheet>' }
+
+    expect(text_of(zip_of(files), 'a.xlsx')).to eq("## B\n\n## A")
   end
 
   describe 'hostile files' do
@@ -272,6 +293,13 @@ RSpec.describe RubyLLM::FileStore::Converters::Office do
       table = "<w:tbl><w:tr><w:tc>#{inner}<w:p/></w:tc>#{cell('z')}</w:tr></w:tbl>"
 
       expect(docx(table)).to eq("x y\tz")
+    end
+
+    it 'keeps a text box between the text around it' do
+      box = "<w:txbxContent><w:p>#{run('<w:t>Box</w:t>')}</w:p></w:txbxContent>"
+
+      expect(docx("<w:p>#{run('<w:t>Before</w:t>')}#{run(box)}#{run('<w:t>After</w:t>')}</w:p>"))
+        .to eq("Before\nBox\nAfter")
     end
 
     it 'reads a text box once, not again from its fallback' do

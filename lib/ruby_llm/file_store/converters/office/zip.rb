@@ -134,6 +134,8 @@ module RubyLLM
               raise Error, 'entry too large' if output.bytesize > limit
               break if inflater.finished?
             end
+            raise Error, 'truncated entry' unless inflater.finished?
+
             output
           ensure
             inflater&.close

@@ -45,7 +45,7 @@ module RubyLLM
 
           def opened(name, tag)
             case name
-            when 'p' then @paragraphs << +''
+            when 'p' then open_paragraph
             when 't' then @capturing = true
             when 'tr' then @rows << []
             when 'tc' then @sinks << []
@@ -71,6 +71,17 @@ module RubyLLM
             when 'tr' then close_row
             when 'sp' then close_shape
             end
+          end
+
+          # A paragraph inside another, as in a text box, comes between the
+          # text around it, so what the outer one holds so far goes first.
+          def open_paragraph
+            outer = @paragraphs.last
+            unless outer.nil? || outer.empty?
+              @sinks.last << outer.dup
+              outer.clear
+            end
+            @paragraphs << +''
           end
 
           def close_paragraph
