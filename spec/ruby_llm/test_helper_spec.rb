@@ -15,13 +15,22 @@ RSpec.describe RubyLLM::TestHelper do
   end
 
   def chat
-    @chat ||= RubyLLM.chat(model: 'claude-haiku-4-5', provider: :anthropic)
+    @chat ||= RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic)
   end
 
   it 'answers from the script, with no provider and no key' do
     stub_replies 'Hello there'
 
     expect(chat.ask('Hi').content).to eq('Hello there')
+  end
+
+  %i[azure bedrock].each do |provider|
+    it "answers on #{provider}, which checks its own credentials" do
+      stub_replies 'Hello'
+      chat = RubyLLM.chat(model: model_for(provider), provider:, assume_model_exists: true)
+
+      expect(chat.ask('Hi').content).to eq('Hello')
+    end
   end
 
   it 'streams word by word' do
@@ -79,7 +88,7 @@ RSpec.describe RubyLLM::TestHelper do
 
   it 'works on a persisted chat, across threads, and writes the ledger' do
     stub_replies 'Saved', cost: 0.5
-    record = Chat.create!(model: 'claude-haiku-4-5')
+    record = Chat.create!(model: model_for(:anthropic))
 
     Thread.new { record.ask('Hi') }.join
 
@@ -91,7 +100,7 @@ RSpec.describe RubyLLM::TestHelper do
     stub_replies 'Hello'
     RubyLLM::TestHelper::Script.clear
 
-    expect { RubyLLM.chat(model: 'claude-haiku-4-5', provider: :anthropic) }.to raise_error(RubyLLM::ConfigurationError)
+    expect { RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic) }.to raise_error(RubyLLM::ConfigurationError)
   end
 
   it 'clears the script after each example through its RSpec hook' do

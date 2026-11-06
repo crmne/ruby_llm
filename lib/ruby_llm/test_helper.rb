@@ -59,6 +59,12 @@ module RubyLLM
 
     # Answers requests from the script, once #stub_replies has been called.
     module StubbedProvider # :nodoc:
+      # Skips the API key check, which some providers define for themselves,
+      # and the connection, which a stubbed request never uses.
+      def initialize(config)
+        Script.active? ? @config = config : super
+      end
+
       def complete(messages, usage_recorder: nil, progress_recorder: nil, **options, &)
         return super unless Script.active?
 
@@ -74,12 +80,6 @@ module RubyLLM
         Message.new(role: :assistant, content: text, model_id: options[:model].id,
                     tool_calls: tool_call && { tool_call.id => tool_call }, input_tokens: 1, output_tokens: 1,
                     reported_cost: settings[:cost])
-      end
-
-      private
-
-      def ensure_configured!
-        super unless Script.active?
       end
     end
 
