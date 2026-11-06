@@ -145,13 +145,82 @@ RSpec.describe RubyLLM::Chat do
       expect(sent.first.find(&:tool_result?).content).to eq('x' * 3_000)
     end
 
-    it 'keeps the results of the latest round, which the model has not seen yet' do
-      add_round(0, 30_000)
+    it 'keeps the results of the latest round while they fit' do
+      add_round(0, 9_000)
+      add_round(1, 9_000)
       sent = sent_messages
 
       chat.complete
 
-      expect(sent.first.find(&:tool_result?).content).to eq('x' * 30_000)
+      expect(sent.first.select(&:tool_result?).map(&:content).first).to include('left out')
+      expect(sent.first.reverse.find(&:tool_result?).content).to eq('x' * 9_000)
+    end
+
+    context 'when one round alone is over the budget' do
+      def add_wide_round(*sizes)
+        calls = sizes.each_index.to_h do |index|
+          ["wide_#{index}", RubyLLM::ToolCall.new(id: "wide_#{index}", name: 'fetch', arguments: {})]
+        end
+        chat.add_message(role: :user, content: 'Fetch them all')
+        chat.add_message(RubyLLM::Message.new(role: :assistant, content: '', tool_calls: calls))
+        sizes.each_with_index do |size, index|
+          chat.add_message(role: :tool, content: 'x' * size, tool_call_id: "wide_#{index}")
+        end
+      end
+
+      def rejecting_overflow
+        sent = []
+        allow(chat.provider).to receive(:complete) do |messages, **|
+          sent << messages
+          size = messages.sum { |message| message.content.to_s.length }
+          raise RubyLLM::ContextLengthExceededError, 'prompt is too long' if size > window * 2
+
+          answer
+        end
+        sent
+      end
+
+      it 'does not leave the chat stuck on every later request' do
+        add_wide_round(9_000, 9_000, 9_000)
+        rejecting_overflow
+
+        expect(chat.complete.content).to eq('done')
+        expect(chat.ask('And now?').content).to eq('done')
+      end
+
+      it 'leaves out the oldest of its results, and keeps those that fit' do
+        add_wide_round(9_000, 9_000, 3_000)
+        sent = rejecting_overflow
+
+        chat.complete
+
+        contents = sent.first.select(&:tool_result?).map(&:content)
+        expect(contents.first).to include('left out').and include('narrower')
+        expect(contents.last(2)).to eq(['x' * 9_000, 'x' * 3_000])
+        expect(chat.messages.select(&:tool_result?).map { |message| message.content.length })
+          .to eq([9_000, 9_000, 3_000])
+      end
+
+      it 'leaves out a single result that takes more than the budget, and tells the model' do
+        add_wide_round(30_000)
+        sent = rejecting_overflow
+
+        chat.complete
+
+        expect(sent.first.find(&:tool_result?).content).to include('left out').and include('narrower')
+      end
+
+      it 'leaves out older rounds first' do
+        add_round(0, 9_000)
+        add_wide_round(6_000, 6_000)
+        sent = rejecting_overflow
+
+        chat.complete
+
+        contents = sent.first.select(&:tool_result?).map(&:content)
+        expect(contents.first).to include('left out')
+        expect(contents.last(2)).to eq(['x' * 6_000, 'x' * 6_000])
+      end
     end
 
     it 'moves the cut in steps, so the same prefix goes out for many rounds' do

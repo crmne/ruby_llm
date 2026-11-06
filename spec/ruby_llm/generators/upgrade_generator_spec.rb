@@ -116,6 +116,127 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
     RubyLLM::ActiveRecord::ChatFile.reset_column_information
   end
 
+  it 'lets an existing usage operation check take code execution rows' do
+    upgrade = migration_class
+
+    ActiveRecord::Base.transaction do
+      connection.execute('DELETE FROM ruby_llm_usages')
+      connection.add_check_constraint(:ruby_llm_usages, "operation IN ('chat', 'embedding')", name: 'old_operations')
+
+      ActiveRecord::Migration.suppress_messages { upgrade.migrate(:up) }
+
+      checks = connection.check_constraints(:ruby_llm_usages)
+      expect(checks.map(&:name)).not_to include('old_operations')
+      expect(checks.count { |check| check.expression.include?("'code_execution'") }).to eq(1)
+      raise ActiveRecord::Rollback
+    end
+  ensure
+    RubyLLM::ActiveRecord::Usage.reset_column_information
+  end
+
+  it 'leaves a usage check the application wrote itself' do
+    upgrade = migration_class
+    own_rule = "operation <> 'chat' OR owner_id IS NOT NULL"
+
+    ActiveRecord::Base.transaction do
+      connection.execute('DELETE FROM ruby_llm_usages')
+      connection.add_check_constraint(:ruby_llm_usages, own_rule, name: 'own_rule')
+
+      ActiveRecord::Migration.suppress_messages { upgrade.migrate(:up) }
+
+      checks = connection.check_constraints(:ruby_llm_usages)
+      expect(checks.map(&:name)).to contain_exactly('own_rule')
+      raise ActiveRecord::Rollback
+    end
+  ensure
+    RubyLLM::ActiveRecord::Usage.reset_column_information
+  end
+
+  # What PostgreSQL 18 and MySQL 9 print for a real 2.1.1 install, and for an
+  # application's own check, read from running databases.
+  it 'recognizes the install list as each database prints it' do
+    upgrade = migration_class.new
+
+    [
+      "operation IN ('chat', 'embedding')",
+      "operation::text = ANY (ARRAY['chat'::text, 'embedding'::text, 'moderation'::text])",
+      "`operation` in (_utf8mb4'chat',_utf8mb4'embedding',_utf8mb4'moderation')",
+      "((operation)::text = ANY (ARRAY['chat'::text, 'embedding'::text]))"
+    ].each { |expression| expect(upgrade.send(:operation_list?, expression)).to be(true) }
+  end
+
+  it 'leaves everything but the install list as each database prints it' do
+    upgrade = migration_class.new
+
+    [
+      "operation::text <> 'chat'::text OR owner_id IS NOT NULL",
+      "(`operation` <> _utf8mb4'chat') or (`owner_id` is not null)",
+      "operation::text = 'chat'::text OR operation::text = 'embedding'::text",
+      "(`operation` = _utf8mb4'chat') or (`operation` = _utf8mb4'embedding')",
+      "operation::text <> 'code_execution'::text",
+      "operation::text <> ALL (ARRAY['chat'::character varying, 'embedding'::character varying]::text[])",
+      "`operation` not in (_utf8mb4'chat',_utf8mb4'embedding')",
+      "operation NOT IN ('chat', 'embedding')",
+      "CASE WHEN operation IN ('chat', 'embedding') THEN owner_id IS NOT NULL ELSE TRUE END",
+      " CASE WHEN operation::text = ANY (ARRAY['chat'::character varying, 'embedding'::character varying]::text[]) " \
+      'THEN owner_id IS NOT NULL ELSE true END',
+      "status::text = ANY (ARRAY['pending'::text, 'succeeded'::text, 'failed'::text, 'cancelled'::text])",
+      "`status` in (_utf8mb4'pending',_utf8mb4'succeeded',_utf8mb4'failed',_utf8mb4'cancelled')",
+      "operation IN ('chat', 'custom_thing')"
+    ].each { |expression| expect(upgrade.send(:operation_list?, expression)).to be(false) }
+  end
+
+  it 'says what to do when a check it cannot change still refuses code runs' do
+    upgrade = migration_class.new
+    said = []
+    allow(upgrade).to receive(:say) { |message, *| said << message }
+
+    ActiveRecord::Base.transaction do
+      connection.execute('DELETE FROM ruby_llm_usages')
+      connection.add_check_constraint(:ruby_llm_usages, "operation = 'chat' OR operation = 'image'", name: 'own_list')
+
+      ActiveRecord::Migration.suppress_messages { upgrade.migrate(:up) }
+
+      expect(connection.check_constraints(:ruby_llm_usages).map(&:name)).to include('own_list')
+      raise ActiveRecord::Rollback
+    end
+
+    expect(said.join).to include("refuses 'code_execution'").and include('own_list').and include('upgrading guide')
+  ensure
+    RubyLLM::ActiveRecord::Usage.reset_column_information
+  end
+
+  it 'says nothing, and leaves no row, when the table accepts code runs' do
+    upgrade = migration_class.new
+    said = []
+    allow(upgrade).to receive(:say) { |message, *| said << message }
+
+    ActiveRecord::Base.transaction do
+      ActiveRecord::Migration.suppress_messages { upgrade.migrate(:up) }
+
+      expect(connection.select_value("SELECT COUNT(*) FROM ruby_llm_usages WHERE model = 'upgrade check'")).to eq(0)
+      raise ActiveRecord::Rollback
+    end
+
+    expect(said.join).not_to include("refuses 'code_execution'")
+  ensure
+    RubyLLM::ActiveRecord::Usage.reset_column_information
+  end
+
+  it 'adds no usage operation check to a table without one' do
+    upgrade = migration_class
+
+    ActiveRecord::Base.transaction do
+      ActiveRecord::Migration.suppress_messages { upgrade.migrate(:up) }
+
+      expect(connection.check_constraints(:ruby_llm_usages).select { |check| check.expression.include?('operation') })
+        .to be_empty
+      raise ActiveRecord::Rollback
+    end
+  ensure
+    RubyLLM::ActiveRecord::Usage.reset_column_information
+  end
+
   it 'adds the workflow columns 2.2 records on usage rows' do
     upgrade = migration_class
     columns = %i[workflow_id workflow_name workflow_step_id workflow_step_name]

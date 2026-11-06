@@ -1073,10 +1073,10 @@ module RubyLLM
     # +per_request+:: when a request would take more than this share, the
     #                 oldest tool results are left out of what is sent,
     #                 each replaced by a one-line note. The transcript
-    #                 keeps them. The results of the latest round always
-    #                 go out. The cut point moves in steps, so the request
-    #                 prefix, and the provider's prompt cache, hold for
-    #                 many rounds.
+    #                 keeps them. The results of the latest round go out
+    #                 whenever they fit. The cut point moves in steps, so
+    #                 the request prefix, and the provider's prompt cache,
+    #                 hold for many rounds.
     #
     #   chat.with_context_budget(per_result: 0.25, per_request: 0.7)
     #

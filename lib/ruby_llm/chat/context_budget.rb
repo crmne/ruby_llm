@@ -14,6 +14,8 @@ module RubyLLM
       STEP = 0.15
       LEFT_OUT = '[This earlier tool result was left out to fit the context window. ' \
                  'Call the tool again if you need it.]'
+      TOO_LONG = '[This tool result was left out to fit the context window. ' \
+                 'Ask for less, such as a narrower query or the next page.]'
       NOTE_ROOM = 200
 
       def self.normalize(budget, **shares)
@@ -54,24 +56,31 @@ module RubyLLM
         limit = characters(:per_request)
         return list unless limit
 
-        excess = list.sum { |message| size_of(message) } - limit
+        excess = size_of_all(list) - limit
         return list unless excess.positive?
 
         step = limit * STEP
-        leave_out(list, (excess / step).ceil * step)
+        latest = list.rindex { |message| message.role == :assistant } || -1
+        fitted = leave_out(list, (excess / step).ceil * step, LEFT_OUT) { |index| index < latest }
+        over = size_of_all(fitted) - limit
+        return fitted unless over.positive?
+
+        leave_out(fitted, over, TOO_LONG) { |index| index > latest }
       end
 
       private
 
-      # Leaves out the oldest results until +characters+ are freed, keeping
-      # the latest round's, which the model has not seen yet.
-      def leave_out(list, characters)
-        latest = list.rindex { |message| message.role == :assistant } || 0
+      # Replaces the oldest results the block picks by index with +note+,
+      # until +characters+ are freed. A request stops here for older rounds,
+      # in steps. The latest round's results, which the model has not seen
+      # yet, are cut only as far as the request needs: left whole, a round
+      # over the budget would fail this request and every one after it.
+      def leave_out(list, characters, note)
         list.each_with_index.map do |message, index|
-          next message unless characters.positive? && index < latest && leavable?(message)
+          next message unless characters.positive? && yield(index) && leavable?(message, note)
 
-          characters -= message.content.length - LEFT_OUT.length
-          message.with(content: LEFT_OUT)
+          characters -= message.content.length - note.length
+          message.with(content: note)
         end
       end
 
@@ -81,8 +90,12 @@ module RubyLLM
         (@window * @budget[share] * CHARACTERS_PER_TOKEN).to_i
       end
 
-      def leavable?(message)
-        message.tool_result? && message.content.is_a?(String) && message.content.length > LEFT_OUT.length
+      def leavable?(message, note)
+        message.tool_result? && message.content.is_a?(String) && message.content.length > note.length
+      end
+
+      def size_of_all(list)
+        list.sum { |message| size_of(message) }
       end
 
       def size_of(message)

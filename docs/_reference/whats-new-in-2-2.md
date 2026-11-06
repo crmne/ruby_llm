@@ -96,7 +96,7 @@ Programs under `/usr`, such as LibreOffice and Poppler's `pdftoppm`, work withou
 
 ### Measuring Runs
 
-Each run emits a `code_execution.ruby_llm` event with its language, duration, exit code, and whether it timed out, and adds a `code_execution` entry with its CPU seconds to the usage ledger, so you can meter and bill runs. With OpenTelemetry, each run becomes a span.
+Each run emits a `code_execution.ruby_llm` event with its language, duration, exit code, and whether it timed out, and adds a `code_execution` entry with its CPU seconds to the usage ledger, so you can meter and bill runs. The upgrade migration widens the check constraint on the ledger's `operation` column for these rows; a constraint you added yourself [needs a migration of its own]({% link _reference/upgrading.md %}#code-runs-write-usage-rows). With OpenTelemetry, each run becomes a span.
 
 ### Your Own Sandbox
 
