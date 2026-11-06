@@ -26,6 +26,31 @@ RSpec.describe RubyLLM::MCP::HTTP do
     expect { described_class.new('http://localhost:3000/mcp') }.not_to raise_error
   end
 
+  it 'names the opt-in when it refuses plain HTTP' do
+    expect { described_class.new('http://tools:4011/mcp') }.to raise_error(ArgumentError, /allow_http: true/)
+  end
+
+  context 'with allow_http' do
+    let(:url) { 'http://tools:4011/mcp' }
+    let(:client) { RubyLLM::MCP::Client.new(described_class.new(url, allow_http: true)) }
+
+    it 'talks to a server over plain HTTP' do
+      stub_method('server/discover', result: discover_result)
+      stub_method('tools/list', result: { tools: [] })
+
+      expect(client.list('tools/list', 'tools')).to eq([])
+    end
+
+    it 'still refuses URLs that carry credentials' do
+      expect { described_class.new('http://user:hunter2@tools:4011/mcp', allow_http: true) }
+        .to raise_error(ArgumentError, /credentials/)
+    end
+
+    it 'still refuses other schemes' do
+      expect { described_class.new('ftp://tools/mcp', allow_http: true) }.to raise_error(ArgumentError, /HTTPS/)
+    end
+  end
+
   it 'keeps the password out of the refusal' do
     expect { described_class.new('https://user:hunter2@mcp.example.com/mcp') }
       .to raise_error(ArgumentError) { |error| expect(error.message).not_to include('hunter2') }

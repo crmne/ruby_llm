@@ -47,7 +47,7 @@ module RubyLLM
     UNKNOWN_TOOL_ERRORS = [-32_601, -32_602].freeze
 
     SETTINGS = %i[
-      @url @command @directory @env @headers @bearer_token @timeout @input_names @only @except @prefix
+      @url @allow_http @command @directory @env @headers @bearer_token @timeout @input_names @only @except @prefix
       @tool_declarations @approvals @deferrals @callbacks @oauth @input_requests @extensions @log_level
     ].freeze
     private_constant :SETTINGS, :INPUT_ROUNDS, :INPUT_REQUESTS, :INLINE_SETTINGS, :EXTENSIONS, :POLL_INTERVAL,
@@ -55,6 +55,7 @@ module RubyLLM
 
     class << self
       attr_writer :default_name # :nodoc:
+      attr_reader :allow_http # :nodoc:
 
       def inherited(subclass) # :nodoc:
         super
@@ -65,15 +66,22 @@ module RubyLLM
         subclass.transport(@transport) if @transport
       end
 
-      # Sets the server's Streamable HTTP endpoint. Plain HTTP is only
-      # allowed for loopback addresses. Called with no argument, returns the
-      # configured value.
+      # Sets the server's Streamable HTTP endpoint. Called with no argument,
+      # returns the configured value.
       #
       #   url "https://mcp.linear.app/mcp"
       #
-      def url(value = nil)
+      # Plain HTTP is only allowed for loopback addresses. Pass
+      # <tt>allow_http: true</tt> for a server on a network you trust, such as
+      # a Compose or Kubernetes service. Anyone on that network can read and
+      # change the traffic, including any token you send.
+      #
+      #   url "http://tools:4011/mcp", allow_http: true
+      #
+      def url(value = nil, allow_http: false)
         return @url if value.nil?
 
+        @allow_http = allow_http
         @url = value
       end
 
@@ -225,9 +233,7 @@ module RubyLLM
                    authorization_params: }
       end
 
-      def oauth_settings # :nodoc:
-        @oauth
-      end
+      def oauth_settings = @oauth # :nodoc:
 
       # Sets how many seconds a request to the server may take. Defaults to
       # the configured +request_timeout+.
@@ -480,11 +486,12 @@ module RubyLLM
       end
 
       # Builds an anonymous MCP class from keywords, as RubyLLM.mcp does.
-      def define(name: nil, headers: {}, env: {}, oauth: nil, extensions: nil, **settings) # :nodoc:
+      def define(name: nil, headers: {}, env: {}, oauth: nil, extensions: nil, allow_http: false, **settings) # :nodoc:
         check_inline_settings(name, settings)
 
         Class.new(self) do
           settings.each { |setting, value| public_send(setting, value) unless value.nil? }
+          url(settings[:url], allow_http:)
           headers.each { |header_name, value| header(header_name, value) }
           Array(extensions).each { |extension_name, options| extension(extension_name, **options.to_h) }
           env(**env)
@@ -1057,9 +1064,9 @@ module RubyLLM
       if settings.transport
         resolve(settings.transport)
       elsif settings.url
-        HTTP.new(resolve(settings.url), headers: method(:request_headers), timeout: settings.timeout,
-                                        unauthorized: method(:unauthorized), responded: method(:responded),
-                                        idempotent: method(:idempotent?), config:)
+        HTTP.new(resolve(settings.url), allow_http: settings.allow_http, headers: method(:request_headers),
+                                        timeout: settings.timeout, unauthorized: method(:unauthorized),
+                                        responded: method(:responded), idempotent: method(:idempotent?), config:)
       elsif settings.command
         Stdio.new(settings.command.map { |part| resolve(part) },
                   env: -> { settings.env.transform_values { |value| resolve(value) } },

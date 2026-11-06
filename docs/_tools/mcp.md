@@ -38,7 +38,19 @@ class Linear < RubyLLM::MCP
 end
 ```
 
-`url` connects over Streamable HTTP. For a server that runs on your machine, give the command that starts it and RubyLLM talks to it over stdio:
+`url` connects over Streamable HTTP, and it takes HTTPS. Plain HTTP works only for `localhost` and loopback addresses, so a local server needs nothing extra. For a server on a private network you trust, such as a Compose or Kubernetes service, opt in with `allow_http: true`:
+
+```ruby
+class Tools < RubyLLM::MCP
+  url "http://tools:4011/mcp", allow_http: true
+end
+
+RubyLLM.mcp(url: "http://tools:4011/mcp", allow_http: true)
+```
+
+Without it, RubyLLM raises an `ArgumentError` that names the option. Nothing encrypts that traffic, so anyone on the network can read and change it, including any `bearer_token` you send. OAuth stays on HTTPS either way, and URLs still can't carry credentials.
+
+For a server that runs on your machine, give the command that starts it and RubyLLM talks to it over stdio:
 
 ```ruby
 class Files < RubyLLM::MCP
@@ -900,7 +912,7 @@ A response stream can break before the answer arrives, such as when a proxy drop
 
 Some defaults protect applications that connect to servers they do not control:
 
-* Plain HTTP is only allowed for `localhost` and loopback addresses. Everything else needs HTTPS.
+* Plain HTTP is only allowed for `localhost` and loopback addresses. Everything else needs HTTPS, unless [`allow_http: true`](#describing-a-server) says the network is trusted.
 * Redirects are never followed.
 * Request logs never include headers, so tokens stay out of your logs.
 

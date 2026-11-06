@@ -12,6 +12,64 @@ RSpec.describe RubyLLM::MCP do
 
   after { mcp.close }
 
+  describe 'url' do
+    let(:endpoint) { 'http://tools:4011/mcp' }
+    let(:discovered) { { resultType: 'complete', supportedVersions: ['2026-07-28'], capabilities: { tools: {} } } }
+
+    def stub_server
+      stub_request(:post, endpoint).to_return do |request|
+        message = JSON.parse(request.body)
+        result = message['method'] == 'tools/list' ? { tools: [] } : discovered
+        { status: 200, headers: { 'Content-Type' => 'application/json' },
+          body: { jsonrpc: '2.0', id: message['id'], result: }.to_json }
+      end
+    end
+
+    it 'refuses plain HTTP outside loopback by default' do
+      expect { RubyLLM.mcp(url: endpoint).tools }.to raise_error(ArgumentError, /allow_http: true/)
+    end
+
+    it 'connects over plain HTTP when a server class opts in' do
+      stub_server
+      url = endpoint
+
+      expect(Class.new(described_class) { url url, allow_http: true }.new.tools).to eq([])
+    end
+
+    it 'connects over plain HTTP when an inline server opts in' do
+      stub_server
+
+      expect(RubyLLM.mcp(url: endpoint, allow_http: true).tools).to eq([])
+    end
+
+    it 'keeps the opt-in in a subclass' do
+      stub_server
+      url = endpoint
+      parent = Class.new(described_class) { url url, allow_http: true }
+
+      expect(Class.new(parent).new.tools).to eq([])
+    end
+
+    it 'drops the opt-in when a subclass declares its own url' do
+      url = endpoint
+      parent = Class.new(described_class) { url 'http://other:4011/mcp', allow_http: true }
+
+      expect { Class.new(parent) { url url }.new.tools }.to raise_error(ArgumentError, /allow_http: true/)
+    end
+
+    it 'keeps OAuth endpoints on HTTPS' do
+      stub_request(:post, endpoint).to_return(status: 401)
+      url = endpoint
+      server = Class.new(described_class) do
+        url url, allow_http: true
+        oauth
+      end
+
+      expect { server.new.authorization_url(redirect_uri: 'https://app.example.com/callback') }
+        .to raise_error(RubyLLM::MCP::Error, /HTTPS/)
+    end
+  end
+
   describe 'tools' do
     it 'lists the server tools' do
       expect(mcp.tools.map(&:name)).to eq(%w[echo add fail picture slow wait deploy connect delete_everything])
