@@ -24,6 +24,10 @@
   </div>
 
   <div>
+    <%%= form.file_field :attachments, multiple: true %>
+  </div>
+
+  <div>
     <%%= form.submit "Start new <%= chat_table_name.singularize.humanize.downcase %>" %>
   </div>
 <%% end %>

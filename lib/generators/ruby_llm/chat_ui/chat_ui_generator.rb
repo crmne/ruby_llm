@@ -60,6 +60,7 @@ module RubyLLM
         template ui_template('views/chats/_form.html.erb'), "app/views/#{chat_view_path}/_form.html.erb"
         template 'views/chats/_approvals.html.erb', "app/views/#{chat_view_path}/_approvals.html.erb"
         template ui_template('views/chats/_files.html.erb'), "app/views/#{chat_view_path}/_files.html.erb"
+        template ui_template('views/chats/_reply_error.html.erb'), "app/views/#{chat_view_path}/_reply_error.html.erb"
 
         # Approval views
         template ui_template('views/approvals/_approval.html.erb'), "app/views/#{approval_view_path}/_approval.html.erb"

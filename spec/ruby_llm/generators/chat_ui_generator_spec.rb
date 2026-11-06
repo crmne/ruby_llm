@@ -42,7 +42,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     approvals_base_path:,
     approvals_path_helper:
   )
-    %w[index new show _chat _form _approvals _files].each do |view|
+    %w[index new show _chat _form _approvals _files _reply_error].each do |view|
       expect(File.exist?(File.join(base_path, "chats/#{view}.html.erb"))).to be true
     end
 
@@ -275,7 +275,9 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       abort "message answered \#{session.response.status}" unless session.response.status == 302
       queued = chat.queued_messages.to_a
       abort "queued \#{queued.map(&:content)}" unless queued.map(&:content) == [ "Use the EU file" ]
-      abort "enqueued \#{jobs.call}" if jobs.call.any?
+      recheck = jobs.call.map { |job| job["scheduled_at"].present? }
+      abort "the queued message has no check to come: \#{jobs.call}" unless recheck == [ true ]
+      ActiveJob::Base.queue_adapter.enqueued_jobs.clear
 
       html = #{controller}.render(:show, assigns: #{assigns})
       [ "Use the EU file", "queued_message_\#{queued.first.id}", "Cancel" ].each do |text|
@@ -314,9 +316,20 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       abort "finished page still thinks" if html.include?("Thinking…")
       abort "finished page still offers Stop" if html.match?(/>Stop<|value="Stop"/)
       abort "finished page lacks the form" unless html.include?('name="#{message_key}[content]"')
+      ActiveJob::Base.queue_adapter.enqueued_jobs.clear
       session.post "#{chats_path}/\#{chat.id}/messages", params: { #{message_key}: { content: "Hi" } }
       abort "idle message enqueued \#{jobs.call}" unless jobs.call.map { |job| job["arguments"] } == [ [ chat.id ] ]
       abort "idle message not saved" unless chat.reload.to_llm.messages.last.content == "Hi"
+
+      session.get "#{chats_path}/new"
+      abort "new chat page answered \#{session.response.status}" unless session.response.status == 200
+      file = Rack::Test::UploadedFile.new(StringIO.new("Quarterly numbers"), "text/plain", original_filename: "q4.txt")
+      session.post "#{chats_path}/\#{chat.id}/messages", params: { #{message_key}: { content: "Read this", attachments: [ file ] } }
+      attached = chat.reload.to_llm.messages.last.attachments.map(&:filename)
+      abort "attached \#{attached}" unless attached == [ "q4.txt" ]
+
+      too_long = ApplicationController.render(partial: "#{chats_path.delete_prefix('/')}/reply_error", locals: { error: RubyLLM::ContextLengthExceededError.new("no") })
+      abort "error lacks advice: \#{too_long}" unless too_long.include?("too long")
     RUBY
   end
 
@@ -486,7 +499,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         '@chat_models = available_chat_models',
         'prompt = params.dig(:chat, :prompt)',
         'if prompt.present?',
-        '@chat.ask_later(prompt)',
+        '@chat.ask_later(prompt, with: Array(params.dig(:chat, :attachments)).compact_blank.presence)',
         'ChatResponseJob.set(wait: 1.second).perform_later(@chat.id)',
         'provider, model = params.dig(:chat, :model).to_s.split(":", 2)',
         '@chat = ChatAgent.create!(**{ model: model.presence, provider: provider.presence }.compact)',
@@ -500,10 +513,10 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         'content = params.dig(:message, :content)',
         'if @chat.pending_approvals.any?',
         'if @chat.running?',
-        '@queued_message = @chat.queue(content)',
-        'ChatResponseJob.perform_later(@chat.id) unless @chat.running?',
+        '@queued_message = @chat.queue(content, with: attachments)',
+        'ChatResponseJob.set(wait: 1.minute).perform_later(@chat.id)',
         'if content.present?',
-        '@chat.ask_later(content)',
+        '@chat.ask_later(content, with: attachments)',
         'ChatResponseJob.perform_later(@chat.id)',
         'format.turbo_stream',
         '@message = @chat.messages.build',
@@ -606,10 +619,10 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         'content = params.dig(:llm_message, :content)',
         'if @llm_chat.pending_approvals.any?',
         'if @llm_chat.running?',
-        '@queued_message = @llm_chat.queue(content)',
-        'LlmChatResponseJob.perform_later(@llm_chat.id) unless @llm_chat.running?',
+        '@queued_message = @llm_chat.queue(content, with: attachments)',
+        'LlmChatResponseJob.set(wait: 1.minute).perform_later(@llm_chat.id)',
         'if content.present?',
-        '@llm_chat.ask_later(content)',
+        '@llm_chat.ask_later(content, with: attachments)',
         'LlmChatResponseJob.perform_later(@llm_chat.id)',
         'format.turbo_stream',
         '@llm_message = @llm_chat.llm_messages.build',

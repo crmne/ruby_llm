@@ -19,6 +19,10 @@
     </div>
 
     <div>
+      <%%= form.file_field :attachments, multiple: true %>
+    </div>
+
+    <div>
       <%%= form.submit "Send <%= message_table_name.singularize.humanize.downcase %>" %>
     </div>
   <%% end %>
