@@ -308,6 +308,7 @@ module RubyLLM
       # chats this agent builds, applied via Chat#with_context_budget.
       #
       #   context_budget per_result: 0.25, per_request: 0.7
+      #   context_budget window: 128_000, per_request: 0.7
       #
       def context_budget(budget = {}, **) = (@context_budget = Chat::ContextBudget.normalize(budget, **))
 
@@ -1348,7 +1349,7 @@ module RubyLLM
 
     ##
     # :method: with_context_budget
-    # :call-seq: with_context_budget(budget = {}, per_result: nil, per_request: nil)
+    # :call-seq: with_context_budget(budget = {}, per_result: nil, per_request: nil, window: nil)
     #
     # Delegates to Chat#with_context_budget. See that method for arguments and return values.
 

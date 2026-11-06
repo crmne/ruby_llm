@@ -22,12 +22,14 @@ module RubyLLM
         return if budget.nil?
 
         budget = budget.to_h.transform_keys(&:to_sym).merge(shares)
-        raise ArgumentError, 'with_context_budget takes per_result:, per_request:, or both' if budget.empty?
-
-        unknown = budget.keys - SHARES
+        unknown = budget.keys - SHARES - [:window]
         raise ArgumentError, "Unknown context budget option: #{unknown.join(', ')}" if unknown.any?
+        unless budget.keys.intersect?(SHARES)
+          raise ArgumentError, 'with_context_budget takes per_result:, per_request:, or both'
+        end
 
-        budget.each { |name, share| validate_share(name, share) }
+        budget.slice(*SHARES).each { |name, share| validate_share(name, share) }
+        validate_window(budget[:window]) if budget.key?(:window)
         budget.freeze
       end
 
@@ -36,11 +38,22 @@ module RubyLLM
 
         raise ArgumentError, "#{name} must be a share of the context window above 0 and at most 1"
       end
-      private_class_method :validate_share
+
+      def self.validate_window(window)
+        return if window.is_a?(Integer) && window.positive?
+
+        raise ArgumentError, 'window must be a positive whole number of tokens'
+      end
+      private_class_method :validate_share, :validate_window
 
       def initialize(budget, context_window)
         @budget = budget
-        @window = context_window.to_i if context_window.to_i.positive?
+        window = budget[:window] || context_window
+        @window = window.to_i if window.to_i.positive?
+      end
+
+      def window?
+        !@window.nil?
       end
 
       def cap(content)

@@ -414,7 +414,7 @@ module RubyLLM
 
       ##
       # :method: with_context_budget
-      # :call-seq: with_context_budget(budget = {}, per_result: nil, per_request: nil)
+      # :call-seq: with_context_budget(budget = {}, per_result: nil, per_request: nil, window: nil)
       #
       # Applies Chat#with_context_budget and returns this record.
 
