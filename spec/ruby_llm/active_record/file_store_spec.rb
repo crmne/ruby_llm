@@ -76,8 +76,8 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
   end
 
   it 'applies concurrent edits of one file from two processes one after the other' do
-    if Chat.connection.adapter_name.match?(/sqlite/i) && ActiveRecord.version < Gem::Version.new('7.2')
-      skip 'Before Rails 7.2, SQLite waits for a lock holding the GVL, so threads in one process cannot take turns'
+    if Chat.connection.adapter_name.match?(/sqlite/i) && ActiveRecord.version < Gem::Version.new('8.0')
+      skip 'Before Rails 8.0, SQLite waits for a lock holding the GVL, so threads in one process cannot take turns'
     end
 
     store.write('plan.md', "a\nb\n")
