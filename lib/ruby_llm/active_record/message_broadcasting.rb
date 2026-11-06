@@ -49,7 +49,10 @@ module RubyLLM
       # message, to the message's <tt><dom_id>_stream</tt> element as
       # <tt><span data-seq="index"></tt>, escaped. Each span names the
       # index of the span before it in <tt>data-after</tt>, so the page can
-      # order them. Returns +nil+ for a chunk without content. Raises
+      # order them. A chunk can reach the page before the message does, and
+      # Turbo drops an append with no target, so a page of your own must hold
+      # it, as the chat UI's Stimulus controller does. Returns +nil+ for a
+      # chunk without content. Raises
       # RubyLLM::ConfigurationError when the message does not broadcast.
       #
       #   chat.ask("Tell me a story") { |chunk| chunk.message.broadcast_chunk(chunk) }
