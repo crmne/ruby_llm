@@ -114,15 +114,30 @@ RSpec.describe RubyLLM::FileStore::Converters::Office do
                 'xl/_rels/workbook.xml.rels' => %(<Relationships><Relationship Id="rId1" Target="a\0b"/>) +
                                                 '</Relationships>' }
 
+      allow(RubyLLM.logger).to receive(:warn)
+
       expect { text_of(zip_of(parts), 'a.xlsx') }.not_to raise_error
+      expect(RubyLLM.logger).not_to have_received(:warn)
     end
 
     it 'reads unclosed tags in linear time, under a Regexp.timeout' do
       with_regexp_timeout(0.1) do
-        expect { docx('<w:p>' * 1_000_000) }.not_to raise_error
-        sheet = "<worksheet><sheetData>#{'<row><c>' * 1_000_000}</sheetData></worksheet>"
-        expect { text_of(zip_of({ 'xl/worksheets/sheet1.xml' => sheet }), 'a.xlsx') }.not_to raise_error
+        allow(RubyLLM.logger).to receive(:warn)
+
+        expect(docx("<w:p><w:r><w:t>first</w:t></w:r></w:p>#{'<w:p>' * 1_000_000}")).to eq('first')
+        rows = "<row r=\"1\"><c r=\"A1\"><v>7</v></c></row>#{'<row><c>' * 1_000_000}"
+        sheet = "<worksheet><sheetData>#{rows}</sheetData></worksheet>"
+        expect(text_of(zip_of({ 'xl/worksheets/sheet1.xml' => sheet }), 'a.xlsx')).to eq("## Sheet 1\n7")
+        expect(RubyLLM.logger).not_to have_received(:warn)
       end
+    end
+
+    it 'never expands a DOCTYPE entity, and reads the reference as text' do
+      entities = (1..9).map { |n| %(<!ENTITY lol#{n} "#{"&lol#{n - 1};" * 10}">) }.join
+      subset = %(<!DOCTYPE lolz [<!ENTITY lol0 "lol">#{entities}]>)
+      bomb = "#{subset}<w:document><w:body><w:p><w:r><w:t>&lol9;</w:t></w:r></w:p></w:body></w:document>"
+
+      expect(text_of(zip_of({ 'word/document.xml' => bomb }), 'a.docx')).to eq('&lol9;')
     end
 
     it 'never raises out of FileStore#text, whatever goes wrong inside it' do
@@ -257,6 +272,193 @@ RSpec.describe RubyLLM::FileStore::Converters::Office do
 
   describe 'Word' do
     def run(content) = "<w:r>#{content}</w:r>"
+
+    def paragraph(text, properties = '') = "<w:p><w:pPr>#{properties}</w:pPr>#{run("<w:t>#{text}</w:t>")}</w:p>"
+    def style(name) = %(<w:pStyle w:val="#{name}"/>)
+    def list(id, level = 0) = %(<w:numPr><w:ilvl w:val="#{level}"/><w:numId w:val="#{id}"/></w:numPr>)
+
+    def word(body, styles: nil, numbering: nil)
+      parts = { 'word/document.xml' => "<w:document><w:body>#{body}</w:body></w:document>" }
+      parts['word/styles.xml'] = "<w:styles>#{styles}</w:styles>" if styles
+      parts['word/numbering.xml'] = "<w:numbering>#{numbering}</w:numbering>" if numbering
+      text_of(zip_of(parts), 'a.docx')
+    end
+
+    describe 'headings' do
+      def paragraph_style(id, *children)
+        %(<w:style w:type="paragraph" w:styleId="#{id}">#{children.join}</w:style>)
+      end
+
+      def named(name) = %(<w:name w:val="#{name}"/>)
+      def based_on(id) = %(<w:basedOn w:val="#{id}"/>)
+      def outline(level) = %(<w:pPr><w:outlineLvl w:val="#{level}"/></w:pPr>)
+
+      it 'renders the six heading styles as Markdown headings' do
+        styles = (1..6).map { |level| paragraph_style("H#{level}", named("heading #{level}")) }.join
+
+        expect(word((1..6).map { |level| paragraph("T#{level}", style("H#{level}")) }.join, styles:))
+          .to eq("# T1\n## T2\n### T3\n#### T4\n##### T5\n###### T6")
+      end
+
+      it 'reads a localized style by its outline level, and a custom one through basedOn' do
+        styles = paragraph_style('berschrift1', named('Überschrift 1'), outline(0)) +
+                 paragraph_style('Report', named('Report Title'), based_on('berschrift1')) +
+                 paragraph_style('Deep', named('Deep'), based_on('H2')) +
+                 paragraph_style('H2', named('heading 2'))
+
+        expect(word(paragraph('A', style('berschrift1')) + paragraph('B', style('Report')) +
+                    paragraph('C', style('Deep')), styles:)).to eq("# A\n# B\n## C")
+      end
+
+      it 'lets a nearer style turn a heading off with the body text level' do
+        styles = paragraph_style('H1', named('heading 1'), outline(0)) +
+                 paragraph_style('Quiet', named('Quiet'), based_on('H1'), outline(9))
+
+        expect(word(paragraph('A', style('Quiet')), styles:)).to eq('A')
+      end
+
+      it "reads a paragraph's own outline level first" do
+        styles = paragraph_style('H1', named('heading 1'), outline(0))
+
+        expect(word(paragraph('A', '<w:outlineLvl w:val="2"/>') +
+                    paragraph('B', "#{style('H1')}<w:outlineLvl w:val=\"9\"/>"), styles:)).to eq("### A\nB")
+      end
+
+      it 'leaves levels past six, and a heading in a table cell, as plain text' do
+        styles = paragraph_style('H7', named('heading 7')) + paragraph_style('H1', named('heading 1'))
+        cell = "<w:tbl><w:tr><w:tc>#{paragraph('In a cell', style('H1'))}</w:tc></w:tr></w:tbl>"
+
+        expect(word(paragraph('Seven', style('H7')) + paragraph('Too', '<w:outlineLvl w:val="7"/>') + cell, styles:))
+          .to eq("Seven\nToo\nIn a cell")
+      end
+
+      it 'survives a basedOn cycle' do
+        styles = paragraph_style('A', based_on('B')) + paragraph_style('B', based_on('A'))
+
+        expect(word(paragraph('Loop', style('A')), styles:)).to eq('Loop')
+      end
+
+      it 'reads plain lines without styles, with broken ones, and with an unknown style' do
+        expect(word(paragraph('A', style('H1')))).to eq('A')
+        expect(word(paragraph('A', style('H1')), styles: '<w:style w:styleId=')).to eq('A')
+        expect(word(paragraph('A', style('Nope')), styles: paragraph_style('H1', named('heading 1')))).to eq('A')
+      end
+
+      it 'reads the document when its styles are too large to read' do
+        stub_const("#{described_class}::MAX_SIZE", 1_000)
+        styles = paragraph_style('H1', named('heading 1')) * 100
+
+        expect(word(paragraph('A', style('H1')), styles:)).to eq('A')
+      end
+    end
+
+    describe 'lists' do
+      let(:numbering) do
+        <<~XML
+          <w:abstractNum w:abstractNumId="0">
+            <w:lvl w:ilvl="0"><w:start w:val="1"/><w:numFmt w:val="bullet"/></w:lvl>
+            <w:lvl w:ilvl="1"><w:start w:val="1"/><w:numFmt w:val="bullet"/></w:lvl>
+          </w:abstractNum>
+          <w:abstractNum w:abstractNumId="1">
+            <w:lvl w:ilvl="0"><w:start w:val="1"/><w:numFmt w:val="decimal"/></w:lvl>
+            <w:lvl w:ilvl="1"><w:start w:val="1"/><w:numFmt w:val="lowerLetter"/></w:lvl>
+          </w:abstractNum>
+          <w:abstractNum w:abstractNumId="2">
+            <w:lvl w:ilvl="0"><w:start w:val="5"/><w:numFmt w:val="decimal"/></w:lvl>
+          </w:abstractNum>
+          <w:abstractNum w:abstractNumId="3">
+            <w:lvl w:ilvl="0"><w:start w:val="1"/><w:numFmt w:val="none"/></w:lvl>
+          </w:abstractNum>
+          <w:num w:numId="1"><w:abstractNumId w:val="0"/></w:num>
+          <w:num w:numId="2"><w:abstractNumId w:val="1"/></w:num>
+          <w:num w:numId="3"><w:abstractNumId w:val="1"/></w:num>
+          <w:num w:numId="4"><w:abstractNumId w:val="1"/>
+            <w:lvlOverride w:ilvl="0"><w:startOverride w:val="1"/></w:lvlOverride></w:num>
+          <w:num w:numId="5"><w:abstractNumId w:val="2"/></w:num>
+          <w:num w:numId="6"><w:abstractNumId w:val="3"/></w:num>
+        XML
+      end
+
+      def lines(*items) = word(items.map { |text, *properties| paragraph(text, list(*properties)) }.join, numbering:)
+
+      it 'marks bullets and nests them by level' do
+        expect(lines(['One', 1], ['Under', 1, 1], ['Two', 1])).to eq("- One\n  - Under\n- Two")
+      end
+
+      it 'counts a numbered list, and starts where the level says' do
+        expect(lines(['A', 2], ['B', 2], ['C', 2])).to eq("1. A\n2. B\n3. C")
+        expect(lines(['A', 5], ['B', 5])).to eq("5. A\n6. B")
+      end
+
+      it 'restarts a level after a shallower one, and carries on the shallower count' do
+        expect(lines(['A', 2], ['a', 2, 1], ['b', 2, 1], ['B', 2], ['c', 2, 1]))
+          .to eq("1. A\n  1. a\n  2. b\n2. B\n  1. c")
+      end
+
+      it 'continues across lists that share a definition, and restarts where one overrides the start' do
+        expect(lines(['A', 2], ['B', 3])).to eq("1. A\n2. B")
+        expect(lines(['A', 2], ['B', 4], ['C', 4])).to eq("1. A\n1. B\n2. C")
+      end
+
+      it 'keeps counting through text between the items' do
+        body = paragraph('A', list(2)) + paragraph('Between') + paragraph('B', list(2))
+
+        expect(word(body, numbering:)).to eq("1. A\nBetween\n2. B")
+      end
+
+      it 'counts an empty item without a line for it' do
+        body = "#{paragraph('A', list(2))}<w:p><w:pPr>#{list(2)}</w:pPr></w:p>#{paragraph('B', list(2))}"
+
+        expect(word(body, numbering:)).to eq("1. A\n3. B")
+      end
+
+      it 'marks nothing for no list, a level that shows no number, or an unknown list' do
+        expect(lines(['A', 0])).to eq('A')
+        expect(lines(['A', 6])).to eq('A')
+        expect(lines(['A', 99])).to eq('A')
+        expect(lines(['A', 1, 7])).to eq('A')
+      end
+
+      it 'reads a list a style gives, and lets the paragraph turn it off' do
+        styles = '<w:style w:type="paragraph" w:styleId="LB"><w:pPr><w:numPr><w:numId w:val="1"/></w:numPr>' \
+                 '</w:pPr></w:style>'
+        body = paragraph('A', style('LB')) + paragraph('B', style('LB') + list(0))
+
+        expect(word(body, styles:, numbering:)).to eq("- A\nB")
+      end
+
+      it 'leaves out markers in a table cell, while the count goes on' do
+        cell = "<w:tbl><w:tr><w:tc>#{paragraph('In', list(2))}</w:tc></w:tr></w:tbl>"
+
+        expect(word(paragraph('A', list(2)) + cell + paragraph('B', list(2)), numbering:)).to eq("1. A\nIn\n3. B")
+      end
+
+      it 'bounds nesting at the levels the format has' do
+        deep = '<w:abstractNum w:abstractNumId="0"><w:lvl w:ilvl="999999999"><w:numFmt w:val="bullet"/></w:lvl>' \
+               '</w:abstractNum><w:num w:numId="1"><w:abstractNumId w:val="0"/></w:num>'
+
+        expect(word(paragraph('A', list(1, 999_999_999)), numbering: deep)).to eq('A')
+      end
+
+      it 'reads plain lines without numbering, and with broken numbering' do
+        expect(word(paragraph('A', list(1)))).to eq('A')
+        expect(word(paragraph('A', list(1)), numbering: '<w:abstractNum')).to eq('A')
+      end
+
+      it 'marks a text box paragraph once, ahead of the text before the box' do
+        box = "<w:txbxContent>#{paragraph('Box')}</w:txbxContent>"
+        body = "<w:p><w:pPr>#{list(1)}</w:pPr>#{run('<w:t>Before</w:t>')}#{run(box)}#{run('<w:t>After</w:t>')}</w:p>"
+
+        expect(word(body, numbering:)).to eq("- Before\nBox\nAfter")
+      end
+    end
+
+    it 'leaves structure out of a PowerPoint slide' do
+      slide = '<p:sld><p:sp><p:txBody><a:p><a:pPr lvl="1"><a:buChar char="x"/></a:pPr><a:r><a:t>Point</a:t></a:r>' \
+              '</a:p></p:txBody></p:sp></p:sld>'
+
+      expect(text_of(zip_of({ 'ppt/slides/slide1.xml' => slide }), 'a.pptx')).to eq("## Slide 1\n\nPoint")
+    end
 
     it 'reads tabs and line breaks' do
       paragraph = "<w:p>#{run('<w:t>Name</w:t><w:tab/><w:t>Value</w:t><w:br/><w:t>Next</w:t>')}</w:p>"

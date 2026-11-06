@@ -43,7 +43,8 @@ module RubyLLM
           private
 
           def document(zip)
-            Prose.lines(zip['word/document.xml']).join("\n")
+            xml = zip['word/document.xml']
+            Prose.lines(xml, outline: Outline.read(zip)).join("\n")
           end
 
           def workbook(zip)

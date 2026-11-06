@@ -8,16 +8,18 @@ module RubyLLM
         # for each paragraph, and a line with tabs between cells for each
         # table row. Word and PowerPoint share these element names.
         class Prose # :nodoc:
-          SKIPPED = %w[pPr rPr tblPr tcPr trPr sectPr Fallback].freeze
+          SKIPPED = %w[tabs tabLst pPrChange rPr tblPr tcPr trPr sectPr Fallback].freeze
           BREAKS = { 'tab' => "\t", 'br' => "\n", 'cr' => "\n" }.freeze
           UNREAD_PLACEHOLDERS = %w[sldNum hdr ftr dt sldImg].freeze
-          private_constant :SKIPPED, :BREAKS, :UNREAD_PLACEHOLDERS
+          Paragraph = Struct.new(:text, :style, :list, :level, :outline, :marked)
+          private_constant :SKIPPED, :BREAKS, :UNREAD_PLACEHOLDERS, :Paragraph
 
-          def self.lines(xml)
-            new.read(xml)
+          def self.lines(xml, outline: nil)
+            new(outline).read(xml)
           end
 
-          def initialize
+          def initialize(outline = nil)
+            @outline = outline
             @sinks = [[]]
             @paragraphs = []
             @rows = []
@@ -40,7 +42,7 @@ module RubyLLM
           private
 
           def text(content)
-            @paragraphs.last << Markup.unescape(content) if @capturing && @paragraphs.any?
+            @paragraphs.last.text << Markup.unescape(content) if @capturing && @paragraphs.any?
           end
 
           def opened(name, tag)
@@ -51,16 +53,33 @@ module RubyLLM
             when 'tc' then @sinks << []
             when 'sp' then open_shape
             when 'ph' then placeholder(tag)
-            when 'tab', 'br', 'cr' then @paragraphs.last&.<<(BREAKS[name])
+            else leaf(name, tag)
             end
           end
 
           def empty(name, tag)
             case name
-            when 'tab', 'br', 'cr' then @paragraphs.last&.<<(BREAKS[name])
             when 'tc' then @rows.last&.push('')
             when 'ph' then placeholder(tag)
+            else leaf(name, tag)
             end
+          end
+
+          def leaf(name, tag)
+            return unless @paragraphs.any?
+
+            paragraph = @paragraphs.last
+            case name
+            when 'tab', 'br', 'cr' then paragraph.text << BREAKS[name]
+            when 'pStyle' then paragraph.style = Markup.prefixed(tag, 'val')
+            when 'numId' then paragraph.list = number(tag)
+            when 'ilvl' then paragraph.level = number(tag)
+            when 'outlineLvl' then paragraph.outline = number(tag)
+            end
+          end
+
+          def number(tag)
+            Markup.prefixed(tag, 'val').to_s[/\A\d{1,9}\z/]&.to_i
           end
 
           def close(name)
@@ -77,16 +96,30 @@ module RubyLLM
           # text around it, so what the outer one holds so far goes first.
           def open_paragraph
             outer = @paragraphs.last
-            unless outer.nil? || outer.empty?
-              @sinks.last << outer.dup
-              outer.clear
-            end
-            @paragraphs << +''
+            emit(outer) if outer && !outer.text.empty?
+            @paragraphs << Paragraph.new(+'')
           end
 
           def close_paragraph
-            text = @paragraphs.pop
-            @sinks.last << text unless text.nil? || text.empty?
+            paragraph = @paragraphs.pop
+            emit(paragraph) if paragraph
+          end
+
+          def emit(paragraph)
+            marker = marker_of(paragraph)
+            @sinks.last << "#{marker}#{paragraph.text}" unless paragraph.text.empty?
+            paragraph.text = +''
+          end
+
+          # A list item counts wherever it is, but a table row keeps to one
+          # line of plain cells.
+          def marker_of(paragraph)
+            return if paragraph.marked || @outline.nil?
+
+            paragraph.marked = true
+            marker = @outline.marker(style: paragraph.style, list: paragraph.list, level: paragraph.level,
+                                     outline: paragraph.outline)
+            marker if @sinks.size == 1
           end
 
           def close_cell

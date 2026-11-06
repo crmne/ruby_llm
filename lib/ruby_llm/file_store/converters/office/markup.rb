@@ -15,11 +15,14 @@ module RubyLLM
           ATTRIBUTES = Hash.new do |patterns, name|
             patterns[name] = /\s#{Regexp.escape(name)}=(?:"([^"]*)"|'([^']*)')/
           end
+          PREFIXED = Hash.new do |patterns, name|
+            patterns[name] = /\s(?:[\w.-]+:)?#{Regexp.escape(name)}=(?:"([^"]*)"|'([^']*)')/
+          end
           RELATIONSHIP_ID = /\s[\w.-]+:id=(?:"([^"]*)"|'([^']*)')/
           SLASH = 47
           QUESTION = 63
           BANG = 33
-          private_constant :ENTITIES, :ENTITY, :NAME, :ATTRIBUTES, :RELATIONSHIP_ID, :SLASH, :QUESTION, :BANG
+          private_constant :ENTITIES, :ENTITY, :NAME, :ATTRIBUTES, :PREFIXED, :RELATIONSHIP_ID, :SLASH, :QUESTION, :BANG
 
           class << self
             # Yields <tt>:open</tt>, <tt>:empty</tt>, or <tt>:close</tt> with
@@ -39,6 +42,12 @@ module RubyLLM
             # Returns the value of an attribute in a tag's source, unescaped.
             def attribute(tag, name)
               match = ATTRIBUTES[name].match(tag.to_s)
+              unescape(match[1] || match[2]) if match
+            end
+
+            # Returns the value of an attribute under any prefix, or none.
+            def prefixed(tag, name)
+              match = PREFIXED[name].match(tag.to_s)
               unescape(match[1] || match[2]) if match
             end
 
