@@ -41,6 +41,10 @@ module RubyLLM
     KEYWORD_PARAMETER_KINDS = %i[keyreq key].freeze # :nodoc:
     TOOL_CALL_KEYWORD = :tool_call # :nodoc:
     ASKING = :ruby_llm_tool_asking # :nodoc:
+    HALT = :ruby_llm_tool_halt # :nodoc:
+
+    # A result that ends the turn, from #halt.
+    Halt = Data.define(:content) # :nodoc:
     RESUMING = :ruby_llm_tool_resuming # :nodoc:
 
     DUPED_INHERITED_CONFIG = {
@@ -476,7 +480,7 @@ module RubyLLM
 
       RubyLLM.logger.debug { "Tool #{name} called with: #{normalized_args.inspect}" }
       normalized_args[TOOL_CALL_KEYWORD] = tool_call if execute_accepts_tool_call?
-      result = asking { execute(**normalized_args) }
+      result = asking { halting { execute(**normalized_args) } }
       RubyLLM.logger.debug { "Tool #{name} returned: #{result.inspect}" }
       result
     end
@@ -563,7 +567,23 @@ module RubyLLM
     def resume_call(state, arguments, tool_call:) # :nodoc:
       return answered(state, arguments, tool_call:) unless state.key?('task')
 
-      resume(task(state, tool_call:), **arguments.transform_keys(&:to_sym))
+      halting { resume(task(state, tool_call:), **arguments.transform_keys(&:to_sym)) }
+    end
+
+    # Ends the turn with +result+ as this call's result: the model is not
+    # asked to respond once the round's other calls finish. It stops
+    # #execute where it is called, so call it, or return it, when the tool
+    # has said the last word, such as filing a ticket a triage turn exists
+    # for. The result reaches the conversation as any other, and the next
+    # Chat#ask starts a new turn. See Chat#complete?.
+    #
+    #   def execute(category:)
+    #     ticket.update!(category:)
+    #     halt "Filed as #{category}"
+    #   end
+    #
+    def halt(result = nil)
+      throw HALT, Halt.new(result)
     end
 
     # Reports what the tool is doing while #execute runs, so an application
@@ -606,6 +626,10 @@ module RubyLLM
     # neither sees them nor moves its count.
     # A fresh Hash each time: fibers inherit their parent's storage, and
     # parallel calls mustn't share a count.
+    def halting(&) # :nodoc:
+      catch(HALT, &)
+    end
+
     def asking # :nodoc:
       previous = Fiber[ASKING]
       input = Fiber[RESUMING]

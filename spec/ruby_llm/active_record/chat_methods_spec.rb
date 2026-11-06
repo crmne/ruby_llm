@@ -1084,6 +1084,21 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(reports).to eq([[chat.messages.second.tool_calls.keys.first, 'Working', 0.5]])
     end
 
+    it 'keeps a halted turn ended after a reload' do
+      stub_const('ConcludeTool', Class.new(RubyLLM::Tool) { def execute = halt('Filed') })
+      chat = Chat.create!(model: model_id).with_tools(ConcludeTool)
+      call = tool_call(name: 'conclude')
+      allow(chat.to_llm.provider).to receive(:complete).and_return(
+        RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { call.id => call })
+      )
+
+      expect(chat.ask('Triage')).to be_halted
+      reloaded = Chat.find(chat.id)
+
+      expect(reloaded.messages.last).to be_halted
+      expect(reloaded).to be_complete
+    end
+
     it 'runs tools inside around_tool_call' do
       stub_const('TenantTool', Class.new(RubyLLM::Tool) { def execute = Fiber[:spec_tenant].to_s })
       chat = Chat.create!(model: model_id).with_tools(TenantTool).with_tool_options(concurrency: :threads)

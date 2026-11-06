@@ -17,6 +17,7 @@ After reading this guide, you will know:
 * How to require a human decision before a tool executes.
 * How to run multiple tool calls concurrently for I/O-bound work.
 * How to keep a tool that shares state from running alongside others.
+* How a tool ends the turn without another model call.
 * How to access the executing tool call from inside a tool.
 * What happens when a model does not support function calling.
 * How to observe tool calls and results with callbacks.
@@ -299,6 +300,32 @@ Or set the state the tools need around each call, in the thread or fiber that ru
 account = Current.account
 chat.around_tool_call { |_call, &run| Current.set(account:, &run) }
 ```
+
+## Ending the Turn
+
+Some tools say the last word. A triage turn exists to file the ticket, and once the tool has filed it, asking the model to respond only buys an extra call and a "Done!" nobody reads. Call `halt` to end the turn with the tool's result:
+
+```ruby
+class FileTicket < RubyLLM::Tool
+  description "Files the ticket under a category"
+  parameter :category, description: "bug, billing, or question"
+
+  def initialize(ticket)
+    @ticket = ticket
+  end
+
+  def execute(category:)
+    @ticket.update!(category:)
+    halt "Filed as #{category}"
+  end
+end
+
+response = chat.ask "Triage this ticket: #{ticket.body}"
+response.halted? # => true
+response.content # => "Filed as bug"
+```
+
+`halt` stops `execute` where you call it, and its argument is the call's result, which reaches the conversation like any other. The other calls of the round still run, then the turn ends: `ask` returns the halted tool result, and `complete?` is `true`. The next `ask` starts a new turn and sends the whole conversation, the halted result included. A tool result that halted has the finish reason `:halted`, which a Rails chat saves, so a reloaded chat knows the turn is over.
 
 ## Accessing the Current Tool Call
 

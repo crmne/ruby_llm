@@ -363,11 +363,12 @@ module RubyLLM
         steering_only ||= boundary
       end
       @cancelled = false
-      pending_tool_response || last_non_system_message || messages.last
+      pending_tool_response || halted_result || last_non_system_message || messages.last
     end
 
     # Returns whether the chat has no pending response or tool execution:
-    # nothing is staged, or the model answered without requesting tools,
+    # nothing is staged, the model answered without requesting tools, or a
+    # tool ended the turn with Tool#halt once its round finished,
     # and no queued message steers the turn. Messages queued with
     # <tt>steer: false</tt> don't count, so the chat is complete while
     # they wait for the next #complete.
@@ -1820,9 +1821,15 @@ module RubyLLM
       last = last_conversation_message
       case last&.role
       when nil then true
-      when :user, :tool then false
+      when :user then false
+      when :tool then !halted_result.nil?
       else !last.tool_call? && !unfinished?(last)
       end
+    end
+
+    # A tool that halted ends the turn once its round has every result.
+    def halted_result
+      messages.reverse_each.take_while(&:tool_result?).find(&:halted?)
     end
 
     def generate_once(stream_tracker: nil, usage_start: nil, &block)
@@ -2409,7 +2416,7 @@ module RubyLLM
       result = run_around_tool_call(tool_call) { execute_tool tool_call }
       return result if result.equal?(PAUSED)
 
-      run_callbacks(:after_tool_result, result)
+      run_callbacks(:after_tool_result, result.is_a?(Tool::Halt) ? result.content : result)
       result
     end
 
@@ -2433,12 +2440,15 @@ module RubyLLM
     end
 
     def add_tool_result_message(tool_call, result)
+      halted = result.is_a?(Tool::Halt)
+      result = result.content if halted
       content, attachments = split_tool_result(result)
       content = @file_references.spill(tool_for(tool_call), tool_call, content) if @file_references
       content = context_budget_for_model.cap(content) if @context_budget
       mcp_result = result if result.is_a?(MCP::Result) && result.ui_uri
       message = add_message(role: :tool, content:, attachments:, tool_call_id: tool_call.id,
-                            provider_call_id: tool_call.provider_call_id, mcp_result:)
+                            provider_call_id: tool_call.provider_call_id, mcp_result:,
+                            finish_reason: (:halted if halted))
       run_callbacks(:after_message, message)
       message
     end
