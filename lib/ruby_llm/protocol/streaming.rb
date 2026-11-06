@@ -8,16 +8,28 @@ module RubyLLM
     module Streaming # :nodoc: all
       MAX_JSON_BODY_BYTES = 1024 * 1024
 
-      StreamState = Struct.new(:parser, :buffer, :json_body) do
+      StreamState = Struct.new(:parser, :buffer, :json_body, :stray_json) do
         def initialize
           super
           reset
         end
 
         def reset
-          self.parser = Transport::EventStreamParser.new
+          self.parser = Transport::EventStreamParser.new(on_unknown_line: method(:keep_stray_line))
           self.buffer = +''
           self.json_body = nil
+          self.stray_json = +''
+        end
+
+        # A provider can answer in the middle of a stream with a bare JSON
+        # error, which is not an event. Only a line that starts with "{" can
+        # open one, so other lines the stream doesn't understand can't hide it.
+        def keep_stray_line(line)
+          self.stray_json = +'' if line.start_with?('{')
+          return if stray_json.empty? && !line.start_with?('{')
+          return if stray_json.bytesize + line.bytesize >= MAX_JSON_BODY_BYTES
+
+          stray_json << line << "\n"
         end
       end
 
@@ -118,7 +130,20 @@ module RubyLLM
         else
           keep_for_failure(chunk, state)
           handle_sse(chunk, state.parser, env, progress, &)
+          raise_stray_error(state, env)
         end
+      end
+
+      # A complete object without an error is a line to ignore, and an
+      # incomplete one may finish in a later read.
+      def raise_stray_error(state, env)
+        return if state.stray_json.empty?
+
+        parsed = JSON.parse(state.stray_json)
+        raise_stream_error(state.stray_json, parsed, env) if parsed['error']
+        state.stray_json = +''
+      rescue JSON::ParserError
+        RubyLLM.logger.debug { 'Waiting for the rest of a line outside any stream event' }
       end
 
       # Faraday 1 knows the status only once the response ends, so a failure
@@ -155,6 +180,8 @@ module RubyLLM
       # Runs once the response has ended, when a body that never parsed as
       # JSON is the only account of the failure.
       def raise_stream_failure(state, env)
+        state.parser.finish
+        raise_stray_error(state, env)
         raise_buffered_error(state, env)
         return unless failed_http_status(env) && !state.buffer.empty?
 
