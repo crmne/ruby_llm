@@ -159,7 +159,7 @@ Providers can charge for each tool use as well as for the tokens in the results.
 
 ### Web Sources
 
-Sources and citations answer different questions. Sources are the pages a web search used. Citations link parts of the answer to what supports them, so there are usually fewer of them. Read the sources from `web_sources`:
+Sources and citations answer different questions. Sources are the pages a web search returned. Citations link parts of the answer to what supports them, so there are usually fewer of them. Read the sources from `web_sources`:
 
 ```ruby
 response = chat.with_provider_tools(:web_search).ask "What changed in the latest Ruby release?"
@@ -177,6 +177,16 @@ Each `WebSource` has a `url` and, where the provider gives one, a `title`. The l
 | Gemini, Vertex AI | A Google redirect link that leads to the page | The site's domain |
 
 `web_sources` is empty on other providers and on Gemini's Interactions protocol. RubyLLM does not build the list from citations, which name only what the answer cites.
+
+Sources come from the outside world, so don't use them as an allowlist on their own. Before you let a chat act on an address from this list, such as opening it without asking, keep these in mind:
+
+* Anyone can publish a page that a search returns, and text the model reads can steer what it searches for.
+* OpenAI can list a page the model opened beside the pages its search found, and its API doesn't mark which is which. Text the model read can name that page, so an address carrying data can reach this list.
+* The list reports what already happened. The provider fetched those pages itself before your code saw them, so a page's address has already reached its site.
+
+Citations can name a page the model chose in the same way.
+
+Pages the model chose to read aren't web sources, though OpenAI's list can include them as above. Find them in `server_tool_calls`: a Responses `web_search_call` holds the address in `call.input["url"]`, a Gemini `url_context` call in its `result`, and an Anthropic `web_fetch_tool_result` in its `result`.
 
 ### Google Search Suggestions
 

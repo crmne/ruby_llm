@@ -290,7 +290,7 @@ A streamed reply you cancel now stays in the conversation as far as it got, mark
 
 ## Smaller Additions
 
-`response.web_sources` lists the pages a hosted web search used, the same on OpenAI, Azure, Meta, xAI, Anthropic, Gemini, and Vertex AI. See [Web Sources]({% link _tools/provider-tools.md %}#web-sources).
+`response.web_sources` lists the pages a hosted web search returned, the same on OpenAI, Azure, Meta, xAI, Anthropic, Gemini, and Vertex AI. They come from the outside world, so don't treat them as an allowlist on their own. See [Web Sources]({% link _tools/provider-tools.md %}#web-sources).
 
 A reply a fallback model wrote names it: `reply.model` and `reply.provider`, also on Rails records with those columns. See [Fallback Callbacks]({% link _advanced/error-handling.md %}#fallback-callbacks).
 
