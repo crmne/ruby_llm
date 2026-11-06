@@ -100,7 +100,7 @@ A double click on "Approve" enqueues two jobs. Only one of them runs the tool: t
 
 Before `complete`, `step`, `generate`, `run_tools`, or `compact` call the model or run a tool, the chat claims itself in the database. The claim is a conditional update of two columns on your chats table, `claim_token` and `claimed_until`, so no transaction stays open while the model or a tool runs. Each tool call is claimed the same way before it runs. A second process that finds the chat claimed returns at once: `complete` returns the latest message, `step` and `generate` return `nil`, and `waiting?` is `true`.
 
-`chat.running?` reads the claim from the database, and a tool call record's `running?`, from `message.ruby_llm_tool_calls`, tells you which call is running:
+`chat.running?` reads the claim from the database, and a tool call record's `running?`, from `message.ruby_llm_tool_calls`, tells you which call is running. Ask it rather than reading the columns. A run clears both columns when it ends, but a process that dies leaves them until another process takes the chat over, so `claim_token` alone doesn't mean a run is alive:
 
 ```ruby
 chat.running?      # => true while any process runs the chat
@@ -158,7 +158,7 @@ A process that dies mid-request removes nothing. Its assistant placeholder stays
 
 ## Stopping from Anywhere
 
-`chat.cancel` on a persisted chat writes the request to the database, so a stop button in the web process halts a background job mid-stream at its next checkpoint. See [Cancelling a Background Stream]({% link _advanced/rails-streaming.md %}#cancelling-a-background-stream).
+`chat.cancel` on a persisted chat writes the request to the database, so a stop button in the web process halts a background job mid-stream at its next checkpoint. A stop pressed after a message is saved or queued, before its job claims the chat, stops that reply too. A stop with nothing to stop does nothing, and a message sent after a stop goes on. See [Cancelling a Background Stream]({% link _advanced/rails-streaming.md %}#cancelling-a-background-stream).
 
 ## At-Least-Once, Not Exactly-Once
 

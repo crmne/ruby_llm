@@ -54,6 +54,7 @@ module RubyLLM
 
       def record_tool_call_decision(tool_call, decision)
         record = tool_call_record(tool_call)
+        forget_stale_cancellation
         decide_persisted_tool_call(record, decision)
         record
       end

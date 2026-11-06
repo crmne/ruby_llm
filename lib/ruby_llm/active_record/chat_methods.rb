@@ -73,17 +73,13 @@ module RubyLLM
       # rebinds the underlying chat, like #with_context.
       attr_reader :context
 
-      # Requests cancellation of the current in-flight chat operation. The
-      # request is persisted so a background job can observe it from another
-      # process.
+      # Requests cancellation of the current in-flight chat operation, or of
+      # the run that will answer a message still waiting for one. The request
+      # is persisted so a background job can observe it from another process.
+      # Does nothing when no run holds the chat and nothing waits to run.
+      # Returns +self+.
       def cancel
-        if persisted?
-          update_column(:cancelled, true)
-        else
-          self[:cancelled] = true
-        end
-
-        @chat&.cancel
+        request_cancellation
         self
       end
 
@@ -780,7 +776,7 @@ module RubyLLM
           RubyLLM::ActiveRecord::ToolCall.exists?(tool_call_id: id)
         end
 
-        message_record = messages_association.create!(message_attributes(llm_message).merge(record_attributes))
+        message_record = create_message_record(llm_message, record_attributes)
         @last_message_id = message_record.id
 
         tool_call = find_tool_call(llm_message.tool_call_id) if llm_message.tool_call_id
@@ -1020,6 +1016,11 @@ module RubyLLM
       end
 
       private
+
+      def create_message_record(llm_message, record_attributes)
+        forget_stale_cancellation if llm_message.role == :user
+        messages_association.create!(message_attributes(llm_message).merge(record_attributes))
+      end
 
       def broadcasts_messages?
         message_class = messages_association.klass

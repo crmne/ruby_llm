@@ -187,6 +187,10 @@ In 2.1, two processes that completed the same persisted chat at the same time co
 
 The process that holds the claim continues with approvals and questions recorded while it ran. See [One Process at a Time]({% link _advanced/durable-agents.md %}#one-process-at-a-time).
 
+## Cancel With Nothing to Stop Does Nothing
+
+In 2.1, `cancel` on a persisted chat always set its `cancelled` column, so a cancel with nothing to stop raised `RubyLLM::CancelledError` in the next reply. In 2.2, once your chats table has the claim columns, `cancel` does nothing when no run holds the chat and nothing waits to run, and `cancelled?` stays `false`. A message recorded after a cancel, while no run holds the chat, clears it. Code that called `cancel` before the first message to stop a run it was about to start should call it after saving the message. See [Cancelling a Background Stream]({% link _advanced/rails-streaming.md %}#cancelling-a-background-stream).
+
 ## Bedrock Mantle Adds the OpenAI Path
 
 OpenAI GPT models on Bedrock Mantle now post under `/openai/v1`, as AWS requires. If you set `bedrock_mantle_api_base` to a URL ending in `/openai` to reach them, remove that suffix.

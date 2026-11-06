@@ -18,6 +18,7 @@ module RubyLLM
       end
 
       def record_input(tool_call, input)
+        @chat.forget_stale_cancellation
         record = @chat.find_tool_call(tool_call.id)
         record.update!(mcp_state: input) if record&.has_attribute?(:mcp_state)
       end

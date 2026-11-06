@@ -71,6 +71,16 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     expect(chat).not_to be_running
   end
 
+  it 'clears a leftover cancel when the user answers' do
+    chat = paused_chat
+    Chat.where(id: chat.id).update_all(cancelled: true)
+    answering = Chat.find(chat.id).with_mcp(files)
+
+    answering.answer(answering.pending_inputs.first, environment: 'staging')
+
+    expect(Chat.find(chat.id)).not_to be_cancelled
+  end
+
   it 'resumes from another process after the user answers' do
     chat = paused_chat
     answering = Chat.find(chat.id).with_mcp(files)

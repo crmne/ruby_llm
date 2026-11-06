@@ -80,8 +80,9 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   end
 
   describe '#cancel' do
-    it 'persists the request on a saved record' do
+    it 'persists the request on a saved record with a message waiting' do
       chat = Chat.create!(model: model_id)
+      chat.ask_later('Hello')
 
       chat.cancel
 
@@ -97,13 +98,19 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(chat).not_to be_persisted
     end
 
-    it 'forwards the request to a chat that is already built' do
+    it 'forwards the request to a chat that is running here' do
       chat = Chat.create!(model: model_id)
-      chat.to_llm
+      chat.ask_later('Hello')
+      seen = nil
+      allow(chat.to_llm.provider).to receive(:complete) do
+        chat.cancel
+        seen = chat.to_llm.cancelled?
+        RubyLLM::Message.new(role: :assistant, content: 'Done')
+      end
 
-      chat.cancel
+      expect { chat.complete }.to raise_error(RubyLLM::CancelledError)
 
-      expect(chat.to_llm).to be_cancelled
+      expect(seen).to be(true)
     end
   end
 
