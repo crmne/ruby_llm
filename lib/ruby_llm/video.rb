@@ -115,13 +115,16 @@ module RubyLLM
       Tokens.new
     end
 
-    # Returns the Cost the provider reported for the job that rendered the
-    # video. Its total is +nil+ when the provider reports no price.
+    # Returns the Cost of the job that rendered the video: the amount the
+    # provider reported, or its reported tokens at registry prices. Its total
+    # is +nil+ when the provider reports neither a price nor priced tokens.
     #
     #   video = RubyLLM.animate("a paper boat")
     #   video.cost.total # => 0.05
     #
     def cost
+      return ruby_llm_usage_cost unless ruby_llm_usage_entries.empty?
+
       Cost.new(tokens:)
     end
 

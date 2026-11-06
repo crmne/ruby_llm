@@ -154,6 +154,14 @@ RSpec.describe RubyLLM::Protocols::Interactions::Videos do
       expect(state[:error]).to start_with('There was a problem processing your request.')
     end
 
+    it 'fails when a completed interaction holds a video with no bytes' do
+      body = completed.merge('steps' => [{ 'type' => 'model_output',
+                                           'content' => [{ 'type' => 'video',
+                                                           'uri' => 'https://attacker.example/v' }] }])
+
+      expect(protocol.parse_video_job_status(response(body))).to include(status: :failed)
+    end
+
     it 'fails when a completed interaction holds no video' do
       body = completed.merge('steps' => [{ 'type' => 'model_output',
                                            'content' => [{ 'type' => 'text', 'text' => 'No' }] }])
@@ -204,5 +212,6 @@ RSpec.describe RubyLLM::Protocols::Interactions::Videos do
 
     expect(entries.first.tokens.output).to eq(17_911)
     expect(job.cost.total).to be_within(0.001).of(0.313)
+    expect(job.video.cost.total).to eq(job.cost.total)
   end
 end

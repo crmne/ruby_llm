@@ -11,8 +11,12 @@
 
 <p>Using <strong><%%= @<%= chat_variable_name %>.model&.label || default_model_display_name %></strong></p>
 
+<%% if @<%= chat_variable_name %>.cost.total&.positive? %>
+  <p>Cost so far: <%%= cost_label(@<%= chat_variable_name %>.cost) %></p>
+<%% end %>
+
 <div id="<%= message_table_name %>">
-  <%% @<%= chat_variable_name %>.<%= message_table_name %>.each do |<%= message_variable_name %>| %>
+  <%% @<%= chat_variable_name %>.<%= message_table_name %>.includes(:ruby_llm_usages).each do |<%= message_variable_name %>| %>
     <%%= render <%= message_variable_name %> %>
   <%% end %>
 </div>
@@ -27,6 +31,10 @@
 <%%= render "<%= chat_model_name.underscore.pluralize %>/approvals", <%= chat_model_name.demodulize.underscore %>: @<%= chat_variable_name %> %>
 
 <%%= render "<%= chat_model_name.underscore.pluralize %>/files", <%= chat_model_name.demodulize.underscore %>: @<%= chat_variable_name %> %>
+
+<%% if @<%= chat_variable_name %>.running? %>
+  <%%= button_to "Stop", cancel_<%= chat_variable_name %>_path(@<%= chat_variable_name %>) %>
+<%% end %>
 
 <div style="margin-top: 30px;">
   <%%= render "<%= message_model_name.underscore.pluralize %>/form", <%= chat_variable_name %>: @<%= chat_variable_name %>, <%= message_variable_name %>: @<%= message_variable_name %> %>

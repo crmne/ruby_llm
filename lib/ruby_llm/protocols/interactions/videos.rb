@@ -64,10 +64,9 @@ module RubyLLM
 
         def download_video(job)
           video = generated_video(job.raw)
-          data = video['data'] ? Base64.decode64(video['data']) : @connection.get(video['uri']).body
 
-          Video.new(data:, mime_type: video['mime_type'] || 'video/mp4', model: job.raw['model'] || job.model,
-                    raw: job.raw)
+          Video.new(data: Base64.decode64(video['data']), mime_type: video['mime_type'] || 'video/mp4',
+                    model: job.raw['model'] || job.model, raw: job.raw)
         end
 
         private
@@ -92,7 +91,7 @@ module RubyLLM
         def generated_video(body)
           Array(body['steps']).select { |step| step['type'] == 'model_output' }
                               .flat_map { |step| Array(step['content']) }
-                              .find { |part| part['type'] == 'video' }
+                              .find { |part| part['type'] == 'video' && part['data'] }
         end
       end
     end

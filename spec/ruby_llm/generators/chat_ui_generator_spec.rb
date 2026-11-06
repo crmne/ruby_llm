@@ -94,6 +94,9 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     expect(chat_show).to include('turbo_refreshes_with method: :morph, scroll: :preserve')
     expect(tool_calls_partial).to include('message.content.present?')
     expect(chat_show).to include('.model&.label || default_model_display_name')
+    expect(chat_show).to include('button_to "Stop", cancel_')
+    expect(chat_show).to include('.cost.total')
+    expect(File.read(File.join(base_path, 'messages/_assistant.html.erb'))).to include('assistant.cost.total')
     chat_partial = File.read(File.join(base_path, 'chats/_chat.html.erb'))
     expect(chat_partial).to include('.model&.label || default_model_display_name')
 
@@ -162,6 +165,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     expect(routes_content).to include('resources :messages, only: [ :create ]')
     expect(routes_content).to include('resources :approvals, only: [ :create ]')
     expect(routes_content).to include('resources :queued_messages, only: [ :destroy ]')
+    expect(routes_content).to include('post :cancel, on: :member')
     expect(routes_content).to include('resources :models, only: [ :index, :show ]')
     expect(routes_content).to include('namespace :llm') if namespaced
   end
@@ -290,9 +294,25 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       left = chat.queued_messages.map(&:content)
       abort "left queued \#{left}" unless left == [ "And Q4" ]
 
+      abort "a chat with no cost shows one" if #{controller}.render(:show, assigns: #{assigns}).include?("Cost so far")
+      reply = chat.add_message(role: :assistant, content: "Priced")
+      chat.ruby_llm_usages.create!(operation: "chat", provider: "openai", model: "gpt-test", status: "succeeded",
+                                   message: reply, total_cost: 0.0123)
+      priced = #{controller}.render(:show, assigns: #{assigns})
+      abort "the page lacks the costs" unless priced.scan("$0.0123").size == 2
+      abort "running page lacks Stop" unless #{controller}.render(:show, assigns: #{assigns}).match?(/>Stop<|value="Stop"/)
+      session.post "#{chats_path}/\#{chat.id}/cancel"
+      abort "stop answered \#{session.response.status}" unless session.response.status == 303
+      abort "stop did not cancel" unless chat.reload[:cancelled]
+
       chat.update_columns(claim_token: nil, claimed_until: nil)
+      #{job}.perform_now(chat.id)
+      abort "the job left the request" if chat.reload[:cancelled]
+      session.post "#{chats_path}/\#{chat.id}/cancel"
+      abort "stopping an idle chat cancelled its next reply" if chat.reload[:cancelled]
       html = #{controller}.render(:show, assigns: #{assigns})
       abort "finished page still thinks" if html.include?("Thinking…")
+      abort "finished page still offers Stop" if html.match?(/>Stop<|value="Stop"/)
       abort "finished page lacks the form" unless html.include?('name="#{message_key}[content]"')
       session.post "#{chats_path}/\#{chat.id}/messages", params: { #{message_key}: { content: "Hi" } }
       abort "idle message enqueued \#{jobs.call}" unless jobs.call.map { |job| job["arguments"] } == [ [ chat.id ] ]
@@ -1009,7 +1029,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         end
       end
 
-      it 'shows Thinking while a reply runs, and queues the messages sent meanwhile' do
+      it 'shows Thinking and Stop while a reply runs, and queues the messages sent meanwhile' do
         within_test_app(app_path) do
           output, status = run_rails_runner_outside_executor(running_reply_script(**config[:approval_flow]))
           expect(status.success?).to be(true), output

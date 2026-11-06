@@ -134,9 +134,9 @@ module RubyLLM
       self
     end
 
-    # Returns the Cost the provider reported for the job. Its total is
-    # +nil+ while the job is pending or when the provider reports no
-    # price.
+    # Returns the Cost of the job: the amount the provider reported, or its
+    # reported tokens at registry prices. Its total is +nil+ while the job is
+    # pending, or when the provider reports neither a price nor priced tokens.
     #
     #   job.wait
     #   job.cost.total # => 0.05
