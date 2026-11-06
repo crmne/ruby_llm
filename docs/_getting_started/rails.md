@@ -153,10 +153,11 @@ The chat's page subscribes to its stream and renders its messages:
 
 `complete` takes the queued message and answers it, and each chunk's `broadcast` appends it to the assistant message on the page. A message sent while a reply runs waits in the queue, and the running job takes it at its next step.
 
-`render @chat.messages` picks a partial per message: `messages/_system`, `_user`, `_assistant`, `_tool`, and `_tool_calls`. Write the ones your page shows. The assistant partial holds the target chunks land in:
+`render @chat.messages` picks a partial per message: `messages/_system`, `_user`, `_assistant`, `_tool`, and `_tool_calls`. Write the ones your page shows. The assistant partial holds the target chunks land in. Rendering a collection passes it `assistant`, and a broadcast passes it `message`, so it accepts both:
 
 ```erb
 <%# app/views/messages/_assistant.html.erb %>
+<% assistant ||= local_assigns[:message] %>
 <div id="<%= dom_id(assistant) %>">
   <div id="<%= dom_id(assistant) %>_stream"><%= assistant.content %></div>
 </div>
@@ -187,7 +188,7 @@ class SupportReplyJob < ApplicationJob
 end
 ```
 
-A rate limit or an outage passes, so retry later. A bad request fails the same way every time, so discard the job and report it. Retrying is safe because the customer's message is already saved: `complete` picks up where the conversation stopped instead of asking twice.
+A rate limit or an outage passes, so retry later. A bad request fails the same way every time, so discard the job and report it. Retrying is safe because the customer's message is already saved: `complete` picks up where the conversation stopped instead of asking twice. A job that gives up leaves any queued message waiting until the next `complete`, so report the failure, or enqueue the job again when the chat has `queued_messages`.
 
 See [Error Handling]({% link _advanced/error-handling.md %}) for every error class, and [Durable Agents]({% link _advanced/durable-agents-overview.md %}) for jobs that pause for approvals and survive deploys.
 
