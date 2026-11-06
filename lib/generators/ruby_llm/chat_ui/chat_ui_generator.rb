@@ -175,6 +175,7 @@ module RubyLLM
               end
             end
             resources :#{chat_resource} do
+              post :cancel, on: :member
               resources :#{message_resource}, only: [ :create ]
               resources :queued_messages, only: [ :destroy ]
               resources :approvals, only: [ :create ]
@@ -195,6 +196,7 @@ module RubyLLM
           route model_routes
           chat_routes = <<~ROUTES.strip
             resources :#{chat_table_name} do
+              post :cancel, on: :member
               resources :#{message_table_name}, only: [ :create ]
               resources :queued_messages, only: [ :destroy ]
               resources :approvals, only: [ :create ]
