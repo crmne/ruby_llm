@@ -1,12 +1,14 @@
 ---
 layout: default
-title: Migrating from ruby-openai
+title: ruby-openai
+seo:
+  title: Migrating from ruby-openai
 nav_order: 4
 description: Move a ruby-openai application to RubyLLM one call site at a time, with before and after code for chat, streaming, and tools.
 permalink: /migrate/ruby-openai/
 ---
 
-# {{ page.title }}
+# Migrating from ruby-openai
 
 {{ page.description }}
 {: .fs-6 .fw-300 }

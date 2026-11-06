@@ -1,12 +1,14 @@
 ---
 layout: default
-title: RubyLLM and LangChain
+title: LangChain and LangGraph
+seo:
+  title: RubyLLM and LangChain
 nav_order: 2
 description: Compare RubyLLM with LangChain and LangGraph in Python on agents, streaming, structured output, memory, approvals, and cost, with code from both projects.
 permalink: /compare/langchain/
 ---
 
-# {{ page.title }}
+# RubyLLM and LangChain
 
 {{ page.description }}
 {: .fs-6 .fw-300 }
@@ -341,4 +343,4 @@ Chats and agents total their cost with `chat.cost.total`, and Rails apps get a u
 
 * [Agents]({% link _getting_started/agents.md %}) - Define agents as classes and use them anywhere.
 * [Agents in Background Jobs]({% link _advanced/durable-agents.md %}) - Run the loop one step per job.
-* [Migrating from langchainrb]({% link _compare/migrate-langchainrb.md %}) - Move a Ruby app from langchainrb to RubyLLM.
+* [Migrating to RubyLLM]({% link _compare/migrating-from.md %}) - Guides for other frameworks and clients.
