@@ -153,7 +153,7 @@ module RubyLLM
         file = store_attachment(attachment)
         return reference(file.path, file) unless shown
 
-        too_long?(attachment) ? as_text(file, @config.call) || attachment : attachment
+        too_long?(attachment) ? start_of(attachment, file) : attachment
       rescue StandardError => e
         RubyLLM.logger.warn { "Could not keep an attachment in the chat's files: #{e.class}" }
         attachment
@@ -163,19 +163,27 @@ module RubyLLM
         @inline_limit && attachment.text? && attachment.content.to_s.length > @inline_limit
       end
 
+      def start_of(attachment, file)
+        text_attachment(file, attachment.content.to_s)
+      end
+
       def as_text(file, config)
         text = store.text(file.path, config:)
         return if text.nil? || text.strip.empty?
 
+        text_attachment(file, text)
+      rescue StandardError => e
+        RubyLLM.logger.warn { "Could not read #{file.path} as text: #{e.class}" }
+        nil
+      end
+
+      def text_attachment(file, text)
         if @inline_limit && text.length > @inline_limit
           text = "#{text[0, @inline_limit]}\n\n[#{file.path} has #{text.length} characters, so only the start " \
                  'is shown, and you have not seen the rest. Read more with read_file, or search it with search_files.]'
         end
         Attachment.new(StringIO.new("#{file.path}, read as text:\n\n#{text}"),
                        filename: "#{File.basename(file.path)}.txt")
-      rescue StandardError => e
-        RubyLLM.logger.warn { "Could not read #{file.path} as text: #{e.class}" }
-        nil
       end
 
       def reference(path, file)

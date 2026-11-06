@@ -280,6 +280,22 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.file_store.read('long.txt').length).to be > 20_000
     end
 
+    it 'bounds a long blank attachment too' do
+      blank = RubyLLM::Attachment.new(StringIO.new(' ' * 20_000), filename: 'blank.txt')
+      chat.add_message(role: :user, content: 'Summarize', attachments: [blank])
+
+      expect(request_view.last.attachments.first.content.length).to be < 11_000
+    end
+
+    it 'keeps showing the question its own upload after the file changes' do
+      long = RubyLLM::Attachment.new(StringIO.new("first line\n#{'x' * 20_000}"), filename: 'long.txt')
+      chat.add_message(role: :user, content: 'Summarize', attachments: [long])
+      request_view
+      chat.file_store.write('long.txt', 'changed')
+
+      expect(request_view.last.attachments.first.content).to include('first line')
+    end
+
     it 'sends a long text attachment whole with inline_limit: false' do
       chat.with_file_store(:memory, inline_limit: false)
       long = RubyLLM::Attachment.new(StringIO.new('x' * 20_000), filename: 'long.txt')
