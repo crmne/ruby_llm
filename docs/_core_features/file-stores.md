@@ -196,7 +196,7 @@ end
 
 ## Reading Files as Text
 
-`read_file` and `chat.file_store.text` read a file through converters. Text files, including source code, CSV, JSON, YAML, and Markdown, are read as they are, and Word, Excel, and PowerPoint files (`.docx`, `.xlsx`, `.pptx`) through `RubyLLM::FileStore::Converters::Office`, which reads them on your machine with no setup: a paragraph per line, a table or sheet row per line with tabs between cells, and a heading for each sheet and slide, with a slide's speaker notes under it. Excel dates read as dates, like `2026-03-31`. Other formats need a converter you register; without one, `read_file` hands an image or a PDF to the model as the file itself, so a model with vision sees it, and says any other file has no text to read.
+`read_file` and `chat.file_store.text` read a file through converters. Text files, including source code, CSV, JSON, YAML, and Markdown, are read as they are, and Word, Excel, and PowerPoint files (`.docx`, `.xlsx`, `.pptx`) through `RubyLLM::FileStore::Converters::Office`, which reads them on your machine with no setup: a paragraph per line, Word headings as Markdown headings and Word lists with their markers and numbers, a table or sheet row per line with tabs between cells, and a heading for each sheet and slide, with a slide's speaker notes under it. Excel dates read as dates, like `2026-03-31`. Other formats need a converter you register; without one, `read_file` hands an image or a PDF to the model as the file itself, so a model with vision sees it, and says any other file has no text to read.
 
 Each version of a file is converted once. A persisted chat keeps the text in the file's row, and the other stores keep it in memory, so the next read or search is free.
 
