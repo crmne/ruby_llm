@@ -12,7 +12,7 @@ module RubyLLM
           BREAKS = { 'tab' => "\t", 'br' => "\n", 'cr' => "\n" }.freeze
           BLANK = /\A[[:space:]]*\z/
           UNREAD_PLACEHOLDERS = %w[sldNum hdr ftr dt sldImg].freeze
-          Paragraph = Struct.new(:text, :style, :list, :level, :outline, :marked)
+          Paragraph = Struct.new(:text, :style, :list, :level, :outline, :marked, :marker)
           private_constant :SKIPPED, :BREAKS, :BLANK, :UNREAD_PLACEHOLDERS, :Paragraph
 
           def self.lines(xml, outline: nil)
@@ -110,20 +110,21 @@ module RubyLLM
             marker = marker_of(paragraph)
             text = paragraph.text
             paragraph.text = +''
-            return if text.empty? || (marker && !marker.empty? && text.match?(BLANK))
+            return if text.empty? || (!marker.to_s.empty? && text.match?(BLANK))
 
+            paragraph.marker = nil
             @sinks.last << "#{marker}#{text}"
           end
 
           # A list item counts wherever it is, but a table row keeps to one
-          # line of plain cells.
+          # line of plain cells. The marker waits for text that isn't blank.
           def marker_of(paragraph)
-            return if paragraph.marked || @outline.nil?
+            return paragraph.marker if paragraph.marked || @outline.nil?
 
             paragraph.marked = true
             marker = @outline.marker(style: paragraph.style, list: paragraph.list, level: paragraph.level,
                                      outline: paragraph.outline)
-            marker if @sinks.size == 1
+            paragraph.marker = marker if @sinks.size == 1
           end
 
           def close_cell

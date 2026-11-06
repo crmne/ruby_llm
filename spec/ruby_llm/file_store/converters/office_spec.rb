@@ -119,6 +119,14 @@ RSpec.describe RubyLLM::FileStore::Converters::Office do
       expect(text_of(zip_of(parts), 'a.xlsx')).to eq("## Data\n7")
     end
 
+    it 'prefers the exact name when another normalizes to it, in either order' do
+      exact = '<w:p><w:r><w:t>exact</w:t></w:r></w:p>'
+      alias_ = '<w:p><w:r><w:t>alias</w:t></w:r></w:p>'
+
+      expect(text_of(zip_of({ 'word/document.xml' => exact, 'word\\document.xml' => alias_ }), 'a.docx')).to eq('exact')
+      expect(text_of(zip_of({ 'word\\document.xml' => alias_, 'word/document.xml' => exact }), 'a.docx')).to eq('exact')
+    end
+
     it 'never lets a climbing name stand in for a part' do
       document = '<w:document><w:body><w:p><w:r><w:t>x</w:t></w:r></w:p></w:body></w:document>'
 
@@ -446,6 +454,13 @@ RSpec.describe RubyLLM::FileStore::Converters::Office do
         body = paragraph('A', list(2)) + paragraph(' ', list(2)) + paragraph('B', list(2))
 
         expect(word(body, numbering:)).to eq("1. A\n3. B")
+      end
+
+      it 'keeps the marker for the text after whitespace and a text box, counting once' do
+        box = "<w:txbxContent>#{paragraph('Box')}</w:txbxContent>"
+        item = "<w:p><w:pPr>#{list(2)}</w:pPr>#{run('<w:t> </w:t>')}#{run(box)}#{run('<w:t>After</w:t>')}</w:p>"
+
+        expect(word(item + paragraph('Next', list(2)), numbering:)).to eq("Box\n1. After\n2. Next")
       end
 
       it 'keeps counting through text between the items' do
