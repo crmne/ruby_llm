@@ -269,6 +269,25 @@ RSpec.describe RubyLLM::Chat do
 
     before { chat.with_file_store }
 
+    it 'sends a long text attachment as its start and says the rest is unseen' do
+      long = RubyLLM::Attachment.new(StringIO.new("first line\n#{'x' * 20_000}"), filename: 'long.txt')
+      chat.add_message(role: :user, content: 'Summarize', attachments: [long])
+
+      sent = request_view.last.attachments.first.content
+
+      expect(sent).to include('first line', 'you have not seen the rest', 'read_file')
+      expect(sent.length).to be < 11_000
+      expect(chat.file_store.read('long.txt').length).to be > 20_000
+    end
+
+    it 'sends a long text attachment whole with inline_limit: false' do
+      chat.with_file_store(:memory, inline_limit: false)
+      long = RubyLLM::Attachment.new(StringIO.new('x' * 20_000), filename: 'long.txt')
+      chat.add_message(role: :user, content: 'Summarize', attachments: [long])
+
+      expect(request_view.last.attachments.first.content.length).to eq(20_000)
+    end
+
     it 'counts as read once the request went out, so the model edits it at once' do
       ask
 
@@ -276,11 +295,11 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.file_store.read('notes.txt')).to eq('uno two')
     end
 
-    it 'counts past the inline limit, which only long tool results and converted text follow' do
+    it 'does not count past the inline limit, when the model saw only the start' do
       chat.with_file_store(inline_limit: 3)
       ask
 
-      expect(edit('one', 'uno')).to start_with('Replaced 1')
+      expect(edit('one', 'uno')).to eq(error: 'Read notes.txt before you change it.')
     end
 
     it 'still refuses once the file changes, on this request and the next' do
@@ -450,7 +469,7 @@ RSpec.describe RubyLLM::Chat do
       chat.add_message(role: :user, content: 'Summarize', attachments: [docx])
 
       expect(chat.render.to_json).to include(
-        '[sample.docx has 15000 characters, so only the start is shown. ' \
+        '[sample.docx has 15000 characters, so only the start is shown, and you have not seen the rest. ' \
         'Read more with read_file, or search it with search_files.]'
       )
     end
