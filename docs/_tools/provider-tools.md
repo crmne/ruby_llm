@@ -157,6 +157,22 @@ Streaming and follow-up questions use the normal `ask` API. Read the completed m
 
 Providers can charge for each tool use as well as for the tokens in the results. `tokens.server_tool_use` counts the uses, such as `{"web_search_requests" => 2}`; see [Pricing Tool Use]({% link _core_features/cost-and-usage-tracking.md %}#pricing-tool-use).
 
+### Search Sources
+
+Sources and citations answer different questions. Sources are every page a web search found. Citations are the passages the answer quotes, so there are usually fewer of them. Read the sources from the search's `result`:
+
+```ruby
+response = chat.with_provider_tools(:web_search).ask "What changed in the latest Ruby release?"
+
+searches = response.server_tool_calls.select do |call|
+  %w[web_search_call web_search_tool_result].include?(call.type)
+end
+sources = searches.flat_map { |call| Array(call.result) }
+urls = sources.filter_map { |source| source["url"] if source.is_a?(Hash) }
+```
+
+The result keeps the service's own shape. On OpenAI, Azure, Meta, and xAI, each `web_search_call` lists Hashes with a `"url"`. Anthropic's `web_search_tool_result` lists results with a `"url"` and a `"title"`. Gemini reports its search queries and grounds the answer through citations instead. In Rails, messages keep the sources in their `server_tool_calls` column, which the install generator creates.
+
 ### Google Search Suggestions
 
 Google requires apps that ground answers with Google Search to show its search suggestions with the answer. On Gemini and Vertex AI, `search_suggestions` holds them as HTML:

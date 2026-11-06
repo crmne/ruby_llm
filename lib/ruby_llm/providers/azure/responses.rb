@@ -21,6 +21,10 @@ module RubyLLM
           true
         end
 
+        def web_search_sources?
+          true
+        end
+
         def provider_file_upload_options(_attachment)
           { purpose: 'assistants' }
         end

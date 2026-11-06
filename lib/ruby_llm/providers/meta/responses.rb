@@ -23,6 +23,10 @@ module RubyLLM
           true
         end
 
+        def web_search_sources?
+          true
+        end
+
         def apply_end_user(payload, identifier)
           payload.merge(safety_identifier: identifier)
         end

@@ -1392,6 +1392,29 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(restored.raw_content.length).to eq(2)
     end
 
+    it 'restores the sources of a web search and replays them from the row' do
+      sources = [{ 'type' => 'url', 'url' => 'https://www.ruby-lang.org/en/downloads/' }]
+      item = { 'type' => 'web_search_call', 'id' => 'ws_1', 'status' => 'completed',
+               'action' => { 'type' => 'search', 'query' => 'ruby', 'sources' => sources } }
+      chat = Chat.create!(model: model_id)
+      chat.send(:persist_new_message)
+
+      chat.send(
+        :persist_message_completion,
+        RubyLLM::Message.new(
+          role: :assistant, content: 'Found it.',
+          server_tool_calls: [RubyLLM::ServerToolCall.new(type: 'web_search_call', id: 'ws_1',
+                                                          input: item['action'], result: sources, raw: item)],
+          raw_content: [item],
+          finish_reason: 'stop'
+        )
+      )
+
+      restored = chat.instance_variable_get(:@message).reload.to_llm
+      expect(restored.server_tool_calls.first.result).to eq(sources)
+      expect(restored.raw_content).to eq([item])
+    end
+
     it 'round-trips the phase of an answer through the row' do
       chat = Chat.create!(model: model_id)
       chat.send(:persist_new_message)

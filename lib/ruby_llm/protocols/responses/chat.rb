@@ -192,12 +192,16 @@ module RubyLLM
         end
 
         # Result payloads differ by item type; compaction items carry an
-        # opaque encrypted_content instead of a readable result.
+        # opaque encrypted_content instead of a readable result, and a web
+        # search keeps the sources it found in its action.
         SERVER_TOOL_RESULT_KEYS = %w[result results outputs output encrypted_content].freeze
 
         def server_tool_result(item)
           key = SERVER_TOOL_RESULT_KEYS.find { |candidate| item[candidate] }
-          item[key] if key
+          return item[key] if key
+
+          action = item['action']
+          action['sources'] if action.is_a?(Hash)
         end
 
         def parse_citations(data, output, content)
@@ -213,8 +217,9 @@ module RubyLLM
               key = MESSAGE_TEXT_KEYS[part['type']]
               next [] unless key
 
-              citations = offset_citations(parse_annotations(part['annotations'], nil), offset, content)
-              offset += part[key].to_s.length
+              text, markers = CitationMarkers.strip(part[key].to_s)
+              citations = offset_citations(parse_annotations(part['annotations'], nil), offset, content, markers)
+              offset += text.length
               citations
             end
           end
@@ -245,10 +250,10 @@ module RubyLLM
           )
         end
 
-        def offset_citations(citations, offset, content)
+        def offset_citations(citations, offset, content, markers = CitationMarkers.new)
           citations.map do |citation|
-            start_index = citation.start_index && (citation.start_index + offset)
-            end_index = citation.end_index && (citation.end_index + offset)
+            start_index = citation.start_index && (markers.shift(citation.start_index) + offset)
+            end_index = citation.end_index && (markers.shift(citation.end_index) + offset)
 
             Citation.new(citation.to_h.merge(
                            start_index: start_index,
@@ -491,7 +496,7 @@ module RubyLLM
           texts = text_messages(output).map do |message|
             Array(message['content']).filter_map do |part|
               key = MESSAGE_TEXT_KEYS[part['type']]
-              part[key] if key
+              CitationMarkers.strip(part[key]).first if key && part[key]
             end.join
           end
 

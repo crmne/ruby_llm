@@ -210,6 +210,49 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
     end
   end
 
+  it 'drops citation markers split across streamed deltas' do
+    deltas = ["Two are urgent \u{E200}ci", "te\u{E202}turn0vi", "ew0\u{E201}. Next \u{E200}cite\u{E202}tu"]
+    allow(protocol).to receive(:stream_events) do |*, &block|
+      deltas.each do |delta|
+        block.call({ 'type' => 'response.output_text.delta', 'output_index' => 0, 'delta' => delta })
+      end
+      nil
+    end
+    chunks = []
+
+    response = protocol.send(:stream_response, {}) { |chunk| chunks << chunk }
+
+    expect(chunks.map(&:content)).to eq(['Two are urgent ', nil, '. Next '])
+    expect(response.content).to eq('Two are urgent . Next ')
+  end
+
+  it 'gives back held text that turns out not to be a citation marker' do
+    allow(protocol).to receive(:stream_events) do |*, &block|
+      block.call({ 'type' => 'response.output_text.delta', 'output_index' => 0, 'delta' => "Odd \u{E200}text here" })
+      block.call({ 'type' => 'response.output_text.done', 'output_index' => 0 })
+      block.call({ 'type' => 'response.output_text.delta', 'output_index' => 1, 'delta' => ' and more' })
+      nil
+    end
+
+    expect(protocol.send(:stream_response, {}, &:itself).content).to eq('Odd text here and more')
+  end
+
+  it 'places streamed citation spans against the text without citation markers' do
+    allow(protocol).to receive(:stream_events) do |*, &block|
+      block.call({ 'type' => 'response.output_text.delta', 'output_index' => 0,
+                   'delta' => "Matz \u{E200}cite\u{E202}turn0search0\u{E201}made Ruby" })
+      block.call({ 'type' => 'response.output_text.annotation.added', 'output_index' => 0,
+                   'annotation' => { 'type' => 'url_citation', 'url' => 'https://ruby-lang.org',
+                                     'start_index' => 24, 'end_index' => 33 } })
+      nil
+    end
+
+    response = protocol.send(:stream_response, {}, &:itself)
+
+    expect(response.content).to eq('Matz made Ruby')
+    expect(response.citations.first).to have_attributes(start_index: 5, end_index: 14, text: 'made Ruby')
+  end
+
   it 'streams reasoning summary deltas as thinking' do
     chunk = build_chunk({ 'type' => 'response.reasoning_summary_text.delta', 'delta' => 'hmm' })
 
