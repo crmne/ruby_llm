@@ -2074,7 +2074,9 @@ module RubyLLM
       end
       on_chunk = wrap_streaming_block(tool_call_ids:, stream_tracker: tracker, &)
 
+      sent = request_messages
       response = replacing_missing_uploads(request_messages, -> { streamed }) do |sent_messages|
+        sent = sent_messages
         @provider.complete(
           sent_messages,
           tools: request_tools,
@@ -2098,6 +2100,7 @@ module RubyLLM
           &on_chunk
         )
       end
+      @file_references&.record_shown(sent)
       tool_call_ids.assign(response)
     end
 
