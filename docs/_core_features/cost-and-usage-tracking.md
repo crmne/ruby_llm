@@ -262,7 +262,16 @@ class SupportAgent < RubyLLM::Agent
 end
 ```
 
-Rows of an `acts_as_chat` record keep both their chat association and the owner. The owner is not persisted with the chat, so set it again, or let the agent set it, when a background job resumes the work. In a shared conversation, set it on each turn to record who caused its attempts. The chat writes each row once. Existing rows keep their recorded owner; RubyLLM does not infer one from your chat or message models.
+In Rails, name the association that holds a chat's owner, and every attempt the chat makes is attributed to it, in whichever process runs the chat:
+
+```ruby
+class Chat < ApplicationRecord
+  belongs_to :user
+  acts_as_chat owner: :user
+end
+```
+
+Rows of an `acts_as_chat` record keep both their chat association and the owner, and the chat's [Active Storage files]({% link _core_features/file-stores.md %}#files-of-several-people) belong to the owner too. RubyLLM reads the association each time, so it follows a change. It never defines an `owner` method on your record, so an association of yours by that name keeps working. `with_owner` on a record wins over the association for that object only: in a conversation several people share, set it on the record that runs each turn to record who caused its attempts. The chat writes each row once, and existing rows keep the owner they recorded.
 
 To query an owner's spend, declare the association on the owner's model:
 

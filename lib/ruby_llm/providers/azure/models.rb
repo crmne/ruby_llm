@@ -10,12 +10,26 @@ module RubyLLM
         end
 
         # Azure reports the same id once per region it is offered in, and keeps
-        # returning models whose inference deprecation date has passed.
+        # returning models whose inference deprecation date has passed. The
+        # listing leaves out Azure AI Speech, so fast transcription is
+        # appended.
         def parse_list_models_response(response, slug)
           Array(response.body['data'])
             .uniq { |model_data| model_data['id'] }
             .reject { |model_data| azure_inference_retired?(model_data) }
-            .map { |model_data| azure_model(model_data, slug) }
+            .map { |model_data| azure_model(model_data, slug) } + [fast_transcription_model(slug)]
+        end
+
+        def fast_transcription_model(slug)
+          Model.new(
+            id: Azure::FAST_TRANSCRIPTION_MODEL,
+            name: 'Fast Transcription',
+            provider: slug,
+            family: 'azure-speech',
+            modalities: { input: ['audio'], output: ['text'] },
+            capabilities: ['transcription'],
+            pricing: {}
+          )
         end
 
         def azure_inference_retired?(model_data)

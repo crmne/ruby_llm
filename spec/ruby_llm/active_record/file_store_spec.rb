@@ -318,18 +318,20 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
       expect(chat.with_file_store(inline_limit: 5).file_store).to be_a(described_class)
       expect(chat.to_llm.instance_variable_get(:@file_references).inline_limit).to eq(5)
       expect(chat.with_file_store(nil).file_store).to be_nil
-      expect(chat.with_file_store(owner: chat).file_store.owner).to eq(chat)
-      expect { chat.with_file_store(memory, owner: chat) }.to raise_error(ArgumentError, /owner: applies/)
     end
 
-    it 'takes a folder path or :memory, and refuses an owner with either' do
+    it "keeps its files for the chat's owner, and takes no owner: of its own" do
+      expect(chat.with_owner(chat).with_file_store.file_store.owner).to eq(chat)
+      expect(chat.with_owner(nil).file_store.owner).to be_nil
+      expect { chat.with_file_store(owner: chat) }.to raise_error(ArgumentError, /owner/)
+    end
+
+    it 'takes a folder path or :memory' do
       root = Dir.mktmpdir('ruby_llm-chat-record-files')
 
       expect(chat.with_file_store(root)).to be(chat)
       expect(chat.file_store).to be_a(RubyLLM::FileStore::Directory)
       expect(chat.with_file_store(:memory).file_store).to be_a(RubyLLM::FileStore::Memory)
-      expect { chat.with_file_store(:memory, owner: chat) }.to raise_error(ArgumentError, /owner: applies/)
-      expect { chat.with_file_store(root, owner: chat) }.to raise_error(ArgumentError, /owner: applies/)
     ensure
       FileUtils.rm_rf(root)
     end
@@ -354,10 +356,11 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
       expect { chat.with_file_store }.to raise_error(RubyLLM::ConfigurationError, /needs Active Storage/)
     end
 
-    it "takes an agent's owner lambda, run with the chat in scope" do
+    it "keeps its files for the agent's owner" do
       agent = Class.new(RubyLLM::Agent) do
         chat_class Chat
-        file_store owner: -> { chat }
+        file_store
+        owner { chat }
       end
       agent.model model_for(:openai), provider: :openai
 

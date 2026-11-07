@@ -45,6 +45,12 @@ Set `default_transcription_model` in [Configuration]({% link _getting_started/co
 
 For Azure, pass your [deployment name]({% link _reference/configuration-providers.md %}#azure-deployments). A diarization deployment with a custom name also needs `format: "diarized_json"`.
 
+Azure AI Speech fast transcription needs no deployment. It runs on the Azure AI Services resource in your [Azure configuration]({% link _reference/configuration-providers.md %}#azure-deployments):
+
+```ruby
+RubyLLM.transcribe("note.webm", model: "{{ site.models.transcription_azure_speech }}", provider: :azure)
+```
+
 ## Language and Vocabulary Hints
 
 Give the model the recording's language and unfamiliar terms:
@@ -58,7 +64,21 @@ RubyLLM.transcribe(
 )
 ```
 
-Use ISO 639-1 language codes such as `en`, `es`, and `fr`. Google's dedicated transcription models also accept BCP-47 hints such as `en-US`.
+Use ISO 639-1 language codes such as `en`, `es`, and `fr`. Google's dedicated transcription models also accept BCP-47 hints such as `en-US`, and Azure AI Speech requires them.
+
+When a recording may be in one of several languages, Azure AI Speech takes them all as candidates and reports the one it heard:
+
+```ruby
+transcription = RubyLLM.transcribe(
+  "note.webm",
+  model: "{{ site.models.transcription_azure_speech }}",
+  provider: :azure,
+  language: ["en-US", "it-IT"]
+)
+transcription.language # => "it-IT"
+```
+
+Azure AI Speech leaves profanity unmasked, like other providers. Pass `provider_options: { profanityFilterMode: "Masked" }` to mask it.
 
 For provider-specific vocabulary and formatting controls, use `provider_options:`:
 
@@ -113,7 +133,7 @@ transcription = RubyLLM.transcribe(
 )
 ```
 
-References accept file paths, URLs, IO objects, `RubyLLM::Attachment` objects, or Active Storage attachments. Other diarization providers assign speaker labels without matching known identities, so pass `speaker_names: []` to them. Names raise `ArgumentError` on those providers: xAI, Mistral, Deepgram, OpenRouter, and Vertex AI and Gemini dedicated transcription. ElevenLabs uses the number of supplied names as a speaker-count limit.
+References accept file paths, URLs, IO objects, `RubyLLM::Attachment` objects, or Active Storage attachments. Other diarization providers assign speaker labels without matching known identities, so pass `speaker_names: []` to them. Names raise `ArgumentError` on those providers: xAI, Mistral, Deepgram, Azure AI Speech, OpenRouter, and Vertex AI and Gemini dedicated transcription. ElevenLabs uses the number of supplied names as a speaker-count limit.
 
 ## Segments and Timestamps
 
@@ -133,7 +153,7 @@ transcription.words.each do |word|
 end
 ```
 
-Available granularities depend on the model. Whisper accepts word and segment timestamps without streaming; Mistral accepts segment timestamps, including streaming. Deepgram, xAI, and ElevenLabs return word timing by default. ElevenLabs also accepts `timestamps: :character`.
+Available granularities depend on the model. Whisper accepts word and segment timestamps without streaming; Mistral accepts segment timestamps, including streaming. Deepgram, xAI, Azure AI Speech, and ElevenLabs return word timing by default. ElevenLabs also accepts `timestamps: :character`.
 
 ## Output Formats
 

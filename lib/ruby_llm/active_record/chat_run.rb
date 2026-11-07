@@ -5,7 +5,8 @@ module RubyLLM
     # Connects a persisted chat's conversation loop to its record: usage
     # and progress land in the database, each cancellation checkpoint
     # renews the run claim and polls for a request from another process,
-    # and losing the claim ends the run.
+    # losing the claim ends the run, and the owner is the record that
+    # +acts_as_chat owner:+ names.
     class ChatRun < Chat::Run # :nodoc:
       def initialize(chat)
         super()
@@ -20,8 +21,13 @@ module RubyLLM
         @chat.persist_message_progress(partial)
       end
 
-      def conversation_id
+      def chat_id
         @chat.id
+      end
+
+      def owner
+        name = @chat.class.owner_association_name
+        @chat.public_send(name) if name
       end
 
       def cancellation_requested?

@@ -13,8 +13,6 @@ module RubyLLM
 
       source_root File.expand_path('templates', __dir__)
 
-      MARKED_VERSION = '18.0.14'
-      DOMPURIFY_VERSION = '3.4.16'
       CONTROLLER = File.expand_path('../../../../app/assets/javascripts/ruby_llm/chat_message_controller.js', __dir__)
 
       namespace 'ruby_llm:chat_ui'
@@ -48,20 +46,12 @@ module RubyLLM
         ::ActiveRecord::Generators::Base.next_migration_number(dirname)
       end
 
-      def check_hotwire
-        return if gem?('turbo-rails')
-
-        say "\n  The chat UI runs on Hotwire, and this app doesn't have it, so its pages raise until you add it:", :red
-        say '    bundle add turbo-rails stimulus-rails importmap-rails'
-        say '    bin/rails importmap:install turbo:install stimulus:install'
-        say '  An app from a plain rails new has them.', :red
-      end
-
       def create_migration_file
         name = "add_reply_error_to_#{chat_table_name}"
         return if behavior == :invoke && self.class.migration_exists?(File.join(destination_root, 'db/migrate'), name)
 
         migration_template 'migrations/add_reply_error_migration.rb', "db/migrate/#{name}.rb"
+        @migration_created = true
       end
 
       def create_views
@@ -81,12 +71,12 @@ module RubyLLM
         template ui_template('views/chats/_chat.html.erb'),
                  "app/views/#{chat_view_path}/_#{chat_model_name.demodulize.underscore}.html.erb"
         template ui_template('views/chats/_form.html.erb'), "app/views/#{chat_view_path}/_form.html.erb"
-        template 'views/chats/_approvals.html.erb', "app/views/#{chat_view_path}/_approvals.html.erb"
+        template 'views/chats/_questions.html.erb', "app/views/#{chat_view_path}/_questions.html.erb"
         template ui_template('views/chats/_files.html.erb'), "app/views/#{chat_view_path}/_files.html.erb"
 
-        # Approval views
-        template ui_template('views/approvals/_approval.html.erb'), "app/views/#{approval_view_path}/_approval.html.erb"
-        template 'views/approvals/create.turbo_stream.erb', "app/views/#{approval_view_path}/create.turbo_stream.erb"
+        # Question and answer views
+        template ui_template('views/questions/_question.html.erb'), "app/views/#{question_view_path}/_question.html.erb"
+        template 'views/answers/create.turbo_stream.erb', "app/views/#{answer_controller_path}/create.turbo_stream.erb"
 
         # Message views
         template ui_template('views/messages/_assistant.html.erb'), "app/views/#{message_view_path}/_assistant.html.erb"
@@ -127,7 +117,7 @@ module RubyLLM
         template 'controllers/chats_controller.rb', "app/controllers/#{chat_controller_path}_controller.rb"
         template 'controllers/messages_controller.rb', "app/controllers/#{message_controller_path}_controller.rb"
         template 'controllers/models_controller.rb', "app/controllers/#{model_controller_path}_controller.rb"
-        template 'controllers/approvals_controller.rb', "app/controllers/#{approval_view_path}_controller.rb"
+        template 'controllers/answers_controller.rb', "app/controllers/#{answer_controller_path}_controller.rb"
         template 'controllers/queued_messages_controller.rb',
                  "app/controllers/#{queued_message_controller_path}_controller.rb"
       end
@@ -151,23 +141,9 @@ module RubyLLM
         template 'test/agents/chat_agent_test.rb', "test/agents/#{chat_agent_class_name.underscore}_test.rb"
       end
 
-      def create_helpers
-        template 'helpers/messages_helper.rb', "app/helpers/#{message_model_name.underscore.pluralize}_helper.rb"
-      end
-
       def create_javascript
-        source = gem?('importmap-rails') ? 'javascript/chat_message_controller.js' : CONTROLLER
+        source = import_map? ? 'javascript/chat_message_controller.js' : CONTROLLER
         copy_file source, 'app/javascript/controllers/chat_message_controller.js'
-      end
-
-      def add_javascript_dependencies
-        return unless behavior == :invoke
-
-        explain_javascript_setup unless gem?('importmap-rails')
-        return if app_file?('app/javascript/controllers/index.js')
-
-        say '  The chat UI renders replies with a Stimulus controller. Install Stimulus to use it:', :yellow
-        say '    bin/rails stimulus:install'
       end
 
       def add_available_chat_models_to_application_controller
@@ -204,7 +180,7 @@ module RubyLLM
               post :cancel, on: :member
               resources :#{message_resource}, only: [ :create ]
               resources :queued_messages, only: [ :destroy ]
-              resources :approvals, only: [ :create ]
+              resources :answers, only: [ :create ]
             end
           ROUTES
           routes_content = namespaces.reverse.reduce(routes_content) do |routes, namespace|
@@ -225,7 +201,7 @@ module RubyLLM
               post :cancel, on: :member
               resources :#{message_table_name}, only: [ :create ]
               resources :queued_messages, only: [ :destroy ]
-              resources :approvals, only: [ :create ]
+              resources :answers, only: [ :create ]
             end
           ROUTES
           route chat_routes
@@ -246,37 +222,13 @@ module RubyLLM
         inject_into_file path, "    <%= yield :head %>\n", before: %r{^\s*</head>}
       end
 
-      def display_post_install_message
+      def show_next_step
         return unless behavior == :invoke
 
-        # Show the correct URL based on whether models are namespaced
-        url_path = if chat_model_name.include?('::')
-                     chat_model_name.underscore.pluralize
-                   else
-                     chat_table_name
-                   end
-
-        say "\n  ✅ Chat UI installed!", :green
-        say "  UI template: #{ui_variant}", :cyan
-        say "\n  Works now: streaming replies, Stop, file attachments, cost per reply, errors on the page."
-        say "\n  Where it lives:"
-        say "    The turn and its errors: app/jobs/#{variable_name_for(chat_model_name)}_response_job.rb"
-        say "    Stop:                    #{chat_controller_class_name}#cancel"
-        say "    Reply rendering:         app/views/#{message_model_name.underscore.pluralize}/_assistant.html.erb"
-        say "    What the model can do:   app/agents/#{chat_agent_class_name.underscore}.rb"
-        say "\n  Add to that agent, one line each, as you need them:"
-        say "    file_store          the model reads, searches, and edits the chat's files with tools"
-        say '    code_execution      the model runs code: bin/rails generate ruby_llm:sandbox Workspace first'
-        say '                        With file_store, code reads attachments in ./attachments, or in the folder of'
-        say "                        a store in a folder, and what it writes joins the chat's files."
-        say '    mcp Linear          an MCP server: bin/rails generate ruby_llm:mcp Linear URL first'
-        say '    tools WeatherTool   a tool: bin/rails generate ruby_llm:tool Weather first'
-        if app_file?('test/test_helper.rb')
-          say "\n  Check it with bin/rails test and bin/rails test:system (needs Chrome)."
-        end
-        say '  Use RubyLLM::TestHelper in your own tests, with no provider or key.'
-        say "\n  Run bin/rails db:migrate, then start your server and visit http://localhost:3000/#{url_path}", :cyan
-        say "\n"
+        steps = []
+        steps << 'add turbo-rails and stimulus-rails, which the chat UI runs on' unless gem?('turbo-rails')
+        steps << 'run bin/rails db:migrate' if @migration_created
+        say "\n#{steps.join(', then ').upcase_first}" if steps.any?
       end
 
       private
@@ -289,34 +241,20 @@ module RubyLLM
         Bundler.with_original_env { run 'bundle install --quiet' } if behavior == :invoke
       end
 
-      def explain_javascript_setup
-        if gem?('jsbundling-rails')
-          say "\n  Add the chat UI's JavaScript dependencies, then register its Stimulus controller:", :yellow
-          say "    yarn add #{javascript_packages}   (or: npm install #{javascript_packages})"
-          say '    bin/rails stimulus:manifest:update'
-        else
-          say "\n  Replies show as plain text until the app loads JavaScript with importmap-rails or jsbundling-rails.",
-              :yellow
-          say "  With another bundler, add #{javascript_packages} and register"
-          say '  app/javascript/controllers/chat_message_controller.js as the chat-message Stimulus controller.'
-        end
-      end
-
-      def javascript_packages = "marked@#{MARKED_VERSION} dompurify@#{DOMPURIFY_VERSION}"
       def app_file?(path) = File.exist?(File.join(destination_root, path))
+      def import_map? = gem?('importmap-rails') && !gem?('jsbundling-rails')
 
       def gem?(name)
         File.read(File.join(destination_root, 'Gemfile')).match?(/^\s*gem[\s(]+["']#{Regexp.escape(name)}["']/)
       end
 
-      def approval_model_name
-        return 'Approval' unless chat_model_name.include?('::')
-
-        "#{chat_model_name.deconstantize}::Approval"
+      def namespaced(name)
+        chat_model_name.include?('::') ? "#{chat_model_name.deconstantize}::#{name}" : name
       end
 
-      def approval_view_path = approval_model_name.underscore.pluralize
-      def approval_controller_class_name = controller_class_name_for(approval_model_name)
+      def question_view_path = namespaced('Question').underscore.pluralize
+      def answer_controller_path = namespaced('Answer').underscore.pluralize
+      def answer_controller_class_name = controller_class_name_for(namespaced('Answer'))
 
       def queued_message_model_name
         return 'QueuedMessage' unless chat_model_name.include?('::')
@@ -335,14 +273,6 @@ module RubyLLM
 
       def application_agent_caching?
         File.read(File.join(destination_root, APPLICATION_AGENT_PATH)).match?(/^\s*caching\b/)
-      end
-
-      def message_helper_module_name
-        if message_model_name.include?('::')
-          "#{message_model_name.deconstantize}::#{message_model_name.demodulize.pluralize}Helper"
-        else
-          "#{message_model_name.pluralize}Helper"
-        end
       end
     end
   end

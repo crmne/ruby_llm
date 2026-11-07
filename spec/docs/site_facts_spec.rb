@@ -22,4 +22,14 @@ RSpec.describe 'Site facts', type: :task do
   it 'names the released gem version' do
     expect(config['gem_version']).to eq(RubyLLM::VERSION)
   end
+
+  it 'gives a jsbundling app the chat UI packages RubyLLM vendors' do
+    packages = %w[marked dompurify].map do |name|
+      File.read(File.join(root, "app/assets/javascripts/ruby_llm/#{name}.js"))[%r{\A// (#{name}@\S+)}, 1]
+    end
+    command = "yarn add #{packages.join(' ')}"
+
+    expect(File.read(File.join(root, 'docs/_advanced/rails-generators.md'))).to include(command)
+    expect(File.read(File.join(root, 'skills/rubyllm/SKILL.md'))).to include(command)
+  end
 end

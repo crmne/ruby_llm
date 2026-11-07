@@ -83,9 +83,9 @@ module RubyLLM
     PASSTHROUGH_CHAT_DELEGATES = %i[
       model model_id provider messages tools deferred_tools mcp provider_tools tool_options provider_options headers
       schema concurrency caching citations code_execution compaction context_budget context end_user fallbacks thinking
-      temperature max_output_tokens skills file_store owner
-      each complete? cancelled? waiting? awaiting_approval? pending_approvals awaiting_input? pending_inputs
-      awaiting_tasks? pending_tasks awaiting_person? add_message add_completion tokens cost render
+      temperature max_output_tokens skills file_store
+      each complete? cancelled? waiting? pending_questions awaiting_approval? pending_approvals awaiting_input?
+      pending_inputs awaiting_tasks? pending_tasks awaiting_person? add_message add_completion tokens cost render
       queue queued_messages withdraw join_queued_messages
     ].freeze
 
@@ -328,8 +328,8 @@ module RubyLLM
 
       # Lets chats this agent builds run code in the configured sandbox,
       # applied via Chat#with_code_execution. Accepts the same options as
-      # keywords or a Hash. Pass +false+ to disable it. Passing +nil+
-      # raises ArgumentError.
+      # keywords or a Hash. Pass +false+ to disable it. Passing +nil+ or a
+      # block raises ArgumentError.
       #
       #   code_execution
       #   code_execution false
@@ -340,6 +340,8 @@ module RubyLLM
       # A +mounts+ lambda runs before each run, with +chat+ and the
       # agent's inputs in scope, like the agent's other lambdas.
       def code_execution(enabled = true, **options) # rubocop:disable Style/OptionalBooleanParameter
+        raise ArgumentError, 'code_execution takes no block. Pass a lambda as mounts: for each run' if block_given?
+
         @code_execution = CodeExecution.options(enabled, options)
       end
 
@@ -347,28 +349,29 @@ module RubyLLM
       # work with it, applied via Chat#with_file_store, which takes the
       # same arguments. A +store+ lambda runs once for each chat, with
       # +chat+ and the agent's inputs in scope, like the agent's other
-      # lambdas, and so does an +owner+ lambda for a persisted chat. Pass
-      # +nil+ to remove the store a parent agent declared.
+      # lambdas. Pass +nil+ to remove the store a parent agent declared. A
+      # block raises ArgumentError: pass the lambda as the store instead.
       #
       #   file_store
       #   file_store inline_limit: 20_000, tools: :read
       #   file_store :memory
       #   file_store -> { "tmp/chats/#{chat.id}" }
-      #   file_store owner: -> { chat.user } # a plain chat's store is its own, so it ignores owner
       #   file_store nil
       #
       # Each chat gets a store of its own: without +store+, a new
       # FileStore::Memory, or for a persisted chat, its files in Active
-      # Storage. A folder path on its own is shared by every chat, so use a
-      # lambda to give each chat its own folder.
+      # Storage, kept for the chat's owner (see ::owner). A folder path on
+      # its own is shared by every chat, so use a lambda to give each chat
+      # its own folder.
       #
-      # :call-seq: file_store(store = default, inline_limit: 10_000, tools: %i[read write edit], owner: nil)
+      # :call-seq: file_store(store = default, inline_limit: 10_000, tools: %i[read write edit])
       def file_store(store = Chat::FileReferences::DEFAULT_STORE, inline_limit: Chat::FileReferences::INLINE_LIMIT,
-                     tools: FileStore::Tools::DEFAULT, owner: nil)
+                     tools: FileStore::Tools::DEFAULT)
+        raise ArgumentError, 'file_store takes no block. Pass the store as a lambda instead' if block_given?
         return @file_store = false if store.nil?
 
         Chat::FileReferences.validate(store, inline_limit:, tools:, store_lambda: true)
-        @file_store = { store:, inline_limit:, tools:, owner: }.compact.freeze
+        @file_store = { store:, inline_limit:, tools: }.freeze
       end
 
       # Gives chats this agent builds the skills named, applied via
@@ -377,13 +380,15 @@ module RubyLLM
       # +true+ is every skill under the roots, and +false+ removes the
       # skills a parent agent declared. An agent without a +skills+
       # declaration has no skills. Called with no arguments, returns the
-      # declaration: the names, +true+, +false+, or +nil+.
+      # declaration: the names, +true+, +false+, or +nil+. A block raises
+      # ArgumentError.
       #
       #   skills :invoices, :refunds
       #   skills true
       #   skills false
       #
       def skills(*skills)
+        raise ArgumentError, 'skills takes no block. Name the skills, or pass true for every skill' if block_given?
         return @skills if skills.empty?
 
         @skills = Skill.selection(skills)
@@ -402,8 +407,11 @@ module RubyLLM
       # Sets whoever the usage of chats this agent builds or finds is
       # attributed to, applied via Chat#with_owner. A block defers
       # evaluation until the chat is built, so the owner can come from the
-      # agent's inputs or, for a persisted chat, from +chat+. Subclasses
-      # inherit it. Called with no arguments, returns the configured value.
+      # agent's inputs or, for a persisted chat, from +chat+. A persisted
+      # chat keeps the files of its Active Storage store for the owner
+      # too, and the owner wins over the association its
+      # <tt>acts_as_chat owner:</tt> names. Subclasses inherit it. Called
+      # with no arguments, returns the configured value.
       #
       #   owner { account }
       #   owner { chat.user }
@@ -942,11 +950,8 @@ module RubyLLM
         return chat.with_file_store(nil) if @file_store == false
 
         store = @file_store[:store]
-        default = store.equal?(Chat::FileReferences::DEFAULT_STORE)
-        options = @file_store.except(:store)
-        options = options.except(:owner) if default && chat.is_a?(Chat)
-        options = options.transform_values { |value| evaluate(value, runtime) }
-        return chat.with_file_store(**options) if default
+        options = @file_store.except(:store).transform_values { |value| evaluate(value, runtime) }
+        return chat.with_file_store(**options) if store.equal?(Chat::FileReferences::DEFAULT_STORE)
 
         chat.with_file_store(evaluate(store, runtime), **options)
       end
@@ -1503,13 +1508,13 @@ module RubyLLM
 
     ##
     # :method: answer
-    # :call-seq: answer(request, **values)
+    # :call-seq: answer(question, value = nil, **values)
     #
     # Delegates to Chat#answer. See that method for arguments and return values.
 
     ##
     # :method: decline
-    # :call-seq: decline(request)
+    # :call-seq: decline(question)
     #
     # Delegates to Chat#decline. See that method for arguments and return values.
 
@@ -1648,12 +1653,6 @@ module RubyLLM
     # Delegates to Chat#end_user. See that method for arguments and return values.
 
     ##
-    # :method: owner
-    # :call-seq: owner
-    #
-    # Delegates to Chat#owner. See that method for arguments and return values.
-
-    ##
     # :method: fallbacks
     # :call-seq: fallbacks
     #
@@ -1708,6 +1707,12 @@ module RubyLLM
     # :call-seq: waiting?()
     #
     # Delegates to Chat#waiting?. See that method for arguments and return values.
+
+    ##
+    # :method: pending_questions
+    # :call-seq: pending_questions()
+    #
+    # Delegates to Chat#pending_questions. See that method for arguments and return values.
 
     ##
     # :method: awaiting_approval?
@@ -1859,6 +1864,13 @@ module RubyLLM
       define_method(operation) do |*args, **kwargs, &block|
         rescuing { chat.public_send(operation, *args, **kwargs, &block) }
       end
+    end
+
+    # Returns whoever the usage of the agent's chat is attributed to, as
+    # Chat#owner describes. For a persisted chat, reads it from the
+    # record's chat, since the record leaves +owner+ to the application.
+    def owner
+      (chat.respond_to?(:to_llm) ? chat.to_llm : chat).owner
     end
 
     def bind(chat, input_values) # :nodoc:

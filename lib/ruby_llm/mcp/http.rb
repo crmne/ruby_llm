@@ -50,6 +50,15 @@ module RubyLLM
         LOOPBACK_HOSTS.include?(URI(url.to_s).hostname)
       end
 
+      # Returns whether +url+ is a web page's address, an +http+ or +https+
+      # one. A server's page to visit must be, since anything else, such as
+      # a javascript: address, would run in the app that links to it.
+      def self.web?(url)
+        URI(url.to_s).is_a?(URI::HTTP)
+      rescue URI::InvalidURIError
+        false
+      end
+
       # The session of a server that predates 2026-07-28: the ID the server gave its session, or +nil+.
       attr_reader :session
 

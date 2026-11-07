@@ -194,7 +194,10 @@ end
 
 def connect(params)
   answer = params.dig('inputResponses', 'connect')
-  return input_required('connect', CONNECT_URL) unless answer
+  page = params.dig('arguments', 'url')
+  request = page ? CONNECT_URL.merge(params: CONNECT_URL[:params].merge(url: page)) : CONNECT_URL
+  return input_required('connect', request) unless answer
+  return { content: [{ type: 'text', text: 'Not connected' }] } unless answer['action'] == 'accept'
 
   { content: [{ type: 'text', text: 'Connected' }] }
 end

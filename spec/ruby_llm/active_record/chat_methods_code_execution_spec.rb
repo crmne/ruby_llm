@@ -79,9 +79,9 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       end
     end
 
-    def chat_with_sales(**)
+    def chat_with_sales(owner: nil)
       chat = Chat.create!(model: model_for(:anthropic), provider: :anthropic)
-      chat.with_code_execution.with_file_store(**).tap do
+      chat.with_owner(owner).with_code_execution.with_file_store.tap do
         file = RubyLLM::Attachment.new(StringIO.new("a,b\n"), filename: 'sales.csv')
         chat.to_llm.add_message(role: :user, content: 'Here', attachments: [file])
       end
@@ -131,7 +131,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       shown = RubyLLM::Attachment.new(StringIO.new('alice only'), filename: 'private.txt')
       chat.to_llm.add_message(role: :tool, content: 'read', tool_call_id: call.id, attachments: [shown])
 
-      run_code(chat.with_file_store(owner: bob))
+      run_code(chat.with_owner(bob))
 
       expect(seen[:attachments]).to eq(%w[sales.csv])
     end

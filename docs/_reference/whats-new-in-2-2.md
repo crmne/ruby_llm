@@ -21,6 +21,7 @@ After reading this guide, you will know:
 * How skills teach the model your workflows, and run their scripts in the sandbox.
 * How persisted chats now run in one process at a time.
 * How to queue messages while a chat runs, and attribute them as they join.
+* How a tool asks the person who runs the chat, and how approvals became questions.
 * How to keep a tool that shares state from running alongside others.
 * How to run each tool inside a block, such as a tenant.
 * How to keep tool results within the model's context window.
@@ -114,8 +115,9 @@ The default sandbox should be the smallest one that does the job. When the code 
 chat.with_code_execution(sandbox: ReadOnlySandbox, escalate_to: [WorkspaceSandbox, OnlineSandbox])
 chat.ask "Add a changelog entry for the new export feature"
 
-chat.pending_approvals.first.arguments # => {"code"=>"...", "sandbox"=>"workspace", "reason"=>"Edit CHANGELOG.md"}
-chat.approve(chat.pending_approvals.first)
+question = chat.pending_questions.first
+question.tool_call.arguments # => {"code"=>"...", "sandbox"=>"workspace", "reason"=>"Edit CHANGELOG.md"}
+question.approve
 chat.complete
 ```
 
@@ -175,11 +177,11 @@ bin/rails generate ruby_llm:evaluation Support
 bin/rails generate ruby_llm:judge Urgency
 ```
 
-They join `ruby_llm:agent`, `ruby_llm:tool`, and `ruby_llm:schema`. `ruby_llm:install` creates every folder, including the new `app/skills`, `app/sandboxes`, `app/mcp`, `app/evals`, and `app/judges`. See [Generators]({% link _advanced/rails-generators.md %}#generators).
+They join `ruby_llm:agent`, `ruby_llm:tool`, and `ruby_llm:schema`, and each creates its folder, such as `app/skills` or `app/mcp`, when it first writes there. See [Generators]({% link _advanced/rails-generators.md %}#generators).
 
 `acts_as_message` can now stream a chat to its page by itself: with `config.broadcast_messages = true`, it broadcasts new messages, chunks, and the finished reply with Turbo, and a job only needs `chat.complete(&:broadcast)`. The chat UI generator turns it on. Each chunk carries its position as `chunk.index`, so the generated chat UI puts chunks back in order even when Action Cable delivers them out of order. That Stimulus controller ships with RubyLLM, so `bundle update` keeps it current: in an app with an import map, RubyLLM pins it with `marked` and `dompurify`, and the generated file is one line. See [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}).
 
-Agents get a parent, the way models have `ApplicationRecord`. `ruby_llm:install` creates `ApplicationAgent` with your chat model, and `ruby_llm:agent` generates subclasses of it. The chat UI talks to its own `ChatAgent`, so tools you add there show up in the UI, with approval cards for the ones that require approval and attachments for the files they return. See [Approvals and Attachments]({% link _advanced/rails-generators.md %}#approvals-and-attachments).
+Agents get a parent, the way models have `ApplicationRecord`. `ruby_llm:install` creates `ApplicationAgent` with your chat model, and `ruby_llm:agent` generates subclasses of it. The chat UI talks to its own `ChatAgent`, so tools you add there show up in the UI, with a card for each question they ask, approvals included, and attachments for the files they return. See [Questions and Attachments]({% link _advanced/rails-generators.md %}#questions-and-attachments).
 
 ## One Process at a Time
 
@@ -209,10 +211,10 @@ chat.queue "Use the EU numbers, not the US ones"
 chat.queue "Then draft the board summary", steer: false
 ```
 
-A message that steers joins the turn that is running, after the next round of tool results. One queued with `steer: false` waits for the next turn. `around_join` wraps the moment a message joins. On a persisted chat it runs inside the transaction that creates the message, so you can set your own columns on it:
+A message that steers joins the turn that is running, after the next round of tool results. One queued with `steer: false` waits for the next turn. On a persisted chat, `queue` takes a `sender:`, and the message record is saved with it when your message model has a `sender` association. `around_join` wraps the moment a message joins. On a persisted chat it runs inside the transaction that creates the message, so you can set your own columns on it:
 
 ```ruby
-chat.around_join { |queued, join| join.call(sender: queued.sender) }
+chat.around_join { |queued, join| join.call(steered: queued.steer?) }
 ```
 
 A block that never calls `join` withdraws the message, and so does `queued.withdraw`, for a Cancel button. `join_queued_messages` joins everything waiting without asking the model. See [Queueing Messages]({% link _advanced/agentic-workflows.md %}#queueing-messages) and [Queued Messages in Rails]({% link _advanced/rails-persistence.md %}#queued-messages).
@@ -228,6 +230,31 @@ end
 ```
 
 A subagent that waits for an approval pauses the call, and the calling chat is `awaiting_person?`. Agents also declare chat callbacks once, `after_message :log_reply`, with `if:` and `unless:` like Rails. See [Subagents]({% link _getting_started/agents.md %}#subagents) and [Callbacks]({% link _getting_started/agents.md %}#callbacks).
+
+## Tools Ask a Person
+
+A tool can now ask the person who runs the chat something and carry on with the answer. The call pauses, no process waits, and `execute` runs again from the top once they answer, so ask first, then act:
+
+```ruby
+class BookFlight < RubyLLM::Tool
+  description "Books a flight"
+  parameter :destination, description: "The city to fly to"
+
+  def execute(destination:)
+    seat = ask("Window or aisle?", choices: %w[window aisle]) or return "No seat chosen."
+    Flights.book!(destination, seat:)
+  end
+end
+```
+
+`ask` takes free text, one of `choices:`, the fields a block declares, or a page to visit. An approval is a question too, answered yes or no, and MCP servers ask theirs the same way. `pending_questions` lists them all, and you answer each with `answer`, `decline`, `approve`, or `deny`, from any process in Rails:
+
+```ruby
+chat.pending_questions.first.answer "window"
+chat.complete
+```
+
+See [Asking a Person]({% link _tools/tool-execution.md %}#asking-a-person).
 
 ## Exclusive Tools
 
@@ -318,6 +345,8 @@ A reply a fallback model wrote names it: `reply.model` and `reply.provider`, als
 
 `RubyLLM::Attachment.new(io, filename: "export.csv", mime_type: "text/csv")` takes a file's type when you know it. See [Automatic File Type Detection]({% link _core_features/attachments.md %}#automatic-file-type-detection).
 
+A chat bills its owner, set with `chat.with_owner(current_user)`, or in Rails named once with `acts_as_chat owner: :user`, which keeps the chat's files for that user too. See [One-Shot Operations]({% link _core_features/cost-and-usage-tracking.md %}#one-shot-operations).
+
 Vertex AI takes the `eu` and `us` multi-region locations.
 
 ## Moonshot AI
@@ -405,9 +434,11 @@ It is off by default, and a context can turn it on for one server. See [Reasonin
 
 ## Upgrades
 
-`bin/rails generate ruby_llm:upgrade` in 2.2 adds the columns chats and tool calls use for their claims, the tables for queued messages and chat files, and any of the conventional `app/` folders your application lacks, such as `app/skills` and `app/sandboxes`. Applications on 2.0 upgrade to 2.1 first. See [Upgrading]({% link _reference/upgrading.md %}).
+`bin/rails generate ruby_llm:upgrade` in 2.2 adds the columns chats and tool calls use for their claims, the tables for queued messages and chat files, and an `ApplicationAgent` for your agents to inherit from. Applications on 2.0 upgrade to 2.1 first. See [Upgrading]({% link _reference/upgrading.md %}).
 
-2.2 deprecates iterating a chat directly and `chat.cache_until_here` in favor of `chat.messages` and marking the message itself. Both still work and warn, and RubyLLM 3.0 removes them. See [Read a Conversation Through `messages`]({% link _reference/upgrading.md %}#read-a-conversation-through-messages).
+2.2 deprecates iterating a chat directly and `chat.cache_until_here` in favor of `chat.messages` and marking the message itself, and renames `RubyLLM.with_usage_owner` to `RubyLLM.with_owner`. The old names still work and warn, and RubyLLM 3.0 removes them. See [Read a Conversation Through `messages`]({% link _reference/upgrading.md %}#read-a-conversation-through-messages).
+
+`pending_questions` lists approvals and questions alike, and `pending_approvals`, `pending_inputs`, `approve`, `deny`, `answer`, and `decline` keep working. Answers to a server's questions are now checked against what they ask, so an extra field or a choice the question doesn't offer raises `ArgumentError`, and a server's request to visit anything but an `http` or `https` page is declined. See [Approvals and Questions Are One List]({% link _reference/upgrading.md %}#approvals-and-questions-are-one-list).
 
 Provider gems and custom providers that override protocol methods rename them: methods that build a request start with `render_`, methods that read a response start with `parse_`, and the capability predicates drop `supports_` ([#1136](https://github.com/crmne/ruby_llm/pull/1136)). See [Rename Protocol Method Overrides]({% link _reference/upgrading.md %}#rename-protocol-method-overrides).
 

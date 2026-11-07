@@ -146,17 +146,17 @@ With `escalate_to:`, the `run_code` tool takes two more arguments: `sandbox`, on
 ```ruby
 chat.ask "Add a changelog entry for the new export feature"
 
-call = chat.pending_approvals.first
-call.arguments
+question = chat.pending_questions.first
+question.tool_call.arguments
 # => {"language"=>"shell", "code"=>"...", "sandbox"=>"workspace", "reason"=>"Edit CHANGELOG.md in the project"}
-chat.tools[:run_code].summary(call.arguments["sandbox"])
+chat.tools[:run_code].summary(question.tool_call.arguments["sandbox"])
 # => "Starts in /srv/app/storage/workspace. Can change /srv/app/storage/workspace. No network access. Stops after 300 seconds."
 
-chat.approve(call)
+question.approve
 chat.complete
 ```
 
-Show the person the code, the reason, and the summary before they decide. `approve` runs that one call in the named sandbox, and `deny` refuses it: the model learns the user said no, and continues. These calls are ordinary [tool approvals]({% link _tools/tool-execution.md %}#requiring-approval), so the approval interface you already have works for them. The cards from the [chat UI generator]({% link _advanced/rails-generators.md %}#approvals-and-attachments) show all three.
+Show the person the code, the reason, and the summary before they decide. `approve` runs that one call in the named sandbox, and `deny` refuses it: the model learns the user said no, and continues. These calls are ordinary [tool approvals]({% link _tools/tool-execution.md %}#requiring-approval), so the approval interface you already have works for them. The cards from the [chat UI generator]({% link _advanced/rails-generators.md %}#questions-and-attachments) show all three.
 
 Escalation is per call. The next call runs in the default sandbox again unless it asks again, and every call that asks waits for its own decision. An escalated call is never remembered: `approve(call, remember: true)` raises `ArgumentError` for it, so no approval can turn into standing access.
 

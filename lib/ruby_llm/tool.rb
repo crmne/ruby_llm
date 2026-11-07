@@ -486,37 +486,54 @@ module RubyLLM
       result
     end
 
-    # Asks a person something while #execute runs, and returns their
-    # InputRequest::Answer. In a chat, the call pauses until Chat#answer or
-    # Chat#decline settles the question (see Chat#pending_inputs), then runs
-    # again from the start, and this +request_input+ returns the answer. Code before
-    # it runs again too, so do work after asking. Pass the fields to ask for
-    # as JSON Schema properties, with <tt>required: true</tt> on the ones
-    # the user must fill, or +url:+ to ask them to visit a page.
+    # Asks the person who runs the chat +message+ while #execute runs, and
+    # returns their answer. The call pauses until they answer (see
+    # Chat#pending_questions), then #execute runs again from the top, and
+    # this time +ask+ returns the answer:
     #
-    #   def execute(question:)
-    #     answer = request_input(question, answer: { type: "string", title: "Answer" })
-    #     answer.accepted? ? { answer: answer[:answer] } : { error: "Nobody answered." }
+    #   def execute(destination:)
+    #     seat = ask("Window or aisle?", choices: %w[window aisle]) or return "No seat chosen."
+    #     Flights.book!(destination, seat:)
     #   end
     #
-    # Each call may ask several questions, one after another. Outside a chat,
-    # an unanswered question raises InputRequiredError. +url:+ is reserved
-    # for the page, so name a form field for a URL something else.
-    def request_input(message, url: nil, **fields)
-      raise ArgumentError, 'url: takes the page to visit; give a form field another name' if url.is_a?(Hash)
+    # Code before +ask+ runs again too, so make it safe to repeat: ask
+    # first, then act. A call may ask several questions, one after
+    # another, and each run asks them in the same order.
+    #
+    # Without options, +ask+ takes free text and returns the String. With
+    # +choices:+ it returns the one the person picked. With a block, it
+    # asks for the fields the block declares, in the DSL of
+    # Tool.parameters, and returns their values by name. With +url:+, it
+    # asks the person to visit a page, such as to connect an account, and
+    # returns +true+ once they say they did.
+    #
+    #   passenger = ask("Who is flying?") do
+    #     string :name, description: "As on the passport"
+    #     integer :age, required: false
+    #   end
+    #   passenger # => {name: "Ada Lovelace", age: 36}
+    #
+    #   ask("Connect your calendar", url: authorization_url)
+    #
+    # Returns +nil+ when the person declines. Outside a chat, nothing can
+    # pause the call, so +ask+ raises InputRequiredError. Raises
+    # ArgumentError when given more than one of +choices:+, +url:+, and a
+    # block.
+    def ask(message, choices: nil, url: nil, &fields)
+      if [choices, url, fields].compact.size > 1
+        raise ArgumentError, 'ask takes choices:, url:, or a block of fields: one kind of answer at a time'
+      end
 
       state = (Fiber[ASKING] ||= { 'input' => nil, 'asked' => 0 })
       index = state['asked']
       state['asked'] += 1
       requests = Array(state['input']&.[]('requests'))
+      return Question.from_h(requests[index]).asked_answer(fields) if requests[index]&.[]('response')
 
-      if (data = requests[index]) && data['response']
-        InputRequest::Answer.new(data['response'])
-      else
-        asked = requests.first(index).map { |data| InputRequest.from_h(data) }
-        asked << InputRequest.ask(index, message, url:, fields:)
-        raise InputRequiredError.new(name, { 'requests' => asked })
-      end
+      schema = SchemaDefinition.new(block: fields).json_schema if fields
+      asked = requests.first(index).map { |data| Question.from_h(data) }
+      question = Question.asked(index, message, choices:, url:, schema:)
+      raise InputRequiredError.new(name, { 'requests' => [*asked, question] })
     end
 
     # Runs the tool with the arguments chosen by the model. Subclasses must
@@ -641,7 +658,7 @@ module RubyLLM
       Fiber[ASKING] = previous
     end
 
-    # Runs a call again that paused on its questions (#request_input), now answered or
+    # Runs a call again that paused on its questions (#ask), now answered or
     # declined, with +input+, the state Chat saved for it.
     def answered(input, arguments, tool_call:) # :nodoc:
       Fiber[RESUMING] = input

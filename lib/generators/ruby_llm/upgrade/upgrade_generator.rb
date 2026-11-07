@@ -27,13 +27,12 @@ module RubyLLM
         migration_template 'upgrade_ruby_llm_to_2_2.rb.tt', 'db/migrate/upgrade_ruby_llm_to_2_2.rb'
       end
 
-      def create_app_directories
-        create_convention_directories
+      def create_application_agent_file
         create_application_agent
       end
 
       def remove_generated_message_code_from_message_model
-        return keep_generated_broadcasting if chat_ui_uses_generated_broadcasting?
+        return if chat_ui_uses_generated_broadcasting?
 
         enable_message_broadcasting if remove_generated_message_code
       end
@@ -41,8 +40,11 @@ module RubyLLM
       def install_active_storage
         return if table_exists?('active_storage_blobs')
 
-        say '  acts_as_message stores attachments with Active Storage, which this app has not installed.', :yellow
         rails_command 'active_storage:install'
+      end
+
+      def show_next_step
+        say "\nRun bin/rails db:migrate" if behavior == :invoke
       end
 
       private
@@ -61,12 +63,6 @@ module RubyLLM
           source = File.read(path)
           source.include?('broadcast_append_chunk') || source.include?(stream)
         end
-      end
-
-      def keep_generated_broadcasting
-        say "\n  #{message_model_name} keeps the broadcasting ruby_llm:chat_ui wrote, which your chat UI still uses.",
-            :yellow
-        say "  Run bin/rails generate ruby_llm:chat_ui to move the job, views and model to RubyLLM's broadcasting."
       end
     end
   end

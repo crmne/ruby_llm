@@ -1,20 +1,14 @@
 class <%= message_controller_class_name %> < ApplicationController
   before_action :set_<%= chat_variable_name %>
 
+  rescue_from RubyLLM::PendingToolCallsError do
+    redirect_to @<%= chat_variable_name %>, notice: "Answer the questions above to continue.", status: :see_other
+  end
+
   def create
-    content = params.dig(:<%= message_variable_name %>, :content)
-    if @<%= chat_variable_name %>.pending_approvals.any?
-      redirect_to @<%= chat_variable_name %>, notice: "Approve or deny the requests above to continue.", status: :see_other
-    elsif content.present? || attachments
-      if @<%= chat_variable_name %>.running?
-        @queued_message = @<%= chat_variable_name %>.queue(content.presence, with: attachments)
-        wait = @<%= chat_variable_name %>.running? ? 1.minute : 0
-        <%= chat_job_class_name %>.set(wait:).perform_later(@<%= chat_variable_name %>.id)
-      else
-        <%= message_model_name %>.suppressing_turbo_broadcasts { @<%= chat_variable_name %>.ask_later(content.presence, with: attachments) }
-        @<%= message_variable_name %> = @<%= chat_variable_name %>.<%= message_table_name %>.last
-        <%= chat_job_class_name %>.perform_later(@<%= chat_variable_name %>.id)
-      end
+    if content || attachments
+      @<%= chat_variable_name %>.ask_later(content, with: attachments)
+      <%= chat_job_class_name %>.perform_later(@<%= chat_variable_name %>.id)
 
       respond_to do |format|
         format.turbo_stream
@@ -23,15 +17,15 @@ class <%= message_controller_class_name %> < ApplicationController
     else
       @<%= message_variable_name %> = @<%= chat_variable_name %>.<%= message_table_name %>.build
       @<%= message_variable_name %>.errors.add(:content, "can't be blank")
-
-      respond_to do |format|
-        format.turbo_stream { render :create, status: <%= unprocessable_content_status.inspect %> }
-        format.html { render "<%= chat_model_name.underscore.pluralize %>/show", status: <%= unprocessable_content_status.inspect %> }
-      end
+      render "<%= chat_model_name.underscore.pluralize %>/show", status: <%= unprocessable_content_status.inspect %>
     end
   end
 
   private
+
+  def content
+    params.dig(:<%= message_variable_name %>, :content).presence
+  end
 
   def attachments
     Array(params.dig(:<%= message_variable_name %>, :attachments)).grep(ActionDispatch::Http::UploadedFile).presence

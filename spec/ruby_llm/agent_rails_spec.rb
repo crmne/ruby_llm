@@ -29,7 +29,7 @@ RSpec.describe RubyLLM::Agent do
       chat_class Chat
       model model_for(:openai, :temperature), provider: :openai, protocol: :responses
       owner { chat.id }
-      instructions { "Owner #{chat.owner}" }
+      instructions { "Owner #{chat.to_llm.owner}" }
     end
     agent.context do |config|
       config.openai_api_key = 'agent-key'
@@ -48,7 +48,8 @@ RSpec.describe RubyLLM::Agent do
     record = agent.find(id)
 
     expect(built).to eq([['https://example.com/v1', :responses]])
-    expect(record.owner).to eq(id)
+    expect(record.to_llm.owner).to eq(id)
+    expect(agent.new(chat: record).owner).to eq(id)
     expect(record.to_llm.messages.first.content).to eq("Owner #{id}")
   end
 

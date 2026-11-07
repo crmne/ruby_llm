@@ -14,7 +14,7 @@ After reading this guide, you will know:
 
 * How to control whether the model can call tools and which one.
 * How to limit how many tool calls appear in one assistant response.
-* How to require a human decision before a tool executes.
+* How a tool call pauses to ask a person, for an approval or anything else, and carries on with the answer.
 * How to run multiple tool calls concurrently for I/O-bound work.
 * How to keep a tool that shares state from running alongside others.
 * How a tool ends the turn without another model call.
@@ -23,7 +23,7 @@ After reading this guide, you will know:
 * How to observe tool calls and results with callbacks.
 * How to report what a slow tool is doing while it runs.
 * How to cap tool usage to prevent runaway loops.
-* How to run tools that take longer than a request, pause until something happens, or ask the user a question.
+* How to run tools that take longer than a request, or pause until something happens.
 
 By default RubyLLM lets the model decide when to call tools and runs them sequentially. When you need tighter control, these options let you steer tool choice, parallelism, and observability per chat.
 
@@ -88,9 +88,13 @@ chat.with_tools(nil)       # forget the tools, keep the options
 chat.with_tool_options(choice: nil, calls: nil, concurrency: nil) # reset all three
 ```
 
-## Requiring Approval
+## Asking a Person
 
-Some tools should not run without a human decision: issuing refunds, deleting records, sending email. Declare them with `requires_approval` to pause execution until a decision is recorded:
+Some calls need a person before they can go on: a refund someone must approve, a seat only the traveller can choose. The call pauses until they answer. No process waits for them: `ask` and `complete` return, the chat is `waiting?`, and the `complete` after the answer carries the call on.
+
+### Requiring Approval
+
+Some tools should not run without a human decision: issuing refunds, deleting records, sending email. Declare them with `requires_approval`, and the chat asks before the tool runs:
 
 ```ruby
 class IssueRefund < RubyLLM::Tool
@@ -103,43 +107,36 @@ class IssueRefund < RubyLLM::Tool
 end
 
 chat = RubyLLM.chat.with_tools(IssueRefund)
-response = chat.ask "Refund order 42"
+chat.ask "Refund order 42"
 
-chat.awaiting_approval? # => true, and nothing has executed
+question = chat.pending_questions.first
+question.approval?           # => true
+question.tool_call.name      # => "issue_refund"
+question.tool_call.arguments # => {"order_id"=>"42"}
 ```
 
-`complete` returns cleanly instead of running the tool. Record a decision, then continue the loop:
+An approval is a question answered yes or no. Approve it, then continue the loop:
 
 ```ruby
-tool_call = response.tool_calls.first
-
-chat.approve(tool_call)
-chat.complete # executes the tool, then lets the model continue
+question.approve
+chat.complete # runs the tool, then lets the model continue
 ```
 
-`approve` and `deny` accept a `ToolCall` or its id, and `chat.pending_approvals` lists the calls still waiting for a decision. A denied call never executes: the model receives a structured result saying the user denied the call, and the conversation continues from there.
+A denied call never runs: the model receives a structured result saying the user denied the call, and the conversation continues from there.
 
 ```ruby
-chat.deny(tool_call)
+question.deny
 chat.complete # appends the denial result and asks the model to respond
 ```
-
-`tool_calls` is an Enumerable of `RubyLLM::ToolCall` objects in the order the provider returned them, empty when the message has none. It also reads by ID: `response.tool_calls["call_1"]`.
-
-Calls that need no approval still run while protected calls wait. `ask` and `complete` return the assistant message that holds the waiting calls, so `response.tool_calls` is always there to inspect. Use `chat.pending_approvals` to pick out the calls that still need a decision.
 
 When the user approves a call and says "don't ask again", pass `remember: true`:
 
 ```ruby
-chat.approve(tool_call, remember: true)
+question.approve(remember: true)
 chat.complete
 ```
 
 Later calls to the same tool run without asking for the rest of the chat. Approving a call that already has a result remembers nothing. A [code execution]({% link _advanced/code-execution.md %}) call that asks for a wider sandbox is the exception: each one waits for its own approval, and `remember: true` raises `ArgumentError` for it. See [Sandboxes]({% link _advanced/sandboxes.md %}#asking-for-a-wider-sandbox).
-
-If you [drive the loop yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself), stop when the chat is waiting: `chat.step until chat.complete? || chat.waiting?`. `waiting?` is true while every pending call waits on something outside the chat, such as an approval, and `awaiting_approval?` tells you an approval is what it waits on.
-
-Finish the pending calls before asking another question. Otherwise `ask` raises `RubyLLM::PendingToolCallsError`.
 
 To read decisions from your application, pass a resolver block. It receives the `ToolCall` and returns `true` to execute, `false` to deny, or `nil` while the decision is pending:
 
@@ -151,34 +148,104 @@ end
 
 The resolver can run repeatedly while a call waits, including after a job resumes. Make it an idempotent read. If it creates an approval request, use a find-or-create operation.
 
-### Remote Tool Approval
+### Asking from a Tool
 
-Providers can also request approval for a tool running on an MCP server. These requests appear in `chat.pending_approvals` with a `server` label. Use `approve`, `deny`, and `complete` as above; RubyLLM sends the decision to the provider instead of executing a Ruby tool. See [MCP servers]({% link _tools/provider-tools.md %}#remote-tool-approval) for a working example.
-
-### Approval in Rails
-
-With `acts_as_chat`, decisions persist on tool-call records. One process can request approval and another can resume execution. Use `chat.pending_approvals` to render each call's name and arguments in your approval UI.
-
-The process that receives a call decides whether it needs approval and records the answer on its tool-call record, so `pending_approvals` only reads the database. Rendering approval cards never builds the chat's tools or connects to its MCP servers. A call whose resolver decides it elsewhere stays in `pending_approvals` until the chat runs again.
-
-The [chat UI generator]({% link _advanced/rails-generators.md %}#approvals-and-attachments) builds this interface for you: an approval card for each pending call, with Approve and Deny buttons that record the decision and continue the conversation in a job. To write your own, follow the same pattern.
-
-After recording a decision, enqueue the job again. Load the chat through its agent class to restore the tools and approval rules:
+A tool can ask the person something itself while it runs. Call `ask` from `execute`:
 
 ```ruby
-class MessagesController < ApplicationController
-  def create
-    chat = Chat.find(params[:chat_id])
-    chat.ask_later(params[:message])
-    CompleteJob.perform_later(chat.id)
+class BookFlight < RubyLLM::Tool
+  description "Books a flight"
+  parameter :destination, description: "The city to fly to"
+
+  def execute(destination:)
+    seat = ask("Window or aisle?", choices: %w[window aisle]) or return "No seat chosen."
+    Flights.book!(destination, seat:)
   end
 end
 
-class ApprovalsController < ApplicationController
+chat = RubyLLM.chat.with_tools(BookFlight)
+chat.ask "Book me a flight to Lisbon"
+
+question = chat.pending_questions.first
+question.message              # => "Window or aisle?"
+question.fields.first.choices # => ["window", "aisle"]
+
+question.answer "window"
+chat.complete
+```
+
+The call pauses on the question. Once the person answers, `complete` runs `execute` again from the top, and this time `ask` returns the answer.
+
+Code before `ask` runs again when the call resumes, so make it safe to repeat: ask first, then act.
+{: .warning }
+
+Without options, `ask` takes free text. With `choices:`, it returns the one the person picked. A block declares several fields, in the same DSL as [`parameters`]({% link _tools/tool-parameters.md %}), and `ask` returns their values by name. `url:` asks the person to visit a page, such as to connect an account, and `ask` returns `true` once they say they did:
+
+```ruby
+name = ask("What name should the booking use?")       # => "Ada Lovelace"
+
+passenger = ask("Who is flying?") do
+  string :name, description: "As on the passport"
+  integer :age, required: false
+end
+passenger                                              # => {name: "Ada Lovelace", age: 36}
+
+ask("Connect your calendar", url: calendar.authorization_url)
+```
+
+`ask` returns `nil` when the person declines with `question.decline`. A call can ask several questions, one after another, and each run asks them in the same order. Outside a chat, nothing can pause the call, so `ask` raises `RubyLLM::InputRequiredError`.
+
+[MCP servers]({% link _tools/mcp.md %}#questions-from-servers) ask their questions the same way, and you answer them the same way.
+
+### Answering Questions
+
+`pending_questions` lists every question the chat waits on, approvals included, in the order the model made the calls. Each one has an `id`, and the chat's `answer`, `decline`, `approve`, and `deny` take the question or its id, which suits a form:
+
+```ruby
+chat.pending_questions.each do |question|
+  # Show the person what they decide on, with question.id in the form:
+  question.message   # => "Window or aisle?", or nil for an approval
+  question.fields    # => the values it asks for, with their choices
+  question.url       # => a page to visit, or nil
+  question.tool_call # => an approval's call, with its name and arguments
+end
+
+# Once they decide, from the form they sent:
+if params[:decline]
+  chat.decline(params[:question_id])                 # denies an approval
+else
+  chat.answer(params[:question_id], params[:answer]) # an approval's form sends no answer
+end
+chat.complete
+```
+
+Answering an approval approves it, and declining one denies it. An approval or a page to visit takes no value, and a blank one counts as none. A question with one field takes its value, and one with several takes them by name, as keywords, a Hash, or the parameters a form sends, of which it keeps only the fields it asks for: `question.answer(name: "Ada", age: 36)`. Strings become the integers, numbers, and booleans the fields ask for, the way a form sends them. An answer the question can't take raises `ArgumentError`: a choice it didn't offer, a field it doesn't ask for, or a required field left out. Answering a question again, or after its call finished, changes nothing, so a form sent twice is safe, and when two people answer one approval at once, the first decision stands. `approve` and `deny` record a decision whatever came before, so use them to change one.
+
+Calls that need no answer still run while the others wait. `chat.ask` and `chat.complete` return the assistant message that holds the waiting calls. If you [drive the loop yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself), stop when the chat is waiting: `chat.step until chat.complete? || chat.waiting?`. `awaiting_person?` tells you a person must act.
+
+Finish the pending calls before you send the chat another message. Otherwise `chat.ask` raises `RubyLLM::PendingToolCallsError`.
+
+### Remote Tool Approval
+
+Providers can also request approval for a tool running on an MCP server. These requests appear in `chat.pending_questions` as approvals, and their tool call is `remote?`. Use `approve`, `deny`, and `complete` as above; RubyLLM sends the decision to the provider instead of executing a Ruby tool. See [MCP servers]({% link _tools/provider-tools.md %}#remote-tool-approval) for a working example.
+
+<div id="approval-in-rails"></div>
+
+### Questions in Rails
+
+With `acts_as_chat`, questions and answers persist on tool-call records. One process can ask, another can record the answer, and a third can carry the call on, even after a deploy. `pending_questions` reads the database only, so rendering questions never builds the chat's tools or connects to its MCP servers.
+
+The [chat UI generator]({% link _advanced/rails-generators.md %}#questions-and-attachments) builds this interface for you: a card for each question, with Approve and Deny buttons for an approval, and the choices, a field, or a form for a question, that records the answer and continues the conversation in a job. To write your own, follow the same pattern. Load the chat through its agent class in the job to restore the tools:
+
+```ruby
+class AnswersController < ApplicationController
   def create
     chat = Chat.find(params[:chat_id])
-    approved = ActiveModel::Type::Boolean.new.cast(params[:approved])
-    approved ? chat.approve(params[:tool_call_id]) : chat.deny(params[:tool_call_id])
+    if params[:decline]
+      chat.decline(params[:question_id])
+    else
+      chat.answer(params[:question_id], params[:answer])
+    end
     CompleteJob.perform_later(chat.id)
   end
 end
@@ -190,17 +257,19 @@ class CompleteJob < ApplicationJob
 end
 ```
 
-A double-submitted approval enqueues two jobs, and that is safe: only one process runs a chat at a time, so the second job finds the chat running or the call answered and returns without running it. Approving a call again changes nothing. Denying a call that has started raises `RubyLLM::ToolCallRunningError`, because the tool is already doing its work:
+`answer` takes the parameters a form sends for a question with several fields, and keeps only the fields the question asks for. Authorize who may answer through your application's permissions, as you would any other action.
+
+A double-submitted answer enqueues two jobs, and that is safe: only one process runs a chat at a time, so the second job finds the chat running or the call answered and returns without running it. Denying a call that has started raises `RubyLLM::ToolCallRunningError`, because the tool is already doing its work:
 
 ```ruby
-class ApprovalsController < ApplicationController
+class AnswersController < ApplicationController
   rescue_from RubyLLM::ToolCallRunningError do
     redirect_back fallback_location: root_path, alert: "That action is already running."
   end
 end
 ```
 
-A tool call record's `running?` is `true` while a process runs it, so a message's approval cards can show progress:
+A tool call record's `running?` is `true` while a process runs it, so a message's tool calls can show progress:
 
 ```erb
 <% message.ruby_llm_tool_calls.each do |tool_call| %>
@@ -208,7 +277,7 @@ A tool call record's `running?` is `true` while a process runs it, so a message'
 <% end %>
 ```
 
-Write approval-gated tools so running them twice is safe. A tool execution can die after its side effect succeeds but before the result is persisted, and the call runs again once its claim expires. See [Agents in Background Jobs]({% link _advanced/durable-agents.md %}#at-least-once-not-exactly-once).
+Write tools that ask or require approval so running them twice is safe. A tool execution can die after its side effect succeeds but before the result is persisted, and the call runs again once its claim expires. See [Agents in Background Jobs]({% link _advanced/durable-agents.md %}#at-least-once-not-exactly-once).
 
 [Agents in Background Jobs]({% link _advanced/durable-agents.md %}) covers jobs, restarts, and cancellation. A call without a result approved with `remember: true` is recorded as `remembered` on its tool call record, so later calls to that tool run without asking in every process.
 
@@ -483,32 +552,6 @@ A task's `status` is `:working` while the work runs on its own, so you check aga
 The call can run again if the process dies before the task is saved, so `execute` keys the request on `tool_call.id` to avoid sending it twice. `data` is what `resume` needs, as a Hash that serializes to JSON. In Rails, the task persists on its tool call, so one process can pause the chat and another can resume it, even after a deploy. To rebuild a task as your own subclass of `RubyLLM::Task`, override `task(state, tool_call:)` on the tool and return `YourTask.load(state, tool_call:)`. A subclass can override `refresh` to check on its work and `cancel` to stop it; cancelling the chat calls `cancel` on every task it waits on and drops the paused calls.
 
 MCP tools pause the same way when a server runs a call as a [task]({% link _tools/mcp.md %}#tasks), and so do [subagents]({% link _getting_started/agents.md %}#subagents) while they wait on a person.
-
-## Asking the User
-
-A tool can ask the user something while it runs, the way an MCP server asks for input. `request_input` takes the question and the fields to fill, as JSON Schema properties (`required: true` on the ones the user must fill), or `url:` for a page to visit:
-
-```ruby
-class AskTeam < RubyLLM::Tool
-  description "Ask the team something you can't answer from the docs"
-
-  parameters do
-    string :question, description: "Written for a colleague"
-  end
-
-  def execute(question:)
-    answer = request_input(question, answer: { type: "string", title: "Answer", required: true })
-    answer.accepted? ? { answer: answer[:answer] } : { error: "Nobody answered" }
-  end
-end
-```
-
-In a chat, the call pauses on the question as on a server's: the chat is `awaiting_input?`, `pending_inputs` lists it, and `answer` or `decline` settles it before `complete` resumes.
-
-Resuming runs `execute` again from the start, and this time `request_input` returns the answer, so code before `request_input` runs twice. Ask first, then do the work.
-{: .warning }
-
-A call can ask several questions, one after another. Outside a chat, an unanswered `request_input` raises `RubyLLM::InputRequiredError`. `RubyLLM::MCP::InputRequiredError` is a subclass, so one `rescue` covers both.
 
 ## Next Steps
 

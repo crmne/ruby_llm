@@ -335,24 +335,13 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
     RubyLLM::ActiveRecord::ToolCall.reset_column_information
   end
 
-  it 'creates the app directories the application is missing, keeping existing ones' do
-    FileUtils.mkdir_p(File.join(destination, 'app/skills/invoices'))
-    generator = described_class.new([], {}, destination_root: destination, shell: Thor::Shell::Basic.new)
-
-    generator.create_app_directories
-
-    %w[agents tools schemas prompts skills sandboxes mcp evals judges].each do |name|
-      expect(File.directory?(File.join(destination, 'app', name))).to be(true)
-    end
-    expect(File.directory?(File.join(destination, 'app/skills/invoices'))).to be(true)
-  end
-
-  it 'adds an ApplicationAgent for the mapped chat model' do
+  it 'adds an ApplicationAgent for the mapped chat model, and no empty folders' do
     described_class.new(['chat:Conversation'], {}, destination_root: destination, shell: Thor::Shell::Basic.new)
-                   .create_app_directories
+                   .create_application_agent_file
 
     expect(File.read(File.join(destination, 'app/agents/application_agent.rb')))
       .to eq("class ApplicationAgent < RubyLLM::Agent\n  chat_class Conversation\nend\n")
+    expect(Dir.children(File.join(destination, 'app'))).to eq(['agents'])
   end
 
   it 'removes the broadcasting and attachments 2.1 wrote into the message model' do
@@ -416,7 +405,7 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
 
     expect(File.read(File.join(destination, 'app/models/message.rb'))).to eq(model)
     expect(File.read(File.join(destination, 'config/initializers/ruby_llm.rb'))).not_to include('broadcast_messages')
-    expect(shell).to have_received(:say).with(/ruby_llm:chat_ui/, anything)
+    expect(shell).not_to have_received(:say)
   end
 
   it 'keeps the broadcasting a 2.1 chat UI page still subscribes to' do
@@ -469,12 +458,22 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
     expect(generator).to have_received(:rails_command).with('active_storage:install')
   end
 
+  it 'ends with the one command to run next, and no guide' do
+    shell = Thor::Shell::Basic.new
+    allow(shell).to receive(:say)
+
+    described_class.new([], {}, destination_root: destination, shell:).show_next_step
+
+    expect(shell).to have_received(:say).once.with("\nRun bin/rails db:migrate")
+  end
+
   it 'leaves an existing ApplicationAgent alone' do
     path = File.join(destination, 'app/agents/application_agent.rb')
     FileUtils.mkdir_p(File.dirname(path))
     File.write(path, "class ApplicationAgent < RubyLLM::Agent\n  chat_class Chat\n  model 'gpt-5.6-luna'\nend\n")
 
-    described_class.new([], {}, destination_root: destination, shell: Thor::Shell::Basic.new).create_app_directories
+    described_class.new([], {}, destination_root: destination, shell: Thor::Shell::Basic.new)
+                   .create_application_agent_file
 
     expect(File.read(path)).to include("model 'gpt-5.6-luna'")
   end

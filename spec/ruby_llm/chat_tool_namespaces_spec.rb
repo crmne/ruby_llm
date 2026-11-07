@@ -177,8 +177,7 @@ RSpec.describe RubyLLM::Chat do
     paused = local_tool('left_click', namespace: 'computer')
     log = executed
     paused.define_singleton_method(:execute) do
-      answer = request_input('Unlock the display?', unlock: { type: 'boolean', required: true })
-      log << :click if answer.accepted?
+      log << :click if ask('Unlock the display?', choices: %w[yes no]) == 'yes'
       'OK'
     end
     later = local_tool('screenshot', namespace: 'computer') { executed << :screenshot }
@@ -194,7 +193,8 @@ RSpec.describe RubyLLM::Chat do
     expect(executed).to eq(%i[lookup publish])
     expect(chat).to be_awaiting_input
 
-    chat.answer(chat.pending_inputs.first, unlock: true).complete
+    chat.pending_questions.sole.answer('yes')
+    chat.complete
     expect(executed).to eq(%i[lookup publish click screenshot])
     expect(requests.size).to eq(2)
   end

@@ -103,8 +103,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       chat.ask_later('Hello')
       seen = nil
       allow(chat.to_llm.provider).to receive(:complete) do
-        chat.cancel
-        seen = chat.to_llm.cancelled?
+        seen ||= chat.cancel.to_llm.cancelled?
         RubyLLM::Message.new(role: :assistant, content: 'Done')
       end
 
@@ -1213,10 +1212,11 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
         raise_if_prompt_attachments! run= run_around_join take_queued_messages tool_call_state= tool_prefs
         add_usage_entry usage_entries usage_entries= agent_class agent_class= running_agent
       ]
+      left_to_the_application = %i[owner]
 
       missing_methods = RubyLLM::Chat.public_instance_methods(false) - Chat.public_instance_methods
 
-      expect(missing_methods).to match_array(integration_methods)
+      expect(missing_methods).to match_array(integration_methods + left_to_the_application)
     end
   end
 

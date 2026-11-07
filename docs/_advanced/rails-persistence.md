@@ -176,10 +176,13 @@ An entry links to the message it produced when there is one. A failed retry or a
 
 Token buckets and cost components are numeric columns in `ruby_llm_usages`; cost details are not stored as JSON. This freezes the price calculated when an attempt finishes and keeps the ledger suitable for database aggregation. The 2.0 runtime reads this ledger only; the 2.0 upgrade moves 1.16 message tokens into it before removing the old columns.
 
-Attribute each chat attempt to a record with `with_owner`. Its usage rows keep both the chat and owner associations. One-shot operations write to the same ledger, with no chat, and accept `owner:`, or take the owner of a surrounding `RubyLLM.with_owner` block. Query an owner's spend through its own association:
+Name the association that holds a chat's owner, and every attempt the chat makes is attributed to it. Its usage rows keep both the chat and owner associations. One-shot operations write to the same ledger, with no chat, and accept `owner:`, or take the owner of a surrounding `RubyLLM.with_owner` block. Query an owner's spend through its own association:
 
 ```ruby
-chat.with_owner(current_user).ask "Summarize the latest reviews."
+class Chat < ApplicationRecord
+  belongs_to :user
+  acts_as_chat owner: :user
+end
 
 RubyLLM.with_owner(current_user) do
   RubyLLM.transcribe("memo.m4a")
@@ -229,32 +232,53 @@ The tool result itself is an application-owned message with the `tool` role. The
 
 ## Queued Messages
 
-A message sent while a job runs the chat can't join the transcript yet: the reply is mid-stream, or a tool round still owes its results. `queue` stores it in `ruby_llm_queued_messages` instead, and the process that runs the chat takes it at its next step. The [Queueing Messages]({% link _advanced/agentic-workflows.md %}#queueing-messages) guide explains when messages join; on a persisted chat the rules are the same, across processes.
+A message sent while a job runs the chat can't join the transcript yet: the reply is mid-stream, or a tool round still owes its results. Whenever a run holds the chat, `ask_later` stores the message in `ruby_llm_queued_messages` instead, and the process that runs the chat takes it at its next step. The [Queueing Messages]({% link _advanced/agentic-workflows.md %}#queueing-messages) guide explains when messages join; on a persisted chat the rules are the same, across processes. So a controller saves every message the same way, and enqueues the job that answers it:
 
 ```ruby
 class MessagesController < ApplicationController
   def create
     @chat = Chat.find(params[:chat_id])
-    @chat.queue(params[:content], sender: Current.user)
-    ChatResponseJob.perform_later(@chat.id) unless @chat.running?
+    @chat.ask_later(params[:content])
+    ChatResponseJob.perform_later(@chat.id)
 
     redirect_to @chat
   end
 end
 ```
 
-`queue` returns a `RubyLLM::ActiveRecord::QueuedMessage` record with `content`, `attachments`, `sender`, `queued_at`, and `steer?`. `sender` is a polymorphic association to any record. RubyLLM stores it and hands it back, without interpreting it. Attachments are stored with Active Storage and move to the message the queued message becomes, without uploading them again.
-
-Queue first and check `running?` after. A run that ends after your check still takes a steering message: before it gives up the chat, the run looks for messages that arrived and starts another loop for them. A job that finishes its turn with messages queued with `steer: false` should enqueue itself again, since they wait for the next `complete`:
+A run that ends looks for messages that arrived once it has let the chat go, and starts another loop for them, so a message never waits on a run that was about to end. A job that finds the chat running returns at once. Have it try again later for the case where the run holding the chat died, and its claim has to expire first:
 
 ```ruby
 class ChatResponseJob < ApplicationJob
   def perform(chat_id)
     chat = Chat.find(chat_id)
     chat.complete(&:broadcast)
-    self.class.perform_later(chat_id) if chat.queued_messages.any? && !chat.waiting?
+    retry_job wait: 1.minute if chat.running?
   end
 end
+```
+
+`queue` puts a message in the queue whether or not a run holds the chat, and takes options `ask_later` doesn't. A message queued with `steer: false` waits for the turn to end, and `sender` records who sent it:
+
+```ruby
+@chat.queue(params[:content], steer: false, sender: Current.user)
+```
+
+`queue` returns a `RubyLLM::ActiveRecord::QueuedMessage` record with `content`, `attachments`, `sender`, `queued_at`, and `steer?`. `sender` is a polymorphic association to any record. Give your message model a `sender` association, and the message a queued one becomes is saved with its sender:
+
+```ruby
+class Message < ApplicationRecord
+  acts_as_message
+  belongs_to :sender, class_name: "User", optional: true
+end
+```
+
+A sender the association can't hold, a record of another class or one whose class was renamed since it was queued, is dropped: the message joins without it. Make the association polymorphic to keep senders of any class.
+
+Attachments are stored with Active Storage and move to the message the queued message becomes, without uploading them again. Messages queued with `steer: false` wait for the next `complete`, so a job that finishes its turn with some waiting should enqueue itself again:
+
+```ruby
+self.class.perform_later(chat_id) if chat.queued_messages.any? && !chat.waiting?
 ```
 
 `queued_messages` returns the waiting records, oldest first, ready to render. `withdraw` takes one back and deletes its attachments:
@@ -270,7 +294,7 @@ chat.queued_messages.find(params[:id]).withdraw # => true, or false once the cha
 
 ```ruby
 class ChatAgent < ApplicationAgent
-  around_join { |queued, join| join.call(sender: queued.sender) }
+  around_join { |queued, join| join.call(steered: queued.steer?) }
 end
 
 ChatAgent.find(chat_id).complete(&:broadcast)
@@ -278,7 +302,7 @@ ChatAgent.find(chat_id).complete(&:broadcast)
 
 Without an agent, call `around_join` on the chat record in your job, before `complete`.
 
-Attributes from nested `around_join` blocks merge, inner ones last. When the block raises, the transaction rolls back: the message is not created and the row stays queued. When it never calls `join`, the row is deleted, its attachments with it. `join_queued_messages` returns the message records.
+Attributes from nested `around_join` blocks merge, inner ones last, and win over the sender RubyLLM fills in. When the block raises, the transaction rolls back: the message is not created and the row stays queued. When it never calls `join`, the row is deleted, its attachments with it. `join_queued_messages` returns the message records.
 
 ## Batches
 
@@ -402,7 +426,7 @@ You can also pass stored attachments that the current user is authorized to acce
 chat.ask "Compare these", with: project.documents
 ```
 
-Stored files stay in Active Storage until a request needs their bytes. Loading a chat, checking `awaiting_approval?`, or listing `pending_approvals` downloads nothing, and each file downloads once, when a request first sends it. RubyLLM takes the file's type from the blob's content type.
+Stored files stay in Active Storage until a request needs their bytes. Loading a chat, checking `awaiting_person?`, or listing `pending_questions` downloads nothing, and each file downloads once, when a request first sends it. RubyLLM takes the file's type from the blob's content type.
 
 Files too large to send inline are [uploaded to the provider]({% link _core_features/files.md %}#large-chat-attachments), and RubyLLM records each upload of a blob in `ruby_llm_provider_files`. A chat loaded later, in any process, sends the provider's copy instead of downloading and uploading the file again. The first time a process reuses a copy, RubyLLM asks the provider whether it still has it, and uploads the file again when it is missing or expired. Uploads belong to the account that made them, so a chat that switches to another API key, project, or storage bucket uploads its own copy. Purging a blob deletes its records.
 

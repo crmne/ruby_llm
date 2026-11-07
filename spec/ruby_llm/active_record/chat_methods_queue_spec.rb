@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'active_support/testing/time_helpers'
 
 RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   include_context 'with configured RubyLLM'
+  include ActiveSupport::Testing::TimeHelpers
 
   let(:image_path) { File.expand_path('../../fixtures/ruby.png', __dir__) }
   let(:requests) { [] }
@@ -20,8 +22,23 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     end
   end
 
-  def job_for(chat)
-    Chat.find(chat.id).with_tools(echo_tool).tap do |job|
+  # An echo tool that sends +message+ to the chat while it runs, as a
+  # person does from the chat's page.
+  def sending_tool(message)
+    chat_id = chat.id
+    Class.new(RubyLLM::Tool) do
+      description 'Echoes the given text'
+      parameter :text, description: 'Text to echo'
+      define_method(:name) { 'echo' }
+      define_method(:execute) do |text:|
+        Chat.find(chat_id).ask_later(message)
+        text
+      end
+    end
+  end
+
+  def job_for(chat, tool: echo_tool)
+    Chat.find(chat.id).with_tools(tool).tap do |job|
       allow(job.to_llm.provider).to receive(:complete) do |messages, **|
         requests << messages.map { |message| [message.role, message.content.to_s] }
         during_request.shift&.call
@@ -96,6 +113,76 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
                                     [:assistant, 'Done']])
     expect(chat.queued_messages.map(&:content)).to eq(['Wait for the turn'])
     expect(job).to be_complete
+  end
+
+  describe 'a message sent with ask_later while a run holds the chat' do
+    it 'waits in the queue mid-reply, and the same run answers it next' do
+      job = job_for(chat)
+      job.ask_later('Hello')
+      during = []
+      during_request << lambda {
+        elsewhere(chat).ask_later('And Q4')
+        during << [transcript(chat), chat.queued_messages.map(&:content)]
+      }
+
+      job.complete
+
+      expect(during).to eq([[[[:user, 'Hello']], ['And Q4']]])
+      expect(transcript(chat)).to eq([[:user, 'Hello'], [:assistant, 'Done'], [:user, 'And Q4'],
+                                      [:assistant, 'Done']])
+      expect(chat.queued_messages).to be_empty
+    end
+
+    it 'joins after the tool round it was sent during' do
+      responses.push(tool_call, answer('Echoed'))
+      job = job_for(chat, tool: sending_tool('Use the EU file'))
+      job.ask_later('Echo hello')
+
+      job.complete
+
+      expect(requests.last).to eq([[:user, 'Echo hello'], [:assistant, ''], [:tool, 'hello'],
+                                   [:user, 'Use the EU file']])
+      expect(transcript(chat).last).to eq([:assistant, 'Echoed'])
+    end
+
+    it 'is answered by the run when it arrives as the run lets the chat go, while a job that found the chat ' \
+       'running leaves it' do
+      job = job_for(chat)
+      job.ask_later('Hello')
+      bounced = nil
+      allow(job).to receive(:release_run_claim).and_wrap_original do |release, *args|
+        if bounced.nil?
+          elsewhere(chat).ask_later('Sent as the reply ends')
+          other = job_for(chat)
+          other.complete
+          bounced = other.running?
+        end
+        release.call(*args)
+      end
+
+      job.complete
+
+      expect(bounced).to be(true)
+      expect(requests.size).to eq(2)
+      expect(transcript(chat)).to eq([[:user, 'Hello'], [:assistant, 'Done'], [:user, 'Sent as the reply ends'],
+                                      [:assistant, 'Done']])
+    end
+
+    it 'is answered once the claim of a run that died expires' do
+      chat.ask_later('Hello')
+      Chat.where(id: chat.id).update_all(claim_token: 'died', claimed_until: 1.minute.from_now)
+      elsewhere(chat).ask_later('Are you there?')
+      bounced = job_for(chat)
+
+      bounced.complete
+
+      expect(bounced).to be_running
+      expect(requests).to be_empty
+      travel 1.minute + 1.second do
+        job_for(chat).complete
+      end
+      expect(transcript(chat)).to eq([[:user, 'Hello'], [:user, 'Are you there?'], [:assistant, 'Done']])
+    end
   end
 
   it 'keeps a waiting message queued while a job answers the question ask_later staged' do
@@ -316,7 +403,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(other.queued_messages.to_a).to eq([queued])
   end
 
-  it 'keeps queued messages when the chat is cancelled' do
+  it 'goes on with what waits in the queue after a stop ends the run, as the next complete would' do
     job = job_for(chat)
     job.ask_later('Hello')
     during_request << lambda {
@@ -324,8 +411,35 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       job.cancel
     }
 
+    job.complete
+
+    expect(requests).to eq([[[:user, 'Hello']], [[:user, 'Hello'], [:user, 'Steer']]])
+    expect(transcript(chat)).to eq([[:user, 'Hello'], [:user, 'Steer'], [:assistant, 'Done']])
+    expect(chat.queued_messages).to be_empty
+  end
+
+  it 'answers a message sent right after a stop, while the stopped run still held the chat' do
+    stub_const("#{described_class}::CANCELLATION_POLL_INTERVAL", 0.0)
+    job = job_for(chat)
+    job.ask_later('Hello')
+    during_request << lambda {
+      elsewhere(chat).cancel
+      elsewhere(chat).ask_later('One more thing')
+    }
+
+    job.complete
+
+    expect(requests.last.last).to eq([:user, 'One more thing'])
+    expect(chat.queued_messages).to be_empty
+  end
+
+  it 'raises on a stop with nothing waiting' do
+    job = job_for(chat)
+    job.ask_later('Hello')
+    during_request << -> { job.cancel }
+
     expect { job.complete }.to raise_error(RubyLLM::CancelledError)
-    expect(chat.queued_messages.map(&:content)).to eq(['Steer'])
+    expect(requests.size).to eq(1)
   end
 
   it 'destroys queued messages with their chat' do

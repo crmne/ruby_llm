@@ -120,6 +120,15 @@ RSpec.describe RubyLLM::Agent do
       expect { Class.new(described_class) { thinking effort: nil } }.to raise_error(ArgumentError)
     end
 
+    it 'rejects a block where a declaration would ignore it' do
+      expect { Class.new(described_class) { file_store { 'tmp/chats' } } }
+        .to raise_error(ArgumentError, /file_store takes no block/)
+      expect { Class.new(described_class) { code_execution { { languages: [:ruby] } } } }
+        .to raise_error(ArgumentError, /code_execution takes no block/)
+      expect { Class.new(described_class) { skills { :invoices } } }
+        .to raise_error(ArgumentError, /skills takes no block/)
+    end
+
     it 'does not carry verb aliases' do
       agent = Class.new(described_class)
 

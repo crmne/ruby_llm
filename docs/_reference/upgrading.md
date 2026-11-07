@@ -17,8 +17,9 @@ After reading this guide, you will know:
 
 * How RubyLLM upgrades move from one release to the next.
 * How to upgrade a 2.1 application and its Rails schema to 2.2.
-* How persisted chats now run in one process at a time.
+* How persisted chats now run in one process at a time, and where a message sent during a reply waits.
 * What changes for a crashed job, a denial, pending approvals, an MCP input error, a stdio server's environment, a dropped MCP tool call, a write over a folder, a document URL, and a deploy that mixes versions.
+* How approvals and questions became one list, and what changes for answers to a server's questions.
 * What changes for agent `rescue_from` handlers and streamed transcription chunks.
 * How `tool_calls` reads now that it is a collection of calls.
 * Which errors failed Responses requests raise, and why malformed tool arguments no longer do.
@@ -68,11 +69,11 @@ bin/rails db:migrate
 
 If your chat model is not `Chat`, name it the way you did for the install generator, for example `bin/rails generate ruby_llm:upgrade chat:Conversation`.
 
-It adds `claim_token` and `claimed_until` columns to your chats table and a `claimed_until` column to `ruby_llm_tool_calls`. They record which process runs a chat and its tool calls. It also adds a nullable `provider_call_id` column to tool calls so RubyLLM can distinguish invocations when a provider reuses an ID, a nullable `phase` column to your messages table, which keeps the label OpenAI's Responses API gives each answer so later requests send it back, a nullable `continuation` text column to your messages table, which keeps the token an unfinished [long response]({% link _getting_started/chat.md %}#long-responses) resumes from, and creates the `ruby_llm_queued_messages` table, which holds [queued messages]({% link _advanced/rails-persistence.md %}#queued-messages) until a chat takes them, and the `ruby_llm_chat_files` table, which holds the [files]({% link _core_features/file-stores.md %}#files-in-rails) of chats that use `with_file_store`. It adds nullable `workflow_id`, `workflow_name`, `workflow_step_id`, and `workflow_step_name` columns to `ruby_llm_usages`, which record the workflow each attempt ran in (see [Usage Rows Record Their Workflow](#usage-rows-record-their-workflow)). It also replaces the check constraint the install generator put on `ruby_llm_usages.operation`, so the table accepts the `code_execution` rows [code runs write](#code-runs-write-usage-rows). On MySQL, it widens the `content`, `thinking_text`, and `thinking_signature` columns of your messages table and the `thought_signature` column of `ruby_llm_tool_calls` to long text, so replies over 64 KB fit, and creates queued message `content` as long text. MySQL rebuilds each of those two tables once to change the column types, which blocks writes to it while it runs, so run the migration when a large messages table can pause. Other databases need no change. The migration changes no existing data. The generator also creates any of RubyLLM's conventional directories your application lacks, such as `app/skills` and `app/sandboxes`, and an `app/agents/application_agent.rb` that points at your chat model, unless you already have one. New agents from `ruby_llm:agent` inherit from it.
+It adds `claim_token` and `claimed_until` columns to your chats table and a `claimed_until` column to `ruby_llm_tool_calls`. They record which process runs a chat and its tool calls. It also adds a nullable `provider_call_id` column to tool calls so RubyLLM can distinguish invocations when a provider reuses an ID, a nullable `phase` column to your messages table, which keeps the label OpenAI's Responses API gives each answer so later requests send it back, a nullable `continuation` text column to your messages table, which keeps the token an unfinished [long response]({% link _getting_started/chat.md %}#long-responses) resumes from, and creates the `ruby_llm_queued_messages` table, which holds [queued messages]({% link _advanced/rails-persistence.md %}#queued-messages) until a chat takes them, and the `ruby_llm_chat_files` table, which holds the [files]({% link _core_features/file-stores.md %}#files-in-rails) of chats that use `with_file_store`. It adds nullable `workflow_id`, `workflow_name`, `workflow_step_id`, and `workflow_step_name` columns to `ruby_llm_usages`, which record the workflow each attempt ran in (see [Usage Rows Record Their Workflow](#usage-rows-record-their-workflow)). It also replaces the check constraint the install generator put on `ruby_llm_usages.operation`, so the table accepts the `code_execution` rows [code runs write](#code-runs-write-usage-rows). On MySQL, it widens the `content`, `thinking_text`, and `thinking_signature` columns of your messages table and the `thought_signature` column of `ruby_llm_tool_calls` to long text, so replies over 64 KB fit, and creates queued message `content` as long text. MySQL rebuilds each of those two tables once to change the column types, which blocks writes to it while it runs, so run the migration when a large messages table can pause. Other databases need no change. The migration changes no existing data. The generator also creates an `app/agents/application_agent.rb` that points at your chat model, unless you already have one. New agents from `ruby_llm:agent` inherit from it.
 
 The generator also removes the broadcasting code and the `has_many_attached :attachments` line that `ruby_llm:chat_ui` wrote into your message model, because `acts_as_message` now provides both, and turns on `config.broadcast_messages` when it removes that broadcasting code. It installs Active Storage if your application lacks it. Broadcasting code you wrote yourself stays untouched.
 
-A chat UI generated by 2.1 still uses that broadcasting code: its job calls `broadcast_append_chunk` and its page subscribes to the stream the model names. While your application has either, the generator leaves the message model and `config.broadcast_messages` alone, and the chat UI keeps working as it did. Rerun `ruby_llm:chat_ui` to move the job, the views and the model to RubyLLM's broadcasting together. The 2.2 chat UI also queues messages sent while a reply runs instead of refusing them. It adds a `reply_error` column to your chats table with a migration, so run `bin/rails db:migrate` after it.
+A chat UI generated by 2.1 still uses that broadcasting code: its job calls `broadcast_append_chunk` and its page subscribes to the stream the model names. While your application has either, the generator leaves the message model and `config.broadcast_messages` alone, and the chat UI keeps working as it did. Rerun `ruby_llm:chat_ui` to move the job, the views and the model to RubyLLM's broadcasting together. The 2.2 chat UI also queues messages sent while a reply runs instead of refusing them. Its view helpers ship with RubyLLM, so rerunning the generator no longer writes `app/helpers/messages_helper.rb`; delete the one 2.1 wrote unless you changed it, since a helper you keep there takes the place of RubyLLM's. It adds a `reply_error` column to your chats table with a migration, so run `bin/rails db:migrate` after it.
 
 Run the migration before deploying 2.2.
 
@@ -114,7 +115,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-With it on, and turbo-rails and Action Cable loaded, `acts_as_message` broadcasts a chat's messages to the chat record's stream, `turbo_stream_from @chat`. It appends an empty assistant reply when it is created, replaces a message when it is saved, removes it when it is destroyed, and refreshes the chat's page after every change and at the end of each run. Streamed chunks know their record, so a job streams with `chat.complete(&:broadcast)`. See [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}).
+With it on, and turbo-rails and Action Cable loaded, `acts_as_message` broadcasts a chat's messages to the chat record's stream, `turbo_stream_from @chat`. It appends an empty assistant reply when it is created, replaces a message when it is saved, removes it when it is destroyed, and refreshes the chat's page after every change and at the end of each run. A refresh carries no request id, so it reaches the page whose request made the change too. Streamed chunks know their record, so a job streams with `chat.complete(&:broadcast)`. See [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}).
 
 Broadcasting renders each message with its partial, chosen by `to_partial_path`, so an application that turns it on needs `messages/_user`, `messages/_assistant`, `messages/_tool`, and `messages/_tool_calls`. A model's `broadcasts:` option overrides the configuration.
 
@@ -186,6 +187,29 @@ In 2.1, two processes that completed the same persisted chat at the same time co
 * `chat.running?` and a tool call record's `running?` are `true`.
 
 The process that holds the claim continues with approvals and questions recorded while it ran. See [One Process at a Time]({% link _advanced/durable-agents.md %}#one-process-at-a-time).
+
+## A Message Sent During a Reply Waits in the Queue
+
+In 2.1, `ask_later` on a persisted chat saved the message even while another process ran the chat, so a message saved mid-reply could land in the transcript ahead of the reply it interrupted, and one sent during a tool round raised `RubyLLM::PendingToolCallsError`. In 2.2, while a run holds the chat, `ask_later` [queues]({% link _advanced/rails-persistence.md %}#queued-messages) the message instead, and that run answers it before it lets the chat go. A controller calls `ask_later` and enqueues its job either way:
+
+```ruby
+@chat.ask_later(params[:content])
+ChatResponseJob.perform_later(@chat.id)
+```
+
+The job finds the chat running and returns at once. Have it try again a minute later, for a run that died and whose claim has to expire first:
+
+```ruby
+class ChatResponseJob < ApplicationJob
+  def perform(chat_id)
+    chat = ChatAgent.find(chat_id)
+    chat.complete(&:broadcast)
+    retry_job wait: 1.minute if chat.running?
+  end
+end
+```
+
+When a stop ends a run while messages wait in the queue, `complete` goes on with them before it returns, and raises `RubyLLM::CancelledError` only when nothing waits. If your job rescued the error to enqueue itself for the queue, it no longer needs to.
 
 ## Cancel With Nothing to Stop Does Nothing
 
@@ -462,7 +486,7 @@ A `ResearchJob` that stopped early is `complete?` and `incomplete?` but not `suc
 
 ## Rescue Input Errors as Input Errors
 
-Tools can now [ask the user]({% link _tools/tool-execution.md %}#asking-the-user) something, the way MCP servers do, so `RubyLLM::MCP::InputRequiredError` now inherits from the new `RubyLLM::InputRequiredError` instead of `RubyLLM::MCP::Error`. A `rescue RubyLLM::MCP::Error` no longer catches it. Rescue the general error, which also catches a tool's own unanswered questions:
+Tools can now [ask a person]({% link _tools/tool-execution.md %}#asking-from-a-tool) something, the way MCP servers do, so `RubyLLM::MCP::InputRequiredError` now inherits from the new `RubyLLM::InputRequiredError` instead of `RubyLLM::MCP::Error`. A `rescue RubyLLM::MCP::Error` no longer catches it. Rescue the general error, which also catches a tool's own unanswered questions:
 
 ```ruby
 begin
@@ -472,7 +496,33 @@ rescue RubyLLM::InputRequiredError => e
 end
 ```
 
-`RubyLLM::MCP::InputRequest` is now `RubyLLM::InputRequest`, the same class under its old name.
+`RubyLLM::MCP::InputRequest` is now `RubyLLM::Question`, the same class under its old name. See [Approvals and Questions Are One List](#approvals-and-questions-are-one-list).
+
+## Approvals and Questions Are One List
+
+A tool call that waits on a person now waits on a `RubyLLM::Question`: the approval of a tool declared with `requires_approval`, a question the tool asks with the new [`ask`]({% link _tools/tool-execution.md %}#asking-from-a-tool), or a question an MCP server asks. `chat.pending_questions` lists them all, in the order the model made the calls, and each is answered the same way:
+
+```ruby
+chat.pending_questions.each do |question|
+  question.approval?  # => true for a call that waits on approval
+  question.message    # => "Which environment?", or nil for an approval
+  question.fields     # => what the question asks for
+end
+
+# Once the person decides, record it by the question's id, as a form sends it:
+chat.answer(params[:question_id], params[:answer])  # approves an approval
+# or: chat.decline(params[:question_id])            # denies an approval
+chat.complete
+```
+
+Code written for 2.1 keeps working. `approve`, `deny`, `pending_approvals`, `awaiting_approval?`, `pending_inputs`, `awaiting_input?`, and `answer` and `decline` with keyword values take the same arguments and return the same values. Four things change:
+
+* `answer` checks the answer against the question. A field the question doesn't ask for, a choice it doesn't offer, a value of the wrong type, or a required field left out raises `ArgumentError`, where 2.1 sent the answer to the server as given. A `before_input_request` callback that answers with an extra field now raises from the call, so remove the field. Strings become the integers, numbers, and booleans the fields ask for, the way a form sends them.
+* `answer` and `decline` on a chat also take a question's `id`, and a question that was already answered, or whose call has finished, stays as it is. In 2.1, answering a request whose call had finished raised `ArgumentError`.
+* `RubyLLM::PendingToolCallsError` tells you to answer the calls' questions instead of naming approvals and inputs. Code that matched its message should rescue the class instead.
+* A server that asks the user to visit anything but a web page, an `http` or `https` address, gets a decline before the question reaches the chat or your `before_input_request` callbacks, so a link your app shows for a question can't run script in it. 2.1 passed any address through.
+
+A chat UI generated by 2.1 keeps working: its `ApprovalsController` approves and denies by tool call id, and its cards list `pending_approvals`. It has no card for a question a tool or an MCP server asks, so such a chat waits until something answers it. Rerun `bin/rails generate ruby_llm:chat_ui` for one card for every question. It writes `AnswersController`, `questions/_question.html.erb`, `answers/create.turbo_stream.erb`, and `chats/_questions.html.erb`, adds `resources :answers` to your routes, and shows the questions where the approvals were. It leaves `ApprovalsController`, its views, and its route in place: delete them once nothing posts to them.
 
 ## Providers Fetch Document URLs
 
@@ -504,7 +554,7 @@ end
 
 ## Usage Owners Use `with_owner`
 
-`RubyLLM.with_usage_owner` is now `RubyLLM.with_owner`, the same name a chat uses for its own owner. `with_usage_owner` still works and warns through `RubyLLM.deprecator`. RubyLLM 3.0 removes it. A chat that should always bill the same record can take it directly, and wins over the block:
+`RubyLLM.with_usage_owner` is now `RubyLLM.with_owner`, the same name a chat uses for its own owner. `with_usage_owner` still works and warns through `RubyLLM.deprecator`. RubyLLM 3.0 removes it. `owner:` on one-shot operations does not change. A chat that should always bill the same record can take it directly, and wins over the block:
 
 ```ruby
 # Before
@@ -513,6 +563,17 @@ RubyLLM.with_usage_owner(current_user) { chat.ask "Summarize this thread" }
 # After
 chat.with_owner(current_user).ask "Summarize this thread"
 ```
+
+In Rails, name the association that holds the owner instead, so every process that runs the chat bills it:
+
+```ruby
+class Chat < ApplicationRecord
+  belongs_to :user
+  acts_as_chat owner: :user
+end
+```
+
+RubyLLM defines no `owner` method on your record, so an `owner` association of your own keeps working. Name it to bill it: `acts_as_chat owner: :owner`.
 
 ## Read a Conversation Through `messages`
 
@@ -556,10 +617,20 @@ If your message association has no inverse, call `chat.reload` after marking the
 
 ## Rename Chat Columns Named After New Methods
 
-`acts_as_chat` records gain `code_execution`, `skills`, `file_store`, `owner`, `with_code_execution`, `with_skills`, `with_file_store`, `with_owner`, `awaiting_person?`, `queue`, `queued_messages`, `withdraw`, `join_queued_messages`, `around_join`, `after_file_write`, and the `ruby_llm_chat_files` association in 2.2. A column of your own with one of those names would be hidden behind RubyLLM's method, so reading it would return RubyLLM's setting, usually `nil`, instead of your value. In 2.2, `acts_as_chat` raises `ArgumentError` naming such a column, and any column a RubyLLM reader hides, such as `cost`, `temperature`, or `tools`, when the model loads its columns. Rename such a column before you upgrade, for example a `code_execution` toggle to `runs_code`:
+`acts_as_chat` records gain `code_execution`, `skills`, `file_store`, `with_code_execution`, `with_skills`, `with_file_store`, `with_owner`, `awaiting_person?`, `queue`, `queued_messages`, `withdraw`, `join_queued_messages`, `around_join`, `after_file_write`, and the `ruby_llm_chat_files` association in 2.2. A column of your own with one of those names would be hidden behind RubyLLM's method, so reading it would return RubyLLM's setting, usually `nil`, instead of your value. In 2.2, `acts_as_chat` raises `ArgumentError` naming such a column, and any column a RubyLLM reader hides, such as `cost`, `temperature`, or `tools`, when the model loads its columns. Rename such a column before you upgrade, for example a `code_execution` toggle to `runs_code`:
 
 ```ruby
 rename_column :chats, :code_execution, :runs_code
+```
+
+An association named after one of those readers was hidden the same way, so `acts_as_chat` raises for it too. Rename it, keeping its table and columns:
+
+```ruby
+# Before
+has_many :tools
+
+# After
+has_many :chat_tools, class_name: "Tool", foreign_key: :chat_id
 ```
 
 ## Rename Protocol Method Overrides

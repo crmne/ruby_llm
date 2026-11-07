@@ -12,6 +12,7 @@ module RubyLLM
         @decisions = {}
         @remembered = []
         @spent_escalations = []
+        @lock = Mutex.new
       end
 
       def initialize_copy(source)
@@ -28,6 +29,23 @@ module RubyLLM
 
       def record_input(tool_call, input)
         @inputs[tool_call.id] = input
+      end
+
+      # Replaces the input +tool_call+ is paused on with what the block
+      # returns for it, while the call is still paused. Answers recorded
+      # from several threads at once take turns, each on the input the one
+      # before left.
+      def settle(tool_call)
+        exclusively do
+          input = @inputs[tool_call.id]
+          @inputs[tool_call.id] = yield(input) if input
+        end
+      end
+
+      # Runs the block while no other thread settles or decides through
+      # this state, so a check and the write it leads to stay together.
+      def exclusively(&)
+        @lock.synchronize(&)
       end
 
       def record_decision(id, decision)

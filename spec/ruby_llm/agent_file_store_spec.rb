@@ -22,10 +22,8 @@ RSpec.describe RubyLLM::Agent do
     expect(first.tools.keys).to include(:read_file, :write_file)
   end
 
-  it 'ignores owner on a plain chat, whose store is its own' do
-    agent = agent_with { file_store owner: -> { raise 'a plain chat has no owner' } }
-
-    expect(agent.chat.file_store).to be_a(RubyLLM::FileStore::Memory)
+  it 'takes no owner, which the chat decides' do
+    expect { agent_with { file_store owner: -> { chat } } }.to raise_error(ArgumentError, /owner/)
   end
 
   it "passes options, and builds the store with a lambda in the agent's scope" do

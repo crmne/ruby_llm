@@ -13,6 +13,16 @@ class <%= chat_controller_class_name.delete_suffix("Controller") %>Test < Applic
 
   teardown { <%= chat_job_class_name %>.queue_adapter = @queue_adapter }
 
+  class BookFlight < RubyLLM::Tool
+    description "Books a flight"
+    parameter :destination, description: "The city to fly to"
+    requires_approval
+
+    def execute(destination:)
+      "Booked a #{ask("Window or aisle?", choices: %w[window aisle])} seat to #{destination}"
+    end
+  end
+
   test "streaming a reply and showing its cost" do
     stub_replies "Hello from the model", cost: 0.01
 
@@ -35,6 +45,17 @@ class <%= chat_controller_class_name.delete_suffix("Controller") %>Test < Applic
     assert_no_text "word200"
   end
 
+  test "answering a message sent right after a reply" do
+    stub_replies "First reply", "Second reply"
+
+    start_chat
+    assert_text "First reply"
+    fill_in "<%= message_variable_name %>[content]", with: "And another thing"
+    click_on "Send <%= message_table_name.singularize.humanize.downcase %>"
+
+    assert_text "Second reply", wait: 5
+  end
+
   test "answering a message sent right after Stop" do
     stub_replies (1..200).map { |word| "word#{word}" }.join(" "), "Answered after stopping", interval: 0.05
 
@@ -44,7 +65,7 @@ class <%= chat_controller_class_name.delete_suffix("Controller") %>Test < Applic
     fill_in "<%= message_variable_name %>[content]", with: "One more thing"
     click_on "Send <%= message_table_name.singularize.humanize.downcase %>"
 
-    assert_text "Answered after stopping", wait: 10
+    assert_text "Answered after stopping", wait: 5
   end
 
   test "keeping what a person is typing when the page refreshes" do
@@ -123,6 +144,21 @@ class <%= chat_controller_class_name.delete_suffix("Controller") %>Test < Applic
     assert_no_text "The reply failed"
   end
 
+  test "answering an approval and the question a tool asks" do
+    stub_replies tool_call(BookFlight.tool_name, destination: "Lisbon"), "Your flight is booked."
+
+    with_tools BookFlight do
+      start_chat
+      assert_text "Lisbon"
+      click_on "Approve"
+      assert_text "Window or aisle?", wait: 5
+      click_on "window"
+
+      assert_text "Booked a window seat to Lisbon", wait: 5
+      assert_text "Your flight is booked."
+    end
+  end
+
   test "saying so when the model returns no reply" do
     stub_replies ""
 
@@ -163,6 +199,15 @@ class <%= chat_controller_class_name.delete_suffix("Controller") %>Test < Applic
     yield
   ensure
     ApplicationController.view_paths = original if original
+  end
+
+  # Gives the chat agent +tools+ while the block runs.
+  def with_tools(*tools)
+    declared = <%= chat_agent_class_name %>.tools
+    <%= chat_agent_class_name %>.tools(*tools)
+    yield
+  ensure
+    declared.is_a?(Proc) ? <%= chat_agent_class_name %>.tools(&declared) : <%= chat_agent_class_name %>.tools(declared)
   end
 
   def start_chat

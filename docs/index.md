@@ -156,7 +156,7 @@ chat = RubyLLM.chat
   .with_code_execution(escalate_to: [WorkspaceSandbox])
 chat.ask "Add a changelog entry for the export"
 
-chat.approve(chat.pending_approvals.first)
+chat.pending_questions.first.approve
 ```
 {: .home-code-card }
 
@@ -230,7 +230,7 @@ class AgentJob < ApplicationJob
 end
 
 chat = SupportAgent.find(chat_id)
-chat.approve(chat.pending_approvals.first)
+chat.pending_questions.first.approve
 AgentJob.perform_later(chat.id)
 ```
 {: .home-code-card }
@@ -479,7 +479,7 @@ app/
       and write your prompts in <a href="{% link _getting_started/agents.md %}#keeping-instructions-in-prompt-templates">ERB templates</a>.
       Use <a href="{% link _advanced/rails-streaming.md %}#full-streaming-implementation">Turbo Streams</a> to show replies
       and <a href="{% link _advanced/durable-agents.md %}">Active Job</a> to run agents in the background,
-      one process per chat, with <a href="{% link _tools/tool-execution.md %}#approval-in-rails">approvals</a> that survive restarts.
+      one process per chat, with <a href="{% link _tools/tool-execution.md %}#questions-in-rails">questions and approvals</a> that survive restarts.
     </p>
     <div class="home-code-cta-actions">
       <a class="home-button home-button--solid home-button--rails" href="{% link _getting_started/rails.md %}">Read the Rails guide</a>
