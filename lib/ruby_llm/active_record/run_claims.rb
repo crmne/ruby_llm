@@ -202,9 +202,20 @@ module RubyLLM
 
       def write_run_claim(now = Time.current)
         claimed_until = leased_until(@run_claim_deadline, now)
-        raise ClaimLost unless chat_row.where(claim_token: @run_claim_token).update_all(claimed_until:) == 1
+        raise ClaimLost unless chat_claim_extended?(@run_claim_token, claimed_until)
 
         @run_claim_renewed_at = now
+      end
+
+      # Writes the chat's claim, moving its stored expiry forward and never
+      # back: the heartbeat and a starting tool call write it from separate
+      # threads, and the older of two writes can land last. Returns whether
+      # the claim is still this run's.
+      def chat_claim_extended?(token, claimed_until)
+        chat_row.where(claim_token: token).update_all(
+          ['claimed_until = CASE WHEN claimed_until IS NULL OR claimed_until < ? THEN ? ELSE claimed_until END',
+           claimed_until, claimed_until]
+        ) == 1
       end
 
       # Runs on the heartbeat's thread. A chat claim it finds taken is lost,
@@ -221,7 +232,7 @@ module RubyLLM
         return unless token && deadline > now
 
         claimed_until = [now + CLAIM_LEASE, deadline].min
-        if chat_row.where(claim_token: token).update_all(claimed_until:) == 1
+        if chat_claim_extended?(token, claimed_until)
           @run_claim_renewed_at = now
         else
           @run_claim_lost_token = token

@@ -92,16 +92,20 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     Process.clock_gettime(Process::CLOCK_MONOTONIC)
   end
 
-  # Whether the call's row shows a live claim within +seconds+, so a check
-  # of a claim that holds doesn't fail on a heartbeat that runs late.
-  def claimed_within?(tool_call_id, seconds)
+  # Whether the block turns true within +seconds+, so a check doesn't fail
+  # on a heartbeat that runs late.
+  def within?(seconds)
     deadline = Process.clock_gettime(Process::CLOCK_MONOTONIC) + seconds
     loop do
-      return true if RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id:).running?
+      return true if yield
       return false if Process.clock_gettime(Process::CLOCK_MONOTONIC) > deadline
 
       sleep 0.05
     end
+  end
+
+  def claimed?(tool_call_id)
+    RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id:).running?
   end
 
   def seconds_until_free(since, &running)
@@ -196,10 +200,12 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   end
 
   context 'when a round of calls runs longer than the run time, though each call fits it' do
-    before { allow(RubyLLM.config).to receive(:max_run_time).and_return(3) }
+    before { allow(RubyLLM.config).to receive(:max_run_time).and_return(4) }
 
-    # Each call takes two of the three seconds, and checks its claim as it
-    # finishes: the second call finishes four seconds into the round.
+    # Each call takes two of the four seconds and checks its claim as it
+    # finishes, so the second checks four seconds into the round, when a
+    # deadline counted from the round's start has passed. Deadlines are
+    # whole seconds, so a call keeps at least three of its four.
     def slow_lookup(claimed, alone:)
       Class.new(RubyLLM::Tool) do
         exclusive if alone
@@ -236,10 +242,10 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       job.after_message do |message|
         next unless message.role == :tool && waiting.empty?
 
-        # Three and a half seconds into the round, past the waiting call's
+        # Four and a half seconds into the round, past the waiting call's
         # own deadline, its claim still holds, however late the heartbeat.
-        sleep 1.5
-        waiting << claimed_within?(call_ids.last, 3)
+        sleep 2.5
+        waiting << within?(3) { claimed?(call_ids.last) }
       end
       allow(job.to_llm.provider).to receive(:complete)
         .and_return(RubyLLM::Message.new(role: :assistant, content: 'Done', input_tokens: 1, output_tokens: 1))
@@ -288,8 +294,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     released = []
     take_over = lambda do
       Chat.where(id: chat.id).update_all(claim_token: 'elsewhere', claimed_until: 10.minutes.from_now)
-      sleep lease * 2
-      released << !RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: waiting).running?
+      released << within?(lease * 3) { !claimed?(waiting) }
     end
     tool = Class.new(RubyLLM::Tool) do
       define_method(:name) { 'lookup' }
@@ -306,6 +311,25 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
     expect(released).to eq([true])
     expect(roles(chat)).to eq(%w[user assistant])
+  end
+
+  # A heartbeat renewal can land after a write that a starting tool call
+  # made for a later deadline; it must not shorten the stored claim.
+  it 'never moves its stored chat claim back' do
+    chat = question_chat
+    stored = []
+    job = nil
+    job = job_for(chat) do
+      later = 10.minutes.from_now.change(usec: 0)
+      Chat.where(id: chat.id).update_all(claimed_until: later)
+      job.send(:renew_run_claim_lease, Time.current)
+      job.send(:write_run_claim, Time.current)
+      stored << (Chat.where(id: chat.id).pick(:claimed_until) == later)
+    end
+
+    job.complete
+
+    expect(stored).to eq([true])
   end
 
   it 'never renews a claim another process took over' do
