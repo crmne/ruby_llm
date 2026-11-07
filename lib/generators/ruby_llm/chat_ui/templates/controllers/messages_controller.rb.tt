@@ -8,7 +8,8 @@ class <%= message_controller_class_name %> < ApplicationController
     elsif content.present? || attachments
       if @<%= chat_variable_name %>.running?
         @queued_message = @<%= chat_variable_name %>.queue(content.presence, with: attachments)
-        <%= chat_job_class_name %>.set(wait: 1.minute).perform_later(@<%= chat_variable_name %>.id)
+        wait = @<%= chat_variable_name %>.running? ? 1.minute : 0
+        <%= chat_job_class_name %>.set(wait:).perform_later(@<%= chat_variable_name %>.id)
       else
         @<%= chat_variable_name %>.ask_later(content.presence, with: attachments)
         <%= chat_job_class_name %>.perform_later(@<%= chat_variable_name %>.id)
