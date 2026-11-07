@@ -1,6 +1,9 @@
 <%% answers_path = <%= chat_variable_name %>_answers_path(<%= chat_model_name.demodulize.underscore %>) %>
-<%% choices = question.fields.first.choices if question.fields.one? %>
-<div id="question_<%%= question.id.parameterize %>" class="question"
+<%% card = "question_#{question.id.parameterize}" %>
+<%% single = question.fields.first if question.fields.one? %>
+<%% choices = single&.choices&.to_h { |choice| [choice, choice] } %>
+<%% choices = { "Yes" => true, "No" => false } if single&.type == "boolean" %>
+<div id="<%%= card %>" class="question"
      style="margin-bottom: 20px; padding: 10px; border-left: 3px solid #d97706; background: #fffbeb;">
   <%% if question.approval? %>
     <%% arguments = question.tool_call.arguments %>
@@ -27,17 +30,20 @@
         <%%= form.hidden_field :question_id, value: question.id %>
         <%% if question.fields.one? %>
           <%%= form.text_field :answer, value: question.fields.first.default, required: question.fields.first.required?,
-            "aria-label": question.message %>
+            id: "#{card}_answer", "aria-label": question.message %>
         <%% else %>
           <%% question.fields.each do |field| %>
+            <%% field_id = "#{card}_#{field.name.to_s.parameterize(separator: "_")}" %>
+            <%% list = field.type == "array" %>
             <div style="margin-bottom: 5px;">
-              <%%= form.label "answer_#{field.name}", field.title || field.name.to_s.humanize %>
+              <%%= label_tag field_id, field.title || field.name.to_s.humanize %>
               <%% if field.choices %>
-                <%%= form.select "answer[#{field.name}]", field.choices, { selected: field.default, include_blank: !field.required? }, id: "answer_#{field.name}" %>
+                <%%= form.select "answer[#{field.name}]", field.choices, { selected: field.default, include_blank: !field.required? && !list },
+                  id: field_id, multiple: list %>
               <%% elsif field.type == "boolean" %>
-                <%%= form.check_box "answer[#{field.name}]", { checked: field.default, id: "answer_#{field.name}" }, "true", "false" %>
+                <%%= form.check_box "answer[#{field.name}]", { checked: field.default, id: field_id }, "true", "false" %>
               <%% else %>
-                <%%= form.text_field "answer[#{field.name}]", value: field.default, required: field.required?, id: "answer_#{field.name}" %>
+                <%%= form.text_field "answer[#{field.name}]", value: field.default, required: field.required?, id: field_id %>
               <%% end %>
             </div>
           <%% end %>
@@ -47,11 +53,11 @@
       <%% end %>
     <%% else %>
       <%% if question.url? %>
-        <p style="margin: 0 0 10px;"><%%= link_to "Open the page", question.url, target: "_blank", rel: "noopener" %></p>
+        <p style="margin: 0 0 10px; overflow-wrap: anywhere;"><%%= link_to question.url, question.url, target: "_blank", rel: "noopener noreferrer" %></p>
         <%%= button_to "Done", answers_path, params: { question_id: question.id }, form: { style: "display: inline-block;" } %>
       <%% else %>
-        <%% choices.each do |choice| %>
-          <%%= button_to choice, answers_path, params: { question_id: question.id, answer: choice }, form: { style: "display: inline-block;" } %>
+        <%% choices.each do |label, value| %>
+          <%%= button_to label, answers_path, params: { question_id: question.id, answer: value }, form: { style: "display: inline-block;" } %>
         <%% end %>
       <%% end %>
       <%%= button_to "Decline", answers_path, params: { question_id: question.id, decline: true }, form: { style: "display: inline-block;" } %>

@@ -1,8 +1,11 @@
 <%% answers_path = <%= chat_variable_name %>_answers_path(<%= chat_model_name.demodulize.underscore %>) %>
-<%% choices = question.fields.first.choices if question.fields.one? %>
+<%% card = "question_#{question.id.parameterize}" %>
+<%% single = question.fields.first if question.fields.one? %>
+<%% choices = single&.choices&.to_h { |choice| [choice, choice] } %>
+<%% choices = { "Yes" => true, "No" => false } if single&.type == "boolean" %>
 <%% primary = "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium cursor-pointer" %>
 <%% secondary = "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 font-medium cursor-pointer" %>
-<div id="question_<%%= question.id.parameterize %>" class="w-full sm:w-auto my-5 space-y-3 rounded-md px-3 py-2 bg-amber-50 border border-amber-200">
+<div id="<%%= card %>" class="w-full sm:w-auto my-5 space-y-3 rounded-md px-3 py-2 bg-amber-50 border border-amber-200">
   <%% if question.approval? %>
     <%% arguments = question.tool_call.arguments %>
     <%% sandbox = arguments["sandbox"].presence if question.tool_call.name == "run_code" %>
@@ -39,18 +42,20 @@
         <%%= form.hidden_field :question_id, value: question.id %>
         <%% if question.fields.one? %>
           <%%= form.text_field :answer, value: question.fields.first.default, required: question.fields.first.required?,
-            "aria-label": question.message, class: "block shadow-sm rounded-md border border-gray-400 px-3 py-2 w-full" %>
+            id: "#{card}_answer", "aria-label": question.message, class: "block shadow-sm rounded-md border border-gray-400 px-3 py-2 w-full" %>
         <%% else %>
           <%% question.fields.each do |field| %>
+            <%% field_id = "#{card}_#{field.name.to_s.parameterize(separator: "_")}" %>
+            <%% list = field.type == "array" %>
             <div>
-              <%%= form.label "answer_#{field.name}", field.title || field.name.to_s.humanize, class: "block text-sm font-medium" %>
+              <%%= label_tag field_id, field.title || field.name.to_s.humanize, class: "block text-sm font-medium" %>
               <%% if field.choices %>
-                <%%= form.select "answer[#{field.name}]", field.choices, { selected: field.default, include_blank: !field.required? },
-                  id: "answer_#{field.name}", class: "block shadow-sm rounded-md border border-gray-400 px-3 py-2 mt-1 w-full" %>
+                <%%= form.select "answer[#{field.name}]", field.choices, { selected: field.default, include_blank: !field.required? && !list },
+                  id: field_id, multiple: list, class: "block shadow-sm rounded-md border border-gray-400 px-3 py-2 mt-1 w-full" %>
               <%% elsif field.type == "boolean" %>
-                <%%= form.check_box "answer[#{field.name}]", { checked: field.default, id: "answer_#{field.name}", class: "mt-1" }, "true", "false" %>
+                <%%= form.check_box "answer[#{field.name}]", { checked: field.default, id: field_id, class: "mt-1" }, "true", "false" %>
               <%% else %>
-                <%%= form.text_field "answer[#{field.name}]", value: field.default, required: field.required?, id: "answer_#{field.name}",
+                <%%= form.text_field "answer[#{field.name}]", value: field.default, required: field.required?, id: field_id,
                   class: "block shadow-sm rounded-md border border-gray-400 px-3 py-2 mt-1 w-full" %>
               <%% end %>
             </div>
@@ -62,13 +67,15 @@
         </div>
       <%% end %>
     <%% else %>
+      <%% if question.url? %>
+        <p class="text-sm [overflow-wrap:anywhere]"><%%= link_to question.url, question.url, target: "_blank", rel: "noopener noreferrer", class: "text-blue-600 hover:underline" %></p>
+      <%% end %>
       <div class="flex flex-col sm:flex-row sm:flex-wrap gap-2">
         <%% if question.url? %>
-          <%%= link_to "Open the page", question.url, target: "_blank", rel: "noopener", class: secondary %>
           <%%= button_to "Done", answers_path, params: { question_id: question.id }, class: primary %>
         <%% else %>
-          <%% choices.each do |choice| %>
-            <%%= button_to choice, answers_path, params: { question_id: question.id, answer: choice }, class: primary %>
+          <%% choices.each do |label, value| %>
+            <%%= button_to label, answers_path, params: { question_id: question.id, answer: value }, class: primary %>
           <%% end %>
         <%% end %>
         <%%= button_to "Decline", answers_path, params: { question_id: question.id, decline: true }, class: secondary %>
