@@ -416,8 +416,12 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       seat = #{agent}.find(chat.id).pending_questions.sole
       session.post "#{chats_path}/\#{chat.id}/answers", params: { question_id: seat.id, answer: "middle" }, headers: stream
       abort "a choice not offered answered \#{session.response.status}" unless session.response.status == 303
-      abort "a choice not offered said \#{session.flash[:notice]}" unless session.flash[:notice] == '"middle" is not one of the choices: window, aisle'
-      session.post "#{chats_path}/\#{chat.id}/answers", params: { question_id: seat.id, answer: "window" }, headers: stream
+      abort "a choice not offered said \#{session.flash[:notice]}" unless session.flash[:notice] == '"middle" is not one of the choices: window or aisle.'
+      session.post "#{chats_path}/\#{chat.id}/answers", params: { question_id: seat.id, answer: "  " }, headers: stream
+      abort "a blank answer said \#{session.flash[:notice]}" unless session.flash[:notice] == "The question needs an answer."
+      session.get "#{chats_path}/\#{chat.id}"
+      abort "show page lacks the refusal" unless session.response.body.include?(">The question needs an answer.</p>")
+      session.post "#{chats_path}/\#{chat.id}/answers", params: { question_id: seat.id, answer: " window " }, headers: stream
       abort "answer answered \#{session.response.status}" unless session.response.status == 200
       abort "answer kept the form hidden" unless session.response.body.include?("Continuing the conversation.")
 

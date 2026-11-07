@@ -85,9 +85,9 @@ RSpec.describe RubyLLM::Question do
     expect { question.answer(seats: 'two') }.to raise_error(ArgumentError, /Seats takes a whole number/)
     expect { question.answer(seats: { value: 2 }) }.to raise_error(ArgumentError, /Seats takes a whole number/)
     expect { question.answer(seats: 2.5) }.to raise_error(ArgumentError, /Seats takes a whole number/)
-    expect { question.answer(name: 36) }.to raise_error(ArgumentError, /name takes text/)
-    expect { question.answer(window: 'maybe') }.to raise_error(ArgumentError, /window takes true or false/)
-    expect { question.answer(meals: { 'a' => 1 }) }.to raise_error(ArgumentError, /meals takes a list/)
+    expect { question.answer(name: 36) }.to raise_error(ArgumentError, /Name takes text/)
+    expect { question.answer(window: 'maybe') }.to raise_error(ArgumentError, /Window takes true or false/)
+    expect { question.answer(meals: { 'a' => 1 }) }.to raise_error(ArgumentError, /Meals takes a list/)
     expect(question).not_to be_answered
   end
 
