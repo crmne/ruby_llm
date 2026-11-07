@@ -497,20 +497,9 @@ When the budget runs out the transcript is still valid, and calling `step` again
 
 ## Long-Running Tools
 
-A persisted chat claims each tool call while it runs, so no other process runs it at the same time. The process running the tool keeps renewing the claim for up to `config.max_run_time`, ten minutes by default. If the process dies, its claim expires within a minute, and another process runs the call again. Give a tool that legitimately runs longer its own limit:
+A persisted chat claims each tool call while it runs, so no other process runs it at the same time. The process running the tool keeps renewing the claim for up to `config.max_run_time`, ten minutes by default. If the process dies, its claim expires within a minute, and another process runs the call again.
 
-```ruby
-class GenerateReport < RubyLLM::Tool
-  description "Builds the quarterly report"
-  max_run_time 2.hours
-
-  def execute(quarter:)
-    Reports.build!(quarter)
-  end
-end
-```
-
-A run that takes longer than its `max_run_time` counts as crashed, and another process may start the call again. MCP tools use `config.max_run_time`. Tools that [pause their call](#pausing-a-tool-call), like MCP operations that run as [tasks]({% link _tools/mcp.md %}#tasks), release their claim instead. See [One Process at a Time]({% link _advanced/durable-agents.md %}#one-process-at-a-time) for how claims work.
+A call that runs longer than `config.max_run_time` counts as crashed, and another process may start it again, so set `config.max_run_time` above your slowest tool. Tools that [pause their call](#pausing-a-tool-call), like MCP operations that run as [tasks]({% link _tools/mcp.md %}#tasks), release their claim instead, so work that takes longer can run on its own. See [One Process at a Time]({% link _advanced/durable-agents.md %}#one-process-at-a-time) for how claims work.
 
 ## Pausing a Tool Call
 
