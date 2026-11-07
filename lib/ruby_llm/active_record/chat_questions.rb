@@ -53,7 +53,7 @@ module RubyLLM
         pending = persisted_pending_question(question)
         return self unless pending
 
-        response = pending.response_to(permitted_answer(pending, value), values)
+        response = pending.response_to(value, values)
         pending.approval? ? approve(pending) : record_persisted_answer(pending, response)
         question.respond(response) if question.is_a?(RubyLLM::Question)
         self
@@ -114,12 +114,6 @@ module RubyLLM
 
       def record_persisted_answer(question, response)
         settle_persisted_input(question.tool_call) { |input| question.answered_input(input, response) }
-      end
-
-      def permitted_answer(question, value)
-        return value unless value.respond_to?(:permit)
-
-        value.permit(*question.fields.map { |field| field.type == 'array' ? { field.name => [] } : field.name }).to_h
       end
     end
   end

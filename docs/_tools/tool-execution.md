@@ -203,16 +203,23 @@ ask("Connect your calendar", url: calendar.authorization_url)
 
 ```ruby
 chat.pending_questions.each do |question|
-  puts "#{question.id}: #{question.message || "Run #{question.tool_call.name}?"}"
+  # Show the person what they decide on, with question.id in the form:
+  question.message   # => "Window or aisle?", or nil for an approval
+  question.fields    # => the values it asks for, with their choices
+  question.url       # => a page to visit, or nil
+  question.tool_call # => an approval's call, with its name and arguments
 end
 
-# Once the person decides, from the form they sent:
-chat.answer(params[:question_id], params[:answer])  # approves an approval
-# or: chat.decline(params[:question_id])            # denies an approval
+# Once they decide, from the form they sent:
+if params[:decline]
+  chat.decline(params[:question_id])                 # denies an approval
+else
+  chat.answer(params[:question_id], params[:answer]) # an approval's form sends no answer
+end
 chat.complete
 ```
 
-Answering an approval approves it, and declining one denies it. A question with one field takes its value, and one with several takes them by name, as keywords or a Hash: `question.answer(name: "Ada", age: 36)`. Strings become the integers, numbers, and booleans the fields ask for, the way a form sends them. An answer the question can't take raises `ArgumentError`: a choice it didn't offer, a field it doesn't ask for, or a required field left out. Answering a question again, or after its call finished, changes nothing, so a form sent twice is safe.
+Answering an approval approves it, and declining one denies it. An approval or a page to visit takes no value, and a blank one counts as none. A question with one field takes its value, and one with several takes them by name, as keywords, a Hash, or the parameters a form sends, of which it keeps only the fields it asks for: `question.answer(name: "Ada", age: 36)`. Strings become the integers, numbers, and booleans the fields ask for, the way a form sends them. An answer the question can't take raises `ArgumentError`: a choice it didn't offer, a field it doesn't ask for, or a required field left out. Answering a question again, or after its call finished, changes nothing, so a form sent twice is safe.
 
 Calls that need no answer still run while the others wait. `chat.ask` and `chat.complete` return the assistant message that holds the waiting calls. If you [drive the loop yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself), stop when the chat is waiting: `chat.step until chat.complete? || chat.waiting?`. `awaiting_person?` tells you a person must act.
 

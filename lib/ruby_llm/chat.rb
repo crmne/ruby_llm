@@ -572,8 +572,10 @@ module RubyLLM
 
     # Answers +question+, a Question from #pending_questions or its id, as
     # Question#answer describes, and returns +self+. Answering an approval
-    # approves its call. A question already answered, or one whose call has
-    # finished, stays as it is, so a form sent twice is safe.
+    # approves its call. Takes the ActionController::Parameters a form
+    # sends for several fields, and keeps only the fields the question asks
+    # for. A question already answered, or one whose call has finished,
+    # stays as it is, so a form sent twice is safe.
     #
     #   chat.answer(question, "window")
     #   chat.answer(params[:question_id], params[:answer])

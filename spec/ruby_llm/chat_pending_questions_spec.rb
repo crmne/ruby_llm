@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'action_controller/metal/strong_parameters'
 
 RSpec.describe RubyLLM::Chat do
   include_context 'with configured RubyLLM'
@@ -100,10 +101,37 @@ RSpec.describe RubyLLM::Chat do
     expect(results).to contain_exactly('Refunded 40', a_string_including('denied'))
   end
 
-  it 'refuses an answer to an approval' do
+  it 'refuses an answer to an approval, and takes a blank one as none' do
     ask_for('issue_refund')
+    question = chat.pending_questions.sole
 
-    expect { chat.pending_questions.sole.answer('yes') }.to raise_error(ArgumentError, /takes no answer/)
+    expect { question.answer('yes') }.to raise_error(ArgumentError, /takes no answer/)
+
+    chat.answer(question.id, '')
+    chat.complete
+
+    expect(runs).to eq(['40'])
+  end
+
+  it 'takes the parameters a form sends for several fields, by question id' do
+    profile = Class.new(RubyLLM::Tool) do
+      def self.name = 'Profile'
+
+      description 'Asks who is flying'
+      define_method(:execute) do
+        ask('Who is flying?') do
+          string :name
+          integer :age
+        end.inspect
+      end
+    end
+    allow(chat.provider).to receive(:complete).and_return(calls('profile'), answer)
+    chat.with_tools(profile).ask('Book')
+
+    form = ActionController::Parameters.new(name: 'Ada', age: '36', admin: 'true')
+    chat.answer(chat.pending_questions.sole.id, form).complete
+
+    expect(results).to eq(['{name: "Ada", age: 36}'])
   end
 
   it 'lists approvals and questions together, in the order the model made the calls' do

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'action_controller/metal/strong_parameters'
 
 RSpec.describe RubyLLM::Question do
   def form(properties, required = [])
@@ -133,12 +134,22 @@ RSpec.describe RubyLLM::Question do
     expect(question.fields.first.choices).to eq(%w[red green blue])
   end
 
+  it 'keeps the fields it asks for of the parameters a form sends' do
+    question = form({ 'name' => { 'type' => 'string' }, 'age' => { 'type' => 'integer' },
+                      'tags' => { 'type' => 'array' } }, %w[name])
+
+    question.answer(ActionController::Parameters.new(name: 'Ada', age: '36', tags: %w[math], admin: 'true'))
+
+    expect(question.response)
+      .to eq('action' => 'accept', 'content' => { 'name' => 'Ada', 'age' => 36, 'tags' => %w[math] })
+  end
+
   it 'accepts a page to visit without content, and refuses a value for it' do
     question = described_class.new('connect', { 'mode' => 'url', 'url' => 'https://example.com/connect' })
 
     expect { question.answer('done') }.to raise_error(ArgumentError, /takes no answer/)
 
-    question.answer
+    question.answer('  ')
 
     expect(question.response).to eq('action' => 'accept')
     expect(question).not_to be_form

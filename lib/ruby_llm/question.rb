@@ -167,9 +167,11 @@ module RubyLLM
     #
     # Strings become the integers, numbers, and booleans the fields ask
     # for, the way a form sends them, a Symbol becomes text, and a blank
-    # String counts as left out. Raises ArgumentError for a value the
-    # question does not ask for, a choice it does not offer, a value of the
-    # wrong type, or a required value left out.
+    # String counts as left out. The ActionController::Parameters a form
+    # sends for several fields work as a Hash, keeping only the fields the
+    # question asks for. Raises ArgumentError for a value the question does
+    # not ask for, a choice it does not offer, a value of the wrong type,
+    # or a required value left out.
     def answer(value = nil, **values)
       if @chat
         @chat.answer(self, value, **values)
@@ -258,12 +260,13 @@ module RubyLLM
     private
 
     def response_without(value, values)
-      return ACCEPTED if value.nil? && values.empty?
+      return ACCEPTED if blank?(value) && values.empty?
 
       raise ArgumentError, "#{approval? ? 'An approval' : 'A page to visit'} takes no answer"
     end
 
     def given_values(value, values)
+      value = permitted(value) if value.respond_to?(:permit)
       given = case value
               when nil, Hash then value.to_h
               else
@@ -274,6 +277,12 @@ module RubyLLM
                 { fields.first.name => value }
               end
       given.merge(values).transform_keys(&:to_s)
+    end
+
+    # The values of +params+, such as the ActionController::Parameters a
+    # form sends, that the question asks for.
+    def permitted(params)
+      params.permit(*fields.map { |field| field.type == 'array' ? { field.name => [] } : field.name }).to_h
     end
 
     def content_from(given)
