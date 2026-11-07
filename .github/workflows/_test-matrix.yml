@@ -84,6 +84,17 @@ jobs:
           files: ./coverage/coverage.xml
           fail_ci_if_error: false
 
+      - name: Upload coverage to UndercoverCI
+        if: >-
+          matrix.ruby-version == '4.0' && matrix.rails-version == 'rails-8.1' &&
+          github.repository_owner == 'grodowski'
+        continue-on-error: true
+        run: |
+          ruby -e "$(curl -fsSL https://undercover-ci.com/uploader.rb)" -- \
+            --repo ${{ github.repository }} \
+            --commit ${{ github.event.pull_request.head.sha || github.sha }} \
+            --simplecov coverage/coverage.json
+
       - name: Run the test suite with Faraday v1
         if: >-
           matrix.ruby-version != '4.0' &&
@@ -110,6 +121,13 @@ jobs:
       SKIP_COVERAGE: true
     steps:
       - uses: actions/checkout@v7
+
+      # Rugged, which undercover depends on, needs jitterentropy to build on
+      # Ubuntu 26.04, and setup-ruby's bundler cache installs gems itself.
+      - name: Install rugged build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libjitterentropy3-dev
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
