@@ -76,6 +76,15 @@ RSpec.describe RubyLLM::OpenTelemetry do
     expect(chat_span.status.code).to eq(OpenTelemetry::Trace::Status::UNSET)
   end
 
+  it 'describes the tool it ran without capturing content' do
+    tool = Class.new(RubyLLM::Tool) { description 'Looks up the weather' }.new
+    RubyLLM.instrument('tool_call.ruby_llm', tool:, tool_name: 'lookup', tool_call_id: 'call_1',
+                                             tool_arguments: { 'city' => 'private' }) { nil }
+
+    expect(spans.sole.attributes['gen_ai.tool.description']).to eq('Looks up the weather')
+    expect(spans.sole.attributes.to_s).not_to include('private')
+  end
+
   describe 'with content' do
     before { described_class.enable(content: true) }
 
