@@ -15,6 +15,12 @@ PreCommit:
     command: ['bundle', 'exec', 'archspec', 'check']
     on_warn: fail
 
+  PublicApi:
+    enabled: true
+    description: 'Check api.txt lists the public API'
+    command: ['bundle', 'exec', 'rake', 'api:check']
+    on_warn: fail
+
   RSpec:
     enabled: true
     command: [

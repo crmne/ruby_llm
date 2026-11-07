@@ -1,0 +1,1623 @@
+# RubyLLM public API, generated from RDoc by `rake api:dump`. Do not edit.
+# A new or changed line needs the maintainer's approval; see AGENTS.md.
+RubyLLM (module)
+RubyLLM.animate(...)
+RubyLLM.animate_later(...)
+RubyLLM.batch(chats)
+RubyLLM.cache(...)
+RubyLLM.chat(...)
+RubyLLM.config
+RubyLLM.configure
+RubyLLM.context
+RubyLLM.count_tokens(text, model: nil, provider: nil)
+RubyLLM.download(...)
+RubyLLM.embed(...)
+RubyLLM.embed_later(text, model: nil, provider: nil, dimensions: nil)
+RubyLLM.judge(...)
+RubyLLM.mcp(...)
+RubyLLM.models
+RubyLLM.moderate(...)
+RubyLLM.ocr(...)
+RubyLLM.paint(...)
+RubyLLM.providers
+RubyLLM.render_prompt(name, **locals)
+RubyLLM.rerank(...)
+RubyLLM.research(...)
+RubyLLM.research_later(...)
+RubyLLM.sandbox
+RubyLLM.speak(...)
+RubyLLM.tokenize(...)
+RubyLLM.transcribe(...)
+RubyLLM.upload(...)
+RubyLLM.with_owner(owner, &)
+RubyLLM.with_usage_owner(owner, &)
+RubyLLM.workflow(name, id: nil, metadata: nil, &)
+RubyLLM::ActiveRecord (module)
+RubyLLM::ActiveRecord::ActsAs (module)
+RubyLLM::ActiveRecord::ActsAs extend ActiveSupport::Concern
+RubyLLM::ActiveRecord::ActsAs.acts_as_chat(messages: :messages, message_class: nil, messages_foreign_key: nil, owner: nil)
+RubyLLM::ActiveRecord::ActsAs.acts_as_message(chat: :chat, chat_class: nil, chat_foreign_key: nil, touch_chat: false, broadcasts: nil)
+RubyLLM::ActiveRecord::Batch (class < RubyLLM::ActiveRecord::Record)
+RubyLLM::ActiveRecord::Batch#chats
+RubyLLM::ActiveRecord::ChatFile (class < RubyLLM::ActiveRecord::Record)
+RubyLLM::ActiveRecord::ChatFile#to_stored_file
+RubyLLM::ActiveRecord::ChatFiles (module)
+RubyLLM::ActiveRecord::ChatFiles#with_file_store(store = active_storage_store, inline_limit: 10_000, tools: %i[read write edit])
+RubyLLM::ActiveRecord::ChatHelper (module)
+RubyLLM::ActiveRecord::ChatHelper#cost_label(cost)
+RubyLLM::ActiveRecord::ChatHelper#default_model_display_name
+RubyLLM::ActiveRecord::ChatHelper#tool_call_partial(tool_call)
+RubyLLM::ActiveRecord::ChatHelper#tool_label(name)
+RubyLLM::ActiveRecord::ChatHelper#tool_result_label(message)
+RubyLLM::ActiveRecord::ChatHelper#tool_result_partial(message)
+RubyLLM::ActiveRecord::ChatMethods (module)
+RubyLLM::ActiveRecord::ChatMethods extend ActiveSupport::Concern
+RubyLLM::ActiveRecord::ChatMethods include RubyLLM::ActiveRecord::ChatQuestions
+RubyLLM::ActiveRecord::ChatMethods include RubyLLM::Support::DeprecatedEnumerable
+RubyLLM::ActiveRecord::ChatMethods#add_message(message_or_attributes)
+RubyLLM::ActiveRecord::ChatMethods#after_fallback(&block)
+RubyLLM::ActiveRecord::ChatMethods#after_file_write(&block)
+RubyLLM::ActiveRecord::ChatMethods#after_message(&block)
+RubyLLM::ActiveRecord::ChatMethods#after_tool_progress(&block)
+RubyLLM::ActiveRecord::ChatMethods#after_tool_result(&block)
+RubyLLM::ActiveRecord::ChatMethods#approve(tool_call, remember: false)
+RubyLLM::ActiveRecord::ChatMethods#around_join(&block)
+RubyLLM::ActiveRecord::ChatMethods#around_tool_call(&block)
+RubyLLM::ActiveRecord::ChatMethods#as_json(options = nil)
+RubyLLM::ActiveRecord::ChatMethods#ask(message = nil, with: nil, &)
+RubyLLM::ActiveRecord::ChatMethods#ask_later(message = nil, with: nil)
+RubyLLM::ActiveRecord::ChatMethods#assume_model_exists (attr_accessor)
+RubyLLM::ActiveRecord::ChatMethods#awaiting_approval?
+RubyLLM::ActiveRecord::ChatMethods#awaiting_input?
+RubyLLM::ActiveRecord::ChatMethods#awaiting_person?
+RubyLLM::ActiveRecord::ChatMethods#awaiting_tasks?
+RubyLLM::ActiveRecord::ChatMethods#before_fallback(&block)
+RubyLLM::ActiveRecord::ChatMethods#before_message(&block)
+RubyLLM::ActiveRecord::ChatMethods#before_request(&block)
+RubyLLM::ActiveRecord::ChatMethods#before_tool_call(&block)
+RubyLLM::ActiveRecord::ChatMethods#cache_until_here(ttl: nil)
+RubyLLM::ActiveRecord::ChatMethods#caching
+RubyLLM::ActiveRecord::ChatMethods#cancel
+RubyLLM::ActiveRecord::ChatMethods#cancelled?
+RubyLLM::ActiveRecord::ChatMethods#citations
+RubyLLM::ActiveRecord::ChatMethods#code_execution
+RubyLLM::ActiveRecord::ChatMethods#compact
+RubyLLM::ActiveRecord::ChatMethods#compaction
+RubyLLM::ActiveRecord::ChatMethods#complete(&block)
+RubyLLM::ActiveRecord::ChatMethods#complete?
+RubyLLM::ActiveRecord::ChatMethods#concurrency
+RubyLLM::ActiveRecord::ChatMethods#context (attr_reader)
+RubyLLM::ActiveRecord::ChatMethods#context=(value)
+RubyLLM::ActiveRecord::ChatMethods#context_budget
+RubyLLM::ActiveRecord::ChatMethods#convert_unsupported_attachments(&block)
+RubyLLM::ActiveRecord::ChatMethods#cost
+RubyLLM::ActiveRecord::ChatMethods#count_tokens(message = nil)
+RubyLLM::ActiveRecord::ChatMethods#deferred_tools
+RubyLLM::ActiveRecord::ChatMethods#deny(tool_call)
+RubyLLM::ActiveRecord::ChatMethods#each(&)
+RubyLLM::ActiveRecord::ChatMethods#end_user
+RubyLLM::ActiveRecord::ChatMethods#fallbacks
+RubyLLM::ActiveRecord::ChatMethods#file_store
+RubyLLM::ActiveRecord::ChatMethods#generate(&block)
+RubyLLM::ActiveRecord::ChatMethods#headers
+RubyLLM::ActiveRecord::ChatMethods#join_queued_messages
+RubyLLM::ActiveRecord::ChatMethods#max_output_tokens
+RubyLLM::ActiveRecord::ChatMethods#mcp
+RubyLLM::ActiveRecord::ChatMethods#model=(value)
+RubyLLM::ActiveRecord::ChatMethods#model_id
+RubyLLM::ActiveRecord::ChatMethods#model_id=(value)
+RubyLLM::ActiveRecord::ChatMethods#pending_approvals
+RubyLLM::ActiveRecord::ChatMethods#pending_tasks
+RubyLLM::ActiveRecord::ChatMethods#protocol (attr_reader)
+RubyLLM::ActiveRecord::ChatMethods#protocol=(value)
+RubyLLM::ActiveRecord::ChatMethods#provider
+RubyLLM::ActiveRecord::ChatMethods#provider=(value)
+RubyLLM::ActiveRecord::ChatMethods#provider_options
+RubyLLM::ActiveRecord::ChatMethods#provider_tools
+RubyLLM::ActiveRecord::ChatMethods#queue(message = nil, with: nil, steer: true, sender: nil)
+RubyLLM::ActiveRecord::ChatMethods#queued_messages
+RubyLLM::ActiveRecord::ChatMethods#reload(...)
+RubyLLM::ActiveRecord::ChatMethods#render
+RubyLLM::ActiveRecord::ChatMethods#run_tools
+RubyLLM::ActiveRecord::ChatMethods#running?
+RubyLLM::ActiveRecord::ChatMethods#say(message = nil, with: nil, &)
+RubyLLM::ActiveRecord::ChatMethods#schema
+RubyLLM::ActiveRecord::ChatMethods#skills
+RubyLLM::ActiveRecord::ChatMethods#step(&block)
+RubyLLM::ActiveRecord::ChatMethods#temperature
+RubyLLM::ActiveRecord::ChatMethods#thinking()
+RubyLLM::ActiveRecord::ChatMethods#to_llm
+RubyLLM::ActiveRecord::ChatMethods#tokens
+RubyLLM::ActiveRecord::ChatMethods#tool_options()
+RubyLLM::ActiveRecord::ChatMethods#tools
+RubyLLM::ActiveRecord::ChatMethods#waiting?
+RubyLLM::ActiveRecord::ChatMethods#with_caching(options = {})
+RubyLLM::ActiveRecord::ChatMethods#with_citations(enabled = true)
+RubyLLM::ActiveRecord::ChatMethods#with_code_execution(enabled = true, **options)
+RubyLLM::ActiveRecord::ChatMethods#with_compaction(options = {})
+RubyLLM::ActiveRecord::ChatMethods#with_context(value)
+RubyLLM::ActiveRecord::ChatMethods#with_context_budget(budget = {}, per_result: nil, per_request: nil, window: nil)
+RubyLLM::ActiveRecord::ChatMethods#with_end_user(end_user)
+RubyLLM::ActiveRecord::ChatMethods#with_fallbacks(*models, on: Fallback::DEFAULT_ERRORS, drop_unsupported: false)
+RubyLLM::ActiveRecord::ChatMethods#with_headers(headers)
+RubyLLM::ActiveRecord::ChatMethods#with_instructions(instructions, append: false, persist: true, cache_until_here: false)
+RubyLLM::ActiveRecord::ChatMethods#with_max_output_tokens(max_output_tokens)
+RubyLLM::ActiveRecord::ChatMethods#with_mcp(*servers, defer: nil)
+RubyLLM::ActiveRecord::ChatMethods#with_model(model_name, provider: nil, protocol: nil, assume_model_exists: false)
+RubyLLM::ActiveRecord::ChatMethods#with_owner(owner)
+RubyLLM::ActiveRecord::ChatMethods#with_provider_options(provider_options)
+RubyLLM::ActiveRecord::ChatMethods#with_provider_tools(*tools, **tools_with_options)
+RubyLLM::ActiveRecord::ChatMethods#with_schema(schema)
+RubyLLM::ActiveRecord::ChatMethods#with_skills(*skills)
+RubyLLM::ActiveRecord::ChatMethods#with_temperature(temperature)
+RubyLLM::ActiveRecord::ChatMethods#with_thinking(enabled = true, **options)
+RubyLLM::ActiveRecord::ChatMethods#with_tool_options(**options)
+RubyLLM::ActiveRecord::ChatMethods#with_tools(*tools, defer: nil)
+RubyLLM::ActiveRecord::ChatMethods#withdraw(queued)
+RubyLLM::ActiveRecord::ChatQuestions (module)
+RubyLLM::ActiveRecord::ChatQuestions#answer(question, value = nil, **values)
+RubyLLM::ActiveRecord::ChatQuestions#decline(question)
+RubyLLM::ActiveRecord::ChatQuestions#pending_inputs
+RubyLLM::ActiveRecord::ChatQuestions#pending_questions
+RubyLLM::ActiveRecord::ChunkMethods (module)
+RubyLLM::ActiveRecord::ChunkMethods#broadcast
+RubyLLM::ActiveRecord::ChunkMethods#message (attr_accessor)
+RubyLLM::ActiveRecord::FileStore (class < RubyLLM::FileStore)
+RubyLLM::ActiveRecord::FileStore#[](path)
+RubyLLM::ActiveRecord::FileStore#chat (attr_reader)
+RubyLLM::ActiveRecord::FileStore#delete(path)
+RubyLLM::ActiveRecord::FileStore#delete_folder(path)
+RubyLLM::ActiveRecord::FileStore#list(prefix = nil)
+RubyLLM::ActiveRecord::FileStore#owner
+RubyLLM::ActiveRecord::FileStore#read(path)
+RubyLLM::ActiveRecord::FileStore#with_lock
+RubyLLM::ActiveRecord::FileStore#write(path, content, content_type: nil)
+RubyLLM::ActiveRecord::FileStore.new(chat, owner: nil)
+RubyLLM::ActiveRecord::MCPCredential (class < RubyLLM::ActiveRecord::Record)
+RubyLLM::ActiveRecord::MessageBroadcasting (module)
+RubyLLM::ActiveRecord::MessageBroadcasting extend ActiveSupport::Concern
+RubyLLM::ActiveRecord::MessageBroadcasting#broadcast_chunk(chunk)
+RubyLLM::ActiveRecord::MessageBroadcasting#broadcasting?
+RubyLLM::ActiveRecord::MessageBroadcasting.available?
+RubyLLM::ActiveRecord::MessageMethods (module)
+RubyLLM::ActiveRecord::MessageMethods extend ActiveSupport::Concern
+RubyLLM::ActiveRecord::MessageMethods#cache_ttl
+RubyLLM::ActiveRecord::MessageMethods#cache_until_here(ttl: nil)
+RubyLLM::ActiveRecord::MessageMethods#cache_until_here?
+RubyLLM::ActiveRecord::MessageMethods#cancelled?
+RubyLLM::ActiveRecord::MessageMethods#chunk(content, index:)
+RubyLLM::ActiveRecord::MessageMethods#citations
+RubyLLM::ActiveRecord::MessageMethods#content_filtered?
+RubyLLM::ActiveRecord::MessageMethods#cost
+RubyLLM::ActiveRecord::MessageMethods#finish_reason
+RubyLLM::ActiveRecord::MessageMethods#halted?
+RubyLLM::ActiveRecord::MessageMethods#max_tokens?
+RubyLLM::ActiveRecord::MessageMethods#mcp_result
+RubyLLM::ActiveRecord::MessageMethods#model
+RubyLLM::ActiveRecord::MessageMethods#model_id
+RubyLLM::ActiveRecord::MessageMethods#model_info
+RubyLLM::ActiveRecord::MessageMethods#parent_tool_call
+RubyLLM::ActiveRecord::MessageMethods#parsed
+RubyLLM::ActiveRecord::MessageMethods#provider
+RubyLLM::ActiveRecord::MessageMethods#server_tool_calls
+RubyLLM::ActiveRecord::MessageMethods#stopped?
+RubyLLM::ActiveRecord::MessageMethods#thinking
+RubyLLM::ActiveRecord::MessageMethods#to_llm
+RubyLLM::ActiveRecord::MessageMethods#to_partial_path
+RubyLLM::ActiveRecord::MessageMethods#tokens
+RubyLLM::ActiveRecord::MessageMethods#tool_call?
+RubyLLM::ActiveRecord::MessageMethods#tool_call_stop?
+RubyLLM::ActiveRecord::MessageMethods#tool_calls
+RubyLLM::ActiveRecord::MessageMethods#tool_error_message
+RubyLLM::ActiveRecord::MessageMethods#tool_result?
+RubyLLM::ActiveRecord::MessageMethods#tool_results
+RubyLLM::ActiveRecord::MessageMethods#truncated?
+RubyLLM::ActiveRecord::MessageMethods#web_sources
+RubyLLM::ActiveRecord::Model (class < RubyLLM::ActiveRecord::Record)
+RubyLLM::ActiveRecord::Model#to_llm
+RubyLLM::ActiveRecord::ProviderFile (class < RubyLLM::ActiveRecord::Record)
+RubyLLM::ActiveRecord::QueuedMessage (class < RubyLLM::ActiveRecord::Record)
+RubyLLM::ActiveRecord::QueuedMessage#queued_at
+RubyLLM::ActiveRecord::QueuedMessage#withdraw
+RubyLLM::ActiveRecord::Record (class < ActiveRecord::Base)
+RubyLLM::ActiveRecord::ToolCall (class < RubyLLM::ActiveRecord::Record)
+RubyLLM::ActiveRecord::ToolCall#arguments
+RubyLLM::ActiveRecord::ToolCall#paused?
+RubyLLM::ActiveRecord::ToolCall#running?
+RubyLLM::ActiveRecord::ToolCall#to_llm
+RubyLLM::ActiveRecord::Usage (class < RubyLLM::ActiveRecord::Record)
+RubyLLM::ActiveRecord::Usage#cost
+RubyLLM::ActiveRecord::Usage#tokens
+RubyLLM::Agent (class)
+RubyLLM::Agent extend Forwardable
+RubyLLM::Agent extend ModelOptions
+RubyLLM::Agent include Support::DeprecatedEnumerable
+RubyLLM::Agent#add_message(message_or_attributes)
+RubyLLM::Agent#after_fallback(&block)
+RubyLLM::Agent#after_file_write(&block)
+RubyLLM::Agent#after_message(&block)
+RubyLLM::Agent#after_tool_progress(&block)
+RubyLLM::Agent#after_tool_result(&block)
+RubyLLM::Agent#answer(question, value = nil, **values)
+RubyLLM::Agent#approve(tool_call, remember: false)
+RubyLLM::Agent#around_join(&block)
+RubyLLM::Agent#around_tool_call(&block)
+RubyLLM::Agent#ask(message = nil, with: nil, &block)
+RubyLLM::Agent#ask_later(message = nil, with: nil)
+RubyLLM::Agent#awaiting_approval?()
+RubyLLM::Agent#awaiting_input?()
+RubyLLM::Agent#awaiting_person?()
+RubyLLM::Agent#awaiting_tasks?()
+RubyLLM::Agent#before_fallback(&block)
+RubyLLM::Agent#before_message(&block)
+RubyLLM::Agent#before_request(&block)
+RubyLLM::Agent#before_tool_call(&block)
+RubyLLM::Agent#cache_until_here(ttl: nil)
+RubyLLM::Agent#caching
+RubyLLM::Agent#cancel()
+RubyLLM::Agent#cancelled?()
+RubyLLM::Agent#chat (attr_reader)
+RubyLLM::Agent#citations
+RubyLLM::Agent#code_execution
+RubyLLM::Agent#compact
+RubyLLM::Agent#compaction
+RubyLLM::Agent#complete(&block)
+RubyLLM::Agent#complete?()
+RubyLLM::Agent#concurrency
+RubyLLM::Agent#context
+RubyLLM::Agent#context_budget
+RubyLLM::Agent#convert_unsupported_attachments(&block)
+RubyLLM::Agent#cost()
+RubyLLM::Agent#count_tokens(message = nil)
+RubyLLM::Agent#decline(question)
+RubyLLM::Agent#deferred_tools
+RubyLLM::Agent#deny(tool_call)
+RubyLLM::Agent#each(&block)
+RubyLLM::Agent#end_user
+RubyLLM::Agent#fallbacks
+RubyLLM::Agent#file_store
+RubyLLM::Agent#generate(&block)
+RubyLLM::Agent#headers
+RubyLLM::Agent#join_queued_messages
+RubyLLM::Agent#max_output_tokens
+RubyLLM::Agent#mcp
+RubyLLM::Agent#messages
+RubyLLM::Agent#model
+RubyLLM::Agent#model_id()
+RubyLLM::Agent#owner
+RubyLLM::Agent#pending_approvals()
+RubyLLM::Agent#pending_inputs()
+RubyLLM::Agent#pending_questions()
+RubyLLM::Agent#pending_tasks()
+RubyLLM::Agent#provider
+RubyLLM::Agent#provider_options
+RubyLLM::Agent#provider_tools
+RubyLLM::Agent#queue(message = nil, with: nil, steer: true, sender: nil)
+RubyLLM::Agent#queued_messages()
+RubyLLM::Agent#render()
+RubyLLM::Agent#rescue_with_handler(exception)
+RubyLLM::Agent#run_tools
+RubyLLM::Agent#say(message = nil, with: nil, &block)
+RubyLLM::Agent#schema
+RubyLLM::Agent#skills
+RubyLLM::Agent#step(&block)
+RubyLLM::Agent#temperature
+RubyLLM::Agent#thinking()
+RubyLLM::Agent#tokens()
+RubyLLM::Agent#tool_options()
+RubyLLM::Agent#tools
+RubyLLM::Agent#waiting?()
+RubyLLM::Agent#with_caching(options = {})
+RubyLLM::Agent#with_citations(enabled = true)
+RubyLLM::Agent#with_code_execution(enabled = true, **options)
+RubyLLM::Agent#with_compaction(options = {})
+RubyLLM::Agent#with_context(context)
+RubyLLM::Agent#with_context_budget(budget = {}, per_result: nil, per_request: nil, window: nil)
+RubyLLM::Agent#with_end_user(end_user)
+RubyLLM::Agent#with_fallbacks(*models, on: Fallback::DEFAULT_ERRORS, drop_unsupported: false)
+RubyLLM::Agent#with_file_store(store = :memory, inline_limit: 10_000, tools: %i[read write edit])
+RubyLLM::Agent#with_headers(headers)
+RubyLLM::Agent#with_instructions(instructions, append: false, cache_until_here: false)
+RubyLLM::Agent#with_max_output_tokens(max_output_tokens)
+RubyLLM::Agent#with_mcp(*servers, defer: nil)
+RubyLLM::Agent#with_model(model_id, provider: nil, protocol: nil, assume_model_exists: false)
+RubyLLM::Agent#with_owner(owner)
+RubyLLM::Agent#with_provider_options(provider_options)
+RubyLLM::Agent#with_provider_tools(*tools, **tools_with_options)
+RubyLLM::Agent#with_schema(schema)
+RubyLLM::Agent#with_skills(*skills)
+RubyLLM::Agent#with_temperature(temperature)
+RubyLLM::Agent#with_thinking(enabled = true, **options)
+RubyLLM::Agent#with_tool_options(**options)
+RubyLLM::Agent#with_tools(*tools, defer: nil)
+RubyLLM::Agent#withdraw(queued)
+RubyLLM::Agent.after_fallback(method_name = nil, if: nil, unless: nil, &block)
+RubyLLM::Agent.after_file_write(method_name = nil, if: nil, unless: nil, &block)
+RubyLLM::Agent.after_message(method_name = nil, if: nil, unless: nil, &block)
+RubyLLM::Agent.after_tool_progress(method_name = nil, if: nil, unless: nil, &block)
+RubyLLM::Agent.after_tool_result(method_name = nil, if: nil, unless: nil, &block)
+RubyLLM::Agent.around_join(&block)
+RubyLLM::Agent.around_tool_call(method_name = nil, if: nil, unless: nil, &block)
+RubyLLM::Agent.before_fallback(method_name = nil, if: nil, unless: nil, &block)
+RubyLLM::Agent.before_message(method_name = nil, if: nil, unless: nil, &block)
+RubyLLM::Agent.before_request(method_name = nil, if: nil, unless: nil, &block)
+RubyLLM::Agent.before_tool_call(method_name = nil, if: nil, unless: nil, &block)
+RubyLLM::Agent.caching(enabled = true, **options, &block)
+RubyLLM::Agent.chat(**kwargs)
+RubyLLM::Agent.chat_class(value = nil)
+RubyLLM::Agent.citations(value = true)
+RubyLLM::Agent.code_execution(enabled = true, **options)
+RubyLLM::Agent.compaction(options = {})
+RubyLLM::Agent.context(value = nil, &block)
+RubyLLM::Agent.context_budget(budget = {}, **, &)
+RubyLLM::Agent.create!(**)
+RubyLLM::Agent.create(**)
+RubyLLM::Agent.description(text = nil)
+RubyLLM::Agent.end_user(value = nil, &block)
+RubyLLM::Agent.fallbacks(*models, on: Fallback::DEFAULT_ERRORS, drop_unsupported: false)
+RubyLLM::Agent.file_store(store = default, inline_limit: 10_000, tools: %i[read write edit])
+RubyLLM::Agent.find(id, **kwargs)
+RubyLLM::Agent.headers(**headers, &block)
+RubyLLM::Agent.inputs(*names)
+RubyLLM::Agent.instructions(text = nil, append: false, persist: true, cache_until_here: false, **prompt_locals, &block)
+RubyLLM::Agent.max_output_tokens(value = nil)
+RubyLLM::Agent.mcp(*servers, defer: nil, &block)
+RubyLLM::Agent.model(model_id = nil, **options, &block)
+RubyLLM::Agent.new(chat: nil, inputs: nil, persist_instructions: true, **kwargs)
+RubyLLM::Agent.owner(value = nil, &block)
+RubyLLM::Agent.provider_options(**provider_options, &block)
+RubyLLM::Agent.provider_tools(*tools, **tools_with_options, &block)
+RubyLLM::Agent.rescue_from(*exception_classes, with: nil, &block)
+RubyLLM::Agent.schema(value = nil, &block)
+RubyLLM::Agent.skills(*skills)
+RubyLLM::Agent.sync_instructions(chat_or_id, **kwargs)
+RubyLLM::Agent.temperature(value = nil)
+RubyLLM::Agent.thinking(enabled = true, **options)
+RubyLLM::Agent.to_tool(**inputs)
+RubyLLM::Agent.tool_options(**options, &block)
+RubyLLM::Agent.tools(*tools, defer: nil, &block)
+RubyLLM::AgentTask (class < RubyLLM::Task)
+RubyLLM::AgentTask#agent (attr_reader)
+RubyLLM::AgentTask#cancel
+RubyLLM::AgentTool (class < RubyLLM::Tool)
+RubyLLM::AgentTool#execute(task:, tool_call: nil, **inputs)
+RubyLLM::AgentTool#resume(task, **)
+RubyLLM::AgentTool#task(state, tool_call: nil)
+RubyLLM::AgentTool.agent_class (attr_reader)
+RubyLLM::AgentTool.tool_name
+RubyLLM::Attachment (class)
+RubyLLM::Attachment include Support::Inspectable
+RubyLLM::Attachment#audio?
+RubyLLM::Attachment#content
+RubyLLM::Attachment#document?
+RubyLLM::Attachment#filename (attr_reader)
+RubyLLM::Attachment#image?
+RubyLLM::Attachment#mime_type (attr_reader)
+RubyLLM::Attachment#pdf?
+RubyLLM::Attachment#processing (attr_reader)
+RubyLLM::Attachment#resolution (attr_reader)
+RubyLLM::Attachment#source (attr_reader)
+RubyLLM::Attachment#text?
+RubyLLM::Attachment#type
+RubyLLM::Attachment#video?
+RubyLLM::Attachment.new(source, filename: nil, mime_type: nil, resolution: nil, processing: nil, config: nil)
+RubyLLM::Attachment::DOCUMENT_EXTENSIONS
+RubyLLM::Attachment::PROCESSING_MODES
+RubyLLM::Attachment::RESOLUTIONS
+RubyLLM::BadRequestError (class < RubyLLM::Error)
+RubyLLM::Batch (class)
+RubyLLM::Batch include Support::Inspectable
+RubyLLM::Batch#cancel
+RubyLLM::Batch#cancelled?
+RubyLLM::Batch#chats (attr_reader)
+RubyLLM::Batch#complete?
+RubyLLM::Batch#cost
+RubyLLM::Batch#failed?
+RubyLLM::Batch#id (attr_reader)
+RubyLLM::Batch#messages
+RubyLLM::Batch#provider
+RubyLLM::Batch#raw_status (attr_reader)
+RubyLLM::Batch#refresh
+RubyLLM::Batch#request_counts (attr_reader)
+RubyLLM::Batch#requests (attr_reader)
+RubyLLM::Batch#results
+RubyLLM::Batch#status (attr_reader)
+RubyLLM::Batch#statuses (attr_reader)
+RubyLLM::Batch#succeeded?
+RubyLLM::Batch#tokens
+RubyLLM::Batch.find(id, provider: nil, context: nil)
+RubyLLM::Batch.submit(chats)
+RubyLLM::CachedContent (class)
+RubyLLM::CachedContent include Support::Inspectable
+RubyLLM::CachedContent#created_at (attr_reader)
+RubyLLM::CachedContent#delete
+RubyLLM::CachedContent#expires_at (attr_reader)
+RubyLLM::CachedContent#metadata (attr_reader)
+RubyLLM::CachedContent#model (attr_reader)
+RubyLLM::CachedContent#name (attr_reader)
+RubyLLM::CachedContent#provider (attr_reader)
+RubyLLM::CachedContent#renew(ttl:)
+RubyLLM::CachedContent#tokens (attr_reader)
+RubyLLM::CachedContent.create(content, model:, ttl: nil, instructions: nil, provider: nil, context: nil, with: nil)
+RubyLLM::CachedContent.find(name, provider: nil, context: nil)
+RubyLLM::CancelledError (class < StandardError)
+RubyLLM::CancelledError.new(message = 'Chat generation cancelled')
+RubyLLM::Chat (class)
+RubyLLM::Chat include Support::DeprecatedEnumerable
+RubyLLM::Chat include Support::Inspectable
+RubyLLM::Chat#add_message(message_or_attributes)
+RubyLLM::Chat#after_fallback(&)
+RubyLLM::Chat#after_file_write(&)
+RubyLLM::Chat#after_message(&)
+RubyLLM::Chat#after_tool_progress(&)
+RubyLLM::Chat#after_tool_result(&)
+RubyLLM::Chat#answer(question, value = nil, **values)
+RubyLLM::Chat#approve(tool_call, remember: false)
+RubyLLM::Chat#around_join(&block)
+RubyLLM::Chat#around_tool_call(&)
+RubyLLM::Chat#ask(message = nil, with: nil, &)
+RubyLLM::Chat#ask_later(message = nil, with: nil)
+RubyLLM::Chat#awaiting_approval?
+RubyLLM::Chat#awaiting_input?
+RubyLLM::Chat#awaiting_person?
+RubyLLM::Chat#awaiting_tasks?
+RubyLLM::Chat#before_fallback(&)
+RubyLLM::Chat#before_message(&)
+RubyLLM::Chat#before_request(&)
+RubyLLM::Chat#before_tool_call(&)
+RubyLLM::Chat#cache_until_here(ttl: nil)
+RubyLLM::Chat#caching (attr_reader)
+RubyLLM::Chat#cancel
+RubyLLM::Chat#cancelled?
+RubyLLM::Chat#citations (attr_reader)
+RubyLLM::Chat#code_execution (attr_reader)
+RubyLLM::Chat#compact
+RubyLLM::Chat#compaction (attr_reader)
+RubyLLM::Chat#complete(&)
+RubyLLM::Chat#complete?
+RubyLLM::Chat#concurrency (attr_reader)
+RubyLLM::Chat#context (attr_reader)
+RubyLLM::Chat#context_budget (attr_reader)
+RubyLLM::Chat#convert_unsupported_attachments(&)
+RubyLLM::Chat#cost
+RubyLLM::Chat#count_tokens(message = nil)
+RubyLLM::Chat#decline(question)
+RubyLLM::Chat#deferred_tools
+RubyLLM::Chat#deny(tool_call)
+RubyLLM::Chat#each(&)
+RubyLLM::Chat#end_user (attr_reader)
+RubyLLM::Chat#fallbacks (attr_reader)
+RubyLLM::Chat#file_store
+RubyLLM::Chat#generate(&)
+RubyLLM::Chat#headers (attr_reader)
+RubyLLM::Chat#join_queued_messages
+RubyLLM::Chat#max_output_tokens (attr_reader)
+RubyLLM::Chat#mcp (attr_reader)
+RubyLLM::Chat#messages (attr_reader)
+RubyLLM::Chat#messages=(new_messages)
+RubyLLM::Chat#model (attr_reader)
+RubyLLM::Chat#model_id
+RubyLLM::Chat#owner
+RubyLLM::Chat#pending_approvals
+RubyLLM::Chat#pending_inputs
+RubyLLM::Chat#pending_questions
+RubyLLM::Chat#pending_tasks
+RubyLLM::Chat#provider (attr_reader)
+RubyLLM::Chat#provider_options (attr_reader)
+RubyLLM::Chat#provider_tools (attr_reader)
+RubyLLM::Chat#queue(message = nil, with: nil, steer: true, sender: nil)
+RubyLLM::Chat#queued_messages
+RubyLLM::Chat#render
+RubyLLM::Chat#run_tools
+RubyLLM::Chat#say(message = nil, with: nil, &)
+RubyLLM::Chat#schema (attr_reader)
+RubyLLM::Chat#skills (attr_reader)
+RubyLLM::Chat#step(&)
+RubyLLM::Chat#temperature (attr_reader)
+RubyLLM::Chat#thinking
+RubyLLM::Chat#tokens
+RubyLLM::Chat#tool_options
+RubyLLM::Chat#tools
+RubyLLM::Chat#waiting?
+RubyLLM::Chat#with_caching(options = {})
+RubyLLM::Chat#with_citations(enabled = true)
+RubyLLM::Chat#with_code_execution(enabled = true, **options)
+RubyLLM::Chat#with_compaction(options = {})
+RubyLLM::Chat#with_context(context)
+RubyLLM::Chat#with_context_budget(budget = {}, **shares)
+RubyLLM::Chat#with_end_user(end_user)
+RubyLLM::Chat#with_fallbacks(*models, on: Fallback::DEFAULT_ERRORS, drop_unsupported: false)
+RubyLLM::Chat#with_file_store(store = :memory, inline_limit: FileReferences::INLINE_LIMIT, tools: FileStore::Tools::DEFAULT)
+RubyLLM::Chat#with_headers(headers)
+RubyLLM::Chat#with_instructions(instructions, append: false, cache_until_here: false)
+RubyLLM::Chat#with_max_output_tokens(max_output_tokens)
+RubyLLM::Chat#with_mcp(*servers, defer: nil)
+RubyLLM::Chat#with_model(model_id, provider: nil, protocol: nil, assume_model_exists: false)
+RubyLLM::Chat#with_owner(owner)
+RubyLLM::Chat#with_provider_options(provider_options)
+RubyLLM::Chat#with_provider_tools(*tools, **tools_with_options)
+RubyLLM::Chat#with_schema(schema)
+RubyLLM::Chat#with_skills(*skills)
+RubyLLM::Chat#with_temperature(temperature)
+RubyLLM::Chat#with_thinking(enabled = true, **options)
+RubyLLM::Chat#with_tool_options(**options)
+RubyLLM::Chat#with_tools(*tools, defer: nil)
+RubyLLM::Chat#withdraw(queued)
+RubyLLM::Chat.new(model: nil, provider: nil, protocol: nil, assume_model_exists: false, context: nil)
+RubyLLM::Chat::COMPACTION_OPTIONS
+RubyLLM::Choice (class)
+RubyLLM::Choice include Support::Inspectable
+RubyLLM::Choice#choice (attr_reader)
+RubyLLM::Choice#confidence (attr_reader)
+RubyLLM::Choice#probabilities (attr_reader)
+RubyLLM::Choice#to_h
+RubyLLM::Choice#type
+RubyLLM::Chunk (class < RubyLLM::Message)
+RubyLLM::Chunk#index (attr_accessor)
+RubyLLM::Citation (class)
+RubyLLM::Citation include Support::Inspectable
+RubyLLM::Citation#==(other)
+RubyLLM::Citation#cited_text (attr_reader)
+RubyLLM::Citation#end_index (attr_reader)
+RubyLLM::Citation#end_page (attr_reader)
+RubyLLM::Citation#source_id (attr_reader)
+RubyLLM::Citation#source_index (attr_reader)
+RubyLLM::Citation#start_index (attr_reader)
+RubyLLM::Citation#start_page (attr_reader)
+RubyLLM::Citation#text (attr_reader)
+RubyLLM::Citation#title (attr_reader)
+RubyLLM::Citation#to_h
+RubyLLM::Citation#url (attr_reader)
+RubyLLM::CodeExecution (class < RubyLLM::Tool)
+RubyLLM::CodeExecution#description
+RubyLLM::CodeExecution#escalations
+RubyLLM::CodeExecution#execute(language:, code:, sandbox: nil, reason: nil, files: nil, tool_call: nil)
+RubyLLM::CodeExecution#languages
+RubyLLM::CodeExecution#mounts
+RubyLLM::CodeExecution#parameters_schema
+RubyLLM::CodeExecution#requires_approval?(tool_call = nil)
+RubyLLM::CodeExecution#sandbox
+RubyLLM::CodeExecution#summary(name)
+RubyLLM::CodeExecution::LANGUAGES
+RubyLLM::CodeExecution::MAX_FILES
+RubyLLM::CodeExecution::MAX_FILE_SIZE
+RubyLLM::CodeExecution::MAX_MODEL_TEXT
+RubyLLM::CodeExecution::MAX_OUTPUT
+RubyLLM::CodeExecution::OPTIONS
+RubyLLM::CodeExecution::RUN_DIR
+RubyLLM::CodeExecution::Workspace (class)
+RubyLLM::CodeExecution::Workspace::Unavailable (class < StandardError)
+RubyLLM::Configuration (class)
+RubyLLM::Configuration#auto_upload_large_files (attr_accessor)
+RubyLLM::Configuration#broadcast_messages (attr_accessor)
+RubyLLM::Configuration#default_embedding_model (attr_accessor)
+RubyLLM::Configuration#default_image_model (attr_accessor)
+RubyLLM::Configuration#default_judgment_model (attr_accessor)
+RubyLLM::Configuration#default_model (attr_accessor)
+RubyLLM::Configuration#default_moderation_model (attr_accessor)
+RubyLLM::Configuration#default_ocr_model (attr_accessor)
+RubyLLM::Configuration#default_speech_model (attr_accessor)
+RubyLLM::Configuration#default_transcription_model (attr_accessor)
+RubyLLM::Configuration#default_video_model (attr_accessor)
+RubyLLM::Configuration#deprecation_behavior (attr_accessor)
+RubyLLM::Configuration#faraday_adapter (attr_accessor)
+RubyLLM::Configuration#file_converters (attr_accessor)
+RubyLLM::Configuration#http_proxy (attr_accessor)
+RubyLLM::Configuration#instrumenter (attr_accessor)
+RubyLLM::Configuration#log_file (attr_accessor)
+RubyLLM::Configuration#log_level (attr_accessor)
+RubyLLM::Configuration#log_regexp_timeout (attr_accessor)
+RubyLLM::Configuration#log_stream_debug (attr_accessor)
+RubyLLM::Configuration#logger (attr_accessor)
+RubyLLM::Configuration#max_retries (attr_accessor)
+RubyLLM::Configuration#max_run_time (attr_accessor)
+RubyLLM::Configuration#mcp_client_id (attr_accessor)
+RubyLLM::Configuration#mcp_client_name (attr_accessor)
+RubyLLM::Configuration#mcp_credential_store (attr_accessor)
+RubyLLM::Configuration#model_registry_file (attr_accessor)
+RubyLLM::Configuration#model_registry_store (attr_accessor)
+RubyLLM::Configuration#package_cache_dir (attr_accessor)
+RubyLLM::Configuration#redact_error_messages (attr_accessor)
+RubyLLM::Configuration#request_timeout (attr_accessor)
+RubyLLM::Configuration#retry_backoff_factor (attr_accessor)
+RubyLLM::Configuration#retry_interval (attr_accessor)
+RubyLLM::Configuration#retry_interval_randomness (attr_accessor)
+RubyLLM::Configuration#retry_max_interval (attr_accessor)
+RubyLLM::Configuration#sandbox (attr_accessor)
+RubyLLM::Configuration#sandbox_backend (attr_accessor)
+RubyLLM::Configuration#split_think_tags (attr_accessor)
+RubyLLM::Configuration#tool_concurrency (attr_accessor)
+RubyLLM::Configuration#video_generation_poll_interval (attr_accessor)
+RubyLLM::Configuration#video_generation_timeout (attr_accessor)
+RubyLLM::Configuration.options
+RubyLLM::ConfigurationError (class < StandardError)
+RubyLLM::ConnectionError (class < RubyLLM::Error)
+RubyLLM::ConnectionError#timeout?
+RubyLLM::ContentFilter (class)
+RubyLLM::ContentFilter include Support::Inspectable
+RubyLLM::ContentFilter#category (attr_reader)
+RubyLLM::ContentFilter#detected?
+RubyLLM::ContentFilter#filtered?
+RubyLLM::ContentFilter#severity (attr_reader)
+RubyLLM::ContentFilter#source (attr_reader)
+RubyLLM::ContentFilter#to_h
+RubyLLM::ContentFilterError (class < RubyLLM::Error)
+RubyLLM::Context (class)
+RubyLLM::Context#animate(*, **, &)
+RubyLLM::Context#animate_later(*, **, &)
+RubyLLM::Context#cache(*, **, &)
+RubyLLM::Context#chat(*, **, &)
+RubyLLM::Context#count_tokens(text, model: nil, provider: nil)
+RubyLLM::Context#download(*, **, &)
+RubyLLM::Context#embed(*, **, &)
+RubyLLM::Context#embed_later(text, model: nil, provider: nil, dimensions: nil)
+RubyLLM::Context#judge(*, **, &)
+RubyLLM::Context#mcp(...)
+RubyLLM::Context#moderate(*, **, &)
+RubyLLM::Context#ocr(*, **, &)
+RubyLLM::Context#paint(*, **, &)
+RubyLLM::Context#rerank(*, **, &)
+RubyLLM::Context#research(*, **)
+RubyLLM::Context#research_later(*, **)
+RubyLLM::Context#speak(*, **, &)
+RubyLLM::Context#tokenize(*, **)
+RubyLLM::Context#transcribe(*, **, &)
+RubyLLM::Context#upload(*, **, &)
+RubyLLM::Context#workflow(name, id: nil, metadata: nil, &)
+RubyLLM::ContextLengthExceededError (class < RubyLLM::Error)
+RubyLLM::Cost (class)
+RubyLLM::Cost include Support::Inspectable
+RubyLLM::Cost#audio_seconds
+RubyLLM::Cost#cache_read
+RubyLLM::Cost#cache_write
+RubyLLM::Cost#characters
+RubyLLM::Cost#input
+RubyLLM::Cost#output
+RubyLLM::Cost#search_units
+RubyLLM::Cost#thinking
+RubyLLM::Cost#to_h
+RubyLLM::Cost#total
+RubyLLM::Cost.aggregate(costs, complete: true)
+RubyLLM::Cost.from_h(hash, tokens: nil)
+RubyLLM::DeprecationError (class < StandardError)
+RubyLLM::DownloadedFile (class < String)
+RubyLLM::DownloadedFile include Files::Saving
+RubyLLM::DownloadedFile include Support::Inspectable
+RubyLLM::DownloadedFile#save(path)
+RubyLLM::DownloadedFile#to_blob
+RubyLLM::Embedding (class)
+RubyLLM::Embedding include Accounting::Usage::ModelInfo
+RubyLLM::Embedding include Accounting::Usage::Result
+RubyLLM::Embedding include Support::Inspectable
+RubyLLM::Embedding#cost
+RubyLLM::Embedding#model (attr_reader)
+RubyLLM::Embedding#sparse_vectors (attr_reader)
+RubyLLM::Embedding#tokens
+RubyLLM::Embedding#vector
+RubyLLM::Embedding#vectors (attr_reader)
+RubyLLM::Embedding.embed(text, model: nil, provider: nil, assume_model_exists: false, context: nil, dimensions: nil, task_type: nil, title: nil, with: nil, provider_options: {}, metadata: nil, owner: nil)
+RubyLLM::EmbeddingRequest (class)
+RubyLLM::EmbeddingRequest include Support::Inspectable
+RubyLLM::EmbeddingRequest#dimensions (attr_reader)
+RubyLLM::EmbeddingRequest#model (attr_reader)
+RubyLLM::EmbeddingRequest#provider (attr_reader)
+RubyLLM::EmbeddingRequest#render
+RubyLLM::EmbeddingRequest#result (attr_accessor)
+RubyLLM::EmbeddingRequest#text (attr_reader)
+RubyLLM::Error (class < StandardError)
+RubyLLM::Error#error_code (attr_reader)
+RubyLLM::Error#provider (attr_reader)
+RubyLLM::Error#provider_message (attr_reader)
+RubyLLM::Error#response (attr_reader)
+RubyLLM::Error#response_body
+RubyLLM::Error.new(message = nil, response: nil, provider: nil, provider_message: nil, error_code: nil, redact: nil)
+RubyLLM::Evaluation (class)
+RubyLLM::Evaluation#assert(condition, message = nil)
+RubyLLM::Evaluation#assert_equal(expected, actual, message = nil)
+RubyLLM::Evaluation#assert_includes(collection, value, message = nil)
+RubyLLM::Evaluation#assertions
+RubyLLM::Evaluation#expected_output (attr_reader)
+RubyLLM::Evaluation#input (attr_reader)
+RubyLLM::Evaluation#messages
+RubyLLM::Evaluation#metadata (attr_reader)
+RubyLLM::Evaluation#output
+RubyLLM::Evaluation#perform(_input)
+RubyLLM::Evaluation#refute(condition, message = nil)
+RubyLLM::Evaluation#result (attr_reader)
+RubyLLM::Evaluation#setup
+RubyLLM::Evaluation#teardown
+RubyLLM::Evaluation#tool_calls
+RubyLLM::Evaluation.adapt(type, &block)
+RubyLLM::Evaluation.cases(dataset: nil, only: nil)
+RubyLLM::Evaluation.dataset(source = nil, &block)
+RubyLLM::Evaluation.evaluation(name, instructions = nil, minimum: nil, evaluator: nil)
+RubyLLM::Evaluation.evaluator(target = nil, **options)
+RubyLLM::Evaluation.run(dataset: nil, only: nil, repetitions: 1, id: nil)
+RubyLLM::Evaluation::Case (class)
+RubyLLM::Evaluation::Case include Support::Inspectable
+RubyLLM::Evaluation::Case#expected_output (attr_reader)
+RubyLLM::Evaluation::Case#expected_output?
+RubyLLM::Evaluation::Case#inputs (attr_reader)
+RubyLLM::Evaluation::Case#metadata (attr_reader)
+RubyLLM::Evaluation::Case#name (attr_reader)
+RubyLLM::Evaluation::Case#to_h
+RubyLLM::Evaluation::Case.new(name:, inputs:, metadata: {}, **reference)
+RubyLLM::Evaluation::Minitest (module)
+RubyLLM::Evaluation::Minitest#evaluates(evaluation, dataset: nil, only: nil, **options)
+RubyLLM::Evaluation::RSpec (module)
+RubyLLM::Evaluation::RSpec#evaluates(evaluation, dataset: nil, only: nil, **options)
+RubyLLM::Evaluation::Report (class)
+RubyLLM::Evaluation::Report include Accounting::Usage::Result
+RubyLLM::Evaluation::Report include Enumerable
+RubyLLM::Evaluation::Report include Support::Inspectable
+RubyLLM::Evaluation::Report#cost
+RubyLLM::Evaluation::Report#counts
+RubyLLM::Evaluation::Report#definitions (attr_reader)
+RubyLLM::Evaluation::Report#each(&)
+RubyLLM::Evaluation::Report#id (attr_reader)
+RubyLLM::Evaluation::Report#name (attr_reader)
+RubyLLM::Evaluation::Report#pass_rate
+RubyLLM::Evaluation::Report#passed?
+RubyLLM::Evaluation::Report#save(path)
+RubyLLM::Evaluation::Report#started_at (attr_reader)
+RubyLLM::Evaluation::Report#to_h
+RubyLLM::Evaluation::Report#to_s
+RubyLLM::Evaluation::Report#tokens
+RubyLLM::Evaluation::Report#trials (attr_reader)
+RubyLLM::Evaluation::Result (class)
+RubyLLM::Evaluation::Result include Support::Inspectable
+RubyLLM::Evaluation::Result#error (attr_reader)
+RubyLLM::Evaluation::Result#evidence (attr_reader)
+RubyLLM::Evaluation::Result#model (attr_reader)
+RubyLLM::Evaluation::Result#name (attr_reader)
+RubyLLM::Evaluation::Result#passed?
+RubyLLM::Evaluation::Result#reason (attr_reader)
+RubyLLM::Evaluation::Result#status
+RubyLLM::Evaluation::Result#to_h
+RubyLLM::Evaluation::Result#value (attr_reader)
+RubyLLM::Evaluation::Trial (class)
+RubyLLM::Evaluation::Trial include Accounting::Usage::Result
+RubyLLM::Evaluation::Trial include Support::Inspectable
+RubyLLM::Evaluation::Trial#assertion_count (attr_reader)
+RubyLLM::Evaluation::Trial#assertion_failure (attr_reader)
+RubyLLM::Evaluation::Trial#cost
+RubyLLM::Evaluation::Trial#duration (attr_reader)
+RubyLLM::Evaluation::Trial#error (attr_reader)
+RubyLLM::Evaluation::Trial#evaluations (attr_reader)
+RubyLLM::Evaluation::Trial#evaluator_cost
+RubyLLM::Evaluation::Trial#evaluator_tokens
+RubyLLM::Evaluation::Trial#evidence (attr_reader)
+RubyLLM::Evaluation::Trial#output (attr_reader)
+RubyLLM::Evaluation::Trial#passed?
+RubyLLM::Evaluation::Trial#repetition (attr_reader)
+RubyLLM::Evaluation::Trial#result (attr_reader)
+RubyLLM::Evaluation::Trial#status
+RubyLLM::Evaluation::Trial#task_cost
+RubyLLM::Evaluation::Trial#task_tokens
+RubyLLM::Evaluation::Trial#test_case (attr_reader)
+RubyLLM::Evaluation::Trial#to_h
+RubyLLM::Evaluation::Trial#tokens
+RubyLLM::Fallback (class)
+RubyLLM::Fallback include Support::Inspectable
+RubyLLM::Fallback#attempt (attr_reader)
+RubyLLM::Fallback#chat (attr_reader)
+RubyLLM::Fallback#chunks_yielded?
+RubyLLM::Fallback#dropped_parameter (attr_reader)
+RubyLLM::Fallback#error (attr_reader)
+RubyLLM::Fallback#failed?
+RubyLLM::Fallback#fallback_error (attr_reader)
+RubyLLM::Fallback#from (attr_reader)
+RubyLLM::Fallback#id (attr_reader)
+RubyLLM::Fallback#model (attr_reader)
+RubyLLM::Fallback#provider (attr_reader)
+RubyLLM::Fallback#response (attr_reader)
+RubyLLM::Fallback#streaming?
+RubyLLM::Fallback#succeeded?
+RubyLLM::Fallback#to (attr_reader)
+RubyLLM::Fallback::DEFAULT_ERRORS
+RubyLLM::FileNotFoundError (class < StandardError)
+RubyLLM::FileStore (class)
+RubyLLM::FileStore include Enumerable
+RubyLLM::FileStore#[](path)
+RubyLLM::FileStore#attachment(path, file: nil)
+RubyLLM::FileStore#delete(path)
+RubyLLM::FileStore#delete_folder(path)
+RubyLLM::FileStore#each(&)
+RubyLLM::FileStore#exist?(path)
+RubyLLM::FileStore#find(path)
+RubyLLM::FileStore#list(prefix = nil)
+RubyLLM::FileStore#read(path)
+RubyLLM::FileStore#text(path, config: nil)
+RubyLLM::FileStore#with_lock(&)
+RubyLLM::FileStore#write(path, content, content_type: nil)
+RubyLLM::FileStore.path(name)
+RubyLLM::FileStore::CACHED_TEXTS
+RubyLLM::FileStore::Converters (module)
+RubyLLM::FileStore::Converters::OCR (class)
+RubyLLM::FileStore::Converters::OCR#call(attachment)
+RubyLLM::FileStore::Converters::OCR.new(**options)
+RubyLLM::FileStore::Converters::Office (module)
+RubyLLM::FileStore::Converters::Office.call(attachment)
+RubyLLM::FileStore::Converters::Office.local?
+RubyLLM::FileStore::Converters::Text (module)
+RubyLLM::FileStore::Converters::Text#call(attachment)
+RubyLLM::FileStore::Converters::Text#local?
+RubyLLM::FileStore::Directory (class < RubyLLM::FileStore)
+RubyLLM::FileStore::Directory#[](path)
+RubyLLM::FileStore::Directory#delete(path)
+RubyLLM::FileStore::Directory#delete_folder(path)
+RubyLLM::FileStore::Directory#list(prefix = nil)
+RubyLLM::FileStore::Directory#read(path)
+RubyLLM::FileStore::Directory#root (attr_reader)
+RubyLLM::FileStore::Directory#with_lock
+RubyLLM::FileStore::Directory#write(path, content, content_type: nil)
+RubyLLM::FileStore::Directory.new(root)
+RubyLLM::FileStore::Memory (class < RubyLLM::FileStore)
+RubyLLM::FileStore::Memory#[](path)
+RubyLLM::FileStore::Memory#delete(path)
+RubyLLM::FileStore::Memory#delete_folder(path)
+RubyLLM::FileStore::Memory#list(prefix = nil)
+RubyLLM::FileStore::Memory#read(path)
+RubyLLM::FileStore::Memory#write(path, content, content_type: nil)
+RubyLLM::FileStoreFullError (class < StandardError)
+RubyLLM::ForbiddenError (class < RubyLLM::Error)
+RubyLLM::Image (class)
+RubyLLM::Image include Accounting::Usage::ModelInfo
+RubyLLM::Image include Accounting::Usage::Result
+RubyLLM::Image include Files::Saving
+RubyLLM::Image include Support::Inspectable
+RubyLLM::Image#base64?
+RubyLLM::Image#cost
+RubyLLM::Image#data (attr_reader)
+RubyLLM::Image#mime_type (attr_reader)
+RubyLLM::Image#model (attr_reader)
+RubyLLM::Image#model_info
+RubyLLM::Image#revised_prompt (attr_reader)
+RubyLLM::Image#save(path)
+RubyLLM::Image#to_blob
+RubyLLM::Image#tokens
+RubyLLM::Image#url (attr_reader)
+RubyLLM::Image.paint(prompt, model: nil, provider: nil, assume_model_exists: false, size: nil, count: nil, context: nil, with: nil, mask: nil, provider_options: {}, metadata: nil, owner: nil)
+RubyLLM::InputRequiredError (class < RubyLLM::Error)
+RubyLLM::InputRequiredError#requests
+RubyLLM::InvalidRoleError (class < StandardError)
+RubyLLM::InvalidSkillError (class < StandardError)
+RubyLLM::InvalidToolChoiceError (class < StandardError)
+RubyLLM::Judge (class)
+RubyLLM::Judge#judge(input = nil, questions: {}, with: nil, context: nil, metadata: nil, owner: nil, **options, &block)
+RubyLLM::Judge.choice(name, instructions = nil, options = nil, &)
+RubyLLM::Judge.inputs(*names)
+RubyLLM::Judge.judge(input = nil, **options, &)
+RubyLLM::Judge.model(value = nil, **options, &block)
+RubyLLM::Judge.new(**inputs)
+RubyLLM::Judge.probability(name, instructions = nil, criteria = nil, &)
+RubyLLM::Judge.provider_options(value = nil, &block)
+RubyLLM::Judge.score(name, instructions = nil, levels = nil, &)
+RubyLLM::Judgment (class)
+RubyLLM::Judgment include Accounting::Usage::Result
+RubyLLM::Judgment include Enumerable
+RubyLLM::Judgment include Support::Inspectable
+RubyLLM::Judgment#[](name)
+RubyLLM::Judgment#answers (attr_reader)
+RubyLLM::Judgment#cost
+RubyLLM::Judgment#each(&)
+RubyLLM::Judgment#fetch(name)
+RubyLLM::Judgment#model (attr_reader)
+RubyLLM::Judgment#raw (attr_reader)
+RubyLLM::Judgment#to_h
+RubyLLM::Judgment#tokens
+RubyLLM::MCP (class)
+RubyLLM::MCP include Support::Inspectable
+RubyLLM::MCP#authorization_url(redirect_uri:)
+RubyLLM::MCP#authorize(params)
+RubyLLM::MCP#authorized?
+RubyLLM::MCP#call(name, **arguments)
+RubyLLM::MCP#close
+RubyLLM::MCP#deauthorize
+RubyLLM::MCP#instructions
+RubyLLM::MCP#listen(resources: [], tasks: [])
+RubyLLM::MCP#name
+RubyLLM::MCP#prompt(name, **arguments)
+RubyLLM::MCP#prompts
+RubyLLM::MCP#resource(uri, **variables)
+RubyLLM::MCP#resource_templates
+RubyLLM::MCP#resources
+RubyLLM::MCP#tools
+RubyLLM::MCP#version
+RubyLLM::MCP.after_change(method = nil, &block)
+RubyLLM::MCP.after_progress(method = nil, &block)
+RubyLLM::MCP.bearer_token(value = nil, &block)
+RubyLLM::MCP.before_input_request(method = nil, &block)
+RubyLLM::MCP.command(*argv)
+RubyLLM::MCP.defer(*names)
+RubyLLM::MCP.directory(value = nil)
+RubyLLM::MCP.env(**variables)
+RubyLLM::MCP.except(*names)
+RubyLLM::MCP.extension(name, **settings)
+RubyLLM::MCP.header(name, value = nil, &block)
+RubyLLM::MCP.input_requests(*kinds)
+RubyLLM::MCP.inputs(*names)
+RubyLLM::MCP.log_level(level = nil)
+RubyLLM::MCP.new(context: nil, **inputs)
+RubyLLM::MCP.oauth(owner: nil, scopes: nil, client_id: nil, client_secret: nil, grant: nil, private_key: nil, assertion: nil, identity_provider: nil, authorization_params: nil)
+RubyLLM::MCP.only(*names)
+RubyLLM::MCP.prefix(value = nil)
+RubyLLM::MCP.requires_approval(*names, **options)
+RubyLLM::MCP.timeout(seconds = nil)
+RubyLLM::MCP.tool(tool, as: nil, description: nil, fixed_arguments: nil, wrap: nil)
+RubyLLM::MCP.transport(value = nil, &block)
+RubyLLM::MCP.url(value = nil, allow_http: false)
+RubyLLM::MCP::Collection (class)
+RubyLLM::MCP::Collection include Enumerable
+RubyLLM::MCP::Collection#[](name)
+RubyLLM::MCP::Collection#each(&)
+RubyLLM::MCP::Collection#empty?
+RubyLLM::MCP::Error (class < RubyLLM::Error)
+RubyLLM::MCP::Error#code (attr_reader)
+RubyLLM::MCP::Error#data (attr_reader)
+RubyLLM::MCP::InputRequest
+RubyLLM::MCP::InputRequest (class)
+RubyLLM::MCP::InputRequest include Support::Inspectable
+RubyLLM::MCP::InputRequest#answer(value = nil, **values)
+RubyLLM::MCP::InputRequest#answered?
+RubyLLM::MCP::InputRequest#approval?
+RubyLLM::MCP::InputRequest#approve(remember: false)
+RubyLLM::MCP::InputRequest#decline
+RubyLLM::MCP::InputRequest#deny
+RubyLLM::MCP::InputRequest#fields (attr_reader)
+RubyLLM::MCP::InputRequest#form?
+RubyLLM::MCP::InputRequest#id
+RubyLLM::MCP::InputRequest#message (attr_reader)
+RubyLLM::MCP::InputRequest#tool_call (attr_reader)
+RubyLLM::MCP::InputRequest#url (attr_reader)
+RubyLLM::MCP::InputRequest#url?
+RubyLLM::MCP::InputRequest::Field
+RubyLLM::MCP::InputRequiredError (class < RubyLLM::InputRequiredError)
+RubyLLM::MCP::InsufficientScopeError (class < RubyLLM::ForbiddenError)
+RubyLLM::MCP::InsufficientScopeError#scopes (attr_reader)
+RubyLLM::MCP::Prompt (class)
+RubyLLM::MCP::Prompt include Support::Inspectable
+RubyLLM::MCP::Prompt#arguments (attr_reader)
+RubyLLM::MCP::Prompt#description (attr_reader)
+RubyLLM::MCP::Prompt#messages
+RubyLLM::MCP::Prompt#name (attr_reader)
+RubyLLM::MCP::Prompt#suggest(**arguments)
+RubyLLM::MCP::Prompt#title (attr_reader)
+RubyLLM::MCP::Prompt::Argument
+RubyLLM::MCP::Resource (class)
+RubyLLM::MCP::Resource include Files::Saving
+RubyLLM::MCP::Resource include Support::Inspectable
+RubyLLM::MCP::Resource#content
+RubyLLM::MCP::Resource#description (attr_reader)
+RubyLLM::MCP::Resource#meta (attr_reader)
+RubyLLM::MCP::Resource#mime_type (attr_reader)
+RubyLLM::MCP::Resource#name (attr_reader)
+RubyLLM::MCP::Resource#save(path)
+RubyLLM::MCP::Resource#title (attr_reader)
+RubyLLM::MCP::Resource#to_attachment
+RubyLLM::MCP::Resource#to_blob
+RubyLLM::MCP::Resource#uri (attr_reader)
+RubyLLM::MCP::ResourceTemplate (class)
+RubyLLM::MCP::ResourceTemplate include Support::Inspectable
+RubyLLM::MCP::ResourceTemplate#description (attr_reader)
+RubyLLM::MCP::ResourceTemplate#mime_type (attr_reader)
+RubyLLM::MCP::ResourceTemplate#name (attr_reader)
+RubyLLM::MCP::ResourceTemplate#suggest(**variables)
+RubyLLM::MCP::ResourceTemplate#title (attr_reader)
+RubyLLM::MCP::ResourceTemplate#uri (attr_reader)
+RubyLLM::MCP::Result (class)
+RubyLLM::MCP::Result include Support::Inspectable
+RubyLLM::MCP::Result#attachments (attr_reader)
+RubyLLM::MCP::Result#content
+RubyLLM::MCP::Result#error?
+RubyLLM::MCP::Result#meta (attr_reader)
+RubyLLM::MCP::Result#structured (attr_reader)
+RubyLLM::MCP::Result#text (attr_reader)
+RubyLLM::MCP::Result#to_h
+RubyLLM::MCP::Result#ui_uri (attr_reader)
+RubyLLM::MCP::Task (class < RubyLLM::Task)
+RubyLLM::MCP::Task#cancel
+RubyLLM::MCP::Task#expires_at
+RubyLLM::MCP::Task#id (attr_reader)
+RubyLLM::MCP::Task#poll_interval
+RubyLLM::MCP::Task#refresh
+RubyLLM::MCP::Task#result
+RubyLLM::MCP::Task#status
+RubyLLM::MCP::Task#status_message
+RubyLLM::MCP::Task#wait(timeout: nil, interval: nil)
+RubyLLM::MCP::Tool (class < RubyLLM::Tool)
+RubyLLM::MCP::Tool include Support::Inspectable
+RubyLLM::MCP::Tool#call(**arguments)
+RubyLLM::MCP::Tool#description (attr_reader)
+RubyLLM::MCP::Tool#destructive?
+RubyLLM::MCP::Tool#idempotent?
+RubyLLM::MCP::Tool#meta (attr_reader)
+RubyLLM::MCP::Tool#name (attr_reader)
+RubyLLM::MCP::Tool#open_world?
+RubyLLM::MCP::Tool#parameters_schema (attr_reader)
+RubyLLM::MCP::Tool#read_only?
+RubyLLM::MCP::Tool#requires_approval?(_tool_call = nil)
+RubyLLM::MCP::Tool#resume(task, **arguments)
+RubyLLM::MCP::Tool#server_name (attr_reader)
+RubyLLM::MCP::Tool#task(state, tool_call: nil)
+RubyLLM::MCP::Tool#ui_uri (attr_reader)
+RubyLLM::MCP::Tool#visibility (attr_reader)
+RubyLLM::Message (class)
+RubyLLM::Message include Accounting::Usage::Result
+RubyLLM::Message include Support::Inspectable
+RubyLLM::Message#attachments (attr_reader)
+RubyLLM::Message#cache_ttl (attr_reader)
+RubyLLM::Message#cache_until_here(ttl: nil)
+RubyLLM::Message#cache_until_here?
+RubyLLM::Message#cancelled?
+RubyLLM::Message#citations (attr_reader)
+RubyLLM::Message#content (attr_reader)
+RubyLLM::Message#content_filtered?
+RubyLLM::Message#content_filters (attr_reader)
+RubyLLM::Message#cost(model: nil)
+RubyLLM::Message#finish_reason (attr_reader)
+RubyLLM::Message#halted?
+RubyLLM::Message#max_tokens?
+RubyLLM::Message#mcp_result (attr_reader)
+RubyLLM::Message#model (attr_reader)
+RubyLLM::Message#model_id (attr_reader)
+RubyLLM::Message#model_info
+RubyLLM::Message#parsed
+RubyLLM::Message#provider
+RubyLLM::Message#raw (attr_reader)
+RubyLLM::Message#role (attr_reader)
+RubyLLM::Message#server_tool_calls (attr_reader)
+RubyLLM::Message#stopped?
+RubyLLM::Message#thinking (attr_reader)
+RubyLLM::Message#to_h
+RubyLLM::Message#tokens
+RubyLLM::Message#tool_call?
+RubyLLM::Message#tool_call_id (attr_reader)
+RubyLLM::Message#tool_call_stop?
+RubyLLM::Message#tool_calls (attr_reader)
+RubyLLM::Message#tool_error_message
+RubyLLM::Message#tool_result?
+RubyLLM::Message#tool_results
+RubyLLM::Message#truncated?
+RubyLLM::Message#web_sources
+RubyLLM::Message#with(**changes)
+RubyLLM::Message::ROLES
+RubyLLM::Model (class)
+RubyLLM::Model include Support::Inspectable
+RubyLLM::Model#capabilities (attr_reader)
+RubyLLM::Model#context_window (attr_reader)
+RubyLLM::Model#cost_for(tokens, tier: :standard)
+RubyLLM::Model#created_at (attr_reader)
+RubyLLM::Model#family (attr_reader)
+RubyLLM::Model#id (attr_reader)
+RubyLLM::Model#knowledge_cutoff (attr_reader)
+RubyLLM::Model#label
+RubyLLM::Model#max_output_tokens (attr_reader)
+RubyLLM::Model#metadata (attr_reader)
+RubyLLM::Model#modalities (attr_reader)
+RubyLLM::Model#name (attr_reader)
+RubyLLM::Model#price(kind)
+RubyLLM::Model#pricing (attr_reader)
+RubyLLM::Model#provider (attr_reader)
+RubyLLM::Model#provider_class
+RubyLLM::Model#supports?(capability)
+RubyLLM::Model#type
+RubyLLM::Model#unlisted?
+RubyLLM::Model#unlisted_at (attr_reader)
+RubyLLM::Model::Modalities (class)
+RubyLLM::Model::Modalities#input (attr_reader)
+RubyLLM::Model::Modalities#output (attr_reader)
+RubyLLM::Model::Modalities#to_h
+RubyLLM::Model::Pricing (class)
+RubyLLM::Model::Pricing#audio_seconds
+RubyLLM::Model::Pricing#audio_tokens
+RubyLLM::Model::Pricing#characters
+RubyLLM::Model::Pricing#embeddings
+RubyLLM::Model::Pricing#images
+RubyLLM::Model::Pricing#search_units
+RubyLLM::Model::Pricing#text_tokens
+RubyLLM::Model::Pricing#to_h
+RubyLLM::Model::Pricing::CATEGORIES
+RubyLLM::Model::PricingCategory (class)
+RubyLLM::Model::PricingCategory#batch (attr_reader)
+RubyLLM::Model::PricingCategory#cache_read_input
+RubyLLM::Model::PricingCategory#cache_write_input
+RubyLLM::Model::PricingCategory#input
+RubyLLM::Model::PricingCategory#long_context (attr_reader)
+RubyLLM::Model::PricingCategory#long_context_threshold (attr_reader)
+RubyLLM::Model::PricingCategory#output
+RubyLLM::Model::PricingCategory#reasoning_output
+RubyLLM::Model::PricingCategory#standard (attr_reader)
+RubyLLM::Model::PricingCategory#tier_for(prompt_tokens)
+RubyLLM::Model::PricingCategory#to_h
+RubyLLM::Model::PricingCategory::TIERS
+RubyLLM::Model::PricingTier (class)
+RubyLLM::Model::PricingTier#cache_read_input_per_million
+RubyLLM::Model::PricingTier#cache_write_input_per_million
+RubyLLM::Model::PricingTier#input_per_million
+RubyLLM::Model::PricingTier#output_per_million
+RubyLLM::Model::PricingTier#reasoning_output_per_million
+RubyLLM::Model::PricingTier#to_h
+RubyLLM::Model::PricingTier::ATTRIBUTES
+RubyLLM::ModelNotFoundError (class < StandardError)
+RubyLLM::ModelRegistryError (class < StandardError)
+RubyLLM::Models (class)
+RubyLLM::Models include Enumerable
+RubyLLM::Models include Lookup
+RubyLLM::Models#all
+RubyLLM::Models#audio_models
+RubyLLM::Models#by_family(family)
+RubyLLM::Models#by_provider(provider)
+RubyLLM::Models#chat_models
+RubyLLM::Models#each(&)
+RubyLLM::Models#embedding_models
+RubyLLM::Models#find(model_id, provider: nil, config: nil)
+RubyLLM::Models#image_models
+RubyLLM::Models#listed
+RubyLLM::Models#load_from_json(file = RubyLLM.config.model_registry_file)
+RubyLLM::Models#load_from_store
+RubyLLM::Models#refresh(remote_only: false)
+RubyLLM::Models#save_to_json(file = RubyLLM.config.model_registry_file)
+RubyLLM::Models#unlisted
+RubyLLM::Models.last_provider_failures (attr_reader)
+RubyLLM::Models.refresh(remote_only: false)
+RubyLLM::Moderation (class)
+RubyLLM::Moderation include Accounting::Usage::Result
+RubyLLM::Moderation include Support::Inspectable
+RubyLLM::Moderation#category_scores
+RubyLLM::Moderation#cost
+RubyLLM::Moderation#flagged?
+RubyLLM::Moderation#flagged_categories
+RubyLLM::Moderation#id (attr_reader)
+RubyLLM::Moderation#model (attr_reader)
+RubyLLM::Moderation#raw (attr_reader)
+RubyLLM::Moderation#results (attr_reader)
+RubyLLM::Moderation#tokens
+RubyLLM::Moderation.moderate(input = nil, model: nil, with: nil, provider: nil, assume_model_exists: false, context: nil, provider_options: {}, metadata: nil, owner: nil)
+RubyLLM::Moderation::Result (class)
+RubyLLM::Moderation::Result#categories (attr_reader)
+RubyLLM::Moderation::Result#category_scores (attr_reader)
+RubyLLM::Moderation::Result#flagged?
+RubyLLM::OCR (class)
+RubyLLM::OCR include Accounting::Usage::Result
+RubyLLM::OCR include Support::Inspectable
+RubyLLM::OCR#markdown
+RubyLLM::OCR#model (attr_reader)
+RubyLLM::OCR#pages
+RubyLLM::OCR#raw (attr_reader)
+RubyLLM::OCR.ocr(file, model: nil, provider: nil, assume_model_exists: false, context: nil, pages: nil, provider_options: {}, metadata: nil, owner: nil)
+RubyLLM::OCR::Page
+RubyLLM::OpenTelemetry (class)
+RubyLLM::OpenTelemetry.disable
+RubyLLM::OpenTelemetry.enable(content: false)
+RubyLLM::OverloadedError (class < RubyLLM::Error)
+RubyLLM::PaymentRequiredError (class < RubyLLM::Error)
+RubyLLM::PendingToolCallsError (class < StandardError)
+RubyLLM::Probability (class)
+RubyLLM::Probability include Support::Inspectable
+RubyLLM::Probability#probability (attr_reader)
+RubyLLM::Probability#to_h
+RubyLLM::Probability#type
+RubyLLM::Progress (class)
+RubyLLM::Progress include Support::Inspectable
+RubyLLM::Progress#fraction
+RubyLLM::Progress#message (attr_reader)
+RubyLLM::Progress#total (attr_reader)
+RubyLLM::Progress#value (attr_reader)
+RubyLLM::Prompt (class)
+RubyLLM::Prompt.roots
+RubyLLM::Prompt::Context (class)
+RubyLLM::Prompt::Context#local_assigns (attr_reader)
+RubyLLM::Prompt::Context#render(options = {}, locals = {})
+RubyLLM::Prompt::Roots (class)
+RubyLLM::Prompt::Roots include Enumerable
+RubyLLM::Prompt::Roots#<<(path)
+RubyLLM::Prompt::Roots#each(&)
+RubyLLM::Prompt::Roots#push(path)
+RubyLLM::PromptNotFoundError (class < StandardError)
+RubyLLM::Protocol (class)
+RubyLLM::Protocol include BinaryStreaming
+RubyLLM::Protocol include NativeContent
+RubyLLM::Protocol include RequestShapes
+RubyLLM::Protocol include Streaming
+RubyLLM::Protocol#config (attr_reader)
+RubyLLM::Protocol#connection (attr_reader)
+RubyLLM::Protocol#model (attr_reader)
+RubyLLM::Protocol#provider (attr_reader)
+RubyLLM::Provider (class)
+RubyLLM::Provider include Support::Inspectable
+RubyLLM::Provider#account_identity
+RubyLLM::Provider#api_base
+RubyLLM::Provider#config (attr_reader)
+RubyLLM::Provider#headers
+RubyLLM::Provider#protocol_for(_model, **)
+RubyLLM::Provider#retry_delay(_response)
+RubyLLM::Provider#slug
+RubyLLM::Provider.assume_models_exist?
+RubyLLM::Provider.capabilities
+RubyLLM::Provider.configuration_options
+RubyLLM::Provider.configuration_requirements
+RubyLLM::Provider.display_name
+RubyLLM::Provider.local?
+RubyLLM::Provider.protocol(name, protocol_class, batches: nil)
+RubyLLM::Provider.providers
+RubyLLM::Provider.register(name, provider_class, models: nil)
+RubyLLM::Provider.slug
+RubyLLM::Question (class)
+RubyLLM::Question include Support::Inspectable
+RubyLLM::Question#answer(value = nil, **values)
+RubyLLM::Question#answered?
+RubyLLM::Question#approval?
+RubyLLM::Question#approve(remember: false)
+RubyLLM::Question#decline
+RubyLLM::Question#deny
+RubyLLM::Question#fields (attr_reader)
+RubyLLM::Question#form?
+RubyLLM::Question#id
+RubyLLM::Question#message (attr_reader)
+RubyLLM::Question#tool_call (attr_reader)
+RubyLLM::Question#url (attr_reader)
+RubyLLM::Question#url?
+RubyLLM::Question::Field
+RubyLLM::QueuedMessage (class)
+RubyLLM::QueuedMessage include Support::Inspectable
+RubyLLM::QueuedMessage#attachments (attr_reader)
+RubyLLM::QueuedMessage#content (attr_reader)
+RubyLLM::QueuedMessage#id (attr_reader)
+RubyLLM::QueuedMessage#queued_at (attr_reader)
+RubyLLM::QueuedMessage#sender (attr_reader)
+RubyLLM::QueuedMessage#steer?
+RubyLLM::QueuedMessage#withdraw
+RubyLLM::RateLimitError (class < RubyLLM::Error)
+RubyLLM::Rerank (class)
+RubyLLM::Rerank include Accounting::Usage::ModelInfo
+RubyLLM::Rerank include Accounting::Usage::Result
+RubyLLM::Rerank include Support::Inspectable
+RubyLLM::Rerank#cost
+RubyLLM::Rerank#model (attr_reader)
+RubyLLM::Rerank#raw (attr_reader)
+RubyLLM::Rerank#results (attr_reader)
+RubyLLM::Rerank#tokens
+RubyLLM::Rerank.rerank(query, documents, model:, provider: nil, assume_model_exists: false, context: nil, top_n: nil, provider_options: {}, metadata: nil, owner: nil)
+RubyLLM::Rerank::Result
+RubyLLM::ResearchJob (class)
+RubyLLM::ResearchJob include Support::DeprecatedJobPredicates
+RubyLLM::ResearchJob include Support::Inspectable
+RubyLLM::ResearchJob#agent (attr_reader)
+RubyLLM::ResearchJob#cancel(timeout: 5)
+RubyLLM::ResearchJob#cancellation_error (attr_reader)
+RubyLLM::ResearchJob#cancelled?
+RubyLLM::ResearchJob#complete?
+RubyLLM::ResearchJob#cost
+RubyLLM::ResearchJob#error (attr_reader)
+RubyLLM::ResearchJob#failed?
+RubyLLM::ResearchJob#id (attr_reader)
+RubyLLM::ResearchJob#incomplete?
+RubyLLM::ResearchJob#message
+RubyLLM::ResearchJob#pending?
+RubyLLM::ResearchJob#provider (attr_reader)
+RubyLLM::ResearchJob#raw (attr_reader)
+RubyLLM::ResearchJob#refresh(timeout: nil)
+RubyLLM::ResearchJob#status (attr_reader)
+RubyLLM::ResearchJob#succeeded?
+RubyLLM::ResearchJob#tokens (attr_reader)
+RubyLLM::ResearchJob#wait(timeout: 600, interval: 5)
+RubyLLM::ResearchJob.find(id, provider:, context: nil)
+RubyLLM::ResearchJob.research(prompt, timeout: 600, interval: 5, **)
+RubyLLM::ResearchJob.research_later(prompt, provider:, agent:, with: nil, provider_tools: nil, context: nil, provider_options: {}, metadata: nil, owner: nil)
+RubyLLM::ResearchJob::Error (class < RubyLLM::Error)
+RubyLLM::ResearchJob::Error#job (attr_reader)
+RubyLLM::ResearchJob::Error.new(message, job:, response: nil)
+RubyLLM::ResearchJob::InterruptedError (class < Interrupt)
+RubyLLM::ResearchJob::InterruptedError#job (attr_reader)
+RubyLLM::ResearchJob::InterruptedError.new(message, job:)
+RubyLLM::ResearchJob::TimeoutError (class < RubyLLM::ResearchJob::Error)
+RubyLLM::Sandbox (module)
+RubyLLM::Sandbox::BACKENDS
+RubyLLM::Sandbox::DEFAULT_TIMEOUT
+RubyLLM::Score (class)
+RubyLLM::Score include Support::Inspectable
+RubyLLM::Score#confidence (attr_reader)
+RubyLLM::Score#levels (attr_reader)
+RubyLLM::Score#probabilities (attr_reader)
+RubyLLM::Score#score (attr_reader)
+RubyLLM::Score#to_h
+RubyLLM::Score#type
+RubyLLM::SearchResults (class)
+RubyLLM::SearchResults#results (attr_reader)
+RubyLLM::SearchResults.new(*results, **result)
+RubyLLM::ServerError (class < RubyLLM::Error)
+RubyLLM::ServerToolCall (class)
+RubyLLM::ServerToolCall include Support::Inspectable
+RubyLLM::ServerToolCall#id (attr_reader)
+RubyLLM::ServerToolCall#input (attr_reader)
+RubyLLM::ServerToolCall#name (attr_reader)
+RubyLLM::ServerToolCall#raw (attr_reader)
+RubyLLM::ServerToolCall#result (attr_reader)
+RubyLLM::ServerToolCall#search_suggestions (attr_reader)
+RubyLLM::ServerToolCall#to_h
+RubyLLM::ServerToolCall#type (attr_reader)
+RubyLLM::ServiceUnavailableError (class < RubyLLM::Error)
+RubyLLM::Skill (class)
+RubyLLM::Skill include Support::Inspectable
+RubyLLM::Skill#allowed_tools (attr_reader)
+RubyLLM::Skill#compatibility (attr_reader)
+RubyLLM::Skill#description (attr_reader)
+RubyLLM::Skill#instructions (attr_reader)
+RubyLLM::Skill#license (attr_reader)
+RubyLLM::Skill#metadata (attr_reader)
+RubyLLM::Skill#name (attr_reader)
+RubyLLM::Skill#path (attr_reader)
+RubyLLM::Skill.all
+RubyLLM::Skill.find(name)
+RubyLLM::Skill.new(path)
+RubyLLM::Skill.roots
+RubyLLM::Skill::FILE
+RubyLLM::Skill::MAX_COMPATIBILITY
+RubyLLM::Skill::MAX_DESCRIPTION
+RubyLLM::Skill::MAX_NAME
+RubyLLM::SkillNotFoundError (class < StandardError)
+RubyLLM::Speech (class)
+RubyLLM::Speech include Accounting::Usage::ModelInfo
+RubyLLM::Speech include Accounting::Usage::Result
+RubyLLM::Speech include Files::Saving
+RubyLLM::Speech include Support::Inspectable
+RubyLLM::Speech#cost
+RubyLLM::Speech#data (attr_reader)
+RubyLLM::Speech#format (attr_reader)
+RubyLLM::Speech#mime_type (attr_reader)
+RubyLLM::Speech#model (attr_reader)
+RubyLLM::Speech#save(path)
+RubyLLM::Speech#to_blob
+RubyLLM::Speech#tokens
+RubyLLM::Speech#voice (attr_reader)
+RubyLLM::Speech.speak(input, model: nil, provider: nil, assume_model_exists: false, voice: nil, format: nil, context: nil, provider_options: {}, metadata: nil, owner: nil, &block)
+RubyLLM::Speech::MIME_TYPES
+RubyLLM::SpeechChunk (class)
+RubyLLM::SpeechChunk include Support::Inspectable
+RubyLLM::SpeechChunk#data (attr_reader)
+RubyLLM::SpeechChunk#format (attr_reader)
+RubyLLM::SpeechChunk#mime_type (attr_reader)
+RubyLLM::SpeechChunk#to_blob
+RubyLLM::StoredFile (class)
+RubyLLM::StoredFile include Support::Inspectable
+RubyLLM::StoredFile#==(other)
+RubyLLM::StoredFile#byte_size (attr_reader)
+RubyLLM::StoredFile#content_type (attr_reader)
+RubyLLM::StoredFile#digest (attr_reader)
+RubyLLM::StoredFile#eql?(other)
+RubyLLM::StoredFile#filename
+RubyLLM::StoredFile#human_size
+RubyLLM::StoredFile#owner (attr_reader)
+RubyLLM::StoredFile#path (attr_reader)
+RubyLLM::StoredFile#text?
+RubyLLM::StoredFile#to_h
+RubyLLM::StoredFile#updated_at (attr_reader)
+RubyLLM::Task (class)
+RubyLLM::Task include Support::DeprecatedJobPredicates
+RubyLLM::Task include Support::Inspectable
+RubyLLM::Task#cancel
+RubyLLM::Task#cancelled?
+RubyLLM::Task#complete?
+RubyLLM::Task#data (attr_reader)
+RubyLLM::Task#failed?
+RubyLLM::Task#input_required?
+RubyLLM::Task#poll_interval (attr_reader)
+RubyLLM::Task#refresh
+RubyLLM::Task#status (attr_reader)
+RubyLLM::Task#status_message (attr_reader)
+RubyLLM::Task#succeeded?
+RubyLLM::Task#to_h
+RubyLLM::Task#tool_call (attr_reader)
+RubyLLM::Task.load(state, tool_call: nil)
+RubyLLM::Task.new(status: :working, status_message: nil, poll_interval: nil, data: {}, tool_call: nil)
+RubyLLM::TestHelper (module)
+RubyLLM::TestHelper#stub_replies(*replies, cost: nil, interval: nil)
+RubyLLM::TestHelper#tool_call(name, **arguments)
+RubyLLM::Thinking (class)
+RubyLLM::Thinking include Support::Inspectable
+RubyLLM::Thinking#signature (attr_reader)
+RubyLLM::Thinking#text (attr_reader)
+RubyLLM::Tokenization (class)
+RubyLLM::Tokenization include Support::Inspectable
+RubyLLM::Tokenization#count
+RubyLLM::Tokenization#ids (attr_reader)
+RubyLLM::Tokenization#model (attr_reader)
+RubyLLM::Tokenization#raw (attr_reader)
+RubyLLM::Tokenization.tokenize(text, model: nil, provider: nil, assume_model_exists: false, context: nil)
+RubyLLM::Tokens (class)
+RubyLLM::Tokens include Support::Inspectable
+RubyLLM::Tokens#audio_seconds (attr_reader)
+RubyLLM::Tokens#cache_read (attr_reader)
+RubyLLM::Tokens#cache_write (attr_reader)
+RubyLLM::Tokens#cache_write_by_ttl (attr_reader)
+RubyLLM::Tokens#characters (attr_reader)
+RubyLLM::Tokens#input (attr_reader)
+RubyLLM::Tokens#output (attr_reader)
+RubyLLM::Tokens#reported_cost (attr_reader)
+RubyLLM::Tokens#search_units (attr_reader)
+RubyLLM::Tokens#server_tool_use (attr_reader)
+RubyLLM::Tokens#thinking (attr_reader)
+RubyLLM::Tokens#to_h
+RubyLLM::Tokens.aggregate(tokens)
+RubyLLM::Tokens.new(input: nil, output: nil, cache_read: nil, cache_write: nil, thinking: nil, characters: nil, audio_seconds: nil, search_units: nil, cache_write_by_ttl: nil, server_tool_use: nil, reported_cost: nil)
+RubyLLM::Tool (class)
+RubyLLM::Tool#ask(message, choices: nil, url: nil, &fields)
+RubyLLM::Tool#call(tool_call: nil, **arguments)
+RubyLLM::Tool#defer
+RubyLLM::Tool#deferred?
+RubyLLM::Tool#description
+RubyLLM::Tool#exclusive?
+RubyLLM::Tool#execute(...)
+RubyLLM::Tool#halt(result = nil)
+RubyLLM::Tool#inline_limit
+RubyLLM::Tool#max_run_time
+RubyLLM::Tool#name
+RubyLLM::Tool#namespace
+RubyLLM::Tool#parameters_schema
+RubyLLM::Tool#progress(message = nil, value: nil, total: nil)
+RubyLLM::Tool#provider_options
+RubyLLM::Tool#requires_approval?(tool_call = nil)
+RubyLLM::Tool#resume(task, **arguments)
+RubyLLM::Tool#task(state, tool_call: nil)
+RubyLLM::Tool.defer
+RubyLLM::Tool.description -> string or nil
+RubyLLM::Tool.description(text) -> text
+RubyLLM::Tool.exclusive
+RubyLLM::Tool.exclusive?
+RubyLLM::Tool.inline_limit -> characters, false, or nil
+RubyLLM::Tool.inline_limit(characters) -> characters
+RubyLLM::Tool.inline_limit(false) -> false
+RubyLLM::Tool.max_run_time -> seconds or nil
+RubyLLM::Tool.max_run_time(seconds) -> seconds
+RubyLLM::Tool.namespace(value = (get = true), description: nil)
+RubyLLM::Tool.parameter(name, **)
+RubyLLM::Tool.parameters(schema = nil, &block)
+RubyLLM::Tool.provider_options -> hash
+RubyLLM::Tool.provider_options(options) -> self
+RubyLLM::Tool.requires_approval(&resolver)
+RubyLLM::Tool.tool_name
+RubyLLM::ToolCall (class)
+RubyLLM::ToolCall include Support::Inspectable
+RubyLLM::ToolCall#arguments (attr_reader)
+RubyLLM::ToolCall#id (attr_reader)
+RubyLLM::ToolCall#name (attr_reader)
+RubyLLM::ToolCall#namespace (attr_reader)
+RubyLLM::ToolCall#remote?
+RubyLLM::ToolCall#thought_signature (attr_accessor)
+RubyLLM::ToolCall#to_h
+RubyLLM::ToolCall::Collection (class)
+RubyLLM::ToolCall::Collection include Enumerable
+RubyLLM::ToolCall::Collection include Support::Inspectable
+RubyLLM::ToolCall::Collection#==(other)
+RubyLLM::ToolCall::Collection#[](id)
+RubyLLM::ToolCall::Collection#as_json(*)
+RubyLLM::ToolCall::Collection#each(&)
+RubyLLM::ToolCall::Collection#each_key(&)
+RubyLLM::ToolCall::Collection#each_value(&)
+RubyLLM::ToolCall::Collection#empty?
+RubyLLM::ToolCall::Collection#except(*ids)
+RubyLLM::ToolCall::Collection#fetch(id, ...)
+RubyLLM::ToolCall::Collection#key?(id)
+RubyLLM::ToolCall::Collection#keys
+RubyLLM::ToolCall::Collection#length
+RubyLLM::ToolCall::Collection#size
+RubyLLM::ToolCall::Collection#to_h(&block)
+RubyLLM::ToolCall::Collection#to_hash(&block)
+RubyLLM::ToolCall::Collection#to_json(*)
+RubyLLM::ToolCall::Collection#transform_values(&)
+RubyLLM::ToolCall::Collection#values
+RubyLLM::ToolCallParseError (class < RubyLLM::Error)
+RubyLLM::ToolCallParseError#finish_reason (attr_reader)
+RubyLLM::ToolCallRunningError (class < StandardError)
+RubyLLM::ToolCallTruncatedError (class < RubyLLM::ToolCallParseError)
+RubyLLM::Transcription (class)
+RubyLLM::Transcription include Accounting::Usage::ModelInfo
+RubyLLM::Transcription include Accounting::Usage::Result
+RubyLLM::Transcription include Support::Inspectable
+RubyLLM::Transcription#cost
+RubyLLM::Transcription#duration (attr_reader)
+RubyLLM::Transcription#language (attr_reader)
+RubyLLM::Transcription#model (attr_reader)
+RubyLLM::Transcription#segments (attr_reader)
+RubyLLM::Transcription#text (attr_reader)
+RubyLLM::Transcription#tokens
+RubyLLM::Transcription#words (attr_reader)
+RubyLLM::Transcription.transcribe(audio_file, model: nil, language: nil, provider: nil, assume_model_exists: false, context: nil, prompt: nil, temperature: nil, format: nil, timestamps: nil, speaker_names: nil, speaker_references: nil, provider_options: {}, metadata: nil, owner: nil, &block)
+RubyLLM::Transcription::Segment (class)
+RubyLLM::Transcription::Segment include Support::Inspectable
+RubyLLM::Transcription::Segment#==(other)
+RubyLLM::Transcription::Segment#[](key)
+RubyLLM::Transcription::Segment#end
+RubyLLM::Transcription::Segment#fetch(key, ...)
+RubyLLM::Transcription::Segment#has_key?(key)
+RubyLLM::Transcription::Segment#key?(key)
+RubyLLM::Transcription::Segment#speaker
+RubyLLM::Transcription::Segment#start
+RubyLLM::Transcription::Segment#text
+RubyLLM::Transcription::Segment#to_h
+RubyLLM::Transcription::Segment#to_hash
+RubyLLM::TranscriptionChunk (class)
+RubyLLM::TranscriptionChunk include Support::Inspectable
+RubyLLM::TranscriptionChunk#delta (attr_reader)
+RubyLLM::TranscriptionChunk#delta?
+RubyLLM::TranscriptionChunk#done?
+RubyLLM::TranscriptionChunk#partial?
+RubyLLM::TranscriptionChunk#raw (attr_reader)
+RubyLLM::TranscriptionChunk#segment (attr_reader)
+RubyLLM::TranscriptionChunk#segment?
+RubyLLM::TranscriptionChunk#text (attr_reader)
+RubyLLM::TranscriptionChunk#type (attr_reader)
+RubyLLM::TranscriptionChunk::DELTA
+RubyLLM::TranscriptionChunk::DONE
+RubyLLM::TranscriptionChunk::PARTIAL
+RubyLLM::TranscriptionChunk::SEGMENT
+RubyLLM::UnauthorizedError (class < RubyLLM::Error)
+RubyLLM::UnsupportedAttachmentError (class < RubyLLM::Error)
+RubyLLM::UnsupportedParameterError (class < RubyLLM::BadRequestError)
+RubyLLM::UnsupportedParameterError#parameter (attr_reader)
+RubyLLM::UnsupportedParameterError.new(message = nil, parameter: nil, **)
+RubyLLM::UnsupportedServerToolError (class < RubyLLM::Error)
+RubyLLM::UploadedFile (class)
+RubyLLM::UploadedFile include Support::Inspectable
+RubyLLM::UploadedFile#byte_size (attr_reader)
+RubyLLM::UploadedFile#created_at (attr_reader)
+RubyLLM::UploadedFile#downloadable (attr_reader)
+RubyLLM::UploadedFile#expired?
+RubyLLM::UploadedFile#expires_at (attr_reader)
+RubyLLM::UploadedFile#filename (attr_reader)
+RubyLLM::UploadedFile#id (attr_reader)
+RubyLLM::UploadedFile#metadata (attr_reader)
+RubyLLM::UploadedFile#mime_type (attr_reader)
+RubyLLM::UploadedFile#provider (attr_reader)
+RubyLLM::UploadedFile#purpose (attr_reader)
+RubyLLM::UploadedFile#status (attr_reader)
+RubyLLM::UploadedFile#uri (attr_reader)
+RubyLLM::UploadedFile.download(id, provider: nil, context: nil)
+RubyLLM::UploadedFile.find(id, provider: nil, context: nil)
+RubyLLM::UploadedFile.upload(file, provider: nil, context: nil, filename: nil, purpose: nil, expires_in: nil, uri: nil, content_type: nil, provider_options: {})
+RubyLLM::VERSION
+RubyLLM::Video (class)
+RubyLLM::Video include Accounting::Usage::Result
+RubyLLM::Video include Files::Saving
+RubyLLM::Video include Support::Inspectable
+RubyLLM::Video#cost
+RubyLLM::Video#data (attr_reader)
+RubyLLM::Video#duration (attr_reader)
+RubyLLM::Video#mime_type (attr_reader)
+RubyLLM::Video#model (attr_reader)
+RubyLLM::Video#raw (attr_reader)
+RubyLLM::Video#save(path)
+RubyLLM::Video#to_blob
+RubyLLM::Video#tokens
+RubyLLM::Video#url (attr_reader)
+RubyLLM::Video.animate(prompt = nil, model: nil, provider: nil, assume_model_exists: false, context: nil, with: nil, extend: nil, provider_options: {}, metadata: nil, owner: nil)
+RubyLLM::VideoJob (class)
+RubyLLM::VideoJob include Support::DeprecatedJobPredicates
+RubyLLM::VideoJob include Support::Inspectable
+RubyLLM::VideoJob#complete?
+RubyLLM::VideoJob#cost
+RubyLLM::VideoJob#duration (attr_reader)
+RubyLLM::VideoJob#error (attr_reader)
+RubyLLM::VideoJob#failed?
+RubyLLM::VideoJob#id (attr_reader)
+RubyLLM::VideoJob#model (attr_reader)
+RubyLLM::VideoJob#pending?
+RubyLLM::VideoJob#raw (attr_reader)
+RubyLLM::VideoJob#refresh
+RubyLLM::VideoJob#resolution (attr_reader)
+RubyLLM::VideoJob#status (attr_reader)
+RubyLLM::VideoJob#succeeded?
+RubyLLM::VideoJob#video
+RubyLLM::VideoJob#wait(timeout: nil, interval: nil)
+RubyLLM::VideoJob.animate_later(prompt = nil, model: nil, provider: nil, assume_model_exists: false, context: nil, with: nil, extend: nil, provider_options: {}, metadata: nil, owner: nil)
+RubyLLM::VideoJob.find(id, model:, provider: nil, assume_model_exists: false, context: nil)
+RubyLLM::WebSource (class)
+RubyLLM::WebSource include Support::Inspectable
+RubyLLM::WebSource#title (attr_reader)
+RubyLLM::WebSource#to_h
+RubyLLM::WebSource#url (attr_reader)
+RubyLLM::Workflow (class)
+RubyLLM::Workflow#id (attr_reader)
+RubyLLM::Workflow#name (attr_reader)
+RubyLLM::Workflow#step(name, id: nil, &block)
