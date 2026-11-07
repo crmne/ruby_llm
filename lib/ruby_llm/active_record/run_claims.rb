@@ -34,7 +34,7 @@ module RubyLLM
         @chat @message @last_message_id @last_cancellation_poll_at @unpersisted_instructions
         @usage_records_by_entry @run_claim_token @run_claim_deadline @run_claim_renewed_at
         @run_claim_lost_token @synced_run_claim_token @synced_usage_count @tool_call_claims
-        @claim_heartbeat @claim_lock @tool_call_renewal_lock
+        @claim_heartbeat @claim_lock @tool_call_renewal_lock @lost_tool_calls
       ].freeze
       private_constant :RUN_STATE
 
@@ -78,6 +78,7 @@ module RubyLLM
         now = Time.current.change(usec: 0)
         claim = claim_lock.synchronize do
           started = tool_call_claims[tool_call_id]
+          raise ClaimLost if started.nil? && lost_tool_calls.include?(tool_call_id)
           next unless started
 
           started.started = true
@@ -272,8 +273,10 @@ module RubyLLM
         claim_lock.synchronize do
           claim = tool_call_claims[tool_call_id]
           next unless claim&.row == row
+          next claim.written = [claimed_until] if renewed
 
-          renewed ? claim.written = [claimed_until] : tool_call_claims.delete(tool_call_id)
+          tool_call_claims.delete(tool_call_id)
+          lost_tool_calls << tool_call_id
         end
       end
 
@@ -365,7 +368,10 @@ module RubyLLM
         return false unless scope.update_all(claimed_until:, updated_at: now) == 1
 
         claim = ToolCallClaim.new(row, deadline, [claimed_until], seconds, false)
-        claim_lock.synchronize { tool_call_claims[tool_call_id] = claim }
+        claim_lock.synchronize do
+          lost_tool_calls.delete(tool_call_id)
+          tool_call_claims[tool_call_id] = claim
+        end
         true
       end
 
@@ -438,6 +444,12 @@ module RubyLLM
 
       def tool_call_claims
         @tool_call_claims ||= {}
+      end
+
+      # Calls whose claim the heartbeat found taken, so their start fails
+      # rather than taking them for calls that were never claimed.
+      def lost_tool_calls
+        @lost_tool_calls ||= Set.new
       end
 
       def claim_lock

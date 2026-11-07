@@ -256,6 +256,10 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       'the waiting call' => lambda { |_chat, waiting, taken|
         RubyLLM::ActiveRecord::ToolCall.where(tool_call_id: waiting).update_all(claimed_until: taken)
       },
+      'the waiting call, which the heartbeat finds first' => lambda { |_chat, waiting, taken|
+        RubyLLM::ActiveRecord::ToolCall.where(tool_call_id: waiting).update_all(claimed_until: taken)
+        sleep 1.5
+      },
       'the chat' => lambda { |chat, _waiting, taken|
         Chat.where(id: chat.id).update_all(claim_token: 'elsewhere', claimed_until: taken)
       }
