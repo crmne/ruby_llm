@@ -47,7 +47,6 @@ class PublicApi
       rdoc = RDoc::RDoc.new
       rdoc.options = options
       rdoc.store = store
-      rdoc.instance_variable_set(:@stats, RDoc::Stats.new(store, 0, 0))
       rdoc.parse_files(options.files)
       store.complete(options.visibility)
       store
