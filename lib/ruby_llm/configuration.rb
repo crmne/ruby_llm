@@ -224,6 +224,17 @@ module RubyLLM
     option :package_cache_dir, -> { (directory = Support::Utils.cache_directory) && File.join(directory, 'packages') }
 
     ##
+    # :attr_accessor: code_execution_max_file_size
+    #
+    # Bytes a file that Chat#with_code_execution's code writes may have and
+    # still come back with the result. Larger files stay out, and the
+    # model is told which ones. Default: 10 MB.
+    #
+    #   config.code_execution_max_file_size = 100 * 1024 * 1024
+    #
+    option :code_execution_max_file_size, 10 * 1024 * 1024
+
+    ##
     # :attr_accessor: file_converters
     #
     # Converters that turn a chat's files into text for the model, as a

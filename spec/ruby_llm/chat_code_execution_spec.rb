@@ -777,10 +777,11 @@ RSpec.describe RubyLLM::Chat do
 
     it 'caps the number and size of returned files' do
       stub_const('RubyLLM::CodeExecution::MAX_FILES', 2)
-      stub_const('RubyLLM::CodeExecution::MAX_FILE_SIZE', 10)
       files = { 'a.txt' => 'a', 'b.txt' => 'b', 'big.txt' => 'x' * 11, 'c.txt' => 'c' }
-      chat = RubyLLM.context { |config| config.sandbox = writing(files) }
-                    .chat(model: model_for(:openai), provider: :openai).with_code_execution
+      chat = RubyLLM.context do |config|
+        config.sandbox = writing(files)
+        config.code_execution_max_file_size = 10
+      end.chat(model: model_for(:openai), provider: :openai).with_code_execution
       text, *returned = chat.tools[:run_code].call(language: 'ruby', code: 'x')
 
       expect(returned.map(&:filename)).to eq(%w[a.txt b.txt])

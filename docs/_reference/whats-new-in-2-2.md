@@ -337,6 +337,8 @@ Replies stream, and `interval:` slows them down so a test can press Stop. See [T
 
 A reply a fallback model wrote names it: `reply.model` and `reply.provider`, also on Rails records with those columns. See [Fallback Callbacks]({% link _advanced/error-handling.md %}#fallback-callbacks).
 
+`config.code_execution_max_file_size` raises the 10 MB cap on a file [code execution]({% link _advanced/code-execution.md %}#limits) returns, for code that makes videos or large exports.
+
 `RubyLLM::Attachment.new(io, filename: "export.csv", mime_type: "text/csv")` takes a file's type when you know it. See [Automatic File Type Detection]({% link _core_features/attachments.md %}#automatic-file-type-detection).
 
 A chat bills its owner, set with `chat.with_owner(current_user)`, or in Rails named once with `acts_as_chat owner: :user`, which keeps the chat's files for that user too. See [One-Shot Operations]({% link _core_features/cost-and-usage-tracking.md %}#one-shot-operations).
