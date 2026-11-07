@@ -49,6 +49,7 @@ module RubyLLM
 
       included do
         before_save :resolve_model
+        after_commit :remember_model_registry_stored, if: -> { @model_registry_loaded_into }
       end
 
       # Returns the record's attributes as a Hash, accepting the same options
@@ -1068,13 +1069,22 @@ module RubyLLM
       # boot, since the registry reads whatever the store returns.
       def load_model_registry_into_store
         RubyLLM::ActiveRecord::Model.save_to_database(RubyLLM.models)
+        @model_registry_loaded_into = RubyLLM::ActiveRecord::Model.connection_db_config
       rescue ::ActiveRecord::RecordInvalid, ::ActiveRecord::RecordNotUnique
         nil
       end
 
+      def model_store_empty?
+        !RubyLLM::ActiveRecord::Model.registry_stored? && RubyLLM::ActiveRecord::Model.none?
+      end
+
+      def remember_model_registry_stored
+        RubyLLM::ActiveRecord::Model.registry_stored!(@model_registry_loaded_into)
+      end
+
       def find_or_create_model(model_info)
         attributes = { model_id: model_info.id, provider: model_info.provider }
-        load_model_registry_into_store if RubyLLM::ActiveRecord::Model.none?
+        load_model_registry_into_store if model_store_empty?
 
         RubyLLM::ActiveRecord::Model.find_or_create_by!(attributes) do |record|
           record.name = model_info.name || model_info.id

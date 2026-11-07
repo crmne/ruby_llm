@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'active_support/core_ext/module/delegation'
+require 'concurrent/set'
 
 module RubyLLM
   module ActiveRecord
@@ -18,6 +19,7 @@ module RubyLLM
       scope :unlisted, -> { where.not(unlisted_at: nil) }
 
       UNLISTED_WARNING_LIMIT = 5 # :nodoc:
+      STORED_REGISTRIES = Concurrent::Set.new # :nodoc:
 
       class << self
         def read # :nodoc:
@@ -50,6 +52,18 @@ module RubyLLM
             upsert_all(rows.values, unique_by: registry_key) if rows.any?
             unlist(pluck(:id, :provider, :model_id).reject { |_id, *key| rows.key?(key) }.map(&:first))
           end
+        end
+
+        # A database stays marked once a chat that loaded the registry into it
+        # has committed. A transactional test rolls that load back after every
+        # example, and loading it again on each empty table would repeat the
+        # whole catalog in every test.
+        def registry_stored? # :nodoc:
+          STORED_REGISTRIES.include?(connection_db_config)
+        end
+
+        def registry_stored!(db_config) # :nodoc:
+          STORED_REGISTRIES << db_config
         end
 
         def from_llm(model_info) # :nodoc:

@@ -208,6 +208,48 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(RubyLLM::ActiveRecord::Model).to have_received(:save_to_database).with(RubyLLM.models)
     end
 
+    context 'when the model store starts empty' do
+      let(:connection) { RubyLLM::ActiveRecord::Model.connection }
+
+      def in_rolled_back_test_transaction
+        connection.begin_transaction(joinable: false, _lazy: false)
+        %w[messages document_messages chats document_chats ruby_llm_models].each do |table|
+          connection.delete("DELETE FROM #{table}")
+        end
+        yield
+      ensure
+        connection.rollback_transaction
+      end
+
+      def model_rows_after_saving_a_chat
+        in_rolled_back_test_transaction do
+          Chat.create!(model: model_id)
+          RubyLLM::ActiveRecord::Model.count
+        end
+      end
+
+      it 'loads the registry once across transactional tests that each roll it back' do
+        first = model_rows_after_saving_a_chat
+        second = model_rows_after_saving_a_chat
+
+        expect(first).to eq(RubyLLM.models.all.size)
+        expect(second).to eq(1)
+      end
+
+      it 'loads the registry again when the save that loaded it rolled back' do
+        in_rolled_back_test_transaction do
+          RubyLLM::ActiveRecord::Model.transaction do
+            Chat.create!(model: model_id)
+            raise ActiveRecord::Rollback
+          end
+
+          Chat.create!(model: model_id)
+
+          expect(RubyLLM::ActiveRecord::Model.count).to eq(RubyLLM.models.all.size)
+        end
+      end
+    end
+
     [nil, ''].each do |name|
       it "still adds the first chat when a registry entry has a #{name.inspect} name" do
         unnamed = RubyLLM::Model.new(id: 'unnamed-model', provider: 'openai', name: name)
