@@ -7,12 +7,18 @@ module RubyLLM
       DEFAULT_CHAT_API_VERSION = '2024-05-01-preview'
       DEFAULT_EMBEDDINGS_API_VERSION = '2024-05-01-preview'
       DEFAULT_MODELS_API_VERSION = 'preview'
+      SPEECH_API_VERSION = '2025-10-15'
+
+      # Azure AI Speech fast transcription. The endpoint takes no model, so
+      # RubyLLM names it after the API.
+      FAST_TRANSCRIPTION_MODEL = 'fast-transcription'
 
       protocol :chat_completions, Azure::ChatCompletions, batches: Azure::ChatCompletions::Batches
       protocol :responses, Azure::Responses
       protocol :files, Protocols::Azure::Files
       protocol :cohere, Azure::Cohere
       protocol :decisions, Azure::Decisions
+      protocol :speech, Protocols::Azure::Speech
 
       def original_image_detail? # :nodoc:
         true
@@ -30,6 +36,7 @@ module RubyLLM
 
       def resolve_protocol(name, model, operation: nil, **options)
         name ||= :decisions if operation == :judge
+        name ||= :speech if operation == :transcribe && model&.id == FAST_TRANSCRIPTION_MODEL
         super
       end
 
@@ -58,6 +65,21 @@ module RubyLLM
       end
 
       def batch_cost_multiplier(**) = 0.5
+
+      # Azure AI Speech answers on the resource's own host, whichever of its
+      # endpoints the API base names.
+      def azure_speech_transcription_url # :nodoc:
+        uri = URI.parse(api_base)
+        uri.path = '/speechtotext/transcriptions:transcribe'
+        uri.query = "api-version=#{SPEECH_API_VERSION}"
+        uri.to_s
+      end
+
+      # Azure AI Speech takes a resource key in its own header. An Entra ID
+      # token is already sent as a bearer token.
+      def azure_speech_headers # :nodoc:
+        @config.azure_api_key ? { 'Ocp-Apim-Subscription-Key' => @config.azure_api_key } : {}
+      end
 
       def azure_cohere_url(operation) # :nodoc:
         base = azure_base_parts[:path_base]

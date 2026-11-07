@@ -81,7 +81,8 @@ module RubyLLM
     #   )
     #
     # +language:+ hints at the spoken language using the provider's accepted
-    # ISO 639-1 or BCP-47 language code.
+    # ISO 639-1 or BCP-47 language code. Some providers also take an Array
+    # of candidate languages and report the one spoken as #language.
     # +prompt:+ gives the model vocabulary or formatting guidance, and
     # +temperature:+ adjusts sampling. +format:+ selects the transcript
     # format in the provider's own vocabulary: OpenAI takes values such as
