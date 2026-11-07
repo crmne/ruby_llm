@@ -359,17 +359,15 @@ module RubyLLM
     # loop goes on with the turn that is running, so messages queued with
     # <tt>steer: false</tt> stay queued.
     def continue_turn(steering_only: true, &) # :nodoc:
-      running_agent do
-        until settled?(steering_only) || waiting?
-          boundary = !pending_tool_response
-          move = advance(steering_only:, &)
-          break if placeholder?(move)
+      until settled?(steering_only) || waiting?
+        boundary = !pending_tool_response
+        move = advance(steering_only:, &)
+        break if placeholder?(move)
 
-          steering_only ||= boundary
-        end
-        @cancelled = false
-        pending_tool_response || halted_result || last_non_system_message || messages.last
+        steering_only ||= boundary
       end
+      @cancelled = false
+      pending_tool_response || halted_result || last_non_system_message || messages.last
     end
 
     # Returns whether the chat has no pending response or tool execution:
