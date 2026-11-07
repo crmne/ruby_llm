@@ -955,10 +955,11 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
           end
         end
 
-        it 'explains that replies stay plain text in an app without JavaScript' do
+        it 'explains that replies stay plain text in an app without JavaScript, even with a package.json for CSS' do
           Dir.mktmpdir do |destination|
             FileUtils.cp_r("#{app_path}/.", destination)
             within_test_app(destination) do
+              File.write('package.json', '{}')
               output, status = run_rails_generate('ruby_llm:chat_ui', '--skip', chdir: destination)
               expect(status.success?).to be(true), output
               expect(output).to include('Your app has no JavaScript setup, so replies show as plain text')
@@ -970,6 +971,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
           Dir.mktmpdir do |destination|
             FileUtils.cp_r("#{app_path}/.", destination)
             within_test_app(destination) do
+              File.write('Gemfile', %(#{File.read('Gemfile')}gem "jsbundling-rails"\n))
               File.write('package.json', '{}')
               File.write('config/importmap.rb', %(pin "application"\n))
               output, status = run_rails_generate('ruby_llm:chat_ui', '--force', chdir: destination)

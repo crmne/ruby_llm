@@ -290,7 +290,7 @@ module RubyLLM
       end
 
       def explain_javascript_setup
-        if app_file?('package.json')
+        if gem?('jsbundling-rails')
           say "\n  Add the chat UI's JavaScript dependencies, then register its Stimulus controller:", :yellow
           say "    yarn add #{javascript_packages}   (or: npm install #{javascript_packages})"
           say '    bin/rails stimulus:manifest:update'
