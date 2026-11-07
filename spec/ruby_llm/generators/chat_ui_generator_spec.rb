@@ -412,6 +412,9 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       abort "deny kept the card" if session.response.body.include?("Approve send_mail?")
       abort "deny kept an approval's call hidden" if session.response.body.include?("display: none")
       seat = #{agent}.find(chat.id).pending_questions.sole
+      session.post "#{chats_path}/\#{chat.id}/answers", params: { question_id: seat.id, answer: "middle" }, headers: stream
+      abort "a choice not offered answered \#{session.response.status}" unless session.response.status == 303
+      abort "a choice not offered said \#{session.flash[:notice]}" unless session.flash[:notice] == '"middle" is not one of the choices: window, aisle'
       session.post "#{chats_path}/\#{chat.id}/answers", params: { question_id: seat.id, answer: "window" }, headers: stream
       abort "answer answered \#{session.response.status}" unless session.response.status == 200
       abort "answer kept the form hidden" unless session.response.body.include?("Continuing the conversation.")
@@ -651,7 +654,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         '@chat.decline(params[:question_id])',
         '@chat.answer(params[:question_id], params[:answer])',
         'ChatResponseJob.perform_later(@chat.id)',
-        'rescue_from RubyLLM::ToolCallRunningError'
+        'rescue_from RubyLLM::ToolCallRunningError',
+        'notice: error.message, status: :see_other'
       ],
       approval_flow: {
         agent: 'ChatAgent', agent_path: 'app/agents/chat_agent.rb', controller: 'ChatsController',
@@ -754,7 +758,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         '@llm_chat.decline(params[:question_id])',
         '@llm_chat.answer(params[:question_id], params[:answer])',
         'LlmChatResponseJob.perform_later(@llm_chat.id)',
-        'rescue_from RubyLLM::ToolCallRunningError'
+        'rescue_from RubyLLM::ToolCallRunningError',
+        'notice: error.message, status: :see_other'
       ],
       approval_flow: {
         agent: 'Llm::ChatAgent', agent_path: 'app/agents/llm/chat_agent.rb', controller: 'Llm::ChatsController',
