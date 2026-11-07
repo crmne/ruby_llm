@@ -163,10 +163,10 @@ module RubyLLM
     # does, and the next Chat#complete carries the call on.
     #
     # Strings become the integers, numbers, and booleans the fields ask
-    # for, the way a form sends them, and a blank String counts as left
-    # out. Raises ArgumentError for a value the question does not ask for,
-    # a choice it does not offer, a value of the wrong type, or a required
-    # value left out.
+    # for, the way a form sends them, a Symbol becomes text, and a blank
+    # String counts as left out. Raises ArgumentError for a value the
+    # question does not ask for, a choice it does not offer, a value of the
+    # wrong type, or a required value left out.
     def answer(value = nil, **values)
       if @chat
         @chat.answer(self, value, **values)
