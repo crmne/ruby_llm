@@ -16,12 +16,12 @@
 
     <div class="my-5">
       <%%= form.label :content, "Message" %>
-      <%%= form.text_area :content, rows: 4, placeholder: "Message...", autofocus: true, data: { turbo_permanent: true },
+      <%%= form.text_area :content, rows: 4, placeholder: "Message...", autofocus: true, data: { chat_draft: true },
           class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": <%= message_variable_name %>.errors[:content].none?, "border-red-400 focus:outline-red-600": <%= message_variable_name %>.errors[:content].any?}] %>
     </div>
 
     <div class="my-5">
-      <%%= form.file_field :attachments, multiple: true, data: { turbo_permanent: true } %>
+      <%%= form.file_field :attachments, multiple: true, data: { chat_draft: true } %>
     </div>
 
     <div class="inline">
