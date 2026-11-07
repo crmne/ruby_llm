@@ -74,7 +74,7 @@ with_thinking with_caching with_citations with_compaction with_context_budget wi
 with_file_store with_code_execution with_skills with_provider_tools with_tool_options with_provider_options
 
 class ChatAgent < ApplicationAgent    # or RubyLLM::Agent
-  model "..."; instructions "..."; tools WeatherTool; mcp Linear; code_execution languages: [:python]
+  model "..."; instructions "..."; tools WeatherTool; mcp LinearMcp; code_execution languages: [:python]
   thinking effort: :medium   # follows model changes; the generated ChatAgent also sets context_budget and caching
 end
 ChatAgent.create!(model: "...")   # a chat keeps its model; ChatAgent.find applies the agent and leaves the model alone
