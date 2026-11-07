@@ -532,8 +532,8 @@ module RubyLLM
 
       schema = SchemaDefinition.new(block: fields).json_schema if fields
       asked = requests.first(index).map { |data| Question.from_h(data) }
-      asked << Question.asked(index, message, choices:, url:, schema:)
-      raise InputRequiredError.new(name, { 'requests' => asked })
+      question = Question.asked(index, message, choices:, url:, schema:)
+      raise InputRequiredError.new(name, { 'requests' => [*asked, question] })
     end
 
     # Runs the tool with the arguments chosen by the model. Subclasses must

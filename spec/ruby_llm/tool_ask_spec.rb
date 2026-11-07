@@ -130,6 +130,19 @@ RSpec.describe RubyLLM::Tool do
     expect(result).to eq('Connected')
   end
 
+  it 'returns nil for a page the person declines to visit' do
+    asking(tool { ask('Connect your calendar', url: 'https://example.com/connect') ? 'Connected' : 'Not connected' })
+
+    chat.pending_questions.sole.decline
+    chat.complete
+
+    expect(result).to eq('Not connected')
+  end
+
+  it 'refuses choices with nothing to choose' do
+    expect { tool { ask('Pick one', choices: []) }.new.call }.to raise_error(ArgumentError, /at least one choice/)
+  end
+
   it 'asks several questions one after another' do
     asking(tool { "#{ask('Name?')} likes #{ask('Color?', choices: %w[red blue])}" })
     chat.pending_questions.sole.answer('Ada')

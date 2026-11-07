@@ -211,6 +211,39 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(result_of(question)).to eq('Seat window')
   end
 
+  it 'marks the question it was given as answered or declined' do
+    chat = paused(call('pick_seat'), call('pick_seat'))
+    answered, declined = chat.pending_questions
+
+    chat.answer(answered, 'window')
+    chat.decline(declined)
+
+    expect(answered.response).to eq('action' => 'accept', 'content' => { 'answer' => 'window' })
+    expect(declined.response).to eq('action' => 'decline')
+  end
+
+  it 'settles nothing on a call that has its result, or asked nothing' do
+    asked = call('pick_seat')
+    approval = call('issue_refund', 'order_id' => '42')
+    chat = paused(asked, approval)
+    job_for(chat.id, seat, refund).tap { |job| job.answer(job.pending_questions.first.id, 'window') }.complete
+    yielded = []
+
+    [asked, approval].each { |tool_call| chat.settle_persisted_input(tool_call) { |input| yielded << input } }
+
+    expect(yielded).to be_empty
+  end
+
+  it 'keeps a cancel when an answer changes nothing' do
+    asking = call('pick_seat')
+    chat = paused(asking)
+    Chat.where(id: chat.id).update_all(cancelled: true)
+
+    Chat.find(chat.id).settle_persisted_input(asking) { |input| input }
+
+    expect(Chat.find(chat.id)).to be_cancelled
+  end
+
   it 'refuses a question it never asked' do
     chat = paused(call('pick_seat'))
 

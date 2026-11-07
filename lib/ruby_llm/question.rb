@@ -32,8 +32,11 @@ module RubyLLM
     DECLINED = { 'action' => 'decline' }.freeze # :nodoc:
     BOOLEANS = { 'true' => true, '1' => true, 'yes' => true, 'on' => true,
                  'false' => false, '0' => false, 'no' => false, 'off' => false }.freeze
-    TYPES = { 'integer' => 'a whole number', 'number' => 'a number', 'boolean' => 'true or false' }.freeze
-    private_constant :BOOLEANS, :TYPES
+    TYPES = { 'string' => 'text', 'integer' => 'a whole number', 'number' => 'a number',
+              'boolean' => 'true or false', 'array' => 'a list' }.freeze
+    CLASSES = { 'string' => [String], 'integer' => [Integer], 'number' => [Numeric],
+                'boolean' => [TrueClass, FalseClass], 'array' => [Array] }.freeze
+    private_constant :BOOLEANS, :TYPES, :CLASSES
 
     # A value a question asks for.
     Field = Struct.new(:name, :type, :title, :description, :required, :choices, :default, keyword_init: true) do
@@ -281,23 +284,30 @@ module RubyLLM
     end
 
     def value_for(field, value)
-      value = Array(value).reject { |item| blank?(item) } if field.type == 'array'
+      value = value.reject { |item| blank?(item) } if value.is_a?(Array)
       return if blank?(value)
 
       typed(field, value).tap { |typed| offered(field, typed) }
     end
 
     def typed(field, value)
-      return value unless value.is_a?(String)
+      value = parsed(field, value) if value.is_a?(String)
+      value = value.to_s if value.is_a?(Symbol) && field.type == 'string'
+      return value if CLASSES.fetch(field.type, [Object]).any? { |kind| value.is_a?(kind) }
 
-      case field.type
-      when 'integer' then Integer(value, 10)
-      when 'number' then Float(value)
-      when 'boolean' then BOOLEANS.fetch(value.strip.downcase) { raise ArgumentError }
-      else value
-      end
-    rescue ArgumentError, TypeError
       raise ArgumentError, "#{label(field)} takes #{TYPES.fetch(field.type)}"
+    end
+
+    def parsed(field, text)
+      case field.type
+      when 'integer' then Integer(text, 10)
+      when 'number' then Float(text)
+      when 'boolean' then BOOLEANS.fetch(text.strip.downcase, text)
+      when 'array' then [text]
+      else text
+      end
+    rescue ArgumentError
+      text
     end
 
     def offered(field, value)

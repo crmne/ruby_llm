@@ -55,12 +55,57 @@ RSpec.describe RubyLLM::Question do
 
     expect(question.response['content'])
       .to eq('seats' => 2, 'budget' => 149.5, 'window' => true, 'meals' => ['vegetarian'])
+
+    question.answer(meals: 'vegetarian')
+
+    expect(question.response['content']).to eq('meals' => ['vegetarian'])
+  end
+
+  it 'leaves out a multi-select answered with nothing but blanks' do
+    question = form('meals' => { 'type' => 'array' }, 'seats' => { 'type' => 'integer' })
+
+    question.answer(meals: [''], seats: '1')
+
+    expect(question.response['content']).to eq('seats' => 1)
+  end
+
+  it 'keeps its id when saved and loaded, and takes the key of one saved without an id' do
+    question = form('name' => { 'type' => 'string' })
+
+    expect(described_class.from_h(question.to_h).id).to eq(question.id)
+    expect(described_class.from_h(question.to_h.except('id')).id).to eq('profile')
+    expect(question.id).not_to eq('profile')
   end
 
   it 'refuses a value that is not of the type a field asks for' do
-    question = form('seats' => { 'type' => 'integer', 'title' => 'Seats' })
+    question = form('seats' => { 'type' => 'integer', 'title' => 'Seats' }, 'name' => { 'type' => 'string' },
+                    'window' => { 'type' => 'boolean' }, 'meals' => { 'type' => 'array' })
 
     expect { question.answer(seats: 'two') }.to raise_error(ArgumentError, /Seats takes a whole number/)
+    expect { question.answer(seats: { value: 2 }) }.to raise_error(ArgumentError, /Seats takes a whole number/)
+    expect { question.answer(seats: 2.5) }.to raise_error(ArgumentError, /Seats takes a whole number/)
+    expect { question.answer(name: 36) }.to raise_error(ArgumentError, /name takes text/)
+    expect { question.answer(window: 'maybe') }.to raise_error(ArgumentError, /window takes true or false/)
+    expect { question.answer(meals: { 'a' => 1 }) }.to raise_error(ArgumentError, /meals takes a list/)
+    expect(question).not_to be_answered
+  end
+
+  it 'takes values of the type a field asks for, and a Symbol as text' do
+    question = form('seats' => { 'type' => 'number' }, 'name' => { 'type' => 'string', 'enum' => %w[ada grace] },
+                    'window' => { 'type' => 'boolean' }, 'notes' => {})
+
+    question.answer(seats: 2, name: :ada, window: false, notes: { 'any' => 'thing' })
+
+    expect(question.response['content'])
+      .to eq('seats' => 2, 'name' => 'ada', 'window' => false, 'notes' => { 'any' => 'thing' })
+  end
+
+  it 'lists the choices of fields that give them titles' do
+    sizes = [{ 'const' => 's', 'title' => 'Small' }, { 'const' => 'l', 'title' => 'Large' }]
+    question = form('size' => { 'type' => 'string', 'oneOf' => sizes },
+                    'tags' => { 'type' => 'array', 'items' => { 'anyOf' => [{ 'const' => 'a', 'title' => 'A' }] } })
+
+    expect(question.fields.map(&:choices)).to eq([%w[s l], %w[a]])
   end
 
   it 'refuses a field the question does not ask for' do

@@ -154,13 +154,43 @@ RSpec.describe RubyLLM::Chat do
     expect { chat.answer('call_9/abc', 'window') }.to raise_error(ArgumentError, /Unknown question/)
   end
 
-  it 'marks the question it was given as answered' do
-    ask_for('pick_seat')
-    question = chat.pending_questions.sole
+  it 'marks the question it was given as answered or declined' do
+    ask_for('pick_seat', 'pick_seat')
+    answered, declined = chat.pending_questions
 
-    chat.answer(question, 'window')
+    chat.answer(answered, 'window')
+    chat.decline(declined)
 
-    expect(question).to be_answered
+    expect(answered.response).to eq('action' => 'accept', 'content' => { 'answer' => 'window' })
+    expect(declined.response).to eq('action' => 'decline')
+  end
+
+  it 'answers one of the questions a call asks at once, and leaves the others waiting' do
+    deploy = Class.new(RubyLLM::Tool) do
+      def self.name = 'Deploy'
+
+      description 'Asks two things at once'
+      define_method(:execute) do
+        questions = %w[environment region].map do |field|
+          RubyLLM::Question.new(field, { 'message' => "Which #{field}?",
+                                         'requestedSchema' => { 'properties' => { field => { 'type' => 'string' } } } })
+        end
+        raise RubyLLM::InputRequiredError.new(name, { 'requests' => questions })
+      end
+    end
+    allow(chat.provider).to receive(:complete).and_return(calls('deploy'), answer)
+    chat.with_tools(deploy).ask('Deploy')
+
+    chat.pending_questions.first.answer('staging')
+
+    expect(chat.pending_questions.map(&:message)).to eq(['Which region?'])
+  end
+
+  it 'reads an approval in one line' do
+    ask_for('issue_refund')
+
+    expect(chat.pending_questions.sole.inspect)
+      .to match(/\A#<RubyLLM::Question id: "[^"]+", approval: true, tool_call: "issue_refund">\z/)
   end
 
   it 'lists nothing once every call has a result' do

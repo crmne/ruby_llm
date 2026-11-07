@@ -27,8 +27,8 @@ module RubyLLM
       # Tool.requires_approval block stays listed until the chat runs again.
       def pending_questions
         approvals = persisted_pending_approvals.to_a
-        rows = RubyLLM::ActiveRecord::ToolCall.uncached { approvals + asking_tool_calls.to_a }
-        rows.uniq.sort_by { |row| [row.created_at, row.id] }.flat_map do |row|
+        rows = RubyLLM::ActiveRecord::ToolCall.uncached { chat_tool_calls.where(result_id: nil).order(:created_at, :id).to_a }
+        rows.flat_map do |row|
           tool_call = row.to_llm
           next [RubyLLM::Question.approval(tool_call, chat: self)] if approvals.include?(row)
 
@@ -80,17 +80,14 @@ module RubyLLM
       end
 
       def settle_persisted_input(tool_call) # :nodoc:
-        record = RubyLLM::ActiveRecord::ToolCall.uncached { find_tool_call(tool_call.id) }
-        return unless record&.has_attribute?(:mcp_state)
-
         transaction do
           # Writing first takes the row's lock on every database, SQLite
           # included, so the state read next is the latest.
-          scope = RubyLLM::ActiveRecord::ToolCall.where(id: record.id, result_id: nil)
+          scope = chat_tool_calls.where(tool_call_id: tool_call.id, result_id: nil)
           next unless scope.update_all(updated_at: Time.current) == 1
 
           locked = RubyLLM::ActiveRecord::ToolCall.uncached { scope.lock.take }
-          next if locked.mcp_state.blank?
+          next if locked.mcp_state.nil?
 
           settled = yield(locked.mcp_state)
           next if settled == locked.mcp_state
@@ -101,12 +98,6 @@ module RubyLLM
       end
 
       private
-
-      def asking_tool_calls
-        return RubyLLM::ActiveRecord::ToolCall.none unless RubyLLM::ActiveRecord::ToolCall.has_attribute?(:mcp_state)
-
-        chat_tool_calls.where(result_id: nil).where.not(mcp_state: nil)
-      end
 
       def persisted_pending_question(question)
         id = question.respond_to?(:tool_call_id) ? question.tool_call_id : question
