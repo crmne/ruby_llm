@@ -533,7 +533,7 @@ module RubyLLM
       # record is saved with your own columns set:
       #
       #   chat.around_join do |queued, join|
-      #     join.call(sender: queued.sender)
+      #     join.call(steered: queued.steer?)
       #   end
       #
       # When the block raises, the transaction rolls back and the message
@@ -1019,7 +1019,8 @@ module RubyLLM
       # RubyLLM::Chat#queue describes, and returns the QueuedMessage record.
       # Attachments given with +with:+ are stored with Active Storage and
       # move to the message it becomes. +sender+ is any record, such as the
-      # user who asked; it is stored and handed back, never interpreted.
+      # user who asked. It is stored, and when your message model has a
+      # +sender+ association, the message record is saved with it.
       #
       # Any process can queue a message. The process that runs the chat
       # takes it at its next step; when none is running, run #complete,

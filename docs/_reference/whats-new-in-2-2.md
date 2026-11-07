@@ -209,10 +209,10 @@ chat.queue "Use the EU numbers, not the US ones"
 chat.queue "Then draft the board summary", steer: false
 ```
 
-A message that steers joins the turn that is running, after the next round of tool results. One queued with `steer: false` waits for the next turn. `around_join` wraps the moment a message joins. On a persisted chat it runs inside the transaction that creates the message, so you can set your own columns on it:
+A message that steers joins the turn that is running, after the next round of tool results. One queued with `steer: false` waits for the next turn. On a persisted chat, `queue` takes a `sender:`, and the message record is saved with it when your message model has a `sender` association. `around_join` wraps the moment a message joins. On a persisted chat it runs inside the transaction that creates the message, so you can set your own columns on it:
 
 ```ruby
-chat.around_join { |queued, join| join.call(sender: queued.sender) }
+chat.around_join { |queued, join| join.call(steered: queued.steer?) }
 ```
 
 A block that never calls `join` withdraws the message, and so does `queued.withdraw`, for a Cancel button. `join_queued_messages` joins everything waiting without asking the model. See [Queueing Messages]({% link _advanced/agentic-workflows.md %}#queueing-messages) and [Queued Messages in Rails]({% link _advanced/rails-persistence.md %}#queued-messages).
