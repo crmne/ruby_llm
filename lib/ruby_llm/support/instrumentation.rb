@@ -35,8 +35,9 @@ module RubyLLM
         @mutex.synchronize { @subscribers = (@subscribers - [subscriber]).freeze }
       end
 
-      def capture_context
-        @subscribers.filter_map do |subscriber|
+      def capture_context(config: nil)
+        instrumenter = (config || RubyLLM.config).instrumenter
+        (@subscribers | [instrumenter]).filter_map do |subscriber|
           [subscriber, subscriber.capture_context] if subscriber.respond_to?(:capture_context)
         end
       end
