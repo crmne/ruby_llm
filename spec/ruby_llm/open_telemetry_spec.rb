@@ -76,6 +76,13 @@ RSpec.describe RubyLLM::OpenTelemetry do
     expect(chat_span.status.code).to eq(OpenTelemetry::Trace::Status::UNSET)
   end
 
+  it 'records the requested thinking effort as the reasoning level' do
+    stub_chat.with_thinking(effort: :high).ask('hello')
+    stub_chat.with_thinking(budget: 1024).ask('hello')
+
+    expect(spans.map { |span| span.attributes['gen_ai.request.reasoning.level'] }).to eq(['high', nil])
+  end
+
   describe 'with content' do
     before { described_class.enable(content: true) }
 

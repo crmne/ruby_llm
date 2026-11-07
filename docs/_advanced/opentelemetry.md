@@ -125,6 +125,7 @@ Spans follow the [OpenTelemetry GenAI semantic conventions](https://github.com/o
 | `gen_ai.request.model` | The model you asked for |
 | `gen_ai.response.model` | The model the provider reports running |
 | `gen_ai.request.temperature`, `gen_ai.request.max_tokens`, `gen_ai.request.stream` | Request settings, when set |
+| `gen_ai.request.reasoning.level` | The thinking effort, when set |
 | `gen_ai.output.type` | `json` for structured output, `image`, or `speech` |
 | `gen_ai.response.finish_reasons` | Why the model stopped |
 | `gen_ai.usage.input_tokens` | Input tokens, including cached input |
