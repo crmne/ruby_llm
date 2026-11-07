@@ -264,7 +264,18 @@ end
 @chat.queue(params[:content], steer: false, sender: Current.user)
 ```
 
-`queue` returns a `RubyLLM::ActiveRecord::QueuedMessage` record with `content`, `attachments`, `sender`, `queued_at`, and `steer?`. `sender` is a polymorphic association to any record. RubyLLM stores it and hands it back, without interpreting it. Attachments are stored with Active Storage and move to the message the queued message becomes, without uploading them again. Messages queued with `steer: false` wait for the next `complete`, so a job that finishes its turn with some waiting should enqueue itself again:
+`queue` returns a `RubyLLM::ActiveRecord::QueuedMessage` record with `content`, `attachments`, `sender`, `queued_at`, and `steer?`. `sender` is a polymorphic association to any record. Give your message model a `sender` association, and the message a queued one becomes is saved with its sender:
+
+```ruby
+class Message < ApplicationRecord
+  acts_as_message
+  belongs_to :sender, class_name: "User", optional: true
+end
+```
+
+A sender the association can't hold, a record of another class or one whose class was renamed since it was queued, is dropped: the message joins without it. Make the association polymorphic to keep senders of any class.
+
+Attachments are stored with Active Storage and move to the message the queued message becomes, without uploading them again. Messages queued with `steer: false` wait for the next `complete`, so a job that finishes its turn with some waiting should enqueue itself again:
 
 ```ruby
 self.class.perform_later(chat_id) if chat.queued_messages.any? && !chat.waiting?
@@ -283,7 +294,7 @@ chat.queued_messages.find(params[:id]).withdraw # => true, or false once the cha
 
 ```ruby
 class ChatAgent < ApplicationAgent
-  around_join { |queued, join| join.call(sender: queued.sender) }
+  around_join { |queued, join| join.call(steered: queued.steer?) }
 end
 
 ChatAgent.find(chat_id).complete(&:broadcast)
@@ -291,7 +302,7 @@ ChatAgent.find(chat_id).complete(&:broadcast)
 
 Without an agent, call `around_join` on the chat record in your job, before `complete`.
 
-Attributes from nested `around_join` blocks merge, inner ones last. When the block raises, the transaction rolls back: the message is not created and the row stays queued. When it never calls `join`, the row is deleted, its attachments with it. `join_queued_messages` returns the message records.
+Attributes from nested `around_join` blocks merge, inner ones last, and win over the sender RubyLLM fills in. When the block raises, the transaction rolls back: the message is not created and the row stays queued. When it never calls `join`, the row is deleted, its attachments with it. `join_queued_messages` returns the message records.
 
 ## Batches
 

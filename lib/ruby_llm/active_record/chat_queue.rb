@@ -9,7 +9,8 @@ module RubyLLM
     # it. Taking or withdrawing deletes the row, and only the process whose
     # delete removes it goes on, so each message joins once or not at all.
     # Joining runs Chat#around_join inside the transaction that deletes the
-    # row, so a callback that raises puts the row back.
+    # row, so a callback that raises puts the row back. The message record
+    # gets the row's sender when its model has a +sender+ association.
     class ChatQueue # :nodoc:
       include AttachmentHelpers
 
@@ -67,9 +68,27 @@ module RubyLLM
 
       def join(queued, attributes)
         blobs = queued.attachments.blobs.to_a if attachments?(queued)
-        message = @chat.persist_message({ role: :user, content: queued.content, attachments: blobs }, attributes)
+        message = @chat.persist_message({ role: :user, content: queued.content, attachments: blobs },
+                                        sender_attributes(queued).merge(attributes))
         detach(queued) if blobs
         message
+      end
+
+      def sender_attributes(queued)
+        association = @chat.messages_association.klass.reflect_on_association(:sender)
+        sender = queued_sender(queued) if association
+        return {} unless sender && (association.polymorphic? || sender.is_a?(association.klass))
+
+        { sender: }
+      end
+
+      # Nil once the sender's class, or the subclass its row names, is
+      # gone, say renamed since the message was queued, so the message
+      # joins without its sender instead of holding up the queue.
+      def queued_sender(queued)
+        queued.sender
+      rescue NameError, ::ActiveRecord::SubclassNotFound
+        nil
       end
 
       def detach(queued)

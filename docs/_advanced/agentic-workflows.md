@@ -338,7 +338,7 @@ chat.queued_messages # => [#<RubyLLM::QueuedMessage ...>]
 queued.withdraw      # => true
 ```
 
-`chat.withdraw(queued)` does the same by message or id. `sender` is stored with the message and handed back on it. RubyLLM does not interpret it, so use it for whatever your application needs to know about who asked.
+`chat.withdraw(queued)` does the same by message or id. `sender` is stored with the message and handed back on it. RubyLLM does not interpret it, so use it for whatever your application needs to know about who asked. In Rails, a message model with a `sender` association [gets it saved too]({% link _advanced/rails-persistence.md %}#queued-messages).
 
 ### Joining Queued Messages
 
