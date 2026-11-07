@@ -328,8 +328,8 @@ module RubyLLM
 
       # Lets chats this agent builds run code in the configured sandbox,
       # applied via Chat#with_code_execution. Accepts the same options as
-      # keywords or a Hash. Pass +false+ to disable it. Passing +nil+
-      # raises ArgumentError.
+      # keywords or a Hash. Pass +false+ to disable it. Passing +nil+ or a
+      # block raises ArgumentError.
       #
       #   code_execution
       #   code_execution false
@@ -340,6 +340,8 @@ module RubyLLM
       # A +mounts+ lambda runs before each run, with +chat+ and the
       # agent's inputs in scope, like the agent's other lambdas.
       def code_execution(enabled = true, **options) # rubocop:disable Style/OptionalBooleanParameter
+        raise ArgumentError, 'code_execution takes no block. Pass a lambda as mounts: for each run' if block_given?
+
         @code_execution = CodeExecution.options(enabled, options)
       end
 
@@ -347,7 +349,8 @@ module RubyLLM
       # work with it, applied via Chat#with_file_store, which takes the
       # same arguments. A +store+ lambda runs once for each chat, with
       # +chat+ and the agent's inputs in scope, like the agent's other
-      # lambdas. Pass +nil+ to remove the store a parent agent declared.
+      # lambdas. Pass +nil+ to remove the store a parent agent declared. A
+      # block raises ArgumentError: pass the lambda as the store instead.
       #
       #   file_store
       #   file_store inline_limit: 20_000, tools: :read
@@ -364,6 +367,7 @@ module RubyLLM
       # :call-seq: file_store(store = default, inline_limit: 10_000, tools: %i[read write edit])
       def file_store(store = Chat::FileReferences::DEFAULT_STORE, inline_limit: Chat::FileReferences::INLINE_LIMIT,
                      tools: FileStore::Tools::DEFAULT)
+        raise ArgumentError, 'file_store takes no block. Pass the store as a lambda instead' if block_given?
         return @file_store = false if store.nil?
 
         Chat::FileReferences.validate(store, inline_limit:, tools:, store_lambda: true)
@@ -376,13 +380,15 @@ module RubyLLM
       # +true+ is every skill under the roots, and +false+ removes the
       # skills a parent agent declared. An agent without a +skills+
       # declaration has no skills. Called with no arguments, returns the
-      # declaration: the names, +true+, +false+, or +nil+.
+      # declaration: the names, +true+, +false+, or +nil+. A block raises
+      # ArgumentError.
       #
       #   skills :invoices, :refunds
       #   skills true
       #   skills false
       #
       def skills(*skills)
+        raise ArgumentError, 'skills takes no block. Name the skills, or pass true for every skill' if block_given?
         return @skills if skills.empty?
 
         @skills = Skill.selection(skills)
