@@ -10,11 +10,11 @@ module RubyLLM
   # and returns the exit code, the output, and every file the code wrote
   # there as an attachment on the tool result. In a chat with a file store
   # (see Chat#with_file_store), runs work with the chat's files instead.
-  # With a store that keeps its files in a folder, such as
-  # FileStore::Directory, code runs in that folder and changes the files
-  # in place. With any other store, each run has read-only copies of
-  # the conversation's files as usual, copies in the files the model names
-  # in +files+, and what the code writes is saved back to the store.
+  # With FileStore::Directory, code runs in the store's folder and changes
+  # the files in place. With any other store, each run has read-only
+  # copies of the conversation's files as usual, copies in the files the
+  # model names in +files+, and what the code writes is saved back to the
+  # store.
   #
   # Calls run in the chat's default sandbox. With +escalate_to:+, the model
   # may name a wider sandbox for one call and say why; that call waits for
