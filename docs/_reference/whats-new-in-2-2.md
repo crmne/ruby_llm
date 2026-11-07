@@ -335,6 +335,8 @@ Replies stream, and `interval:` slows them down so a test can press Stop. See [T
 
 `response.web_sources` lists the pages a hosted web search returned, the same on OpenAI, Azure, Meta, xAI, Anthropic, Gemini, and Vertex AI. They come from the outside world, so don't treat them as an allowlist on their own. See [Web Sources]({% link _tools/provider-tools.md %}#web-sources).
 
+`rescue_from` on a tool turns its exceptions into results the model reads, as on an agent. Declare it on a base tool class, on `RubyLLM::CodeExecution`, or on an MCP server's class for its tools. See [Tool-Level Handlers]({% link _advanced/error-handling.md %}#tool-level-handlers).
+
 A reply a fallback model wrote names it: `reply.model` and `reply.provider`, also on Rails records with those columns. See [Fallback Callbacks]({% link _advanced/error-handling.md %}#fallback-callbacks).
 
 `RubyLLM::Attachment.new(io, filename: "export.csv", mime_type: "text/csv")` takes a file's type when you know it. See [Automatic File Type Detection]({% link _core_features/attachments.md %}#automatic-file-type-detection).

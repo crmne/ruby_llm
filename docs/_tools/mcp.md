@@ -315,6 +315,27 @@ Without names, every tool is deferred. See [Tool Search]({% link _tools/tool-sea
 
 Every name you declare must exist on the server. When a server stops offering one, RubyLLM raises `RubyLLM::ConfigurationError` as the tools load, instead of silently changing what the model sees.
 
+### Handling Tool Errors
+
+A call that fails because the server answers with a protocol error raises, and the exception stops the chat. To hand the model a result instead, declare `rescue_from` on the server's class:
+
+```ruby
+class Linear < RubyLLM::MCP
+  url "https://mcp.linear.app/mcp"
+  inputs :user
+
+  rescue_from RubyLLM::MCP::Error, with: :server_refused
+
+  private
+
+  def server_refused(error)
+    { error: "Linear couldn't answer: #{error.message}" }
+  end
+end
+```
+
+The handler runs on the MCP instance, so declared inputs are available, and its return value becomes the call's result. Re-raise to stop the chat. It works like [`rescue_from` on a tool]({% link _advanced/error-handling.md %}#tool-level-handlers), and comes before a handler declared on `RubyLLM::MCP::Tool`. Tool classes added with `tool` use their own handlers.
+
 ## Using Servers in Chats
 
 Connect servers to a chat with `with_mcp`, and the model can call their tools:

@@ -137,6 +137,18 @@ end
 
 When only you can fix it, such as a missing API key or a database that's down, raise. The exception stops the chat and reaches your code. See [Handling Errors Within Tools]({% link _advanced/error-handling.md %}#handling-errors-within-tools).
 
+To turn the same exceptions into results for every tool, declare `rescue_from` once in a base class:
+
+```ruby
+class ApplicationTool < RubyLLM::Tool
+  rescue_from Faraday::Error do |error|
+    { error: "The service didn't answer (#{error.class.name.demodulize}). Try again later." }
+  end
+end
+```
+
+The handler's return value becomes the call's result, and the model reads it. See [Tool-Level Handlers]({% link _advanced/error-handling.md %}#tool-level-handlers).
+
 ## Security
 
 The model writes a tool's arguments from the conversation, and the conversation includes what the customer typed. Treat arguments as untrusted input.
