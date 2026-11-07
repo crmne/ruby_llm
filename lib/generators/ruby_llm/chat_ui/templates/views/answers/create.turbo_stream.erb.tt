@@ -1,0 +1,6 @@
+<%%= turbo_stream.replace "<%= chat_variable_name %>_#{@<%= chat_variable_name %>.id}_questions",
+  partial: "<%= chat_model_name.underscore.pluralize %>/questions",
+  locals: { <%= chat_model_name.demodulize.underscore %>: @<%= chat_variable_name %> } %>
+<%% unless @<%= chat_variable_name %>.pending_questions.any? %>
+  <%%= turbo_stream.update "new_<%= message_variable_name %>", "Continuing the conversation." %>
+<%% end %>

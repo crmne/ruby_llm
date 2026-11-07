@@ -235,7 +235,7 @@ Providers can also request approval for a tool running on an MCP server. These r
 
 With `acts_as_chat`, questions and answers persist on tool-call records. One process can ask, another can record the answer, and a third can carry the call on, even after a deploy. `pending_questions` reads the database only, so rendering questions never builds the chat's tools or connects to its MCP servers.
 
-The [chat UI generator]({% link _advanced/rails-generators.md %}#approvals-and-attachments) builds an approval card for each pending approval, with Approve and Deny buttons that record the decision and continue the conversation in a job. To answer every question, write a controller like this one. Load the chat through its agent class in the job to restore the tools:
+The [chat UI generator]({% link _advanced/rails-generators.md %}#questions-and-attachments) builds this interface for you: a card for each question, with Approve and Deny buttons for an approval, and the choices, a field, or a form for a question, that records the answer and continues the conversation in a job. To write your own, follow the same pattern. Load the chat through its agent class in the job to restore the tools:
 
 ```ruby
 class AnswersController < ApplicationController

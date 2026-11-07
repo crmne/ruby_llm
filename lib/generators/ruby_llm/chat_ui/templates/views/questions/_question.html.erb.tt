@@ -1,0 +1,78 @@
+<%% answers_path = <%= chat_variable_name %>_answers_path(<%= chat_model_name.demodulize.underscore %>) %>
+<%% card = "question_#{question.id.parameterize}" %>
+<%% single = question.fields.first if question.fields.one? %>
+<%% choices = single&.choices&.to_h { |choice| [choice, choice] } %>
+<%% choices = { "Yes" => true, "No" => false } if single&.type == "boolean" %>
+<%% steps = { "integer" => 1, "number" => "any" } %>
+<div id="<%%= card %>" class="question"
+     style="margin-bottom: 20px; padding: 10px; border-left: 3px solid #d97706; background: #fffbeb;">
+  <%% if question.approval? %>
+    <%% arguments = question.tool_call.arguments %>
+    <%% sandbox = arguments["sandbox"].presence if question.tool_call.name == "run_code" %>
+    <div style="font-weight: bold; margin-bottom: 5px;">Approve <%%= question.tool_call.name %>?</div>
+    <%% if sandbox %>
+      <p style="margin: 0 0 5px;"><%%= arguments["reason"] %></p>
+      <pre style="white-space: pre-wrap; margin: 0 0 5px;"><%%= arguments["code"] %></pre>
+      <p style="margin: 0 0 10px;">Runs in the <strong><%%= sandbox %></strong> sandbox. <%%= <%= chat_model_name.demodulize.underscore %>.tools[:run_code]&.summary(sandbox) %></p>
+    <%% else %>
+      <dl style="margin: 0 0 10px;">
+        <%% arguments.each do |name, value| %>
+          <dt style="font-weight: bold; margin-top: 5px;"><%%= name.to_s.humanize %></dt>
+          <dd style="margin: 0;"><pre style="white-space: pre-wrap; margin: 0;"><%%= value.is_a?(String) ? value : value.to_json %></pre></dd>
+        <%% end %>
+      </dl>
+    <%% end %>
+    <%%= button_to "Approve", answers_path, params: { question_id: question.id }, form: { style: "display: inline-block;" } %>
+    <%%= button_to "Deny", answers_path, params: { question_id: question.id, decline: true }, form: { style: "display: inline-block;" } %>
+  <%% else %>
+    <div style="font-weight: bold; margin-bottom: 5px;"><%%= question.message %></div>
+    <%% if question.form? && !choices %>
+      <%%= form_with url: answers_path do |form| %>
+        <%%= form.hidden_field :question_id, value: question.id %>
+        <%% if question.fields.one? %>
+          <%%= form.text_field :answer, value: single.default, required: single.required?, id: "#{card}_answer",
+            type: steps.key?(single.type) ? "number" : "text", step: steps[single.type], "aria-label": question.message %>
+          <%% if single.description %>
+            <div style="margin: 5px 0; font-size: 0.875em; color: #6b7280;"><%%= single.description %></div>
+          <%% end %>
+        <%% else %>
+          <%% question.fields.each do |field| %>
+            <%% field_id = "#{card}_#{field.name.to_s.parameterize(separator: "_")}" %>
+            <%% caption = field.title || field.name.to_s.humanize %>
+            <%% list = field.type == "array" %>
+            <div style="margin-bottom: 10px;">
+              <%% if field.type == "boolean" %>
+                <%%= form.check_box "answer[#{field.name}]", { checked: field.default, id: field_id }, "true", "false" %>
+                <%%= label_tag field_id, caption %>
+              <%% else %>
+                <%%= label_tag field_id, caption, style: "display: block;" %>
+                <%% if field.choices %>
+                  <%%= form.select "answer[#{field.name}]", field.choices, { selected: field.default, include_blank: !field.required? && !list },
+                    id: field_id, multiple: list, required: list && field.required? %>
+                <%% else %>
+                  <%%= form.text_field "answer[#{field.name}]", value: field.default, required: field.required?, id: field_id,
+                    type: steps.key?(field.type) ? "number" : "text", step: steps[field.type] %>
+                <%% end %>
+              <%% end %>
+              <%% if field.description %>
+                <div style="font-size: 0.875em; color: #6b7280;"><%%= field.description %></div>
+              <%% end %>
+            </div>
+          <%% end %>
+        <%% end %>
+        <%%= form.submit "Send" %>
+        <%%= form.button "Decline", name: :decline, value: true, formnovalidate: true %>
+      <%% end %>
+    <%% else %>
+      <%% if question.url? %>
+        <p style="margin: 0 0 10px; overflow-wrap: anywhere;"><%%= link_to question.url, question.url, target: "_blank", rel: "noopener noreferrer" %></p>
+        <%%= button_to "Done", answers_path, params: { question_id: question.id }, form: { style: "display: inline-block;" } %>
+      <%% else %>
+        <%% choices.each do |label, value| %>
+          <%%= button_to label, answers_path, params: { question_id: question.id, answer: value }, form: { style: "display: inline-block;" } %>
+        <%% end %>
+      <%% end %>
+      <%%= button_to "Decline", answers_path, params: { question_id: question.id, decline: true }, form: { style: "display: inline-block;" } %>
+    <%% end %>
+  <%% end %>
+</div>
