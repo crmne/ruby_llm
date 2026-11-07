@@ -2,18 +2,15 @@
 
 require 'spec_helper'
 require 'ferrum'
-require 'generators/ruby_llm/chat_ui/chat_ui_generator'
 
 RSpec.describe 'The chat UI message controller', :generator do # rubocop:disable RSpec/DescribeClass
-  generator = RubyLLM::Generators::ChatUIGenerator
-  fixtures = File.expand_path('../../fixtures/javascript', __dir__)
+  javascripts = File.expand_path('../../../app/assets/javascripts/ruby_llm', __dir__)
 
   let(:files) do
     {
-      '/chat_message_controller.js' => File.read(File.join(generator.source_root,
-                                                           'javascript/controllers/chat_message_controller.js')),
-      '/marked.js' => File.read(File.join(fixtures, "marked-#{generator::MARKED_VERSION}.js")),
-      '/dompurify.js' => File.read(File.join(fixtures, "dompurify-#{generator::DOMPURIFY_VERSION}.js")),
+      '/chat_message_controller.js' => File.read(File.join(javascripts, 'chat_message_controller.js')),
+      '/marked.js' => File.read(File.join(javascripts, 'marked.js')),
+      '/dompurify.js' => File.read(File.join(javascripts, 'dompurify.js')),
       '/stimulus.js' => <<~JS
         export class Controller {
           constructor(element) {

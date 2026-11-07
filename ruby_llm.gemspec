@@ -45,7 +45,8 @@ Gem::Specification.new do |spec|
       Agent skill: https://rubyllm.com/ai-coding-assistants/
   MESSAGE
 
-  spec.files = Dir.glob('{lib,skills}/**/*') + Dir.glob('exe/*') + ['README.md', 'LICENSE', '.rdoc_options']
+  spec.files = Dir.glob('{app,lib,skills}/**/*') + Dir.glob('exe/*') +
+               ['config/importmap.rb', 'README.md', 'LICENSE', '.rdoc_options']
   spec.bindir = 'exe'
   spec.executables = ['ruby_llm']
   spec.require_paths = ['lib']

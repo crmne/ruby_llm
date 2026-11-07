@@ -3,6 +3,9 @@
 if defined?(Rails::Railtie)
   module RubyLLM
     class Railtie < Rails::Railtie # :nodoc:
+      ROOT = File.expand_path('../..', __dir__)
+      JAVASCRIPTS = %w[ruby_llm/chat_message_controller.js ruby_llm/marked.js ruby_llm/dompurify.js].freeze
+
       initializer 'ruby_llm.inflections' do
         ActiveSupport::Inflector.inflections(:en) do |inflect|
           inflect.acronym 'RubyLLM'
@@ -48,6 +51,17 @@ if defined?(Rails::Railtie)
         ActiveSupport.on_load :active_storage_blob do
           after_destroy { RubyLLM::ActiveRecord::ProviderFile.forget_blob(self) }
         end
+      end
+
+      initializer 'ruby_llm.assets' do |app|
+        next unless app.config.respond_to?(:assets)
+
+        app.config.assets.paths << File.join(ROOT, 'app/assets/javascripts')
+        app.config.assets.precompile += JAVASCRIPTS
+      end
+
+      initializer 'ruby_llm.importmap', before: 'importmap' do |app|
+        app.config.importmap.paths << File.join(ROOT, 'config/importmap.rb') if app.config.respond_to?(:importmap)
       end
 
       config.after_initialize do
