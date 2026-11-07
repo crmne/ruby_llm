@@ -206,6 +206,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
   end
 
   def give_chat_agent_an_approval_tool(agent_path)
+    FileUtils.mkdir_p('app/tools')
     File.write('app/tools/send_mail_tool.rb', <<~RUBY)
       class SendMailTool < RubyLLM::Tool
         description "Sends an email"
@@ -812,23 +813,30 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
               within_test_app(destination) do
                 gemfile = File.read('Gemfile').lines.reject { |line| line.include?('turbo-rails') }.join
                 File.write('Gemfile', gemfile)
+                FileUtils.rm(Dir['db/migrate/*_add_reply_error_to_chats.rb'])
                 output, = run_rails_generate('ruby_llm:chat_ui', '--skip', chdir: destination)
-                expect(output).to include('runs on Hotwire', 'bundle add turbo-rails')
+                expect(output.lines.last.strip)
+                  .to eq('Add turbo-rails and stimulus-rails, which the chat UI runs on, then run bin/rails db:migrate')
               end
             end
           end
         end
 
-        it 'says what works, where it lives, and what comes next' do
+        it 'prints the files it creates and the migration to run, and no guide' do
           within_test_app(app_path) do
             Dir.mktmpdir do |destination|
               FileUtils.cp_r("#{app_path}/.", destination)
               within_test_app(destination) do
+                File.write('Gemfile', %(#{File.read('Gemfile')}gem "turbo-rails"\n))
+                FileUtils.rm(Dir['db/migrate/*_add_reply_error_to_chats.rb'])
                 output, status = run_rails_generate('ruby_llm:chat_ui', '--skip', chdir: destination)
                 expect(status.success?).to be(true), output
-                expect(output).to include('Works now:', 'app/jobs/chat_response_job.rb', 'ChatsController#cancel',
-                                          'app/agents/chat_agent.rb', 'code_execution', 'file_store', 'mcp Linear')
-                expect(output).to include('With file_store, code reads attachments in ./attachments')
+                expect(output).to include('app/agents/chat_agent.rb', 'add_reply_error_to_chats.rb')
+                expect(output.lines.last.strip).to eq('Run bin/rails db:migrate')
+                expect(output).not_to include('Works now', 'Where it lives', 'file_store', 'TestHelper')
+
+                output, = run_rails_generate('ruby_llm:chat_ui', '--skip', chdir: destination)
+                expect(output).not_to include('db:migrate')
               end
             end
           end
@@ -962,27 +970,12 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
               expect(status.success?).to be(true), output
               expect(File.read('app/models/message.rb')).to eq(custom)
               expect(output).to include('Message broadcasts with Turbo itself')
-              expect(output).to include("the chat UI turns on RubyLLM's broadcasting")
               expect(output).to include('acts_as_message broadcasts: false')
             end
           end
         end
 
-        it 'explains that replies stay plain text in an app without JavaScript, even with a package.json for CSS' do
-          Dir.mktmpdir do |destination|
-            FileUtils.cp_r("#{app_path}/.", destination)
-            within_test_app(destination) do
-              File.write('package.json', '{}')
-              output, status = run_rails_generate('ruby_llm:chat_ui', '--skip', chdir: destination)
-              expect(status.success?).to be(true), output
-              expect(output).to include('Replies show as plain text until the app loads JavaScript',
-                                        'With another bundler, add marked@18.0.14 dompurify@3.4.16')
-              expect(output).not_to include('yarn add', 'stimulus:manifest:update')
-            end
-          end
-        end
-
-        it 'copies the controller and prints the packages to install for a jsbundling app' do
+        it 'copies the controller for a jsbundling app, and leaves its packages to the guide' do
           Dir.mktmpdir do |destination|
             FileUtils.cp_r("#{app_path}/.", destination)
             within_test_app(destination) do
@@ -991,9 +984,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
               File.write('config/importmap.rb', %(pin "application"\n))
               output, status = run_rails_generate('ruby_llm:chat_ui', '--force', chdir: destination)
               expect(status.success?).to be(true), output
-              expect(output).to include('yarn add marked@18.0.14 dompurify@3.4.16')
-              expect(output).to include('bin/rails stimulus:manifest:update')
-              expect(output).to include('bin/rails stimulus:install')
+              expect(output).not_to include('yarn add', 'stimulus:manifest:update', 'importmap')
+              expect(output.lines.last.strip).to eq('Add turbo-rails and stimulus-rails, which the chat UI runs on')
 
               javascripts = File.expand_path('../../../app/assets/javascripts/ruby_llm', __dir__)
               expect(File.read('app/javascript/controllers/chat_message_controller.js'))

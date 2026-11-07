@@ -50,8 +50,9 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
         expect(File.exist?('app/models/model.rb')).to be false
         expect(File.exist?('app/models/tool_call.rb')).to be false
         expect(File.exist?('app/models/batch.rb')).to be false
-        %w[agents tools schemas prompts skills sandboxes mcp evals judges].each do |name|
-          expect(File.exist?("app/#{name}/.gitkeep")).to be(true), "app/#{name}/.gitkeep is missing"
+        expect(File.exist?('app/agents/application_agent.rb')).to be(true)
+        %w[tools schemas prompts skills sandboxes mcp evals judges].each do |name|
+          expect(Dir.exist?("app/#{name}")).to be(false), "app/#{name} is an empty folder"
         end
         expect(File.read('config/initializers/ruby_llm.rb')).not_to include('sandbox')
       end
@@ -218,15 +219,6 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
     end
   end
 
-  it 'ends at the next steps and the documentation link' do
-    output = capture_stdout do
-      described_class.new([], {}, destination_root: Dir.tmpdir, shell: Thor::Shell::Basic.new).show_install_info
-    end
-
-    expect(output.lines.reject { |line| line.strip.empty? }.last).to include('https://rubyllm.com')
-    expect(output).not_to include('github.com', 'x.com')
-  end
-
   it 'leaves message broadcasting off in the initializer' do
     Dir.mktmpdir do |destination|
       described_class.new([], {}, destination_root: destination, shell: Thor::Shell::Basic.new).create_initializer
@@ -248,15 +240,23 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
     end
   end
 
+  it 'ends with the one command to run next, and no guide' do
+    output = capture_stdout do
+      described_class.new([], {}, destination_root: Dir.tmpdir, shell: Thor::Shell::Basic.new).show_next_step
+    end
+
+    expect(output).to eq("\nRun bin/rails db:migrate\n")
+  end
+
   describe 'with a mapped chat model' do
     it 'points ApplicationAgent at that model' do
       Dir.mktmpdir do |destination|
         described_class.new(['chat:Conversation'], {}, destination_root: destination, shell: Thor::Shell::Basic.new)
-                       .create_app_directories
+                       .create_application_agent_file
 
         expect(File.read(File.join(destination, 'app/agents/application_agent.rb')))
           .to eq("class ApplicationAgent < RubyLLM::Agent\n  chat_class Conversation\nend\n")
-        expect(File.exist?(File.join(destination, 'app/agents/.gitkeep'))).to be(true)
+        expect(Dir.children(File.join(destination, 'app'))).to eq(['agents'])
       end
     end
   end

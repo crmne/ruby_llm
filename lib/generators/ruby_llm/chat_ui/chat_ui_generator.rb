@@ -13,8 +13,6 @@ module RubyLLM
 
       source_root File.expand_path('templates', __dir__)
 
-      MARKED_VERSION = '18.0.14'
-      DOMPURIFY_VERSION = '3.4.16'
       CONTROLLER = File.expand_path('../../../../app/assets/javascripts/ruby_llm/chat_message_controller.js', __dir__)
 
       namespace 'ruby_llm:chat_ui'
@@ -48,20 +46,12 @@ module RubyLLM
         ::ActiveRecord::Generators::Base.next_migration_number(dirname)
       end
 
-      def check_hotwire
-        return if gem?('turbo-rails')
-
-        say "\n  The chat UI runs on Hotwire, and this app doesn't have it, so its pages raise until you add it:", :red
-        say '    bundle add turbo-rails stimulus-rails importmap-rails'
-        say '    bin/rails importmap:install turbo:install stimulus:install'
-        say '  An app from a plain rails new has them.', :red
-      end
-
       def create_migration_file
         name = "add_reply_error_to_#{chat_table_name}"
         return if behavior == :invoke && self.class.migration_exists?(File.join(destination_root, 'db/migrate'), name)
 
         migration_template 'migrations/add_reply_error_migration.rb', "db/migrate/#{name}.rb"
+        @migration_created = true
       end
 
       def create_views
@@ -156,16 +146,6 @@ module RubyLLM
         copy_file source, 'app/javascript/controllers/chat_message_controller.js'
       end
 
-      def add_javascript_dependencies
-        return unless behavior == :invoke
-
-        explain_javascript_setup unless gem?('importmap-rails')
-        return if app_file?('app/javascript/controllers/index.js')
-
-        say '  The chat UI renders replies with a Stimulus controller. Install Stimulus to use it:', :yellow
-        say '    bin/rails stimulus:install'
-      end
-
       def add_available_chat_models_to_application_controller
         path = 'app/controllers/application_controller.rb'
         return unless app_file?(path)
@@ -242,37 +222,13 @@ module RubyLLM
         inject_into_file path, "    <%= yield :head %>\n", before: %r{^\s*</head>}
       end
 
-      def display_post_install_message
+      def show_next_step
         return unless behavior == :invoke
 
-        # Show the correct URL based on whether models are namespaced
-        url_path = if chat_model_name.include?('::')
-                     chat_model_name.underscore.pluralize
-                   else
-                     chat_table_name
-                   end
-
-        say "\n  ✅ Chat UI installed!", :green
-        say "  UI template: #{ui_variant}", :cyan
-        say "\n  Works now: streaming replies, Stop, file attachments, cost per reply, errors on the page."
-        say "\n  Where it lives:"
-        say "    Background replies:      app/jobs/#{variable_name_for(chat_model_name)}_response_job.rb"
-        say "    Stop:                    #{chat_controller_class_name}#cancel"
-        say "    Reply rendering:         app/views/#{message_model_name.underscore.pluralize}/_assistant.html.erb"
-        say "    What the model can do:   app/agents/#{chat_agent_class_name.underscore}.rb"
-        say "\n  Add to that agent, one line each, as you need them:"
-        say "    file_store          the model reads, searches, and edits the chat's files with tools"
-        say '    code_execution      the model runs code: bin/rails generate ruby_llm:sandbox Workspace first'
-        say '                        With file_store, code reads attachments in ./attachments, or in the folder of'
-        say "                        a store in a folder, and what it writes joins the chat's files."
-        say '    mcp Linear          an MCP server: bin/rails generate ruby_llm:mcp Linear URL first'
-        say '    tools WeatherTool   a tool: bin/rails generate ruby_llm:tool Weather first'
-        if app_file?('test/test_helper.rb')
-          say "\n  Check it with bin/rails test and bin/rails test:system (needs Chrome)."
-        end
-        say '  Use RubyLLM::TestHelper in your own tests, with no provider or key.'
-        say "\n  Run bin/rails db:migrate, then start your server and visit http://localhost:3000/#{url_path}", :cyan
-        say "\n"
+        steps = []
+        steps << 'add turbo-rails and stimulus-rails, which the chat UI runs on' unless gem?('turbo-rails')
+        steps << 'run bin/rails db:migrate' if @migration_created
+        say "\n#{steps.join(', then ').upcase_first}" if steps.any?
       end
 
       private
@@ -285,20 +241,6 @@ module RubyLLM
         Bundler.with_original_env { run 'bundle install --quiet' } if behavior == :invoke
       end
 
-      def explain_javascript_setup
-        if gem?('jsbundling-rails')
-          say "\n  Add the chat UI's JavaScript dependencies, then register its Stimulus controller:", :yellow
-          say "    yarn add #{javascript_packages}   (or: npm install #{javascript_packages})"
-          say '    bin/rails stimulus:manifest:update'
-        else
-          say "\n  Replies show as plain text until the app loads JavaScript with importmap-rails or jsbundling-rails.",
-              :yellow
-          say "  With another bundler, add #{javascript_packages} and register"
-          say '  app/javascript/controllers/chat_message_controller.js as the chat-message Stimulus controller.'
-        end
-      end
-
-      def javascript_packages = "marked@#{MARKED_VERSION} dompurify@#{DOMPURIFY_VERSION}"
       def app_file?(path) = File.exist?(File.join(destination_root, path))
 
       def gem?(name)

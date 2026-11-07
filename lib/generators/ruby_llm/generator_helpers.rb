@@ -5,20 +5,11 @@ module RubyLLM
     # Shared helpers for RubyLLM generators
     module GeneratorHelpers
       APPLICATION_MODEL_TYPES = %w[chat message].freeze
-      CONVENTION_DIRECTORIES = %w[agents tools schemas prompts skills sandboxes mcp evals judges].freeze
       APPLICATION_AGENT_PATH = 'app/agents/application_agent.rb'
       DEFAULT_MODEL_NAMES = {
         chat: 'Chat',
         message: 'Message'
       }.freeze
-
-      def create_convention_directories
-        CONVENTION_DIRECTORIES.each do |name|
-          empty_directory "app/#{name}"
-          keep = File.join('app', name, '.gitkeep')
-          create_file keep unless File.exist?(File.join(destination_root, keep))
-        end
-      end
 
       def create_application_agent
         return if application_agent?
@@ -58,7 +49,7 @@ module RubyLLM
         path = 'config/initializers/ruby_llm.rb'
         initializer = File.join(destination_root, path)
         unless File.exist?(initializer)
-          return say("\n  Add config.broadcast_messages = true to your RubyLLM configuration.", :yellow)
+          return say('Add config.broadcast_messages = true to your RubyLLM configuration', :yellow)
         end
         return if File.read(initializer).match?(/^\s*config\.broadcast_messages\s*=/)
 
@@ -69,9 +60,8 @@ module RubyLLM
         return unless source.match?(/\b(?:broadcast_\w+_to|broadcasts_to|broadcasts_refreshes|broadcast_append_chunk)/)
         return if source.include?('broadcasts: false')
 
-        say "\n  #{message_model_name} broadcasts with Turbo itself, and the chat UI turns on RubyLLM's broadcasting.",
-            :yellow
-        say '  Remove that code to use RubyLLM\'s broadcasting, or keep it and write acts_as_message broadcasts: false.'
+        say "#{message_model_name} broadcasts with Turbo itself: remove that code, or write acts_as_message " \
+            'broadcasts: false', :yellow
       end
 
       # The broadcasting blocks earlier versions of ruby_llm:chat_ui wrote:
