@@ -53,6 +53,13 @@ if defined?(Rails::Railtie)
         end
       end
 
+      initializer 'ruby_llm.helpers' do
+        ActiveSupport.on_load :action_view do
+          require 'ruby_llm/active_record/chat_helper'
+          include RubyLLM::ActiveRecord::ChatHelper
+        end
+      end
+
       initializer 'ruby_llm.assets' do |app|
         next unless app.config.respond_to?(:assets)
 

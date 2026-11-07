@@ -25,19 +25,6 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     GeneratorTestHelpers.run_command(env, ['bundle', 'exec', 'rails', *args], chdir:)
   end
 
-  def expect_messages_helper_content(path)
-    messages_helper = File.read(path)
-    expect(messages_helper).to include('def default_model_display_name')
-    expect(messages_helper).not_to include('def llm_model_label(model)')
-    expect(messages_helper).to include('RubyLLM.models.find(RubyLLM.config.default_model).label')
-    expect(messages_helper).to include('def tool_result_partial(message)')
-    expect(messages_helper).to include('def tool_call_partial(tool_call)')
-    expect(messages_helper).not_to include('def model_display_name(model)')
-    expect(messages_helper).not_to include('def provider_display_name(model_or_provider)')
-    expect(messages_helper).not_to include('def parse_tool_payload(content)')
-    expect(messages_helper).not_to include('def llm_model_info(model)')
-  end
-
   def expect_generated_view_set( # rubocop:disable Metrics/AbcSize
     base_path:,
     chats_target:,
@@ -803,8 +790,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
             expect(File.exist?(path)).to be true
           end
 
-          expect(File.exist?(config[:helper_path])).to be true
-          expect_messages_helper_content(config[:helper_path])
+          expect(File.exist?(config[:helper_path])).to be(false)
+          expect(Dir['app/helpers/**/*_helper.rb']).to eq(['app/helpers/application_helper.rb'])
         end
       end
 

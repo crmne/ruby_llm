@@ -151,10 +151,6 @@ module RubyLLM
         template 'test/agents/chat_agent_test.rb', "test/agents/#{chat_agent_class_name.underscore}_test.rb"
       end
 
-      def create_helpers
-        template 'helpers/messages_helper.rb', "app/helpers/#{message_model_name.underscore.pluralize}_helper.rb"
-      end
-
       def create_javascript
         source = gem?('importmap-rails') ? 'javascript/chat_message_controller.js' : CONTROLLER
         copy_file source, 'app/javascript/controllers/chat_message_controller.js'
@@ -335,14 +331,6 @@ module RubyLLM
 
       def application_agent_caching?
         File.read(File.join(destination_root, APPLICATION_AGENT_PATH)).match?(/^\s*caching\b/)
-      end
-
-      def message_helper_module_name
-        if message_model_name.include?('::')
-          "#{message_model_name.deconstantize}::#{message_model_name.demodulize.pluralize}Helper"
-        else
-          "#{message_model_name.pluralize}Helper"
-        end
       end
     end
   end
