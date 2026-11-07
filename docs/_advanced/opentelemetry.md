@@ -132,7 +132,7 @@ Spans follow the [OpenTelemetry GenAI semantic conventions](https://github.com/o
 | `gen_ai.usage.output_tokens` | Output tokens |
 | `gen_ai.usage.cache_read.input_tokens`, `gen_ai.usage.cache_write.input_tokens` | Cached input, also counted in the input total |
 | `gen_ai.usage.reasoning.output_tokens` | Thinking tokens |
-| `gen_ai.tool.name`, `gen_ai.tool.call.id` | The tool and its call ID |
+| `gen_ai.tool.name`, `gen_ai.tool.description`, `gen_ai.tool.call.id` | The tool, its description, and its call ID |
 | `gen_ai.skill.name` | The skill a `load_skill` call loads, when it is one of the chat's skills |
 | `gen_ai.workflow.name`, `ruby_llm.workflow.id` | The workflow name and ID |
 | `ruby_llm.workflow.step.name`, `ruby_llm.workflow.step.id` | The step name and ID |
