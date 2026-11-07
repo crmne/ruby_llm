@@ -38,7 +38,7 @@ You don't need to read the generated files or `lib/ruby_llm` to use this. The ge
 
 Code reads a chat's attachments, earlier ones too, at `./attachments/<name>`, or at `./<name>` with a store in a folder. Python needs `languages: [:python]`: the default is Ruby and shell. Without a converter, the model gets a PDF as the file itself, so it needs no PDF gem. `per_result` and `per_request` in `context_budget` are shares of the model's context window, not sizes.
 
-Chats, messages, files, and cost live in the database and storage, so they survive a restart. A process that dies mid-reply loses that reply's unsaved text, and the chat stays `running?` until `config.max_run_time` passes, ten minutes by default. `claim_token`, `claimed_until`, and `cancelled` belong to RubyLLM: `claim_token` stays set after a run ends, so read `chat.running?`, and a `cancelled` left set stops the next run. `durable-agents/#when-a-run-is-interrupted` says what cancel, a crash, and a failure each save and continue.
+`durable-agents/#when-a-run-is-interrupted` says what cancel, a crash, and a failure each save and continue.
 
 RubyLLM's own suite covers streaming and reply assembly, persistence, the tool loop, usage and cost, retries, cancellation, and generated code; the official conformance suite covers its MCP client; and mxc's tests cover sandbox isolation. Don't probe those by hand. See [Verify](#verify-the-application-change) for the one command that checks the result.
 
@@ -58,12 +58,12 @@ These are the signatures an application uses, for 2.2; on an older release, chec
 ```ruby
 RubyLLM.configure do |config|
   config.anthropic_api_key = ENV["ANTHROPIC_API_KEY"]
-  config.anthropic_api_base = ENV["ANTHROPIC_BASE_URL"]   # see configuration-providers/ for what each base contains
+  config.anthropic_api_base = ENV["ANTHROPIC_BASE_URL"]   # no path; openai_api_base ends in /v1, gemini_api_base in /v1beta
 end
 
 chat = RubyLLM.chat(model: "...")   # or Chat.create!(model: "...") with acts_as_chat
 message = chat.ask("Hi", with: "file.pdf") { |chunk| chunk.content }
-message.content; message.parsed; message.tokens.input; message.cost.total   # also chat.tokens, chat.cost
+message.content; message.parsed; message.tokens.input; message.cost.total; message.model_id   # also chat.tokens, chat.cost, chat.model_id
 chat.cancel    # any thread, and any process with acts_as_chat; raises RubyLLM::CancelledError in the running call
 
 # Chainable on a chat. Each is also a macro without with_ on RubyLLM::Agent.
@@ -73,7 +73,7 @@ with_file_store with_code_execution with_skills with_provider_tools with_tool_op
 
 class ChatAgent < ApplicationAgent    # or RubyLLM::Agent
   model "..."; instructions "..."; tools WeatherTool; mcp Linear; code_execution languages: [:python]
-  context_budget per_result: 0.25, per_request: 0.7
+  context_budget per_result: 0.25, per_request: 0.7; thinking effort: :medium   # thinking follows model changes
 end
 ChatAgent.create!(model: "...")   # a chat keeps its model; ChatAgent.find applies the agent and leaves the model alone
 chat.with_model("...")            # saved on a record, and the next request uses it with the same history
