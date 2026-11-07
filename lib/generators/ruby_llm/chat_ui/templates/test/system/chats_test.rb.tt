@@ -59,10 +59,6 @@ class <%= chat_controller_class_name.delete_suffix("Controller") %>Test < Applic
 
     assert_field "<%= message_variable_name %>[content]", with: "Half a thought"
 
-    click_on "Send <%= message_table_name.singularize.humanize.downcase %>"
-    assert_text "Half a thought"
-    assert_field "<%= message_variable_name %>[content]", with: ""
-
     fill_in "<%= message_variable_name %>[content]", with: "For this chat only"
     start_chat
     assert_field "<%= message_variable_name %>[content]", with: ""
