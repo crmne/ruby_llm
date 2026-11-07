@@ -46,9 +46,10 @@ module RubyLLM
 
       content = self.class.content?
       span = safely do
-        attributes = Attributes.request(operation, payload, event: name)
+        attributes = Attributes.request(operation, payload, event: name, content:)
         attributes.merge!(Content.request(operation, payload)) if content
-        tracer.start_span(Attributes.span_name(operation, payload), kind: Attributes.span_kind(operation), attributes:)
+        span_name = Attributes.span_name(operation, payload, content:)
+        tracer.start_span(span_name, kind: Attributes.span_kind(operation), attributes:)
       end
       return yield unless span
 

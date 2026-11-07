@@ -32,24 +32,24 @@ module RubyLLM
 
       module_function
 
-      def span_name(operation, payload)
+      def span_name(operation, payload, content: false)
         target = case operation
-                 when 'execute_tool' then payload[:tool_name]
+                 when 'execute_tool' then [payload[:tool_name], *skill(payload, content:).values]
                  when 'invoke_workflow' then payload[:workflow_name]
                  when 'ruby_llm.workflow_step' then payload[:workflow_step_name]
                  when 'ruby_llm.code_execution' then payload[:language]
                  else payload[:model]
                  end
-        [operation, target].compact.join(' ')
+        [operation, *target].compact.join(' ')
       end
 
       def span_kind(operation)
         INTERNAL_OPERATIONS.include?(operation) ? :internal : :client
       end
 
-      def request(operation, payload, event:)
+      def request(operation, payload, event:, content: false)
         return workflow(operation, payload) if %w[invoke_workflow ruby_llm.workflow_step].include?(operation)
-        return tool(payload) if operation == 'execute_tool'
+        return tool(payload, content:) if operation == 'execute_tool'
         return code_execution_request(payload) if operation == 'ruby_llm.code_execution'
 
         {
@@ -112,12 +112,26 @@ module RubyLLM
         }
       end
 
-      def tool(payload)
+      def tool(payload, content:)
         {
           'gen_ai.operation.name' => 'execute_tool',
           'gen_ai.tool.name' => payload[:tool_name],
           'gen_ai.tool.call.id' => payload[:tool_call_id],
           'gen_ai.tool.type' => 'function'
+        }.merge(skill(payload, content:)).compact
+      end
+
+      # A skill name the chat does not have, or the file a call asks for,
+      # is a model's argument, so it is content.
+      def skill(payload, content:)
+        loader = payload[:tool]
+        arguments = payload[:tool_arguments].to_h.transform_keys(&:to_s)
+        name = arguments['skill'].to_s
+        return {} unless loader.is_a?(Skill::Loader) && loader.skill?(name)
+
+        {
+          'gen_ai.skill.name' => name,
+          'gen_ai.skill.resource.name' => (Skill::Loader.resource_name(name, arguments['file']) if content)
         }.compact
       end
 
