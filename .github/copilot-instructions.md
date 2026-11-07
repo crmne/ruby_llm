@@ -66,7 +66,10 @@ Look for these, in this order, and treat the first four as blockers:
   one keyword; a raw provider Hash returned where a value object exists; a String where the
   gem's own enumeration is a Symbol (`finish_reason`, statuses, thinking
   effort, `Model#type`); an error constructor that does not take the
-  message first.
+  message first; a predicate or narrower list that only filters a list the
+  API already returns (`awaiting_approval?` next to `pending_questions`); a
+  second verb for an outcome an existing one reaches (`deny` next to
+  `decline`); state held in memory across calls instead of in records.
 - Missing evidence. Behavior changes without a unit spec that fails before the
   fix; a changed wire request without a re-recorded cassette; a cassette with
   an API key or personal data in it.
@@ -142,4 +145,6 @@ that says why, with no generated footers or co-author tags. You may push
 straight to `main`, but prefer a pull request for anything beyond a small fix,
 so CodeRabbit and GitHub code scanning review it first. Merge your own pull
 request (squash) once CI is green and those reviews are in, with every finding
-fixed or answered.
+fixed or answered. A public API change, any new, changed, or removed line in
+`api.txt`, never goes straight to `main` and waits for the maintainer to
+approve its shape and merge it.

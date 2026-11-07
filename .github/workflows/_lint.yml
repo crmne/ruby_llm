@@ -53,6 +53,10 @@ jobs:
         working-directory: ${{ inputs.working-directory }}
         run: bundle exec archspec check
 
+      - name: Check the public API list
+        working-directory: ${{ inputs.working-directory }}
+        run: bundle exec rake api:check
+
       - name: Check public API documentation
         working-directory: ${{ inputs.working-directory }}
         run: bundle exec rdoc --coverage-report lib
