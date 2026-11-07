@@ -103,8 +103,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       chat.ask_later('Hello')
       seen = nil
       allow(chat.to_llm.provider).to receive(:complete) do
-        chat.cancel
-        seen = chat.to_llm.cancelled?
+        seen ||= chat.cancel.to_llm.cancelled?
         RubyLLM::Message.new(role: :assistant, content: 'Done')
       end
 

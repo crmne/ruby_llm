@@ -67,8 +67,9 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
   it 'saves nothing when a stop ends the reply' do
     with_reply_error_column do
+      cancelled = false
       stopped = job_for(chat) do |job|
-        job.cancel
+        cancelled ||= job.cancel.cancelled?
         answer
       end
 
