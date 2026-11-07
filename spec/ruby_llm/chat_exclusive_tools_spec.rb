@@ -75,6 +75,19 @@ RSpec.describe RubyLLM::Chat do
         expect(log.index([:start, 'click'])).to be > log.index([:finish, 'read_b'])
       end
 
+      it "tells the chat's tool call state as each call starts, after the one before it finished" do
+        state = RubyLLM::Chat::ToolCallState.new
+        allow(state).to receive(:started) { |tool_call| log << [:started, tool_call.name] }
+        chat.tool_call_state = state
+        allow(chat.provider).to receive(:complete).and_return(calls('click', 'type'), answer)
+
+        chat.ask('Go')
+
+        log = events
+        expect(log.index([:started, 'click'])).to be < log.index([:start, 'click'])
+        expect(log.index([:started, 'type'])).to be > log.index([:finish, 'click'])
+      end
+
       it 'keeps the order the model gave around an exclusive call' do
         allow(chat.provider).to receive(:complete).and_return(calls('read_a', 'click', 'read_b'), answer)
 
