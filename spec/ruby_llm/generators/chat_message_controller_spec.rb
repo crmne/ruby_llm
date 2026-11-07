@@ -227,23 +227,24 @@ RSpec.describe 'The chat UI message controller', :generator do # rubocop:disable
       (() => {
         document.body.insertAdjacentHTML("beforeend", "<turbo-cable-stream-source data-chat-stream></turbo-cable-stream-source>")
         const rendered = []
-        const deliver = () => {
+        const deliver = (id) => {
           const stream = document.createElement("turbo-stream")
           stream.setAttribute("action", "refresh")
-          const event = new CustomEvent("turbo:before-stream-render", { detail: { render: () => rendered.push("refresh") } })
+          stream.id = id
+          const event = new CustomEvent("turbo:before-stream-render", { detail: { render: (given) => rendered.push(given?.id) } })
           dispatchEvent(event)
           event.detail.render(stream)
         }
         dispatchEvent(new Event("turbo:visit"))
-        deliver()
-        const during = rendered.length
+        deliver("during")
+        const during = [...rendered]
         dispatchEvent(new Event("turbo:load"))
-        const after = rendered.length
-        deliver()
-        return [during, after, rendered.length]
+        const after = [...rendered]
+        deliver("later")
+        return [during, after, rendered]
       })()
     JS
 
-    expect(rendered).to eq([0, 1, 2])
+    expect(rendered).to eq([[], ['during'], %w[during later]])
   end
 end
