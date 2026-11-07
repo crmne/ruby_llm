@@ -973,6 +973,24 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
           end
         end
 
+        it "keeps the ApplicationAgent's caching policy" do
+          Dir.mktmpdir do |destination|
+            FileUtils.cp_r("#{app_path}/.", destination)
+            within_test_app(destination) do
+              File.write('app/agents/application_agent.rb',
+                         "class ApplicationAgent < RubyLLM::Agent\n  chat_class Chat\n  caching false\nend\n")
+
+              output, status = run_rails_generate('ruby_llm:chat_ui', '--force', chdir: destination)
+              expect(status.success?).to be(true), output
+              expect(File.read('app/agents/chat_agent.rb')).to eq(<<~RUBY)
+                class ChatAgent < ApplicationAgent
+                  context_budget per_result: 0.25, per_request: 0.7
+                end
+              RUBY
+            end
+          end
+        end
+
         it 'gives the chat agent its chat model without an ApplicationAgent' do
           Dir.mktmpdir do |destination|
             FileUtils.cp_r("#{app_path}/.", destination)
