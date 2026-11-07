@@ -33,7 +33,7 @@ RSpec.describe RubyLLM::Chat do
   def claims(running: false, &claimer)
     record = instance_double(Chat, find_tool_call: nil, persisted_tool_call_approval: nil,
                                    persisted_remembered_tool?: false, tool_call_running_elsewhere?: running,
-                                   release_persisted_tool_calls: nil)
+                                   release_persisted_tool_calls: nil, persisted_tool_call_started: nil)
     allow(record).to receive(:claim_persisted_tool_calls, &claimer)
     RubyLLM::ActiveRecord::ChatToolCallState.new(record)
   end

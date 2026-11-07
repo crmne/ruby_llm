@@ -82,6 +82,9 @@ module RubyLLM
 
       def release(_ids); end
 
+      # Notes that +tool_call+, claimed with its round, starts running now.
+      def started(_tool_call); end
+
       def running_elsewhere?(_tool_call)
         false
       end

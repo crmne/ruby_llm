@@ -174,6 +174,49 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(tool_call_record).not_to be_running
   end
 
+  context 'when a round of calls runs longer than the run time, though each call fits it' do
+    let(:call_ids) { Array.new(2) { "call_#{SecureRandom.hex(4)}" } }
+
+    before { allow(RubyLLM.config).to receive(:max_run_time).and_return(3) }
+
+    def round_chat
+      question_chat.tap do |chat|
+        tool_calls = call_ids.to_h { |id| [id, RubyLLM::ToolCall.new(id:, name: 'lookup', arguments: {})] }
+        chat.add_message(role: :assistant, content: '', tool_calls:)
+      end
+    end
+
+    # Each call takes two of the three seconds, and checks its claim as it
+    # finishes: the second call finishes four seconds into the round.
+    def slow_lookup(claimed, alone:)
+      Class.new(RubyLLM::Tool) do
+        exclusive if alone
+        define_method(:name) { 'lookup' }
+        define_method(:execute) do |tool_call:|
+          sleep 2
+          claimed << RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: tool_call.id).running?
+          'found'
+        end
+      end
+    end
+
+    [nil, :threads, :fibers].each do |concurrency|
+      it "keeps each call claimed for its own run time#{", one at a time with #{concurrency}" if concurrency}" do
+        chat = round_chat
+        claimed = []
+        job = Chat.find(chat.id).with_tools(slow_lookup(claimed, alone: concurrency))
+        job.with_tool_options(concurrency:) if concurrency
+        allow(job.to_llm.provider).to receive(:complete)
+          .and_return(RubyLLM::Message.new(role: :assistant, content: 'Done', input_tokens: 1, output_tokens: 1))
+
+        job.complete
+
+        expect(claimed).to eq([true, true])
+        expect(roles(chat)).to eq(%w[user assistant tool tool assistant])
+      end
+    end
+  end
+
   it 'never renews a claim another process took over' do
     chat = question_chat
     taken = 10.minutes.from_now.change(usec: 0)
