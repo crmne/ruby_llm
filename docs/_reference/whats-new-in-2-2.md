@@ -278,7 +278,7 @@ The round finishes, `ask` returns the halted result, and the chat is `complete?`
 
 ## Dropping Unsupported Parameters
 
-When an OpenAI model doesn't take a parameter, such as a temperature, the rejection now raises `RubyLLM::UnsupportedParameterError`, with `parameter` naming it. Opt in, and the chat retries once without it before its fallback models. Other providers' rejections stay `BadRequestError`:
+When an OpenAI model doesn't take a parameter, such as a temperature, the rejection now raises `RubyLLM::UnsupportedParameterError`, with `parameter` naming it. Opt in, and the chat retries each model without it before moving on to the next. Other providers' rejections stay `BadRequestError`:
 
 ```ruby
 chat.with_temperature(0.2).with_fallbacks(drop_unsupported: true)

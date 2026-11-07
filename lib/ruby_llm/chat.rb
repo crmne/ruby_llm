@@ -898,14 +898,16 @@ module RubyLLM
     #   chat.with_fallbacks("gpt-4.1-mini", "claude-haiku-4-5")
     #   chat.with_fallbacks(nil)
     #
-    # With <tt>drop_unsupported: true</tt>, a request the provider rejects
-    # with UnsupportedParameterError is first retried once on the same
-    # model without that parameter: the temperature, thinking, the output
-    # cap, citations, or a key of #with_provider_options. The chat keeps
+    # With <tt>drop_unsupported: true</tt>, when a model rejects a parameter
+    # with UnsupportedParameterError, the chat retries that model without
+    # it: the temperature, thinking, the output cap, citations, or a key of
+    # #with_provider_options. A model that rejects another parameter is
+    # retried without that one too, and each is dropped at most once. The
+    # next model starts again from the request as written. The chat keeps
     # its settings for later requests. #before_fallback and
-    # #after_fallback receive the retry as a Fallback whose
-    # Fallback#dropped_parameter names the parameter. Without the option,
-    # nothing is ever dropped.
+    # #after_fallback receive each retry as a Fallback from the model to
+    # itself, whose Fallback#dropped_parameter names the parameter. Without
+    # the option, nothing is ever dropped.
     #
     #   chat.with_temperature(0.2).with_fallbacks(drop_unsupported: true)
     #
@@ -1455,8 +1457,8 @@ module RubyLLM
     end
 
     # Registers a callback that receives the Fallback attempt after the
-    # current model fails and before the fallback model is tried. Returns
-    # +self+.
+    # current model fails and before the next model is tried, or the same
+    # model again without a parameter it rejected. Returns +self+.
     def before_fallback(&)
       add_callback(:before_fallback, &)
     end
@@ -2061,10 +2063,11 @@ module RubyLLM
       restore_parameters(drops)
     end
 
-    # Retries once on the same model without a parameter it rejected, when
-    # the chat opted in, then moves on to the fallback models.
+    # Retries the same model without each parameter it rejects, when the
+    # chat opted in, then moves on to the next model with every parameter
+    # back. Each parameter is dropped at most once per model.
     def next_attempt!(fallback_queue, drops, error:, **details)
-      if drops.empty? && (restore = drop_unsupported_parameter(error))
+      if (restore = drop_unsupported_parameter(error))
         drops << restore
         return retry_without_parameter!(error:, **details)
       end
@@ -2104,10 +2107,7 @@ module RubyLLM
     end
 
     def restore_parameters(drops)
-      drops&.map! do |restore|
-        restore.call if restore.respond_to?(:call)
-        :restored
-      end
+      drops.pop.call until drops.nil? || drops.empty?
     end
 
     def retry_without_parameter!(error:, attempt:, streaming:, chunks_yielded:)
