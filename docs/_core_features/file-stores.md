@@ -379,15 +379,24 @@ end
 
 ### Files of Several People
 
-In a chat several people share, files a tool fetched for one of them may not be for the others. Give the store an owner:
+The Active Storage store keeps a chat's files for the chat's [owner]({% link _core_features/cost-and-usage-tracking.md %}#one-shot-operations), the record its `acts_as_chat owner:` association names:
 
 ```ruby
-chat.with_file_store(owner: Current.user)
+class Chat < ApplicationRecord
+  belongs_to :user
+  acts_as_chat owner: :user
+end
 ```
 
-An agent takes the owner as a lambda, like its store: `file_store owner: -> { Current.user }`.
+In a chat several people share, files a tool fetched for one of them may not be for the others. Set the owner of each turn on the record that runs it, and the files that turn writes are theirs:
 
-That store writes files for its owner and sees only their files and the files without an owner, preferring theirs when both have the same path. A store without an owner sees only the files without one.
+```ruby
+chat.with_owner(Current.user).ask "Find last quarter's invoices"
+```
+
+An agent sets it with its `owner` macro, such as `owner { chat.user }`.
+
+The store writes files for the owner and sees only their files and the files without an owner, preferring theirs when both have the same path. Without an owner, it sees only the files without one.
 
 The `ruby_llm:chat_ui` generator lists a chat's files on its page, with links to download them. Add `file_store` to the chat's agent to turn them on.
 

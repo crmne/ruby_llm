@@ -16,6 +16,8 @@ module RubyLLM
 
       def conversation_id; end
 
+      def owner; end
+
       def cancellation_requested?
         false
       end

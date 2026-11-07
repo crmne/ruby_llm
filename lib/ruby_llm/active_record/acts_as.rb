@@ -40,7 +40,7 @@ module RubyLLM
       ##
       # :singleton-method: acts_as_chat
       # :call-seq:
-      #   acts_as_chat(messages: :messages, message_class: nil, messages_foreign_key: nil)
+      #   acts_as_chat(messages: :messages, message_class: nil, messages_foreign_key: nil, owner: nil)
       #
       # Turns an application record into a persisted RubyLLM chat.
       #
@@ -62,6 +62,17 @@ module RubyLLM
       # [+messages:+] Name of the messages association. Defaults to +:messages+.
       # [+message_class:+] Class of the messages. Inferred from the association name.
       # [+messages_foreign_key:+] Foreign key on the messages table. Inferred by Rails.
+      # [+owner:+] Name of the association whose record the chat works for,
+      #            such as +:user+. Every attempt the chat makes is
+      #            attributed to it in the usage ledger, and the Active
+      #            Storage file store keeps the chat's files for it (see
+      #            ChatFiles#with_file_store). Defaults to +nil+, which
+      #            leaves usage to RubyLLM.with_owner.
+      #
+      #   class Chat < ApplicationRecord
+      #     belongs_to :user
+      #     acts_as_chat owner: :user
+      #   end
 
       ##
       # :singleton-method: acts_as_message
@@ -96,14 +107,16 @@ module RubyLLM
       #                 Overrides it with +true+ or +false+.
 
       class_methods do # rubocop:disable Metrics/BlockLength
-        def acts_as_chat(messages: :messages, message_class: nil, messages_foreign_key: nil)
+        def acts_as_chat(messages: :messages, message_class: nil, messages_foreign_key: nil, owner: nil)
           include RubyLLM::ActiveRecord::ChatMethods
           include RubyLLM::ActiveRecord::ChatFiles
           singleton_class.prepend RubyLLM::ActiveRecord::ChatColumnGuard
 
           class_attribute :messages_association_name, :message_class
+          class_attribute :owner_association_name, instance_accessor: false
           self.messages_association_name = messages
           self.message_class = (message_class || messages.to_s.classify).to_s
+          self.owner_association_name = owner&.to_sym
 
           has_many messages,
                    -> { order(:created_at, :id) },
