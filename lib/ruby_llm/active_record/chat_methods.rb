@@ -38,7 +38,7 @@ module RubyLLM
 
       CANCELLATION_POLL_INTERVAL = 1.0 # :nodoc:
       COMPLETION_ERRORS = [ # :nodoc:
-        RubyLLM::CancelledError, RubyLLM::Error, Faraday::Error, Timeout::Error, Errno::ETIMEDOUT
+        CancelledError, Error, ConfigurationError, Faraday::Error, Timeout::Error, Errno::ETIMEDOUT
       ].freeze
 
       included do

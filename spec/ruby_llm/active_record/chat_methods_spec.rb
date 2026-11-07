@@ -1245,6 +1245,35 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(RubyLLM.logger).to have_received(:warn).with(/chat cancelled/)
     end
 
+    it 'destroys the blank assistant message when a configuration error stops the request' do
+      chat = Chat.create!(model: model_id).ask_later('Hello')
+      allow(chat.to_llm.provider).to receive(:complete)
+        .and_raise(RubyLLM::ConfigurationError, 'bedrock_credential_provider must respond to #credentials')
+      allow(RubyLLM.logger).to receive(:warn)
+
+      expect { chat.complete { |_chunk| nil } }.to raise_error(RubyLLM::ConfigurationError)
+      expect(chat.messages.reload.pluck(:role)).to eq(['user'])
+      expect(RubyLLM.logger).to have_received(:warn).with(/API call failed/)
+    end
+
+    it 'raises a missing streaming gem instead of falling back' do
+      chat = Chat.create!(model: model_for(:bedrock), provider: 'bedrock').ask_later('Hello')
+      chat.to_llm.with_fallbacks(RubyLLM::Fallback.new(id: model_for(:anthropic), provider: :anthropic))
+      allow(RubyLLM::Protocols::Converse).to receive(:new).and_wrap_original do |original, *args|
+        original.call(*args).tap do |protocol|
+          allow(protocol).to receive(:require).with('aws-eventstream').and_raise(LoadError)
+        end
+      end
+      allow(RubyLLM.logger).to receive(:warn)
+      fallbacks = []
+      chat.before_fallback { |fallback| fallbacks << fallback }
+
+      expect { chat.complete { |_chunk| nil } }.to raise_error(RubyLLM::Error, /aws-eventstream gem is required/)
+      expect(fallbacks).to be_empty
+      expect(RubyLLM.logger).not_to have_received(:warn).with(/skipped fallback/)
+      expect(chat.messages.reload.pluck(:role)).to eq(['user'])
+    end
+
     it 'destroys the blank assistant message when the streaming block raises' do
       chat = Chat.create!(model: model_id)
       allow(chat.to_llm.provider).to receive(:complete) do |*, **, &block|
