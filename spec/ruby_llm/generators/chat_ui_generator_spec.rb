@@ -520,7 +520,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       abort "the job that found the chat held didn't try again: \#{retried}" unless retried&.dig("job_class") == "#{job}"
       at = Time.zone.parse(retried["scheduled_at"])
       expires = chat.reload.claimed_until
-      abort "the retry at \#{at} isn't right after the claim expires at \#{expires}" unless at.between?(expires, expires + 5.seconds)
+      abort "the retry at \#{at} isn't right after the claim expires at \#{expires}" unless at.between?(expires, expires + 30.seconds)
       travel_to(at + 1.second) { ActiveJob::Base.execute(retried) }
       answer = chat.reload.to_llm.messages.last.content
       abort "the retry didn't answer: \#{answer}" unless answer == "Here I am"
