@@ -117,6 +117,7 @@ module RubyLLM
           'gen_ai.operation.name' => 'execute_tool',
           'gen_ai.tool.name' => payload[:tool_name],
           'gen_ai.tool.call.id' => payload[:tool_call_id],
+          'gen_ai.tool.description' => payload[:tool]&.description,
           'gen_ai.tool.type' => 'function'
         }.merge(skill(payload, content:)).compact
       end
