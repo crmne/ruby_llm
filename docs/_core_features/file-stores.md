@@ -297,7 +297,7 @@ To share a store, ship it as a gem named `ruby_llm-file_stores-<name>`, like the
 
 A store with a limit raises `RubyLLM::FileStoreFullError` from `write` when a file wouldn't fit. Its message goes to the model, so say what to do, such as "This chat's files are full: delete or overwrite files." The file tools answer with it as an error, `run_code` saves what fits and lists the rest under `unsaved_files` with the message as `files_error`, and a long tool result that can't be saved goes to the model whole.
 
-RubyLLM passes only paths `RubyLLM::FileStore.path` accepts. Your store keeps what converters read from its files, and what the model read, in memory, in each process: the file tools change a file only after the model read it in the process that changes it, so in a store several processes share, the model may have to read a file again first. A store that several processes share should override `with_lock` to lock across them. Give your `StoredFile`s a `digest` when you can: it tells RubyLLM a file changed without reading it.
+RubyLLM passes only paths `RubyLLM::FileStore.path` accepts. Your store keeps what converters read from its files, and what the model read, in memory on the store object: the file tools change a file only after the model read it through that object, so once a chat gets a new store object, as in another job or process, the model may have to read a file again first. A store that several processes share should override `with_lock` to lock across them. Give your `StoredFile`s a `digest` when you can: it tells RubyLLM a file changed without reading it.
 
 ## Following Writes
 
