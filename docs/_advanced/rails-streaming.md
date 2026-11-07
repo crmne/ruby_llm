@@ -198,9 +198,16 @@ This is what `acts_as_message` and the [generated chat UI]({% link _advanced/rai
 <span data-seq="7" data-after="5">Hello</span>
 ```
 
-A small Stimulus controller, `app/javascript/controllers/chat_message_controller.js`, keeps the spans in a hidden source element, holds a chunk that arrives before its message, puts them in order, drops repeats, and shows the text up to the first missing chunk. It renders that text as Markdown with [marked](https://marked.js.org) and sanitizes the result with [DOMPurify](https://github.com/cure53/DOMPurify), at most once per animation frame. It shows images and raw HTML as text, because an image the model was tricked into writing would send chat data to its URL without a click; files the chat returns still appear as attachments.
+A small Stimulus controller that ships with RubyLLM keeps the spans in a hidden source element, holds a chunk that arrives before its message, puts them in order, drops repeats, and shows the text up to the first missing chunk. It renders that text as Markdown with [marked](https://marked.js.org) and sanitizes the result with [DOMPurify](https://github.com/cure53/DOMPurify), at most once per animation frame. It shows images and raw HTML as text, because an image the model was tricked into writing would send chat data to its URL without a click; files the chat returns still appear as attachments.
 
 Every other change, such as a new message or an approval card, broadcasts a page refresh. A refresh fetches the chat again and morphs the page into it, so the order refreshes arrive in cannot matter. The empty assistant message is appended as soon as it is created, so it is on the page before its first chunk. When the reply is saved, the message replaces itself once with the full text. The finished message has no `_stream` element, so a chunk that arrives after the replace finds no target and Turbo drops it. The controller also keeps a refresh from emptying a reply that is still streaming, and keeps a late placeholder from replacing a finished one. Without JavaScript, the page shows the source as plain text.
+
+A page of your own can use the same controller. In an app with an import map, RubyLLM pins it as `ruby_llm/chat_message_controller`, so one line registers it as `chat-message`:
+
+```javascript
+// app/javascript/controllers/chat_message_controller.js
+export { default } from "ruby_llm/chat_message_controller"
+```
 
 Morphing needs `<%= yield :head %>` in your layout. The chat UI generator adds it when your layout lacks it.
 

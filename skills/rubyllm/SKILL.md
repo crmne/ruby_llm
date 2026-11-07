@@ -162,7 +162,7 @@ Use the same chat API on persisted records. Persisted `ask` returns the applicat
 
 Pass Active Storage attachments through `with:` and retain the message attachment association set up by the install generator. For a Hotwire UI, use the Rails streaming guide or `ruby_llm:chat_ui` generator: persisted messages provide the targets for Turbo Streams. Individual operations work directly in Rails services and jobs with the same methods as plain Ruby.
 
-On a page of your own, broadcast each chunk once, never accumulated text or re-rendered HTML, and hold chunks that arrive before their message, as the `ruby_llm:chat_ui` Stimulus controller does. See `rails-streaming/`.
+On a page of your own, broadcast each chunk once, never accumulated text or re-rendered HTML, and hold chunks that arrive before their message, as the chat UI's Stimulus controller does. It ships with RubyLLM: with an import map, `export { default } from "ruby_llm/chat_message_controller"` in `app/javascript/controllers/chat_message_controller.js` registers it. See `rails-streaming/`.
 
 For an upgrade, read the complete `upgrading/` guide before editing migrations, and upgrade one release at a time.
 

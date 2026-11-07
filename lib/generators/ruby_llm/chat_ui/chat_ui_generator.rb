@@ -15,6 +15,7 @@ module RubyLLM
 
       MARKED_VERSION = '18.0.14'
       DOMPURIFY_VERSION = '3.4.16'
+      CONTROLLER = File.expand_path('../../../../app/assets/javascripts/ruby_llm/chat_message_controller.js', __dir__)
 
       namespace 'ruby_llm:chat_ui'
 
@@ -48,7 +49,7 @@ module RubyLLM
       end
 
       def check_hotwire
-        return if File.read(File.join(destination_root, 'Gemfile')).match?(/^\s*gem[\s(]+["']turbo-rails["']/)
+        return if gem?('turbo-rails')
 
         say "\n  The chat UI runs on Hotwire, and this app doesn't have it, so its pages raise until you add it:", :red
         say '    bundle add turbo-rails stimulus-rails importmap-rails'
@@ -155,22 +156,14 @@ module RubyLLM
       end
 
       def create_javascript
-        copy_file 'javascript/controllers/chat_message_controller.js',
-                  'app/javascript/controllers/chat_message_controller.js'
+        source = gem?('importmap-rails') ? 'javascript/chat_message_controller.js' : CONTROLLER
+        copy_file source, 'app/javascript/controllers/chat_message_controller.js'
       end
 
       def add_javascript_dependencies
         return unless behavior == :invoke
 
-        if app_file?('config/importmap.rb')
-          pin_javascript_dependencies
-        elsif app_file?('package.json')
-          say "\n  Add the chat UI's JavaScript dependencies, then register its Stimulus controller:", :yellow
-          say "    yarn add #{javascript_packages}   (or: npm install #{javascript_packages})"
-          say '    bin/rails stimulus:manifest:update'
-        else
-          say "\n  Your app has no JavaScript setup, so replies show as plain text until it has one.", :yellow
-        end
+        explain_javascript_setup unless gem?('importmap-rails')
         return if app_file?('app/javascript/controllers/index.js')
 
         say '  The chat UI renders replies with a Stimulus controller. Install Stimulus to use it:', :yellow
@@ -289,23 +282,31 @@ module RubyLLM
       private
 
       def add_system_test_gems
-        gemfile = File.read(File.join(destination_root, 'Gemfile'))
-        missing = %w[capybara selenium-webdriver].reject { |name| gemfile.match?(/^\s*gem[\s(]+["']#{name}["']/) }
+        missing = %w[capybara selenium-webdriver].reject { |name| gem?(name) }
         return if missing.empty?
 
         gem_group(:test) { missing.each { |name| gem name } }
         Bundler.with_original_env { run 'bundle install --quiet' } if behavior == :invoke
       end
 
+      def explain_javascript_setup
+        if gem?('jsbundling-rails')
+          say "\n  Add the chat UI's JavaScript dependencies, then register its Stimulus controller:", :yellow
+          say "    yarn add #{javascript_packages}   (or: npm install #{javascript_packages})"
+          say '    bin/rails stimulus:manifest:update'
+        else
+          say "\n  Replies show as plain text until the app loads JavaScript with importmap-rails or jsbundling-rails.",
+              :yellow
+          say "  With another bundler, add #{javascript_packages} and register"
+          say '  app/javascript/controllers/chat_message_controller.js as the chat-message Stimulus controller.'
+        end
+      end
+
       def javascript_packages = "marked@#{MARKED_VERSION} dompurify@#{DOMPURIFY_VERSION}"
       def app_file?(path) = File.exist?(File.join(destination_root, path))
 
-      def pin_javascript_dependencies
-        importmap = File.read(File.join(destination_root, 'config/importmap.rb'))
-        return if importmap.match?(/^pin "marked"/) && importmap.match?(/^pin "dompurify"/)
-        return if run("bin/importmap pin #{javascript_packages}")
-
-        say "\n  Pin the chat UI's JavaScript dependencies: bin/importmap pin #{javascript_packages}", :yellow
+      def gem?(name)
+        File.read(File.join(destination_root, 'Gemfile')).match?(/^\s*gem[\s(]+["']#{Regexp.escape(name)}["']/)
       end
 
       def approval_model_name

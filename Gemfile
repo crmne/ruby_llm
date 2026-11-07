@@ -18,6 +18,7 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'ferrum'
   gem 'flay'
   gem 'image_processing', '~> 2.0'
+  gem 'importmap-rails', require: false
   gem 'irb'
   # Older Rails versions need JSON 2; the Rails 8.1 appraisal also tests JSON 3.
   gem 'json', '< 3'
@@ -30,6 +31,7 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'nokogiri'
   gem 'opentelemetry-sdk', '~> 1.0'
   gem 'overcommit', '>= 0.66'
+  gem 'propshaft', require: false
   gem 'pry', '>= 0.14'
   gem 'rails'
   gem 'rake', '>= 13.0'

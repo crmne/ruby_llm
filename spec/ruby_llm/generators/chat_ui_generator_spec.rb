@@ -848,24 +848,22 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
           end
         end
 
-        it 'pins its JavaScript dependencies with importmap, once' do
+        it 'loads the Stimulus controller from the gem in an importmap app, without pinning anything' do
           Dir.mktmpdir do |destination|
             FileUtils.cp_r("#{app_path}/.", destination)
             within_test_app(destination) do
+              File.write('Gemfile', %(#{File.read('Gemfile')}gem "importmap-rails"\n))
               File.write('config/importmap.rb', %(pin "application"\n))
-              File.write('bin/importmap', <<~SH)
-                #!/bin/sh
-                echo "$@" >> tmp/importmap_calls
-                echo 'pin "marked" # @18.0.14' >> config/importmap.rb
-                echo 'pin "dompurify" # @3.4.16' >> config/importmap.rb
-              SH
+              File.write('bin/importmap', "#!/bin/sh\necho \"$@\" >> tmp/importmap_calls\n")
               FileUtils.chmod('+x', 'bin/importmap')
 
-              2.times do
-                output, status = run_rails_generate('ruby_llm:chat_ui', '--skip', chdir: destination)
-                expect(status.success?).to be(true), output
-              end
-              expect(File.read('tmp/importmap_calls')).to eq("pin marked@18.0.14 dompurify@3.4.16\n")
+              output, status = run_rails_generate('ruby_llm:chat_ui', '--force', chdir: destination)
+              expect(status.success?).to be(true), output
+              expect(File.read('app/javascript/controllers/chat_message_controller.js'))
+                .to eq(%(export { default } from "ruby_llm/chat_message_controller"\n))
+              expect(File.exist?('tmp/importmap_calls')).to be(false)
+              expect(File.read('config/importmap.rb')).to eq(%(pin "application"\n))
+              expect(output).not_to include('yarn add', 'plain text')
             end
           end
         end
@@ -957,27 +955,38 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
           end
         end
 
-        it 'explains that replies stay plain text in an app without JavaScript' do
-          Dir.mktmpdir do |destination|
-            FileUtils.cp_r("#{app_path}/.", destination)
-            within_test_app(destination) do
-              output, status = run_rails_generate('ruby_llm:chat_ui', '--skip', chdir: destination)
-              expect(status.success?).to be(true), output
-              expect(output).to include('Your app has no JavaScript setup, so replies show as plain text')
-            end
-          end
-        end
-
-        it 'prints the packages to install for a jsbundling app' do
+        it 'explains that replies stay plain text in an app without JavaScript, even with a package.json for CSS' do
           Dir.mktmpdir do |destination|
             FileUtils.cp_r("#{app_path}/.", destination)
             within_test_app(destination) do
               File.write('package.json', '{}')
               output, status = run_rails_generate('ruby_llm:chat_ui', '--skip', chdir: destination)
               expect(status.success?).to be(true), output
+              expect(output).to include('Replies show as plain text until the app loads JavaScript',
+                                        'With another bundler, add marked@18.0.14 dompurify@3.4.16')
+              expect(output).not_to include('yarn add', 'stimulus:manifest:update')
+            end
+          end
+        end
+
+        it 'copies the controller and prints the packages to install for a jsbundling app' do
+          Dir.mktmpdir do |destination|
+            FileUtils.cp_r("#{app_path}/.", destination)
+            within_test_app(destination) do
+              File.write('Gemfile', %(#{File.read('Gemfile')}gem "jsbundling-rails"\n))
+              File.write('package.json', '{}')
+              File.write('config/importmap.rb', %(pin "application"\n))
+              output, status = run_rails_generate('ruby_llm:chat_ui', '--force', chdir: destination)
+              expect(status.success?).to be(true), output
               expect(output).to include('yarn add marked@18.0.14 dompurify@3.4.16')
               expect(output).to include('bin/rails stimulus:manifest:update')
               expect(output).to include('bin/rails stimulus:install')
+
+              javascripts = File.expand_path('../../../app/assets/javascripts/ruby_llm', __dir__)
+              expect(File.read('app/javascript/controllers/chat_message_controller.js'))
+                .to eq(File.read(File.join(javascripts, 'chat_message_controller.js')))
+              expect(File.read(File.join(javascripts, 'marked.js'))).to start_with('// marked@18.0.14 ')
+              expect(File.read(File.join(javascripts, 'dompurify.js'))).to start_with('// dompurify@3.4.16 ')
             end
           end
         end
