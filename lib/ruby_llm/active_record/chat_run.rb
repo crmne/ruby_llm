@@ -20,6 +20,10 @@ module RubyLLM
         @chat.persist_message_progress(partial)
       end
 
+      def conversation_id
+        @chat.id
+      end
+
       def cancellation_requested?
         @chat.poll_run_cancellation == :cancelled
       end

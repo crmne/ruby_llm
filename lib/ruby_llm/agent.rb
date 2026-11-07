@@ -766,6 +766,8 @@ module RubyLLM
         apply_schema(chat, runtime)
         apply_fallbacks(chat)
         apply_rescue_handlers(chat, agent, input_values)
+        target = chat.respond_to?(:to_llm) ? chat.to_llm : chat
+        target.agent_class = self if target.respond_to?(:agent_class=)
       end
 
       private

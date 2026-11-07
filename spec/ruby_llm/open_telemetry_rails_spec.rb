@@ -47,4 +47,22 @@ RSpec.describe RubyLLM::OpenTelemetry do
       ActiveSupport::IsolatedExecutionState.isolation_level = previous
     end
   end
+
+  it 'records the conversation id of a persisted agent chat on its agent span' do
+    stub_const('TelemetryPersistedAgent', Class.new(RubyLLM::Agent) do
+      chat_class Chat
+      model model_for(:openai, :temperature)
+    end)
+    model = model_for(:openai, :temperature)
+    chat = TelemetryPersistedAgent.create!
+    allow(chat.to_llm.provider).to receive(:complete)
+      .and_return(RubyLLM::Message.new(role: :assistant, model:, content: 'done', input_tokens: 5, output_tokens: 1))
+
+    chat.ask('Hello')
+
+    run = spans.find { |span| span.name == 'invoke_agent TelemetryPersistedAgent' }
+    expect(run.attributes).to include('gen_ai.agent.name' => 'TelemetryPersistedAgent',
+                                      'gen_ai.conversation.id' => chat.id.to_s)
+    expect(spans.find { |span| span.name == "chat #{model}" }.parent_span_id).to eq(run.span_id)
+  end
 end

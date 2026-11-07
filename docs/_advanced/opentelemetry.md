@@ -79,13 +79,14 @@ This produces a tree like:
 ```text
 invoke_workflow Answer question
 └── ruby_llm.workflow_step Generate answer
-    ├── chat {{ site.models.default_chat }}
-    ├── execute_tool lookup_order
-    │   └── GET /orders/42          (from your HTTP instrumentation)
-    └── chat {{ site.models.default_chat }}
+    └── invoke_agent SupportAgent
+        ├── chat {{ site.models.default_chat }}
+        ├── execute_tool lookup_order
+        │   └── GET /orders/42      (from your HTTP instrumentation)
+        └── chat {{ site.models.default_chat }}
 ```
 
-The agent asks the model, runs the tool the model chose, then asks the model again with the result. Each RubyLLM span uses the current OpenTelemetry context, so spans from your other instrumentation, such as the HTTP call inside the tool, appear beneath it. Without a workflow, each model call starts its own trace, or joins the trace already active, such as a Rails request.
+The agent asks the model, runs the tool the model chose, then asks the model again with the result. Each turn of an [agent]({% link _getting_started/agents.md %}) gets one `invoke_agent` span, whether you call `ask`, `complete`, or `step` on the agent, on the chat it built, or on a Rails chat record from `create`, `create!`, or `find`. A subagent running inside a tool gets its own `invoke_agent` span beneath that tool. Each RubyLLM span uses the current OpenTelemetry context, so spans from your other instrumentation, such as the HTTP call inside the tool, appear beneath it. Without a workflow, each model call starts its own trace, or joins the trace already active, such as a Rails request.
 
 A few details:
 
@@ -95,11 +96,12 @@ A few details:
 
 ## Spans
 
-Span names follow the pattern `<operation> <target>`. The target is the model for model calls, the tool name for tools (followed by the skill for a `load_skill` call, and the file it reads when you record content), the language for code execution runs, and the workflow or step name for workflows.
+Span names follow the pattern `<operation> <target>`. The target is the model for model calls, the agent's class name for agent runs, the tool name for tools (followed by the skill for a `load_skill` call, and the file it reads when you record content), the language for code execution runs, and the workflow or step name for workflows.
 
 | RubyLLM operation | Operation name | Span kind |
 | --- | --- | --- |
 | Chat, including Agents and Rails chat records | `chat` | Client |
+| Agent runs | `invoke_agent` | Internal |
 | Embeddings | `embeddings` | Client |
 | Images and speech | `generate_content` | Client |
 | Transcription | `transcription` | Client |
@@ -132,6 +134,8 @@ Spans follow the [OpenTelemetry GenAI semantic conventions](https://github.com/o
 | `gen_ai.usage.output_tokens` | Output tokens |
 | `gen_ai.usage.cache_read.input_tokens`, `gen_ai.usage.cache_write.input_tokens` | Cached input, also counted in the input total |
 | `gen_ai.usage.reasoning.output_tokens` | Thinking tokens |
+| `gen_ai.agent.name` | The agent's class name, on agent runs and the tools they run |
+| `gen_ai.conversation.id` | The ID of the Rails chat record an agent run belongs to |
 | `gen_ai.tool.name`, `gen_ai.tool.description`, `gen_ai.tool.call.id` | The tool, its description, and its call ID |
 | `gen_ai.skill.name` | The skill a `load_skill` call loads, when it is one of the chat's skills |
 | `gen_ai.workflow.name`, `ruby_llm.workflow.id` | The workflow name and ID |
@@ -148,7 +152,7 @@ RubyLLM carries the trace context into the threads and fibers it starts for [con
 
 Traces often go to a third-party service, so by default RubyLLM exports only the metadata listed above. It does not export prompts, instructions, messages, generated content, or tool arguments and results unless you [record content](#recording-content). It never exports embeddings, attachment bytes, metadata you attach, provider options, credentials, or exception messages and stack traces.
 
-Model names, tool names and descriptions, tool call IDs, and workflow names and IDs are exported. A tool's description is written for the model and can read like instructions, so keep tool descriptions, workflow names, and IDs safe to send to your tracing backend.
+Model names, agent class names, chat record IDs, tool names and descriptions, tool call IDs, and workflow names and IDs are exported. A tool's description is written for the model and can read like instructions, so keep tool descriptions, workflow names, and IDs safe to send to your tracing backend.
 
 The [instrumentation events]({% link _advanced/instrumentation.md %}#payloads) your own subscribers receive still contain the full application data. What you do with it is up to you.
 
