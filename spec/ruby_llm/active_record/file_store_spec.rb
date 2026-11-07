@@ -421,7 +421,6 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
       chat.ask('List everything')
 
       result = Chat.find(chat.id).messages.find_by(role: 'tool')
-      expect(result).to be_spilled
       expect(result.spilled_path).to match(%r{\Aresults/list_everything-\w{8}\.txt\z})
       expect(result.content.length).to be < 2_500
       expect(chat.file_store.read(result.spilled_path)).to eq('item ' * 5_000)

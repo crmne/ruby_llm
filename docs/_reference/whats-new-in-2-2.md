@@ -341,7 +341,7 @@ A reply a fallback model wrote names it: `reply.model` and `reply.provider`, als
 
 `config.code_execution_max_file_size` raises the 10 MB cap on a file [code execution]({% link _advanced/code-execution.md %}#limits) returns, for code that makes videos or large exports.
 
-A chat with a [file store]({% link _core_features/file-stores.md %}#what-the-model-sees) says what it sent in part: a tool result kept in a file is `spilled?`, with the whole at `spilled_path`, and the start of a long attachment is `partial?`.
+A chat with a [file store]({% link _core_features/file-stores.md %}#what-the-model-sees) says what it sent in part: a tool result kept in a file names it in `spilled_path`, and the start of a long attachment is `partial?`.
 
 `RubyLLM::Attachment.new(io, filename: "export.csv", mime_type: "text/csv")` takes a file's type when you know it. See [Automatic File Type Detection]({% link _core_features/attachments.md %}#automatic-file-type-detection).
 

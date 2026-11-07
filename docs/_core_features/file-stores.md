@@ -180,11 +180,11 @@ item 1: Quarterly plan, owner Dana...
 results/search_drive-8f3a2b1c.json: read more with read_file, or search it with search_files.]
 ```
 
-JSON is saved pretty printed, one value per line, so the model can read and search it by line. The message keeps only what the model saw, so a persisted chat stores the start too. `spilled?` says a result went this way, and `spilled_path` names the file with the whole, on plain and persisted messages alike:
+JSON is saved pretty printed, one value per line, so the model can read and search it by line. The message keeps only what the model saw, so a persisted chat stores the start too. `spilled_path` names the file with the whole, on plain and persisted messages alike, and is `nil` for a result that went whole:
 
 ```ruby
 result = chat.messages.find(&:tool_result?)
-full = result.spilled? ? chat.file_store.read(result.spilled_path) : result.content
+full = (path = result.spilled_path) ? chat.file_store.read(path) : result.content
 ```
 
 A [context budget]({% link _core_features/chat-request-control.md %}#keeping-tool-results-in-budget) leaves a saved result as it is, since its start already fits. Change the limit with `inline_limit:`, the characters a result may have and still go to the model whole, or send every result whole with `inline_limit: false`. A tool that already returns what it finds in pages can opt out, and a tool with very long results can set its own limit:

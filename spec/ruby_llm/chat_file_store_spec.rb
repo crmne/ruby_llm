@@ -572,22 +572,22 @@ RSpec.describe RubyLLM::Chat do
       expect(written).to eq(['results/search_drive-call1.txt'])
     end
 
-    it 'marks a long result spilled, with the path of the whole' do
+    it 'names the file holding the whole of a long result' do
       chat.with_file_store(inline_limit: 10)
 
       spilled = tool_result(tool_call, { 'items' => [1, 2] })
       whole = tool_result(RubyLLM::ToolCall.new(id: 'call_2', name: 'never_spill', arguments: {}), 'y' * 20)
 
-      expect(spilled).to have_attributes(spilled?: true, spilled_path: 'results/search_drive-call1.json')
-      expect(whole).to have_attributes(spilled?: false, spilled_path: nil)
+      expect(spilled.spilled_path).to eq('results/search_drive-call1.json')
+      expect(whole.spilled_path).to be_nil
     end
 
-    it 'never marks a message the chat did not spill' do
+    it 'names no file for a message the chat did not spill' do
       quoted = "Look:\n\n[This result has 9 characters, so only the start is shown. All of it is in " \
                'results/x.txt: read more with read_file, or search it with search_files.]'
 
-      expect(RubyLLM::Message.new(role: :user, content: quoted)).not_to be_spilled
-      expect(RubyLLM::Message.new(role: :tool, content: 'short', tool_call_id: 'call_1')).not_to be_spilled
+      expect(RubyLLM::Message.new(role: :user, content: quoted).spilled_path).to be_nil
+      expect(RubyLLM::Message.new(role: :tool, content: 'short', tool_call_id: 'call_1').spilled_path).to be_nil
       expect(RubyLLM::Message.new(role: :tool, content: nil, tool_call_id: 'call_1').spilled_path).to be_nil
     end
 
