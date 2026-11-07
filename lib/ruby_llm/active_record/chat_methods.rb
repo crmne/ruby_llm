@@ -11,6 +11,7 @@ require 'ruby_llm/active_record/system_instructions'
 require 'ruby_llm/active_record/chat_queue'
 require 'ruby_llm/active_record/chat_tool_call_state'
 require 'ruby_llm/active_record/chat_run'
+require 'ruby_llm/active_record/chat_agent_hooks'
 
 module RubyLLM
   module ActiveRecord
@@ -35,7 +36,7 @@ module RubyLLM
       include ChatCancellation
       include ChatPlaceholders
       include SystemInstructions
-      prepend RubyLLM::Chat::Rescuable
+      prepend ChatAgentHooks
 
       CANCELLATION_POLL_INTERVAL = 1.0 # :nodoc:
       COMPLETION_ERRORS = [ # :nodoc:

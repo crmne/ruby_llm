@@ -14,6 +14,8 @@ module RubyLLM
 
       def record_progress(_partial); end
 
+      def conversation_id; end
+
       def cancellation_requested?
         false
       end

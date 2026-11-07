@@ -694,6 +694,35 @@ RSpec.describe RubyLLM::OpenTelemetry do
     end
   end
 
+  it 'traces an agent run as the parent of its chat and tool spans' do
+    stub_const('TelemetryLookup', Class.new(RubyLLM::Tool) do
+      description 'Looks something up'
+      def execute = 'found'
+    end)
+    stub_const('TelemetryAgent', Class.new(RubyLLM::Agent) do
+      model model_for(:openai, :temperature)
+      tools TelemetryLookup
+      description 'Looks orders up'
+    end)
+    agent = TelemetryAgent.new
+    call = RubyLLM::ToolCall.new(id: 'call_agent', name: 'telemetry_lookup', arguments: {})
+    allow(agent.chat.provider).to receive(:complete).and_return(
+      RubyLLM::Message.new(role: :assistant, content: nil, model:, tool_calls: { call.id => call }), response
+    )
+
+    agent.ask('Look it up')
+
+    run = spans.find { |span| span.name == 'invoke_agent TelemetryAgent' }
+    children = spans.reject { |span| span == run }
+    expect(run.kind).to eq(:internal)
+    expect(run.parent_span_id).to eq(OpenTelemetry::Trace::INVALID_SPAN_ID)
+    expect(run.attributes).to eq('gen_ai.operation.name' => 'invoke_agent', 'gen_ai.agent.name' => 'TelemetryAgent',
+                                 'gen_ai.agent.description' => 'Looks orders up')
+    expect(children.map(&:name)).to eq(["chat #{model}", 'execute_tool telemetry_lookup', "chat #{model}"])
+    expect(children.map(&:parent_span_id).uniq).to eq([run.span_id])
+    expect(children[1].attributes).to include('gen_ai.agent.name' => 'TelemetryAgent')
+  end
+
   it 'traces a code execution run inside its tool call' do
     sandbox = FakeSandbox.new { FakeSandbox.result(exit_code: 2) }
     chat = RubyLLM.context { |config| config.sandbox = sandbox }.chat(model:).with_code_execution

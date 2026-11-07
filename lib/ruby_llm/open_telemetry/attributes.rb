@@ -4,6 +4,7 @@ module RubyLLM
   class OpenTelemetry
     module Attributes # :nodoc:
       OPERATIONS = {
+        'agent.ruby_llm' => 'invoke_agent',
         'chat.ruby_llm' => 'chat',
         'embedding.ruby_llm' => 'embeddings',
         'image.ruby_llm' => 'generate_content',
@@ -28,12 +29,15 @@ module RubyLLM
         'ollama_cloud' => 'ollama',
         'xai' => 'x_ai'
       }.freeze
-      INTERNAL_OPERATIONS = %w[execute_tool invoke_workflow ruby_llm.workflow_step ruby_llm.code_execution].freeze
+      INTERNAL_OPERATIONS = %w[
+        invoke_agent execute_tool invoke_workflow ruby_llm.workflow_step ruby_llm.code_execution
+      ].freeze
 
       module_function
 
       def span_name(operation, payload, content: false)
         target = case operation
+                 when 'invoke_agent' then payload[:agent_name]
                  when 'execute_tool' then [payload[:tool_name], *skill(payload, content:).values]
                  when 'invoke_workflow' then payload[:workflow_name]
                  when 'ruby_llm.workflow_step' then payload[:workflow_step_name]
@@ -49,6 +53,7 @@ module RubyLLM
 
       def request(operation, payload, event:, content: false)
         return workflow(operation, payload) if %w[invoke_workflow ruby_llm.workflow_step].include?(operation)
+        return agent(payload) if operation == 'invoke_agent'
         return tool(payload, content:) if operation == 'execute_tool'
         return code_execution_request(payload) if operation == 'ruby_llm.code_execution'
 
@@ -118,7 +123,8 @@ module RubyLLM
           'gen_ai.tool.name' => payload[:tool_name],
           'gen_ai.tool.call.id' => payload[:tool_call_id],
           'gen_ai.tool.description' => payload[:tool]&.description,
-          'gen_ai.tool.type' => 'function'
+          'gen_ai.tool.type' => 'function',
+          'gen_ai.agent.name' => payload[:agent_name]
         }.merge(skill(payload, content:)).compact
       end
 
@@ -133,6 +139,15 @@ module RubyLLM
         {
           'gen_ai.skill.name' => name,
           'gen_ai.skill.resource.name' => (Skill::Loader.resource_name(name, arguments['file']) if content)
+        }.compact
+      end
+
+      def agent(payload)
+        {
+          'gen_ai.operation.name' => 'invoke_agent',
+          'gen_ai.agent.name' => payload[:agent_name],
+          'gen_ai.agent.description' => payload[:agent_description],
+          'gen_ai.conversation.id' => payload[:conversation_id]&.to_s
         }.compact
       end
 

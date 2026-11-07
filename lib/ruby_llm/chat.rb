@@ -27,6 +27,7 @@ module RubyLLM
     include Support::DeprecatedEnumerable
     include ToolSearch
     include ToolSequences
+    prepend AgentRun
     prepend Rescuable
     prepend Ownership
 
@@ -34,12 +35,13 @@ module RubyLLM
     COMPACTION_OPTIONS = %i[at instructions pause_after].freeze
     THINKING_OPTIONS = %i[effort budget display].freeze
     PAUSED = Object.new.freeze
+    AGENT_RUN_KEY = :ruby_llm_agent_run
     COPIED_STATE = %i[
       @usage_entries @tools @tool_deferrals @mcp @mcp_deferrals @tool_prefs @headers @attachment_replacements
       @tool_call_state
     ].freeze
     UNFINISHED_TOOL_RESULT = { error: 'The tool call did not finish.' }.to_json.freeze
-    private_constant :THINKING_OPTIONS, :PAUSED, :COPIED_STATE, :UNFINISHED_TOOL_RESULT
+    private_constant :THINKING_OPTIONS, :PAUSED, :AGENT_RUN_KEY, :COPIED_STATE, :UNFINISHED_TOOL_RESULT
 
     # The Model the chat sends requests to.
     attr_reader :model
@@ -1596,6 +1598,30 @@ module RubyLLM
     # Hooks installed by the Rails integration.
     attr_writer :run, :message_queue, :tool_call_state # :nodoc:
 
+    # The Agent class that configured the chat, which its instrumentation
+    # events name.
+    attr_accessor :agent_class # :nodoc:
+
+    # Runs the block inside one +agent.ruby_llm+ event when an Agent
+    # configured the chat, unless a run of this chat is already open. Fibers
+    # and threads started during a run inherit its marker, which is emptied
+    # when the run ends, so their later turns open events of their own.
+    def running_agent(&) # :nodoc:
+      return yield if @agent_class.nil? || Fiber[AGENT_RUN_KEY]&.first.equal?(self)
+
+      previous = Fiber[AGENT_RUN_KEY]
+      Fiber[AGENT_RUN_KEY] = run = [self]
+      begin
+        payload = { agent_name: @agent_class.name, chat: self, agent_description: @agent_class.description,
+                    conversation_id: @run.conversation_id }
+        payload.delete_if { |key, value| value.nil? && key != :agent_name }
+        RubyLLM.instrument('agent.ruby_llm', payload, config: @config, &)
+      ensure
+        run.clear
+        Fiber[AGENT_RUN_KEY] = previous
+      end
+    end
+
     # Appends a message to the conversation and returns it as a Message.
     # Accepts a Message, an attribute Hash, or a record responding to
     # +to_llm+.
@@ -1702,6 +1728,13 @@ module RubyLLM
     end
 
     private
+
+    def agent_run_chat = self
+
+    def agent_fields
+      name = @agent_class&.name
+      name ? { agent_name: name } : {}
+    end
 
     def build_skill_loader
       Skill::Loader.new(skills: -> { @skills }, code_execution: -> { !@code_execution_tool.nil? })
@@ -1975,7 +2008,8 @@ module RubyLLM
         caching: @caching,
         streaming: streaming,
         tokens: empty_tokens,
-        cost: Cost.new(tokens: empty_tokens, model: @model)
+        cost: Cost.new(tokens: empty_tokens, model: @model),
+        **agent_fields
       }
     end
 
@@ -2624,7 +2658,8 @@ module RubyLLM
         tool_call: tool_call,
         tool_name: tool.name,
         tool_arguments: args,
-        tool_call_id: tool_call.id
+        tool_call_id: tool_call.id,
+        **agent_fields
       }
 
       RubyLLM.instrument('tool_call.ruby_llm', payload, config: @config) do |event|

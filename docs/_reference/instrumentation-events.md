@@ -23,8 +23,9 @@ Subscribe to these events as shown in [Instrumentation and Observability]({% lin
 | `request.ruby_llm` | Around one request through a provider's connection, including its retries | `provider`, `method`, `url`, and `status` unless the request raises |
 | `usage.ruby_llm` | After every finished attempt of a tracked operation, including retries and cancellations | `operation`, `provider`, `model`, `status`, `tokens`, `cost`, `owner`, and the workflow fields |
 | `batch.ruby_llm` | Around one batch submission | `provider`, `provider_class`, `requests`, and `batch_id` after submission |
-| `chat.ruby_llm` | Around one chat completion | `chat`, `provider`, `provider_class`, `model`, `model_info`, `input_messages`, `messages_after`, `response`, `streaming`, `tokens`, `cost`, `response_tokens` |
-| `tool_call.ruby_llm` | Around one tool execution | `tool_name`, `tool_arguments`, `tool_call_id`, `result` |
+| `agent.ruby_llm` | Around one run of a chat an agent configured | `agent_name`, `agent_description`, `chat`, `conversation_id` |
+| `chat.ruby_llm` | Around one chat completion | `chat`, `provider`, `provider_class`, `model`, `model_info`, `input_messages`, `messages_after`, `response`, `streaming`, `tokens`, `cost`, `response_tokens`, `agent_name` |
+| `tool_call.ruby_llm` | Around one tool execution | `tool_name`, `tool_arguments`, `tool_call_id`, `result`, `agent_name` |
 | `mcp_unreachable.ruby_llm` | When a chat can't list an MCP server's tools and goes on without them, at most once a minute per server | `server`, `error` |
 | `code_execution.ruby_llm` | Around one [code execution]({% link _advanced/code-execution.md %}) run | `tool_name`, `tool_call_id`, `language`, `sandbox`, `timeout`, `network`, `duration`, `exit_code`, `timed_out`, `blocked_hosts`, `files` |
 | `embedding.ruby_llm` | Around one embedding request | `input`, `dimensions`, `embedding_dimensions`, `embedding_count`, `tokens`, `cost` |
@@ -45,6 +46,21 @@ Subscribe to these events as shown in [Instrumentation and Observability]({% lin
 The `embedding`, `image`, `judgment`, `moderation`, `ocr`, `rerank`, `speech`, `transcription`, and `video_job` events also carry `provider`, `provider_class`, `model`, `model_info`, `provider_options`, and `metadata`. All of them except `video_job` add `result` and `response_model` when the call succeeds.
 
 See [Progress and Monitoring]({% link _advanced/evaluations.md %}#progress-and-monitoring) in the Evaluations guide for evaluation progress, run IDs, and report payloads.
+
+## Agent Events
+
+`agent.ruby_llm` wraps one run of a chat an [agent]({% link _getting_started/agents.md %}) configured: a turn of `ask` or `complete`, or a single `step`, `generate`, or `run_tools`. It fires however you reach the chat: through the agent, the chat that `Agent.chat` returns, or a Rails chat record from `create`, `create!`, or `find`, including its `to_llm` chat. The model calls and tool executions of the run happen inside it, so their events come first.
+
+A run opens one event, however many moves it takes. A turn that goes on to answer a steering message queued while it ran stays in the same event, and two `ask` calls on the same chat give two events. A subagent that runs inside a tool opens its own event, nested in its parent's.
+
+| Field | Contents |
+| --- | --- |
+| `agent_name` | The agent's class name, or `nil` for an anonymous agent class |
+| `agent_description` | The agent's `description`, present only when it has one |
+| `chat` | The `RubyLLM::Chat` that runs, the same object as in `chat.ruby_llm` |
+| `conversation_id` | The ID of the Rails chat record, present only for a persisted chat |
+
+The workflow fields are added as usual. `chat.ruby_llm`, `compaction.ruby_llm`, and `tool_call.ruby_llm` also carry `agent_name` when the chat belongs to a named agent class, so subscribers can attribute model calls and tools without tracking the enclosing event.
 
 ## Tokens and Cost
 

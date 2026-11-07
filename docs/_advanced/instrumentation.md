@@ -213,6 +213,22 @@ end
 
 The event fires once for every finished physical attempt of a tracked operation. See [Usage Events]({% link _reference/instrumentation-events.md %}#usage-events) for its payload, what `model` can hold, and how jobs and batches report differently, and [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) for status semantics and Rails persistence.
 
+### Agent Events
+
+Subscribe to `agent.ruby_llm` to see which [agent]({% link _getting_started/agents.md %}) a run belongs to. It wraps each turn of an agent's chat, including Rails chat records from `create`, `create!`, and `find`:
+
+```ruby
+ActiveSupport::Notifications.subscribe("agent.ruby_llm") do |event|
+  Rails.logger.info(
+    agent: event.payload[:agent_name],
+    chat_id: event.payload[:conversation_id],
+    duration: event.duration
+  )
+end
+```
+
+The model calls and tool executions of the run fire inside it, and their `chat.ruby_llm` and `tool_call.ruby_llm` events carry the same `agent_name`. See [Agent Events]({% link _reference/instrumentation-events.md %}#agent-events) for when the event fires and its payload.
+
 ## Payloads
 
 Payloads include the Ruby objects needed by observability adapters, but message content, tool arguments, and provider responses may be sensitive. Only export or log those fields when your application policy allows it.
