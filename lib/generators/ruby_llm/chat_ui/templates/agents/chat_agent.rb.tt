@@ -3,9 +3,11 @@ class <%= chat_agent_class_name %> < ApplicationAgent
 <% unless application_agent_chat_class? -%>
   chat_class <%= chat_model_name %>
 <% end -%>
+  context_budget per_result: 0.25, per_request: 0.7
 end
 <% else -%>
 class <%= chat_agent_class_name %> < RubyLLM::Agent
   chat_class <%= chat_model_name %>
+  context_budget per_result: 0.25, per_request: 0.7
 end
 <% end -%>

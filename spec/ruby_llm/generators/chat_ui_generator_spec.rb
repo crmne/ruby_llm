@@ -12,12 +12,17 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
   let(:template_path) { File.expand_path('../../fixtures/templates', __dir__) }
 
   def run_rails_generate(*args, chdir: app_path)
+    run_rails('generate', *args, chdir:)
+  end
+
+  def run_rails(*args, chdir: Dir.pwd, env: {})
     env = {
       'BUNDLE_GEMFILE' => ENV['BUNDLE_GEMFILE'] || Bundler.default_gemfile.to_s,
       'BUNDLE_IGNORE_CONFIG' => '1',
-      'OPENAI_API_KEY' => ENV.fetch('OPENAI_API_KEY', 'test')
+      'OPENAI_API_KEY' => ENV.fetch('OPENAI_API_KEY', 'test'),
+      **env
     }
-    GeneratorTestHelpers.run_command(env, ['bundle', 'exec', 'rails', 'generate', *args], chdir:)
+    GeneratorTestHelpers.run_command(env, ['bundle', 'exec', 'rails', *args], chdir:)
   end
 
   def expect_messages_helper_content(path)
@@ -200,13 +205,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
   # The script sends requests through the app, and each request resets
   # the execution context a wrapping executor would still be using.
   def run_rails_runner_outside_executor(script)
-    env = {
-      'BUNDLE_GEMFILE' => ENV['BUNDLE_GEMFILE'] || Bundler.default_gemfile.to_s,
-      'BUNDLE_IGNORE_CONFIG' => '1',
-      'OPENAI_API_KEY' => ENV.fetch('OPENAI_API_KEY', 'test')
-    }
-    GeneratorTestHelpers.run_command(env, ['bundle', 'exec', 'rails', 'runner', '--skip-executor', script],
-                                     chdir: Dir.pwd)
+    run_rails('runner', '--skip-executor', script)
   end
 
   def give_chat_agent_an_approval_tool(agent_path)
@@ -393,6 +392,35 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       abort "decisions \#{decisions}" unless decisions == { "call_search" => "approved", "call_mail" => "denied" }
       jobs = ActiveJob::Base.queue_adapter.enqueued_jobs.select { |job| job["job_class"] == "#{job}" }
       abort "jobs \#{jobs}" unless jobs.map { |job| job["arguments"] } == [ [ chat.id ], [ chat.id ] ]
+    RUBY
+  end
+
+  def oversized_tool_result_script(agent:, **)
+    <<~RUBY
+      require "ruby_llm/test_helper"
+      include RubyLLM::TestHelper
+
+      class LogsTool < RubyLLM::Tool
+        description "Returns the application's logs"
+      end
+
+      requests = []
+      RubyLLM::Provider.prepend(Module.new do
+        define_method(:complete) do |messages, **options, &block|
+          requests << messages.sum { |message| message.content.to_s.length }
+          super(messages, **options, &block)
+        end
+      end)
+
+      chat = #{agent}.create!.with_tools(LogsTool)
+      window = chat.to_llm.model.context_window
+      LogsTool.define_method(:execute) { "A log line\n" * window }
+      stub_replies tool_call(:logs), "The logs look fine.", "Nothing else."
+
+      chat.ask "What do the logs say?"
+      chat.ask "Anything else?"
+
+      abort "sent \#{requests.max} characters for a \#{window}-token window" unless requests.max < window
     RUBY
   end
 
@@ -935,7 +963,11 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
 
               output, status = run_rails_generate('ruby_llm:chat_ui', '--force', chdir: destination)
               expect(status.success?).to be(true), output
-              expect(File.read('app/agents/chat_agent.rb')).to eq("class ChatAgent < ApplicationAgent\nend\n")
+              expect(File.read('app/agents/chat_agent.rb')).to eq(<<~RUBY)
+                class ChatAgent < ApplicationAgent
+                  context_budget per_result: 0.25, per_request: 0.7
+                end
+              RUBY
             end
           end
         end
@@ -948,8 +980,12 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
 
               output, status = run_rails_generate('ruby_llm:chat_ui', '--force', chdir: destination)
               expect(status.success?).to be(true), output
-              expect(File.read('app/agents/chat_agent.rb'))
-                .to eq("class ChatAgent < RubyLLM::Agent\n  chat_class Chat\nend\n")
+              expect(File.read('app/agents/chat_agent.rb')).to eq(<<~RUBY)
+                class ChatAgent < RubyLLM::Agent
+                  chat_class Chat
+                  context_budget per_result: 0.25, per_request: 0.7
+                end
+              RUBY
             end
           end
         end
@@ -1047,6 +1083,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
           chat_agent = File.read(config[:approval_flow][:agent_path])
           expect(chat_agent).to start_with("class #{config[:approval_flow][:agent]} < ApplicationAgent\n")
           expect(chat_agent).not_to include('chat_class')
+          expect(chat_agent).to include('context_budget per_result: 0.25, per_request: 0.7')
 
           queued_messages_controller = File.read(config[:queued_messages_controller_path])
           config[:queued_messages_controller_expectations].each do |line|
@@ -1115,6 +1152,23 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
           give_chat_agent_an_approval_tool(config[:approval_flow][:agent_path])
           output, status = run_rails_runner_outside_executor(approval_flow_script(**config[:approval_flow]))
           expect(status.success?).to be(true), output
+        end
+      end
+
+      it 'keeps a tool result larger than the context window out of later requests' do
+        within_test_app(app_path) do
+          output, status = run_rails_runner_outside_executor(oversized_tool_result_script(**config[:approval_flow]))
+          expect(status.success?).to be(true), output
+        end
+      end
+
+      it 'writes an agent test that passes' do
+        within_test_app(app_path) do
+          test_path = "test/agents/#{config[:approval_flow][:agent_path].delete_prefix('app/agents/')}"
+                      .sub(/\.rb\z/, '_test.rb')
+          output, status = run_rails('test', test_path, env: { 'RAILS_ENV' => 'test' })
+          expect(status.success?).to be(true), output
+          expect(output).to match(/1 runs, \d+ assertions, 0 failures, 0 errors/)
         end
       end
 
