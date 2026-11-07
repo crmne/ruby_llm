@@ -131,7 +131,7 @@ RSpec.describe RubyLLM::Chat do
     form = ActionController::Parameters.new(name: 'Ada', age: '36', admin: 'true')
     chat.answer(chat.pending_questions.sole.id, form).complete
 
-    expect(results).to eq(['{name: "Ada", age: 36}'])
+    expect(results).to eq([{ name: 'Ada', age: 36 }.inspect])
   end
 
   it 'lists approvals and questions together, in the order the model made the calls' do
