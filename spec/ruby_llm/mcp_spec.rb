@@ -473,6 +473,20 @@ RSpec.describe RubyLLM::MCP do
       mcp = mcp_answering { |request| request.answer if request.url? }
 
       expect(mcp.connect.text).to eq('Connected')
+      expect(mcp.connect(url: 'HTTP://example.com/connect').text).to eq('Connected')
+    ensure
+      mcp&.close
+    end
+
+    it 'declines a request to visit anything but a web page without asking its callbacks' do
+      asked = []
+      mcp = mcp_answering { |request| asked << request.answer }
+
+      ['javascript:alert(document.cookie)', 'data:text/html,<script>alert(1)</script>', '/connect',
+       'https://exa mple.com/connect', 404].each do |url|
+        expect(mcp.connect(url:).text).to eq('Not connected')
+      end
+      expect(asked).to be_empty
     ensure
       mcp&.close
     end

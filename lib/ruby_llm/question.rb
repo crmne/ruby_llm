@@ -49,7 +49,10 @@ module RubyLLM
     # The question, or +nil+ for an approval.
     attr_reader :message
 
-    # The page the question asks the person to visit, or +nil+.
+    # The page the question asks the person to visit, or +nil+. When an MCP
+    # server asks, show the whole address before the person goes, since
+    # the server chose it. RubyLLM declines a server's request to visit
+    # anything but an +http+ or +https+ address (see MCP.input_requests).
     attr_reader :url
 
     # The values the question asks for, as Field objects: one for a question

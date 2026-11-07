@@ -509,11 +509,12 @@ end
 chat.complete
 ```
 
-Code written for 2.1 keeps working. `approve`, `deny`, `pending_approvals`, `awaiting_approval?`, `pending_inputs`, `awaiting_input?`, and `answer` and `decline` with keyword values take the same arguments and return the same values. Three things change:
+Code written for 2.1 keeps working. `approve`, `deny`, `pending_approvals`, `awaiting_approval?`, `pending_inputs`, `awaiting_input?`, and `answer` and `decline` with keyword values take the same arguments and return the same values. Four things change:
 
 * `answer` checks the answer against the question. A field the question doesn't ask for, a choice it doesn't offer, a value of the wrong type, or a required field left out raises `ArgumentError`, where 2.1 sent the answer to the server as given. A `before_input_request` callback that answers with an extra field now raises from the call, so remove the field. Strings become the integers, numbers, and booleans the fields ask for, the way a form sends them.
 * `answer` and `decline` on a chat also take a question's `id`, and a question that was already answered, or whose call has finished, stays as it is. In 2.1, answering a request whose call had finished raised `ArgumentError`.
 * `RubyLLM::PendingToolCallsError` tells you to answer the calls' questions instead of naming approvals and inputs. Code that matched its message should rescue the class instead.
+* A server that asks the user to visit anything but a web page, an `http` or `https` address, gets a decline before the question reaches the chat or your `before_input_request` callbacks, so a link your app shows for a question can't run script in it. 2.1 passed any address through.
 
 ## Providers Fetch Document URLs
 

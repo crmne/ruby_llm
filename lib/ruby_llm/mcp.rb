@@ -391,8 +391,10 @@ module RubyLLM
       # Question): +:form+, for values, +:url+, to visit a page, or both, the
       # default. Pass +false+ when your app cannot show them to anyone, so a
       # call never waits on an answer that will not come. RubyLLM declines
-      # questions of other kinds. Called with no arguments, returns the
-      # accepted kinds.
+      # questions of other kinds, and asks to visit anything but a web page
+      # (an +http+ or +https+ address), so a link to the page can't run
+      # script in your app. Called with no arguments, returns the accepted
+      # kinds.
       #
       #   input_requests false
       #   input_requests :url
@@ -900,7 +902,9 @@ module RubyLLM
     end
 
     def accepts?(question)
-      self.class.input_requests.include?(question.url? ? :url : :form)
+      return self.class.input_requests.include?(:form) unless question.url?
+
+      self.class.input_requests.include?(:url) && HTTP.web?(question.url)
     end
 
     def send_request(method, params)
