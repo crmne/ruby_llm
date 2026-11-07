@@ -815,10 +815,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
                 File.write('Gemfile', gemfile)
                 FileUtils.rm(Dir['db/migrate/*_add_reply_error_to_chats.rb'])
                 output, = run_rails_generate('ruby_llm:chat_ui', '--skip', chdir: destination)
-                expect(output.lines.last.strip).to eq(
-                  'Run bundle add turbo-rails stimulus-rails importmap-rails, ' \
-                  'then bin/rails importmap:install turbo:install stimulus:install, then bin/rails db:migrate'
-                )
+                expect(output.lines.last.strip)
+                  .to eq('Add turbo-rails and stimulus-rails, which the chat UI runs on, then run bin/rails db:migrate')
               end
             end
           end
@@ -987,8 +985,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
               output, status = run_rails_generate('ruby_llm:chat_ui', '--force', chdir: destination)
               expect(status.success?).to be(true), output
               expect(output).not_to include('yarn add', 'stimulus:manifest:update', 'importmap')
-              expect(output.lines.last.strip)
-                .to eq('Run bundle add turbo-rails stimulus-rails, then bin/rails turbo:install stimulus:install')
+              expect(output.lines.last.strip).to eq('Add turbo-rails and stimulus-rails, which the chat UI runs on')
 
               javascripts = File.expand_path('../../../app/assets/javascripts/ruby_llm', __dir__)
               expect(File.read('app/javascript/controllers/chat_message_controller.js'))

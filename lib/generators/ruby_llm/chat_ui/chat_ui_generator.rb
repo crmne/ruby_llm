@@ -14,11 +14,6 @@ module RubyLLM
       source_root File.expand_path('templates', __dir__)
 
       CONTROLLER = File.expand_path('../../../../app/assets/javascripts/ruby_llm/chat_message_controller.js', __dir__)
-      HOTWIRE_STEPS = {
-        importmap: ['bundle add turbo-rails stimulus-rails importmap-rails',
-                    'bin/rails importmap:install turbo:install stimulus:install'],
-        bundler: ['bundle add turbo-rails stimulus-rails', 'bin/rails turbo:install stimulus:install']
-      }.freeze
 
       namespace 'ruby_llm:chat_ui'
 
@@ -231,9 +226,9 @@ module RubyLLM
         return unless behavior == :invoke
 
         steps = []
-        steps.push(*HOTWIRE_STEPS[gem?('jsbundling-rails') ? :bundler : :importmap]) unless gem?('turbo-rails')
-        steps << 'bin/rails db:migrate' if @migration_created
-        say "\nRun #{steps.join(', then ')}" if steps.any?
+        steps << 'add turbo-rails and stimulus-rails, which the chat UI runs on' unless gem?('turbo-rails')
+        steps << 'run bin/rails db:migrate' if @migration_created
+        say "\n#{steps.join(', then ').upcase_first}" if steps.any?
       end
 
       private
