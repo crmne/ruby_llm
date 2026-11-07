@@ -259,7 +259,7 @@ end
 
 `answer` takes the parameters a form sends for a question with several fields, and keeps only the fields the question asks for. Authorize who may answer through your application's permissions, as you would any other action.
 
-A double-submitted answer enqueues two jobs, and that is safe: only one process runs a chat at a time, so the second job finds the chat running or the call answered and returns without running it. Declining an approval whose call has started in the meantime, such as one a remembered approval let run, raises `RubyLLM::ToolCallRunningError`, because the tool is already doing its work:
+A double-submitted answer enqueues two jobs, and that is safe: only one process runs a chat at a time, so the second job finds the chat running or the call answered and returns without running it. Declining an approval whose call started running after the person saw it raises `RubyLLM::ToolCallRunningError`, because the tool is already doing its work:
 
 ```ruby
 class AnswersController < ApplicationController

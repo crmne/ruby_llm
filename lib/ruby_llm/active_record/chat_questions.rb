@@ -69,7 +69,7 @@ module RubyLLM
       #
       # Raises ArgumentError for a question the chat never asked, and
       # RubyLLM::ToolCallRunningError for an approval whose call started
-      # running in the meantime.
+      # running after it was listed.
       def decline(question, note = nil)
         pending = persisted_pending_question(question)
         response = RubyLLM::Question.declined(note)
