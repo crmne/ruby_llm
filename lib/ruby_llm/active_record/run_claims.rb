@@ -26,7 +26,7 @@ module RubyLLM
         @chat @message @last_message_id @last_cancellation_poll_at @unpersisted_instructions
         @usage_records_by_entry @run_claim_token @run_claim_deadline @run_claim_renewed_at
         @run_claim_lost_token @synced_run_claim_token @synced_usage_count @tool_call_claims
-        @claim_heartbeat @claim_lock @tool_call_state @calling_chats
+        @claim_heartbeat @claim_lock @tool_call_state
       ].freeze
       private_constant :RUN_STATE
 

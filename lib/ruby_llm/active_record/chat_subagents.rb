@@ -89,7 +89,7 @@ module RubyLLM
       end
 
       def calling_chat_cancelled?
-        (@calling_chats ||= calling_chats).any?(&:persisted_cancellation_request?)
+        calling_chats.any?(&:persisted_cancellation_request?)
       end
 
       def calling_chats

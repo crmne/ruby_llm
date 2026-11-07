@@ -7,8 +7,8 @@ module RubyLLM
     # A request is for the run holding the chat, or for the run about to
     # answer what waits. New work recorded while no run holds the chat, and
     # a run that finds nothing waiting, clear a request that is left over.
-    # A subagent's run also stops when a chat it works for has a request
-    # waiting, which that chat's own run clears.
+    # A subagent's run also stops when a chat it works for, read again at
+    # each poll, has a request waiting, which that chat's own run clears.
     module ChatCancellation # :nodoc:
       def poll_run_cancellation # :nodoc:
         renew_run_claim
@@ -66,7 +66,6 @@ module RubyLLM
       end
 
       def settle_cancellation_request
-        @calling_chats = nil
         return unless @run_claim_token && has_attribute?(:cancelled)
 
         remember_cancellation(self.class.uncached { chat_row.pick(:cancelled) })
