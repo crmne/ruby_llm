@@ -271,9 +271,20 @@ Locals passed to those partials:
 - `messages/tool_calls/_your_tool.html.erb` receives `message` and `tool_call`
 - `messages/tool_results/_your_tool.html.erb` receives `tool`
 
-`ruby_llm:tool` creates `_your_tool.html.erb` files with the correct names so custom rendering hooks up automatically.
+`ruby_llm:tool` creates `_your_tool.html.erb` files with the correct names so custom rendering hooks up automatically: `messages/_tool_calls.html.erb` renders `tool_call_partial(tool_call)`, which is the call's own partial in the `tool_calls` folder beside it, or `_default`, and `messages/_tool.html.erb` does the same with `tool_result_partial(tool)`.
 
 Using fixed locals keeps the templates dumb and predictable.
+
+### View Helpers
+
+The views use helpers that RubyLLM adds to every view, so the generator writes no helper of its own:
+
+- `tool_call_partial(tool_call)` and `tool_result_partial(message)` pick a tool's partial, as described above.
+- `tool_label(name)` and `tool_result_label(message)` turn a tool's name into a label, such as "Send mail".
+- `cost_label(cost)` shows a `RubyLLM::Cost` in US dollars to four decimal places, such as "$0.0123". RubyLLM prices every cost in US dollars, so the label stays in dollars whatever your locale.
+- `default_model_display_name` labels the model picker's empty choice with the name of `config.default_model`.
+
+To change one, define a method with the same name in a helper of your own, such as `app/helpers/messages_helper.rb`: it takes the place of RubyLLM's in every view. A chat UI generated before RubyLLM shipped these keeps the `MessagesHelper` the generator wrote, and its methods win the same way.
 
 Turbo Stream templates used by the generated chat UI:
 
