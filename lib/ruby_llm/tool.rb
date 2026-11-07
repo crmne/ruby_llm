@@ -83,7 +83,7 @@ module RubyLLM
     #     rescue_from StandardError, with: :report_failure
     #
     #     rescue_from Faraday::Error do |error|
-    #       { error: "The service didn't answer (#{error.class.name.demodulize}). Try again later." }
+    #       { error: "The service didn't answer (#{error.class.name.split("::").last}). Try again later." }
     #     end
     #
     #     private

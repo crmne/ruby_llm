@@ -142,7 +142,7 @@ To turn the same exceptions into results for every tool, declare `rescue_from` o
 ```ruby
 class ApplicationTool < RubyLLM::Tool
   rescue_from Faraday::Error do |error|
-    { error: "The service didn't answer (#{error.class.name.demodulize}). Try again later." }
+    { error: "The service didn't answer (#{error.class.name.split("::").last}). Try again later." }
   end
 end
 ```

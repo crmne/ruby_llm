@@ -350,7 +350,7 @@ A subclass inherits the handlers its parent has when the subclass is defined. Ru
 ```ruby
 # config/initializers/ruby_llm.rb
 RubyLLM::CodeExecution.rescue_from StandardError do |error|
-  { error: "The code couldn't run (#{error.class.name.demodulize})." }
+  { error: "The code couldn't run (#{error.class.name.split("::").last})." }
 end
 ```
 
