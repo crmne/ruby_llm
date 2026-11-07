@@ -193,6 +193,7 @@ RubyLLM::ActiveRecord::MessageMethods#parent_tool_call
 RubyLLM::ActiveRecord::MessageMethods#parsed
 RubyLLM::ActiveRecord::MessageMethods#provider
 RubyLLM::ActiveRecord::MessageMethods#server_tool_calls
+RubyLLM::ActiveRecord::MessageMethods#spilled_path
 RubyLLM::ActiveRecord::MessageMethods#stopped?
 RubyLLM::ActiveRecord::MessageMethods#thinking
 RubyLLM::ActiveRecord::MessageMethods#to_llm
@@ -375,6 +376,7 @@ RubyLLM::Attachment#document?
 RubyLLM::Attachment#filename (attr_reader)
 RubyLLM::Attachment#image?
 RubyLLM::Attachment#mime_type (attr_reader)
+RubyLLM::Attachment#partial?
 RubyLLM::Attachment#pdf?
 RubyLLM::Attachment#processing (attr_reader)
 RubyLLM::Attachment#resolution (attr_reader)
@@ -1043,6 +1045,7 @@ RubyLLM::Message#provider
 RubyLLM::Message#raw (attr_reader)
 RubyLLM::Message#role (attr_reader)
 RubyLLM::Message#server_tool_calls (attr_reader)
+RubyLLM::Message#spilled_path
 RubyLLM::Message#stopped?
 RubyLLM::Message#thinking (attr_reader)
 RubyLLM::Message#to_h
