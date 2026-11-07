@@ -1020,7 +1020,8 @@ module RubyLLM
       # Attachments given with +with:+ are stored with Active Storage and
       # move to the message it becomes. +sender+ is any record, such as the
       # user who asked. It is stored, and when your message model has a
-      # +sender+ association, the message record is saved with it.
+      # +sender+ association that can hold it, the message record is saved
+      # with it.
       #
       # Any process can queue a message. The process that runs the chat
       # takes it at its next step; when none is running, run #complete,

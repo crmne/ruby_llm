@@ -270,6 +270,8 @@ class Message < ApplicationRecord
 end
 ```
 
+A sender the association can't hold, a record of another class or one whose class was renamed since it was queued, is dropped: the message joins without it. Make the association polymorphic to keep senders of any class.
+
 Attachments are stored with Active Storage and move to the message the queued message becomes, without uploading them again. Messages queued with `steer: false` wait for the next `complete`, so a job that finishes its turn with some waiting should enqueue itself again:
 
 ```ruby

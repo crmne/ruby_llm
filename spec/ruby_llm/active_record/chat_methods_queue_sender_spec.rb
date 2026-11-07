@@ -98,4 +98,31 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
     expect(chat.sent_messages.find_by(role: 'user').sender).to eq(other)
   end
+
+  context 'when the queued sender class no longer exists' do
+    let(:chat) { SentChat.create!(model:) }
+
+    before do
+      chat.queue('Hello', sender:)
+      chat.ruby_llm_queued_messages.update_all(sender_type: 'RenamedSender')
+    end
+
+    it 'joins the message without its sender' do
+      job_for(chat).complete
+
+      expect(chat.sent_messages.where(role: 'user').map { |message| [message.content, message.sender] })
+        .to eq([['Hello', nil]])
+      expect(chat.queued_messages).to be_empty
+    end
+
+    it 'lets around_join set another sender' do
+      other = Chat.create!(model:)
+      job = job_for(chat)
+      job.around_join { |_queued, join| join.call(sender: other) }
+
+      job.complete
+
+      expect(chat.sent_messages.find_by(role: 'user').sender).to eq(other)
+    end
+  end
 end
