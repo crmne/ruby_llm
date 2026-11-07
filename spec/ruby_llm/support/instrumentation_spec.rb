@@ -373,4 +373,81 @@ RSpec.describe RubyLLM::Support::Instrumentation do
       expect(payload[:metadata]).to eq(metadata)
     end
   end
+
+  describe 'a configured instrumenter with its own context' do
+    let(:instrumenter) do
+      Class.new do
+        attr_reader :spans
+
+        def initialize
+          @spans = Queue.new
+        end
+
+        def instrument(name, _payload, &)
+          span = { name:, parent: capture_context }
+          @spans << span
+          with_context(span, &) if block_given?
+        end
+
+        def capture_context
+          Thread.current[:ruby_llm_spec_span]
+        end
+
+        def with_context(span)
+          previous = Thread.current[:ruby_llm_spec_span]
+          Thread.current[:ruby_llm_spec_span] = span
+          yield
+        ensure
+          Thread.current[:ruby_llm_spec_span] = previous
+        end
+      end.new
+    end
+
+    before do
+      stub_const('InstrumentedLookup', Class.new(RubyLLM::Tool) do
+        parameter :label
+
+        define_method(:execute) { |label:| label }
+      end)
+      stub_request(:post, 'https://api.openai.com/v1/chat/completions').to_return do |request|
+        message = { role: 'assistant', content: 'done' }
+        if JSON.parse(request.body)['messages'].last['role'] == 'user'
+          message[:tool_calls] = %w[alpha beta].map do |label|
+            { id: label, type: 'function', function: { name: 'instrumented_lookup', arguments: { label: }.to_json } }
+          end
+        end
+        finish_reason = message[:tool_calls] ? 'tool_calls' : 'stop'
+        { headers: { 'Content-Type' => 'application/json' },
+          body: { model: model_for(:openai), choices: [{ message:, finish_reason: }],
+                  usage: { prompt_tokens: 4, completion_tokens: 2 } }.to_json }
+      end
+    end
+
+    it 'captures the global instrumenter once when it also subscribes' do
+      allow(RubyLLM.config).to receive(:instrumenter).and_return(instrumenter)
+      described_class.subscribe(instrumenter)
+
+      instrumenter.with_context(:span) do
+        expect(described_class.capture_context).to eq([[instrumenter, :span]])
+      end
+    ensure
+      described_class.unsubscribe(instrumenter)
+    end
+
+    %i[threads fibers].each do |mode|
+      it "keeps the parent of tool spans run with #{mode}" do
+        context = RubyLLM.context { |config| config.instrumenter = instrumenter }
+        chat = context.chat(model: model_for(:openai), protocol: :chat_completions)
+                      .with_tools(InstrumentedLookup).with_tool_options(concurrency: mode)
+
+        instrumenter.instrument('root', {}) { chat.ask('Look up both') }
+
+        spans = Array.new(instrumenter.spans.size) { instrumenter.spans.pop }
+        root = spans.find { |span| span[:name] == 'root' }
+        tools = spans.select { |span| span[:name] == 'tool_call.ruby_llm' }
+        expect(tools.size).to eq(2)
+        expect(tools.map { |span| span[:parent] }).to all(equal(root))
+      end
+    end
+  end
 end

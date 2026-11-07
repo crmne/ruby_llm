@@ -11,13 +11,13 @@ module RubyLLM
       # Runs +tool_calls+ in rounds split by the calls +exclusive+ picks
       # out. A round with a result +paused+ picks out stops the rounds
       # after it, which wait for that call to finish.
-      def run(mode, tool_calls, exclusive: nil, paused: nil, on_result: nil, &)
+      def run(mode, tool_calls, exclusive: nil, paused: nil, on_result: nil, config: nil, &)
         rounds = rounds(tool_calls, exclusive)
         case mode
         when :threads
-          run_with_threads(rounds, paused:, on_result:, &)
+          run_with_threads(rounds, paused:, on_result:, config:, &)
         when :fibers
-          run_with_fibers(rounds, paused:, on_result:, &)
+          run_with_fibers(rounds, paused:, on_result:, config:, &)
         end
       end
 
@@ -31,10 +31,10 @@ module RubyLLM
         indexed.chunk_while { |(first, _), (second, _)| !exclusive.call(first) && !exclusive.call(second) }.to_a
       end
 
-      def run_with_threads(rounds, paused:, on_result:, &execute)
+      def run_with_threads(rounds, paused:, on_result:, config:, &execute)
         caller_context = execution_context
         workflow_context = Support::Instrumentation.current_workflow
-        instrumentation_context = Support::Instrumentation.capture_context
+        instrumentation_context = Support::Instrumentation.capture_context(config:)
         results = Array.new(rounds.sum(&:size))
         rounds.each do |round|
           queue = Queue.new
@@ -58,11 +58,11 @@ module RubyLLM
         results
       end
 
-      def run_with_fibers(rounds, paused:, on_result:, &execute)
+      def run_with_fibers(rounds, paused:, on_result:, config:, &execute)
         require_async
         caller_context = execution_context
         contexts = { workflow_context: Support::Instrumentation.current_workflow,
-                     instrumentation_context: Support::Instrumentation.capture_context }
+                     instrumentation_context: Support::Instrumentation.capture_context(config:) }
         results = Array.new(rounds.sum(&:size))
         # Inside a reactor, Sync runs the block in the calling fiber, so
         # results persist with the caller's execution state and connection.
