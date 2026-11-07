@@ -404,12 +404,35 @@ class ProviderSlugLiterals
     component = graph.components[@source]
     return [] unless component
 
-    slugs = File.read(File.join(graph.root, 'lib/ruby_llm.rb')).scan(/Provider\.register :(\w+)/).flatten
-    raise "#{id} found no Provider.register :slug calls in lib/ruby_llm.rb" if slugs.empty?
+    slugs = registered_slugs(File.join(graph.root, 'lib/ruby_llm.rb'))
+    raise "#{id} found no Provider.register calls in lib/ruby_llm.rb" if slugs.empty?
+
     component.files.sort.flat_map { |path| diagnostics(path, slugs) }
   end
 
   private
+
+  def registered_slugs(entrypoint)
+    Registrations.new.tap { |finder| Prism.parse_file(entrypoint).value.accept(finder) }.slugs
+  end
+
+  # Collects the names passed to Provider.register, as a symbol or a string.
+  class Registrations < Prism::Visitor
+    attr_reader :slugs
+
+    def initialize
+      super
+      @slugs = []
+    end
+
+    def visit_call_node(node)
+      name = node.arguments&.arguments&.first
+      if node.name == :register && node.receiver&.slice&.end_with?('Provider') && name.respond_to?(:unescaped)
+        @slugs << name.unescaped
+      end
+      super
+    end
+  end
 
   def diagnostics(path, slugs)
     finder = Finder.new(slugs, @except)
