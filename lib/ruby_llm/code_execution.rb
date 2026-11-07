@@ -10,9 +10,9 @@ module RubyLLM
   # and returns the exit code, the output, and every file the code wrote
   # there as an attachment on the tool result. In a chat with a file store
   # (see Chat#with_file_store), runs work with the chat's files instead.
-  # With a store that keeps its files in a folder (FileStore#local_root),
-  # such as FileStore::Directory, code runs in that folder and changes the
-  # files in place. With any other store, each run has read-only copies of
+  # With a store that keeps its files in a folder, such as
+  # FileStore::Directory, code runs in that folder and changes the files
+  # in place. With any other store, each run has read-only copies of
   # the conversation's files as usual, copies in the files the model names
   # in +files+, and what the code writes is saved back to the store.
   #
@@ -250,9 +250,10 @@ module RubyLLM
     # Configuration#sandbox from +config+. A Proc may return a new sandbox
     # instance each call: it stands for one sandbox, checked once.
     # Raises ConfigurationError without a sandbox.
-    def initialize(sandbox:, escalate_to: [], attachments: -> { [] }, file_store: -> {}, attached_files: -> { [] },
-                   written: ->(_file) {}, skills: -> { {} }, mounts: {}, approval: ->(_tool_call) { false }, chat: nil,
-                   config: nil, package_cache_dir: nil, languages: %i[ruby shell], **packages)
+    def initialize(sandbox:, escalate_to: [], attachments: -> { [] }, file_store: -> {}, # :nodoc:
+                   attached_files: -> { [] }, written: ->(_file) {}, skills: -> { {} }, mounts: {},
+                   approval: ->(_tool_call) { false }, chat: nil, config: nil, package_cache_dir: nil,
+                   languages: %i[ruby shell], **packages)
       super()
       @sandbox = sandbox
       @config = config
