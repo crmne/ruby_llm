@@ -250,10 +250,10 @@ module RubyLLM
     # Configuration#sandbox from +config+. A Proc may return a new sandbox
     # instance each call: it stands for one sandbox, checked once.
     # Raises ConfigurationError without a sandbox.
-    def initialize(sandbox:, escalate_to: [], attachments: -> { [] }, file_store: -> {}, # :nodoc:
+    def initialize(sandbox:, escalate_to: [], attachments: -> { [] }, file_store: -> {},
                    attached_files: -> { [] }, written: ->(_file) {}, skills: -> { {} }, mounts: {},
                    approval: ->(_tool_call) { false }, chat: nil, config: nil, package_cache_dir: nil,
-                   languages: %i[ruby shell], **packages)
+                   languages: %i[ruby shell], **packages) # :nodoc:
       super()
       @sandbox = sandbox
       @config = config
