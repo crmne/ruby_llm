@@ -207,6 +207,20 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.messages.find { |message| message.role == :tool }.content).to eq('5')
   end
 
+  it 'runs a server tool approved after a decline, without the note' do
+    files_class.requires_approval :add
+    allow(chat.provider).to receive(:complete).and_return(tool_call('add', { 'a' => 2, 'b' => 3 }), answer)
+    chat.with_mcp(files).ask('What is 2 + 3?')
+    question = chat.pending_questions.sole
+
+    chat.decline(question, 'Not yet')
+    allow(files).to receive(:send_request).and_call_original
+    chat.approve(question).complete
+
+    expect(chat.messages.find { |message| message.role == :tool }.content).to eq('5')
+    expect(files).to have_received(:send_request).with('tools/call', hash_excluding(:inputResponses))
+  end
+
   it 'asks with a server prompt' do
     allow(chat.provider).to receive(:complete).and_return(answer)
 

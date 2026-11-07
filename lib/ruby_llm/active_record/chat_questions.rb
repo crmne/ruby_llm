@@ -141,7 +141,7 @@ module RubyLLM
 
       def refuse(question, note)
         record = record_tool_call_decision(question.tool_call, 'denied')
-        record.update!(mcp_state: { 'note' => note }) if note && record.has_attribute?(:mcp_state)
+        record.update!(mcp_state: { 'note' => note }) if note
       end
     end
   end

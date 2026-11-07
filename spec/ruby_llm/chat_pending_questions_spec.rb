@@ -107,6 +107,10 @@ RSpec.describe RubyLLM::Chat do
     expect(results.sole).to eq('Refunded 40')
   end
 
+  it 'approves a call the chat has not seen yet without raising' do
+    expect(chat.approve('call_later')).to eq(chat)
+  end
+
   it 'takes a blank note as no note' do
     ask_for('issue_refund')
 
