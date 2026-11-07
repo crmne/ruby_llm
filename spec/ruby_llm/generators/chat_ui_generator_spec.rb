@@ -813,8 +813,12 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
               within_test_app(destination) do
                 gemfile = File.read('Gemfile').lines.reject { |line| line.include?('turbo-rails') }.join
                 File.write('Gemfile', gemfile)
+                FileUtils.rm(Dir['db/migrate/*_add_reply_error_to_chats.rb'])
                 output, = run_rails_generate('ruby_llm:chat_ui', '--skip', chdir: destination)
-                expect(output).to include('Add Hotwire', 'bundle add turbo-rails')
+                expect(output.lines.last.strip).to eq(
+                  'Run bundle add turbo-rails stimulus-rails importmap-rails, ' \
+                  'then bin/rails importmap:install turbo:install stimulus:install, then bin/rails db:migrate'
+                )
               end
             end
           end

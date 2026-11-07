@@ -53,7 +53,7 @@ module RubyLLM
         requirement = line[/["']mxc["']\s*,\s*["']([^"']+)["']/, 1]
         return if requirement.nil? || Gem::Requirement.new(requirement).satisfied_by?(Gem::Version.new('0.4.1'))
 
-        say "Change the mxc line in your Gemfile to mxc #{MXC_REQUIREMENT}", :yellow
+        say %(Change the mxc requirement in your Gemfile to "#{MXC_REQUIREMENT}"), :yellow
       end
 
       def sandbox_class_name
