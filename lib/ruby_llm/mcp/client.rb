@@ -20,8 +20,14 @@ module RubyLLM
     # never announce the status of tasks. Their subscription counts as
     # acknowledged once a ping confirms the session, starting a new one if
     # it ended.
-    class Client # :nodoc:
+    #
+    # An MCP builds its own client. Applications use one only to read
+    # #meta, when they send a server requests of their own.
+    class Client
+      # The MCP revision the client speaks first.
       VERSION = '2026-07-28'
+
+      # :stopdoc:
       LEGACY_VERSIONS = %w[2025-11-25 2025-06-18 2025-03-26 2024-11-05].freeze
       UNSUPPORTED_VERSION = -32_022
       MODERN_ERRORS = [-32_020, -32_021, UNSUPPORTED_VERSION].freeze
@@ -33,9 +39,10 @@ module RubyLLM
         notifications/tools/list_changed notifications/prompts/list_changed
         notifications/resources/list_changed notifications/resources/updated
       ].freeze
+      # :startdoc:
 
       # The answer to a request the server sends: RubyLLM only answers pings.
-      def self.reply(request)
+      def self.reply(request) # :nodoc:
         if request['method'] == 'ping'
           { jsonrpc: '2.0', id: request['id'], result: {} }
         else
@@ -43,8 +50,10 @@ module RubyLLM
         end
       end
 
-      attr_reader :version
+      attr_reader :version # :nodoc:
 
+      # Returns a client that speaks to a server over +transport+, declaring
+      # +capabilities+, a Hash such as <tt>{ extensions: { ... } }</tt>.
       def initialize(transport, capabilities: {}, &on_change)
         @transport = transport
         @capabilities = capabilities
@@ -53,11 +62,11 @@ module RubyLLM
         @subscribed = []
       end
 
-      def server
+      def server # :nodoc:
         @connecting.synchronize { @server ||= discover || handshake }
       end
 
-      def request(method, params = {}, headers: {}, &)
+      def request(method, params = {}, headers: {}, &) # :nodoc:
         server
         call(method, params, headers:, &)
       rescue SessionExpired => e
@@ -65,7 +74,7 @@ module RubyLLM
         call(method, params, headers:, &)
       end
 
-      def list(method, key)
+      def list(method, key) # :nodoc:
         page = request(method)
         items = page.fetch(key, [])
         PAGE_LIMIT.times do
@@ -82,24 +91,45 @@ module RubyLLM
       # each notification of the subscription, starting with the server's
       # acknowledgment. Returns when the server ends the subscription and
       # raises Error when it refuses one or the stream breaks.
-      def listen(changes, &)
+      def listen(changes, &) # :nodoc:
         server
         raise ConfigurationError, 'The MCP transport does not respond to listen' unless @transport.respond_to?(:listen)
 
         modern? ? subscribe(changes, &) : listen_to_session(changes, &)
       end
 
-      def modern?
+      def modern? # :nodoc:
         version == VERSION
       end
 
-      def close
+      def close # :nodoc:
         @connecting.synchronize do
           @transport.close
           @server = nil
           @version = nil
           @subscribed = []
         end
+      end
+
+      # Returns the +_meta+ the client adds to every request it sends a
+      # server that speaks VERSION: the revision, the client's name and
+      # version, and its capabilities. Merge it into requests you send the
+      # server yourself, so they describe the client the same way:
+      #
+      #   meta = RubyLLM::MCP::Client.new(transport).meta
+      #   # => { "io.modelcontextprotocol/protocolVersion" => "2026-07-28",
+      #   #      "io.modelcontextprotocol/clientInfo" => { name: "ruby_llm", version: "2.2.0" },
+      #   #      "io.modelcontextprotocol/clientCapabilities" => {} }
+      #   params = { name: "roots", arguments: {}, _meta: meta }
+      #
+      # Servers on an older revision get none: they learn the same from the
+      # initialize handshake.
+      def meta
+        {
+          'io.modelcontextprotocol/protocolVersion' => VERSION,
+          'io.modelcontextprotocol/clientInfo' => client_info,
+          'io.modelcontextprotocol/clientCapabilities' => @capabilities
+        }
       end
 
       private
@@ -216,14 +246,6 @@ module RubyLLM
       def message(method, params = {}, id: nil)
         params = params.merge(_meta: meta.merge(params.fetch(:_meta, {}))) if modern?
         { jsonrpc: '2.0', id:, method:, params: }.compact
-      end
-
-      def meta
-        {
-          'io.modelcontextprotocol/protocolVersion' => VERSION,
-          'io.modelcontextprotocol/clientInfo' => client_info,
-          'io.modelcontextprotocol/clientCapabilities' => @capabilities
-        }
       end
 
       def client_info

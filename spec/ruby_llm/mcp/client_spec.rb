@@ -25,6 +25,14 @@ RSpec.describe RubyLLM::MCP::Client do
       )
     end
 
+    it 'reads the meta it sends, for requests an application sends itself' do
+      sent = client.request('meta/echo')['meta']
+      meta = described_class.new(nil, capabilities: { extensions: { 'io.example/x' => {} } }).meta
+
+      expect(JSON.parse(client.meta.to_json)).to eq(sent.slice(*client.meta.keys))
+      expect(meta['io.modelcontextprotocol/clientCapabilities']).to eq(extensions: { 'io.example/x' => {} })
+    end
+
     it 'follows pagination cursors' do
       names = client.list('tools/list', 'tools').map { |tool| tool['name'] }
 
