@@ -148,7 +148,7 @@ RubyLLM carries the trace context into the threads and fibers it starts for [con
 
 Traces often go to a third-party service, so by default RubyLLM exports only the metadata listed above. It does not export prompts, instructions, messages, generated content, or tool arguments and results unless you [record content](#recording-content). It never exports embeddings, attachment bytes, metadata you attach, provider options, credentials, or exception messages and stack traces.
 
-Model names, tool names, tool call IDs, and workflow names and IDs are exported. Choose workflow names and IDs that are safe to send to your tracing backend.
+Model names, tool names and descriptions, tool call IDs, and workflow names and IDs are exported. A tool's description is written for the model and can read like instructions, so keep tool descriptions, workflow names, and IDs safe to send to your tracing backend.
 
 The [instrumentation events]({% link _advanced/instrumentation.md %}#payloads) your own subscribers receive still contain the full application data. What you do with it is up to you.
 
