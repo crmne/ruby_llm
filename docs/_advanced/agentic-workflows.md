@@ -294,7 +294,7 @@ chat.messages.last.content      # => "Order R-1042 shipped on Monday and arrives
 
 With Rails persistence, each method reads the saved transcript and skips tool calls with saved results. Only one process runs a chat at a time: while another process is running it, each method returns without doing anything and `waiting?` is `true`. Work interrupted before its result is saved may run again once its claim expires. See [Agents in Background Jobs]({% link _advanced/durable-agents.md %}) for job retries and idempotent tools.
 
-Stop scheduling work while `waiting?` is true: the chat waits on something outside it. `awaiting_approval?` tells you it waits on an approval, so record one or a denial, then resume the loop. `awaiting_input?` and `awaiting_tasks?` cover [MCP servers]({% link _tools/mcp.md %}#input-requests) asking for input and running tasks. `awaiting_person?` is true when any of them needs a person to act, including a task that reports `input_required?`.
+Stop scheduling work while `waiting?` is true: the chat waits on something outside it. `pending_questions` lists what a person must [answer]({% link _tools/tool-execution.md %}#asking-a-person), approvals included, so record the answers, then resume the loop. `awaiting_tasks?` covers [tasks]({% link _tools/tool-execution.md %}#pausing-a-tool-call) that run elsewhere. `awaiting_person?` is true when a person must act, for a question or for a task that reports `input_required?`.
 
 When a tool calls `halt`, its round still finishes, and then `step` returns `nil`, `complete` returns the halted tool result, and the queue's messages join as they would after an answer.
 

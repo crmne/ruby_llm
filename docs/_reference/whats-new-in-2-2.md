@@ -21,6 +21,7 @@ After reading this guide, you will know:
 * How skills teach the model your workflows, and run their scripts in the sandbox.
 * How persisted chats now run in one process at a time.
 * How to queue messages while a chat runs, and attribute them as they join.
+* How a tool asks the person who runs the chat, and how approvals became questions.
 * How to keep a tool that shares state from running alongside others.
 * How to run each tool inside a block, such as a tenant.
 * How to keep tool results within the model's context window.
@@ -114,8 +115,9 @@ The default sandbox should be the smallest one that does the job. When the code 
 chat.with_code_execution(sandbox: ReadOnlySandbox, escalate_to: [WorkspaceSandbox, OnlineSandbox])
 chat.ask "Add a changelog entry for the new export feature"
 
-chat.pending_approvals.first.arguments # => {"code"=>"...", "sandbox"=>"workspace", "reason"=>"Edit CHANGELOG.md"}
-chat.approve(chat.pending_approvals.first)
+question = chat.pending_questions.first
+question.tool_call.arguments # => {"code"=>"...", "sandbox"=>"workspace", "reason"=>"Edit CHANGELOG.md"}
+question.approve
 chat.complete
 ```
 
@@ -228,6 +230,31 @@ end
 ```
 
 A subagent that waits for an approval pauses the call, and the calling chat is `awaiting_person?`. Agents also declare chat callbacks once, `after_message :log_reply`, with `if:` and `unless:` like Rails. See [Subagents]({% link _getting_started/agents.md %}#subagents) and [Callbacks]({% link _getting_started/agents.md %}#callbacks).
+
+## Tools Ask a Person
+
+A tool can now ask the person who runs the chat something and carry on with the answer. The call pauses, no process waits, and `execute` runs again from the top once they answer, so ask first, then act:
+
+```ruby
+class BookFlight < RubyLLM::Tool
+  description "Books a flight"
+  parameter :destination, description: "The city to fly to"
+
+  def execute(destination:)
+    seat = ask("Window or aisle?", choices: %w[window aisle]) or return "No seat chosen."
+    Flights.book!(destination, seat:)
+  end
+end
+```
+
+`ask` takes free text, one of `choices:`, the fields a block declares, or a page to visit. An approval is a question too, answered yes or no, and MCP servers ask theirs the same way. `pending_questions` lists them all, and you answer each with `answer`, `decline`, `approve`, or `deny`, from any process in Rails:
+
+```ruby
+chat.pending_questions.first.answer "window"
+chat.complete
+```
+
+See [Asking a Person]({% link _tools/tool-execution.md %}#asking-a-person).
 
 ## Exclusive Tools
 
@@ -410,6 +437,8 @@ It is off by default, and a context can turn it on for one server. See [Reasonin
 `bin/rails generate ruby_llm:upgrade` in 2.2 adds the columns chats and tool calls use for their claims, the tables for queued messages and chat files, and an `ApplicationAgent` for your agents to inherit from. Applications on 2.0 upgrade to 2.1 first. See [Upgrading]({% link _reference/upgrading.md %}).
 
 2.2 deprecates iterating a chat directly and `chat.cache_until_here` in favor of `chat.messages` and marking the message itself, and renames `RubyLLM.with_usage_owner` to `RubyLLM.with_owner`. The old names still work and warn, and RubyLLM 3.0 removes them. See [Read a Conversation Through `messages`]({% link _reference/upgrading.md %}#read-a-conversation-through-messages).
+
+`pending_questions` lists approvals and questions alike, and `pending_approvals`, `pending_inputs`, `approve`, `deny`, `answer`, and `decline` keep working. Answers to a server's questions are now checked against what they ask, so an extra field or a choice the question doesn't offer raises `ArgumentError`, and a server's request to visit anything but an `http` or `https` page is declined. See [Approvals and Questions Are One List]({% link _reference/upgrading.md %}#approvals-and-questions-are-one-list).
 
 Provider gems and custom providers that override protocol methods rename them: methods that build a request start with `render_`, methods that read a response start with `parse_`, and the capability predicates drop `supports_` ([#1136](https://github.com/crmne/ruby_llm/pull/1136)). See [Rename Protocol Method Overrides]({% link _reference/upgrading.md %}#rename-protocol-method-overrides).
 

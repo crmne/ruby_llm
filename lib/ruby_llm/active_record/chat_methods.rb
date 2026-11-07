@@ -5,6 +5,7 @@ require 'ruby_llm/active_record/attachment_helpers'
 require 'ruby_llm/active_record/claim_heartbeat'
 require 'ruby_llm/active_record/run_claims'
 require 'ruby_llm/active_record/chat_approvals'
+require 'ruby_llm/active_record/chat_questions'
 require 'ruby_llm/active_record/chat_cancellation'
 require 'ruby_llm/active_record/chat_placeholders'
 require 'ruby_llm/active_record/chat_reply_error'
@@ -34,6 +35,7 @@ module RubyLLM
       include AttachmentHelpers
       include RunClaims
       include ChatApprovals
+      include ChatQuestions
       include ChatCancellation
       include ChatPlaceholders
       include ChatReplyError
@@ -93,33 +95,35 @@ module RubyLLM
         @chat&.cancelled? || self[:cancelled]
       end
 
-      # Records approval for +tool_call+ (a ToolCall, a tool call record, or
-      # an id) on the persisted tool call, so the next #complete executes it
-      # from any process. Approving a call that is running or answered
-      # changes nothing. With <tt>remember: true</tt>, later calls to the
-      # same tool run without asking for the rest of the chat, as
-      # RubyLLM::Chat#approve describes, in every process. Returns +self+.
+      # Records approval for +tool_call+ (an approval RubyLLM::Question, a
+      # ToolCall, a tool call record, or an id) on the persisted tool call,
+      # so the next #complete executes it from any process. Approving a call
+      # that is running or answered changes nothing. With
+      # <tt>remember: true</tt>, later calls to the same tool run without
+      # asking for the rest of the chat, as RubyLLM::Chat#approve describes,
+      # in every process. Returns +self+.
       #
       #   chat.approve(params[:tool_call_id])
       #   chat.approve(params[:tool_call_id], remember: true)
       #   CompleteJob.perform_later(chat.id)
       #
       def approve(tool_call, remember: false)
-        record = tool_call_record(tool_call)
+        record = tool_call_record(RubyLLM::Question.decided_call(tool_call, 'answer'))
         to_llm.approve(record.to_llm, remember:) if record.result_id.nil?
         record_tool_call_decision(record, remember ? 'remembered' : 'approved')
         self
       end
 
-      # Records denial for +tool_call+ (a ToolCall, a tool call record, or
-      # an id) on the persisted tool call. The next #complete appends a
-      # structured denial result instead of executing the tool. Denying an
-      # answered call changes nothing. Returns +self+.
+      # Records denial for +tool_call+ (an approval RubyLLM::Question, a
+      # ToolCall, a tool call record, or an id) on the persisted tool call.
+      # The next #complete appends a structured denial result instead of
+      # executing the tool. Denying an answered call changes nothing.
+      # Returns +self+.
       #
       # Raises RubyLLM::ToolCallRunningError when the call is already
       # running.
       def deny(tool_call)
-        to_llm.deny(record_tool_call_decision(tool_call, 'denied').to_llm)
+        to_llm.deny(record_tool_call_decision(RubyLLM::Question.decided_call(tool_call, 'decline'), 'denied').to_llm)
         self
       end
 
@@ -152,16 +156,15 @@ module RubyLLM
         to_llm.waiting? || running_elsewhere?
       end
 
-      # Returns whether the conversation is waiting on tool calls that
-      # require approval and have no recorded decision. See
-      # RubyLLM::Chat#awaiting_approval?.
+      # Returns whether the conversation is waiting on an approval among
+      # #pending_questions. See RubyLLM::Chat#awaiting_approval?.
       def awaiting_approval?
         to_llm.awaiting_approval?
       end
 
-      # Returns the persisted tool call records that require approval and
-      # have no recorded decision, ready to render as approval cards. Pass
-      # a record (or its tool_call_id) to #approve or #deny.
+      # Returns the persisted tool call records whose approvals are among
+      # #pending_questions, as a relation to query. Pass a record (or its
+      # tool_call_id) to #approve or #deny.
       # A record's +remote?+ identifies a provider-executed call. Records
       # come in the order the model made the calls.
       #
@@ -317,7 +320,7 @@ module RubyLLM
       # RubyLLM::Chat. Each behaves exactly as documented on RubyLLM::Chat,
       # then returns the record so calls chain.
       CHAINABLE_CHAT_DELEGATES = %i[
-        with_tools with_mcp with_tool_options with_provider_tools with_fallbacks with_temperature answer decline
+        with_tools with_mcp with_tool_options with_provider_tools with_fallbacks with_temperature
         with_max_output_tokens with_thinking with_citations with_caching
         with_end_user with_owner with_compaction with_context_budget with_code_execution with_skills
         with_provider_options with_headers with_schema
@@ -337,19 +340,6 @@ module RubyLLM
       # :call-seq: with_mcp(*servers, defer: nil)
       #
       # Applies Chat#with_mcp and returns this record.
-
-      ##
-      # :method: answer
-      # :call-seq: answer(request, **values)
-      #
-      # Applies Chat#answer and returns this record. The answer persists
-      # on the tool call, so any process can resume the call.
-
-      ##
-      # :method: decline
-      # :call-seq: decline(request)
-      #
-      # Applies Chat#decline and returns this record.
 
       ##
       # :method: with_tool_options
@@ -677,13 +667,6 @@ module RubyLLM
       # Delegates to Chat#awaiting_input?. See that method for arguments and return values.
 
       ##
-      # :method: pending_inputs
-      # :call-seq: pending_inputs
-      #
-      # Delegates to Chat#pending_inputs. Requests persist on their tool
-      # calls, so they survive restarts.
-
-      ##
       # :method: awaiting_tasks?
       # :call-seq: awaiting_tasks?
       #
@@ -717,7 +700,7 @@ module RubyLLM
         caching citations code_execution compaction context_budget concurrency end_user fallbacks headers
         max_output_tokens provider_options schema provider_tools temperature thinking tool_options tools deferred_tools
         mcp skills file_store
-        awaiting_input? pending_inputs awaiting_tasks? pending_tasks awaiting_person? add_completion count_tokens
+        awaiting_input? awaiting_tasks? pending_tasks awaiting_person? add_completion count_tokens
         render
       ].freeze
 
@@ -849,8 +832,8 @@ module RubyLLM
 
       # Persists +message+ as a user message, after every queued message
       # (see #queue), then runs the conversation loop and returns the latest
-      # assistant RubyLLM::Message. The loop pauses when #awaiting_approval?
-      # is true. Yields streaming chunks to a block.
+      # assistant RubyLLM::Message. The loop pauses while a call waits on a
+      # person (see #pending_questions). Yields streaming chunks to a block.
       #
       #   chat.ask "What is the capital of France?"
       #   chat.ask "What's in this file?", with: "diagram.png"
@@ -948,12 +931,12 @@ module RubyLLM
       end
 
       # Runs the completion loop on the underlying chat, persisting each
-      # message, and returns the latest RubyLLM::Message. Pauses when a tool
-      # requires approval. When the API call fails, destroys the empty assistant
-      # message and any orphaned tool results, then re-raises the error. When
-      # the block raises, destroys the empty assistant message and re-raises.
-      # Tool calls paused on a task or an MCP input request stay, so the next
-      # #complete picks them up.
+      # message, and returns the latest RubyLLM::Message. Pauses while a call
+      # waits on a person (see #pending_questions). When the API call fails,
+      # destroys the empty assistant message and any orphaned tool results,
+      # then re-raises the error. When the block raises, destroys the empty
+      # assistant message and re-raises. Tool calls paused on a task or a
+      # question stay, so the next #complete picks them up.
       #
       # Only one process runs a chat at a time. While another process is
       # #running? it, returns the latest message without calling the model

@@ -2,8 +2,8 @@
 
 module RubyLLM
   class MCP
-    # A server's request for input from the user, the same InputRequest a
-    # tool's own Tool#request_input makes.
-    InputRequest = RubyLLM::InputRequest
+    # A server's question to the person, the same Question a tool asks
+    # with Tool#ask, under its 2.1 name.
+    InputRequest = RubyLLM::Question
   end
 end

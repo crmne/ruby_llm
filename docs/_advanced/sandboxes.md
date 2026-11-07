@@ -146,13 +146,13 @@ With `escalate_to:`, the `run_code` tool takes two more arguments: `sandbox`, on
 ```ruby
 chat.ask "Add a changelog entry for the new export feature"
 
-call = chat.pending_approvals.first
-call.arguments
+question = chat.pending_questions.first
+question.tool_call.arguments
 # => {"language"=>"shell", "code"=>"...", "sandbox"=>"workspace", "reason"=>"Edit CHANGELOG.md in the project"}
-chat.tools[:run_code].summary(call.arguments["sandbox"])
+chat.tools[:run_code].summary(question.tool_call.arguments["sandbox"])
 # => "Starts in /srv/app/storage/workspace. Can change /srv/app/storage/workspace. No network access. Stops after 300 seconds."
 
-chat.approve(call)
+question.approve
 chat.complete
 ```
 

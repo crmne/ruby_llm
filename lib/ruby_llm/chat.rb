@@ -16,10 +16,11 @@ module RubyLLM
   #   chat.with_instructions("Be terse.").with_tools(Weather)
   #
   # #ask runs the conversation loop, executing tools until the model answers
-  # or a call needs approval. #ask_later, #generate, #run_tools, and #step
-  # expose individual operations. Resume an approval pause with #approve
-  # or #deny followed by #complete. #queue adds a message from anywhere,
-  # even while the loop runs, and the loop takes it between two moves.
+  # or a call waits on a person. #ask_later, #generate, #run_tools, and
+  # #step expose individual operations. Answer what a paused call asks,
+  # an approval included (see #pending_questions), then #complete carries
+  # it on. #queue adds a message from anywhere, even while the loop runs,
+  # and the loop takes it between two moves.
   #
   # Read the conversation through #messages.
   class Chat # rubocop:disable Metrics/ClassLength
@@ -482,9 +483,11 @@ module RubyLLM
       raise
     end
 
-    # Records approval for +tool_call+, a ToolCall or its id, so the next
-    # #complete or #run_tools executes a local tool or records permission for
-    # the provider to execute a remote tool on the next request. Returns +self+.
+    # Records approval for +tool_call+, the approval Question from
+    # #pending_questions, its ToolCall, or its id, so the next #complete or
+    # #run_tools executes a local tool or records permission for the
+    # provider to execute a remote tool on the next request. Returns
+    # +self+. Question#approve does the same.
     #
     #   chat.approve(tool_call)
     #   chat.complete
@@ -499,28 +502,33 @@ module RubyLLM
     # A +run_code+ call that asks for another sandbox is approved one call
     # at a time: passing <tt>remember: true</tt> for it raises
     # ArgumentError, and the approval never applies to another call.
+    # Raises ArgumentError for a Question that is not an approval.
     def approve(tool_call, remember: false)
+      tool_call = Question.decided_call(tool_call, 'answer')
       name = remembered_tool_identity(tool_call) if remember
       record_tool_call_decision(tool_call, true)
       @tool_call_state.remember(name) if name && !tool_call_answered?(tool_call)
       self
     end
 
-    # Records denial for +tool_call+, a ToolCall or its id. The next
-    # #complete or #run_tools appends a structured denial result instead
-    # of executing a local tool, or sends a refusal for a remote tool on the
-    # next request. The model continues from there. Returns
-    # +self+.
+    # Records denial for +tool_call+, the approval Question from
+    # #pending_questions, its ToolCall, or its id. The next #complete or
+    # #run_tools appends a structured denial result instead of executing a
+    # local tool, or sends a refusal for a remote tool on the next request.
+    # The model continues from there. Returns +self+. Question#deny does
+    # the same.
+    #
+    # Raises ArgumentError for a Question that is not an approval.
     def deny(tool_call)
-      record_tool_call_decision(tool_call, false)
+      record_tool_call_decision(Question.decided_call(tool_call, 'decline'), false)
     end
 
     # Returns whether the conversation can't continue until something
     # outside it happens: every remaining pending tool call waits on an
-    # approval decision, an answer to an MCP input request, a Task, or
-    # a run in another process. #complete stops here, and
-    # #awaiting_approval?, #awaiting_input?, and #awaiting_tasks? tell what
-    # it waits on. Stop a loop you drive with #step here too:
+    # answer to a question (see #pending_questions), a Task, or a run in
+    # another process. #complete stops here, and #awaiting_person? and
+    # #awaiting_tasks? tell what it waits on. Stop a loop you drive with
+    # #step here too:
     #
     #   chat.step until chat.complete? || chat.waiting?
     #
@@ -535,23 +543,81 @@ module RubyLLM
       end
     end
 
-    # Returns whether the conversation can make no progress without an
-    # approval decision: every remaining pending tool call requires
-    # approval and has none recorded, or waits on input. While +true+,
-    # #complete returns
-    # without executing them; record decisions with #approve or #deny,
-    # then call #complete again. Tool calls that need no approval still
-    # execute before the loop pauses.
+    # Returns the questions the conversation waits on a person to answer,
+    # as Question objects, in the order the model made their calls: the
+    # approvals of tools declared with Tool.requires_approval, which ask
+    # before the tool runs, and the questions tools ask with Tool#ask and
+    # MCP servers ask while they work. Empty when nothing waits on a person.
     #
+    #   chat.ask "Book me a flight to Lisbon"
+    #   question = chat.pending_questions.first
+    #   question.message         # => "Window or aisle?", or nil for an approval
+    #   question.answer "window" # as the person chose; approve or deny an approval
+    #   chat.complete
+    #
+    # #complete carries each call on once nothing it asked waits for an
+    # answer. Calls that need no answer still run before the loop pauses.
     # Consults each pending tool's approval resolver when one is declared,
     # so resolvers must be idempotent reads.
+    def pending_questions
+      response = pending_tool_response
+      return [] unless response
+
+      pending_tool_calls(response).flat_map do |tool_call|
+        next [Question.approval(tool_call, chat: self)] if approval_pending?(tool_call)
+
+        unanswered_questions(tool_call)
+      end
+    end
+
+    # Answers +question+, a Question from #pending_questions or its id, as
+    # Question#answer describes, and returns +self+. Answering an approval
+    # approves its call. Takes the ActionController::Parameters a form
+    # sends for several fields, and keeps only the fields the question asks
+    # for. A question already answered, or one whose call has finished,
+    # stays as it is, so a form sent twice is safe, and of two answers to
+    # one approval at once, the first stands. #approve and #deny instead
+    # record a decision whatever came before.
+    #
+    #   chat.answer(question, "window")
+    #   chat.answer(params[:question_id], params[:answer])
+    #   chat.complete
+    #
+    # Raises ArgumentError for a question the chat never asked, and for an
+    # answer the question can't take.
+    def answer(question, value = nil, **values)
+      pending = pending_question(question)
+      response = pending&.response_to(value, values)
+      return self unless pending && settle_question(pending, response)
+
+      question.respond(response) if question.is_a?(Question)
+      self
+    end
+
+    # Declines +question+, a Question from #pending_questions or its id,
+    # and returns +self+. Declining an approval denies its call, unless
+    # another decision came first. A question already answered, or one
+    # whose call has finished, stays as it is.
+    #
+    # Raises ArgumentError for a question the chat never asked.
+    def decline(question)
+      pending = pending_question(question)
+      return self unless pending && settle_question(pending, Question::DECLINED)
+
+      question.respond(Question::DECLINED) if question.is_a?(Question)
+      self
+    end
+
+    # Returns whether the conversation can make no progress without an
+    # approval decision: it is #waiting? and an approval is among
+    # #pending_questions.
     def awaiting_approval?
       waiting? && pending_approvals.any?
     end
 
-    # Returns the tool calls from the latest response that require approval
-    # and have no recorded decision, as an array of ToolCall objects. Pairs
-    # with #approve and #deny. ToolCall#remote? identifies provider-executed calls.
+    # Returns the tool calls whose approvals are among #pending_questions,
+    # as ToolCall objects. Pairs with #approve and #deny. ToolCall#remote?
+    # identifies provider-executed calls.
     #
     #   chat.pending_approvals.each { |tool_call| puts tool_call.name }
     #   chat.approve(chat.pending_approvals.first)
@@ -575,29 +641,20 @@ module RubyLLM
       approval_decision(tool, tool_call).nil?
     end
 
-    # Returns whether the conversation can make no progress until the user
-    # answers an MCP server: every remaining pending tool call waits on
-    # input or an approval decision, and at least one waits on input.
+    # Returns whether the conversation can make no progress until a person
+    # answers a tool or an MCP server: it is #waiting? and a question other
+    # than an approval is among #pending_questions.
     def awaiting_input?
       waiting? && pending_inputs.any?
     end
 
-    # Returns the unanswered requests for input that paused MCP tool calls,
-    # as MCP::InputRequest objects. Settle each with #answer or #decline,
-    # then call #complete to resume the calls.
-    #
-    #   chat.pending_inputs.each { |request| puts request.message }
-    #   chat.answer(chat.pending_inputs.first, environment: "staging")
-    #
+    # Returns the questions among #pending_questions that are not
+    # approvals: those tools ask with Tool#ask and MCP servers ask.
     def pending_inputs
       response = pending_tool_response
       return [] unless response
 
-      pending_tool_calls(response).flat_map do |tool_call|
-        Array(tool_call_input(tool_call)&.[]('requests'))
-          .map { |data| MCP::InputRequest.from_h(data, tool_call:) }
-          .reject(&:answered?)
-      end
+      pending_tool_calls(response).flat_map { |tool_call| unanswered_questions(tool_call) }
     end
 
     # Returns whether the conversation can make no progress until tasks
@@ -615,15 +672,15 @@ module RubyLLM
     end
 
     # Returns whether the conversation can make no progress until a person
-    # acts: it is #waiting? and an approval waits for a decision, an input
-    # request waits for an answer, or a Task is Task#input_required?. A
-    # chat that waits only on tasks that are working returns +false+, so
-    # check on those with #complete instead of asking anyone.
+    # acts: it is #waiting? and a question waits for an answer (see
+    # #pending_questions), or a Task is Task#input_required?. A chat that
+    # waits only on tasks that are working returns +false+, so check on
+    # those with #complete instead of asking anyone.
     #
     #   notify(chat.owner) if chat.awaiting_person?
     #
     def awaiting_person?
-      waiting? && (pending_approvals.any? || pending_inputs.any? || pending_tasks.any?(&:input_required?))
+      waiting? && (pending_questions.any? || pending_tasks.any?(&:input_required?))
     end
 
     # Returns the Task objects that tool calls wait on, as they were when
@@ -643,20 +700,6 @@ module RubyLLM
         state = tool_call_input(tool_call)
         task_for(tool_call, state) if state&.key?('task') && !unanswered?(state)
       end
-    end
-
-    # Answers +request+, an MCP::InputRequest from #pending_inputs, with
-    # +values+ for a form, or none to accept a URL request. The next
-    # #complete resumes the call once its requests are settled. Returns
-    # +self+.
-    def answer(request, **values)
-      settle_input(request) { |pending| pending.answer(**values) }
-    end
-
-    # Declines +request+, an MCP::InputRequest from #pending_inputs.
-    # Returns +self+.
-    def decline(request)
-      settle_input(request, &:decline)
     end
 
     # Cancels the current in-flight chat operation. Every cancellation
@@ -1730,8 +1773,8 @@ module RubyLLM
       names = pending_tool_calls(response).map(&:name).uniq
       raise PendingToolCallsError,
             "The last response has unanswered tool calls (#{names.join(', ')}). " \
-            'Run complete, recording approve or deny decisions for calls that ' \
-            'require approval, answering pending inputs, and waiting for tasks, before asking again.'
+            'Run complete, answering their questions (see pending_questions) and waiting for ' \
+            'their tasks, before asking again.'
     end
 
     private
@@ -2771,17 +2814,41 @@ module RubyLLM
       @tool_call_state.record_input(tool_call, input)
     end
 
-    def settle_input(request)
-      input = tool_call_input(request.tool_call) or raise ArgumentError, 'Unknown input request'
-      requests = input['requests'].map do |data|
-        next data unless data['key'] == request.key
-
-        pending = MCP::InputRequest.from_h(data)
-        yield pending
-        pending.to_h
+    def unanswered_questions(tool_call)
+      Array(tool_call_input(tool_call)&.[]('requests')).filter_map do |data|
+        Question.from_h(data, tool_call:, chat: self) unless data['response']
       end
-      record_tool_call_input(request.tool_call, input.merge('requests' => requests))
-      self
+    end
+
+    def pending_question(question)
+      id = question.respond_to?(:id) ? question.id : question.to_s
+      pending_questions.find { |pending| pending.id == id } ||
+        (asked_question?(id) ? nil : raise(ArgumentError, "Unknown question: #{id.inspect}"))
+    end
+
+    def asked_question?(id)
+      [id, id.rpartition('/').first].any? { |tool_call_id| find_tool_call(tool_call_id) }
+    end
+
+    def record_answer(question, response)
+      @tool_call_state.settle(question.tool_call) { |input| question.answered_input(input, response) }
+    end
+
+    # Records +response+ to +question+ and returns whether it did. An
+    # approval is approved or denied only while no decision came first, so
+    # of two people deciding at once, the first one's decision stands.
+    def settle_question(question, response)
+      unless question.approval?
+        record_answer(question, response)
+        return true
+      end
+
+      @tool_call_state.exclusively do
+        next false unless approval_pending?(question.tool_call)
+
+        response == Question::ACCEPTED ? approve(question) : deny(question)
+        true
+      end
     end
 
     def apply_tool_choice(choice)

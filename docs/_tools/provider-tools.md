@@ -286,10 +286,10 @@ chat = RubyLLM.chat(model: "{{ site.models.openai_mcp }}", provider: :openai)
               })
 
 chat.ask "Search Microsoft documentation for Azure Blob Storage."
-call = chat.pending_approvals.first
-call.remote? # => true
+question = chat.pending_questions.first
+question.tool_call.remote? # => true
 
-chat.approve(call) # or chat.deny(call)
+question.approve # or question.deny
 response = chat.complete
 ```
 

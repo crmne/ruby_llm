@@ -14,7 +14,7 @@ After reading this guide, you will know:
 
 * When an agent needs to be durable, and when a plain chat is enough.
 * How a durable agent waits for something outside it.
-* Which guide covers each piece: jobs, run claims, approvals, input requests, tasks, queued messages, files, and code execution.
+* Which guide covers each piece: jobs, run claims, approvals and questions, tasks, queued messages, files, and code execution.
 
 ## When You Need Durable Agents
 
@@ -52,13 +52,12 @@ chat = SupportAgent.find(chat_id)
 chat.complete
 
 chat.waiting?           # => true
-chat.awaiting_approval? # a tool call needs approval
-chat.awaiting_input?    # a tool or MCP server asked a question
+chat.pending_questions  # approvals and questions a person must answer
 chat.awaiting_tasks?    # a tool call runs as a task
-chat.awaiting_person?   # any of them needs a person to act
+chat.awaiting_person?   # a person must act
 ```
 
-`awaiting_person?` is the one to check before you notify someone: it is true for approvals, questions, and tasks that report `input_required?`, and false while the chat only waits on work that runs elsewhere. Record the approval or the answer from your controller, then enqueue the job again. The next `complete` picks up where the last one stopped.
+`awaiting_person?` is the one to check before you notify someone: it is true while a question waits for an answer, an approval included, or a task reports `input_required?`, and false while the chat only waits on work that runs elsewhere. Record the answer from your controller, then enqueue the job again. The next `complete` picks up where the last one stopped.
 
 ## The Pieces
 
@@ -68,8 +67,7 @@ Each piece has its own guide. Read the ones your agent needs.
 | --- | --- | --- |
 | Background jobs | Run one turn per job, survive deploys with ActiveJob Continuations, and stop a run from anywhere. | [Agents in Background Jobs]({% link _advanced/durable-agents.md %}) |
 | Run claims | Let only one process run a chat or a tool call at a time, and resume a run after a crash. | [One Process at a Time]({% link _advanced/durable-agents.md %}#one-process-at-a-time), [Long-Running Tools]({% link _tools/tool-execution.md %}#long-running-tools) |
-| Approvals | Pause a tool call until a person approves or denies it. | [Requiring Approval]({% link _tools/tool-execution.md %}#requiring-approval), [Approval in Rails]({% link _tools/tool-execution.md %}#approval-in-rails) |
-| Input requests | Let a tool or an MCP server ask the user a question in the middle of a call. | [Asking the User]({% link _tools/tool-execution.md %}#asking-the-user), [MCP Input Requests]({% link _tools/mcp.md %}#input-requests) |
+| Questions | Pause a tool call until a person answers: the approval before a tool runs, or a question a tool or an MCP server asks in the middle of a call. | [Asking a Person]({% link _tools/tool-execution.md %}#asking-a-person), [Questions in Rails]({% link _tools/tool-execution.md %}#questions-in-rails), [Questions from Servers]({% link _tools/mcp.md %}#questions-from-servers) |
 | Tasks | Pause a tool call while slow work runs elsewhere, then resume it. | [Pausing a Tool Call]({% link _tools/tool-execution.md %}#pausing-a-tool-call), [MCP Tasks]({% link _tools/mcp.md %}#tasks) |
 | Queued messages | Accept new messages while a job runs the chat, and decide when they join. | [Queueing Messages]({% link _advanced/agentic-workflows.md %}#queueing-messages), [Queued Messages in Rails]({% link _advanced/rails-persistence.md %}#queued-messages) |
 | File stores | Keep attachments and long tool results as files the model reads when it needs them. | [File Stores]({% link _core_features/file-stores.md %}) |

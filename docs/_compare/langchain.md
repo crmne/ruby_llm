@@ -266,7 +266,7 @@ end
 
 chat = DataAgent.create!
 chat.ask "Delete last year's test orders"
-chat.awaiting_approval? # => true
+chat.awaiting_person? # => true
 ```
 
 The decision is stored on the tool call's row, so another request, after a deploy if need be, can record it and continue:
@@ -277,7 +277,7 @@ chat.approve params[:tool_call_id]
 chat.complete
 ```
 
-`chat.pending_approvals` lists the calls to show the reviewer, and `chat.deny` sends the model a refusal instead. LangChain's middleware can also let the reviewer edit the arguments or answer in place of the tool. See [Controlling Tool Execution]({% link _tools/tool-execution.md %}).
+`chat.pending_questions` lists what to show the reviewer, and `chat.deny` sends the model a refusal instead. LangChain's middleware can also let the reviewer edit the arguments or answer in place of the tool. See [Controlling Tool Execution]({% link _tools/tool-execution.md %}).
 
 ## Usage and Cost
 

@@ -283,55 +283,88 @@ RSpec.describe RubyLLM::Chat do
     servers&.each(&:close)
   end
 
-  describe 'input requests' do
+  describe 'questions' do
     before { allow(chat.provider).to receive(:complete).and_return(tool_call('deploy', {}), answer) }
 
-    it 'pauses the tool call until the user answers' do
+    def result = chat.messages.find { |message| message.role == :tool }.content
+
+    it 'pauses the tool call until the person answers the server, as they answer a tool' do
       chat.with_mcp(files).ask('Deploy')
 
-      expect(chat).to be_awaiting_input
       expect(chat).to be_waiting
-      request = chat.pending_inputs.first
-      expect(request).to have_attributes(message: 'Which environment?', tool_call: have_attributes(name: 'deploy'))
+      expect(chat).to be_awaiting_person
+      question = chat.pending_questions.sole
+      expect(question).to be_a(RubyLLM::Question)
+      expect(question).to have_attributes(message: 'Which environment?', approval?: false,
+                                          tool_call: have_attributes(name: 'deploy'))
+      expect(question.fields.sole).to have_attributes(name: :environment, choices: %w[staging production])
 
-      chat.answer(request, environment: 'production').complete
+      question.answer 'production'
+      chat.complete
 
-      expect(chat.messages.find { |message| message.role == :tool }.content).to eq('Deployed to production')
-      expect(chat).not_to be_awaiting_input
+      expect(result).to eq('Deployed to production')
+      expect(chat.pending_questions).to be_empty
     end
 
     it 'answers with the defaults the server gave' do
       chat.with_mcp(files).ask('Deploy')
-      chat.answer(chat.pending_inputs.first).complete
+      chat.pending_questions.sole.answer
+      chat.complete
 
-      expect(chat.messages.find { |message| message.role == :tool }.content).to eq('Deployed to staging')
+      expect(result).to eq('Deployed to staging')
     end
 
-    it 'resumes a declined request' do
+    it 'resumes a declined question' do
       chat.with_mcp(files).ask('Deploy')
-      chat.decline(chat.pending_inputs.first).complete
+      chat.pending_questions.sole.decline
+      chat.complete
 
-      expect(chat.messages.find { |message| message.role == :tool }.content).to eq('Deploy cancelled')
+      expect(result).to eq('Deploy cancelled')
     end
 
-    it 'does not pause for input requests the MCP does not accept' do
+    it 'asks the person to visit a page the server names' do
+      allow(chat.provider).to receive(:complete).and_return(tool_call('connect', {}), answer)
+      chat.with_mcp(files).ask('Connect')
+
+      question = chat.pending_questions.sole
+      expect(question).to have_attributes(url?: true, url: 'https://example.com/connect', fields: [])
+
+      chat.answer(question.id).complete
+
+      expect(result).to eq('Connected')
+    end
+
+    it 'keeps the names of 2.1' do
+      chat.with_mcp(files).ask('Deploy')
+
+      expect(chat).to be_awaiting_input
+      request = chat.pending_inputs.sole
+      expect(request).to be_a(RubyLLM::MCP::InputRequest)
+
+      chat.answer(request, environment: 'production').complete
+
+      expect(result).to eq('Deployed to production')
+      expect(chat).not_to be_awaiting_input
+    end
+
+    it 'does not pause for questions the MCP does not accept' do
       files_class.input_requests false
 
       chat.with_mcp(files).ask('Deploy')
 
-      expect(chat).not_to be_awaiting_input
-      expect(chat.messages.find { |message| message.role == :tool }.content).to eq('Deploy cancelled')
+      expect(chat.pending_questions).to be_empty
+      expect(result).to eq('Deploy cancelled')
     end
 
     it 'does not pause when a callback answers' do
-      files_class.before_input_request { |request| request.answer(environment: 'staging') }
+      files_class.before_input_request { |question| question.answer('staging') }
 
       chat.with_mcp(files).ask('Deploy')
 
-      expect(chat.messages.find { |message| message.role == :tool }.content).to eq('Deployed to staging')
+      expect(result).to eq('Deployed to staging')
     end
 
-    it 'waits on approvals and inputs together' do
+    it 'lists approvals and server questions together' do
       files_class.requires_approval :add
       allow(chat.provider).to receive(:complete).and_return(
         RubyLLM::Message.new(role: :assistant, content: '', tool_calls: {
@@ -344,9 +377,11 @@ RSpec.describe RubyLLM::Chat do
 
       chat.with_mcp(files).ask('Deploy and add')
 
+      expect(chat.pending_questions.map { |question| [question.tool_call.name, question.approval?] })
+        .to eq([['deploy', false], ['add', true]])
       expect(chat).to be_awaiting_input
       expect(chat).to be_awaiting_approval
-      expect { chat.ask_later('Next') }.to raise_error(RubyLLM::PendingToolCallsError, /answering pending inputs/)
+      expect { chat.ask_later('Next') }.to raise_error(RubyLLM::PendingToolCallsError, /answering their questions/)
     end
   end
 
@@ -452,17 +487,18 @@ RSpec.describe RubyLLM::Chat do
       expect(reports).to eq([%w[report Rendering]])
     end
 
-    it 'pauses on the input requests of a task until the user answers' do
+    it 'pauses on the questions of a task until the person answers' do
       run_task('approve_report')
       chat.complete
 
-      expect(chat).to be_awaiting_input
+      expect(chat).to be_awaiting_person
       expect(chat).not_to be_awaiting_tasks
-      request = chat.pending_inputs.first
-      expect(request).to have_attributes(message: 'Publish the report?',
-                                         tool_call: have_attributes(name: 'approve_report'))
+      question = chat.pending_questions.sole
+      expect(question).to have_attributes(message: 'Publish the report?',
+                                          tool_call: have_attributes(name: 'approve_report'))
 
-      chat.answer(request, approved: true).complete
+      question.answer 'true'
+      chat.complete
 
       expect(chat).to be_complete
       expect(chat.messages.find(&:tool_result?).content).to eq('Approved: true')
@@ -489,7 +525,7 @@ RSpec.describe RubyLLM::Chat do
     it 'refuses a new question while a task runs' do
       run_task('report')
 
-      expect { chat.ask('Anything else?') }.to raise_error(RubyLLM::PendingToolCallsError, /waiting for tasks/)
+      expect { chat.ask('Anything else?') }.to raise_error(RubyLLM::PendingToolCallsError, /waiting for their tasks/)
     end
   end
 

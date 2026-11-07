@@ -84,8 +84,8 @@ module RubyLLM
       model model_id provider messages tools deferred_tools mcp provider_tools tool_options provider_options headers
       schema concurrency caching citations code_execution compaction context_budget context end_user fallbacks thinking
       temperature max_output_tokens skills file_store
-      each complete? cancelled? waiting? awaiting_approval? pending_approvals awaiting_input? pending_inputs
-      awaiting_tasks? pending_tasks awaiting_person? add_message add_completion tokens cost render
+      each complete? cancelled? waiting? pending_questions awaiting_approval? pending_approvals awaiting_input?
+      pending_inputs awaiting_tasks? pending_tasks awaiting_person? add_message add_completion tokens cost render
       queue queued_messages withdraw join_queued_messages
     ].freeze
 
@@ -1508,13 +1508,13 @@ module RubyLLM
 
     ##
     # :method: answer
-    # :call-seq: answer(request, **values)
+    # :call-seq: answer(question, value = nil, **values)
     #
     # Delegates to Chat#answer. See that method for arguments and return values.
 
     ##
     # :method: decline
-    # :call-seq: decline(request)
+    # :call-seq: decline(question)
     #
     # Delegates to Chat#decline. See that method for arguments and return values.
 
@@ -1707,6 +1707,12 @@ module RubyLLM
     # :call-seq: waiting?()
     #
     # Delegates to Chat#waiting?. See that method for arguments and return values.
+
+    ##
+    # :method: pending_questions
+    # :call-seq: pending_questions()
+    #
+    # Delegates to Chat#pending_questions. See that method for arguments and return values.
 
     ##
     # :method: awaiting_approval?
