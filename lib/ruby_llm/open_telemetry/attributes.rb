@@ -21,9 +21,11 @@ module RubyLLM
       PROVIDERS = {
         'bedrock' => 'aws.bedrock',
         'azure' => 'azure.ai.openai',
-        'gemini' => 'gcp.gen_ai',
+        'gemini' => 'gcp.gemini',
         'vertexai' => 'gcp.vertex_ai',
         'mistral' => 'mistral_ai',
+        'moonshot' => 'moonshot_ai',
+        'ollama_cloud' => 'ollama',
         'xai' => 'x_ai'
       }.freeze
       INTERNAL_OPERATIONS = %w[execute_tool invoke_workflow ruby_llm.workflow_step ruby_llm.code_execution].freeze

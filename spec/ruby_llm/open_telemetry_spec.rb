@@ -478,6 +478,14 @@ RSpec.describe RubyLLM::OpenTelemetry do
     expect(spans.map(&:attributes).to_s).not_to include('private', 'secret')
   end
 
+  it 'names Gemini, Moonshot, and Ollama Cloud as the conventions do' do
+    %w[gemini moonshot ollama_cloud].each do |provider|
+      RubyLLM.instrument('chat.ruby_llm', provider:, model:) { :ok }
+    end
+
+    expect(spans.map { |span| span.attributes['gen_ai.provider.name'] }).to eq(%w[gcp.gemini moonshot_ai ollama])
+  end
+
   it 'keeps distinct operations isolated when fibers interleave' do
     run = lambda do
       RubyLLM.instrument('chat.ruby_llm', provider: 'openai', model: model) do
