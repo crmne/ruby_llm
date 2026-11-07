@@ -2553,7 +2553,7 @@ module RubyLLM
     def execute_tools_concurrently(tool_calls, &on_result)
       exclusive = ->(tool_call) { exclusive_call?(tool_call) }
       paused = ->(result) { result.equal?(PAUSED) }
-      ToolConcurrency.run(concurrency, tool_calls, exclusive:, paused:, on_result:) do |tool_call|
+      ToolConcurrency.run(concurrency, tool_calls, exclusive:, paused:, on_result:, config: @config) do |tool_call|
         execute_tool_with_callbacks(tool_call)
       end
     end

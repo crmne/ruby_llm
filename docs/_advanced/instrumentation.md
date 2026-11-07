@@ -82,6 +82,8 @@ RubyLLM.configure do |config|
 end
 ```
 
+An instrumenter that tracks its own current span can keep it across [concurrent tools]({% link _reference/instrumentation-events.md %}#context-across-concurrent-tools) with two optional methods.
+
 You can also set `instrumenter` on a [context]({% link _reference/configuration-connection.md %}#contexts-isolated-configurations) when you only want instrumentation around a specific operation.
 
 ## OpenTelemetry

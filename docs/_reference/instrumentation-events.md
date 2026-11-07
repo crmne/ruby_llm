@@ -85,6 +85,45 @@ Every event inside a [workflow]({% link _advanced/instrumentation.md %}#workflow
 
 Non-Rails instrumenters control their own error payload behavior.
 
+## Context Across Concurrent Tools
+
+When a chat runs [tools concurrently]({% link _tools/tool-execution.md %}#concurrent-tool-execution), each tool call runs in its own thread or fiber. An instrumenter that keeps its current span in thread or fiber state would lose it there, so a `tool_call.ruby_llm` event would start without its parent.
+
+An instrumenter can carry that state across by also responding to two optional methods:
+
+*   `capture_context` returns whatever identifies the current span. RubyLLM calls it in the chat's thread before it starts the tools.
+*   `with_context(value) { ... }` makes that value current for the block. RubyLLM wraps each tool call with it, in both `:threads` and `:fibers` mode.
+
+RubyLLM uses the instrumenter of the chat's own configuration, so this works for a [context]({% link _reference/configuration-connection.md %}#contexts-isolated-configurations) with its own instrumenter too. An instrumenter that wraps another one passes both methods through, keeping the inner one's context:
+
+```ruby
+class TracingInstrumenter
+  def initialize(inner)
+    @inner = inner
+  end
+
+  def instrument(name, payload, &)
+    Tracing.span(name) { @inner.instrument(name, payload, &) }
+  end
+
+  def capture_context
+    [Tracing.current_span, @inner.respond_to?(:capture_context) && @inner.capture_context]
+  end
+
+  def with_context((span, inner))
+    Tracing.with_span(span) do
+      @inner.respond_to?(:with_context) ? @inner.with_context(inner) { yield } : yield
+    end
+  end
+end
+
+RubyLLM.configure do |config|
+  config.instrumenter = TracingInstrumenter.new(config.instrumenter)
+end
+```
+
+Both methods are optional. Without them, events from concurrent tools still arrive, with no parent from your instrumenter.
+
 ## Next Steps
 
 * [Instrumentation]({% link _advanced/instrumentation.md %}): subscribe to these events.
