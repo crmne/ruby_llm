@@ -4,10 +4,11 @@ module RubyLLM
   module ActiveRecord
     # Reaches the chats that subagents work in for a persisted chat, through
     # the +subagent_chat+ of its unanswered tool calls, so every process
-    # sees what they wait for. A chat lists their approvals with its own,
-    # records decisions on them, and stops their runs when it is cancelled.
-    # A decision on a subagent's call lets the calls that wait on it carry
-    # on: their tasks stop waiting on a person once no approval is left.
+    # sees what they wait for. A chat lists their approvals with its own and
+    # records decisions on them. A decision on a subagent's call lets the
+    # calls that wait on it carry on: their tasks stop waiting on a person
+    # once no approval is left. A subagent's run stops when a chat it works
+    # for is asked to stop.
     module ChatSubagents # :nodoc:
       # Records +decision+ on +record+, one of this chat's calls, for a chat
       # this one works for. The decision is only persisted: building this
@@ -72,6 +73,8 @@ module RubyLLM
         raise ArgumentError, "Unknown tool call: #{id.inspect}"
       end
 
+      # Each decision commits before this reads what still waits, so of two
+      # decisions made at once, at least one read sees both.
       def wake_callers
         chat = self
         while (call = calling_tool_call(chat))
@@ -83,6 +86,18 @@ module RubyLLM
           end
           chat = calling_chat
         end
+      end
+
+      def calling_chat_cancelled?
+        (@calling_chats ||= calling_chats).any?(&:persisted_cancellation_request?)
+      end
+
+      def calling_chats
+        chats = []
+        while (call = calling_tool_call(chats.last || self))
+          chats << call.message.chat_association
+        end
+        chats
       end
 
       def calling_tool_call(chat)

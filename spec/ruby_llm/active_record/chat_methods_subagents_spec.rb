@@ -360,6 +360,37 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(ResearchAgent.find(subagent_chat(lead).id)).not_to be_running
       expect(LeadAgent.find(lead.id)).not_to be_waiting
     end
+
+    it 'stops a subagent that starts after the chat that calls it was asked to stop' do
+      stub_const("#{described_class}::CANCELLATION_POLL_INTERVAL", 3600.0)
+      lead = LeadAgent.create!
+      replies['Lead.'].push(lambda {
+        LeadAgent.find(lead.id).cancel
+        calling(research('Look it up'))
+      })
+
+      expect { lead.ask('Find it') }.to raise_error(RubyLLM::CancelledError)
+
+      expect(requests['Research.']).to be_empty
+      expect(calls_of(lead).find_by!(name: 'research_agent').result).to be_present
+      expect(LeadAgent.find(lead.id)).not_to be_waiting
+    end
+
+    it "lets a subagent's chat go on by itself once the call it worked for is answered" do
+      stub_const("#{described_class}::CANCELLATION_POLL_INTERVAL", 0.0)
+      created = []
+      allow(ResearchAgent).to receive(:create!).and_wrap_original do |create, **kwargs|
+        create.call(**kwargs).tap { |chat| created << chat }
+      end
+      replies['Lead.'].push(calling(research('Look it up')), answer('Here it is'))
+      replies['Research.'].push(answer('Found it.'), answer('Found more.'))
+      lead = LeadAgent.create!
+      lead.ask('Find it')
+      lead.ask_later('And then?')
+      LeadAgent.find(lead.id).cancel
+
+      expect(created.sole.ask('Anything else?').content).to eq('Found more.')
+    end
   end
 
   describe 'two processes' do

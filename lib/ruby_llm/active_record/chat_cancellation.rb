@@ -7,19 +7,20 @@ module RubyLLM
     # A request is for the run holding the chat, or for the run about to
     # answer what waits. New work recorded while no run holds the chat, and
     # a run that finds nothing waiting, clear a request that is left over.
-    # A request also reaches the runs of the chat's subagents, which stop
-    # the call that runs them.
+    # A subagent's run also stops when a chat it works for has a request
+    # waiting, which that chat's own run clears.
     module ChatCancellation # :nodoc:
       def poll_run_cancellation # :nodoc:
         renew_run_claim
         consume_persisted_cancellation_request
       end
 
-      # Requests cancellation of the run that holds the chat, when one does,
-      # and of the runs of its subagents.
-      def cancel_run # :nodoc:
-        cancel_claimed_run if run_claims?
-        subagent_chats.each(&:cancel_run)
+      # Jobs and requests run with the query cache on, which would replay the
+      # first poll's answer for the rest of the run.
+      def persisted_cancellation_request? # :nodoc:
+        self.class.uncached do
+          self.class.unscoped.where(self.class.primary_key => id).pick(:cancelled)
+        end
       end
 
       def forget_stale_cancellation # :nodoc:
@@ -38,21 +39,16 @@ module RubyLLM
         @chat&.cancel
       end
 
+      # The conditional update can't land after the run's release, which
+      # clears the request, so it can't outlive the run it was meant for.
       def request_run_cancellation
-        if cancel_claimed_run == 1
+        claimed_until = chat_row.arel_table[:claimed_until]
+        if chat_row.where(claimed_until.gt(Time.current)).update_all(cancelled: true) == 1
           remember_cancellation(true)
           @chat&.cancel if @run_claim_token
         elsif !nothing_to_stop?
           update_column(:cancelled, true)
         end
-        subagent_chats.each(&:cancel_run)
-      end
-
-      # The conditional update can't land after the run's release, which
-      # clears the request, so it can't outlive the run it was meant for.
-      def cancel_claimed_run
-        claimed_until = chat_row.arel_table[:claimed_until]
-        chat_row.where(claimed_until.gt(Time.current)).update_all(cancelled: true)
       end
 
       def nothing_to_stop?
@@ -70,6 +66,7 @@ module RubyLLM
       end
 
       def settle_cancellation_request
+        @calling_chats = nil
         return unless @run_claim_token && has_attribute?(:cancelled)
 
         remember_cancellation(self.class.uncached { chat_row.pick(:cancelled) })
@@ -88,18 +85,11 @@ module RubyLLM
         end
         return unless persisted?
         return unless cancellation_poll_due?
+        return :cancelled if calling_chat_cancelled?
         return unless persisted_cancellation_request?
 
         clear_cancellation_request
         :cancelled
-      end
-
-      # Jobs and requests run with the query cache on, which would replay the
-      # first poll's answer for the rest of the run.
-      def persisted_cancellation_request?
-        self.class.uncached do
-          self.class.unscoped.where(self.class.primary_key => id).pick(:cancelled)
-        end
       end
 
       def clear_cancellation_request
