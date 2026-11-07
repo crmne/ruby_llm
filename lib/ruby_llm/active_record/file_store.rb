@@ -113,14 +113,14 @@ module RubyLLM
 
       # Returns the digest of what the model last read at +path+, from the
       # file's row, or +nil+.
-      def read_digest(path)
+      def read_digest(path) # :nodoc:
         return super unless read_digests?
 
         row(path)&.read_digest
       end
 
       # Keeps +digest+ as what the model read at +path+, in the file's row.
-      def record_read(path, digest)
+      def record_read(path, digest) # :nodoc:
         return super unless read_digests?
 
         row(path)&.update_columns(read_digest: digest)
@@ -140,13 +140,13 @@ module RubyLLM
       end
 
       # Returns the text kept for +file+, or +nil+.
-      def cached_text(file)
+      def cached_text(file) # :nodoc:
         record = row(file.path)
         record.text if record&.digest == file.digest && record.has_attribute?(:text)
       end
 
       # Keeps +text+ for +file+ in its row.
-      def cache_text(file, text)
+      def cache_text(file, text) # :nodoc:
         record = row(file.path)
         record.update_columns(text:) if record&.digest == file.digest && record.has_attribute?(:text)
       end

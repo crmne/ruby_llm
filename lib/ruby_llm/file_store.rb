@@ -42,10 +42,9 @@ module RubyLLM
   #
   # The model must read a file before its tools change it, and a file that
   # changed since it read it must be read again. The store remembers what
-  # the model read with #record_read, in memory unless the store overrides
-  # it and #read_digest, and #with_lock keeps two changes to the files
-  # from interleaving. Override #with_lock in a store that several
-  # processes share.
+  # the model read, and #with_lock keeps two changes to the files from
+  # interleaving. Override #with_lock in a store that several processes
+  # share.
   class FileStore
     include Enumerable
 
@@ -197,10 +196,8 @@ module RubyLLM
     # with one has code execution run in that folder, reading and writing
     # the files in place; a store without one has each run read the
     # attachments in +attachments/+ and copy in the files it names.
-    # FileStore::Directory returns its root. Override it
-    # in a store of your own that keeps its files in a folder, and give
-    # the store a folder of its own: the sandbox can change anything in it.
-    def local_root
+    # FileStore::Directory returns its root.
+    def local_root # :nodoc:
       nil
     end
 
@@ -217,14 +214,13 @@ module RubyLLM
     # Returns the digest of the content the model last read at +path+, or
     # +nil+ when it has not read it. The file tools compare it with the
     # file's digest before they change the file.
-    def read_digest(path)
+    def read_digest(path) # :nodoc:
       @reads_lock.synchronize { @reads[FileStore.path(path)] }
     end
 
     # Remembers that the model read +digest+, a digest of the content, at
-    # +path+. Stores keep it in memory unless they override this and
-    # #read_digest.
-    def record_read(path, digest)
+    # +path+, in memory.
+    def record_read(path, digest) # :nodoc:
       @reads_lock.synchronize { @reads[FileStore.path(path)] = digest }
     end
 
@@ -262,14 +258,13 @@ module RubyLLM
       Attachment.new(StringIO.new(read(file.path)), filename: file.filename)
     end
 
-    # Returns the converted text kept for +file+, or +nil+. Stores keep
-    # conversions in memory unless they override this and #cache_text.
-    def cached_text(file)
+    # Returns the converted text kept for +file+, or +nil+, from memory.
+    def cached_text(file) # :nodoc:
       @texts_lock.synchronize { @texts[text_key(file)] }
     end
 
-    # Keeps +text+ as the conversion of +file+.
-    def cache_text(file, text)
+    # Keeps +text+ as the conversion of +file+, in memory.
+    def cache_text(file, text) # :nodoc:
       @texts_lock.synchronize do
         @texts.delete(@texts.keys.first) if @texts.size >= CACHED_TEXTS
         @texts[text_key(file)] = text

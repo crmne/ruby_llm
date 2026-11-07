@@ -1151,9 +1151,9 @@ module RubyLLM
     # directory, with read-only copies of the conversation's files, and
     # returns the output and every file the code writes there as
     # attachments on the tool result. With #with_file_store, runs work with
-    # the chat's files instead: in the store's folder when it has one
-    # (FileStore#local_root), where attachments are at their own paths.
-    # Otherwise runs still have read-only copies of the conversation's files
+    # the chat's files instead: with FileStore::Directory, in the store's
+    # folder, where attachments are at their own paths. With other stores,
+    # runs still have read-only copies of the conversation's files
     # in +attachments/+, copy in the other files the model names, and what
     # the code writes is saved back. The options are:
     #

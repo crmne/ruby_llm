@@ -31,7 +31,7 @@ module RubyLLM
       end
 
       # Returns #root: code execution runs in this folder.
-      def local_root
+      def local_root # :nodoc:
         root
       end
 
