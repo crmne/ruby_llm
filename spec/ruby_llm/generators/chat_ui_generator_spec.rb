@@ -966,6 +966,25 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
               expect(File.read('app/agents/chat_agent.rb')).to eq(<<~RUBY)
                 class ChatAgent < ApplicationAgent
                   context_budget per_result: 0.25, per_request: 0.7
+                  caching
+                end
+              RUBY
+            end
+          end
+        end
+
+        it "keeps the ApplicationAgent's caching policy" do
+          Dir.mktmpdir do |destination|
+            FileUtils.cp_r("#{app_path}/.", destination)
+            within_test_app(destination) do
+              File.write('app/agents/application_agent.rb',
+                         "class ApplicationAgent < RubyLLM::Agent\n  chat_class Chat\n  caching false\nend\n")
+
+              output, status = run_rails_generate('ruby_llm:chat_ui', '--force', chdir: destination)
+              expect(status.success?).to be(true), output
+              expect(File.read('app/agents/chat_agent.rb')).to eq(<<~RUBY)
+                class ChatAgent < ApplicationAgent
+                  context_budget per_result: 0.25, per_request: 0.7
                 end
               RUBY
             end
@@ -984,6 +1003,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
                 class ChatAgent < RubyLLM::Agent
                   chat_class Chat
                   context_budget per_result: 0.25, per_request: 0.7
+                  caching
                 end
               RUBY
             end
@@ -1083,7 +1103,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
           chat_agent = File.read(config[:approval_flow][:agent_path])
           expect(chat_agent).to start_with("class #{config[:approval_flow][:agent]} < ApplicationAgent\n")
           expect(chat_agent).not_to include('chat_class')
-          expect(chat_agent).to include('context_budget per_result: 0.25, per_request: 0.7')
+          expect(chat_agent).to include("  context_budget per_result: 0.25, per_request: 0.7\n  caching\nend\n")
 
           queued_messages_controller = File.read(config[:queued_messages_controller_path])
           config[:queued_messages_controller_expectations].each do |line|

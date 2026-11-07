@@ -320,6 +320,10 @@ module RubyLLM
             .match?(/^\s*chat_(?:class|model) #{Regexp.escape(chat_model_name)}\s*$/)
       end
 
+      def application_agent_caching?
+        File.read(File.join(destination_root, APPLICATION_AGENT_PATH)).match?(/^\s*caching\b/)
+      end
+
       def message_helper_module_name
         if message_model_name.include?('::')
           "#{message_model_name.deconstantize}::#{message_model_name.demodulize.pluralize}Helper"
