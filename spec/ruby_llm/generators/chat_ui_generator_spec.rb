@@ -889,6 +889,21 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
           end
         end
 
+        it 'copies the controller for the bundler in an app with both jsbundling-rails and importmap-rails' do
+          Dir.mktmpdir do |destination|
+            FileUtils.cp_r("#{app_path}/.", destination)
+            within_test_app(destination) do
+              File.write('Gemfile', %(#{File.read('Gemfile')}gem "importmap-rails"\ngem "jsbundling-rails"\n))
+              File.write('package.json', '{}')
+
+              output, status = run_rails_generate('ruby_llm:chat_ui', '--force', chdir: destination)
+              expect(status.success?).to be(true), output
+              controller = File.read(RubyLLM::Generators::ChatUIGenerator::CONTROLLER)
+              expect(File.read('app/javascript/controllers/chat_message_controller.js')).to eq(controller)
+            end
+          end
+        end
+
         it 'leaves the message model to acts_as_message when run again, with or without --force' do
           Dir.mktmpdir do |destination|
             FileUtils.cp_r("#{app_path}/.", destination)
