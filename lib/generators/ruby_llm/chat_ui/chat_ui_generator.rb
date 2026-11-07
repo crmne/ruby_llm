@@ -295,7 +295,10 @@ module RubyLLM
           say "    yarn add #{javascript_packages}   (or: npm install #{javascript_packages})"
           say '    bin/rails stimulus:manifest:update'
         else
-          say "\n  Your app has no JavaScript setup, so replies show as plain text until it has one.", :yellow
+          say "\n  Replies show as plain text until the app loads JavaScript with importmap-rails or jsbundling-rails.",
+              :yellow
+          say "  With another bundler, add #{javascript_packages} and register"
+          say '  app/javascript/controllers/chat_message_controller.js as the chat-message Stimulus controller.'
         end
       end
 

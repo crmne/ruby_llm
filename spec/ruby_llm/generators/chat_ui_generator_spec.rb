@@ -962,7 +962,9 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
               File.write('package.json', '{}')
               output, status = run_rails_generate('ruby_llm:chat_ui', '--skip', chdir: destination)
               expect(status.success?).to be(true), output
-              expect(output).to include('Your app has no JavaScript setup, so replies show as plain text')
+              expect(output).to include('Replies show as plain text until the app loads JavaScript',
+                                        'With another bundler, add marked@18.0.14 dompurify@3.4.16')
+              expect(output).not_to include('yarn add', 'stimulus:manifest:update')
             end
           end
         end
