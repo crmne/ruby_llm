@@ -14,9 +14,9 @@ module RubyLLM
     # Configuration#max_run_time after the run last made progress, or for
     # a tool call, its run time after it starts, so a run that hangs past
     # it counts as crashed. A call waiting for the calls before it in its
-    # round keeps its claim as long as they may run. A run inside a
-    # transaction can't renew from another connection, so its claims last
-    # until their deadline instead.
+    # round keeps its claim as long as the chat's claim lasts. A run inside
+    # a transaction can't renew from another connection, so its claims
+    # last until their deadline instead.
     module RunClaims # :nodoc:
       class ClaimLost < StandardError; end # :nodoc:
       private_constant :ClaimLost
@@ -69,9 +69,9 @@ module RubyLLM
 
       # Counts a claimed tool call's run time from now, when it starts, not
       # from when its round was claimed, so waiting for the calls before it
-      # costs it nothing. The calls still waiting keep their claims while
-      # this one may run, and the chat's claim covers it. The heartbeat
-      # writes the new deadlines.
+      # costs it nothing, and stretches the chat's claim to cover it. Until
+      # then the call keeps its claim as long as the chat does. The
+      # heartbeat writes the new deadlines.
       def persisted_tool_call_started(tool_call_id) # :nodoc:
         claim_lock.synchronize do
           claim = tool_call_claims[tool_call_id]
@@ -79,9 +79,6 @@ module RubyLLM
 
           claim.started = true
           claim.deadline = Time.current.change(usec: 0) + claim.seconds
-          tool_call_claims.each_value do |waiting|
-            waiting.deadline = [waiting.deadline, claim.deadline].max unless waiting.started
-          end
           @run_claim_deadline = [@run_claim_deadline, claim.deadline].max if @run_claim_token
         end
       end
@@ -225,13 +222,22 @@ module RubyLLM
       def renew_tool_call_leases(now)
         renewals = claim_lock.synchronize do
           tool_call_claims.filter_map do |tool_call_id, claim|
-            claimed_until = [now.change(usec: 0) + CLAIM_LEASE, claim.deadline].min
-            next if claim.deadline <= now || claim.written.include?(claimed_until)
+            deadline = tool_call_deadline(claim)
+            claimed_until = [now.change(usec: 0) + CLAIM_LEASE, deadline].min
+            next if deadline <= now || claim.written.include?(claimed_until)
 
             [tool_call_id, claim.row, claim.written.dup, claim.written.push(claimed_until).last]
           end
         end
         renewals.each { |renewal| renew_tool_call_lease(*renewal) }
+      end
+
+      # A call that hasn't started yet, waiting for the calls before it in
+      # its round, keeps its claim as long as the chat's claim lasts.
+      def tool_call_deadline(claim)
+        return claim.deadline if claim.started || !@run_claim_token
+
+        [claim.deadline, @run_claim_deadline].max
       end
 
       def renew_tool_call_lease(tool_call_id, row, written, claimed_until)

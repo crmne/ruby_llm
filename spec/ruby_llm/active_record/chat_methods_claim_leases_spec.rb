@@ -215,6 +215,26 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
         expect(roles(chat)).to eq(%w[user assistant tool tool assistant])
       end
     end
+
+    it 'keeps a waiting call claimed while a callback after the call before it runs long' do
+      chat = round_chat
+      claimed = []
+      waiting = []
+      job = Chat.find(chat.id).with_tools(slow_lookup(claimed, alone: false))
+      job.after_message do |message|
+        next unless message.role == :tool && waiting.empty?
+
+        sleep 1.5
+        waiting << RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call_ids.last).running?
+      end
+      allow(job.to_llm.provider).to receive(:complete)
+        .and_return(RubyLLM::Message.new(role: :assistant, content: 'Done', input_tokens: 1, output_tokens: 1))
+
+      job.complete
+
+      expect(waiting).to eq([true])
+      expect(claimed).to eq([true, true])
+    end
   end
 
   it 'never renews a claim another process took over' do
