@@ -217,7 +217,7 @@ end
 
 Because `perform` returns the agent, the evaluator sees both user turns, both answers, and every tool call and result in between. `expected_output` describes the correct final advice. Write each criterion so it says which part of the conversation matters: the final answer, an earlier turn, or the order of actions.
 
-`perform` is ordinary Ruby. It can branch on an earlier answer, approve or deny a tool call, run several agents, or change application state. Return whatever holds the evidence your criteria need.
+`perform` is ordinary Ruby. It can branch on an earlier answer, approve or decline a tool call, run several agents, or change application state. Return whatever holds the evidence your criteria need.
 
 ### Saved Conversations
 

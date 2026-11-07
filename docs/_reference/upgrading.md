@@ -20,6 +20,7 @@ After reading this guide, you will know:
 * How persisted chats now run in one process at a time, and where a message sent during a reply waits.
 * What changes for a crashed job, a denial, pending approvals, an MCP input error, a stdio server's environment, a dropped MCP tool call, a write over a folder, a document URL, and a deploy that mixes versions.
 * How approvals and questions became one list, and what changes for answers to a server's questions.
+* Which six waiting methods and `deny` are gone, and what replaces each.
 * What changes for agent `rescue_from` handlers and streamed transcription chunks.
 * How `tool_calls` reads now that it is a collection of calls.
 * Which errors failed Responses requests raise, and why malformed tool arguments no longer do.
@@ -56,7 +57,7 @@ Then update it in your development branch:
 bundle update ruby_llm
 ```
 
-Plain Ruby applications need no changes. Rails applications upgrade their schema and read the changes to persisted chats below.
+Plain Ruby applications replace the waiting methods and `deny`, which 2.2 removes, as [Two Lists and `decline` Replace Seven Methods](#two-lists-and-decline-replace-seven-methods) shows. Rails applications also upgrade their schema and read the changes to persisted chats below.
 
 ## Upgrade the Rails Schema
 
@@ -422,9 +423,9 @@ In 2.1, tool-call arguments that were not a JSON object raised `RubyLLM::ToolCal
 
 In 2.1, a later attachment overwrote an earlier one with the same name in `attachments/`. The newest still takes the name, and an older one is now `report-2.txt` beside it. Names are compared without case, so `Report.txt` and `report.txt` with different content get separate names on every filesystem.
 
-## Rescue Denials of Running Calls
+## Rescue Declines of Running Calls
 
-`deny` on a persisted tool call that has started running now raises `RubyLLM::ToolCallRunningError`; in 2.1 it recorded a denial the running tool never saw. `approve` on a running call and either decision on an answered call change nothing, where 2.1 overwrote the recorded decision. Rescue the error where you record denials:
+In 2.1, `deny` on a persisted tool call that had started running recorded a denial the running tool never saw. In 2.2, `decline` says no instead. It changes nothing for a call that no longer waits for approval, such as one another decision approved first, and raises `RubyLLM::ToolCallRunningError` when the approval is still pending but its call is already running, so the decline can't be recorded. `approve` on a running call, and either answer on an answered call, change nothing, where 2.1 overwrote the recorded decision. Rescue the error where you record declines:
 
 ```ruby
 rescue_from RubyLLM::ToolCallRunningError do
@@ -434,17 +435,17 @@ end
 
 ## Pending Approvals Read the Database
 
-In 2.1, `pending_approvals` on a persisted chat built the chat's tools to find the calls that need a decision, which connected to every MCP server the chat uses, starting stdio servers in the web process. In 2.2, the process that saves a call records whether it waits for approval on the call's record, and `pending_approvals` reads only the database. The schema does not change, but the `approval` column of `ruby_llm_tool_calls` now holds `pending` for a call that waits for a decision, where 2.1 left it empty. If your code reads that column and treats an empty value as undecided, treat `pending` the same way:
+In 2.1, `pending_approvals` on a persisted chat built the chat's tools to find the calls that need a decision, which connected to every MCP server the chat uses, starting stdio servers in the web process. In 2.2, the process that saves a call records whether it waits for approval on the call's record, and `pending_questions`, which lists the approvals, reads only the database. The schema does not change, but the `approval` column of `ruby_llm_tool_calls` now holds `pending` for a call that waits for a decision, where 2.1 left it empty. If your code reads that column and treats an empty value as undecided, treat `pending` the same way:
 
 ```ruby
 RubyLLM::ActiveRecord::ToolCall.where(approval: [nil, "pending"], result_id: nil)
 ```
 
-Calls that were already waiting for approval when you deploy have no such record, so `pending_approvals` leaves them out. Load the chat through its agent class, so its tools and MCP servers are registered, list those calls the 2.1 way, which still connects to the chat's servers, and decide them by ID:
+Calls that were already waiting for approval when you deploy have no such record, so `pending_questions` leaves them out. Load the chat through its agent class, so its tools and MCP servers are registered, list those calls from the chat it builds, which still connects to the chat's servers, and decide them by ID:
 
 ```ruby
 chat = ChatAgent.find(chat_id)
-chat.to_llm.pending_approvals.map(&:id) # => ["call_1a2b3c"]
+chat.to_llm.pending_questions.select(&:approval?).map(&:id) # => ["call_1a2b3c"]
 chat.approve("call_1a2b3c")
 ```
 
@@ -510,19 +511,38 @@ chat.pending_questions.each do |question|
 end
 
 # Once the person decides, record it by the question's id, as a form sends it:
-chat.answer(params[:question_id], params[:answer])  # approves an approval
-# or: chat.decline(params[:question_id])            # denies an approval
+chat.answer(params[:question_id], params[:answer])               # approves an approval
+# or: chat.decline(params[:question_id], params[:note])          # refuses an approval
 chat.complete
 ```
 
-Code written for 2.1 keeps working. `approve`, `deny`, `pending_approvals`, `awaiting_approval?`, `pending_inputs`, `awaiting_input?`, and `answer` and `decline` with keyword values take the same arguments and return the same values. Four things change:
+`approve`, and `answer` with keyword values, take the same arguments and return the same values. `deny`, `pending_approvals`, `awaiting_approval?`, `pending_inputs`, and `awaiting_input?` are gone: [Two Lists and `decline` Replace Seven Methods](#two-lists-and-decline-replace-seven-methods) gives each one's replacement. Four more things change:
 
 * `answer` checks the answer against the question. A field the question doesn't ask for, a choice it doesn't offer, a value of the wrong type, or a required field left out raises `ArgumentError`, where 2.1 sent the answer to the server as given. A `before_input_request` callback that answers with an extra field now raises from the call, so remove the field. Strings become the integers, numbers, and booleans the fields ask for, the way a form sends them.
 * `answer` and `decline` on a chat also take a question's `id`, and a question that was already answered, or whose call has finished, stays as it is. In 2.1, answering a request whose call had finished raised `ArgumentError`.
 * `RubyLLM::PendingToolCallsError` tells you to answer the calls' questions instead of naming approvals and inputs. Code that matched its message should rescue the class instead.
 * A server that asks the user to visit anything but a web page, an `http` or `https` address, gets a decline before the question reaches the chat or your `before_input_request` callbacks, so a link your app shows for a question can't run script in it. 2.1 passed any address through.
 
-A chat UI generated by 2.1 keeps working: its `ApprovalsController` approves and denies by tool call id, and its cards list `pending_approvals`. It has no card for a question a tool or an MCP server asks, so such a chat waits until something answers it. Rerun `bin/rails generate ruby_llm:chat_ui` for one card for every question. It writes `AnswersController`, `questions/_question.html.erb`, `answers/create.turbo_stream.erb`, and `chats/_questions.html.erb`, adds `resources :answers` to your routes, and shows the questions where the approvals were. It leaves `ApprovalsController`, its views, and its route in place: delete them once nothing posts to them.
+Views that listed `pending_approvals` list `pending_questions` instead, which also holds the questions tools and MCP servers ask, so a chat no longer waits on a question nobody sees. The chat UI 2.2 generates has one card for every question. Rerun `bin/rails generate ruby_llm:chat_ui` for it: it writes `AnswersController`, `questions/_question.html.erb`, `answers/create.turbo_stream.erb`, and `chats/_questions.html.erb`, and adds `resources :answers` to your routes.
+
+## Two Lists and `decline` Replace Seven Methods
+
+2.2 removes six methods that each answered one narrow question about a chat that waits. Three remain: `waiting?` says whether the chat can't go on until something outside it happens, `pending_questions` lists what a person must answer, approvals included, and `pending_tasks` lists the tool calls finishing elsewhere. It removes `deny` too: `decline` is the one way to say no to any question, an approval included, and takes an optional note the model sees, such as `chat.decline(question, "The order shipped already")`. Plain chats, `acts_as_chat` records, and agents answer all of them. Replace each removed method with its expression:
+
+| Removed | Replacement |
+| --- | --- |
+| `chat.awaiting_approval?` | `chat.waiting? && chat.pending_questions.any?(&:approval?)` |
+| `chat.pending_approvals` | `chat.pending_questions.select(&:approval?).map(&:tool_call)` |
+| `chat.awaiting_input?` | `chat.waiting? && chat.pending_questions.reject(&:approval?).any?` |
+| `chat.pending_inputs` | `chat.pending_questions.reject(&:approval?)` |
+| `chat.awaiting_tasks?` | `chat.waiting? && chat.pending_tasks.any?` |
+| `chat.awaiting_person?` | `chat.waiting? && (chat.pending_questions.any? || chat.pending_tasks.any?(&:input_required?))` |
+| `chat.deny(call)` | `chat.decline(call)` |
+| `question.deny` | `question.decline` |
+
+`approve`, `answer`, and `decline` take a question as well as its call, so code that hands a `pending_approvals` entry to them can hand over the question and drop `.map(&:tool_call)`. On an `acts_as_chat` record, `pending_approvals` returned tool call records, where the replacement returns each call as a `RubyLLM::ToolCall` with the same `id`, `name`, and `arguments`.
+
+`decline` records its answer only while the approval still waits, so of two people deciding at once the first stands, where `deny` overwrote any decision before the call ran. To change a decline, `approve` the call before it runs.
 
 ## Providers Fetch Document URLs
 
@@ -617,7 +637,7 @@ If your message association has no inverse, call `chat.reload` after marking the
 
 ## Rename Chat Columns Named After New Methods
 
-`acts_as_chat` records gain `code_execution`, `skills`, `file_store`, `with_code_execution`, `with_skills`, `with_file_store`, `with_owner`, `awaiting_person?`, `queue`, `queued_messages`, `withdraw`, `join_queued_messages`, `around_join`, `after_file_write`, and the `ruby_llm_chat_files` association in 2.2. A column of your own with one of those names would be hidden behind RubyLLM's method, so reading it would return RubyLLM's setting, usually `nil`, instead of your value. In 2.2, `acts_as_chat` raises `ArgumentError` naming such a column, and any column a RubyLLM reader hides, such as `cost`, `temperature`, or `tools`, when the model loads its columns. Rename such a column before you upgrade, for example a `code_execution` toggle to `runs_code`:
+`acts_as_chat` records gain `code_execution`, `skills`, `file_store`, `with_code_execution`, `with_skills`, `with_file_store`, `with_owner`, `queue`, `queued_messages`, `withdraw`, `join_queued_messages`, `around_join`, `after_file_write`, and the `ruby_llm_chat_files` association in 2.2. A column of your own with one of those names would be hidden behind RubyLLM's method, so reading it would return RubyLLM's setting, usually `nil`, instead of your value. In 2.2, `acts_as_chat` raises `ArgumentError` naming such a column, and any column a RubyLLM reader hides, such as `cost`, `temperature`, or `tools`, when the model loads its columns. Rename such a column before you upgrade, for example a `code_execution` toggle to `runs_code`:
 
 ```ruby
 rename_column :chats, :code_execution, :runs_code

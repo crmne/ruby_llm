@@ -57,7 +57,7 @@ RSpec.describe 'RubyLLM and LangChain guide', type: :task do
     expect(provider_requests.size).to eq(1)
 
     chat = Chat.last
-    evaluate('chat.approve params', params: { id: chat.id, tool_call_id: chat.pending_approvals.first.tool_call_id })
+    evaluate('chat.approve params', params: { id: chat.id, tool_call_id: chat.pending_questions.first.id })
 
     expect(Chat.last.messages.last.content).to eq('Deleted 42 test orders.')
     expect(provider_requests.last['messages'][-1]['content'].to_s).to include('Deleted 42 rows')

@@ -172,8 +172,8 @@ module RubyLLM
       resolve_protocol(protocol, model).new(self, model).skipped_tool_call_error(tool_call)
     end
 
-    def tool_approval_response(tool_call, approved:, model:, protocol: nil) # :nodoc:
-      resolve_protocol(protocol, model).new(self, model).tool_approval_response(tool_call, approved:)
+    def tool_approval_response(tool_call, approved:, model:, protocol: nil, note: nil) # :nodoc:
+      resolve_protocol(protocol, model).new(self, model).tool_approval_response(tool_call, approved:, note:)
     end
 
     def compact(messages, model:, protocol: nil, headers: {}, before_request: [], usage_recorder: nil) # :nodoc:

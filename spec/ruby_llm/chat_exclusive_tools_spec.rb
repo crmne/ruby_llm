@@ -107,10 +107,10 @@ RSpec.describe RubyLLM::Chat do
 
         chat.ask('Go')
 
-        expect(chat).to be_awaiting_approval
+        expect(chat.waiting? && chat.pending_questions.any?(&:approval?)).to be(true)
         expect(chat.messages.select(&:tool_result?).map(&:content)).to eq(%w[read_a])
 
-        chat.approve(chat.pending_approvals.first)
+        chat.approve(chat.pending_questions.find(&:approval?))
         chat.complete
 
         expect(chat.messages.select(&:tool_result?).map(&:content)).to eq(%w[read_a approve_click read_b])

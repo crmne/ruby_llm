@@ -239,7 +239,8 @@ end
 
 chat = SupportAgent.create!
 chat.ask "Cancel order 42."
-chat.awaiting_person? # => true
+chat.waiting?                          # => true
+chat.pending_questions.first.approval? # => true
 ```
 
 Another request, after a deploy if need be, records the decision and continues:
@@ -250,9 +251,9 @@ chat.approve params[:tool_call_id]
 chat.complete
 ```
 
-You still authorize the reviewer in your controller, as you would for any other action. A double-submitted approval is safe, because only one process runs a chat at a time, and `find` applies the agent's current tools and instructions. `chat.pending_questions` lists what to show, and `chat.deny` sends the model a refusal. See [Controlling Tool Execution]({% link _tools/tool-execution.md %}#requiring-approval).
+You still authorize the reviewer in your controller, as you would for any other action. A double-submitted approval is safe, because only one process runs a chat at a time, and `find` applies the agent's current tools and instructions. `chat.pending_questions` lists what to show, and `chat.decline` sends the model a refusal, with the reviewer's note if they give one. See [Controlling Tool Execution]({% link _tools/tool-execution.md %}#requiring-approval).
 
-Nested agents differ. In the SDK, an approval inside a nested agent tool surfaces on the outer run and is stored with it, so it can resume in another process. A RubyLLM [subagent]({% link _getting_started/agents.md %}#subagents) lives in the process that ran it: a chat resumed elsewhere reports the subagent's work as lost, and the model can start it again.
+Nested agents differ. In the SDK, an approval inside a nested agent tool surfaces on the outer run and is stored with it, so it can resume in another process. A RubyLLM [subagent]({% link _getting_started/agents.md %}#subagents) from `tools` has to finish within its call. One that waits for a person keeps its work in a [chat of its own]({% link _getting_started/agents.md %}#subagents-that-wait-for-a-person), and the outer call pauses on a task that holds that chat's ID, so any process can carry both on once the person decides.
 
 ## Handoffs
 
@@ -579,7 +580,7 @@ With `acts_as_chat`, every billed attempt also lands in the `ruby_llm_usages` ta
 | `input_guardrails` and `output_guardrails` | No equivalent. A check agent or `RubyLLM.moderate` in your code |
 | Tool guardrails | `around_tool_call` |
 | `SQLiteSession` and other sessions | The chat's transcript, or an `acts_as_chat` record |
-| `needs_approval` and `RunState` | `requires_approval`, `approve`, and `deny` |
+| `needs_approval` and `RunState` | `requires_approval`, `approve`, and `decline` |
 | `result.context_wrapper.usage` | `response.tokens` and `response.cost` |
 | Tracing and the Traces dashboard | [OpenTelemetry]({% link _advanced/opentelemetry.md %}) and your own backend |
 | `trace()` | `RubyLLM.workflow` |

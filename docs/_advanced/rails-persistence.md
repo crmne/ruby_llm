@@ -378,7 +378,7 @@ RubyLLM::ActiveRecord::QueuedMessage.where(sender: current_user).includes(:chat)
 RubyLLM::ActiveRecord::QueuedMessage.where(steer: false).where(created_at: ...10.minutes.ago)
 ```
 
-Read these records, but leave writing them to RubyLLM. Creating, updating, or deleting rows yourself can count an attempt twice, lose an approval, or hand a queued message to two processes. Use `queue` and `withdraw`, `approve` and `deny`, `RubyLLM::Batch`, and the MCP server's `deauthorize` to change them.
+Read these records, but leave writing them to RubyLLM. Creating, updating, or deleting rows yourself can count an attempt twice, lose an approval, or hand a queued message to two processes. Use `queue` and `withdraw`, `approve` and `decline`, `RubyLLM::Batch`, and the MCP server's `deauthorize` to change them.
 
 You can still add your own scopes and columns. Declare them when the application prepares, since RubyLLM's classes live in the gem:
 
@@ -426,7 +426,7 @@ You can also pass stored attachments that the current user is authorized to acce
 chat.ask "Compare these", with: project.documents
 ```
 
-Stored files stay in Active Storage until a request needs their bytes. Loading a chat, checking `awaiting_person?`, or listing `pending_questions` downloads nothing, and each file downloads once, when a request first sends it. RubyLLM takes the file's type from the blob's content type.
+Stored files stay in Active Storage until a request needs their bytes. Loading a chat, checking `waiting?`, or listing `pending_questions` downloads nothing, and each file downloads once, when a request first sends it. RubyLLM takes the file's type from the blob's content type.
 
 Files too large to send inline are [uploaded to the provider]({% link _core_features/files.md %}#large-chat-attachments), and RubyLLM records each upload of a blob in `ruby_llm_provider_files`. A chat loaded later, in any process, sends the provider's copy instead of downloading and uploading the file again. The first time a process reuses a copy, RubyLLM asks the provider whether it still has it, and uploads the file again when it is missing or expired. Uploads belong to the account that made them, so a chat that switches to another API key, project, or storage bucket uploads its own copy. Purging a blob deletes its records.
 

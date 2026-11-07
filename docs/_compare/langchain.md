@@ -266,7 +266,8 @@ end
 
 chat = DataAgent.create!
 chat.ask "Delete last year's test orders"
-chat.awaiting_person? # => true
+chat.waiting?                          # => true
+chat.pending_questions.first.approval? # => true
 ```
 
 The decision is stored on the tool call's row, so another request, after a deploy if need be, can record it and continue:
@@ -277,7 +278,7 @@ chat.approve params[:tool_call_id]
 chat.complete
 ```
 
-`chat.pending_questions` lists what to show the reviewer, and `chat.deny` sends the model a refusal instead. LangChain's middleware can also let the reviewer edit the arguments or answer in place of the tool. See [Controlling Tool Execution]({% link _tools/tool-execution.md %}).
+`chat.pending_questions` lists what to show the reviewer, and `chat.decline` sends the model a refusal instead, with the reviewer's note if they give one. LangChain's middleware can also let the reviewer edit the arguments or answer in place of the tool. See [Controlling Tool Execution]({% link _tools/tool-execution.md %}).
 
 ## Usage and Cost
 
@@ -320,7 +321,7 @@ Chats and agents total their cost with `chat.cost.total`, and Rails apps get a u
 | `agent.stream(..., stream_mode="messages")` | A block given to `ask` |
 | `response_format=Schema` | `schema Schema` or `with_schema` |
 | Checkpointer and `thread_id` | The chat's transcript, or an `acts_as_chat` record |
-| `HumanInTheLoopMiddleware` | `requires_approval`, `approve`, and `deny` |
+| `HumanInTheLoopMiddleware` | `requires_approval`, `approve`, and `decline` |
 | `usage_metadata` | `response.tokens` and `response.cost` |
 | LangSmith tracing | [Instrumentation]({% link _advanced/instrumentation.md %}) and [OpenTelemetry]({% link _advanced/opentelemetry.md %}) |
 | LangSmith evaluations | [Evaluations]({% link _advanced/evaluations.md %}) |

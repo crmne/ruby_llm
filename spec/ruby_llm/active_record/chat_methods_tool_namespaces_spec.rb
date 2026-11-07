@@ -69,14 +69,14 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
                [native_call('second', 'screenshot')], done,
                [native_call('third', 'screenshot', namespace: 'browser')])
     configured(chat, computer, browser).ask('Inspect')
-    chat.approve(chat.pending_approvals.first, remember: true).complete
+    chat.approve(chat.pending_questions.first, remember: true).complete
     restored = configured(Chat.find(chat.id), computer, browser)
 
     restored.ask('Inspect again')
     restored.ask('Inspect browser')
 
     expect(executed).to eq([%w[computer screenshot], %w[computer screenshot]])
-    expect(restored.pending_approvals.map(&:namespace)).to eq(['browser'])
+    expect(restored.pending_questions.map { |question| question.tool_call.namespace }).to eq(['browser'])
   end
 
   it 'does not execute a later action when another worker has claimed an earlier one' do

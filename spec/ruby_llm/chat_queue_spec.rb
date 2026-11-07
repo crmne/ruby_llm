@@ -158,7 +158,7 @@ RSpec.describe RubyLLM::Chat do
       expect(transcript.last).to eq([:assistant, ''])
       expect { chat.ask_later('Another') }.to raise_error(RubyLLM::PendingToolCallsError)
 
-      chat.approve(chat.pending_approvals.first)
+      chat.approve(chat.pending_questions.find(&:approval?))
       chat.complete
 
       expect(requests.last).to eq([[:user, 'Echo hello'], [:assistant, ''], [:tool, 'hello'], [:user, 'Steer']])
@@ -176,7 +176,7 @@ RSpec.describe RubyLLM::Chat do
       }
 
       chat.ask('Echo hello')
-      chat.approve(chat.pending_approvals.first)
+      chat.approve(chat.pending_questions.find(&:approval?))
       response = chat.complete
 
       expect(response.content).to eq('Echoed')

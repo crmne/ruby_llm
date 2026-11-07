@@ -30,20 +30,20 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   it 'persists the input a paused tool call waits on' do
     chat = paused_chat
 
-    expect(chat).to be_awaiting_input
+    expect(chat.waiting? && chat.pending_questions.reject(&:approval?).any?).to be(true)
     expect(tool_call_record.mcp_state).to include('request_state' => 'environment-state')
-    expect(chat.pending_inputs.first.message).to eq('Which environment?')
+    expect(chat.pending_questions.first.message).to eq('Which environment?')
   end
 
   it 'reads the persisted input on a copy of the underlying chat' do
     chat = paused_chat
     copy = chat.to_llm.dup
 
-    expect(copy).to be_awaiting_input
+    expect(copy.waiting? && copy.pending_questions.reject(&:approval?).any?).to be(true)
 
     RubyLLM::ActiveRecord::ToolCall.where(tool_call_id: call_id).update_all(mcp_state: nil)
 
-    expect(copy).not_to be_awaiting_input
+    expect(copy.waiting? && copy.pending_questions.reject(&:approval?).any?).to be(false)
   end
 
   it 'binds a copy of the record to its own tool call state' do
@@ -60,7 +60,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     chat = paused_chat
     RubyLLM::ActiveRecord::ToolCall.where(tool_call_id: call_id).update_all(mcp_state: nil)
 
-    expect(chat.reload).not_to be_awaiting_input
+    expect(chat.reload.waiting? && chat.reload.pending_questions.reject(&:approval?).any?).to be(false)
   end
 
   it 'releases the claims of a call that pauses for input' do
@@ -76,7 +76,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     Chat.where(id: chat.id).update_all(cancelled: true)
     answering = Chat.find(chat.id).with_mcp(files)
 
-    answering.answer(answering.pending_inputs.first, environment: 'staging')
+    answering.answer(answering.pending_questions.first, environment: 'staging')
 
     expect(Chat.find(chat.id)).not_to be_cancelled
   end
@@ -105,7 +105,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   it 'resumes from another process after the user answers' do
     chat = paused_chat
     answering = Chat.find(chat.id).with_mcp(files)
-    answering.answer(answering.pending_inputs.first, environment: 'staging')
+    answering.answer(answering.pending_questions.first, environment: 'staging')
 
     resumed = Chat.find(chat.id).with_mcp(files)
     allow(resumed.to_llm.provider).to receive(:complete).and_return(
@@ -115,6 +115,6 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
     expect(resumed.messages_association.find_by(role: 'tool').content).to eq('Deployed to staging')
     expect(tool_call_record.mcp_state).to be_nil
-    expect(resumed).not_to be_awaiting_input
+    expect(resumed.waiting? && resumed.pending_questions.reject(&:approval?).any?).to be(false)
   end
 end

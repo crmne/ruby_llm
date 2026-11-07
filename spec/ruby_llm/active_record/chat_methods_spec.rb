@@ -410,7 +410,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       record.update!(approval: 'approved')
       copy = chat.to_llm.dup
 
-      copy.deny(record.to_llm)
+      copy.send(:record_tool_call_decision, record.to_llm, false)
 
       expect(copy.instance_variable_get(:@tool_call_state).decision(record.to_llm)).to be(false)
       expect(chat.to_llm.instance_variable_get(:@tool_call_state).decision(record.to_llm)).to be(true)
@@ -1391,17 +1391,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   end
 
   describe 'tool call decisions' do
-    it 'records a denial' do
-      call = tool_call
-      chat = Chat.create!(model: model_id)
-      chat.add_message(RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { call.id => call }))
-
-      expect(chat.deny(call.id)).to eq(chat)
-      expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call.id).approval).to eq('denied')
-    end
-
-    it 'denies a call it approved earlier' do
-      runs = []
+    def charging(runs)
       charge = Class.new(RubyLLM::Tool) do
         requires_approval
         define_method(:name) { 'charge_card' }
@@ -1410,13 +1400,25 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       call = tool_call(name: 'charge_card')
       chat = Chat.create!(model: model_id).with_tools(charge)
       chat.add_message(RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { call.id => call }))
+      [chat, call]
+    end
+
+    it 'records a decline as a denial' do
+      chat, call = charging([])
+
+      expect(chat.decline(call.id)).to eq(chat)
+      expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call.id).approval).to eq('denied')
+    end
+
+    it 'keeps an approval that a later decline would change' do
+      runs = []
+      chat, call = charging(runs)
 
       chat.approve(call.id)
-      chat.deny(call.id)
+      chat.decline(call.id)
       chat.run_tools
 
-      expect(runs).to be_empty
-      expect(chat.messages.reload.last.content).to include('The user denied the charge_card tool call.')
+      expect(runs).to eq([:charged])
     end
 
     it 'accepts a RubyLLM::ToolCall value' do
@@ -1656,8 +1658,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       count = downloads do
         loaded = Chat.find(chat.id)
         loaded.to_llm.messages.each(&:inspect)
-        loaded.awaiting_approval?
-        loaded.pending_approvals.to_a
+        loaded.waiting? && loaded.pending_questions.any?(&:approval?)
       end
 
       expect(count).to eq(0)

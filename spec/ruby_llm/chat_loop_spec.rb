@@ -288,7 +288,7 @@ RSpec.describe RubyLLM::Chat do
 
       expect { chat.step }.to raise_error(RubyLLM::CancelledError)
 
-      expect(chat.pending_approvals).to be_empty
+      expect(chat.pending_questions.select(&:approval?)).to be_empty
     end
 
     context 'with a pending call when the cancel arrives' do

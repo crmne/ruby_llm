@@ -66,6 +66,16 @@ RSpec.describe RubyLLM::Protocols::Responses::Approvals do
     end
   end
 
+  it "gives the provider the person's note as the reason for a denial" do
+    request = parse(body).tool_calls.fetch('approval_1').with_id('invocation_1')
+    response = protocol.tool_approval_response(request, approved: false, note: 'Not on this account')
+
+    expect(response.content).to eq('Not on this account')
+    expect(protocol.send(:render_tool_items, response))
+      .to eq([{ type: 'mcp_approval_response', approval_request_id: 'approval_1', approve: false,
+                reason: 'Not on this account' }])
+  end
+
   it 'preserves a streamed approval exactly once across repeated final events' do
     accumulator = RubyLLM::Protocol::StreamAccumulator.new
     event = { 'type' => 'response.completed', 'response' => body }

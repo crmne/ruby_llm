@@ -53,11 +53,16 @@ chat.complete
 
 chat.waiting?           # => true
 chat.pending_questions  # approvals and questions a person must answer
-chat.awaiting_tasks?    # a tool call runs as a task
-chat.awaiting_person?   # a person must act
+chat.pending_tasks      # tool calls that run as tasks
 ```
 
-`awaiting_person?` is the one to check before you notify someone: it is true while a question waits for an answer, an approval included, or a task reports `input_required?`, and false while the chat only waits on work that runs elsewhere. Record the answer from your controller, then enqueue the job again. The next `complete` picks up where the last one stopped.
+A person must act while a question waits for an answer, an approval included, or a task reports `input_required?`. Check that before you notify someone, and leave a chat alone while it only waits on work that runs elsewhere:
+
+```ruby
+notify(chat.owner) if chat.pending_questions.any? || chat.pending_tasks.any?(&:input_required?)
+```
+
+Record the answer from your controller, then enqueue the job again. The next `complete` picks up where the last one stopped.
 
 ## The Pieces
 
@@ -69,6 +74,7 @@ Each piece has its own guide. Read the ones your agent needs.
 | Run claims | Let only one process run a chat or a tool call at a time, and resume a run after a crash. | [One Process at a Time]({% link _advanced/durable-agents.md %}#one-process-at-a-time), [Long-Running Tools]({% link _tools/tool-execution.md %}#long-running-tools) |
 | Questions | Pause a tool call until a person answers: the approval before a tool runs, or a question a tool or an MCP server asks in the middle of a call. | [Asking a Person]({% link _tools/tool-execution.md %}#asking-a-person), [Questions in Rails]({% link _tools/tool-execution.md %}#questions-in-rails), [Questions from Servers]({% link _tools/mcp.md %}#questions-from-servers) |
 | Tasks | Pause a tool call while slow work runs elsewhere, then resume it. | [Pausing a Tool Call]({% link _tools/tool-execution.md %}#pausing-a-tool-call), [MCP Tasks]({% link _tools/mcp.md %}#tasks) |
+| Subagents | Hand work to another agent that keeps its own chat, so it can wait for a person. | [Subagents That Wait for a Person]({% link _getting_started/agents.md %}#subagents-that-wait-for-a-person) |
 | Queued messages | Accept new messages while a job runs the chat, and decide when they join. | [Queueing Messages]({% link _advanced/agentic-workflows.md %}#queueing-messages), [Queued Messages in Rails]({% link _advanced/rails-persistence.md %}#queued-messages) |
 | File stores | Keep attachments and long tool results as files the model reads when it needs them. | [File Stores]({% link _core_features/file-stores.md %}) |
 | Sandboxes | Decide what code from a model can read, write, and reach. | [Sandboxes]({% link _advanced/sandboxes.md %}) |

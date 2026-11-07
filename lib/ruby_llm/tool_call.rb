@@ -4,7 +4,8 @@ module RubyLLM
   # A ToolCall is a request to run a tool with specific arguments. Instances
   # appear in Message#tool_calls. Local calls are yielded to tool callbacks
   # such as Chat#before_tool_call. Remote calls awaiting approval return
-  # +true+ from #remote? and appear in Chat#pending_approvals.
+  # +true+ from #remote?, and their approvals appear among
+  # Chat#pending_questions.
   #
   #   chat.before_tool_call do |tool_call|
   #     puts "Calling tool: #{tool_call.name}"

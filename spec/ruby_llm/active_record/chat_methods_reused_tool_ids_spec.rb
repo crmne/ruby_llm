@@ -22,6 +22,8 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     Chat.find(chat.id).with_tools(lookup).tap { |record| record.protocol = :responses }
   end
 
+  def tool_call_record(question) = RubyLLM::ActiveRecord::ToolCall.find_by!(tool_call_id: question.id)
+
   def response(city, id: nil)
     call = RubyLLM::ToolCall.new(id:, provider_call_id: 'call_1', name: 'lookup', arguments: { city: })
     RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { id || call.provider_call_id => call })
@@ -61,13 +63,13 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     chat = process(Chat.create!(model: model_for(:openai)))
     allow(chat.to_llm.provider).to receive(:complete).and_return(response('Paris'))
     chat.ask('Check Paris and London')
-    first = chat.pending_approvals.first
+    first = tool_call_record(chat.pending_questions.first)
     process(chat).approve(first)
 
     worker = process(chat)
     allow(worker.to_llm.provider).to receive(:complete).and_return(response('London'))
     worker.complete
-    second = worker.pending_approvals.first
+    second = tool_call_record(worker.pending_questions.first)
 
     expect(executions).to eq(['Paris'])
     expect(second.tool_call_id).not_to eq(first.tool_call_id)
@@ -75,7 +77,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(second.provider_call_id).to eq('call_1')
 
     process(chat).approve(first.tool_call_id)
-    expect(process(chat).pending_approvals.pluck(:id)).to eq([second.id])
+    expect(process(chat).pending_questions.map(&:id)).to eq([second.tool_call_id])
 
     process(chat).approve(second.tool_call_id)
     worker = process(chat)
@@ -95,7 +97,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       chat = process(Chat.create!(model: model_for(:openai)))
       allow(chat.to_llm.provider).to receive(:complete).and_return(response('Paris'))
       chat.ask('Check Paris')
-      expect(chat.pending_approvals.first.provider_call_id).to eq('call_1')
+      expect(tool_call_record(chat.pending_questions.first).provider_call_id).to eq('call_1')
     end
   end
 
@@ -107,7 +109,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     second = chat.add_message(response('London', id:)).tool_calls.values.first
 
     expect(second.id).not_to eq(first.id)
-    expect(process(chat).pending_approvals.map(&:tool_call_id)).to eq([second.id])
+    expect(process(chat).pending_questions.map(&:id)).to eq([second.id])
   end
 
   it 'pairs an appended result with the latest call that reused its provider ID' do

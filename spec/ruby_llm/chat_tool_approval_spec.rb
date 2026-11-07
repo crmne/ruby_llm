@@ -54,23 +54,23 @@ RSpec.describe RubyLLM::Chat do
 
     response = chat.ask('Do the thing')
 
-    expect(chat).to be_awaiting_approval
+    expect(chat.waiting? && chat.pending_questions.any?(&:approval?)).to be(true)
     expect(chat).not_to be_complete
     expect(executions).to be_empty
-    expect(response.tool_calls.keys).to eq(chat.pending_approvals.map(&:id))
+    expect(response.tool_calls.keys).to eq(chat.pending_questions.select(&:approval?).map(&:id))
   end
 
   it 'resumes and executes after approve' do
     chat = stubbed_chat(tool_call_message('call_1' => 'dangerous'), final_message, tools: [dangerous_tool])
     chat.ask('Do the thing')
 
-    chat.approve(chat.pending_approvals.first.id)
+    chat.approve(chat.pending_questions.find(&:approval?).id)
     response = chat.complete
 
     expect(executions).to eq([:dangerous])
     expect(response.content).to eq('All done')
     expect(chat).to be_complete
-    expect(chat).not_to be_awaiting_approval
+    expect(chat.waiting? && chat.pending_questions.any?(&:approval?)).to be(false)
   end
 
   it 'accepts a ToolCall for approve' do
@@ -87,8 +87,8 @@ RSpec.describe RubyLLM::Chat do
     chat = stubbed_chat(tool_call_message('call_1' => 'dangerous'), final_message, tools: [dangerous_tool])
     chat.ask('Do the thing')
 
-    id = chat.pending_approvals.first.id
-    chat.deny(id)
+    id = chat.pending_questions.find(&:approval?).id
+    chat.decline(id)
     response = chat.complete
 
     expect(executions).to be_empty
@@ -144,7 +144,7 @@ RSpec.describe RubyLLM::Chat do
     chat.ask('Do the thing')
 
     expect(resolver_calls.uniq).to eq(chat.messages.last.tool_calls.keys)
-    expect(chat).to be_awaiting_approval
+    expect(chat.waiting? && chat.pending_questions.any?(&:approval?)).to be(true)
     expect(executions).to be_empty
   end
 
@@ -168,13 +168,13 @@ RSpec.describe RubyLLM::Chat do
     chat = stubbed_chat(tool_call_message('call_1' => 'dangerous'), final_message, tools: [dangerous_tool])
     chat.ask('Do the thing')
 
-    expect(chat.pending_approvals.map(&:id)).to eq(chat.messages.last.tool_calls.keys)
-    expect(chat.pending_approvals.first.name).to eq('dangerous')
+    expect(chat.pending_questions.select(&:approval?).map(&:id)).to eq(chat.messages.last.tool_calls.keys)
+    expect(chat.pending_questions.first.tool_call.name).to eq('dangerous')
 
-    chat.approve(chat.pending_approvals.first)
+    chat.approve(chat.pending_questions.find(&:approval?))
     chat.complete
 
-    expect(chat.pending_approvals).to be_empty
+    expect(chat.pending_questions.select(&:approval?)).to be_empty
   end
 
   it 'shows what the chat is waiting for in inspect' do
@@ -183,7 +183,7 @@ RSpec.describe RubyLLM::Chat do
 
     expect(chat.inspect).to include('awaiting_approval: ["dangerous"]')
 
-    chat.approve(chat.pending_approvals.first.id)
+    chat.approve(chat.pending_questions.find(&:approval?).id)
     chat.complete
 
     expect(chat.inspect).not_to include('awaiting_approval')
@@ -199,9 +199,9 @@ RSpec.describe RubyLLM::Chat do
     chat.ask('Do both things')
 
     expect(executions).to eq([:harmless])
-    expect(chat).to be_awaiting_approval
+    expect(chat.waiting? && chat.pending_questions.any?(&:approval?)).to be(true)
 
-    chat.approve(chat.pending_approvals.first.id)
+    chat.approve(chat.pending_questions.find(&:approval?).id)
     response = chat.complete
 
     expect(executions).to eq(%i[harmless dangerous])
@@ -220,7 +220,7 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.messages.last.role).to eq(:tool)
     expect(response.role).to eq(:assistant)
     expect(response.tool_calls.values.map(&:name)).to eq(%w[harmless dangerous])
-    expect(response.tool_calls.values).to include(chat.pending_approvals.first)
+    expect(response.tool_calls.values).to include(chat.pending_questions.find(&:approval?).tool_call)
     expect(chat.complete).to equal(response)
   end
 end

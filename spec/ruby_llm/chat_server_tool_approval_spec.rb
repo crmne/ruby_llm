@@ -34,8 +34,8 @@ RSpec.describe RubyLLM::Chat do
     chat.with_tools(local_tool)
     stage(remote_call)
 
-    expect(chat).to be_awaiting_approval
-    expect(chat.pending_approvals).to eq(chat.messages.last.tool_calls.values)
+    expect(chat.waiting? && chat.pending_questions.any?(&:approval?)).to be(true)
+    expect(chat.pending_questions.select(&:approval?).map(&:tool_call)).to eq(chat.messages.last.tool_calls.values)
     expect(executions).to be_empty
     expect(provider).to have_received(:complete).once
   end
@@ -44,8 +44,8 @@ RSpec.describe RubyLLM::Chat do
     it "records a server #{approved ? 'approval' : 'denial'} exactly once without executing a same-name local tool" do
       chat.with_tools(local_tool)
       stage(remote_call)
-      call = chat.pending_approvals.first
-      approved ? chat.approve(call) : chat.deny(call)
+      call = chat.pending_questions.find(&:approval?).tool_call
+      approved ? chat.approve(call) : chat.decline(call)
 
       chat.run_tools.run_tools
       decisions = chat.messages.select(&:tool_result?)
@@ -61,8 +61,8 @@ RSpec.describe RubyLLM::Chat do
     it "raises a RubyLLM error for a server #{approved ? 'approval' : 'denial'} after a move to another provider" do
       stage(remote_call)
       chat.with_model(model_for(:anthropic), provider: :anthropic)
-      call = chat.pending_approvals.first
-      approved ? chat.approve(call) : chat.deny(call)
+      call = chat.pending_questions.find(&:approval?).tool_call
+      approved ? chat.approve(call) : chat.decline(call)
 
       expect { chat.run_tools }.to raise_error(RubyLLM::Error, /Anthropic doesn't support remote tool approvals/)
     end
@@ -75,8 +75,8 @@ RSpec.describe RubyLLM::Chat do
     response = chat.messages.find(&:tool_call?)
 
     expect(executions).to eq([:local])
-    expect(chat).to be_awaiting_approval
-    chat.approve(chat.pending_approvals.first)
+    expect(chat.waiting? && chat.pending_questions.any?(&:approval?)).to be(true)
+    chat.approve(chat.pending_questions.find(&:approval?))
     chat.complete
 
     expect(executions).to eq([:local])

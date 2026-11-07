@@ -183,7 +183,7 @@ module RubyLLM
 
       # Declares that this tool must be approved before it executes. The
       # conversation loop pauses the tool call until a decision is recorded with
-      # Chat#approve or Chat#deny, so Chat#complete returns cleanly and
+      # Chat#approve or Chat#decline, so Chat#complete returns cleanly and
       # can be called again once the decision exists. In Rails the decision
       # persists on the tool call record and survives process restarts.
       #

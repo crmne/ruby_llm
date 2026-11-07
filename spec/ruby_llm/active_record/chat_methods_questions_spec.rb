@@ -178,6 +178,30 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(result_of(approval)).to include('denied')
   end
 
+  it 'sends the model the note on an approval declined in another process' do
+    approval = call('issue_refund', 'order_id' => '42')
+    chat = paused(approval)
+
+    Chat.find(chat.id).decline(approval.id, 'The order shipped already')
+    job_for(chat.id, refund).complete
+
+    expect(result_of(approval)).to eq('{"error":"The order shipped already"}')
+  end
+
+  it "adds the note on a question declined in another process to its tool's result" do
+    question = call('pick_seat')
+    chat = paused(question)
+
+    Chat.find(chat.id).pending_questions.sole.decline('I will choose at the gate')
+    job_for(chat.id, seat).complete
+
+    expect(result_of(question)).to eq("Seat declined\n\nThe user declined: I will choose at the gate")
+  end
+
+  it 'says no with decline alone' do
+    expect(Chat.method_defined?(:deny)).to be(false)
+  end
+
   it 'remembers an approval approved through its question' do
     approval = call('issue_refund', 'order_id' => '42')
     chat = paused(approval)

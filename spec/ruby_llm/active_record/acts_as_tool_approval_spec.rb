@@ -29,23 +29,23 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     chat
   end
 
-  it 'returns the persisted tool call records awaiting a decision' do
+  it 'lists the approvals of persisted tool calls awaiting a decision' do
     chat = parked_chat
 
-    records = chat.pending_approvals
-    expect(records.map(&:tool_call_id)).to eq([call_id])
-    expect(records.first).to be_a(RubyLLM::ActiveRecord::ToolCall)
-    expect(chat).to be_awaiting_approval
+    approvals = chat.pending_questions.select(&:approval?)
+    expect(approvals.map(&:id)).to eq([call_id])
+    expect(approvals.first.tool_call.name).to eq('dangerous')
+    expect(chat.waiting? && chat.pending_questions.any?(&:approval?)).to be(true)
     expect(chat).to be_waiting
   end
 
   it 'persists an approval recorded from a pending record' do
     chat = parked_chat
 
-    chat.approve(chat.pending_approvals.first)
+    chat.approve(chat.pending_questions.first)
 
-    expect(chat.pending_approvals).to be_empty
-    expect(chat).not_to be_awaiting_approval
+    expect(chat.pending_questions).to be_empty
+    expect(chat.waiting? && chat.pending_questions.any?(&:approval?)).to be(false)
     expect(chat).not_to be_waiting
     expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call_id).approval).to eq('approved')
   end
@@ -57,8 +57,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     reloaded = Chat.find(chat.id)
     reloaded.with_tools(approval_tool)
 
-    expect(reloaded).not_to be_awaiting_approval
-    expect(reloaded.pending_approvals).to be_empty
+    expect(reloaded.waiting? && reloaded.pending_questions.any?(&:approval?)).to be(false)
+    expect(reloaded.pending_questions).to be_empty
   end
 
   it 'refuses to persist a new question while the round is parked' do
@@ -97,7 +97,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       )
     )
 
-    reloaded = reading_rows_in_reverse { Chat.find(chat.id).pending_approvals.map(&:tool_call_id) }
+    reloaded = reading_rows_in_reverse { Chat.find(chat.id).pending_questions.select(&:approval?).map(&:id) }
 
     expect(reloaded).to eq(ids)
   end
@@ -134,7 +134,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       chat = park_mcp_calls
       allow(RubyLLM::MCP::Stdio).to receive(:new).and_call_original
 
-      pending = agent.find(chat.id).pending_approvals.map(&:tool_call_id)
+      pending = agent.find(chat.id).pending_questions.select(&:approval?).map(&:id)
 
       expect(pending).to eq(["#{call_id}_1"])
       expect(RubyLLM::MCP::Stdio).not_to have_received(:new)

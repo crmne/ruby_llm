@@ -699,7 +699,7 @@ A chat never waits for a task. The tool call pauses, the way [tools that require
 chat = RubyLLM.chat.with_mcp(Reports)
 chat.ask "Render the quarterly report"
 
-chat.awaiting_tasks? # => true
+chat.waiting?        # => true
 task = chat.pending_tasks.first
 task.status          # => :working
 task.status_message  # => "Rendering page 3 of 12"
@@ -713,7 +713,7 @@ class CheckTasksJob < ApplicationJob
   def perform(chat_id)
     chat = ReportsAgent.find(chat_id)
     chat.complete
-    return unless chat.awaiting_tasks?
+    return if chat.pending_tasks.none?
 
     wait = chat.pending_tasks.filter_map(&:poll_interval).min || 5
     CheckTasksJob.set(wait: wait.seconds).perform_later(chat_id)

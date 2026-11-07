@@ -99,7 +99,7 @@ RSpec.describe RubyLLM::Chat do
     chat = chat_with(RubyLLM::Message.new(role: :user, content: 'Do it'), round(tool_call('a', 'dangerous')))
 
     expect(chat.complete).to eq(chat.messages.last)
-    expect(chat).to be_awaiting_approval
+    expect(chat.waiting? && chat.pending_questions.any?(&:approval?)).to be(true)
 
     chat.generate
 

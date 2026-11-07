@@ -82,7 +82,7 @@ RSpec.describe RubyLLM::Chat do
     chat.ask('Echo hello')
 
     expect(chat).to be_complete
-    expect(chat.pending_approvals).to be_empty
+    expect(chat.pending_questions.select(&:approval?)).to be_empty
     expect(tool_results.first).to include('were not valid JSON')
     expect(events).to be_empty
   end
@@ -108,7 +108,8 @@ RSpec.describe RubyLLM::Chat do
     chat.ask('Search')
 
     expect(chat.provider).to have_received(:tool_approval_response)
-      .with(having_attributes(provider_call_id: 'approval_1'), approved: false, model: anything, protocol: anything)
+      .with(having_attributes(provider_call_id: 'approval_1'), approved: false, model: anything, protocol: anything,
+                                                               note: nil)
     expect(chat).to be_complete
   end
 end

@@ -181,7 +181,7 @@ Each call runs a new [subagent]({% link _getting_started/agents.md %}#subagents)
 
 The two are not the same. CrewAI's manager comes with its delegation behavior, while yours is the instructions you write. CrewAI's agents can also delegate to each other with [`allow_delegation=True`](https://docs.crewai.com/edge/en/concepts/collaboration), which adds tools for delegating work and asking questions. In RubyLLM, an agent can call only the agents in its `tools`.
 
-A subagent lives in the process that ran it. A chat resumed in another process reports the subagent's work as lost, and the model can start it again.
+A subagent from `tools` has to finish within its call. One that waits for a person keeps its work in a [chat of its own]({% link _getting_started/agents.md %}#subagents-that-wait-for-a-person).
 {: .note }
 
 ## Flows
@@ -437,7 +437,8 @@ end
 
 chat = Editor.create!
 chat.ask "Publish the quantum computing post"
-chat.awaiting_person? # => true
+chat.waiting?                          # => true
+chat.pending_questions.first.approval? # => true
 ```
 
 The decision is stored on the tool call's row, so another request, after a deploy if need be, can record it and continue:
@@ -448,7 +449,7 @@ chat.approve params[:tool_call_id]
 chat.complete
 ```
 
-You still scope the lookup and authorize the reviewer in your controller, as you would for any other action. `chat.pending_questions` lists what to show the reviewer, and `chat.deny` sends the model a refusal instead.
+You still scope the lookup and authorize the reviewer in your controller, as you would for any other action. `chat.pending_questions` lists what to show the reviewer, and `chat.decline` sends the model a refusal instead, with the reviewer's note if they give one.
 
 The two gate different things. CrewAI reviews what a step produced, and routes on what the reviewer said. RubyLLM stops an action before it happens, and takes a yes or a no. It doesn't read free text into an outcome, and notifying the reviewer is your application's code, such as a mailer or a Slack call. See [Controlling Tool Execution]({% link _tools/tool-execution.md %}).
 
@@ -564,7 +565,7 @@ CrewAI ships these as framework features:
 | `and_` | `Async` blocks, waiting for each |
 | `or_` | `Async` blocks, acting on the first to finish |
 | `@persist` and `checkpoint` | `acts_as_chat` and [one step per job]({% link _advanced/durable-agents.md %}) |
-| `@human_feedback` | `requires_approval`, `approve`, and `deny` |
+| `@human_feedback` | `requires_approval`, `approve`, and `decline` |
 | `output_pydantic` and `response_format` | `schema` |
 | `BaseTool` or `@tool` | A [`RubyLLM::Tool`]({% link _getting_started/tools.md %}) class |
 | `Crew(stream=True)` | A block given to `ask` |

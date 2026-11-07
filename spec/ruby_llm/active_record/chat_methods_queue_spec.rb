@@ -335,7 +335,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     chat.queue('Steer')
 
     resumed = job_for(chat).with_tools(nil).with_tools(approved_echo)
-    resumed.approve(resumed.pending_approvals.first)
+    resumed.approve(resumed.pending_questions.first)
     resumed.complete
 
     expect(transcript(chat)).to eq([[:user, 'Echo hello'], [:assistant, ''], [:tool, 'hello'], [:user, 'Steer'],
