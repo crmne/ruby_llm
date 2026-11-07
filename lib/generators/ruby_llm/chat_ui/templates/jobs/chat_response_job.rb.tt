@@ -1,15 +1,16 @@
 class <%= chat_job_class_name %> < ApplicationJob
+  discard_on RubyLLM::CancelledError
+
   def perform(<%= chat_variable_name %>_id)
     <%= chat_variable_name %> = <%= chat_agent_class_name %>.find(<%= chat_variable_name %>_id)
     <%= chat_variable_name %>.update!(reply_error: nil)
     <%= chat_variable_name %>.complete(&:broadcast)
-    self.class.perform_later(<%= chat_variable_name %>_id) if <%= chat_variable_name %>.queued_messages.any? && !<%= chat_variable_name %>.waiting?
-    self.class.set(wait: 1.minute).perform_later(<%= chat_variable_name %>_id) if <%= chat_variable_name %>.running?
+    retry_job wait: 1.minute if <%= chat_variable_name %>.running?
   rescue RubyLLM::CancelledError
-    self.class.perform_later(<%= chat_variable_name %>_id) if <%= chat_variable_name %>.queued_messages.any?
+    raise
   rescue StandardError => error
-    <%= chat_variable_name %>.update!(reply_error: reply_error_message(error))
-    <%= chat_variable_name %>.broadcast_refresh
+    <%= chat_variable_name %>&.update!(reply_error: reply_error_message(error))
+    <%= chat_variable_name %>&.broadcast_refresh
     raise
   end
 

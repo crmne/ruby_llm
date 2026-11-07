@@ -132,7 +132,7 @@ module RubyLLM
       # return without doing anything and #waiting? is +true+. A process
       # that dies stops counting as running within a minute.
       #
-      #   CompleteJob.set(wait: 1.minute).perform_later(chat.id) if chat.running?
+      #   retry_job wait: 1.minute if chat.running?
       #
       def running?
         return false unless run_claims?
@@ -875,13 +875,23 @@ module RubyLLM
       end
 
       # Persists +message+ as a user message without calling the model, so
-      # #complete can run later. Every queued message (see #queue) is
-      # persisted first, in order. Returns +self+.
+      # #complete can run later, usually in a job. Every queued message (see
+      # #queue) is persisted first, in order. Returns +self+.
       #
-      #   chat.ask_later "Summarize this document."
-      #   chat.complete
+      #   chat.ask_later params[:content]
+      #   ChatResponseJob.perform_later(chat.id)
       #
+      # While a run holds the chat, in this process or another, the message
+      # is queued instead, as #queue does, so the transcript that run writes
+      # stays whole. The run takes it at its next step, or the next
+      # #complete does. An MCP::Prompt, which the queue can't hold, is
+      # persisted either way.
+      #
+      # Raises PendingToolCallsError while the last response has tool calls
+      # waiting for their results and no run holds the chat.
       def ask_later(message = nil, with: nil)
+        return tap { queue(message, with:) } if running? && !message.is_a?(RubyLLM::MCP::Prompt)
+
         to_llm.raise_if_pending_tool_calls!
         to_llm.raise_if_prompt_attachments!(message, with)
         to_llm.take_queued_messages
@@ -948,33 +958,47 @@ module RubyLLM
       # Only one process runs a chat at a time. While another process is
       # #running? it, returns the latest message without calling the model
       # or running tools, and #waiting? is +true+. Work recorded while this
-      # process ran, such as an approval, continues before it returns.
+      # process ran, such as an approval, continues before it returns. A job
+      # that finds the chat running tries again later, which also covers a
+      # process that dies, since its claim expires within a minute:
+      #
+      #   def perform(chat_id)
+      #     chat = ChatAgent.find(chat_id)
+      #     chat.complete(&:broadcast)
+      #     retry_job wait: 1.minute if chat.running?
+      #   end
       #
       # Each chunk passed to the block also answers +message+, the record
       # it streams into, and +broadcast+ (see ChunkMethods). When the
       # messages broadcast with Turbo, the chat's page refreshes once the
       # run ends.
       #
-      #   chat.complete(&:broadcast)
-      #
       # Queued messages join as RubyLLM::Chat#complete describes, including
       # those another process queues while this one runs. A message that
       # steers, queued as the run ends, starts another loop before
-      # #complete returns.
+      # #complete returns. When #cancel stops the run while messages wait
+      # in the queue, the run goes on with them before #complete returns,
+      # as the next #complete would. It raises CancelledError when none
+      # wait, or when the stop came before the run began.
       def complete(&block)
         operation = :complete
         loop do
-          busy = false
+          busy = stopped_before_run = false
           response = exclusively(-> { busy = true }) do
+            stopped_before_run = self[:cancelled]
             completing(block) { |on_chunk| to_llm.public_send(operation, &on_chunk) }
           end
           return latest_message if busy
           return response unless work_arrived_during_run?
 
           operation = :continue_turn
+        rescue CancelledError
+          raise if stopped_before_run || ChatQueue.new(self).none?
+
+          operation = :complete
         end
       ensure
-        broadcast_refresh_to(self) if broadcasts_messages?
+        broadcast_refresh_to(self, request_id: nil) if broadcasts_messages?
       end
 
       # Queues +message+ in the chat's +ruby_llm_queued_messages+ table, as
@@ -985,10 +1009,12 @@ module RubyLLM
       #
       # Any process can queue a message. The process that runs the chat
       # takes it at its next step; when none is running, run #complete,
-      # usually in a job.
+      # usually in a job. #ask_later queues for you while a run holds the
+      # chat, so reach for #queue when a message should wait for the turn
+      # to end (<tt>steer: false</tt>) or keep its +sender+.
       #
       #   chat.queue params[:content], sender: Current.user
-      #   ChatResponseJob.perform_later(chat.id) unless chat.running?
+      #   ChatResponseJob.perform_later(chat.id)
       #
       def queue(message = nil, with: nil, steer: true, sender: nil)
         to_llm.queue(message, with:, steer:, sender:)

@@ -120,14 +120,14 @@ RubyLLM.configure do |config|
 end
 ```
 
-The controller queues the customer's message and starts a job, unless one is already running for this chat:
+The controller saves the customer's message and starts a job to answer it:
 
 ```ruby
 class MessagesController < ApplicationController
   def create
     chat = current_customer.chats.find(params[:chat_id])
-    chat.queue(params[:content])
-    SupportReplyJob.perform_later(chat.id) unless chat.running?
+    chat.ask_later(params[:content])
+    SupportReplyJob.perform_later(chat.id)
     head :accepted
   end
 end
@@ -138,7 +138,9 @@ The job lets the agent finish the conversation, broadcasting each chunk as it ar
 ```ruby
 class SupportReplyJob < ApplicationJob
   def perform(chat_id)
-    SupportAgent.find(chat_id).complete(&:broadcast)
+    chat = SupportAgent.find(chat_id)
+    chat.complete(&:broadcast)
+    retry_job wait: 1.minute if chat.running?
   end
 end
 ```
@@ -151,7 +153,7 @@ The chat's page subscribes to its stream and renders its messages:
 <div id="messages"><%= render @chat.messages %></div>
 ```
 
-`complete` takes the queued message and answers it, and each chunk's `broadcast` appends it to the assistant message on the page. A message sent while a reply runs waits in the queue, and the running job takes it at its next step.
+`complete` answers the message, and each chunk's `broadcast` appends it to the assistant message on the page. A message sent while a reply runs waits in the queue, because `ask_later` queues it while a run holds the chat, and the running job answers it before it lets the chat go. The job you enqueued for it finds the chat running and returns. Its retry a minute later only matters when the running job died, since its claim on the chat expires within a minute.
 
 `render @chat.messages` picks a partial per message: `messages/_system`, `_user`, `_assistant`, `_tool`, and `_tool_calls`. Write the ones your page shows. The assistant partial holds the target chunks land in. Rendering a collection passes it `assistant`, and a broadcast passes it `message`, so it accepts both:
 

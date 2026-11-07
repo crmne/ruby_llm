@@ -63,7 +63,7 @@ RSpec.describe RubyLLM::ActiveRecord::MessageBroadcasting do
          [[chat], "broadcast_message_#{reply.id}_stream", '<span data-seq="2" data-after="0">lo &lt;b&gt;</span>']]
       )
       expect(broadcasts.map(&:first)).to include(:broadcast_replace_to)
-      expect(broadcasts.last).to eq([:broadcast_refresh_to, [chat], {}])
+      expect(broadcasts.last).to eq([:broadcast_refresh_to, [chat], { request_id: nil }])
     end
 
     it 'broadcasts, streams, and persists split think tags the same way' do
@@ -113,6 +113,18 @@ RSpec.describe RubyLLM::ActiveRecord::MessageBroadcasting do
       message.destroy!
 
       expect(broadcasts.map(&:first)).to include(:broadcast_remove_to)
+    end
+
+    it 'refreshes the page whose request saved the message too, so Turbo skips no burst of refreshes' do
+      chat = BroadcastChat.create!(model: model_for(:openai))
+
+      Turbo.with_request_id('the-page-that-sent-it') { chat.add_message(role: :user, content: 'Hi') }
+
+      refreshes = broadcasts.select { |action, *| action == :broadcast_refresh_to }
+      expect(refreshes).to eq([[:broadcast_refresh_to, [chat], { request_id: nil }]])
+      view = ActionView::Base.empty.extend(Turbo::Streams::ActionHelper)
+      tag = Turbo.with_request_id('the-page-that-sent-it') { view.turbo_stream_refresh_tag(request_id: nil) }
+      expect(tag).to eq('<turbo-stream action="refresh"></turbo-stream>')
     end
   end
 
