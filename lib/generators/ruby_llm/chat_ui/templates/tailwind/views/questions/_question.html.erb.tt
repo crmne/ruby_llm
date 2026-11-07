@@ -3,6 +3,7 @@
 <%% single = question.fields.first if question.fields.one? %>
 <%% choices = single&.choices&.to_h { |choice| [choice, choice] } %>
 <%% choices = { "Yes" => true, "No" => false } if single&.type == "boolean" %>
+<%% steps = { "integer" => 1, "number" => "any" } %>
 <%% primary = "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium cursor-pointer" %>
 <%% secondary = "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 font-medium cursor-pointer" %>
 <div id="<%%= card %>" class="w-full sm:w-auto my-5 space-y-3 rounded-md px-3 py-2 bg-amber-50 border border-amber-200">
@@ -41,22 +42,37 @@
       <%%= form_with url: answers_path, class: "space-y-3" do |form| %>
         <%%= form.hidden_field :question_id, value: question.id %>
         <%% if question.fields.one? %>
-          <%%= form.text_field :answer, value: question.fields.first.default, required: question.fields.first.required?,
-            id: "#{card}_answer", "aria-label": question.message, class: "block shadow-sm rounded-md border border-gray-400 px-3 py-2 w-full" %>
+          <div>
+            <%%= form.text_field :answer, value: single.default, required: single.required?, id: "#{card}_answer",
+              type: steps.key?(single.type) ? "number" : "text", step: steps[single.type], "aria-label": question.message, class: "block shadow-sm rounded-md border border-gray-400 px-3 py-2 w-full" %>
+            <%% if single.description %>
+              <p class="mt-1 text-xs text-gray-600"><%%= single.description %></p>
+            <%% end %>
+          </div>
         <%% else %>
           <%% question.fields.each do |field| %>
             <%% field_id = "#{card}_#{field.name.to_s.parameterize(separator: "_")}" %>
+            <%% caption = field.title || field.name.to_s.humanize %>
             <%% list = field.type == "array" %>
             <div>
-              <%%= label_tag field_id, field.title || field.name.to_s.humanize, class: "block text-sm font-medium" %>
-              <%% if field.choices %>
-                <%%= form.select "answer[#{field.name}]", field.choices, { selected: field.default, include_blank: !field.required? && !list },
-                  id: field_id, multiple: list, class: "block shadow-sm rounded-md border border-gray-400 px-3 py-2 mt-1 w-full" %>
-              <%% elsif field.type == "boolean" %>
-                <%%= form.check_box "answer[#{field.name}]", { checked: field.default, id: field_id, class: "mt-1" }, "true", "false" %>
+              <%% if field.type == "boolean" %>
+                <div class="flex items-center gap-2">
+                  <%%= form.check_box "answer[#{field.name}]", { checked: field.default, id: field_id }, "true", "false" %>
+                  <%%= label_tag field_id, caption, class: "text-sm font-medium" %>
+                </div>
               <%% else %>
-                <%%= form.text_field "answer[#{field.name}]", value: field.default, required: field.required?, id: field_id,
-                  class: "block shadow-sm rounded-md border border-gray-400 px-3 py-2 mt-1 w-full" %>
+                <%%= label_tag field_id, caption, class: "block text-sm font-medium" %>
+                <%% if field.choices %>
+                  <%%= form.select "answer[#{field.name}]", field.choices, { selected: field.default, include_blank: !field.required? && !list },
+                    id: field_id, multiple: list, required: list && field.required?, class: "block shadow-sm rounded-md border border-gray-400 px-3 py-2 mt-1 w-full" %>
+                <%% else %>
+                  <%%= form.text_field "answer[#{field.name}]", value: field.default, required: field.required?, id: field_id,
+                    type: steps.key?(field.type) ? "number" : "text", step: steps[field.type],
+                    class: "block shadow-sm rounded-md border border-gray-400 px-3 py-2 mt-1 w-full" %>
+                <%% end %>
+              <%% end %>
+              <%% if field.description %>
+                <p class="mt-1 text-xs text-gray-600"><%%= field.description %></p>
               <%% end %>
             </div>
           <%% end %>

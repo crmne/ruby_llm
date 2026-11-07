@@ -3,6 +3,7 @@
 <%% single = question.fields.first if question.fields.one? %>
 <%% choices = single&.choices&.to_h { |choice| [choice, choice] } %>
 <%% choices = { "Yes" => true, "No" => false } if single&.type == "boolean" %>
+<%% steps = { "integer" => 1, "number" => "any" } %>
 <div id="<%%= card %>" class="question"
      style="margin-bottom: 20px; padding: 10px; border-left: 3px solid #d97706; background: #fffbeb;">
   <%% if question.approval? %>
@@ -29,21 +30,32 @@
       <%%= form_with url: answers_path do |form| %>
         <%%= form.hidden_field :question_id, value: question.id %>
         <%% if question.fields.one? %>
-          <%%= form.text_field :answer, value: question.fields.first.default, required: question.fields.first.required?,
-            id: "#{card}_answer", "aria-label": question.message %>
+          <%%= form.text_field :answer, value: single.default, required: single.required?, id: "#{card}_answer",
+            type: steps.key?(single.type) ? "number" : "text", step: steps[single.type], "aria-label": question.message %>
+          <%% if single.description %>
+            <div style="margin: 5px 0; font-size: 0.875em; color: #6b7280;"><%%= single.description %></div>
+          <%% end %>
         <%% else %>
           <%% question.fields.each do |field| %>
             <%% field_id = "#{card}_#{field.name.to_s.parameterize(separator: "_")}" %>
+            <%% caption = field.title || field.name.to_s.humanize %>
             <%% list = field.type == "array" %>
-            <div style="margin-bottom: 5px;">
-              <%%= label_tag field_id, field.title || field.name.to_s.humanize %>
-              <%% if field.choices %>
-                <%%= form.select "answer[#{field.name}]", field.choices, { selected: field.default, include_blank: !field.required? && !list },
-                  id: field_id, multiple: list %>
-              <%% elsif field.type == "boolean" %>
+            <div style="margin-bottom: 10px;">
+              <%% if field.type == "boolean" %>
                 <%%= form.check_box "answer[#{field.name}]", { checked: field.default, id: field_id }, "true", "false" %>
+                <%%= label_tag field_id, caption %>
               <%% else %>
-                <%%= form.text_field "answer[#{field.name}]", value: field.default, required: field.required?, id: field_id %>
+                <%%= label_tag field_id, caption, style: "display: block;" %>
+                <%% if field.choices %>
+                  <%%= form.select "answer[#{field.name}]", field.choices, { selected: field.default, include_blank: !field.required? && !list },
+                    id: field_id, multiple: list, required: list && field.required? %>
+                <%% else %>
+                  <%%= form.text_field "answer[#{field.name}]", value: field.default, required: field.required?, id: field_id,
+                    type: steps.key?(field.type) ? "number" : "text", step: steps[field.type] %>
+                <%% end %>
+              <%% end %>
+              <%% if field.description %>
+                <div style="font-size: 0.875em; color: #6b7280;"><%%= field.description %></div>
               <%% end %>
             </div>
           <%% end %>
