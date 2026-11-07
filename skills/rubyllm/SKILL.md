@@ -30,13 +30,15 @@ bin/rails generate ruby_llm:tool Weather
 bin/rails generate ruby_llm:agent Researcher
 ```
 
-Each takes one line in `app/agents/chat_agent.rb`, which is what the generated UI runs: `code_execution`, `mcp Linear`, `tools WeatherTool`, and `file_store` for files.
-
-For what cancel, a restart, and a failure each save and continue, see `durable-agents/#when-a-run-is-interrupted`. Don't rebuild the transcript, don't keep a price table, and don't reopen or prepend onto RubyLLM's classes. If you think you need to, read the matching guide below first: `rails-persistence/`, `cost-and-usage-tracking/`, or the feature's own.
+Each takes one line in `app/agents/chat_agent.rb`, which is what the generated UI runs: `code_execution`, `mcp Linear`, `tools WeatherTool`, and `file_store` when the model should keep files. Don't rebuild the transcript, don't keep a price table, and don't reopen or prepend onto RubyLLM's classes. If you think you need to, read the matching guide below first: `rails-persistence/`, `cost-and-usage-tracking/`, or the feature's own.
 
 With `with_thinking` on, a stream can sit quiet for several seconds before text starts, while the model thinks. That is normal, not a stall.
 
-You don't need to read the generated files or `lib/ruby_llm` to use this. The generator prints what works and which file controls it: with the default `Chat` model, `app/jobs/chat_response_job.rb` runs the turn and shows errors, `ChatsController#cancel` is Stop, and `app/agents/chat_agent.rb` says what the model can do. Files attached to a chat reach `code_execution` in `attachments/`, and reach `file_store` as the chat's files. For anything else, read the one guide for that feature, and open source only when something fails or you need a signature.
+You don't need to read the generated files or `lib/ruby_llm` to use this. The generator prints what works and which file controls it: with the default `Chat` model, `app/jobs/chat_response_job.rb` runs the turn and shows errors, `ChatsController#cancel` is Stop, and `app/agents/chat_agent.rb` says what the model can do. For anything else, read the one guide for that feature, and open source only when something fails or you need a signature.
+
+Code reads a chat's attachments, earlier ones too, at `attachments/<name>` in its run directory, which `RUN_DIR` names, or at `<name>` in the folder of a store in a folder. Python needs `:python` in `languages:`, which replaces the default of Ruby and shell, or `python:` packages. Without a converter, a model and provider that read PDFs get the file itself, so no PDF gem is needed.
+
+`durable-agents/#when-a-run-is-interrupted` says what cancel, a crash, and a failure each save and continue.
 
 RubyLLM's own suite covers streaming and reply assembly, persistence, the tool loop, usage and cost, retries, cancellation, and generated code; the official conformance suite covers its MCP client; and mxc's tests cover sandbox isolation. Don't probe those by hand. See [Verify](#verify-the-application-change) for the one command that checks the result.
 
@@ -54,9 +56,14 @@ For a 1.x application, use its version's documentation and keep the requested ch
 These are the signatures an application uses, for 2.2; on an older release, check the `with_file_store`, `with_code_execution`, and test helper lines against its guides. Use them, and don't write your own version of anything here: not persistence, a runner, a sandbox, an MCP client, or a price table.
 
 ```ruby
-chat = RubyLLM.chat(model: "...", provider: :openai)   # or Chat.create! with acts_as_chat
+RubyLLM.configure do |config|
+  config.anthropic_api_key = ENV["ANTHROPIC_API_KEY"]
+  config.anthropic_api_base = ENV["ANTHROPIC_BASE_URL"]   # without /v1/messages; openai_api_base ends in /v1, gemini_api_base in its API version, /v1beta by default
+end
+
+chat = RubyLLM.chat(model: "...")   # or Chat.create!(model: "...") with acts_as_chat
 message = chat.ask("Hi", with: "file.pdf") { |chunk| chunk.content }
-message.content; message.parsed; message.tokens.input; message.cost.total   # also chat.tokens, chat.cost
+message.content; message.parsed; message.tokens.input; message.cost.total; message.model_id   # also chat.tokens, chat.cost, chat.model_id
 chat.cancel    # any thread, and any process with acts_as_chat; raises RubyLLM::CancelledError in the running call
 
 # Chainable on a chat. Each is also a macro without with_ on RubyLLM::Agent.
@@ -65,8 +72,11 @@ with_thinking with_caching with_citations with_compaction with_context_budget wi
 with_file_store with_code_execution with_skills with_provider_tools with_tool_options with_provider_options
 
 class ChatAgent < ApplicationAgent    # or RubyLLM::Agent
-  model "..."; instructions "..."; tools WeatherTool; mcp Linear; file_store; code_execution
+  model "..."; instructions "..."; tools WeatherTool; mcp Linear; code_execution languages: [:python]
+  thinking effort: :medium   # follows model changes; the generated ChatAgent also sets context_budget and caching
 end
+ChatAgent.create!(model: "...")   # a chat keeps its model; ChatAgent.find applies the agent and leaves the model alone
+chat.with_model("...")            # saved on a record, and the next request uses it with the same history
 
 class WeatherTool < RubyLLM::Tool
   description "Looks up the weather"
@@ -93,7 +103,10 @@ RubyLLM.paint RubyLLM.animate RubyLLM.speak RubyLLM.transcribe RubyLLM.ocr RubyL
 require "ruby_llm/test_helper"
 include RubyLLM::TestHelper
 stub_replies tool_call(:weather, city: "Berlin"), "It is sunny.", cost: 0.01, interval: 0.05
+stub_replies RubyLLM::ServerError.new("The provider is down")   # in another test: a failed request
 ```
+
+A model ID is enough: the registry knows its provider, so `with_model`, `create!`, and a model picker need no table of providers. Pass `provider:` when several providers offer the model. For one the registry doesn't list, see `model-resolution/`.
 
 Outside Rails, all of this except the Rails records works on plain Ruby objects. The application stores the transcript itself and rebuilds a chat with `add_message`, which does not restore the usage ledger, so persist `usage.ruby_llm` events if it needs past spend.
 
@@ -107,6 +120,8 @@ Read the relevant page instead of loading the entire documentation site:
 | --- | --- |
 | Understand the framework's structure | `overview/` |
 | Configure a provider or select a model | `configuration/`, `configuration-providers/`, `models/` |
+| Script replies in tests | `testing/` |
+| Limit tool results, choose the wire protocol, or set request options | `chat-request-control/` |
 | Chat, stream, or attach files | `chat/`, `streaming/`, `attachments/` |
 | Declare tools or require approval | `tools/`, `tool-parameters/`, `tool-execution/` |
 | Let the model run code in a sandbox (2.2) | `code-execution/`, `sandboxes/` |
@@ -134,7 +149,7 @@ Markdown guides use the same name with `.md`, such as `chat.md`. The API referen
 
 ## Use the 2.x API consistently
 
-- Configure credentials through `RubyLLM.configure`, following the application's secret storage. Select an existing configured provider. Verify explicit model IDs with `RubyLLM.models.find(id, provider: ...)`; do not invent IDs or use `assume_model_exists` to hide a typo.
+- Configure credentials through `RubyLLM.configure`, following the application's secret storage. Select an existing configured provider. Verify explicit model IDs with `RubyLLM.models.find(id, provider: ...)`; do not invent IDs or use `assume_model_exists` to hide a typo. Bedrock streaming through Converse or InvokeModel needs `gem "aws-eventstream"` in the Gemfile, which RubyLLM loads only when a stream starts.
 - Use individual operations directly for media, document processing, moderation, embeddings, and reranking. Read their typed results and use `save` on generated images, video, and speech. Check each operation's provider, model, and credentials; a configured chat provider may not offer every operation. `animate` waits for completion; use `animate_later` when the application needs to manage the job.
 - `ask` runs the conversation and returns a message. `ask_later` stages input and returns the chat. For explicit loop control, use `generate`, `run_tools`, `step`, and `complete?`. Approval can park the loop before completion; inspect `awaiting_approval?` and resume after `approve` or `deny`. `queue` adds a user message while the loop runs (`steer: false` waits for the turn to end), and the next `ask`, `complete`, or `step` takes whatever is still queued.
 - Subclass `RubyLLM::Tool`. Use `description`, `parameter`, or a `parameters` block, and keyword arguments on `execute`. Register tools with `with_tools`; configure choice and concurrency with `with_tool_options`. Keep application authorization in the tool or underlying service. Use `requires_approval` when the product needs a user's decision before execution. Call `halt(result)` in a tool that says the last word, so the turn ends without another model call (2.2). Declare `exclusive` on tools that share state, such as a browser page, so they run alone in a concurrent round (2.2). With large tool sets, pass `defer: true` to `with_tools` or `with_mcp` (or declare `defer` on the class) so the model searches for tools instead of receiving them all (2.1).

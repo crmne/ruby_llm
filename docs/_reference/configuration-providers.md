@@ -325,6 +325,8 @@ end
 
 RubyLLM selects the Bedrock endpoint from the model registry. Converse and Mantle use the same credentials and region. Claude models speak the Anthropic Messages API through InvokeModel on the Converse host, so they keep Anthropic features such as tool search. Pass `protocol: :converse` on a chat, or set `config.bedrock_protocol = :converse`, to send Claude through Converse instead.
 
+Streaming through Converse or InvokeModel needs the `aws-eventstream` gem, which RubyLLM loads when a stream starts. Add `gem "aws-eventstream"` to your Gemfile. Mantle streams without it.
+
 For a custom endpoint, set `bedrock_api_base` for Converse or `bedrock_mantle_api_base` for Mantle. Either can include a port and a path, such as `http://gateway:8080/bedrock`. Requests go under that path. See [Model Resolution]({% link _reference/model-resolution.md %}) for protocol selection.
 
 ### Guardrails
