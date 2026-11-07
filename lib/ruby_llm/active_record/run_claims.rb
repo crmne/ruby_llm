@@ -8,7 +8,8 @@ module RubyLLM
     # tool runs.
     #
     # A claim is a lease of CLAIM_LEASE seconds that a heartbeat thread
-    # renews every CLAIM_RENEWAL seconds, so the work of a process that dies
+    # renews every CLAIM_RENEWAL seconds, or every quarter of a shorter
+    # Configuration#max_run_time, so the work of a process that dies
     # is free again within a lease. Renewal stops at the claim's deadline:
     # Configuration#max_run_time after the run last made progress, or a
     # tool's Tool.max_run_time, so a run that hangs past it counts as
@@ -155,7 +156,7 @@ module RubyLLM
 
         now = Time.current
         @run_claim_deadline = [@run_claim_deadline, now + run_claim_duration].max
-        write_run_claim(now) if force || now >= @run_claim_renewed_at + CLAIM_RENEWAL
+        write_run_claim(now) if force || now >= @run_claim_renewed_at + claim_renewal_interval
       end
 
       def write_run_claim(now = Time.current)
@@ -213,7 +214,7 @@ module RubyLLM
         return if @claim_heartbeat || claims_in_transaction?
 
         claim_lock
-        @claim_heartbeat = ClaimHeartbeat.new([self.class, RubyLLM::ActiveRecord::ToolCall], CLAIM_RENEWAL) do
+        @claim_heartbeat = ClaimHeartbeat.new([self.class, RubyLLM::ActiveRecord::ToolCall], claim_renewal_interval) do
           renew_claim_leases
         end
       end
@@ -230,6 +231,12 @@ module RubyLLM
 
       def leased_until(deadline, now)
         @claim_heartbeat ? [now + CLAIM_LEASE, deadline].min : deadline
+      end
+
+      # A max_run_time shorter than the lease is the claim's whole life, so
+      # a renewal has to land within it.
+      def claim_renewal_interval
+        [CLAIM_RENEWAL, [CLAIM_LEASE, run_claim_duration].min / 4.0].min
       end
 
       def running_elsewhere?

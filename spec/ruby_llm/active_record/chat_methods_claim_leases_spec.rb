@@ -62,9 +62,9 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     Thread.list.select { |thread| thread.alive? && thread.name == 'ruby_llm claim heartbeat' }
   end
 
-  # Runs +work+ in a forked process, waits until it reports that it is
-  # busy, and returns its pid.
   def busy_process(&work)
+    skip 'needs fork' unless RUBY_ENGINE == 'ruby'
+
     reader, writer = IO.pipe
     pid = fork do
       reader.close

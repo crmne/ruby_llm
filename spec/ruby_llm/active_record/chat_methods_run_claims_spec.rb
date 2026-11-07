@@ -709,6 +709,25 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     travel_back
   end
 
+  it 'renews within a run time shorter than the lease as it streams' do
+    allow(RubyLLM.config).to receive(:max_run_time).and_return(8)
+    freeze_time
+    chat = question_chat
+    started = Time.current
+    claims = []
+    job = job_for(chat) do |stream|
+      travel 3.seconds
+      stream.call(chunk)
+      claims << claimed_until(chat)
+    end
+
+    job.complete { |_chunk| nil }
+
+    expect(claims).to eq([started + 11.seconds])
+  ensure
+    travel_back
+  end
+
   it 'keeps renewing its lease until the run time a long tool call extended' do
     freeze_time
     started = Time.current
