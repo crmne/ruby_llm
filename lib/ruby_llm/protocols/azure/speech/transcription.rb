@@ -55,10 +55,11 @@ module RubyLLM
             track_usage(:transcription) do
               file_part = build_audio_file_part(audio_file)
               payload = render_transcription_payload(file_part, language:, speaker_names:, prompt:, provider_options:)
-              response = @connection.post(transcription_url, payload, usage: @usage_tracker) do |request|
-                request.headers.merge!(@provider.azure_speech_headers)
-              end
-              parse_transcription_response(response, model:)
+              parse_transcription_response(post_transcription(payload), model:)
+            rescue RubyLLM::Error => e
+              raise unless no_language_identified?(e.response)
+
+              RubyLLM::Transcription.new(text: '', model:)
             end
           end
 
@@ -79,6 +80,24 @@ module RubyLLM
           end
 
           private
+
+          def post_transcription(payload)
+            @connection.post(transcription_url, payload, usage: @usage_tracker) do |request|
+              request.headers.merge!(@provider.azure_speech_headers)
+            end
+          end
+
+          # Given candidate languages, Azure answers silence with a 422 that
+          # bills nothing, where every other provider returns an empty
+          # transcript.
+          def no_language_identified?(response)
+            return false unless response&.status == 422
+
+            body = response.body.is_a?(String) ? JSON.parse(response.body) : response.body
+            body.is_a?(Hash) && body.dig('innerError', 'code') == 'NoLanguageIdentified'
+          rescue JSON::ParserError
+            false
+          end
 
           # Azure bills whole seconds and reports them in a header, as
           # <tt>CognitiveServices.SpeechServices.BatchSpeechtoTextSync=4</tt>.

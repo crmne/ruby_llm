@@ -68,6 +68,15 @@ RSpec.describe RubyLLM::Providers::Azure do
       expect(described_class.new(token_context.config).azure_speech_headers).to eq({})
     end
 
+    it 'still raises other unprocessable requests' do
+      stub_request(:post, url).to_return(status: 422, headers: { 'Content-Type' => 'application/json' },
+                                         body: { code: 'UnprocessableEntity', message: 'Bad audio.',
+                                                 innerError: { code: 'InvalidAudio' } }.to_json)
+
+      expect { context.transcribe(audio_path, model:, provider: :azure, language: %w[en-US it-IT]) }
+        .to raise_error(RubyLLM::Error)
+    end
+
     it 'rejects options the endpoint cannot carry' do
       expect { context.transcribe(audio_path, model:, provider: :azure, format: 'srt') }
         .to raise_error(ArgumentError, /format/)
@@ -99,6 +108,15 @@ RSpec.describe RubyLLM::Providers::Azure do
 
       expect(transcription.text).to match(/ruby/i)
       expect(transcription.language).to eq('en-US')
+    end
+
+    it 'returns an empty transcript for silence when given candidate languages' do
+      silence = File.expand_path('../../fixtures/silence.wav', __dir__)
+
+      transcription = RubyLLM.transcribe(silence, model:, provider: :azure, language: %w[en-US it-IT])
+
+      expect(transcription).to have_attributes(text: '', language: nil, duration: nil)
+      expect(transcription.cost.total).to eq(0)
     end
 
     it 'labels speakers when asked' do
