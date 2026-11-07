@@ -54,6 +54,27 @@ module RubyLLM
     private_constant :SETTINGS, :INPUT_ROUNDS, :INPUT_REQUESTS, :INLINE_SETTINGS, :EXTENSIONS, :POLL_INTERVAL,
                      :LOG_LEVELS, :UNKNOWN_TOOL_ERRORS
 
+    ##
+    # :singleton-method: rescue_from
+    # :call-seq: rescue_from(*exception_classes, with: nil, &block)
+    #
+    # Registers a handler for exceptions raised while one of the server's
+    # tools runs in a chat, the way Tool.rescue_from does for a Tool. Name
+    # the handler with +with:+ or pass a block; either runs on the MCP
+    # instance, so declared ::inputs are available. The handler's return
+    # value becomes the call's result. Re-raise to stop the chat.
+    #
+    #   class Linear < RubyLLM::MCP
+    #     url "https://mcp.linear.app/mcp"
+    #
+    #     rescue_from RubyLLM::MCP::Error do |error|
+    #       { error: "Linear couldn't answer: #{error.message}" }
+    #     end
+    #   end
+    #
+    # A handler declared here comes before one declared on MCP::Tool. Tool
+    # classes added with ::tool use their own handlers.
+
     class << self
       attr_writer :default_name # :nodoc:
       attr_reader :allow_http # :nodoc:
@@ -354,27 +375,6 @@ module RubyLLM
       end
 
       def deferrals = @deferrals || [] # :nodoc:
-
-      ##
-      # :method: rescue_from
-      # :call-seq: rescue_from(*exception_classes, with: nil, &block)
-      #
-      # Registers a handler for exceptions raised while one of the server's
-      # tools runs in a chat, the way Tool.rescue_from does for a Tool. Name
-      # the handler with +with:+ or pass a block; either runs on the MCP
-      # instance, so declared ::inputs are available. The handler's return
-      # value becomes the call's result. Re-raise to stop the chat.
-      #
-      #   class Linear < RubyLLM::MCP
-      #     url "https://mcp.linear.app/mcp"
-      #
-      #     rescue_from RubyLLM::MCP::Error do |error|
-      #       { error: "Linear couldn't answer: #{error.message}" }
-      #     end
-      #   end
-      #
-      # A handler declared here comes before one declared on MCP::Tool. Tool
-      # classes added with ::tool use their own handlers.
 
       # Registers a callback for the progress the server reports while it
       # works on a request. Pass a method name or a block; either runs on

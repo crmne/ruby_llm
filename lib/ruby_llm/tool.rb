@@ -68,6 +68,43 @@ module RubyLLM
     ].freeze
     private_constant :DUPED_INHERITED_CONFIG, :COPIED_INHERITED_CONFIG
 
+    ##
+    # :singleton-method: rescue_from
+    # :call-seq: rescue_from(*exception_classes, with: nil, &block)
+    #
+    # Registers a handler for exceptions #execute and #resume raise. Name
+    # the handler with +with:+ or pass a block; either runs on the tool
+    # instance. The handler's return value becomes the call's result, as
+    # if #execute had returned it, so the model reads it and the chat
+    # goes on. Re-raise inside a handler to stop the chat with the
+    # exception, as an unhandled one does.
+    #
+    #   class ApplicationTool < RubyLLM::Tool
+    #     rescue_from StandardError, with: :report_failure
+    #
+    #     rescue_from Faraday::Error do |error|
+    #       { error: "The service didn't answer (#{error.class.name.demodulize}). Try again later." }
+    #     end
+    #
+    #     private
+    #
+    #     def report_failure(error)
+    #       Rails.error.report(error, context: { tool: name })
+    #       { error: "This tool failed unexpectedly. Trying the same call again won't help." }
+    #     end
+    #   end
+    #
+    # Handlers are searched in reverse declaration order, so the last
+    # matching one wins. Subclasses inherit the handlers declared when
+    # they are defined; declare handlers for RubyLLM's own tools on their
+    # classes, such as CodeExecution, and for a server's tools on its MCP
+    # class. A question from Tool#ask and a cancelled chat never reach a
+    # handler.
+    #
+    # Exception classes may be named as Strings, which defers constant
+    # lookup until an exception is raised. A class that can never match a
+    # StandardError, such as Interrupt, raises ArgumentError.
+
     class << self
       attr_reader :parameters_schema_definition, :approval_resolver, :namespace_description # :nodoc:
 
@@ -309,43 +346,6 @@ module RubyLLM
 
         @inline_limit = characters
       end
-
-      ##
-      # :method: rescue_from
-      # :call-seq: rescue_from(*exception_classes, with: nil, &block)
-      #
-      # Registers a handler for exceptions #execute and #resume raise. Name
-      # the handler with +with:+ or pass a block; either runs on the tool
-      # instance. The handler's return value becomes the call's result, as
-      # if #execute had returned it, so the model reads it and the chat
-      # goes on. Re-raise inside a handler to stop the chat with the
-      # exception, as an unhandled one does.
-      #
-      #   class ApplicationTool < RubyLLM::Tool
-      #     rescue_from StandardError, with: :report_failure
-      #
-      #     rescue_from Faraday::Error do |error|
-      #       { error: "The service didn't answer (#{error.class.name.demodulize}). Try again later." }
-      #     end
-      #
-      #     private
-      #
-      #     def report_failure(error)
-      #       Rails.error.report(error, context: { tool: name })
-      #       { error: "This tool failed unexpectedly. Trying the same call again won't help." }
-      #     end
-      #   end
-      #
-      # Handlers are searched in reverse declaration order, so the last
-      # matching one wins. Subclasses inherit the handlers declared when
-      # they are defined; declare handlers for RubyLLM's own tools on their
-      # classes, such as CodeExecution, and for a server's tools on its MCP
-      # class. A question from Tool#ask and a cancelled chat never reach a
-      # handler.
-      #
-      # Exception classes may be named as Strings, which defers constant
-      # lookup until an exception is raised. A class that can never match a
-      # StandardError, such as Interrupt, raises ArgumentError.
 
       def split_result(result) # :nodoc:
         case result
