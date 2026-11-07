@@ -108,9 +108,8 @@ To support [listening for changes](#listening-for-changes), a transport also res
 When your app also sends such a server requests of its own, outside RubyLLM, give them the `_meta` RubyLLM's client adds to every request, so the server sees the same protocol revision, client name, and capabilities:
 
 ```ruby
-meta = RubyLLM::MCP::Client.new(Tunnel.new(device)).meta
-tunnel.request({ jsonrpc: "2.0", id: 1, method: "tools/call",
-                 params: { name: "roots", arguments: {}, _meta: meta } }, version: RubyLLM::MCP::Client::VERSION)
+meta = RubyLLM::MCP::Client.new(tunnel).meta
+params = { name: "roots", arguments: {}, _meta: meta }
 ```
 
 ### Inputs

@@ -24,10 +24,8 @@ module RubyLLM
     # An MCP builds its own client. Applications use one only to read
     # #meta, when they send a server requests of their own.
     class Client
-      # The MCP revision the client speaks first.
-      VERSION = '2026-07-28'
-
       # :stopdoc:
+      VERSION = '2026-07-28'
       LEGACY_VERSIONS = %w[2025-11-25 2025-06-18 2025-03-26 2024-11-05].freeze
       UNSUPPORTED_VERSION = -32_022
       MODERN_ERRORS = [-32_020, -32_021, UNSUPPORTED_VERSION].freeze
@@ -52,9 +50,7 @@ module RubyLLM
 
       attr_reader :version # :nodoc:
 
-      # Returns a client that speaks to a server over +transport+, declaring
-      # +capabilities+, a Hash such as <tt>{ extensions: { ... } }</tt>.
-      def initialize(transport, capabilities: {}, &on_change)
+      def initialize(transport, capabilities: {}, &on_change) # :nodoc:
         @transport = transport
         @capabilities = capabilities
         @on_change = on_change
@@ -112,9 +108,9 @@ module RubyLLM
       end
 
       # Returns the +_meta+ the client adds to every request it sends a
-      # server that speaks VERSION: the revision, the client's name and
-      # version, and its capabilities. Merge it into requests you send the
-      # server yourself, so they describe the client the same way:
+      # server on the 2026-07-28 revision: the revision, the client's name
+      # and version, and its capabilities. Merge it into requests you send
+      # the server yourself, so they describe the client the same way:
       #
       #   meta = RubyLLM::MCP::Client.new(transport).meta
       #   # => { "io.modelcontextprotocol/protocolVersion" => "2026-07-28",
