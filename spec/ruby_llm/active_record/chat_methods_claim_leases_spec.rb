@@ -11,6 +11,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   let(:call_id) { "call_#{SecureRandom.hex(4)}" }
   let(:executions) { [] }
   let(:requests) { [] }
+  let(:call_ids) { Array.new(2) { "call_#{SecureRandom.hex(4)}" } }
 
   before do
     stub_const('RubyLLM::ActiveRecord::RunClaims::CLAIM_LEASE', lease)
@@ -54,6 +55,14 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call_id)
   end
 
+  # A chat whose last reply asks for two calls in one round.
+  def round_chat
+    question_chat.tap do |chat|
+      tool_calls = call_ids.to_h { |id| [id, RubyLLM::ToolCall.new(id:, name: 'lookup', arguments: {})] }
+      chat.add_message(role: :assistant, content: '', tool_calls:)
+    end
+  end
+
   def roles(chat)
     chat.messages_association.reload.pluck(:role)
   end
@@ -81,6 +90,18 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     Process.kill(:KILL, pid)
     Process.wait(pid)
     Process.clock_gettime(Process::CLOCK_MONOTONIC)
+  end
+
+  # Whether the call's row shows a live claim within +seconds+, so a check
+  # of a claim that holds doesn't fail on a heartbeat that runs late.
+  def claimed_within?(tool_call_id, seconds)
+    deadline = Process.clock_gettime(Process::CLOCK_MONOTONIC) + seconds
+    loop do
+      return true if RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id:).running?
+      return false if Process.clock_gettime(Process::CLOCK_MONOTONIC) > deadline
+
+      sleep 0.05
+    end
   end
 
   def seconds_until_free(since, &running)
@@ -175,16 +196,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   end
 
   context 'when a round of calls runs longer than the run time, though each call fits it' do
-    let(:call_ids) { Array.new(2) { "call_#{SecureRandom.hex(4)}" } }
-
     before { allow(RubyLLM.config).to receive(:max_run_time).and_return(3) }
-
-    def round_chat
-      question_chat.tap do |chat|
-        tool_calls = call_ids.to_h { |id| [id, RubyLLM::ToolCall.new(id:, name: 'lookup', arguments: {})] }
-        chat.add_message(role: :assistant, content: '', tool_calls:)
-      end
-    end
 
     # Each call takes two of the three seconds, and checks its claim as it
     # finishes: the second call finishes four seconds into the round.
@@ -224,8 +236,10 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       job.after_message do |message|
         next unless message.role == :tool && waiting.empty?
 
+        # Three and a half seconds into the round, past the waiting call's
+        # own deadline, its claim still holds, however late the heartbeat.
         sleep 1.5
-        waiting << RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call_ids.last).running?
+        waiting << claimed_within?(call_ids.last, 3)
       end
       allow(job.to_llm.provider).to receive(:complete)
         .and_return(RubyLLM::Message.new(role: :assistant, content: 'Done', input_tokens: 1, output_tokens: 1))
@@ -262,6 +276,32 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
         expect(roles(chat)).to eq(%w[user assistant tool])
       end
     end
+  end
+
+  it 'lets a waiting call go once another process takes the chat over' do
+    chat = round_chat
+    first, waiting = call_ids
+    released = []
+    take_over = lambda do
+      Chat.where(id: chat.id).update_all(claim_token: 'elsewhere', claimed_until: 10.minutes.from_now)
+      sleep lease * 2
+      released << !RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: waiting).running?
+    end
+    tool = Class.new(RubyLLM::Tool) do
+      define_method(:name) { 'lookup' }
+      define_method(:execute) do |tool_call:|
+        take_over.call if tool_call.id == first
+        'found'
+      end
+    end
+    job = Chat.find(chat.id).with_tools(tool)
+    allow(job.to_llm.provider).to receive(:complete)
+      .and_return(RubyLLM::Message.new(role: :assistant, content: 'Done', input_tokens: 1, output_tokens: 1))
+
+    job.complete
+
+    expect(released).to eq([true])
+    expect(roles(chat)).to eq(%w[user assistant])
   end
 
   it 'never renews a claim another process took over' do

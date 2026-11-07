@@ -232,6 +232,8 @@ module RubyLLM
           renewals = claim_lock.synchronize do
             tool_call_claims.filter_map do |tool_call_id, claim|
               deadline = tool_call_deadline(claim)
+              next unless deadline
+
               claimed_until = [now.change(usec: 0) + CLAIM_LEASE, deadline].min
               next if deadline <= now || claim.written.include?(claimed_until)
 
@@ -254,9 +256,12 @@ module RubyLLM
       end
 
       # A call that hasn't started yet, waiting for the calls before it in
-      # its round, keeps its claim as long as the chat's claim lasts.
+      # its round, keeps its claim as long as the chat's claim lasts. Once
+      # another process takes the chat over, this run won't start it, so
+      # there is no deadline to renew to.
       def tool_call_deadline(claim)
         return claim.deadline if claim.started || !@run_claim_token
+        return if @run_claim_lost_token == @run_claim_token
 
         [claim.deadline, @run_claim_deadline].max
       end
