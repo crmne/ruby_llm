@@ -288,13 +288,13 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     end
   end
 
-  it 'lets a waiting call go once another process takes the chat over' do
+  it 'lets a waiting call go once another process takes the chat over, and keeps the running one' do
     chat = round_chat
     first, waiting = call_ids
     released = []
     take_over = lambda do
       Chat.where(id: chat.id).update_all(claim_token: 'elsewhere', claimed_until: 10.minutes.from_now)
-      released << within?(lease * 3) { !claimed?(waiting) }
+      released << within?(lease * 3) { !claimed?(waiting) } << claimed?(first)
     end
     tool = Class.new(RubyLLM::Tool) do
       define_method(:name) { 'lookup' }
@@ -309,8 +309,107 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
     job.complete
 
-    expect(released).to eq([true])
+    expect(released).to eq([true, true])
     expect(roles(chat)).to eq(%w[user assistant])
+  end
+
+  it 'claims a waiting call with its round, before any renewal' do
+    stub_const('RubyLLM::ActiveRecord::RunClaims::CLAIM_LEASE', 60)
+    stub_const('RubyLLM::ActiveRecord::RunClaims::CLAIM_RENEWAL', 30)
+    chat = round_chat
+    first, waiting = call_ids
+    claimed = []
+    check = -> { claimed << claimed?(waiting) }
+    tool = Class.new(RubyLLM::Tool) do
+      define_method(:name) { 'lookup' }
+      define_method(:execute) do |tool_call:|
+        check.call if tool_call.id == first
+        'found'
+      end
+    end
+    job = Chat.find(chat.id).with_tools(tool)
+    allow(job.to_llm.provider).to receive(:complete)
+      .and_return(RubyLLM::Message.new(role: :assistant, content: 'Done', input_tokens: 1, output_tokens: 1))
+
+    job.complete
+
+    expect(claimed).to eq([true])
+  end
+
+  it 'lets a hung call lose its claim at its own run time while the chat goes on' do
+    chat = tool_call_chat
+    claimed = []
+    check = -> { claimed << claimed?(call_id) }
+    hung = Class.new(RubyLLM::Tool) do
+      define_method(:name) { 'lookup' }
+      max_run_time 2
+      define_method(:execute) do
+        sleep 3.5
+        check.call
+        'found'
+      end
+    end
+    job = Chat.find(chat.id).with_tools(hung)
+    allow(job.to_llm.provider).to receive(:complete)
+      .and_return(RubyLLM::Message.new(role: :assistant, content: 'Done', input_tokens: 1, output_tokens: 1))
+
+    job.complete
+
+    expect(claimed).to eq([false])
+  end
+
+  # The chat's claim covered the round's longest run time from when the
+  # round was claimed; a call that starts later runs past that.
+  it 'keeps the chat claimed for a call that starts late and has a longer run time of its own' do
+    allow(RubyLLM.config).to receive(:max_run_time).and_return(3)
+    chat = question_chat
+    late = "call_#{SecureRandom.hex(4)}"
+    tool_calls = {
+      call_id => RubyLLM::ToolCall.new(id: call_id, name: 'lookup', arguments: {}),
+      late => RubyLLM::ToolCall.new(id: late, name: 'report', arguments: {})
+    }
+    chat.add_message(role: :assistant, content: '', tool_calls:)
+    running = []
+    report = Class.new(RubyLLM::Tool) do
+      define_method(:name) { 'report' }
+      max_run_time 6
+      define_method(:execute) do
+        sleep 4
+        running << Chat.find(chat.id).running?
+        'reported'
+      end
+    end
+    job = Chat.find(chat.id).with_tools(lookup_tool { sleep 2.5 }, report)
+    allow(job.to_llm.provider).to receive(:complete)
+      .and_return(RubyLLM::Message.new(role: :assistant, content: 'Done', input_tokens: 1, output_tokens: 1))
+
+    job.complete
+
+    expect(running).to eq([true])
+    expect(roles(chat)).to eq(%w[user assistant tool tool assistant])
+  end
+
+  it 'runs a call it lost once it claims the call again' do
+    chat = round_chat
+    waiting = call_ids.last
+    job = Chat.find(chat.id).with_tools(lookup_tool)
+    taken = false
+    job.after_message do |message|
+      next if taken || message.role != :tool
+
+      taken = true
+      RubyLLM::ActiveRecord::ToolCall.where(tool_call_id: waiting).update_all(claimed_until: 10.minutes.from_now)
+      sleep 1.5
+    end
+    allow(job.to_llm.provider).to receive(:complete)
+      .and_return(RubyLLM::Message.new(role: :assistant, content: 'Done', input_tokens: 1, output_tokens: 1))
+
+    job.complete
+    RubyLLM::ActiveRecord::ToolCall.where(tool_call_id: waiting).update_all(claimed_until: nil)
+    job.complete
+
+    expect(executions).to eq(%i[lookup lookup])
+    expect(roles(chat)).to eq(%w[user assistant tool tool assistant])
   end
 
   # A heartbeat renewal can land after a write that a starting tool call
