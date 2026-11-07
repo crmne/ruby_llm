@@ -504,8 +504,14 @@ A tool call that waits on a person now waits on a `RubyLLM::Question`: the appro
 
 ```ruby
 chat.pending_questions.each do |question|
-  question.approval? ? question.approve : question.answer("staging")
+  question.approval?  # => true for a call that waits on approval
+  question.message    # => "Which environment?", or nil for an approval
+  question.fields     # => what the question asks for
 end
+
+# Once the person decides, record it by the question's id, as a form sends it:
+chat.answer(params[:question_id], params[:answer])  # approves an approval
+# or: chat.decline(params[:question_id])            # denies an approval
 chat.complete
 ```
 

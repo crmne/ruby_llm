@@ -412,10 +412,14 @@ module RubyLLM
       # Registers a callback for the server's questions to the person. Pass
       # a method name or a block; either runs on the MCP instance with a
       # Question to answer or decline. In a chat, a question no callback
-      # answers pauses the tool call; see Chat#pending_questions.
+      # answers pauses the tool call; see Chat#pending_questions. Answer
+      # only the questions you recognize: an answer a question can't take
+      # raises ArgumentError from the call.
       #
       #   before_input_request :ask_operator
-      #   before_input_request { |question| question.answer(environment: "staging") }
+      #   before_input_request do |question|
+      #     question.answer("staging") if question.fields.map(&:name) == [:environment]
+      #   end
       #
       def before_input_request(method = nil, &block)
         add_callback(:before_input_request, method, block)

@@ -403,6 +403,8 @@ review.suggest(language: "ru")              # => ["ruby", "rust"]
 files.resource_templates.first.suggest(path: "app/mo")
 ```
 
+<div id="input-requests"></div>
+
 ## Questions from Servers
 
 A server can stop in the middle of a call to ask the user something: which environment to deploy to, or to visit a page and connect an account. Its question arrives as a `RubyLLM::Question`, the same object a tool's own [`ask`]({% link _tools/tool-execution.md %}#asking-from-a-tool) makes, and you answer it the same way.
@@ -422,7 +424,7 @@ chat.complete
 
 A question describes what it asks for in `fields`, each with a `name`, `type`, `title`, `description`, `choices`, and `default`, and `required?`. Show each `default` in your form: the fields an answer leaves out take theirs. A question with one field takes its value, and one with several takes them by name: `question.answer(environment: "staging", reason: "Release 2.2")`. A question with a `url` asks the user to visit it, and `answer` with no value means they agreed to go. Show the whole address, since the server chose it. RubyLLM declines a request to visit anything but a web page, an `http` or `https` address, so a link to it can't run script in your app. `decline` refuses either kind.
 
-`complete` resumes the call once all its questions are answered: RubyLLM sends the answers with the server's saved request state, and the server finishes. Until then the chat is `waiting?`, as it is while a call waits for approval. Calling a tool outside a chat raises `RubyLLM::MCP::InputRequiredError` instead, with the unanswered questions in `requests`.
+`complete` resumes the call once all its questions are answered: RubyLLM sends the answers with the server's saved request state, and the server finishes, or asks something more. Then the call pauses again with the new questions, so check `pending_questions` after each `complete` and answer until none are left. Until then the chat is `waiting?`, as it is while a call waits for approval. Calling a tool outside a chat raises `RubyLLM::MCP::InputRequiredError` instead, with the unanswered questions in `requests`.
 
 To answer for the user, declare `before_input_request`, a method name or a block that receives each question before it reaches the chat:
 
@@ -437,12 +439,14 @@ class Deploys < RubyLLM::MCP
   def answer_from_settings(question)
     if question.url?
       question.decline
-    else
-      question.answer(environment: user.default_environment)
+    elsif question.fields.map(&:name) == [:environment]
+      question.answer(user.default_environment)
     end
   end
 end
 ```
+
+A question the callback leaves unanswered reaches the chat. An answer the question can't take, such as a field it doesn't ask for, raises `ArgumentError` from the call, so answer only the questions you recognize.
 
 A paused chat waits until someone answers. If your app has nowhere to show a kind of question, tell servers not to ask it:
 

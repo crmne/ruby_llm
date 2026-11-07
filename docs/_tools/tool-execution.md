@@ -221,6 +221,8 @@ Finish the pending calls before asking another question. Otherwise `ask` raises 
 
 Providers can also request approval for a tool running on an MCP server. These requests appear in `chat.pending_questions` as approvals, and their tool call is `remote?`. Use `approve`, `deny`, and `complete` as above; RubyLLM sends the decision to the provider instead of executing a Ruby tool. See [MCP servers]({% link _tools/provider-tools.md %}#remote-tool-approval) for a working example.
 
+<div id="approval-in-rails"></div>
+
 ### Questions in Rails
 
 With `acts_as_chat`, questions and answers persist on tool-call records. One process can ask, another can record the answer, and a third can carry the call on, even after a deploy. `pending_questions` reads the database only, so rendering questions never builds the chat's tools or connects to its MCP servers.
