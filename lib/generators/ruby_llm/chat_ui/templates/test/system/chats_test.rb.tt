@@ -72,6 +72,7 @@ class <%= chat_controller_class_name.delete_suffix("Controller") %>Test < Applic
     with_extra_message_fields do
       start_chat
       assert_text "Hello"
+      assert_select "History", options: [ "2 messages" ]
       select "Formal", from: "Tone"
       fill_in "Note", with: "Keep it short"
       refresh_page
@@ -140,11 +141,13 @@ class <%= chat_controller_class_name.delete_suffix("Controller") %>Test < Applic
   def with_extra_message_fields
     views = Rails.root.join("tmp/system_test_views")
     form = Rails.root.join("app/views/<%= message_model_name.underscore.pluralize %>/_form.html.erb").read
-    fields = <<~ERB
+    fields = <<~'ERB'
       <%%= label_tag :<%= message_variable_name %>_tone, "Tone" %>
       <%%= select_tag "<%= message_variable_name %>[tone]", options_for_select(%w[Casual Formal]) %>
       <%%= label_tag :<%= message_variable_name %>_note, "Note" %>
       <%%= text_field_tag "<%= message_variable_name %>[note]" %>
+      <%%= label_tag :<%= message_variable_name %>_history, "History" %>
+      <%%= select_tag "<%= message_variable_name %>[history]", options_for_select(["#{<%= chat_variable_name %>.<%= message_table_name %>.count} messages"]) %>
     ERB
     views.join("<%= message_model_name.underscore.pluralize %>").mkpath
     views.join("<%= message_model_name.underscore.pluralize %>/_form.html.erb").write(form.sub(/do \|form\| %>\n/) { |line| line + fields })
