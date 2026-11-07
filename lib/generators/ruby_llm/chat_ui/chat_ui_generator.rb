@@ -142,7 +142,7 @@ module RubyLLM
       end
 
       def create_javascript
-        source = gem?('importmap-rails') ? 'javascript/chat_message_controller.js' : CONTROLLER
+        source = import_map? ? 'javascript/chat_message_controller.js' : CONTROLLER
         copy_file source, 'app/javascript/controllers/chat_message_controller.js'
       end
 
@@ -242,6 +242,7 @@ module RubyLLM
       end
 
       def app_file?(path) = File.exist?(File.join(destination_root, path))
+      def import_map? = gem?('importmap-rails') && !gem?('jsbundling-rails')
 
       def gem?(name)
         File.read(File.join(destination_root, 'Gemfile')).match?(/^\s*gem[\s(]+["']#{Regexp.escape(name)}["']/)
