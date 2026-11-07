@@ -49,7 +49,7 @@ module RubyLLM
       end
 
       def check_hotwire
-        return if File.read(File.join(destination_root, 'Gemfile')).match?(/^\s*gem[\s(]+["']turbo-rails["']/)
+        return if gem?('turbo-rails')
 
         say "\n  The chat UI runs on Hotwire, and this app doesn't have it, so its pages raise until you add it:", :red
         say '    bundle add turbo-rails stimulus-rails importmap-rails'
@@ -156,14 +156,14 @@ module RubyLLM
       end
 
       def create_javascript
-        source = app_file?('config/importmap.rb') ? 'javascript/chat_message_controller.js' : CONTROLLER
+        source = gem?('importmap-rails') ? 'javascript/chat_message_controller.js' : CONTROLLER
         copy_file source, 'app/javascript/controllers/chat_message_controller.js'
       end
 
       def add_javascript_dependencies
         return unless behavior == :invoke
 
-        explain_javascript_setup unless app_file?('config/importmap.rb')
+        explain_javascript_setup unless gem?('importmap-rails')
         return if app_file?('app/javascript/controllers/index.js')
 
         say '  The chat UI renders replies with a Stimulus controller. Install Stimulus to use it:', :yellow
@@ -282,8 +282,7 @@ module RubyLLM
       private
 
       def add_system_test_gems
-        gemfile = File.read(File.join(destination_root, 'Gemfile'))
-        missing = %w[capybara selenium-webdriver].reject { |name| gemfile.match?(/^\s*gem[\s(]+["']#{name}["']/) }
+        missing = %w[capybara selenium-webdriver].reject { |name| gem?(name) }
         return if missing.empty?
 
         gem_group(:test) { missing.each { |name| gem name } }
@@ -302,6 +301,10 @@ module RubyLLM
 
       def javascript_packages = "marked@#{MARKED_VERSION} dompurify@#{DOMPURIFY_VERSION}"
       def app_file?(path) = File.exist?(File.join(destination_root, path))
+
+      def gem?(name)
+        File.read(File.join(destination_root, 'Gemfile')).match?(/^\s*gem[\s(]+["']#{Regexp.escape(name)}["']/)
+      end
 
       def approval_model_name
         return 'Approval' unless chat_model_name.include?('::')

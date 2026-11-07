@@ -852,6 +852,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
           Dir.mktmpdir do |destination|
             FileUtils.cp_r("#{app_path}/.", destination)
             within_test_app(destination) do
+              File.write('Gemfile', %(#{File.read('Gemfile')}gem "importmap-rails"\n))
               File.write('config/importmap.rb', %(pin "application"\n))
               File.write('bin/importmap', "#!/bin/sh\necho \"$@\" >> tmp/importmap_calls\n")
               FileUtils.chmod('+x', 'bin/importmap')
@@ -965,12 +966,13 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
           end
         end
 
-        it 'prints the packages to install for a jsbundling app' do
+        it 'copies the controller and prints the packages to install for a jsbundling app' do
           Dir.mktmpdir do |destination|
             FileUtils.cp_r("#{app_path}/.", destination)
             within_test_app(destination) do
               File.write('package.json', '{}')
-              output, status = run_rails_generate('ruby_llm:chat_ui', '--skip', chdir: destination)
+              File.write('config/importmap.rb', %(pin "application"\n))
+              output, status = run_rails_generate('ruby_llm:chat_ui', '--force', chdir: destination)
               expect(status.success?).to be(true), output
               expect(output).to include('yarn add marked@18.0.14 dompurify@3.4.16')
               expect(output).to include('bin/rails stimulus:manifest:update')
