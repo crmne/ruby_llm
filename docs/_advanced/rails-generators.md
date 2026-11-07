@@ -133,15 +133,18 @@ class ChatAgent < ApplicationAgent
 end
 ```
 
-The generated agent starts with a [context budget]({% link _core_features/chat-request-control.md %}#keeping-tool-results-in-budget):
+The generated agent starts with a [context budget]({% link _core_features/chat-request-control.md %}#keeping-tool-results-in-budget) and [prompt caching]({% link _core_features/prompt-caching.md %}):
 
 ```ruby
 class ChatAgent < ApplicationAgent
   context_budget per_result: 0.25, per_request: 0.7
+  caching
 end
 ```
 
 A tool result longer than a quarter of the model's context window is cut when it is added, and a request that would take more than 70% of the window leaves out the oldest tool results. Without it, one tool result larger than the window stays in the transcript, and every later reply in that chat fails with `RubyLLM::ContextLengthExceededError`. Raise `per_request` if your tools return mostly prose, or remove the line to send every result whole.
+
+`caching` turns on the provider's default prompt caching. Every reply and every tool round sends the whole conversation again, usually seconds after the last request, so the unchanged prefix is read from the cache at a lower price. Anthropic caches only when RubyLLM asks it to, and on Bedrock RubyLLM adds cache points; OpenAI and Gemini cache on their own either way. The default cache lives for 5 minutes. A chat that sits idle longer pays the cache write surcharge again on its next reply. If your users come back to chats after longer pauses, pass a longer lifetime such as `caching ttl: 1.hour`, which costs more to write, or `caching false` to stop asking for caching.
 
 The agent is named after your chat model: `chat:Conversation` gives `ConversationAgent`, and `chat:Llm::Chat` gives `Llm::ChatAgent` in `app/agents/llm/chat_agent.rb`.
 
