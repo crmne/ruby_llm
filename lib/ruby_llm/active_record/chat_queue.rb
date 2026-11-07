@@ -76,18 +76,18 @@ module RubyLLM
 
       def sender_attributes(queued)
         association = @chat.messages_association.klass.reflect_on_association(:sender)
-        sender = queued.sender if association && queued.sender_id && sender_class(queued.sender_type)
+        sender = queued_sender(queued) if association
         return {} unless sender && (association.polymorphic? || sender.is_a?(association.klass))
 
         { sender: }
       end
 
-      # Nil once the class is gone, say renamed since the message was
-      # queued, so the message joins without its sender instead of
-      # holding up the queue.
-      def sender_class(type)
-        QueuedMessage.polymorphic_class_for(type)
-      rescue NameError
+      # Nil once the sender's class, or the subclass its row names, is
+      # gone, say renamed since the message was queued, so the message
+      # joins without its sender instead of holding up the queue.
+      def queued_sender(queued)
+        queued.sender
+      rescue NameError, ::ActiveRecord::SubclassNotFound
         nil
       end
 

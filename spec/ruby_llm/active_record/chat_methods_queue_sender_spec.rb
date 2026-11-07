@@ -50,6 +50,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       t.text :content
       t.timestamps
     end
+    connection.create_table(:sent_people) { |t| t.string :type }
   end
 
   def job_for(chat)
@@ -124,5 +125,22 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
       expect(chat.sent_messages.find_by(role: 'user').sender).to eq(other)
     end
+  end
+
+  it 'joins a message without its sender once the sender record names a subclass that no longer exists' do
+    stub_const('SentPerson', Class.new(ActiveRecord::Base) do
+      self.table_name = 'sent_people'
+      def self.name = 'SentPerson'
+    end)
+    chat = SentChat.create!(model:)
+    person = SentPerson.create!
+    chat.queue('Hello', sender: person)
+    SentPerson.where(id: person.id).update_all(type: 'RenamedPerson')
+
+    job_for(chat).complete
+
+    expect(chat.sent_messages.where(role: 'user').map { |message| [message.content, message.sender] })
+      .to eq([['Hello', nil]])
+    expect(chat.queued_messages).to be_empty
   end
 end
