@@ -102,8 +102,10 @@ class TracingInstrumenter
     @inner = inner
   end
 
-  def instrument(name, payload, &)
-    Tracing.span(name) { @inner.instrument(name, payload, &) }
+  def instrument(name, payload, &block)
+    Tracing.span(name) do
+      @inner.respond_to?(:instrument) ? @inner.instrument(name, payload, &block) : block&.call
+    end
   end
 
   def capture_context
