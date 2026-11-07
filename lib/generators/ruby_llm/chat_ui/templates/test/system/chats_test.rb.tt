@@ -132,7 +132,7 @@ class <%= chat_controller_class_name.delete_suffix("Controller") %>Test < Applic
     stub_replies RubyLLM::ServerError.new("The provider is down"), "Back again"
 
     start_chat
-    assert_text "The reply failed"
+    assert_text "The reply failed", wait: 5
     assert_no_text "Thinking…"
 
     visit current_path

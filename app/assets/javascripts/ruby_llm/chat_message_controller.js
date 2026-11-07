@@ -20,14 +20,32 @@ const sanitizeOptions = {
 
 const earlyChunks = new Map()
 const removedReplies = new Set()
+const chatStream = "turbo-cable-stream-source[data-chat-stream]"
+let visiting = false
+
+addEventListener("turbo:visit", () => { visiting = true })
+addEventListener("turbo:load", () => { visiting = false })
 
 addEventListener("turbo:before-stream-render", (event) => {
   const render = event.detail.render
   event.detail.render = (stream) => {
     if (stream.getAttribute("action") === "remove") removedReplies.add(stream.getAttribute("target"))
+    if (holdsRefresh(stream, render)) return
     if (!holdsEarlyChunk(stream) && !revivesPlaceholder(stream)) render(stream)
   }
 })
+
+// A chat page refreshes whenever its stream connects, so it shows what was
+// broadcast before it subscribed or while it was offline, such as a reply
+// that failed at once. The refresh morphs whatever the page's own refresh
+// method, so the stream stays connected and the refresh happens once.
+const catchUp = '<turbo-stream action="refresh" method="morph" scroll="preserve"></turbo-stream>'
+
+new MutationObserver((records) => {
+  for (const { target } of records) {
+    if (target.matches(`${chatStream}[connected]`)) target.dispatchEvent(new MessageEvent("message", { data: catchUp }))
+  }
+}).observe(document.documentElement, { subtree: true, attributeFilter: ["connected"] })
 
 addEventListener("turbo:before-morph-element", (event) => {
   const { newElement } = event.detail
@@ -77,6 +95,15 @@ function revivesPlaceholder(stream) {
   const incoming = stream.templateContent?.firstElementChild
   if (!incoming?.hasAttribute("data-streaming")) return false
   return document.getElementById(incoming.id) !== null || removedReplies.has(incoming.id)
+}
+
+// Turbo drops a refresh that arrives during a visit, though the page the
+// visit brings may predate it, so a chat page refreshes once the visit ends.
+function holdsRefresh(stream, render) {
+  if (stream.getAttribute("action") !== "refresh" || !visiting || !document.querySelector(chatStream)) return false
+
+  addEventListener("turbo:load", () => render(stream), { once: true })
+  return true
 }
 
 export default class extends Controller {
