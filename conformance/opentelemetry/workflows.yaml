@@ -18,3 +18,26 @@ groups:
         stability: development
         brief: The name of the workflow step.
         examples: [Summarize]
+  - id: registry.ruby_llm.code_execution
+    type: attribute_group
+    brief: RubyLLM code execution runs.
+    attributes:
+      - id: ruby_llm.code_execution.language
+        type: string
+        stability: development
+        brief: The language the code ran as.
+        examples: [shell, python]
+      - id: ruby_llm.code_execution.exit_code
+        type: int
+        stability: development
+        brief: The exit code of the run.
+        examples: [0, 2]
+      - id: ruby_llm.code_execution.timed_out
+        type: boolean
+        stability: development
+        brief: Whether the run was stopped at its timeout.
+      - id: ruby_llm.code_execution.duration
+        type: double
+        stability: development
+        brief: How long the run took, in seconds.
+        examples: [0.42]
