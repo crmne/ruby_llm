@@ -986,7 +986,9 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
               File.write('config/importmap.rb', %(pin "application"\n))
               output, status = run_rails_generate('ruby_llm:chat_ui', '--force', chdir: destination)
               expect(status.success?).to be(true), output
-              expect(output).not_to include('yarn add', 'stimulus:manifest:update')
+              expect(output).not_to include('yarn add', 'stimulus:manifest:update', 'importmap')
+              expect(output.lines.last.strip)
+                .to eq('Run bundle add turbo-rails stimulus-rails, then bin/rails turbo:install stimulus:install')
 
               javascripts = File.expand_path('../../../app/assets/javascripts/ruby_llm', __dir__)
               expect(File.read('app/javascript/controllers/chat_message_controller.js'))
