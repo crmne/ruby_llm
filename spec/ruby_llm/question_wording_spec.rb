@@ -118,6 +118,5 @@ RSpec.describe RubyLLM::Question do
     question = form('name' => { 'type' => 'string' })
 
     expect { question.approve }.to raise_error(ArgumentError, 'This question is not an approval: answer it instead.')
-    expect { question.deny }.to raise_error(ArgumentError, 'This question is not an approval: decline it instead.')
   end
 end

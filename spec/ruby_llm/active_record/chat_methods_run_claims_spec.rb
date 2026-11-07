@@ -468,10 +468,10 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
   it 'writes a denial once when two jobs answer it' do
     chat = approved_chat
-    tool_call_record.update!(approval: nil)
+    tool_call_record.update!(approval: 'pending')
     first_job = job_for(chat)
     second_job = job_for(chat)
-    chat.deny(call_id)
+    chat.decline(call_id)
 
     first_job.complete
     second_job.complete
@@ -480,21 +480,18 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(roles(chat)).to eq(%w[user assistant tool assistant])
   end
 
-  it 'refuses to deny a running call and ignores approving it again' do
+  it 'ignores declining a running call and approving it again' do
     chat = approved_chat
     outcomes = {}
     during_run << lambda do
       deciding = Chat.find(chat.id)
       outcomes[:approve] = deciding.approve(call_id)
-      deciding.deny(call_id)
-    rescue RubyLLM::ToolCallRunningError => e
-      outcomes[:deny] = e
+      outcomes[:decline] = deciding.decline(call_id)
     end
 
     job_for(chat).complete
 
-    expect(outcomes[:approve]).to be_a(Chat)
-    expect(outcomes[:deny].message).to eq('The charge_card tool call is already running')
+    expect(outcomes.values).to all(be_a(Chat))
     expect(tool_call_record.approval).to eq('approved')
     expect(roles(chat)).to eq(%w[user assistant tool assistant])
   end
@@ -503,7 +500,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     chat = approved_chat
     job_for(chat).complete
 
-    chat.deny(call_id)
+    chat.decline(call_id)
 
     expect(tool_call_record.approval).to eq('approved')
   end

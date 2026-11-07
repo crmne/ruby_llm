@@ -66,7 +66,7 @@ Local setup and programming errors inherit from `StandardError` directly, so `re
 | `RubyLLM::InvalidRoleError` | A message uses an invalid role |
 | `RubyLLM::InvalidToolChoiceError` | The tool choice is neither a known mode nor a registered tool |
 | `RubyLLM::PendingToolCallsError` | A new question is staged before pending tool calls finish |
-| `RubyLLM::ToolCallRunningError` | A persisted tool call is denied after it started running. The call keeps running, and the model receives its result |
+| `RubyLLM::ToolCallRunningError` | An approval is declined after its call started running. The call keeps running, and the model receives its result |
 | `RubyLLM::CancelledError` | An in-flight chat operation is cancelled |
 
 The [`RubyLLM::Error` reference]({{ '/api/RubyLLM/Error.html' | relative_url }}) documents the readers every provider error carries, such as `response`, `provider`, and `error_code`, and each subclass has its own page.

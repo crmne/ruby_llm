@@ -39,6 +39,15 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     RubyLLM::Message.new(role: :assistant, content: '', tool_calls:)
   end
 
+  def charging_chat
+    charge = Class.new(RubyLLM::Tool) do
+      requires_approval
+      define_method(:name) { 'charge_card' }
+      define_method(:execute) { 'charged' }
+    end
+    question_chat.with_tools(charge).tap { |chat| chat.add_message(tool_call_message) }
+  end
+
   describe 'a released claim' do
     it 'leaves neither token nor expiry after a finished run' do
       chat = answered_chat
@@ -267,11 +276,10 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     end
 
     it 'does not stop a decision recorded after it' do
-      chat = question_chat
-      chat.add_message(tool_call_message)
+      chat = charging_chat
       flag(chat)
 
-      row(chat).deny(call_id)
+      row(chat).decline(call_id)
 
       expect(row(chat)).not_to be_cancelled
     end
@@ -288,12 +296,11 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     end
 
     it 'stays when a decision cannot be recorded on a running call' do
-      chat = question_chat
-      chat.add_message(tool_call_message)
+      chat = charging_chat
       RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call_id).update!(claimed_until: 10.minutes.from_now)
       flag(chat)
 
-      expect { row(chat).deny(call_id) }.to raise_error(RubyLLM::ToolCallRunningError)
+      expect { row(chat).decline(call_id) }.to raise_error(RubyLLM::ToolCallRunningError)
 
       expect(row(chat)).to be_cancelled
     end

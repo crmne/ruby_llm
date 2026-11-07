@@ -213,7 +213,7 @@ RSpec.describe RubyLLM::Chat do
     )
     enable_computer.with_tools(first, second).ask('Inspect')
 
-    chat.deny(chat.pending_questions.find(&:approval?))
+    chat.decline(chat.pending_questions.find(&:approval?))
     chat.complete
 
     expect(executed).to be_empty

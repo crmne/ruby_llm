@@ -21,12 +21,15 @@ RSpec.describe RubyLLM::Chat do
   end
 
   def approved_chat(state = RubyLLM::Chat::ToolCallState.new)
+    asking_chat(state).approve('call_1')
+  end
+
+  def asking_chat(state)
     chat = RubyLLM.chat(model: model_for(:openai)).with_tools(charge_tool)
     chat.tool_call_state = state
     chat.add_message(role: :user, content: 'Charge the card')
     tool_calls = { 'call_1' => RubyLLM::ToolCall.new(id: 'call_1', name: 'charge_card', arguments: {}) }
     chat.add_message(RubyLLM::Message.new(role: :assistant, content: '', tool_calls:))
-    chat.approve('call_1')
     chat
   end
 
@@ -75,8 +78,8 @@ RSpec.describe RubyLLM::Chat do
 
   it 'leases a denied call for the configured run time while it records the denial' do
     leases = []
-    chat = approved_chat(recording_leases(leases))
-    chat.deny('call_1')
+    chat = asking_chat(recording_leases(leases))
+    chat.decline('call_1')
 
     chat.run_tools
 

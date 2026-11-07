@@ -128,7 +128,7 @@ Repeat this sequence for more batch turns. `run_tools` does nothing when there a
 For tools declared with `requires_approval`, record each decision before running tools:
 
 ```ruby
-chat.pending_questions.first.approve # Or .deny
+chat.pending_questions.first.approve # Or .decline
 chat.run_tools
 ```
 

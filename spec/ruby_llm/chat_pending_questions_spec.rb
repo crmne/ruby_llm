@@ -67,14 +67,58 @@ RSpec.describe RubyLLM::Chat do
     expect(results).to eq(['Refunded 40'])
   end
 
-  it 'sends the model a refusal for a denied approval' do
+  it 'sends the model the default refusal for a declined approval' do
     ask_for('issue_refund')
 
-    chat.pending_questions.sole.deny
+    chat.pending_questions.sole.decline
     chat.complete
 
     expect(runs).to be_empty
-    expect(results.sole).to include('denied')
+    expect(results.sole).to eq('{"error":"The user denied the issue_refund tool call."}')
+  end
+
+  it "sends the model the person's note as the result of an approval they declined" do
+    ask_for('issue_refund')
+
+    chat.decline(chat.pending_questions.sole, 'The order shipped already')
+    chat.complete
+
+    expect(runs).to be_empty
+    expect(results.sole).to eq('{"error":"The order shipped already"}')
+  end
+
+  it "adds the person's note to the result of a tool whose question they declined, after ask returns nil" do
+    ask_for('pick_seat')
+
+    chat.pending_questions.sole.decline('I will choose at the gate')
+    chat.complete
+
+    expect(results.sole).to eq("Seat \n\nThe user declined: I will choose at the gate")
+  end
+
+  it 'runs a declined call that is approved after all, without the note' do
+    response = ask_for('issue_refund')
+
+    chat.decline(chat.pending_questions.sole, 'Not yet')
+    chat.approve(response.tool_calls.first.id)
+    chat.complete
+
+    expect(runs).to eq(['40'])
+    expect(results.sole).to eq('Refunded 40')
+  end
+
+  it 'takes a blank note as no note' do
+    ask_for('issue_refund')
+
+    chat.pending_questions.sole.decline(' ')
+    chat.complete
+
+    expect(results.sole).to eq('{"error":"The user denied the issue_refund tool call."}')
+  end
+
+  it 'says no with decline alone' do
+    expect([described_class, RubyLLM::Question, RubyLLM::Agent].select { |owner| owner.method_defined?(:deny) })
+      .to be_empty
   end
 
   it 'remembers an approval for the rest of the chat' do
@@ -118,8 +162,8 @@ RSpec.describe RubyLLM::Chat do
     declined, approved = Array.new(2) { chat.pending_questions.sole }
     paused = Queue.new
     resume = Queue.new
-    # Holds the denial between finding the approval pending and recording it.
-    allow(chat).to receive(:deny).and_wrap_original do |original, *args|
+    # Holds the refusal between finding the approval pending and recording it.
+    allow(chat).to receive(:refuse).and_wrap_original do |original, *args|
       paused << true
       resume.pop
       original.call(*args)
@@ -170,12 +214,13 @@ RSpec.describe RubyLLM::Chat do
     expect(results).to eq(['Seat aisle', 'Refunded 41'])
   end
 
-  it 'approves and denies by question as well as by tool call' do
-    ask_for('issue_refund', 'issue_refund')
-    first, second = chat.pending_questions
+  it 'approves and declines by question as well as by tool call' do
+    ask_for('issue_refund', 'issue_refund', 'issue_refund')
+    first, second, third = chat.pending_questions
 
     chat.approve(first)
-    chat.deny(second)
+    chat.decline(second)
+    chat.decline(third.tool_call)
     chat.complete
 
     expect(runs).to eq(['40'])
@@ -185,7 +230,6 @@ RSpec.describe RubyLLM::Chat do
     ask_for('pick_seat')
 
     expect { chat.approve(chat.pending_questions.sole) }.to raise_error(ArgumentError, /answer it instead/)
-    expect { chat.deny(chat.pending_questions.sole) }.to raise_error(ArgumentError, /decline it instead/)
   end
 
   it 'changes nothing for a question already answered, or one whose call finished' do

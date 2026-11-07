@@ -69,7 +69,7 @@ chat.approve(chat.pending_questions.first)
 chat.complete
 ```
 
-Use `deny` to reject a call. The model receives the decision and can respond to it. See [Tool Approvals]({% link _tools/tool-execution.md %}#requiring-approval).
+Use `decline` to reject a call. The model receives the decision and can respond to it. See [Tool Approvals]({% link _tools/tool-execution.md %}#requiring-approval).
 
 You also get explicit control over the conversation loop. `ask_later` stages a question, `generate` asks the model for one response, `run_tools` executes pending tools, and `step` advances the conversation by one generation or tool execution. Use them to set limits, hand work to another agent, or run one turn per job. See [Agentic Workflows]({% link _advanced/agentic-workflows.md %}).
 

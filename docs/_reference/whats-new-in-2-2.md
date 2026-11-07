@@ -247,7 +247,7 @@ class BookFlight < RubyLLM::Tool
 end
 ```
 
-`ask` takes free text, one of `choices:`, the fields a block declares, or a page to visit. An approval is a question too, answered yes or no, and MCP servers ask theirs the same way. `pending_questions` lists them all, and you answer each with `answer`, `decline`, `approve`, or `deny`, from any process in Rails:
+`ask` takes free text, one of `choices:`, the fields a block declares, or a page to visit. An approval is a question too, answered yes or no, and MCP servers ask theirs the same way. `pending_questions` lists them all, and you answer each with `answer`, `approve`, or `decline`, which takes a note for the model, from any process in Rails:
 
 ```ruby
 chat.pending_questions.first.answer "window"
@@ -438,7 +438,7 @@ It is off by default, and a context can turn it on for one server. See [Reasonin
 
 2.2 deprecates iterating a chat directly and `chat.cache_until_here` in favor of `chat.messages` and marking the message itself, and renames `RubyLLM.with_usage_owner` to `RubyLLM.with_owner`. The old names still work and warn, and RubyLLM 3.0 removes them. See [Read a Conversation Through `messages`]({% link _reference/upgrading.md %}#read-a-conversation-through-messages).
 
-`waiting?`, `pending_questions`, and `pending_tasks` now say what a chat waits on. `pending_questions` lists approvals and questions alike, and `pending_approvals`, `awaiting_approval?`, `pending_inputs`, `awaiting_input?`, and `awaiting_tasks?` are gone; the upgrade guide gives each one's replacement. `approve`, `deny`, `answer`, and `decline` keep working. Answers to a server's questions are now checked against what they ask, so an extra field or a choice the question doesn't offer raises `ArgumentError`, and a server's request to visit anything but an `http` or `https` page is declined. See [Two Lists Say What a Chat Waits On]({% link _reference/upgrading.md %}#two-lists-say-what-a-chat-waits-on) and [Approvals and Questions Are One List]({% link _reference/upgrading.md %}#approvals-and-questions-are-one-list).
+`waiting?`, `pending_questions`, and `pending_tasks` now say what a chat waits on. `pending_questions` lists approvals and questions alike, and `pending_approvals`, `awaiting_approval?`, `pending_inputs`, `awaiting_input?`, and `awaiting_tasks?` are gone. `deny` is gone too: `decline` says no to every question, with an optional note the model sees. The upgrade guide gives each one's replacement. Answers to a server's questions are now checked against what they ask, so an extra field or a choice the question doesn't offer raises `ArgumentError`, and a server's request to visit anything but an `http` or `https` page is declined. See [Two Lists and `decline` Replace Seven Methods]({% link _reference/upgrading.md %}#two-lists-and-decline-replace-seven-methods) and [Approvals and Questions Are One List]({% link _reference/upgrading.md %}#approvals-and-questions-are-one-list).
 
 Provider gems and custom providers that override protocol methods rename them: methods that build a request start with `render_`, methods that read a response start with `parse_`, and the capability predicates drop `supports_` ([#1136](https://github.com/crmne/ruby_llm/pull/1136)). See [Rename Protocol Method Overrides]({% link _reference/upgrading.md %}#rename-protocol-method-overrides).
 

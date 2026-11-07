@@ -114,10 +114,10 @@ module RubyLLM
       raise ArgumentError, "#{@provider.name} #{operation} does not accept #{rejected.join(', ')}"
     end
 
-    def tool_approval_response(tool_call, approved:)
-      Message.new(role: :tool, content: approved ? 'Approved' : 'Denied', tool_call_id: tool_call.id,
+    def tool_approval_response(tool_call, approved:, note: nil)
+      Message.new(role: :tool, content: approved ? 'Approved' : note || 'Denied', tool_call_id: tool_call.id,
                   provider_call_id: tool_call.provider_call_id,
-                  raw_content: render_tool_approval_response(tool_call, approved:))
+                  raw_content: render_tool_approval_response(tool_call, approved:, note:))
     end
 
     def complete(messages, tools:, temperature:, provider_options: {}, headers: {}, schema: nil, thinking: nil,

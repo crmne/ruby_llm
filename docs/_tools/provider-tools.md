@@ -289,7 +289,7 @@ chat.ask "Search Microsoft documentation for Azure Blob Storage."
 question = chat.pending_questions.first
 question.tool_call.remote? # => true
 
-question.approve # or question.deny
+question.approve # or question.decline
 response = chat.complete
 ```
 

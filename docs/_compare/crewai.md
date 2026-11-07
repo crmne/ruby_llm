@@ -449,7 +449,7 @@ chat.approve params[:tool_call_id]
 chat.complete
 ```
 
-You still scope the lookup and authorize the reviewer in your controller, as you would for any other action. `chat.pending_questions` lists what to show the reviewer, and `chat.deny` sends the model a refusal instead.
+You still scope the lookup and authorize the reviewer in your controller, as you would for any other action. `chat.pending_questions` lists what to show the reviewer, and `chat.decline` sends the model a refusal instead, with the reviewer's note if they give one.
 
 The two gate different things. CrewAI reviews what a step produced, and routes on what the reviewer said. RubyLLM stops an action before it happens, and takes a yes or a no. It doesn't read free text into an outcome, and notifying the reviewer is your application's code, such as a mailer or a Slack call. See [Controlling Tool Execution]({% link _tools/tool-execution.md %}).
 
@@ -565,7 +565,7 @@ CrewAI ships these as framework features:
 | `and_` | `Async` blocks, waiting for each |
 | `or_` | `Async` blocks, acting on the first to finish |
 | `@persist` and `checkpoint` | `acts_as_chat` and [one step per job]({% link _advanced/durable-agents.md %}) |
-| `@human_feedback` | `requires_approval`, `approve`, and `deny` |
+| `@human_feedback` | `requires_approval`, `approve`, and `decline` |
 | `output_pydantic` and `response_format` | `schema` |
 | `BaseTool` or `@tool` | A [`RubyLLM::Tool`]({% link _getting_started/tools.md %}) class |
 | `Crew(stream=True)` | A block given to `ask` |

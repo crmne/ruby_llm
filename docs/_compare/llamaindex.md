@@ -397,7 +397,7 @@ chat.approve params[:tool_call_id]
 chat.complete
 ```
 
-Nothing is serialized by hand, and the pending call survives a deploy. An approval is a decision on a tool call, `approve` or `deny`. You still scope the lookup and authorize the reviewer in your controller, as you would for any other action. See [Controlling Tool Execution]({% link _tools/tool-execution.md %}) and [Agents in Background Jobs]({% link _advanced/durable-agents.md %}).
+Nothing is serialized by hand, and the pending call survives a deploy. An approval is a decision on a tool call, `approve` or `decline`. You still scope the lookup and authorize the reviewer in your controller, as you would for any other action. See [Controlling Tool Execution]({% link _tools/tool-execution.md %}) and [Agents in Background Jobs]({% link _advanced/durable-agents.md %}).
 
 ## Workflows
 
@@ -518,7 +518,7 @@ In Rails, every billed attempt also lands in the `ruby_llm_usages` table, and `R
 | A Python function as a tool | A [`RubyLLM::Tool`]({% link _getting_started/tools.md %}) class |
 | `output_cls` | `schema` on an agent, or `with_schema` |
 | `Context` and its serializers | The chat's transcript, or an `acts_as_chat` record |
-| `InputRequiredEvent` and `HumanResponseEvent` | `requires_approval`, `approve`, and `deny` |
+| `InputRequiredEvent` and `HumanResponseEvent` | `requires_approval`, `approve`, and `decline` |
 | `Workflow` and `@step` | Ruby methods, `Async`, and Active Job |
 | `TokenCountingHandler` | `tokens` and `cost` on each result |
 

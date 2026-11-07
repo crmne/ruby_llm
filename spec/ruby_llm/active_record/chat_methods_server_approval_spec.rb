@@ -35,7 +35,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       call = restored.pending_questions.first.tool_call
       expect(call).to have_attributes(remote?: true, arguments: { 'query' => 'Ruby' })
       expect(restored.waiting? && restored.pending_questions.any?(&:approval?)).to be(true)
-      approved ? restored.approve(call) : restored.deny(call)
+      approved ? restored.approve(call) : restored.decline(call, 'Not on this account')
 
       resumed = agent.find(chat.id)
       resumed.run_tools.run_tools
@@ -43,7 +43,8 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(result.to_llm.raw_content).to eq([
                                                 { 'type' => 'mcp_approval_response',
                                                   'approval_request_id' => provider_call_id,
-                                                  'approve' => approved }
+                                                  'approve' => approved,
+                                                  'reason' => ('Not on this account' unless approved) }.compact
                                               ])
       expect(result.to_llm.tool_call_id).to eq(call.id)
       expect(result.to_llm.provider_call_id).to eq(provider_call_id)

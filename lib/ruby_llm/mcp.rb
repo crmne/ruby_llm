@@ -831,7 +831,7 @@ module RubyLLM
     def responses(requests)
       requests.to_h do |question|
         question = Question.from_h(question) if question.is_a?(Hash)
-        [question.key, question.response]
+        [question.key, question.response&.except('note')]
       end
     end
 

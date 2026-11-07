@@ -139,7 +139,7 @@ RSpec.describe RubyLLM::Chat do
       model_calls(call)
       chat.complete
 
-      chat.deny('call_1').complete
+      chat.decline('call_1').complete
 
       expect(result_for(call)).to include('denied')
       expect(online_sandbox.code_runs).to be_empty

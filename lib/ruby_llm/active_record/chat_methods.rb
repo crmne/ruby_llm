@@ -114,19 +114,6 @@ module RubyLLM
         self
       end
 
-      # Records denial for +tool_call+ (an approval RubyLLM::Question, a
-      # ToolCall, a tool call record, or an id) on the persisted tool call.
-      # The next #complete appends a structured denial result instead of
-      # executing the tool. Denying an answered call changes nothing.
-      # Returns +self+.
-      #
-      # Raises RubyLLM::ToolCallRunningError when the call is already
-      # running.
-      def deny(tool_call)
-        to_llm.deny(record_tool_call_decision(RubyLLM::Question.decided_call(tool_call, 'decline'), 'denied').to_llm)
-        self
-      end
-
       def claiming_delivery(&) # :nodoc:
         exclusively(-> { false }) { transaction(requires_new: true, &) }
       end

@@ -378,7 +378,7 @@ RubyLLM::ActiveRecord::QueuedMessage.where(sender: current_user).includes(:chat)
 RubyLLM::ActiveRecord::QueuedMessage.where(steer: false).where(created_at: ...10.minutes.ago)
 ```
 
-Read these records, but leave writing them to RubyLLM. Creating, updating, or deleting rows yourself can count an attempt twice, lose an approval, or hand a queued message to two processes. Use `queue` and `withdraw`, `approve` and `deny`, `RubyLLM::Batch`, and the MCP server's `deauthorize` to change them.
+Read these records, but leave writing them to RubyLLM. Creating, updating, or deleting rows yourself can count an attempt twice, lose an approval, or hand a queued message to two processes. Use `queue` and `withdraw`, `approve` and `decline`, `RubyLLM::Batch`, and the MCP server's `deauthorize` to change them.
 
 You can still add your own scopes and columns. Declare them when the application prepares, since RubyLLM's classes live in the gem:
 

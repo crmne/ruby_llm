@@ -45,7 +45,7 @@ RSpec.describe RubyLLM::Chat, :live do
           request_documentation
           expect(chat.waiting? && chat.pending_questions.any?(&:approval?)).to be(true)
           denied_call = chat.pending_questions.find(&:approval?).tool_call
-          chat.deny(denied_call)
+          chat.decline(denied_call)
 
           chat.complete
 

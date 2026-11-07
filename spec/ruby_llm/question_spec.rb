@@ -163,11 +163,16 @@ RSpec.describe RubyLLM::Question do
     expect(question.response).to eq('action' => 'decline')
   end
 
-  it 'leaves approving and denying to approvals' do
+  it 'leaves approving to approvals' do
     question = form('name' => { 'type' => 'string' })
 
     expect { question.approve }.to raise_error(ArgumentError, /answer it instead/)
-    expect { question.deny }.to raise_error(ArgumentError, /decline it instead/)
+  end
+
+  it 'keeps the note it was declined with, and takes a blank note as none' do
+    expect(form('name' => { 'type' => 'string' }).decline('Not now').response)
+      .to eq('action' => 'decline', 'note' => 'Not now')
+    expect(form('name' => { 'type' => 'string' }).decline(" \n").response).to eq('action' => 'decline')
   end
 
   it 'reads in one line' do

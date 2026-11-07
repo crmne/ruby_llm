@@ -7,8 +7,9 @@ module RubyLLM
       module Approvals
         module_function
 
-        def render_tool_approval_response(tool_call, approved:)
-          [{ type: 'mcp_approval_response', approval_request_id: tool_call.provider_call_id, approve: approved }]
+        def render_tool_approval_response(tool_call, approved:, note: nil)
+          [{ type: 'mcp_approval_response', approval_request_id: tool_call.provider_call_id, approve: approved,
+             reason: note }.compact]
         end
 
         def parse_tool_approvals(output, response: nil, finish_reason: nil)

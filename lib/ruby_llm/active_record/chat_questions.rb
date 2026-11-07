@@ -59,17 +59,23 @@ module RubyLLM
         self
       end
 
-      # Declines +question+, a RubyLLM::Question from #pending_questions or
-      # its id, on its tool call record, as RubyLLM::Chat#decline describes.
-      # Declining an approval denies it, as +deny+ does, unless another
-      # decision came first. Returns +self+.
+      # Declines +question+, a RubyLLM::Question from #pending_questions,
+      # its id, or the call of an approval, on its tool call record, as
+      # RubyLLM::Chat#decline describes, unless another decision came
+      # first. The +note+ persists with it, so whichever process carries
+      # the call on gives the model the same note. Returns +self+.
       #
-      # Raises ArgumentError for a question the chat never asked.
-      def decline(question)
+      #   chat.decline(params[:question_id], params[:note])
+      #
+      # Raises ArgumentError for a question the chat never asked, and
+      # RubyLLM::ToolCallRunningError for an approval whose call started
+      # running in the meantime.
+      def decline(question, note = nil)
         pending = persisted_pending_question(question)
-        return self unless pending && settle_persisted_question(pending, RubyLLM::Question::DECLINED)
+        response = RubyLLM::Question.declined(note)
+        return self unless pending && settle_persisted_question(pending, response)
 
-        question.respond(RubyLLM::Question::DECLINED) if question.is_a?(RubyLLM::Question)
+        question.respond(response) if question.is_a?(RubyLLM::Question)
         self
       end
 
@@ -128,9 +134,14 @@ module RubyLLM
           # one and then finds the call decided.
           next false unless waiting.update_all(updated_at: Time.current) == 1
 
-          response == RubyLLM::Question::ACCEPTED ? approve(question) : deny(question)
+          response == RubyLLM::Question::ACCEPTED ? approve(question) : refuse(question, response['note'])
           true
         end
+      end
+
+      def refuse(question, note)
+        record = record_tool_call_decision(question.tool_call, 'denied')
+        record.update!(mcp_state: { 'note' => note }) if note && record.has_attribute?(:mcp_state)
       end
     end
   end

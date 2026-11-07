@@ -270,7 +270,7 @@ chat.approve params[:tool_call_id]
 chat.complete
 ```
 
-You still scope the lookup and authorize the reviewer in your controller, as you would for any other action. `chat.pending_questions` lists what to show the reviewer, and `chat.deny` sends the model a refusal. The chat UI generator builds the approval cards. [Pydantic AI's deferred tools](https://pydantic.dev/docs/ai/tools-toolsets/deferred-tools/) also let the reviewer change a call's arguments, and hand a call to a frontend or a worker to run; RubyLLM has no way to edit the arguments of a pending call. See [Controlling Tool Execution]({% link _tools/tool-execution.md %}#requiring-approval).
+You still scope the lookup and authorize the reviewer in your controller, as you would for any other action. `chat.pending_questions` lists what to show the reviewer, and `chat.decline` sends the model a refusal, with the reviewer's note if they give one. The chat UI generator builds the approval cards. [Pydantic AI's deferred tools](https://pydantic.dev/docs/ai/tools-toolsets/deferred-tools/) also let the reviewer change a call's arguments, and hand a call to a frontend or a worker to run; RubyLLM has no way to edit the arguments of a pending call. See [Controlling Tool Execution]({% link _tools/tool-execution.md %}#requiring-approval).
 
 ## Usage and Cost
 
@@ -318,7 +318,7 @@ Pydantic AI comes with a stack of neighboring projects. Here's how each maps to 
 | `result.output` | `response.parsed` |
 | `run_stream` and `stream_text` | A block given to `ask` |
 | `ConversationTypeAdapter` and `ConversationStore` | `acts_as_chat` |
-| `requires_approval=True` and `DeferredToolRequests` | `requires_approval`, `approve`, and `deny` |
+| `requires_approval=True` and `DeferredToolRequests` | `requires_approval`, `approve`, and `decline` |
 | `ModelFallback` | [`fallbacks`]({% link _getting_started/agents.md %}#model-fallbacks) |
 | `result.usage` | `response.tokens` and `response.cost` |
 | `UsageLimits` and `SpendLimits` | Your own loop, reading `chat.cost.total` |

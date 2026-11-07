@@ -122,11 +122,11 @@ question.approve
 chat.complete # runs the tool, then lets the model continue
 ```
 
-A denied call never runs: the model receives a structured result saying the user denied the call, and the conversation continues from there.
+A declined call never runs: the model receives a structured result saying the user denied the call, and the conversation continues from there. Give a note, and the model gets it as the call's result instead, so it knows why:
 
 ```ruby
-question.deny
-chat.complete # appends the denial result and asks the model to respond
+question.decline("The order shipped already")
+chat.complete # appends the refusal and asks the model to respond
 ```
 
 When the user approves a call and says "don't ask again", pass `remember: true`:
@@ -193,13 +193,13 @@ passenger                                              # => {name: "Ada Lovelace
 ask("Connect your calendar", url: calendar.authorization_url)
 ```
 
-`ask` returns `nil` when the person declines with `question.decline`. A call can ask several questions, one after another, and each run asks them in the same order. Outside a chat, nothing can pause the call, so `ask` raises `RubyLLM::InputRequiredError`.
+`ask` returns `nil` when the person declines with `question.decline`. A note they give, `question.decline("I'll choose at the gate")`, follows the tool's result to the model. A call can ask several questions, one after another, and each run asks them in the same order. Outside a chat, nothing can pause the call, so `ask` raises `RubyLLM::InputRequiredError`.
 
 [MCP servers]({% link _tools/mcp.md %}#questions-from-servers) ask their questions the same way, and you answer them the same way.
 
 ### Answering Questions
 
-`pending_questions` lists every question the chat waits on, approvals included, in the order the model made the calls. Each one has an `id`, and the chat's `answer`, `decline`, `approve`, and `deny` take the question or its id, which suits a form:
+`pending_questions` lists every question the chat waits on, approvals included, in the order the model made the calls. Each one has an `id`, and the chat's `answer`, `approve`, and `decline` take the question or its id, which suits a form:
 
 ```ruby
 chat.pending_questions.each do |question|
@@ -212,14 +212,14 @@ end
 
 # Once they decide, from the form they sent:
 if params[:decline]
-  chat.decline(params[:question_id])                 # denies an approval
+  chat.decline(params[:question_id], params[:note])   # refuses an approval
 else
   chat.answer(params[:question_id], params[:answer]) # an approval's form sends no answer
 end
 chat.complete
 ```
 
-Answering an approval approves it, and declining one denies it. An approval or a page to visit takes no value, and a blank one counts as none. A question with one field takes its value, and one with several takes them by name, as keywords, a Hash, or the parameters a form sends, of which it keeps only the fields it asks for: `question.answer(name: "Ada", age: 36)`. Strings become the integers, numbers, and booleans the fields ask for, the way a form sends them. Text, and each item of a list, loses the spaces around it, so spaces alone count as left out. An answer the question can't take raises `ArgumentError`: a choice it didn't offer, a field it doesn't ask for, a value of the wrong type, or a required field left out. Its message is a whole sentence you can show the person under the form, naming a field by its title or, without one, by its name in words ("Release name needs an answer."). Answering a question again, or after its call finished, changes nothing, so a form sent twice is safe, and when two people answer one approval at once, the first decision stands. `approve` and `deny` record a decision whatever came before, so use them to change one.
+Answering an approval approves it, and declining one refuses its call. An approval or a page to visit takes no value, and a blank one counts as none. A question with one field takes its value, and one with several takes them by name, as keywords, a Hash, or the parameters a form sends, of which it keeps only the fields it asks for: `question.answer(name: "Ada", age: 36)`. Strings become the integers, numbers, and booleans the fields ask for, the way a form sends them. Text, and each item of a list, loses the spaces around it, so spaces alone count as left out. An answer the question can't take raises `ArgumentError`: a choice it didn't offer, a field it doesn't ask for, a value of the wrong type, or a required field left out. Its message is a whole sentence you can show the person under the form, naming a field by its title or, without one, by its name in words ("Release name needs an answer."). Answering a question again, or after its call finished, changes nothing, so a form sent twice is safe, and when two people answer one approval at once, the first decision stands. `approve` records its decision whatever came before, so use it to change a decline.
 
 Calls that need no answer still run while the others wait. `chat.ask` and `chat.complete` return the assistant message that holds the waiting calls. If you [drive the loop yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself), stop when the chat is waiting: `chat.step until chat.complete? || chat.waiting?`. While `pending_questions` has any, a person must act.
 
@@ -227,7 +227,7 @@ Finish the pending calls before you send the chat another message. Otherwise `ch
 
 ### Remote Tool Approval
 
-Providers can also request approval for a tool running on an MCP server. These requests appear in `chat.pending_questions` as approvals, and their tool call is `remote?`. Use `approve`, `deny`, and `complete` as above; RubyLLM sends the decision to the provider instead of executing a Ruby tool. See [MCP servers]({% link _tools/provider-tools.md %}#remote-tool-approval) for a working example.
+Providers can also request approval for a tool running on an MCP server. These requests appear in `chat.pending_questions` as approvals, and their tool call is `remote?`. Use `approve`, `decline`, and `complete` as above; RubyLLM sends the decision to the provider instead of executing a Ruby tool, with a decline's note as its reason. See [MCP servers]({% link _tools/provider-tools.md %}#remote-tool-approval) for a working example.
 
 <div id="approval-in-rails"></div>
 
@@ -259,7 +259,7 @@ end
 
 `answer` takes the parameters a form sends for a question with several fields, and keeps only the fields the question asks for. Authorize who may answer through your application's permissions, as you would any other action.
 
-A double-submitted answer enqueues two jobs, and that is safe: only one process runs a chat at a time, so the second job finds the chat running or the call answered and returns without running it. Denying a call that has started raises `RubyLLM::ToolCallRunningError`, because the tool is already doing its work:
+A double-submitted answer enqueues two jobs, and that is safe: only one process runs a chat at a time, so the second job finds the chat running or the call answered and returns without running it. Declining an approval whose call has started in the meantime, such as one a remembered approval let run, raises `RubyLLM::ToolCallRunningError`, because the tool is already doing its work:
 
 ```ruby
 class AnswersController < ApplicationController

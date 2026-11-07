@@ -184,7 +184,7 @@ RSpec.describe RubyLLM::Chat do
     chat.approve(chat.pending_questions.find(&:approval?)).complete
 
     expect(chat.waiting? && chat.pending_questions.any?(&:approval?)).to be(true)
-    chat.deny(chat.pending_questions.find(&:approval?))
+    chat.decline(chat.pending_questions.find(&:approval?))
     chat.complete
 
     expect(executions).to be_empty

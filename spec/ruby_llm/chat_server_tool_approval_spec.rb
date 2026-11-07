@@ -45,7 +45,7 @@ RSpec.describe RubyLLM::Chat do
       chat.with_tools(local_tool)
       stage(remote_call)
       call = chat.pending_questions.find(&:approval?).tool_call
-      approved ? chat.approve(call) : chat.deny(call)
+      approved ? chat.approve(call) : chat.decline(call)
 
       chat.run_tools.run_tools
       decisions = chat.messages.select(&:tool_result?)
@@ -62,7 +62,7 @@ RSpec.describe RubyLLM::Chat do
       stage(remote_call)
       chat.with_model(model_for(:anthropic), provider: :anthropic)
       call = chat.pending_questions.find(&:approval?).tool_call
-      approved ? chat.approve(call) : chat.deny(call)
+      approved ? chat.approve(call) : chat.decline(call)
 
       expect { chat.run_tools }.to raise_error(RubyLLM::Error, /Anthropic doesn't support remote tool approvals/)
     end

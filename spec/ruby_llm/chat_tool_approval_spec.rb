@@ -88,7 +88,7 @@ RSpec.describe RubyLLM::Chat do
     chat.ask('Do the thing')
 
     id = chat.pending_questions.find(&:approval?).id
-    chat.deny(id)
+    chat.decline(id)
     response = chat.complete
 
     expect(executions).to be_empty

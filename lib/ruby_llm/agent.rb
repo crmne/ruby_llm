@@ -76,7 +76,7 @@ module RubyLLM
       before_request before_message after_message before_tool_call around_tool_call after_tool_result
       after_tool_progress before_fallback after_fallback around_join after_file_write
       convert_unsupported_attachments
-      cancel approve deny answer decline cache_until_here
+      cancel approve answer decline cache_until_here
     ].freeze
 
     # Chat values and operations whose return values pass through unchanged.
@@ -1500,12 +1500,6 @@ module RubyLLM
     # Delegates to Chat#approve. See that method for arguments and return values.
 
     ##
-    # :method: deny
-    # :call-seq: deny(tool_call)
-    #
-    # Delegates to Chat#deny. See that method for arguments and return values.
-
-    ##
     # :method: answer
     # :call-seq: answer(question, value = nil, **values)
     #
@@ -1513,7 +1507,7 @@ module RubyLLM
 
     ##
     # :method: decline
-    # :call-seq: decline(question)
+    # :call-seq: decline(question, note = nil)
     #
     # Delegates to Chat#decline. See that method for arguments and return values.
 

@@ -19,7 +19,7 @@ module RubyLLM
   #
   #   question.approval?      # => true
   #   question.tool_call.name # => "issue_refund"
-  #   question.approve        # or question.deny
+  #   question.approve        # or question.decline("Not on this account")
   #
   # A server can also ask the person to visit a page, such as to connect an
   # account: #url? is +true+, and answering says they agreed to go. Before
@@ -87,9 +87,16 @@ module RubyLLM
         new(data['key'], data['params'], id: data['id'] || data['key'], response: data['response'], tool_call:, chat:)
       end
 
-      # Returns the call +decision+ approves or denies: the ToolCall of an
-      # approval, or +decision+ itself, such as a ToolCall or its id.
-      # Raises ArgumentError for any other Question, which takes +instead+.
+      # Returns the response that declines a question, keeping +note+ for
+      # the model unless it is blank.
+      def declined(note) # :nodoc:
+        note = note.to_s.strip
+        note.empty? ? DECLINED : DECLINED.merge('note' => note)
+      end
+
+      # Returns the call +decision+ approves: the ToolCall of an approval,
+      # or +decision+ itself, such as a ToolCall or its id. Raises
+      # ArgumentError for any other Question, which takes +instead+.
       def decided_call(decision, instead) # :nodoc:
         return decision unless decision.is_a?(Question)
         raise ArgumentError, "This question is not an approval: #{instead} it instead." unless decision.approval?
@@ -132,7 +139,7 @@ module RubyLLM
 
     # Returns whether the question asks whether its call may run: the
     # approval of a tool declared with Tool.requires_approval. Answer it
-    # with #approve or #deny.
+    # with #approve or #decline.
     def approval?
       @approval
     end
@@ -183,13 +190,20 @@ module RubyLLM
     end
 
     # Declines the question and returns +self+. Declining an approval
-    # denies its call. A question from a chat records it there, as
-    # Chat#decline does.
-    def decline
+    # keeps its call from running. A +note+ tells the model why: an
+    # approval's call gets it as its result, in place of a plain refusal,
+    # and a tool that asked gets +nil+ from Tool#ask, and the model gets
+    # the note after the tool's result. A question from a chat records it
+    # there, as Chat#decline does.
+    #
+    #   question.decline
+    #   question.decline("The order shipped already")
+    #
+    def decline(note = nil)
       if @chat
-        @chat.decline(self)
+        @chat.decline(self, note)
       else
-        respond(DECLINED)
+        respond(self.class.declined(note))
       end
       self
     end
@@ -202,16 +216,6 @@ module RubyLLM
     def approve(remember: false)
       self.class.decided_call(self, 'answer')
       @chat ? @chat.approve(self, remember:) : respond(ACCEPTED)
-      self
-    end
-
-    # Denies the call an approval asks about, as Chat#deny does, and
-    # returns +self+. The model gets a result saying the person denied it.
-    #
-    # Raises ArgumentError for a question that is not an approval.
-    def deny
-      self.class.decided_call(self, 'decline')
-      @chat ? @chat.deny(self) : respond(DECLINED)
       self
     end
 
