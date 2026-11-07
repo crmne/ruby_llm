@@ -12,6 +12,7 @@ module RubyLLM
         @decisions = {}
         @remembered = []
         @spent_escalations = []
+        @settling = Mutex.new
       end
 
       def initialize_copy(source)
@@ -31,10 +32,14 @@ module RubyLLM
       end
 
       # Replaces the input +tool_call+ is paused on with what the block
-      # returns for it, while the call is still paused.
+      # returns for it, while the call is still paused. Answers recorded
+      # from several threads at once take turns, each on the input the one
+      # before left.
       def settle(tool_call)
-        input = @inputs[tool_call.id]
-        @inputs[tool_call.id] = yield(input) if input
+        @settling.synchronize do
+          input = @inputs[tool_call.id]
+          @inputs[tool_call.id] = yield(input) if input
+        end
       end
 
       def record_decision(id, decision)

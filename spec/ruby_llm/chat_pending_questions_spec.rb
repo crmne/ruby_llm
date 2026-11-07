@@ -193,7 +193,7 @@ RSpec.describe RubyLLM::Chat do
     expect(declined.response).to eq('action' => 'decline')
   end
 
-  it 'answers one of the questions a call asks at once, and leaves the others waiting' do
+  def ask_two_at_once
     deploy = Class.new(RubyLLM::Tool) do
       def self.name = 'Deploy'
 
@@ -208,10 +208,38 @@ RSpec.describe RubyLLM::Chat do
     end
     allow(chat.provider).to receive(:complete).and_return(calls('deploy'), answer)
     chat.with_tools(deploy).ask('Deploy')
+  end
+
+  it 'answers one of the questions a call asks at once, and leaves the others waiting' do
+    ask_two_at_once
 
     chat.pending_questions.first.answer('staging')
 
     expect(chat.pending_questions.map(&:message)).to eq(['Which region?'])
+  end
+
+  it 'keeps both answers when two threads answer the questions of one call at once' do
+    ask_two_at_once
+    environment, region = chat.pending_questions
+    paused = Queue.new
+    resume = Queue.new
+    # Holds the first answer between reading the call's questions and writing them back.
+    allow_any_instance_of(RubyLLM::Question).to receive(:answered_input).and_wrap_original do |original, *args| # rubocop:disable RSpec/AnyInstance
+      if original.receiver.id == environment.id
+        paused << true
+        resume.pop
+      end
+      original.call(*args)
+    end
+
+    first = Thread.new { chat.answer(environment, 'staging') }
+    paused.pop
+    second = Thread.new { chat.answer(region, 'eu') }
+    second.join(0.2)
+    resume << true
+    [first, second].each(&:join)
+
+    expect(chat.pending_questions).to be_empty
   end
 
   it 'reads an approval in one line' do
