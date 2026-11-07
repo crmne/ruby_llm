@@ -38,17 +38,13 @@ module RubyLLM
         return leases.keys.map(&:id) unless tool_call_claims?
 
         start_claim_heartbeat
-        rows = RubyLLM::ActiveRecord::ToolCall.uncached { tool_call_rows(leases.keys.map(&:id)) }
-        claimed = RubyLLM::ActiveRecord::ToolCall.transaction do
-          ids = leases.filter_map do |tool_call, seconds|
-            row = rows[tool_call.id]
-            tool_call.id if row.nil? || tool_call_claimed?(tool_call.id, row, seconds, executing.include?(tool_call.id))
-          end
-          extend_run_claim_for_tool_calls
-          ids
-        end
+        claimed = claim_tool_call_rows(leases, executing)
         resync_messages if claimed.size < leases.size
         claimed
+      rescue StandardError
+        claim_lock.synchronize { leases.each_key { |tool_call| tool_call_claims.delete(tool_call.id) } }
+        stop_idle_claim_heartbeat
+        raise
       end
 
       def release_persisted_tool_calls(tool_call_ids) # :nodoc:
@@ -60,7 +56,7 @@ module RubyLLM
                                          .update_all(claimed_until: nil)
         end
       ensure
-        stop_claim_heartbeat unless @run_claim_token || claim_lock.synchronize { tool_call_claims.any? }
+        stop_idle_claim_heartbeat
       end
 
       def tool_call_running_elsewhere?(tool_call) # :nodoc:
@@ -68,6 +64,18 @@ module RubyLLM
       end
 
       private
+
+      def claim_tool_call_rows(leases, executing)
+        rows = RubyLLM::ActiveRecord::ToolCall.uncached { tool_call_rows(leases.keys.map(&:id)) }
+        RubyLLM::ActiveRecord::ToolCall.transaction do
+          ids = leases.filter_map do |tool_call, seconds|
+            row = rows[tool_call.id]
+            tool_call.id if row.nil? || tool_call_claimed?(tool_call.id, row, seconds, executing.include?(tool_call.id))
+          end
+          extend_run_claim_for_tool_calls
+          ids
+        end
+      end
 
       def initialize_dup(*)
         super
@@ -219,6 +227,10 @@ module RubyLLM
         end
       end
 
+      def stop_idle_claim_heartbeat
+        stop_claim_heartbeat unless @run_claim_token || claim_lock.synchronize { tool_call_claims.any? }
+      end
+
       def stop_claim_heartbeat
         heartbeat = @claim_heartbeat
         @claim_heartbeat = nil
@@ -334,8 +346,13 @@ module RubyLLM
         raise ClaimLost
       end
 
-      def verify_run_claim
-        renew_run_claim(force: true)
+      # Renewing inside the transaction holds the chat row until the result
+      # commits, so no other process can take the chat over in between.
+      def fenced_by_run_claim(&)
+        transaction do
+          renew_run_claim(force: true)
+          yield
+        end
       rescue ClaimLost
         @message.destroy
         raise

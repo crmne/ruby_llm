@@ -63,7 +63,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   end
 
   def busy_process(&work)
-    skip 'needs fork' unless RUBY_ENGINE == 'ruby'
+    skip 'needs fork' unless Process.respond_to?(:fork)
 
     reader, writer = IO.pipe
     pid = fork do
@@ -208,6 +208,16 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     outcomes << heartbeats.size
 
     expect(outcomes).to eq([1, 0, 0, 0, 0, 0])
+  end
+
+  it 'stops renewing when claiming tool calls fails outside a run' do
+    job = job_for(tool_call_chat)
+    tool_call = RubyLLM::ToolCall.new(id: call_id, name: 'lookup', arguments: {})
+    allow(job).to receive(:tool_call_rows).and_raise(ActiveRecord::StatementInvalid, 'gone')
+
+    expect { job.claim_persisted_tool_calls({ tool_call => 60 }, executing: [call_id]) }
+      .to raise_error(ActiveRecord::StatementInvalid)
+    expect(heartbeats).to be_empty
   end
 
   it 'claims until the run time when it runs inside a transaction' do

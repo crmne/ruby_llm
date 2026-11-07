@@ -664,6 +664,20 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(roles(chat)).to eq(%w[user])
   end
 
+  it 'discards an answer when another process takes the chat over just before it is saved' do
+    chat = question_chat
+    job = job_for(chat)
+    allow(job).to receive(:message_attributes).and_wrap_original do |original, *args|
+      take_over(chat)
+      original.call(*args)
+    end
+
+    response = job.complete
+
+    expect(response.content).to eq('Hello')
+    expect(roles(chat)).to eq(%w[user])
+  end
+
   it 'discards a partly saved answer that arrives after another process took the chat over' do
     chat = question_chat
     job = job_for(chat) do |stream|

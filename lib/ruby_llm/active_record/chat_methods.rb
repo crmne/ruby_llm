@@ -1291,11 +1291,10 @@ module RubyLLM
       def persist_message_completion(message)
         return unless message
 
-        verify_run_claim
         tool_call = find_tool_call(message.tool_call_id) if message.tool_call_id
         attrs = message_attributes(message)
 
-        answered = transaction do
+        answered = fenced_by_run_claim do
           @message.assign_attributes(attrs)
           @message.save!
           raise ::ActiveRecord::Rollback if tool_call && !tool_result_recorded?(tool_call, message)
