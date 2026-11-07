@@ -36,7 +36,7 @@ With `with_thinking` on, a stream can sit quiet for several seconds before text 
 
 You don't need to read the generated files or `lib/ruby_llm` to use this. The generator prints what works and which file controls it: with the default `Chat` model, `app/jobs/chat_response_job.rb` runs the turn and shows errors, `ChatsController#cancel` is Stop, and `app/agents/chat_agent.rb` says what the model can do. For anything else, read the one guide for that feature, and open source only when something fails or you need a signature.
 
-Code reads a chat's attachments, earlier ones too, at `./attachments/<name>`, or at `./<name>` with a store in a folder. Python needs `:python` in `languages:`, which replaces the default of Ruby and shell, or `python:` packages. Without a converter, a model and provider that read PDFs get the file itself, so no PDF gem is needed.
+Code reads a chat's attachments, earlier ones too, at `attachments/<name>` in its run directory, which `RUN_DIR` names, or at `<name>` in the folder of a store in a folder. Python needs `:python` in `languages:`, which replaces the default of Ruby and shell, or `python:` packages. Without a converter, a model and provider that read PDFs get the file itself, so no PDF gem is needed.
 
 `durable-agents/#when-a-run-is-interrupted` says what cancel, a crash, and a failure each save and continue.
 
@@ -58,7 +58,7 @@ These are the signatures an application uses, for 2.2; on an older release, chec
 ```ruby
 RubyLLM.configure do |config|
   config.anthropic_api_key = ENV["ANTHROPIC_API_KEY"]
-  config.anthropic_api_base = ENV["ANTHROPIC_BASE_URL"]   # without /v1/messages; openai_api_base ends in /v1, gemini_api_base in /v1beta
+  config.anthropic_api_base = ENV["ANTHROPIC_BASE_URL"]   # without /v1/messages; openai_api_base ends in /v1, gemini_api_base in its API version, /v1beta by default
 end
 
 chat = RubyLLM.chat(model: "...")   # or Chat.create!(model: "...") with acts_as_chat
