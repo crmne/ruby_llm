@@ -36,7 +36,7 @@ With `with_thinking` on, a stream can sit quiet for several seconds before text 
 
 You don't need to read the generated files or `lib/ruby_llm` to use this. The generator prints what works and which file controls it: with the default `Chat` model, `app/jobs/chat_response_job.rb` runs the turn and shows errors, `ChatsController#cancel` is Stop, and `app/agents/chat_agent.rb` says what the model can do. For anything else, read the one guide for that feature, and open source only when something fails or you need a signature.
 
-Code reads a chat's attachments, earlier ones too, at `./attachments/<name>`, or at `./<name>` with a store in a folder. Python needs `languages: [:python]`: the default is Ruby and shell. Without a converter, the model gets a PDF as the file itself, so it needs no PDF gem. `per_result` and `per_request` in `context_budget` are shares of the model's context window, not sizes.
+Code reads a chat's attachments, earlier ones too, at `./attachments/<name>`, or at `./<name>` with a store in a folder. Python needs `languages: [:python]`: the default is Ruby and shell. Without a converter, the model gets a PDF as the file itself, so it needs no PDF gem.
 
 `durable-agents/#when-a-run-is-interrupted` says what cancel, a crash, and a failure each save and continue.
 
@@ -73,7 +73,7 @@ with_file_store with_code_execution with_skills with_provider_tools with_tool_op
 
 class ChatAgent < ApplicationAgent    # or RubyLLM::Agent
   model "..."; instructions "..."; tools WeatherTool; mcp Linear; code_execution languages: [:python]
-  context_budget per_result: 0.25, per_request: 0.7; thinking effort: :medium   # thinking follows model changes
+  thinking effort: :medium   # follows model changes; the generated ChatAgent also sets context_budget and caching
 end
 ChatAgent.create!(model: "...")   # a chat keeps its model; ChatAgent.find applies the agent and leaves the model alone
 chat.with_model("...")            # saved on a record, and the next request uses it with the same history
@@ -149,7 +149,7 @@ Markdown guides use the same name with `.md`, such as `chat.md`. The API referen
 
 ## Use the 2.x API consistently
 
-- Configure credentials through `RubyLLM.configure`, following the application's secret storage. Select an existing configured provider. Verify explicit model IDs with `RubyLLM.models.find(id, provider: ...)`; do not invent IDs or use `assume_model_exists` to hide a typo.
+- Configure credentials through `RubyLLM.configure`, following the application's secret storage. Select an existing configured provider. Verify explicit model IDs with `RubyLLM.models.find(id, provider: ...)`; do not invent IDs or use `assume_model_exists` to hide a typo. Bedrock streaming through Converse or InvokeModel needs `gem "aws-eventstream"` in the Gemfile, which RubyLLM loads only when a stream starts.
 - Use individual operations directly for media, document processing, moderation, embeddings, and reranking. Read their typed results and use `save` on generated images, video, and speech. Check each operation's provider, model, and credentials; a configured chat provider may not offer every operation. `animate` waits for completion; use `animate_later` when the application needs to manage the job.
 - `ask` runs the conversation and returns a message. `ask_later` stages input and returns the chat. For explicit loop control, use `generate`, `run_tools`, `step`, and `complete?`. Approval can park the loop before completion; inspect `awaiting_approval?` and resume after `approve` or `deny`. `queue` adds a user message while the loop runs (`steer: false` waits for the turn to end), and the next `ask`, `complete`, or `step` takes whatever is still queued.
 - Subclass `RubyLLM::Tool`. Use `description`, `parameter`, or a `parameters` block, and keyword arguments on `execute`. Register tools with `with_tools`; configure choice and concurrency with `with_tool_options`. Keep application authorization in the tool or underlying service. Use `requires_approval` when the product needs a user's decision before execution. Call `halt(result)` in a tool that says the last word, so the turn ends without another model call (2.2). Declare `exclusive` on tools that share state, such as a browser page, so they run alone in a concurrent round (2.2). With large tool sets, pass `defer: true` to `with_tools` or `with_mcp` (or declare `defer` on the class) so the model searches for tools instead of receiving them all (2.1).
