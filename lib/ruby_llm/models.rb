@@ -236,7 +236,7 @@ module RubyLLM
 
       def models_dev_provider_slugs # :nodoc:
         Provider.providers.each_with_object({}) do |(slug, provider), slugs|
-          provider.models_dev_provider_ids.each { |id| slugs[id] = slug.to_s }
+          provider.models_dev_provider_ids.each { |id| slugs[id] ||= slug.to_s }
         end
       end
 

@@ -160,7 +160,7 @@ RSpec.describe RubyLLM::Generators::Provider::Scaffold do
       provider = File.read(File.join(dir, 'lib/ruby_llm/providers/acme_cloud.rb'))
       expect(provider).to include('class ChatCompletions < Ollama::ChatCompletions')
       expect(provider).to include('def assume_models_exist?')
-      expect(provider).to include('%w[acme-cloud]')
+      expect(provider).to include("def models_dev_provider_ids # :nodoc:\n          %w[acme-cloud]\n        end")
 
       provider_spec = File.read(File.join(dir, 'spec/ruby_llm/providers/acme_cloud_spec.rb'))
       expect(provider_spec).to include('include(chat_completions: described_class::ChatCompletions)')

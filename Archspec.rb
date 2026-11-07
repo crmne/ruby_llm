@@ -405,6 +405,7 @@ class ProviderSlugLiterals
     return [] unless component
 
     slugs = File.read(File.join(graph.root, 'lib/ruby_llm.rb')).scan(/Provider\.register :(\w+)/).flatten
+    raise "#{id} found no Provider.register :slug calls in lib/ruby_llm.rb" if slugs.empty?
     component.files.sort.flat_map { |path| diagnostics(path, slugs) }
   end
 
