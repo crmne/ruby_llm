@@ -36,7 +36,7 @@ With `with_thinking` on, a stream can sit quiet for several seconds before text 
 
 You don't need to read the generated files or `lib/ruby_llm` to use this. The generator prints what works and which file controls it: with the default `Chat` model, `app/jobs/chat_response_job.rb` runs the turn and shows errors, `ChatsController#cancel` is Stop, and `app/agents/chat_agent.rb` says what the model can do. For anything else, read the one guide for that feature, and open source only when something fails or you need a signature.
 
-Code reads a chat's attachments, earlier ones too, at `./attachments/<name>`, or at `./<name>` with a store in a folder. Python needs `languages: [:python]`: the default is Ruby and shell. Without a converter, the model gets a PDF as the file itself, so it needs no PDF gem.
+Code reads a chat's attachments, earlier ones too, at `./attachments/<name>`, or at `./<name>` with a store in a folder. Python needs `:python` in `languages:`, which replaces the default of Ruby and shell, or `python:` packages. Without a converter, a model and provider that read PDFs get the file itself, so no PDF gem is needed.
 
 `durable-agents/#when-a-run-is-interrupted` says what cancel, a crash, and a failure each save and continue.
 
@@ -58,7 +58,7 @@ These are the signatures an application uses, for 2.2; on an older release, chec
 ```ruby
 RubyLLM.configure do |config|
   config.anthropic_api_key = ENV["ANTHROPIC_API_KEY"]
-  config.anthropic_api_base = ENV["ANTHROPIC_BASE_URL"]   # no path; openai_api_base ends in /v1, gemini_api_base in /v1beta
+  config.anthropic_api_base = ENV["ANTHROPIC_BASE_URL"]   # without /v1/messages; openai_api_base ends in /v1, gemini_api_base in /v1beta
 end
 
 chat = RubyLLM.chat(model: "...")   # or Chat.create!(model: "...") with acts_as_chat
@@ -103,10 +103,10 @@ RubyLLM.paint RubyLLM.animate RubyLLM.speak RubyLLM.transcribe RubyLLM.ocr RubyL
 require "ruby_llm/test_helper"
 include RubyLLM::TestHelper
 stub_replies tool_call(:weather, city: "Berlin"), "It is sunny.", cost: 0.01, interval: 0.05
-stub_replies RubyLLM::ServerError.new("The provider is down")
+stub_replies RubyLLM::ServerError.new("The provider is down")   # in another test: a failed request
 ```
 
-A model ID is enough: the registry knows its provider, so `with_model`, `create!`, and a model picker need no table of providers. Pass `provider:` only for a model the registry doesn't list or one that several providers offer.
+A model ID is enough: the registry knows its provider, so `with_model`, `create!`, and a model picker need no table of providers. Pass `provider:` when several providers offer the model. For one the registry doesn't list, see `model-resolution/`.
 
 Outside Rails, all of this except the Rails records works on plain Ruby objects. The application stores the transcript itself and rebuilds a chat with `add_message`, which does not restore the usage ledger, so persist `usage.ruby_llm` events if it needs past spend.
 
