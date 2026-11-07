@@ -61,6 +61,17 @@ module RubyLLM
     #
     # Providers that cannot generate several images in one request raise
     # ArgumentError when +count:+ is above 1.
+    #
+    # +fallbacks:+ lists models to try, in order, when the request fails
+    # with one of the errors Chat#with_fallbacks moves on from by default,
+    # such as a rate limit or an overloaded provider. Each is a model id or
+    # a Model, and gets the same request. A fallback whose model can't be
+    # found is skipped. Each attempt has its own +image.ruby_llm+ event
+    # and usage entry.
+    #
+    #   RubyLLM.paint("A small watercolor robot", model: "gpt-image-2",
+    #                 fallbacks: ["gemini-3.1-flash-image"])
+    #
     def self.paint(prompt,
                    model: nil,
                    provider: nil,
@@ -72,7 +83,27 @@ module RubyLLM
                    mask: nil,
                    provider_options: {},
                    metadata: nil,
-                   owner: nil)
+                   owner: nil,
+                   fallbacks: [])
+      queue = Array(fallbacks).flatten.compact.map { |fallback| Fallback.build(fallback) }
+      operation = painting(model, provider:, assume_model_exists:, context:, owner:)
+      begin
+        operation.run(prompt:, size:, count:, provider_options:, metadata:) do |provider_instance, resolved|
+          provider_instance.paint(prompt, model: resolved, size:, count:, with:, mask:, provider_options:)
+        end
+      rescue StandardError => e
+        raise unless Fallback.error?(e, Fallback::DEFAULT_ERRORS)
+
+        _, operation = Fallback.next_usable(queue) do |fallback|
+          painting(fallback.id, provider: fallback.provider, context:, owner:)
+        end
+        raise e unless operation
+
+        retry
+      end
+    end
+
+    def self.painting(model, provider:, context:, owner:, assume_model_exists: false) # :nodoc:
       Accounting::Operation.new(
         'image', model, default: :default_image_model, category: :images, provider:, assume_model_exists:, context:,
                         owner:,
@@ -83,10 +114,9 @@ module RubyLLM
                           event[:tokens] = Tokens.aggregate(images.map(&:tokens))
                           event[:cost] = Cost.aggregate(images.map(&:cost))
                         }
-      ).run(prompt:, size:, count:, provider_options:, metadata:) do |provider_instance, model|
-        provider_instance.paint(prompt, model:, size:, count:, with:, mask:, provider_options:)
-      end
+      )
     end
+    private_class_method :painting
 
     # :stopdoc:
 

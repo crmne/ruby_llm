@@ -86,6 +86,25 @@ module RubyLLM
       end
     end
 
+    # Returns whether +error+ is one of +errors+ and may move on to a
+    # fallback. A cancellation never does.
+    def self.error?(error, errors) # :nodoc:
+      !error.is_a?(CancelledError) && errors.any? { |error_class| error.is_a?(error_class) }
+    end
+
+    # Takes fallbacks off +queue+ until the block accepts one, skipping
+    # those whose model can't be resolved. Returns the fallback and the
+    # block's value, or +nil+ when none is left.
+    def self.next_usable(queue) # :nodoc:
+      while (fallback = queue.shift)
+        begin
+          return [fallback, yield(fallback)]
+        rescue ModelNotFoundError, ConfigurationError => e
+          RubyLLM.logger.warn("RubyLLM skipped fallback #{fallback.id}: #{e.message}")
+        end
+      end
+    end
+
     def inspect_attributes # :nodoc:
       { id: id, provider: provider, attempt: attempt }
     end

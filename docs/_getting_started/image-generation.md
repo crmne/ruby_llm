@@ -18,6 +18,7 @@ After reading this guide, you will know:
 *   How to generate several images from one prompt in a single request.
 *   How to edit existing images with source images and masks.
 *   How to select different image generation models.
+*   How to fall back to another model when one is busy.
 *   How to specify image sizes (for supported models).
 *   How to inspect token usage and calculate image costs.
 *   How to save images to disk or attach them with Rails Active Storage.
@@ -130,6 +131,20 @@ RubyLLM.paint("A small red ruby on a white background",
 ```
 
 Configure the required [Image & Video plan and permissions]({% link _reference/configuration-providers.md %}#media-generation). You can reuse [uploaded media assets]({% link _core_features/files.md %}#elevenlabs-media-assets) as inputs.
+
+### Falling Back to Another Model
+
+Image models hit rate limits and overload like any other. Pass `fallbacks:` to try other models, in order, when one fails:
+
+```ruby
+RubyLLM.paint("A mountain village at sunrise",
+              model: "{{ site.models.image_openai }}",
+              fallbacks: ["{{ site.models.image_google }}"])
+```
+
+Each fallback gets the same prompt and options, and runs only after an error that [chat fallbacks]({% link _advanced/error-handling.md %}#model-fallbacks) move on from by default: a rate limit, a server error, an overloaded or unavailable service, or a connection failure. A rejected prompt raises at once. A fallback can be a model ID or a `RubyLLM::Model`, and one whose model can't be found is skipped. When every model fails, the last error is raised.
+
+Each attempt has its own `image.ruby_llm` event and usage entry, so failed attempts the provider billed still reach your [usage tracking]({% link _core_features/cost-and-usage-tracking.md %}).
 
 ## Image Sizes
 
