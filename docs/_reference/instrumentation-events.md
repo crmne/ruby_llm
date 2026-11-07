@@ -23,7 +23,7 @@ Subscribe to these events as shown in [Instrumentation and Observability]({% lin
 | `request.ruby_llm` | Around one request through a provider's connection, including its retries | `provider`, `method`, `url`, and `status` unless the request raises |
 | `usage.ruby_llm` | After every finished attempt of a tracked operation, including retries and cancellations | `operation`, `provider`, `model`, `status`, `tokens`, `cost`, `owner`, and the workflow fields |
 | `batch.ruby_llm` | Around one batch submission | `provider`, `provider_class`, `requests`, and `batch_id` after submission |
-| `agent.ruby_llm` | Around one run of a chat an agent configured | `agent_name`, `chat`, `conversation_id` |
+| `agent.ruby_llm` | Around one run of a chat an agent configured | `agent_name`, `agent_description`, `chat`, `conversation_id` |
 | `chat.ruby_llm` | Around one chat completion | `chat`, `provider`, `provider_class`, `model`, `model_info`, `input_messages`, `messages_after`, `response`, `streaming`, `tokens`, `cost`, `response_tokens`, `agent_name` |
 | `tool_call.ruby_llm` | Around one tool execution | `tool_name`, `tool_arguments`, `tool_call_id`, `result`, `agent_name` |
 | `mcp_unreachable.ruby_llm` | When a chat can't list an MCP server's tools and goes on without them, at most once a minute per server | `server`, `error` |
@@ -56,6 +56,7 @@ A run opens one event, however many moves it takes. A turn that goes on to answe
 | Field | Contents |
 | --- | --- |
 | `agent_name` | The agent's class name, or `nil` for an anonymous agent class |
+| `agent_description` | The agent's `description`, present only when it has one |
 | `chat` | The `RubyLLM::Chat` that runs, the same object as in `chat.ruby_llm` |
 | `conversation_id` | The ID of the Rails chat record, present only for a persisted chat |
 

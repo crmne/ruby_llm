@@ -135,6 +135,7 @@ Spans follow the [OpenTelemetry GenAI semantic conventions](https://github.com/o
 | `gen_ai.usage.cache_read.input_tokens`, `gen_ai.usage.cache_write.input_tokens` | Cached input, also counted in the input total |
 | `gen_ai.usage.reasoning.output_tokens` | Thinking tokens |
 | `gen_ai.agent.name` | The agent's class name, on agent runs and the tools they run |
+| `gen_ai.agent.description` | The agent's `description`, on agent runs, when it has one |
 | `gen_ai.conversation.id` | The ID of the Rails chat record an agent run belongs to |
 | `gen_ai.tool.name`, `gen_ai.tool.description`, `gen_ai.tool.call.id` | The tool, its description, and its call ID |
 | `gen_ai.skill.name` | The skill a `load_skill` call loads, when it is one of the chat's skills |
@@ -152,7 +153,7 @@ RubyLLM carries the trace context into the threads and fibers it starts for [con
 
 Traces often go to a third-party service, so by default RubyLLM exports only the metadata listed above. It does not export prompts, instructions, messages, generated content, or tool arguments and results unless you [record content](#recording-content). It never exports embeddings, attachment bytes, metadata you attach, provider options, credentials, or exception messages and stack traces.
 
-Model names, agent class names, chat record IDs, tool names and descriptions, tool call IDs, and workflow names and IDs are exported. A tool's description is written for the model and can read like instructions, so keep tool descriptions, workflow names, and IDs safe to send to your tracing backend.
+Model names, agent class names and descriptions, chat record IDs, tool names and descriptions, tool call IDs, and workflow names and IDs are exported. Agent and tool descriptions are written for the model and can read like instructions, so keep them, workflow names, and IDs safe to send to your tracing backend.
 
 The [instrumentation events]({% link _advanced/instrumentation.md %}#payloads) your own subscribers receive still contain the full application data. What you do with it is up to you.
 

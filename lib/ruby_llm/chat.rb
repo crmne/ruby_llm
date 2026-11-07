@@ -1612,8 +1612,9 @@ module RubyLLM
       previous = Fiber[AGENT_RUN_KEY]
       Fiber[AGENT_RUN_KEY] = self
       begin
-        payload = { agent_name: @agent_class.name, chat: self, conversation_id: @run.conversation_id }
-        payload.delete(:conversation_id) if payload[:conversation_id].nil?
+        payload = { agent_name: @agent_class.name, chat: self, agent_description: @agent_class.description,
+                    conversation_id: @run.conversation_id }
+        payload.delete_if { |key, value| value.nil? && key != :agent_name }
         RubyLLM.instrument('agent.ruby_llm', payload, config: @config, &)
       ensure
         Fiber[AGENT_RUN_KEY] = previous

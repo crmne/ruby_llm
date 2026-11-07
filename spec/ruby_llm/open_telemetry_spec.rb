@@ -702,6 +702,7 @@ RSpec.describe RubyLLM::OpenTelemetry do
     stub_const('TelemetryAgent', Class.new(RubyLLM::Agent) do
       model model_for(:openai, :temperature)
       tools TelemetryLookup
+      description 'Looks orders up'
     end)
     agent = TelemetryAgent.new
     call = RubyLLM::ToolCall.new(id: 'call_agent', name: 'telemetry_lookup', arguments: {})
@@ -715,7 +716,8 @@ RSpec.describe RubyLLM::OpenTelemetry do
     children = spans.reject { |span| span == run }
     expect(run.kind).to eq(:internal)
     expect(run.parent_span_id).to eq(OpenTelemetry::Trace::INVALID_SPAN_ID)
-    expect(run.attributes).to eq('gen_ai.operation.name' => 'invoke_agent', 'gen_ai.agent.name' => 'TelemetryAgent')
+    expect(run.attributes).to eq('gen_ai.operation.name' => 'invoke_agent', 'gen_ai.agent.name' => 'TelemetryAgent',
+                                 'gen_ai.agent.description' => 'Looks orders up')
     expect(children.map(&:name)).to eq(["chat #{model}", 'execute_tool telemetry_lookup', "chat #{model}"])
     expect(children.map(&:parent_span_id).uniq).to eq([run.span_id])
     expect(children[1].attributes).to include('gen_ai.agent.name' => 'TelemetryAgent')

@@ -101,6 +101,22 @@ RSpec.describe RubyLLM::Agent do
     expect(events('tool_call.ruby_llm').first).to include(agent_name: 'InstrumentedAgent')
   end
 
+  it 'carries the agent description when the agent has one' do
+    InstrumentedAgent.description 'Looks things up'
+    agent = InstrumentedAgent.new
+    stub_replies(agent.chat, reply, reply)
+
+    agent.ask('Hello')
+    Class.new(described_class) { model model_for(:openai, :temperature) }.new.tap do |plain|
+      stub_replies(plain.chat, reply)
+      plain.ask('Hello')
+    end
+
+    first, second = events('agent.ruby_llm')
+    expect(first).to include(agent_description: 'Looks things up')
+    expect(second).not_to have_key(:agent_description)
+  end
+
   it 'carries the workflow fields' do
     agent = InstrumentedAgent.new
     stub_replies(agent.chat, reply)
