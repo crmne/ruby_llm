@@ -89,35 +89,40 @@ The generator creates:
 
 Start your server and visit `http://localhost:3000/chats`.
 
-The controllers save the user's message with `chat.ask_later` before they enqueue the job, so a job that runs again after a failure does not repeat it. `MessagesController` answers the send with a Turbo Stream that clears the form and appends the message, so it shows right away without waiting for a page refresh. It saves the message inside `Message.suppressing_turbo_broadcasts`: the page that sent it already shows it, and Turbo skips a burst of page refreshes when the last one comes from the page's own request. The message form sits in a Turbo Frame, so a page refresh that starts while the message is sending doesn't cancel the send. The generated job streams each reply with the chunks' own `broadcast`. `ChatsController#create` enqueues a new chat's first reply a second later, so the new page has subscribed to the chat's stream before the reply starts:
+`MessagesController` saves the person's message with `ask_later` and enqueues `ChatResponseJob` to answer it:
+
+```ruby
+@chat.ask_later(content, with: attachments)
+ChatResponseJob.perform_later(@chat.id)
+```
+
+`ask_later` saves the message when the chat is idle. While a reply runs, it [queues]({% link _advanced/rails-persistence.md %}#queued-messages) the message instead, so the transcript that reply writes stays whole. The running job answers it right after: a run takes the messages that wait at each step, and looks again once it lets the chat go. The message is saved before the job runs, so a job that runs again after a failure does not repeat it.
+
+The job completes the chat, streaming each reply with the chunks' own `broadcast`:
 
 ```ruby
 class ChatResponseJob < ApplicationJob
+  discard_on RubyLLM::CancelledError
+
   def perform(chat_id)
     chat = ChatAgent.find(chat_id)
-    chat.update!(reply_error: nil)
     chat.complete(&:broadcast)
-    self.class.perform_later(chat_id) if chat.queued_messages.any? && !chat.waiting?
-    self.class.set(wait: 1.minute).perform_later(chat_id) if chat.running?
-  rescue RubyLLM::CancelledError
-    self.class.perform_later(chat_id) if chat.queued_messages.any?
-  rescue StandardError => error
-    chat.update!(reply_error: reply_error_message(error))
-    chat.broadcast_refresh
-    raise
-  end
-
-  private
-
-  def reply_error_message(error)
-    return "This conversation is too long for the model. Start a new chat." if error.is_a?(RubyLLM::ContextLengthExceededError)
-
-    "The reply failed. Send your message again."
+    retry_job wait: 1.minute if chat.running?
   end
 end
 ```
 
-Replies stream into the page chunk by chunk, and the finished message replaces the streamed text once when it is saved. New messages, approval cards, and the form appear through page refreshes, so the page always matches what a reload would show. A Stimulus controller that ships with RubyLLM puts the chunks in order, ignores an empty reply that arrives after the failed reply's removal, and renders assistant replies as Markdown, sanitized with DOMPurify. Images in a reply show as text, so a prompt injection cannot make the browser fetch a URL that leaks the chat, while attachments still show. In an app with an import map, RubyLLM pins the controller as `ruby_llm/chat_message_controller`, along with `marked` and `dompurify`, and the generated `app/javascript/controllers/chat_message_controller.js` is one line that loads it, so the controller updates with the gem. Pins in your own `config/importmap.rb` win, and to change the controller, replace that line with your own. In an app that bundles its JavaScript with jsbundling-rails, the generator copies the controller into that file and prints the `yarn add` command and `bin/rails stimulus:manifest:update`. With another bundler, it copies the controller and says what to add. Without JavaScript, replies show as plain text. See [Message Ordering Issues]({% link _advanced/rails-streaming.md %}#message-ordering-issues). While the job runs the chat, an empty reply shows "Thinking…", the message form stays, and a Stop button posts to `ChatsController#cancel`, which calls [`chat.cancel`]({% link _advanced/rails-streaming.md %}#cancelling-a-background-stream). `ChatResponseJob` rescues the `RubyLLM::CancelledError` it raises in the job. Each finished reply shows what it cost, and the page shows the chat's total. Both message forms take file attachments, and the Stimulus controller keeps a page refresh from undoing any field a person changed in the message form, whether what they are typing or a field your app adds, such as a model picker. Sending clears the form, and another chat starts empty. The generator needs `turbo-rails`, which a plain `rails new` has, and says what to add when an app doesn't. When the app has `test/test_helper.rb`, it also writes `test/system/chats_test.rb`, so `bin/rails test:system` checks streaming, Stop, cost, and errors with [scripted replies]({% link _advanced/testing.md %}), in a real browser. That needs Chrome, and it adds `capybara` and `selenium-webdriver` to your test group when they're missing. It writes `test/agents/chat_agent_test.rb` too, which `bin/rails test` runs to check the agent's context budget. When a reply fails, the job saves a message for the person in the chat's `reply_error` column, refreshes the page, and raises, so your error reporting sees it. The page renders the message whenever it loads or refreshes, so it shows however the broadcasts of a quick failure arrive, and the next reply clears it. The generator adds the column with a migration, so run `bin/rails db:migrate` after it. If the process running a reply dies, the chat's claim expires within a minute, and the reply starts over the next time a job runs for the chat: a job that finds the chat running checks again a minute later, and a new message enqueues one. The job the dead process was running only runs again if your queue retries it. A message sent in the meantime is [queued]({% link _advanced/rails-persistence.md %}#queued-messages): `MessagesController` calls `chat.queue` while `chat.running?`, and the message shows under the transcript, faded, with a Cancel button that posts to `QueuedMessagesController#destroy`, which finds the queued message and calls `withdraw` on it. The running job takes it at its next step, so the reply goes on to answer it, and the page refresh then shows it in the transcript. `chat.running?` reads the chat's claim, so a job that dies frees the chat within a minute.
+When another process is running the chat, `complete` returns at once, and the job tries again a minute later. That retry only matters when the other process has died: a live one answers what waits before it lets the chat go, and the claim of a dead one expires within a minute, so the retry finds the chat free. The job the dead process was running only runs again if your queue retries it. `ChatsController#create` enqueues a new chat's first reply a second later, so the new page has subscribed to the chat's stream before the reply starts.
+
+`MessagesController` answers the send with a Turbo Stream that clears the form and refreshes the page, so the message shows right away, in the transcript or queued under it, without waiting for the job. RubyLLM's page refreshes carry no request id, so Turbo never skips one as the page's own. The message form sits in a Turbo Frame, so a page refresh that starts while the message is sending doesn't cancel the send.
+
+Replies stream into the page chunk by chunk, and the finished message replaces the streamed text once when it is saved. New messages, approval cards, and the form appear through page refreshes, so the page always matches what a reload would show. A Stimulus controller that ships with RubyLLM puts the chunks in order, ignores an empty reply that arrives after the failed reply's removal, and renders assistant replies as Markdown, sanitized with DOMPurify. Images in a reply show as text, so a prompt injection cannot make the browser fetch a URL that leaks the chat, while attachments still show. In an app with an import map, RubyLLM pins the controller as `ruby_llm/chat_message_controller`, along with `marked` and `dompurify`, and the generated `app/javascript/controllers/chat_message_controller.js` is one line that loads it, so the controller updates with the gem. Pins in your own `config/importmap.rb` win, and to change the controller, replace that line with your own. In an app that bundles its JavaScript with jsbundling-rails, the generator copies the controller into that file and prints the `yarn add` command and `bin/rails stimulus:manifest:update`. With another bundler, it copies the controller and says what to add. Without JavaScript, replies show as plain text. See [Message Ordering Issues]({% link _advanced/rails-streaming.md %}#message-ordering-issues).
+
+While the job runs the chat, an empty reply shows "Thinking…", the message form stays, and a Stop button posts to `ChatsController#cancel`, which calls [`chat.cancel`]({% link _advanced/rails-streaming.md %}#cancelling-a-background-stream). Stop raises `RubyLLM::CancelledError` in the job, which discards it. A message sent while a reply runs shows under the transcript, faded, with a Cancel button that posts to `QueuedMessagesController#destroy`, which finds the queued message and calls `withdraw` on it. When Stop ends a reply while messages wait, `complete` goes on to answer them before the job ends. Each finished reply shows what it cost, and the page shows the chat's total. Both message forms take file attachments, and the Stimulus controller keeps a page refresh from undoing any field a person changed in the message form, whether what they are typing or a field your app adds, such as a model picker. Sending clears the form, and another chat starts empty.
+
+When a reply fails, `complete` saves a message for the person in the chat's `reply_error` column, refreshes the page, and raises, so the job fails and your error reporting sees it. The page renders the message whenever it loads or refreshes, so it shows however the broadcasts of a quick failure arrive, and the next run clears it. The message is "The reply failed. Send your message again.", or "This conversation is too long for the model. Start a new chat." for `RubyLLM::ContextLengthExceededError`. Change or translate them with the I18n keys `ruby_llm.reply_error.failed` and `ruby_llm.reply_error.too_long`. The generator adds the column with a migration, so run `bin/rails db:migrate` after it.
+
+The generator needs `turbo-rails`, which a plain `rails new` has, and says what to add when an app doesn't. When the app has `test/test_helper.rb`, it also writes `test/system/chats_test.rb`, so `bin/rails test:system` checks streaming, Stop, a message sent right after a reply or Stop, cost, and errors with [scripted replies]({% link _advanced/testing.md %}), in a real browser. That needs Chrome, and it adds `capybara` and `selenium-webdriver` to your test group when they're missing. It writes `test/agents/chat_agent_test.rb` too, which `bin/rails test` runs to check the agent's context budget.
 
 The UI generator also supports custom model names:
 

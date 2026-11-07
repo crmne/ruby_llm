@@ -29,9 +29,7 @@ Show user messages immediately for better UX:
 class MessagesController < ApplicationController
   def create
     @chat = Chat.find(params[:chat_id])
-
-    @chat.add_message(role: :user, content: params[:content])
-
+    @chat.ask_later(params[:content])
     ChatStreamJob.perform_later(@chat.id)
 
     respond_to do |format|
@@ -42,7 +40,7 @@ class MessagesController < ApplicationController
 end
 ```
 
-The `add_message` method provides instant feedback while processing continues in the background.
+`ask_later` saves the message at once, so the page can show it while the job answers. While a reply runs, it queues the message instead, so the reply's transcript stays whole. See [Messages Sent During a Reply](#messages-sent-during-a-reply).
 
 ## Full Streaming Implementation
 
@@ -157,16 +155,28 @@ The reply record keeps the text streamed before the cancel, with `finish_reason`
 
 ## Messages Sent During a Reply
 
-A message sent while the job streams a reply goes in the chat's queue. The running job takes it at its next step, and it broadcasts like any other message once it joins:
+A message sent while the job streams a reply goes in the chat's queue: `ask_later` queues it whenever a run holds the chat. The running job takes it at its next step, and it broadcasts like any other message once it joins:
 
 ```ruby
 # app/controllers/messages_controller.rb
 def create
   @chat = Chat.find(params[:chat_id])
-  @chat.queue(params[:content])
-  ChatStreamJob.perform_later(@chat.id) unless @chat.running?
+  @chat.ask_later(params[:content])
+  ChatStreamJob.perform_later(@chat.id)
 
   redirect_to @chat
+end
+```
+
+The job you enqueue finds the chat running and returns at once. The running job answers the message before it lets the chat go, so a retry only matters when that job died. Its claim expires within a minute:
+
+```ruby
+class ChatStreamJob < ApplicationJob
+  def perform(chat_id)
+    chat = Chat.find(chat_id)
+    chat.complete(&:broadcast)
+    retry_job wait: 1.minute if chat.running?
+  end
 end
 ```
 
@@ -184,7 +194,7 @@ Render what waits beside the transcript, with a way to take it back:
 </div>
 ```
 
-When a queued message joins, its message saves and the page refreshes, so the queued entry gives way to the message in the transcript. A cancelled reply leaves the queue alone, and the next `complete` takes those messages, so a job that rescues `RubyLLM::CancelledError` should start one when the queue isn't empty, as the generated job does. A stopped turn stays stopped: `complete` with nothing queued asks the model nothing. See [Queued Messages]({% link _advanced/rails-persistence.md %}#queued-messages) for the job that runs messages queued with `steer: false`.
+When a queued message joins, its message saves and the page refreshes, so the queued entry gives way to the message in the transcript. When a stop ends a reply while messages wait in the queue, `complete` goes on with them before it returns, as the next `complete` would, and raises `RubyLLM::CancelledError` only when nothing waits. A stopped turn with nothing queued stays stopped: the next `complete` asks the model nothing. See [Queued Messages]({% link _advanced/rails-persistence.md %}#queued-messages) for the job that runs messages queued with `steer: false`.
 
 ## Message Ordering Issues
 

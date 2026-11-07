@@ -17,7 +17,7 @@ After reading this guide, you will know:
 
 * How RubyLLM upgrades move from one release to the next.
 * How to upgrade a 2.1 application and its Rails schema to 2.2.
-* How persisted chats now run in one process at a time.
+* How persisted chats now run in one process at a time, and where a message sent during a reply waits.
 * What changes for a crashed job, a denial, pending approvals, an MCP input error, a stdio server's environment, a dropped MCP tool call, a write over a folder, a document URL, and a deploy that mixes versions.
 * What changes for agent `rescue_from` handlers and streamed transcription chunks.
 * How `tool_calls` reads now that it is a collection of calls.
@@ -114,7 +114,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-With it on, and turbo-rails and Action Cable loaded, `acts_as_message` broadcasts a chat's messages to the chat record's stream, `turbo_stream_from @chat`. It appends an empty assistant reply when it is created, replaces a message when it is saved, removes it when it is destroyed, and refreshes the chat's page after every change and at the end of each run. Streamed chunks know their record, so a job streams with `chat.complete(&:broadcast)`. See [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}).
+With it on, and turbo-rails and Action Cable loaded, `acts_as_message` broadcasts a chat's messages to the chat record's stream, `turbo_stream_from @chat`. It appends an empty assistant reply when it is created, replaces a message when it is saved, removes it when it is destroyed, and refreshes the chat's page after every change and at the end of each run. A refresh carries no request id, so it reaches the page whose request made the change too. Streamed chunks know their record, so a job streams with `chat.complete(&:broadcast)`. See [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}).
 
 Broadcasting renders each message with its partial, chosen by `to_partial_path`, so an application that turns it on needs `messages/_user`, `messages/_assistant`, `messages/_tool`, and `messages/_tool_calls`. A model's `broadcasts:` option overrides the configuration.
 
@@ -186,6 +186,29 @@ In 2.1, two processes that completed the same persisted chat at the same time co
 * `chat.running?` and a tool call record's `running?` are `true`.
 
 The process that holds the claim continues with approvals and questions recorded while it ran. See [One Process at a Time]({% link _advanced/durable-agents.md %}#one-process-at-a-time).
+
+## A Message Sent During a Reply Waits in the Queue
+
+In 2.1, `ask_later` on a persisted chat saved the message even while another process ran the chat, so a message saved mid-reply could land in the transcript ahead of the reply it interrupted, and one sent during a tool round raised `RubyLLM::PendingToolCallsError`. In 2.2, while a run holds the chat, `ask_later` [queues]({% link _advanced/rails-persistence.md %}#queued-messages) the message instead, and that run answers it before it lets the chat go. A controller calls `ask_later` and enqueues its job either way:
+
+```ruby
+@chat.ask_later(params[:content])
+ChatResponseJob.perform_later(@chat.id)
+```
+
+The job finds the chat running and returns at once. Have it try again a minute later, for a run that died and whose claim has to expire first:
+
+```ruby
+class ChatResponseJob < ApplicationJob
+  def perform(chat_id)
+    chat = ChatAgent.find(chat_id)
+    chat.complete(&:broadcast)
+    retry_job wait: 1.minute if chat.running?
+  end
+end
+```
+
+When a stop ends a run while messages wait in the queue, `complete` goes on with them before it returns, and raises `RubyLLM::CancelledError` only when nothing waits. If your job rescued the error to enqueue itself for the queue, it no longer needs to.
 
 ## Cancel With Nothing to Stop Does Nothing
 

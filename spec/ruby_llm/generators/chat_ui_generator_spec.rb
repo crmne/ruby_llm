@@ -168,7 +168,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     chat_show = File.read(File.join(base_path, 'chats/show.html.erb'))
     expect(chat_show).to include('.queued_messages.each do |queued_message|')
     create_stream = File.read(File.join(base_path, 'messages/create.turbo_stream.erb'))
-    expect(create_stream).to include('turbo_stream.append "queued_')
+    expect(create_stream).to include('turbo_stream.refresh request_id: nil')
+    expect(create_stream).not_to include('turbo_stream.append')
   end
 
   def expect_routes(path, namespaced: false)
@@ -206,8 +207,9 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     expect(job_content).to include(perform_line)
     expect(job_content).to include(complete_line)
     expect(job_content).to include(requeue_line)
-    expect(job_content).to include('.update!(reply_error: nil)', '.update!(reply_error: reply_error_message(error))')
-    expect(job_content).not_to include('broadcast_refresh_to')
+    expect(job_content).to include('discard_on RubyLLM::CancelledError')
+    expect(job_content).not_to include('reply_error', 'rescue', 'broadcast_refresh', 'perform_later', 'queued_messages')
+    expect(job_content.lines.size).to eq(9)
   end
 
   # The script sends requests through the app, and each request resets
@@ -282,8 +284,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       abort "message answered \#{session.response.status}" unless session.response.status == 302
       queued = chat.queued_messages.to_a
       abort "queued \#{queued.map(&:content)}" unless queued.map(&:content) == [ "Use the EU file" ]
-      recheck = jobs.call.map { |job| job["scheduled_at"].present? }
-      abort "the queued message has no check to come: \#{jobs.call}" unless recheck == [ true ]
+      enqueued = jobs.call.map { |job| [ job["arguments"], job["scheduled_at"] ] }
+      abort "the queued message has no job at once: \#{enqueued}" unless enqueued == [ [ [ chat.id ], nil ] ]
       ActiveJob::Base.queue_adapter.enqueued_jobs.clear
 
       html = #{controller}.render(:show, assigns: #{assigns})
@@ -294,7 +296,9 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       stream = { "Accept" => "text/vnd.turbo-stream.html" }
       session.post "#{chats_path}/\#{chat.id}/messages", params: { #{message_key}: { content: "And Q4" } }, headers: stream
       abort "streamed message answered \#{session.response.status}" unless session.response.status == 200
-      abort "stream lacks the queued message" unless session.response.body.include?("And Q4")
+      refresh = '<turbo-stream action="refresh"></turbo-stream>'
+      abort "the stream doesn't refresh the page that sent it" unless session.response.body.include?(refresh)
+      abort "the streamed message wasn't queued" unless chat.queued_messages.map(&:content).include?("And Q4")
 
       session.delete "#{chats_path}/\#{chat.id}/queued_messages/\#{queued.first.id}"
       abort "withdraw answered \#{session.response.status}" unless session.response.status == 303
@@ -318,7 +322,9 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       ActiveJob::Base.queue_adapter.enqueued_jobs.clear
       #{job}.perform_now(chat.id)
       abort "the job left the request" if chat.reload[:cancelled]
-      abort "a message queued during the stop has no job" unless jobs.call.map { |job| job["arguments"] } == [ [ chat.id ] ]
+      left = chat.queued_messages.map(&:content)
+      abort "a stop the next run found took what waits: \#{left}" unless left == [ "And Q4" ]
+      abort "a stopped job enqueued another: \#{jobs.call}" if jobs.call.any?
       session.post "#{chats_path}/\#{chat.id}/cancel"
       abort "stopping an idle chat cancelled its next reply" if chat.reload[:cancelled]
       html = #{controller}.render(:show, assigns: #{assigns})
@@ -338,8 +344,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       abort "idle message enqueued \#{jobs.call}" unless jobs.call.map { |job| job["arguments"] } == [ [ chat.id ] ]
       abort "idle message not saved" unless chat.reload.to_llm.messages.last.content == "Hi"
       session.post "#{chats_path}/\#{chat.id}/messages", params: { #{message_key}: { content: "Shown at once" } }, headers: stream
-      appended = session.response.body[%r{<turbo-stream action="append" target="#{message_key}s">.*?</turbo-stream>}m].to_s
-      abort "the sent message isn't in the response: \#{session.response.body}" unless appended.include?("Shown at once")
+      abort "the stream doesn't refresh the page that sent it" unless session.response.body.include?(refresh)
+      abort "the sent message isn't saved" unless chat.reload.to_llm.messages.last.content == "Shown at once"
 
       session.get "#{chats_path}/new"
       abort "new chat page answered \#{session.response.status}" unless session.response.status == 200
@@ -489,6 +495,38 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     RUBY
   end
 
+  def dead_holder_script(agent:, chats_path:, job:, message_key:, **)
+    <<~RUBY
+      require "ruby_llm/test_helper"
+      require "active_support/testing/time_helpers"
+      include RubyLLM::TestHelper
+      include ActiveSupport::Testing::TimeHelpers
+      ActiveJob::Base.queue_adapter = :test
+      ActionController::Base.allow_forgery_protection = false
+      chat = #{agent}.create!
+      chat.add_message(role: :user, content: "Hello")
+      chat.update_columns(claim_token: "died", claimed_until: 1.minute.from_now)
+
+      session = ActionDispatch::Integration::Session.new(Rails.application)
+      session.host! "localhost"
+      session.post "#{chats_path}/\#{chat.id}/messages", params: { #{message_key}: { content: "Are you there?" } }
+      queued = chat.queued_messages.map(&:content)
+      abort "a message to a chat a run that died holds wasn't queued: \#{queued}" unless queued == [ "Are you there?" ]
+
+      stub_replies "Here I am"
+      enqueued = ActiveJob::Base.queue_adapter.enqueued_jobs
+      ActiveJob::Base.execute(enqueued.shift)
+      retried = enqueued.shift
+      abort "the job that found the chat held didn't try again: \#{retried}" unless retried&.dig("job_class") == "#{job}"
+      at = Time.zone.parse(retried["scheduled_at"])
+      expires = chat.reload.claimed_until
+      abort "the retry at \#{at} isn't right after the claim expires at \#{expires}" unless at.between?(expires, expires + 30.seconds)
+      travel_to(at + 1.second) { ActiveJob::Base.execute(retried) }
+      answer = chat.reload.to_llm.messages.last.content
+      abort "the retry didn't answer: \#{answer}" unless answer == "Here I am"
+    RUBY
+  end
+
   def expect_chat_script_to_succeed(script)
     success, output = run_rails_runner(script)
     expect(success).to be(true), output
@@ -573,16 +611,10 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       messages_controller_expectations: [
         'class MessagesController',
         '@chat = ChatAgent.find(params[:chat_id])',
-        'content = params.dig(:message, :content)',
-        'if @chat.pending_approvals.any?',
-        'if @chat.running?',
-        '@queued_message = @chat.queue(content.presence, with: attachments)',
-        'wait = @chat.running? ? 1.minute : 0',
-        'ChatResponseJob.set(wait:).perform_later(@chat.id)',
-        'if content.present? || attachments',
-        'Message.suppressing_turbo_broadcasts { @chat.ask_later(content.presence, with: attachments) }',
-        '@message = @chat.messages.last',
-        'ChatResponseJob.perform_later(@chat.id)',
+        'rescue_from RubyLLM::PendingToolCallsError',
+        'params.dig(:message, :content).presence',
+        "if content || attachments\n      @chat.ask_later(content, with: attachments)\n      " \
+        "ChatResponseJob.perform_later(@chat.id)\n",
         'format.turbo_stream',
         '@message = @chat.messages.build',
         '@message.errors.add(:content, "can\'t be blank")',
@@ -620,7 +652,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         class_name: 'class ChatResponseJob',
         perform_line: 'def perform(chat_id)',
         complete_line: 'chat.complete(&:broadcast)',
-        requeue_line: 'self.class.perform_later(chat_id) if chat.queued_messages.any? && !chat.waiting?'
+        requeue_line: 'retry_job wait: 1.minute if chat.running?'
       },
       functionality_example: 'chat functionality works correctly',
       functionality_script: <<~RUBY
@@ -681,16 +713,10 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       messages_controller_expectations: [
         'class Llm::MessagesController',
         '@llm_chat = Llm::ChatAgent.find(params[:chat_id])',
-        'content = params.dig(:llm_message, :content)',
-        'if @llm_chat.pending_approvals.any?',
-        'if @llm_chat.running?',
-        '@queued_message = @llm_chat.queue(content.presence, with: attachments)',
-        'wait = @llm_chat.running? ? 1.minute : 0',
-        'LlmChatResponseJob.set(wait:).perform_later(@llm_chat.id)',
-        'if content.present? || attachments',
-        'Llm::Message.suppressing_turbo_broadcasts { @llm_chat.ask_later(content.presence, with: attachments) }',
-        '@llm_message = @llm_chat.llm_messages.last',
-        'LlmChatResponseJob.perform_later(@llm_chat.id)',
+        'rescue_from RubyLLM::PendingToolCallsError',
+        'params.dig(:llm_message, :content).presence',
+        "if content || attachments\n      @llm_chat.ask_later(content, with: attachments)\n      " \
+        "LlmChatResponseJob.perform_later(@llm_chat.id)\n",
         'format.turbo_stream',
         '@llm_message = @llm_chat.llm_messages.build',
         '@llm_message.errors.add(:content, "can\'t be blank")',
@@ -728,7 +754,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         class_name: 'class LlmChatResponseJob',
         perform_line: 'def perform(llm_chat_id)',
         complete_line: 'llm_chat.complete(&:broadcast)',
-        requeue_line: 'self.class.perform_later(llm_chat_id) if llm_chat.queued_messages.any? && !llm_chat.waiting?'
+        requeue_line: 'retry_job wait: 1.minute if llm_chat.running?'
       },
       extra_view_example: 'views use correct partial paths',
       extra_view_assertions: lambda do
@@ -1144,7 +1170,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
           config[:messages_controller_expectations].each do |line|
             expect(messages_controller).to include(line)
           end
-          expect(messages_controller).not_to include('def content')
+          expect(messages_controller).not_to include('running?', '.queue(', 'suppressing_turbo_broadcasts', 'wait')
 
           chat_agent = File.read(config[:approval_flow][:agent_path])
           expect(chat_agent).to start_with("class #{config[:approval_flow][:agent]} < ApplicationAgent\n")
@@ -1209,6 +1235,13 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       it 'saves a message once, however often its job runs' do
         within_test_app(app_path) do
           output, status = run_rails_runner_outside_executor(job_retry_script(**config[:approval_flow]))
+          expect(status.success?).to be(true), output
+        end
+      end
+
+      it 'answers a message sent to a chat whose run died, right after its claim expires' do
+        within_test_app(app_path) do
+          output, status = run_rails_runner_outside_executor(dead_holder_script(**config[:approval_flow]))
           expect(status.success?).to be(true), output
         end
       end

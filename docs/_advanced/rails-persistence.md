@@ -229,32 +229,42 @@ The tool result itself is an application-owned message with the `tool` role. The
 
 ## Queued Messages
 
-A message sent while a job runs the chat can't join the transcript yet: the reply is mid-stream, or a tool round still owes its results. `queue` stores it in `ruby_llm_queued_messages` instead, and the process that runs the chat takes it at its next step. The [Queueing Messages]({% link _advanced/agentic-workflows.md %}#queueing-messages) guide explains when messages join; on a persisted chat the rules are the same, across processes.
+A message sent while a job runs the chat can't join the transcript yet: the reply is mid-stream, or a tool round still owes its results. Whenever a run holds the chat, `ask_later` stores the message in `ruby_llm_queued_messages` instead, and the process that runs the chat takes it at its next step. The [Queueing Messages]({% link _advanced/agentic-workflows.md %}#queueing-messages) guide explains when messages join; on a persisted chat the rules are the same, across processes. So a controller saves every message the same way, and enqueues the job that answers it:
 
 ```ruby
 class MessagesController < ApplicationController
   def create
     @chat = Chat.find(params[:chat_id])
-    @chat.queue(params[:content], sender: Current.user)
-    ChatResponseJob.perform_later(@chat.id) unless @chat.running?
+    @chat.ask_later(params[:content])
+    ChatResponseJob.perform_later(@chat.id)
 
     redirect_to @chat
   end
 end
 ```
 
-`queue` returns a `RubyLLM::ActiveRecord::QueuedMessage` record with `content`, `attachments`, `sender`, `queued_at`, and `steer?`. `sender` is a polymorphic association to any record. RubyLLM stores it and hands it back, without interpreting it. Attachments are stored with Active Storage and move to the message the queued message becomes, without uploading them again.
-
-Queue first and check `running?` after. A run that ends after your check still takes a steering message: before it gives up the chat, the run looks for messages that arrived and starts another loop for them. A job that finishes its turn with messages queued with `steer: false` should enqueue itself again, since they wait for the next `complete`:
+A run that ends looks for messages that arrived once it has let the chat go, and starts another loop for them, so a message never waits on a run that was about to end. A job that finds the chat running returns at once. Have it try again later for the case where the run holding the chat died, and its claim has to expire first:
 
 ```ruby
 class ChatResponseJob < ApplicationJob
   def perform(chat_id)
     chat = Chat.find(chat_id)
     chat.complete(&:broadcast)
-    self.class.perform_later(chat_id) if chat.queued_messages.any? && !chat.waiting?
+    retry_job wait: 1.minute if chat.running?
   end
 end
+```
+
+`queue` puts a message in the queue whether or not a run holds the chat, and takes options `ask_later` doesn't. A message queued with `steer: false` waits for the turn to end, and `sender` records who sent it:
+
+```ruby
+@chat.queue(params[:content], steer: false, sender: Current.user)
+```
+
+`queue` returns a `RubyLLM::ActiveRecord::QueuedMessage` record with `content`, `attachments`, `sender`, `queued_at`, and `steer?`. `sender` is a polymorphic association to any record. RubyLLM stores it and hands it back, without interpreting it. Attachments are stored with Active Storage and move to the message the queued message becomes, without uploading them again. Messages queued with `steer: false` wait for the next `complete`, so a job that finishes its turn with some waiting should enqueue itself again:
+
+```ruby
+self.class.perform_later(chat_id) if chat.queued_messages.any? && !chat.waiting?
 ```
 
 `queued_messages` returns the waiting records, oldest first, ready to render. `withdraw` takes one back and deletes its attachments:

@@ -138,7 +138,7 @@ Claims rely on the database to make them visible to other processes, so call the
 | The person | Sees the partial reply, and the page stops streaming | Sees "Thinking…" until a job runs again | Sees what your job shows them | Sees what your job shows them |
 | Provider usage | An interrupted request is recorded as `:cancelled` with the tokens seen. One that already finished stays `:succeeded` | Lost for that attempt | Recorded as `:failed` | The request that finished stays `:succeeded` |
 
-The generated chat UI handles each of these: its job rescues the cancel, shows failures on the page and raises, and checks again every minute while a dead process still holds the chat. With a queue that loses jobs on a crash, such as development's `:async`, a run only resumes when the next message arrives.
+The generated chat UI handles each of these: its job discards the cancel and tries again every minute while a dead process still holds the chat, and `complete` saves a failure in the chat's `reply_error` column for the page before it raises. With a queue that loses jobs on a crash, such as development's `:async`, a run only resumes when the next message arrives.
 
 ## Resuming a Crashed Run
 
@@ -149,7 +149,7 @@ class CompleteJob < ApplicationJob
   def perform(chat_id)
     chat = SupportAgent.find(chat_id)
     chat.complete
-    CompleteJob.set(wait: 1.minute).perform_later(chat_id) if chat.running?
+    retry_job wait: 1.minute if chat.running?
   end
 end
 ```

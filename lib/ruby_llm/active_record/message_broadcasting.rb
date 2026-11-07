@@ -11,7 +11,9 @@ module RubyLLM
     # each chunk is appended as a numbered span that the chat UI's Stimulus
     # controller puts back in order. A saved message replaces itself, a
     # destroyed one is removed, and every change refreshes the chat page.
-    # Broadcasts go to the chat record's stream:
+    # A refresh carries no request id, so it reaches the page whose request
+    # made the change too, and Turbo never skips a burst of refreshes as
+    # that page's own. Broadcasts go to the chat record's stream:
     #
     #   <%= turbo_stream_from @chat %>
     #
@@ -28,7 +30,7 @@ module RubyLLM
         after_create_commit -> { broadcast_append_to chat_association }, if: :streaming_placeholder?
         after_update_commit -> { broadcast_replace_to chat_association }, if: :broadcasting?
         after_destroy_commit -> { broadcast_remove_to chat_association }, if: :broadcasting?
-        after_commit -> { broadcast_refresh_to chat_association }, if: :broadcasting?
+        after_commit -> { broadcast_refresh_to chat_association, request_id: nil }, if: :broadcasting?
       end
 
       class_methods do
