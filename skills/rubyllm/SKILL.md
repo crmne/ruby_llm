@@ -36,7 +36,7 @@ With `with_thinking` on, a stream can sit quiet for several seconds before text 
 
 You don't need to read the generated files or `lib/ruby_llm` to use this. The generator prints what works and which file controls it: with the default `Chat` model, `app/jobs/chat_response_job.rb` runs the turn and shows errors, `ChatsController#cancel` is Stop, and `app/agents/chat_agent.rb` says what the model can do. For anything else, read the one guide for that feature, and open source only when something fails or you need a signature.
 
-Code reads a chat's attachments, earlier ones too, at `./attachments/<name>`, or at `./<name>` with a store in a folder. Python needs `languages: [:python]`: the default is Ruby and shell. Without a converter, the model gets a PDF as the file itself, so it needs no PDF gem. `per_result` and `per_request` in `context_budget` are shares of the model's context window, not sizes.
+Code reads a chat's attachments, earlier ones too, at `./attachments/<name>`, or at `./<name>` with a store in a folder. Python needs `languages: [:python]`: the default is Ruby and shell. Without a converter, the model gets a PDF as the file itself, so it needs no PDF gem.
 
 `durable-agents/#when-a-run-is-interrupted` says what cancel, a crash, and a failure each save and continue.
 
@@ -73,7 +73,7 @@ with_file_store with_code_execution with_skills with_provider_tools with_tool_op
 
 class ChatAgent < ApplicationAgent    # or RubyLLM::Agent
   model "..."; instructions "..."; tools WeatherTool; mcp Linear; code_execution languages: [:python]
-  context_budget per_result: 0.25, per_request: 0.7; thinking effort: :medium   # thinking follows model changes
+  thinking effort: :medium   # follows model changes; the generated ChatAgent also sets context_budget and caching
 end
 ChatAgent.create!(model: "...")   # a chat keeps its model; ChatAgent.find applies the agent and leaves the model alone
 chat.with_model("...")            # saved on a record, and the next request uses it with the same history
