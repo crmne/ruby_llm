@@ -41,6 +41,22 @@ RSpec.describe RubyLLM::Providers::Azure do
         .to eq(RubyLLM::Protocols::Azure::Speech)
     end
 
+    {
+      'https://solco-dictation.cognitiveservices.azure.com/' => 'https://solco-dictation.cognitiveservices.azure.com',
+      'https://acme.services.ai.azure.com/api/projects/notes' => 'https://acme.services.ai.azure.com',
+      'https://swedencentral.api.cognitive.microsoft.com' => 'https://swedencentral.api.cognitive.microsoft.com'
+    }.each do |base, host|
+      it "calls Azure AI Speech on #{host} for #{base}" do
+        regional = RubyLLM.context do |config|
+          config.azure_api_base = base
+          config.azure_api_key = 'test-key'
+        end
+
+        expect(described_class.new(regional.config).azure_speech_transcription_url)
+          .to eq("#{host}/speechtotext/transcriptions:transcribe?api-version=2025-10-15")
+      end
+    end
+
     it 'leaves the resource key out when an Entra ID token signs the request' do
       token_context = RubyLLM.context do |config|
         config.azure_api_base = 'https://contoso.services.ai.azure.com'
