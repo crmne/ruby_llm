@@ -1620,7 +1620,7 @@ module RubyLLM
       Fiber[AGENT_RUN_KEY] = run = [self]
       begin
         payload = { agent_name: @agent_class.name, chat: self, agent_description: @agent_class.description,
-                    conversation_id: @run.conversation_id }
+                    chat_id: @run.chat_id }
         payload.delete_if { |key, value| value.nil? && key != :agent_name }
         RubyLLM.instrument('agent.ruby_llm', payload, config: @config, &)
       ensure
