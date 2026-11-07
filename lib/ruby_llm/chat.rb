@@ -550,9 +550,9 @@ module RubyLLM
     # MCP servers ask while they work. Empty when nothing waits on a person.
     #
     #   chat.ask "Book me a flight to Lisbon"
-    #   chat.pending_questions.each do |question|
-    #     question.approval? ? question.approve : question.answer("window")
-    #   end
+    #   question = chat.pending_questions.first
+    #   question.message         # => "Window or aisle?", or nil for an approval
+    #   question.answer "window" # as the person chose; approve or deny an approval
     #   chat.complete
     #
     # #complete carries each call on once nothing it asked waits for an

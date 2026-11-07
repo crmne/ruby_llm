@@ -203,19 +203,20 @@ ask("Connect your calendar", url: calendar.authorization_url)
 
 ```ruby
 chat.pending_questions.each do |question|
-  question.approval? ? question.approve : question.answer("window")
+  puts "#{question.id}: #{question.message || "Run #{question.tool_call.name}?"}"
 end
 
-chat.answer(params[:question_id], params[:answer])
-chat.decline(params[:question_id])
+# Once the person decides, from the form they sent:
+chat.answer(params[:question_id], params[:answer])  # approves an approval
+# or: chat.decline(params[:question_id])            # denies an approval
 chat.complete
 ```
 
 Answering an approval approves it, and declining one denies it. A question with one field takes its value, and one with several takes them by name, as keywords or a Hash: `question.answer(name: "Ada", age: 36)`. Strings become the integers, numbers, and booleans the fields ask for, the way a form sends them. An answer the question can't take raises `ArgumentError`: a choice it didn't offer, a field it doesn't ask for, or a required field left out. Answering a question again, or after its call finished, changes nothing, so a form sent twice is safe.
 
-Calls that need no answer still run while the others wait. `ask` and `complete` return the assistant message that holds the waiting calls. If you [drive the loop yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself), stop when the chat is waiting: `chat.step until chat.complete? || chat.waiting?`. `awaiting_person?` tells you a person must act.
+Calls that need no answer still run while the others wait. `chat.ask` and `chat.complete` return the assistant message that holds the waiting calls. If you [drive the loop yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself), stop when the chat is waiting: `chat.step until chat.complete? || chat.waiting?`. `awaiting_person?` tells you a person must act.
 
-Finish the pending calls before asking another question. Otherwise `ask` raises `RubyLLM::PendingToolCallsError`.
+Finish the pending calls before you send the chat another message. Otherwise `chat.ask` raises `RubyLLM::PendingToolCallsError`.
 
 ### Remote Tool Approval
 
