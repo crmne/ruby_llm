@@ -11,7 +11,8 @@ class <%= message_controller_class_name %> < ApplicationController
         wait = @<%= chat_variable_name %>.running? ? 1.minute : 0
         <%= chat_job_class_name %>.set(wait:).perform_later(@<%= chat_variable_name %>.id)
       else
-        @<%= chat_variable_name %>.ask_later(content.presence, with: attachments)
+        <%= message_model_name %>.suppressing_turbo_broadcasts { @<%= chat_variable_name %>.ask_later(content.presence, with: attachments) }
+        @<%= message_variable_name %> = @<%= chat_variable_name %>.<%= message_table_name %>.last
         <%= chat_job_class_name %>.perform_later(@<%= chat_variable_name %>.id)
       end
 

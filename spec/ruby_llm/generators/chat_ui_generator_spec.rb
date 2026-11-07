@@ -47,7 +47,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     approvals_base_path:,
     approvals_path_helper:
   )
-    %w[index new show _chat _form _approvals _files _reply_error].each do |view|
+    %w[index new show _chat _form _approvals _files].each do |view|
       expect(File.exist?(File.join(base_path, "chats/#{view}.html.erb"))).to be true
     end
 
@@ -199,6 +199,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     expect(job_content).to include(perform_line)
     expect(job_content).to include(complete_line)
     expect(job_content).to include(requeue_line)
+    expect(job_content).to include('.update!(reply_error: nil)', '.update!(reply_error: reply_error_message(error))')
     expect(job_content).not_to include('broadcast_refresh_to')
   end
 
@@ -329,6 +330,9 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       session.post "#{chats_path}/\#{chat.id}/messages", params: { #{message_key}: { content: "Hi" } }
       abort "idle message enqueued \#{jobs.call}" unless jobs.call.map { |job| job["arguments"] } == [ [ chat.id ] ]
       abort "idle message not saved" unless chat.reload.to_llm.messages.last.content == "Hi"
+      session.post "#{chats_path}/\#{chat.id}/messages", params: { #{message_key}: { content: "Shown at once" } }, headers: stream
+      appended = session.response.body[%r{<turbo-stream action="append" target="#{message_key}s">.*?</turbo-stream>}m].to_s
+      abort "the sent message isn't in the response: \#{session.response.body}" unless appended.include?("Shown at once")
 
       session.get "#{chats_path}/new"
       abort "new chat page answered \#{session.response.status}" unless session.response.status == 200
@@ -340,9 +344,6 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       session.post "#{chats_path}/\#{chat.id}/messages", params: { #{message_key}: { content: "Steal", attachments: [ "/etc/passwd" ] } }
       leaked = chat.reload.to_llm.messages.last
       abort "a path became an attachment" if leaked.content == "Steal" && leaked.attachments.any?
-
-      too_long = ApplicationController.render(partial: "#{chats_path.delete_prefix('/')}/reply_error", locals: { error: RubyLLM::ContextLengthExceededError.new("no") })
-      abort "error lacks advice: \#{too_long}" unless too_long.include?("too long")
     RUBY
   end
 
@@ -437,7 +438,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     RUBY
   end
 
-  def job_retry_script(agent:, chats_path:, job:, message_key:, **)
+  def job_retry_script(agent:, controller:, assigns:, chats_path:, job:, message_key:, **)
     <<~RUBY
       ActiveJob::Base.queue_adapter = :test
       ActionController::Base.allow_forgery_protection = false
@@ -449,22 +450,35 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       abort "jobs \#{jobs}" unless jobs.map { |job| job["arguments"] } == [ [ chat.id ] ]
 
       attempts = 0
+      failures = [ RubyLLM::ServerError.new("The model is overloaded"), nil, RubyLLM::ContextLengthExceededError.new("no") ]
       RubyLLM::Chat.prepend(Module.new do
         define_method(:complete) do |&_block|
+          failure = failures[attempts]
           attempts += 1
-          raise RubyLLM::ServerError, "The model is overloaded" if attempts == 1
+          raise failure if failure
 
           add_message(role: :assistant, content: "Hello")
         end
       end)
-      2.times do
+      perform = lambda do
         #{job}.perform_now(chat.id)
-      rescue RubyLLM::ServerError
-        next
+      rescue RubyLLM::Error
+        nil
       end
+
+      perform.call
+      chat.reload
+      html = #{controller}.render(:show, assigns: #{assigns})
+      abort "the failed reply's page lacks its error" unless html.include?("The reply failed. Send your message again.")
+      perform.call
+      abort "the next reply kept the error: \#{chat.reload.reply_error}" if chat.reload.reply_error
+      abort "the page still shows the error" if #{controller}.render(:show, assigns: #{assigns}).include?("The reply failed")
 
       asked = chat.reload.#{message_key}s.where(role: "user").pluck(:content)
       abort "asked \#{asked} in \#{attempts} attempts" unless attempts == 2 && asked == [ "Hi" ]
+
+      perform.call
+      abort "error lacks advice: \#{chat.reload.reply_error}" unless chat.reload.reply_error.include?("too long")
     RUBY
   end
 
@@ -559,7 +573,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         'wait = @chat.running? ? 1.minute : 0',
         'ChatResponseJob.set(wait:).perform_later(@chat.id)',
         'if content.present? || attachments',
-        '@chat.ask_later(content.presence, with: attachments)',
+        'Message.suppressing_turbo_broadcasts { @chat.ask_later(content.presence, with: attachments) }',
+        '@message = @chat.messages.last',
         'ChatResponseJob.perform_later(@chat.id)',
         'format.turbo_stream',
         '@message = @chat.messages.build',
@@ -666,7 +681,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         'wait = @llm_chat.running? ? 1.minute : 0',
         'LlmChatResponseJob.set(wait:).perform_later(@llm_chat.id)',
         'if content.present? || attachments',
-        '@llm_chat.ask_later(content.presence, with: attachments)',
+        'Llm::Message.suppressing_turbo_broadcasts { @llm_chat.ask_later(content.presence, with: attachments) }',
+        '@llm_message = @llm_chat.llm_messages.last',
         'LlmChatResponseJob.perform_later(@llm_chat.id)',
         'format.turbo_stream',
         '@llm_message = @llm_chat.llm_messages.build',
@@ -762,6 +778,9 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       it config[:view_example] do
         within_test_app(app_path) do
           expect_generated_view_set(**config[:view_options])
+          chat_show = File.read(File.join(config[:view_options][:base_path], 'chats/show.html.erb'))
+          expect(chat_show).to include('turbo_frame_tag "', '.reply_error.present?')
+          expect(chat_show).not_to include('data-turbo-permanent')
         end
       end
 
@@ -853,6 +872,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
               end
 
               expect(File.read('app/models/message.rb')).to eq(plain_message_model)
+              expect(Dir['db/migrate/*_add_reply_error_to_chats.rb'].size).to eq(1)
               initializer = File.read('config/initializers/ruby_llm.rb')
               expect(initializer.scan('config.broadcast_messages = true').size).to eq(1)
             end
@@ -1022,6 +1042,15 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       it config[:job_file_example] do
         within_test_app(app_path) do
           expect(File.exist?(config[:job_file_path])).to be true
+        end
+      end
+
+      it 'adds a column for the reply error to the chats table' do
+        within_test_app(app_path) do
+          table = config[:approval_flow][:chats_path].delete_prefix('/').tr('/', '_')
+          migrations = Dir["db/migrate/*_add_reply_error_to_#{table}.rb"]
+          expect(migrations.size).to eq(1)
+          expect(File.read(migrations.first)).to include("add_column :#{table}, :reply_error, :string")
         end
       end
 

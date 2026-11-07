@@ -100,8 +100,9 @@ module RubyLLM
     end
 
     def after_teardown # :nodoc:
-      Script.clear
       super
+    ensure
+      Script.clear
     end
 
     # Makes every chat answer with +replies+ until the test ends, in order,

@@ -1,0 +1,5 @@
+class AddReplyErrorTo<%= chat_table_name.camelize %> < ActiveRecord::Migration<%= migration_version %>
+  def change
+    add_column :<%= chat_table_name %>, :reply_error, :string
+  end
+end
