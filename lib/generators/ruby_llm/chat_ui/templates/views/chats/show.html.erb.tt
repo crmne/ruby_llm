@@ -3,7 +3,7 @@
 <%% end %>
 
 <%% turbo_refreshes_with method: :morph, scroll: :preserve %>
-<%%= turbo_stream_from @<%= chat_variable_name %> %>
+<%%= turbo_stream_from @<%= chat_variable_name %>, data: { chat_stream: true } %>
 
 <%% content_for :title, "<%= chat_model_name %>" %>
 

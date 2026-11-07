@@ -201,4 +201,50 @@ RSpec.describe 'The chat UI message controller', :generator do # rubocop:disable
     expect(output_html).to include('ab')
     expect(output_html).not_to include('aa')
   end
+
+  it "refreshes a chat page when the chat's stream connects, so it shows what was broadcast before" do
+    open_message('')
+    browser.execute(<<~JS)
+      window.received = []
+      document.body.insertAdjacentHTML("beforeend", `
+        <turbo-cable-stream-source data-chat-stream></turbo-cable-stream-source>
+        <turbo-cable-stream-source id="other"></turbo-cable-stream-source>`)
+      for (const source of document.querySelectorAll("turbo-cable-stream-source")) {
+        source.addEventListener("message", (event) => window.received.push([source.id, event.data]))
+        source.setAttribute("connected", "")
+      }
+    JS
+    wait_for { browser.evaluate('window.received.length').positive? }
+    sleep 0.2
+
+    expect(browser.evaluate('window.received'))
+      .to eq([['', '<turbo-stream action="refresh" method="morph" scroll="preserve"></turbo-stream>']])
+  end
+
+  it 'holds a refresh that reaches a chat page during a visit until the visit ends, as Turbo would drop it' do
+    open_message('')
+    rendered = browser.evaluate(<<~JS)
+      (() => {
+        document.body.insertAdjacentHTML("beforeend", "<turbo-cable-stream-source data-chat-stream></turbo-cable-stream-source>")
+        const rendered = []
+        const deliver = (id) => {
+          const stream = document.createElement("turbo-stream")
+          stream.setAttribute("action", "refresh")
+          stream.id = id
+          const event = new CustomEvent("turbo:before-stream-render", { detail: { render: (given) => rendered.push(given?.id) } })
+          dispatchEvent(event)
+          event.detail.render(stream)
+        }
+        dispatchEvent(new Event("turbo:visit"))
+        deliver("during")
+        const during = [...rendered]
+        dispatchEvent(new Event("turbo:load"))
+        const after = [...rendered]
+        deliver("later")
+        return [during, after, rendered]
+      })()
+    JS
+
+    expect(rendered).to eq([[], ['during'], %w[during later]])
+  end
 end

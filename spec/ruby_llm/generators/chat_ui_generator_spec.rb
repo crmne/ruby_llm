@@ -85,6 +85,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     # matter what the app calls its chat class or the models UI resource.
     chat_show = File.read(File.join(base_path, 'chats/show.html.erb'))
     expect(chat_show).to include('turbo_refreshes_with method: :morph, scroll: :preserve')
+    # The shipped Stimulus controller refreshes the page when this stream connects.
+    expect(chat_show).to match(/turbo_stream_from @\w+, data: \{ chat_stream: true \} %>/)
     expect(tool_calls_partial).to include('message.content.present?')
     expect(chat_show).to include('.model&.label || default_model_display_name')
     expect(chat_show).to include('button_to "Stop", cancel_')
