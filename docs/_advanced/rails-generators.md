@@ -35,7 +35,6 @@ The generator:
 - Adds the `acts_as_chat` and `acts_as_message` declarations
 - Installs Active Storage, which `acts_as_message` uses for attachments
 - Creates an initializer for provider configuration
-- Creates the conventional AI app directories: `app/agents`, `app/tools`, `app/schemas`, `app/prompts`, `app/skills`, `app/sandboxes`, `app/mcp`, `app/evals`, and `app/judges`
 - Creates `app/agents/application_agent.rb`, the parent of your agents, pointed at your chat model
 
 After running the generator:
@@ -186,7 +185,7 @@ app/
 `-- judges/      judge classes
 ```
 
-The install generator creates these directories with `.gitkeep` files so teams start from one shared convention, and the upgrade generator adds any an existing application lacks.
+Each generator puts what it creates in its folder, so your application has the folders it uses and no empty ones.
 
 These are conventions, not hard requirements:
 
@@ -222,7 +221,7 @@ What each generator creates:
 - `ruby_llm:agent`: `app/agents/support_agent.rb`, a subclass of `ApplicationAgent`, and `app/prompts/support_agent/instructions.txt.erb`. In an app without `ApplicationAgent`, the agent inherits from `RubyLLM::Agent` and names its chat model itself.
 - `ruby_llm:tool`: `app/tools/weather_tool.rb` plus tool-specific chat UI partials under `app/views/messages/tool_calls` and `app/views/messages/tool_results`
 - `ruby_llm:schema`: `app/schemas/product_schema.rb`
-- `ruby_llm:mcp`: `app/mcp/linear.rb`, connecting to the URL you give. For a server that runs on your machine, pass `--command` instead: `bin/rails generate ruby_llm:mcp Files --command "npx -y @modelcontextprotocol/server-filesystem ."`
+- `ruby_llm:mcp`: `app/mcp/linear_mcp.rb`, a `LinearMcp` server connecting to the URL you give, or `LinearMCP` when your inflections make MCP an acronym. For a server that runs on your machine, pass `--command` instead: `bin/rails generate ruby_llm:mcp Files --command "npx -y @modelcontextprotocol/server-filesystem ."`
 - `ruby_llm:skill`: `app/skills/invoices/SKILL.md` with the name and description. Names use lowercase letters, digits, and hyphens, as the Agent Skills format requires.
 - `ruby_llm:sandbox`: `app/sandboxes/workspace_sandbox.rb`, an `MXC::Sandbox` with a two-minute timeout, `gem "mxc", ">= 0.4.1"` in your Gemfile when it is missing, and `config.sandbox` in your initializer when you have no default sandbox yet
 - `ruby_llm:evaluation`: `app/evals/support_evaluation.rb` and its dataset, `support_evaluation.yml`, with one case to fill in. It runs `SupportAgent` when you have one.

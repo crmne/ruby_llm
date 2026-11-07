@@ -175,7 +175,7 @@ bin/rails generate ruby_llm:evaluation Support
 bin/rails generate ruby_llm:judge Urgency
 ```
 
-They join `ruby_llm:agent`, `ruby_llm:tool`, and `ruby_llm:schema`. `ruby_llm:install` creates every folder, including the new `app/skills`, `app/sandboxes`, `app/mcp`, `app/evals`, and `app/judges`. See [Generators]({% link _advanced/rails-generators.md %}#generators).
+They join `ruby_llm:agent`, `ruby_llm:tool`, and `ruby_llm:schema`, and each creates its folder, such as `app/skills` or `app/mcp`, when it first writes there. See [Generators]({% link _advanced/rails-generators.md %}#generators).
 
 `acts_as_message` can now stream a chat to its page by itself: with `config.broadcast_messages = true`, it broadcasts new messages, chunks, and the finished reply with Turbo, and a job only needs `chat.complete(&:broadcast)`. The chat UI generator turns it on. Each chunk carries its position as `chunk.index`, so the generated chat UI puts chunks back in order even when Action Cable delivers them out of order. That Stimulus controller ships with RubyLLM, so `bundle update` keeps it current: in an app with an import map, RubyLLM pins it with `marked` and `dompurify`, and the generated file is one line. See [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}).
 
@@ -407,7 +407,7 @@ It is off by default, and a context can turn it on for one server. See [Reasonin
 
 ## Upgrades
 
-`bin/rails generate ruby_llm:upgrade` in 2.2 adds the columns chats and tool calls use for their claims, the tables for queued messages and chat files, and any of the conventional `app/` folders your application lacks, such as `app/skills` and `app/sandboxes`. Applications on 2.0 upgrade to 2.1 first. See [Upgrading]({% link _reference/upgrading.md %}).
+`bin/rails generate ruby_llm:upgrade` in 2.2 adds the columns chats and tool calls use for their claims, the tables for queued messages and chat files, and an `ApplicationAgent` for your agents to inherit from. Applications on 2.0 upgrade to 2.1 first. See [Upgrading]({% link _reference/upgrading.md %}).
 
 2.2 deprecates iterating a chat directly and `chat.cache_until_here` in favor of `chat.messages` and marking the message itself, and renames `RubyLLM.with_usage_owner` to `RubyLLM.with_owner`. The old names still work and warn, and RubyLLM 3.0 removes them. See [Read a Conversation Through `messages`]({% link _reference/upgrading.md %}#read-a-conversation-through-messages).
 

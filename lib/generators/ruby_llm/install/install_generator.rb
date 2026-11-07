@@ -44,8 +44,7 @@ module RubyLLM
         template 'initializer.rb.tt', 'config/initializers/ruby_llm.rb'
       end
 
-      def create_app_directories
-        create_convention_directories
+      def create_application_agent_file
         create_application_agent
       end
 

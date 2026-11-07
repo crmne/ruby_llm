@@ -19,7 +19,7 @@ class <%= chat_agent_class_name %>Test < ActiveSupport::TestCase
     chat.ask "What do the logs say?"
 
     result = chat.<%= message_table_name %>.find_by(role: :tool).content
-    assert_includes result, "[Result truncated"
+    assert result.start_with?("A log line")
     # The budget counts two characters a token.
     assert_operator result.length, :<=, window * chat.context_budget[:per_result] * 2
   end

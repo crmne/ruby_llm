@@ -265,7 +265,7 @@ module RubyLLM
         say '    code_execution      the model runs code: bin/rails generate ruby_llm:sandbox Workspace first'
         say '                        With file_store, code reads attachments in ./attachments, or in the folder of'
         say "                        a store in a folder, and what it writes joins the chat's files."
-        say '    mcp Linear          an MCP server: bin/rails generate ruby_llm:mcp Linear URL first'
+        say '    mcp LinearMcp       an MCP server: bin/rails generate ruby_llm:mcp Linear URL first'
         say '    tools WeatherTool   a tool: bin/rails generate ruby_llm:tool Weather first'
         if app_file?('test/test_helper.rb')
           say "\n  Check it with bin/rails test and bin/rails test:system (needs Chrome)."

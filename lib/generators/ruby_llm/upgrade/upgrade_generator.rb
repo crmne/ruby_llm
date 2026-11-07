@@ -27,8 +27,7 @@ module RubyLLM
         migration_template 'upgrade_ruby_llm_to_2_2.rb.tt', 'db/migrate/upgrade_ruby_llm_to_2_2.rb'
       end
 
-      def create_app_directories
-        create_convention_directories
+      def create_application_agent_file
         create_application_agent
       end
 

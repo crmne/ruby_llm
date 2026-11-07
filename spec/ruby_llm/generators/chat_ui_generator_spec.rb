@@ -206,6 +206,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
   end
 
   def give_chat_agent_an_approval_tool(agent_path)
+    FileUtils.mkdir_p('app/tools')
     File.write('app/tools/send_mail_tool.rb', <<~RUBY)
       class SendMailTool < RubyLLM::Tool
         description "Sends an email"

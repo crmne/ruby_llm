@@ -50,8 +50,9 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
         expect(File.exist?('app/models/model.rb')).to be false
         expect(File.exist?('app/models/tool_call.rb')).to be false
         expect(File.exist?('app/models/batch.rb')).to be false
-        %w[agents tools schemas prompts skills sandboxes mcp evals judges].each do |name|
-          expect(File.exist?("app/#{name}/.gitkeep")).to be(true), "app/#{name}/.gitkeep is missing"
+        expect(File.exist?('app/agents/application_agent.rb')).to be(true)
+        %w[tools schemas prompts skills sandboxes mcp evals judges].each do |name|
+          expect(Dir.exist?("app/#{name}")).to be(false), "app/#{name} is an empty folder"
         end
         expect(File.read('config/initializers/ruby_llm.rb')).not_to include('sandbox')
       end
@@ -252,11 +253,11 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
     it 'points ApplicationAgent at that model' do
       Dir.mktmpdir do |destination|
         described_class.new(['chat:Conversation'], {}, destination_root: destination, shell: Thor::Shell::Basic.new)
-                       .create_app_directories
+                       .create_application_agent_file
 
         expect(File.read(File.join(destination, 'app/agents/application_agent.rb')))
           .to eq("class ApplicationAgent < RubyLLM::Agent\n  chat_class Conversation\nend\n")
-        expect(File.exist?(File.join(destination, 'app/agents/.gitkeep'))).to be(true)
+        expect(Dir.children(File.join(destination, 'app'))).to eq(['agents'])
       end
     end
   end

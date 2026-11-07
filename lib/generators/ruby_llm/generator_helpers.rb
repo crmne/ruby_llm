@@ -5,20 +5,11 @@ module RubyLLM
     # Shared helpers for RubyLLM generators
     module GeneratorHelpers
       APPLICATION_MODEL_TYPES = %w[chat message].freeze
-      CONVENTION_DIRECTORIES = %w[agents tools schemas prompts skills sandboxes mcp evals judges].freeze
       APPLICATION_AGENT_PATH = 'app/agents/application_agent.rb'
       DEFAULT_MODEL_NAMES = {
         chat: 'Chat',
         message: 'Message'
       }.freeze
-
-      def create_convention_directories
-        CONVENTION_DIRECTORIES.each do |name|
-          empty_directory "app/#{name}"
-          keep = File.join('app', name, '.gitkeep')
-          create_file keep unless File.exist?(File.join(destination_root, keep))
-        end
-      end
 
       def create_application_agent
         return if application_agent?

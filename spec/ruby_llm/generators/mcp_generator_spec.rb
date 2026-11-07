@@ -38,12 +38,13 @@ RSpec.describe RubyLLM::Generators::MCPGenerator, :generator, type: :generator d
       expect(status.success?).to be(true), output
       run_rails_generate('ruby_llm:mcp', 'Files', '--command', 'npx -y @modelcontextprotocol/server-filesystem .')
 
-      expect(File.read('app/mcp/linear.rb'))
-        .to eq("class Linear < RubyLLM::MCP\n  url \"https://mcp.linear.app/mcp\"\nend\n")
-      expect(File.read('app/mcp/files.rb')).to include(
-        'command "npx", "-y", "@modelcontextprotocol/server-filesystem", "."'
+      expect(File.read('app/mcp/linear_mcp.rb'))
+        .to eq("class LinearMcp < RubyLLM::MCP\n  url \"https://mcp.linear.app/mcp\"\nend\n")
+      expect(File.read('app/mcp/files_mcp.rb')).to include(
+        'class FilesMcp < RubyLLM::MCP', 'command "npx", "-y", "@modelcontextprotocol/server-filesystem", "."'
       )
-      success, runner = run_rails_runner('puts Linear.url, Files.command.inspect')
+      expect(output).to include('Connect it by adding LinearMcp to `mcp` in an agent')
+      success, runner = run_rails_runner('puts LinearMcp.url, FilesMcp.command.inspect')
       expect(success).to be(true), runner
       expect(runner).to include("https://mcp.linear.app/mcp\n")
     end
