@@ -266,7 +266,7 @@ Every setting that isn't a provider's, with its default. Provider keys and endpo
 | `faraday_adapter` | `:net_http` | Faraday adapter for requests. |
 | `auto_upload_large_files` | `true` | Upload attachments too large to send inline. |
 | `tool_concurrency` | `false` | `true` or `:threads`, or `:fibers`, to run tool calls at once. |
-| `max_run_time` | `600` | Seconds before a persisted chat's run counts as crashed. |
+| `max_run_time` | `600` | Seconds a persisted chat's run may go without progress before it counts as crashed. |
 | `broadcast_messages` | `false` | `acts_as_message` broadcasts chats with Turbo. The chat UI generator turns it on. |
 | `split_think_tags` | `false` | `true` moves a leading `<think>` block into thinking on Chat Completions. |
 | `mcp_credential_store` | `nil` | Store for MCP OAuth credentials. Rails apps use a table automatically; otherwise they stay in memory. |

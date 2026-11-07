@@ -243,7 +243,8 @@ module RubyLLM
       #
       # Sets how long a run of this tool may take before a persisted chat
       # treats it as crashed, overriding Configuration#max_run_time. Another
-      # process that resumes the chat after that time runs the call again.
+      # process that resumes the chat after that time, or within a minute
+      # of the running process dying, runs the call again.
       # Without an argument, returns the declared value, or +nil+.
       #
       #   class GenerateReport < RubyLLM::Tool

@@ -26,7 +26,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
   # What a worker leaves when it dies after one of two tools finished and
   # before the placeholder for its result was filled: its claims on the
-  # chat and on the unfinished call outlive it.
+  # chat and on the unfinished call outlive it by up to a lease.
   def crashed_chat(*later_questions)
     chat = Chat.create!(model: model_for(:openai))
     chat.add_message(role: :user, content: 'Look twice')
@@ -35,7 +35,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     chat.add_message(role: :tool, content: 'found', tool_call_id: first_call)
     placeholder = chat.messages.create!(role: :assistant, content: '')
     later_questions.each { |question| chat.messages.create!(role: :user, content: question) }
-    claimed_until = RubyLLM.config.max_run_time.seconds.from_now
+    claimed_until = RubyLLM::ActiveRecord::RunClaims::CLAIM_LEASE.seconds.from_now
     Chat.where(id: chat.id).update_all(claim_token: 'crashed', claimed_until:)
     RubyLLM::ActiveRecord::ToolCall.where(tool_call_id: second_call).update_all(claimed_until:)
     [chat, placeholder]
@@ -72,7 +72,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
   it 'runs the unfinished call again once the claims expire' do
     chat, placeholder = crashed_chat
-    travel RubyLLM.config.max_run_time + 1
+    travel RubyLLM::ActiveRecord::RunClaims::CLAIM_LEASE + 1
     chat = resumed(chat)
 
     expect(chat.complete.content).to eq('Answered')
@@ -85,7 +85,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
   it 'answers the unfinished call as unfinished once the user moved on' do
     chat, placeholder = crashed_chat('Hello?')
-    travel RubyLLM.config.max_run_time + 1
+    travel RubyLLM::ActiveRecord::RunClaims::CLAIM_LEASE + 1
     chat = resumed(chat)
 
     expect(chat.complete.content).to eq('Answered')

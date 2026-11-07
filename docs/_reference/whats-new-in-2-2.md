@@ -190,7 +190,7 @@ chat.complete
 chat.running? # => true while another process runs the chat
 ```
 
-A claim lasts `config.max_run_time`, ten minutes by default. A tool that legitimately runs longer declares its own:
+A run that goes `config.max_run_time` without progress, ten minutes by default, counts as crashed. A tool that legitimately runs longer declares its own:
 
 ```ruby
 class RenderVideo < RubyLLM::Tool
@@ -198,7 +198,7 @@ class RenderVideo < RubyLLM::Tool
 end
 ```
 
-If a process dies, its claims expire and another process picks the chat up. See [Agents in Background Jobs]({% link _advanced/durable-agents.md %}#one-process-at-a-time).
+If a process dies, its claims expire within a minute, on any number of servers, and another process picks the chat up. See [Agents in Background Jobs]({% link _advanced/durable-agents.md %}#one-process-at-a-time).
 
 ## Queued Messages
 

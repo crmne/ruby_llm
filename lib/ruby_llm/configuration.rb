@@ -310,10 +310,11 @@ module RubyLLM
     ##
     # :attr_accessor: max_run_time
     #
-    # Seconds a persisted chat's run, or a tool call it runs, may take
-    # before another process treats it as crashed and resumes it. A run
-    # renews its claim as it streams and between steps; a tool call keeps
-    # its claim for this long, or for its Tool.max_run_time. Default: 600.
+    # Seconds a persisted chat's run may go without progress, or a tool
+    # call it runs may take, before another process treats it as crashed
+    # and resumes it. A run makes progress as it streams and between steps;
+    # a tool call may take this long, or its Tool.max_run_time. A process
+    # that dies frees its claims within a minute. Default: 600.
     option :max_run_time, 600
 
     ##
