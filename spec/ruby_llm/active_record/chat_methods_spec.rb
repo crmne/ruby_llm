@@ -1265,8 +1265,12 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
         end
       end
       allow(RubyLLM.logger).to receive(:warn)
+      fallbacks = []
+      chat.before_fallback { |fallback| fallbacks << fallback }
 
       expect { chat.complete { |_chunk| nil } }.to raise_error(RubyLLM::Error, /aws-eventstream gem is required/)
+      expect(fallbacks).to be_empty
+      expect(RubyLLM.logger).not_to have_received(:warn).with(/skipped fallback/)
       expect(chat.messages.reload.pluck(:role)).to eq(['user'])
     end
 
