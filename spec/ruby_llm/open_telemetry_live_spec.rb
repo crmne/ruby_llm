@@ -80,8 +80,10 @@ RSpec.describe RubyLLM::OpenTelemetry, :live do
     result = agent.new.ask('What is six times seven?')
 
     expect(result.parsed).to eq('answer' => 42)
-    expect(spans.size).to eq(1)
-    expect(spans.first.attributes['gen_ai.output.type']).to eq('json')
+    chat_span, run = spans
+    expect(run.name).to eq('invoke_agent')
+    expect(chat_span.parent_span_id).to eq(run.span_id)
+    expect(chat_span.attributes['gen_ai.output.type']).to eq('json')
   end
 
   it 'reports a provider validation error without leaking the error body' do
