@@ -437,16 +437,18 @@ class Deploys < RubyLLM::MCP
   private
 
   def answer_from_settings(question)
+    field = question.fields.first if question.fields.one?
+
     if question.url?
       question.decline
-    elsif question.fields.map(&:name) == [:environment]
+    elsif field&.name == :environment && Array(field.choices).include?(user.default_environment)
       question.answer(user.default_environment)
     end
   end
 end
 ```
 
-A question the callback leaves unanswered reaches the chat. An answer the question can't take, such as a field it doesn't ask for, raises `ArgumentError` from the call, so answer only the questions you recognize.
+A question the callback leaves unanswered reaches the chat. An answer the question can't take, such as a field it doesn't ask for or a choice it doesn't offer, raises `ArgumentError` from the call, so answer only the questions you recognize, with values they offer.
 
 A paused chat waits until someone answers. If your app has nowhere to show a kind of question, tell servers not to ask it:
 

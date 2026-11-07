@@ -295,4 +295,33 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   ensure
     ActiveSupport::Notifications.unsubscribe(pausing) if pausing
   end
+
+  it 'keeps the first decision when two processes answer and decline one approval at once' do
+    refunding = call('issue_refund', 'order_id' => '42')
+    chat = paused(refunding)
+
+    reader, writer = IO.pipe
+    start = Queue.new
+    declining = Thread.new do
+      start.pop
+      Chat.find(chat.id).pending_questions.sole.decline
+    end
+    pausing = ActiveSupport::Notifications.subscribe('sql.active_record') do |*, payload|
+      next unless Thread.current == declining && payload[:sql].match?(/UPDATE .ruby_llm_tool_calls. SET .approval/)
+
+      writer.puts('written')
+      sleep 1
+    end
+    start << true
+    unless reader.wait_readable(10)
+      declining.join(1)
+      raise 'The denial was never written'
+    end
+    approved = in_another_process { Chat.find(chat.id).pending_questions.sole.answer.answered? }
+
+    expect(RubyLLM::ActiveRecord::ToolCall.find_by!(tool_call_id: refunding.id).approval).to eq('denied')
+    expect([declining.value.answered?, approved]).to eq([true, false])
+  ensure
+    ActiveSupport::Notifications.unsubscribe(pausing) if pausing
+  end
 end

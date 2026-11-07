@@ -113,6 +113,30 @@ RSpec.describe RubyLLM::Chat do
     expect(runs).to eq(['40'])
   end
 
+  it 'keeps the first decision when two threads answer and decline one approval at once' do
+    ask_for('issue_refund')
+    declined, approved = Array.new(2) { chat.pending_questions.sole }
+    paused = Queue.new
+    resume = Queue.new
+    # Holds the denial between finding the approval pending and recording it.
+    allow(chat).to receive(:deny).and_wrap_original do |original, *args|
+      paused << true
+      resume.pop
+      original.call(*args)
+    end
+
+    first = Thread.new { declined.decline }
+    paused.pop
+    second = Thread.new { approved.answer }
+    second.join(0.2)
+    resume << true
+    [first, second].each(&:join)
+    chat.complete
+
+    expect(runs).to be_empty
+    expect([declined, approved].map(&:answered?)).to eq([true, false])
+  end
+
   it 'takes the parameters a form sends for several fields, by question id' do
     profile = Class.new(RubyLLM::Tool) do
       def self.name = 'Profile'

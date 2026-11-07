@@ -575,7 +575,9 @@ module RubyLLM
     # approves its call. Takes the ActionController::Parameters a form
     # sends for several fields, and keeps only the fields the question asks
     # for. A question already answered, or one whose call has finished,
-    # stays as it is, so a form sent twice is safe.
+    # stays as it is, so a form sent twice is safe, and of two answers to
+    # one approval at once, the first stands. #approve and #deny instead
+    # record a decision whatever came before.
     #
     #   chat.answer(question, "window")
     #   chat.answer(params[:question_id], params[:answer])
@@ -585,25 +587,23 @@ module RubyLLM
     # answer the question can't take.
     def answer(question, value = nil, **values)
       pending = pending_question(question)
-      return self unless pending
+      response = pending&.response_to(value, values)
+      return self unless pending && settle_question(pending, response)
 
-      response = pending.response_to(value, values)
-      pending.approval? ? approve(pending) : record_answer(pending, response)
       question.respond(response) if question.is_a?(Question)
       self
     end
 
     # Declines +question+, a Question from #pending_questions or its id,
-    # and returns +self+. Declining an approval denies its call. A
-    # question already answered, or one whose call has finished, stays as
-    # it is.
+    # and returns +self+. Declining an approval denies its call, unless
+    # another decision came first. A question already answered, or one
+    # whose call has finished, stays as it is.
     #
     # Raises ArgumentError for a question the chat never asked.
     def decline(question)
       pending = pending_question(question)
-      return self unless pending
+      return self unless pending && settle_question(pending, Question::DECLINED)
 
-      pending.approval? ? deny(pending) : record_answer(pending, Question::DECLINED)
       question.respond(Question::DECLINED) if question.is_a?(Question)
       self
     end
@@ -2832,6 +2832,23 @@ module RubyLLM
 
     def record_answer(question, response)
       @tool_call_state.settle(question.tool_call) { |input| question.answered_input(input, response) }
+    end
+
+    # Records +response+ to +question+ and returns whether it did. An
+    # approval is approved or denied only while no decision came first, so
+    # of two people deciding at once, the first one's decision stands.
+    def settle_question(question, response)
+      unless question.approval?
+        record_answer(question, response)
+        return true
+      end
+
+      @tool_call_state.exclusively do
+        next false unless approval_pending?(question.tool_call)
+
+        response == Question::ACCEPTED ? approve(question) : deny(question)
+        true
+      end
     end
 
     def apply_tool_choice(choice)

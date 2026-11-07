@@ -417,9 +417,7 @@ module RubyLLM
       # raises ArgumentError from the call.
       #
       #   before_input_request :ask_operator
-      #   before_input_request do |question|
-      #     question.answer("staging") if question.fields.map(&:name) == [:environment]
-      #   end
+      #   before_input_request { |question| question.decline if question.url? }
       #
       def before_input_request(method = nil, &block)
         add_callback(:before_input_request, method, block)

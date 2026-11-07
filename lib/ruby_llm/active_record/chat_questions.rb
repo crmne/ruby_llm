@@ -41,7 +41,8 @@ module RubyLLM
       # Answers +question+, a RubyLLM::Question from #pending_questions or
       # its id, on its tool call record, so the next +complete+ in any
       # process carries the call on, as RubyLLM::Chat#answer describes.
-      # Answering an approval approves it, as +approve+ does. Takes the
+      # Answering an approval approves it, as +approve+ does, unless another
+      # decision came first, in this process or another. Takes the
       # ActionController::Parameters a form sends for several fields, and
       # keeps only those the question asks for. Returns +self+.
       #
@@ -51,24 +52,23 @@ module RubyLLM
       # answer the question can't take.
       def answer(question, value = nil, **values)
         pending = persisted_pending_question(question)
-        return self unless pending
+        response = pending&.response_to(value, values)
+        return self unless pending && settle_persisted_question(pending, response)
 
-        response = pending.response_to(value, values)
-        pending.approval? ? approve(pending) : record_persisted_answer(pending, response)
         question.respond(response) if question.is_a?(RubyLLM::Question)
         self
       end
 
       # Declines +question+, a RubyLLM::Question from #pending_questions or
       # its id, on its tool call record, as RubyLLM::Chat#decline describes.
-      # Declining an approval denies it, as +deny+ does. Returns +self+.
+      # Declining an approval denies it, as +deny+ does, unless another
+      # decision came first. Returns +self+.
       #
       # Raises ArgumentError for a question the chat never asked.
       def decline(question)
         pending = persisted_pending_question(question)
-        return self unless pending
+        return self unless pending && settle_persisted_question(pending, RubyLLM::Question::DECLINED)
 
-        pending.approval? ? deny(pending) : record_persisted_answer(pending, RubyLLM::Question::DECLINED)
         question.respond(RubyLLM::Question::DECLINED) if question.is_a?(RubyLLM::Question)
         self
       end
@@ -114,6 +114,28 @@ module RubyLLM
 
       def record_persisted_answer(question, response)
         settle_persisted_input(question.tool_call) { |input| question.answered_input(input, response) }
+      end
+
+      # Records +response+ to +question+ and returns whether it did. An
+      # approval is approved or denied only while it still waits, so of
+      # two people deciding at once, in any processes, the first one's
+      # decision stands.
+      def settle_persisted_question(question, response)
+        unless question.approval?
+          record_persisted_answer(question, response)
+          return true
+        end
+
+        transaction do
+          # Writing first takes the row's lock, so a decision made at the
+          # same time waits for this one and then finds the call decided.
+          waiting = RubyLLM::ActiveRecord::ToolCall.where(id: tool_call_record(question.tool_call.id).id,
+                                                          approval: 'pending', result_id: nil)
+          next false unless waiting.update_all(updated_at: Time.current) == 1
+
+          response == RubyLLM::Question::ACCEPTED ? approve(question) : deny(question)
+          true
+        end
       end
     end
   end
