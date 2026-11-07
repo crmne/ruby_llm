@@ -67,10 +67,6 @@ RubyLLM::ActiveRecord::ChatMethods#as_json(options = nil)
 RubyLLM::ActiveRecord::ChatMethods#ask(message = nil, with: nil, &)
 RubyLLM::ActiveRecord::ChatMethods#ask_later(message = nil, with: nil)
 RubyLLM::ActiveRecord::ChatMethods#assume_model_exists (attr_accessor)
-RubyLLM::ActiveRecord::ChatMethods#awaiting_approval?
-RubyLLM::ActiveRecord::ChatMethods#awaiting_input?
-RubyLLM::ActiveRecord::ChatMethods#awaiting_person?
-RubyLLM::ActiveRecord::ChatMethods#awaiting_tasks?
 RubyLLM::ActiveRecord::ChatMethods#before_fallback(&block)
 RubyLLM::ActiveRecord::ChatMethods#before_message(&block)
 RubyLLM::ActiveRecord::ChatMethods#before_request(&block)
@@ -93,7 +89,6 @@ RubyLLM::ActiveRecord::ChatMethods#convert_unsupported_attachments(&block)
 RubyLLM::ActiveRecord::ChatMethods#cost
 RubyLLM::ActiveRecord::ChatMethods#count_tokens(message = nil)
 RubyLLM::ActiveRecord::ChatMethods#deferred_tools
-RubyLLM::ActiveRecord::ChatMethods#deny(tool_call)
 RubyLLM::ActiveRecord::ChatMethods#each(&)
 RubyLLM::ActiveRecord::ChatMethods#end_user
 RubyLLM::ActiveRecord::ChatMethods#fallbacks
@@ -106,7 +101,6 @@ RubyLLM::ActiveRecord::ChatMethods#mcp
 RubyLLM::ActiveRecord::ChatMethods#model=(value)
 RubyLLM::ActiveRecord::ChatMethods#model_id
 RubyLLM::ActiveRecord::ChatMethods#model_id=(value)
-RubyLLM::ActiveRecord::ChatMethods#pending_approvals
 RubyLLM::ActiveRecord::ChatMethods#pending_tasks
 RubyLLM::ActiveRecord::ChatMethods#protocol (attr_reader)
 RubyLLM::ActiveRecord::ChatMethods#protocol=(value)
@@ -156,8 +150,7 @@ RubyLLM::ActiveRecord::ChatMethods#with_tools(*tools, defer: nil)
 RubyLLM::ActiveRecord::ChatMethods#withdraw(queued)
 RubyLLM::ActiveRecord::ChatQuestions (module)
 RubyLLM::ActiveRecord::ChatQuestions#answer(question, value = nil, **values)
-RubyLLM::ActiveRecord::ChatQuestions#decline(question)
-RubyLLM::ActiveRecord::ChatQuestions#pending_inputs
+RubyLLM::ActiveRecord::ChatQuestions#decline(question, note = nil)
 RubyLLM::ActiveRecord::ChatQuestions#pending_questions
 RubyLLM::ActiveRecord::ChunkMethods (module)
 RubyLLM::ActiveRecord::ChunkMethods#broadcast
@@ -244,10 +237,6 @@ RubyLLM::Agent#around_join(&block)
 RubyLLM::Agent#around_tool_call(&block)
 RubyLLM::Agent#ask(message = nil, with: nil, &block)
 RubyLLM::Agent#ask_later(message = nil, with: nil)
-RubyLLM::Agent#awaiting_approval?()
-RubyLLM::Agent#awaiting_input?()
-RubyLLM::Agent#awaiting_person?()
-RubyLLM::Agent#awaiting_tasks?()
 RubyLLM::Agent#before_fallback(&block)
 RubyLLM::Agent#before_message(&block)
 RubyLLM::Agent#before_request(&block)
@@ -269,9 +258,8 @@ RubyLLM::Agent#context_budget
 RubyLLM::Agent#convert_unsupported_attachments(&block)
 RubyLLM::Agent#cost()
 RubyLLM::Agent#count_tokens(message = nil)
-RubyLLM::Agent#decline(question)
+RubyLLM::Agent#decline(question, note = nil)
 RubyLLM::Agent#deferred_tools
-RubyLLM::Agent#deny(tool_call)
 RubyLLM::Agent#each(&block)
 RubyLLM::Agent#end_user
 RubyLLM::Agent#fallbacks
@@ -285,8 +273,6 @@ RubyLLM::Agent#messages
 RubyLLM::Agent#model
 RubyLLM::Agent#model_id()
 RubyLLM::Agent#owner
-RubyLLM::Agent#pending_approvals()
-RubyLLM::Agent#pending_inputs()
 RubyLLM::Agent#pending_questions()
 RubyLLM::Agent#pending_tasks()
 RubyLLM::Agent#provider
@@ -376,13 +362,8 @@ RubyLLM::Agent.thinking(enabled = true, **options)
 RubyLLM::Agent.to_tool(**inputs)
 RubyLLM::Agent.tool_options(**options, &block)
 RubyLLM::Agent.tools(*tools, defer: nil, &block)
-RubyLLM::AgentTask (class < RubyLLM::Task)
-RubyLLM::AgentTask#agent (attr_reader)
-RubyLLM::AgentTask#cancel
 RubyLLM::AgentTool (class < RubyLLM::Tool)
-RubyLLM::AgentTool#execute(task:, tool_call: nil, **inputs)
-RubyLLM::AgentTool#resume(task, **)
-RubyLLM::AgentTool#task(state, tool_call: nil)
+RubyLLM::AgentTool#execute(task:, **inputs)
 RubyLLM::AgentTool.agent_class (attr_reader)
 RubyLLM::AgentTool.tool_name
 RubyLLM::Attachment (class)
@@ -457,10 +438,6 @@ RubyLLM::Chat#around_join(&block)
 RubyLLM::Chat#around_tool_call(&)
 RubyLLM::Chat#ask(message = nil, with: nil, &)
 RubyLLM::Chat#ask_later(message = nil, with: nil)
-RubyLLM::Chat#awaiting_approval?
-RubyLLM::Chat#awaiting_input?
-RubyLLM::Chat#awaiting_person?
-RubyLLM::Chat#awaiting_tasks?
 RubyLLM::Chat#before_fallback(&)
 RubyLLM::Chat#before_message(&)
 RubyLLM::Chat#before_request(&)
@@ -481,9 +458,8 @@ RubyLLM::Chat#context_budget (attr_reader)
 RubyLLM::Chat#convert_unsupported_attachments(&)
 RubyLLM::Chat#cost
 RubyLLM::Chat#count_tokens(message = nil)
-RubyLLM::Chat#decline(question)
+RubyLLM::Chat#decline(question, note = nil)
 RubyLLM::Chat#deferred_tools
-RubyLLM::Chat#deny(tool_call)
 RubyLLM::Chat#each(&)
 RubyLLM::Chat#end_user (attr_reader)
 RubyLLM::Chat#fallbacks (attr_reader)
@@ -498,8 +474,6 @@ RubyLLM::Chat#messages=(new_messages)
 RubyLLM::Chat#model (attr_reader)
 RubyLLM::Chat#model_id
 RubyLLM::Chat#owner
-RubyLLM::Chat#pending_approvals
-RubyLLM::Chat#pending_inputs
 RubyLLM::Chat#pending_questions
 RubyLLM::Chat#pending_tasks
 RubyLLM::Chat#provider (attr_reader)
@@ -962,8 +936,7 @@ RubyLLM::MCP::InputRequest#answer(value = nil, **values)
 RubyLLM::MCP::InputRequest#answered?
 RubyLLM::MCP::InputRequest#approval?
 RubyLLM::MCP::InputRequest#approve(remember: false)
-RubyLLM::MCP::InputRequest#decline
-RubyLLM::MCP::InputRequest#deny
+RubyLLM::MCP::InputRequest#decline(note = nil)
 RubyLLM::MCP::InputRequest#fields (attr_reader)
 RubyLLM::MCP::InputRequest#form?
 RubyLLM::MCP::InputRequest#id
@@ -1249,8 +1222,7 @@ RubyLLM::Question#answer(value = nil, **values)
 RubyLLM::Question#answered?
 RubyLLM::Question#approval?
 RubyLLM::Question#approve(remember: false)
-RubyLLM::Question#decline
-RubyLLM::Question#deny
+RubyLLM::Question#decline(note = nil)
 RubyLLM::Question#fields (attr_reader)
 RubyLLM::Question#form?
 RubyLLM::Question#id
@@ -1451,7 +1423,6 @@ RubyLLM::Tool#exclusive?
 RubyLLM::Tool#execute(...)
 RubyLLM::Tool#halt(result = nil)
 RubyLLM::Tool#inline_limit
-RubyLLM::Tool#max_run_time
 RubyLLM::Tool#name
 RubyLLM::Tool#namespace
 RubyLLM::Tool#parameters_schema
@@ -1468,8 +1439,6 @@ RubyLLM::Tool.exclusive?
 RubyLLM::Tool.inline_limit -> characters, false, or nil
 RubyLLM::Tool.inline_limit(characters) -> characters
 RubyLLM::Tool.inline_limit(false) -> false
-RubyLLM::Tool.max_run_time -> seconds or nil
-RubyLLM::Tool.max_run_time(seconds) -> seconds
 RubyLLM::Tool.namespace(value = (get = true), description: nil)
 RubyLLM::Tool.parameter(name, **)
 RubyLLM::Tool.parameters(schema = nil, &block)
