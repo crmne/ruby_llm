@@ -12,11 +12,13 @@ module RubyLLM
     #   chat.with_file_store
     #   chat.file_store.list
     #
-    # With +owner:+, the store writes files for that owner and sees only
-    # their files and the files without an owner, so in a chat several
-    # people share, one person's tool results stay theirs:
+    # The store writes files for the chat's owner, the record
+    # <tt>acts_as_chat owner:</tt> names or one set with
+    # ChatMethods#with_owner, and sees only their files and the files
+    # without an owner, so in a chat several people share, one person's
+    # tool results stay theirs:
     #
-    #   chat.with_file_store(owner: Current.user)
+    #   chat.with_owner(Current.user).with_file_store
     #
     # What the model last read of a file is kept in the row's
     # +read_digest+ column, so it holds across processes, and #with_lock
@@ -28,11 +30,8 @@ module RubyLLM
       # The chat record the files belong to.
       attr_reader :chat
 
-      # The owner the store writes files for, or +nil+.
-      attr_reader :owner
-
       # Creates a store for the files of the +chat+ record, writing them for
-      # +owner+ when given.
+      # +owner+ when given, and otherwise for the chat's owner.
       #
       # Raises ArgumentError when +chat+ is not an +acts_as_chat+ record,
       # and ConfigurationError when Active Storage is not loaded.
@@ -49,6 +48,16 @@ module RubyLLM
         super()
         @chat = chat
         @owner = owner
+      end
+
+      # Returns the owner the store writes files for: the one it was
+      # created with, or else the chat's owner when that is a record.
+      # Returns +nil+ when there is neither.
+      def owner
+        return @owner unless @owner.nil?
+
+        owner = @chat.to_llm.owner
+        owner if owner.is_a?(::ActiveRecord::Base)
       end
 
       # Returns the files inside the folder +prefix+, or every file.
@@ -210,11 +219,11 @@ module RubyLLM
 
       def visible
         shared = rows.where(owner_type: nil, owner_id: nil)
-        @owner ? shared.or(rows.where(owner: @owner)) : shared
+        owner ? shared.or(rows.where(owner:)) : shared
       end
 
       def owned
-        @owner ? rows.where(owner: @owner) : rows.where(owner_type: nil, owner_id: nil)
+        owner ? rows.where(owner:) : rows.where(owner_type: nil, owner_id: nil)
       end
 
       def inside(folder, scope = visible)

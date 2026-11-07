@@ -192,7 +192,7 @@ RSpec.describe RubyLLM::ActiveRecord::Usage do
     chat = Chat.create!(model: model_for(:anthropic))
 
     expect(chat.with_owner(owner)).to be(chat)
-    expect(chat.owner).to eq(owner)
+    expect(chat.to_llm.owner).to eq(owner)
     expect { chat.ask('Hello') }.to change(described_class, :count).by(1)
 
     expect(chat.reload.ruby_llm_usages.sole).to have_attributes(operation: 'chat', chat:, owner:)

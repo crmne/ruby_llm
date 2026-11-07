@@ -104,9 +104,13 @@ module RubyLLM
     # +nil+.
     attr_reader :end_user
 
-    # Whoever the chat's usage is attributed to, set with #with_owner, or
-    # +nil+.
-    attr_reader :owner
+    # Whoever the chat's usage is attributed to: the owner set with
+    # #with_owner, or else, for a persisted chat, the record its
+    # +acts_as_chat+ declaration names with +owner:+. Returns +nil+ when
+    # neither is set.
+    def owner
+      @owner || @run.owner
+    end
 
     # The Fallback models tried in order when generation fails.
     attr_reader :fallbacks
@@ -1281,8 +1285,9 @@ module RubyLLM
     # as a user or an account record: each request, the tools it runs, the
     # file converters it triggers, and compaction. In Rails, the usage
     # ledger stores the owner with each row; everywhere, the
-    # +usage.ruby_llm+ event carries it. It wins over RubyLLM.with_owner.
-    # Pass +nil+ to remove it. Returns +self+.
+    # +usage.ruby_llm+ event carries it. It wins over RubyLLM.with_owner,
+    # and over the owner a persisted chat's record names. Pass +nil+ to
+    # remove it. Returns +self+.
     #
     #   chat.with_owner(current_user).ask "Summarize this thread"
     #

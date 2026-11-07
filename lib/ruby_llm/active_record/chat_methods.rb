@@ -409,9 +409,13 @@ module RubyLLM
       # :method: with_owner
       # :call-seq: with_owner(owner)
       #
-      # Applies Chat#with_owner and returns this record. The owner is not
-      # persisted, so set it, or let the agent's +owner+ set it, on each
-      # record you load.
+      # Applies Chat#with_owner and returns this record. For this record
+      # instance, the owner wins over the association +acts_as_chat owner:+
+      # names, both for usage and for the files of the Active Storage
+      # store. It is not persisted, so a record loaded later works for that
+      # association again. Read it with <tt>to_llm.owner</tt>: the record
+      # defines no +owner+, so an association of yours by that name keeps
+      # working.
 
       ##
       # :method: with_context_budget
@@ -595,12 +599,6 @@ module RubyLLM
       # Delegates to Chat#end_user. See that method for arguments and return values.
 
       ##
-      # :method: owner
-      # :call-seq: owner
-      #
-      # Delegates to Chat#owner. See that method for arguments and return values.
-
-      ##
       # :method: fallbacks
       # :call-seq: fallbacks
       #
@@ -716,7 +714,7 @@ module RubyLLM
       # The public methods behave as documented on RubyLLM::Chat.
 
       PASSTHROUGH_CHAT_DELEGATES = %i[
-        caching citations code_execution compaction context_budget concurrency end_user owner fallbacks headers
+        caching citations code_execution compaction context_budget concurrency end_user fallbacks headers
         max_output_tokens provider_options schema provider_tools temperature thinking tool_options tools deferred_tools
         mcp skills file_store
         awaiting_input? pending_inputs awaiting_tasks? pending_tasks awaiting_person? add_completion count_tokens

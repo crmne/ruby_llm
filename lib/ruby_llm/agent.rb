@@ -83,7 +83,7 @@ module RubyLLM
     PASSTHROUGH_CHAT_DELEGATES = %i[
       model model_id provider messages tools deferred_tools mcp provider_tools tool_options provider_options headers
       schema concurrency caching citations code_execution compaction context_budget context end_user fallbacks thinking
-      temperature max_output_tokens skills file_store owner
+      temperature max_output_tokens skills file_store
       each complete? cancelled? waiting? awaiting_approval? pending_approvals awaiting_input? pending_inputs
       awaiting_tasks? pending_tasks awaiting_person? add_message add_completion tokens cost render
       queue queued_messages withdraw join_queued_messages
@@ -347,28 +347,27 @@ module RubyLLM
       # work with it, applied via Chat#with_file_store, which takes the
       # same arguments. A +store+ lambda runs once for each chat, with
       # +chat+ and the agent's inputs in scope, like the agent's other
-      # lambdas, and so does an +owner+ lambda for a persisted chat. Pass
-      # +nil+ to remove the store a parent agent declared.
+      # lambdas. Pass +nil+ to remove the store a parent agent declared.
       #
       #   file_store
       #   file_store inline_limit: 20_000, tools: :read
       #   file_store :memory
       #   file_store -> { "tmp/chats/#{chat.id}" }
-      #   file_store owner: -> { chat.user } # a plain chat's store is its own, so it ignores owner
       #   file_store nil
       #
       # Each chat gets a store of its own: without +store+, a new
       # FileStore::Memory, or for a persisted chat, its files in Active
-      # Storage. A folder path on its own is shared by every chat, so use a
-      # lambda to give each chat its own folder.
+      # Storage, kept for the chat's owner (see ::owner). A folder path on
+      # its own is shared by every chat, so use a lambda to give each chat
+      # its own folder.
       #
-      # :call-seq: file_store(store = default, inline_limit: 10_000, tools: %i[read write edit], owner: nil)
+      # :call-seq: file_store(store = default, inline_limit: 10_000, tools: %i[read write edit])
       def file_store(store = Chat::FileReferences::DEFAULT_STORE, inline_limit: Chat::FileReferences::INLINE_LIMIT,
-                     tools: FileStore::Tools::DEFAULT, owner: nil)
+                     tools: FileStore::Tools::DEFAULT)
         return @file_store = false if store.nil?
 
         Chat::FileReferences.validate(store, inline_limit:, tools:, store_lambda: true)
-        @file_store = { store:, inline_limit:, tools:, owner: }.compact.freeze
+        @file_store = { store:, inline_limit:, tools: }.freeze
       end
 
       # Gives chats this agent builds the skills named, applied via
@@ -402,8 +401,11 @@ module RubyLLM
       # Sets whoever the usage of chats this agent builds or finds is
       # attributed to, applied via Chat#with_owner. A block defers
       # evaluation until the chat is built, so the owner can come from the
-      # agent's inputs or, for a persisted chat, from +chat+. Subclasses
-      # inherit it. Called with no arguments, returns the configured value.
+      # agent's inputs or, for a persisted chat, from +chat+. A persisted
+      # chat keeps the files of its Active Storage store for the owner
+      # too, and the owner wins over the association its
+      # <tt>acts_as_chat owner:</tt> names. Subclasses inherit it. Called
+      # with no arguments, returns the configured value.
       #
       #   owner { account }
       #   owner { chat.user }
@@ -942,11 +944,8 @@ module RubyLLM
         return chat.with_file_store(nil) if @file_store == false
 
         store = @file_store[:store]
-        default = store.equal?(Chat::FileReferences::DEFAULT_STORE)
-        options = @file_store.except(:store)
-        options = options.except(:owner) if default && chat.is_a?(Chat)
-        options = options.transform_values { |value| evaluate(value, runtime) }
-        return chat.with_file_store(**options) if default
+        options = @file_store.except(:store).transform_values { |value| evaluate(value, runtime) }
+        return chat.with_file_store(**options) if store.equal?(Chat::FileReferences::DEFAULT_STORE)
 
         chat.with_file_store(evaluate(store, runtime), **options)
       end
@@ -1648,12 +1647,6 @@ module RubyLLM
     # Delegates to Chat#end_user. See that method for arguments and return values.
 
     ##
-    # :method: owner
-    # :call-seq: owner
-    #
-    # Delegates to Chat#owner. See that method for arguments and return values.
-
-    ##
     # :method: fallbacks
     # :call-seq: fallbacks
     #
@@ -1859,6 +1852,13 @@ module RubyLLM
       define_method(operation) do |*args, **kwargs, &block|
         rescuing { chat.public_send(operation, *args, **kwargs, &block) }
       end
+    end
+
+    # Returns whoever the usage of the agent's chat is attributed to, as
+    # Chat#owner describes. For a persisted chat, reads it from the
+    # record's chat, since the record leaves +owner+ to the application.
+    def owner
+      (chat.respond_to?(:to_llm) ? chat.to_llm : chat).owner
     end
 
     def bind(chat, input_values) # :nodoc:

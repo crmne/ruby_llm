@@ -10,7 +10,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     end
   end
 
-  def chat_class_with(*columns)
+  def chat_class_with(*columns, &associations)
     ActiveRecord::Base.connection.create_table(:guarded_chats) do |t|
       t.references :ruby_llm_model
       columns.each { |column| t.string column }
@@ -20,6 +20,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       def self.name = 'GuardedChat'
 
       acts_as_chat messages: :messages, message_class: 'Message', messages_foreign_key: :chat_id
+      class_exec(&associations) if associations
     end
   end
 
@@ -43,6 +44,18 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     chat_class = chat_class_with(:complete, :count)
 
     expect { chat_class.new }.to raise_error(ArgumentError, /guarded_chats\.complete, guarded_chats\.count/)
+  end
+
+  it 'raises when an association would be hidden by a RubyLLM reader, naming it and the fix' do
+    chat_class = chat_class_with(:title) do
+      has_many :tools, class_name: 'Message', foreign_key: :chat_id
+      has_many :notes, class_name: 'Message', foreign_key: :chat_id
+    end
+
+    expect { chat_class.new }.to raise_error(ArgumentError) { |error|
+      expect(error.message).to include('has_many :tools', 'GuardedChat#tools', 'class_name: and foreign_key:')
+      expect(error.message).not_to include('notes')
+    }
   end
 
   it 'leaves a table with only its own columns alone' do
