@@ -57,9 +57,14 @@ module RubyLLM
           'gen_ai.request.temperature' => payload[:temperature],
           'gen_ai.request.max_tokens' => payload[:max_output_tokens],
           'gen_ai.request.stream' => (true if payload[:streaming]),
+          'gen_ai.request.reasoning.level' => reasoning_level(payload[:thinking]),
           'gen_ai.embeddings.dimension.count' => payload[:dimensions],
           'gen_ai.output.type' => output_type(event, payload)
         }.compact
+      end
+
+      def reasoning_level(thinking)
+        thinking.effort.to_s if thinking.respond_to?(:effort) && thinking.effort
       end
 
       def output_type(event, payload)
