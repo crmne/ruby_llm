@@ -64,7 +64,9 @@ module RubyLLM
       end
 
       # Returns whether a process is running this tool call: it has no
-      # result yet and its claim has not expired.
+      # result yet and its claim has not expired. The process running it
+      # keeps renewing the claim, which expires within a minute of that
+      # process dying.
       def running?
         (result_id.nil? && has_attribute?(:claimed_until) && claimed_until&.future?) || false
       end

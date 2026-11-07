@@ -109,7 +109,9 @@ tool_call.running? # => true while a process runs this call
 
 The process that holds the claim finishes the work recorded while it ran. An approval that arrives as it finishes, or a question asked while it streams an answer, is picked up before it lets go, so the job the approval enqueued can return without losing anything.
 
-A claim lasts `config.max_run_time`, ten minutes by default. A run renews its claim as it streams, between steps, and as each message is saved. A tool call keeps its claim for its own `max_run_time`, and the chat's claim stretches to cover it:
+A claim is a one-minute lease. While a run is alive, a background thread renews the leases on the chat and on the tool calls it runs every 15 seconds, whether the model streams, stays silent, or a tool works for minutes. Each renewal checks out a database connection and returns it, so leave room in your connection pool for one more connection per running chat. A process that dies stops renewing, and its claims expire within a minute, on any number of servers, without a step at boot. Each server compares leases against its own clock, so keep your servers' clocks synchronized.
+
+`config.max_run_time`, ten minutes by default, limits how long a run may go without progress. A run makes progress as it streams, between steps, and as each message is saved. A tool call may run for its own `max_run_time`, and the chat's claim stretches to cover it. Past that, the run stops renewing and counts as crashed:
 
 ```ruby
 RubyLLM.configure do |config|
@@ -121,9 +123,9 @@ class GenerateReport < RubyLLM::Tool
 end
 ```
 
-Set `config.max_run_time` above your slowest model request without streaming. A run that outlasts its claim counts as crashed: another process can take the chat over, and the late run's results are discarded.
+Set `config.max_run_time` above your slowest model request without streaming. When a run counts as crashed, another process can take the chat over, and the late run's results are discarded.
 
-Claims rely on the database to make them visible to other processes, so call these methods outside your own transactions. Inside a transaction, the claim stays invisible until it commits, and the transaction stays open while the model and tools run.
+Claims rely on the database to make them visible to other processes, so call these methods outside your own transactions. Inside a transaction, the claim stays invisible until it commits, the transaction stays open while the model and tools run, and the claims can't be renewed from another connection, so they last `max_run_time` instead of a minute.
 
 ## When a Run Is Interrupted
 
@@ -140,7 +142,7 @@ The generated chat UI handles each of these: its job rescues the cancel, shows f
 
 ## Resuming a Crashed Run
 
-A process that dies keeps its claims until they expire. Until then, `complete` in another process returns without doing anything and `chat.running?` stays `true`. Check it after `complete` and try again later, so the conversation resumes once the claim expires:
+A process that dies keeps its claims for up to a minute, until their leases expire. Until then, `complete` in another process returns without doing anything and `chat.running?` stays `true`. Check it after `complete` and try again later, so the conversation resumes once the claim expires:
 
 ```ruby
 class CompleteJob < ApplicationJob
@@ -152,7 +154,7 @@ class CompleteJob < ApplicationJob
 end
 ```
 
-When the other process is alive, it finishes the work and the retry finds nothing to do.
+When the other process is alive, it finishes the work and the retry finds nothing to do. Don't clear the claim columns at boot to resume sooner: a process on another server that is still running would then share the chat, and both would run its tools.
 
 A process that dies mid-request removes nothing. Its assistant placeholder stays blank, and a tool call it was running keeps no result. RubyLLM leaves blank assistant messages out of every request, so the chat still works. Once the claims expire, the next `complete` runs the unfinished calls of the latest round again. A call in a round the conversation has moved past reaches the model with an error saying it didn't finish. Your records stay as they are.
 
