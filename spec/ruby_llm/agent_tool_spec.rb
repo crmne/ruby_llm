@@ -162,8 +162,10 @@ RSpec.describe RubyLLM::AgentTool do
       expect(task).to be_a(RubyLLM::AgentTask).and(be_input_required)
       expect(task.agent).to be_awaiting_approval
 
+      allow(task.agent).to receive(:complete).and_call_original
       chat.complete
       expect(chat).to be_awaiting_person
+      expect(task.agent).not_to have_received(:complete)
 
       task.agent.approve(task.agent.pending_approvals.sole)
       chat.complete

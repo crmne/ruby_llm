@@ -88,7 +88,7 @@ module RubyLLM
     def resume(task, **)
       agent = task.agent
       return { error: "This agent's work was lost. Start it again with everything it needs." } unless agent
-      return report(agent, nil, task.data['run'], task.tool_call) if agent.awaiting_person?
+      return paused(agent, task.data['run'], task.tool_call) if agent.awaiting_person?
 
       carry_on(agent, task.tool_call, run: task.data['run'], &:complete)
     end
@@ -102,10 +102,8 @@ module RubyLLM
     # Returns the agent +task+ waits for: the one this process ran, or the
     # record of an agent that sets Agent::chat_class, or +nil+.
     def agent_for(task) # :nodoc:
-      agent = @lock.synchronize { @agents[task.data['run']] }
-      return agent if agent || !records?
-
-      linked_agent(task.tool_call, run_inputs(task.tool_call&.arguments || {}))
+      @lock.synchronize { @agents[task.data['run']] } ||
+        linked_agent(task.tool_call, run_inputs(task.tool_call&.arguments || {}))
     end
 
     # Lets go of the agent of +run+, once its call is over.
@@ -150,14 +148,16 @@ module RubyLLM
     end
 
     def report(agent, message, run, tool_call)
-      if agent.waiting?
-        status = agent.awaiting_person? ? :input_required : :working
-        return AgentTask.new(status:, agent:, tool: self, tool_call:,
-                             data: { 'agent' => self.class.agent_class.name, 'run' => run })
-      end
+      return paused(agent, run, tool_call) if agent.waiting?
 
       forget(run)
       message&.content
+    end
+
+    def paused(agent, run, tool_call)
+      status = agent.awaiting_person? ? :input_required : :working
+      AgentTask.new(status:, agent:, tool: self, tool_call:,
+                    data: { 'agent' => self.class.agent_class.name, 'run' => run })
     end
   end
 end

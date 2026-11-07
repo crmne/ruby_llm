@@ -23,8 +23,6 @@ module RubyLLM
 
       def subagent_chats(chat = self)
         calls = RubyLLM::ActiveRecord::ToolCall
-        return [] unless calls.subagent_chats?
-
         association = chat.messages_association
         calls.uncached do
           calls.where(message_type: association.klass.polymorphic_name, message_id: association.select(:id),
@@ -76,7 +74,6 @@ module RubyLLM
 
       def wake_callers
         chat = self
-        waiting = false
         while (call = calling_tool_call(chat))
           waiting ||= chat.pending_approvals.exists?
           calling_chat = call.message.chat_association
