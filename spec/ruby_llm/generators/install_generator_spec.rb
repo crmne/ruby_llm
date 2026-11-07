@@ -219,15 +219,6 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
     end
   end
 
-  it 'ends at the next steps and the documentation link' do
-    output = capture_stdout do
-      described_class.new([], {}, destination_root: Dir.tmpdir, shell: Thor::Shell::Basic.new).show_install_info
-    end
-
-    expect(output.lines.reject { |line| line.strip.empty? }.last).to include('https://rubyllm.com')
-    expect(output).not_to include('github.com', 'x.com')
-  end
-
   it 'leaves message broadcasting off in the initializer' do
     Dir.mktmpdir do |destination|
       described_class.new([], {}, destination_root: destination, shell: Thor::Shell::Basic.new).create_initializer
@@ -247,6 +238,14 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
 
       expect(File.read(File.join(destination, 'app/models/llm.rb'))).to eq("module Llm\nend\n")
     end
+  end
+
+  it 'ends with the one command to run next, and no guide' do
+    output = capture_stdout do
+      described_class.new([], {}, destination_root: Dir.tmpdir, shell: Thor::Shell::Basic.new).show_next_step
+    end
+
+    expect(output).to eq("\nRun bin/rails db:migrate\n")
   end
 
   describe 'with a mapped chat model' do

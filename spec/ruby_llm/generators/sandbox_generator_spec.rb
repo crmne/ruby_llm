@@ -89,7 +89,7 @@ RSpec.describe RubyLLM::Generators::SandboxGenerator, :generator, type: :generat
       initializer = File.read('config/initializers/ruby_llm.rb')
       File.write('Gemfile', %(#{original.gsub(/^gem "mxc".*\n/, '')}\ngem "mxc", "~> 0.3.0", require: false\n))
       output, = run_rails_generate('ruby_llm:sandbox', 'Third')
-      expect(output).to include('code execution needs mxc >= 0.4.1')
+      expect(output).to include('Change the mxc line in your Gemfile to mxc >= 0.4.1')
     ensure
       File.write('Gemfile', original)
       File.write('config/initializers/ruby_llm.rb', initializer)

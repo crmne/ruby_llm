@@ -32,7 +32,7 @@ module RubyLLM
         return warn_about_mxc_constraint(existing) if existing
 
         gem 'mxc', MXC_REQUIREMENT
-        say 'Run bundle install: sandboxes subclass MXC::Sandbox from the mxc gem.', :yellow
+        say "\nRun bundle install" if behavior == :invoke
       end
 
       def default_to_new_sandbox
@@ -41,14 +41,10 @@ module RubyLLM
         return if behavior == :invoke && File.read(initializer).match?(/^\s*config\.sandbox\s*(\|\|)?=/)
 
         unless File.read(initializer).match?(CONFIGURE_BLOCK)
-          return say %(Set config.sandbox = "#{sandbox_class_name}" where you configure RubyLLM.), :yellow
+          return say %(Set config.sandbox = "#{sandbox_class_name}" where you configure RubyLLM), :yellow
         end
 
         inject_into_file INITIALIZER, %(  config.sandbox = "#{sandbox_class_name}"\n), after: CONFIGURE_BLOCK
-      end
-
-      def explain_next_step
-        say 'Turn it on with `code_execution` in an agent, or with_code_execution on a chat.' if behavior == :invoke
       end
 
       private
@@ -57,7 +53,7 @@ module RubyLLM
         requirement = line[/["']mxc["']\s*,\s*["']([^"']+)["']/, 1]
         return if requirement.nil? || Gem::Requirement.new(requirement).satisfied_by?(Gem::Version.new('0.4.1'))
 
-        say "Change the mxc line in your Gemfile: code execution needs mxc #{MXC_REQUIREMENT}.", :yellow
+        say "Change the mxc line in your Gemfile to mxc #{MXC_REQUIREMENT}", :yellow
       end
 
       def sandbox_class_name

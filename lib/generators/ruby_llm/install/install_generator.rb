@@ -49,34 +49,11 @@ module RubyLLM
       end
 
       def install_active_storage
-        say '  Installing Active Storage for message attachments...', :cyan
         rails_command 'active_storage:install'
       end
 
-      def show_install_info
-        say "\n  ✅ RubyLLM installed!", :green
-
-        say '  ✅ Active Storage installed for message attachments', :green
-
-        say "\n  Next steps:", :yellow
-        say '     1. Run: bin/rails db:migrate'
-        say '     2. Run: bin/rails ruby_llm:load_models'
-        say '     3. Set your API keys in config/initializers/ruby_llm.rb'
-
-        say "     4. Start chatting: #{chat_model_name}.create!.ask('Hello!')"
-        say "     5. Optional UI: #{chat_ui_generator_command}"
-
-        say "\n  📚 Documentation: https://rubyllm.com", :cyan
-
-        say "\n"
-      end
-
-      private
-
-      def chat_ui_generator_command
-        mappings = model_mappings.join(' ')
-        mappings = " #{mappings}" unless mappings.empty?
-        "bin/rails generate ruby_llm:chat_ui#{mappings}"
+      def show_next_step
+        say "\nRun bin/rails db:migrate" if behavior == :invoke
       end
     end
   end

@@ -30,13 +30,15 @@ bin/rails generate ruby_llm:tool Weather
 bin/rails generate ruby_llm:agent Researcher
 ```
 
-Each takes one line in `app/agents/chat_agent.rb`, which is what the generated UI runs: `code_execution`, `mcp Linear`, `tools WeatherTool`, and `file_store` for files.
+Each takes one line in `app/agents/chat_agent.rb`, which is what the generated UI runs: `code_execution`, `mcp LinearMcp`, `tools WeatherTool`, and `file_store` for files.
+
+The generators print only the files they create and, when one is needed, the next command. The rest of the setup is here. After `ruby_llm:install`, set the provider's API key in `config/initializers/ruby_llm.rb`. In a jsbundling-rails app, the chat UI needs `yarn add marked@18.0.14 dompurify@3.4.16` and `bin/rails stimulus:manifest:update`, and an app without Stimulus needs `bin/rails stimulus:install`; without them, replies show as plain text. An app without Hotwire needs `bundle add turbo-rails stimulus-rails importmap-rails` and `bin/rails importmap:install turbo:install stimulus:install`.
 
 For what cancel, a restart, and a failure each save and continue, see `durable-agents/#when-a-run-is-interrupted`. A dead process frees its chat within a minute, so never clear `claim_token` or `claimed_until` yourself, at boot or otherwise. Don't rebuild the transcript, don't keep a price table, and don't reopen or prepend onto RubyLLM's classes. If you think you need to, read the matching guide below first: `rails-persistence/`, `cost-and-usage-tracking/`, or the feature's own.
 
 With `with_thinking` on, a stream can sit quiet for several seconds before text starts, while the model thinks. That is normal, not a stall.
 
-You don't need to read the generated files or `lib/ruby_llm` to use this. The generator prints what works and which file controls it: with the default `Chat` model, `app/jobs/chat_response_job.rb` runs the turn and shows errors, `ChatsController#cancel` is Stop, and `app/agents/chat_agent.rb` says what the model can do. Files attached to a chat reach `code_execution` in `attachments/`, and reach `file_store` as the chat's files. For anything else, read the one guide for that feature, and open source only when something fails or you need a signature.
+You don't need to read the generated files or `lib/ruby_llm` to use this. With the default `Chat` model, `app/jobs/chat_response_job.rb` runs the turn and shows errors, `ChatsController#cancel` is Stop, `app/views/messages/_assistant.html.erb` renders a reply, and `app/agents/chat_agent.rb` says what the model can do. Files attached to a chat reach `code_execution` in `attachments/`, and reach `file_store` as the chat's files. For anything else, read the one guide for that feature, and open source only when something fails or you need a signature.
 
 RubyLLM's own suite covers streaming and reply assembly, persistence, the tool loop, usage and cost, retries, cancellation, and generated code; the official conformance suite covers its MCP client; and mxc's tests cover sandbox isolation. Don't probe those by hand. See [Verify](#verify-the-application-change) for the one command that checks the result.
 

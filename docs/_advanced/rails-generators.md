@@ -37,7 +37,7 @@ The generator:
 - Creates an initializer for provider configuration
 - Creates `app/agents/application_agent.rb`, the parent of your agents, pointed at your chat model
 
-After running the generator:
+Like Rails' own generators, it prints the files it creates and the one command you need next. Run it, set your provider's API key in `config/initializers/ruby_llm.rb`, and load the model registry:
 
 ```bash
 bin/rails db:migrate
@@ -115,13 +115,20 @@ When another process is running the chat, `complete` returns at once, and the jo
 
 `MessagesController` answers the send with a Turbo Stream that clears the form and refreshes the page, so the message shows right away, in the transcript or queued under it, without waiting for the job. RubyLLM's page refreshes carry no request id, so Turbo never skips one as the page's own. The message form sits in a Turbo Frame, so a page refresh that starts while the message is sending doesn't cancel the send.
 
-Replies stream into the page chunk by chunk, and the finished message replaces the streamed text once when it is saved. New messages, approval cards, and the form appear through page refreshes, so the page always matches what a reload would show. A Stimulus controller that ships with RubyLLM puts the chunks in order, ignores an empty reply that arrives after the failed reply's removal, and renders assistant replies as Markdown, sanitized with DOMPurify. Images in a reply show as text, so a prompt injection cannot make the browser fetch a URL that leaks the chat, while attachments still show. In an app with an import map, RubyLLM pins the controller as `ruby_llm/chat_message_controller`, along with `marked` and `dompurify`, and the generated `app/javascript/controllers/chat_message_controller.js` is one line that loads it, so the controller updates with the gem. Pins in your own `config/importmap.rb` win, and to change the controller, replace that line with your own. In an app that bundles its JavaScript with jsbundling-rails, the generator copies the controller into that file and prints the `yarn add` command and `bin/rails stimulus:manifest:update`. With another bundler, it copies the controller and says what to add. Without JavaScript, replies show as plain text. See [Message Ordering Issues]({% link _advanced/rails-streaming.md %}#message-ordering-issues).
+Replies stream into the page chunk by chunk, and the finished message replaces the streamed text once when it is saved. New messages, approval cards, and the form appear through page refreshes, so the page always matches what a reload would show. A Stimulus controller that ships with RubyLLM puts the chunks in order, ignores an empty reply that arrives after the failed reply's removal, and renders assistant replies as Markdown, sanitized with DOMPurify. Images in a reply show as text, so a prompt injection cannot make the browser fetch a URL that leaks the chat, while attachments still show. In an app with an import map, RubyLLM pins the controller as `ruby_llm/chat_message_controller`, along with `marked` and `dompurify`, and the generated `app/javascript/controllers/chat_message_controller.js` is one line that loads it, so the controller updates with the gem. Pins in your own `config/importmap.rb` win, and to change the controller, replace that line with your own. In an app that bundles its JavaScript with jsbundling-rails, the generator copies the controller into that file; add the packages it imports and register it:
+
+```bash
+yarn add marked@18.0.14 dompurify@3.4.16
+bin/rails stimulus:manifest:update
+```
+
+With another bundler, add the same packages and register `app/javascript/controllers/chat_message_controller.js` as the `chat-message` Stimulus controller. An app without Stimulus needs `bin/rails stimulus:install` first. Without JavaScript, replies show as plain text. See [Message Ordering Issues]({% link _advanced/rails-streaming.md %}#message-ordering-issues).
 
 While the job runs the chat, an empty reply shows "Thinking…", the message form stays, and a Stop button posts to `ChatsController#cancel`, which calls [`chat.cancel`]({% link _advanced/rails-streaming.md %}#cancelling-a-background-stream). Stop raises `RubyLLM::CancelledError` in the job, which discards it. A message sent while a reply runs shows under the transcript, faded, with a Cancel button that posts to `QueuedMessagesController#destroy`, which finds the queued message and calls `withdraw` on it. When Stop ends a reply while messages wait, `complete` goes on to answer them before the job ends. Each finished reply shows what it cost, and the page shows the chat's total. Both message forms take file attachments, and the Stimulus controller keeps a page refresh from undoing any field a person changed in the message form, whether what they are typing or a field your app adds, such as a model picker. Sending clears the form, and another chat starts empty.
 
 When a reply fails, `complete` saves a message for the person in the chat's `reply_error` column, refreshes the page, and raises, so the job fails and your error reporting sees it. The page renders the message whenever it loads or refreshes, so it shows however the broadcasts of a quick failure arrive, and the next run clears it. The message is "The reply failed. Send your message again.", or "This conversation is too long for the model. Start a new chat." for `RubyLLM::ContextLengthExceededError`. Change or translate them with the I18n keys `ruby_llm.reply_error.failed` and `ruby_llm.reply_error.too_long`. The generator adds the column with a migration, so run `bin/rails db:migrate` after it.
 
-The generator needs `turbo-rails`, which a plain `rails new` has, and says what to add when an app doesn't. When the app has `test/test_helper.rb`, it also writes `test/system/chats_test.rb`, so `bin/rails test:system` checks streaming, Stop, a message sent right after a reply or Stop, cost, and errors with [scripted replies]({% link _advanced/testing.md %}), in a real browser. That needs Chrome, and it adds `capybara` and `selenium-webdriver` to your test group when they're missing. It writes `test/agents/chat_agent_test.rb` too, which `bin/rails test` runs to check the agent's context budget.
+The generator needs Hotwire, which a plain `rails new` has. When an app doesn't, the generator says so; add it with `bundle add turbo-rails stimulus-rails importmap-rails` and `bin/rails importmap:install turbo:install stimulus:install`. When the app has `test/test_helper.rb`, it also writes `test/system/chats_test.rb`, so `bin/rails test:system` checks streaming, Stop, a message sent right after a reply or Stop, cost, and errors with [scripted replies]({% link _advanced/testing.md %}), in a real browser. That needs Chrome, and it adds `capybara` and `selenium-webdriver` to your test group when they're missing. It writes `test/agents/chat_agent_test.rb` too, which `bin/rails test` runs to check the agent's context budget. In tests of your own, `RubyLLM::TestHelper` scripts the replies, with no provider or key.
 
 The UI generator also supports custom model names:
 
@@ -135,15 +142,21 @@ When a tool [requires approval]({% link _tools/tool-execution.md %}#requiring-ap
 
 Each button posts to `ApprovalsController#create`, which records the decision with `chat.approve` or `chat.deny`, replaces the cards with a Turbo Stream, and enqueues `ChatResponseJob` to continue the conversation. Decided calls show as ordinary tool calls with their results. When the job finishes or pauses for the next approval, the page refreshes with the new cards and the message form.
 
-The chat UI talks to `ChatAgent` in `app/agents/chat_agent.rb`. The controllers and the job create chats with `ChatAgent.create!` and load them with `ChatAgent.find`, so whatever you add to it reaches the UI. Give it tools, instructions, or code execution, and tools that require approval get their cards:
+The chat UI talks to `ChatAgent` in `app/agents/chat_agent.rb`. The controllers and the job create chats with `ChatAgent.create!` and load them with `ChatAgent.find`, so whatever you add to it reaches the UI. Give it tools, instructions, an MCP server, files, or code execution, one line each, and tools that require approval get their cards:
 
 ```ruby
 class ChatAgent < ApplicationAgent
   instructions "You help the finance team with invoices."
   tools SendInvoiceTool
+  mcp LinearMcp
+  file_store
   code_execution sandbox: ReadOnlySandbox, escalate_to: [WorkspaceSandbox]
 end
 ```
+
+Generate the classes it names first, with `ruby_llm:tool SendInvoice`, `ruby_llm:mcp Linear URL`, and `ruby_llm:sandbox` for each sandbox. `file_store` gives the model tools to read, search, and edit the chat's files; with it, code reads a chat's attachments in `attachments/`, and what the code writes joins the chat's files.
+
+Where the rest lives, with the default model names: `app/jobs/chat_response_job.rb` runs each turn and saves its errors, `ChatsController#cancel` is the Stop button, and `app/views/messages/_assistant.html.erb` renders a reply.
 
 The generated agent starts with a [context budget]({% link _core_features/chat-request-control.md %}#keeping-tool-results-in-budget) and [prompt caching]({% link _core_features/prompt-caching.md %}):
 
@@ -219,11 +232,11 @@ bin/rails generate ruby_llm:judge Urgency
 What each generator creates:
 
 - `ruby_llm:agent`: `app/agents/support_agent.rb`, a subclass of `ApplicationAgent`, and `app/prompts/support_agent/instructions.txt.erb`. In an app without `ApplicationAgent`, the agent inherits from `RubyLLM::Agent` and names its chat model itself.
-- `ruby_llm:tool`: `app/tools/weather_tool.rb` plus tool-specific chat UI partials under `app/views/messages/tool_calls` and `app/views/messages/tool_results`
+- `ruby_llm:tool`: `app/tools/weather_tool.rb` plus tool-specific chat UI partials under `app/views/messages/tool_calls` and `app/views/messages/tool_results`. Offer it with `tools WeatherTool` in an agent or `with_tools(WeatherTool)` on a chat.
 - `ruby_llm:schema`: `app/schemas/product_schema.rb`
-- `ruby_llm:mcp`: `app/mcp/linear_mcp.rb`, a `LinearMcp` server connecting to the URL you give, or `LinearMCP` when your inflections make MCP an acronym. For a server that runs on your machine, pass `--command` instead: `bin/rails generate ruby_llm:mcp Files --command "npx -y @modelcontextprotocol/server-filesystem ."`
+- `ruby_llm:mcp`: `app/mcp/linear_mcp.rb`, a `LinearMcp` server connecting to the URL you give, or `LinearMCP` when your inflections make MCP an acronym. For a server that runs on your machine, pass `--command` instead: `bin/rails generate ruby_llm:mcp Files --command "npx -y @modelcontextprotocol/server-filesystem ."`. Connect it with `mcp LinearMcp` in an agent or `with_mcp(LinearMcp)` on a chat.
 - `ruby_llm:skill`: `app/skills/invoices/SKILL.md` with the name and description. Names use lowercase letters, digits, and hyphens, as the Agent Skills format requires.
-- `ruby_llm:sandbox`: `app/sandboxes/workspace_sandbox.rb`, an `MXC::Sandbox` with a two-minute timeout, `gem "mxc", ">= 0.4.1"` in your Gemfile when it is missing, and `config.sandbox` in your initializer when you have no default sandbox yet
+- `ruby_llm:sandbox`: `app/sandboxes/workspace_sandbox.rb`, an `MXC::Sandbox` with a two-minute timeout, `gem "mxc", ">= 0.4.1"` in your Gemfile when it is missing, so run `bundle install` after it, and `config.sandbox` in your initializer when you have no default sandbox yet. Turn code execution on with `code_execution` in an agent or `with_code_execution` on a chat.
 - `ruby_llm:evaluation`: `app/evals/support_evaluation.rb` and its dataset, `support_evaluation.yml`, with one case to fill in. It runs `SupportAgent` when you have one.
 - `ruby_llm:judge`: `app/judges/urgency_judge.rb`
 

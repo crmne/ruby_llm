@@ -405,7 +405,7 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
 
     expect(File.read(File.join(destination, 'app/models/message.rb'))).to eq(model)
     expect(File.read(File.join(destination, 'config/initializers/ruby_llm.rb'))).not_to include('broadcast_messages')
-    expect(shell).to have_received(:say).with(/ruby_llm:chat_ui/, anything)
+    expect(shell).not_to have_received(:say)
   end
 
   it 'keeps the broadcasting a 2.1 chat UI page still subscribes to' do
@@ -456,6 +456,15 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
     generator.install_active_storage
 
     expect(generator).to have_received(:rails_command).with('active_storage:install')
+  end
+
+  it 'ends with the one command to run next, and no guide' do
+    shell = Thor::Shell::Basic.new
+    allow(shell).to receive(:say)
+
+    described_class.new([], {}, destination_root: destination, shell:).show_next_step
+
+    expect(shell).to have_received(:say).once.with("\nRun bin/rails db:migrate")
   end
 
   it 'leaves an existing ApplicationAgent alone' do
