@@ -115,6 +115,20 @@ RSpec.describe RubyLLM::TestHelper do
     expect { RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic) }.to raise_error(RubyLLM::ConfigurationError)
   end
 
+  it 'keeps the script through the rest of a Minitest teardown, such as a browser reset, then clears it' do
+    active_during_reset = nil
+    system_test = Class.new do
+      define_method(:after_teardown) { active_during_reset = RubyLLM::TestHelper::Script.active? }
+    end
+    test = Class.new(system_test) { include RubyLLM::TestHelper }.new
+    test.stub_replies 'Hello'
+
+    test.after_teardown
+
+    expect(active_during_reset).to be(true)
+    expect(RubyLLM::TestHelper::Script).not_to be_active
+  end
+
   it 'clears the script after each example through its RSpec hook' do
     expect(RubyLLM::TestHelper::Script).not_to be_active
   end

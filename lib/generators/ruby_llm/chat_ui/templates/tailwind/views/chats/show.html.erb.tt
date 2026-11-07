@@ -40,13 +40,17 @@
 
   <%%= render "<%= chat_model_name.underscore.pluralize %>/files", <%= chat_model_name.demodulize.underscore %>: @<%= chat_variable_name %> %>
 
-  <div id="reply_error" data-turbo-permanent></div>
+  <%% if @<%= chat_variable_name %>.reply_error.present? %>
+    <p id="reply_error" class="py-2 px-3 bg-red-50 mb-5 text-red-500 font-medium rounded-md inline-block"><%%= @<%= chat_variable_name %>.reply_error %></p>
+  <%% end %>
 
   <%% if @<%= chat_variable_name %>.running? %>
     <%%= button_to "Stop", cancel_<%= chat_variable_name %>_path(@<%= chat_variable_name %>), class: "rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium cursor-pointer" %>
   <%% end %>
 
-  <%%= render "<%= message_model_name.underscore.pluralize %>/form", <%= chat_variable_name %>: @<%= chat_variable_name %>, <%= message_variable_name %>: @<%= message_variable_name %> %>
+  <%%= turbo_frame_tag "<%= message_variable_name %>_form" do %>
+    <%%= render "<%= message_model_name.underscore.pluralize %>/form", <%= chat_variable_name %>: @<%= chat_variable_name %>, <%= message_variable_name %>: @<%= message_variable_name %> %>
+  <%% end %>
 
   <%%= link_to "Back to <%= chat_table_name.humanize.downcase %>", <%= chat_table_name %>_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
 </div>

@@ -3,6 +3,9 @@
     <%= chat_variable_name %>: @<%= chat_variable_name %>,
     <%= message_variable_name %>: @<%= chat_variable_name %>.<%= message_table_name %>.build %>
 <%% end %>
+<%% if @<%= message_variable_name %>&.persisted? %>
+  <%%= turbo_stream.append "<%= message_table_name %>", @<%= message_variable_name %> %>
+<%% end %>
 <%% if @queued_message %>
   <%%= turbo_stream.append "queued_<%= message_table_name %>",
     partial: "<%= message_model_name.underscore.pluralize %>/queued_message",

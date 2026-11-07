@@ -165,6 +165,32 @@ RSpec.describe 'The chat UI message controller', :generator do # rubocop:disable
     expect(browser.evaluate("document.getElementById('message_2_output').textContent")).to include('Early late')
   end
 
+  it 'drops a reply placeholder that reaches the page after its removal' do
+    open_message('', streaming: true)
+    rendered = browser.evaluate(<<~JS)
+      (() => {
+        const rendered = []
+        const deliver = (action, target, html) => {
+          const stream = document.createElement("turbo-stream")
+          stream.setAttribute("action", action)
+          stream.setAttribute("target", target)
+          const template = document.createElement("template")
+          template.innerHTML = html
+          stream.templateContent = template.content
+          const event = new CustomEvent("turbo:before-stream-render", { detail: { render: () => rendered.push(action) } })
+          dispatchEvent(event)
+          event.detail.render(stream)
+        }
+        deliver("remove", "message_3", "")
+        deliver("append", "messages", '<div id="message_3" data-streaming></div>')
+        deliver("append", "messages", '<div id="message_4" data-streaming></div>')
+        return rendered
+      })()
+    JS
+
+    expect(rendered).to eq(%w[remove append])
+  end
+
   it 'joins chunks across indexes that carried no content' do
     open_message('<span data-seq="5" data-after="2">c</span><span data-seq="2">ab</span>', streaming: true)
     wait_for { output_html.include?('abc') }

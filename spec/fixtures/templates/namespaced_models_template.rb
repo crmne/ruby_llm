@@ -9,3 +9,4 @@ rails_command 'db:migrate'
 generate 'ruby_llm:chat_ui',
          'chat:Llm::Chat',
          'message:Llm::Message'
+rails_command 'db:migrate'

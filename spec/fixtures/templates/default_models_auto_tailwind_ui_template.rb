@@ -6,3 +6,4 @@ generate 'ruby_llm:install'
 rails_command 'db:migrate'
 create_file 'app/assets/tailwind/application.css', "/* tailwind marker */\n"
 generate 'ruby_llm:chat_ui', '--ui=auto'
+rails_command 'db:migrate'

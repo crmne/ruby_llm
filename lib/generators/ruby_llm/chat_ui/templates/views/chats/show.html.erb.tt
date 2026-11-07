@@ -32,14 +32,18 @@
 
 <%%= render "<%= chat_model_name.underscore.pluralize %>/files", <%= chat_model_name.demodulize.underscore %>: @<%= chat_variable_name %> %>
 
-<div id="reply_error" data-turbo-permanent></div>
+<%% if @<%= chat_variable_name %>.reply_error.present? %>
+  <p id="reply_error" style="color: red"><%%= @<%= chat_variable_name %>.reply_error %></p>
+<%% end %>
 
 <%% if @<%= chat_variable_name %>.running? %>
   <%%= button_to "Stop", cancel_<%= chat_variable_name %>_path(@<%= chat_variable_name %>) %>
 <%% end %>
 
 <div style="margin-top: 30px;">
-  <%%= render "<%= message_model_name.underscore.pluralize %>/form", <%= chat_variable_name %>: @<%= chat_variable_name %>, <%= message_variable_name %>: @<%= message_variable_name %> %>
+  <%%= turbo_frame_tag "<%= message_variable_name %>_form" do %>
+    <%%= render "<%= message_model_name.underscore.pluralize %>/form", <%= chat_variable_name %>: @<%= chat_variable_name %>, <%= message_variable_name %>: @<%= message_variable_name %> %>
+  <%% end %>
 </div>
 
 <div style="margin-top: 20px;">

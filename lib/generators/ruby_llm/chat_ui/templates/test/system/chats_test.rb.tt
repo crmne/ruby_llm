@@ -64,12 +64,32 @@ class <%= chat_controller_class_name.delete_suffix("Controller") %>Test < Applic
     assert_field "<%= message_variable_name %>[content]", with: ""
   end
 
-  test "showing an error when a reply fails" do
-    stub_replies RubyLLM::ServerError.new("The provider is down")
+  test "showing a sent message before its reply starts" do
+    stub_replies "Hello"
+    <%= chat_job_class_name %>.queue_adapter = :test
 
     start_chat
+    fill_in "<%= message_variable_name %>[content]", with: "Are you there?"
+    click_on "Send <%= message_table_name.singularize.humanize.downcase %>"
 
+    assert_text "Are you there?"
+    assert_field "<%= message_variable_name %>[content]", with: ""
+  end
+
+  test "showing an error when a reply fails, until the next reply starts" do
+    stub_replies RubyLLM::ServerError.new("The provider is down"), "Back again"
+
+    start_chat
     assert_text "The reply failed"
+    assert_no_text "Thinking…"
+
+    visit current_path
+    assert_text "The reply failed"
+
+    fill_in "<%= message_variable_name %>[content]", with: "Try again"
+    click_on "Send <%= message_table_name.singularize.humanize.downcase %>"
+    assert_text "Back again"
+    assert_no_text "The reply failed"
   end
 
   test "saying so when the model returns no reply" do

@@ -63,7 +63,7 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
         expect(migrations.any? { |f| f.include?('create_chats') }).to be true
         expect(migrations.any? { |f| f.include?('create_messages') }).to be true
         expect(migrations.any? { |f| f.include?('create_ruby_llm_records') }).to be true
-        expect(migrations.count { |file| !file.include?('active_storage') }).to eq(3)
+        expect(migrations.count { |file| !file.match?(/active_storage|add_reply_error/) }).to eq(3)
       end
     end
 

@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 require 'rails/generators'
+require 'rails/generators/active_record'
 require_relative '../generator_helpers'
 
 module RubyLLM
   module Generators
     # Generates a simple chat UI scaffold for RubyLLM
     class ChatUIGenerator < Rails::Generators::Base
+      include Rails::Generators::Migration
       include RubyLLM::Generators::GeneratorHelpers
 
       source_root File.expand_path('templates', __dir__)
@@ -41,6 +43,10 @@ module RubyLLM
         ERROR
       end
 
+      def self.next_migration_number(dirname)
+        ::ActiveRecord::Generators::Base.next_migration_number(dirname)
+      end
+
       def check_hotwire
         return if File.read(File.join(destination_root, 'Gemfile')).match?(/^\s*gem[\s(]+["']turbo-rails["']/)
 
@@ -48,6 +54,13 @@ module RubyLLM
         say '    bundle add turbo-rails stimulus-rails importmap-rails'
         say '    bin/rails importmap:install turbo:install stimulus:install'
         say '  An app from a plain rails new has them.', :red
+      end
+
+      def create_migration_file
+        name = "add_reply_error_to_#{chat_table_name}"
+        return if behavior == :invoke && self.class.migration_exists?(File.join(destination_root, 'db/migrate'), name)
+
+        migration_template 'migrations/add_reply_error_migration.rb', "db/migrate/#{name}.rb"
       end
 
       def create_views
@@ -69,7 +82,6 @@ module RubyLLM
         template ui_template('views/chats/_form.html.erb'), "app/views/#{chat_view_path}/_form.html.erb"
         template 'views/chats/_approvals.html.erb', "app/views/#{chat_view_path}/_approvals.html.erb"
         template ui_template('views/chats/_files.html.erb'), "app/views/#{chat_view_path}/_files.html.erb"
-        template ui_template('views/chats/_reply_error.html.erb'), "app/views/#{chat_view_path}/_reply_error.html.erb"
 
         # Approval views
         template ui_template('views/approvals/_approval.html.erb'), "app/views/#{approval_view_path}/_approval.html.erb"
@@ -270,7 +282,7 @@ module RubyLLM
           say "\n  Check it with bin/rails test and bin/rails test:system (needs Chrome)."
         end
         say '  Use RubyLLM::TestHelper in your own tests, with no provider or key.'
-        say "\n  Start your server and visit http://localhost:3000/#{url_path}", :cyan
+        say "\n  Run bin/rails db:migrate, then start your server and visit http://localhost:3000/#{url_path}", :cyan
         say "\n"
       end
 
