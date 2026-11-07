@@ -83,17 +83,32 @@ RSpec.describe RubyLLM::OpenTelemetry do
     expect(spans.map { |span| span.attributes['gen_ai.request.reasoning.level'] }).to eq(['high', nil])
   end
 
-  it 'names the skill and the skill file a load_skill call reads' do
-    loader = RubyLLM::Skill::Loader.new(skills: -> { [] }, code_execution: -> { false })
+  def load_skill_spans(content:)
+    described_class.enable(content:)
+    pdf = Struct.new(:name).new('pdf')
+    loader = RubyLLM::Skill::Loader.new(skills: -> { [pdf] }, code_execution: -> { false })
     [{ 'skill' => 'pdf' }, { 'skill' => 'pdf', 'file' => 'SKILL.md' },
-     { 'skill' => 'pdf', 'file' => 'skills/pdf/reference.md' }].each do |arguments|
+     { 'skill' => 'pdf', 'file' => 'skills/pdf/reference.md' }, { 'skill' => 'private' }].each do |arguments|
       RubyLLM.instrument('tool_call.ruby_llm', tool: loader, tool_name: 'load_skill', tool_arguments: arguments) { nil }
     end
+    spans
+  end
 
-    expect(spans.map(&:name)).to eq(['execute_tool load_skill pdf', 'execute_tool load_skill pdf',
-                                     'execute_tool load_skill pdf reference.md'])
-    expect(spans.map { |span| span.attributes['gen_ai.skill.name'] }).to eq(%w[pdf pdf pdf])
-    expect(spans.map { |span| span.attributes['gen_ai.skill.resource.name'] }).to eq([nil, nil, 'reference.md'])
+  it 'names the skill a load_skill call loads, but not the file it asks for' do
+    loaded = load_skill_spans(content: false)
+
+    expect(loaded.map(&:name)).to eq((['execute_tool load_skill pdf'] * 3) + ['execute_tool load_skill'])
+    expect(loaded.map { |span| span.attributes['gen_ai.skill.name'] }).to eq(['pdf', 'pdf', 'pdf', nil])
+    expect(loaded.map(&:attributes).to_s).not_to include('reference.md', 'private')
+  end
+
+  it 'names the skill file a load_skill call reads when recording content' do
+    loaded = load_skill_spans(content: true)
+
+    expect(loaded.map(&:name)).to eq(['execute_tool load_skill pdf', 'execute_tool load_skill pdf',
+                                      'execute_tool load_skill pdf reference.md', 'execute_tool load_skill'])
+    expect(loaded.map { |span| span.attributes['gen_ai.skill.resource.name'] })
+      .to eq([nil, nil, 'reference.md', nil])
   end
 
   it 'names no skill for another tool that takes a skill argument' do

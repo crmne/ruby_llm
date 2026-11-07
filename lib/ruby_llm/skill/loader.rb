@@ -50,6 +50,10 @@ module RubyLLM
         }
       end
 
+      def skill?(name)
+        @skills.call.any? { |skill| skill.name == name }
+      end
+
       def listing
         [
           'You have skills: folders of instructions, scripts, and files for specific tasks. ' \

@@ -95,7 +95,7 @@ A few details:
 
 ## Spans
 
-Span names follow the pattern `<operation> <target>`. The target is the model for model calls, the tool name for tools (followed by the skill and the file for a `load_skill` call), the language for code execution runs, and the workflow or step name for workflows.
+Span names follow the pattern `<operation> <target>`. The target is the model for model calls, the tool name for tools (followed by the skill for a `load_skill` call, and the file it reads when you record content), the language for code execution runs, and the workflow or step name for workflows.
 
 | RubyLLM operation | Operation name | Span kind |
 | --- | --- | --- |
@@ -133,7 +133,7 @@ Spans follow the [OpenTelemetry GenAI semantic conventions](https://github.com/o
 | `gen_ai.usage.cache_read.input_tokens`, `gen_ai.usage.cache_write.input_tokens` | Cached input, also counted in the input total |
 | `gen_ai.usage.reasoning.output_tokens` | Thinking tokens |
 | `gen_ai.tool.name`, `gen_ai.tool.call.id` | The tool and its call ID |
-| `gen_ai.skill.name`, `gen_ai.skill.resource.name` | The skill a `load_skill` call loads, and the skill file it reads |
+| `gen_ai.skill.name` | The skill a `load_skill` call loads, when it is one of the chat's skills |
 | `gen_ai.workflow.name`, `ruby_llm.workflow.id` | The workflow name and ID |
 | `ruby_llm.workflow.step.name`, `ruby_llm.workflow.step.id` | The step name and ID |
 | `ruby_llm.code_execution.language`, `ruby_llm.code_execution.exit_code`, `ruby_llm.code_execution.timed_out`, `ruby_llm.code_execution.duration` | A code execution run's language, exit code, timeout, and duration in seconds |
@@ -169,6 +169,7 @@ Chat spans then carry the conversation, and tool spans carry what each tool rece
 | `gen_ai.output.messages` | The model's reply and why it stopped |
 | `gen_ai.tool.call.arguments` | The arguments a tool was called with |
 | `gen_ai.tool.call.result` | What the tool returned |
+| `gen_ai.skill.resource.name` | The skill file a `load_skill` call reads |
 
 Messages follow the GenAI conventions' message format, recorded as JSON strings. Attachments appear as their type, MIME type, and URL, provider file ID, or filename, never as their bytes.
 
