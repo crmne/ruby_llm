@@ -48,8 +48,8 @@ RSpec.describe RubyLLM::Protocols::Azure::Speech::Transcription do
   end
 
   describe '#parse_transcription_response' do
-    def response(body)
-      Struct.new(:body).new(body)
+    def response(body, headers = {})
+      Struct.new(:body, :headers).new(body, headers)
     end
 
     it 'reads the transcript, language, duration, and timing' do
@@ -72,7 +72,18 @@ RSpec.describe RubyLLM::Protocols::Azure::Speech::Transcription do
                                                duration: 3.7)
       expect(transcription.tokens.audio_seconds).to eq(3.7)
       expect(transcription.segments.first).to have_attributes(text: 'Ruby rocks.', speaker: 1, start: 0.11, end: 1.31)
-      expect(transcription.words.first).to have_attributes(text: 'Ruby', start: 0.11, end: 0.67)
+      expect(transcription.words.first).to have_attributes(text: 'Ruby', speaker: 1, start: 0.11, end: 0.67)
+    end
+
+    it 'counts the whole seconds Azure bills, keeping the recording length as the duration' do
+      transcription = protocol.parse_transcription_response(
+        response({ 'durationMilliseconds' => 3700, 'combinedPhrases' => [{ 'text' => 'Ruby.' }], 'phrases' => [] },
+                 { 'csp-billing-usage' => 'CognitiveServices.SpeechServices.BatchSpeechtoTextSync=4' }),
+        model: 'fast-transcription'
+      )
+
+      expect(transcription.duration).to eq(3.7)
+      expect(transcription.tokens.audio_seconds).to eq(4.0)
     end
 
     it 'returns an empty transcript for silence' do

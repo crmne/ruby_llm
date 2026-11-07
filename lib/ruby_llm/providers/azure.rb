@@ -70,7 +70,9 @@ module RubyLLM
       # endpoints the API base names.
       def azure_speech_transcription_url # :nodoc:
         uri = URI.parse(api_base)
-        "#{uri.scheme}://#{uri.host}/speechtotext/transcriptions:transcribe?api-version=#{SPEECH_API_VERSION}"
+        uri.path = '/speechtotext/transcriptions:transcribe'
+        uri.query = "api-version=#{SPEECH_API_VERSION}"
+        uri.to_s
       end
 
       # Azure AI Speech takes a resource key in its own header. An Entra ID

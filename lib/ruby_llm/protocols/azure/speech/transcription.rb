@@ -72,13 +72,25 @@ module RubyLLM
               model: model,
               language: phrases.filter_map { |phrase| phrase['locale'] }.first,
               duration:,
-              audio_seconds: duration,
+              audio_seconds: billed_seconds(response) || duration,
               segments: phrases.map { |phrase| timed(phrase.except('words')) },
-              words: phrases.flat_map { |phrase| Array(phrase['words']).map { |word| timed(word) } }
+              words: words_in(phrases)
             )
           end
 
           private
+
+          # Azure bills whole seconds and reports them in a header, as
+          # <tt>CognitiveServices.SpeechServices.BatchSpeechtoTextSync=4</tt>.
+          def billed_seconds(response)
+            response.headers['csp-billing-usage'].to_s.scan(/=(\d+(?:\.\d+)?)/).flatten.map(&:to_f).max
+          end
+
+          def words_in(phrases)
+            phrases.flat_map do |phrase|
+              Array(phrase['words']).map { |word| timed(word.merge(phrase.slice('speaker'))) }
+            end
+          end
 
           def timed(part)
             offset = part['offsetMilliseconds']

@@ -44,7 +44,8 @@ RSpec.describe RubyLLM::Providers::Azure do
     {
       'https://solco-dictation.cognitiveservices.azure.com/' => 'https://solco-dictation.cognitiveservices.azure.com',
       'https://acme.services.ai.azure.com/api/projects/notes' => 'https://acme.services.ai.azure.com',
-      'https://swedencentral.api.cognitive.microsoft.com' => 'https://swedencentral.api.cognitive.microsoft.com'
+      'https://swedencentral.api.cognitive.microsoft.com' => 'https://swedencentral.api.cognitive.microsoft.com',
+      'https://speech.internal.example:8443/openai/v1' => 'https://speech.internal.example:8443'
     }.each do |base, host|
       it "calls Azure AI Speech on #{host} for #{base}" do
         regional = RubyLLM.context do |config|
@@ -90,7 +91,7 @@ RSpec.describe RubyLLM::Providers::Azure do
 
       expect(transcription.text).to match(/ruby/i)
       expect(transcription).to have_attributes(model:, language: 'en-US')
-      expect(transcription.tokens.audio_seconds).to be > 0
+      expect(transcription.tokens.audio_seconds).to eq(4.0)
     end
 
     it 'identifies the language from candidates' do
@@ -104,6 +105,7 @@ RSpec.describe RubyLLM::Providers::Azure do
       transcription = RubyLLM.transcribe(audio_path, model:, provider: :azure, speaker_names: [])
 
       expect(transcription.segments.first.speaker).not_to be_nil
+      expect(transcription.words.first.speaker).to eq(transcription.segments.first.speaker)
     end
   end
 end
