@@ -255,7 +255,7 @@ This comes from Rails partial rendering: `render @chat.messages` calls `to_parti
 
 For compatibility with model broadcasts (`broadcasts_to`), generated message partials also accept a `message` local as a fallback.
 
-Shared partials take explicit locals: `messages/_attachments.html.erb` gets `message`, `chats/_approvals.html.erb` gets `chat`, and `approvals/_approval.html.erb` gets `approval` and `chat`.
+Shared partials take explicit locals: `messages/_attachments.html.erb` gets `message`, `chats/_questions.html.erb` gets `chat`, and `questions/_question.html.erb` gets `question` and `chat`.
 
 ### Tool Call and Tool Result Partials
 
@@ -294,7 +294,7 @@ To change one, define a method with the same name in a helper of your own, such 
 Turbo Stream templates used by the generated chat UI:
 
 - `messages/create.turbo_stream.erb` resets the message form for `MessagesController#create`.
-- `approvals/create.turbo_stream.erb` replaces the approval cards for `ApprovalsController#create`.
+- `answers/create.turbo_stream.erb` replaces the question cards for `AnswersController#create`.
 
 ## Setting Up Active Storage
 
