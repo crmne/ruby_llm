@@ -18,10 +18,11 @@ Model resolution, configuration, accounting, instrumentation, batches, and provi
 ```bash
 bundle exec rspec --tag ~live          # unit tests only, no keys, seconds not minutes
 bundle exec rspec spec/ruby_llm/chat_spec.rb:42   # one example
+bundle exec undercover --format json   # changed methods and blocks no spec runs
 overcommit --run                       # what the commit hook will run
 ```
 
-Run the fast loop while developing. Run `overcommit --run` before declaring anything done: it runs RuboCop (auto-correct), Flay (duplication), archspec (architecture), the public API list (`rake api:check`), and the unit suite, and the commit fails if any of them do.
+Run the fast loop while developing. After each spec run, run undercover and add specs for what it names until it exits 0; after a partial run, add `--include-files` with the files those specs load. Run `overcommit --run` before declaring anything done: it runs RuboCop (auto-correct), Flay (duplication), archspec (architecture), the public API list (`rake api:check`), and the unit suite, and the commit fails if any of them do.
 
 ## Working with cassettes
 
@@ -113,6 +114,6 @@ Read Public API rules in AGENTS.md, then check each new public name:
 ## Before opening the PR
 
 1. `overcommit --run` passes.
-2. New behavior has specs; changed provider behavior has re-recorded cassettes, reviewed for secrets.
+2. New behavior has specs, and `bundle exec undercover` reports no warnings; changed provider behavior has re-recorded cassettes, reviewed for secrets.
 3. Public API changes are documented in `docs/` and have RDoc.
 4. The PR does one thing, links its issue when there is one, and explains the problem before the solution.

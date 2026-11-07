@@ -45,6 +45,7 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'simplecov', '>= 0.21', '< 1.3.3'
   gem 'simplecov-cobertura'
   gem 'test-queue'
+  gem 'undercover', '~> 0.9', require: false, platform: :mri
 
   # database drivers for MRI and JRuby
   gem 'activerecord-jdbcsqlite3-adapter', platform: 'jruby'
