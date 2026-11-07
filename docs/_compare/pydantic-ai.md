@@ -258,7 +258,7 @@ end
 
 chat = RefundAgent.create!
 chat.ask "Refund 12.50 on order R-1042"
-chat.awaiting_approval? # => true
+chat.awaiting_person? # => true
 ```
 
 The pending call is already a row, so any later request can show it, decide, and continue:
@@ -269,7 +269,7 @@ chat.approve params[:tool_call_id]
 chat.complete
 ```
 
-You still scope the lookup and authorize the reviewer in your controller, as you would for any other action. `chat.pending_approvals` lists the calls to show the reviewer, and `chat.deny` sends the model a refusal. The chat UI generator builds the approval cards. [Pydantic AI's deferred tools](https://pydantic.dev/docs/ai/tools-toolsets/deferred-tools/) also let the reviewer change a call's arguments, and hand a call to a frontend or a worker to run; RubyLLM has no way to edit the arguments of a pending call. See [Controlling Tool Execution]({% link _tools/tool-execution.md %}#requiring-approval).
+You still scope the lookup and authorize the reviewer in your controller, as you would for any other action. `chat.pending_questions` lists what to show the reviewer, and `chat.deny` sends the model a refusal. The chat UI generator builds the approval cards. [Pydantic AI's deferred tools](https://pydantic.dev/docs/ai/tools-toolsets/deferred-tools/) also let the reviewer change a call's arguments, and hand a call to a frontend or a worker to run; RubyLLM has no way to edit the arguments of a pending call. See [Controlling Tool Execution]({% link _tools/tool-execution.md %}#requiring-approval).
 
 ## Usage and Cost
 

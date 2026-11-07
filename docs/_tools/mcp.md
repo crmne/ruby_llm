@@ -19,7 +19,7 @@ After reading this guide, you will know:
 * How to choose, rename, wrap, and build on a server's tools.
 * How to give a server's tools to chats, agents, and Rails records.
 * How to read a server's resources and ask with its prompts.
-* How to answer a server's requests for input and follow its progress and logs.
+* How to answer a server's questions and follow its progress and logs.
 * How to keep up with servers whose tools and resources change.
 * How to declare protocol extensions, host MCP Apps, and follow long tasks.
 * How to authorize servers with OAuth.
@@ -403,9 +403,28 @@ review.suggest(language: "ru")              # => ["ruby", "rust"]
 files.resource_templates.first.suggest(path: "app/mo")
 ```
 
-## Input Requests
+## Questions from Servers
 
-A server can stop in the middle of a call to ask the user something: which environment to deploy to, or to visit a page and connect an account. Answer with `before_input_request`, a method name or a block that receives a `RubyLLM::MCP::InputRequest`:
+A server can stop in the middle of a call to ask the user something: which environment to deploy to, or to visit a page and connect an account. Its question arrives as a `RubyLLM::Question`, the same object a tool's own [`ask`]({% link _tools/tool-execution.md %}#asking-from-a-tool) makes, and you answer it the same way.
+
+In a chat, the question pauses the tool call. Show it to the user, record the answer, and resume:
+
+```ruby
+chat.ask "Deploy the release branch"
+
+question = chat.pending_questions.first
+question.message                    # => "Which environment?"
+question.fields.first.choices       # => ["staging", "production"]
+
+question.answer "staging"           # or question.decline
+chat.complete
+```
+
+A question describes what it asks for in `fields`, each with a `name`, `type`, `title`, `description`, `choices`, and `default`, and `required?`. Show each `default` in your form: the fields an answer leaves out take theirs. A question with one field takes its value, and one with several takes them by name: `question.answer(environment: "staging", reason: "Release 2.2")`. A question with a `url` asks the user to visit it, and `answer` with no value means they agreed to go. `decline` refuses either kind.
+
+`complete` resumes the call once all its questions are answered: RubyLLM sends the answers with the server's saved request state, and the server finishes. Until then the chat is `waiting?`, as it is while a call waits for approval. Calling a tool outside a chat raises `RubyLLM::MCP::InputRequiredError` instead, with the unanswered questions in `requests`.
+
+To answer for the user, declare `before_input_request`, a method name or a block that receives each question before it reaches the chat:
 
 ```ruby
 class Deploys < RubyLLM::MCP
@@ -415,35 +434,17 @@ class Deploys < RubyLLM::MCP
 
   private
 
-  def answer_from_settings(request)
-    if request.url?
-      request.decline
+  def answer_from_settings(question)
+    if question.url?
+      question.decline
     else
-      request.answer(environment: user.default_environment)
+      question.answer(environment: user.default_environment)
     end
   end
 end
 ```
 
-A form request describes what it asks for in `fields`, each with a `name`, `type`, `title`, `description`, `choices`, and `default`, and `required?`. Show each `default` in your form: the fields an answer leaves out take theirs. A URL request has a `url` for the user to visit; `answer` with no values means the user agreed to go. `decline` refuses either kind. RubyLLM then sends the answers and the server finishes the call.
-
-In a chat, a request no callback answers pauses the tool call, the way [tools that require approval]({% link _tools/tool-execution.md %}#requiring-approval) pause. Show the requests to the user, record their answers, and resume:
-
-```ruby
-chat.ask "Deploy the release branch"
-
-chat.awaiting_input?                         # => true
-request = chat.pending_inputs.first
-request.message                              # => "Which environment?"
-request.fields.first.choices                 # => ["staging", "production"]
-
-chat.answer(request, environment: "staging") # or chat.decline(request)
-chat.complete
-```
-
-`complete` resumes the call once all its requests are settled: RubyLLM sends the answers with the server's saved request state, and the server finishes. Until then the chat is `waiting?`, as it is while a call waits for approval. Calling a tool outside a chat raises `RubyLLM::MCP::InputRequiredError` instead, with the unanswered requests in `requests`.
-
-A paused chat waits until someone answers. If your app has nowhere to show a kind of request, tell servers not to send it:
+A paused chat waits until someone answers. If your app has nowhere to show a kind of question, tell servers not to ask it:
 
 ```ruby
 class Deploys < RubyLLM::MCP
@@ -452,11 +453,11 @@ class Deploys < RubyLLM::MCP
 end
 ```
 
-RubyLLM accepts form and URL requests by default. `input_requests :form` or `input_requests :url` keeps one kind, and `input_requests false` accepts none, so servers finish the call without asking or answer with an error that raises `RubyLLM::MCP::Error`. A server that asks for a kind you left out gets a decline. Inline servers take the same setting: `RubyLLM.mcp(url: server.endpoint, input_requests: false)`.
+RubyLLM accepts form and URL questions by default. `input_requests :form` or `input_requests :url` keeps one kind, and `input_requests false` accepts none, so servers finish the call without asking or answer with an error that raises `RubyLLM::MCP::Error`. A server that asks a kind you left out gets a decline. Inline servers take the same setting: `RubyLLM.mcp(url: server.endpoint, input_requests: false)`.
 
-In Rails, the requests persist on the tool call, so a job can pause, a controller can record the user's answer, and another job can resume the call after a deploy or a restart. New applications get the `mcp_state` column from `ruby_llm:install`; applications that installed RubyLLM 2.0 add it with `bin/rails generate ruby_llm:upgrade`.
+In Rails, the questions persist on the tool call, so a job can pause, a controller can record the user's answer, and another job can resume the call after a deploy or a restart. Answering never connects to the server. See [Questions in Rails]({% link _tools/tool-execution.md %}#questions-in-rails).
 
-Servers never ask for passwords or tokens through forms; those go through URL requests, so they never pass through your application.
+Servers never ask for passwords or tokens through forms; those go through URL questions, so they never pass through your application.
 
 ## Progress and Cancellation
 
@@ -686,7 +687,7 @@ class Reports < RubyLLM::MCP
 end
 ```
 
-A chat never waits for a task. The tool call pauses, the way [tools that require approval]({% link _tools/tool-execution.md %}#requiring-approval) and [input requests](#input-requests) do, and `complete` returns:
+A chat never waits for a task. The tool call pauses, the way [tools that require approval]({% link _tools/tool-execution.md %}#requiring-approval) and [questions](#questions-from-servers) do, and `complete` returns:
 
 ```ruby
 chat = RubyLLM.chat.with_mcp(Reports)
@@ -699,7 +700,7 @@ task.status_message  # => "Rendering page 3 of 12"
 task.poll_interval   # => 5.0
 ```
 
-Call `complete` again later. The chat is `waiting?` until then, as it is for approvals and input requests. `complete` checks on each task once, without waiting, and resumes the chat when they're done, so the model sees their results. In Rails, the task persists on its tool call, so one job can pause the chat and another can check on it, even after a deploy. Schedule the next check from the task's poll interval:
+Call `complete` again later. The chat is `waiting?` until then, as it is for approvals and questions. `complete` checks on each task once, without waiting, and resumes the chat when they're done, so the model sees their results. In Rails, the task persists on its tool call, so one job can pause the chat and another can check on it, even after a deploy. Schedule the next check from the task's poll interval:
 
 ```ruby
 class CheckTasksJob < ApplicationJob
@@ -732,7 +733,7 @@ reports = Reports.new.listen(tasks: chat.pending_tasks)
 
 A server decides whether it announces the status of a task, and servers that predate 2026-07-28 never do, so `listen` raises `RubyLLM::MCP::Error` for tasks it won't hear about. Checking with `complete` works either way.
 
-A task that needs input pauses the chat on [input requests](#input-requests): answer them and call `complete`. A task that fails raises `RubyLLM::MCP::Error` from `complete`. When checking on a task raises, a Rails chat keeps the paused tool call and its task, so `complete` checks again, and `cancel` drops them. Cancelling the chat cancels its tasks the next time it runs, so after `chat.cancel`, or the persisted flag on a Rails record, `complete` cancels them and raises `RubyLLM::CancelledError`. `task.cancel` asks the server right away; the server may still finish the task.
+A task that needs input pauses the chat on [questions](#questions-from-servers): answer them and call `complete`. A task that fails raises `RubyLLM::MCP::Error` from `complete`. When checking on a task raises, a Rails chat keeps the paused tool call and its task, so `complete` checks again, and `cancel` drops them. Cancelling the chat cancels its tasks the next time it runs, so after `chat.cancel`, or the persisted flag on a Rails record, `complete` cancels them and raises `RubyLLM::CancelledError`. `task.cancel` asks the server right away; the server may still finish the task.
 
 Outside a chat, `call` waits for the task of a tool you call directly, and `wait` waits for any task, both up to the server's `timeout`:
 

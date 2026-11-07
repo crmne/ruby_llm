@@ -16,7 +16,7 @@ After reading this guide, you will know:
 * Why a persisted chat is resumable by construction, with no run state to serialize.
 * How to run each agent turn as its own background job.
 * How to survive deploys with ActiveJob Continuations.
-* How an approval-gated tool parks the loop across processes.
+* How a tool call that asks a person parks the loop across processes.
 * Why only one process runs a chat at a time, and how a crashed run resumes.
 * How to stop a running agent from anywhere.
 * Why execution is at-least-once, and what that asks of your tools.
@@ -48,7 +48,7 @@ class AgentTurnJob < ApplicationJob
 end
 ```
 
-Each job makes one move and enqueues the next unless the conversation is complete or `waiting?`: paused until something outside it happens, such as an approval, an answer to an MCP input request, or an MCP task. Any worker can load the saved transcript.
+Each job makes one move and enqueues the next unless the conversation is complete or `waiting?`: paused until something outside it happens, such as an answer from a person, an approval included, or a task. Any worker can load the saved transcript.
 
 ## Surviving Deploys with ActiveJob Continuations
 
@@ -74,7 +74,7 @@ ActiveJob's `step` and the chat's `step` are unrelated methods. The job step wra
 
 ## Parking for a Human Decision
 
-A tool declared with [`requires_approval`]({% link _tools/tool-execution.md %}#requiring-approval) pauses the loop until someone decides. The pending call is saved in the database, and `complete` returns so the job can finish.
+A tool call that [asks a person]({% link _tools/tool-execution.md %}#asking-a-person) pauses the loop until they answer, whether it is the approval of a tool declared with `requires_approval` or a question the tool asks with `ask`. The question is saved in the database, and `complete` returns so the job can finish.
 
 ```ruby
 class CompleteJob < ApplicationJob
@@ -83,18 +83,18 @@ class CompleteJob < ApplicationJob
   end
 end
 
-class ApprovalsController < ApplicationController
+class AnswersController < ApplicationController
   def create
     chat = Chat.find(params[:chat_id])
-    params[:approved] == "true" ? chat.approve(params[:tool_call_id]) : chat.deny(params[:tool_call_id])
+    params[:decline] ? chat.decline(params[:question_id]) : chat.answer(params[:question_id], params[:answer])
     CompleteJob.perform_later(chat.id)
   end
 end
 ```
 
-The decision persists on the tool call. The next job reads it and continues the conversation. Use `chat.pending_approvals` to render the calls awaiting a decision, and authorize that decision through your application's permissions.
+The answer persists on the tool call. The next job reads it and carries the call on: an approved tool runs, and a tool that asked runs again with the answer. Use `chat.pending_questions` to render what waits for an answer, and authorize the answer through your application's permissions.
 
-A double click on "Approve" enqueues two jobs. Only one of them runs the tool: the other finds the chat running, or the call answered, and returns. Approving again changes nothing, and denying a call that has started raises `RubyLLM::ToolCallRunningError`.
+A double click on "Approve" enqueues two jobs. Only one of them runs the tool: the other finds the chat running, or the call answered, and returns. Answering again changes nothing, and denying a call that has started raises `RubyLLM::ToolCallRunningError`.
 
 ## One Process at a Time
 
@@ -107,7 +107,7 @@ chat.running?      # => true while any process runs the chat
 tool_call.running? # => true while a process runs this call
 ```
 
-The process that holds the claim finishes the work recorded while it ran. An approval that arrives as it finishes, or a question asked while it streams an answer, is picked up before it lets go, so the job the approval enqueued can return without losing anything.
+The process that holds the claim finishes the work recorded while it ran. An answer that arrives as it finishes, or a message queued while it streams a reply, is picked up before it lets go, so the job the answer enqueued can return without losing anything.
 
 A claim is a one-minute lease. While a run is alive, a background thread renews the leases on the chat and on the tool calls it runs every 15 seconds, whether the model streams, stays silent, or a tool works for minutes. Each renewal checks out a database connection and returns it, so leave room in your connection pool for one more connection per running chat. A process that dies stops renewing, and its claims expire within a minute, on any number of servers, without a step at boot. Each server compares leases against its own clock, so keep your servers' clocks synchronized.
 
@@ -164,13 +164,13 @@ A process that dies mid-request removes nothing. Its assistant placeholder stays
 
 ## At-Least-Once, Not Exactly-Once
 
-Claims keep two healthy processes from running the same tool call or asking the model the same question. Interruption still never gives you exactly-once execution. A job that dies after the model responds but before the message is saved repeats that model call once its claim expires, and a job that dies after a tool runs but before its result is saved runs that tool again. Write tools so that running them twice is safe: `find_or_create_by!` over `create!`, and idempotency keys on external calls. The same rule applies to [approval resolvers]({% link _tools/tool-execution.md %}#requiring-approval), which may be consulted again on resume.
+Claims keep two healthy processes from running the same tool call or asking the model the same question. Interruption still never gives you exactly-once execution. A job that dies after the model responds but before the message is saved repeats that model call once its claim expires, and a job that dies after a tool runs but before its result is saved runs that tool again. Write tools so that running them twice is safe: `find_or_create_by!` over `create!`, and idempotency keys on external calls. The same rule applies to [approval resolvers]({% link _tools/tool-execution.md %}#requiring-approval), which may be consulted again on resume, and to code in a tool before it [asks]({% link _tools/tool-execution.md %}#asking-from-a-tool), which runs again once the person answers.
 
 [Batches]({% link _advanced/batches.md %}) are the same durability at scale: a batch is `generate` deferred for many chats at once, with `run_tools` run locally between rounds, and batch state persisted so any process can collect the results.
 
 ## Next Steps
 
 * [Agentic Workflows]({% link _advanced/agentic-workflows.md %}) - The loop verbs these jobs drive, and multi-agent patterns.
-* [Controlling Tool Execution]({% link _tools/tool-execution.md %}) - Approval, tool choice, and concurrency.
+* [Controlling Tool Execution]({% link _tools/tool-execution.md %}) - Approvals and questions, tool choice, and concurrency.
 * [Persistence with acts_as]({% link _advanced/rails-persistence.md %}) - The transcript persistence durability builds on.
 * [Batches]({% link _advanced/batches.md %}) - Deferred provider-side generation for many chats, with provider-specific pricing.

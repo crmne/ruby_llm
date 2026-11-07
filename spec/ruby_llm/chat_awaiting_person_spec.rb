@@ -49,11 +49,11 @@ RSpec.describe RubyLLM::Chat do
     question = Class.new(RubyLLM::Tool) do
       description 'Asks the team'
       define_method(:name) { 'ask_team' }
-      define_method(:execute) { request_input('Which region?', region: { type: 'string' })[:region] }
+      define_method(:execute) { ask('Which region?') }
     end
     run(question)
 
-    expect(chat).to be_awaiting_input
+    expect(chat.pending_questions.map(&:message)).to eq(['Which region?'])
     expect(chat).to be_awaiting_person
   end
 

@@ -387,11 +387,12 @@ module RubyLLM
         add_callback(:after_change, method, block)
       end
 
-      # Sets the kinds of requests for input the server may send: +:form+,
-      # +:url+, or both, the default. Pass +false+ when your app cannot
-      # show them to anyone, so a call never waits on an answer that will
-      # not come. RubyLLM declines requests of other kinds. Called with no
-      # arguments, returns the accepted kinds.
+      # Sets the kinds of questions the server may ask the person (see
+      # Question): +:form+, for values, +:url+, to visit a page, or both, the
+      # default. Pass +false+ when your app cannot show them to anyone, so a
+      # call never waits on an answer that will not come. RubyLLM declines
+      # questions of other kinds. Called with no arguments, returns the
+      # accepted kinds.
       #
       #   input_requests false
       #   input_requests :url
@@ -406,13 +407,13 @@ module RubyLLM
         @input_requests = kinds
       end
 
-      # Registers a callback for the server's requests for input from the
-      # user. Pass a method name or a block; either runs on the MCP instance
-      # with an MCP::InputRequest to answer or decline. In a chat, a request
-      # no callback answers pauses the tool call; see Chat#pending_inputs.
+      # Registers a callback for the server's questions to the person. Pass
+      # a method name or a block; either runs on the MCP instance with a
+      # Question to answer or decline. In a chat, a question no callback
+      # answers pauses the tool call; see Chat#pending_questions.
       #
       #   before_input_request :ask_operator
-      #   before_input_request { |request| request.answer(environment: "staging") }
+      #   before_input_request { |question| question.answer(environment: "staging") }
       #
       def before_input_request(method = nil, &block)
         add_callback(:before_input_request, method, block)
@@ -824,9 +825,9 @@ module RubyLLM
     end
 
     def responses(requests)
-      requests.to_h do |request|
-        request = InputRequest.from_h(request) if request.is_a?(Hash)
-        [request.key, request.response]
+      requests.to_h do |question|
+        question = Question.from_h(question) if question.is_a?(Hash)
+        [question.key, question.response]
       end
     end
 
@@ -888,18 +889,18 @@ module RubyLLM
       result.fetch('inputRequests', {}).filter_map do |key, request|
         next unless request['method'] == 'elicitation/create'
 
-        InputRequest.new(key, request['params'] || {}).tap do |input_request|
-          next input_request.decline unless accepts?(input_request)
+        Question.new(key, request['params'] || {}).tap do |question|
+          next question.decline unless accepts?(question)
 
           self.class.callbacks(:before_input_request).each do |callback|
-            apply(callback, input_request) unless input_request.answered?
+            apply(callback, question) unless question.answered?
           end
         end
       end
     end
 
-    def accepts?(input_request)
-      self.class.input_requests.include?(input_request.url? ? :url : :form)
+    def accepts?(question)
+      self.class.input_requests.include?(question.url? ? :url : :form)
     end
 
     def send_request(method, params)

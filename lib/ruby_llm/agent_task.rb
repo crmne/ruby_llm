@@ -6,7 +6,7 @@ module RubyLLM
   # and #agent is the agent, so you can settle what it waits for:
   #
   #   task = chat.pending_tasks.first
-  #   task.agent.pending_approvals.each { |call| task.agent.approve(call) }
+  #   task.agent.pending_questions.each(&:approve)
   #   chat.complete
   #
   # The agent lives in the process that ran it. A task loaded in another

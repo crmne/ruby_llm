@@ -19,6 +19,7 @@ After reading this guide, you will know:
 * How to upgrade a 2.1 application and its Rails schema to 2.2.
 * How persisted chats now run in one process at a time, and where a message sent during a reply waits.
 * What changes for a crashed job, a denial, pending approvals, an MCP input error, a stdio server's environment, a dropped MCP tool call, a write over a folder, a document URL, and a deploy that mixes versions.
+* How approvals and questions became one list, and what changes for answers to a server's questions.
 * What changes for agent `rescue_from` handlers and streamed transcription chunks.
 * How `tool_calls` reads now that it is a collection of calls.
 * Which errors failed Responses requests raise, and why malformed tool arguments no longer do.
@@ -485,7 +486,7 @@ A `ResearchJob` that stopped early is `complete?` and `incomplete?` but not `suc
 
 ## Rescue Input Errors as Input Errors
 
-Tools can now [ask the user]({% link _tools/tool-execution.md %}#asking-the-user) something, the way MCP servers do, so `RubyLLM::MCP::InputRequiredError` now inherits from the new `RubyLLM::InputRequiredError` instead of `RubyLLM::MCP::Error`. A `rescue RubyLLM::MCP::Error` no longer catches it. Rescue the general error, which also catches a tool's own unanswered questions:
+Tools can now [ask a person]({% link _tools/tool-execution.md %}#asking-from-a-tool) something, the way MCP servers do, so `RubyLLM::MCP::InputRequiredError` now inherits from the new `RubyLLM::InputRequiredError` instead of `RubyLLM::MCP::Error`. A `rescue RubyLLM::MCP::Error` no longer catches it. Rescue the general error, which also catches a tool's own unanswered questions:
 
 ```ruby
 begin
@@ -495,7 +496,24 @@ rescue RubyLLM::InputRequiredError => e
 end
 ```
 
-`RubyLLM::MCP::InputRequest` is now `RubyLLM::InputRequest`, the same class under its old name.
+`RubyLLM::MCP::InputRequest` is now `RubyLLM::Question`, the same class under its old name. See [Approvals and Questions Are One List](#approvals-and-questions-are-one-list).
+
+## Approvals and Questions Are One List
+
+A tool call that waits on a person now waits on a `RubyLLM::Question`: the approval of a tool declared with `requires_approval`, a question the tool asks with the new [`ask`]({% link _tools/tool-execution.md %}#asking-from-a-tool), or a question an MCP server asks. `chat.pending_questions` lists them all, in the order the model made the calls, and each is answered the same way:
+
+```ruby
+chat.pending_questions.each do |question|
+  question.approval? ? question.approve : question.answer("staging")
+end
+chat.complete
+```
+
+Code written for 2.1 keeps working. `approve`, `deny`, `pending_approvals`, `awaiting_approval?`, `pending_inputs`, `awaiting_input?`, and `answer` and `decline` with keyword values take the same arguments and return the same values. Three things change:
+
+* `answer` checks the answer against the question. A field the question doesn't ask for, a choice it doesn't offer, a value of the wrong type, or a required field left out raises `ArgumentError`, where 2.1 sent the answer to the server as given. A `before_input_request` callback that answers with an extra field now raises from the call, so remove the field. Strings become the integers, numbers, and booleans the fields ask for, the way a form sends them.
+* `answer` and `decline` on a chat also take a question's `id`, and a question that was already answered, or whose call has finished, stays as it is. In 2.1, answering a request whose call had finished raised `ArgumentError`.
+* `RubyLLM::PendingToolCallsError` tells you to answer the calls' questions instead of naming approvals and inputs. Code that matched its message should rescue the class instead.
 
 ## Providers Fetch Document URLs
 

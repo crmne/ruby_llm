@@ -84,8 +84,9 @@ loader.setup
 #   a reusable prefix. Chat#with_compaction manages long conversations.
 #
 # Subclass Tool and implement +execute+ to give the model an application
-# action. Tool.requires_approval pauses execution for a human decision;
-# Chat#approve and Chat#deny record it. Tool#progress reports what a
+# action. Tool.requires_approval pauses a call until a person approves
+# it, and Tool#ask until they answer a question; Chat#pending_questions
+# returns the Question objects a chat waits on. Tool#progress reports what a
 # running tool is doing to Chat#after_tool_progress as a Progress. A tool
 # that returns a Task pauses its call until Tool#resume finishes it.
 # Chat#with_provider_tools enables provider-executed tools such as web

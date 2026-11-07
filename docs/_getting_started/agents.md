@@ -308,7 +308,7 @@ agent = SupportAgent.new(customer: current_customer)
 agent.ask "Please refund the shipping on order R-1042"
 
 task = agent.pending_tasks.first
-task.agent.pending_approvals.each { |tool_call| task.agent.approve(tool_call) }
+task.agent.pending_questions.each(&:approve)
 agent.complete
 ```
 

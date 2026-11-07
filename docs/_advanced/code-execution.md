@@ -212,8 +212,9 @@ List the sandboxes the model may ask for, and it can run one call at a time in o
 chat = RubyLLM.chat.with_code_execution(sandbox: ReadOnlySandbox, escalate_to: [WorkspaceSandbox, OnlineSandbox])
 chat.ask "Add a changelog entry for the new export feature"
 
-chat.pending_approvals.first.arguments["sandbox"] # => "workspace"
-chat.approve(chat.pending_approvals.first)
+question = chat.pending_questions.first
+question.tool_call.arguments["sandbox"] # => "workspace"
+question.approve
 chat.complete
 ```
 

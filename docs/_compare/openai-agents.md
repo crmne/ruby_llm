@@ -239,7 +239,7 @@ end
 
 chat = SupportAgent.create!
 chat.ask "Cancel order 42."
-chat.awaiting_approval? # => true
+chat.awaiting_person? # => true
 ```
 
 Another request, after a deploy if need be, records the decision and continues:
@@ -250,7 +250,7 @@ chat.approve params[:tool_call_id]
 chat.complete
 ```
 
-You still authorize the reviewer in your controller, as you would for any other action. A double-submitted approval is safe, because only one process runs a chat at a time, and `find` applies the agent's current tools and instructions. `chat.pending_approvals` lists the calls to show, and `chat.deny` sends the model a refusal. See [Controlling Tool Execution]({% link _tools/tool-execution.md %}#requiring-approval).
+You still authorize the reviewer in your controller, as you would for any other action. A double-submitted approval is safe, because only one process runs a chat at a time, and `find` applies the agent's current tools and instructions. `chat.pending_questions` lists what to show, and `chat.deny` sends the model a refusal. See [Controlling Tool Execution]({% link _tools/tool-execution.md %}#requiring-approval).
 
 Nested agents differ. In the SDK, an approval inside a nested agent tool surfaces on the outer run and is stored with it, so it can resume in another process. A RubyLLM [subagent]({% link _getting_started/agents.md %}#subagents) lives in the process that ran it: a chat resumed elsewhere reports the subagent's work as lost, and the model can start it again.
 

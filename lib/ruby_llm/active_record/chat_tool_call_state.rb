@@ -27,6 +27,10 @@ module RubyLLM
         end
       end
 
+      def settle(tool_call, &)
+        @chat.settle_persisted_input(tool_call, &)
+      end
+
       def decision(tool_call)
         decided = super
         decided.nil? ? @chat.persisted_tool_call_approval(tool_call) : decided

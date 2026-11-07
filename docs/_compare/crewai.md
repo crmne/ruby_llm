@@ -437,7 +437,7 @@ end
 
 chat = Editor.create!
 chat.ask "Publish the quantum computing post"
-chat.awaiting_approval? # => true
+chat.awaiting_person? # => true
 ```
 
 The decision is stored on the tool call's row, so another request, after a deploy if need be, can record it and continue:
@@ -448,7 +448,7 @@ chat.approve params[:tool_call_id]
 chat.complete
 ```
 
-You still scope the lookup and authorize the reviewer in your controller, as you would for any other action. `chat.pending_approvals` lists the calls to show the reviewer, and `chat.deny` sends the model a refusal instead.
+You still scope the lookup and authorize the reviewer in your controller, as you would for any other action. `chat.pending_questions` lists what to show the reviewer, and `chat.deny` sends the model a refusal instead.
 
 The two gate different things. CrewAI reviews what a step produced, and routes on what the reviewer said. RubyLLM stops an action before it happens, and takes a yes or a no. It doesn't read free text into an outcome, and notifying the reviewer is your application's code, such as a mailer or a Slack call. See [Controlling Tool Execution]({% link _tools/tool-execution.md %}).
 

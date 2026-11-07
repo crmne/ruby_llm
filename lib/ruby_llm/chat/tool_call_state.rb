@@ -30,6 +30,13 @@ module RubyLLM
         @inputs[tool_call.id] = input
       end
 
+      # Replaces the input +tool_call+ is paused on with what the block
+      # returns for it, while the call is still paused.
+      def settle(tool_call)
+        input = @inputs[tool_call.id]
+        @inputs[tool_call.id] = yield(input) if input
+      end
+
       def record_decision(id, decision)
         @decisions[id] = decision
       end

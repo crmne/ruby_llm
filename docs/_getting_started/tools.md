@@ -152,7 +152,7 @@ The model writes a tool's arguments from the conversation, and the conversation 
 * **Agents as tools.** An agent class goes wherever a tool goes, so the model can hand a task to another agent and get its answer back. See [Subagents]({% link _getting_started/agents.md %}#subagents).
 * **MCP servers.** `with_mcp` connects a [Model Context Protocol server]({% link _tools/mcp.md %}), and the model calls its tools like your own. To have the provider connect to a remote server instead, see [Provider Tools]({% link _tools/provider-tools.md %}#mcp-servers).
 * **Provider tools.** Web search, code execution, and other tools the provider runs on its side. See [Provider Tools]({% link _tools/provider-tools.md %}).
-* **Tools that wait.** A tool can run for hours, pause until a person signs a contract, or ask the user a question. See [Long-Running Tools]({% link _tools/tool-execution.md %}#long-running-tools), [Pausing a Tool Call]({% link _tools/tool-execution.md %}#pausing-a-tool-call), and [Asking the User]({% link _tools/tool-execution.md %}#asking-the-user).
+* **Tools that wait.** A tool can run for hours, pause until a person signs a contract, or ask the user a question with `ask`. See [Long-Running Tools]({% link _tools/tool-execution.md %}#long-running-tools), [Pausing a Tool Call]({% link _tools/tool-execution.md %}#pausing-a-tool-call), and [Asking a Person]({% link _tools/tool-execution.md %}#asking-a-person).
 
 ## Long Results
 
