@@ -21,7 +21,7 @@ module RubyLLM
         @chat.persist_message_progress(partial)
       end
 
-      def conversation_id
+      def chat_id
         @chat.id
       end
 

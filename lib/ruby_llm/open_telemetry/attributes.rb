@@ -142,7 +142,7 @@ module RubyLLM
           'gen_ai.operation.name' => 'invoke_agent',
           'gen_ai.agent.name' => payload[:agent_name],
           'gen_ai.agent.description' => payload[:agent_description],
-          'gen_ai.conversation.id' => payload[:conversation_id]&.to_s
+          'gen_ai.conversation.id' => payload[:chat_id]&.to_s
         }.compact
       end
 

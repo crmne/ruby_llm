@@ -41,7 +41,7 @@ RSpec.describe RubyLLM::Agent do
     instrumenter.events.filter_map { |event, payload| payload if event == name }
   end
 
-  it 'wraps each turn of a created record in one agent event with its conversation id' do
+  it 'wraps each turn of a created record in one agent event with its chat id' do
     record = PersistedAgent.create!
     allow(record.to_llm.provider).to receive(:complete).and_return(tool_request, reply, reply)
 
@@ -50,7 +50,7 @@ RSpec.describe RubyLLM::Agent do
 
     expect(events('agent.ruby_llm').size).to eq(2)
     expect(events('agent.ruby_llm'))
-      .to all(include(agent_name: 'PersistedAgent', conversation_id: record.id, chat: record.to_llm))
+      .to all(include(agent_name: 'PersistedAgent', chat_id: record.id, chat: record.to_llm))
     expect(events('chat.ruby_llm')).to all(include(agent_name: 'PersistedAgent'))
     expect(events('tool_call.ruby_llm')).to contain_exactly(include(agent_name: 'PersistedAgent'))
   end
@@ -64,8 +64,8 @@ RSpec.describe RubyLLM::Agent do
     record.to_llm.ask('Again')
 
     expect(events('agent.ruby_llm')).to contain_exactly(
-      include(agent_name: 'PersistedAgent', conversation_id: id),
-      include(agent_name: 'PersistedAgent', conversation_id: id)
+      include(agent_name: 'PersistedAgent', chat_id: id),
+      include(agent_name: 'PersistedAgent', chat_id: id)
     )
   end
 

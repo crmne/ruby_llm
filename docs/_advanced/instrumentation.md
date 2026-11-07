@@ -221,7 +221,7 @@ Subscribe to `agent.ruby_llm` to see which [agent]({% link _getting_started/agen
 ActiveSupport::Notifications.subscribe("agent.ruby_llm") do |event|
   Rails.logger.info(
     agent: event.payload[:agent_name],
-    chat_id: event.payload[:conversation_id],
+    chat_id: event.payload[:chat_id],
     duration: event.duration
   )
 end
