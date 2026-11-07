@@ -5,7 +5,10 @@ module RubyLLM
   # When the active model fails with a matching error, the chat retries the
   # request with each fallback in order. Instances are yielded to
   # Chat#before_fallback and Chat#after_fallback callbacks, enriched with the
-  # details of that attempt.
+  # details of that attempt. With <tt>drop_unsupported: true</tt>, a retry
+  # of the same model without a parameter it rejected is an attempt too:
+  # its #from and #to are that model, and #dropped_parameter names what
+  # it left out.
   #
   #   chat = RubyLLM.chat(model: "gpt-4.1")
   #                 .with_fallbacks("gpt-4.1-mini", "claude-haiku-4-5")
@@ -30,7 +33,8 @@ module RubyLLM
       ConnectionError
     ].freeze
 
-    # The model id of the fallback target.
+    # The model id of the fallback target, or of the model a retry without a
+    # rejected parameter runs on.
     attr_reader :id
 
     # The provider slug of the fallback target as a String, or +nil+.

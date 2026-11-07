@@ -91,7 +91,7 @@ The agent asks the model, runs the tool the model chose, then asks the model aga
 A few details:
 
 * A streaming call's span stays open until the final chunk or an error.
-* Retries happen inside one model call's span. Each fallback model gets its own span.
+* Retries happen inside one model call's span. Each fallback model gets its own span, and so does each retry without a parameter the model rejected.
 * [Evaluations]({% link _advanced/evaluations.md %}#tracing) run every trial as a workflow, so each trial appears as its own trace.
 
 ## Spans

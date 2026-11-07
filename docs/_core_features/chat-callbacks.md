@@ -99,7 +99,7 @@ chat.after_fallback do |fallback|
 end
 ```
 
-`before_fallback` runs before each fallback attempt; `after_fallback` runs after it succeeds or fails. Both receive a `RubyLLM::Fallback` with `from`, `to`, `error`, `attempt`, `response`, `fallback_error`, `streaming?`, and `chunks_yielded?`.
+`before_fallback` runs before each fallback attempt; `after_fallback` runs after it succeeds or fails. Both receive a `RubyLLM::Fallback` with `from`, `to`, `error`, `attempt`, `response`, `fallback_error`, `dropped_parameter`, `streaming?`, and `chunks_yielded?`. With [`drop_unsupported: true`]({% link _advanced/error-handling.md %}#dropping-unsupported-parameters), a retry of the same model without a parameter it rejected is an attempt too: `from` and `to` are the same model, and `dropped_parameter` names what was left out.
 
 ## Usage Events
 

@@ -235,9 +235,28 @@ chat = RubyLLM.chat(model: "{{ site.models.openai_current }}")
               .with_fallbacks(drop_unsupported: true)
 ```
 
-The request is retried once on the same model without that parameter, and then the fallback models, if any, take over as usual with every setting in place. The chat keeps its settings, so the next request sends the parameter again. `before_fallback` and `after_fallback` receive the retry, with `fallback.dropped_parameter` naming what was left out and `fallback.to` the same model as `fallback.from`, so you can log it and fix the setting. Nothing is ever dropped unless you opt in.
+The model is retried without that parameter. If it then rejects another one, it is retried without that one too, and each parameter is dropped at most once. The chat keeps its settings, so the next request sends them again. `before_fallback` and `after_fallback` receive each retry, with `fallback.dropped_parameter` naming what was left out and `fallback.to` the same model as `fallback.from`, so you can log it and fix the setting. Nothing is ever dropped unless you opt in.
 
-`UnsupportedParameterError` and `drop_unsupported` only act on rejections RubyLLM can identify. Today those are OpenAI's, whose errors name the parameter. Other providers, including Anthropic and Gemini, describe these rejections only in free text, which RubyLLM doesn't guess from, so they raise `BadRequestError` and nothing is dropped.
+With fallback models, each model gets the same treatment before the next one is tried, and each starts again from the request as written:
+
+```ruby
+chat = RubyLLM.chat(model: "{{ site.models.openai_current }}")
+              .with_temperature(0.2)
+              .with_fallbacks("{{ site.models.openai_terra }}", "{{ site.models.openai_latest }}", drop_unsupported: true)
+```
+
+When every model rejects the temperature, and the first two are overloaded once it's gone, the chat tries, in order:
+
+1. `{{ site.models.openai_current }}` with the temperature
+2. `{{ site.models.openai_current }}` without it
+3. `{{ site.models.openai_terra }}` with the temperature
+4. `{{ site.models.openai_terra }}` without it
+5. `{{ site.models.openai_latest }}` with the temperature
+6. `{{ site.models.openai_latest }}` without it
+
+A parameter one model rejected is sent to the next model, which may take it. Moving on to the next model still needs an error from `on:`, such as an overloaded or rate-limited provider; a rejection the chat can't drop is raised.
+
+This only works with providers whose errors name the parameter, and today that means OpenAI. Other providers, including Anthropic and Gemini, describe these rejections only in free text, which RubyLLM doesn't guess from. Their models raise `BadRequestError`: nothing is dropped, and the chat doesn't move on to the next model unless you add `BadRequestError` to `on:`.
 
 ### Fallback Callbacks
 

@@ -151,19 +151,29 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.provider_options).to eq(top_p: 0.5, seed: 1)
     end
 
-    it 'drops one parameter once, then goes on to the fallback models' do
-      chat.with_temperature(0.2).with_fallbacks(model_for(:anthropic), drop_unsupported: true,
-                                                                       on: [RubyLLM::BadRequestError])
-      fallback_chat = nil
-      chat.before_fallback { |fallback| fallback_chat = fallback.to }
-      respond_with(unsupported(:temperature), unsupported(:max_output_tokens))
-      allow(RubyLLM::Provider.resolve!(:anthropic)).to receive(:new).and_wrap_original do |original, *args|
-        original.call(*args).tap { |provider| allow(provider).to receive(:complete).and_return(answer) }
-      end
+    it 'drops each parameter the model rejects in turn, and puts every one back' do
+      chat.with_temperature(0.2).with_max_output_tokens(100).with_provider_options(top_p: 0.5, seed: 1)
+          .with_fallbacks(drop_unsupported: true)
+      respond_with(unsupported(:temperature), unsupported(:max_output_tokens), unsupported('top_p'),
+                   unsupported('seed'), answer)
 
       expect(chat.ask('Hi').content).to eq('done')
+
+      expect(sent.map { |options| options.values_at(:temperature, :max_output_tokens) })
+        .to eq([[0.2, 100], [nil, 100], [nil, nil], [nil, nil], [nil, nil]])
+      expect(sent.map { |options| options[:provider_options] })
+        .to eq([{ top_p: 0.5, seed: 1 }, { top_p: 0.5, seed: 1 }, { top_p: 0.5, seed: 1 }, { seed: 1 }, {}])
+      expect([chat.temperature, chat.max_output_tokens, chat.provider_options])
+        .to eq([0.2, 100, { top_p: 0.5, seed: 1 }])
+    end
+
+    it 'raises when the model rejects a parameter it already left out' do
+      chat.with_temperature(0.2).with_fallbacks(drop_unsupported: true)
+      respond_with(unsupported(:temperature), unsupported(:temperature), answer)
+
+      expect { chat.ask('Hi') }.to raise_error(RubyLLM::UnsupportedParameterError)
       expect(sent.size).to eq(2)
-      expect(fallback_chat.id).to eq(model_for(:anthropic))
+      expect(chat.temperature).to eq(0.2)
     end
 
     it 'takes the option from an Agent macro, without fallback models' do
@@ -196,6 +206,150 @@ RSpec.describe RubyLLM::Chat do
 
       expect { chat.ask('Hi') }.to raise_error(RubyLLM::UnsupportedParameterError)
       expect(sent.size).to eq(1)
+    end
+  end
+
+  describe 'with_fallbacks(*models, drop_unsupported: true)' do
+    def url = 'https://api.openai.com/v1/chat/completions'
+    def primary = model_for(:openai)
+    def second = model_for(:openai, :alternate_chat)
+    def third = model_for(:openai, :temperature)
+
+    let(:requests) { [] }
+    let(:fallbacks) { [] }
+    let(:chat) do
+      RubyLLM.chat(model: primary, provider: :openai, protocol: :chat_completions)
+             .with_temperature(0.2)
+             .with_fallbacks(second, third, drop_unsupported: true)
+             .before_fallback { |fallback| fallbacks << fallback }
+    end
+
+    def rejected_temperature
+      { status: 400, headers: { 'Content-Type' => 'application/json' },
+        body: { error: { message: "Unsupported value: 'temperature' does not support 0.2 with this model.",
+                         type: 'invalid_request_error', param: 'temperature', code: 'unsupported_value' } }.to_json }
+    end
+
+    def overloaded
+      { status: 503, headers: { 'Content-Type' => 'application/json' },
+        body: { error: { message: 'The server is overloaded.', type: 'server_error' } }.to_json }
+    end
+
+    def completion(model, message, stream:)
+      body = { id: 'chatcmpl-1', model:, usage: { prompt_tokens: 3, completion_tokens: 2, total_tokens: 5 },
+               choices: [{ index: 0, (stream ? :delta : :message) => message,
+                           finish_reason: message[:tool_calls] ? 'tool_calls' : 'stop' }] }
+      return { status: 200, headers: { 'Content-Type' => 'application/json' }, body: body.to_json } unless stream
+
+      { status: 200, headers: { 'Content-Type' => 'text/event-stream' },
+        body: "data: #{body.to_json}\n\ndata: [DONE]\n\n" }
+    end
+
+    def reply_with(*outcomes)
+      stub_request(:post, url).to_return do |request|
+        body = JSON.parse(request.body)
+        requests << body
+        outcome = outcomes.shift
+        next send(outcome) if outcome.is_a?(Symbol)
+
+        completion(body['model'], outcome, stream: body['stream'] == true)
+      end
+    end
+
+    def sent
+      requests.map { |body| [body['model'], body['temperature']] }
+    end
+
+    def done = { role: 'assistant', content: 'done' }
+
+    it 'tries each model as written, then without what it rejected, before the next model' do
+      reply_with(:rejected_temperature, :overloaded, :rejected_temperature, :overloaded,
+                 :rejected_temperature, done)
+
+      reply = chat.ask('Hi')
+
+      expect(reply.content).to eq('done')
+      expect(sent).to eq([[primary, 0.2], [primary, nil], [second, 0.2], [second, nil], [third, 0.2], [third, nil]])
+      expect(fallbacks.map { |fallback| [fallback.from.id, fallback.to.id, fallback.dropped_parameter] }).to eq(
+        [[primary, primary, :temperature], [primary, second, nil], [second, second, :temperature],
+         [second, third, nil], [third, third, :temperature]]
+      )
+      expect(fallbacks.map(&:id)).to eq([primary, second, second, third, third])
+      expect(fallbacks.map(&:attempt)).to eq([1, 2, 3, 4, 5])
+      expect([reply.model, chat.model.id, chat.temperature]).to eq([third, primary, 0.2])
+    end
+
+    it 'records usage for every attempt, with the model each one ran on' do
+      reply_with(:rejected_temperature, :overloaded, :rejected_temperature, done)
+
+      reply = chat.ask('Hi')
+
+      expect(reply.ruby_llm_usage_entries.map { |entry| [entry.model, entry.status] }).to eq(
+        [[primary, :failed], [primary, :failed], [second, :failed], [second, :succeeded]]
+      )
+      expect(chat.usage_entries).to eq(reply.ruby_llm_usage_entries)
+      expect(reply.tokens).to have_attributes(input: 3, output: 2)
+      expect(reply.cost.total).to be_positive
+      expect(reply.cost.total).to eq(reply.ruby_llm_usage_entries.last.cost.total)
+    end
+
+    it 'reports every attempt as a chat event with the model and settings it sent' do
+      events = []
+      instrumenter = Object.new
+      instrumenter.define_singleton_method(:instrument) do |name, payload, &block|
+        block&.call
+      ensure
+        events << payload.dup if name == 'chat.ruby_llm'
+      end
+      previous = RubyLLM.config.instrumenter
+      RubyLLM.config.instrumenter = instrumenter
+      reply_with(:rejected_temperature, :overloaded, done)
+
+      chat.ask('Hi')
+
+      expect(events.map { |event| event.values_at(:model, :temperature) })
+        .to eq([[primary, 0.2], [primary, nil], [second, 0.2]])
+    ensure
+      RubyLLM.config.instrumenter = previous
+    end
+
+    it 'does the same while streaming' do
+      reply_with(:rejected_temperature, :overloaded, :rejected_temperature, done)
+      chunks = []
+
+      reply = chat.ask('Hi') { |chunk| chunks << chunk.content }
+
+      expect(reply.content).to eq('done')
+      expect(chunks.compact.join).to eq('done')
+      expect(sent).to eq([[primary, 0.2], [primary, nil], [second, 0.2], [second, nil]])
+      expect(fallbacks).to all(be_streaming)
+      expect(fallbacks.map(&:chunks_yielded?)).to all(be(false))
+    end
+
+    it 'starts every round of a tool loop from the request as written' do
+      tool = Class.new(RubyLLM::Tool) do
+        description 'Says hello'
+        def name = 'greet'
+        def execute = 'hello'
+      end
+      tool_call = { role: 'assistant', content: nil,
+                    tool_calls: [{ id: 'call_1', type: 'function', function: { name: 'greet', arguments: '{}' } }] }
+      reply_with(:rejected_temperature, tool_call, :rejected_temperature, :overloaded, done)
+
+      reply = chat.with_tools(tool).ask('Hi')
+
+      expect(reply.content).to eq('done')
+      expect(sent).to eq([[primary, 0.2], [primary, nil], [primary, 0.2], [primary, nil], [second, 0.2]])
+      expect(chat.messages.map(&:role)).to eq(%i[user assistant tool assistant])
+    end
+
+    it 'leaves a parameter the next model takes in its request' do
+      reply_with(:rejected_temperature, :overloaded, done)
+
+      chat.ask('Hi')
+
+      expect(sent).to eq([[primary, 0.2], [primary, nil], [second, 0.2]])
+      expect(fallbacks.last).to have_attributes(dropped_parameter: nil, error: be_a(RubyLLM::ServiceUnavailableError))
     end
   end
 end
