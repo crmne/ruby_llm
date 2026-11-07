@@ -1603,18 +1603,21 @@ module RubyLLM
     attr_accessor :agent_class # :nodoc:
 
     # Runs the block inside one +agent.ruby_llm+ event when an Agent
-    # configured the chat, unless a run of this chat is already open.
+    # configured the chat, unless a run of this chat is already open. Fibers
+    # and threads started during a run inherit its marker, which is emptied
+    # when the run ends, so their later turns open events of their own.
     def running_agent(&) # :nodoc:
-      return yield if @agent_class.nil? || Fiber[AGENT_RUN_KEY].equal?(self)
+      return yield if @agent_class.nil? || Fiber[AGENT_RUN_KEY]&.first.equal?(self)
 
       previous = Fiber[AGENT_RUN_KEY]
-      Fiber[AGENT_RUN_KEY] = self
+      Fiber[AGENT_RUN_KEY] = run = [self]
       begin
         payload = { agent_name: @agent_class.name, chat: self, agent_description: @agent_class.description,
                     conversation_id: @run.conversation_id }
         payload.delete_if { |key, value| value.nil? && key != :agent_name }
         RubyLLM.instrument('agent.ruby_llm', payload, config: @config, &)
       ensure
+        run.clear
         Fiber[AGENT_RUN_KEY] = previous
       end
     end

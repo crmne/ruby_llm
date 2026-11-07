@@ -117,6 +117,27 @@ RSpec.describe RubyLLM::Agent do
     expect(second).not_to have_key(:agent_description)
   end
 
+  it 'opens an agent event for a later turn from a fiber the run created' do
+    follow_up = nil
+    agent = InstrumentedAgent.new
+    stub_const('InstrumentedScheduler', Class.new(RubyLLM::Tool) do
+      description 'Schedules a follow-up'
+      define_method(:execute) do
+        follow_up = Fiber.new { agent.ask('Follow up') }
+        'scheduled'
+      end
+    end)
+    agent.with_tools(InstrumentedScheduler)
+    call = RubyLLM::ToolCall.new(id: 'call_3', name: 'instrumented_scheduler', arguments: {})
+    schedule = RubyLLM::Message.new(role: :assistant, content: nil, model:, tool_calls: { call.id => call })
+    stub_replies(agent.chat, schedule, reply, reply)
+
+    agent.ask('Schedule it')
+    follow_up.resume
+
+    expect(events('agent.ruby_llm').size).to eq(2)
+  end
+
   it 'carries the workflow fields' do
     agent = InstrumentedAgent.new
     stub_replies(agent.chat, reply)
