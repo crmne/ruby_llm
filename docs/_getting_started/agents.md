@@ -312,7 +312,48 @@ task.agent.pending_approvals.each { |tool_call| task.agent.approve(tool_call) }
 agent.complete
 ```
 
-Cancelling the calling chat cancels a subagent it waits on. A subagent lives in the process that ran it: a chat resumed in another process, such as a later job, reports the subagent's work as lost, and the model can start it again.
+Cancelling the calling chat cancels a subagent it waits on. A subagent without a `chat_class` lives in the process that ran it: a chat resumed in another process, such as a later job, reports the subagent's work as lost, and the model can start it again.
+
+### Subagents in Rails
+
+Give the subagent a `chat_class`, or let it inherit one from `ApplicationAgent`, and each call runs in a chat record of its own, made with `create!`. The calling chat's tool call keeps a link to that record, so any process finds the subagent again, after a deploy, a crash, or an approval that took a day:
+
+```ruby
+class ResearchAgent < ApplicationAgent
+  description "Researches a question across the help center and reports back with links"
+  tools SearchDocs, RefundShipping
+end
+
+class SupportAgent < ApplicationAgent
+  tools ResearchAgent
+end
+```
+
+The calling chat lists the approvals its subagents wait for in its own `pending_approvals`, with its own, in the order the calls were made, and its `approve` and `deny` decide them. An approval page for the chat covers its subagents, and completing the chat carries the subagent on, then the chat:
+
+```ruby
+chat = SupportAgent.find(params[:chat_id])
+chat.approve(params[:tool_call_id])
+CompleteJob.perform_later(chat.id)
+```
+
+`cancel` on the calling chat stops a subagent at work, and the next `complete` cancels one that waits. The subagent's usage rows belong to its own chat, under the owner of the chat that called it.
+
+Keywords that aren't inputs go to `create!`, as they do for `SupportAgent.create!`, so pass the attributes your chats need with `to_tool`:
+
+```ruby
+tools { [ResearchAgent.to_tool(account: chat.account)] }
+```
+
+A subagent's chat is a record of your chat class, so it appears wherever you list chats. `subagent_chat` on the tool call record leads to it, and leaving those chats out of a list reads the same link:
+
+```ruby
+call = RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: params[:tool_call_id])
+call.subagent_chat.messages
+
+subagents = RubyLLM::ActiveRecord::ToolCall.where(subagent_chat_type: "Chat").select(:subagent_chat_id)
+Chat.where.not(id: subagents)
+```
 
 ## Handling Errors with `rescue_from`
 

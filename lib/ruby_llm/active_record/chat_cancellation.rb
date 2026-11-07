@@ -7,10 +7,19 @@ module RubyLLM
     # A request is for the run holding the chat, or for the run about to
     # answer what waits. New work recorded while no run holds the chat, and
     # a run that finds nothing waiting, clear a request that is left over.
+    # A request also reaches the runs of the chat's subagents, which stop
+    # the call that runs them.
     module ChatCancellation # :nodoc:
       def poll_run_cancellation # :nodoc:
         renew_run_claim
         consume_persisted_cancellation_request
+      end
+
+      # Requests cancellation of the run that holds the chat, when one does,
+      # and of the runs of its subagents.
+      def cancel_run # :nodoc:
+        cancel_claimed_run if run_claims?
+        subagent_chats.each(&:cancel_run)
       end
 
       def forget_stale_cancellation # :nodoc:
@@ -29,16 +38,21 @@ module RubyLLM
         @chat&.cancel
       end
 
-      # The conditional update can't land after the run's release, which
-      # clears the request, so it can't outlive the run it was meant for.
       def request_run_cancellation
-        claimed_until = chat_row.arel_table[:claimed_until]
-        if chat_row.where(claimed_until.gt(Time.current)).update_all(cancelled: true) == 1
+        if cancel_claimed_run == 1
           remember_cancellation(true)
           @chat&.cancel if @run_claim_token
         elsif !nothing_to_stop?
           update_column(:cancelled, true)
         end
+        subagent_chats.each(&:cancel_run)
+      end
+
+      # The conditional update can't land after the run's release, which
+      # clears the request, so it can't outlive the run it was meant for.
+      def cancel_claimed_run
+        claimed_until = chat_row.arel_table[:claimed_until]
+        chat_row.where(claimed_until.gt(Time.current)).update_all(cancelled: true)
       end
 
       def nothing_to_stop?

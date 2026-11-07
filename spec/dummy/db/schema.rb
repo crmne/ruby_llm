@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ActiveRecord::Schema[7.1].define(version: 20_261_105_120_000) do
+ActiveRecord::Schema[7.1].define(version: 20_261_107_120_000) do
   create_table 'action_text_rich_texts', force: :cascade do |t|
     t.string 'name', null: false
     t.text 'body'
@@ -163,10 +163,13 @@ ActiveRecord::Schema[7.1].define(version: 20_261_105_120_000) do
     t.json 'mcp_state'
     t.json 'mcp_result'
     t.datetime 'claimed_until'
+    t.string 'subagent_chat_type'
+    t.integer 'subagent_chat_id'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index %w[message_type message_id], name: 'index_ruby_llm_tool_calls_on_message'
     t.index %w[result_type result_id], name: 'index_ruby_llm_tool_calls_on_result'
+    t.index %w[subagent_chat_type subagent_chat_id], name: 'index_ruby_llm_tool_calls_on_subagent_chat'
     t.index ['tool_call_id'], name: 'index_ruby_llm_tool_calls_on_tool_call_id', unique: true
   end
 

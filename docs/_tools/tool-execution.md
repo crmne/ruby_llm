@@ -161,6 +161,8 @@ With `acts_as_chat`, decisions persist on tool-call records. One process can req
 
 The process that receives a call decides whether it needs approval and records the answer on its tool-call record, so `pending_approvals` only reads the database. Rendering approval cards never builds the chat's tools or connects to its MCP servers. A call whose resolver decides it elsewhere stays in `pending_approvals` until the chat runs again.
 
+`pending_approvals` also lists the calls of the [subagents]({% link _getting_started/agents.md %}#subagents-in-rails) the chat waits on, when their agents have a `chat_class`, and `approve` and `deny` decide them. A record's `message` belongs to the chat that made the call.
+
 The [chat UI generator]({% link _advanced/rails-generators.md %}#approvals-and-attachments) builds this interface for you: an approval card for each pending call, with Approve and Deny buttons that record the decision and continue the conversation in a job. To write your own, follow the same pattern.
 
 After recording a decision, enqueue the job again. Load the chat through its agent class to restore the tools and approval rules:

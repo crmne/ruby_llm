@@ -6,6 +6,7 @@ require 'ruby_llm/active_record/claim_heartbeat'
 require 'ruby_llm/active_record/run_claims'
 require 'ruby_llm/active_record/chat_approvals'
 require 'ruby_llm/active_record/chat_cancellation'
+require 'ruby_llm/active_record/chat_subagents'
 require 'ruby_llm/active_record/chat_placeholders'
 require 'ruby_llm/active_record/chat_reply_error'
 require 'ruby_llm/active_record/system_instructions'
@@ -35,6 +36,7 @@ module RubyLLM
       include RunClaims
       include ChatApprovals
       include ChatCancellation
+      include ChatSubagents
       include ChatPlaceholders
       include ChatReplyError
       include SystemInstructions
@@ -79,9 +81,10 @@ module RubyLLM
 
       # Requests cancellation of the current in-flight chat operation, or of
       # the run that will answer a message still waiting for one. The request
-      # is persisted so a background job can observe it from another process.
-      # Does nothing when no run holds the chat and nothing waits to run.
-      # Returns +self+.
+      # is persisted so a background job can observe it from another process,
+      # and reaches the runs of the subagents with a chat record that the
+      # chat's calls run (see RubyLLM::AgentTool). Does nothing when no run
+      # holds the chat and nothing waits to run. Returns +self+.
       def cancel
         request_cancellation
         self
@@ -104,23 +107,28 @@ module RubyLLM
       #   chat.approve(params[:tool_call_id], remember: true)
       #   CompleteJob.perform_later(chat.id)
       #
+      # A call of a subagent the chat waits on (see #pending_approvals) is
+      # approved in the subagent's chat, and +remember+ applies there. The
+      # next #complete carries the subagent on, then the chat.
       def approve(tool_call, remember: false)
-        record = tool_call_record(tool_call)
-        to_llm.approve(record.to_llm, remember:) if record.result_id.nil?
-        record_tool_call_decision(record, remember ? 'remembered' : 'approved')
-        self
+        decision = remember ? 'remembered' : 'approved'
+        deciding(tool_call, decision) do |record|
+          to_llm.approve(record.to_llm, remember:) if record.result_id.nil?
+          record_tool_call_decision(record, decision)
+        end
       end
 
       # Records denial for +tool_call+ (a ToolCall, a tool call record, or
       # an id) on the persisted tool call. The next #complete appends a
       # structured denial result instead of executing the tool. Denying an
-      # answered call changes nothing. Returns +self+.
+      # answered call changes nothing. A call of a subagent the chat waits
+      # on is denied in the subagent's chat, as #approve does. Returns
+      # +self+.
       #
       # Raises RubyLLM::ToolCallRunningError when the call is already
       # running.
       def deny(tool_call)
-        to_llm.deny(record_tool_call_decision(tool_call, 'denied').to_llm)
-        self
+        deciding(tool_call, 'denied') { |record| to_llm.deny(record_tool_call_decision(record, 'denied').to_llm) }
       end
 
       def claiming_delivery(&) # :nodoc:
@@ -153,10 +161,10 @@ module RubyLLM
       end
 
       # Returns whether the conversation is waiting on tool calls that
-      # require approval and have no recorded decision. See
-      # RubyLLM::Chat#awaiting_approval?.
+      # require approval and have no recorded decision, its own or those of
+      # a subagent it waits on. See RubyLLM::Chat#awaiting_approval?.
       def awaiting_approval?
-        to_llm.awaiting_approval?
+        to_llm.awaiting_approval? || (waiting? && subagent_pending_approvals?)
       end
 
       # Returns the persisted tool call records that require approval and
@@ -172,8 +180,13 @@ module RubyLLM
       # only and connects to no MCP server. A call whose tool decides with
       # a Tool.requires_approval block stays listed until the chat runs
       # again.
+      #
+      # The calls of the chat's subagents that have a chat record of their
+      # own (see RubyLLM::AgentTool) are listed too, after the calls made
+      # before them. A record's +message+ belongs to the chat that made the
+      # call.
       def pending_approvals
-        persisted_pending_approvals
+        with_subagent_approvals(persisted_pending_approvals)
       end
 
       def messages_association # :nodoc:
@@ -1000,9 +1013,9 @@ module RubyLLM
             completing(block) { |on_chunk| to_llm.public_send(operation, &on_chunk) }
           end
           return latest_message if busy
-          return response unless work_arrived_during_run?
 
-          operation = :continue_turn
+          operation = operation_after_run
+          return response unless operation
         rescue CancelledError
           raise if stopped_before_run || ChatQueue.new(self).none?
 
@@ -1228,7 +1241,7 @@ module RubyLLM
         )
         sync_messages(chat)
         chat.run = ChatRun.new(self)
-        chat.tool_call_state = ChatToolCallState.new(self)
+        chat.tool_call_state = @tool_call_state = ChatToolCallState.new(self)
         chat.message_queue = ChatQueue.new(self)
         install_persistence_callbacks(chat)
       end

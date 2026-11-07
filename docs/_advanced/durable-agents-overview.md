@@ -14,7 +14,7 @@ After reading this guide, you will know:
 
 * When an agent needs to be durable, and when a plain chat is enough.
 * How a durable agent waits for something outside it.
-* Which guide covers each piece: jobs, run claims, approvals, input requests, tasks, queued messages, files, and code execution.
+* Which guide covers each piece: jobs, run claims, approvals, input requests, tasks, subagents, queued messages, files, and code execution.
 
 ## When You Need Durable Agents
 
@@ -71,6 +71,7 @@ Each piece has its own guide. Read the ones your agent needs.
 | Approvals | Pause a tool call until a person approves or denies it. | [Requiring Approval]({% link _tools/tool-execution.md %}#requiring-approval), [Approval in Rails]({% link _tools/tool-execution.md %}#approval-in-rails) |
 | Input requests | Let a tool or an MCP server ask the user a question in the middle of a call. | [Asking the User]({% link _tools/tool-execution.md %}#asking-the-user), [MCP Input Requests]({% link _tools/mcp.md %}#input-requests) |
 | Tasks | Pause a tool call while slow work runs elsewhere, then resume it. | [Pausing a Tool Call]({% link _tools/tool-execution.md %}#pausing-a-tool-call), [MCP Tasks]({% link _tools/mcp.md %}#tasks) |
+| Subagents | Hand work to another agent that keeps its own chat, waits for its own approvals, and resumes in any process. | [Subagents in Rails]({% link _getting_started/agents.md %}#subagents-in-rails) |
 | Queued messages | Accept new messages while a job runs the chat, and decide when they join. | [Queueing Messages]({% link _advanced/agentic-workflows.md %}#queueing-messages), [Queued Messages in Rails]({% link _advanced/rails-persistence.md %}#queued-messages) |
 | File stores | Keep attachments and long tool results as files the model reads when it needs them. | [File Stores]({% link _core_features/file-stores.md %}) |
 | Sandboxes | Decide what code from a model can read, write, and reach. | [Sandboxes]({% link _advanced/sandboxes.md %}) |

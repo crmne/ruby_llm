@@ -1136,6 +1136,11 @@ module RubyLLM
     #   chat.with_tools(ResearchAgent.to_tool(workspace: current_workspace))
     #   chat.with_tools(ResearchAgent)
     #
+    # An agent with a ::chat_class runs each call in a record that
+    # ::create! makes, and other keywords go to it, as they do there:
+    #
+    #   tools { [ResearchAgent.to_tool(account: chat.account)] }
+    #
     # Raises ArgumentError for an agent class without a name.
 
     ##

@@ -26,7 +26,7 @@ module RubyLLM
         @chat @message @last_message_id @last_cancellation_poll_at @unpersisted_instructions
         @usage_records_by_entry @run_claim_token @run_claim_deadline @run_claim_renewed_at
         @run_claim_lost_token @synced_run_claim_token @synced_usage_count @tool_call_claims
-        @claim_heartbeat @claim_lock
+        @claim_heartbeat @claim_lock @tool_call_state
       ].freeze
       private_constant :RUN_STATE
 
@@ -258,11 +258,20 @@ module RubyLLM
         (claimed_until&.future? && token != @run_claim_token) || false
       end
 
+      # A decision on a subagent's call lets the call that waits on the
+      # subagent carry on, while the chat itself still waits on that call,
+      # so only #complete, which resumes waiting calls, goes on with it.
+      def operation_after_run
+        return unless work_arrived_during_run?
+
+        to_llm.awaiting_tasks? ? :complete : :continue_turn
+      end
+
       def work_arrived_during_run?
         return false if @run_claim_token || !run_claims?
 
         resync_messages if latest_message_id != @last_message_id
-        !to_llm.complete? && !to_llm.waiting?
+        !to_llm.complete? && (!to_llm.waiting? || @tool_call_state.wait_ended_elsewhere?)
       end
 
       def latest_message_id

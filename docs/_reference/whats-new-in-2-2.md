@@ -227,7 +227,7 @@ class SupportAgent < ApplicationAgent
 end
 ```
 
-A subagent that waits for an approval pauses the call, and the calling chat is `awaiting_person?`. Agents also declare chat callbacks once, `after_message :log_reply`, with `if:` and `unless:` like Rails. See [Subagents]({% link _getting_started/agents.md %}#subagents) and [Callbacks]({% link _getting_started/agents.md %}#callbacks).
+A subagent that waits for an approval pauses the call, and the calling chat is `awaiting_person?`. In Rails, a subagent whose agent has a `chat_class` works in a chat record of its own, so it resumes in any process, and the calling chat lists its approvals in `pending_approvals` with its own. Agents also declare chat callbacks once, `after_message :log_reply`, with `if:` and `unless:` like Rails. See [Subagents]({% link _getting_started/agents.md %}#subagents), [Subagents in Rails]({% link _getting_started/agents.md %}#subagents-in-rails), and [Callbacks]({% link _getting_started/agents.md %}#callbacks).
 
 ## Exclusive Tools
 

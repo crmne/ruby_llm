@@ -40,6 +40,7 @@ class <%= create_migration_class_name('ruby_llm_records') %> < ActiveRecord::Mig
     create_table :ruby_llm_tool_calls, id: :<%= reference_type %> do |t|
       t.references :message, polymorphic: true, null: false, type: :<%= reference_type %>, index: false
       t.references :result, polymorphic: true, type: :<%= reference_type %>, index: false
+      t.references :subagent_chat, polymorphic: true, type: :<%= reference_type %>, index: false
       t.string :tool_call_id, null: false
       t.string :provider_call_id
       t.string :namespace
@@ -65,6 +66,7 @@ class <%= create_migration_class_name('ruby_llm_records') %> < ActiveRecord::Mig
 
       t.index [ :message_type, :message_id ]
       t.index [ :result_type, :result_id ]
+      t.index [ :subagent_chat_type, :subagent_chat_id ], name: "index_ruby_llm_tool_calls_on_subagent_chat"
       t.index :tool_call_id, unique: true
       t.index :name
     end

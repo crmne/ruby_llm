@@ -1604,6 +1604,17 @@ module RubyLLM
     # events name.
     attr_accessor :agent_class # :nodoc:
 
+    # Returns what an approval of +call+ with <tt>remember: true</tt> covers:
+    # the namespace and name of its tool. Raises ArgumentError for a
+    # +run_code+ call, which is approved one at a time.
+    def self.remembered_tool_identity(call) # :nodoc:
+      if call.name == CodeExecution.tool_name && call.namespace.nil?
+        raise ArgumentError, "#{call.name} calls are approved one at a time and cannot be remembered"
+      end
+
+      [call.namespace, call.name.to_s]
+    end
+
     # Runs the block inside one +agent.ruby_llm+ event when an Agent
     # configured the chat, unless a run of this chat is already open. Fibers
     # and threads started during a run inherit its marker, which is emptied
@@ -2525,11 +2536,8 @@ module RubyLLM
       id = tool_call.respond_to?(:id) ? tool_call.id : tool_call
       call = tool_call.respond_to?(:name) ? tool_call : find_tool_call(id)
       raise ArgumentError, "Unknown tool call: #{id.inspect}" unless call
-      if call.name == CodeExecution.tool_name && call.namespace.nil?
-        raise ArgumentError, "#{call.name} calls are approved one at a time and cannot be remembered"
-      end
 
-      [call.namespace, call.name.to_s]
+      Chat.remembered_tool_identity(call)
     end
 
     def tool_call_answered?(tool_call)

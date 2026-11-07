@@ -59,12 +59,16 @@ module RubyLLM
       end
 
       def tool_call_record(tool_call)
-        id = tool_call.respond_to?(:tool_call_id) ? tool_call.tool_call_id : tool_call
-        id = id.id if id.respond_to?(:id) && !id.is_a?(String)
+        id = tool_call_id_of(tool_call)
         record = RubyLLM::ActiveRecord::ToolCall.uncached { find_tool_call(id) }
         raise ArgumentError, "Unknown tool call: #{id.inspect}" unless record
 
         record
+      end
+
+      def tool_call_id_of(tool_call)
+        id = tool_call.respond_to?(:tool_call_id) ? tool_call.tool_call_id : tool_call
+        id.respond_to?(:id) && !id.is_a?(String) ? id.id : id
       end
     end
   end

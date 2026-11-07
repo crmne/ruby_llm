@@ -57,6 +57,8 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
       expect(connection.column_exists?(:messages, :phase)).to be(false)
       expect(connection.column_exists?(:messages, :continuation)).to be(false)
       expect(connection.column_exists?(:ruby_llm_tool_calls, :namespace)).to be(false)
+      expect(connection.column_exists?(:ruby_llm_tool_calls, :subagent_chat_id)).to be(false)
+      expect(connection.column_exists?(:ruby_llm_tool_calls, :subagent_chat_type)).to be(false)
       expect(connection.table_exists?(:ruby_llm_queued_messages)).to be(false)
       expect(connection.table_exists?(:ruby_llm_chat_files)).to be(false)
       raise ActiveRecord::Rollback
@@ -282,6 +284,27 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
     end
   ensure
     RubyLLM::ActiveRecord::Usage.reset_column_information
+  end
+
+  it 'links tool calls to the chats their subagents work in' do
+    upgrade = migration_class
+    index = 'index_ruby_llm_tool_calls_on_subagent_chat'
+
+    ActiveRecord::Base.transaction do
+      connection.remove_index(:ruby_llm_tool_calls, name: index)
+      connection.remove_column(:ruby_llm_tool_calls, :subagent_chat_id)
+      connection.remove_column(:ruby_llm_tool_calls, :subagent_chat_type)
+
+      ActiveRecord::Migration.suppress_messages { upgrade.migrate(:up) }
+
+      expect(connection.column_exists?(:ruby_llm_tool_calls, :subagent_chat_type, :string)).to be(true)
+      expect(connection.column_exists?(:ruby_llm_tool_calls, :subagent_chat_id, :integer)).to be(true)
+      expect(connection.index_exists?(:ruby_llm_tool_calls, %i[subagent_chat_type subagent_chat_id], name: index))
+        .to be(true)
+      raise ActiveRecord::Rollback
+    end
+  ensure
+    RubyLLM::ActiveRecord::ToolCall.reset_column_information
   end
 
   it 'adds the run claims to a mapped chat table' do

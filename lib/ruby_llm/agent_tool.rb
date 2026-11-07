@@ -23,6 +23,10 @@ module RubyLLM
   # waits, for an approval, a question, or a task of its own, the call
   # pauses on an AgentTask instead, and Chat#complete carries the agent on
   # once nothing holds it.
+  #
+  # An agent that sets Agent::chat_class runs each call in a new record of
+  # that class, made with Agent::create!, so any process can carry it on.
+  # See AgentTask.
   class AgentTool < Tool
     class << self
       # The Agent class this tool runs.
@@ -30,6 +34,10 @@ module RubyLLM
 
       # The agent's ::inputs that the model supplies, as parameters.
       attr_reader :input_parameters # :nodoc:
+
+      # Finds and links the chat records that subagents run in, for an
+      # application that stores them, such as the Rails integration.
+      attr_accessor :store # :nodoc:
 
       # Returns a Tool class for +agent_class+, with the inputs in +given+
       # left out of its parameters.
@@ -64,31 +72,40 @@ module RubyLLM
 
     # Runs a fresh instance of the agent on +task+, with the inputs given to
     # Agent::to_tool and those the model chose, and returns the content of
-    # its last answer, or an AgentTask when the agent waits.
+    # its last answer, or an AgentTask when the agent waits. An agent that
+    # sets Agent::chat_class carries on the record that a process which died
+    # left for this call, instead of starting another.
     def execute(task:, tool_call: nil, **inputs)
-      agent = self.class.agent_class.new(**@inputs, **inputs.slice(*self.class.input_parameters))
-      owner = Accounting::Usage.owner
-      agent.with_owner(owner) unless owner.nil?
-      run = SecureRandom.uuid
-      @lock.synchronize { @agents[run] = agent }
-      running(run) { report(agent, agent.ask(task), run, tool_call) }
+      inputs = run_inputs(inputs)
+      return carry_on(self.class.agent_class.new(**inputs), tool_call) { |agent| agent.ask(task) } unless records?
+
+      agent = linked_agent(tool_call, inputs) || start(task, tool_call, inputs)
+      carry_on(agent, tool_call, &:complete)
     end
 
     # Carries the agent on once nothing holds it, with Chat#complete, and
-    # returns its answer, or +task+ again while it still waits.
+    # returns its answer, or an AgentTask again while it still waits.
     def resume(task, **)
       agent = task.agent
       return { error: "This agent's work was lost. Start it again with everything it needs." } unless agent
-      return task if agent.awaiting_person?
+      return report(agent, nil, task.data['run'], task.tool_call) if agent.awaiting_person?
 
-      run = task.data['run']
-      running(run) { report(agent, agent.complete, run, task.tool_call) }
+      carry_on(agent, task.tool_call, run: task.data['run'], &:complete)
     end
 
-    # Returns the AgentTask the call paused on, with the agent it waits for.
+    # Returns the AgentTask the call paused on, which finds the agent it
+    # waits for when asked (see AgentTask#agent).
     def task(state, tool_call: nil)
-      run = state.dig('task', 'data', 'run')
-      AgentTask.load(state, tool_call:, tool: self, agent: @lock.synchronize { @agents[run] })
+      AgentTask.load(state, tool_call:, tool: self)
+    end
+
+    # Returns the agent +task+ waits for: the one this process ran, or the
+    # record of an agent that sets Agent::chat_class, or +nil+.
+    def agent_for(task) # :nodoc:
+      agent = @lock.synchronize { @agents[task.data['run']] }
+      return agent if agent || !records?
+
+      linked_agent(task.tool_call, run_inputs(task.tool_call&.arguments || {}))
     end
 
     # Lets go of the agent of +run+, once its call is over.
@@ -97,6 +114,33 @@ module RubyLLM
     end
 
     private
+
+    def records?
+      !self.class.agent_class.chat_class.nil?
+    end
+
+    def run_inputs(chosen)
+      @inputs.merge(chosen.transform_keys(&:to_sym).slice(*self.class.input_parameters))
+    end
+
+    def start(task, tool_call, inputs)
+      self.class.agent_class.create!(**inputs).tap do |chat|
+        chat.ask_later(task)
+        AgentTool.store&.link_subagent_chat(tool_call, chat) if tool_call
+      end
+    end
+
+    def linked_agent(tool_call, inputs)
+      chat = AgentTool.store&.subagent_chat(tool_call) if tool_call
+      self.class.agent_class.new(chat:, persist_instructions: false, **inputs).chat if chat
+    end
+
+    def carry_on(agent, tool_call, run: SecureRandom.uuid)
+      owner = Accounting::Usage.owner
+      agent.with_owner(owner) unless owner.nil?
+      @lock.synchronize { @agents[run] = agent }
+      running(run) { report(agent, yield(agent), run, tool_call) }
+    end
 
     def running(run)
       yield

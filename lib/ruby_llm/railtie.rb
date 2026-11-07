@@ -44,6 +44,7 @@ if defined?(Rails::Railtie)
           ::ActiveRecord::Base.include RubyLLM::ActiveRecord::ActsAs
           RubyLLM.config.mcp_credential_store ||= RubyLLM::ActiveRecord::MCPCredential
           RubyLLM::Accounting::Usage.ledger ||= RubyLLM::ActiveRecord::Usage
+          RubyLLM::AgentTool.store ||= RubyLLM::ActiveRecord::ToolCall
         end
       end
 

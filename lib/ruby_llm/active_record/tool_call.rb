@@ -14,7 +14,9 @@ module RubyLLM
     #
     # Each row belongs to +message+, the assistant message that requested
     # it, and to +result+, the tool message that answers it once there is
-    # one. Both associations are polymorphic. Its columns:
+    # one. A call to an agent with a +chat_class+ also belongs to
+    # +subagent_chat+, the chat record the agent works in (see
+    # RubyLLM::AgentTool). The associations are polymorphic. Its columns:
     #
     # [+tool_call_id+] The call's id, unique across the table.
     # [+name+] The tool's name.
@@ -27,6 +29,8 @@ module RubyLLM
     #
     # RubyLLM writes these rows. Read and query them, and add scopes and
     # columns of your own, but do not create or update them.
+    #
+    #   call.subagent_chat&.messages # => what the subagent said and did
     class ToolCall < Record
       self.table_name = 'ruby_llm_tool_calls'
 
@@ -34,8 +38,34 @@ module RubyLLM
 
       belongs_to :message, polymorphic: true
       belongs_to :result, polymorphic: true, optional: true
+      belongs_to :subagent_chat, polymorphic: true, optional: true
 
       validates :tool_call_id, :name, presence: true
+
+      class << self
+        # Returns the chat record the subagent of +tool_call+ works in, or
+        # +nil+. RubyLLM::AgentTool reads it to carry the subagent on.
+        def subagent_chat(tool_call) # :nodoc:
+          return unless subagent_chats?
+
+          uncached { find_by(tool_call_id: tool_call.id)&.subagent_chat }
+        end
+
+        # Records that the subagent of +tool_call+ works in +chat+.
+        def link_subagent_chat(tool_call, chat) # :nodoc:
+          return unless subagent_chats?
+
+          where(tool_call_id: tool_call.id)
+            .update_all(subagent_chat_type: chat.class.polymorphic_name, subagent_chat_id: chat.id,
+                        updated_at: Time.current)
+        end
+
+        # Returns whether the table links calls to the chats of their
+        # subagents, as the 2.2 schema does.
+        def subagent_chats? # :nodoc:
+          column_names.include?('subagent_chat_id')
+        end
+      end
 
       # Returns this row as a RubyLLM::ToolCall.
       def to_llm

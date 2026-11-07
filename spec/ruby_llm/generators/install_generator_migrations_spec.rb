@@ -76,6 +76,18 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator do
     expect(calls).to include('t.string :namespace')
   end
 
+  it 'links tool calls to the chats their subagents work in' do
+    generator = described_class.new([], {}, destination_root: destination, shell: Thor::Shell::Basic.new)
+    generator.create_migration_files
+    migration = File.read(Dir.glob(File.join(destination, 'db/migrate/*_create_ruby_llm_records.rb')).sole)
+    calls = migration[/create_table :ruby_llm_tool_calls.*?^    end$/m]
+
+    expect(calls).to include('t.references :subagent_chat, polymorphic: true, type: :bigint, index: false')
+    expect(calls).to include(
+      't.index [ :subagent_chat_type, :subagent_chat_id ], name: "index_ruby_llm_tool_calls_on_subagent_chat"'
+    )
+  end
+
   it 'creates the queued messages table for any chat, with an optional sender' do
     generator = described_class.new([], {}, destination_root: destination, shell: Thor::Shell::Basic.new)
     generator.create_migration_files
@@ -140,7 +152,7 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator do
               expect(migrations).to include("create_table :#{table}, id: :#{key_type} do |t|")
             end
           references = migrations.lines.grep(/t.references/)
-          expect(references.size).to eq(12)
+          expect(references.size).to eq(13)
           expect(references).to all(include("type: :#{key_type}"))
         end
       end

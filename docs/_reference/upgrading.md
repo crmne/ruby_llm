@@ -84,6 +84,15 @@ If you already ran an unreleased 2.2 upgrade without this column, add it in a ne
 add_column :ruby_llm_tool_calls, :namespace, :string
 ```
 
+The upgrade also adds nullable `subagent_chat_type` and `subagent_chat_id` columns to `ruby_llm_tool_calls`, with an index. They link a call to the chat its [subagent]({% link _getting_started/agents.md %}#subagents-in-rails) works in, when the subagent's agent has a `chat_class`, so another process can carry the subagent on and its approvals reach the calling chat. Existing calls link to nothing. If you already ran an unreleased 2.2 upgrade without these columns, add them in a new migration before updating:
+
+```ruby
+add_reference :ruby_llm_tool_calls, :subagent_chat, polymorphic: true,
+              index: { name: "index_ruby_llm_tool_calls_on_subagent_chat" }
+```
+
+Until they exist, such a subagent still runs in a chat of its own, but a job that resumes the calling chat reports its work as lost, and the calling chat's `pending_approvals` leaves its calls out.
+
 If you already ran an unreleased 2.2 migration that created `provider_id` on `ruby_llm_tool_calls`, rename that column in a new migration before updating:
 
 ```ruby

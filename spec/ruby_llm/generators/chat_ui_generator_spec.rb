@@ -409,6 +409,55 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     RUBY
   end
 
+  def subagent_approval_script(agent:, controller:, assigns:, chats_path:, job:, **)
+    <<~RUBY
+      require "ruby_llm/test_helper"
+      include RubyLLM::TestHelper
+      ActiveJob::Base.queue_adapter = :test
+      ActionController::Base.allow_forgery_protection = false
+
+      class SendMailTool < RubyLLM::Tool
+        description "Sends an email"
+        parameter :to, description: "The recipient"
+        requires_approval
+
+        def execute(to:) = "Sent to \#{to}"
+      end
+
+      class MailerAgent < ApplicationAgent
+        description "Sends the emails a task needs"
+        tools SendMailTool
+      end
+      #{agent}.tools MailerAgent
+
+      stub_replies tool_call(:mailer_agent, task: "Email ops"), tool_call(:send_mail, to: "ops"), "Sent it.",
+                   "Ops has the email."
+      chat = #{agent}.create!
+      chat.ask "Tell ops"
+      chat = #{agent}.find(chat.id)
+      abort "chat waits on nobody" unless chat.awaiting_person?
+
+      html = #{controller}.render(:show, assigns: #{assigns})
+      abort "show page lacks the subagent's approval" unless html.include?("Approve send_mail?")
+
+      session = ActionDispatch::Integration::Session.new(Rails.application)
+      session.host! "localhost"
+      approval = chat.pending_approvals.sole
+      session.post "#{chats_path}/\#{chat.id}/approvals", params: { tool_call_id: approval.tool_call_id, approved: true },
+                                                          headers: { "Accept" => "text/vnd.turbo-stream.html" }
+      abort "approve answered \#{session.response.status}" unless session.response.status == 200
+      abort "approve kept the card" if session.response.body.include?("Approve send_mail?")
+      abort "approve did not continue" unless session.response.body.include?("Continuing the conversation.")
+
+      jobs = ActiveJob::Base.queue_adapter.enqueued_jobs.select { |enqueued| enqueued["job_class"] == "#{job}" }
+      abort "jobs \#{jobs}" unless jobs.map { |enqueued| enqueued["arguments"] } == [ [ chat.id ] ]
+      #{job}.perform_now(chat.id)
+
+      reply = #{agent}.find(chat.id).to_llm.messages.last.content
+      abort "replied \#{reply.inspect}" unless reply == "Ops has the email."
+    RUBY
+  end
+
   def oversized_tool_result_script(agent:, **)
     <<~RUBY
       require "ruby_llm/test_helper"
@@ -1250,6 +1299,13 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         within_test_app(app_path) do
           give_chat_agent_an_approval_tool(config[:approval_flow][:agent_path])
           output, status = run_rails_runner_outside_executor(approval_flow_script(**config[:approval_flow]))
+          expect(status.success?).to be(true), output
+        end
+      end
+
+      it "shows a subagent's approval on the chat that called it, and carries both on once decided" do
+        within_test_app(app_path) do
+          output, status = run_rails_runner_outside_executor(subagent_approval_script(**config[:approval_flow]))
           expect(status.success?).to be(true), output
         end
       end

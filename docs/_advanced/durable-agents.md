@@ -16,7 +16,7 @@ After reading this guide, you will know:
 * Why a persisted chat is resumable by construction, with no run state to serialize.
 * How to run each agent turn as its own background job.
 * How to survive deploys with ActiveJob Continuations.
-* How an approval-gated tool parks the loop across processes.
+* How an approval-gated tool parks the loop across processes, in the chat or in one of its subagents.
 * Why only one process runs a chat at a time, and how a crashed run resumes.
 * How to stop a running agent from anywhere.
 * Why execution is at-least-once, and what that asks of your tools.
@@ -96,6 +96,8 @@ The decision persists on the tool call. The next job reads it and continues the 
 
 A double click on "Approve" enqueues two jobs. Only one of them runs the tool: the other finds the chat running, or the call answered, and returns. Approving again changes nothing, and denying a call that has started raises `RubyLLM::ToolCallRunningError`.
 
+A [subagent]({% link _getting_started/agents.md %}#subagents-in-rails) whose agent has a `chat_class` parks the same way, in a chat of its own. The chat that called it waits on it, lists its pending calls in `pending_approvals`, and records decisions on them with `approve` and `deny`, so the controller above needs no change. The next job completes the calling chat, which carries the subagent on first. A decision that arrives while a job finishes the calling chat's run is picked up before that job lets go.
+
 ## One Process at a Time
 
 Before `complete`, `step`, `generate`, `run_tools`, or `compact` call the model or run a tool, the chat claims itself in the database. The claim is a conditional update of two columns on your chats table, `claim_token` and `claimed_until`, so no transaction stays open while the model or a tool runs. Each tool call is claimed the same way before it runs. A second process that finds the chat claimed returns at once: `complete` returns the latest message, `step` and `generate` return `nil`, and `waiting?` is `true`.
@@ -160,7 +162,7 @@ A process that dies mid-request removes nothing. Its assistant placeholder stays
 
 ## Stopping from Anywhere
 
-`chat.cancel` on a persisted chat writes the request to the database, so a stop button in the web process halts a background job mid-stream at its next checkpoint. A stop pressed after a message is saved or queued, before its job claims the chat, stops that reply too. A stop with nothing to stop does nothing, and a message sent after a stop goes on. See [Cancelling a Background Stream]({% link _advanced/rails-streaming.md %}#cancelling-a-background-stream).
+`chat.cancel` on a persisted chat writes the request to the database, so a stop button in the web process halts a background job mid-stream at its next checkpoint, along with any subagent the job is running for the chat. A stop pressed after a message is saved or queued, before its job claims the chat, stops that reply too. A stop with nothing to stop does nothing, and a message sent after a stop goes on. See [Cancelling a Background Stream]({% link _advanced/rails-streaming.md %}#cancelling-a-background-stream).
 
 ## At-Least-Once, Not Exactly-Once
 
