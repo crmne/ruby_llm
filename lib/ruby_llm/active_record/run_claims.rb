@@ -5,16 +5,28 @@ module RubyLLM
     # Claims a persisted chat for the process that runs its conversation
     # loop, and each tool call for the process that answers it. Claims are
     # conditional updates, so no transaction stays open while a model or a
-    # tool runs, and they expire after Configuration#max_run_time so another
-    # process resumes the work of one that crashed.
+    # tool runs.
+    #
+    # A claim is a lease of CLAIM_LEASE seconds that a heartbeat thread
+    # renews every CLAIM_RENEWAL seconds, or every quarter of a shorter
+    # Configuration#max_run_time, so the work of a process that dies
+    # is free again within a lease. Renewal stops at the claim's deadline:
+    # Configuration#max_run_time after the run last made progress, or a
+    # tool's Tool.max_run_time, so a run that hangs past it counts as
+    # crashed. A run inside a transaction can't renew from another
+    # connection, so its claims last until their deadline instead.
     module RunClaims # :nodoc:
       class ClaimLost < StandardError; end # :nodoc:
       private_constant :ClaimLost
 
+      CLAIM_LEASE = 60
+      CLAIM_RENEWAL = 15
+
       RUN_STATE = %i[
         @chat @message @last_message_id @last_cancellation_poll_at @unpersisted_instructions
-        @usage_records_by_entry @run_claim_token @run_claimed_until @run_claim_renewed_at
-        @synced_run_claim_token @synced_usage_count @tool_call_claims
+        @usage_records_by_entry @run_claim_token @run_claim_deadline @run_claim_renewed_at
+        @run_claim_lost_token @synced_run_claim_token @synced_usage_count @tool_call_claims
+        @claim_heartbeat @claim_lock
       ].freeze
       private_constant :RUN_STATE
 
@@ -25,27 +37,26 @@ module RubyLLM
       def claim_persisted_tool_calls(leases, executing:) # :nodoc:
         return leases.keys.map(&:id) unless tool_call_claims?
 
-        rows = RubyLLM::ActiveRecord::ToolCall.uncached { tool_call_rows(leases.keys.map(&:id)) }
-        claimed = RubyLLM::ActiveRecord::ToolCall.transaction do
-          ids = leases.filter_map do |tool_call, seconds|
-            row = rows[tool_call.id]
-            tool_call.id if row.nil? || tool_call_claimed?(tool_call.id, row, seconds, executing.include?(tool_call.id))
-          end
-          extend_run_claim_for_tool_calls
-          ids
-        end
+        start_claim_heartbeat
+        claimed = claim_tool_call_rows(leases, executing)
         resync_messages if claimed.size < leases.size
         claimed
+      rescue StandardError
+        claim_lock.synchronize { leases.each_key { |tool_call| tool_call_claims.delete(tool_call.id) } }
+        stop_idle_claim_heartbeat
+        raise
       end
 
       def release_persisted_tool_calls(tool_call_ids) # :nodoc:
         tool_call_ids.each do |tool_call_id|
-          row, claimed_until = tool_call_claims.delete(tool_call_id)
+          row, _deadline, written = claim_lock.synchronize { tool_call_claims.delete(tool_call_id) }
           next unless row
 
-          RubyLLM::ActiveRecord::ToolCall.where(id: row, result_id: nil, claimed_until:)
+          RubyLLM::ActiveRecord::ToolCall.where(id: row, result_id: nil, claimed_until: written)
                                          .update_all(claimed_until: nil)
         end
+      ensure
+        stop_idle_claim_heartbeat
       end
 
       def tool_call_running_elsewhere?(tool_call) # :nodoc:
@@ -53,6 +64,18 @@ module RubyLLM
       end
 
       private
+
+      def claim_tool_call_rows(leases, executing)
+        rows = RubyLLM::ActiveRecord::ToolCall.uncached { tool_call_rows(leases.keys.map(&:id)) }
+        RubyLLM::ActiveRecord::ToolCall.transaction do
+          ids = leases.filter_map do |tool_call, seconds|
+            row = rows[tool_call.id]
+            tool_call.id if row.nil? || tool_call_claimed?(tool_call.id, row, seconds, executing.include?(tool_call.id))
+          end
+          extend_run_claim_for_tool_calls
+          ids
+        end
+      end
 
       def initialize_dup(*)
         super
@@ -63,12 +86,16 @@ module RubyLLM
 
       def exclusively(busy, &)
         return yield if @run_claim_token
-        return busy.call if run_claims? && !run_claim_acquired?
 
         holding_run_claim(busy, &)
       end
 
       def holding_run_claim(busy)
+        if run_claims?
+          start_claim_heartbeat
+          return busy.call unless run_claim_acquired?
+        end
+
         settle_cancellation_request
         result = yield
         completed = true
@@ -78,12 +105,14 @@ module RubyLLM
         resync_messages if @chat
         busy.call
       ensure
+        stop_claim_heartbeat
         release_run_claim(completed)
       end
 
       def run_claim_acquired?
         now = Time.current
-        claim = { claim_token: SecureRandom.uuid, claimed_until: now + run_claim_duration }
+        deadline = now + run_claim_duration
+        claim = { claim_token: SecureRandom.uuid, claimed_until: leased_until(deadline, now) }
         available = unclaimed(chat_row, now)
         unless available.where(claim_token: @synced_run_claim_token).update_all(claim) == 1
           return false unless available.update_all(claim) == 1
@@ -92,7 +121,7 @@ module RubyLLM
         end
 
         @run_claim_token = claim[:claim_token]
-        @run_claimed_until = claim[:claimed_until]
+        @run_claim_deadline = deadline
         @run_claim_renewed_at = now
         resync_messages if @chat && (stale || run_finished_elsewhere?)
         true
@@ -131,18 +160,95 @@ module RubyLLM
 
       def renew_run_claim(force: false)
         return unless @run_claim_token
+        raise ClaimLost if @run_claim_lost_token == @run_claim_token
 
         now = Time.current
-        return unless force || now >= @run_claim_renewed_at + (run_claim_duration / 4.0)
-
-        extend_run_claim([@run_claimed_until, now + run_claim_duration].max, now)
+        @run_claim_deadline = [@run_claim_deadline, now + run_claim_duration].max
+        write_run_claim(now) if force || now >= @run_claim_renewed_at + claim_renewal_interval
       end
 
-      def extend_run_claim(claimed_until, now = Time.current)
+      def write_run_claim(now = Time.current)
+        claimed_until = leased_until(@run_claim_deadline, now)
         raise ClaimLost unless chat_row.where(claim_token: @run_claim_token).update_all(claimed_until:) == 1
 
-        @run_claimed_until = claimed_until
         @run_claim_renewed_at = now
+      end
+
+      # Runs on the heartbeat's thread. A chat claim it finds taken is lost,
+      # but only the run's own thread raises, at its next renewal.
+      def renew_claim_leases
+        now = Time.current
+        renew_run_claim_lease(now)
+        renew_tool_call_leases(now)
+      end
+
+      def renew_run_claim_lease(now)
+        token = @run_claim_token
+        deadline = @run_claim_deadline
+        return unless token && deadline > now
+
+        claimed_until = [now + CLAIM_LEASE, deadline].min
+        if chat_row.where(claim_token: token).update_all(claimed_until:) == 1
+          @run_claim_renewed_at = now
+        else
+          @run_claim_lost_token = token
+        end
+      end
+
+      def renew_tool_call_leases(now)
+        renewals = claim_lock.synchronize do
+          tool_call_claims.filter_map do |tool_call_id, (row, deadline, written)|
+            claimed_until = [now.change(usec: 0) + CLAIM_LEASE, deadline].min
+            next if deadline <= now || written.include?(claimed_until)
+
+            [tool_call_id, row, written.dup, written.push(claimed_until).last]
+          end
+        end
+        renewals.each { |renewal| renew_tool_call_lease(*renewal) }
+      end
+
+      def renew_tool_call_lease(tool_call_id, row, written, claimed_until)
+        renewed = RubyLLM::ActiveRecord::ToolCall.where(id: row, result_id: nil, claimed_until: written)
+                                                 .update_all(claimed_until:) == 1
+        claim_lock.synchronize do
+          claim = tool_call_claims[tool_call_id]
+          next unless claim&.first == row
+
+          renewed ? claim[2] = [claimed_until] : tool_call_claims.delete(tool_call_id)
+        end
+      end
+
+      def start_claim_heartbeat
+        return if @claim_heartbeat || claims_in_transaction?
+
+        claim_lock
+        @claim_heartbeat = ClaimHeartbeat.new([self.class, RubyLLM::ActiveRecord::ToolCall], claim_renewal_interval) do
+          renew_claim_leases
+        end
+      end
+
+      def stop_idle_claim_heartbeat
+        stop_claim_heartbeat unless @run_claim_token || claim_lock.synchronize { tool_call_claims.any? }
+      end
+
+      def stop_claim_heartbeat
+        heartbeat = @claim_heartbeat
+        @claim_heartbeat = nil
+        heartbeat&.stop
+      end
+
+      def claims_in_transaction?
+        self.class.connection_pool.with_connection(&:transaction_open?)
+      end
+
+      def leased_until(deadline, now)
+        @claim_heartbeat ? [now + CLAIM_LEASE, deadline].min : deadline
+      end
+
+      # A max_run_time shorter than the lease is the claim's whole life, so
+      # a renewal has to land within it.
+      def claim_renewal_interval
+        [CLAIM_RENEWAL, [CLAIM_LEASE, run_claim_duration].min / 4.0].min
       end
 
       def running_elsewhere?
@@ -185,9 +291,12 @@ module RubyLLM
         @synced_run_claim_token = self.class.uncached { chat_row.pick(:claim_token) }
       end
 
+      # Tool call rows carry no token, so this process recognizes its claim
+      # on a row by the whole-second expiries it wrote there.
       def tool_call_claimed?(tool_call_id, row, seconds, executing)
         now = Time.current.change(usec: 0)
-        claimed_until = now + seconds.to_f.ceil
+        deadline = now + seconds.to_f.ceil
+        claimed_until = leased_until(deadline, now)
         scope = unclaimed(RubyLLM::ActiveRecord::ToolCall.where(id: row, result_id: nil), now)
         if executing && row_supports_approval?
           approval = RubyLLM::ActiveRecord::ToolCall.arel_table[:approval]
@@ -195,20 +304,23 @@ module RubyLLM
         end
         return false unless scope.update_all(claimed_until:, updated_at: now) == 1
 
-        tool_call_claims[tool_call_id] = [row, claimed_until]
+        claim_lock.synchronize { tool_call_claims[tool_call_id] = [row, deadline, [claimed_until]] }
         true
       end
 
       def extend_run_claim_for_tool_calls
-        latest = tool_call_claims.values.map(&:last).max
-        extend_run_claim([@run_claimed_until, latest].max) if @run_claim_token && latest
+        latest = claim_lock.synchronize { tool_call_claims.values.map { |claim| claim[1] }.max }
+        return unless @run_claim_token && latest
+
+        @run_claim_deadline = [@run_claim_deadline, latest].max
+        write_run_claim
       end
 
       def tool_result_recorded?(tool_call, message)
         attributes = { result_type: @message.class.polymorphic_name, result_id: @message.id, updated_at: Time.current }
         attributes[:mcp_result] = message.mcp_result&.dump if tool_call.has_attribute?(:mcp_result)
         attributes[:claimed_until] = nil if tool_call.has_attribute?(:claimed_until)
-        tool_call_claims.delete(tool_call.tool_call_id)
+        claim_lock.synchronize { tool_call_claims.delete(tool_call.tool_call_id) }
         RubyLLM::ActiveRecord::ToolCall.where(id: tool_call.id, result_id: nil).update_all(attributes) == 1
       end
 
@@ -234,8 +346,13 @@ module RubyLLM
         raise ClaimLost
       end
 
-      def verify_run_claim
-        renew_run_claim(force: true)
+      # Renewing inside the transaction holds the chat row until the result
+      # commits, so no other process can take the chat over in between.
+      def fenced_by_run_claim(&)
+        transaction do
+          renew_run_claim(force: true)
+          yield
+        end
       rescue ClaimLost
         @message.destroy
         raise
@@ -260,6 +377,10 @@ module RubyLLM
 
       def tool_call_claims
         @tool_call_claims ||= {}
+      end
+
+      def claim_lock
+        @claim_lock ||= Mutex.new
       end
 
       def run_claims?

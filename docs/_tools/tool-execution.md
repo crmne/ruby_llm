@@ -428,7 +428,7 @@ When the budget runs out the transcript is still valid, and calling `step` again
 
 ## Long-Running Tools
 
-A persisted chat claims each tool call while it runs, so no other process runs it at the same time. The claim lasts `config.max_run_time`, ten minutes by default. If the process running a tool dies, another process runs the call again once the claim expires. Give a tool that legitimately runs longer its own limit:
+A persisted chat claims each tool call while it runs, so no other process runs it at the same time. The process running the tool keeps renewing the claim for up to `config.max_run_time`, ten minutes by default. If the process dies, its claim expires within a minute, and another process runs the call again. Give a tool that legitimately runs longer its own limit:
 
 ```ruby
 class GenerateReport < RubyLLM::Tool

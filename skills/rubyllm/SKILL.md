@@ -32,7 +32,7 @@ bin/rails generate ruby_llm:agent Researcher
 
 Each takes one line in `app/agents/chat_agent.rb`, which is what the generated UI runs: `code_execution`, `mcp Linear`, `tools WeatherTool`, and `file_store` for files.
 
-For what cancel, a restart, and a failure each save and continue, see `durable-agents/#when-a-run-is-interrupted`. Don't rebuild the transcript, don't keep a price table, and don't reopen or prepend onto RubyLLM's classes. If you think you need to, read the matching guide below first: `rails-persistence/`, `cost-and-usage-tracking/`, or the feature's own.
+For what cancel, a restart, and a failure each save and continue, see `durable-agents/#when-a-run-is-interrupted`. A dead process frees its chat within a minute, so never clear `claim_token` or `claimed_until` yourself, at boot or otherwise. Don't rebuild the transcript, don't keep a price table, and don't reopen or prepend onto RubyLLM's classes. If you think you need to, read the matching guide below first: `rails-persistence/`, `cost-and-usage-tracking/`, or the feature's own.
 
 With `with_thinking` on, a stream can sit quiet for several seconds before text starts, while the model thinks. That is normal, not a stall.
 

@@ -2,6 +2,7 @@
 
 require 'active_support/concern'
 require 'ruby_llm/active_record/attachment_helpers'
+require 'ruby_llm/active_record/claim_heartbeat'
 require 'ruby_llm/active_record/run_claims'
 require 'ruby_llm/active_record/chat_approvals'
 require 'ruby_llm/active_record/chat_cancellation'
@@ -127,7 +128,8 @@ module RubyLLM
       # calling the model or running tools from #complete, #step, #generate,
       # #run_tools, or #compact. Reads the database, so it sees runs in
       # other processes. While another process runs the chat, those methods
-      # return without doing anything and #waiting? is +true+.
+      # return without doing anything and #waiting? is +true+. A process
+      # that dies stops counting as running within a minute.
       #
       #   CompleteJob.set(wait: 1.minute).perform_later(chat.id) if chat.running?
       #
@@ -1289,11 +1291,10 @@ module RubyLLM
       def persist_message_completion(message)
         return unless message
 
-        verify_run_claim
         tool_call = find_tool_call(message.tool_call_id) if message.tool_call_id
         attrs = message_attributes(message)
 
-        answered = transaction do
+        answered = fenced_by_run_claim do
           @message.assign_attributes(attrs)
           @message.save!
           raise ::ActiveRecord::Rollback if tool_call && !tool_result_recorded?(tool_call, message)

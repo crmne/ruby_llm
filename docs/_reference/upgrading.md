@@ -197,9 +197,9 @@ OpenAI GPT models on Bedrock Mantle now post under `/openai/v1`, as AWS requires
 
 ## Crashed Runs Resume After Their Claim Expires
 
-In 2.1, `complete` ran the unfinished tool calls of a crashed job right away. In 2.2, a crashed job keeps its claims for `config.max_run_time`, ten minutes by default, and `complete` in another process returns until they expire. A job retried within that time finds the chat `running?` and does nothing. Check `running?` after `complete` and enqueue the job again later, as [Resuming a Crashed Run]({% link _advanced/durable-agents.md %}#resuming-a-crashed-run) shows.
+In 2.1, `complete` ran the unfinished tool calls of a crashed job right away. In 2.2, a crashed job keeps its claims for up to a minute, until their leases expire, and `complete` in another process returns until then. A job retried within that time finds the chat `running?` and does nothing. Check `running?` after `complete` and enqueue the job again later, as [Resuming a Crashed Run]({% link _advanced/durable-agents.md %}#resuming-a-crashed-run) shows. Don't clear the claim columns yourself, at boot or otherwise: a process that is still alive would then share the chat with another, and both would run its tools and ask the model.
 
-Give tools that legitimately run longer than ten minutes their own limit with [`max_run_time`]({% link _tools/tool-execution.md %}#long-running-tools), and raise `config.max_run_time` above your slowest model request without streaming. A run that outlasts its claim counts as crashed and may run again.
+A live run renews its leases from a background thread, which checks out a database connection every 15 seconds and returns it, so leave room in your connection pool for one more connection per running chat. Give tools that legitimately run longer than ten minutes their own limit with [`max_run_time`]({% link _tools/tool-execution.md %}#long-running-tools), and raise `config.max_run_time` above your slowest model request without streaming. A run that goes longer than that without progress counts as crashed and may run again.
 
 ## Cancelled Chats Close Their Tool Calls
 

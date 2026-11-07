@@ -46,7 +46,7 @@ module RubyLLM
       end
 
       def release(ids)
-        @chat.release_persisted_tool_calls(ids) if ids.any?
+        @chat.release_persisted_tool_calls(ids)
       end
 
       def running_elsewhere?(tool_call)

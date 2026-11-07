@@ -508,20 +508,25 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(tool_call_record.approval).to eq('approved')
   end
 
-  it 'claims a call for the run time its tool declares' do
+  it 'renews the claims on a call for the run time its tool declares, and no longer' do
     freeze_time
-    long_tool = tool_class { max_run_time 2.hours }
+    started = Time.current
     chat = approved_chat
-    claims = {}
+    job = job_for(chat, tool_class { max_run_time 2.hours })
+    claims = []
+    record_claims = -> { claims << [tool_call_record.claimed_until, Chat.find(chat.id).claimed_until] }
     during_run << lambda {
-      claims[:tool_call] = tool_call_record.claimed_until
-      claims[:chat] = Chat.find(chat.id).claimed_until
+      record_claims.call
+      [90.minutes, 29.minutes + 30.seconds, 1.minute].each do |wait|
+        travel wait
+        job.__send__(:renew_claim_leases)
+        record_claims.call
+      end
     }
 
-    job_for(chat, long_tool).complete
+    job.complete
 
-    expect(claims[:tool_call]).to eq(2.hours.from_now)
-    expect(claims[:chat]).to be >= 2.hours.from_now
+    expect(claims).to eq([[started + 1.minute] * 2, [started + 91.minutes] * 2] + ([[started + 2.hours] * 2] * 2))
   ensure
     travel_back
   end
@@ -659,6 +664,20 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(roles(chat)).to eq(%w[user])
   end
 
+  it 'discards an answer when another process takes the chat over just before it is saved' do
+    chat = question_chat
+    job = job_for(chat)
+    allow(job).to receive(:message_attributes).and_wrap_original do |original, *args|
+      take_over(chat)
+      original.call(*args)
+    end
+
+    response = job.complete
+
+    expect(response.content).to eq('Hello')
+    expect(roles(chat)).to eq(%w[user])
+  end
+
   it 'discards a partly saved answer that arrives after another process took the chat over' do
     chat = question_chat
     job = job_for(chat) do |stream|
@@ -683,40 +702,87 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(roles(chat)).to eq(%w[user assistant tool])
   end
 
-  it 'renews its claim at most every quarter of the run time' do
+  it 'renews its lease as it streams, at most every quarter of the lease' do
     freeze_time
     chat = question_chat
     started = Time.current
     claims = []
     job = job_for(chat) do |stream|
-      travel 1.minute
+      travel 10.seconds
       stream.call(chunk)
       claims << claimed_until(chat)
-      travel 90.seconds
+      travel 10.seconds
       stream.call(chunk)
       claims << claimed_until(chat)
     end
 
     job.complete { |_chunk| nil }
 
-    expect(claims).to eq([started + 10.minutes, started + 150.seconds + 10.minutes])
+    expect(claims).to eq([started + 1.minute, started + 20.seconds + 1.minute])
   ensure
     travel_back
   end
 
-  it 'keeps the claim a long tool call extended when it renews afterwards' do
+  it 'renews within a run time shorter than the lease as it streams' do
+    allow(RubyLLM.config).to receive(:max_run_time).and_return(8)
     freeze_time
+    chat = question_chat
     started = Time.current
     claims = []
-    job = job_for(approved_chat, tool_class { max_run_time 2.hours }) do |stream|
-      travel 3.minutes
+    job = job_for(chat) do |stream|
+      travel 3.seconds
       stream.call(chunk)
-      claims << claimed_until(Chat.last)
+      claims << claimed_until(chat)
     end
 
     job.complete { |_chunk| nil }
 
-    expect(claims).to eq([started + 2.hours])
+    expect(claims).to eq([started + 11.seconds])
+  ensure
+    travel_back
+  end
+
+  it 'keeps renewing its lease until the run time a long tool call extended' do
+    freeze_time
+    started = Time.current
+    claims = []
+    chat = approved_chat
+    job = job_for(chat, tool_class { max_run_time 2.hours }) do |stream|
+      travel 3.minutes
+      stream.call(chunk)
+      travel 30.minutes
+      job.__send__(:renew_claim_leases)
+      claims << claimed_until(chat)
+    end
+
+    job.complete { |_chunk| nil }
+
+    expect(claims).to eq([started + 33.minutes + 1.minute])
+  ensure
+    travel_back
+  end
+
+  it 'stops renewing its lease once the model is silent for longer than the run time' do
+    freeze_time
+    started = Time.current
+    chat = question_chat
+    second_job = job_for(chat)
+    claims = []
+    job = job_for(chat) do
+      travel 9.minutes + 30.seconds
+      job.__send__(:renew_claim_leases)
+      claims << claimed_until(chat)
+      travel 1.minute
+      job.__send__(:renew_claim_leases)
+      claims << claimed_until(chat)
+      second_job.complete
+    end
+
+    job.complete
+
+    expect(claims).to eq([started + 10.minutes, started + 10.minutes])
+    expect(requests).to eq([job, second_job])
+    expect(roles(chat)).to eq(%w[user assistant])
   ensure
     travel_back
   end
@@ -726,10 +792,19 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     started = Time.current
     chat = approved_chat
     claims = []
+    job = nil
+    renew_later = lambda {
+      travel 15.minutes
+      job.__send__(:renew_claim_leases)
+    }
     refund = Class.new(RubyLLM::Tool) do
       requires_approval
       define_method(:name) { 'refund' }
-      define_method(:execute) { claims << Chat.find(chat.id).claimed_until and 'refunded' }
+      define_method(:execute) do
+        renew_later.call
+        claims << Chat.find(chat.id).claimed_until
+        'refunded'
+      end
     end
     job = job_for(chat, tool_class { max_run_time 2.hours }).with_tools(refund)
     job.complete
@@ -739,7 +814,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
     job.complete
 
-    expect(claims).to eq([started + 1.hour + 10.minutes])
+    expect(claims).to eq([started + 1.hour + 1.minute])
   ensure
     travel_back
   end
