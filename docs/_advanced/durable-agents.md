@@ -119,7 +119,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-Set `config.max_run_time` above your slowest model request without streaming and your slowest round of tool calls, which share the limit when they run one after another. A tool whose work takes longer can [pause its call]({% link _tools/tool-execution.md %}#pausing-a-tool-call) instead. When a run counts as crashed, another process can take the chat over, and the late run's results are discarded.
+Set `config.max_run_time` above your slowest model request without streaming and your slowest tool call. A tool whose work takes longer can [pause its call]({% link _tools/tool-execution.md %}#pausing-a-tool-call) instead. When a run counts as crashed, another process can take the chat over, and the late run's results are discarded.
 
 Claims rely on the database to make them visible to other processes, so call these methods outside your own transactions. Inside a transaction, the claim stays invisible until it commits, the transaction stays open while the model and tools run, and the claims can't be renewed from another connection, so they last `config.max_run_time` instead of a minute.
 

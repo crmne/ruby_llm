@@ -499,7 +499,7 @@ When the budget runs out the transcript is still valid, and calling `step` again
 
 A persisted chat claims each tool call while it runs, so no other process runs it at the same time. The process running the tool keeps renewing the claim for up to `config.max_run_time`, ten minutes by default. If the process dies, its claim expires within a minute, and another process runs the call again.
 
-A reply's tool calls are claimed together when their round starts, and run one after another unless they [run concurrently](#concurrent-tool-execution), so `config.max_run_time` covers the whole round: a call still running that long after its round started counts as crashed, and another process may start it again. Set `config.max_run_time` above your slowest round of tool calls. Tools that [pause their call](#pausing-a-tool-call), like MCP operations that run as [tasks]({% link _tools/mcp.md %}#tasks), release their claim instead, so work that takes longer can run on its own. See [One Process at a Time]({% link _advanced/durable-agents.md %}#one-process-at-a-time) for how claims work.
+A call that runs longer than `config.max_run_time` counts as crashed, and another process may start it again, so set `config.max_run_time` above your slowest tool. Tools that [pause their call](#pausing-a-tool-call), like MCP operations that run as [tasks]({% link _tools/mcp.md %}#tasks), release their claim instead, so work that takes longer can run on its own. See [One Process at a Time]({% link _advanced/durable-agents.md %}#one-process-at-a-time) for how claims work.
 
 ## Pausing a Tool Call
 

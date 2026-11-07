@@ -192,7 +192,7 @@ chat.complete
 chat.running? # => true while another process runs the chat
 ```
 
-A run that goes `config.max_run_time` without progress, ten minutes by default, counts as crashed, and so does a round of tool calls that runs longer. A tool whose work takes longer can [pause its call]({% link _tools/tool-execution.md %}#long-running-tools).
+A run that goes `config.max_run_time` without progress, ten minutes by default, counts as crashed, and so does a tool call that runs longer. A tool whose work takes longer can [pause its call]({% link _tools/tool-execution.md %}#long-running-tools).
 
 If a process dies, its claims expire within a minute, on any number of servers, and another process picks the chat up. See [Agents in Background Jobs]({% link _advanced/durable-agents.md %}#one-process-at-a-time).
 
