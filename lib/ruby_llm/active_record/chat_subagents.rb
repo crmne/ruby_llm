@@ -93,10 +93,12 @@ module RubyLLM
       end
 
       def stop_waiting_on_person(call)
-        state = call.mcp_state
-        return unless state&.dig('task', 'status') == 'input_required'
+        call.with_lock do
+          state = call.mcp_state
+          next unless state&.dig('task', 'status') == 'input_required'
 
-        call.update!(mcp_state: state.merge('task' => state['task'].merge('status' => 'working')))
+          call.update!(mcp_state: state.merge('task' => state['task'].merge('status' => 'working')))
+        end
       end
     end
   end
