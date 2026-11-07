@@ -181,7 +181,7 @@ Each call runs a new [subagent]({% link _getting_started/agents.md %}#subagents)
 
 The two are not the same. CrewAI's manager comes with its delegation behavior, while yours is the instructions you write. CrewAI's agents can also delegate to each other with [`allow_delegation=True`](https://docs.crewai.com/edge/en/concepts/collaboration), which adds tools for delegating work and asking questions. In RubyLLM, an agent can call only the agents in its `tools`.
 
-A subagent lives in the process that ran it. A chat resumed in another process reports the subagent's work as lost, and the model can start it again.
+A subagent from `tools` has to finish within its call. One that waits for a person keeps its work in a [chat of its own]({% link _getting_started/agents.md %}#subagents-that-wait-for-a-person).
 {: .note }
 
 ## Flows
@@ -437,7 +437,8 @@ end
 
 chat = Editor.create!
 chat.ask "Publish the quantum computing post"
-chat.awaiting_person? # => true
+chat.waiting?                          # => true
+chat.pending_questions.first.approval? # => true
 ```
 
 The decision is stored on the tool call's row, so another request, after a deploy if need be, can record it and continue:

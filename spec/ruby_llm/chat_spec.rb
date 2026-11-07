@@ -267,8 +267,8 @@ RSpec.describe RubyLLM::Chat, :live do
       branch.approve('call_1')
 
       expect(branch).not_to be_cancelled
-      expect(branch.pending_approvals).to be_empty
-      expect(chat.pending_approvals.map(&:id)).to eq(['call_1'])
+      expect(branch.pending_questions.select(&:approval?)).to be_empty
+      expect(chat.pending_questions.select(&:approval?).map(&:id)).to eq(['call_1'])
     end
 
     it 'connects further MCP servers to the copy alone and shares the connected ones' do

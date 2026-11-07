@@ -189,7 +189,7 @@ RSpec.describe RubyLLM::Tool do
     chat.pending_questions.sole.answer('staging')
     chat.complete
 
-    expect(chat).to be_awaiting_tasks
+    expect(chat.waiting? && chat.pending_tasks.any?).to be(true)
     expect(chat.pending_tasks.sole.data).to eq('target' => 'staging')
 
     chat.complete

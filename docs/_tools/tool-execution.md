@@ -221,7 +221,7 @@ chat.complete
 
 Answering an approval approves it, and declining one denies it. An approval or a page to visit takes no value, and a blank one counts as none. A question with one field takes its value, and one with several takes them by name, as keywords, a Hash, or the parameters a form sends, of which it keeps only the fields it asks for: `question.answer(name: "Ada", age: 36)`. Strings become the integers, numbers, and booleans the fields ask for, the way a form sends them. Text, and each item of a list, loses the spaces around it, so spaces alone count as left out. An answer the question can't take raises `ArgumentError`: a choice it didn't offer, a field it doesn't ask for, a value of the wrong type, or a required field left out. Its message is a whole sentence you can show the person under the form, naming a field by its title or, without one, by its name in words ("Release name needs an answer."). Answering a question again, or after its call finished, changes nothing, so a form sent twice is safe, and when two people answer one approval at once, the first decision stands. `approve` and `deny` record a decision whatever came before, so use them to change one.
 
-Calls that need no answer still run while the others wait. `chat.ask` and `chat.complete` return the assistant message that holds the waiting calls. If you [drive the loop yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself), stop when the chat is waiting: `chat.step until chat.complete? || chat.waiting?`. `awaiting_person?` tells you a person must act.
+Calls that need no answer still run while the others wait. `chat.ask` and `chat.complete` return the assistant message that holds the waiting calls. If you [drive the loop yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself), stop when the chat is waiting: `chat.step until chat.complete? || chat.waiting?`. While `pending_questions` has any, a person must act.
 
 Finish the pending calls before you send the chat another message. Otherwise `chat.ask` raises `RubyLLM::PendingToolCallsError`.
 
@@ -533,13 +533,13 @@ class RequestSignature < RubyLLM::Tool
 end
 ```
 
-`ask` and `complete` return while the call waits. The chat is `waiting?` and `awaiting_tasks?`, and `pending_tasks` returns the tasks:
+`ask` and `complete` return while the call waits. The chat is `waiting?`, and `pending_tasks` returns the tasks:
 
 ```ruby
 chat = RubyLLM.chat.with_tools(RequestSignature)
 chat.ask "Send contract 42 for signature"
 
-chat.awaiting_tasks?               # => true
+chat.waiting?                      # => true
 task = chat.pending_tasks.first
 task.status_message                # => "Waiting for the signature"
 task.input_required?               # => true
@@ -551,7 +551,7 @@ A task's `status` is `:working` while the work runs on its own, so you check aga
 
 The call can run again if the process dies before the task is saved, so `execute` keys the request on `tool_call.id` to avoid sending it twice. `data` is what `resume` needs, as a Hash that serializes to JSON. In Rails, the task persists on its tool call, so one process can pause the chat and another can resume it, even after a deploy. To rebuild a task as your own subclass of `RubyLLM::Task`, override `task(state, tool_call:)` on the tool and return `YourTask.load(state, tool_call:)`. A subclass can override `refresh` to check on its work and `cancel` to stop it; cancelling the chat calls `cancel` on every task it waits on and drops the paused calls.
 
-MCP tools pause the same way when a server runs a call as a [task]({% link _tools/mcp.md %}#tasks), and so do [subagents]({% link _getting_started/agents.md %}#subagents) while they wait on a person.
+MCP tools pause the same way when a server runs a call as a [task]({% link _tools/mcp.md %}#tasks). A [subagent that waits for a person]({% link _getting_started/agents.md %}#subagents-that-wait-for-a-person) pauses its call on a task like this one, holding the ID of the subagent's chat.
 
 ## Next Steps
 

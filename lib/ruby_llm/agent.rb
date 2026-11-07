@@ -84,8 +84,7 @@ module RubyLLM
       model model_id provider messages tools deferred_tools mcp provider_tools tool_options provider_options headers
       schema concurrency caching citations code_execution compaction context_budget context end_user fallbacks thinking
       temperature max_output_tokens skills file_store
-      each complete? cancelled? waiting? pending_questions awaiting_approval? pending_approvals awaiting_input?
-      pending_inputs awaiting_tasks? pending_tasks awaiting_person? add_message add_completion tokens cost render
+      each complete? cancelled? waiting? pending_questions pending_tasks add_message add_completion tokens cost render
       queue queued_messages withdraw join_queued_messages
     ].freeze
 
@@ -1713,42 +1712,6 @@ module RubyLLM
     # :call-seq: pending_questions()
     #
     # Delegates to Chat#pending_questions. See that method for arguments and return values.
-
-    ##
-    # :method: awaiting_approval?
-    # :call-seq: awaiting_approval?()
-    #
-    # Delegates to Chat#awaiting_approval?. See that method for arguments and return values.
-
-    ##
-    # :method: pending_approvals
-    # :call-seq: pending_approvals()
-    #
-    # Delegates to Chat#pending_approvals. See that method for arguments and return values.
-
-    ##
-    # :method: awaiting_input?
-    # :call-seq: awaiting_input?()
-    #
-    # Delegates to Chat#awaiting_input?. See that method for arguments and return values.
-
-    ##
-    # :method: pending_inputs
-    # :call-seq: pending_inputs()
-    #
-    # Delegates to Chat#pending_inputs. See that method for arguments and return values.
-
-    ##
-    # :method: awaiting_tasks?
-    # :call-seq: awaiting_tasks?()
-    #
-    # Delegates to Chat#awaiting_tasks?. See that method for arguments and return values.
-
-    ##
-    # :method: awaiting_person?
-    # :call-seq: awaiting_person?()
-    #
-    # Delegates to Chat#awaiting_person?. See that method for arguments and return values.
 
     ##
     # :method: pending_tasks

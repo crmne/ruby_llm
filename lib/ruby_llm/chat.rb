@@ -356,7 +356,7 @@ module RubyLLM
     # messages that steer join. See #queue.
     def complete(&)
       resuming = !answered?
-      run_tools if awaiting_tasks?
+      run_tools if waiting? && pending_tasks.any?
       continue_turn(steering_only: resuming, &)
     end
 
@@ -525,10 +525,9 @@ module RubyLLM
 
     # Returns whether the conversation can't continue until something
     # outside it happens: every remaining pending tool call waits on an
-    # answer to a question (see #pending_questions), a Task, or a run in
-    # another process. #complete stops here, and #awaiting_person? and
-    # #awaiting_tasks? tell what it waits on. Stop a loop you drive with
-    # #step here too:
+    # answer to a question, a Task, or a run in another process.
+    # #complete stops here, and #pending_questions and #pending_tasks tell
+    # what it waits on. Stop a loop you drive with #step here too:
     #
     #   chat.step until chat.complete? || chat.waiting?
     #
@@ -554,6 +553,8 @@ module RubyLLM
     #   question.message         # => "Window or aisle?", or nil for an approval
     #   question.answer "window" # as the person chose; approve or deny an approval
     #   chat.complete
+    #
+    #   chat.pending_questions.select(&:approval?).each { |question| puts question.tool_call.name }
     #
     # #complete carries each call on once nothing it asked waits for an
     # answer. Calls that need no answer still run before the loop pauses.
@@ -608,27 +609,6 @@ module RubyLLM
       self
     end
 
-    # Returns whether the conversation can make no progress without an
-    # approval decision: it is #waiting? and an approval is among
-    # #pending_questions.
-    def awaiting_approval?
-      waiting? && pending_approvals.any?
-    end
-
-    # Returns the tool calls whose approvals are among #pending_questions,
-    # as ToolCall objects. Pairs with #approve and #deny. ToolCall#remote?
-    # identifies provider-executed calls.
-    #
-    #   chat.pending_approvals.each { |tool_call| puts tool_call.name }
-    #   chat.approve(chat.pending_approvals.first)
-    #
-    def pending_approvals
-      response = pending_tool_response
-      return [] unless response
-
-      pending_tool_calls(response).select { |tool_call| approval_pending?(tool_call) }
-    end
-
     # Returns whether +tool_call+ requires approval and has no recorded
     # decision.
     def approval_pending?(tool_call) # :nodoc:
@@ -641,56 +621,23 @@ module RubyLLM
       approval_decision(tool, tool_call).nil?
     end
 
-    # Returns whether the conversation can make no progress until a person
-    # answers a tool or an MCP server: it is #waiting? and a question other
-    # than an approval is among #pending_questions.
-    def awaiting_input?
-      waiting? && pending_inputs.any?
-    end
-
-    # Returns the questions among #pending_questions that are not
-    # approvals: those tools ask with Tool#ask and MCP servers ask.
-    def pending_inputs
-      response = pending_tool_response
-      return [] unless response
-
-      pending_tool_calls(response).flat_map { |tool_call| unanswered_questions(tool_call) }
-    end
-
-    # Returns whether the conversation can make no progress until tasks
-    # finish: every remaining pending tool call waits on a Task, input, or
-    # an approval decision, and at least one waits on a Task. #complete
-    # resumes the calls again.
-    #
-    #   chat.ask "Render the quarterly report"
-    #   chat.awaiting_tasks?  # => true
-    #   sleep chat.pending_tasks.first.poll_interval
-    #   chat.complete
-    #
-    def awaiting_tasks?
-      waiting? && pending_tasks.any?
-    end
-
-    # Returns whether the conversation can make no progress until a person
-    # acts: it is #waiting? and a question waits for an answer (see
-    # #pending_questions), or a Task is Task#input_required?. A chat that
-    # waits only on tasks that are working returns +false+, so check on
-    # those with #complete instead of asking anyone.
-    #
-    #   notify(chat.owner) if chat.awaiting_person?
-    #
-    def awaiting_person?
-      waiting? && (pending_questions.any? || pending_tasks.any?(&:input_required?))
-    end
-
     # Returns the Task objects that tool calls wait on, as they were when
     # the chat last checked, with an MCP::Task for each MCP tool call.
     # Task#refresh checks on one without resuming the chat; #complete
-    # resumes every call with Tool#resume. A task that is
-    # Task#input_required? waits on a person, so there is no point in
-    # checking on it before they act.
+    # resumes every call with Tool#resume.
     #
     #   chat.pending_tasks.each { |task| puts "#{task.tool_call.name}: #{task.status_message}" }
+    #
+    # A task that is Task#input_required? waits on a person, as the
+    # questions in #pending_questions do, so there is no point in checking
+    # on it before they act:
+    #
+    #   notify(chat.owner) if chat.pending_questions.any? || chat.pending_tasks.any?(&:input_required?)
+    #
+    # Check on the others after their Task#poll_interval:
+    #
+    #   sleep chat.pending_tasks.first.poll_interval
+    #   chat.complete
     #
     def pending_tasks
       response = pending_tool_response
@@ -2966,7 +2913,7 @@ module RubyLLM
     end
 
     def awaiting_approval_names
-      pending_approvals.map(&:name).uniq
+      pending_questions.select(&:approval?).map { |question| question.tool_call.name }.uniq
     end
   end
 end

@@ -54,7 +54,7 @@ These measurements compare 2.0.0 with 2.1 on the same machine. Providers answer 
 | Twenty Vertex AI calls with a service account key | 20 token requests | 1 token request |
 | Rebuild a persisted 100-message chat | 11.4 ms | 6.8 ms |
 | The same chat without `automatic_scope_inversing` | 58 queries | 8 queries |
-| Check `awaiting_approval?` on a chat with ten 1 MB images | 10 downloads | none |
+| Check a chat with ten 1 MB images for approvals | 10 downloads | none |
 
 Two more speedups need you to opt in. Calls now share HTTP connections, so an adapter that keeps connections open lets every call after the first skip the TCP and TLS handshake. Use `:net_http_persistent` from the `faraday-net_http_persistent` gem with threads, as in Puma and Sidekiq, or `:async_http` from `async-http-faraday` inside an Async reactor, as in Falcon:
 

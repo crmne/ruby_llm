@@ -98,7 +98,7 @@ RSpec.describe RubyLLM::Chat do
 
       chat.complete
 
-      expect(chat.awaiting_approval?).to be(false)
+      expect(chat.waiting? && chat.pending_questions.any?(&:approval?)).to be(false)
       expect(default_sandbox.code_runs.size).to eq(1)
       expect(workspace_sandbox.code_runs).to be_empty
     end
@@ -108,7 +108,7 @@ RSpec.describe RubyLLM::Chat do
       model_calls(first)
 
       chat.complete
-      expect(chat.pending_approvals.map(&:id)).to eq(['call_1'])
+      expect(chat.pending_questions.select(&:approval?).map(&:id)).to eq(['call_1'])
       expect(workspace_sandbox.code_runs).to be_empty
 
       chat.approve('call_1').complete
@@ -120,7 +120,7 @@ RSpec.describe RubyLLM::Chat do
       chat.add_message(role: :assistant, content: '', tool_calls: { second.id => second, plain.id => plain })
       chat.complete
 
-      expect(chat.pending_approvals.map(&:id)).to eq(['call_2'])
+      expect(chat.pending_questions.select(&:approval?).map(&:id)).to eq(['call_2'])
       expect(default_sandbox.code_runs.size).to eq(1)
       expect(workspace_sandbox.code_runs.size).to eq(1)
     end
@@ -131,7 +131,7 @@ RSpec.describe RubyLLM::Chat do
       chat.complete
 
       expect { chat.approve('call_1', remember: true) }.to raise_error(ArgumentError, /cannot be remembered/)
-      expect(chat.pending_approvals.map(&:id)).to eq(['call_1'])
+      expect(chat.pending_questions.select(&:approval?).map(&:id)).to eq(['call_1'])
     end
 
     it 'denies an escalated call without running it' do
@@ -151,7 +151,7 @@ RSpec.describe RubyLLM::Chat do
 
       chat.complete
 
-      expect(chat.awaiting_approval?).to be(false)
+      expect(chat.waiting? && chat.pending_questions.any?(&:approval?)).to be(false)
       expect(result_for(call)).to include('Unknown sandbox root. Use one of: workspace, online')
       expect(default_sandbox.code_runs).to be_empty
     end

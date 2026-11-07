@@ -53,7 +53,7 @@ RSpec.describe 'RubyLLM and the OpenAI Agents SDK guide', type: :task do
     expect(provider_requests.size).to eq(1)
 
     chat = Chat.last
-    evaluate('chat.approve params', params: { id: chat.id, tool_call_id: chat.pending_approvals.first.tool_call_id })
+    evaluate('chat.approve params', params: { id: chat.id, tool_call_id: chat.pending_questions.first.id })
 
     expect(Chat.last.messages.last.content).to eq('Order 42 is cancelled.')
     expect(provider_requests.last.to_s).to include('Cancelled order 42')

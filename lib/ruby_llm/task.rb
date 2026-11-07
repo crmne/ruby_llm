@@ -23,8 +23,7 @@ module RubyLLM
   #
   # A task is saved with its tool call as #to_h, so a Rails chat can pause
   # in one process and resume in another. MCP::Task is the task of an MCP
-  # tool call that a server runs in the background, and AgentTask the task
-  # of a subagent that waits.
+  # tool call that a server runs in the background.
   class Task
     include Support::Inspectable
     include Support::DeprecatedJobPredicates

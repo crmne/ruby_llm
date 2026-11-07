@@ -167,7 +167,7 @@ RSpec.describe RubyLLM::Chat do
     enable_computer.with_tools(first, second).ask('Inspect')
 
     expect(executed).to be_empty
-    chat.approve(chat.pending_approvals.first)
+    chat.approve(chat.pending_questions.find(&:approval?))
     chat.complete
 
     expect(executed).to eq(%i[click screenshot])
@@ -189,9 +189,9 @@ RSpec.describe RubyLLM::Chat do
     enable_computer.with_tools(paused, later, lookup, publish).ask('Inspect')
     expect(executed).to eq(%i[lookup])
 
-    chat.approve(chat.pending_approvals.first).complete
+    chat.approve(chat.pending_questions.find(&:approval?)).complete
     expect(executed).to eq(%i[lookup publish])
-    expect(chat).to be_awaiting_input
+    expect(chat.waiting? && chat.pending_questions.reject(&:approval?).any?).to be(true)
 
     chat.pending_questions.sole.answer('yes')
     chat.complete
@@ -213,7 +213,7 @@ RSpec.describe RubyLLM::Chat do
     )
     enable_computer.with_tools(first, second).ask('Inspect')
 
-    chat.deny(chat.pending_approvals.first)
+    chat.deny(chat.pending_questions.find(&:approval?))
     chat.complete
 
     expect(executed).to be_empty
@@ -255,12 +255,12 @@ RSpec.describe RubyLLM::Chat do
     stub_turns([call('first', 'screenshot', namespace: 'computer')], finish,
                [call('second', 'screenshot', namespace: 'browser')])
     enable_computer.with_tools(native, browser).ask('Inspect')
-    chat.approve(chat.pending_approvals.first, remember: true).complete
+    chat.approve(chat.pending_questions.find(&:approval?), remember: true).complete
 
     chat.ask('Inspect another environment')
 
     expect(executed).to eq([:native])
-    expect(chat.pending_approvals.map(&:namespace)).to eq(['browser'])
+    expect(chat.pending_questions.map { |question| question.tool_call.namespace }).to eq(['browser'])
   end
 
   it 'does not remember an approval for a qualified-looking ordinary tool registered later' do
@@ -269,13 +269,13 @@ RSpec.describe RubyLLM::Chat do
     stub_turns([call('first', 'screenshot', namespace: 'computer')], finish,
                [call('second', 'computer_screenshot')])
     enable_computer.with_tools(native).ask('Inspect')
-    chat.approve(chat.pending_approvals.first, remember: true).complete
+    chat.approve(chat.pending_questions.find(&:approval?), remember: true).complete
     chat.with_tools(nil).with_tools(ordinary)
 
     chat.ask('Use the other tool')
 
     expect(executed).to be_empty
-    expect(chat.pending_approvals.map(&:name)).to eq(['computer_screenshot'])
+    expect(chat.pending_questions.map { |question| question.tool_call.name }).to eq(['computer_screenshot'])
   end
 
   it 'routes the same member name independently in two native groups' do

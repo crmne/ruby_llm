@@ -79,7 +79,7 @@ RSpec.describe RubyLLM::Chat::ToolCallState do
     branch = chat.dup
     branch.__send__(:record_tool_call_input, tool_call, nil)
 
-    expect(chat).to be_awaiting_input
-    expect(branch).not_to be_awaiting_input
+    expect(chat.waiting? && chat.pending_questions.reject(&:approval?).any?).to be(true)
+    expect(branch.waiting? && branch.pending_questions.reject(&:approval?).any?).to be(false)
   end
 end

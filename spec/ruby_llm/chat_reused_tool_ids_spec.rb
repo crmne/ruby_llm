@@ -71,13 +71,13 @@ RSpec.describe RubyLLM::Chat do
     lookup.requires_approval
     answer_with(response('Paris'), response('Paris'))
     chat.ask('Check twice')
-    first = chat.pending_approvals.first
+    first = chat.pending_questions.find(&:approval?).tool_call
     chat.approve(first)
     chat.complete
 
     expect(executions).to eq(['Paris'])
-    expect(chat).to be_awaiting_approval
-    second = chat.pending_approvals.first
+    expect(chat.waiting? && chat.pending_questions.any?(&:approval?)).to be(true)
+    second = chat.pending_questions.find(&:approval?).tool_call
     expect(second.id).not_to eq(first.id)
 
     chat.approve(first.id)
@@ -181,10 +181,10 @@ RSpec.describe RubyLLM::Chat do
     end
     answer_with(*responses)
     chat.ask('Look up both')
-    chat.approve(chat.pending_approvals.first).complete
+    chat.approve(chat.pending_questions.find(&:approval?)).complete
 
-    expect(chat).to be_awaiting_approval
-    chat.deny(chat.pending_approvals.first)
+    expect(chat.waiting? && chat.pending_questions.any?(&:approval?)).to be(true)
+    chat.deny(chat.pending_questions.find(&:approval?))
     chat.complete
 
     expect(executions).to be_empty

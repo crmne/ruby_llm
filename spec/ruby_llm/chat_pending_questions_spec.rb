@@ -57,7 +57,7 @@ RSpec.describe RubyLLM::Chat do
     expect(question).to have_attributes(id: response.tool_calls.first.id, message: nil, fields: [], url: nil,
                                         tool_call: have_attributes(name: 'issue_refund',
                                                                    arguments: { 'order_id' => '40' }))
-    expect(chat).to be_awaiting_person
+    expect(chat.waiting? && (chat.pending_questions.any? || chat.pending_tasks.any?(&:input_required?))).to be(true)
     expect(runs).to be_empty
 
     question.approve
@@ -279,7 +279,7 @@ RSpec.describe RubyLLM::Chat do
     chat.complete
 
     expect(chat.pending_questions).to eq([])
-    expect(chat).not_to be_awaiting_person
+    expect(chat.waiting? && (chat.pending_questions.any? || chat.pending_tasks.any?(&:input_required?))).to be(false)
   end
 
   it 'is delegated by agents' do

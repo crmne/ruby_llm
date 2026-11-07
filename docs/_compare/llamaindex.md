@@ -385,7 +385,8 @@ end
 
 chat = RefundAgent.create!
 chat.ask "Refund order 42"
-chat.awaiting_person? # => true
+chat.waiting?                          # => true
+chat.pending_questions.first.approval? # => true
 ```
 
 The decision is stored on the tool call's row, so a later request can record it and continue:

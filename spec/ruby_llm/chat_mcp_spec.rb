@@ -27,11 +27,12 @@ RSpec.describe RubyLLM::Chat, :live do
         it 'executes a remote read-only tool after approval using stateless continuation' do
           request_documentation
 
-          expect(chat).to be_awaiting_approval
-          expect(chat.pending_approvals.size).to eq(1)
-          expect(chat.pending_approvals.first).to have_attributes(remote?: true, name: 'microsoft_docs_search')
+          expect(chat.waiting? && chat.pending_questions.any?(&:approval?)).to be(true)
+          expect(chat.pending_questions.count(&:approval?)).to eq(1)
+          expect(chat.pending_questions.find(&:approval?).tool_call)
+            .to have_attributes(remote?: true, name: 'microsoft_docs_search')
 
-          chat.approve(chat.pending_approvals.first)
+          chat.approve(chat.pending_questions.find(&:approval?))
           response = chat.complete
 
           expect(chat).to be_complete
@@ -42,13 +43,13 @@ RSpec.describe RubyLLM::Chat, :live do
 
         it 'denies a remote call without executing it' do
           request_documentation
-          expect(chat).to be_awaiting_approval
-          denied_call = chat.pending_approvals.first
+          expect(chat.waiting? && chat.pending_questions.any?(&:approval?)).to be(true)
+          denied_call = chat.pending_questions.find(&:approval?).tool_call
           chat.deny(denied_call)
 
           chat.complete
 
-          expect(chat.pending_approvals.map(&:id)).not_to include(denied_call.id)
+          expect(chat.pending_questions.select(&:approval?).map(&:id)).not_to include(denied_call.id)
           expect(chat.messages.flat_map(&:server_tool_calls)).not_to include(have_attributes(type: 'mcp_call'))
           expect(chat.messages.find(&:tool_result?).raw_content.first[:approve]).to be(false)
         end
@@ -56,9 +57,9 @@ RSpec.describe RubyLLM::Chat, :live do
         it 'streams a remote approval and its completed result' do
           chunks = []
           request_documentation { |chunk| chunks << chunk }
-          expect(chat.pending_approvals.size).to eq(1)
-          expect(chat.pending_approvals.first).to be_remote
-          chat.approve(chat.pending_approvals.first)
+          expect(chat.pending_questions.count(&:approval?)).to eq(1)
+          expect(chat.pending_questions.find(&:approval?).tool_call).to be_remote
+          chat.approve(chat.pending_questions.find(&:approval?))
 
           response = chat.complete { |chunk| chunks << chunk }
 
@@ -91,7 +92,7 @@ RSpec.describe RubyLLM::Chat, :live do
         calls = response.server_tool_calls
 
         expect(chat).to be_complete
-        expect(chat.pending_approvals).to be_empty
+        expect(chat.pending_questions.select(&:approval?)).to be_empty
         expect(calls).to include(have_attributes(name: a_string_including('microsoft_docs_search')))
         expect(calls.filter_map(&:result)).not_to be_empty
         expect(response.content).to match(/blob/i)

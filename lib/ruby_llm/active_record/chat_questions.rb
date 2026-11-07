@@ -73,12 +73,6 @@ module RubyLLM
         self
       end
 
-      # Returns the questions among #pending_questions that are not
-      # approvals.
-      def pending_inputs
-        pending_questions.reject(&:approval?)
-      end
-
       def settle_persisted_input(tool_call) # :nodoc:
         transaction do
           # Writing first takes the row's lock on every database, SQLite

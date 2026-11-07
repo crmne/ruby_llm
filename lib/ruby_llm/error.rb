@@ -138,7 +138,8 @@ module RubyLLM
   class DeprecationError < StandardError; end
 
   # Raised when required configuration, such as a provider API key, is
-  # missing.
+  # missing, or when a setup can't do what a chat asks of it, such as a
+  # subagent added with +tools+ that stops to wait (see AgentTool).
   class ConfigurationError < StandardError; end
 
   # Raised when RubyLLM.render_prompt cannot find the named prompt file.

@@ -258,7 +258,8 @@ end
 
 chat = RefundAgent.create!
 chat.ask "Refund 12.50 on order R-1042"
-chat.awaiting_person? # => true
+chat.waiting?                          # => true
+chat.pending_questions.first.approval? # => true
 ```
 
 The pending call is already a row, so any later request can show it, decide, and continue:

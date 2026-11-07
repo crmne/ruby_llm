@@ -82,7 +82,7 @@ RSpec.describe RubyLLM::Chat do
     chat.ask('Echo hello')
 
     expect(chat).to be_complete
-    expect(chat.pending_approvals).to be_empty
+    expect(chat.pending_questions.select(&:approval?)).to be_empty
     expect(tool_results.first).to include('were not valid JSON')
     expect(events).to be_empty
   end

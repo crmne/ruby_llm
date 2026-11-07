@@ -266,7 +266,8 @@ end
 
 chat = DataAgent.create!
 chat.ask "Delete last year's test orders"
-chat.awaiting_person? # => true
+chat.waiting?                          # => true
+chat.pending_questions.first.approval? # => true
 ```
 
 The decision is stored on the tool call's row, so another request, after a deploy if need be, can record it and continue:

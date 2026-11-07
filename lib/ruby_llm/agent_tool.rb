@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'securerandom'
-
 module RubyLLM
   # The Tool an Agent class becomes when it goes wherever tools go, so a
   # model can hand work to it: a subagent. Agent::to_tool returns one, and
@@ -19,11 +17,16 @@ module RubyLLM
   # a +task+, everything the agent needs written to stand alone, plus the
   # agent's ::inputs that ::to_tool was not given. Each call runs a fresh
   # instance of the agent on the task, under the owner of the chat that
-  # called it, and returns the content of its last answer. When the agent
-  # waits, for an approval, a question, or a task of its own, the call
-  # pauses on an AgentTask instead, and Chat#complete carries the agent on
-  # once nothing holds it.
+  # called it, and returns the content of its last answer.
+  #
+  # The agent lives only as long as its call, so it has to finish within
+  # it. When it stops to wait instead, for an approval, a question, or a
+  # task, the call raises ConfigurationError. To let a subagent wait for a
+  # person, give it a chat of its own, as the Agents guide shows.
   class AgentTool < Tool
+    GUIDE = 'https://rubyllm.com/agents/#subagents-that-wait-for-a-person'
+    private_constant :GUIDE
+
     class << self
       # The Agent class this tool runs.
       attr_reader :agent_class
@@ -58,62 +61,31 @@ module RubyLLM
     def initialize(inputs = {}) # :nodoc:
       super()
       @inputs = inputs
-      @agents = {}
-      @lock = Mutex.new
     end
 
     # Runs a fresh instance of the agent on +task+, with the inputs given to
     # Agent::to_tool and those the model chose, and returns the content of
-    # its last answer, or an AgentTask when the agent waits.
-    def execute(task:, tool_call: nil, **inputs)
+    # its last answer. Raises ConfigurationError, naming what the agent
+    # waits for, when it stops to wait instead of answering.
+    def execute(task:, **inputs)
       agent = self.class.agent_class.new(**@inputs, **inputs.slice(*self.class.input_parameters))
       owner = Accounting::Usage.owner
       agent.with_owner(owner) unless owner.nil?
-      run = SecureRandom.uuid
-      @lock.synchronize { @agents[run] = agent }
-      running(run) { report(agent, agent.ask(task), run, tool_call) }
-    end
+      message = agent.ask(task)
+      raise ConfigurationError, stopped(agent) if agent.waiting?
 
-    # Carries the agent on once nothing holds it, with Chat#complete, and
-    # returns its answer, or +task+ again while it still waits.
-    def resume(task, **)
-      agent = task.agent
-      return { error: "This agent's work was lost. Start it again with everything it needs." } unless agent
-      return task if agent.awaiting_person?
-
-      run = task.data['run']
-      running(run) { report(agent, agent.complete, run, task.tool_call) }
-    end
-
-    # Returns the AgentTask the call paused on, with the agent it waits for.
-    def task(state, tool_call: nil)
-      run = state.dig('task', 'data', 'run')
-      AgentTask.load(state, tool_call:, tool: self, agent: @lock.synchronize { @agents[run] })
-    end
-
-    # Lets go of the agent of +run+, once its call is over.
-    def forget(run) # :nodoc:
-      @lock.synchronize { @agents.delete(run) }
+      message&.content
     end
 
     private
 
-    def running(run)
-      yield
-    rescue StandardError
-      forget(run)
-      raise
-    end
-
-    def report(agent, message, run, tool_call)
-      if agent.waiting?
-        status = agent.awaiting_person? ? :input_required : :working
-        return AgentTask.new(status:, agent:, tool: self, tool_call:,
-                             data: { 'agent' => self.class.agent_class.name, 'run' => run })
+    def stopped(agent)
+      people = agent.pending_questions.map do |question|
+        "a person to #{question.approval? ? 'approve' : 'answer'} #{question.tool_call.name}"
       end
-
-      forget(run)
-      message&.content
+      tasks = agent.pending_tasks.map { |task| "the task of #{task.tool_call.name}" }
+      "#{self.class.agent_class.name} stopped to wait for #{(people + tasks).join(' and ')}, but an agent used " \
+        "as a tool has to finish within its call. To let it wait, give it a chat of its own: #{GUIDE}"
     end
   end
 end

@@ -1656,8 +1656,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       count = downloads do
         loaded = Chat.find(chat.id)
         loaded.to_llm.messages.each(&:inspect)
-        loaded.awaiting_approval?
-        loaded.pending_approvals.to_a
+        loaded.waiting? && loaded.pending_questions.any?(&:approval?)
       end
 
       expect(count).to eq(0)

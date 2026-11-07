@@ -33,7 +33,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   it 'persists the task a tool call became' do
     chat = paused_chat
 
-    expect(chat).to be_awaiting_tasks
+    expect(chat.waiting? && chat.pending_tasks.any?).to be(true)
     expect(tool_call_record.mcp_state['task'])
       .to include('taskId' => 'task-1', 'pollIntervalMs' => 10, 'ttlMs' => 60_000)
     expect(Chat.find(chat.id).with_mcp(reports).pending_tasks.first).to have_attributes(id: 'task-1', status: :working)
@@ -61,7 +61,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
     expect(resumed.messages_association.find_by(role: 'tool').content).to eq('Report ready')
     expect(tool_call_record.mcp_state).to be_nil
-    expect(resumed).not_to be_awaiting_tasks
+    expect(resumed.waiting? && resumed.pending_tasks.any?).to be(false)
   end
 
   it 'keeps the task when checking on it fails' do
@@ -72,7 +72,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     expect { resumed.complete }.to raise_error(RubyLLM::MCP::Error, 'Connection lost')
 
     expect(tool_call_record.mcp_state['task']).to include('taskId' => 'task-1')
-    expect(Chat.find(chat.id).with_mcp(reports)).to be_awaiting_tasks
+    found = Chat.find(chat.id).with_mcp(reports)
+    expect(found.waiting? && found.pending_tasks.any?).to be(true)
   end
 
   it 'cancels the task when another process cancels the chat' do

@@ -32,9 +32,9 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     it "preserves a remote #{approved ? 'approval' : 'denial'} through Agent.find and Rails result serialization" do
       chat = parked_chat
       restored = agent.find(chat.id)
-      call = restored.pending_approvals.first
-      expect(call.to_llm).to have_attributes(remote?: true, arguments: { 'query' => 'Ruby' })
-      expect(restored).to be_awaiting_approval
+      call = restored.pending_questions.first.tool_call
+      expect(call).to have_attributes(remote?: true, arguments: { 'query' => 'Ruby' })
+      expect(restored.waiting? && restored.pending_questions.any?(&:approval?)).to be(true)
       approved ? restored.approve(call) : restored.deny(call)
 
       resumed = agent.find(chat.id)
@@ -45,7 +45,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
                                                   'approval_request_id' => provider_call_id,
                                                   'approve' => approved }
                                               ])
-      expect(result.to_llm.tool_call_id).to eq(call.tool_call_id)
+      expect(result.to_llm.tool_call_id).to eq(call.id)
       expect(result.to_llm.provider_call_id).to eq(provider_call_id)
       expect(resumed.messages_association.where(role: 'tool').count).to eq(1)
       expect(agent.find(chat.id).render[:input]).to include(raw_approval, *result.to_llm.raw_content)
@@ -56,7 +56,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     chat = parked_chat
     first_worker = agent.find(chat.id)
     second_worker = agent.find(chat.id)
-    chat.approve(chat.pending_approvals.first)
+    chat.approve(chat.pending_questions.first)
 
     first_worker.run_tools
     second_worker.run_tools
@@ -66,16 +66,16 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
   it 'reads a decision written by another worker while the query cache is enabled' do
     chat = parked_chat
-    pending = chat.pending_approvals.first
+    pending = RubyLLM::ActiveRecord::ToolCall.find_by!(tool_call_id: chat.pending_questions.first.id)
     RubyLLM::ActiveRecord::ToolCall.cache do
-      expect(chat).to be_awaiting_approval
+      expect(chat.waiting? && chat.pending_questions.any?(&:approval?)).to be(true)
       path = File.expand_path(RubyLLM::ActiveRecord::ToolCall.connection_db_config.database, Rails.root)
       database = SQLite3::Database.new(path)
       database.execute('UPDATE ruby_llm_tool_calls SET approval = ? WHERE id = ?', ['approved', pending.id])
       database.close
 
-      expect(chat).not_to be_awaiting_approval
-      expect(chat.pending_approvals).to be_empty
+      expect(chat.waiting? && chat.pending_questions.any?(&:approval?)).to be(false)
+      expect(chat.pending_questions).to be_empty
     end
   end
 end

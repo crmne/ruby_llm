@@ -47,7 +47,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     RubyLLM::ToolCall.new(id: "call_#{SecureRandom.hex(4)}", name:, arguments:)
   end
 
-  describe 'pending approvals with the query cache enabled' do
+  describe 'pending questions with the query cache enabled' do
     %w[approved denied result].each do |decision|
       it "stops listing a call after another connection records #{decision}" do
         chat = Chat.create!(model: model_for(:openai)).with_tools(refund_tool)
@@ -57,8 +57,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
         attributes = result ? { result_id: result.id } : { approval: decision }
 
         RubyLLM::ActiveRecord::ToolCall.cache do
-          expect(chat.pending_approvals.map(&:tool_call_id)).to eq([pending.id])
-          expect(chat.pending_approvals.where(name: 'refund').limit(1).count).to eq(1)
+          expect(chat.pending_questions.map(&:id)).to eq([pending.id])
 
           Thread.new do
             RubyLLM::ActiveRecord::ToolCall.connection_pool.with_connection do
@@ -66,8 +65,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
             end
           end.value
 
-          expect(chat.pending_approvals.map(&:tool_call_id)).to eq([])
-          expect(chat.pending_approvals.where(name: 'refund').limit(1).count).to eq(0)
+          expect(chat.pending_questions).to eq([])
         end
       end
     end
@@ -82,7 +80,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: first.id).approval).to eq('remembered')
     later = process(chat)
     park(later, call('refund'))
-    expect(later.pending_approvals).to be_empty
+    expect(later.pending_questions).to be_empty
   end
 
   it 'remembers nothing for an answered call, here or in another process' do
@@ -103,13 +101,13 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     RubyLLM::ActiveRecord::ToolCall.reset_column_information
     chat = process(Chat.create!(model: model_for(:openai)))
     first = park(chat, call('refund'))
-    expect(Chat.find(chat.id).pending_approvals.map(&:tool_call_id)).to eq([first.id])
+    expect(Chat.find(chat.id).pending_questions.map(&:id)).to eq([first.id])
 
     chat.approve(first.id, remember: true)
 
     later = process(chat)
     park(later, call('refund'))
-    expect(later.pending_approvals).to be_empty
+    expect(later.pending_questions).to be_empty
   ensure
     connection.add_column(:ruby_llm_tool_calls, :namespace, :string)
     RubyLLM::ActiveRecord::ToolCall.reset_column_information
@@ -121,18 +119,18 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     second = call('refund')
     tool_calls = { first.id => first, second.id => second }
     chat.add_message(RubyLLM::Message.new(role: :assistant, content: '', tool_calls:))
-    expect(Chat.find(chat.id).pending_approvals.map(&:tool_call_id)).to eq([first.id, second.id])
+    expect(Chat.find(chat.id).pending_questions.map(&:id)).to eq([first.id, second.id])
 
     Chat.find(chat.id).approve(first.id, remember: true)
 
-    expect(Chat.find(chat.id).pending_approvals).to be_empty
+    expect(Chat.find(chat.id).pending_questions).to be_empty
   end
 
   it 'approves an escalated run in one process and runs it once in another' do
     chat = process(Chat.create!(model: model_for(:openai)))
     escalated = park(chat, call('run_code', 'language' => 'shell', 'code' => 'curl example.com',
                                             'sandbox' => 'online', 'reason' => 'Fetch the page'))
-    expect(chat.pending_approvals.map(&:tool_call_id)).to eq([escalated.id])
+    expect(chat.pending_questions.map(&:id)).to eq([escalated.id])
 
     expect { Chat.find(chat.id).approve(escalated.id, remember: true) }
       .to raise_error(ArgumentError, /cannot be remembered/)
@@ -145,6 +143,6 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(default_sandbox.code_runs).to be_empty
     later = process(chat)
     park(later, call('run_code', 'language' => 'shell', 'code' => 'curl example.com', 'sandbox' => 'online'))
-    expect(later.pending_approvals.size).to eq(1)
+    expect(later.pending_questions.size).to eq(1)
   end
 end

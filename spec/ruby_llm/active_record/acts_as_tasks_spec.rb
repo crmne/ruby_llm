@@ -35,7 +35,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   it 'persists the task a tool call returned' do
     chat = paused_chat
 
-    expect(chat).to be_awaiting_tasks
+    expect(chat.waiting? && chat.pending_tasks.any?).to be(true)
     expect(tool_call_record.mcp_state)
       .to eq('task' => { 'status' => 'input_required', 'data' => { 'job' => 'deploy' } })
     expect(tool_call_record).to be_paused
@@ -62,6 +62,6 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
     expect(resumed.messages_association.find_by(role: 'tool').content).to eq('Ran deploy')
     expect(tool_call_record.mcp_state).to be_nil
-    expect(resumed).not_to be_awaiting_tasks
+    expect(resumed.waiting? && resumed.pending_tasks.any?).to be(false)
   end
 end

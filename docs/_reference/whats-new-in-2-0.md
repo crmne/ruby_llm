@@ -59,13 +59,13 @@ end
 
 chat = RubyLLM.chat.with_tools(PublishPost)
 chat.ask "Publish post 42."
-chat.awaiting_approval? # => true when the model requests publication
+chat.pending_questions.first.approval? # => true when the model requests publication
 ```
 
 The tool call stays pending and `ask` returns. Your application can show the proposed action, collect a decision, and continue from its approval handler:
 
 ```ruby
-chat.approve(chat.pending_approvals.first)
+chat.approve(chat.pending_questions.first)
 chat.complete
 ```
 

@@ -56,7 +56,7 @@ RSpec.describe 'RubyLLM and Pydantic AI guide', type: :task do
     expect(provider_requests.size).to eq(1)
 
     chat = Chat.last
-    evaluate('chat.approve params', params: { id: chat.id, tool_call_id: chat.pending_approvals.first.tool_call_id })
+    evaluate('chat.approve params', params: { id: chat.id, tool_call_id: chat.pending_questions.first.id })
 
     expect(Chat.last.messages.last.content).to eq('Refunded 12.50 on R-1042.')
     expect(provider_requests.last['messages'].last['content'].to_s).to include('Refunded 12.50 on order R-1042')

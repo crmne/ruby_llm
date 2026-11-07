@@ -21,7 +21,7 @@ After reading this guide, you will know:
 * How to get structured answers from an agent.
 * How to keep instructions in `app/prompts`.
 * How to declare callbacks and error handlers once for every chat.
-* How to hand work to another agent as a subagent.
+* How to hand work to another agent as a subagent, and let one wait for a person.
 * How to use agents with Rails records.
 
 ## Why Agents?
@@ -301,19 +301,50 @@ tools { [LookupOrder.new(customer), BillingAgent.to_tool(customer: customer)] }
 
 Each call runs a new instance of the agent under the [owner]({% link _core_features/cost-and-usage-tracking.md %}#one-shot-operations) of the chat that called it, and returns the content of the agent's last answer.
 
-A subagent can wait on a person. When `BillingAgent` calls a refund tool that [requires approval]({% link _tools/tool-execution.md %}#requiring-approval), the call pauses on a `RubyLLM::AgentTask`, and the calling chat is `awaiting_person?`. The task's `agent` is the subagent, so settle what it waits for, then `complete` the calling chat:
+That is all a subagent needs when it never waits. It lives only as long as its call, so it has to finish within it: when it stops to wait instead, for an approval, a question, or a task, the call raises `RubyLLM::ConfigurationError` naming what it waits for, rather than leave the calling chat waiting on work nothing could carry on.
+
+### Subagents That Wait for a Person
+
+In Rails, a subagent that waits for a person keeps its work in a chat record of its own. Write the tool yourself: `execute` creates the subagent's chat and asks it, and when the subagent waits, the call pauses on a [task]({% link _tools/tool-execution.md %}#pausing-a-tool-call) that holds the chat's ID, so `resume` finds it again in any process:
 
 ```ruby
-agent = SupportAgent.new(customer: current_customer)
-agent.ask "Please refund the shipping on order R-1042"
+class AskBilling < RubyLLM::Tool
+  description "Hands a billing request, such as a refund, to the billing agent"
+  parameter :request, description: "What the customer needs, written to stand alone"
 
-task = agent.pending_tasks.first
-question = task.agent.pending_questions.first # the refund's approval
-question.approve # or question.deny, once the person decides
-agent.complete
+  def execute(request:)
+    billing = BillingAgent.create!
+    report billing, billing.ask(request)
+  end
+
+  def resume(task, **)
+    billing = BillingAgent.find(task.data["chat_id"])
+    report billing, billing.complete
+  end
+
+  private
+
+  def report(billing, answer)
+    return answer.content unless billing.waiting?
+
+    status = billing.pending_questions.any? ? :input_required : :working
+    RubyLLM::Task.new(status:, data: { "chat_id" => billing.id })
+  end
+end
 ```
 
-Cancelling the calling chat cancels a subagent it waits on. A subagent lives in the process that ran it: a chat resumed in another process, such as a later job, reports the subagent's work as lost, and the model can start it again.
+`BillingAgent` inherits its `chat_class` from `ApplicationAgent`, as [Rails-Backed Agents](#rails-backed-agents) shows, and `create!` takes what its chat needs, such as the customer. Add `AskBilling` to the calling agent's `tools`.
+
+When the billing agent's refund waits for [approval]({% link _tools/tool-execution.md %}#requiring-approval), the calling chat is `waiting?` on that task. Show the person the billing chat's questions, record their decision there, and complete the calling chat. `resume` carries the billing agent on, and the calling model gets its answer:
+
+```ruby
+task = chat.pending_tasks.find(&:input_required?)
+billing = BillingAgent.find(task.data["chat_id"])
+billing.pending_questions.first.approve # once the person decides
+chat.complete
+```
+
+Each call starts a new billing chat. To let the subagent remember earlier calls, find its chat instead of creating one, keyed however your application likes, such as a reference on the calling chat. It is an ordinary chat with its own transcript and `cost`, so leave it out of the lists of chats people pick from.
 
 ## Handling Errors with `rescue_from`
 

@@ -42,7 +42,7 @@ RSpec.describe RubyLLM::Chat do
     chat.ask('Deploy')
 
     expect(chat).to be_waiting
-    expect(chat).to be_awaiting_tasks
+    expect(chat.waiting? && chat.pending_tasks.any?).to be(true)
     expect(chat).not_to be_complete
     expect(chat.pending_tasks.first).to be_input_required
     expect(chat.pending_tasks.first).to have_attributes(
@@ -56,11 +56,11 @@ RSpec.describe RubyLLM::Chat do
     chat.ask('Deploy')
 
     chat.complete
-    expect(chat).to be_awaiting_tasks
+    expect(chat.waiting? && chat.pending_tasks.any?).to be(true)
 
     approvals[7] = true
     expect(chat.complete.content).to eq('Done')
-    expect(chat).not_to be_awaiting_tasks
+    expect(chat.waiting? && chat.pending_tasks.any?).to be(false)
     expect(chat.messages.find(&:tool_result?).content).to eq('Ran deploy')
     expect(resumes).to eq([[{ 'run_id' => 7 }, { job: 'deploy' }]] * 2)
   end

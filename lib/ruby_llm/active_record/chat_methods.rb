@@ -156,29 +156,6 @@ module RubyLLM
         to_llm.waiting? || running_elsewhere?
       end
 
-      # Returns whether the conversation is waiting on an approval among
-      # #pending_questions. See RubyLLM::Chat#awaiting_approval?.
-      def awaiting_approval?
-        to_llm.awaiting_approval?
-      end
-
-      # Returns the persisted tool call records whose approvals are among
-      # #pending_questions, as a relation to query. Pass a record (or its
-      # tool_call_id) to #approve or #deny.
-      # A record's +remote?+ identifies a provider-executed call. Records
-      # come in the order the model made the calls.
-      #
-      #   chat.pending_approvals.each { |record| render record }
-      #
-      # Whether a call requires approval is decided when it is saved, by
-      # the process that received it, so reading this queries the database
-      # only and connects to no MCP server. A call whose tool decides with
-      # a Tool.requires_approval block stays listed until the chat runs
-      # again.
-      def pending_approvals
-        persisted_pending_approvals
-      end
-
       def messages_association # :nodoc:
         association(messages_association_name).reader
       end
@@ -661,24 +638,6 @@ module RubyLLM
       # Delegates to Chat#mcp. See that method for arguments and return values.
 
       ##
-      # :method: awaiting_input?
-      # :call-seq: awaiting_input?
-      #
-      # Delegates to Chat#awaiting_input?. See that method for arguments and return values.
-
-      ##
-      # :method: awaiting_tasks?
-      # :call-seq: awaiting_tasks?
-      #
-      # Delegates to Chat#awaiting_tasks?. See that method for arguments and return values.
-
-      ##
-      # :method: awaiting_person?
-      # :call-seq: awaiting_person?
-      #
-      # Delegates to Chat#awaiting_person?. See that method for arguments and return values.
-
-      ##
       # :method: pending_tasks
       # :call-seq: pending_tasks
       #
@@ -700,7 +659,7 @@ module RubyLLM
         caching citations code_execution compaction context_budget concurrency end_user fallbacks headers
         max_output_tokens provider_options schema provider_tools temperature thinking tool_options tools deferred_tools
         mcp skills file_store
-        awaiting_input? awaiting_tasks? pending_tasks awaiting_person? add_completion count_tokens
+        pending_tasks add_completion count_tokens
         render
       ].freeze
 

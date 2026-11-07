@@ -31,8 +31,9 @@ Benchmarks.area('attachments') do
   Benchmarks.isolated do
     RailsApp.boot(database: 'attachments')
     chat = seed
-    measure_with_downloads('Chat.find + awaiting_approval?, 10 images of 1 MB') do
-      Chat.find(chat.id).awaiting_approval?
+    measure_with_downloads('Chat.find + waiting? on an approval, 10 images of 1 MB') do
+      found = Chat.find(chat.id)
+      found.waiting? && found.pending_questions.any?(&:approval?)
     end
     measure_with_downloads('Chat.find + ask, 10 images of 1 MB', teardown: RailsApp.forget_new_rows) do
       Chat.find(chat.id).ask('Which picture is the brightest?')

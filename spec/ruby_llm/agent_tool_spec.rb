@@ -108,17 +108,6 @@ RSpec.describe RubyLLM::AgentTool do
     expect(sub_requests.sole.first).to eq(:alice)
   end
 
-  it 'lets go of an agent whose run fails' do
-    tool = research_agent.to_tool(region: 'EU')
-    allow(research_agent).to receive(:new).and_wrap_original do |new, **kwargs|
-      new.call(**kwargs).tap { |agent| allow(agent.chat.provider).to receive(:complete).and_raise(IOError) }
-    end
-    allow(tool).to receive(:forget).and_call_original
-
-    expect { tool.call(task: 'Go') }.to raise_error(IOError)
-    expect(tool).to have_received(:forget).once
-  end
-
   it 'goes wherever tools go, such as another agent' do
     stub_subagents(research_agent)
     lead = Class.new(RubyLLM::Agent) { tools ResearchAgent.to_tool(region: 'US') }
@@ -139,92 +128,55 @@ RSpec.describe RubyLLM::AgentTool do
     expect(lead.new.tools.keys).to eq([:research_agent])
   end
 
-  context 'when the agent waits on a person' do
-    let(:wipe) do
+  context 'when the agent stops to wait' do
+    let(:guide) { 'https://rubyllm.com/agents/#subagents-that-wait-for-a-person' }
+
+    def tool_named(name, &execute)
       Class.new(RubyLLM::Tool) do
-        description 'Wipes the cache'
-        requires_approval
-        define_method(:name) { 'wipe' }
-        define_method(:execute) { 'wiped' }
+        description "The #{name} tool"
+        define_method(:name) { name }
+        define_method(:execute, &execute)
       end
     end
 
-    it 'pauses the call on a task that needs a person, and carries the agent on once it is settled' do
-      research_agent.tools(wipe)
+    def ask_stopping_agent(*sub_turns)
       stub_subagents(research_agent)
-      sub_answers.push(calling('wipe', {}, id: 'sub_1'), answer('Cache wiped.'))
-      chat = parent_chat(calling('research_agent', { 'task' => 'Wipe it', 'region' => 'EU' }), answer('All done'))
-
-      chat.with_tools(research_agent).ask('Clean up')
-
-      expect(chat).to be_awaiting_person
-      task = chat.pending_tasks.sole
-      expect(task).to be_a(RubyLLM::AgentTask).and(be_input_required)
-      expect(task.agent).to be_awaiting_approval
-
-      chat.complete
-      expect(chat).to be_awaiting_person
-
-      task.agent.approve(task.agent.pending_approvals.sole)
-      chat.complete
-
-      expect(chat.messages.find(&:tool_result?).content).to eq('Cache wiped.')
-      expect(chat.messages.last.content).to eq('All done')
-      expect(chat).not_to be_waiting
+      sub_answers.push(*sub_turns)
+      chat = parent_chat(calling('research_agent', { 'task' => 'Clean up', 'region' => 'EU' }), answer('All done'))
+      [chat, -> { chat.with_tools(research_agent).ask('Clean up') }]
     end
 
-    it 'keeps the agents of chats that share the tool apart, even when their call IDs match' do
-      research_agent.tools(wipe)
-      stub_subagents(research_agent)
-      sub_answers.push(calling('wipe', {}, id: 'sub_1'), calling('wipe', {}, id: 'sub_1'))
-      tool = research_agent.to_tool(region: 'EU')
-      chats = %w[First Second].map do |task|
-        parent_chat(calling('research_agent', { 'task' => task })).tap { |chat| chat.with_tools(tool).ask('Go') }
-      end
+    it 'raises for the developer, naming the agent and the approval, and the model never hears of it' do
+      research_agent.tools(tool_named('wipe') { 'wiped' }.tap(&:requires_approval))
+      chat, asking = ask_stopping_agent(calling('wipe', {}, id: 'sub_1'))
 
-      agents = chats.map { |chat| chat.pending_tasks.sole.agent }
-
-      expect(agents.uniq.size).to eq(2)
-      expect(agents.map { |agent| agent.messages.find { |message| message.role == :user }.content })
-        .to eq(%w[First Second])
+      expect(&asking).to raise_error(RubyLLM::ConfigurationError,
+                                     'ResearchAgent stopped to wait for a person to approve wipe, but an agent ' \
+                                     'used as a tool has to finish within its call. To let it wait, give it a ' \
+                                     "chat of its own: #{guide}")
+      expect(chat.provider).to have_received(:complete).once
+      expect(chat.messages.none?(&:tool_result?)).to be(true)
     end
 
-    it 'cancels what the subagent waits on when the calling chat is cancelled' do
-      cancelled = []
-      render_task = Class.new(RubyLLM::Task) { define_method(:cancel) { cancelled << :render } }
-      render = Class.new(RubyLLM::Tool) do
-        description 'Renders a report in the background'
-        define_method(:name) { 'render' }
-        define_method(:execute) { render_task.new(status: :working) }
-        define_method(:resume) { |task, **| task }
-        define_method(:task) { |state, tool_call: nil| render_task.load(state, tool_call:) }
-      end
-      research_agent.tools(render)
-      stub_subagents(research_agent)
-      sub_answers.push(calling('render', {}, id: 'sub_1'))
-      chat = parent_chat(calling('research_agent', { 'task' => 'Render it', 'region' => 'EU' }))
-      chat.with_tools(research_agent).ask('Go')
+    it 'names the question a tool of the agent asks' do
+      research_agent.tools(tool_named('lookup') { ask('Which order?') })
+      _chat, asking = ask_stopping_agent(calling('lookup', {}, id: 'sub_1'))
 
-      chat.cancel
-
-      expect { chat.complete }.to raise_error(RubyLLM::CancelledError)
-      expect(cancelled).to eq([:render])
+      expect(&asking).to raise_error(RubyLLM::ConfigurationError,
+                                     /\AResearchAgent stopped to wait for a person to answer lookup, but /)
     end
 
-    it 'cancels the subagent when the chat that waits on it is cancelled' do
-      research_agent.tools(wipe)
-      stub_subagents(research_agent)
-      sub_answers.push(calling('wipe', {}, id: 'sub_1'))
-      chat = parent_chat(calling('research_agent', { 'task' => 'Wipe it', 'region' => 'EU' }))
-      chat.with_tools(research_agent).ask('Clean up')
-      paused = chat.pending_tasks.sole
-      subagent = paused.agent
+    it 'names the task the agent waits on, and everything else it waits for' do
+      research_agent.tools(tool_named('render') { RubyLLM::Task.new(status: :working) },
+                           tool_named('wipe') { 'wiped' }.tap(&:requires_approval))
+      both = RubyLLM::Message.new(role: :assistant, content: '', input_tokens: 1, output_tokens: 1, tool_calls: {
+                                    'sub_1' => RubyLLM::ToolCall.new(id: 'sub_1', name: 'render', arguments: {}),
+                                    'sub_2' => RubyLLM::ToolCall.new(id: 'sub_2', name: 'wipe', arguments: {})
+                                  })
+      _chat, asking = ask_stopping_agent(both)
 
-      chat.cancel
-
-      expect { chat.complete }.to raise_error(RubyLLM::CancelledError)
-      expect(subagent).not_to be_waiting
-      expect(chat.tools[:research_agent].task(paused.to_h, tool_call: paused.tool_call).agent).to be_nil
+      waits = 'a person to approve wipe and the task of render'
+      expect(&asking).to raise_error(RubyLLM::ConfigurationError, /\AResearchAgent stopped to wait for #{waits},/)
     end
   end
 end
