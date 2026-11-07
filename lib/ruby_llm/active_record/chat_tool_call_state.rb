@@ -53,6 +53,10 @@ module RubyLLM
         @chat.release_persisted_tool_calls(ids)
       end
 
+      def started(tool_call)
+        @chat.persisted_tool_call_started(tool_call.id)
+      end
+
       def running_elsewhere?(tool_call)
         @contested.include?(tool_call.id) && @chat.tool_call_running_elsewhere?(tool_call)
       end

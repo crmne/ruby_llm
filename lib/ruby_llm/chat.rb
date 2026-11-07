@@ -2642,6 +2642,7 @@ module RubyLLM
 
     def execute_tool_with_callbacks(tool_call)
       raise_if_cancelled!
+      @tool_call_state.started(tool_call)
       run_callbacks(:before_tool_call, tool_call)
       result = run_around_tool_call(tool_call) { execute_tool tool_call }
       return result if result.equal?(PAUSED)
