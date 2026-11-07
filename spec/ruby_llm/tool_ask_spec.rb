@@ -140,7 +140,8 @@ RSpec.describe RubyLLM::Tool do
   end
 
   it 'refuses choices with nothing to choose' do
-    expect { tool { ask('Pick one', choices: []) }.new.call }.to raise_error(ArgumentError, /at least one choice/)
+    expect { tool { ask('Pick one', choices: []) }.new.call }
+      .to raise_error(ArgumentError, 'choices: needs at least one choice.')
   end
 
   it 'asks several questions one after another' do

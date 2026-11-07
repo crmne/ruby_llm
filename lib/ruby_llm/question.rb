@@ -92,7 +92,7 @@ module RubyLLM
       # Raises ArgumentError for any other Question, which takes +instead+.
       def decided_call(decision, instead) # :nodoc:
         return decision unless decision.is_a?(Question)
-        raise ArgumentError, "This question is not an approval: #{instead} it instead" unless decision.approval?
+        raise ArgumentError, "This question is not an approval: #{instead} it instead." unless decision.approval?
 
         decision.tool_call
       end
@@ -100,7 +100,7 @@ module RubyLLM
       private
 
       def answer_schema(choices)
-        raise ArgumentError, 'choices: needs at least one choice' if choices && Array(choices).empty?
+        raise ArgumentError, 'choices: needs at least one choice.' if choices && Array(choices).empty?
 
         answer = { 'type' => 'string', 'enum' => choices&.map(&:to_s) }.compact
         { 'type' => 'object', 'properties' => { 'answer' => answer }, 'required' => ['answer'] }
@@ -166,12 +166,13 @@ module RubyLLM
     # does, and the next Chat#complete carries the call on.
     #
     # Strings become the integers, numbers, and booleans the fields ask
-    # for, the way a form sends them, a Symbol becomes text, and a blank
-    # String counts as left out. The ActionController::Parameters a form
-    # sends for several fields work as a Hash, keeping only the fields the
-    # question asks for. Raises ArgumentError for a value the question does
-    # not ask for, a choice it does not offer, a value of the wrong type,
-    # or a required value left out.
+    # for, the way a form sends them, a Symbol becomes text, text and the
+    # items of a list lose the spaces around them, and a blank String
+    # counts as left out. The ActionController::Parameters a form sends
+    # for several fields work as a Hash, keeping only the fields the
+    # question asks for. Raises ArgumentError, with a sentence to show the
+    # person, for a value the question does not ask for, a choice it does
+    # not offer, a value of the wrong type, or a required value left out.
     def answer(value = nil, **values)
       if @chat
         @chat.answer(self, value, **values)
@@ -221,7 +222,7 @@ module RubyLLM
 
       given = given_values(value, values)
       unknown = given.keys - fields.map { |field| field.name.to_s }
-      raise ArgumentError, "The question does not ask for #{unknown.join(' or ')}" if unknown.any?
+      raise ArgumentError, "The question does not ask for #{listed(unknown, 'or')}." if unknown.any?
 
       ACCEPTED.merge('content' => content_from(given))
     end
@@ -262,7 +263,7 @@ module RubyLLM
     def response_without(value, values)
       return ACCEPTED if blank?(value) && values.empty?
 
-      raise ArgumentError, "#{approval? ? 'An approval' : 'A page to visit'} takes no answer"
+      raise ArgumentError, "#{approval? ? 'An approval' : 'A page to visit'} takes no answer."
     end
 
     def given_values(value, values)
@@ -271,7 +272,7 @@ module RubyLLM
               when nil, Hash then value.to_h
               else
                 unless fields.one?
-                  raise ArgumentError, "The question asks for #{fields.map(&:name).join(' and ')}: give each by name"
+                  raise ArgumentError, "The question asks for #{listed(fields.map(&:name), 'and')}: give each by name."
                 end
 
                 { fields.first.name => value }
@@ -289,14 +290,14 @@ module RubyLLM
       fields.each_with_object({}) do |field, content|
         answer = value_for(field, given[field.name.to_s])
         answer = field.default if answer.nil?
-        raise ArgumentError, "#{label(field)} needs an answer" if answer.nil? && field.required?
+        raise ArgumentError, "#{label(field)} needs an answer." if answer.nil? && field.required?
 
         content[field.name.to_s] = answer unless answer.nil?
       end
     end
 
     def value_for(field, value)
-      value = value.reject { |item| blank?(item) } if value.is_a?(Array)
+      value = trimmed(value)
       return if blank?(value)
 
       typed(field, value).tap { |typed| offered(field, typed) }
@@ -307,14 +308,14 @@ module RubyLLM
       value = value.to_s if value.is_a?(Symbol) && field.type == 'string'
       return value if CLASSES.fetch(field.type, [Object]).any? { |kind| value.is_a?(kind) }
 
-      raise ArgumentError, "#{label(field)} takes #{TYPES.fetch(field.type)}"
+      raise ArgumentError, "#{label(field)} takes #{TYPES.fetch(field.type)}."
     end
 
     def parsed(field, text)
       case field.type
       when 'integer' then Integer(text, 10)
       when 'number' then Float(text)
-      when 'boolean' then BOOLEANS.fetch(text.strip.downcase, text)
+      when 'boolean' then BOOLEANS.fetch(text.downcase, text)
       when 'array' then [text]
       else text
       end
@@ -328,7 +329,15 @@ module RubyLLM
       Array(value).each do |choice|
         next if field.choices.include?(choice)
 
-        raise ArgumentError, "#{choice.inspect} is not one of the choices: #{field.choices.join(', ')}"
+        raise ArgumentError, "#{choice.inspect} is not one of the choices: #{listed(field.choices, 'or')}."
+      end
+    end
+
+    def trimmed(value)
+      case value
+      when String then value.strip
+      when Array then value.map { |item| trimmed(item) }.reject { |item| blank?(item) }
+      else value
       end
     end
 
@@ -337,7 +346,19 @@ module RubyLLM
     end
 
     def label(field)
-      field.title || (fields.one? ? 'The question' : field.name.to_s)
+      field.title || (fields.one? ? 'The question' : humanized(field.name))
+    end
+
+    def humanized(name)
+      words = name.to_s.gsub(/([a-z\d])([A-Z])|([A-Z])([A-Z][a-z])/, '\\1\\3 \\2\\4').split(/[\s_-]+/)
+      text = words.map { |word| word == word.upcase ? word : word.downcase }.join(' ')
+      text.sub(/\A./, &:upcase)
+    end
+
+    def listed(words, conjunction)
+      return words.join(" #{conjunction} ") if words.size < 3
+
+      "#{words[0..-2].join(', ')}, #{conjunction} #{words.last}"
     end
 
     def fields_from(schema)
