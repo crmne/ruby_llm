@@ -192,6 +192,8 @@ end
 
 A rate limit or an outage passes, so retry later. A bad request fails the same way every time, so discard the job and report it. Retrying is safe because the customer's message is already saved: `complete` picks up where the conversation stopped instead of asking twice. A job that gives up leaves any queued message waiting until the next `complete`, so report the failure, or enqueue the job again when the chat has `queued_messages`.
 
+To tell the customer, add a `reply_error` string column to your chats table. When a reply fails, `complete` saves a short message for them there before it raises, and the next run clears it, so the chat's page can show it whenever it loads. The I18n keys `ruby_llm.reply_error.failed` and `ruby_llm.reply_error.too_long` hold the text. The [chat UI generator]({% link _advanced/rails-generators.md %}#adding-a-chat-ui) adds the column.
+
 See [Error Handling]({% link _advanced/error-handling.md %}) for every error class, and [Durable Agents]({% link _advanced/durable-agents-overview.md %}) for jobs that pause for approvals and survive deploys.
 
 ## Individual Operations in Jobs

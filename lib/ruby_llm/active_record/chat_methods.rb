@@ -7,6 +7,7 @@ require 'ruby_llm/active_record/run_claims'
 require 'ruby_llm/active_record/chat_approvals'
 require 'ruby_llm/active_record/chat_cancellation'
 require 'ruby_llm/active_record/chat_placeholders'
+require 'ruby_llm/active_record/chat_reply_error'
 require 'ruby_llm/active_record/system_instructions'
 require 'ruby_llm/active_record/chat_queue'
 require 'ruby_llm/active_record/chat_tool_call_state'
@@ -35,6 +36,7 @@ module RubyLLM
       include ChatApprovals
       include ChatCancellation
       include ChatPlaceholders
+      include ChatReplyError
       include SystemInstructions
       prepend ChatAgentHooks
 
@@ -980,12 +982,21 @@ module RubyLLM
       # in the queue, the run goes on with them before #complete returns,
       # as the next #complete would. It raises CancelledError when none
       # wait, or when the stop came before the run began.
+      #
+      # When the chats table has a +reply_error+ column, a failed reply
+      # saves a short message for the person there before the error is
+      # raised, and the next run clears it, so the chat's page can show it
+      # whenever it loads. The message comes from I18n:
+      # +ruby_llm.reply_error.too_long+ for ContextLengthExceededError,
+      # +ruby_llm.reply_error.failed+ for any other error, with English
+      # defaults.
       def complete(&block)
         operation = :complete
         loop do
           busy = stopped_before_run = false
           response = exclusively(-> { busy = true }) do
             stopped_before_run = self[:cancelled]
+            clear_reply_error
             completing(block) { |on_chunk| to_llm.public_send(operation, &on_chunk) }
           end
           return latest_message if busy
@@ -997,6 +1008,9 @@ module RubyLLM
 
           operation = :complete
         end
+      rescue StandardError => e
+        record_reply_error(e)
+        raise
       ensure
         broadcast_refresh_to(self, request_id: nil) if broadcasts_messages?
       end

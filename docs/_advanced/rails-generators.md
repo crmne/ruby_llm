@@ -106,23 +106,8 @@ class ChatResponseJob < ApplicationJob
 
   def perform(chat_id)
     chat = ChatAgent.find(chat_id)
-    chat.update!(reply_error: nil)
     chat.complete(&:broadcast)
     retry_job wait: 1.minute if chat.running?
-  rescue RubyLLM::CancelledError
-    raise
-  rescue StandardError => error
-    chat&.update!(reply_error: reply_error_message(error))
-    chat&.broadcast_refresh
-    raise
-  end
-
-  private
-
-  def reply_error_message(error)
-    return "This conversation is too long for the model. Start a new chat." if error.is_a?(RubyLLM::ContextLengthExceededError)
-
-    "The reply failed. Send your message again."
   end
 end
 ```
@@ -135,7 +120,7 @@ Replies stream into the page chunk by chunk, and the finished message replaces t
 
 While the job runs the chat, an empty reply shows "Thinking…", the message form stays, and a Stop button posts to `ChatsController#cancel`, which calls [`chat.cancel`]({% link _advanced/rails-streaming.md %}#cancelling-a-background-stream). Stop raises `RubyLLM::CancelledError` in the job, which discards it. A message sent while a reply runs shows under the transcript, faded, with a Cancel button that posts to `QueuedMessagesController#destroy`, which finds the queued message and calls `withdraw` on it. When Stop ends a reply while messages wait, `complete` goes on to answer them before the job ends. Each finished reply shows what it cost, and the page shows the chat's total. Both message forms take file attachments, and the Stimulus controller keeps a page refresh from undoing any field a person changed in the message form, whether what they are typing or a field your app adds, such as a model picker. Sending clears the form, and another chat starts empty.
 
-When a reply fails, the job saves a message for the person in the chat's `reply_error` column, refreshes the page, and raises, so your error reporting sees it. The page renders the message whenever it loads or refreshes, so it shows however the broadcasts of a quick failure arrive, and the next reply clears it. The generator adds the column with a migration, so run `bin/rails db:migrate` after it.
+When a reply fails, `complete` saves a message for the person in the chat's `reply_error` column, refreshes the page, and raises, so the job fails and your error reporting sees it. The page renders the message whenever it loads or refreshes, so it shows however the broadcasts of a quick failure arrive, and the next run clears it. The message is "The reply failed. Send your message again.", or "This conversation is too long for the model. Start a new chat." for `RubyLLM::ContextLengthExceededError`. Change or translate them with the I18n keys `ruby_llm.reply_error.failed` and `ruby_llm.reply_error.too_long`. The generator adds the column with a migration, so run `bin/rails db:migrate` after it.
 
 The generator needs `turbo-rails`, which a plain `rails new` has, and says what to add when an app doesn't. When the app has `test/test_helper.rb`, it also writes `test/system/chats_test.rb`, so `bin/rails test:system` checks streaming, Stop, a message sent right after a reply or Stop, cost, and errors with [scripted replies]({% link _advanced/testing.md %}), in a real browser. That needs Chrome, and it adds `capybara` and `selenium-webdriver` to your test group when they're missing. It writes `test/agents/chat_agent_test.rb` too, which `bin/rails test` runs to check the agent's context budget.
 

@@ -207,9 +207,9 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     expect(job_content).to include(perform_line)
     expect(job_content).to include(complete_line)
     expect(job_content).to include(requeue_line)
-    expect(job_content).to include('.update!(reply_error: nil)', '.update!(reply_error: reply_error_message(error))')
     expect(job_content).to include('discard_on RubyLLM::CancelledError')
-    expect(job_content).not_to include('broadcast_refresh_to', 'perform_later', 'queued_messages')
+    expect(job_content).not_to include('reply_error', 'rescue', 'broadcast_refresh', 'perform_later', 'queued_messages')
+    expect(job_content.lines.size).to eq(9)
   end
 
   # The script sends requests through the app, and each request resets

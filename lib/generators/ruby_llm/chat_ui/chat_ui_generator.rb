@@ -260,7 +260,7 @@ module RubyLLM
         say "  UI template: #{ui_variant}", :cyan
         say "\n  Works now: streaming replies, Stop, file attachments, cost per reply, errors on the page."
         say "\n  Where it lives:"
-        say "    The turn and its errors: app/jobs/#{variable_name_for(chat_model_name)}_response_job.rb"
+        say "    Background replies:      app/jobs/#{variable_name_for(chat_model_name)}_response_job.rb"
         say "    Stop:                    #{chat_controller_class_name}#cancel"
         say "    Reply rendering:         app/views/#{message_model_name.underscore.pluralize}/_assistant.html.erb"
         say "    What the model can do:   app/agents/#{chat_agent_class_name.underscore}.rb"
