@@ -235,6 +235,33 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(waiting).to eq([true])
       expect(claimed).to eq([true, true])
     end
+
+    # Another process takes something over between the two calls, as it
+    # could once a claim lapsed; the second call must not run here too.
+    {
+      'the waiting call' => lambda { |_chat, waiting, taken|
+        RubyLLM::ActiveRecord::ToolCall.where(tool_call_id: waiting).update_all(claimed_until: taken)
+      },
+      'the chat' => lambda { |chat, _waiting, taken|
+        Chat.where(id: chat.id).update_all(claim_token: 'elsewhere', claimed_until: taken)
+      }
+    }.each do |what, take_over|
+      it "does not start a call once another process took over #{what}" do
+        chat = round_chat
+        taken = 10.minutes.from_now.change(usec: 0)
+        job = Chat.find(chat.id).with_tools(lookup_tool)
+        job.after_message do |message|
+          take_over.call(chat, call_ids.last, taken) if message.role == :tool
+        end
+        allow(job.to_llm.provider).to receive(:complete)
+          .and_return(RubyLLM::Message.new(role: :assistant, content: 'Done', input_tokens: 1, output_tokens: 1))
+
+        job.complete
+
+        expect(executions).to eq([:lookup])
+        expect(roles(chat)).to eq(%w[user assistant tool])
+      end
+    end
   end
 
   it 'never renews a claim another process took over' do
