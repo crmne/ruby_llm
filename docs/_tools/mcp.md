@@ -73,7 +73,7 @@ end
 
 Values in `env` can also be blocks or method names that read [inputs](#inputs), such as `env GITHUB_PERSONAL_ACCESS_TOKEN: -> { user.github_token }` on a server that declares `inputs :user`. They run each time the process starts, so a server that starts again after `close` or a crash gets the current values.
 
-In Rails, `bin/rails generate ruby_llm:mcp Linear https://mcp.linear.app/mcp` creates `LinearMcp` in `app/mcp/linear_mcp.rb`, and `--command` instead of a URL creates a server started over stdio. The examples in this guide name a server after its service, such as `Linear`; with a generated class, use its name, such as `LinearMcp.new(user: current_user)`.
+In Rails, `bin/rails generate ruby_llm:mcp Linear https://mcp.linear.app/mcp` creates `LinearMcp` in `app/mcp/linear_mcp.rb`, or `LinearMCP` when your inflections make MCP an acronym, and `--command` instead of a URL creates a server started over stdio. The examples in this guide name a server after its service, such as `Linear`; with a generated class, use its name, such as `LinearMcp.new(user: current_user)`.
 
 ### Custom Transports
 
