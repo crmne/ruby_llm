@@ -1,0 +1,23 @@
+require "test_helper"
+require "ruby_llm/test_helper"
+
+class <%= chat_agent_class_name %>Test < ActiveSupport::TestCase
+  include RubyLLM::TestHelper
+
+  class LogsTool < RubyLLM::Tool
+    description "Returns the application's logs"
+
+    def execute = "A log line\n" * 1_000_000
+  end
+
+  test "cuts a tool result that would fill the context window" do
+    stub_replies tool_call(LogsTool.tool_name), "The logs look fine."
+    chat = <%= chat_agent_class_name %>.create!.with_tools(LogsTool)
+
+    chat.ask "What do the logs say?"
+
+    result = chat.<%= message_table_name %>.find_by(role: :tool).content
+    assert_includes result, "[Result truncated"
+    assert_operator result.length, :<, chat.model.context_window
+  end
+end

@@ -135,6 +135,7 @@ module RubyLLM
           template 'test/application_system_test_case.rb', 'test/application_system_test_case.rb'
         end
         template 'test/system/chats_test.rb', "test/system/#{chat_model_name.underscore.pluralize}_test.rb"
+        template 'test/agents/chat_agent_test.rb', "test/agents/#{chat_agent_class_name.underscore}_test.rb"
       end
 
       def create_helpers
@@ -265,7 +266,9 @@ module RubyLLM
         say "                        a store in a folder, and what it writes joins the chat's files."
         say '    mcp Linear          an MCP server: bin/rails generate ruby_llm:mcp Linear URL first'
         say '    tools WeatherTool   a tool: bin/rails generate ruby_llm:tool Weather first'
-        say "\n  Check it with bin/rails test:system (needs Chrome)." if app_file?('test/test_helper.rb')
+        if app_file?('test/test_helper.rb')
+          say "\n  Check it with bin/rails test and bin/rails test:system (needs Chrome)."
+        end
         say '  Use RubyLLM::TestHelper in your own tests, with no provider or key.'
         say "\n  Start your server and visit http://localhost:3000/#{url_path}", :cyan
         say "\n"
