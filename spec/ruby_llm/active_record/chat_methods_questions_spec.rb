@@ -294,6 +294,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(answers).to eq([{ 'environment' => 'staging' }, { 'region' => 'eu' }])
   ensure
     ActiveSupport::Notifications.unsubscribe(pausing) if pausing
+    finish(answering)
   end
 
   it 'keeps the first decision when two processes answer and decline one approval at once' do
@@ -323,5 +324,14 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect([declining.value.answered?, approved]).to eq([true, false])
   ensure
     ActiveSupport::Notifications.unsubscribe(pausing) if pausing
+    finish(declining)
+  end
+
+  # Waits for +thread+, so the transaction it holds ends before the next
+  # example, and leaves what it raised to the example's expectations.
+  def finish(thread)
+    thread&.join
+  rescue StandardError
+    nil
   end
 end

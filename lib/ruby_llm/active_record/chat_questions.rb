@@ -126,11 +126,12 @@ module RubyLLM
           return true
         end
 
+        waiting = RubyLLM::ActiveRecord::ToolCall.where(id: tool_call_record(question.tool_call.id).id,
+                                                        approval: 'pending', result_id: nil)
         transaction do
-          # Writing first takes the row's lock, so a decision made at the
-          # same time waits for this one and then finds the call decided.
-          waiting = RubyLLM::ActiveRecord::ToolCall.where(id: tool_call_record(question.tool_call.id).id,
-                                                          approval: 'pending', result_id: nil)
+          # Writing first takes the row's lock on every database, SQLite
+          # included, so a decision made at the same time waits for this
+          # one and then finds the call decided.
           next false unless waiting.update_all(updated_at: Time.current) == 1
 
           response == RubyLLM::Question::ACCEPTED ? approve(question) : deny(question)
