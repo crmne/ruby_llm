@@ -101,6 +101,10 @@ module RubyLLM
       end
 
       class << self
+        def models_dev_provider_ids # :nodoc:
+          %w[openrouter]
+        end
+
         def configuration_options
           %i[openrouter_api_key openrouter_api_base openrouter_app_url openrouter_app_name]
         end

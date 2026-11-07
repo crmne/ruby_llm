@@ -63,7 +63,7 @@ RSpec.describe RubyLLM::Providers::Moonshot do
   end
 
   it 'reads the models.dev moonshotai catalog' do
-    expect(RubyLLM::Models::MODELS_DEV_PROVIDER_MAP).to include('moonshotai' => 'moonshot')
+    expect(described_class.models_dev_provider_ids).to eq(%w[moonshotai])
     expect(RubyLLM.models.find('kimi-k3', provider: :moonshot).context_window).to eq(1_048_576)
   end
 

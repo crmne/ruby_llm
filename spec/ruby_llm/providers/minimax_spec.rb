@@ -66,7 +66,7 @@ RSpec.describe RubyLLM::Providers::MiniMax do
   end
 
   it 'reads the models.dev minimax catalog' do
-    expect(RubyLLM::Models::MODELS_DEV_PROVIDER_MAP).to include('minimax' => 'minimax')
+    expect(described_class.models_dev_provider_ids).to eq(%w[minimax])
     expect(RubyLLM.models.find(model_id, provider: :minimax).context_window).to eq(1_000_000)
   end
 

@@ -30,6 +30,10 @@ module RubyLLM
       def batch_cost_multiplier(**) = 0.5
 
       class << self
+        def models_dev_provider_ids # :nodoc:
+          %w[anthropic]
+        end
+
         def capabilities
           Anthropic::Capabilities
         end

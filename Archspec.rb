@@ -334,3 +334,122 @@ domain.method_names.matching(PROVIDER_VOCABULARY)
       .forbidden(because: 'provider and protocol vocabulary belongs in providers and protocols')
 rails_integration.method_names.matching(PROVIDER_VOCABULARY)
                  .forbidden(because: 'provider and protocol vocabulary belongs in providers and protocols')
+
+# Provider-specific knowledge lives with its provider. Outside providers,
+# protocols, and the entrypoint that registers them, no code lists provider
+# slugs: no table keyed by them, no case or comparison on them. A provider
+# answers through a Provider class hook (open_telemetry_name,
+# models_dev_provider_ids) instead. Slugs come from the entrypoint's
+# registrations, so a new provider is covered as soon as it is registered.
+component :provider_agnostic,
+          in: 'lib/ruby_llm/**/*.rb',
+          except: %w[lib/ruby_llm/providers/**/*.rb lib/ruby_llm/protocols/**/*.rb]
+
+class ProviderSlugLiterals
+  # Visits one file and records each literal collection naming a slug.
+  class Finder < Prism::Visitor
+    attr_reader :findings
+
+    def initialize(slugs, except)
+      super()
+      @slugs = slugs
+      @except = except
+      @findings = []
+    end
+
+    def visit_constant_write_node(node)
+      return if @except.include?(node.name)
+
+      super
+    end
+
+    def visit_array_node(node)
+      record(node, node.elements)
+      super
+    end
+
+    def visit_hash_node(node)
+      record(node, node.elements.flat_map { |pair| pair.respond_to?(:key) ? [pair.key, pair.value] : [] })
+      super
+    end
+
+    def visit_when_node(node)
+      record(node, node.conditions)
+      super
+    end
+
+    def visit_call_node(node)
+      record(node, [node.receiver, *node.arguments&.arguments]) if %i[== != eql? equal?].include?(node.name)
+      super
+    end
+
+    private
+
+    def record(node, values)
+      named = values.filter_map { |value| value.unescaped if value.respond_to?(:unescaped) } & @slugs
+      @findings << [node.location, named] if named.any?
+    end
+  end
+
+  def initialize(source, except: [])
+    @source = source
+    @except = except
+  end
+
+  def id
+    'providers.slug_literals'
+  end
+
+  def evaluate(graph)
+    component = graph.components[@source]
+    return [] unless component
+
+    slugs = registered_slugs(File.join(graph.root, 'lib/ruby_llm.rb'))
+    raise "#{id} found no Provider.register calls in lib/ruby_llm.rb" if slugs.empty?
+
+    component.files.sort.flat_map { |path| diagnostics(path, slugs) }
+  end
+
+  private
+
+  def registered_slugs(entrypoint)
+    Registrations.new.tap { |finder| Prism.parse_file(entrypoint).value.accept(finder) }.slugs
+  end
+
+  # Collects the names passed to Provider.register, as a symbol or a string.
+  class Registrations < Prism::Visitor
+    attr_reader :slugs
+
+    def initialize
+      super
+      @slugs = []
+    end
+
+    def visit_call_node(node)
+      name = node.arguments&.arguments&.first
+      if node.name == :register && node.receiver&.slice&.end_with?('Provider') && name.respond_to?(:unescaped)
+        @slugs << name.unescaped
+      end
+      super
+    end
+  end
+
+  def diagnostics(path, slugs)
+    finder = Finder.new(slugs, @except)
+    Prism.parse_file(path).value.accept(finder)
+    finder.findings.map do |location, named|
+      ArchSpec::Diagnostic.new(
+        rule: id,
+        message: "#{@source} lists provider slugs",
+        location: ArchSpec::SourceLocation.point(path, location.start_line, location.start_column + 1),
+        evidence: named.join(', ')
+      )
+    end
+  end
+end
+
+# PROVIDER_PREFERENCE ranks first-party providers above the aggregators that
+# resell their models. It orders providers against each other, so it waits for
+# a design that lets each provider state its own rank.
+rule ProviderSlugLiterals.new(:provider_agnostic, except: %i[PROVIDER_PREFERENCE]),
+     because: 'provider-specific knowledge belongs in that provider, behind a Provider class hook'

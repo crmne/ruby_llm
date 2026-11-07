@@ -184,6 +184,27 @@ RSpec.describe RubyLLM::Models do
       )
     end
 
+    it 'reads the models.dev catalogs each registered provider names' do
+      provider = Class.new(RubyLLM::Provider) { def self.models_dev_provider_ids = %w[alibaba] }
+      allow(RubyLLM::Provider).to receive(:providers).and_return(qwen: provider)
+
+      models = described_class.parse_models_dev_catalog(
+        alibaba: { models: { a: { id: 'qwen-test', name: 'Qwen Test' } } },
+        openai: { models: { b: { id: 'gpt-test', name: 'GPT Test' } } }
+      )
+
+      expect(models.map { |m| [m.provider, m.id] }).to eq([%w[qwen qwen-test]])
+    end
+
+    it 'keeps a models.dev catalog with the provider that claimed it first' do
+      subclass = Class.new(RubyLLM::Providers::OpenAI)
+      allow(RubyLLM::Provider).to receive(:providers).and_return(openai: RubyLLM::Providers::OpenAI, acme: subclass)
+
+      models = described_class.parse_models_dev_catalog(openai: { models: { b: { id: 'gpt-test', name: 'GPT' } } })
+
+      expect(models.map { |m| [m.provider, m.id] }).to eq([%w[openai gpt-test]])
+    end
+
     it 'keeps the models.dev entries it already had when the answer carries no models' do
       allow(RubyLLM.logger).to receive(:warn)
       cached = model(id: 'cached', provider: 'openai', metadata: { source: 'models.dev' })

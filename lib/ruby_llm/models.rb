@@ -18,27 +18,6 @@ module RubyLLM
     include Enumerable
     include Lookup
 
-    MODELS_DEV_PROVIDER_MAP = { # :nodoc:
-      'openai' => 'openai',
-      'anthropic' => 'anthropic',
-      'azure' => 'azure',
-      'google' => 'gemini',
-      'google-vertex' => 'vertexai',
-      'amazon-bedrock' => 'bedrock',
-      'cohere' => 'cohere',
-      'deepseek' => 'deepseek',
-      'hetzner' => 'hetzner',
-      'meta' => 'meta',
-      'minimax' => 'minimax',
-      'mistral' => 'mistral',
-      'moonshotai' => 'moonshot',
-      'ollama-cloud' => 'ollama_cloud',
-      'openrouter' => 'openrouter',
-      'perplexity' => 'perplexity',
-      'perplexity-agent' => 'perplexity',
-      'xai' => 'xai',
-      'zai' => 'zai'
-    }.freeze
     MODELS_DEV_INPUT_MODALITIES = %w[text image audio pdf video file].freeze # :nodoc:
     MODELS_DEV_OUTPUT_MODALITIES = %w[text image audio video embeddings moderation rerank judgment].freeze # :nodoc:
     # First-party providers outrank the aggregators that resell their models.
@@ -246,18 +225,26 @@ module RubyLLM
       def parse_models_dev_catalog(body) # :nodoc:
         raise ModelRegistryError, "models.dev returned #{body.class} instead of a catalog" unless body.is_a?(Hash)
 
-        models = body.flat_map { |provider_key, data| models_dev_provider_models(provider_key, data) }
+        slugs = models_dev_provider_slugs
+        models = body.flat_map do |provider_key, data|
+          models_dev_provider_models(provider_key.to_s, data, slugs[provider_key.to_s])
+        end
         raise ModelRegistryError, 'models.dev returned no models RubyLLM knows a provider for' if models.empty?
 
         models
       end
 
-      def models_dev_provider_models(provider_key, provider_data) # :nodoc:
-        provider_slug = MODELS_DEV_PROVIDER_MAP[provider_key.to_s]
+      def models_dev_provider_slugs # :nodoc:
+        Provider.providers.each_with_object({}) do |(slug, provider), slugs|
+          provider.models_dev_provider_ids.each { |id| slugs[id] ||= slug.to_s }
+        end
+      end
+
+      def models_dev_provider_models(provider_key, provider_data, provider_slug) # :nodoc:
         return [] unless provider_slug
 
         (provider_data[:models] || {}).values.filter_map do |model_data|
-          model = Model.new(models_dev_model_attributes(model_data, provider_slug, provider_key.to_s))
+          model = Model.new(models_dev_model_attributes(model_data, provider_slug, provider_key))
           model unless model.provider.nil? || model.id.nil?
         end
       end

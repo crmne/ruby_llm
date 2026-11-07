@@ -28,6 +28,10 @@ module RubyLLM
       end
 
       class << self
+        def models_dev_provider_ids # :nodoc:
+          %w[deepseek]
+        end
+
         def capabilities
           DeepSeek::Capabilities
         end

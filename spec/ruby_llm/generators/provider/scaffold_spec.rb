@@ -153,13 +153,14 @@ RSpec.describe RubyLLM::Generators::Provider::Scaffold do
         'lib/ruby_llm.rb',
         '.env',
         'spec/support/rubyllm_configuration.rb',
-        'spec/support/vcr_configuration.rb',
-        'lib/ruby_llm/models.rb'
+        'spec/support/vcr_configuration.rb'
       )
+      expect(result.updated).not_to include('lib/ruby_llm/models.rb')
 
       provider = File.read(File.join(dir, 'lib/ruby_llm/providers/acme_cloud.rb'))
       expect(provider).to include('class ChatCompletions < Ollama::ChatCompletions')
       expect(provider).to include('def assume_models_exist?')
+      expect(provider).to include("def models_dev_provider_ids # :nodoc:\n          %w[acme-cloud]\n        end")
 
       provider_spec = File.read(File.join(dir, 'spec/ruby_llm/providers/acme_cloud_spec.rb'))
       expect(provider_spec).to include('include(chat_completions: described_class::ChatCompletions)')
@@ -167,9 +168,6 @@ RSpec.describe RubyLLM::Generators::Provider::Scaffold do
       entrypoint = File.read(File.join(dir, 'lib/ruby_llm.rb'))
       expect(entrypoint).to include("'acme_cloud' => 'AcmeCloud',")
       expect(entrypoint).to include('RubyLLM::Provider.register :acme_cloud, RubyLLM::Providers::AcmeCloud')
-
-      models = File.read(File.join(dir, 'lib/ruby_llm/models.rb'))
-      expect(models).to include("'acme-cloud' => 'acme_cloud',")
     end
 
     it 'keeps core wiring valid and sorted' do

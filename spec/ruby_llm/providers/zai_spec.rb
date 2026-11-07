@@ -63,7 +63,7 @@ RSpec.describe RubyLLM::Providers::ZAI do
   end
 
   it 'reads the models.dev zai catalog' do
-    expect(RubyLLM::Models::MODELS_DEV_PROVIDER_MAP).to include('zai' => 'zai')
+    expect(described_class.models_dev_provider_ids).to eq(%w[zai])
     expect(RubyLLM.models.find(model_id, provider: :zai).context_window).to eq(1_000_000)
   end
 

@@ -69,6 +69,10 @@ module RubyLLM
       def batch_cost_multiplier(**) = 0.5
 
       class << self
+        def models_dev_provider_ids # :nodoc:
+          %w[openai]
+        end
+
         def capabilities
           OpenAI::Capabilities
         end
