@@ -53,15 +53,46 @@ class <%= chat_controller_class_name.delete_suffix("Controller") %>Test < Applic
     start_chat
     assert_text "Hello"
     fill_in "<%= message_variable_name %>[content]", with: "Half a thought"
-    find("h1").click
-    page.execute_script("Turbo.visit(location.href, { action: 'replace' })")
-    assert_no_selector "html[aria-busy]"
+    refresh_page
 
     assert_field "<%= message_variable_name %>[content]", with: "Half a thought"
 
     fill_in "<%= message_variable_name %>[content]", with: "For this chat only"
     start_chat
     assert_field "<%= message_variable_name %>[content]", with: ""
+  end
+
+  test "keeping every field a person changed when the page refreshes, and sending them" do
+    sent = []
+    subscriber = ActiveSupport::Notifications.subscribe("start_processing.action_controller") do |event|
+      sent << event.payload[:params] if event.payload[:controller] == "<%= message_controller_class_name %>"
+    end
+    stub_replies "Hello", "Noted"
+
+    with_extra_message_fields do
+      start_chat
+      choose "Length B"
+      assert_text "Hello"
+      assert_select "History", options: [ "2 messages" ]
+      assert_checked_field "Length B"
+      select "Formal", from: "Tone"
+      fill_in "Note", with: "Keep it short"
+      refresh_page
+
+      assert_equal "Formal", find_field("Tone").value
+      assert_field "Note", with: "Keep it short"
+
+      fill_in "<%= message_variable_name %>[content]", with: "Thanks"
+      click_on "Send <%= message_table_name.singularize.humanize.downcase %>"
+      assert_text "Noted"
+      assert_equal "Casual", find_field("Tone").value
+      assert_field "Note", with: ""
+    end
+
+    assert_equal({ "tone" => "Formal", "note" => "Keep it short", "length" => "b" },
+      sent.last["<%= message_variable_name %>"].slice("tone", "note", "length"))
+  ensure
+    ActiveSupport::Notifications.unsubscribe(subscriber)
   end
 
   test "showing a sent message before its reply starts" do
@@ -101,6 +132,38 @@ class <%= chat_controller_class_name.delete_suffix("Controller") %>Test < Applic
   end
 
   private
+
+  def refresh_page
+    find("h1").click
+    page.execute_script("Turbo.visit(location.href, { action: 'replace' })")
+    assert_no_selector "html[aria-busy]"
+  end
+
+  # Renders the message form with two fields of the app's own, as a model
+  # picker or an option would add.
+  def with_extra_message_fields
+    views = Rails.root.join("tmp/system_test_views")
+    form = Rails.root.join("app/views/<%= message_model_name.underscore.pluralize %>/_form.html.erb").read
+    fields = <<~'ERB'
+      <%%= label_tag :<%= message_variable_name %>_tone, "Tone" %>
+      <%%= select_tag "<%= message_variable_name %>[tone]", options_for_select(%w[Casual Formal]) %>
+      <%%= label_tag :<%= message_variable_name %>_note, "Note" %>
+      <%%= text_field_tag "<%= message_variable_name %>[note]" %>
+      <%%= label_tag :<%= message_variable_name %>_history, "History" %>
+      <%%= select_tag "<%= message_variable_name %>[history]", options_for_select(["#{<%= chat_variable_name %>.<%= message_table_name %>.count} messages"]) %>
+      <%% %w[a b c].each do |length| %>
+        <%%= radio_button_tag "<%= message_variable_name %>[length]", length, length == (<%= chat_variable_name %>.<%= message_table_name %>.count == 1 ? "a" : "c") %>
+        <%%= label_tag "<%= message_variable_name %>_length_#{length}", "Length #{length.upcase}" %>
+      <%% end %>
+    ERB
+    views.join("<%= message_model_name.underscore.pluralize %>").mkpath
+    views.join("<%= message_model_name.underscore.pluralize %>/_form.html.erb").write(form.sub(/do \|form\| %>\n/) { |line| line + fields })
+    original = ApplicationController.view_paths
+    ApplicationController.prepend_view_path(views)
+    yield
+  ensure
+    ApplicationController.view_paths = original if original
+  end
 
   def start_chat
     visit new_<%= chat_variable_name %>_path

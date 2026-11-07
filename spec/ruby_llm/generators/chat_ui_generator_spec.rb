@@ -125,9 +125,9 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     expect(approval_stream).to include('turbo_stream.replace')
     expect(approval_stream).to include('"Continuing the conversation."')
     message_form = File.read(File.join(base_path, 'messages/_form.html.erb'))
-    expect(message_form).to include('chat.pending_approvals.any?')
-    expect(message_form).to include('Approve or deny the requests above to continue.')
+    expect(message_form).to include('chat.pending_approvals.any?', 'Approve or deny the requests above to continue.')
     expect(message_form).not_to include('Replying…')
+    expect_draft_form(message_form)
     expect_queued_message_views(base_path, approvals_path_helper.sub('approvals', 'queued_message'))
     expect(assistant_partial).to include('.running? %>')
     expect(assistant_partial).to include('" data-streaming" if streaming')
@@ -151,6 +151,13 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     models_index = File.read(File.join(base_path, 'models/index.html.erb'))
     expect(models_index).to include("@#{model_index_collection}.each do |model_info|")
     expect(models_index).to include(%(render "#{model_partial_path}",))
+  end
+
+  def expect_draft_form(message_form)
+    expect(message_form).to include('", data: { chat_draft: true }')
+    expect(message_form.scan('chat_draft').size).to eq(1)
+    expect(File.read('app/javascript/controllers/chat_message_controller.js'))
+      .to include('element.form?.hasAttribute("data-chat-draft")', 'option.defaultSelected')
   end
 
   def expect_queued_message_views(base_path, path_helper)
@@ -818,7 +825,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
           within_test_app(app_path) do
             test_file = File.read('test/system/chats_test.rb')
             expect(test_file).to include('include RubyLLM::TestHelper', 'click_on "Stop"',
-                                         'ChatResponseJob.queue_adapter')
+                                         'ChatResponseJob.queue_adapter', 'with_extra_message_fields',
+                                         'select_tag "message[tone]"')
             expect(File.exist?('test/application_system_test_case.rb')).to be(true)
           end
         end
