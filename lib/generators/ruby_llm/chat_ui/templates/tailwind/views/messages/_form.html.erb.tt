@@ -1,7 +1,7 @@
 <%% if <%= chat_variable_name %>.pending_approvals.any? %>
   <p id="new_<%= message_variable_name %>" class="my-5 py-2 px-3 bg-amber-50 text-amber-800 font-medium rounded-md">Approve or deny the requests above to continue.</p>
 <%% else %>
-  <%%= form_with(model: <%= message_variable_name %>, url: <%= chat_model_name.include?('::') ? "#{chat_variable_name}_#{message_model_name.demodulize.underscore.pluralize}_path(#{chat_variable_name})" : "[#{chat_variable_name}, #{message_variable_name}]" %>, id: "new_<%= message_variable_name %>", class: "contents") do |form| %>
+  <%%= form_with(model: <%= message_variable_name %>, url: <%= chat_model_name.include?('::') ? "#{chat_variable_name}_#{message_model_name.demodulize.underscore.pluralize}_path(#{chat_variable_name})" : "[#{chat_variable_name}, #{message_variable_name}]" %>, id: "new_<%= message_variable_name %>", data: { chat_draft: true }, class: "contents") do |form| %>
     <%% if <%= message_variable_name %>.errors.any? %>
       <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
         <h2><%%= pluralize(<%= message_variable_name %>.errors.count, "error") %> prohibited this <%= message_table_name.singularize.humanize.downcase %> from being saved:</h2>
@@ -16,12 +16,12 @@
 
     <div class="my-5">
       <%%= form.label :content, "Message" %>
-      <%%= form.text_area :content, rows: 4, placeholder: "Message...", autofocus: true, data: { chat_draft: true },
+      <%%= form.text_area :content, rows: 4, placeholder: "Message...", autofocus: true,
           class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": <%= message_variable_name %>.errors[:content].none?, "border-red-400 focus:outline-red-600": <%= message_variable_name %>.errors[:content].any?}] %>
     </div>
 
     <div class="my-5">
-      <%%= form.file_field :attachments, multiple: true, data: { chat_draft: true } %>
+      <%%= form.file_field :attachments, multiple: true %>
     </div>
 
     <div class="inline">
