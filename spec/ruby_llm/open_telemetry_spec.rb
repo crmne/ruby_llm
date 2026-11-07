@@ -83,6 +83,26 @@ RSpec.describe RubyLLM::OpenTelemetry do
     expect(spans.map { |span| span.attributes['gen_ai.request.reasoning.level'] }).to eq(['high', nil])
   end
 
+  it 'names the skill and the skill file a load_skill call reads' do
+    loader = RubyLLM::Skill::Loader.new(skills: -> { [] }, code_execution: -> { false })
+    [{ 'skill' => 'pdf' }, { 'skill' => 'pdf', 'file' => 'SKILL.md' },
+     { 'skill' => 'pdf', 'file' => 'skills/pdf/reference.md' }].each do |arguments|
+      RubyLLM.instrument('tool_call.ruby_llm', tool: loader, tool_name: 'load_skill', tool_arguments: arguments) { nil }
+    end
+
+    expect(spans.map(&:name)).to eq(['execute_tool load_skill pdf', 'execute_tool load_skill pdf',
+                                     'execute_tool load_skill pdf reference.md'])
+    expect(spans.map { |span| span.attributes['gen_ai.skill.name'] }).to eq(%w[pdf pdf pdf])
+    expect(spans.map { |span| span.attributes['gen_ai.skill.resource.name'] }).to eq([nil, nil, 'reference.md'])
+  end
+
+  it 'names no skill for another tool that takes a skill argument' do
+    RubyLLM.instrument('tool_call.ruby_llm', tool_name: 'rate', tool_arguments: { 'skill' => 'pdf' }) { nil }
+
+    expect(spans.sole.name).to eq('execute_tool rate')
+    expect(spans.sole.attributes).not_to have_key('gen_ai.skill.name')
+  end
+
   describe 'with content' do
     before { described_class.enable(content: true) }
 

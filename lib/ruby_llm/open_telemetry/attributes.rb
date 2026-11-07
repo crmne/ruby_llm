@@ -34,13 +34,13 @@ module RubyLLM
 
       def span_name(operation, payload)
         target = case operation
-                 when 'execute_tool' then payload[:tool_name]
+                 when 'execute_tool' then [payload[:tool_name], *skill(payload).values]
                  when 'invoke_workflow' then payload[:workflow_name]
                  when 'ruby_llm.workflow_step' then payload[:workflow_step_name]
                  when 'ruby_llm.code_execution' then payload[:language]
                  else payload[:model]
                  end
-        [operation, target].compact.join(' ')
+        [operation, *target].compact.join(' ')
       end
 
       def span_kind(operation)
@@ -118,6 +118,17 @@ module RubyLLM
           'gen_ai.tool.name' => payload[:tool_name],
           'gen_ai.tool.call.id' => payload[:tool_call_id],
           'gen_ai.tool.type' => 'function'
+        }.merge(skill(payload)).compact
+      end
+
+      def skill(payload)
+        return {} unless payload[:tool].is_a?(Skill::Loader)
+
+        arguments = payload[:tool_arguments].to_h.transform_keys(&:to_s)
+        name = arguments['skill']&.to_s
+        {
+          'gen_ai.skill.name' => name,
+          'gen_ai.skill.resource.name' => Skill::Loader.resource_name(name, arguments['file'])
         }.compact
       end
 

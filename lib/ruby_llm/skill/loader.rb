@@ -18,6 +18,13 @@ module RubyLLM
         "#{MOUNT}/#{skill.name}"
       end
 
+      def self.resource_name(skill, file)
+        file = file.to_s
+        return if file.strip.empty? || file == FILE
+
+        file.delete_prefix("#{MOUNT}/#{skill}/")
+      end
+
       def initialize(skills:, code_execution:)
         super()
         @skills = skills
@@ -57,7 +64,8 @@ module RubyLLM
         found = @skills.call.find { |candidate| candidate.name == skill.to_s }
         return { error: "No skill named #{skill}. Skills: #{@skills.call.map(&:name).join(', ')}" } unless found
 
-        file.nil? || file.to_s.strip.empty? || file.to_s == FILE ? instructions(found) : read(found, file.to_s)
+        resource = self.class.resource_name(found.name, file)
+        resource ? read(found, resource) : instructions(found)
       end
 
       private
@@ -77,7 +85,6 @@ module RubyLLM
       end
 
       def read(skill, file)
-        file = file.delete_prefix("#{self.class.mount_path(skill)}/")
         path = skill.resolve_file(file)
         return { error: "#{file} is a folder holding: #{folder_entries(path)}" } if File.directory?(path)
         return { error: "#{file} is larger than #{MAX_FILE_SIZE} bytes. #{use_from_code(skill, file)}" } if
