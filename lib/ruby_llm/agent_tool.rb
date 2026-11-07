@@ -131,7 +131,7 @@ module RubyLLM
     end
 
     def linked_agent(tool_call, inputs)
-      chat = AgentTool.store&.subagent_chat(tool_call) if tool_call
+      chat = AgentTool.store&.subagent_chat_for(tool_call) if tool_call
       self.class.agent_class.new(chat:, persist_instructions: false, **inputs).chat if chat
     end
 

@@ -45,7 +45,7 @@ module RubyLLM
       class << self
         # Returns the chat record the subagent of +tool_call+ works in, or
         # +nil+. RubyLLM::AgentTool reads it to carry the subagent on.
-        def subagent_chat(tool_call) # :nodoc:
+        def subagent_chat_for(tool_call) # :nodoc:
           return unless subagent_chats?
 
           uncached { find_by(tool_call_id: tool_call.id)&.subagent_chat }

@@ -68,7 +68,7 @@ module RubyLLM
 
       def tool_call_id_of(tool_call)
         id = tool_call.respond_to?(:tool_call_id) ? tool_call.tool_call_id : tool_call
-        id.respond_to?(:id) && !id.is_a?(String) ? id.id : id
+        id.respond_to?(:id) ? id.id : id
       end
     end
   end

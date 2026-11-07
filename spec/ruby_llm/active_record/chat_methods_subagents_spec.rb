@@ -10,6 +10,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   after { travel_back }
 
   let(:ran) { [] }
+  let(:during_lookup) { [] }
   let(:replies) { Hash.new { |all, instructions| all[instructions] = [] } }
   let(:requests) { Hash.new { |all, instructions| all[instructions] = [] } }
 
@@ -29,6 +30,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
   def define_tools
     runs = ran
+    hooks = during_lookup
     stub_const('Wipe', Class.new(RubyLLM::Tool) do
       description 'Wipes the cache'
       requires_approval
@@ -41,6 +43,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       description 'Looks something up'
       define_method(:execute) do
         runs << :lookup
+        hooks.shift&.call
         'Found'
       end
     end)
@@ -226,21 +229,59 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
         instructions 'Audit.'
         tools Wipe
       end)
-      ResearchAgent.tools AuditAgent
+      ResearchAgent.tools Wipe, AuditAgent
       replies['Lead.'].push(calling(research('Audit it')), answer('All audited'))
-      replies['Research.'].push(calling(['audit_agent', { 'task' => 'Wipe the cache' }]), answer('Audited.'))
+      replies['Research.'].push(calling(['audit_agent', { 'task' => 'Wipe the cache' }], 'wipe'), answer('Audited.'))
       replies['Audit.'].push(calling('wipe'), answer('Wiped it.'))
       lead = LeadAgent.create!
       lead.ask('Audit everything')
 
-      approval = LeadAgent.find(lead.id).pending_approvals.sole
-      expect(approval.message.chat).to eq(calls_of(subagent_chat(lead)).find_by!(name: 'audit_agent').subagent_chat)
-      LeadAgent.find(lead.id).approve(approval.tool_call_id)
+      research = subagent_chat(lead)
+      own, delegated = LeadAgent.find(lead.id).pending_approvals.to_a
+      expect(own.message.chat).to eq(research)
+      expect(delegated.message.chat).to eq(calls_of(research).find_by!(name: 'audit_agent').subagent_chat)
+
+      LeadAgent.find(lead.id).approve(delegated.tool_call_id)
+      expect(LeadAgent.find(lead.id)).to be_awaiting_person
+      LeadAgent.find(lead.id).approve(own.tool_call_id)
       expect(LeadAgent.find(lead.id)).not_to be_awaiting_person
 
       expect(LeadAgent.find(lead.id).complete.content).to eq('All audited')
+      expect(ran).to eq(%i[wipe wipe])
+      expect(requests['Research.'].last.last(2)).to contain_exactly([:tool, 'Wiped it.'], [:tool, 'Wiped'])
+    end
+
+    it 'takes an approval recorded while the subagent still works through its round' do
+      lead = LeadAgent.create!
+      during_lookup << lambda {
+        web = LeadAgent.find(lead.id)
+        web.approve(web.pending_approvals.sole)
+      }
+      replies['Lead.'].push(calling(research), answer('All clean'))
+      replies['Research.'].push(calling('wipe', 'lookup'), answer('Cache wiped.'))
+
+      expect(lead.ask('Clean up').content).to eq('All clean')
+      expect(ran).to eq(%i[lookup wipe])
+    end
+
+    it 'lets the calling chat carry on when the subagent decides its own call' do
+      lead = waiting_lead
+      research = subagent_chat(lead)
+
+      ResearchAgent.find(research.id).approve(calls_of(research).find_by!(name: 'wipe').tool_call_id)
+
+      expect(LeadAgent.find(lead.id)).not_to be_awaiting_person
+    end
+
+    it 'forgets a stop left on the calling chat once a person decides for its subagent' do
+      lead = waiting_lead(answer('All clean'))
+      replies['Research.'].push(answer('Cache wiped.'))
+      LeadAgent.find(lead.id).cancel
+
+      LeadAgent.find(lead.id).approve(LeadAgent.find(lead.id).pending_approvals.sole)
+
+      expect(LeadAgent.find(lead.id).complete.content).to eq('All clean')
       expect(ran).to eq([:wipe])
-      expect(requests['Research.'].last.last).to eq([:tool, 'Wiped it.'])
     end
 
     it 'approves each run_code call of a subagent on its own' do
@@ -253,6 +294,9 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect { LeadAgent.find(lead.id).approve(row.tool_call_id, remember: true) }
         .to raise_error(ArgumentError, /cannot be remembered/)
       expect(row.reload.approval).to eq('pending')
+
+      LeadAgent.find(lead.id).approve(row.tool_call_id)
+      expect(row.reload.approval).to eq('approved')
     end
 
     it "decides a subagent's call without the API key its agent's context supplies" do
@@ -362,6 +406,66 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(lead.complete.content).to eq('All clean')
       expect(ran).to eq([:wipe])
       expect(requests['Lead.'].size).to eq(2)
+    end
+
+    it 'stops carrying on once another process holds the call a decision freed' do
+      replies['Lead.'].push(calling(research))
+      replies['Research.'].push(calling('wipe'))
+      lead = LeadAgent.create!
+      lead.ask_later('Clean up')
+      runs = 0
+      allow(lead.to_llm).to receive(:complete).and_wrap_original do |original, *args, &block|
+        runs += 1
+        raise 'kept carrying on' if runs > 3
+
+        original.call(*args, &block).tap do
+          next unless runs == 1
+
+          web = LeadAgent.find(lead.id)
+          web.approve(web.pending_approvals.sole)
+          calls_of(lead).where(name: 'research_agent').update_all(claimed_until: 1.minute.from_now)
+        end
+      end
+
+      lead.complete
+
+      expect(runs).to eq(2)
+      expect(ran).to be_empty
+      expect(LeadAgent.find(lead.id)).to be_waiting
+    end
+  end
+
+  describe 'a schema without the subagent link' do
+    def without_subagent_link
+      connection = ActiveRecord::Base.connection
+      ActiveRecord::Base.transaction do
+        connection.remove_index(:ruby_llm_tool_calls, name: 'index_ruby_llm_tool_calls_on_subagent_chat')
+        connection.remove_column(:ruby_llm_tool_calls, :subagent_chat_id)
+        connection.remove_column(:ruby_llm_tool_calls, :subagent_chat_type)
+        RubyLLM::ActiveRecord::ToolCall.reset_column_information
+        yield
+        raise ActiveRecord::Rollback
+      end
+    ensure
+      RubyLLM::ActiveRecord::ToolCall.reset_column_information
+    end
+
+    it "still runs the subagent in a chat, but can't reach it from another process" do
+      without_subagent_link do
+        replies['Lead.'].push(calling(research, 'wipe'), answer('Started over'))
+        replies['Research.'].push(calling('wipe'))
+        lead = LeadAgent.create!
+        lead.ask('Clean up')
+
+        web = LeadAgent.find(lead.id)
+        own = web.pending_approvals.sole
+        expect(own.message.chat).to eq(lead)
+        web.approve(own)
+
+        expect(LeadAgent.find(lead.id).complete.content).to eq('Started over')
+        expect(ran).to eq([:wipe])
+        expect(requests['Lead.'].last.map(&:last)).to include(a_string_including('lost'))
+      end
     end
   end
 

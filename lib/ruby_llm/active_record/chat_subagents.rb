@@ -23,13 +23,12 @@ module RubyLLM
 
       def subagent_chats(chat = self)
         calls = RubyLLM::ActiveRecord::ToolCall
-        return [] unless chat.persisted? && calls.subagent_chats?
+        return [] unless calls.subagent_chats?
 
         association = chat.messages_association
         calls.uncached do
           calls.where(message_type: association.klass.polymorphic_name, message_id: association.select(:id),
-                      result_id: nil)
-               .where.not(subagent_chat_id: nil).includes(:subagent_chat).filter_map(&:subagent_chat)
+                      result_id: nil).includes(:subagent_chat).filter_map(&:subagent_chat)
         end
       end
 
@@ -48,12 +47,10 @@ module RubyLLM
       end
 
       def with_subagent_approvals(own)
-        chats = subagent_chats
-        return own if chats.empty?
-
         calls = RubyLLM::ActiveRecord::ToolCall
-        [own, *chats.map(&:pending_approvals)].map { |scope| calls.where(id: scope.unscope(:order).select(:id)) }
-                                              .reduce(:or).order(:created_at, :id).skip_query_cache!
+        scopes = [own, *subagent_chats.map(&:pending_approvals)]
+        scopes.map { |scope| calls.where(id: scope.unscope(:order).select(:id)) }
+              .reduce(:or).order(:created_at, :id).skip_query_cache!
       end
 
       def deciding(tool_call, decision)
@@ -78,24 +75,22 @@ module RubyLLM
       end
 
       def wake_callers
-        call = calling_tool_call(self)
-        return unless call
-
-        waiting = pending_approvals.exists?
-        while call
-          chat = call.message.chat_association
-          chat.transaction do
-            chat.forget_stale_cancellation
+        chat = self
+        waiting = false
+        while (call = calling_tool_call(chat))
+          waiting ||= chat.pending_approvals.exists?
+          calling_chat = call.message.chat_association
+          calling_chat.transaction do
+            calling_chat.forget_stale_cancellation
             stop_waiting_on_person(call) unless waiting
           end
-          waiting ||= chat.pending_approvals.exists?
-          call = calling_tool_call(chat)
+          chat = calling_chat
         end
       end
 
       def calling_tool_call(chat)
         calls = RubyLLM::ActiveRecord::ToolCall
-        return unless chat.persisted? && calls.subagent_chats?
+        return unless calls.subagent_chats?
 
         calls.uncached { calls.where(subagent_chat: chat, result_id: nil).includes(:message).first }
       end
