@@ -2,7 +2,7 @@ class <%= message_controller_class_name %> < ApplicationController
   before_action :set_<%= chat_variable_name %>
 
   rescue_from RubyLLM::PendingToolCallsError do
-    redirect_to @<%= chat_variable_name %>, notice: "Approve or deny the requests above to continue.", status: :see_other
+    redirect_to @<%= chat_variable_name %>, notice: "Answer the questions above to continue.", status: :see_other
   end
 
   def create

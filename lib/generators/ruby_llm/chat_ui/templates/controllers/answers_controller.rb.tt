@@ -1,4 +1,4 @@
-class <%= approval_controller_class_name %> < ApplicationController
+class <%= answer_controller_class_name %> < ApplicationController
   before_action :set_<%= chat_variable_name %>
 
   rescue_from RubyLLM::ToolCallRunningError do
@@ -6,10 +6,10 @@ class <%= approval_controller_class_name %> < ApplicationController
   end
 
   def create
-    if ActiveModel::Type::Boolean.new.cast(params[:approved])
-      @<%= chat_variable_name %>.approve(params[:tool_call_id])
+    if params[:decline]
+      @<%= chat_variable_name %>.decline(params[:question_id])
     else
-      @<%= chat_variable_name %>.deny(params[:tool_call_id])
+      @<%= chat_variable_name %>.answer(params[:question_id], params[:answer])
     end
     <%= chat_job_class_name %>.perform_later(@<%= chat_variable_name %>.id)
 

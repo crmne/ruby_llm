@@ -1,0 +1,60 @@
+<%% answers_path = <%= chat_variable_name %>_answers_path(<%= chat_model_name.demodulize.underscore %>) %>
+<%% choices = question.fields.first.choices if question.fields.one? %>
+<div id="question_<%%= question.id.parameterize %>" class="question"
+     style="margin-bottom: 20px; padding: 10px; border-left: 3px solid #d97706; background: #fffbeb;">
+  <%% if question.approval? %>
+    <%% arguments = question.tool_call.arguments %>
+    <%% sandbox = arguments["sandbox"].presence if question.tool_call.name == "run_code" %>
+    <div style="font-weight: bold; margin-bottom: 5px;">Approve <%%= question.tool_call.name %>?</div>
+    <%% if sandbox %>
+      <p style="margin: 0 0 5px;"><%%= arguments["reason"] %></p>
+      <pre style="white-space: pre-wrap; margin: 0 0 5px;"><%%= arguments["code"] %></pre>
+      <p style="margin: 0 0 10px;">Runs in the <strong><%%= sandbox %></strong> sandbox. <%%= <%= chat_model_name.demodulize.underscore %>.tools[:run_code]&.summary(sandbox) %></p>
+    <%% else %>
+      <dl style="margin: 0 0 10px;">
+        <%% arguments.each do |name, value| %>
+          <dt style="font-weight: bold; margin-top: 5px;"><%%= name.to_s.humanize %></dt>
+          <dd style="margin: 0;"><pre style="white-space: pre-wrap; margin: 0;"><%%= value.is_a?(String) ? value : value.to_json %></pre></dd>
+        <%% end %>
+      </dl>
+    <%% end %>
+    <%%= button_to "Approve", answers_path, params: { question_id: question.id }, form: { style: "display: inline-block;" } %>
+    <%%= button_to "Deny", answers_path, params: { question_id: question.id, decline: true }, form: { style: "display: inline-block;" } %>
+  <%% else %>
+    <div style="font-weight: bold; margin-bottom: 5px;"><%%= question.message %></div>
+    <%% if question.form? && !choices %>
+      <%%= form_with url: answers_path do |form| %>
+        <%%= form.hidden_field :question_id, value: question.id %>
+        <%% if question.fields.one? %>
+          <%%= form.text_field :answer, value: question.fields.first.default, required: question.fields.first.required?,
+            "aria-label": question.message %>
+        <%% else %>
+          <%% question.fields.each do |field| %>
+            <div style="margin-bottom: 5px;">
+              <%%= form.label "answer_#{field.name}", field.title || field.name.to_s.humanize %>
+              <%% if field.choices %>
+                <%%= form.select "answer[#{field.name}]", field.choices, { selected: field.default, include_blank: !field.required? }, id: "answer_#{field.name}" %>
+              <%% elsif field.type == "boolean" %>
+                <%%= form.check_box "answer[#{field.name}]", { checked: field.default, id: "answer_#{field.name}" }, "true", "false" %>
+              <%% else %>
+                <%%= form.text_field "answer[#{field.name}]", value: field.default, required: field.required?, id: "answer_#{field.name}" %>
+              <%% end %>
+            </div>
+          <%% end %>
+        <%% end %>
+        <%%= form.submit "Send" %>
+        <%%= form.button "Decline", name: :decline, value: true, formnovalidate: true %>
+      <%% end %>
+    <%% else %>
+      <%% if question.url? %>
+        <p style="margin: 0 0 10px;"><%%= link_to "Open the page", question.url, target: "_blank", rel: "noopener" %></p>
+        <%%= button_to "Done", answers_path, params: { question_id: question.id }, form: { style: "display: inline-block;" } %>
+      <%% else %>
+        <%% choices.each do |choice| %>
+          <%%= button_to choice, answers_path, params: { question_id: question.id, answer: choice }, form: { style: "display: inline-block;" } %>
+        <%% end %>
+      <%% end %>
+      <%%= button_to "Decline", answers_path, params: { question_id: question.id, decline: true }, form: { style: "display: inline-block;" } %>
+    <%% end %>
+  <%% end %>
+</div>

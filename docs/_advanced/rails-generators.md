@@ -129,13 +129,13 @@ The UI generator also supports custom model names:
 bin/rails generate ruby_llm:chat_ui chat:Conversation message:ChatMessage
 ```
 
-### Approvals and Attachments
+### Questions and Attachments
 
-When a tool [requires approval]({% link _tools/tool-execution.md %}#requiring-approval), the chat page shows a card for each call in `chat.pending_approvals`, with its arguments and Approve and Deny buttons. A `run_code` call that asks for a [wider sandbox]({% link _advanced/sandboxes.md %}) shows its reason, its code, and what that sandbox allows. Remote tool calls, such as those from MCP servers, get the same cards. While a call waits, the transcript hides its tool call entry so the call shows only as a card, and the message form gives way to a line asking for a decision. `MessagesController` redirects a message sent in the meantime back to the chat.
+When a tool call [waits on a person]({% link _tools/tool-execution.md %}#asking-a-person), the chat page shows a card for each question in `chat.pending_questions`. An approval shows the call's arguments with Approve and Deny buttons. A `run_code` call that asks for a [wider sandbox]({% link _advanced/sandboxes.md %}) shows its reason, its code, and what that sandbox allows. A question a tool asks with `ask`, or an MCP server asks, shows a button for each choice, a field for free text, a form for several fields, or a link to the page it asks the person to visit, with a Decline button. Remote tool calls, such as those from MCP servers, get the same cards. While an approval waits, the transcript hides its tool call entry so the call shows only as a card, and the message form gives way to a line asking for an answer. `MessagesController` redirects a message sent in the meantime back to the chat.
 
-Each button posts to `ApprovalsController#create`, which records the decision with `chat.approve` or `chat.deny`, replaces the cards with a Turbo Stream, and enqueues `ChatResponseJob` to continue the conversation. Decided calls show as ordinary tool calls with their results. When the job finishes or pauses for the next approval, the page refreshes with the new cards and the message form.
+Each card posts to `AnswersController#create`, which records the answer with `chat.answer`, or `chat.decline` for Deny and Decline, replaces the cards with a Turbo Stream, and enqueues `ChatResponseJob` to continue the conversation. Approved calls run, and a tool that asked runs again with the answer. When the job finishes or pauses for the next question, the page refreshes with the new cards and the message form.
 
-The chat UI talks to `ChatAgent` in `app/agents/chat_agent.rb`. The controllers and the job create chats with `ChatAgent.create!` and load them with `ChatAgent.find`, so whatever you add to it reaches the UI. Give it tools, instructions, an MCP server, files, or code execution, one line each, and tools that require approval get their cards:
+The chat UI talks to `ChatAgent` in `app/agents/chat_agent.rb`. The controllers and the job create chats with `ChatAgent.create!` and load them with `ChatAgent.find`, so whatever you add to it reaches the UI. Give it tools, instructions, an MCP server, files, or code execution, one line each, and every question its tools ask gets a card:
 
 ```ruby
 class ChatAgent < ApplicationAgent
