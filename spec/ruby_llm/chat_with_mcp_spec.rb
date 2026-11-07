@@ -336,6 +336,14 @@ RSpec.describe RubyLLM::Chat do
       expect(result).to eq('Deploy cancelled')
     end
 
+    it "gives the model the note on a server's question after its result, and the server only the decline" do
+      chat.with_mcp(files).ask('Deploy')
+      chat.pending_questions.sole.decline('Ship to staging first')
+      chat.complete
+
+      expect(result).to eq("Deploy cancelled\n\nThe user declined: Ship to staging first")
+    end
+
     it 'asks the person to visit a page the server names' do
       allow(chat.provider).to receive(:complete).and_return(tool_call('connect', {}), answer)
       chat.with_mcp(files).ask('Connect')

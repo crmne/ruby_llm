@@ -111,6 +111,44 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.approve('call_later')).to eq(chat)
   end
 
+  it 'keeps the turn ending when a tool halts on a declined question, with the note after its result' do
+    halting = Class.new(RubyLLM::Tool) do
+      def self.name = 'PickSeat'
+
+      description 'Asks for a seat'
+      define_method(:execute) { ask('Window or aisle?', choices: %w[window aisle]) || halt('No seat chosen.') }
+    end
+    allow(chat.provider).to receive(:complete).and_return(calls('pick_seat'), answer)
+    chat.with_tools(halting).ask('Go')
+
+    chat.pending_questions.sole.decline('At the gate')
+    chat.complete
+
+    expect(results.sole).to eq("No seat chosen.\n\nThe user declined: At the gate")
+    expect(chat.provider).to have_received(:complete).once
+  end
+
+  it 'keeps the files a tool returns after a declined question, with the note after its text' do
+    filing = Class.new(RubyLLM::Tool) do
+      def self.name = 'PickSeat'
+
+      description 'Asks for a seat'
+      define_method(:execute) do
+        ask('Window or aisle?', choices: %w[window aisle])
+        ['Your boarding pass', RubyLLM::Attachment.new(StringIO.new('pass'), filename: 'pass.txt')]
+      end
+    end
+    allow(chat.provider).to receive(:complete).and_return(calls('pick_seat'), answer)
+    chat.with_tools(filing).ask('Go')
+
+    chat.pending_questions.sole.decline('At the gate')
+    chat.complete
+
+    result = chat.messages.find(&:tool_result?)
+    expect(result.content).to eq("Your boarding pass\n\nThe user declined: At the gate")
+    expect(result.attachments.map(&:filename)).to eq(['pass.txt'])
+  end
+
   it 'takes a blank note as no note' do
     ask_for('issue_refund')
 
