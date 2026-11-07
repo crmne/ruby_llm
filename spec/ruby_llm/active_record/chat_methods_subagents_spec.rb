@@ -391,6 +391,22 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
       expect(created.sole.ask('Anything else?').content).to eq('Found more.')
     end
+
+    it 'keeps a subagent going when the call it worked for is answered and its caller stopped during its run' do
+      stub_const("#{described_class}::CANCELLATION_POLL_INTERVAL", 0.0)
+      lead = waiting_lead
+      research = ResearchAgent.find(subagent_chat(lead).id)
+      research.approve(calls_of(research).find_by!(name: 'wipe'))
+      replies['Research.'].push(lambda {
+        answered = Message.create!(chat_id: lead.id, role: 'tool', content: 'Answered elsewhere')
+        calls_of(lead).find_by!(name: 'research_agent').update!(result: answered)
+        LeadAgent.find(lead.id).cancel
+        answer('Cache wiped.')
+      })
+
+      expect(research.complete.content).to eq('Cache wiped.')
+      expect(ran).to eq([:wipe])
+    end
   end
 
   describe 'two processes' do
