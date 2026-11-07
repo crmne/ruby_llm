@@ -68,8 +68,8 @@ module RubyLLM
       #   chat.decline(params[:question_id], params[:note])
       #
       # Raises ArgumentError for a question the chat never asked, and
-      # RubyLLM::ToolCallRunningError for an approval whose call started
-      # running after it was listed.
+      # RubyLLM::ToolCallRunningError for an approval still pending whose
+      # call is already running.
       def decline(question, note = nil)
         pending = persisted_pending_question(question)
         response = RubyLLM::Question.declined(note)

@@ -94,7 +94,7 @@ end
 
 The answer persists on the tool call. The next job reads it and carries the call on: an approved tool runs, and a tool that asked runs again with the answer. Use `chat.pending_questions` to render what waits for an answer, and authorize the answer through your application's permissions.
 
-A double click on "Approve" enqueues two jobs. Only one of them runs the tool: the other finds the chat running, or the call answered, and returns. Answering again changes nothing, and declining an approval whose call started running after the person saw it raises `RubyLLM::ToolCallRunningError`.
+A double click on "Approve" enqueues two jobs. Only one of them runs the tool: the other finds the chat running, or the call answered, and returns. Answering again changes nothing, and declining an approval that is still pending while its call already runs raises `RubyLLM::ToolCallRunningError`.
 
 ## One Process at a Time
 

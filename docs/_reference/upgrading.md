@@ -425,7 +425,7 @@ In 2.1, a later attachment overwrote an earlier one with the same name in `attac
 
 ## Rescue Declines of Running Calls
 
-In 2.1, `deny` on a persisted tool call that had started running recorded a denial the running tool never saw. In 2.2, `decline` says no instead. It changes nothing for a call that no longer waits for approval, and raises `RubyLLM::ToolCallRunningError` when the call started running after the person saw the approval but before the decline arrived. `approve` on a running call, and either answer on an answered call, change nothing, where 2.1 overwrote the recorded decision. Rescue the error where you record declines:
+In 2.1, `deny` on a persisted tool call that had started running recorded a denial the running tool never saw. In 2.2, `decline` says no instead. It changes nothing for a call that no longer waits for approval, such as one another decision approved first, and raises `RubyLLM::ToolCallRunningError` when the approval is still pending but its call is already running, so the decline can't be recorded. `approve` on a running call, and either answer on an answered call, change nothing, where 2.1 overwrote the recorded decision. Rescue the error where you record declines:
 
 ```ruby
 rescue_from RubyLLM::ToolCallRunningError do
