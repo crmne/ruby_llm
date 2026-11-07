@@ -237,21 +237,9 @@ module RubyLLM
         @exclusive || false
       end
 
-      # :call-seq:
-      #   max_run_time(seconds) -> seconds
-      #   max_run_time -> seconds or nil
-      #
-      # Sets how long a run of this tool may take before a persisted chat
-      # treats it as crashed, overriding Configuration#max_run_time. Another
-      # process that resumes the chat after that time, or within a minute
-      # of the running process dying, runs the call again.
-      # Without an argument, returns the declared value, or +nil+.
-      #
-      #   class GenerateReport < RubyLLM::Tool
-      #     max_run_time 2.hours
-      #   end
-      #
-      def max_run_time(seconds = nil)
+      # Seconds a run of this tool may take before a persisted chat treats
+      # it as crashed, overriding Configuration#max_run_time.
+      def max_run_time(seconds = nil) # :nodoc:
         @max_run_time = seconds if seconds
         @max_run_time
       end
@@ -402,9 +390,7 @@ module RubyLLM
       self.class.inline_limit
     end
 
-    # Returns the run time declared on the class with ::max_run_time, or
-    # +nil+ to use Configuration#max_run_time.
-    def max_run_time
+    def max_run_time # :nodoc:
       self.class.max_run_time
     end
 
