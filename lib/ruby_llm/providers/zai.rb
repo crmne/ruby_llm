@@ -24,6 +24,10 @@ module RubyLLM
       end
 
       class << self
+        def models_dev_provider_ids # :nodoc:
+          %w[zai]
+        end
+
         def configuration_options
           %i[zai_api_key zai_api_base]
         end

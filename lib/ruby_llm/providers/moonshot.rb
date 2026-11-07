@@ -24,6 +24,14 @@ module RubyLLM
       end
 
       class << self
+        def open_telemetry_name # :nodoc:
+          'moonshot_ai'
+        end
+
+        def models_dev_provider_ids # :nodoc:
+          %w[moonshotai]
+        end
+
         def capabilities
           Moonshot::Capabilities
         end

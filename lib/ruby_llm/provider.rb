@@ -563,6 +563,18 @@ module RubyLLM
         id
       end
 
+      # The models.dev provider ids whose catalogs list this provider's
+      # models. Empty for a provider models.dev does not list.
+      def models_dev_provider_ids # :nodoc:
+        []
+      end
+
+      # The provider's +gen_ai.provider.name+ in the OpenTelemetry GenAI
+      # conventions. Providers the conventions name differently override this.
+      def open_telemetry_name # :nodoc:
+        slug
+      end
+
       # Returns the configuration keys that must be set before the
       # provider is usable. The base implementation returns an empty
       # array.

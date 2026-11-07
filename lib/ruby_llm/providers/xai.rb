@@ -23,6 +23,14 @@ module RubyLLM
       end
 
       class << self
+        def open_telemetry_name # :nodoc:
+          'x_ai'
+        end
+
+        def models_dev_provider_ids # :nodoc:
+          %w[xai]
+        end
+
         def capabilities
           XAI::Capabilities
         end

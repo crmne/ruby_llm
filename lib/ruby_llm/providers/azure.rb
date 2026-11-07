@@ -119,6 +119,14 @@ module RubyLLM
       end
 
       class << self
+        def open_telemetry_name # :nodoc:
+          'azure.ai.openai'
+        end
+
+        def models_dev_provider_ids # :nodoc:
+          %w[azure]
+        end
+
         def capabilities
           Azure::Capabilities
         end

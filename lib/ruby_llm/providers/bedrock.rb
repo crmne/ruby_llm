@@ -51,6 +51,14 @@ module RubyLLM
         Models.models_dev_alias(...)
       end
 
+      def self.open_telemetry_name # :nodoc:
+        'aws.bedrock'
+      end
+
+      def self.models_dev_provider_ids # :nodoc:
+        %w[amazon-bedrock]
+      end
+
       def initialize(config) # :nodoc:
         super
         @connection = signed_connection(api_base)

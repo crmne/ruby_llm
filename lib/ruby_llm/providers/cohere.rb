@@ -18,6 +18,10 @@ module RubyLLM
       end
 
       class << self
+        def models_dev_provider_ids # :nodoc:
+          %w[cohere]
+        end
+
         def configuration_options
           %i[cohere_api_key cohere_api_base]
         end

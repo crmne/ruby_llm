@@ -19,6 +19,10 @@ module RubyLLM
       end
 
       class << self
+        def models_dev_provider_ids # :nodoc:
+          %w[meta]
+        end
+
         def configuration_options
           %i[meta_api_key meta_api_base]
         end

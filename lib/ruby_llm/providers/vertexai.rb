@@ -48,6 +48,14 @@ module RubyLLM
         def models_dev_model_id(id)
           id&.split('@')&.first
         end
+
+        def open_telemetry_name # :nodoc:
+          'gcp.vertex_ai'
+        end
+
+        def models_dev_provider_ids # :nodoc:
+          %w[google-vertex]
+        end
       end
 
       def initialize(config) # :nodoc:

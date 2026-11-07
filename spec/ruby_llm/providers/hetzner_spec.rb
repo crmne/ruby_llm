@@ -46,7 +46,7 @@ RSpec.describe RubyLLM::Providers::Hetzner do
   end
 
   it 'reads the models.dev hetzner catalog' do
-    expect(RubyLLM::Models::MODELS_DEV_PROVIDER_MAP).to include('hetzner' => 'hetzner')
+    expect(described_class.models_dev_provider_ids).to eq(%w[hetzner])
   end
 
   it 'reads string error bodies' do

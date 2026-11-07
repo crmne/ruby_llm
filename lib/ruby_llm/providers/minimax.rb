@@ -19,6 +19,10 @@ module RubyLLM
       end
 
       class << self
+        def models_dev_provider_ids # :nodoc:
+          %w[minimax]
+        end
+
         def configuration_options
           %i[minimax_api_key minimax_api_base]
         end

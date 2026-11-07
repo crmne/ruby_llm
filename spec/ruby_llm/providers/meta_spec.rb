@@ -62,7 +62,7 @@ RSpec.describe RubyLLM::Providers::Meta do
   end
 
   it 'reads the models.dev meta catalog' do
-    expect(RubyLLM::Models::MODELS_DEV_PROVIDER_MAP).to include('meta' => 'meta')
+    expect(described_class.models_dev_provider_ids).to eq(%w[meta])
     expect(RubyLLM.models.find(model_id, provider: :meta).context_window).to eq(1_048_576)
   end
 

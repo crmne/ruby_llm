@@ -20,6 +20,10 @@ module RubyLLM
       end
 
       class << self
+        def models_dev_provider_ids # :nodoc:
+          %w[hetzner]
+        end
+
         def configuration_options
           %i[hetzner_api_key hetzner_api_base]
         end

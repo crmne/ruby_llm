@@ -19,16 +19,6 @@ module RubyLLM
         'workflow.ruby_llm' => 'invoke_workflow',
         'workflow_step.ruby_llm' => 'ruby_llm.workflow_step'
       }.freeze
-      PROVIDERS = {
-        'bedrock' => 'aws.bedrock',
-        'azure' => 'azure.ai.openai',
-        'gemini' => 'gcp.gemini',
-        'vertexai' => 'gcp.vertex_ai',
-        'mistral' => 'mistral_ai',
-        'moonshot' => 'moonshot_ai',
-        'ollama_cloud' => 'ollama',
-        'xai' => 'x_ai'
-      }.freeze
       INTERNAL_OPERATIONS = %w[
         invoke_agent execute_tool invoke_workflow ruby_llm.workflow_step ruby_llm.code_execution
       ].freeze
@@ -59,7 +49,7 @@ module RubyLLM
 
         {
           'gen_ai.operation.name' => operation,
-          'gen_ai.provider.name' => PROVIDERS.fetch(payload[:provider], payload[:provider]),
+          'gen_ai.provider.name' => provider_name(payload[:provider]),
           'gen_ai.request.model' => payload[:model],
           'gen_ai.request.temperature' => payload[:temperature],
           'gen_ai.request.max_tokens' => payload[:max_output_tokens],
@@ -68,6 +58,11 @@ module RubyLLM
           'gen_ai.embeddings.dimension.count' => payload[:dimensions],
           'gen_ai.output.type' => output_type(event, payload)
         }.compact
+      end
+
+      def provider_name(slug)
+        provider = Provider.resolve(slug) if slug
+        provider ? provider.open_telemetry_name : slug
       end
 
       def reasoning_level(thinking)

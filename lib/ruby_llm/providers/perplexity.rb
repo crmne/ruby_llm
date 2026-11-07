@@ -58,6 +58,10 @@ module RubyLLM
       end
 
       class << self
+        def models_dev_provider_ids # :nodoc:
+          %w[perplexity perplexity-agent]
+        end
+
         def configuration_options
           %i[perplexity_api_key perplexity_api_base]
         end

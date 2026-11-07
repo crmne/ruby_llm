@@ -30,6 +30,14 @@ module RubyLLM
       end
 
       class << self
+        def open_telemetry_name # :nodoc:
+          'ollama'
+        end
+
+        def models_dev_provider_ids # :nodoc:
+          %w[ollama-cloud]
+        end
+
         def configuration_options
           %i[ollama_cloud_api_key ollama_cloud_api_base]
         end

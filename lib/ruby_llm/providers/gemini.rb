@@ -36,6 +36,14 @@ module RubyLLM
       end
 
       class << self
+        def open_telemetry_name # :nodoc:
+          'gcp.gemini'
+        end
+
+        def models_dev_provider_ids # :nodoc:
+          %w[google]
+        end
+
         def capabilities
           Gemini::Capabilities
         end

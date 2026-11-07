@@ -27,6 +27,14 @@ module RubyLLM
       def batch_cost_multiplier(**) = 0.5
 
       class << self
+        def open_telemetry_name # :nodoc:
+          'mistral_ai'
+        end
+
+        def models_dev_provider_ids # :nodoc:
+          %w[mistral]
+        end
+
         def capabilities
           Mistral::Capabilities
         end
