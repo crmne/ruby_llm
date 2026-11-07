@@ -25,6 +25,12 @@ module RubyLLM
         def configuration_requirements
           %i[<%= api_key_config %>]
         end
+<% if models_dev_provider -%>
+
+        def models_dev_provider_ids # :nodoc:
+          %w[<%= models_dev_provider %>]
+        end
+<% end -%>
 <% if dynamic_models? -%>
 
         def assume_models_exist?

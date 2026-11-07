@@ -115,7 +115,6 @@ module RubyLLM
           update_core_env
           update_core_spec_configuration
           update_core_vcr_configuration
-          update_core_models_dev_map if models_dev_provider
         end
 
         def generate_provider_gem
@@ -194,13 +193,6 @@ module RubyLLM
           line = "  config.filter_sensitive_data('<#{api_key_env}>') { " \
                  "ENV.fetch('#{api_key_env}', nil) }"
           insert_sorted_line(path, line, /^\s+config\.filter_sensitive_data\('<[A-Z0-9_]+>'\)/)
-        end
-
-        def update_core_models_dev_map
-          path = file_path('lib/ruby_llm/models.rb')
-          return unless File.exist?(path)
-
-          insert_sorted_entry(path, "      '#{models_dev_provider}' => '#{slug}'")
         end
 
         def write_template(template, relative_path, executable: false)
