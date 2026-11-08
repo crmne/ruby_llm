@@ -2460,8 +2460,11 @@ module RubyLLM
       else
         handle_sequential_tool_calls(executable.slice(*claimed))
       end
+    rescue SignalException, SystemExit => e
+      stopped_by = e
+      raise
     ensure
-      release_tool_calls(claimed)
+      release_tool_calls(claimed, stopped_by)
     end
 
     def claim_tool_calls(executable, answered)
@@ -2473,9 +2476,9 @@ module RubyLLM
       end
     end
 
-    def release_tool_calls(ids)
+    def release_tool_calls(ids, stopped_by)
       answered = messages.filter_map { |message| message.tool_call_id if message.tool_result? }
-      @tool_call_state.release(ids - answered)
+      @tool_call_state.release(ids - answered, stopped_by)
     end
 
     def max_run_time_for(tool_call)

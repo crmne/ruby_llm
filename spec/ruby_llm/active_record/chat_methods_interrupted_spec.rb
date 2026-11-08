@@ -79,6 +79,29 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     Chat.find(chat.id)
   end
 
+  # A tool that posts an update somewhere, doing whatever +behavior+ does.
+  def posting(&behavior)
+    Class.new(RubyLLM::Tool) do
+      def self.name = 'PostUpdate'
+
+      description 'Posts an update'
+      define_method(:execute) { behavior.call }
+    end
+  end
+
+  # A job whose model calls post_update +calls+ times in one round, then
+  # replies.
+  def posting_job(chat, calls: 1, &behavior)
+    tool_calls = Array.new(calls) { RubyLLM::ToolCall.new(id: "call_#{SecureRandom.hex(4)}", name: 'post_update') }
+    answers = [RubyLLM::Message.new(role: :assistant, content: '', tool_calls: tool_calls.index_by(&:id),
+                                    input_tokens: 1, output_tokens: 1)]
+    job_for(chat, posting(&behavior)) { answers.shift || reply }
+  end
+
+  def tool_call_rows(chat)
+    RubyLLM::ActiveRecord::ToolCall.where(message_id: Message.where(chat_id: chat.id).select(:id)).order(:id).to_a
+  end
+
   # Starts a reply in a forked process and ends that process without
   # unwinding while the provider answers, as a crash or a SIGKILL would.
   def killed_mid_reply(chat)
@@ -315,5 +338,90 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
       expect(chats.interrupted.find_each(batch_size: 2).to_a).to match_array(interrupted)
     end
+  end
+
+  it 'keeps the claim of a tool call that was running when its thread was killed at exit' do
+    chat = asked
+    started = Queue.new
+    job = posting_job(chat) do
+      started << true
+      sleep
+    end
+    thread = Thread.new { job.complete }
+    expect(started.pop(timeout: 10)).to be(true)
+    expect(thread.kill.join(10)).to eq(thread)
+
+    expect(tool_call_rows(chat).sole).to have_attributes(result_id: nil, claimed_until: be_future)
+    expect(row(chat).claim_token).to be_present
+  end
+
+  it 'keeps the claim of a tool call that was running when a TERM signal stopped its run' do
+    chat = asked
+    job = posting_job(chat) { raise SignalException, 'TERM' }
+
+    expect { job.complete }.to raise_error(SignalException)
+    expect(tool_call_rows(chat).sole).to have_attributes(result_id: nil, claimed_until: be_future)
+  end
+
+  it 'keeps the claims of the chat and its running tool call together on shutdown, to expire alike' do
+    chat = asked
+    job = posting_job(chat) { raise SignalException, 'TERM' }
+
+    expect { job.complete }.to raise_error(SignalException)
+    expect(row(chat).claimed_until).to be_future
+    expect(tool_call_rows(chat).sole.claimed_until).to be_future
+    travel_to [row(chat).claimed_until, tool_call_rows(chat).sole.claimed_until].max + 1
+    expect(chats.interrupted).to contain_exactly(chat)
+    expect(tool_call_rows(chat).sole).to have_attributes(result_id: nil, running?: false)
+  end
+
+  it 'releases the claim of a tool call that has not started when its run shuts down' do
+    chat = asked
+    job = posting_job(chat, calls: 2) { raise SignalException, 'TERM' }
+
+    expect { job.complete }.to raise_error(SignalException)
+    running, waiting = tool_call_rows(chat)
+    expect(running.claimed_until).to be_future
+    expect(waiting).to have_attributes(result_id: nil, claimed_until: nil)
+  end
+
+  it 'releases the claim of a tool call whose run Ctrl-C stopped, along with the chat' do
+    chat = asked
+    job = posting_job(chat) { raise Interrupt }
+
+    expect { job.complete }.to raise_error(Interrupt)
+    expect(tool_call_rows(chat).sole).to have_attributes(result_id: nil, claimed_until: nil)
+    expect(row(chat)).to have_attributes(claim_token: nil, claimed_until: nil)
+  end
+
+  it 'releases the claim of a tool call that raised' do
+    chat = asked
+    job = posting_job(chat) { raise ArgumentError, 'Slack is down' }
+
+    expect { job.complete }.to raise_error(ArgumentError)
+    expect(tool_call_rows(chat).sole).to have_attributes(result_id: nil, claimed_until: nil)
+    expect(row(chat)).to have_attributes(claim_token: nil, claimed_until: nil)
+  end
+
+  it 'releases the claim of a tool call whose run was cancelled while it ran' do
+    stub_const("#{described_class}::CANCELLATION_POLL_INTERVAL", 0.0)
+    chat = asked
+    job = posting_job(chat) do
+      row(chat).cancel
+      raise RubyLLM::CancelledError
+    end
+
+    expect { job.complete }.to raise_error(RubyLLM::CancelledError)
+    expect(tool_call_rows(chat).sole.claimed_until).to be_nil
+    expect(row(chat).claim_token).to be_nil
+  end
+
+  it 'clears the claim of a tool call that completed' do
+    chat = asked
+    job = posting_job(chat) { 'posted' }
+
+    job.complete
+    expect(tool_call_rows(chat).sole).to have_attributes(result_id: be_present, claimed_until: nil)
+    expect(row(chat)).to have_attributes(claim_token: nil, claimed_until: nil)
   end
 end

@@ -52,3 +52,6 @@ ignore:
   # RunClaims.interrupted: on SQLite, claim_token != 1 is NULL for a NULL
   # token and true for every UUID token, as IS NOT NULL is.
   - 4c317e36bbad
+  # Chat#release_tool_calls: a call answered in this run dropped its claim
+  # when its result was recorded, so releasing it again changes nothing.
+  - cd2b9be256c9

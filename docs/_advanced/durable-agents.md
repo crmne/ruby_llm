@@ -158,7 +158,9 @@ Rails.application.server { ResumeInterruptedChatsJob.set(wait: 1.minute).perform
 
 `Rails.application.server` runs when a web server loads `config.ru`, never in the console, a rake task, or a job worker. Don't write a polling worker or a boot sweep of your own: the generated job is both, and the claims let only one process answer each chat, however many servers boot at once.
 
-`Chat.interrupted` returns the chats whose run died holding its claim, because a crash or a deploy stopped its process, once that claim has expired; a run that finishes, pauses, is cancelled, or fails releases its claim, so its chat never counts. It's a scope, so it chains with your own and loads in batches:
+`Chat.interrupted` returns the chats whose run died holding its claim, because a crash or a deploy stopped its process, once that claim has expired; a run that finishes, pauses, is cancelled, or fails releases its claim, so its chat never counts. A tool call that was running when its process shut down keeps its claim to expire too, the only record that it started. A live run whose tool works past `config.max_run_time` also shows up as interrupted, since its claims stop renewing then, so give a long tool a longer `config.max_run_time`, or have it [pause its call]({% link _tools/tool-execution.md %}#pausing-a-tool-call).
+
+It's a scope, so it chains with your own and loads in batches:
 
 ```ruby
 Chat.where(account: account).interrupted.find_each { |chat| CompleteJob.perform_later(chat.id) }

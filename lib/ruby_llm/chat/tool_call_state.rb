@@ -92,7 +92,9 @@ module RubyLLM
         requested
       end
 
-      def release(_ids); end
+      # Frees the claims on +ids+ once their round ends, whether it ended
+      # normally or by +stopped_by+, the signal or exit that stopped it.
+      def release(_ids, _stopped_by = nil); end
 
       # Notes that +tool_call+, claimed with its round, starts running now.
       def started(_tool_call); end
