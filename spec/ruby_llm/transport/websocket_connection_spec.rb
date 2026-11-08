@@ -204,6 +204,15 @@ RSpec.describe RubyLLM::Transport::WebsocketConnection do
     expect(Socket).not_to have_received(:tcp)
   end
 
+  it 'rejects configured TLS options before opening a socket' do
+    config.ssl = { ca_file: '/certs/internal-ca.pem' }
+    allow(Socket).to receive(:tcp)
+
+    expect { described_class.open('wss://example.com', headers: {}, config:) { nil } }
+      .to raise_error(ArgumentError, /do not support TLS options/)
+    expect(Socket).not_to have_received(:tcp)
+  end
+
   it 'requires the optional driver with an actionable error' do
     connection = described_class.new('wss://example.com', headers: {}, config:)
     allow(connection).to receive(:require).with('websocket/driver').and_raise(LoadError)

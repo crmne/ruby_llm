@@ -24,6 +24,7 @@ RSpec.describe RubyLLM::Transport::Connection do
         retry_interval_randomness: 0.5,
         retry_backoff_factor: 2,
         http_proxy: nil,
+        ssl: nil,
         log_regexp_timeout: 1.0,
         faraday_adapter: :net_http
       )

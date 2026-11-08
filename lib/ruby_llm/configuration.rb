@@ -311,6 +311,17 @@ module RubyLLM
     option :http_proxy, nil
 
     ##
+    # :attr_accessor: ssl
+    #
+    # TLS options for all requests, as a Hash of Faraday's SSL option
+    # keys, such as <tt>{ ca_file: '/certs/internal-ca.pem' }</tt> or
+    # <tt>{ verify: false }</tt>. A context copies its strings, but shares
+    # objects such as a +cert_store+, so give each context its own and
+    # leave it unchanged once used. WebSocket connections raise
+    # ArgumentError when it is set. Default: +nil+.
+    option :ssl, nil
+
+    ##
     # :attr_accessor: tool_concurrency
     #
     # How chats run multiple tool calls from one response: +false+ for
@@ -431,10 +442,11 @@ module RubyLLM
     def initialize_copy(source) # :nodoc:
       super
       @file_converters = @file_converters.dup
+      @ssl = @ssl.to_h.transform_values { |value| value.is_a?(String) ? value.dup : value } if @ssl
     end
 
     def instance_variables # :nodoc:
-      super.reject { |ivar| ivar.to_s.match?(/(_id|_key|_secret|_token|_credential_provider|_proxy)$/) }
+      super.reject { |ivar| ivar.to_s.match?(/(_id|_key|_secret|_token|_credential_provider|_proxy|\A@ssl)$/) }
     end
 
     # Object#inspect reads the instance variable table directly, so

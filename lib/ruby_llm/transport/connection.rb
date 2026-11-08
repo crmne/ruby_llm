@@ -19,7 +19,7 @@ module RubyLLM
       # The key a shared Faraday connection is cached under: the provider,
       # whether it streams, and everything ::build reads.
       Settings = Struct.new(
-        :provider, :stream, :api_base, :adapter, :timeout, :proxy, :logger, :log_bodies, :log_regexp_timeout,
+        :provider, :stream, :api_base, :adapter, :timeout, :proxy, :ssl, :logger, :log_bodies, :log_regexp_timeout,
         :max_retries, :retry_interval, :retry_max_interval, :retry_interval_randomness, :retry_backoff_factor,
         keyword_init: true
       )
@@ -35,6 +35,7 @@ module RubyLLM
           f.use ReleaseRequest
           f.options.timeout = config.request_timeout
           f.proxy = config.http_proxy if config.http_proxy
+          f.ssl.update(ssl_snapshot(config.ssl)) if config.ssl
           f.response :logger,
                      RubyLLM.logger,
                      bodies: false,
@@ -77,6 +78,12 @@ module RubyLLM
         CACHE
       end
 
+      # A frozen copy of +ssl+, so a value changed in place afterwards
+      # reaches neither a cache key nor a connection already built.
+      def self.ssl_snapshot(ssl)
+        ssl.to_h.transform_values { |value| value.is_a?(String) ? value.dup.freeze : value }.freeze
+      end
+
       # The result is shared across threads and contexts, so the middleware
       # stack is built now rather than lazily, without a lock, on the first
       # request, and the defaults every request copies are frozen.
@@ -87,6 +94,7 @@ module RubyLLM
           setup_retry(faraday, settings)
           setup_middleware(faraday, settings)
           setup_http_proxy(faraday, settings)
+          setup_ssl(faraday, settings)
         end
         [connection.headers, connection.params, connection.options].each(&:freeze)
         connection.app
@@ -180,6 +188,7 @@ module RubyLLM
           adapter: @config.faraday_adapter,
           timeout: @config.request_timeout,
           proxy: @config.http_proxy,
+          ssl: (self.class.ssl_snapshot(@config.ssl) if @config.ssl),
           logger: logger,
           log_bodies: logger.debug?,
           log_regexp_timeout: @config.log_regexp_timeout,
@@ -264,6 +273,12 @@ module RubyLLM
         faraday.proxy = settings.proxy
       end
 
+      def self.setup_ssl(faraday, settings)
+        return unless settings.ssl
+
+        faraday.ssl.update(settings.ssl)
+      end
+
       def self.retry_exceptions
         [
           Errno::ETIMEDOUT,
@@ -281,7 +296,8 @@ module RubyLLM
       end
 
       private_class_method :setup_timeout, :setup_logging, :logging_regexp, :setup_retry, :stream_delivered?,
-                           :idempotent?, :setup_middleware, :setup_http_proxy, :retry_exceptions
+                           :idempotent?, :setup_middleware, :setup_http_proxy, :setup_ssl,
+                           :retry_exceptions
 
       def set_usage_tracker(request, tracker)
         context = request.options.context ||= {}

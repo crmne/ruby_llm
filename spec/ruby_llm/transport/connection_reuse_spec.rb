@@ -34,10 +34,44 @@ RSpec.describe RubyLLM::Transport::Connection do
       {
         openai_api_base: 'https://openai.example.test/v1', request_timeout: 7, http_proxy: 'http://proxy.example.test:8080',
         faraday_adapter: :test, max_retries: 9, retry_interval: 2.5, retry_max_interval: 99,
-        retry_interval_randomness: 0.9, retry_backoff_factor: 5, log_regexp_timeout: 3.0
+        retry_interval_randomness: 0.9, retry_backoff_factor: 5, log_regexp_timeout: 3.0, ssl: { verify: false }
       }.each do |option, value|
         expect(faraday_for(configured(option => value))).not_to be(shared), "expected #{option} to separate connections"
       end
+    end
+
+    it 'hands the TLS options to the adapter' do
+      seen = nil
+      adapter = Class.new(Faraday::Adapter) do
+        define_method(:call) do |env|
+          super(env)
+          seen = env.ssl
+          save_response(env, 200, '')
+          @app.call(env)
+        end
+      end
+      ssl = { ca_file: '/certs/internal-ca.pem', min_version: :TLS1_2 }
+      RubyLLM::Providers::OpenAI.new(configured(faraday_adapter: adapter, ssl:)).connection.post('chat/completions', {})
+
+      expect(seen.to_h.compact).to include(ssl)
+    end
+
+    it 'keeps its cache key when the TLS options are changed in place afterwards' do
+      ssl = { verify: false }
+      tls = configured(ssl:)
+      built = faraday_for(tls)
+      ssl[:verify] = true
+
+      expect(faraday_for(configured(ssl: { verify: false }))).to be(built)
+    end
+
+    it 'keeps its TLS options when a configured value is changed in place afterwards' do
+      ca_file = +'/certs/internal-ca.pem'
+      built = faraday_for(configured(ssl: { ca_file: }))
+      ca_file.replace('/certs/other-ca.pem')
+
+      expect(built.ssl.ca_file).to eq('/certs/internal-ca.pem')
+      expect(faraday_for(configured(ssl: { ca_file: '/certs/internal-ca.pem' }))).to be(built)
     end
 
     it 'builds a separate connection for each provider' do
@@ -117,6 +151,7 @@ RSpec.describe RubyLLM::Transport::Connection do
     def changed_value(option, value)
       return :test if option == :faraday_adapter
       return Logger.new(File::NULL) if option == :logger
+      return { verify: false } if option == :ssl
 
       case value
       when nil then 'http://changed.example.test'
@@ -157,7 +192,7 @@ RSpec.describe RubyLLM::Transport::Connection do
         app = app.instance_variable_get(:@app)
       end
       [faraday.url_prefix.to_s, faraday.headers.to_h, describe_state(faraday.options), faraday.proxy&.uri.to_s,
-       middleware]
+       describe_state(faraday.ssl), middleware]
     end
 
     def fresh_faraday_for(config, provider_class)

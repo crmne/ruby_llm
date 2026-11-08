@@ -555,7 +555,7 @@ module RubyLLM
 
     # Creates an MCP. Keywords are the values of the declared ::inputs.
     # Pass a Context as +context:+ to connect with its configuration: its
-    # +faraday_adapter+, +http_proxy+, and +request_timeout+ apply to the
+    # +faraday_adapter+, +http_proxy+, +ssl+, and +request_timeout+ apply to the
     # server's requests and to its OAuth requests.
     #
     #   Linear.new(user: current_user)

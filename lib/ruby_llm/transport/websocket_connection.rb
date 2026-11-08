@@ -27,6 +27,7 @@ module RubyLLM
           raise ArgumentError, 'WebSocket URL must not contain credentials or a fragment'
         end
         raise ArgumentError, 'WebSocket connections do not support HTTP proxies' if config.http_proxy
+        raise ArgumentError, 'WebSocket connections do not support TLS options' if config.ssl
 
         @headers = headers
         @timeout = config.request_timeout

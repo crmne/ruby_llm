@@ -349,6 +349,8 @@ A chat bills its owner, set with `chat.with_owner(current_user)`, or in Rails na
 
 Vertex AI takes the `eu` and `us` multi-region locations.
 
+`config.ssl` sets TLS options for every connection, globally or in a context, so a self-hosted server behind an internal certificate authority works without process-wide certificate variables: `config.ssl = { ca_file: "/certs/internal-ca.pem" }`. See [TLS Options]({% link _reference/configuration-connection.md %}#tls-options) ([#1525](https://github.com/crmne/ruby_llm/issues/1525)).
+
 ## Moonshot AI
 
 Moonshot AI joins the built-in providers, bringing the total to twenty. Its Kimi models read text and images, think before they answer, and call tools:

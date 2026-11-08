@@ -71,6 +71,12 @@ RSpec.describe RubyLLM::Configuration do
       expect(config.inspect).not_to include('hunter2')
     end
 
+    it 'keeps TLS key material out of inspect' do
+      config.ssl = { client_key: 'PRIVATE-KEY-MATERIAL', ca_file: '/certs/internal-ca.pem' }
+
+      expect(config.inspect).not_to include('PRIVATE-KEY-MATERIAL')
+    end
+
     it 'omits credential providers from instance variables' do
       config.bedrock_credential_provider = Object.new
 
