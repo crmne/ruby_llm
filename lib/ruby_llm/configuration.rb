@@ -315,7 +315,9 @@ module RubyLLM
     #
     # TLS options for all requests, as a Hash of Faraday's SSL option
     # keys, such as <tt>{ ca_file: '/certs/internal-ca.pem' }</tt> or
-    # <tt>{ verify: false }</tt>. WebSocket connections raise
+    # <tt>{ verify: false }</tt>. A context copies its strings, but shares
+    # objects such as a +cert_store+, so give each context its own and
+    # leave it unchanged once used. WebSocket connections raise
     # ArgumentError when it is set. Default: +nil+.
     option :ssl, nil
 
