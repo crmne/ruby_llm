@@ -105,6 +105,15 @@ The transport handles its own authentication and timeouts. `timeout` is `nil` un
 
 To support [listening for changes](#listening-for-changes), a transport also responds to `listen(message, version:)`. It sends `message`, a `subscriptions/listen` request, yields each notification the server sends for it, and returns the server's response once the server ends the subscription. RubyLLM calls it from the listener's thread and raises `RubyLLM::CancelledError` there to stop it. For servers that predate the 2026-07-28 revision, `message` is `nil`, and the transport yields the changes the server announces on its own.
 
+When your app also sends such a server requests of its own, outside RubyLLM, give them the `_meta` RubyLLM's client adds to every request on the 2026-07-28 revision, so the server sees the same protocol revision and client name:
+
+```ruby
+meta = RubyLLM::MCP::Client.new(tunnel).meta
+params = { name: "roots", arguments: {}, _meta: meta }
+```
+
+On the 2026-07-28 revision, this client declares no capabilities, so the server won't send those requests questions or extension features. A server on an older revision takes the client's details and capabilities from its session's `initialize` handshake instead, which `meta` doesn't perform. Send it requests only in a session that has already been initialized, leave these fields out, and keep any `_meta` of the request's own, such as a `progressToken`.
+
 ### Inputs
 
 Most servers act on behalf of a user. Declare inputs, and settings that depend on them take a block or a method name:
