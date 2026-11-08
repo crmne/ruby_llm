@@ -133,7 +133,8 @@ module RubyLLM
           return server if settings.transport || !endpoint.compact.all?(String)
 
           config = server.send(:config)
-          [*endpoint, config.http_proxy, config.ssl, config.faraday_adapter, config.request_timeout]
+          ssl = Transport::Connection.ssl_snapshot(config.ssl) if config.ssl
+          [*endpoint, config.http_proxy, ssl, config.faraday_adapter, config.request_timeout]
         end
 
         def monotonic_now

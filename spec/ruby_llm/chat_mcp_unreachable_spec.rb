@@ -371,6 +371,16 @@ RSpec.describe RubyLLM::Chat do
     expect(RubyLLM::MCP::Outages.down?(linear.new)).to be(false)
   end
 
+  it 'keeps the backoff for other contexts when the TLS settings change in place afterwards' do
+    linear = RubyLLM.mcp(url: "https://127.0.0.1:#{closed_port}/mcp", name: 'linear').class
+    ssl = { verify: true }
+    RubyLLM::MCP::Outages.tools(linear.new(context: RubyLLM.context { |config| config.ssl = ssl }))
+    ssl[:verify] = false
+
+    expect(RubyLLM::MCP::Outages.down?(linear.new(context: RubyLLM.context { |config| config.ssl = { verify: true } })))
+      .to be(true)
+  end
+
   it 'reports an outage once when chats find it at the same time' do
     server = RubyLLM.mcp(url: "http://127.0.0.1:#{closed_port}/mcp", name: 'linear')
     allow(RubyLLM.logger).to receive(:warn).and_call_original
