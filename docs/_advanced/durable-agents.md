@@ -158,7 +158,7 @@ Rails.application.server { ResumeInterruptedChatsJob.set(wait: 1.minute).perform
 
 `Rails.application.server` runs when a web server loads `config.ru`, never in the console, a rake task, or a job worker. Don't write a polling worker or a boot sweep of your own: the generated job is both, and the claims let only one process answer each chat, however many servers boot at once.
 
-`Chat.interrupted` returns the chats whose turn stopped with work left and that no process holds: a person asked and no reply finished, a round of tools is unfinished, or a message is still queued. It leaves out chats that are complete, cancelled, running, or waiting for an answer, an approval, or a task. It's a scope, so it chains with your own and loads in batches:
+`Chat.interrupted` returns the chats whose run died holding its claim, because a crash or a deploy stopped its process, once that claim has expired; a run that finishes, pauses, is cancelled, or fails releases its claim, so its chat never counts. It's a scope, so it chains with your own and loads in batches:
 
 ```ruby
 Chat.where(account: account).interrupted.find_each { |chat| CompleteJob.perform_later(chat.id) }

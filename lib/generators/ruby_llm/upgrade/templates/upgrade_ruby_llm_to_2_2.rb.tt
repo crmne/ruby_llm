@@ -18,6 +18,10 @@ class <%= 'upgrade_ruby_llm_to_2_2'.camelize %> < ActiveRecord::Migration<%= mig
       add_column :<%= chat_table_name %>, :claimed_until, :datetime
     end
 
+    unless index_exists?(:<%= chat_table_name %>, :claimed_until)
+      add_index :<%= chat_table_name %>, :claimed_until<%= ', where: "claim_token IS NOT NULL"' unless mysql? %>
+    end
+
     unless column_exists?(:ruby_llm_tool_calls, :claimed_until)
       add_column :ruby_llm_tool_calls, :claimed_until, :datetime
     end
@@ -111,6 +115,7 @@ class <%= 'upgrade_ruby_llm_to_2_2'.camelize %> < ActiveRecord::Migration<%= mig
     remove_column :<%= message_table_name %>, :phase
     remove_column :ruby_llm_tool_calls, :namespace
     remove_column :ruby_llm_tool_calls, :claimed_until
+    remove_index :<%= chat_table_name %>, :claimed_until, if_exists: true
     remove_column :<%= chat_table_name %>, :claimed_until
     remove_column :<%= chat_table_name %>, :claim_token
     remove_column :ruby_llm_tool_calls, :provider_call_id

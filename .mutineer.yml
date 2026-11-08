@@ -49,3 +49,6 @@ ignore:
   # ClaimHeartbeat#waiting_until: a monotonic clock read as a Float never
   # lands exactly on the deadline.
   - 5e86f5e520d3
+  # RunClaims.interrupted: on SQLite, claim_token != 1 is NULL for a NULL
+  # token and true for every UUID token, as IS NOT NULL is.
+  - 4c317e36bbad

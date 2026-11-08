@@ -38,6 +38,20 @@ module RubyLLM
       ].freeze
       private_constant :RUN_STATE
 
+      # The chats whose run died holding its claim. Every run that ends
+      # releases its claim, so a token whose lease expired is left only by
+      # a process that died or shut down mid-run. A chat someone stopped
+      # stays stopped. It skips the query cache, since a job polls it for
+      # what other processes wrote.
+      def self.interrupted(relation)
+        chat = relation.klass
+        return relation.none unless (%w[claim_token claimed_until] - chat.column_names).empty?
+
+        died = relation.where.not(claim_token: nil).where(claimed_until: ..Time.current)
+        died = died.where(cancelled: false) if chat.column_names.include?('cancelled')
+        died.skip_query_cache!
+      end
+
       def run_claim_lost?(error) # :nodoc:
         error.is_a?(ClaimLost)
       end
@@ -123,6 +137,11 @@ module RubyLLM
         holding_run_claim(busy, &)
       end
 
+      # A run stopped because its process is shutting down didn't end, so
+      # it leaves its claim to expire, and the chat counts as interrupted.
+      # That covers a thread killed at exit and a signal such as TERM, but
+      # not Interrupt: Ctrl-C in a console stops the run, and a job backend
+      # that interrupts a job on shutdown, as Sidekiq does, runs it again.
       def holding_run_claim(busy)
         if run_claims?
           start_claim_heartbeat
@@ -137,9 +156,15 @@ module RubyLLM
         @message.destroy if blank_placeholder?
         resync_messages if @chat
         busy.call
+      rescue SignalException, SystemExit => e
+        exiting = !e.is_a?(Interrupt)
+        raise
       ensure
-        stop_claim_heartbeat
-        release_run_claim(completed)
+        begin
+          stop_claim_heartbeat
+        ensure
+          exiting || Thread.current.status == 'aborting' ? forget_run_claim : release_run_claim(completed)
+        end
       end
 
       def run_claim_acquired?
@@ -172,6 +197,10 @@ module RubyLLM
 
       def usage_row_count
         ruby_llm_usages.klass.uncached { ruby_llm_usages.count }
+      end
+
+      def forget_run_claim
+        @synced_usage_count = @synced_run_claim_token = @run_claim_token = nil
       end
 
       def release_run_claim(completed)

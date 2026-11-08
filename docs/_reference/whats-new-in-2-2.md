@@ -196,7 +196,7 @@ A run that goes `config.max_run_time` without progress, ten minutes by default, 
 
 If a process dies, its claims expire within a minute, on any number of servers, and the next job picks the chat up. See [Agents in Background Jobs]({% link _advanced/durable-agents.md %}#one-process-at-a-time).
 
-No job backend runs a reply that a crash or a deploy cut off again by itself, so `Chat.interrupted` returns the chats whose turn stopped with work left and that no process holds, and the chat UI generator writes `ResumeInterruptedChatsJob`, which answers them every minute through Solid Queue and once when the server boots:
+No job backend runs a reply that a crash or a deploy cut off again by itself, so `Chat.interrupted` returns the chats whose run died holding its claim, and the chat UI generator writes `ResumeInterruptedChatsJob`, which answers them every minute through Solid Queue and once when the server boots:
 
 ```ruby
 Chat.interrupted.find_each { |chat| ChatResponseJob.perform_later(chat.id) }

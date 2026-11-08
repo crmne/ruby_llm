@@ -535,6 +535,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     around do |example|
       connection = ActiveRecord::Base.connection
       ActiveRecord::Base.transaction do
+        connection.remove_index(:chats, :claimed_until)
         connection.remove_column(:chats, :claim_token)
         connection.remove_column(:chats, :claimed_until)
         Chat.reset_column_information
