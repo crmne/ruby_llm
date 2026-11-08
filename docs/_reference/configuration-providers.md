@@ -560,7 +560,7 @@ RubyLLM uses each base URL as you give it and adds each request's path to it, so
 | `xai_api_base` | `https://api.x.ai/v1` |
 | `zai_api_base` | `https://api.z.ai/api/paas/v4` |
 
-A base URL without `http://` or `https://`, or one that ends in an endpoint path RubyLLM adds itself, such as `/v1/messages`, `/chat/completions`, `/responses`, `/model/...`, or `/models/MODEL:generateContent`, raises `RubyLLM::ConfigurationError` naming the setting and the form it expects.
+A base URL without `http://` or `https://`, or one that ends in an endpoint path RubyLLM adds itself, such as `/v1/messages`, `/chat/completions`, `/responses`, `/model/...`, or `/models/MODEL:generateContent`, raises `RubyLLM::ConfigurationError` naming the setting and the form it expects. Azure is the exception, since its own documentation uses those forms: it reads a base ending in `/models` as the resource, and one ending in `/openai/v1/responses` as the `/openai/v1` base.
 
 A custom base URL takes the default's place, and RubyLLM adds the same path to it. For a gateway that strips its own prefix and forwards the rest, that means the prefix followed by whatever the default has after the host:
 

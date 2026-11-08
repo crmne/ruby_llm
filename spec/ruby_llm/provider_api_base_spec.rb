@@ -27,7 +27,7 @@ RSpec.describe RubyLLM::Provider do
     openrouter: [:openrouter_api_base, 'https://openrouter.ai/api/v1', '/chat/completions'],
     zai: [:zai_api_base, 'https://api.z.ai/api/paas/v4', '/chat/completions'],
     deepseek: [:deepseek_api_base, 'https://api.deepseek.com', '/chat/completions'],
-    perplexity: [:perplexity_api_base, 'https://api.perplexity.ai', '/chat/completions'],
+    perplexity: [:perplexity_api_base, 'https://api.perplexity.ai', '/chat/completions', '/v1/agent', '/v1/embeddings'],
     anthropic: [:anthropic_api_base, 'https://api.anthropic.com', '/v1/messages'],
     minimax: [:minimax_api_base, 'https://api.minimax.io/anthropic', '/v1/messages'],
     cohere: [:cohere_api_base, 'https://api.cohere.com', '/v2/chat'],
