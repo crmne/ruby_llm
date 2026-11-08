@@ -26,7 +26,7 @@ Subscribe to these events as shown in [Instrumentation and Observability]({% lin
 | `agent.ruby_llm` | Around one run of a chat an agent configured | `agent_name`, `agent_description`, `chat`, `chat_id` |
 | `chat.ruby_llm` | Around one chat completion | `chat`, `provider`, `provider_class`, `model`, `model_info`, `input_messages`, `messages_after`, `response`, `streaming`, `tokens`, `cost`, `response_tokens`, `agent_name` |
 | `tool_call.ruby_llm` | Around one tool execution | `tool_name`, `tool_arguments`, `tool_call_id`, `result`, `agent_name` |
-| `mcp_unreachable.ruby_llm` | When a chat can't list an MCP server's tools and goes on without them, at most once a minute per server | `server`, `error` |
+| `mcp_unreachable.ruby_llm` | When a chat can't list an MCP server's tools and goes on without them, at most once a minute per server, or once per the server's `Retry-After` | `server`, `error` |
 | `code_execution.ruby_llm` | Around one [code execution]({% link _advanced/code-execution.md %}) run | `tool_name`, `tool_call_id`, `language`, `sandbox`, `timeout`, `network`, `duration`, `exit_code`, `timed_out`, `blocked_hosts`, `files` |
 | `embedding.ruby_llm` | Around one embedding request | `input`, `dimensions`, `embedding_dimensions`, `embedding_count`, `tokens`, `cost` |
 | `image.ruby_llm` | Around one image generation | `prompt`, `size`, `count`, `tokens`, `cost` |

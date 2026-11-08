@@ -696,10 +696,9 @@ module RubyLLM
     # Runs +tool+, one of this MCP's tools, with the model's +arguments+.
     def run(tool, arguments, input: nil) # :nodoc:
       arguments = arguments.transform_keys(&:to_sym)
-      fixed = tool.fixed_arguments.transform_values { |value| value.is_a?(Proc) ? instance_exec(&value) : value }
-      params = { name: tool.server_name, arguments: arguments.merge(fixed) }
-      outcome = call_tool(params, input:)
-      return outcome if outcome.is_a?(Task)
+      params = { name: tool.server_name, arguments: arguments.merge(tool.resolved_fixed_arguments) }
+      outcome = Outages.calling(self, tool, input) { call_tool(params, input:) }
+      return outcome if outcome.is_a?(Task) || outcome.is_a?(Outages::Failure)
 
       result = Result.new(outcome, tool.ui_uri)
       return result.ui_uri ? result : { error: result.text } if result.error?

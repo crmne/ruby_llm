@@ -36,6 +36,7 @@ module RubyLLM
     COMPACTION_OPTIONS = %i[at instructions pause_after].freeze
     THINKING_OPTIONS = %i[effort budget display].freeze
     PAUSED = Object.new.freeze
+    TOOL_CHOICE_MODES = %i[auto none required].freeze
     AGENT_RUN_KEY = :ruby_llm_agent_run
     COPIED_STATE = %i[
       @usage_entries @tools @tool_deferrals @mcp @mcp_deferrals @tool_prefs @headers @attachment_replacements
@@ -45,8 +46,8 @@ module RubyLLM
     # Not a RubyLLM::Error, which a record takes for a failed request and
     # answers by removing the round.
     class StalledToolRound < StandardError; end # :nodoc:
-    private_constant :THINKING_OPTIONS, :PAUSED, :AGENT_RUN_KEY, :COPIED_STATE, :UNFINISHED_TOOL_RESULT,
-                     :StalledToolRound
+    private_constant :THINKING_OPTIONS, :PAUSED, :TOOL_CHOICE_MODES, :AGENT_RUN_KEY, :COPIED_STATE,
+                     :UNFINISHED_TOOL_RESULT, :StalledToolRound
 
     # The Model the chat sends requests to.
     attr_reader :model
@@ -1691,8 +1692,9 @@ module RubyLLM
     # its next completion, with #before_request hooks applied. Useful for
     # inspecting and testing request output.
     def render
+      check_requested_tool_choice
       @provider.render(
-        preprocessed_messages,
+        with_mcp_outages(preprocessed_messages),
         tools: request_tools,
         provider_tools: @provider_tools,
         tool_prefs: @tool_prefs,
@@ -2313,6 +2315,7 @@ module RubyLLM
 
     def provider_completion(usage_recorder:, progress_recorder: nil, stream_tracker: nil, &)
       raise_if_cancelled!
+      check_requested_tool_choice
 
       request_messages = with_mcp_outages(preprocessed_messages)
       tool_call_ids = ToolCallIds.new
@@ -2887,14 +2890,34 @@ module RubyLLM
         @tool_prefs[:choice] = nil
       else
         normalized_choice = normalize_tool_choice(choice)
-        modes = %i[auto none required]
-        unless modes.include?(normalized_choice) || tools.key?(normalized_choice)
-          raise InvalidToolChoiceError,
-                "Invalid tool choice: #{choice}. Valid choices are: #{(modes + tools.keys).join(', ')}"
-        end
-
+        check_tool_choice(normalized_choice, choice) if mcp.empty?
         @tool_prefs[:choice] = normalized_choice
       end
+    end
+
+    # A chat with MCP servers checks its choice once it lists their tools,
+    # so building it never contacts them.
+    def check_tool_choice(choice, given = choice)
+      return if choice.nil? || TOOL_CHOICE_MODES.include?(choice) || tools.key?(choice)
+
+      invalid_tool_choice("Invalid tool choice: #{given}. Valid choices are: " \
+                          "#{(TOOL_CHOICE_MODES + tools.keys).join(', ')}")
+    end
+
+    # A forced call with no tools to call would reach the provider without
+    # the constraint, since protocols drop a choice when there are no tools.
+    def check_requested_tool_choice
+      return if mcp.empty?
+
+      check_tool_choice(@tool_prefs[:choice])
+      invalid_tool_choice('Tool choice required needs a tool, and the chat has none') if
+        @tool_prefs[:choice] == :required && tools.empty?
+    end
+
+    def invalid_tool_choice(message)
+      unreachable = mcp.unreachable
+      message += ". These MCP servers can't be reached right now: #{unreachable.join(', ')}" if unreachable.any?
+      raise InvalidToolChoiceError, message
     end
 
     def apply_tool_concurrency(value)
@@ -2928,17 +2951,18 @@ module RubyLLM
     def normalize_tool_choice(choice)
       return choice.to_sym if choice.is_a?(String) || choice.is_a?(Symbol)
       return tool_name_for_choice_class(choice) if choice.is_a?(Class)
-      return tools.key(choice) if tools.value?(choice)
+      return choice.qualified_name.to_sym if choice.is_a?(Tool)
 
       choice.respond_to?(:name) ? choice.name.to_sym : choice.to_sym
     end
 
     def tool_name_for_choice_class(tool_class)
-      matched_tool_name = tools.find { |_name, tool| tool.is_a?(tool_class) }&.first
+      matched_tool_name = @tools.find { |_name, tool| tool.is_a?(tool_class) }&.first
       return matched_tool_name if matched_tool_name
-      return tool_class.tool_name.to_sym if tool_class.respond_to?(:tool_name)
+      return tool_class.name.to_s.to_sym unless tool_class.respond_to?(:tool_name)
 
-      tool_class.name.to_s.to_sym
+      namespace = tool_class.namespace if tool_class.respond_to?(:namespace)
+      [namespace, tool_class.tool_name].compact.join('_').to_sym
     end
 
     def forced_tool_choice?

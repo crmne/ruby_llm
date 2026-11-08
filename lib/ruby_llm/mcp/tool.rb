@@ -45,6 +45,11 @@ module RubyLLM
 
       attr_reader :fixed_arguments, :wrap # :nodoc:
 
+      # The fixed arguments, with lambdas called on the MCP instance.
+      def resolved_fixed_arguments # :nodoc:
+        fixed_arguments.transform_values { |value| value.is_a?(Proc) ? @mcp.instance_exec(&value) : value }
+      end
+
       def initialize(mcp, definition, prefix: nil, as: nil, description: nil, fixed_arguments: {}, wrap: nil) # :nodoc:
         super()
         @mcp = mcp
@@ -92,11 +97,15 @@ module RubyLLM
 
       # Calls the tool on the server and returns its MCP::Result, what the
       # +wrap:+ method made of it, or <tt>{ error: }</tt> when the tool
-      # failed. A tool with a UI returns its failed MCP::Result instead, so
-      # your app can still render the UI. A chat sends the model the
-      # result's content. When the
-      # server runs the call as a task, returns the MCP::Task without
-      # waiting, and a chat pauses the tool call until the task is done.
+      # failed, or when the server failed the call: it could not be
+      # reached, answered HTTP 429 or a 5xx status, or answered with a
+      # JSON-RPC error. A server that could not be reached sits out the
+      # chat's next requests, as when listing its tools. A refusal, such as
+      # missing credentials, still raises. A tool with a UI returns its
+      # failed MCP::Result instead, so your app can still render the UI. A
+      # chat sends the model the result's content. When the server runs
+      # the call as a task, returns the MCP::Task without waiting, and a
+      # chat pauses the tool call until the task is done.
       # Raises MCP::InputRequiredError when the server needs input that no
       # MCP.before_input_request callback gave.
       def call(**arguments)

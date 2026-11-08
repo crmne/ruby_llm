@@ -148,6 +148,77 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.tool_options[:choice]).to eq(:add)
   end
 
+  it 'waits to contact servers when the tool choice names a tool' do
+    allow(files).to receive(:tools).and_call_original
+
+    chat.with_mcp(files).with_tool_options(choice: :add)
+
+    expect(files).not_to have_received(:tools)
+  end
+
+  it 'takes a tool class as the tool choice without contacting servers' do
+    allow(files).to receive(:tools).and_call_original
+    weather = Class.new(RubyLLM::Tool) do
+      def name = 'weather'
+      def execute = 'sunny'
+    end
+
+    chat.with_tools(weather).with_mcp(files).with_tool_options(choice: weather)
+
+    expect(chat.tool_options[:choice]).to eq(:weather)
+    expect(files).not_to have_received(:tools)
+  end
+
+  it 'takes a namespaced tool a server adds as the tool choice by its qualified name' do
+    stub_const('Clock', Class.new(RubyLLM::Tool) do
+      namespace 'office'
+      def self.tool_name = 'time'
+      def execute = 'noon'
+    end)
+    local_time = Class.new(RubyLLM::Tool) do
+      def self.tool_name = 'time'
+      def execute = 'midnight'
+    end
+    files_class.tool(Clock)
+    allow(files).to receive(:tools).and_call_original
+    allow(chat.provider).to receive(:complete).and_return(answer)
+
+    chat.with_tools(local_time).with_mcp(files).with_tool_options(choice: Clock)
+
+    expect(chat.tool_options[:choice]).to eq(:office_time)
+    expect(files).not_to have_received(:tools)
+    expect { chat.ask('What time is it?') }.not_to raise_error
+  end
+
+  it 'takes a namespaced tool instance a server adds as the tool choice by its qualified name' do
+    clock = Class.new(RubyLLM::Tool) do
+      namespace 'office'
+      def self.tool_name = 'time'
+      def execute = 'noon'
+    end
+
+    chat.with_mcp(files).with_tool_options(choice: clock.new)
+
+    expect(chat.tool_options[:choice]).to eq(:office_time)
+  end
+
+  it 'names a tool choice class that is not a tool by its class name' do
+    stub_const('Plain', Class.new)
+
+    chat.with_mcp(files).with_tool_options(choice: Plain)
+
+    expect(chat.tool_options[:choice]).to eq(:Plain)
+  end
+
+  it 'rejects a tool choice no server offers once the chat lists their tools' do
+    allow(chat.provider).to receive(:complete).and_return(answer)
+    chat.with_mcp(files).with_tool_options(choice: :missing)
+
+    listed = /Invalid tool choice: missing. Valid choices are: auto, none, required, .*echo/
+    expect { chat.ask('Hi') }.to raise_error(RubyLLM::InvalidToolChoiceError, listed)
+    expect(chat.provider).not_to have_received(:complete)
+  end
+
   it 'lets the model call server tools' do
     allow(chat.provider).to receive(:complete).and_return(tool_call('add', { 'a' => 2, 'b' => 3 }), answer)
 
