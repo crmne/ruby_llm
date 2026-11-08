@@ -412,6 +412,21 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(chats.interrupted).to contain_exactly(chat)
   end
 
+  # Blocking the fiber would hold up every other fiber on its scheduler.
+  it 'releases the claims of a run that finished in a fiber without blocking its scheduler' do
+    chat = asked
+    job = posting_job(chat) { 'Posted' }
+    releases = []
+    release = lambda do |*, payload|
+      releases << Fiber.current.blocking? if payload[:sql].match?(/\AUPDATE \S+ SET "?claim_token"? = /)
+    end
+
+    ActiveSupport::Notifications.subscribed(release, 'sql.active_record') { in_reactor { job.complete } }
+
+    expect(releases).to be_present.and(all(be(false)))
+    expect(row(chat)).to have_attributes(claim_token: nil, claimed_until: nil)
+  end
+
   it 'releases the claims of a run in a fiber whose reactor Ctrl-C stopped, along with its tool call' do
     skip 'async runs on MRI' unless RUBY_ENGINE == 'ruby'
     require 'async'

@@ -180,9 +180,7 @@ module RubyLLM
       # without yielding to the scheduler, and one that finished yields as
       # usual.
       def unyielding(stopped, &)
-        return yield unless stopped && Fiber.respond_to?(:blocking)
-
-        Fiber.blocking(&)
+        stopped ? Fiber.blocking(&) : yield
       end
 
       # Whether the process is shutting down: a thread killed at exit, or
