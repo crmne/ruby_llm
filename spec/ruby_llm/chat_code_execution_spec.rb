@@ -739,6 +739,24 @@ RSpec.describe RubyLLM::Chat do
       expect(files.last.content).to eq("a,b\n1,2\n")
     end
 
+    it 'returns only the report when the code writes no files' do
+      chat.with_code_execution
+
+      expect(run_code('puts 1')).to be_a(String)
+    end
+
+    it 'keeps returned files in tempfiles, not in memory, once the run ends' do
+      chat = RubyLLM.context { |config| config.sandbox = writing('a.bin' => 'first', 'b.bin' => 'second') }
+                    .chat(model: model_for(:openai), provider: :openai).with_code_execution
+      _, *files = chat.tools[:run_code].call(language: 'ruby', code: 'write')
+
+      expect(files.map(&:source)).to all(be_a(Tempfile))
+      expect(files.map { |file| File.basename(file.source.path) }).to all(start_with('ruby_llm-output-'))
+      expect(files.map(&:mime_type)).to all(eq('application/octet-stream'))
+      expect(files.map { |file| file.instance_variable_get(:@content) }).to all(be_nil)
+      expect(files.map(&:content)).to eq(%w[first second])
+    end
+
     it 'leaves out symlinks, hidden files, and caches' do
       sandbox = FakeSandbox.new do |run|
         File.symlink('/etc/hostname', File.join(run[:directory], 'leak.txt'))

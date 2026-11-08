@@ -2,7 +2,7 @@
 
 require 'find'
 require 'fileutils'
-require 'stringio'
+require 'tempfile'
 require 'tmpdir'
 
 module RubyLLM
@@ -35,6 +35,7 @@ module RubyLLM
           yield workspace
         ensure
           workspace&.remove_links
+          workspace&.close_outputs
           unlock(root)
         end
       end
@@ -108,6 +109,7 @@ module RubyLLM
         @attachments = File.join(@directory, ATTACHMENTS)
         File.symlink(@inputs, @attachments) if attachments
         @unmounted = []
+        @opened = []
       end
 
       def self.mount_path(name)
@@ -198,11 +200,25 @@ module RubyLLM
           next skipped << "#{name} (larger than #{max_size} bytes)" if size > max_size
           next skipped << "#{name} (more than #{max_files} files)" if files.size >= max_files
 
-          files << Attachment.new(StringIO.new(read(path)), filename: name)
+          files << Attachment.new(open_output(path), filename: name)
         rescue SystemCallError
           skipped << "#{name} (unreadable)"
         end
         [files, skipped]
+      end
+
+      # Returns +files+, from #outputs, copied to tempfiles that outlive
+      # the workspace, one file at a time.
+      def keep(files)
+        files.map do |file|
+          copy = Tempfile.new(['ruby_llm-output-', File.extname(file.filename)], binmode: true)
+          IO.copy_stream(file.source, copy, nil, 0)
+          Attachment.new(copy, filename: file.filename, mime_type: file.mime_type)
+        end
+      end
+
+      def close_outputs
+        @opened.each(&:close)
       end
 
       private
@@ -287,11 +303,11 @@ module RubyLLM
       def unchanged?(path, size, copied)
         return false unless copied&.first == size
 
-        copied.last == FileStore.digest(read(path))
+        File.open(path, OPEN_FLAGS) { |io| copied.last == FileStore.digest(io) }
       end
 
-      def read(path)
-        File.open(path, OPEN_FLAGS, &:read).b
+      def open_output(path)
+        File.new(path, OPEN_FLAGS).tap { |io| @opened << io }
       end
     end
   end

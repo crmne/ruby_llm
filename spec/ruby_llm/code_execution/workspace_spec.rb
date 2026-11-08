@@ -229,6 +229,43 @@ RSpec.describe RubyLLM::CodeExecution::Workspace do
     end
   end
 
+  it 'opens the files a run wrote instead of reading them' do
+    described_class.open do |workspace|
+      File.binwrite(File.join(workspace.directory, 'a.bin'), 'x' * 200)
+
+      files, = workspace.outputs(max_files: 10, max_size: 1000)
+
+      expect(files.map(&:source)).to all(be_a(File))
+      expect(files.first.content).to eq('x' * 200)
+    end
+  end
+
+  it 'closes the files it opened when the run ends' do
+    files = described_class.open do |workspace|
+      File.binwrite(File.join(workspace.directory, 'a.bin'), 'x')
+      workspace.outputs(max_files: 10, max_size: 100).first
+    end
+
+    expect(files.map(&:source)).to all(be_closed)
+  end
+
+  it 'raises what stopped a workspace from being made' do
+    allow(FileUtils).to receive(:mkdir_p).and_raise(Errno::EACCES)
+
+    expect { described_class.open { nil } }.to raise_error(Errno::EACCES)
+  end
+
+  it 'compares a copy it gave the run without reading it into memory' do
+    described_class.open do |workspace|
+      File.binwrite(File.join(workspace.directory, 'a.txt'), 'old')
+      unchanged = { 'a.txt' => [3, RubyLLM::FileStore.digest('old')] }
+      allow(RubyLLM::FileStore).to receive(:digest).and_call_original
+
+      expect(workspace.outputs(max_files: 10, max_size: 100, unchanged:)).to eq([[], []])
+      expect(RubyLLM::FileStore).to have_received(:digest).with(an_instance_of(File))
+    end
+  end
+
   it 'reports an output whose name is not valid UTF-8 as skipped' do
     described_class.open do |workspace|
       File.binwrite(File.join(workspace.directory, "bad\xFFname.txt".b), 'x')

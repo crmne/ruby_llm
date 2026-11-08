@@ -400,8 +400,14 @@ module RubyLLM
       return @mime_type = content_type unless content_type.to_s.empty?
 
       @mime_type = RubyLLM::Files::MimeType.for(url? ? nil : @source, name: @filename)
-      @mime_type = RubyLLM::Files::MimeType.for(content) if @mime_type == 'application/octet-stream'
+      @mime_type = content_mime_type if @mime_type == 'application/octet-stream'
       @mime_type = 'audio/wav' if @mime_type == 'audio/x-wav'
+    end
+
+    # An IO's bytes were examined already, so it isn't read in full for a
+    # second look. A URL is never one: open-uri makes URI objects readable.
+    def content_mime_type
+      io_like? && !url? ? @mime_type : RubyLLM::Files::MimeType.for(content)
     end
 
     def fetch_content

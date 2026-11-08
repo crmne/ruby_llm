@@ -148,6 +148,13 @@ RSpec.describe RubyLLM::Attachment do
     expect(attachment.byte_size).to be_nil
   end
 
+  it 'finds the type of an IO from its first bytes without reading it in full' do
+    attachment = described_class.new(StringIO.new("\x00\x01\x02".b * 100), filename: 'data.bin')
+
+    expect(attachment.mime_type).to eq('application/octet-stream')
+    expect(attachment.instance_variable_get(:@content)).to be_nil
+  end
+
   describe 'URL downloads' do
     def redirect_to(location)
       { status: 302, body: '<html>Moved</html>', headers: { 'Location' => location } }
@@ -159,6 +166,22 @@ RSpec.describe RubyLLM::Attachment do
       stub_request(:get, 'https://cdn.example.com/signed/logo.png?token=1').to_return(body: 'png bytes')
 
       expect(described_class.new('http://example.com/logo.png').content).to eq('png bytes')
+    end
+
+    it 'reads a download whose name says nothing to find its type' do
+      png = File.binread(File.expand_path('../fixtures/ruby.png', __dir__))
+      stub_request(:get, 'https://example.com/download').to_return(body: png)
+
+      expect(described_class.new('https://example.com/download').mime_type).to eq('image/png')
+    end
+
+    it 'reads a download to find its type when open-uri makes the URL readable' do
+      png = File.binread(File.expand_path('../fixtures/ruby.png', __dir__))
+      stub_request(:get, 'https://example.com/download').to_return(body: png)
+      url = URI('https://example.com/download')
+      url.define_singleton_method(:read) { |*| raise 'read through open-uri' }
+
+      expect(described_class.new(url).mime_type).to eq('image/png')
     end
 
     it 'stops following redirects after five' do

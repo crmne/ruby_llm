@@ -470,7 +470,7 @@ module RubyLLM
         record(event, result, files.map(&:filename))
         next save(store, result, files, skipped) if store
 
-        files.empty? ? report(result, files, skipped) : [report(result, files, skipped), *files]
+        files.empty? ? report(result, files, skipped) : [report(result, files, skipped), *workspace.keep(files)]
       end
     end
 
@@ -544,7 +544,7 @@ module RubyLLM
       unsaved = []
       reason = nil
       files.each do |file|
-        stored = store.write(file.filename, file.content)
+        stored = store.write(file.filename, file.source)
       rescue FileStoreFullError, ArgumentError => e
         unsaved << file.filename
         reason ||= e.message
