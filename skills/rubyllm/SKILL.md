@@ -21,7 +21,7 @@ bin/rails ruby_llm:load_models
 bin/rails generate ruby_llm:chat_ui
 ```
 
-That gives you saved chats and history, a streaming chat UI with a Stop button, background jobs, and usage and cost per reply, with no code of your own. Then change only what is specific to the application. Add only the pieces it needs:
+That gives you saved chats and history, a streaming chat UI with a Stop button and a model picker on every message, so a chat switches models mid-conversation, background jobs, and usage and cost per reply, with no code of your own. Then change only what is specific to the application. Add only the pieces it needs:
 
 ```bash
 bin/rails generate ruby_llm:sandbox Workspace   # then bundle install

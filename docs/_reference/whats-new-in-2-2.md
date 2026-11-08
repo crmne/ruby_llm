@@ -373,6 +373,8 @@ A chat bills its owner, set with `chat.with_owner(current_user)`, or in Rails na
 
 Vertex AI takes the `eu` and `us` multi-region locations.
 
+The generated chat UI switches a chat's model mid-conversation. The message form has the same model picker as the new-chat form, and a message sent with another model moves the chat to it with `with_model`, so that reply and every later one use it. See [Adding a Chat UI]({% link _advanced/rails-generators.md %}#adding-a-chat-ui).
+
 `config.ssl` sets TLS options for every connection, globally or in a context, so a self-hosted server behind an internal certificate authority works without process-wide certificate variables: `config.ssl = { ca_file: "/certs/internal-ca.pem" }`. See [TLS Options]({% link _reference/configuration-connection.md %}#tls-options) ([#1525](https://github.com/crmne/ruby_llm/issues/1525)).
 
 ## Moonshot AI

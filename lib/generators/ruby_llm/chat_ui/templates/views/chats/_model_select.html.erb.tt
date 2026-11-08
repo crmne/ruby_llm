@@ -1,0 +1,7 @@
+<div>
+  <%%= form.label :model, "Select AI model:", style: "display: block" %>
+  <%%= form.select :model,
+      @chat_models.map { |model| [model.label, [model.provider, model.id].join(":")] }.unshift([default_model_display_name, nil]),
+      { selected: selected },
+      style: "width: 100%; max-width: 600px; padding: 5px;" %>
+</div>
