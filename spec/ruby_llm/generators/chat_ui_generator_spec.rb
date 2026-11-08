@@ -606,6 +606,39 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       end
     end
 
+    it 'adds it inside the configure block, with its block variable' do
+      path = File.join(destination, 'config/initializers/ruby_llm.rb')
+      FileUtils.mkdir_p(File.dirname(path))
+      File.write(path,
+                 "module Tracing\nend\n\nRubyLLM.configure do |c|\n  c.openai_api_key = nil\nend\n\nTracing.start\n")
+
+      generator.context_budget
+
+      expect(File.read(path)).to eq(<<~RUBY)
+        module Tracing
+        end
+
+        RubyLLM.configure do |c|
+          c.openai_api_key = nil
+          c.context_budget = { per_result: 0.25, per_request: 0.7 }
+        end
+
+        Tracing.start
+      RUBY
+    end
+
+    it 'says what to add without a configure block it can find' do
+      path = File.join(destination, 'config/initializers/ruby_llm.rb')
+      FileUtils.mkdir_p(File.dirname(path))
+      File.write(path, "RubyLLM.config.openai_api_key = nil\n")
+      allow(generator).to receive(:say)
+
+      generator.context_budget
+
+      expect(File.read(path)).to eq("RubyLLM.config.openai_api_key = nil\n")
+      expect(generator).to have_received(:say).with(/\AAdd config\.context_budget = /, :yellow)
+    end
+
     it 'says what to add without an initializer' do
       allow(generator).to receive(:say)
 

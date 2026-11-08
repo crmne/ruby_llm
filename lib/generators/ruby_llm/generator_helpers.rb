@@ -49,16 +49,19 @@ module RubyLLM
         configure_initializer(:broadcast_messages, 'true')
       end
 
-      # Sets +setting+ to +value+ in the RubyLLM initializer, unless the
-      # initializer already sets it.
+      # Sets +setting+ to +value+ at the end of the initializer's
+      # RubyLLM.configure block, unless the initializer already sets it.
       def configure_initializer(setting, value)
         path = 'config/initializers/ruby_llm.rb'
         initializer = File.join(destination_root, path)
-        line = "config.#{setting} = #{value}"
-        return say("Add #{line} to your RubyLLM configuration", :yellow) unless File.exist?(initializer)
-        return if File.read(initializer).match?(/^\s*config\.#{setting}\s*=/)
+        source = File.exist?(initializer) ? File.read(initializer) : ''
+        block = source.match(/^( *)RubyLLM\.configure do \|(\w+)\|\n.*?(?=^\1end\b)/m)
+        return say("Add config.#{setting} = #{value} to your RubyLLM configuration", :yellow) unless block
 
-        inject_into_file path, "  #{line}\n", before: /^end\s*\z/
+        indent, name = block.captures
+        return if source.match?(/^\s*#{name}\.#{setting}\s*=/)
+
+        inject_into_file path, "#{indent}  #{name}.#{setting} = #{value}\n", after: block[0]
       end
 
       def explain_own_broadcasting(source)
