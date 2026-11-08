@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'ripper'
+
 module RubyLLM
   module Generators
     # Shared helpers for RubyLLM generators
@@ -46,14 +48,39 @@ module RubyLLM
 
       # Turns on Configuration#broadcast_messages in the RubyLLM initializer.
       def enable_message_broadcasting
+        configure_initializer(:broadcast_messages, 'true')
+      end
+
+      # Sets +setting+ to +value+ at the end of the initializer's
+      # RubyLLM.configure block, unless the initializer already sets it.
+      def configure_initializer(setting, value)
         path = 'config/initializers/ruby_llm.rb'
         initializer = File.join(destination_root, path)
-        unless File.exist?(initializer)
-          return say('Add config.broadcast_messages = true to your RubyLLM configuration', :yellow)
-        end
-        return if File.read(initializer).match?(/^\s*config\.broadcast_messages\s*=/)
+        source = File.exist?(initializer) ? File.read(initializer) : ''
+        block = configure_block(source)
+        return say("Add config.#{setting} = #{value} to your RubyLLM configuration", :yellow) unless block
 
-        inject_into_file path, "  config.broadcast_messages = true\n", before: /^end\s*\z/
+        indent, name = block.captures
+        return if block[0].match?(/^\s*#{name}\.#{setting}\s*=/)
+        return if source.match?(/^\s*RubyLLM\.config\.#{setting}\s*=/)
+
+        inject_into_file path, "#{indent}  #{name}.#{setting} = #{value}\n", after: block[0]
+      end
+
+      # The RubyLLM.configure block up to its closing +end+, or +nil+ unless
+      # Ruby reads both lines as code and that +end+ as the one closing the
+      # block. Lines inside a heredoc can look like either.
+      def configure_block(source)
+        block = source.match(/^( *)RubyLLM\.configure do \|(\w+)\|\n.*?(?=^\1end\b)/m)
+        return unless block
+
+        tokens = Ripper.lex(source).to_h { |at, type| [at, type] }
+        column = block[1].length
+        opening = [source[0...block.begin(0)].count("\n") + 1, column]
+        closing = [source[0...block.end(0)].count("\n") + 1, column]
+        return unless tokens[opening] == :on_const && tokens[closing] == :on_kw
+
+        block if Ripper.sexp("#{block[0]}#{block[1]}end\n")
       end
 
       def explain_own_broadcasting(source)

@@ -25,7 +25,7 @@ module RubyLLM
   # never set.
   class Configuration
     class << self
-      def option(key, default = nil) # :nodoc:
+      def option(key, default = nil, &normalize) # :nodoc:
         key = key.to_sym
         return if options.include?(key)
 
@@ -33,6 +33,7 @@ module RubyLLM
 
         define_method("#{key}=") do |value|
           value = nil if value.is_a?(String) && value.strip.empty?
+          value = normalize.call(value) if normalize
           instance_variable_set(:"@#{key}", value)
         end
 
@@ -328,6 +329,18 @@ module RubyLLM
     # sequential execution, +true+ or +:threads+ for threads, +:fibers+
     # for fibers via the async gem. Default: +false+.
     option :tool_concurrency, false
+
+    ##
+    # :attr_accessor: context_budget
+    #
+    # The shares of the context window every chat and agent keeps tool
+    # results within, as Chat#with_context_budget takes them. A chat's or
+    # agent's own budget wins, and +nil+ there turns it off. Default:
+    # +nil+ (no budget).
+    #
+    #   config.context_budget = { per_result: 0.25, per_request: 0.7 }
+    #
+    option(:context_budget, nil) { |budget| Chat::ContextBudget.normalize(budget) }
 
     ##
     # :attr_accessor: max_run_time

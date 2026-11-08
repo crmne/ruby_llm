@@ -152,6 +152,7 @@ RSpec.describe RubyLLM::Transport::Connection do
       return :test if option == :faraday_adapter
       return Logger.new(File::NULL) if option == :logger
       return { verify: false } if option == :ssl
+      return { per_request: 0.5 } if option == :context_budget
 
       case value
       when nil then 'http://changed.example.test'

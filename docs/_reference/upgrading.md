@@ -120,6 +120,18 @@ With it on, and turbo-rails and Action Cable loaded, `acts_as_message` broadcast
 
 Broadcasting renders each message with its partial, chosen by `to_partial_path`, so an application that turns it on needs `messages/_user`, `messages/_assistant`, `messages/_tool`, and `messages/_tool_calls`. A model's `broadcasts:` option overrides the configuration.
 
+## Give Every Chat a Context Budget
+
+2.2 adds a [context budget]({% link _core_features/chat-request-control.md %}#keeping-tool-results-in-budget), which keeps tool results within shares of the model's context window. Your chats have none until you set it, so they behave as they did in 2.1. We recommend adding the line new applications get from the install generator. Rerunning `ruby_llm:chat_ui` adds it when your initializer sets no budget:
+
+```ruby
+RubyLLM.configure do |config|
+  config.context_budget = { per_result: 0.25, per_request: 0.7 }
+end
+```
+
+Without it, one tool result larger than the window stays in the transcript, and every later reply in that chat fails with `RubyLLM::ContextLengthExceededError`. A chat or agent that sets its own budget with `with_context_budget` or the `context_budget` macro keeps it, and `nil` there turns the budget off.
+
 ## Code Runs Write Usage Rows
 
 Each [code execution]({% link _advanced/code-execution.md %}#measuring-runs) run now writes a usage row with `operation` set to `code_execution`. The 2.2 upgrade migration widens the check constraint on `operation` that the install generator created. It also replaces any other check that starts with such a list of known operations, which it can't tell apart from that one, and that includes a condition you added after the list. Read your own checks on `operation` before upgrading, and restore what you still need. Checks in other shapes stay as they are. The migration then tries the row, and if the database still refuses it, the migration says so and names your constraints. Without that fix, RubyLLM only logs a warning and the run goes on, so its seconds go unmetered.

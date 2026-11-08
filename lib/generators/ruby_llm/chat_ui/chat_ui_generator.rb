@@ -213,6 +213,10 @@ module RubyLLM
         enable_message_broadcasting if behavior == :invoke
       end
 
+      def context_budget
+        configure_initializer(:context_budget, '{ per_result: 0.25, per_request: 0.7 }') if behavior == :invoke
+      end
+
       def add_head_to_layout
         path = 'app/views/layouts/application.html.erb'
         layout = File.join(destination_root, path)

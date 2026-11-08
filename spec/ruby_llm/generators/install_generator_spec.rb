@@ -227,6 +227,15 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
     end
   end
 
+  it 'gives every chat a context budget in the initializer' do
+    Dir.mktmpdir do |destination|
+      described_class.new([], {}, destination_root: destination, shell: Thor::Shell::Basic.new).create_initializer
+
+      expect(File.read(File.join(destination, 'config/initializers/ruby_llm.rb')))
+        .to include("  config.context_budget = { per_result: 0.25, per_request: 0.7 }\nend\n")
+    end
+  end
+
   it 'keeps a namespace module the destination already has' do
     Dir.mktmpdir do |destination|
       FileUtils.mkdir_p(File.join(destination, 'app/models'))

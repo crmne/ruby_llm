@@ -13,14 +13,16 @@ class <%= chat_agent_class_name %>Test < ActiveSupport::TestCase
   test "cuts a tool result that would fill the context window" do
     stub_replies tool_call(LogsTool.tool_name), "The logs look fine."
     chat = <%= chat_agent_class_name %>.create!.with_tools(LogsTool)
+    budget = chat.context_budget
+    assert_not_nil budget
     window = 100_000
-    chat.with_context_budget(**chat.context_budget, window:)
+    chat.with_context_budget(**budget, window:)
 
     chat.ask "What do the logs say?"
 
     result = chat.<%= message_table_name %>.find_by(role: :tool).content
     assert result.start_with?("A log line")
     # The budget counts two characters a token.
-    assert_operator result.length, :<=, window * chat.context_budget[:per_result] * 2
+    assert_operator result.length, :<=, window * budget[:per_result] * 2
   end
 end

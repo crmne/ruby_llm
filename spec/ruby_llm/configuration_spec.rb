@@ -20,6 +20,7 @@ RSpec.describe RubyLLM::Configuration do
       expect(config.faraday_adapter).to eq(:net_http)
       expect(config.default_judgment_model).to eq('jev-latest')
       expect(config.sandbox).to be_nil
+      expect(config.context_budget).to be_nil
     end
 
     it 'keeps code execution packages in the user cache directory' do
@@ -81,6 +82,16 @@ RSpec.describe RubyLLM::Configuration do
       config.bedrock_credential_provider = Object.new
 
       expect(config.instance_variables).not_to include(:@bedrock_credential_provider)
+    end
+  end
+
+  describe 'an option with a block' do
+    it 'stores what the block returns for the value' do
+      options = Class.new(described_class) { option(:greeting) { |value| value&.upcase } }.new
+
+      options.greeting = 'hello'
+
+      expect(options.greeting).to eq('HELLO')
     end
   end
 

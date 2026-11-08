@@ -582,6 +582,105 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       expect(File.read(File.join(destination, 'app/controllers/application_controller.rb')))
         .to include('def available_chat_models')
     end
+
+    def initializer_with(lines)
+      path = File.join(destination, 'config/initializers/ruby_llm.rb')
+      FileUtils.mkdir_p(File.dirname(path))
+      File.write(path, "RubyLLM.configure do |config|\n#{lines}end\n")
+      generator.context_budget
+      File.read(path)
+    end
+
+    it 'gives an initializer without a context budget the one new apps get' do
+      expect(initializer_with("  config.openai_api_key = nil\n")).to eq(<<~RUBY)
+        RubyLLM.configure do |config|
+          config.openai_api_key = nil
+          config.context_budget = { per_result: 0.25, per_request: 0.7 }
+        end
+      RUBY
+    end
+
+    it 'leaves a context budget the initializer sets, or turns off, alone' do
+      ["  config.context_budget = { per_request: 0.5 }\n", "  config.context_budget = nil\n"].each do |line|
+        expect(initializer_with(line)).to eq("RubyLLM.configure do |config|\n#{line}end\n")
+      end
+    end
+
+    it 'adds it inside the configure block, with its block variable' do
+      path = File.join(destination, 'config/initializers/ruby_llm.rb')
+      FileUtils.mkdir_p(File.dirname(path))
+      File.write(path,
+                 "module Tracing\nend\n\nRubyLLM.configure do |c|\n  c.openai_api_key = nil\nend\n\nTracing.start\n")
+
+      generator.context_budget
+
+      expect(File.read(path)).to eq(<<~RUBY)
+        module Tracing
+        end
+
+        RubyLLM.configure do |c|
+          c.openai_api_key = nil
+          c.context_budget = { per_result: 0.25, per_request: 0.7 }
+        end
+
+        Tracing.start
+      RUBY
+    end
+
+    def initializer_after_generating(source)
+      path = File.join(destination, 'config/initializers/ruby_llm.rb')
+      FileUtils.mkdir_p(File.dirname(path))
+      File.write(path, source)
+      generator.context_budget
+      File.read(path)
+    end
+
+    it 'leaves a context budget set through RubyLLM.config alone' do
+      source = "RubyLLM.config.context_budget = { per_request: 0.5 }\nRubyLLM.configure do |config|\nend\n"
+
+      expect(initializer_after_generating(source)).to eq(source)
+    end
+
+    it 'adds it when only an unrelated method assigns the same name' do
+      source = "def tune(config)\n  config.context_budget = nil\nend\n\nRubyLLM.configure do |config|\nend\n"
+
+      expect(initializer_after_generating(source)).to end_with(<<~RUBY)
+        RubyLLM.configure do |config|
+          config.context_budget = { per_result: 0.25, per_request: 0.7 }
+        end
+      RUBY
+    end
+
+    it 'leaves the file alone when a heredoc holds what looks like the block' do
+      allow(generator).to receive(:say)
+
+      ["RubyLLM.configure do |config|\n  config.openai_api_key = <<~KEY\nend\nKEY\nend\n",
+       "example = <<~TEXT\nRubyLLM.configure do |config|\nTEXT\n1.times do\nend\n"].each do |source|
+        expect(initializer_after_generating(source)).to eq(source)
+      end
+      expect(generator).to have_received(:say).with(/\AAdd config\.context_budget = /, :yellow).twice
+    end
+
+    it 'says what to add without a configure block it can find' do
+      path = File.join(destination, 'config/initializers/ruby_llm.rb')
+      FileUtils.mkdir_p(File.dirname(path))
+      File.write(path, "RubyLLM.config.openai_api_key = nil\n")
+      allow(generator).to receive(:say)
+
+      generator.context_budget
+
+      expect(File.read(path)).to eq("RubyLLM.config.openai_api_key = nil\n")
+      expect(generator).to have_received(:say).with(/\AAdd config\.context_budget = /, :yellow)
+    end
+
+    it 'says what to add without an initializer' do
+      allow(generator).to receive(:say)
+
+      generator.context_budget
+
+      line = 'config.context_budget = { per_result: 0.25, per_request: 0.7 }'
+      expect(generator).to have_received(:say).with("Add #{line} to your RubyLLM configuration", :yellow)
+    end
   end
 
   {
@@ -958,6 +1057,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
               expect(Dir['db/migrate/*_add_reply_error_to_chats.rb'].size).to eq(1)
               initializer = File.read('config/initializers/ruby_llm.rb')
               expect(initializer.scan('config.broadcast_messages = true').size).to eq(1)
+              expect(initializer.scan('config.context_budget =').size).to eq(1)
             end
           end
         end
@@ -1063,7 +1163,6 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
               expect(status.success?).to be(true), output
               expect(File.read('app/agents/chat_agent.rb')).to eq(<<~RUBY)
                 class ChatAgent < ApplicationAgent
-                  context_budget per_result: 0.25, per_request: 0.7
                   caching
                 end
               RUBY
@@ -1082,7 +1181,6 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
               expect(status.success?).to be(true), output
               expect(File.read('app/agents/chat_agent.rb')).to eq(<<~RUBY)
                 class ChatAgent < ApplicationAgent
-                  context_budget per_result: 0.25, per_request: 0.7
                 end
               RUBY
             end
@@ -1100,7 +1198,6 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
               expect(File.read('app/agents/chat_agent.rb')).to eq(<<~RUBY)
                 class ChatAgent < RubyLLM::Agent
                   chat_class Chat
-                  context_budget per_result: 0.25, per_request: 0.7
                   caching
                 end
               RUBY
@@ -1210,7 +1307,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
           chat_agent = File.read(config[:approval_flow][:agent_path])
           expect(chat_agent).to start_with("class #{config[:approval_flow][:agent]} < ApplicationAgent\n")
           expect(chat_agent).not_to include('chat_class')
-          expect(chat_agent).to include("  context_budget per_result: 0.25, per_request: 0.7\n  caching\nend\n")
+          expect(chat_agent).to end_with("  caching\nend\n")
+          expect(chat_agent).not_to include('context_budget')
 
           queued_messages_controller = File.read(config[:queued_messages_controller_path])
           config[:queued_messages_controller_expectations].each do |line|
