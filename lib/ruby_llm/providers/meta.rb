@@ -7,7 +7,7 @@ module RubyLLM
       protocol :responses, Meta::Responses
 
       def api_base
-        @config.meta_api_base || 'https://api.meta.ai/v1'
+        configured_api_base(:meta_api_base, 'https://api.meta.ai/v1', endpoints: Protocols::ChatCompletions::ENDPOINT_PATHS)
       end
 
       def headers

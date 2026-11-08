@@ -91,7 +91,8 @@ module RubyLLM
       end
 
       def mantle_api_base
-        @config.bedrock_mantle_api_base || "https://bedrock-mantle.#{bedrock_region}.api.aws"
+        configured_api_base(:bedrock_mantle_api_base, "https://bedrock-mantle.#{bedrock_region}.api.aws",
+                            endpoints: %r{/(?:chat/completions|responses|messages)\z})
       end
 
       def mantle_connection
@@ -99,7 +100,8 @@ module RubyLLM
       end
 
       def api_base
-        @config.bedrock_api_base || "https://bedrock-runtime.#{bedrock_region}.amazonaws.com"
+        configured_api_base(:bedrock_api_base, "https://bedrock-runtime.#{bedrock_region}.amazonaws.com",
+                            endpoints: %r{/model/.*\z})
       end
 
       # Uploads are objects in the configured bucket, readable with any
@@ -110,11 +112,13 @@ module RubyLLM
       end
 
       def control_api_base
-        @config.bedrock_api_base || "https://bedrock.#{bedrock_region}.amazonaws.com"
+        configured_api_base(:bedrock_api_base, "https://bedrock.#{bedrock_region}.amazonaws.com",
+                            endpoints: %r{/model/.*\z})
       end
 
       def agent_api_base # :nodoc:
-        @config.bedrock_api_base || "https://bedrock-agent-runtime.#{bedrock_region}.amazonaws.com"
+        configured_api_base(:bedrock_api_base, "https://bedrock-agent-runtime.#{bedrock_region}.amazonaws.com",
+                            endpoints: %r{/model/.*\z})
       end
 
       def agent_connection # :nodoc:

@@ -18,7 +18,8 @@ module RubyLLM
       end
 
       def api_base
-        @config.gemini_api_base || 'https://generativelanguage.googleapis.com/v1beta'
+        configured_api_base(:gemini_api_base, 'https://generativelanguage.googleapis.com/v1beta',
+                            endpoints: %r{/models/[^/]+:\w+\z})
       end
 
       def headers

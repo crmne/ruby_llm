@@ -13,7 +13,7 @@ module RubyLLM
       protocol :files, Protocols::Anthropic::Files
 
       def api_base
-        @config.anthropic_api_base || 'https://api.anthropic.com'
+        configured_api_base(:anthropic_api_base, 'https://api.anthropic.com', endpoints: %r{/v1/messages\z})
       end
 
       def headers

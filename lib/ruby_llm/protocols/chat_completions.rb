@@ -4,6 +4,10 @@ module RubyLLM
   module Protocols
     # The OpenAI Chat Completions API — the lingua franca of LLM APIs.
     class ChatCompletions < Protocol
+      # The endpoint paths a base URL of an OpenAI-compatible API must not
+      # end in, since RubyLLM adds them.
+      ENDPOINT_PATHS = %r{/(?:chat/completions|completions|responses|embeddings)\z}
+
       include ChatCompletions::Chat
       include ChatCompletions::Embeddings
       include ChatCompletions::Models

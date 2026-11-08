@@ -8,7 +8,7 @@ module RubyLLM
       protocol :files, Protocols::Cohere::Datasets
 
       def api_base
-        @config.cohere_api_base || 'https://api.cohere.com'
+        configured_api_base(:cohere_api_base, 'https://api.cohere.com', endpoints: %r{/v2/(?:chat|embed|rerank)\z})
       end
 
       def headers

@@ -794,6 +794,19 @@ module RubyLLM
       model.respond_to?(:id) ? model.id : model
     end
 
+    # Returns the base URL +setting+ holds, or +default+, as given. Raises
+    # when it has no http(s) scheme or ends in one of the provider's
+    # +endpoints+, since RubyLLM adds those paths itself.
+    def configured_api_base(setting, default = nil, example: default, endpoints: nil)
+      value = @config.public_send(setting) || default
+      endpoint = value.to_s.sub(/[?#].*/, '').chomp('/')[endpoints] if endpoints
+      return value if value.to_s.match?(%r{\Ahttps?://[^/?#]}i) && !endpoint
+
+      raise ConfigurationError, "#{setting} should look like #{example}" \
+                                "#{endpoint ? " (without #{endpoint})" : ', starting with http:// or https://'}, " \
+                                "got #{value.inspect}"
+    end
+
     def account_digest(*parts)
       Digest::SHA256.hexdigest(parts.join("\0"))
     end

@@ -531,18 +531,36 @@ end
 
 Blank strings are treated as unset, so environment variables can be wired directly without causing invalid URL errors.
 
-RubyLLM adds each request's path to the base URL. These providers' defaults stop in different places, some at the host and others after the API version, and the path RubyLLM adds starts from there:
+RubyLLM uses each base URL as you give it and adds each request's path to it, so set the base URL, not an endpoint. A trailing slash is fine. These are the base URLs RubyLLM expects, which are also the defaults where a provider has one:
 
-| Setting | Default | A chat request goes to |
-| --- | --- | --- |
-| `anthropic_api_base` | `https://api.anthropic.com` | `https://api.anthropic.com/v1/messages` |
-| `cohere_api_base` | `https://api.cohere.com` | `https://api.cohere.com/v2/chat` |
-| `deepseek_api_base` | `https://api.deepseek.com` | `https://api.deepseek.com/chat/completions` |
-| `gemini_api_base` | `https://generativelanguage.googleapis.com/v1beta` | `https://generativelanguage.googleapis.com/v1beta/models/MODEL:generateContent` |
-| `mistral_api_base` | `https://api.mistral.ai/v1` | `https://api.mistral.ai/v1/chat/completions` |
-| `openai_api_base` | `https://api.openai.com/v1` | `https://api.openai.com/v1/responses` |
-| `openrouter_api_base` | `https://openrouter.ai/api/v1` | `https://openrouter.ai/api/v1/chat/completions` |
-| `xai_api_base` | `https://api.x.ai/v1` | `https://api.x.ai/v1/responses` |
+| Setting | Base URL |
+| --- | --- |
+| `anthropic_api_base` | `https://api.anthropic.com` |
+| `azure_api_base` | `https://RESOURCE.openai.azure.com`, its `/openai/v1` base, or `https://RESOURCE.openai.azure.com/openai/deployments/DEPLOYMENT` |
+| `bedrock_api_base` | `https://bedrock-runtime.REGION.amazonaws.com` |
+| `bedrock_mantle_api_base` | `https://bedrock-mantle.REGION.api.aws` |
+| `cohere_api_base` | `https://api.cohere.com` |
+| `deepgram_api_base` | `https://api.deepgram.com` |
+| `deepseek_api_base` | `https://api.deepseek.com` |
+| `elevenlabs_api_base` | `https://api.elevenlabs.io` |
+| `gemini_api_base` | `https://generativelanguage.googleapis.com/v1beta` |
+| `gpustack_api_base` | `http://HOST/v1`, or `http://HOST/model/proxy/ROUTE_ID/v1` |
+| `hetzner_api_base` | `https://inference.hetzner.com/v1` |
+| `meta_api_base` | `https://api.meta.ai/v1` |
+| `minimax_api_base` | `https://api.minimax.io/anthropic` |
+| `mistral_api_base` | `https://api.mistral.ai/v1` |
+| `moonshot_api_base` | `https://api.moonshot.ai/v1` |
+| `ollama_api_base` | `http://localhost:11434/v1` |
+| `ollama_cloud_api_base` | `https://ollama.com/v1` |
+| `openai_api_base` | `https://api.openai.com/v1` |
+| `openrouter_api_base` | `https://openrouter.ai/api/v1` |
+| `perplexity_api_base` | `https://api.perplexity.ai` |
+| `typesafe_api_base` | `https://api.typesafe.ai` |
+| `vertexai_api_base` | `https://LOCATION-aiplatform.googleapis.com/v1beta1` |
+| `xai_api_base` | `https://api.x.ai/v1` |
+| `zai_api_base` | `https://api.z.ai/api/paas/v4` |
+
+A base URL without `http://` or `https://`, or one that ends in an endpoint path RubyLLM adds itself, such as `/v1/messages`, `/chat/completions`, `/responses`, `/model/...`, or `/models/MODEL:generateContent`, raises `RubyLLM::ConfigurationError` naming the setting and the form it expects. Azure is the exception, since its own documentation uses those forms: it reads a base ending in `/models` as the resource, and one ending in `/openai/v1/responses` as the `/openai/v1` base.
 
 A custom base URL takes the default's place, and RubyLLM adds the same path to it. For a gateway that strips its own prefix and forwards the rest, that means the prefix followed by whatever the default has after the host:
 
@@ -554,7 +572,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-Through that gateway, `https://gateway.example.com/anthropic/v1` would forward `/v1/v1/messages`, a path Anthropic does not have. A gateway that routes another way, including one whose own prefix ends in `/v1`, needs whichever URL makes it forward the path in the table.
+Through that gateway, `https://gateway.example.com/anthropic/v1` would forward `/v1/v1/messages`, a path Anthropic does not have. A gateway that routes another way, including one whose own prefix ends in `/v1`, needs whichever URL makes it forward the path RubyLLM adds, such as `/v1/messages` for Anthropic.
 
 ## Next Steps
 

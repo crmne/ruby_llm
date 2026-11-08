@@ -24,8 +24,12 @@ module RubyLLM
         true
       end
 
+      # A base ending in /models or /openai/v1/responses is the resource or
+      # its openai/v1 base, since RubyLLM adds those paths itself.
       def api_base
-        @config.azure_api_base
+        configured_api_base(:azure_api_base, example: 'https://RESOURCE.openai.azure.com')
+          .sub(%r{\A(https?://[^/?#]+)/models/?(?=\?|\z)}, '\\1')
+          .sub(%r{/openai/v1/responses/?(?=\?|\z)}, '/openai/v1')
       end
 
       # Files belong to the Azure resource, whichever key or Entra ID token

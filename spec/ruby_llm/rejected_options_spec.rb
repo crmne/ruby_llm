@@ -9,7 +9,9 @@ RSpec.describe 'options a wire format cannot carry' do # rubocop:disable RSpec/D
   def provider(slug)
     provider_class = RubyLLM::Provider.resolve!(slug)
     config = RubyLLM::Configuration.new
-    provider_class.configuration_requirements.each { |key| config.public_send(:"#{key}=", 'test') }
+    provider_class.configuration_requirements.each do |key|
+      config.public_send(:"#{key}=", key.end_with?('_api_base') ? 'https://example.com' : 'test')
+    end
     config.azure_api_key = 'test'
     config.bedrock_region = 'us-east-1'
     config.bedrock_api_key = 'test'

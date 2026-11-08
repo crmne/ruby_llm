@@ -17,7 +17,8 @@ module RubyLLM
       protocol :agent_responses, Protocols::Perplexity::Agent
 
       def api_base
-        @config.perplexity_api_base || 'https://api.perplexity.ai'
+        configured_api_base(:perplexity_api_base, 'https://api.perplexity.ai',
+                            endpoints: %r{/(?:chat/completions|v1/agent|v1/embeddings)\z})
       end
 
       # Chat runs on the Agent API. Embeddings and the model listing stay on

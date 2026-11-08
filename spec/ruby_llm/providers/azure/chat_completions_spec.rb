@@ -46,6 +46,24 @@ RSpec.describe RubyLLM::Providers::Azure::ChatCompletions do
       expect(protocol.azure_endpoint(:chat)).to eq('models/chat/completions?api-version=2024-05-01-preview')
     end
 
+    it 'routes a base ending in /models through the resource, not /models/models' do
+      provider = protocol_for('https://res.services.ai.azure.com/models').instance_variable_get(:@provider)
+      protocol = described_class.new(provider, nil)
+
+      expect(provider.connection.connection.build_url(protocol.azure_endpoint(:chat)).to_s).to eq(
+        'https://res.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview'
+      )
+    end
+
+    it 'posts chat and responses under the openai/v1 base a /responses URL names' do
+      provider = protocol_for('https://res.openai.azure.com/openai/v1/responses').instance_variable_get(:@provider)
+      responses = RubyLLM::Providers::Azure::Responses.new(provider, nil)
+
+      expect(provider.connection.connection.build_url(described_class.new(provider, nil).completion_url).to_s)
+        .to eq('https://res.openai.azure.com/openai/v1/chat/completions')
+      expect(responses.completion_url).to eq('https://res.openai.azure.com/openai/v1/responses')
+    end
+
     it 'resolves embeddings relative to a deployment or openai/v1 base' do
       expect(protocol_for('https://res.openai.azure.com/openai/v1').azure_endpoint(:embeddings)).to eq('embeddings')
       expect(
