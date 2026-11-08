@@ -118,8 +118,8 @@ module RubyLLM
       #   #      "io.modelcontextprotocol/clientCapabilities" => {} }
       #   params = { name: "roots", arguments: {}, _meta: meta }
       #
-      # Servers on an older revision get none: they learn the same from the
-      # initialize handshake.
+      # Servers on an older revision get none of these fields: they learn
+      # the same from the initialize handshake.
       def meta
         {
           'io.modelcontextprotocol/protocolVersion' => VERSION,
