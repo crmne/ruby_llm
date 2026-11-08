@@ -208,8 +208,8 @@ Leave out `on:` unless you have a reason to change it. The default, `RubyLLM::Fa
 
 | What the provider sends | Raised as |
 | --- | --- |
-| HTTP 429 from any provider, or a rate limit or quota error mid-stream, such as Bedrock's `throttlingException` | `RubyLLM::RateLimitError`, or `RubyLLM::ContextLengthExceededError` when RubyLLM recognizes the message as a context length error and not as a rate limit |
-| HTTP 500 | `RubyLLM::ServerError` |
+| HTTP 429 from any provider, or a stream error event the provider tags as a rate limit or quota error: Anthropic's `rate_limit_error`, OpenAI's `rate_limit_exceeded` or `insufficient_quota`, Bedrock's `throttlingException` | `RubyLLM::RateLimitError`, or `RubyLLM::ContextLengthExceededError` when RubyLLM recognizes the message as a context length error and not as a rate limit |
+| HTTP 500, and a Bedrock stream error of a type not listed here, such as `modelStreamErrorException` | `RubyLLM::ServerError` |
 | HTTP 502, 503 or 504: how OpenAI, Gemini and Bedrock say they are overloaded or unavailable, and how OpenRouter reports a failed upstream provider | `RubyLLM::ServiceUnavailableError` |
 | HTTP 529: Anthropic's overload, and an `overloaded_error` mid-stream | `RubyLLM::OverloadedError` |
 | HTTP 400 whose message says the service is currently overloaded | `RubyLLM::OverloadedError` |
