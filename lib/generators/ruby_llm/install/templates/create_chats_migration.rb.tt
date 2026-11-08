@@ -6,6 +6,8 @@ class <%= create_migration_class_name(chat_table_name) %> < ActiveRecord::Migrat
       t.string :claim_token
       t.datetime :claimed_until
       t.timestamps
+
+      t.index :claimed_until<%= ', where: "claim_token IS NOT NULL"' unless mysql? %>
     end
   end
 end

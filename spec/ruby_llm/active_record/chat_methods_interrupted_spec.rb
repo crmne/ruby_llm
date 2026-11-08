@@ -12,16 +12,45 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   let(:lease) { RubyLLM::ActiveRecord::RunClaims::CLAIM_LEASE.seconds }
   let(:created) { [] }
 
+  let(:charge) do
+    Class.new(RubyLLM::Tool) do
+      def self.name = 'ChargeCard'
+
+      description 'Charges the card'
+      requires_approval
+      define_method(:execute) { 'charged' }
+    end
+  end
+
+  let(:seat) do
+    Class.new(RubyLLM::Tool) do
+      def self.name = 'PickSeat'
+
+      description 'Asks for a seat'
+      define_method(:execute) { "Seat #{ask('Window or aisle?', choices: %w[window aisle])}" }
+    end
+  end
+
+  let(:deploy) do
+    Class.new(RubyLLM::Tool) do
+      def self.name = 'Deploy'
+
+      description 'Starts a deploy'
+      define_method(:execute) { RubyLLM::Task.new(status: :working, data: { 'job' => 'deploy' }) }
+      define_method(:resume) { |task, **| task }
+    end
+  end
+
   # Other examples leave their chats in the database, so each example
   # looks only at its own.
   def chats
     Chat.where(id: created.map(&:id))
   end
 
-  def chat_with(*messages)
+  def asked
     Chat.create!(model: model_for(:openai)).tap do |chat|
       created << chat
-      messages.each { |message| chat.add_message(message) }
+      chat.add_message(role: :user, content: 'Hello')
     end
   end
 
@@ -30,277 +59,247 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     chat
   end
 
-  def asked
-    chat_with({ role: :user, content: 'Hello' })
+  def reply(content = 'Done')
+    RubyLLM::Message.new(role: :assistant, content:, input_tokens: 1, output_tokens: 1)
   end
 
-  def answered
-    chat_with({ role: :user, content: 'Hello' }, { role: :assistant, content: 'Hi', finish_reason: 'stop' })
+  def calling(name)
+    tool_call = RubyLLM::ToolCall.new(id: "call_#{SecureRandom.hex(4)}", name:, arguments: {})
+    RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { tool_call.id => tool_call },
+                         input_tokens: 1, output_tokens: 1)
   end
 
-  def call(name = 'lookup')
-    RubyLLM::ToolCall.new(id: "call_#{SecureRandom.hex(4)}", name:, arguments: {})
+  def job_for(chat, *tools, &answer)
+    Chat.find(chat.id).with_tools(*tools).tap do |job|
+      allow(job.to_llm.provider).to receive(:complete) { answer ? answer.call(job) : reply }
+    end
   end
 
-  def mid_round(first = call, second = call)
-    chat = chat_with({ role: :user, content: 'Look twice' },
-                     { role: :assistant, content: '', tool_calls: { first.id => first, second.id => second } })
-    chat.add_message(role: :tool, content: 'found', tool_call_id: first.id)
-    [chat, second]
+  def row(chat)
+    Chat.find(chat.id)
   end
 
-  def tool_call_row(tool_call)
-    RubyLLM::ActiveRecord::ToolCall.where(tool_call_id: tool_call.id)
+  # Starts a reply in a forked process and ends that process without
+  # unwinding while the provider answers, as a crash or a SIGKILL would.
+  def killed_mid_reply(chat)
+    skip 'needs fork' unless Process.respond_to?(:fork)
+
+    pid = fork do
+      job_for(chat) { exit!(0) }.complete
+    ensure
+      exit!(1)
+    end
+    Process.wait(pid)
+    chat
+  end
+
+  def with_reply_error_column
+    connection = ActiveRecord::Base.connection
+    ActiveRecord::Base.transaction do
+      connection.add_column(:chats, :reply_error, :string)
+      Chat.reset_column_information
+      yield
+      raise ActiveRecord::Rollback
+    end
+  ensure
+    Chat.reset_column_information
   end
 
   describe '.interrupted' do
-    it 'returns a chat whose reply was cut off after the user asked' do
-      chat = claim(asked, 1.minute.ago)
+    it 'returns a chat whose run was killed mid-turn, once its claim expires' do
+      chat = killed_mid_reply(asked)
 
+      expect(row(chat).claim_token).to be_present
+      expect(chats.interrupted).to be_empty
+      travel lease + 1
       expect(chats.interrupted).to contain_exactly(chat)
     end
 
-    it 'returns a chat that never held a claim' do
+    it 'returns a chat whose run thread was killed as its process exited, once its claim expires' do
       chat = asked
-
-      expect(chats.interrupted).to contain_exactly(chat)
-    end
-
-    it 'returns a chat once its lease expires' do
-      chat = claim(asked, lease.from_now)
+      started = Queue.new
+      thread = Thread.new do
+        job_for(chat) do
+          started << true
+          sleep
+        end.complete
+      end
+      started.pop
+      thread.kill.join
 
       expect(chats.interrupted).to be_empty
       travel lease + 1
       expect(chats.interrupted).to contain_exactly(chat)
     end
 
-    it 'looks past the blank reply a killed run leaves' do
+    it 'returns a chat whose run a TERM signal stopped, once its claim expires' do
       chat = asked
-      chat.messages.create!(role: :assistant, content: '')
 
-      expect(chats.interrupted).to contain_exactly(chat)
-    end
-
-    it 'returns a chat whose tool round is unfinished' do
-      chat, = mid_round
-
-      expect(chats.interrupted).to contain_exactly(chat)
-    end
-
-    it 'returns a chat whose tool round finished before the model answered' do
-      tool_call = call
-      chat = chat_with({ role: :user, content: 'Look' },
-                       { role: :assistant, content: '', tool_calls: { tool_call.id => tool_call } })
-      chat.add_message(role: :tool, content: 'found', tool_call_id: tool_call.id)
-
-      expect(chats.interrupted).to contain_exactly(chat)
-    end
-
-    it 'returns a chat whose call was answered but never ran' do
-      chat, second = mid_round
-      tool_call_row(second).update_all(mcp_state: { 'requests' => [{ 'id' => 'q1', 'response' => 'yes' }] })
-
-      expect(chats.interrupted).to contain_exactly(chat)
-    end
-
-    it 'returns a chat whose call was approved but never ran' do
-      chat, second = mid_round
-      tool_call_row(second).update_all(approval: 'approved')
-
-      expect(chats.interrupted).to contain_exactly(chat)
-    end
-
-    it 'returns a chat whose stream the provider paused' do
-      chat = asked
-      chat.messages.create!(role: :assistant, content: 'Half', continuation: 'resume-token')
-
-      expect(chats.interrupted).to contain_exactly(chat)
-    end
-
-    it 'returns an answered chat with a message still queued' do
-      chat = answered
-      chat.queue('And then?')
-
-      expect(chats.interrupted).to contain_exactly(chat)
-    end
-
-    it 'returns a chat whose worker died during a tool round, once its claims expire' do
-      chat, second = mid_round
-      chat.messages.create!(role: :assistant, content: '')
-      claim(chat, lease.from_now)
-      tool_call_row(second).update_all(claimed_until: lease.from_now)
-
-      expect(chats.interrupted).to be_empty
+      expect { job_for(chat) { raise SignalException, 'TERM' }.complete }.to raise_error(SignalException)
       travel lease + 1
       expect(chats.interrupted).to contain_exactly(chat)
     end
 
-    it 'returns none without the claim columns, since no row says whether a run holds a chat' do
+    it 'leaves out a chat whose run Ctrl-C stopped, as a stop' do
+      chat = asked
+
+      expect { job_for(chat) { raise Interrupt }.complete }.to raise_error(Interrupt)
+      expect(row(chat)).to have_attributes(claim_token: nil, claimed_until: nil)
+      expect(chats.interrupted).to be_empty
+    end
+
+    it 'can run the chat again in the process that kept its claim, once the claim expires' do
+      chat = asked
+      job = job_for(chat) { raise SignalException, 'TERM' }
+      expect { job.complete }.to raise_error(SignalException)
+      allow(job.to_llm.provider).to receive(:complete).and_return(reply)
+
+      travel lease + 1
+      job.complete
+
+      expect(row(chat)).to have_attributes(claim_token: nil, claimed_until: nil)
+      expect(job.messages.last.content).to eq('Done')
+    end
+
+    it 'returns a chat whose claim expires at this moment' do
+      freeze_time
+      chat = claim(asked, Time.current)
+
+      expect(chats.interrupted).to contain_exactly(chat)
+    end
+
+    it 'leaves out a chat a live run holds' do
+      claim(asked, lease.from_now)
+
+      expect(chats.interrupted).to be_empty
+    end
+
+    it 'leaves out a chat whose run completed' do
+      chat = asked
+      job_for(chat).complete
+
+      expect(row(chat)).to have_attributes(claim_token: nil, claimed_until: nil)
+      expect(chats.interrupted).to be_empty
+    end
+
+    it 'leaves out a chat whose run paused for an approval' do
+      chat = asked
+      job = job_for(chat, charge) { calling('charge_card') }
+      job.complete
+
+      expect(job.pending_questions).to be_present
+      expect(chats.interrupted).to be_empty
+    end
+
+    it 'leaves out a chat whose run paused for a question' do
+      chat = asked
+      job = job_for(chat, seat) { calling('pick_seat') }
+      job.complete
+
+      expect(job.pending_questions).to be_present
+      expect(chats.interrupted).to be_empty
+    end
+
+    it 'leaves out a chat whose run paused on a task' do
+      chat = asked
+      job = job_for(chat, deploy) { calling('deploy') }
+      job.complete
+
+      expect(job.pending_tasks).to be_present
+      expect(chats.interrupted).to be_empty
+    end
+
+    it 'leaves out a chat whose reply failed, so a refused request is not sent again' do
+      with_reply_error_column do
+        chat = asked
+        failing = job_for(chat) { raise RubyLLM::BadRequestError, 'Refused' }
+
+        expect { failing.complete }.to raise_error(RubyLLM::BadRequestError)
+        expect(row(chat).reply_error).to be_present
+        travel lease + 1
+        expect(chats.interrupted).to be_empty
+      end
+    end
+
+    it 'leaves out a chat whose run was cancelled' do
+      stub_const("#{described_class}::CANCELLATION_POLL_INTERVAL", 0.0)
+      chat = asked
+      job = job_for(chat) do
+        row(chat).cancel
+        reply
+      end
+
+      expect { job.complete }.to raise_error(RubyLLM::CancelledError)
+      expect(chats.interrupted).to be_empty
+    end
+
+    it 'leaves out a chat whose job is queued and has not started' do
       asked
-      allow(Chat).to receive(:column_names).and_return(Chat.column_names - %w[claim_token claimed_until])
 
       expect(chats.interrupted).to be_empty
     end
 
-    it 'counts a reply with only thinking as an answer' do
-      chat = asked
-      chat.messages.create!(role: :assistant, content: '', thinking_text: 'Nothing to add', finish_reason: 'stop')
-
-      expect(chats.interrupted).to be_empty
-    end
-
-    it 'counts a reply with only an attachment as an answer' do
-      chat = asked
-      reply = chat.messages.create!(role: :assistant, content: '', finish_reason: 'stop')
-      reply.attachments.attach(io: StringIO.new('chart'), filename: 'chart.txt', content_type: 'text/plain')
-
-      expect(chats.interrupted).to be_empty
-    end
-
-    it 'treats every tool result as needing a reply without a finish_reason column' do
-      tool_call = call
-      chat = chat_with({ role: :user, content: 'Look' },
-                       { role: :assistant, content: '', tool_calls: { tool_call.id => tool_call } })
-      chat.add_message(role: :tool, content: 'done', tool_call_id: tool_call.id, finish_reason: 'halted')
-      allow(Message).to receive(:column_names).and_return(Message.column_names - %w[finish_reason])
-
-      expect(chats.interrupted).to contain_exactly(chat)
-    end
-
-    it 'pauses no call without an mcp_state column' do
-      chat, second = mid_round
-      tool_call_row(second).update_all(mcp_state: { 'requests' => [{ 'id' => 'q1', 'message' => 'Sure?' }] })
-      allow(RubyLLM::ActiveRecord::ToolCall).to receive(:column_names)
-        .and_return(RubyLLM::ActiveRecord::ToolCall.column_names - %w[mcp_state])
-
-      expect(chats.interrupted).to contain_exactly(chat)
-    end
-
-    it 'leaves out complete chats' do
-      answered
-      created << Chat.create!(model: model_for(:openai))
-
-      expect(chats.interrupted).to be_empty
-    end
-
-    it 'leaves out a chat a tool halted' do
-      tool_call = call
-      chat = chat_with({ role: :user, content: 'Look' },
-                       { role: :assistant, content: '', tool_calls: { tool_call.id => tool_call } })
-      chat.add_message(role: :tool, content: 'done', tool_call_id: tool_call.id, finish_reason: 'halted')
-
-      expect(chats.interrupted).to be_empty
-    end
-
-    it 'leaves out a chat a tool halted before another call of its round finished' do
-      chat, second = mid_round
-      first_result = chat.messages.where(role: 'tool').last
-      first_result.update!(finish_reason: 'halted')
-      chat.add_message(role: :tool, content: 'found', tool_call_id: second.id)
-
-      expect(chats.interrupted).to be_empty
-    end
-
-    it 'leaves out cancelled chats' do
-      chat = asked
+    it 'leaves out a chat someone stopped after its run was killed' do
+      chat = claim(asked, 1.minute.ago)
       Chat.where(id: chat.id).update_all(cancelled: true)
 
       expect(chats.interrupted).to be_empty
     end
 
-    it 'leaves out chats a run holds' do
-      claim(asked, lease.from_now)
-      claim(mid_round.first, lease.from_now)
+    it 'reads no messages, so how they store roles and content makes no difference' do
+      chat = claim(asked, 1.minute.ago)
+      chat.messages.create!(role: :assistant, content: '')
+      Message.where(chat_id: chat.id).update_all(role: '1', content: '{"p":"c2VjcmV0","h":{"iv":"aXY="}}')
+      queries = []
+      record = ->(*, payload) { queries << payload[:sql] }
 
-      expect(chats.interrupted).to be_empty
+      found = ActiveSupport::Notifications.subscribed(record, 'sql.active_record') { chats.interrupted.to_a }
+
+      expect(found).to contain_exactly(chat)
+      expect(queries.grep(/\bmessages\b/)).to be_empty
     end
 
-    it 'leaves out a chat whose only open call another process is running' do
-      chat, second = mid_round
-      tool_call_row(second).update_all(claimed_until: lease.from_now)
-
-      expect(chats.interrupted).to be_empty
-      travel lease + 1
-      expect(chats.interrupted).to contain_exactly(chat)
-    end
-
-    it 'leaves out a chat waiting for an approval' do
-      _, second = mid_round
-      tool_call_row(second).update_all(approval: 'pending')
-
-      expect(chats.interrupted).to be_empty
-    end
-
-    it 'leaves out a chat waiting for an answer' do
-      _, second = mid_round
-      tool_call_row(second).update_all(mcp_state: { 'requests' => [{ 'id' => 'q1', 'message' => 'Sure?' }] })
-
-      expect(chats.interrupted).to be_empty
-    end
-
-    it 'leaves out a chat waiting on a task' do
-      _, second = mid_round
-      tool_call_row(second).update_all(mcp_state: { 'task' => { 'id' => 't1', 'status' => 'working' } })
-
-      expect(chats.interrupted).to be_empty
-    end
-
-    it 'returns a chat with one call waiting and another free to run' do
-      first = call
-      second = call
-      chat = chat_with({ role: :user, content: 'Look twice' },
-                       { role: :assistant, content: '', tool_calls: { first.id => first, second.id => second } })
-      tool_call_row(first).update_all(approval: 'pending')
-
-      expect(chats.interrupted).to contain_exactly(chat)
-    end
-
-    it 'ignores open calls on an earlier response' do
-      tool_call = call
-      chat_with({ role: :user, content: 'Look' },
-                { role: :assistant, content: '', tool_calls: { tool_call.id => tool_call } },
-                { role: :assistant, content: 'Never mind', finish_reason: 'stop' })
-
-      expect(chats.interrupted).to be_empty
-    end
-
-    it 'agrees with complete? and waiting? on every chat' do
-      asked
-      answered
-      mid_round
+    it 'returns none without the claim columns, since no row says whether a run holds a chat' do
       claim(asked, 1.minute.ago)
-      claim(asked, lease.from_now)
-      _, guarded_call = mid_round(call, call('guarded'))
-      tool_call_row(guarded_call).update_all(approval: 'pending')
-      guarded = Class.new(RubyLLM::Tool) do
-        define_method(:name) { 'guarded' }
-        requires_approval
+      allow(Chat).to receive(:column_names).and_return(Chat.column_names - %w[claim_token claimed_until])
+
+      expect(chats.interrupted).to be_empty
+    end
+
+    it 'leaves the cancelled flag out without a cancelled column' do
+      chat = claim(asked, 1.minute.ago)
+      Chat.where(id: chat.id).update_all(cancelled: true)
+      allow(Chat).to receive(:column_names).and_return(Chat.column_names - %w[cancelled])
+
+      expect(chats.interrupted).to contain_exactly(chat)
+    end
+
+    it 'asks the database each time, even inside the query cache, since other processes write the claims' do
+      freeze_time
+      claim(asked, 1.minute.ago)
+      cached = []
+      record = ->(*, payload) { cached << payload[:cached] if payload[:sql].include?('claim_token') }
+
+      ActiveRecord::Base.cache do
+        ActiveSupport::Notifications.subscribed(record, 'sql.active_record') { 2.times { chats.interrupted.to_a } }
       end
 
-      settled = chats.select { |chat| chat.with_tools(guarded).then { |record| record.complete? || record.waiting? } }
-
-      expect(chats.interrupted).to match_array(chats - settled)
+      expect(cached).to eq([nil, nil])
     end
 
     it 'composes with other conditions' do
-      chat = asked
-      asked
+      chat = claim(asked, 1.minute.ago)
+      claim(asked, 1.minute.ago)
 
       expect(Chat.where(id: chat.id).interrupted).to contain_exactly(chat)
       expect(Chat.interrupted.where(id: chat.id)).to contain_exactly(chat)
       expect(Chat.interrupted.merge(chats).count).to eq(2)
-    end
-
-    it 'keeps a selection the caller made' do
-      chat, second = mid_round
-      tool_call_row(second).update_all(mcp_state: { 'requests' => [{ 'id' => 'q1', 'response' => 'yes' }] })
-
-      expect(chats.select(:id).interrupted.map(&:id)).to eq([chat.id])
+      expect(chats.select(:id).interrupted.map(&:id)).to include(chat.id)
     end
 
     it 'loads in batches' do
-      interrupted = Array.new(3) { asked }
-      answered
+      interrupted = Array.new(3) { claim(asked, 1.minute.ago) }
+      asked
 
       expect(chats.interrupted.find_each(batch_size: 2).to_a).to match_array(interrupted)
     end

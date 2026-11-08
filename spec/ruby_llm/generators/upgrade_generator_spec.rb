@@ -21,6 +21,7 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
     upgrade = migration_class
 
     ActiveRecord::Base.transaction do
+      connection.remove_index(:chats, :claimed_until)
       connection.remove_column(:chats, :claim_token)
       connection.remove_column(:chats, :claimed_until)
       connection.remove_column(:ruby_llm_tool_calls, :claimed_until)
@@ -33,6 +34,7 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
 
       expect(connection.column_exists?(:chats, :claim_token, :string)).to be(true)
       expect(connection.column_exists?(:chats, :claimed_until, :datetime)).to be(true)
+      expect(connection.index_exists?(:chats, :claimed_until, where: 'claim_token IS NOT NULL')).to be(true)
       expect(connection.column_exists?(:ruby_llm_tool_calls, :claimed_until, :datetime)).to be(true)
       expect(connection.column_exists?(:ruby_llm_tool_calls, :provider_call_id, :string)).to be(true)
       expect(connection.column_exists?(:messages, :phase, :string)).to be(true)
@@ -52,6 +54,7 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
 
       expect(connection.column_exists?(:chats, :claim_token)).to be(false)
       expect(connection.column_exists?(:chats, :claimed_until)).to be(false)
+      expect(connection.index_exists?(:chats, :claimed_until)).to be(false)
       expect(connection.column_exists?(:ruby_llm_tool_calls, :claimed_until)).to be(false)
       expect(connection.column_exists?(:ruby_llm_tool_calls, :provider_call_id)).to be(false)
       expect(connection.column_exists?(:messages, :phase)).to be(false)
@@ -291,6 +294,27 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
 
     expect(migration).to include('add_column :conversations, :claim_token, :string')
     expect(migration).to include('add_column :conversations, :claimed_until, :datetime')
+    expect(migration).to include('add_index :conversations, :claimed_until, where: "claim_token IS NOT NULL"')
+  end
+
+  it 'indexes the claim expiry without a condition on MySQL, which has no partial indexes' do
+    generator = described_class.new([], {}, destination_root: destination, shell: Thor::Shell::Basic.new)
+    allow(generator).to receive(:mysql?).and_return(true)
+    generator.create_migration_file
+    migration = File.read(Dir.glob(File.join(destination, 'db/migrate/*_upgrade_ruby_llm_to_2_2.rb')).first)
+
+    expect(migration).to include("add_index :chats, :claimed_until\n")
+  end
+
+  it 'keeps the claim expiry index an application already added' do
+    upgrade = migration_class
+
+    ActiveRecord::Base.transaction do
+      ActiveRecord::Migration.suppress_messages { upgrade.migrate(:up) }
+
+      expect(connection.indexes(:chats).count { |index| index.columns == ['claimed_until'] }).to eq(1)
+      raise ActiveRecord::Rollback
+    end
   end
 
   { true => 'widens', false => 'leaves' }.each do |mysql, verb|

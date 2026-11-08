@@ -179,6 +179,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   def without_claim_columns
     connection = ActiveRecord::Base.connection
     ActiveRecord::Base.transaction do
+      connection.remove_index(:chats, :claimed_until)
       connection.remove_column(:chats, :claim_token)
       connection.remove_column(:chats, :claimed_until)
       connection.remove_column(:ruby_llm_tool_calls, :claimed_until)
