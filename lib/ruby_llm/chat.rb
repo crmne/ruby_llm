@@ -1747,9 +1747,6 @@ module RubyLLM
       @thinking&.resolve(@model)
     end
 
-    # A fallback leaves out the caching options its provider cannot
-    # express, and a persisted chat gives a provider that takes a cache
-    # key its own unless with_caching set one.
     def request_caching
       return @caching unless @caching.is_a?(Hash)
 
