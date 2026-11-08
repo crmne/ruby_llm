@@ -335,7 +335,7 @@ Replies stream, and `interval:` slows them down so a test can press Stop. See [T
 
 `response.web_sources` lists the pages a hosted web search returned, the same on OpenAI, Azure, Meta, xAI, Anthropic, Gemini, and Vertex AI. They come from the outside world, so don't treat them as an allowlist on their own. See [Web Sources]({% link _tools/provider-tools.md %}#web-sources).
 
-`rescue_from` on a tool turns its exceptions into results the model reads, as on an agent. Declare it on a base tool class, on `RubyLLM::CodeExecution`, or on an MCP server's class for its tools. See [Tool-Level Handlers]({% link _advanced/error-handling.md %}#tool-level-handlers).
+`rescue_from` on a tool turns its exceptions into results the model reads, as on an agent. Declare it on a base tool class, on `RubyLLM::Tool` for every tool, on `RubyLLM::CodeExecution`, or on an MCP server's class for its tools. See [Tool-Level Handlers]({% link _advanced/error-handling.md %}#tool-level-handlers).
 
 Prompt caching and fallbacks work together across providers. A fallback leaves out the caching options its provider has no use for, such as an OpenAI cache key on Claude, and a persisted chat with caching on sends a stable cache key of its own, so `caching` alone is enough. See [Caching with Fallbacks]({% link _core_features/prompt-caching.md %}#caching-with-fallbacks).
 

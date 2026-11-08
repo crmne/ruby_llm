@@ -58,8 +58,7 @@ module RubyLLM
       :@headers => {},
       :@input_names => [],
       :@fallbacks => [],
-      :@fallback_options => {},
-      :@rescue_handlers => []
+      :@fallback_options => {}
     }.freeze
     # Simple value options: a class-level getter/setter macro whose value the
     # agent forwards to the matching Chat#with_* when it builds its chat.
@@ -914,7 +913,7 @@ module RubyLLM
       def apply_rescue_handlers(chat, agent, input_values)
         return unless chat.is_a?(Chat::Rescuable)
 
-        chat.rescuer = rescue_handlers.empty? ? nil : agent || allocate.bind(chat, input_values)
+        chat.rescuer = rescue_handlers? ? agent || allocate.bind(chat, input_values) : nil
       end
 
       def resolved_schema_value(runtime)
@@ -1076,8 +1075,8 @@ module RubyLLM
     # matching one wins. Re-raise inside a handler to let the caller see
     # the exception; otherwise the handler's return value becomes the
     # operation's return value. Exceptions no handler matches are
-    # re-raised. Subclasses inherit the handlers declared when they are
-    # defined.
+    # re-raised. Subclasses use their parents' handlers, including ones
+    # declared after the subclass, and their own come first.
     #
     # Exception classes may be named as Strings, which defers constant
     # lookup until an exception is raised. A class that can never match a

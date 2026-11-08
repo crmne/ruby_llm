@@ -242,7 +242,16 @@ RSpec.describe RubyLLM::Tool do
       .to raise_error(RubyLLM::InputRequiredError, /BookFlight|book_flight/) { |error|
         expect(error.requests.map(&:message)).to eq(['Window or aisle?'])
         expect(error.requests.sole).to be_a(RubyLLM::Question)
+        expect(error.requests.sole.key).to eq('ask_0')
       }
+  end
+
+  it 'reads the answers it is resumed with outside a chat' do
+    question = RubyLLM::Question.asked(0, 'Window or aisle?', choices: %w[window aisle])
+    input = { 'requests' => [question.respond({ 'action' => 'accept', 'content' => { 'answer' => 'aisle' } }).to_h] }
+
+    expect(book_flight.new.resume_call(input, { destination: 'Lisbon' }, tool_call: nil))
+      .to eq('Booked a aisle seat to Lisbon')
   end
 
   it 'keeps a server question as the same object, under its old names' do

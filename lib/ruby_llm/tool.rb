@@ -51,8 +51,7 @@ module RubyLLM
 
     DUPED_INHERITED_CONFIG = {
       :@declared_parameters => {},
-      :@provider_options => {},
-      :@rescue_handlers => []
+      :@provider_options => {}
     }.freeze
     COPIED_INHERITED_CONFIG = %i[
       @description
@@ -72,12 +71,14 @@ module RubyLLM
     # :singleton-method: rescue_from
     # :call-seq: rescue_from(*exception_classes, with: nil, &block)
     #
-    # Registers a handler for exceptions #execute and #resume raise. Name
+    # Registers a handler for exceptions a call raises when a chat runs
+    # the tool, from #execute, #resume, or a #call the tool overrides. Name
     # the handler with +with:+ or pass a block; either runs on the tool
     # instance. The handler's return value becomes the call's result, as
     # if #execute had returned it, so the model reads it and the chat
     # goes on. Re-raise inside a handler to stop the chat with the
-    # exception, as an unhandled one does.
+    # exception, as an unhandled one does. Handlers only run for calls a
+    # chat makes: when you call #call yourself, exceptions reach you.
     #
     #   class ApplicationTool < RubyLLM::Tool
     #     rescue_from StandardError, with: :report_failure
@@ -94,10 +95,11 @@ module RubyLLM
     #     end
     #   end
     #
-    # Handlers are searched in reverse declaration order, so the last
-    # matching one wins. Subclasses inherit the handlers declared when
-    # they are defined; declare handlers for RubyLLM's own tools on their
-    # classes, such as CodeExecution, and for a server's tools on its MCP
+    # Handlers are searched in reverse declaration order, a class's own
+    # before its parent's, so the last matching one wins. Subclasses use
+    # their parents' handlers, including ones declared after the subclass,
+    # so a handler on Tool itself also covers RubyLLM's own tools, such as
+    # CodeExecution. Declare handlers for a server's tools on its MCP
     # class. A question from Tool#ask and a cancelled chat never reach a
     # handler.
     #
@@ -107,6 +109,18 @@ module RubyLLM
 
     class << self
       attr_reader :parameters_schema_definition, :approval_resolver, :namespace_description # :nodoc:
+
+      # Opens the questions of the call a chat makes of +tool+, with
+      # +input+, the answers Chat saved for it, so the call and its
+      # ::rescue_from handler ask in turn and each reads its answers when
+      # the call runs again.
+      def asking(tool, input) # :nodoc:
+        previous = Fiber[ASKING]
+        Fiber[ASKING] = { 'input' => input, 'asked' => 0, 'tool' => tool }
+        yield
+      ensure
+        Fiber[ASKING] = previous
+      end
 
       def inherited(subclass) # :nodoc:
         super
@@ -507,7 +521,7 @@ module RubyLLM
 
       RubyLLM.logger.debug { "Tool #{name} called with: #{normalized_args.inspect}" }
       normalized_args[TOOL_CALL_KEYWORD] = tool_call if execute_accepts_tool_call?
-      result = asking { halting { rescuing { execute(**normalized_args) } } }
+      result = asking { halting { execute(**normalized_args) } }
       RubyLLM.logger.debug { "Tool #{name} returned: #{result.inspect}" }
       result
     end
@@ -611,7 +625,7 @@ module RubyLLM
     def resume_call(state, arguments, tool_call:) # :nodoc:
       return answered(state, arguments, tool_call:) unless state.key?('task')
 
-      halting { rescuing { resume(task(state, tool_call:), **arguments.transform_keys(&:to_sym)) } }
+      halting { resume(task(state, tool_call:), **arguments.transform_keys(&:to_sym)) }
     end
 
     # Ends the turn with +result+ as this call's result: the model is not
@@ -674,21 +688,13 @@ module RubyLLM
       catch(HALT, &)
     end
 
-    # A question or a cancellation is how a call pauses or stops, not a
-    # failure, so it never reaches a handler.
-    def rescuing # :nodoc:
-      yield
-    rescue InputRequiredError, CancelledError
-      raise
-    rescue StandardError => e
-      rescue_with_handler(e)
-    end
-
+    # The call a chat makes of a tool takes the questions Tool.asking
+    # opened for it, which its handler then shares.
     def asking # :nodoc:
       previous = Fiber[ASKING]
       input = Fiber[RESUMING]
       Fiber[RESUMING] = nil
-      Fiber[ASKING] = { 'input' => input, 'asked' => 0 }
+      Fiber[ASKING] = previous&.delete('tool') == self ? previous : { 'input' => input, 'asked' => 0 }
       yield
     ensure
       Fiber[ASKING] = previous
