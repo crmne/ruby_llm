@@ -96,7 +96,7 @@ module RubyLLM
       def conversation_data(chat, parents)
         answer = chat.messages.reverse.find { |message| message.role == :assistant }&.content
         { output: answer, messages: serialize(chat.messages, parents), complete: chat.complete?, waiting: chat.waiting?,
-          pending_approvals: chat.pending_questions.select(&:approval?).map(&:id), cancelled: chat.cancelled?,
+          pending_questions: chat.pending_questions.map(&:id), cancelled: chat.cancelled?,
           model: chat.model.id }
       end
 

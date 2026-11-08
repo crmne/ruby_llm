@@ -527,7 +527,7 @@ Views that listed `pending_approvals` list `pending_questions` instead, which al
 
 ## Two Lists and `decline` Replace Seven Methods
 
-2.2 removes six methods that each answered one narrow question about a chat that waits. Three remain: `waiting?` says whether the chat can't go on until something outside it happens, `pending_questions` lists what a person must answer, approvals included, and `pending_tasks` lists the tool calls finishing elsewhere. It removes `deny` too: `decline` is the one way to say no to any question, an approval included, and takes an optional note the model sees, such as `chat.decline(question, "The order shipped already")`. Plain chats, `acts_as_chat` records, and agents answer all of them. Replace each removed method with its expression:
+2.2 removes six methods that each answered one narrow question about a chat that waits. Three remain: `waiting?` says whether the chat can't go on until something outside it happens, `pending_questions` lists what a person must answer, approvals included, and `pending_tasks` lists the tool calls finishing elsewhere. It removes `deny` too: `decline` is the one way to say no to any question, an approval included, and takes an optional note the model sees, such as `chat.decline(question, "The order shipped already")`. Plain chats, `acts_as_chat` records, and agents answer all of them. Evaluation evidence follows the same list. Replace each removed name with its replacement:
 
 | Removed | Replacement |
 | --- | --- |
@@ -539,6 +539,7 @@ Views that listed `pending_approvals` list `pending_questions` instead, which al
 | `chat.awaiting_person?` | `chat.waiting? && (chat.pending_questions.any? || chat.pending_tasks.any?(&:input_required?))` |
 | `chat.deny(call)` | `chat.decline(call)` |
 | `question.deny` | `question.decline` |
+| `pending_approvals` in a chat's evaluation evidence | `pending_questions`, the ids of every question the chat waits on, approvals included |
 
 `approve`, `answer`, and `decline` take a question as well as its call, so code that hands a `pending_approvals` entry to them can hand over the question and drop `.map(&:tool_call)`. On an `acts_as_chat` record, `pending_approvals` returned tool call records, where the replacement returns each call as a `RubyLLM::ToolCall` with the same `id`, `name`, and `arguments`.
 

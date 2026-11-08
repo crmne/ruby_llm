@@ -130,9 +130,16 @@ RSpec.describe RubyLLM::Evaluation::Evidence do
     chat.messages.pop(2)
     evidence = described_class.new(chat)
 
-    expect(evidence.data).to include(complete: false, waiting: true, pending_approvals: ['call-1'])
+    expect(evidence.data).to include(complete: false, waiting: true, pending_questions: ['call-1'])
     expect(evidence.data[:messages].last[:role]).to eq('assistant')
     expect(evidence.data[:messages].none? { |message| message[:role] == 'tool' }).to be(true)
+  end
+
+  it 'lists every question the chat waits on, not only approvals' do
+    asked = RubyLLM::Question.asked(0, 'Which order?')
+    allow(chat).to receive(:pending_questions).and_return([asked])
+
+    expect(described_class.new(chat).data[:pending_questions]).to eq([asked.id])
   end
 
   it 'keeps transcripts of nested agents distinct' do
