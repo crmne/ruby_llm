@@ -138,6 +138,7 @@ module RubyLLM
       def schedule_resume_job
         return unless app_file?(RECURRING_PATH)
         return unschedule_resume_job if behavior == :revoke
+        return say_status(:skip, "add #{resume_job_class_name} to #{RECURRING_PATH}", :yellow) unless recurring_config
 
         environments = recurring_environments
         if environments.empty?
@@ -150,6 +151,11 @@ module RubyLLM
       def resume_on_boot
         initializer "#{resume_job_class_name.delete_suffix('Job').underscore}.rb",
                     "Rails.application.server { #{resume_job_class_name}.set(wait: 1.minute).perform_later }\n"
+        return unless behavior == :invoke && app_file?('config.ru')
+        return if File.read(File.join(destination_root, 'config.ru')).include?('load_server')
+
+        say_status :warn, "add Rails.application.load_server to config.ru, so #{resume_job_class_name} runs at boot",
+                   :yellow
       end
 
       def create_system_test
@@ -306,9 +312,11 @@ module RubyLLM
 
         source = File.read(File.join(destination_root, RECURRING_PATH))
         name = Regexp.escape(environment)
-        if (aliased = source.match(/^#{name}:[ \t]*(\*[\w-]+)[ \t]*(?:#.*)?\n/))
-          gsub_file RECURRING_PATH, aliased[0], "#{environment}:\n  <<: #{aliased[1]}\n#{recurring_task.indent(2)}"
-        elsif (header = source[/^#{name}:[ \t]*(?:&[\w-]+[ \t]*)?(?:#.*)?\n/])
+        aliased = /^#{name}:[ \t]*(\*[\w-]+)[ \t]*(?:#.*)?\n/
+        header = /^#{name}:[ \t]*(?:&[\w-]+[ \t]*)?(?:#.*)?\n/
+        if (target = source[aliased, 1])
+          gsub_file RECURRING_PATH, aliased, "#{environment}:\n  <<: #{target}\n#{recurring_task.indent(2)}"
+        elsif source.match?(header)
           inject_into_file RECURRING_PATH, recurring_task.indent(2), after: header, force: true
         elsif recurring_config.key?(environment)
           say_status :skip, "add #{resume_job_class_name} to #{environment} in #{RECURRING_PATH}", :yellow
@@ -331,7 +339,7 @@ module RubyLLM
         config = ActiveSupport::ConfigurationFile.parse(File.join(destination_root, RECURRING_PATH))
         config.is_a?(Hash) ? config : {}
       rescue StandardError
-        {}
+        nil
       end
 
       def recurring_environments

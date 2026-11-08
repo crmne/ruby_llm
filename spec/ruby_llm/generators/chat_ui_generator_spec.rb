@@ -698,6 +698,24 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         expect(config).to include('clear_jobs')
       end
 
+      it 'adds it under the environment, not a comment or key that ends with its name' do
+        config = schedule("# production:\nother_production:\n#{cleanup}\nproduction:\n#{cleanup}")
+
+        expect(resume_tasks(config['production']).size).to eq(1)
+        expect(resume_tasks(config['other_production'])).to be_empty
+      end
+
+      it 'leaves a file it cannot read alone, and says so' do
+        source = "production:\n  clear_jobs: [unclosed\n"
+        File.write(recurring_path, source)
+        allow(generator).to receive(:say_status).and_call_original
+
+        generator.schedule_resume_job
+
+        expect(File.read(recurring_path)).to eq(source)
+        expect(generator).to have_received(:say_status).with(:skip, /add ResumeInterruptedChatsJob/, :yellow)
+      end
+
       it 'removes it on destroy' do
         source = "development: &shared\n#{cleanup}\nproduction: # servers\n#{cleanup}"
         schedule(source, times: 1)
@@ -706,6 +724,15 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
 
         expect(File.read(recurring_path)).to eq(source)
       end
+    end
+
+    it 'warns when config.ru never loads the server hooks the boot run needs' do
+      File.write(File.join(destination, 'config.ru'), "run Rails.application\n")
+      allow(generator).to receive(:say_status).and_call_original
+
+      generator.resume_on_boot
+
+      expect(generator).to have_received(:say_status).with(:warn, /load_server/, :yellow)
     end
 
     it 'adds available_chat_models to the application controller there' do
