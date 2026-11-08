@@ -170,9 +170,18 @@ RSpec.describe RubyLLM::Attachment do
 
     it 'reads a download whose name says nothing to find its type' do
       png = File.binread(File.expand_path('../fixtures/ruby.png', __dir__))
-      allow(RubyLLM::Transport::Connection).to receive(:download).and_return(png)
+      stub_request(:get, 'https://example.com/download').to_return(body: png)
 
       expect(described_class.new('https://example.com/download').mime_type).to eq('image/png')
+    end
+
+    it 'reads a download to find its type when open-uri makes the URL readable' do
+      png = File.binread(File.expand_path('../fixtures/ruby.png', __dir__))
+      stub_request(:get, 'https://example.com/download').to_return(body: png)
+      url = URI('https://example.com/download')
+      url.define_singleton_method(:read) { |*| raise 'read through open-uri' }
+
+      expect(described_class.new(url).mime_type).to eq('image/png')
     end
 
     it 'stops following redirects after five' do
