@@ -2823,16 +2823,16 @@ module RubyLLM
 
     def refuse(tool_call, note)
       record_tool_call_decision(tool_call, false)
-      record_tool_call_input(tool_call, { 'note' => note }) if note
+      @tool_call_state.record_decline_note(tool_call, note) if note
     end
 
     def decline_note(tool_call)
-      tool_call_input(tool_call)&.[]('note')
+      @tool_call_state.decline_note(tool_call)
     end
 
     def forget_decline_note(tool_call)
       call = tool_call.respond_to?(:id) ? tool_call : find_tool_call(tool_call)
-      record_tool_call_input(call, nil) if call && decline_note(call)
+      @tool_call_state.record_decline_note(call, nil) if call && decline_note(call)
     end
 
     def apply_tool_choice(choice)

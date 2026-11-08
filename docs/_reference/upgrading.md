@@ -441,12 +441,12 @@ In 2.1, `pending_approvals` on a persisted chat built the chat's tools to find t
 RubyLLM::ActiveRecord::ToolCall.where(approval: [nil, "pending"], result_id: nil)
 ```
 
-Calls that were already waiting for approval when you deploy have no such record, so `pending_questions` leaves them out. Load the chat through its agent class, so its tools and MCP servers are registered, list those calls from the chat it builds, which still connects to the chat's servers, and decide them by ID:
+Calls that were already waiting for approval when you deploy have no such record, so `pending_questions` leaves them out. Load the chat through its agent class, so its tools and MCP servers are registered, list those calls from the chat it builds, which still connects to the chat's servers, and approve or decline them by ID:
 
 ```ruby
 chat = ChatAgent.find(chat_id)
 chat.to_llm.pending_questions.select(&:approval?).map(&:id) # => ["call_1a2b3c"]
-chat.approve("call_1a2b3c")
+chat.approve("call_1a2b3c") # or chat.decline("call_1a2b3c", "The order shipped already")
 ```
 
 ## Agent Handlers Cover Every Chat

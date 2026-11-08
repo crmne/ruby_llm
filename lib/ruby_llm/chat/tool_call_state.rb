@@ -10,6 +10,7 @@ module RubyLLM
       def initialize
         @inputs = {}
         @decisions = {}
+        @notes = {}
         @remembered = []
         @spent_escalations = []
         @lock = Mutex.new
@@ -19,6 +20,7 @@ module RubyLLM
         super
         @inputs = @inputs.dup
         @decisions = @decisions.dup
+        @notes = @notes.dup
         @remembered = @remembered.dup
         @spent_escalations = @spent_escalations.dup
       end
@@ -54,6 +56,16 @@ module RubyLLM
 
       def decision(tool_call)
         @decisions[tool_call.id]
+      end
+
+      # The note a person gave when declining +tool_call+, kept apart from
+      # its input so a declined call never looks paused on a question.
+      def decline_note(tool_call)
+        @notes[tool_call.id]
+      end
+
+      def record_decline_note(tool_call, note)
+        note ? @notes[tool_call.id] = note : @notes.delete(tool_call.id)
       end
 
       def denied?(tool_call)

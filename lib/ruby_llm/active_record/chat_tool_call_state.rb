@@ -27,6 +27,14 @@ module RubyLLM
         end
       end
 
+      def decline_note(tool_call)
+        @chat.persisted_decline_note(tool_call)
+      end
+
+      def record_decline_note(tool_call, note)
+        @chat.record_persisted_decline_note(tool_call, note)
+      end
+
       def settle(tool_call, &)
         @chat.settle_persisted_input(tool_call, &)
       end
