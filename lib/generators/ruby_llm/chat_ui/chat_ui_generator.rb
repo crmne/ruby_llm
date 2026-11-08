@@ -141,9 +141,10 @@ module RubyLLM
           append_to_file RECURRING_PATH, "\n#{recurring_task}" unless scheduled?(source)
         else
           environments.each do |environment|
-            next if scheduled?(source[/^#{environment}:[ \t]*\n(?:(?:[ \t#].*)?\n)*/])
+            header = environment_header(environment)
+            next if scheduled?(source[/#{header}(?:(?:[ \t#].*)?\n)*/])
 
-            inject_into_file RECURRING_PATH, recurring_task.indent(2), after: /^#{environment}:[ \t]*\n/, force: true
+            inject_into_file RECURRING_PATH, recurring_task.indent(2), after: header, force: true
           end
         end
       end
@@ -308,7 +309,11 @@ module RubyLLM
 
       def recurring_environments(source)
         environments = Dir[File.join(destination_root, 'config/environments/*.rb')].map { File.basename(_1, '.rb') }
-        environments.select { |environment| source.match?(/^#{environment}:[ \t]*$/) }
+        environments.select { |environment| source.match?(environment_header(environment)) }
+      end
+
+      def environment_header(environment)
+        /^#{Regexp.escape(environment)}:[ \t]*(?:&[\w-]+[ \t]*)?(?:#.*)?\n/
       end
 
       def application_agent_chat_class?

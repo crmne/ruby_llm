@@ -1319,7 +1319,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
                 #     class: CleanSoftDeletedRecordsJob
                 #     schedule: every hour
 
-                development:
+                development: &development
                   clear_development_jobs:
                     command: "SolidQueue::Job.clear_finished_in_batches"
                     schedule: every day
@@ -1327,7 +1327,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
                     class: #{config[:approval_flow][:resume_job]}
                     schedule: every minute
 
-                production:
+                production: # what runs on the servers
                   clear_solid_queue_finished_jobs:
                     command: "SolidQueue::Job.clear_finished_in_batches(sleep_between_batches: 0.3)"
                     schedule: every hour at minute 12
