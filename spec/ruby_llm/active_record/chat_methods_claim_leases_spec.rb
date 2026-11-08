@@ -234,10 +234,10 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       end
     end
 
-    # The clock moves instead of the test waiting on it, and a heartbeat
-    # beats when the check needs one, so a stalled runner can't lapse the
-    # claim. Five seconds into the round, the waiting call's own deadline
-    # has passed, and the chat's claim, renewed by the first result, holds.
+    # The clock moves instead of the test waiting on it, so a stalled
+    # runner can't lapse the claim. The heartbeat beats once the first
+    # result is saved, and five seconds into the round, past the waiting
+    # call's own deadline, the claim it wrote then still holds.
     it 'keeps a waiting call claimed while a callback after the call before it runs long' do
       stub_const('RubyLLM::ActiveRecord::RunClaims::CLAIM_LEASE', 60)
       freeze_time
@@ -259,8 +259,8 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       job.after_message do |message|
         next unless message.role == :tool && waiting.empty?
 
-        travel 3.seconds
         job.send(:renew_claim_leases)
+        travel 3.seconds
         waiting << claimed?(call_ids.last)
       end
       allow(job.to_llm.provider).to receive(:complete)
