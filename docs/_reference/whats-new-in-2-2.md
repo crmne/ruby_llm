@@ -343,7 +343,7 @@ A reply a fallback model wrote names it: `reply.model` and `reply.provider`, als
 
 A chat with a [file store]({% link _core_features/file-stores.md %}#what-the-model-sees) says what it sent in part: a tool result kept in a file names it in `spilled_path`, and the start of a long attachment is `partial?`.
 
-`RubyLLM::MCP::Client#meta` returns the `_meta` RubyLLM sends with every MCP request, for requests your app sends a server itself. See [Custom Transports]({% link _tools/mcp.md %}#custom-transports).
+`RubyLLM::MCP::Client#meta` returns the `_meta` RubyLLM sends with every request to a server on the 2026-07-28 revision, for requests your app sends a server itself. See [Custom Transports]({% link _tools/mcp.md %}#custom-transports).
 
 `RubyLLM::Attachment.new(io, filename: "export.csv", mime_type: "text/csv")` takes a file's type when you know it. See [Automatic File Type Detection]({% link _core_features/attachments.md %}#automatic-file-type-detection).
 
