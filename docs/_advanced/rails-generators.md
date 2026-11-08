@@ -159,7 +159,7 @@ class ChatAgent < ApplicationAgent
 end
 ```
 
-Its chats use the [context budget]({% link _core_features/chat-request-control.md %}#keeping-tool-results-in-budget) the install generator writes into `config/initializers/ruby_llm.rb`, so you can rewrite the agent freely:
+Its chats use the [context budget]({% link _core_features/chat-request-control.md %}#keeping-tool-results-in-budget) the install generator writes into `config/initializers/ruby_llm.rb`, so you can rewrite the agent freely. The chat UI generator adds it there too when your initializer sets none:
 
 ```ruby
 config.context_budget = { per_result: 0.25, per_request: 0.7 }

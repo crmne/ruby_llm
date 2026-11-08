@@ -46,14 +46,19 @@ module RubyLLM
 
       # Turns on Configuration#broadcast_messages in the RubyLLM initializer.
       def enable_message_broadcasting
+        configure_initializer(:broadcast_messages, 'true')
+      end
+
+      # Sets +setting+ to +value+ in the RubyLLM initializer, unless the
+      # initializer already sets it.
+      def configure_initializer(setting, value)
         path = 'config/initializers/ruby_llm.rb'
         initializer = File.join(destination_root, path)
-        unless File.exist?(initializer)
-          return say('Add config.broadcast_messages = true to your RubyLLM configuration', :yellow)
-        end
-        return if File.read(initializer).match?(/^\s*config\.broadcast_messages\s*=/)
+        line = "config.#{setting} = #{value}"
+        return say("Add #{line} to your RubyLLM configuration", :yellow) unless File.exist?(initializer)
+        return if File.read(initializer).match?(/^\s*config\.#{setting}\s*=/)
 
-        inject_into_file path, "  config.broadcast_messages = true\n", before: /^end\s*\z/
+        inject_into_file path, "  #{line}\n", before: /^end\s*\z/
       end
 
       def explain_own_broadcasting(source)

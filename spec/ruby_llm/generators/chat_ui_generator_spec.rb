@@ -582,6 +582,38 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       expect(File.read(File.join(destination, 'app/controllers/application_controller.rb')))
         .to include('def available_chat_models')
     end
+
+    def initializer_with(lines)
+      path = File.join(destination, 'config/initializers/ruby_llm.rb')
+      FileUtils.mkdir_p(File.dirname(path))
+      File.write(path, "RubyLLM.configure do |config|\n#{lines}end\n")
+      generator.context_budget
+      File.read(path)
+    end
+
+    it 'gives an initializer without a context budget the one new apps get' do
+      expect(initializer_with("  config.openai_api_key = nil\n")).to eq(<<~RUBY)
+        RubyLLM.configure do |config|
+          config.openai_api_key = nil
+          config.context_budget = { per_result: 0.25, per_request: 0.7 }
+        end
+      RUBY
+    end
+
+    it 'leaves a context budget the initializer sets, or turns off, alone' do
+      ["  config.context_budget = { per_request: 0.5 }\n", "  config.context_budget = nil\n"].each do |line|
+        expect(initializer_with(line)).to eq("RubyLLM.configure do |config|\n#{line}end\n")
+      end
+    end
+
+    it 'says what to add without an initializer' do
+      allow(generator).to receive(:say)
+
+      generator.context_budget
+
+      line = 'config.context_budget = { per_result: 0.25, per_request: 0.7 }'
+      expect(generator).to have_received(:say).with("Add #{line} to your RubyLLM configuration", :yellow)
+    end
   end
 
   {
@@ -958,6 +990,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
               expect(Dir['db/migrate/*_add_reply_error_to_chats.rb'].size).to eq(1)
               initializer = File.read('config/initializers/ruby_llm.rb')
               expect(initializer.scan('config.broadcast_messages = true').size).to eq(1)
+              expect(initializer.scan('config.context_budget =').size).to eq(1)
             end
           end
         end

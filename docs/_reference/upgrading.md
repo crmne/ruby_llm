@@ -122,7 +122,7 @@ Broadcasting renders each message with its partial, chosen by `to_partial_path`,
 
 ## Give Every Chat a Context Budget
 
-2.2 adds a [context budget]({% link _core_features/chat-request-control.md %}#keeping-tool-results-in-budget), which keeps tool results within shares of the model's context window. Your chats have none until you set it, so they behave as they did in 2.1. We recommend adding the line new applications get from the install generator:
+2.2 adds a [context budget]({% link _core_features/chat-request-control.md %}#keeping-tool-results-in-budget), which keeps tool results within shares of the model's context window. Your chats have none until you set it, so they behave as they did in 2.1. We recommend adding the line new applications get from the install generator. Rerunning `ruby_llm:chat_ui` adds it when your initializer sets no budget:
 
 ```ruby
 RubyLLM.configure do |config|
