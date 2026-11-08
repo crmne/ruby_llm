@@ -147,6 +147,35 @@ RSpec.describe RubyLLM::MCP::Outages do
     end
   end
 
+  describe 'the event' do
+    def event_for(failure)
+      events = []
+      instrumenter = Class.new do
+        define_method(:instrument) do |name, payload = {}, &block|
+          events << payload if name == 'mcp_unreachable.ruby_llm'
+          block&.call(payload)
+        end
+      end.new
+      allow(RubyLLM.config).to receive(:instrumenter).and_return(instrumenter)
+      tool_result(failure)
+      events.sole
+    end
+
+    it "names the server and the error's class, not the host" do
+      payload = event_for(dropped)
+
+      expect(payload).to eq(server: 'linear', error: 'RubyLLM::ConnectionError')
+      expect(payload.values.join(' ')).not_to include('internal.example')
+    end
+
+    it 'carries the status the server answered, without its message' do
+      payload = event_for(unavailable(503))
+
+      expect(payload).to eq(server: 'linear', error: 'RubyLLM::MCP::Error', status: 503)
+      expect(payload.values.join(' ')).not_to include('internal.example')
+    end
+  end
+
   describe 'a call that may have partly run' do
     partly_run = 'The call may have partly run, so check before trying it again.'
 

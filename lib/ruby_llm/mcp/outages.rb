@@ -85,14 +85,14 @@ module RubyLLM
 
         private
 
-        # Names the error by its class and status, since a connection
-        # error's message can carry the server's host or URL.
+        # Names the error by its class and status, never its message, since
+        # a connection error's message can carry the server's host or URL.
         def report(server, error)
           status = error.response&.status
           RubyLLM.logger.warn("MCP server #{server.name} is unreachable, so its tools sit out: " \
                               "#{[error.class, ("HTTP #{status}" if status)].compact.join(', ')}")
-          RubyLLM.instrument('mcp_unreachable.ruby_llm', { server: server.name, error: error.message },
-                             config: server.send(:config))
+          payload = { server: server.name, error: error.class.name, status: }.compact
+          RubyLLM.instrument('mcp_unreachable.ruby_llm', payload, config: server.send(:config))
         end
 
         # What the server wrote, or the error's own message when it wrote
