@@ -129,4 +129,29 @@ RSpec.describe RubyLLM::Chat do
     expect(resumed(chat).content).to eq('Done')
     expect(refusal(chat)).to eq('{"error":"The user denied the issue_refund tool call."}')
   end
+
+  it 'returns the waiting chat when a call that stalled once then pauses' do
+    seat = Class.new(RubyLLM::Tool) do
+      def self.name = 'PickSeat'
+
+      description 'Asks for a seat'
+      define_method(:execute) { "Seat #{ask('Window or aisle?')}" }
+    end
+    chat = described_class.new(model: model_for(:openai)).with_tools(seat)
+    call = RubyLLM::ToolCall.new(id: 'call_seat', name: 'pick_seat', arguments: {})
+    stub_model(chat, RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { call.id => call }))
+    stalled = false
+    state = chat.instance_variable_get(:@tool_call_state)
+    allow(state).to receive(:claim).and_wrap_original do |claim, *args, **options, &leases|
+      next claim.call(*args, **options, &leases) if stalled
+
+      stalled = true
+      []
+    end
+
+    Timeout.timeout(5) { chat.ask('Book a seat') }
+
+    expect(chat).to be_waiting
+    expect(chat.pending_questions.sole.message).to eq('Window or aisle?')
+  end
 end

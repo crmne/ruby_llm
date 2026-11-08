@@ -1874,10 +1874,11 @@ module RubyLLM
     end
 
     # A round can stall once while another process lets its claim go, and
-    # goes on the next time. A second stall in a row would repeat forever.
+    # goes on the next time, perhaps to pause. A second stall in a row that
+    # leaves nothing to wait on would repeat forever.
     def stalled_round?(stalled, generated:, move:)
       return false if generated || move
-      return true unless stalled
+      return true unless stalled && !waiting?
 
       ids = pending_tool_response&.then { |response| pending_tool_calls(response).keys }
       raise StalledToolRound,
