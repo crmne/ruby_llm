@@ -40,7 +40,12 @@ RSpec.describe RubyLLM::Chat do
       loop do
         socket = server.accept
         head = +''
-        head << socket.gets until head.end_with?("\r\n\r\n")
+        while (line = socket.gets)
+          head << line
+          break if head.end_with?("\r\n\r\n")
+        end
+        next socket.close unless head.end_with?("\r\n\r\n")
+
         socket.read(head[/content-length: (\d+)/i, 1].to_i)
         fields = headers.merge('Content-Type' => 'application/json', 'Content-Length' => body.bytesize,
                                'Connection' => 'close').map { |name, value| "#{name}: #{value}\r\n" }.join
