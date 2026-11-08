@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'stringio'
+require 'tempfile'
 
 module RubyLLM
   module ActiveRecord
@@ -79,12 +80,15 @@ module RubyLLM
 
       # Writes +content+ to +path+ and returns its StoredFile.
       def write(path, content, content_type: nil)
-        content = RubyLLM::FileStore.bytes(content)
         path = path(path)
-        type = content_type || RubyLLM::FileStore.content_type_for(path, content)
-        blob = ::ActiveStorage::Blob.create_and_upload!(io: StringIO.new(content), filename: File.basename(path),
-                                                        content_type: type, identify: false)
-        save(path, content.bytesize, type, RubyLLM::FileStore.digest(content)) { |record| record.file.attach(blob) }
+        rewindable(content) do |io|
+          type = content_type || RubyLLM::FileStore.content_type_for(path, io)
+          digest = RubyLLM::FileStore.digest(io)
+          io.rewind
+          blob = ::ActiveStorage::Blob.create_and_upload!(io:, filename: File.basename(path),
+                                                          content_type: type, identify: false)
+          save(path, blob.byte_size, type, digest) { |record| record.file.attach(blob) }
+        end
       end
 
       # Deletes the file at +path+ and returns its StoredFile, or +nil+. A
@@ -162,6 +166,25 @@ module RubyLLM
       end
 
       private
+
+      # Active Storage reads an IO from its start, so one that cannot
+      # rewind, or stands past its start, is copied to a tempfile first.
+      def rewindable(content)
+        return yield StringIO.new(content.to_s.b) unless content.respond_to?(:read)
+        return yield content if at_start?(content)
+
+        Tempfile.create('ruby_llm-file-', binmode: true) do |copy|
+          IO.copy_stream(content, copy)
+          copy.rewind
+          yield copy
+        end
+      end
+
+      def at_start?(io)
+        %i[rewind pos].all? { |method| io.respond_to?(method) } && io.pos.zero?
+      rescue Errno::ESPIPE
+        false
+      end
 
       def read_digests?
         ChatFile.column_names.include?('read_digest')

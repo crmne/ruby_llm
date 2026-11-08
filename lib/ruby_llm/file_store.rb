@@ -119,11 +119,14 @@ module RubyLLM
         digest.hexdigest
       end
 
-      # Returns the MIME type of +content+ written to +path+.
+      # Returns the MIME type of +content+, a String or an IO that can
+      # rewind, written to +path+. An IO is sniffed from its start and
+      # left there.
       def content_type_for(path, content) # :nodoc:
         type = Files::MimeType.for(name: File.basename(path))
-        type = Files::MimeType.for(StringIO.new(content)) if type == 'application/octet-stream' && !content.empty?
-        type
+        return type unless type == 'application/octet-stream'
+
+        Files::MimeType.for(content.respond_to?(:read) ? content : StringIO.new(content))
       end
 
       # Returns the bytes of +content+, a String or an IO.

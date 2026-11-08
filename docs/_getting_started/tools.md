@@ -147,7 +147,7 @@ class ApplicationTool < RubyLLM::Tool
 end
 ```
 
-The handler's return value becomes the call's result, and the model reads it. See [Tool-Level Handlers]({% link _advanced/error-handling.md %}#tool-level-handlers).
+The handler's return value becomes the call's result, and the model reads it. Handlers run for the calls a chat makes. You can still call a tool yourself, as in `LookupOrder.new(customer).call(number: "R-1042")` or with `execute`, and handlers don't wrap that call, so its exceptions reach your code. See [Tool-Level Handlers]({% link _advanced/error-handling.md %}#tool-level-handlers).
 
 ## Security
 

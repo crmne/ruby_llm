@@ -191,3 +191,55 @@ RSpec.shared_examples 'a file store that writes under its lock' do
     expect(store.read('notes.md')).to eq('waited')
   end
 end
+
+# An IO that refuses to be read whole, so a store must stream it.
+class ChunkedReader < SimpleDelegator
+  def read(length = nil, *)
+    raise ArgumentError, 'read the whole IO into memory' if length.nil?
+
+    __getobj__.read(length, *)
+  end
+end
+
+# What a store that keeps files outside the process does with an IO: it
+# copies it in chunks instead of reading it into a String.
+RSpec.shared_examples 'a file store that streams what it writes' do
+  let(:png) { File.expand_path('../fixtures/ruby.png', __dir__) }
+
+  it 'writes an IO in chunks, never reading it whole' do
+    file = File.open(png, 'rb') { |io| store.write('logo', ChunkedReader.new(io)) }
+
+    expect(file).to have_attributes(byte_size: File.size(png), content_type: 'image/png')
+    expect(store.read('logo')).to eq(File.binread(png))
+  end
+
+  it 'writes an IO that cannot rewind' do
+    reader, writer = IO.pipe
+    writer.write('streamed')
+    writer.close
+
+    expect(store.write('notes.txt', reader).byte_size).to eq(8)
+    expect(store.read('notes.txt')).to eq('streamed')
+  ensure
+    reader&.close
+  end
+
+  it 'writes an object that only reads' do
+    io = StringIO.new('read only')
+    reader = Object.new
+    reader.define_singleton_method(:read) { |*arguments| io.read(*arguments) }
+
+    store.write('notes.txt', reader)
+
+    expect(store.read('notes.txt')).to eq('read only')
+  end
+
+  it 'writes an IO from where it stands' do
+    io = StringIO.new('skip:kept')
+    io.read(5)
+
+    store.write('notes.txt', io)
+
+    expect(store.read('notes.txt')).to eq('kept')
+  end
+end

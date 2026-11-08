@@ -10,6 +10,7 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
   let(:image_path) { File.expand_path('../../fixtures/ruby.png', __dir__) }
 
   it_behaves_like 'a file store'
+  it_behaves_like 'a file store that streams what it writes'
 
   def answer(content)
     RubyLLM::Message.new(role: :assistant, content:, input_tokens: 1, output_tokens: 1)
@@ -23,6 +24,37 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
                                    digest: Digest::SHA256.hexdigest('# Plan'))
     expect(row.file.download).to eq('# Plan')
     expect(row.to_stored_file).to have_attributes(path: 'notes/plan.md', updated_at: row.updated_at)
+  end
+
+  it 'keeps the digest of an IO it streams, wherever the IO stands' do
+    png = File.binread(image_path)
+    reader, writer = IO.pipe.each(&:binmode)
+    writer.write(png)
+    writer.close
+
+    store.write('pipe.png', reader)
+    File.open(image_path, 'rb') { |io| store.write('file', ChunkedReader.new(io)) }
+
+    expect(store.list.map(&:digest)).to eq([Digest::SHA256.hexdigest(png)] * 2)
+    expect(store.list.map(&:content_type)).to eq(['image/png'] * 2)
+  ensure
+    reader&.close
+  end
+
+  it 'uploads an IO at its start to Active Storage as it is' do
+    allow(ActiveStorage::Blob).to receive(:create_and_upload!).and_call_original
+
+    File.open(image_path, 'rb') do |io|
+      store.write('logo.png', io)
+
+      expect(ActiveStorage::Blob).to have_received(:create_and_upload!).with(hash_including(io:))
+    end
+  end
+
+  it 'keeps the content type it is given in Active Storage, without identifying the content' do
+    store.write('logo.txt', File.binread(image_path), content_type: 'text/plain')
+
+    expect(chat.ruby_llm_chat_files.sole.file.content_type).to eq('text/plain')
   end
 
   it 'keeps converted text in the row until the file changes' do
