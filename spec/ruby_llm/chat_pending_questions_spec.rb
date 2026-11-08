@@ -160,6 +160,34 @@ RSpec.describe RubyLLM::Chat do
     expect(result.attachments.map(&:filename)).to eq(['pass.txt'])
   end
 
+  it 'sends the model a Hash it declines an approval with as the whole result' do
+    ask_for('issue_refund')
+
+    chat.decline(chat.pending_questions.sole, error: 'Denied', reason: 'Wrong account')
+    chat.complete
+
+    expect(runs).to be_empty
+    expect(results.sole).to eq('{"error":"Denied","reason":"Wrong account"}')
+  end
+
+  it 'adds a Hash a question is declined with to the result of its tool' do
+    ask_for('pick_seat')
+
+    chat.pending_questions.sole.decline(reason: 'Choosing at the gate')
+    chat.complete
+
+    expect(results.sole).to eq(%(Seat \n\nThe user declined: {"reason":"Choosing at the gate"}))
+  end
+
+  it 'takes an empty Hash as no note' do
+    ask_for('issue_refund')
+
+    chat.pending_questions.sole.decline({})
+    chat.complete
+
+    expect(results.sole).to eq('{"error":"The user denied the issue_refund tool call."}')
+  end
+
   it 'takes a blank note as no note' do
     ask_for('issue_refund')
 

@@ -188,6 +188,16 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(result_of(approval)).to eq('{"error":"The order shipped already"}')
   end
 
+  it 'sends the model a Hash an approval was declined with in another process as its result' do
+    approval = call('issue_refund', 'order_id' => '42')
+    chat = paused(approval)
+
+    Chat.find(chat.id).decline(approval.id, error: 'Denied', reason: 'Wrong account')
+    job_for(chat.id, refund).complete
+
+    expect(result_of(approval)).to eq('{"error":"Denied","reason":"Wrong account"}')
+  end
+
   it "adds the note on a question declined in another process to its tool's result" do
     question = call('pick_seat')
     chat = paused(question)

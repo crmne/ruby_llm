@@ -590,8 +590,9 @@ module RubyLLM
     # next request, unless another decision came first. A tool that asked
     # gets +nil+ from Tool#ask. A +note+ tells the model why: it is the
     # declined approval's result in place of the plain refusal, and it
-    # follows the result of a tool whose question was declined. A blank
-    # note counts as none. A question already answered, or one whose call
+    # follows the result of a tool whose question was declined. A Hash
+    # +note+ is the declined approval's whole result, as given, and
+    # follows a tool's result as JSON. A blank note counts as none. A question already answered, or one whose call
     # has finished, stays as it is.
     #
     #   chat.decline(question)
@@ -2461,8 +2462,9 @@ module RubyLLM
         decision = decisions.fetch(id)
         raise_if_cancelled!
         run_callbacks(:before_message)
+        note = note_text(decline_note(tool_call)) unless decision
         response = @provider.tool_approval_response(tool_call, approved: decision, model: @model, protocol: @protocol,
-                                                               note: (decline_note(tool_call) unless decision))
+                                                               note:)
         message = add_message(response)
         run_callbacks(:after_message, message)
       end
@@ -2485,13 +2487,18 @@ module RubyLLM
       tool_calls.each_value do |tool_call|
         raise_if_cancelled!
         run_callbacks(:before_message)
-        add_tool_result_message(tool_call, { error: refusal_error(tool_call) })
+        add_tool_result_message(tool_call, refusal(tool_call))
       end
     end
 
-    def refusal_error(tool_call)
+    def refusal(tool_call)
+      note = decline_note(tool_call) unless tool_call.malformed_arguments?
+      note.is_a?(Hash) ? note : { error: refusal_error(tool_call, note) }
+    end
+
+    def refusal_error(tool_call, note)
       name = tool_call.name
-      return decline_note(tool_call) || "The user denied the #{name} tool call." unless tool_call.malformed_arguments?
+      return note || "The user denied the #{name} tool call." unless tool_call.malformed_arguments?
 
       "The arguments for #{name} were #{tool_call.malformed_arguments_problem}. Call #{name} again with a JSON object."
     end
@@ -2699,7 +2706,7 @@ module RubyLLM
     def with_decline_notes(result, input)
       notes = Array(input&.[]('requests')).filter_map do |request|
         note = request.dig('response', 'note')
-        "The user declined: #{note}" if note
+        "The user declined: #{note_text(note)}" if note
       end
       notes.empty? ? result : noted_result(result, notes)
     end
@@ -2827,6 +2834,10 @@ module RubyLLM
 
     def decline_note(tool_call)
       @tool_call_state.decline_note(tool_call)
+    end
+
+    def note_text(note)
+      note.is_a?(Hash) ? JSON.generate(note) : note
     end
 
     def apply_tool_choice(choice)
