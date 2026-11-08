@@ -211,6 +211,12 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       }
     end
 
+    def tools
+      { 'lookup' => instance_double(RubyLLM::Tool, name: 'lookup', description: 'Looks things up',
+                                                   parameters_schema: nil, declared_parameters: {},
+                                                   provider_options: {}) }
+    end
+
     def render_payload(messages = [], **overrides)
       described_class.render_payload(messages, **base_args, **overrides)
     end
@@ -310,7 +316,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       end
 
       it 'caches a tool round through its results, the system prompt, and the call before them' do
-        payload = render_payload(tool_loop, caching: {})
+        payload = render_payload(tool_loop, caching: {}, tools: { 'lookup' => tool_double })
 
         expect(payload[:system]).to eq([{ text: 'Stable instructions' }, point])
         expect(payload[:messages].map { |message| message[:role] }).to eq(%w[user assistant user])
@@ -411,6 +417,40 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       def tool_double
         instance_double(RubyLLM::Tool, name: 'lookup', description: 'Looks things up', parameters_schema: nil,
                                        declared_parameters: {}, provider_options: {})
+      end
+    end
+
+    context 'with tool rounds in the history' do
+      let(:call) { RubyLLM::ToolCall.new(id: 'call_a', name: 'lookup', arguments: { 'query' => 'Ruby' }) }
+      let(:history) do
+        [
+          RubyLLM::Message.new(role: :user, content: 'Who created Ruby?'),
+          RubyLLM::Message.new(role: :assistant, content: 'Looking', tool_calls: { 'call_a' => call }),
+          RubyLLM::Message.new(role: :tool, content: 'Matz', tool_call_id: 'call_a'),
+          RubyLLM::Message.new(role: :user, content: 'Summarize the conversation')
+        ]
+      end
+
+      def block_types(payload)
+        payload[:messages].map { |message| message[:content].map { |block| block.keys.first } }
+      end
+
+      # Converse refuses toolUse and toolResult blocks without a toolConfig,
+      # and has no tool choice of none to declare tools it may not call.
+      it 'sends the calls and results as text when the request declares no tools' do
+        payload = render_payload(history)
+
+        expect(payload).not_to have_key(:toolConfig)
+        expect(block_types(payload)).to eq([%i[text], %i[text text], %i[text text]])
+        expect(payload.dig(:messages, 1, :content, 1, :text)).to eq('Called the lookup tool with {"query":"Ruby"}')
+        expect(payload.dig(:messages, 2, :content, 0, :text)).to eq("The lookup tool returned:\nMatz")
+      end
+
+      it 'sends toolUse and toolResult blocks when the request declares tools' do
+        payload = render_payload(history, tools:)
+
+        expect(payload[:toolConfig][:tools].size).to eq(1)
+        expect(block_types(payload)).to eq([%i[text], %i[text toolUse], %i[toolResult text]])
       end
     end
 
@@ -688,7 +728,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       message = RubyLLM::Message.new(role: :tool, content: 'Found it', tool_call_id: 'call_a',
                                      attachments: [pdf_path, facts])
       attachment_blocks = lambda do |**options|
-        tool_result = render_payload([message], **options)[:messages].first[:content].first[:toolResult]
+        tool_result = render_payload([message], tools:, **options)[:messages].first[:content].first[:toolResult]
         tool_result[:content].drop(1).map { |block| block[:document]&.except(:source) || block.keys }
       end
 
@@ -706,7 +746,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
         RubyLLM::Message.new(role: :tool, content: 'Found it', tool_call_id: 'call_a', attachments: [facts])
       ]
 
-      tool_result = render_payload(messages, citations: true)[:messages].last[:content].first[:toolResult]
+      tool_result = render_payload(messages, tools:, citations: true)[:messages].last[:content].first[:toolResult]
 
       expect(tool_result[:content].last).to eq(
         document: { format: 'txt', name: 'facts_2', source: { text: 'Matz created Ruby.' },
@@ -1109,7 +1149,10 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       ]
       payload = lambda do |id|
         model = instance_double(RubyLLM::Model, id:, max_output_tokens: 4096, supports?: false)
-        described_class.render_payload(messages, tools: {}, temperature: nil, model:).to_json
+        tools = { 'search' => instance_double(RubyLLM::Tool, name: 'search', description: 'Searches',
+                                                             parameters_schema: nil, declared_parameters: {},
+                                                             provider_options: {}) }
+        described_class.render_payload(messages, tools:, temperature: nil, model:).to_json
       end
 
       expect(payload.call('openai.gpt-oss-120b-1:0')).not_to include('searchResult')

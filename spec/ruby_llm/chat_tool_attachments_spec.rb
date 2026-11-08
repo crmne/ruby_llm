@@ -73,7 +73,11 @@ RSpec.describe RubyLLM::Chat do
     end
 
     def chat_with_tool_attachment(model, provider, protocol: nil, attachment: image_path)
-      chat = RubyLLM.chat(model: model, provider: provider, protocol: protocol)
+      drive_search = Class.new(RubyLLM::Tool) do
+        description 'Searches the drive'
+        def name = 'drive_search'
+      end
+      chat = RubyLLM.chat(model: model, provider: provider, protocol: protocol).with_tools(drive_search)
       chat.messages = messages_with_tool_attachment(attachment)
       chat
     end
