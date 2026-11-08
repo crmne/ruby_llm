@@ -34,7 +34,7 @@ module RubyLLM
         @chat @message @last_message_id @last_cancellation_poll_at @unpersisted_instructions
         @usage_records_by_entry @run_claim_token @run_claim_deadline @run_claim_renewed_at
         @run_claim_lost_token @synced_run_claim_token @synced_usage_count @tool_call_claims
-        @claim_heartbeat @claim_lock @tool_call_renewal_lock @lost_tool_calls
+        @claim_heartbeat @claim_lock @tool_call_renewal_lock @lost_tool_calls @interrupted_tool_calls
       ].freeze
       private_constant :RUN_STATE
 
@@ -114,6 +114,14 @@ module RubyLLM
 
         write_run_claim(now) if @run_claim_token
         raise ClaimLost unless started_tool_call_claimed?(tool_call_id, claim, now)
+      end
+
+      # Whether this run claimed +tool_call_id+ from a process that had
+      # started it and stopped, by a shutdown or a crash, before it saved
+      # the result. Its claim is left expired, or lapses, while a call that
+      # never started is released.
+      def persisted_tool_call_interrupted?(tool_call_id) # :nodoc:
+        claim_lock.synchronize { interrupted_tool_calls.include?(tool_call_id) }
       end
 
       def tool_call_running_elsewhere?(tool_call) # :nodoc:
@@ -437,14 +445,27 @@ module RubyLLM
           approval = RubyLLM::ActiveRecord::ToolCall.arel_table[:approval]
           scope = scope.where(approval.eq(nil).or(approval.not_eq('denied')))
         end
-        return false unless scope.update_all(claimed_until:, updated_at: now) == 1
+        claimed, expired = claim_tool_call_row(scope, { claimed_until:, updated_at: now })
+        return false unless claimed
 
         claim = ToolCallClaim.new(row, deadline, [claimed_until], seconds, false)
         claim_lock.synchronize do
           lost_tool_calls.delete(tool_call_id)
+          interrupted_tool_calls.delete(tool_call_id)
+          interrupted_tool_calls << tool_call_id if expired && executing
           tool_call_claims[tool_call_id] = claim
         end
         true
+      end
+
+      # A released call has no expiry, while a call that started keeps its
+      # expired claim when its process shuts down, or lets it lapse when the
+      # process dies. Returns whether the claim was written, and whether it
+      # took over an expired one.
+      def claim_tool_call_row(scope, written)
+        return [true, false] if scope.where(claimed_until: nil).update_all(written) == 1
+
+        [scope.where.not(claimed_until: nil).update_all(written) == 1, true]
       end
 
       def extend_run_claim_for_tool_calls
@@ -459,7 +480,10 @@ module RubyLLM
         attributes = { result_type: @message.class.polymorphic_name, result_id: @message.id, updated_at: Time.current }
         attributes[:mcp_result] = message.mcp_result&.dump if tool_call.has_attribute?(:mcp_result)
         attributes[:claimed_until] = nil if tool_call.has_attribute?(:claimed_until)
-        claim_lock.synchronize { tool_call_claims.delete(tool_call.tool_call_id) }
+        claim_lock.synchronize do
+          tool_call_claims.delete(tool_call.tool_call_id)
+          interrupted_tool_calls.delete(tool_call.tool_call_id)
+        end
         RubyLLM::ActiveRecord::ToolCall.where(id: tool_call.id, result_id: nil).update_all(attributes) == 1
       end
 
@@ -522,6 +546,10 @@ module RubyLLM
       # rather than taking them for calls that were never claimed.
       def lost_tool_calls
         @lost_tool_calls ||= Set.new
+      end
+
+      def interrupted_tool_calls
+        @interrupted_tool_calls ||= Set.new
       end
 
       def claim_lock

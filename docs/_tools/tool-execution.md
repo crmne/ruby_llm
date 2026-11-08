@@ -285,7 +285,7 @@ A tool call record's `running?` is `true` while a process runs it, so a message'
 <% end %>
 ```
 
-Write tools that ask or require approval so running them twice is safe. A tool execution can die after its side effect succeeds but before the result is persisted, and the call runs again once its claim expires. See [Agents in Background Jobs]({% link _advanced/durable-agents.md %}#at-least-once-not-exactly-once).
+Code before `ask` runs again when the person answers, so keep it safe to repeat. A tool execution can also die after its side effect succeeds but before the result is persisted. That call doesn't run again: the model hears it may have partly run. See [Agents in Background Jobs]({% link _advanced/durable-agents.md %}#what-a-crash-repeats).
 
 [Agents in Background Jobs]({% link _advanced/durable-agents.md %}) covers jobs, restarts, and cancellation. A call without a result approved with `remember: true` is recorded as `remembered` on its tool call record, so later calls to that tool run without asking in every process.
 
@@ -546,7 +546,7 @@ Each `complete` calls `resume` once for every paused call, with the task and the
 
 A task's `status` is `:working` while the work runs on its own, so you check again after its `poll_interval`, and `:input_required` while it waits on a person, so nothing changes until they act. Call `complete` after they do, such as from the controller that records their decision.
 
-The call can run again if the process dies before the task is saved, so `execute` keys the request on `tool_call.id` to avoid sending it twice. `data` is what `resume` needs, as a Hash that serializes to JSON. In Rails, the task persists on its tool call, so one process can pause the chat and another can resume it, even after a deploy. To rebuild a task as your own subclass of `RubyLLM::Task`, override `task(state, tool_call:)` on the tool and return `YourTask.load(state, tool_call:)`. A subclass can override `refresh` to check on its work and `cancel` to stop it; cancelling the chat calls `cancel` on every task it waits on and drops the paused calls.
+If the process dies before the task is saved, the call doesn't run again and the model hears it may have partly run, so `execute` keys the request on `tool_call.id`, which lets a later call find the job instead of starting a second one. `data` is what `resume` needs, as a Hash that serializes to JSON. In Rails, the task persists on its tool call, so one process can pause the chat and another can resume it, even after a deploy. To rebuild a task as your own subclass of `RubyLLM::Task`, override `task(state, tool_call:)` on the tool and return `YourTask.load(state, tool_call:)`. A subclass can override `refresh` to check on its work and `cancel` to stop it; cancelling the chat calls `cancel` on every task it waits on and drops the paused calls.
 
 MCP tools pause the same way when a server runs a call as a [task]({% link _tools/mcp.md %}#tasks). A [subagent that waits for a person]({% link _getting_started/agents.md %}#subagents-that-wait-for-a-person) pauses its call on a task like this one, holding the ID of the subagent's chat.
 

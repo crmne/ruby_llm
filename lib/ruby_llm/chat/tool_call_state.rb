@@ -100,6 +100,13 @@ module RubyLLM
       # Notes that +tool_call+, claimed with its round, starts running now.
       def started(_tool_call); end
 
+      # Whether +tool_call+, claimed with its round, had started in a
+      # process that stopped before saving its result, so it is answered
+      # as interrupted instead of running again.
+      def interrupted?(_tool_call)
+        false
+      end
+
       def running_elsewhere?(_tool_call)
         false
       end

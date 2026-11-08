@@ -194,7 +194,7 @@ chat.running? # => true while another process runs the chat
 
 A run that goes `config.max_run_time` without progress, ten minutes by default, counts as crashed, and so does a tool call that runs longer. A tool whose work takes longer can [pause its call]({% link _tools/tool-execution.md %}#long-running-tools).
 
-If a process dies, its claims expire within a minute, on any number of servers, and the next job picks the chat up. See [Agents in Background Jobs]({% link _advanced/durable-agents.md %}#one-process-at-a-time).
+If a process dies, its claims expire within a minute, on any number of servers, and the next job picks the chat up. A tool call it had started doesn't run again: the model hears the call may have partly run and decides what to do. See [Agents in Background Jobs]({% link _advanced/durable-agents.md %}#one-process-at-a-time).
 
 No job backend runs a reply that a crash or a deploy cut off again by itself, so `Chat.interrupted` returns the chats whose run died holding its claim, and the chat UI generator writes `ResumeInterruptedChatsJob`, which answers them every minute through Solid Queue and as soon as the server boots, so a deploy resumes right away and a hard kill within about a minute:
 

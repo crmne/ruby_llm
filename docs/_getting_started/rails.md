@@ -218,7 +218,7 @@ When you call `ask`, RubyLLM saves the user message, calls the provider, and sav
 Allow assistant messages with empty content. Streaming starts before any text arrives, and a message that only calls tools has no text. A blanket `validates :content, presence: true` on `Message` breaks both.
 {: .warning }
 
-Only one process runs a chat at a time. A job that finds the chat claimed returns without doing anything, and a crashed job's claim lasts until it expires, so nothing resumes that work until another `complete` runs after that. Write tools so running them twice is safe. See [One Process at a Time]({% link _advanced/durable-agents.md %}#one-process-at-a-time), [Resuming a Crashed Run]({% link _advanced/durable-agents.md %}#resuming-a-crashed-run), and [At-Least-Once, Not Exactly-Once]({% link _advanced/durable-agents.md %}#at-least-once-not-exactly-once).
+Only one process runs a chat at a time. A job that finds the chat claimed returns without doing anything, and a crashed job's claim lasts until it expires, so nothing resumes that work until another `complete` runs after that. A tool call the crash cut off doesn't run again: the model hears it may have partly run. See [One Process at a Time]({% link _advanced/durable-agents.md %}#one-process-at-a-time), [Resuming a Crashed Run]({% link _advanced/durable-agents.md %}#resuming-a-crashed-run), and [What a Crash Repeats]({% link _advanced/durable-agents.md %}#what-a-crash-repeats).
 
 ## Next Steps
 

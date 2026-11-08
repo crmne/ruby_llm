@@ -2455,10 +2455,11 @@ module RubyLLM
     def answer_claimed_tool_calls(claimed, server_calls, decisions, executable, denied)
       respond_to_tool_approvals(server_calls.slice(*claimed), decisions)
       deny_tool_calls(denied.slice(*claimed))
+      runnable = answer_interrupted_tool_calls(executable.slice(*claimed))
       if concurrency && executable.values.none? { |tool_call| ordered?(tool_call) }
-        handle_concurrent_tool_calls(executable.slice(*claimed))
+        handle_concurrent_tool_calls(runnable)
       else
-        handle_sequential_tool_calls(executable.slice(*claimed))
+        handle_sequential_tool_calls(runnable)
       end
       finished = true
     rescue SignalException, SystemExit => e
@@ -2466,6 +2467,22 @@ module RubyLLM
       raise
     ensure
       release_tool_calls(claimed, stopped_by, finished:)
+    end
+
+    # A call that had started in a process that stopped before saving its
+    # result may have done its work, so it doesn't run again: the model
+    # reads that it was interrupted and decides what to do. A call that
+    # paused for an answer or a task carries on as usual. Returns the calls
+    # left to run.
+    def answer_interrupted_tool_calls(tool_calls)
+      interrupted, runnable = tool_calls.partition do |_, tool_call|
+        @tool_call_state.interrupted?(tool_call) && !tool_call_input(tool_call)
+      end
+      interrupted.to_h.each_value do |tool_call|
+        run_callbacks(:before_message)
+        add_tool_result_message(tool_call, { error: "The tool call did not finish. #{MCP::Outages::PARTLY_RUN}" })
+      end
+      runnable.to_h
     end
 
     def claim_tool_calls(executable, answered)
