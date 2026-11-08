@@ -223,6 +223,12 @@ module RubyLLM
         to_llm.halted?
       end
 
+      # Returns the path of the file holding the whole of a tool result too
+      # long to send whole, or +nil+. See RubyLLM::Message#spilled_path.
+      def spilled_path
+        to_llm.spilled_path
+      end
+
       # Returns whether this is the part of a streamed reply the chat kept
       # when it was cancelled. See RubyLLM::Message#cancelled?.
       def cancelled?

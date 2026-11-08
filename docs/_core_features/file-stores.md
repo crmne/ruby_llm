@@ -163,7 +163,7 @@ Each file is a `RubyLLM::StoredFile` with `path`, `filename`, `byte_size`, `cont
 
 ## What the Model Sees
 
-**Attachments.** Every attachment is kept in the chat's files under its file name. The model sees the files attached to the latest question in full, as it would without files, except a text file longer than `inline_limit`, 10,000 characters by default: that goes as its start, with a line telling the model it hasn't seen the rest and how to read it, so a large upload doesn't overflow the context. Such a file doesn't count as read, so the model reads it before `edit_file` can change it. Pass `inline_limit: false` to send every file whole. From the next question on, it sees one line naming each of them, and opens them again with `read_file` when it needs to. Files that tools return, such as a PDF an MCP server fetched, become a line at once: the model reads them with `read_file`, which it sees in full until the next question.
+**Attachments.** Every attachment is kept in the chat's files under its file name. The model sees the files attached to the latest question in full, as it would without files, except a text file longer than `inline_limit`, 10,000 characters by default: that goes as its start, with a line telling the model it hasn't seen the rest and how to read it, so a large upload doesn't overflow the context. The attachment the request carries in its place is `partial?`. Such a file doesn't count as read, so the model reads it before `edit_file` can change it. Pass `inline_limit: false` to send every file whole. From the next question on, it sees one line naming each of them, and opens them again with `read_file` when it needs to. Files that tools return, such as a PDF an MCP server fetched, become a line at once: the model reads them with `read_file`, which it sees in full until the next question.
 
 An attachment the provider cannot take, such as a Word file for most models, goes as its text instead of the request failing, when RubyLLM's Office converter or one you registered reads that format. The conversion runs when the request is prepared, so a paid converter such as OCR costs its request then. The store keeps the text it converted, so later requests usually reuse it, though a memory store keeps only its most recent conversions. The model sees up to `inline_limit` characters, 10,000 by default, and a note that the rest is in the chat's files. When no converter reads the file, it becomes that line on its own question, and the model reads it with code when it can run code. A `convert_unsupported_attachments` handler you register comes first.
 
@@ -180,7 +180,12 @@ item 1: Quarterly plan, owner Dana...
 results/search_drive-8f3a2b1c.json: read more with read_file, or search it with search_files.]
 ```
 
-JSON is saved pretty printed, one value per line, so the model can read and search it by line. The message keeps only what the model saw, so a persisted chat stores the start too.
+JSON is saved pretty printed, one value per line, so the model can read and search it by line. The message keeps only what the model saw, so a persisted chat stores the start too. `spilled_path` names the file with the whole, on plain and persisted messages alike, and is `nil` for a result that went whole:
+
+```ruby
+result = chat.messages.find(&:tool_result?)
+full = (path = result.spilled_path) ? chat.file_store.read(path) : result.content
+```
 
 A [context budget]({% link _core_features/chat-request-control.md %}#keeping-tool-results-in-budget) leaves a saved result as it is, since its start already fits. Change the limit with `inline_limit:`, the characters a result may have and still go to the model whole, or send every result whole with `inline_limit: false`. A tool that already returns what it finds in pages can opt out, and a tool with very long results can set its own limit:
 

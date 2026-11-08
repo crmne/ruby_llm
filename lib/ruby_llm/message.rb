@@ -246,6 +246,19 @@ module RubyLLM
       finish_reason == :cancelled
     end
 
+    # Returns the path, in the chat's files, of the whole of a tool result
+    # too long to send whole, or +nil+ when the result went whole. A chat
+    # with a file store keeps such a result in a file and sends the model
+    # its start and this path (see Chat#with_file_store).
+    #
+    #   if (path = message.spilled_path)
+    #     chat.file_store.read(path)
+    #   end
+    #
+    def spilled_path
+      Chat::FileReferences.spilled_path(content) if tool_result?
+    end
+
     def mark_cancelled # :nodoc:
       @finish_reason = :cancelled
       self

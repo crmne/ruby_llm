@@ -287,6 +287,20 @@ module RubyLLM
       RubyLLM::Files::MimeType.text? mime_type
     end
 
+    # Returns whether the attachment holds only the start of a text, the
+    # way a chat with a file store sends a file longer than its inline
+    # limit (see Chat#with_file_store). The whole file stays in the chat's
+    # files, and the text says where. An attachment you make is never
+    # partial.
+    def partial?
+      @partial == true
+    end
+
+    def mark_partial # :nodoc:
+      @partial = true
+      self
+    end
+
     def to_h # :nodoc:
       { type: type, source: @source, filename: filename, mime_type: @given_mime_type, resolution: resolution,
         processing: processing }.compact

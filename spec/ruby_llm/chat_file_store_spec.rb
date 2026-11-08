@@ -56,6 +56,10 @@ RSpec.describe RubyLLM::Chat do
   end
 
   def request_view
+    request_view_of(chat)
+  end
+
+  def request_view_of(chat)
     chat.send(:preprocessed_messages)
   end
 
@@ -280,6 +284,15 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.file_store.read('long.txt').length).to be > 20_000
     end
 
+    it 'marks the start of a long text attachment partial, and a whole one not' do
+      long = RubyLLM::Attachment.new(StringIO.new('x' * 20_000), filename: 'long.txt')
+      short = RubyLLM::Attachment.new(StringIO.new('x' * 20), filename: 'short.txt')
+      chat.add_message(role: :user, content: 'Summarize', attachments: [long, short])
+
+      expect(request_view.last.attachments.map(&:partial?)).to eq([true, false])
+      expect(long).not_to be_partial
+    end
+
     it 'bounds a long blank attachment too' do
       blank = RubyLLM::Attachment.new(StringIO.new(' ' * 20_000), filename: 'blank.txt')
       chat.add_message(role: :user, content: 'Summarize', attachments: [blank])
@@ -480,6 +493,16 @@ RSpec.describe RubyLLM::Chat do
       expect(calls).to eq(1)
     end
 
+    it 'marks converted text partial only when it is longer than the limit' do
+      chat = converting_chat('word ' * 4)
+      chat.with_file_store(chat.file_store, inline_limit: 20)
+      chat.add_message(role: :user, content: 'Summarize', attachments: [docx])
+      expect(request_view_of(chat).last.attachments.first).not_to be_partial
+
+      chat.with_file_store(chat.file_store, inline_limit: 19)
+      expect(request_view_of(chat).last.attachments.first).to be_partial
+    end
+
     it 'sends the start of a long text and says where the rest is' do
       chat = converting_chat('word ' * 3_000)
       chat.add_message(role: :user, content: 'Summarize', attachments: [docx])
@@ -547,6 +570,25 @@ RSpec.describe RubyLLM::Chat do
       expect(message.content.length).to be < 2_200
       expect(chat.file_store.read('results/search_drive-call1.txt')).to eq(SearchDrive.new.call(query: 'q'))
       expect(written).to eq(['results/search_drive-call1.txt'])
+    end
+
+    it 'names the file holding the whole of a long result' do
+      chat.with_file_store(inline_limit: 10)
+
+      spilled = tool_result(tool_call, { 'items' => [1, 2] })
+      whole = tool_result(RubyLLM::ToolCall.new(id: 'call_2', name: 'never_spill', arguments: {}), 'y' * 20)
+
+      expect(spilled.spilled_path).to eq('results/search_drive-call1.json')
+      expect(whole.spilled_path).to be_nil
+    end
+
+    it 'names no file for a message the chat did not spill' do
+      quoted = "Look:\n\n[This result has 9 characters, so only the start is shown. All of it is in " \
+               'results/x.txt: read more with read_file, or search it with search_files.]'
+
+      expect(RubyLLM::Message.new(role: :user, content: quoted).spilled_path).to be_nil
+      expect(RubyLLM::Message.new(role: :tool, content: 'short', tool_call_id: 'call_1').spilled_path).to be_nil
+      expect(RubyLLM::Message.new(role: :tool, content: nil, tool_call_id: 'call_1').spilled_path).to be_nil
     end
 
     it 'saves long JSON pretty printed, so lines can be read and searched' do

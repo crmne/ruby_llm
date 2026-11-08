@@ -19,6 +19,8 @@ module RubyLLM
     class FileReferences # :nodoc:
       INLINE_LIMIT = 10_000
       PREVIEW = 2_000
+      SPILLED = Regexp.new('\n\n\[This result has \d+ characters, so only the start is shown\. All of it is in ' \
+                           '(\S+): read more with read_file, or search it with search_files\.\]\z')
       READ_TOOL = 'read_file'
 
       # Stands for the store a chat picks when given none: a new
@@ -37,6 +39,12 @@ module RubyLLM
           return if inline_limit == false || (inline_limit.is_a?(Integer) && inline_limit.positive?)
 
           raise ArgumentError, 'inline_limit: takes a positive number of characters or false'
+        end
+
+        # Returns the path of the file holding the whole result whose start
+        # is +content+, or +nil+ when the result was sent whole.
+        def spilled_path(content)
+          content.to_s[SPILLED, 1]
         end
 
         def resolve(store)
@@ -195,12 +203,14 @@ module RubyLLM
       end
 
       def text_attachment(file, text)
-        if @inline_limit && text.length > @inline_limit
+        partial = @inline_limit && text.length > @inline_limit
+        if partial
           text = "#{text[0, @inline_limit]}\n\n[#{file.path} has #{text.length} characters, so only the start " \
                  'is shown, and you have not seen the rest. Read more with read_file, or search it with search_files.]'
         end
-        Attachment.new(StringIO.new("#{file.path}, read as text:\n\n#{text}"),
-                       filename: "#{File.basename(file.path)}.txt")
+        attachment = Attachment.new(StringIO.new("#{file.path}, read as text:\n\n#{text}"),
+                                    filename: "#{File.basename(file.path)}.txt")
+        partial ? attachment.mark_partial : attachment
       end
 
       def reference(path, file)
