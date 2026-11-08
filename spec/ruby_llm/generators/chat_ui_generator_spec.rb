@@ -618,14 +618,20 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
 
       Rails.application.load_server
       jobs = ActiveJob::Base.queue_adapter.enqueued_jobs
-      boot = jobs.find { |enqueued| enqueued["job_class"] == "#{resume_job}" }
-      abort "booting didn't schedule #{resume_job}: \#{jobs}" unless boot
-      at = Time.zone.parse(boot["scheduled_at"])
-      abort "the boot sweep at \#{at} runs before the claims expire" unless at > 50.seconds.from_now
+      boot = jobs.shift
+      abort "booting didn't run #{resume_job} at once: \#{boot}" unless boot&.dig("job_class") == "#{resume_job}" && !boot["scheduled_at"]
+      ActiveJob::Base.execute(boot)
+      later = jobs.shift
+      abort "the boot run queued more than itself again: \#{jobs}" unless jobs.empty?
+      abort "the boot run didn't come back for the claim: \#{later}" unless later&.dig("job_class") == "#{resume_job}"
+      at = Time.zone.parse(later["scheduled_at"])
+      expires = #{model}.find(#{chat_id}).claimed_until
+      abort "the second run at \#{at} isn't right after the claim expires at \#{expires}" unless at.between?(expires, expires + 2.seconds)
 
       stub_replies "Picked up again"
-      travel_to(at + 1.second) do
-        ActiveJob::Base.execute(boot)
+      travel_to(at) do
+        ActiveJob::Base.execute(later)
+        abort "the second run queued itself again: \#{jobs}" if jobs.any? { |enqueued| enqueued["job_class"] == "#{resume_job}" }
         reply = jobs.find { |enqueued| enqueued["job_class"] == "#{job}" }
         abort "#{resume_job} didn't queue the reply: \#{jobs}" unless reply&.dig("arguments") == [ #{chat_id} ]
         ActiveJob::Base.execute(reply)
@@ -633,6 +639,28 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       answer = #{agent}.find(#{chat_id}).to_llm.messages.last.content
       abort "the reply didn't complete: \#{answer}" unless answer == "Picked up again"
       abort "a complete chat counts as interrupted" if #{model}.interrupted.exists?(#{chat_id})
+    RUBY
+  end
+
+  def restart_script(agent:, job:, resume_job:, chat_id:, **)
+    model = agent.delete_suffix('Agent')
+    <<~RUBY
+      require "ruby_llm/test_helper"
+      include RubyLLM::TestHelper
+      ActiveJob::Base.queue_adapter = :test
+      abort "a reply a restart stopped isn't interrupted at once" unless #{model}.interrupted.exists?(#{chat_id})
+
+      Rails.application.load_server
+      jobs = ActiveJob::Base.queue_adapter.enqueued_jobs
+      boot = jobs.shift
+      abort "booting didn't run #{resume_job} at once: \#{boot}" unless boot&.dig("job_class") == "#{resume_job}" && !boot["scheduled_at"]
+      ActiveJob::Base.execute(boot)
+      abort "#{resume_job} didn't queue only the reply: \#{jobs}" unless jobs.map { |enqueued| enqueued["job_class"] } == [ "#{job}" ]
+
+      stub_replies "Picked up again"
+      ActiveJob::Base.execute(jobs.shift)
+      answer = #{agent}.find(#{chat_id}).to_llm.messages.last.content
+      abort "the reply didn't complete: \#{answer}" unless answer == "Picked up again"
     RUBY
   end
 
@@ -645,14 +673,14 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     Process.spawn(env, 'bundle', 'exec', 'rails', 'runner', script, out: log, err: log)
   end
 
-  def kill_mid_reply(agent_options)
+  def kill_mid_reply(agent_options, signal: 'KILL')
     marker = File.expand_path('tmp/killed_reply')
     FileUtils.rm_f(marker)
     log = File.expand_path('tmp/killed_reply.log')
     pid = spawn_rails_runner(killed_reply_script(**agent_options, marker:), log)
     deadline = Time.now + 60
     sleep 0.1 until File.exist?(marker) || Time.now > deadline
-    Process.kill('KILL', pid)
+    Process.kill(signal, pid)
     Process.wait(pid)
     expect(File.exist?(marker)).to be(true), File.read(log)
     File.read(marker).to_i
@@ -980,7 +1008,11 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       resume_job_path: 'app/jobs/resume_interrupted_chats_job.rb',
       resume_job_source: <<~RUBY,
         class ResumeInterruptedChatsJob < ApplicationJob
-          def perform = Chat.interrupted.find_each { |chat| ChatResponseJob.perform_later(chat.id) }
+          def perform(boot: false)
+            Chat.interrupted.find_each { |chat| ChatResponseJob.perform_later(chat.id) }
+            expiry = Chat.where(claimed_until: Time.current..).minimum(:claimed_until) if boot
+            self.class.set(wait_until: expiry + 1.second).perform_later if expiry
+          end
         end
       RUBY
       resume_boot_path: 'config/initializers/resume_interrupted_chats.rb',
@@ -1099,7 +1131,11 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       resume_job_path: 'app/jobs/resume_interrupted_llm_chats_job.rb',
       resume_job_source: <<~RUBY,
         class ResumeInterruptedLlmChatsJob < ApplicationJob
-          def perform = Llm::Chat.interrupted.find_each { |llm_chat| LlmChatResponseJob.perform_later(llm_chat.id) }
+          def perform(boot: false)
+            Llm::Chat.interrupted.find_each { |llm_chat| LlmChatResponseJob.perform_later(llm_chat.id) }
+            expiry = Llm::Chat.where(claimed_until: Time.current..).minimum(:claimed_until) if boot
+            self.class.set(wait_until: expiry + 1.second).perform_later if expiry
+          end
         end
       RUBY
       resume_boot_path: 'config/initializers/resume_interrupted_llm_chats.rb',
@@ -1458,7 +1494,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
           resume_job = config[:approval_flow][:resume_job]
           expect(File.read(config[:resume_job_path])).to eq(config[:resume_job_source])
           expect(File.read(config[:resume_boot_path]))
-            .to eq("Rails.application.server { #{resume_job}.set(wait: 1.minute).perform_later }\n")
+            .to eq("Rails.application.server { #{resume_job}.perform_later(boot: true) }\n")
         end
       end
 
@@ -1503,10 +1539,18 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         end
       end
 
-      it 'completes a reply killed mid-turn once the app boots again' do
+      it 'completes a reply killed mid-turn once its claim expires after the app boots again' do
         within_test_app(app_path) do
           chat_id = kill_mid_reply(config[:approval_flow])
           output, status = run_rails_runner_outside_executor(boot_again_script(**config[:approval_flow], chat_id:))
+          expect(status.success?).to be(true), output
+        end
+      end
+
+      it 'completes a reply a restart stopped mid-turn as soon as the app boots again' do
+        within_test_app(app_path) do
+          chat_id = kill_mid_reply(config[:approval_flow], signal: 'TERM')
+          output, status = run_rails_runner_outside_executor(restart_script(**config[:approval_flow], chat_id:))
           expect(status.success?).to be(true), output
         end
       end

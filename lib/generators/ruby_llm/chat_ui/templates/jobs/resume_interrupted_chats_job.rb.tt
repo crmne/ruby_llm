@@ -1,3 +1,7 @@
 class <%= resume_job_class_name %> < ApplicationJob
-  def perform = <%= chat_model_name %>.interrupted.find_each { |<%= chat_variable_name %>| <%= chat_job_class_name %>.perform_later(<%= chat_variable_name %>.id) }
+  def perform(boot: false)
+    <%= chat_model_name %>.interrupted.find_each { |<%= chat_variable_name %>| <%= chat_job_class_name %>.perform_later(<%= chat_variable_name %>.id) }
+    expiry = <%= chat_model_name %>.where(claimed_until: Time.current..).minimum(:claimed_until) if boot
+    self.class.set(wait_until: expiry + 1.second).perform_later if expiry
+  end
 end
