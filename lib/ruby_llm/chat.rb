@@ -42,7 +42,11 @@ module RubyLLM
       @tool_call_state
     ].freeze
     UNFINISHED_TOOL_RESULT = { error: 'The tool call did not finish.' }.to_json.freeze
-    private_constant :THINKING_OPTIONS, :PAUSED, :AGENT_RUN_KEY, :COPIED_STATE, :UNFINISHED_TOOL_RESULT
+    # Not a RubyLLM::Error, which a record takes for a failed request and
+    # answers by removing the round.
+    class StalledToolRound < StandardError; end # :nodoc:
+    private_constant :THINKING_OPTIONS, :PAUSED, :AGENT_RUN_KEY, :COPIED_STATE, :UNFINISHED_TOOL_RESULT,
+                     :StalledToolRound
 
     # The Model the chat sends requests to.
     attr_reader :model
@@ -369,6 +373,7 @@ module RubyLLM
         move = advance(steering_only:, &)
         break if placeholder?(move)
 
+        stalled = stalled_round?(stalled, generated: boundary, move:)
         steering_only ||= boundary
       end
       @cancelled = false
@@ -587,7 +592,8 @@ module RubyLLM
     # the ToolCall of an approval, and returns +self+. A declined
     # approval's call doesn't run: the next #complete or #run_tools gives
     # the model a refusal instead, or sends one for a remote tool on the
-    # next request, unless another decision came first. A tool that asked
+    # next request, unless another decision came first, also once the chat
+    # no longer offers the call's tool. A tool that asked
     # gets +nil+ from Tool#ask. A +note+ tells the model why: it is the
     # declined approval's result in place of the plain refusal, and it
     # follows the result of a tool whose question was declined. A Hash
@@ -1865,6 +1871,17 @@ module RubyLLM
     rescue CancelledError
       stop_tool_round
       raise
+    end
+
+    # A round can stall once while another process lets its claim go, and
+    # goes on the next time. A second stall in a row would repeat forever.
+    def stalled_round?(stalled, generated:, move:)
+      return false if generated || move
+      return true unless stalled
+
+      ids = pending_tool_response&.then { |response| pending_tool_calls(response).keys }
+      raise StalledToolRound,
+            "RubyLLM made no progress on tool calls #{Array(ids).join(', ')}: they neither ran nor wait"
     end
 
     def stop_tool_round
