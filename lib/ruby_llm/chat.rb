@@ -889,12 +889,15 @@ module RubyLLM
     end
 
     # Sets fallback models to try, in order, when generation fails. +on:+
-    # selects the error classes that trigger a fallback; the default covers
-    # transient provider and network errors. Cancelling the chat never
-    # triggers a fallback, and neither does another process taking over a
-    # persisted chat or an error your streaming block raises. Pass +nil+ to
-    # remove all fallbacks and restore the default error classes. Returns
-    # +self+.
+    # selects the error classes that trigger a fallback; the default,
+    # Fallback::DEFAULT_ERRORS, covers transient provider and network errors.
+    # Keep it unless you have a reason: providers signal overload as HTTP 529
+    # (OverloadedError) or 503 (ServiceUnavailableError), so a list narrowed
+    # by name misses some, and an +on:+ that adds an error should splat the
+    # default list into it. Cancelling the chat never triggers a fallback,
+    # and neither does another process taking over a persisted chat or an
+    # error your streaming block raises. Pass +nil+ to remove all fallbacks
+    # and restore the default error classes. Returns +self+.
     #
     #   chat.with_fallbacks("gpt-4.1-mini", "claude-haiku-4-5")
     #   chat.with_fallbacks(nil)

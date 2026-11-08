@@ -204,12 +204,23 @@ response = chat.ask "Summarize this incident report."
 
 Fallbacks are tried in order. The fallback only applies to that generation attempt; after the response finishes or the error bubbles up, the chat returns to its original model.
 
-By default, fallbacks handle rate limits, server errors, service unavailable errors, overload errors, timeouts, and connection failures. Pass `on:` to choose the errors yourself:
+Leave out `on:` unless you have a reason to change it. The default, `RubyLLM::Fallback::DEFAULT_ERRORS`, covers every provider's rate limits, server errors, unavailable and overloaded services, timeouts, and connection failures. Providers signal the same trouble with different errors, so a list narrowed by name can miss one: an overloaded Anthropic model raises `OverloadedError`, but an overloaded OpenAI, Gemini or Bedrock model raises `ServiceUnavailableError`.
+
+| What the provider sends | Raised as |
+| --- | --- |
+| HTTP 429 from any provider, or a stream error event the provider tags as a rate limit or quota error: Anthropic's `rate_limit_error`, OpenAI's `rate_limit_exceeded` or `insufficient_quota`, Bedrock's `throttlingException` | `RubyLLM::RateLimitError`, or `RubyLLM::ContextLengthExceededError` when RubyLLM recognizes the message as a context length error and not as a rate limit |
+| HTTP 500, and a Bedrock stream error of a type not listed here, such as `modelStreamErrorException` | `RubyLLM::ServerError` |
+| HTTP 502, 503 or 504: how OpenAI, Gemini and Bedrock say they are overloaded or unavailable, and how OpenRouter reports a failed upstream provider | `RubyLLM::ServiceUnavailableError` |
+| HTTP 529: Anthropic's overload, and an `overloaded_error` mid-stream | `RubyLLM::OverloadedError` |
+| HTTP 400 whose message says the service is currently overloaded | `RubyLLM::OverloadedError` |
+| A timeout or a failed connection | `RubyLLM::ConnectionError` |
+
+To fall back on another error as well, such as to a model with a larger context window, pass `on:` with the whole default list plus that error:
 
 ```ruby
 chat.with_fallbacks(
   "{{ site.models.openai_mini }}",
-  on: [RubyLLM::RateLimitError, RubyLLM::ServiceUnavailableError]
+  on: [*RubyLLM::Fallback::DEFAULT_ERRORS, RubyLLM::ContextLengthExceededError]
 )
 ```
 

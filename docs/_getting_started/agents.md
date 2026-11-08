@@ -200,10 +200,10 @@ class SupportAgent < RubyLLM::Agent
 end
 ```
 
-Fallbacks may be model ids or `RubyLLM::Model` objects, and `on:` chooses which errors trigger them:
+Fallbacks may be model ids or `RubyLLM::Model` objects. Leave out `on:`: the default covers every provider's rate-limit, server, unavailable and overload errors, and providers signal overload differently (Anthropic with HTTP 529, OpenAI, Gemini and Bedrock with 503). To fall back on another error as well, keep the default list and add it:
 
 ```ruby
-fallbacks "{{ site.models.anthropic_haiku }}", on: [RubyLLM::RateLimitError, RubyLLM::ServiceUnavailableError]
+fallbacks "{{ site.models.anthropic_haiku }}", on: [*RubyLLM::Fallback::DEFAULT_ERRORS, RubyLLM::ContextLengthExceededError]
 ```
 
 See [Model Fallbacks]({% link _advanced/error-handling.md %}#model-fallbacks).
