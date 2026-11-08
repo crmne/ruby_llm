@@ -72,18 +72,21 @@ module RubyLLM
       # A call that was running when its process shut down may have done
       # its work, such as a message it already sent, so it keeps its claim,
       # expired at once like the chat's: the expired claim is the only
-      # record that it started. Every other call is released.
+      # record that it started. Every other call is released. A call left
+      # unanswered means its round stopped before it finished.
       def release_persisted_tool_calls(tool_call_ids, stopped_by = nil) # :nodoc:
-        expired = Time.current.change(usec: 0) if shutting_down?(stopped_by)
-        tool_call_ids.each do |tool_call_id|
-          claim = claim_lock.synchronize { tool_call_claims.delete(tool_call_id) }
-          next unless claim
+        unyielding(tool_call_ids.any? || shutting_down?(stopped_by)) do
+          expired = Time.current.change(usec: 0) if shutting_down?(stopped_by)
+          tool_call_ids.each do |tool_call_id|
+            claim = claim_lock.synchronize { tool_call_claims.delete(tool_call_id) }
+            next unless claim
 
-          RubyLLM::ActiveRecord::ToolCall.where(id: claim.row, result_id: nil, claimed_until: claim.written)
-                                         .update_all(claimed_until: (expired if claim.started))
+            RubyLLM::ActiveRecord::ToolCall.where(id: claim.row, result_id: nil, claimed_until: claim.written)
+                                           .update_all(claimed_until: (expired if claim.started))
+          end
+        ensure
+          stop_idle_claim_heartbeat
         end
-      ensure
-        stop_idle_claim_heartbeat
       end
 
       # Counts a claimed tool call's run time from now, when it starts, not
@@ -163,11 +166,23 @@ module RubyLLM
         stopped_by = e
         raise
       ensure
-        begin
+        unyielding(!completed) do
           stop_claim_heartbeat
         ensure
           shutting_down?(stopped_by) ? expire_run_claim : release_run_claim(completed)
         end
+      end
+
+      # Under a fiber scheduler, as in Async or Solid Queue's fiber workers,
+      # a fiber whose thread is exiting or whose reactor is stopping is
+      # cancelled, or never resumed, once it waits on a socket, a file or a
+      # thread. So a run that +stopped+ before it finished ends its claims
+      # without yielding to the scheduler, and one that finished yields as
+      # usual.
+      def unyielding(stopped, &)
+        return yield unless stopped && Fiber.respond_to?(:blocking)
+
+        Fiber.blocking(&)
       end
 
       # Whether the process is shutting down: a thread killed at exit, or

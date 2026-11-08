@@ -373,6 +373,66 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(chats.interrupted).to contain_exactly(chat)
   end
 
+  # A network database's adapter, such as PostgreSQL's, waits on its socket
+  # for every query, which under a fiber scheduler yields to the scheduler.
+  # SQLite doesn't, so each query waits on a ready pipe first, as it would.
+  def waiting_on_a_socket_for_queries
+    reader, writer = IO.pipe
+    writer.write('ready')
+    socket = Object.new
+    socket.define_singleton_method(:start) { |*| reader.wait_readable(1) }
+    socket.define_singleton_method(:finish) { |*| nil }
+    subscriber = ActiveSupport::Notifications.subscribe('sql.active_record', socket)
+    yield
+  ensure
+    ActiveSupport::Notifications.unsubscribe(subscriber) if subscriber
+    [reader, writer].compact.each(&:close)
+  end
+
+  # Solid Queue's fiber workers and Async run a job in a fiber under a fiber
+  # scheduler. Once its thread is killed at exit, the fiber is cancelled or
+  # never resumed if it yields to the scheduler, as a query does.
+  it 'expires the claims of a run in a fiber whose thread was killed at exit, so the chat resumes at once' do
+    skip 'async runs on MRI' unless RUBY_ENGINE == 'ruby'
+    require 'async'
+    chat = asked
+    started = Queue.new
+    job = posting_job(chat) do
+      started << true
+      sleep
+    end
+    thread = Thread.new { Async { |task| task.async { job.complete } } }
+    waiting_on_a_socket_for_queries do
+      expect(started.pop(timeout: 10)).to be(true)
+      expect(thread.kill.join(10)).to eq(thread)
+    end
+
+    expect(row(chat)).to have_attributes(claim_token: be_present, claimed_until: be <= Time.current)
+    expect(tool_call_rows(chat).sole).to have_attributes(result_id: nil, claimed_until: be <= Time.current)
+    expect(chats.interrupted).to contain_exactly(chat)
+  end
+
+  it 'releases the claims of a run in a fiber whose reactor Ctrl-C stopped, along with its tool call' do
+    skip 'async runs on MRI' unless RUBY_ENGINE == 'ruby'
+    require 'async'
+    chat = asked
+    started = Queue.new
+    job = posting_job(chat) do
+      started << true
+      sleep
+    end
+    thread = Thread.new { Async { |task| task.async { job.complete } } }
+    thread.report_on_exception = false
+    waiting_on_a_socket_for_queries do
+      expect(started.pop(timeout: 10)).to be(true)
+      thread.raise(Interrupt)
+      expect { thread.join(10) }.to raise_error(Interrupt)
+    end
+
+    expect(row(chat)).to have_attributes(claim_token: nil, claimed_until: nil)
+    expect(tool_call_rows(chat).sole).to have_attributes(result_id: nil, claimed_until: nil)
+  end
+
   it 'keeps the expired claim of a tool call that was running when a TERM signal stopped its run' do
     chat = asked
     job = posting_job(chat) { raise SignalException, 'TERM' }
