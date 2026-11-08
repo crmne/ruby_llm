@@ -90,7 +90,7 @@ module RubyLLM
       # Returns the response that declines a question, keeping +note+ for
       # the model unless it is blank.
       def declined(note) # :nodoc:
-        note = note.to_s.strip
+        note = note.to_s.strip unless note.is_a?(Hash)
         note.empty? ? DECLINED : DECLINED.merge('note' => note)
       end
 
@@ -193,11 +193,13 @@ module RubyLLM
     # keeps its call from running. A +note+ tells the model why: an
     # approval's call gets it as its result, in place of a plain refusal,
     # and a tool that asked gets +nil+ from Tool#ask, and the model gets
-    # the note after the tool's result. A question from a chat records it
+    # the note after the tool's result. A Hash +note+ is an approval's
+    # whole result, as given, and follows a tool's result as JSON. A question from a chat records it
     # there, as Chat#decline does.
     #
     #   question.decline
     #   question.decline("The order shipped already")
+    #   question.decline(error: "Denied", reason: "Wrong account")
     #
     def decline(note = nil)
       if @chat

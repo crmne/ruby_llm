@@ -53,6 +53,18 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     end
   end
 
+  it 'sends a Hash a remote call was declined with as its reason, in JSON' do
+    chat = parked_chat
+    agent.find(chat.id).decline(chat.pending_questions.first, reason: 'Not on this account')
+
+    resumed = agent.find(chat.id)
+    resumed.run_tools
+    result = resumed.messages_association.find_by!(role: 'tool').to_llm
+
+    expect(result.raw_content.sole['reason']).to eq('{"reason":"Not on this account"}')
+    expect(result.content).to eq('{"reason":"Not on this account"}')
+  end
+
   it 'sends one approval response when two workers resume the chat' do
     chat = parked_chat
     first_worker = agent.find(chat.id)

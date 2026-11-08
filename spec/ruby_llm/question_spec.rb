@@ -175,6 +175,12 @@ RSpec.describe RubyLLM::Question do
     expect(form('name' => { 'type' => 'string' }).decline(" \n").response).to eq('action' => 'decline')
   end
 
+  it 'keeps a Hash it was declined with, and takes an empty Hash as none' do
+    expect(form('name' => { 'type' => 'string' }).decline(error: 'Denied').response)
+      .to eq('action' => 'decline', 'note' => { error: 'Denied' })
+    expect(form('name' => { 'type' => 'string' }).decline({}).response).to eq('action' => 'decline')
+  end
+
   it 'reads in one line' do
     question = form('name' => { 'type' => 'string' })
 

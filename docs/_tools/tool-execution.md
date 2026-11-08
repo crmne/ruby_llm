@@ -129,6 +129,12 @@ question.decline("The order shipped already")
 chat.complete # appends the refusal and asks the model to respond
 ```
 
+The model sees a note as `{"error":"The order shipped already"}`. To give it a result of your own shape, decline with a Hash, and the model gets that Hash as the call's result:
+
+```ruby
+question.decline(error: "Denied", reason: "Refunds over $500 need a manager")
+```
+
 When the user approves a call and says "don't ask again", pass `remember: true`:
 
 ```ruby
@@ -193,7 +199,7 @@ passenger                                              # => {name: "Ada Lovelace
 ask("Connect your calendar", url: calendar.authorization_url)
 ```
 
-`ask` returns `nil` when the person declines with `question.decline`. A note they give, `question.decline("I'll choose at the gate")`, follows the tool's result to the model. A call can ask several questions, one after another, and each run asks them in the same order. Outside a chat, nothing can pause the call, so `ask` raises `RubyLLM::InputRequiredError`.
+`ask` returns `nil` when the person declines with `question.decline`. A note they give, `question.decline("I'll choose at the gate")`, follows the tool's result to the model, and a Hash follows it as JSON. A call can ask several questions, one after another, and each run asks them in the same order. Outside a chat, nothing can pause the call, so `ask` raises `RubyLLM::InputRequiredError`.
 
 [MCP servers]({% link _tools/mcp.md %}#questions-from-servers) ask their questions the same way, and you answer them the same way.
 
