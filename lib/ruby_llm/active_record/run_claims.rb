@@ -73,20 +73,22 @@ module RubyLLM
       # its work, such as a message it already sent, so it keeps its claim,
       # expired at once like the chat's: the expired claim is the only
       # record that it started. Every other call is released. A call left
-      # unanswered means its round stopped before it finished.
+      # unanswered means its round stopped before it finished, so its claim
+      # is written without yielding to a fiber scheduler, as #unyielding
+      # explains.
       def release_persisted_tool_calls(tool_call_ids, stopped_by = nil) # :nodoc:
-        unyielding(tool_call_ids.any? || shutting_down?(stopped_by)) do
-          expired = Time.current.change(usec: 0) if shutting_down?(stopped_by)
-          tool_call_ids.each do |tool_call_id|
-            claim = claim_lock.synchronize { tool_call_claims.delete(tool_call_id) }
-            next unless claim
+        expired = Time.current.change(usec: 0) if shutting_down?(stopped_by)
+        tool_call_ids.each do |tool_call_id|
+          claim = claim_lock.synchronize { tool_call_claims.delete(tool_call_id) }
+          next unless claim
 
+          unyielding(true) do
             RubyLLM::ActiveRecord::ToolCall.where(id: claim.row, result_id: nil, claimed_until: claim.written)
                                            .update_all(claimed_until: (expired if claim.started))
           end
-        ensure
-          stop_idle_claim_heartbeat
         end
+      ensure
+        stop_idle_claim_heartbeat
       end
 
       # Counts a claimed tool call's run time from now, when it starts, not
