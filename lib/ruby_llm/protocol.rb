@@ -199,6 +199,29 @@ module RubyLLM
       false
     end
 
+    # Returns +caching+ for a fallback attempt, without the options this
+    # wire format cannot express, so a hint meant for the model the caller
+    # chose does not stop another provider from answering. An explicit
+    # cache +id+ names content the prompt relies on and stays.
+    def fallback_caching(caching) # :nodoc:
+      names = cache_option_names
+      return caching unless names
+
+      dropped = caching.keys - names - [:id]
+      return caching if dropped.empty?
+
+      RubyLLM.logger.debug do
+        "RubyLLM left out #{dropped.map { |name| ":#{name}" }.join(', ')} from caching on a fallback to " \
+          "#{@provider.name}, which has no use for it"
+      end
+      caching.except(*dropped)
+    end
+
+    # Returns whether this wire format takes a cache key.
+    def cache_key? # :nodoc:
+      cache_option_names&.include?(:key) || false
+    end
+
     # Writes the chat's safety identifier into the request payload and
     # returns it. The default drops the value with a debug log, so
     # providers with no equivalent field simply omit it. Protocols whose
@@ -598,6 +621,12 @@ module RubyLLM
     end
 
     private
+
+    # The with_caching options this wire format can express, or +nil+ when
+    # it ignores the ones it has no use for.
+    def cache_option_names
+      nil
+    end
 
     def unsupported_parameter_error(error)
       return error unless error.instance_of?(BadRequestError) && error.response

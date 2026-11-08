@@ -25,6 +25,15 @@ module RubyLLM
         @chat.id
       end
 
+      # Stable across processes and opaque: the provider sees neither the
+      # table nor the id.
+      def cache_key
+        id = @chat.id
+        return unless id
+
+        "ruby_llm-#{Digest::SHA256.hexdigest("#{@chat.class.base_class.name}/#{id}")[0, 32]}"
+      end
+
       def owner
         name = @chat.class.owner_association_name
         @chat.public_send(name) if name

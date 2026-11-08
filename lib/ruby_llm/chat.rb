@@ -1544,7 +1544,7 @@ module RubyLLM
         thinking: resolved_thinking,
         schema: @schema,
         citations: @citations,
-        caching: @caching,
+        caching: request_caching,
         protocol: @protocol
       )
     end
@@ -1694,7 +1694,7 @@ module RubyLLM
         schema: @schema,
         thinking: resolved_thinking,
         citations: @citations,
-        caching: @caching,
+        caching: request_caching,
         compaction: @compaction,
         end_user: @end_user,
         protocol: @protocol,
@@ -1745,6 +1745,20 @@ module RubyLLM
 
     def resolved_thinking
       @thinking&.resolve(@model)
+    end
+
+    # A fallback leaves out the caching options its provider cannot
+    # express, and a persisted chat gives a provider that takes a cache
+    # key its own unless with_caching set one.
+    def request_caching
+      return @caching unless @caching.is_a?(Hash)
+
+      caching = @caching
+      caching = @provider.fallback_caching(caching, model: @model, protocol: @protocol) if @answering_fallback
+      key = @run.cache_key
+      return caching if key.nil? || @caching.key?(:key) || !@provider.cache_key?(model: @model, protocol: @protocol)
+
+      caching.merge(key:)
     end
 
     def normalize_compaction(options)
@@ -2317,7 +2331,7 @@ module RubyLLM
             schema: @schema,
             thinking: resolved_thinking,
             citations: @citations,
-            caching: @caching,
+            caching: request_caching,
             compaction: @compaction,
             end_user: @end_user,
             protocol: @protocol,

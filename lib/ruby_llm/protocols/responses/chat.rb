@@ -326,6 +326,8 @@ module RubyLLM
                 "Responses prompt caching accepts :key, :ttl, and :mode, got #{format_cache_option_keys(unsupported)}"
         end
 
+        def cache_option_names = PROMPT_CACHE_OPTIONS
+
         def format_cache_option_keys(keys)
           keys.map { |key| ":#{key}" }.join(', ')
         end

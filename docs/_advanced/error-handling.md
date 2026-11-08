@@ -223,6 +223,8 @@ chat.with_fallbacks(
 )
 ```
 
+Fallbacks work with [prompt caching]({% link _core_features/prompt-caching.md %}#caching-with-fallbacks) across providers. A fallback model leaves out the caching options its provider has no use for, such as an OpenAI cache key on Claude, so you don't need to set caching per provider.
+
 ### Dropping Unsupported Parameters
 
 Models differ in which settings they take: some reasoning models reject a temperature, and some reject a reasoning effort other than their default. When OpenAI says so, RubyLLM raises `RubyLLM::UnsupportedParameterError`, a `BadRequestError` whose `parameter` names what it rejected: `:temperature`, `:thinking`, or `:max_output_tokens` for RubyLLM's own settings, or the provider's name as a String, such as a key you passed to `with_provider_options`.
