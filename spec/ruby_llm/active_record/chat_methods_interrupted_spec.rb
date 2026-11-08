@@ -382,14 +382,33 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   end
 
   it 'expires the claims of the chat and its running tool call on shutdown, so the chat resumes at once' do
-    freeze_time
     chat = asked
     job = posting_job(chat) { raise SignalException, 'TERM' }
 
     expect { job.complete }.to raise_error(SignalException)
-    expect(row(chat)).to have_attributes(claim_token: be_present, claimed_until: Time.current.change(usec: 0))
-    expect(tool_call_rows(chat).sole.claimed_until).to eq(Time.current.change(usec: 0))
+    expect(row(chat)).to have_attributes(claim_token: be_present, claimed_until: be <= Time.current)
+    expect(tool_call_rows(chat).sole.claimed_until).to be <= Time.current
     expect(chats.interrupted).to contain_exactly(chat)
+  end
+
+  # A column that keeps whole seconds rounds a fraction up, into the future.
+  it 'expires the claims on shutdown to the whole second, which has already passed' do
+    travel_to Time.current.change(usec: 900_000), with_usec: true
+    chat = asked
+    job = posting_job(chat) { raise SignalException, 'TERM' }
+
+    expect { job.complete }.to raise_error(SignalException)
+    expect(row(chat).claimed_until).to eq(Time.current.change(usec: 0))
+    expect(tool_call_rows(chat).sole.claimed_until).to eq(Time.current.change(usec: 0))
+  end
+
+  it 'leaves a free chat alone when a shutdown stops its run before the run claims it' do
+    chat = asked
+    job = job_for(chat)
+    allow(job).to receive(:run_claim_acquired?).and_raise(SignalException, 'TERM')
+
+    expect { job.complete }.to raise_error(SignalException)
+    expect(row(chat)).to have_attributes(claim_token: nil, claimed_until: nil)
   end
 
   it 'leaves the claim of a tool call alone when another process took it over before the shutdown' do
