@@ -67,15 +67,20 @@ module RubyLLM
         inject_into_file path, "#{indent}  #{name}.#{setting} = #{value}\n", after: block[0]
       end
 
-      # The RubyLLM.configure block up to its closing +end+, or +nil+ when
-      # Ruby doesn't read the line that looks like it as that keyword, such
-      # as one inside a heredoc.
+      # The RubyLLM.configure block up to its closing +end+, or +nil+ unless
+      # Ruby reads both lines as code and that +end+ as the one closing the
+      # block. Lines inside a heredoc can look like either.
       def configure_block(source)
         block = source.match(/^( *)RubyLLM\.configure do \|(\w+)\|\n.*?(?=^\1end\b)/m)
         return unless block
 
-        position = [source[0...block.end(0)].count("\n") + 1, block[1].length]
-        block if Ripper.lex(source).any? { |at, type, token| at == position && type == :on_kw && token == 'end' }
+        tokens = Ripper.lex(source).to_h { |at, type| [at, type] }
+        column = block[1].length
+        opening = [source[0...block.begin(0)].count("\n") + 1, column]
+        closing = [source[0...block.end(0)].count("\n") + 1, column]
+        return unless tokens[opening] == :on_const && tokens[closing] == :on_kw
+
+        block if Ripper.sexp("#{block[0]}#{block[1]}end\n")
       end
 
       def explain_own_broadcasting(source)

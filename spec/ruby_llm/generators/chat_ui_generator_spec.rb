@@ -651,17 +651,14 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       RUBY
     end
 
-    it 'leaves the file alone when the end it finds is inside a heredoc' do
-      source = "RubyLLM.configure do |config|\n  config.openai_api_key = <<~KEY\nend\nKEY\nend\n"
-      path = File.join(destination, 'config/initializers/ruby_llm.rb')
-      FileUtils.mkdir_p(File.dirname(path))
-      File.write(path, source)
+    it 'leaves the file alone when a heredoc holds what looks like the block' do
       allow(generator).to receive(:say)
 
-      generator.context_budget
-
-      expect(File.read(path)).to eq(source)
-      expect(generator).to have_received(:say).with(/\AAdd config\.context_budget = /, :yellow)
+      ["RubyLLM.configure do |config|\n  config.openai_api_key = <<~KEY\nend\nKEY\nend\n",
+       "example = <<~TEXT\nRubyLLM.configure do |config|\nTEXT\n1.times do\nend\n"].each do |source|
+        expect(initializer_after_generating(source)).to eq(source)
+      end
+      expect(generator).to have_received(:say).with(/\AAdd config\.context_budget = /, :yellow).twice
     end
 
     it 'says what to add without a configure block it can find' do
