@@ -291,6 +291,13 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(Chat.interrupted.merge(chats).count).to eq(2)
     end
 
+    it 'keeps a selection the caller made' do
+      chat, second = mid_round
+      tool_call_row(second).update_all(mcp_state: { 'requests' => [{ 'id' => 'q1', 'response' => 'yes' }] })
+
+      expect(chats.select(:id).interrupted.map(&:id)).to eq([chat.id])
+    end
+
     it 'loads in batches' do
       interrupted = Array.new(3) { asked }
       answered

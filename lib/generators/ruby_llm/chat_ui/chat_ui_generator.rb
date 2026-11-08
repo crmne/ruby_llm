@@ -136,13 +136,13 @@ module RubyLLM
         return unless app_file?(RECURRING_PATH)
 
         source = File.read(File.join(destination_root, RECURRING_PATH))
-        return if behavior == :invoke && source.include?("class: #{resume_job_class_name}")
-
         environments = recurring_environments(source)
         if environments.empty?
-          append_to_file RECURRING_PATH, "\n#{recurring_task}"
+          append_to_file RECURRING_PATH, "\n#{recurring_task}" unless scheduled?(source)
         else
           environments.each do |environment|
+            next if scheduled?(source[/^#{environment}:[ \t]*\n(?:(?:[ \t#].*)?\n)*/])
+
             inject_into_file RECURRING_PATH, recurring_task.indent(2), after: /^#{environment}:[ \t]*\n/, force: true
           end
         end
@@ -300,6 +300,10 @@ module RubyLLM
             class: #{resume_job_class_name}
             schedule: every minute
         YAML
+      end
+
+      def scheduled?(section)
+        behavior == :invoke && section.include?("class: #{resume_job_class_name}")
       end
 
       def recurring_environments(source)

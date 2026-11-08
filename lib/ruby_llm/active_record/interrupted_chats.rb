@@ -67,7 +67,7 @@ module RubyLLM
       def paused_calls(found)
         return [] unless tool_call_column?(:mcp_state)
 
-        responses = found.select(Arel.sql(sql("(#{newest('p') { |a| response(a) }})")))
+        responses = found.reselect(Arel.sql(sql("(#{newest('p') { |a| response(a) }})")))
         states = ToolCall.uncached do
           ToolCall.where(message_type:, message_id: responses, result_id: nil)
                   .pluck(:id, :mcp_state)

@@ -1308,7 +1308,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         end
       end
 
-      it 'schedules the job every minute in Solid Queue, once' do
+      it 'schedules the job every minute in each Solid Queue environment, once' do
         within_test_app(app_path) do
           Dir.mktmpdir do |destination|
             FileUtils.cp_r("#{app_path}/.", destination)
@@ -1323,6 +1323,9 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
                   clear_development_jobs:
                     command: "SolidQueue::Job.clear_finished_in_batches"
                     schedule: every day
+                  #{config[:resume_job_path].delete_prefix('app/jobs/').delete_suffix('_job.rb')}:
+                    class: #{config[:approval_flow][:resume_job]}
+                    schedule: every minute
 
                 production:
                   clear_solid_queue_finished_jobs:
