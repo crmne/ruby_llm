@@ -20,6 +20,9 @@ ignore:
   # ActiveRecord::FileStore#initialize: the store keeps converted text in
   # its rows, so the memory cache super sets up is never read.
   - 94ac200a2929
+  # Chat#request_caching: without a key from the run, merging key: nil
+  # renders no cache key on every protocol, as returning early does.
+  - a4f553cecb2e
   # Chat#initialize: an unset instance variable reads nil too.
   - cdd92a72524b
   - a628cf763df0

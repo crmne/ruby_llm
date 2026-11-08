@@ -95,6 +95,29 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  describe 'a chat whose run names a cache key' do
+    def keyed_chat(model, provider)
+      chat = RubyLLM.chat(model:, provider:)
+      chat.run = Class.new(RubyLLM::Chat::Run) { def cache_key = 'ruby_llm-run' }.new
+      chat.ask_later('Hi')
+    end
+
+    it 'sends it to a provider that takes one' do
+      expect(keyed_chat(model_for(:openai), :openai).with_caching.render[:prompt_cache_key]).to eq('ruby_llm-run')
+    end
+
+    it 'sends none to a provider that takes none' do
+      expect(keyed_chat(model_for(:anthropic), :anthropic).with_caching.render[:cache_control]).to eq(type: 'ephemeral')
+    end
+
+    it 'sends none unless caching is on' do
+      chat = keyed_chat(model_for(:openai), :openai)
+
+      expect(chat.render).not_to have_key(:prompt_cache_key)
+      expect(chat.with_caching(false).render).not_to have_key(:prompt_cache_key)
+    end
+  end
+
   it 'sends no cache key of its own on a chat without a record' do
     payload = RubyLLM.chat(model: model_for(:openai), provider: :openai).with_caching.ask_later('Hi').render
 
