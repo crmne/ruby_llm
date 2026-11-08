@@ -486,7 +486,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       ActiveJob::Base.queue_adapter = :test
       ActionController::Base.allow_forgery_protection = false
       default = RubyLLM.models.find(RubyLLM.config.default_model)
-      other = RubyLLM.models.chat_models.by_provider(default.provider).all.find { |model| model.id != default.id }
+      other = RubyLLM.models.chat_models.by_provider(default.provider).all.find { |candidate| candidate.id != default.id }
       chat = #{agent}.create!
       selected = ->(html) { html[/<option selected="selected" value="([^"]*)"/, 1] }
       shown = selected.(#{controller}.render(:show, assigns: #{assigns}))

@@ -119,7 +119,7 @@ class <%= chat_controller_class_name.delete_suffix("Controller") %>Test < Applic
   test "switching the model mid-conversation" do
     stub_replies "Hello", "Hello again"
     default = RubyLLM.models.find(RubyLLM.config.default_model)
-    model = RubyLLM.models.chat_models.by_provider(default.provider).all.find { |model| model.id != default.id }
+    model = RubyLLM.models.chat_models.by_provider(default.provider).all.find { |candidate| candidate.id != default.id }
     choice = "#{model.provider}:#{model.id}"
 
     start_chat
