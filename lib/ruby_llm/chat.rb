@@ -2942,9 +2942,10 @@ module RubyLLM
     def tool_name_for_choice_class(tool_class)
       matched_tool_name = @tools.find { |_name, tool| tool.is_a?(tool_class) }&.first
       return matched_tool_name if matched_tool_name
-      return tool_class.tool_name.to_sym if tool_class.respond_to?(:tool_name)
+      return tool_class.name.to_s.to_sym unless tool_class.respond_to?(:tool_name)
 
-      tool_class.name.to_s.to_sym
+      namespace = tool_class.namespace if tool_class.respond_to?(:namespace)
+      [namespace, tool_class.tool_name].compact.join('_').to_sym
     end
 
     def forced_tool_choice?

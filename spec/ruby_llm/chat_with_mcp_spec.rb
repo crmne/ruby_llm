@@ -169,6 +169,35 @@ RSpec.describe RubyLLM::Chat do
     expect(files).not_to have_received(:tools)
   end
 
+  it 'takes a namespaced tool a server adds as the tool choice by its qualified name' do
+    stub_const('Clock', Class.new(RubyLLM::Tool) do
+      namespace 'office'
+      def self.tool_name = 'time'
+      def execute = 'noon'
+    end)
+    local_time = Class.new(RubyLLM::Tool) do
+      def self.tool_name = 'time'
+      def execute = 'midnight'
+    end
+    files_class.tool(Clock)
+    allow(files).to receive(:tools).and_call_original
+    allow(chat.provider).to receive(:complete).and_return(answer)
+
+    chat.with_tools(local_time).with_mcp(files).with_tool_options(choice: Clock)
+
+    expect(chat.tool_options[:choice]).to eq(:office_time)
+    expect(files).not_to have_received(:tools)
+    expect { chat.ask('What time is it?') }.not_to raise_error
+  end
+
+  it 'names a tool choice class that is not a tool by its class name' do
+    stub_const('Plain', Class.new)
+
+    chat.with_mcp(files).with_tool_options(choice: Plain)
+
+    expect(chat.tool_options[:choice]).to eq(:Plain)
+  end
+
   it 'rejects a tool choice no server offers once the chat lists their tools' do
     allow(chat.provider).to receive(:complete).and_return(answer)
     chat.with_mcp(files).with_tool_options(choice: :missing)
