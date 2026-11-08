@@ -66,7 +66,7 @@ module RubyLLM
       # ArgumentError when +path+ is a folder.
       def write(path, content, content_type: nil)
         path = FileStore.path(path)
-        file = with_lock { write_file(path, FileStore.bytes(content)) }
+        file = with_lock { write_file(path, content) }
         content_type ? StoredFile.new(**file.to_h, content_type:) : file
       end
 
@@ -120,7 +120,9 @@ module RubyLLM
         full = full_path(path)
         make_room(full)
         temporary = File.join(File.dirname(full), ".#{SecureRandom.hex(16)}.tmp")
-        File.open(temporary, WRITE_FLAGS, binmode: true) { |io| io.write(content) }
+        File.open(temporary, WRITE_FLAGS, binmode: true) do |io|
+          content.respond_to?(:read) ? IO.copy_stream(content, io) : io.write(content)
+        end
         File.rename(temporary, full)
         stored_file(full, File.lstat(full))
       ensure

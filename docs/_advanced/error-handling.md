@@ -358,7 +358,7 @@ end
 
 Declare one on `RubyLLM::CodeExecution` to cover only code execution.
 
-Handlers run for the calls a chat makes, whether your tool defines `execute` or overrides `call`. When you call a tool yourself, as in `Weather.new.call(city: "Berlin")`, the exception reaches you.
+Handlers run for the calls a chat makes, whether your tool defines `execute` or overrides `call`. Calling a tool yourself is still supported, in a test, a job, or a controller: `Weather.new.call(city: "Berlin")` validates the arguments and runs `execute`, and you can call `execute` directly too. Handlers don't wrap those calls, so an exception reaches your code as it would from any Ruby method.
 
 Handlers for an [MCP server's]({% link _tools/mcp.md %}#handling-tool-errors) tools go on its client class.
 

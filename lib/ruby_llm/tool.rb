@@ -78,7 +78,8 @@ module RubyLLM
     # if #execute had returned it, so the model reads it and the chat
     # goes on. Re-raise inside a handler to stop the chat with the
     # exception, as an unhandled one does. Handlers only run for calls a
-    # chat makes: when you call #call yourself, exceptions reach you.
+    # chat makes. Calling #call or #execute yourself is supported and
+    # runs without handlers, so exceptions reach you.
     #
     #   class ApplicationTool < RubyLLM::Tool
     #     rescue_from StandardError, with: :report_failure
