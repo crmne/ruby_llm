@@ -30,17 +30,17 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
 
   describe 'with default model names' do
     let(:app_name) { 'test_install_default' }
-    let(:app_path) { File.join(Dir.tmpdir, app_name) }
+    let(:app_path) { GeneratorTestHelpers.app_path(app_name) }
 
     before(:all) do # rubocop:disable RSpec/BeforeAfterAll
       template_path = File.expand_path('../../fixtures/templates', __dir__)
-      GeneratorTestHelpers.cleanup_test_app(File.join(Dir.tmpdir, 'test_install_default'))
+      GeneratorTestHelpers.cleanup_test_app(GeneratorTestHelpers.app_path('test_install_default'))
       GeneratorTestHelpers.create_test_app('test_install_default', template: 'default_models_template.rb',
                                                                    template_path: template_path)
     end
 
     after(:all) do # rubocop:disable RSpec/BeforeAfterAll
-      GeneratorTestHelpers.cleanup_test_app(File.join(Dir.tmpdir, 'test_install_default'))
+      GeneratorTestHelpers.cleanup_test_app(GeneratorTestHelpers.app_path('test_install_default'))
     end
 
     it 'creates only the application-owned model files' do
@@ -242,7 +242,7 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
 
   it 'ends with the one command to run next, and no guide' do
     output = capture_stdout do
-      described_class.new([], {}, destination_root: Dir.tmpdir, shell: Thor::Shell::Basic.new).show_next_step
+      described_class.new([], {}, destination_root: GeneratorTestHelpers.root, shell: Thor::Shell::Basic.new).show_next_step
     end
 
     expect(output).to eq("\nRun bin/rails db:migrate\n")
@@ -282,17 +282,17 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
 
   describe 'with namespaced model names' do
     let(:app_name) { 'test_install_namespaced' }
-    let(:app_path) { File.join(Dir.tmpdir, app_name) }
+    let(:app_path) { GeneratorTestHelpers.app_path(app_name) }
 
     before(:all) do # rubocop:disable RSpec/BeforeAfterAll
       template_path = File.expand_path('../../fixtures/templates', __dir__)
-      GeneratorTestHelpers.cleanup_test_app(File.join(Dir.tmpdir, 'test_install_namespaced'))
+      GeneratorTestHelpers.cleanup_test_app(GeneratorTestHelpers.app_path('test_install_namespaced'))
       GeneratorTestHelpers.create_test_app('test_install_namespaced', template: 'namespaced_models_template.rb',
                                                                       template_path: template_path)
     end
 
     after(:all) do # rubocop:disable RSpec/BeforeAfterAll
-      GeneratorTestHelpers.cleanup_test_app(File.join(Dir.tmpdir, 'test_install_namespaced'))
+      GeneratorTestHelpers.cleanup_test_app(GeneratorTestHelpers.app_path('test_install_namespaced'))
     end
 
     it 'creates namespaced model files' do

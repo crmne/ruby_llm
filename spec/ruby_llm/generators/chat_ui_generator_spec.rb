@@ -811,10 +811,10 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     }
   }.each do |description, config|
     describe description do
-      let(:app_path) { File.join(Dir.tmpdir, config[:app_name]) }
+      let(:app_path) { GeneratorTestHelpers.app_path(config[:app_name]) }
 
       before(:all) do # rubocop:disable RSpec/BeforeAfterAll
-        GeneratorTestHelpers.cleanup_test_app(File.join(Dir.tmpdir, config[:app_name]))
+        GeneratorTestHelpers.cleanup_test_app(GeneratorTestHelpers.app_path(config[:app_name]))
         GeneratorTestHelpers.create_test_app(
           config[:app_name],
           template: config[:template_name],
@@ -823,7 +823,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       end
 
       after(:all) do # rubocop:disable RSpec/BeforeAfterAll
-        GeneratorTestHelpers.cleanup_test_app(File.join(Dir.tmpdir, config[:app_name]))
+        GeneratorTestHelpers.cleanup_test_app(GeneratorTestHelpers.app_path(config[:app_name]))
       end
 
       it config[:controller_example] do
@@ -1334,10 +1334,10 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     ]
   }.each do |description, (app_name, template_name, example_name)|
     describe description do
-      let(:app_path) { File.join(Dir.tmpdir, app_name) }
+      let(:app_path) { GeneratorTestHelpers.app_path(app_name) }
 
       before(:all) do # rubocop:disable RSpec/BeforeAfterAll
-        GeneratorTestHelpers.cleanup_test_app(File.join(Dir.tmpdir, app_name))
+        GeneratorTestHelpers.cleanup_test_app(GeneratorTestHelpers.app_path(app_name))
         GeneratorTestHelpers.create_test_app(
           app_name,
           template: template_name,
@@ -1346,7 +1346,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       end
 
       after(:all) do # rubocop:disable RSpec/BeforeAfterAll
-        GeneratorTestHelpers.cleanup_test_app(File.join(Dir.tmpdir, app_name))
+        GeneratorTestHelpers.cleanup_test_app(GeneratorTestHelpers.app_path(app_name))
       end
 
       it example_name do

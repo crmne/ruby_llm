@@ -10,7 +10,7 @@ RSpec.describe RubyLLM::Generators::JudgeGenerator, :generator, type: :generator
 
   let(:template_path) { File.expand_path('../../fixtures/templates', __dir__) }
   let(:app_name) { 'test_judge_generator' }
-  let(:app_path) { File.join(Dir.tmpdir, app_name) }
+  let(:app_path) { GeneratorTestHelpers.app_path(app_name) }
 
   def run_rails_generate(*args)
     env = {
@@ -23,13 +23,13 @@ RSpec.describe RubyLLM::Generators::JudgeGenerator, :generator, type: :generator
 
   before(:all) do # rubocop:disable RSpec/BeforeAfterAll
     template_path = File.expand_path('../../fixtures/templates', __dir__)
-    GeneratorTestHelpers.cleanup_test_app(File.join(Dir.tmpdir, 'test_judge_generator'))
+    GeneratorTestHelpers.cleanup_test_app(GeneratorTestHelpers.app_path('test_judge_generator'))
     GeneratorTestHelpers.create_test_app('test_judge_generator', template: 'default_models_template.rb',
                                                                  template_path: template_path)
   end
 
   after(:all) do # rubocop:disable RSpec/BeforeAfterAll
-    GeneratorTestHelpers.cleanup_test_app(File.join(Dir.tmpdir, 'test_judge_generator'))
+    GeneratorTestHelpers.cleanup_test_app(GeneratorTestHelpers.app_path('test_judge_generator'))
   end
 
   it 'creates a judge class in app/judges' do
