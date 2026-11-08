@@ -42,8 +42,9 @@ RSpec.describe 'Context connection settings' do # rubocop:disable RSpec/Describe
     end
 
     it 'leaves the global TLS options alone when a context changes its own' do
-      RubyLLM.configure { |config| config.ssl = { ca_file: '/certs/internal-ca.pem' } }
+      RubyLLM.configure { |config| config.ssl = { ca_file: +'/certs/internal-ca.pem' } }
       RubyLLM.context { |config| config.ssl[:verify] = false }
+      RubyLLM.context { |config| config.ssl[:ca_file].replace('/certs/other-ca.pem') }
 
       expect(RubyLLM.config.ssl).to eq(ca_file: '/certs/internal-ca.pem')
     ensure

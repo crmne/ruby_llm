@@ -65,6 +65,15 @@ RSpec.describe RubyLLM::Transport::Connection do
       expect(faraday_for(configured(ssl: { verify: false }))).to be(built)
     end
 
+    it 'keeps its TLS options when a configured value is changed in place afterwards' do
+      ca_file = +'/certs/internal-ca.pem'
+      built = faraday_for(configured(ssl: { ca_file: }))
+      ca_file.replace('/certs/other-ca.pem')
+
+      expect(built.ssl.ca_file).to eq('/certs/internal-ca.pem')
+      expect(faraday_for(configured(ssl: { ca_file: '/certs/internal-ca.pem' }))).to be(built)
+    end
+
     it 'builds a separate connection for each provider' do
       same_base = configured(xai_api_base: 'https://api.openai.com/v1')
 

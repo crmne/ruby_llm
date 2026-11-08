@@ -440,7 +440,7 @@ module RubyLLM
     def initialize_copy(source) # :nodoc:
       super
       @file_converters = @file_converters.dup
-      @ssl = @ssl.dup
+      @ssl = @ssl.to_h.transform_values { |value| value.is_a?(String) ? value.dup : value } if @ssl
     end
 
     def instance_variables # :nodoc:

@@ -35,7 +35,7 @@ module RubyLLM
           f.use ReleaseRequest
           f.options.timeout = config.request_timeout
           f.proxy = config.http_proxy if config.http_proxy
-          f.ssl.update(config.ssl) if config.ssl
+          f.ssl.update(ssl_snapshot(config.ssl)) if config.ssl
           f.response :logger,
                      RubyLLM.logger,
                      bodies: false,
@@ -76,6 +76,12 @@ module RubyLLM
 
       def self.cache
         CACHE
+      end
+
+      # A frozen copy of +ssl+, so a value changed in place afterwards
+      # reaches neither a cache key nor a connection already built.
+      def self.ssl_snapshot(ssl)
+        ssl.to_h.transform_values { |value| value.is_a?(String) ? value.dup.freeze : value }.freeze
       end
 
       # The result is shared across threads and contexts, so the middleware
@@ -182,7 +188,7 @@ module RubyLLM
           adapter: @config.faraday_adapter,
           timeout: @config.request_timeout,
           proxy: @config.http_proxy,
-          ssl: (@config.ssl.to_h.dup.freeze if @config.ssl),
+          ssl: (self.class.ssl_snapshot(@config.ssl) if @config.ssl),
           logger: logger,
           log_bodies: logger.debug?,
           log_regexp_timeout: @config.log_regexp_timeout,
