@@ -274,7 +274,7 @@ Agents declare it once, `around_tool_call :in_tenant`, and Rails chat records ta
 
 ## Context Budgets
 
-Long tool results no longer overflow the context window. A context budget cuts a result longer than its share when it is added, and leaves the oldest results out of a request that would take more than its share, in steps that keep the prompt cache warm. Set it once for every chat and agent:
+A context budget keeps long tool results from filling the context window. It cuts a result longer than its share when it is added, and leaves the oldest results out of a request that would take more than its share, in steps that keep the prompt cache warm. Set it once for every chat and agent:
 
 ```ruby
 RubyLLM.configure do |config|
@@ -289,6 +289,8 @@ chat.with_context_budget(per_result: 0.1, per_request: 0.5)
 ```
 
 For a model the registry has no window for, pass it: `chat.with_context_budget(window: 128_000, per_request: 0.7)`.
+
+The budget is off until you set it, and it only cuts the text of tool results: attachments and long tool call arguments still count against the window.
 
 `Message#with(content:)` returns a changed copy of a message, for shaping the transcript yourself. See [Keeping Tool Results in Budget]({% link _core_features/chat-request-control.md %}#keeping-tool-results-in-budget).
 
