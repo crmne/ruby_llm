@@ -2179,14 +2179,7 @@ module RubyLLM
     end
 
     def switch_to_usable_fallback(fallback_queue)
-      while (fallback = fallback_queue.shift)
-        begin
-          switch_to_fallback_model(fallback)
-          return fallback
-        rescue ModelNotFoundError, ConfigurationError => e
-          RubyLLM.logger.warn("RubyLLM skipped fallback #{fallback.id}: #{e.message}")
-        end
-      end
+      Fallback.next_usable(fallback_queue) { |fallback| switch_to_fallback_model(fallback) }&.first
     end
 
     def finish_fallback(fallback, response: nil, fallback_error: nil)
@@ -2197,9 +2190,7 @@ module RubyLLM
     end
 
     def fallback_error?(error)
-      return false if error.is_a?(CancelledError) || @run.interrupted_by?(error)
-
-      fallback_errors.any? { |error_class| error.is_a?(error_class) }
+      !@run.interrupted_by?(error) && Fallback.error?(error, fallback_errors)
     end
 
     # Preprocessing builds a per-request view of the conversation: the

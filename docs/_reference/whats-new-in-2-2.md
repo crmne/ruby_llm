@@ -347,6 +347,8 @@ A chat with a [file store]({% link _core_features/file-stores.md %}#what-the-mod
 
 `RubyLLM::MCP::Client#meta` returns the `_meta` RubyLLM sends with every request to a server on the 2026-07-28 revision, for requests your app sends a server itself. See [Custom Transports]({% link _tools/mcp.md %}#custom-transports).
 
+`RubyLLM.paint` takes `fallbacks:`, the models to try when the first is rate limited or overloaded, as `with_fallbacks` does for chats. See [Falling Back to Another Model]({% link _getting_started/image-generation.md %}#falling-back-to-another-model).
+
 `RubyLLM::Attachment.new(io, filename: "export.csv", mime_type: "text/csv")` takes a file's type when you know it. See [Automatic File Type Detection]({% link _core_features/attachments.md %}#automatic-file-type-detection).
 
 A chat bills its owner, set with `chat.with_owner(current_user)`, or in Rails named once with `acts_as_chat owner: :user`, which keeps the chat's files for that user too. See [One-Shot Operations]({% link _core_features/cost-and-usage-tracking.md %}#one-shot-operations).
