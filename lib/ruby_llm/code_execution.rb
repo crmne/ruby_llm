@@ -35,9 +35,6 @@ module RubyLLM
     # Files a run returns at most.
     MAX_FILES = 10
 
-    # Bytes a returned file may have at most.
-    MAX_FILE_SIZE = 10 * 1024 * 1024
-
     # Bytes of a text file the model reads back. Larger files, and files
     # that are not images, PDFs, or text, reach the model as a description.
     MAX_MODEL_TEXT = 64 * 1024
@@ -468,7 +465,8 @@ module RubyLLM
       script = prepare(workspace, language, code)
       instrument(language, runner, name, tool_call) do |event|
         result = run_in_sandbox(runner, language.command(script), workspace, readable: mounted)
-        files, skipped = workspace.outputs(max_files: MAX_FILES, max_size: MAX_FILE_SIZE, unchanged: copied)
+        files, skipped = workspace.outputs(max_files: MAX_FILES, max_size: configuration.code_execution_max_file_size,
+                                           unchanged: copied)
         record(event, result, files.map(&:filename))
         next save(store, result, files, skipped) if store
 

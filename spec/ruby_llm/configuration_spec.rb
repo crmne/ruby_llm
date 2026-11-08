@@ -34,6 +34,10 @@ RSpec.describe RubyLLM::Configuration do
       expect(config.package_cache_dir).to be_nil
     end
 
+    it 'returns code execution files of up to 10 MB' do
+      expect(config.code_execution_max_file_size).to eq(10 * 1024 * 1024)
+    end
+
     it 'exposes a discoverable options API' do
       expect(described_class.options).to include(
         :request_timeout,

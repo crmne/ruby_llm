@@ -276,6 +276,7 @@ Every setting that isn't a provider's, with its default. Provider keys and endpo
 | `sandbox` | `nil` | The name of an `MXC::Sandbox` class, or your own sandbox. |
 | `sandbox_backend` | `:bubblewrap` | Or `:landlock`, which isolates less. Linux only. |
 | `package_cache_dir` | OS user cache directory | Where declared gems and Python packages are kept. |
+| `code_execution_max_file_size` | `10 * 1024 * 1024` | Bytes a file code execution returns may have. |
 | `logger` | `nil` | A `Logger`. When set, it overrides `log_file` and `log_level`. |
 | `log_file` | `$stdout`, or `RUBYLLM_LOG_FILE` | Destination of the built-in logger: a path or an IO. |
 | `log_level` | `Logger::INFO`, or `DEBUG` with `RUBYLLM_DEBUG` | Severity of the built-in logger. |

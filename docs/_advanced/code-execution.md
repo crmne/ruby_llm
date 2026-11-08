@@ -162,10 +162,18 @@ end
 | --- | --- |
 | Standard output and error sent to the model | 20,000 characters each, keeping the start and the end |
 | Files returned per call | 10 |
-| Size of a returned file | 10 MB |
+| Size of a returned file | 10 MB, or `config.code_execution_max_file_size` |
 | Text files the model reads back | 64 KB |
 
-Files past the count or size limit stay out of the result, and the model is told which ones. Hidden files, symbolic links, and Python's `__pycache__` are never returned.
+Files past the count or size limit stay out of the result, and the model is told which ones. Raise the size limit when code makes larger files, such as videos:
+
+```ruby
+RubyLLM.configure do |config|
+  config.code_execution_max_file_size = 100 * 1024 * 1024
+end
+```
+
+Every returned file is read into memory while it's saved, so keep the limit as low as your files allow. With a file store in a folder, code changes the files where they are, so neither limit applies: a file it writes stays in the folder whatever its size, and the result lists every changed path. Hidden files, symbolic links, and Python's `__pycache__` are never returned.
 
 ### What the Model Reads Back
 
