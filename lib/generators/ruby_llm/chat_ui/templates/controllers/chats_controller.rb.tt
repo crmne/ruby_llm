@@ -32,6 +32,7 @@ class <%= chat_controller_class_name %> < ApplicationController
 
   def show
     @<%= message_variable_name %> = <%= message_model_name %>.new
+    @chat_models = available_chat_models
   end
 
   def cancel

@@ -72,6 +72,8 @@ module RubyLLM
         template ui_template('views/chats/_chat.html.erb'),
                  "app/views/#{chat_view_path}/_#{chat_model_name.demodulize.underscore}.html.erb"
         template ui_template('views/chats/_form.html.erb'), "app/views/#{chat_view_path}/_form.html.erb"
+        template ui_template('views/chats/_model_select.html.erb'),
+                 "app/views/#{chat_view_path}/_model_select.html.erb"
         template 'views/chats/_questions.html.erb', "app/views/#{chat_view_path}/_questions.html.erb"
         template ui_template('views/chats/_files.html.erb'), "app/views/#{chat_view_path}/_files.html.erb"
 

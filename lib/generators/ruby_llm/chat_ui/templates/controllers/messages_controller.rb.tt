@@ -6,7 +6,9 @@ class <%= message_controller_class_name %> < ApplicationController
   end
 
   def create
+    @chat_models = available_chat_models
     if content || attachments
+      switch_model
       @<%= chat_variable_name %>.ask_later(content, with: attachments)
       <%= chat_job_class_name %>.perform_later(@<%= chat_variable_name %>.id)
 
@@ -29,6 +31,14 @@ class <%= message_controller_class_name %> < ApplicationController
 
   def attachments
     Array(params.dig(:<%= message_variable_name %>, :attachments)).grep(ActionDispatch::Http::UploadedFile).presence
+  end
+
+  def switch_model
+    selected = params.dig(:<%= message_variable_name %>, :model)
+    return if selected.nil? || selected == [ @<%= chat_variable_name %>.provider, @<%= chat_variable_name %>.model_id ].compact.join(":")
+
+    provider, model = selected.split(":", 2)
+    @<%= chat_variable_name %>.with_model(model, provider: provider)
   end
 
   def set_<%= chat_variable_name %>

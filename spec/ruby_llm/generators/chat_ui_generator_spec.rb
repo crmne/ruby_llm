@@ -28,6 +28,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
   def expect_generated_view_set( # rubocop:disable Metrics/AbcSize
     base_path:,
     chats_target:,
+    chat_views_path:,
+    chat:,
     form_partial_path:,
     model_index_collection:,
     model_partial_path:,
@@ -35,7 +37,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     answers_base_path:,
     answers_path_helper:
   )
-    %w[index new show _chat _form _questions _files].each do |view|
+    %w[index new show _chat _form _model_select _questions _files].each do |view|
       expect(File.exist?(File.join(base_path, "chats/#{view}.html.erb"))).to be true
     end
 
@@ -95,10 +97,11 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     chat_partial = File.read(File.join(base_path, 'chats/_chat.html.erb'))
     expect(chat_partial).to include('.model&.label || default_model_display_name')
 
+    model_select = File.read(File.join(base_path, 'chats/_model_select.html.erb'))
+    expect(model_select).to include('@chat_models.map', 'default_model_display_name', 'form.select :model,')
+    expect(model_select).to include('[model.label, [model.provider, model.id].join(":")]')
     chat_form = File.read(File.join(base_path, 'chats/_form.html.erb'))
-    expect(chat_form).to include('@chat_models.map')
-    expect(chat_form).to include('[model.label, [model.provider, model.id].join(":")]')
-    expect(chat_form).to include('default_model_display_name')
+    expect(chat_form).to include(%(render "#{chat_views_path}/model_select", form: form, selected: @selected_model))
     create_stream = File.read(File.join(base_path, 'messages/create.turbo_stream.erb'))
     expect(create_stream).to include(%(turbo_stream.replace "#{chats_target}"))
     expect(create_stream).to include(%(render "#{form_partial_path}"))
@@ -106,6 +109,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     expect_question_views(base_path, questions_base_path, answers_base_path, answers_path_helper)
     message_form = File.read(File.join(base_path, 'messages/_form.html.erb'))
     expect(message_form).to include('chat.pending_questions.any?', 'Answer the questions above to continue.')
+    expect(message_form).to include(%(render "#{chat_views_path}/model_select", form: form, ) +
+                                    %(selected: [ #{chat}.provider, #{chat}.model_id ].compact.join(":")))
     expect(message_form).not_to include('Replying…')
     expect_draft_form(message_form)
     expect_queued_message_views(base_path, answers_path_helper.sub('answers', 'queued_message'))
@@ -473,6 +478,44 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         abort "model page answered \#{session.response.status} for \#{params}" unless session.response.status == 200
         abort "model page lacks \#{model.name} for \#{params}" unless session.response.body.include?(model.name)
       end
+    RUBY
+  end
+
+  def model_switch_script(agent:, controller:, assigns:, chats_path:, message_key:, **)
+    <<~RUBY
+      ActiveJob::Base.queue_adapter = :test
+      ActionController::Base.allow_forgery_protection = false
+      default = RubyLLM.models.find(RubyLLM.config.default_model)
+      other = RubyLLM.models.chat_models.by_provider(default.provider).all.find { |candidate| candidate.id != default.id }
+      chat = #{agent}.create!
+      selected = ->(html) { html[/<option selected="selected" value="([^"]*)"/, 1] }
+      shown = selected.(#{controller}.render(:show, assigns: #{assigns}))
+      abort "the form selects \#{shown}" unless shown == "\#{default.provider}:\#{default.id}"
+
+      switches = []
+      chat.class.prepend(Module.new { define_method(:with_model) { |*args, **options| switches << args; super(*args, **options) } })
+      session = ActionDispatch::Integration::Session.new(Rails.application)
+      session.host! "localhost"
+      send_message = lambda do |model|
+        params = { #{message_key}: { content: "Hi", model: model }.compact }
+        session.post "#{chats_path}/\#{chat.id}/messages", params:, headers: { "Accept" => "text/vnd.turbo-stream.html" }
+        abort "the message answered \#{session.response.status}" unless session.response.status == 200
+        chat.reload
+      end
+
+      choice = "\#{other.provider}:\#{other.id}"
+      send_message.(choice)
+      abort "the chat uses \#{chat.model_id}" unless chat.model_id == other.id && chat.provider == other.provider
+      abort "the new form selects \#{selected.(session.response.body)}" unless selected.(session.response.body) == choice
+      shown = selected.(#{controller}.render(:show, assigns: #{assigns}))
+      abort "the page selects \#{shown}" unless shown == choice
+
+      send_message.(choice)
+      send_message.(nil)
+      abort "switched for an unchanged model: \#{switches}" unless switches == [ [ other.id ] ]
+
+      send_message.("")
+      abort "the default entry left \#{chat.model_id}" unless chat.model_id == default.id
     RUBY
   end
 
@@ -860,6 +903,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       view_options: {
         base_path: 'app/views',
         chats_target: 'new_message',
+        chat_views_path: 'chats',
+        chat: 'chat',
         form_partial_path: 'messages/form',
         model_index_collection: 'models',
         model_partial_path: 'models/model',
@@ -881,6 +926,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       chats_controller_expectations: [
         'class ChatsController',
         '@chat = ChatAgent.find(params[:id])',
+        "@message = Message.new\n    @chat_models = available_chat_models\n",
         '@chat = Chat.new',
         '@chat_models = available_chat_models',
         'prompt = params.dig(:chat, :prompt)',
@@ -898,8 +944,11 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         '@chat = ChatAgent.find(params[:chat_id])',
         'rescue_from RubyLLM::PendingToolCallsError',
         'params.dig(:message, :content).presence',
-        "if content || attachments\n      @chat.ask_later(content, with: attachments)\n      " \
-        "ChatResponseJob.perform_later(@chat.id)\n",
+        "@chat_models = available_chat_models\n    if content || attachments\n      switch_model\n      " \
+        "@chat.ask_later(content, with: attachments)\n      ChatResponseJob.perform_later(@chat.id)\n",
+        'selected = params.dig(:message, :model)',
+        'return if selected.nil? || selected == [ @chat.provider, @chat.model_id ].compact.join(":")',
+        '@chat.with_model(model, provider: provider)',
         'format.turbo_stream',
         '@message = @chat.messages.build',
         '@message.errors.add(:content, "can\'t be blank")',
@@ -924,7 +973,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       ],
       approval_flow: {
         agent: 'ChatAgent', agent_path: 'app/agents/chat_agent.rb', controller: 'ChatsController',
-        assigns: '{ chat: chat, message: Message.new }', chats_path: '/chats',
+        assigns: '{ chat: chat, message: Message.new, chat_models: RubyLLM.models.chat_models.all }',
+        chats_path: '/chats',
         job: 'ChatResponseJob', message_key: 'message', resume_job: 'ResumeInterruptedChatsJob'
       },
       resume_job_path: 'app/jobs/resume_interrupted_chats_job.rb',
@@ -972,6 +1022,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       view_options: {
         base_path: 'app/views/llm',
         chats_target: 'new_llm_message',
+        chat_views_path: 'llm/chats',
+        chat: 'llm_chat',
         form_partial_path: 'llm/messages/form',
         model_index_collection: 'llm_models',
         model_partial_path: 'llm/models/model',
@@ -995,6 +1047,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       chats_controller_expectations: [
         'class Llm::ChatsController',
         '@llm_chat = Llm::ChatAgent.find(params[:id])',
+        "@llm_message = Llm::Message.new\n    @chat_models = available_chat_models\n",
         '@llm_chat = Llm::Chat.new',
         '@chat_models = available_chat_models',
         'prompt = params.dig(:llm_chat, :prompt)',
@@ -1010,8 +1063,11 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         '@llm_chat = Llm::ChatAgent.find(params[:chat_id])',
         'rescue_from RubyLLM::PendingToolCallsError',
         'params.dig(:llm_message, :content).presence',
-        "if content || attachments\n      @llm_chat.ask_later(content, with: attachments)\n      " \
-        "LlmChatResponseJob.perform_later(@llm_chat.id)\n",
+        "@chat_models = available_chat_models\n    if content || attachments\n      switch_model\n      " \
+        "@llm_chat.ask_later(content, with: attachments)\n      LlmChatResponseJob.perform_later(@llm_chat.id)\n",
+        'selected = params.dig(:llm_message, :model)',
+        'return if selected.nil? || selected == [ @llm_chat.provider, @llm_chat.model_id ].compact.join(":")',
+        '@llm_chat.with_model(model, provider: provider)',
         'format.turbo_stream',
         '@llm_message = @llm_chat.llm_messages.build',
         '@llm_message.errors.add(:content, "can\'t be blank")',
@@ -1036,7 +1092,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       ],
       approval_flow: {
         agent: 'Llm::ChatAgent', agent_path: 'app/agents/llm/chat_agent.rb', controller: 'Llm::ChatsController',
-        assigns: '{ llm_chat: chat, llm_message: Llm::Message.new }', chats_path: '/llm/chats',
+        assigns: '{ llm_chat: chat, llm_message: Llm::Message.new, chat_models: RubyLLM.models.chat_models.all }',
+        chats_path: '/llm/chats',
         job: 'LlmChatResponseJob', message_key: 'llm_message', resume_job: 'ResumeInterruptedLlmChatsJob'
       },
       resume_job_path: 'app/jobs/resume_interrupted_llm_chats_job.rb',
@@ -1162,7 +1219,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
             test_file = File.read('test/system/chats_test.rb')
             expect(test_file).to include('include RubyLLM::TestHelper', 'click_on "Stop"',
                                          'ChatResponseJob.queue_adapter', 'with_extra_message_fields',
-                                         'select_tag "message[tone]"')
+                                         'select_tag "message[tone]"', 'switching the model mid-conversation',
+                                         'replies.map(&:model_id)')
             expect(File.exist?('test/application_system_test_case.rb')).to be(true)
           end
         end
@@ -1594,6 +1652,13 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       it 'shows Thinking and Stop while a reply runs, and queues the messages sent meanwhile' do
         within_test_app(app_path) do
           output, status = run_rails_runner_outside_executor(running_reply_script(**config[:approval_flow]))
+          expect(status.success?).to be(true), output
+        end
+      end
+
+      it 'switches the model of a chat when a message chooses another' do
+        within_test_app(app_path) do
+          output, status = run_rails_runner_outside_executor(model_switch_script(**config[:approval_flow]))
           expect(status.success?).to be(true), output
         end
       end

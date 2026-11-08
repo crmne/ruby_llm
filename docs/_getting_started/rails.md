@@ -173,7 +173,7 @@ To skip the wiring, generate a working chat interface with controllers, views, a
 bin/rails generate ruby_llm:chat_ui
 ```
 
-Visit `/chats` in your running application. The generated files belong to your app, so change them as you like.
+Visit `/chats` in your running application. The message form has the same model picker as the new-chat form, so you can switch a chat's model mid-conversation: the reply to that message and every reply after it use the new model. The generated files belong to your app, so change them as you like.
 
 ## Handling Errors in Jobs
 

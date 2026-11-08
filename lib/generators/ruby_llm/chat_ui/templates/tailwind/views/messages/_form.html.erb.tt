@@ -14,6 +14,8 @@
       </div>
     <%% end %>
 
+    <%%= render "<%= chat_model_name.underscore.pluralize %>/model_select", form: form, selected: [ <%= chat_variable_name %>.provider, <%= chat_variable_name %>.model_id ].compact.join(":") %>
+
     <div class="my-5">
       <%%= form.label :content, "Message" %>
       <%%= form.text_area :content, rows: 4, placeholder: "Message...", autofocus: true,

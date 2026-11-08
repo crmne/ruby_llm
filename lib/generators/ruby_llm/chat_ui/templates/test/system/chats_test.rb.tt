@@ -116,6 +116,28 @@ class <%= chat_controller_class_name.delete_suffix("Controller") %>Test < Applic
     ActiveSupport::Notifications.unsubscribe(subscriber)
   end
 
+  test "switching the model mid-conversation" do
+    stub_replies "Hello", "Hello again"
+    default = RubyLLM.models.find(RubyLLM.config.default_model)
+    model = RubyLLM.models.chat_models.by_provider(default.provider).all.find { |candidate| candidate.id != default.id }
+    choice = "#{model.provider}:#{model.id}"
+
+    start_chat
+    assert_text "Hello"
+    find_field("Select AI model:").find("option[value='#{choice}']").select_option
+    refresh_page
+    assert_equal choice, find_field("Select AI model:").value
+
+    fill_in "<%= message_variable_name %>[content]", with: "And now?"
+    click_on "Send <%= message_table_name.singularize.humanize.downcase %>"
+    assert_text "Hello again"
+    visit current_path
+
+    assert_equal choice, find_field("Select AI model:").value
+    replies = <%= chat_model_name %>.last.<%= message_table_name %>.where(role: "assistant")
+    assert_equal [ default.id, model.id ], replies.map(&:model_id)
+  end
+
   test "showing a sent message before its reply starts" do
     stub_replies "Hello"
     <%= chat_job_class_name %>.queue_adapter = :test
