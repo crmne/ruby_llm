@@ -12,6 +12,7 @@ module RubyLLM
     # again won't fix that.
     module Outages # :nodoc:
       BACKOFF = 60
+      PARTLY_RUN = 'The call may have partly run, so check before trying it again.'
 
       # The tool error of a call the server failed, which a chat gives the
       # model like any tool error.
@@ -36,9 +37,11 @@ module RubyLLM
         end
 
         # Yields to call one of +server+'s tools, and returns the tool error
-        # when the server fails the call, unless a handler is declared for
-        # it, or right away while the server sits out. Checking on a task
-        # still raises, since the task may still be running.
+        # when the server fails the call, or right away while the server
+        # sits out. A handler declared on the server's class or on MCP::Tool
+        # takes the error instead, but not one every Tool inherits, so a
+        # catch-all on RubyLLM::Tool keeps the outage handling. Checking on
+        # a task still raises, since the task may still be running.
         def calling(server, tool, input)
           return yield if input&.key?('task')
           return Failure[error: "The #{server.name} MCP server can't be reached right now"] if down?(server)
@@ -46,17 +49,19 @@ module RubyLLM
           begin
             yield
           rescue StandardError => e
-            raise if server.class.rescue_handler_for(e) || tool.class.rescue_handler_for(e)
+            raise if server.class.rescue_handler_for(e) || tool.class.rescue_handler_for(e, within: MCP::Tool)
 
-            failed_call(server, e) || raise
+            failed_call(server, tool, e) || raise
           end
         end
 
         # Returns the tool error for a call +server+ failed, or +nil+ for an
         # error the call should raise: one that is not the server's, or a
         # refusal such as missing credentials or an unknown endpoint. A
-        # server that is unavailable sits out until its backoff ends.
-        def failed_call(server, error)
+        # server that is unavailable sits out until its backoff ends. The
+        # model reads what the server wrote, even with redacted error
+        # messages, since it is the one deciding what to do next.
+        def failed_call(server, tool, error)
           return unless error.is_a?(Error) || (error.is_a?(RubyLLM::Error) && unavailable?(error))
           return if refused_status?(error.response&.status)
 
@@ -64,7 +69,7 @@ module RubyLLM
             report(server, error) if record(server, backoff(error))
             server.send(:forget_tools)
           end
-          Failure[error: "The #{server.name} MCP server failed: #{error.message}"]
+          Failure[error: failure_text(server, tool, error)]
         end
 
         def down?(server)
@@ -80,10 +85,31 @@ module RubyLLM
 
         private
 
+        # Names the error by its class and status, since a connection
+        # error's message can carry the server's host or URL.
         def report(server, error)
-          RubyLLM.logger.warn("MCP server #{server.name} is unreachable, so its tools sit out: #{error.message}")
+          status = error.response&.status
+          RubyLLM.logger.warn("MCP server #{server.name} is unreachable, so its tools sit out: " \
+                              "#{[error.class, ("HTTP #{status}" if status)].compact.join(', ')}")
           RubyLLM.instrument('mcp_unreachable.ruby_llm', { server: server.name, error: error.message },
                              config: server.send(:config))
+        end
+
+        # What the server wrote, or the error's own message when it wrote
+        # nothing, as an empty message would tell the model nothing.
+        def failure_text(server, tool, error)
+          detail = [error.provider_message, error.message].find { |candidate| candidate.to_s.strip != '' }
+          text = "The #{server.name} MCP server failed: #{detail}"
+          partly_run?(tool, error) ? "#{text.delete_suffix('.')}. #{PARTLY_RUN}" : text
+        end
+
+        # A call that broke off, or that the server failed with a 5xx
+        # status, may have done some of its work before it stopped, unless
+        # the tool says it has no effect or the same call again has none.
+        def partly_run?(tool, error)
+          return false if tool.read_only? || (tool.idempotent? && !tool.destructive?)
+
+          unavailable?(error) && error.response&.status != 429
         end
 
         def unavailable?(error)

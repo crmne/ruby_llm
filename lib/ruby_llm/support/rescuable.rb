@@ -26,12 +26,16 @@ module RubyLLM
           @rescue_handlers ||= []
         end
 
-        def rescue_handler_for(exception)
+        # Returns the handler for +exception+, searched from this class up
+        # through +within+, or through every ancestor without it.
+        def rescue_handler_for(exception, within: nil)
           rescue_handlers.reverse_each do |class_name, handler|
             exception_class = rescue_handler_class(class_name)
             return handler if exception_class && exception.is_a?(exception_class)
           end
-          superclass.rescue_handler_for(exception) if superclass.respond_to?(:rescue_handler_for)
+          return if equal?(within)
+
+          superclass.rescue_handler_for(exception, within:) if superclass.respond_to?(:rescue_handler_for)
         end
 
         def rescue_handlers?
