@@ -32,13 +32,29 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
     writer.write(png)
     writer.close
 
-    store.write('pipe', reader)
+    store.write('pipe.png', reader)
     File.open(image_path, 'rb') { |io| store.write('file', ChunkedReader.new(io)) }
 
     expect(store.list.map(&:digest)).to eq([Digest::SHA256.hexdigest(png)] * 2)
     expect(store.list.map(&:content_type)).to eq(['image/png'] * 2)
   ensure
     reader&.close
+  end
+
+  it 'uploads an IO at its start to Active Storage as it is' do
+    allow(ActiveStorage::Blob).to receive(:create_and_upload!).and_call_original
+
+    File.open(image_path, 'rb') do |io|
+      store.write('logo.png', io)
+
+      expect(ActiveStorage::Blob).to have_received(:create_and_upload!).with(hash_including(io:))
+    end
+  end
+
+  it 'keeps the content type it is given in Active Storage, without identifying the content' do
+    store.write('logo.txt', File.binread(image_path), content_type: 'text/plain')
+
+    expect(chat.ruby_llm_chat_files.sole.file.content_type).to eq('text/plain')
   end
 
   it 'keeps converted text in the row until the file changes' do
