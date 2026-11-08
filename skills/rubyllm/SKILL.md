@@ -30,7 +30,7 @@ bin/rails generate ruby_llm:tool Weather
 bin/rails generate ruby_llm:agent Researcher
 ```
 
-Each takes one line in `app/agents/chat_agent.rb`, which is what the generated UI runs: `code_execution`, `mcp LinearMcp` (`LinearMCP` in an app whose inflections make MCP an acronym), `tools WeatherTool`, and `file_store` when the model should keep files. Don't rebuild the transcript, don't keep a price table, and don't reopen or prepend onto RubyLLM's classes. If you think you need to, read the matching guide below first: `rails-persistence/`, `cost-and-usage-tracking/`, or the feature's own.
+Each takes one line in `app/agents/chat_agent.rb`, which is what the generated UI runs: `code_execution`, `mcp LinearMcp` (`LinearMCP` in an app whose inflections make MCP an acronym), `tools WeatherTool`, and `file_store` when the model should keep files. Edit that file rather than rewriting it: add `model`, `instructions`, and `tools` to it, and keep the lines the generator wrote, `caching` and `context_budget`, or one oversized tool result overflows every later request. Don't rebuild the transcript, don't keep a price table, and don't reopen or prepend onto RubyLLM's classes. If you think you need to, read the matching guide below first: `rails-persistence/`, `cost-and-usage-tracking/`, or the feature's own.
 
 The generators print only the files they create and, when one is needed, the next command. The rest of the setup is here. After `ruby_llm:install`, set the provider's API key in `config/initializers/ruby_llm.rb`. The chat UI needs Hotwire's `turbo-rails` and `stimulus-rails`, which a plain `rails new` has; install them as their guides describe for the app's JavaScript setup and package manager. In a jsbundling-rails app, install the packages the chat UI's controller imports before building, with the app's own package manager, such as `yarn add marked@18.0.14 dompurify@3.4.16` or the same packages with npm, pnpm, or Bun, and register the controller as `chat-message`, with `bin/rails stimulus:manifest:update` unless `app/javascript/controllers/index.js` is kept by hand, since the task rewrites it. Without Stimulus or that registration, replies show as plain text.
 
@@ -60,7 +60,7 @@ These are the signatures an application uses, for 2.2; on an older release, chec
 ```ruby
 RubyLLM.configure do |config|
   config.anthropic_api_key = ENV["ANTHROPIC_API_KEY"]
-  config.anthropic_api_base = ENV["ANTHROPIC_BASE_URL"]   # without /v1/messages; openai_api_base ends in /v1, gemini_api_base in its API version, /v1beta by default
+  config.anthropic_api_base = ENV["ANTHROPIC_BASE_URL"]   # pass the base URL as the provider documents it; RubyLLM accepts the common forms, no normalising needed
 end
 
 chat = RubyLLM.chat(model: "...")   # or Chat.create!(model: "...") with acts_as_chat
@@ -75,7 +75,7 @@ with_file_store with_code_execution with_skills with_provider_tools with_tool_op
 
 class ChatAgent < ApplicationAgent    # or RubyLLM::Agent
   model "..."; instructions "..."; tools WeatherTool; mcp LinearMcp; code_execution languages: [:python]
-  thinking effort: :medium   # follows model changes; the generated ChatAgent also sets context_budget and caching
+  thinking effort: :medium   # follows model changes; keep the generated ChatAgent's caching and context_budget lines
 end
 ChatAgent.create!(model: "...")   # a chat keeps its model; ChatAgent.find applies the agent and leaves the model alone
 chat.with_model("...")            # saved on a record, and the next request uses it with the same history

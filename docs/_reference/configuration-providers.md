@@ -358,7 +358,7 @@ These headers are optional and only needed for organization-specific billing or 
 
 Pass your Azure deployment name as `model:`. It can differ from the underlying model's name. Listing a model in the catalog does not mean your resource has a deployment for it.
 
-Set `azure_api_base` to your resource URL, deployment URL, or `/openai/v1` base. Use a deployment that supports the operation you call.
+Set `azure_api_base` to your resource URL, deployment URL, or `/openai/v1` base; [Accepted Base URL Forms](#accepted-base-url-forms) lists every shape. Use a deployment that supports the operation you call.
 
 When a deployment name differs from the model it deploys, declare it so RubyLLM uses that model's registry entry for pricing, limits, and capabilities:
 
@@ -531,20 +531,46 @@ end
 
 Blank strings are treated as unset, so environment variables can be wired directly without causing invalid URL errors.
 
-RubyLLM adds each request's path to the base URL. These providers' defaults stop in different places, some at the host and others after the API version, and the path RubyLLM adds starts from there:
+### Accepted Base URL Forms
 
-| Setting | Default | A chat request goes to |
-| --- | --- | --- |
-| `anthropic_api_base` | `https://api.anthropic.com` | `https://api.anthropic.com/v1/messages` |
-| `cohere_api_base` | `https://api.cohere.com` | `https://api.cohere.com/v2/chat` |
-| `deepseek_api_base` | `https://api.deepseek.com` | `https://api.deepseek.com/chat/completions` |
-| `gemini_api_base` | `https://generativelanguage.googleapis.com/v1beta` | `https://generativelanguage.googleapis.com/v1beta/models/MODEL:generateContent` |
-| `mistral_api_base` | `https://api.mistral.ai/v1` | `https://api.mistral.ai/v1/chat/completions` |
-| `openai_api_base` | `https://api.openai.com/v1` | `https://api.openai.com/v1/responses` |
-| `openrouter_api_base` | `https://openrouter.ai/api/v1` | `https://openrouter.ai/api/v1/chat/completions` |
-| `xai_api_base` | `https://api.x.ai/v1` | `https://api.x.ai/v1/responses` |
+Pass the base URL the way the provider's documentation or SDK writes it. RubyLLM accepts the common forms and turns them into the base it needs, so you don't normalize them yourself:
 
-A custom base URL takes the default's place, and RubyLLM adds the same path to it. For a gateway that strips its own prefix and forwards the rest, that means the prefix followed by whatever the default has after the host:
+* A trailing slash is always optional.
+* The host alone gets the provider's API version, such as `/v1`.
+* A full endpoint URL copied from the provider's docs, such as `.../v1/chat/completions`, loses its endpoint path and that endpoint's query string.
+* Any other path is your gateway's prefix and stays as you wrote it.
+
+| Setting | Base URL | Also accepts | Example you can paste |
+| --- | --- | --- | --- |
+| `openai_api_base` | `https://api.openai.com/v1` | the host alone; endpoint URLs ending in `/chat/completions`, `/completions`, `/responses`, or `/embeddings` | `https://api.openai.com/v1/chat/completions` |
+| `mistral_api_base` | `https://api.mistral.ai/v1` | the same forms as `openai_api_base` | `https://api.mistral.ai` |
+| `xai_api_base` | `https://api.x.ai/v1` | the same forms as `openai_api_base` | `https://api.x.ai/v1/responses` |
+| `moonshot_api_base` | `https://api.moonshot.ai/v1` | the same forms as `openai_api_base` | `https://api.moonshot.cn/v1/` |
+| `hetzner_api_base` | `https://inference.hetzner.com/v1` | the same forms as `openai_api_base` | `https://inference.hetzner.com` |
+| `meta_api_base` | `https://api.meta.ai/v1` | the same forms as `openai_api_base` | `https://api.meta.ai/v1/responses` |
+| `ollama_api_base` | `http://localhost:11434/v1` | the same forms as `openai_api_base` | `http://localhost:11434` |
+| `ollama_cloud_api_base` | `https://ollama.com/v1` | the same forms as `openai_api_base` | `https://ollama.com/v1/chat/completions` |
+| `gpustack_api_base` | `http://HOST/v1`, or `http://HOST/model/proxy/ROUTE_ID/v1` | the same forms as `openai_api_base` | `http://gpustack.local` |
+| `openrouter_api_base` | `https://openrouter.ai/api/v1` | the host alone, `/api`, and the same endpoint URLs as `openai_api_base` | `https://openrouter.ai/api/v1/chat/completions` |
+| `zai_api_base` | `https://api.z.ai/api/paas/v4` | the host alone, and the same endpoint URLs as `openai_api_base` | `https://open.bigmodel.cn/api/paas/v4/chat/completions` |
+| `deepseek_api_base` | `https://api.deepseek.com` | `/v1`, kept as given; endpoint URLs ending in `/chat/completions` | `https://api.deepseek.com/v1` |
+| `perplexity_api_base` | `https://api.perplexity.ai` | `/v1`, `/router/v1`, and endpoint URLs ending in `/chat/completions`, `/embeddings`, or `/agent` | `https://api.perplexity.ai/v1/agent` |
+| `anthropic_api_base` | `https://api.anthropic.com` | `/v1` and `/v1/messages` | `https://api.anthropic.com/v1/messages` |
+| `minimax_api_base` | `https://api.minimax.io/anthropic` | the host alone, `/anthropic/v1`, and `/anthropic/v1/messages` | `https://api.minimax.cn/anthropic/v1` |
+| `cohere_api_base` | `https://api.cohere.com` | `/v1`, `/v2`, `/v2/chat`, `/v2/embed`, and `/v2/rerank` | `https://api.cohere.com/v2/chat` |
+| `deepgram_api_base` | `https://api.deepgram.com` | `/v1`, `/v1/listen`, and `/v1/speak` | `https://api.deepgram.com/v1/listen` |
+| `elevenlabs_api_base` | `https://api.elevenlabs.io` | `/v1`, `/v1/speech-to-text`, and `/v1/text-to-speech/VOICE_ID` | `https://api.eu.residency.elevenlabs.io/v1` |
+| `typesafe_api_base` | `https://api.typesafe.ai` | `/v1` and `/v1/systemone` | `https://api.typesafe.ai/v1` |
+| `gemini_api_base` | `https://generativelanguage.googleapis.com/v1beta` | the host alone; `/v1`, kept as given; `/models` and `/models/MODEL:METHOD` endpoint URLs | `https://generativelanguage.googleapis.com/v1beta/models/{{ site.models.gemini_current }}:generateContent` |
+| `vertexai_api_base` | `https://LOCATION-aiplatform.googleapis.com/v1beta1` | the host alone; `/v1`, kept as given; endpoint URLs under `/projects/PROJECT/locations/LOCATION` | `https://us-central1-aiplatform.googleapis.com` |
+| `vertexai_ranking_api_base` | `https://discoveryengine.googleapis.com/v1` | the host alone; endpoint URLs under `/projects/PROJECT/locations/LOCATION` | `https://discoveryengine.googleapis.com/` |
+| `bedrock_api_base` | `https://bedrock-runtime.REGION.amazonaws.com` | `/model/MODEL/converse` and the other `/model/MODEL/...` endpoint URLs | `https://bedrock-runtime.us-east-1.amazonaws.com/model/MODEL/converse` |
+| `bedrock_mantle_api_base` | `https://bedrock-mantle.REGION.api.aws` | `/v1`, `/openai/v1`, and endpoint URLs ending in `/v1/chat/completions`, `/v1/responses`, or `/anthropic/v1/messages` | `https://bedrock-mantle.us-east-1.api.aws/v1` |
+| `azure_api_base` | `https://RESOURCE.openai.azure.com`, its `/openai/v1` base, or a deployment URL ending in `/openai/deployments/NAME` | `/models`, `/models/chat/completions`, `/openai`, endpoint URLs under `/openai/v1` or a deployment, and an `api-version` query | `https://acme.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2025-01-01` |
+
+RubyLLM raises `RubyLLM::ConfigurationError`, naming the forms it accepts, when it would have to guess: a URL without `http://` or `https://`, Gemini's or Bedrock's OpenAI-compatible endpoint under `/openai`, or an Azure URL ending in `/openai/deployments` without a deployment name. Use the `openai` provider with `openai_api_base` for an OpenAI-compatible endpoint.
+
+A gateway that strips its own prefix and forwards the rest takes the prefix followed by whatever the base URL has after the host:
 
 ```ruby
 RubyLLM.configure do |config|
@@ -554,7 +580,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-Through that gateway, `https://gateway.example.com/anthropic/v1` would forward `/v1/v1/messages`, a path Anthropic does not have. A gateway that routes another way, including one whose own prefix ends in `/v1`, needs whichever URL makes it forward the path in the table.
+Because RubyLLM removes the version and endpoint paths it recognizes from the end of a base URL, a gateway prefix that itself ends in one of them, such as `https://gateway.example.com/v1` for Anthropic, can't be expressed. Give the gateway a prefix of its own.
 
 ## Next Steps
 

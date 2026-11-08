@@ -27,7 +27,9 @@ module RubyLLM
       end
 
       def api_base
-        @config.gpustack_api_base
+        configured_api_base(:gpustack_api_base,
+                            example: 'http://localhost/v1',
+                            endpoints: Protocols::ChatCompletions::ENDPOINT_PATHS)
       end
 
       def backend_api_base # :nodoc:

@@ -48,7 +48,8 @@ module RubyLLM
       end
 
       def api_base
-        @config.openrouter_api_base || 'https://openrouter.ai/api/v1'
+        configured_api_base(:openrouter_api_base, 'https://openrouter.ai/api/v1',
+                            endpoints: Protocols::ChatCompletions::ENDPOINT_PATHS)
       end
 
       def batch_api_base

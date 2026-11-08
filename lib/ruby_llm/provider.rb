@@ -794,6 +794,42 @@ module RubyLLM
       model.respond_to?(:id) ? model.id : model
     end
 
+    # Reads a base URL setting and accepts the forms people paste: with or
+    # without a trailing slash, with or without the API version that ends
+    # +example+'s path, or a full endpoint URL whose tail matches
+    # +endpoints+. A path that is empty or a leading part of that version
+    # becomes the version; any other path is a gateway prefix and stays as
+    # given. A path matching +rejects+ names a different API, so it raises
+    # instead of being guessed at.
+    def configured_api_base(setting, default = nil, example: default, endpoints: nil, rejects: nil)
+      value = @config.public_send(setting) || default
+      version = URI.parse(example).path
+      forms = { setting:, value:, example:, version: }
+      uri = parse_api_base(**forms)
+      path = uri.path.sub(%r{/+\z}, '')
+      reject_api_base!(**forms) if rejects&.match?(path)
+      base_path = endpoints ? path.sub(endpoints, '') : path
+      uri.query = nil unless base_path == path
+      uri.path = "#{version}/".start_with?("#{base_path}/") ? version : base_path
+      uri.to_s
+    end
+
+    def parse_api_base(**forms)
+      uri = URI.parse(forms[:value].to_s)
+      return uri if %w[http https].include?(uri.scheme) && !uri.host.to_s.empty?
+
+      reject_api_base!(**forms)
+    rescue URI::InvalidURIError
+      reject_api_base!(**forms)
+    end
+
+    def reject_api_base!(setting:, value:, example:, version:)
+      version = " with or without #{version} and" unless version.empty?
+      raise ConfigurationError,
+            "#{setting} must be a base URL such as #{example}. RubyLLM accepts it#{version} with or without a " \
+            "trailing slash, or a full endpoint URL from the provider's documentation. Got #{value.inspect}."
+    end
+
     def account_digest(*parts)
       Digest::SHA256.hexdigest(parts.join("\0"))
     end

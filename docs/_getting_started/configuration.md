@@ -36,6 +36,8 @@ That's all most applications need. RubyLLM chooses default models, timeouts, and
 
 Configure only the providers you use. RubyLLM doesn't ask for the others, and raises `RubyLLM::ConfigurationError` when you use a provider without its required credentials. See [Provider Setup]({% link _reference/configuration-providers.md %}) for every provider's settings, including regions, projects, Bedrock and Vertex AI authentication, and OpenAI-compatible endpoints.
 
+To send a provider's requests through a gateway or another endpoint, set its `*_api_base` setting to the URL the way the provider's documentation writes it, with or without the API version or a trailing slash, or a full endpoint URL. [Accepted Base URL Forms]({% link _reference/configuration-providers.md %}#accepted-base-url-forms) lists every provider's forms in one table.
+
 ## Configuring RubyLLM in Rails
 
 In Rails, the install generator writes `config/initializers/ruby_llm.rb`. Read keys from your credentials and send RubyLLM's logs to the Rails log:

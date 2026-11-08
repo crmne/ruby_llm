@@ -14,10 +14,16 @@ RSpec.describe RubyLLM::Providers::Azure::ChatCompletions do
   end
 
   describe '#azure_endpoint' do
-    it 'posts straight to a base that already names the chat endpoint' do
+    it 'treats a chat endpoint URL as its deployment base' do
       protocol = protocol_for(
         'https://res.openai.azure.com/openai/deployments/gpt/chat/completions?api-version=2025-01-01'
       )
+
+      expect(protocol.azure_endpoint(:chat)).to eq('chat/completions?api-version=2025-01-01')
+    end
+
+    it 'posts straight to a chat endpoint outside the paths it knows' do
+      protocol = protocol_for('https://grok.eastus2.models.ai.azure.com/chat/completions')
 
       expect(protocol.azure_endpoint(:chat)).to eq('')
     end

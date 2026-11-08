@@ -17,7 +17,8 @@ module RubyLLM
       protocol :agent_responses, Protocols::Perplexity::Agent
 
       def api_base
-        @config.perplexity_api_base || 'https://api.perplexity.ai'
+        configured_api_base(:perplexity_api_base, 'https://api.perplexity.ai',
+                            endpoints: %r{(?:/router)?(?:/v1)?(?:/chat/completions|/embeddings|/agent)?\z})
       end
 
       # Chat runs on the Agent API. Embeddings and the model listing stay on
@@ -27,11 +28,11 @@ module RubyLLM
       end
 
       def agent_url # :nodoc:
-        "#{api_base.delete_suffix('/').delete_suffix('/v1')}/v1/agent"
+        "#{api_base}/v1/agent"
       end
 
       def router_url(operation) # :nodoc:
-        "#{api_base.delete_suffix('/').delete_suffix('/router/v1')}/router/v1/#{operation}"
+        "#{api_base}/router/v1/#{operation}"
       end
 
       def headers

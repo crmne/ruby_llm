@@ -9,7 +9,7 @@ module RubyLLM
       protocol :files, Protocols::XAI::Files
 
       def api_base
-        @config.xai_api_base || 'https://api.x.ai/v1'
+        configured_api_base(:xai_api_base, 'https://api.x.ai/v1', endpoints: Protocols::ChatCompletions::ENDPOINT_PATHS)
       end
 
       def headers

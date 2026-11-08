@@ -13,6 +13,12 @@ module RubyLLM
       # RubyLLM names it after the API.
       FAST_TRANSCRIPTION_MODEL = 'fast-transcription'
 
+      EXAMPLE_API_BASE = 'https://RESOURCE.openai.azure.com'
+      OPENAI_ENDPOINT_PATHS =
+        %r{(/openai/(?:v1|deployments/[^/]+))/(?:(?:chat/)?completions|embeddings|responses|images/\w+|audio/\w+)\z}
+      MODELS_ENDPOINT_PATHS = %r{\A/models(?:/chat/completions|/embeddings)?\z}
+      private_constant :EXAMPLE_API_BASE, :OPENAI_ENDPOINT_PATHS, :MODELS_ENDPOINT_PATHS
+
       protocol :chat_completions, Azure::ChatCompletions, batches: Azure::ChatCompletions::Batches
       protocol :responses, Azure::Responses
       protocol :files, Protocols::Azure::Files
@@ -25,7 +31,8 @@ module RubyLLM
       end
 
       def api_base
-        @config.azure_api_base
+        parts = azure_base_parts
+        parts[:query] ? "#{parts[:path_base]}?#{parts[:query]}" : parts[:path_base]
       end
 
       # Files belong to the Azure resource, whichever key or Entra ID token
@@ -117,9 +124,13 @@ module RubyLLM
 
       def azure_base_parts
         @azure_base_parts ||= begin
-          raw_base = api_base.to_s.sub(%r{/+\z}, '')
-          version = raw_base[/[?&]api-version=([^&]+)/i, 1]
-          path_base = raw_base.sub(/\?.*\z/, '')
+          uri = parse_api_base(setting: :azure_api_base, value: @config.azure_api_base, example: EXAMPLE_API_BASE,
+                               version: '')
+          query = uri.query
+          version = query&.[](/(?:\A|&)api-version=([^&]+)/i, 1)
+          uri.path = azure_path(uri.path)
+          uri.query = nil
+          path_base = uri.to_s
 
           mode = if path_base.include?('/chat/completions')
                    :chat_endpoint
@@ -135,7 +146,8 @@ module RubyLLM
             path_base: path_base,
             root: azure_host_root(path_base),
             mode: mode,
-            version: version
+            version: version,
+            query: query
           }
         end
       end
@@ -194,6 +206,18 @@ module RubyLLM
       end
 
       private
+
+      def azure_path(path)
+        path = path.sub(%r{/+\z}, '')
+        if path.end_with?('/openai/deployments')
+          raise ConfigurationError,
+                "azure_api_base names no deployment. Use the resource URL (#{EXAMPLE_API_BASE}), its /openai/v1 " \
+                "base, or a deployment URL ending in /openai/deployments/NAME. Got #{@config.azure_api_base.inspect}."
+        end
+
+        path = path.sub(OPENAI_ENDPOINT_PATHS, '\\1').sub(MODELS_ENDPOINT_PATHS, '')
+        path.end_with?('/openai') ? "#{path}/v1" : path
+      end
 
       def azure_host_root(base_without_query)
         base_without_query.sub(%r{/(models|openai)/.*\z}, '').sub(%r{/+\z}, '')
