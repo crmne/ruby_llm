@@ -185,7 +185,10 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     it 'releases the claim of a finished run when stopping its heartbeat fails' do
       chat = asked
       job = job_for(chat)
-      allow(job).to receive(:stop_claim_heartbeat).and_raise(ThreadError, 'stuck')
+      allow(job).to receive(:stop_claim_heartbeat).and_wrap_original do |stop|
+        stop.call
+        raise ThreadError, 'stuck'
+      end
 
       expect { job.complete }.to raise_error(ThreadError)
       expect(row(chat)).to have_attributes(claim_token: nil, claimed_until: nil)
