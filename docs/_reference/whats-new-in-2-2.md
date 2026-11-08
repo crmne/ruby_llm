@@ -19,7 +19,7 @@ After reading this guide, you will know:
 * How to measure each run.
 * How sandboxes decide what code can do, and how the model asks for more.
 * How skills teach the model your workflows, and run their scripts in the sandbox.
-* How persisted chats now run in one process at a time.
+* How persisted chats now run in one process at a time, and resume after a crash or a deploy.
 * How to queue messages while a chat runs, and attribute them as they join.
 * How a tool asks the person who runs the chat, and how approvals became questions.
 * How to keep a tool that shares state from running alongside others.
@@ -194,7 +194,15 @@ chat.running? # => true while another process runs the chat
 
 A run that goes `config.max_run_time` without progress, ten minutes by default, counts as crashed, and so does a tool call that runs longer. A tool whose work takes longer can [pause its call]({% link _tools/tool-execution.md %}#long-running-tools).
 
-If a process dies, its claims expire within a minute, on any number of servers, and another process picks the chat up. See [Agents in Background Jobs]({% link _advanced/durable-agents.md %}#one-process-at-a-time).
+If a process dies, its claims expire within a minute, on any number of servers, and the next job picks the chat up. See [Agents in Background Jobs]({% link _advanced/durable-agents.md %}#one-process-at-a-time).
+
+No job backend runs a reply that a crash or a deploy cut off again by itself, so `Chat.interrupted` returns the chats whose turn stopped with work left and that no process holds, and the chat UI generator writes `ResumeInterruptedChatsJob`, which answers them every minute through Solid Queue and once when the server boots:
+
+```ruby
+Chat.interrupted.find_each { |chat| ChatResponseJob.perform_later(chat.id) }
+```
+
+See [Resuming a Crashed Run]({% link _advanced/durable-agents.md %}#resuming-a-crashed-run).
 
 ## Queued Messages
 

@@ -552,6 +552,69 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     RUBY
   end
 
+  def killed_reply_script(agent:, marker:, **)
+    <<~RUBY
+      require "ruby_llm/test_helper"
+      include RubyLLM::TestHelper
+      stub_replies (1..400).map { |word| "word\#{word}" }.join(" "), interval: 0.05
+      chat = #{agent}.create!
+      chat.ask("Hello") { File.write("#{marker}", chat.id.to_s) unless File.exist?("#{marker}") }
+    RUBY
+  end
+
+  def boot_again_script(agent:, job:, resume_job:, chat_id:, **)
+    model = agent.delete_suffix('Agent')
+    <<~RUBY
+      require "ruby_llm/test_helper"
+      require "active_support/testing/time_helpers"
+      include RubyLLM::TestHelper
+      include ActiveSupport::Testing::TimeHelpers
+      ActiveJob::Base.queue_adapter = :test
+      abort "the killed reply isn't held until its claim expires" unless #{model}.find(#{chat_id}).running?
+      abort "a held chat counts as interrupted" if #{model}.interrupted.exists?(#{chat_id})
+
+      Rails.application.load_server
+      jobs = ActiveJob::Base.queue_adapter.enqueued_jobs
+      boot = jobs.find { |enqueued| enqueued["job_class"] == "#{resume_job}" }
+      abort "booting didn't schedule #{resume_job}: \#{jobs}" unless boot
+      at = Time.zone.parse(boot["scheduled_at"])
+      abort "the boot sweep at \#{at} runs before the claims expire" unless at > 50.seconds.from_now
+
+      stub_replies "Picked up again"
+      travel_to(at + 1.second) do
+        ActiveJob::Base.execute(boot)
+        reply = jobs.find { |enqueued| enqueued["job_class"] == "#{job}" }
+        abort "#{resume_job} didn't queue the reply: \#{jobs}" unless reply&.dig("arguments") == [ #{chat_id} ]
+        ActiveJob::Base.execute(reply)
+      end
+      answer = #{agent}.find(#{chat_id}).to_llm.messages.last.content
+      abort "the reply didn't complete: \#{answer}" unless answer == "Picked up again"
+      abort "a complete chat counts as interrupted" if #{model}.interrupted.exists?(#{chat_id})
+    RUBY
+  end
+
+  def spawn_rails_runner(script, log)
+    env = {
+      'BUNDLE_GEMFILE' => ENV['BUNDLE_GEMFILE'] || Bundler.default_gemfile.to_s,
+      'BUNDLE_IGNORE_CONFIG' => '1',
+      'OPENAI_API_KEY' => ENV.fetch('OPENAI_API_KEY', 'test')
+    }
+    Process.spawn(env, 'bundle', 'exec', 'rails', 'runner', script, out: log, err: log)
+  end
+
+  def kill_mid_reply(agent_options)
+    marker = File.expand_path('tmp/killed_reply')
+    FileUtils.rm_f(marker)
+    log = File.expand_path('tmp/killed_reply.log')
+    pid = spawn_rails_runner(killed_reply_script(**agent_options, marker:), log)
+    deadline = Time.now + 60
+    sleep 0.1 until File.exist?(marker) || Time.now > deadline
+    Process.kill('KILL', pid)
+    Process.wait(pid)
+    expect(File.exist?(marker)).to be(true), File.read(log)
+    File.read(marker).to_i
+  end
+
   def expect_chat_script_to_succeed(script)
     success, output = run_rails_runner(script)
     expect(success).to be(true), output
@@ -574,6 +637,102 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
 
     it 'finds the message model there' do
       expect { generator.check_model_exists }.not_to raise_error
+    end
+
+    describe 'scheduling the resume job' do
+      def recurring_path = File.join(destination, 'config/recurring.yml')
+
+      def cleanup
+        "  clear_jobs:\n    command: \"SolidQueue::Job.clear_finished_in_batches\"\n    schedule: every hour\n"
+      end
+
+      before do
+        FileUtils.mkdir_p(File.join(destination, 'config/environments'))
+        %w[development production test].each do |environment|
+          File.write(File.join(destination, "config/environments/#{environment}.rb"), '')
+        end
+      end
+
+      def schedule(source, times: 2)
+        File.write(recurring_path, source)
+        times.times { generator.schedule_resume_job }
+        ActiveSupport::ConfigurationFile.parse(recurring_path)
+      end
+
+      def resume_tasks(tasks)
+        tasks.values.select { |task| task.is_a?(Hash) && task['class'] == 'ResumeInterruptedChatsJob' }
+      end
+
+      it 'adds it once under production, as Rails writes the file' do
+        config = schedule("# examples:\n#   periodic_cleanup:\n\nproduction:\n#{cleanup}")
+
+        expect(resume_tasks(config['production'])).to eq([{ 'class' => 'ResumeInterruptedChatsJob',
+                                                            'schedule' => 'every minute' }])
+        expect(config['production']).to include('clear_jobs')
+      end
+
+      it 'adds it under headers with a comment or an anchor' do
+        config = schedule("development: &shared\n#{cleanup}\nproduction: # servers\n#{cleanup}")
+
+        expect(%w[development production].map { |environment| resume_tasks(config[environment]).size }).to eq([1, 1])
+      end
+
+      it 'adds it to a production that aliases another environment, keeping what it had' do
+        config = schedule("development: &shared\n#{cleanup}\nproduction: *shared\n")
+
+        expect(resume_tasks(config['production']).size).to eq(1)
+        expect(config['production']).to include('clear_jobs')
+        expect(resume_tasks(config['development']).size).to eq(1)
+      end
+
+      it 'adds production to a file that only names development' do
+        config = schedule("development:\n#{cleanup}")
+
+        expect(%w[development production].map { |environment| resume_tasks(config[environment]).size }).to eq([1, 1])
+      end
+
+      it 'adds it at the top of a file without environments' do
+        config = schedule(cleanup.gsub(/^  /, ''))
+
+        expect(resume_tasks(config).size).to eq(1)
+        expect(config).to include('clear_jobs')
+      end
+
+      it 'adds it under the environment, not a comment or key that ends with its name' do
+        config = schedule("# production:\nother_production:\n#{cleanup}\nproduction:\n#{cleanup}")
+
+        expect(resume_tasks(config['production']).size).to eq(1)
+        expect(resume_tasks(config['other_production'])).to be_empty
+      end
+
+      it 'leaves a file it cannot read alone, and says so' do
+        source = "production:\n  clear_jobs: [unclosed\n"
+        File.write(recurring_path, source)
+        allow(generator).to receive(:say_status).and_call_original
+
+        generator.schedule_resume_job
+
+        expect(File.read(recurring_path)).to eq(source)
+        expect(generator).to have_received(:say_status).with(:skip, /add ResumeInterruptedChatsJob/, :yellow)
+      end
+
+      it 'removes it on destroy' do
+        source = "development: &shared\n#{cleanup}\nproduction: # servers\n#{cleanup}"
+        schedule(source, times: 1)
+        generator.behavior = :revoke
+        generator.schedule_resume_job
+
+        expect(File.read(recurring_path)).to eq(source)
+      end
+    end
+
+    it 'warns when config.ru never loads the server hooks the boot run needs' do
+      File.write(File.join(destination, 'config.ru'), "run Rails.application\n")
+      allow(generator).to receive(:say_status).and_call_original
+
+      generator.resume_on_boot
+
+      expect(generator).to have_received(:say_status).with(:warn, /load_server/, :yellow)
     end
 
     it 'adds available_chat_models to the application controller there' do
@@ -687,6 +846,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     'with default model names' => {
       app_name: 'test_app_default',
       template_name: 'default_models_template.rb',
+      generator_args: [],
       controller_example: 'creates controller files with default names',
       controller_paths: %w[
         app/controllers/chats_controller.rb
@@ -765,8 +925,15 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       approval_flow: {
         agent: 'ChatAgent', agent_path: 'app/agents/chat_agent.rb', controller: 'ChatsController',
         assigns: '{ chat: chat, message: Message.new }', chats_path: '/chats',
-        job: 'ChatResponseJob', message_key: 'message'
+        job: 'ChatResponseJob', message_key: 'message', resume_job: 'ResumeInterruptedChatsJob'
       },
+      resume_job_path: 'app/jobs/resume_interrupted_chats_job.rb',
+      resume_job_source: <<~RUBY,
+        class ResumeInterruptedChatsJob < ApplicationJob
+          def perform = Chat.interrupted.find_each { |chat| ChatResponseJob.perform_later(chat.id) }
+        end
+      RUBY
+      resume_boot_path: 'config/initializers/resume_interrupted_chats.rb',
       models_controller_path: 'app/controllers/models_controller.rb',
       models_controller_expectations: [
         'class ModelsController',
@@ -791,6 +958,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     'with namespaced model names' => {
       app_name: 'test_app_namespaced',
       template_name: 'namespaced_models_template.rb',
+      generator_args: %w[chat:Llm::Chat message:Llm::Message],
       controller_example: 'creates controller files with namespaced paths',
       controller_paths: %w[
         app/controllers/llm/chats_controller.rb
@@ -869,8 +1037,15 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       approval_flow: {
         agent: 'Llm::ChatAgent', agent_path: 'app/agents/llm/chat_agent.rb', controller: 'Llm::ChatsController',
         assigns: '{ llm_chat: chat, llm_message: Llm::Message.new }', chats_path: '/llm/chats',
-        job: 'LlmChatResponseJob', message_key: 'llm_message'
+        job: 'LlmChatResponseJob', message_key: 'llm_message', resume_job: 'ResumeInterruptedLlmChatsJob'
       },
+      resume_job_path: 'app/jobs/resume_interrupted_llm_chats_job.rb',
+      resume_job_source: <<~RUBY,
+        class ResumeInterruptedLlmChatsJob < ApplicationJob
+          def perform = Llm::Chat.interrupted.find_each { |llm_chat| LlmChatResponseJob.perform_later(llm_chat.id) }
+        end
+      RUBY
+      resume_boot_path: 'config/initializers/resume_interrupted_llm_chats.rb',
       models_controller_path: 'app/controllers/llm/models_controller.rb',
       models_controller_expectations: [
         'class Llm::ModelsController',
@@ -1217,6 +1392,64 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       it config[:job_file_example] do
         within_test_app(app_path) do
           expect(File.exist?(config[:job_file_path])).to be true
+        end
+      end
+
+      it 'writes a job that resumes interrupted chats, and runs it at boot' do
+        within_test_app(app_path) do
+          resume_job = config[:approval_flow][:resume_job]
+          expect(File.read(config[:resume_job_path])).to eq(config[:resume_job_source])
+          expect(File.read(config[:resume_boot_path]))
+            .to eq("Rails.application.server { #{resume_job}.set(wait: 1.minute).perform_later }\n")
+        end
+      end
+
+      it 'schedules the job every minute in each Solid Queue environment, once' do
+        within_test_app(app_path) do
+          Dir.mktmpdir do |destination|
+            FileUtils.cp_r("#{app_path}/.", destination)
+            within_test_app(destination) do
+              File.write('config/recurring.yml', <<~YAML)
+                # examples:
+                #   periodic_cleanup:
+                #     class: CleanSoftDeletedRecordsJob
+                #     schedule: every hour
+
+                development: &development
+                  clear_development_jobs:
+                    command: "SolidQueue::Job.clear_finished_in_batches"
+                    schedule: every day
+                  #{config[:resume_job_path].delete_prefix('app/jobs/').delete_suffix('_job.rb')}:
+                    class: #{config[:approval_flow][:resume_job]}
+                    schedule: every minute
+
+                production: # what runs on the servers
+                  clear_solid_queue_finished_jobs:
+                    command: "SolidQueue::Job.clear_finished_in_batches(sleep_between_batches: 0.3)"
+                    schedule: every hour at minute 12
+              YAML
+              2.times do
+                output, status = run_rails_generate('ruby_llm:chat_ui', *config[:generator_args], '--skip',
+                                                    chdir: destination)
+                expect(status.success?).to be(true), output
+              end
+
+              resume_job = config[:approval_flow][:resume_job]
+              recurring = YAML.load_file('config/recurring.yml')
+              %w[development production].each do |environment|
+                expect(recurring[environment].values).to include('class' => resume_job, 'schedule' => 'every minute')
+              end
+              expect(File.read('config/recurring.yml').scan("class: #{resume_job}").size).to eq(2)
+            end
+          end
+        end
+      end
+
+      it 'completes a reply killed mid-turn once the app boots again' do
+        within_test_app(app_path) do
+          chat_id = kill_mid_reply(config[:approval_flow])
+          output, status = run_rails_runner_outside_executor(boot_again_script(**config[:approval_flow], chat_id:))
+          expect(status.success?).to be(true), output
         end
       end
 

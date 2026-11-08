@@ -13,6 +13,7 @@ module RubyLLM
 
       source_root File.expand_path('templates', __dir__)
 
+      RECURRING_PATH = 'config/recurring.yml'
       CONTROLLER = File.expand_path('../../../../app/assets/javascripts/ruby_llm/chat_message_controller.js', __dir__)
 
       namespace 'ruby_llm:chat_ui'
@@ -128,6 +129,33 @@ module RubyLLM
 
       def create_jobs
         template 'jobs/chat_response_job.rb', "app/jobs/#{variable_name_for(chat_model_name)}_response_job.rb"
+        template 'jobs/resume_interrupted_chats_job.rb', "app/jobs/#{resume_job_class_name.underscore}.rb"
+      end
+
+      # Solid Queue reads the key of the running environment, or the whole
+      # file when it has none, so the job goes under every environment the
+      # file names and production, and at the top of a file without any.
+      def schedule_resume_job
+        return unless app_file?(RECURRING_PATH)
+        return unschedule_resume_job if behavior == :revoke
+        return say_status(:skip, "add #{resume_job_class_name} to #{RECURRING_PATH}", :yellow) unless recurring_config
+
+        environments = recurring_environments
+        if environments.empty?
+          append_to_file RECURRING_PATH, "\n#{recurring_task}" unless scheduled_in?(recurring_config)
+        else
+          (environments | ['production']).each { |environment| schedule_in(environment) }
+        end
+      end
+
+      def resume_on_boot
+        initializer "#{resume_job_class_name.delete_suffix('Job').underscore}.rb",
+                    "Rails.application.server { #{resume_job_class_name}.set(wait: 1.minute).perform_later }\n"
+        return unless behavior == :invoke && app_file?('config.ru')
+        return if File.read(File.join(destination_root, 'config.ru')).include?('load_server')
+
+        say_status :warn, "add Rails.application.load_server to config.ru, so #{resume_job_class_name} runs at boot",
+                   :yellow
       end
 
       def create_system_test
@@ -269,6 +297,55 @@ module RubyLLM
       def queued_message_controller_path = queued_message_model_name.underscore.pluralize
       def queued_message_controller_class_name = controller_class_name_for(queued_message_model_name)
       def chat_agent_class_name = "#{chat_model_name}Agent"
+      def resume_job_class_name = "ResumeInterrupted#{chat_variable_name.camelize.pluralize}Job"
+
+      def recurring_task
+        <<~YAML
+          #{resume_job_class_name.delete_suffix('Job').underscore}:
+            class: #{resume_job_class_name}
+            schedule: every minute
+        YAML
+      end
+
+      def schedule_in(environment)
+        return if scheduled_in?(recurring_config[environment])
+
+        source = File.read(File.join(destination_root, RECURRING_PATH))
+        name = Regexp.escape(environment)
+        aliased = /^#{name}:[ \t]*(\*[\w-]+)[ \t]*(?:#.*)?\n/
+        header = /^#{name}:[ \t]*(?:&[\w-]+[ \t]*)?(?:#.*)?\n/
+        if (target = source[aliased, 1])
+          gsub_file RECURRING_PATH, aliased, "#{environment}:\n  <<: #{target}\n#{recurring_task.indent(2)}"
+        elsif source.match?(header)
+          inject_into_file RECURRING_PATH, recurring_task.indent(2), after: header, force: true
+        elsif recurring_config.key?(environment)
+          say_status :skip, "add #{resume_job_class_name} to #{environment} in #{RECURRING_PATH}", :yellow
+        else
+          append_to_file RECURRING_PATH, "\n#{environment}:\n#{recurring_task.indent(2)}"
+        end
+      end
+
+      def unschedule_resume_job
+        [recurring_task.indent(2), recurring_task].each do |task|
+          gsub_file RECURRING_PATH, task, '', force: true
+        end
+      end
+
+      def scheduled_in?(tasks)
+        tasks.is_a?(Hash) && tasks.values.any? { |task| task.is_a?(Hash) && task['class'] == resume_job_class_name }
+      end
+
+      def recurring_config
+        config = ActiveSupport::ConfigurationFile.parse(File.join(destination_root, RECURRING_PATH))
+        config.is_a?(Hash) ? config : {}
+      rescue StandardError
+        nil
+      end
+
+      def recurring_environments
+        environments = Dir[File.join(destination_root, 'config/environments/*.rb')].map { File.basename(_1, '.rb') }
+        environments & recurring_config.keys
+      end
 
       def application_agent_chat_class?
         File.read(File.join(destination_root, APPLICATION_AGENT_PATH))
