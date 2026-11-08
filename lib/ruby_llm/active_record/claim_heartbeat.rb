@@ -9,9 +9,9 @@ module RubyLLM
     # between beats.
     #
     # A beat that fails is skipped, and the next one tries again. A lease
-    # spans at least four intervals and a busy SQLite beat waits at most a
-    # quarter of one, so a claim outlasts two skipped beats in a row; the
-    # second one logs a warning.
+    # spans at least four intervals, so a claim outlasts a skipped beat,
+    # but after two in a row it may lapse before the next one lands, so
+    # the second logs a warning.
     class ClaimHeartbeat # :nodoc:
       def initialize(models, interval, &beat)
         @models = models
