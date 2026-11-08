@@ -2899,8 +2899,10 @@ module RubyLLM
     def check_tool_choice(choice, given = choice)
       return if choice.nil? || TOOL_CHOICE_MODES.include?(choice) || tools.key?(choice)
 
-      raise InvalidToolChoiceError,
-            "Invalid tool choice: #{given}. Valid choices are: #{(TOOL_CHOICE_MODES + tools.keys).join(', ')}"
+      message = "Invalid tool choice: #{given}. Valid choices are: #{(TOOL_CHOICE_MODES + tools.keys).join(', ')}"
+      unreachable = mcp.unreachable
+      message += ". These MCP servers can't be reached right now: #{unreachable.join(', ')}" if unreachable.any?
+      raise InvalidToolChoiceError, message
     end
 
     def apply_tool_concurrency(value)

@@ -176,6 +176,16 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  it 'says the server is down when the tool choice names one of its tools' do
+    chat.with_mcp(RubyLLM.mcp(url: answering('503 Service Unavailable'), name: 'linear'))
+        .with_tool_options(choice: :search_issues)
+
+    expect { chat.ask('Find the bug') }.to raise_error(
+      RubyLLM::InvalidToolChoiceError, /search_issues.*can't be reached right now: linear\z/
+    )
+    expect(requests).to be_empty
+  end
+
   it 'keeps a test server answering after a request it cut off' do
     uri = URI(answering('503 Service Unavailable'))
     TCPSocket.open(uri.host, uri.port) { |socket| socket.write("POST /mcp HTTP/1.1\r\n") }

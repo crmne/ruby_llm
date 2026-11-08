@@ -81,6 +81,22 @@ RSpec.describe RubyLLM::Agent do
     expect(requests).to be_empty
   end
 
+  it 'says the server is down when the tool choice names one of its tools' do
+    server = down
+    chooser = Class.new(described_class) do
+      model model_for(:openai, :temperature)
+      mcp server
+      tool_options choice: :search_issues
+    end
+    chat = chooser.new
+    allow(chat.provider).to receive(:complete)
+
+    expect { chat.ask('Find the bug') }.to raise_error(
+      RubyLLM::InvalidToolChoiceError, /search_issues.*can't be reached right now: linear/
+    )
+    expect(chat.provider).not_to have_received(:complete)
+  end
+
   it 'shows and settles the questions of a chat whose MCP servers are down' do
     chat = parked_chat
     first, second = agent.find(chat.id).pending_questions.map(&:id)
