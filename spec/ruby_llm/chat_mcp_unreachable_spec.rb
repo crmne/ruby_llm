@@ -26,10 +26,33 @@ RSpec.describe RubyLLM::Chat do
       end
     end
   end
+  let(:answering_servers) { [] }
 
   def closed_port
     server = TCPServer.new('127.0.0.1', 0)
     server.addr[1].tap { server.close }
+  end
+
+  def answering(status, headers = {}, body = '{}')
+    server = TCPServer.new('127.0.0.1', 0)
+    answering_servers << server
+    answering_servers << Thread.new do
+      loop do
+        socket = server.accept
+        head = +''
+        head << socket.gets until head.end_with?("\r\n\r\n")
+        socket.read(head[/content-length: (\d+)/i, 1].to_i)
+        fields = headers.merge('Content-Type' => 'application/json', 'Content-Length' => body.bytesize,
+                               'Connection' => 'close').map { |name, value| "#{name}: #{value}\r\n" }.join
+        socket.write("HTTP/1.1 #{status}\r\n#{fields}\r\n#{body}")
+        socket.close
+      end
+    end
+    "http://127.0.0.1:#{server.addr[1]}/mcp"
+  end
+
+  after do
+    answering_servers.reverse_each { |server| server.is_a?(Thread) ? server.kill.join : server.close }
   end
 
   def elapsed
@@ -110,6 +133,90 @@ RSpec.describe RubyLLM::Chat do
     it_behaves_like 'a server the chat goes on without'
   end
 
+  context 'when the server answers that it is unavailable' do
+    let(:url) { answering('503 Service Unavailable') }
+
+    it_behaves_like 'a server the chat goes on without'
+  end
+
+  context 'when the server answers with an internal error' do
+    let(:url) do
+      answering('500 Internal Server Error', {}, '{"jsonrpc":"2.0","id":1,"error":{"code":-32603,"message":"boom"}}')
+    end
+
+    it_behaves_like 'a server the chat goes on without'
+  end
+
+  context 'when the server limits the rate of requests' do
+    let(:url) { answering('429 Too Many Requests') }
+
+    it_behaves_like 'a server the chat goes on without'
+  end
+
+  context "when the server's process exits" do
+    it 'answers without its tools and tells the model' do
+      chat.with_mcp(RubyLLM.mcp(command: [RbConfig.ruby, '-e', 'exit 1'], name: 'files'))
+
+      expect(chat.ask('Hi').content).to eq('Done')
+
+      expect(requests.first[:tools]).to be_empty
+      note = requests.first[:messages].find { |message| message.role == :system }
+      expect(note.content).to include("can't be reached").and include('files')
+    end
+
+    it 'still raises from a direct call to the server' do
+      server = RubyLLM.mcp(command: [RbConfig.ruby, '-e', 'exit 1'], name: 'files')
+
+      expect { server.tools }.to raise_error(RubyLLM::MCP::Error, /exited/)
+    end
+  end
+
+  describe 'Retry-After' do
+    before { stub_const('RubyLLM::MCP::Outages::BACKOFF', 0.05) }
+
+    def down_after_backoff?(url)
+      server = RubyLLM.mcp(url:, name: 'linear')
+      RubyLLM::MCP::Outages.tools(server)
+      sleep 0.1
+      RubyLLM::MCP::Outages.down?(server)
+    end
+
+    it 'waits as long as a server that limits the rate asks, in seconds' do
+      expect(down_after_backoff?(answering('429 Too Many Requests', 'Retry-After' => '30'))).to be(true)
+    end
+
+    it 'waits until the date an unavailable server asks for' do
+      retry_at = (Time.now + 30).httpdate
+
+      expect(down_after_backoff?(answering('503 Service Unavailable', 'Retry-After' => retry_at))).to be(true)
+    end
+
+    it 'waits the usual backoff without one, or with one it cannot read' do
+      expect(down_after_backoff?(answering('503 Service Unavailable'))).to be(false)
+      RubyLLM::MCP::Outages.clear
+      expect(down_after_backoff?(answering('503 Service Unavailable', 'Retry-After' => 'soon'))).to be(false)
+      RubyLLM::MCP::Outages.clear
+      passed = (Time.now - 30).httpdate
+      expect(down_after_backoff?(answering('503 Service Unavailable', 'Retry-After' => passed))).to be(false)
+    end
+  end
+
+  it 'answers through the model while one server refuses the connection and another is unavailable' do
+    reply = { id: 'resp_1', object: 'response', status: 'completed', model: model_for(:openai),
+              output: [{ type: 'message', id: 'msg_1', status: 'completed', role: 'assistant',
+                         content: [{ type: 'output_text', text: 'Hello', annotations: [] }] }],
+              usage: { input_tokens: 5, output_tokens: 1, total_tokens: 6 } }
+    model = answering('200 OK', {}, JSON.generate(reply)).sub(%r{/mcp\z}, '/v1')
+    context = RubyLLM.context { |config| config.openai_api_base = model }
+    refused = RubyLLM.mcp(url: "http://127.0.0.1:#{closed_port}/mcp", name: 'refused')
+    down = RubyLLM.mcp(url: answering('503 Service Unavailable'), name: 'down')
+
+    reply = context.chat(model: model_for(:openai), provider: :openai).with_mcp(refused, down).ask('Hi')
+
+    expect(reply.content).to eq('Hello')
+    expect(RubyLLM::MCP::Outages.down?(refused) && RubyLLM::MCP::Outages.down?(down)).to be(true)
+  end
+
   it 'tries again after the backoff and offers the tools once the server is back' do
     fixture = File.expand_path('../fixtures/mcp/server.rb', __dir__)
     server = RubyLLM.mcp(command: [RbConfig.ruby, fixture], name: 'files')
@@ -167,6 +274,120 @@ RSpec.describe RubyLLM::Chat do
     server = RubyLLM.mcp(url: "http://127.0.0.1:#{closed_port}/mcp", name: 'linear')
 
     expect { server.tools }.to raise_error(RubyLLM::ConnectionError)
+  end
+
+  it 'still raises when the server answers that the credentials are missing' do
+    chat.with_mcp(RubyLLM.mcp(url: answering('401 Unauthorized'), name: 'linear'))
+
+    expect { chat.ask('Hi') }.to raise_error(RubyLLM::UnauthorizedError)
+  end
+
+  it 'still raises when the server does not know the endpoint' do
+    chat.with_mcp(RubyLLM.mcp(url: answering('404 Not Found'), name: 'linear'))
+
+    expect { chat.ask('Hi') }.to raise_error(RubyLLM::MCP::Error, /HTTP 404/)
+  end
+
+  describe 'a tool call the server fails' do
+    let(:server) do
+      RubyLLM.mcp(command: [RbConfig.ruby, File.expand_path('../fixtures/mcp/server.rb', __dir__)], name: 'files')
+    end
+    let(:chat) do
+      done = RubyLLM::Message.new(role: :assistant, content: 'Done', input_tokens: 1, output_tokens: 1)
+      call = RubyLLM::ToolCall.new(id: 'call_1', name: 'echo', arguments: { 'text' => 'hi' })
+      replies = [RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { 'call_1' => call }), done]
+      seen = requests
+      described_class.new(model: model_for(:anthropic)).with_mcp(server).tap do |built|
+        allow(built.provider).to receive(:complete) do |messages, tools:, **|
+          seen << { messages: messages.to_a, tools: tools.keys }
+          replies.shift || done
+        end
+      end
+    end
+
+    after { server.close }
+
+    def failing_with(error)
+      allow(server).to receive(:run).and_raise(error)
+      chat.ask('Echo hi')
+    end
+
+    def tool_result
+      chat.messages.find { |message| message.role == :tool }.content
+    end
+
+    def unavailable(status)
+      RubyLLM::MCP::Error.new("HTTP #{status}", response: Faraday::Response.new(status:))
+    end
+
+    shared_examples 'a failed call the turn goes on after' do |sits_out:|
+      it 'gives the model a tool error and finishes the turn' do
+        expect(failing_with(error).content).to eq('Done')
+
+        expect(tool_result).to include('files').and include('failed')
+      end
+
+      it(sits_out ? 'sits the server out of the next request' : 'keeps offering its tools') do
+        failing_with(error)
+
+        expect(requests.last[:tools].include?(:echo)).to be(!sits_out)
+        expect(RubyLLM::MCP::Outages.down?(server)).to be(sits_out)
+      end
+    end
+
+    context 'when it answers that it is unavailable' do
+      let(:error) { unavailable(503) }
+
+      it_behaves_like 'a failed call the turn goes on after', sits_out: true
+    end
+
+    context 'when it limits the rate of requests' do
+      let(:error) { unavailable(429) }
+
+      it_behaves_like 'a failed call the turn goes on after', sits_out: true
+    end
+
+    context 'when the connection drops or times out' do
+      let(:error) { RubyLLM::ConnectionError.new('Net::ReadTimeout') }
+
+      it_behaves_like 'a failed call the turn goes on after', sits_out: true
+    end
+
+    context "when the server's process exits" do
+      let(:error) { RubyLLM::MCP::Stdio::Unavailable.new('server.rb exited') }
+
+      it_behaves_like 'a failed call the turn goes on after', sits_out: true
+    end
+
+    context 'when it answers with a JSON-RPC error' do
+      let(:error) { RubyLLM::MCP::Error.new('Internal error', code: -32_603) }
+
+      it_behaves_like 'a failed call the turn goes on after', sits_out: false
+    end
+
+    it 'still raises when the server refuses the credentials' do
+      expect { failing_with(RubyLLM::UnauthorizedError.new('no')) }.to raise_error(RubyLLM::UnauthorizedError)
+    end
+
+    it 'still raises when the server does not know the endpoint' do
+      expect { failing_with(unavailable(404)) }.to raise_error(RubyLLM::MCP::Error, 'HTTP 404')
+    end
+
+    it 'lets a handler the server declares answer instead' do
+      server.class.rescue_from(RubyLLM::MCP::Error) { |failure| { error: "Handled #{failure.message}" } }
+
+      failing_with(unavailable(503))
+
+      expect(tool_result).to include('Handled HTTP 503')
+      expect(RubyLLM::MCP::Outages.down?(server)).to be(false)
+    end
+
+    it 'still raises from a direct call to the server' do
+      server.tools
+      allow(server).to receive(:call_tool).and_raise(unavailable(503))
+
+      expect { server.call(:echo, text: 'hi') }.to raise_error(RubyLLM::MCP::Error, 'HTTP 503')
+    end
   end
 
   it 'still raises when the server refuses the credentials' do

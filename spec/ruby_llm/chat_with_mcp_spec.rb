@@ -148,6 +148,36 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.tool_options[:choice]).to eq(:add)
   end
 
+  it 'waits to contact servers when the tool choice names a tool' do
+    allow(files).to receive(:tools).and_call_original
+
+    chat.with_mcp(files).with_tool_options(choice: :add)
+
+    expect(files).not_to have_received(:tools)
+  end
+
+  it 'takes a tool class as the tool choice without contacting servers' do
+    allow(files).to receive(:tools).and_call_original
+    weather = Class.new(RubyLLM::Tool) do
+      def name = 'weather'
+      def execute = 'sunny'
+    end
+
+    chat.with_tools(weather).with_mcp(files).with_tool_options(choice: weather)
+
+    expect(chat.tool_options[:choice]).to eq(:weather)
+    expect(files).not_to have_received(:tools)
+  end
+
+  it 'rejects a tool choice no server offers once the chat lists their tools' do
+    allow(chat.provider).to receive(:complete).and_return(answer)
+    chat.with_mcp(files).with_tool_options(choice: :missing)
+
+    listed = /Invalid tool choice: missing. Valid choices are: auto, none, required, .*echo/
+    expect { chat.ask('Hi') }.to raise_error(RubyLLM::InvalidToolChoiceError, listed)
+    expect(chat.provider).not_to have_received(:complete)
+  end
+
   it 'lets the model call server tools' do
     allow(chat.provider).to receive(:complete).and_return(tool_call('add', { 'a' => 2, 'b' => 3 }), answer)
 

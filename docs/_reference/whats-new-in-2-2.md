@@ -454,6 +454,8 @@ It is off by default, and a context can turn it on for one server. See [Reasonin
 
 Saving a chat on an empty `ruby_llm_models` table still loads the whole model registry, but only once per database and process. Transactional tests roll that load back after every test, and each test that saved a chat used to load the registry again ([#1554](https://github.com/crmne/ruby_llm/issues/1554)).
 
+An MCP server that answers HTTP 429 or a 5xx status while a chat lists its tools, or whose stdio process exits, now sits out the turn like one that can't be reached, instead of raising from `ask`. A 429 or 503 with `Retry-After` waits as long as the server asks. A tool call the server fails the same way, or answers with a JSON-RPC error, gives the model a tool error and the turn goes on, where it used to raise. Building or finding an agent whose tool choice names a server's tool no longer contacts its MCP servers, which now happens only when the chat first needs their tools. See [When a Server Is Down]({% link _tools/mcp.md %}#when-a-server-is-down).
+
 ## Upgrades
 
 `bin/rails generate ruby_llm:upgrade` in 2.2 adds the columns chats and tool calls use for their claims, the tables for queued messages and chat files, and an `ApplicationAgent` for your agents to inherit from. Applications on 2.0 upgrade to 2.1 first. See [Upgrading]({% link _reference/upgrading.md %}).

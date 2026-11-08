@@ -316,11 +316,13 @@ RSpec.describe RubyLLM::Tool do
       RubyLLM::MCP::Tool.instance_variable_set(:@rescue_handlers, saved)
     end
 
-    it 'raises a server error without a handler, as before' do
+    it 'gives the model a server error without a handler' do
       chat.with_mcp(laptop_class.new(owner: 'Ada'))
       allow(chat.provider).to receive(:complete).and_return(calls('read_notes'), answer)
 
-      expect { chat.ask('Read my notes') }.to raise_error(RubyLLM::MCP::Error, /Asleep/)
+      chat.ask('Read my notes')
+
+      expect(chat.messages.find { |message| message.role == :tool }.content).to include('Asleep')
     end
 
     it 'runs a handler declared on the MCP class on the MCP instance' do

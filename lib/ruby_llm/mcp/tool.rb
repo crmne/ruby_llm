@@ -92,7 +92,11 @@ module RubyLLM
 
       # Calls the tool on the server and returns its MCP::Result, what the
       # +wrap:+ method made of it, or <tt>{ error: }</tt> when the tool
-      # failed. A tool with a UI returns its failed MCP::Result instead, so
+      # failed, or when the server failed the call: it could not be
+      # reached, answered HTTP 429 or a 5xx status, or answered with a
+      # JSON-RPC error. A server that could not be reached sits out the
+      # chat's next requests, as when listing its tools. A refusal, such as
+      # missing credentials, still raises. A tool with a UI returns its failed MCP::Result instead, so
       # your app can still render the UI. A chat sends the model the
       # result's content. When the
       # server runs the call as a task, returns the MCP::Task without
@@ -100,7 +104,7 @@ module RubyLLM
       # Raises MCP::InputRequiredError when the server needs input that no
       # MCP.before_input_request callback gave.
       def call(**arguments)
-        @mcp.run(self, arguments.except(:tool_call))
+        answering_failures { @mcp.run(self, arguments.except(:tool_call)) }
       end
 
       # Resumes a call that paused on +task+, which it checks on once.
@@ -126,6 +130,17 @@ module RubyLLM
       end
 
       private
+
+      # A call the server fails gives the model a tool error, unless a
+      # handler is declared for it. Checking on a task still raises, since
+      # the task may still be running.
+      def answering_failures
+        yield
+      rescue StandardError => e
+        raise if @mcp.class.rescue_handler_for(e) || self.class.rescue_handler_for(e)
+
+        Outages.failed_call(@mcp, e) || raise
+      end
 
       def model_schema(schema)
         schema = SchemaDefinition.new(schema:).json_schema

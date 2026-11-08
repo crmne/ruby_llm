@@ -326,7 +326,7 @@ Every name you declare must exist on the server. When a server stops offering on
 
 ### Handling Tool Errors
 
-A call that fails because the server answers with a protocol error raises, and the exception stops the chat. To hand the model a result instead, declare `rescue_from` on the server's class:
+A call the server fails, because it can't be reached, answers that it is unavailable, or answers with a protocol error, gives the model a tool error saying so, and the chat goes on. See [When a Server Is Down](#when-a-server-is-down). To hand the model a result of your own, or to stop the chat, declare `rescue_from` on the server's class:
 
 ```ruby
 class Linear < RubyLLM::MCP
@@ -955,11 +955,15 @@ Some defaults protect applications that connect to servers they do not control:
 
 ### When a Server Is Down
 
-An MCP server that can't be reached doesn't stop the chat. When listing a server's tools raises `RubyLLM::ConnectionError`, because the connection is refused or the server never answers, the turn goes on without that server's tools. RubyLLM logs a warning, emits a `mcp_unreachable.ruby_llm` event, and adds a line to the request telling the model the server's tools are unavailable, so it can say so instead of guessing. That line never joins `chat.messages`.
+An MCP server that is down doesn't stop the chat. A server is down when listing its tools can't reach it or it says it can't serve right now: the connection is refused, the server never answers, it answers HTTP 429 or a 5xx status, or its stdio process exits or doesn't answer in time. The turn goes on without that server's tools. RubyLLM logs a warning, emits a `mcp_unreachable.ruby_llm` event, and adds a line to the request telling the model the server's tools are unavailable, so it can say so instead of guessing. That line never joins `chat.messages`.
 
-RubyLLM waits a minute before it tries that server again, across the whole process, so a server that never answers doesn't hold up every request. A server whose `url` or `command` is a block or method name, or that uses a `transport`, waits per object instead, since it may be a different server for each user. Tools that were already listed stay available in that chat. A tool error the server reports goes to the model, while a tool call that can't reach the server raises `RubyLLM::ConnectionError`.
+RubyLLM waits a minute before it tries that server again, across the whole process, so a server that never answers doesn't hold up every request. A server that answers with a `Retry-After` header waits as long as it asks instead. A server whose `url` or `command` is a block or method name, or that uses a `transport`, waits per object instead, since it may be a different server for each user. Tools that were already listed stay available in that chat while other chats find the server down.
 
-Calling the server directly, such as `linear.tools`, still raises. So does anything else a server answers with, such as `RubyLLM::UnauthorizedError`, since retrying won't fix those.
+A tool call the server fails doesn't stop the turn either. When the call can't reach the server, the server answers HTTP 429 or a 5xx status, or it answers with a JSON-RPC error, the model gets a tool error saying the server failed, as it does for a tool error the server reports, and the turn goes on. A server that is down also sits out the chat's next requests, with the same warning, event, and backoff. A handler you declare with `rescue_from` comes first. Checking on a task the server runs still raises, since the task may still be running.
+
+Building a chat or an agent never contacts its MCP servers, and neither does finding a saved one with `find`. They are contacted when the chat first needs their tools, to make a request or to read `chat.tools`. So the pages that show a conversation, list its `pending_questions`, or `answer`, `approve`, and `decline` them keep working while a server is down.
+
+Calling the server directly, such as `linear.tools` or `linear.search_issues`, still raises. So does a refusal, such as `RubyLLM::UnauthorizedError` or a 404, from a chat too, since retrying won't fix those.
 
 ### Which Addresses a Server May Reach
 
@@ -981,7 +985,7 @@ class Linear < RubyLLM::MCP
 end
 ```
 
-A server that answers with a protocol error raises `RubyLLM::MCP::Error`, whose `code` is the JSON-RPC error code. A server that wants credentials raises `RubyLLM::UnauthorizedError`. A server that refuses a request raises `RubyLLM::ForbiddenError`, or `RubyLLM::MCP::InsufficientScopeError` when the token lacks a scope.
+Outside a chat's tool calls, a server that answers with a protocol error raises `RubyLLM::MCP::Error`, whose `code` is the JSON-RPC error code. A server that wants credentials raises `RubyLLM::UnauthorizedError`. A server that refuses a request raises `RubyLLM::ForbiddenError`, or `RubyLLM::MCP::InsufficientScopeError` when the token lacks a scope.
 
 ## Next Steps
 

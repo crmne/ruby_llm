@@ -24,6 +24,10 @@ module RubyLLM
     # request reads. A listener stops when CancelledError is raised in its
     # thread, so it reads and writes with that deferred.
     class Stdio # :nodoc:
+      # Raised when the server's process exits or does not answer in time.
+      class Unavailable < Error # :nodoc:
+      end
+
       SHUTDOWN_GRACE = 2
       SHUTDOWN_CHECK = 0.05
       CHECK_INTERVAL = 0.5
@@ -91,7 +95,7 @@ module RubyLLM
 
             yield reply
           end
-          raise Error, "#{name} exited" unless @process.equal?(process)
+          raise Unavailable, "#{name} exited" unless @process.equal?(process)
 
           receive(subscription)
         end
@@ -112,7 +116,7 @@ module RubyLLM
       end
 
       def subscribe(subscription, message)
-        raise Error, "#{name} exited" unless message || @process&.alive?
+        raise Unavailable, "#{name} exited" unless message || @process&.alive?
 
         @subscriptions << subscription
         write(message) if message
@@ -134,7 +138,7 @@ module RubyLLM
 
         @stdout.wait_readable(CHECK_INTERVAL) if subscription.messages.empty?
       rescue IOError
-        raise Error, "#{name} exited"
+        raise Unavailable, "#{name} exited"
       end
 
       def drain
@@ -184,7 +188,7 @@ module RubyLLM
           @stdin.flush
         rescue Errno::EPIPE, IOError
           stop
-          raise Error, "#{name} exited"
+          raise Unavailable, "#{name} exited"
         end
       end
 
@@ -211,7 +215,7 @@ module RubyLLM
           return line if line
 
           remaining = deadline - monotonic_now
-          raise Error, "#{name} did not answer in time" unless remaining.positive?
+          raise Unavailable, "#{name} did not answer in time" unless remaining.positive?
 
           Support::Cancellation.check
           next unless @stdout.wait_readable([remaining, CHECK_INTERVAL].min)
@@ -226,7 +230,7 @@ module RubyLLM
 
       def exited
         stop
-        raise Error, "#{name} exited"
+        raise Unavailable, "#{name} exited"
       end
 
       def answer(request)
