@@ -2936,7 +2936,7 @@ module RubyLLM
     def normalize_tool_choice(choice)
       return choice.to_sym if choice.is_a?(String) || choice.is_a?(Symbol)
       return tool_name_for_choice_class(choice) if choice.is_a?(Class)
-      return @tools.key(choice) if @tools.value?(choice)
+      return choice.qualified_name.to_sym if choice.is_a?(Tool)
 
       choice.respond_to?(:name) ? choice.name.to_sym : choice.to_sym
     end

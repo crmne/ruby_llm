@@ -12,6 +12,11 @@ module RubyLLM
     # again won't fix that.
     module Outages # :nodoc:
       BACKOFF = 60
+
+      # The tool error of a call the server failed, which a chat gives the
+      # model like any tool error.
+      class Failure < Hash # :nodoc:
+      end
       UNAVAILABLE = [ConnectionError, RateLimitError, ServerError, ServiceUnavailableError, OverloadedError,
                      Stdio::Unavailable].freeze
 
@@ -30,6 +35,23 @@ module RubyLLM
           []
         end
 
+        # Yields to call one of +server+'s tools, and returns the tool error
+        # when the server fails the call, unless a handler is declared for
+        # it, or right away while the server sits out. Checking on a task
+        # still raises, since the task may still be running.
+        def calling(server, tool, input)
+          return yield if input&.key?('task')
+          return Failure[error: "The #{server.name} MCP server can't be reached right now"] if down?(server)
+
+          begin
+            yield
+          rescue StandardError => e
+            raise if server.class.rescue_handler_for(e) || tool.class.rescue_handler_for(e)
+
+            failed_call(server, e) || raise
+          end
+        end
+
         # Returns the tool error for a call +server+ failed, or +nil+ for an
         # error the call should raise: one that is not the server's, or a
         # refusal such as missing credentials or an unknown endpoint. A
@@ -42,7 +64,7 @@ module RubyLLM
             report(server, error) if record(server, backoff(error))
             server.send(:forget_tools)
           end
-          { error: "The #{server.name} MCP server failed: #{error.message}" }
+          Failure[error: "The #{server.name} MCP server failed: #{error.message}"]
         end
 
         def down?(server)

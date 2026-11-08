@@ -330,7 +330,7 @@ RSpec.describe RubyLLM::Chat do
     after { server.close }
 
     def failing_with(error)
-      allow(server).to receive(:run).and_raise(error)
+      allow(server).to receive(:call_tool).and_raise(error)
       chat.ask('Echo hi')
     end
 
@@ -402,6 +402,45 @@ RSpec.describe RubyLLM::Chat do
 
       expect(tool_result).to include('Handled HTTP 503')
       expect(RubyLLM::MCP::Outages.down?(server)).to be(false)
+    end
+
+    it 'gives the model a tool error when a call resumed with answers fails' do
+      allow(server).to receive(:call_tool).and_raise(unavailable(503))
+      tool = server.tools.find { |listed| listed.name == 'echo' }
+
+      expect(tool.resume_call({ 'requests' => [] }, { text: 'hi' })).to include(error: /files MCP server failed/)
+    end
+
+    it 'still raises when checking on a task fails' do
+      allow(server).to receive(:call_tool).and_raise(unavailable(503))
+      tool = server.tools.find { |listed| listed.name == 'echo' }
+
+      expect { tool.resume_call({ 'task' => { 'taskId' => 't1' } }, {}) }.to raise_error(RubyLLM::MCP::Error)
+    end
+
+    it 'skips the call while the server sits out, for its tools registered with with_tools' do
+      tool = server.tools.find { |listed| listed.name == 'echo' }
+      allow(server).to receive(:call_tool).and_raise(unavailable(503))
+      tool.call(text: 'hi')
+
+      expect(tool.call(text: 'again')).to include(error: /files/)
+      expect(server).to have_received(:call_tool).once
+    end
+
+    it 'raises what its own fixed arguments raise, without sitting the server out' do
+      server.class.tool :echo, fixed_arguments: { text: -> { raise RubyLLM::ConnectionError, 'database down' } }
+      tool = server.tools.find { |listed| listed.name == 'echo' }
+
+      expect { tool.call }.to raise_error(RubyLLM::ConnectionError, 'database down')
+      expect(server.tools_listed?).to be(true)
+    end
+
+    it 'raises what its wrap method raises, without sitting the server out' do
+      server.class.tool :echo, wrap: ->(_result, **) { raise RubyLLM::ConnectionError, 'cache down' }
+      tool = server.tools.find { |listed| listed.name == 'echo' }
+
+      expect { tool.call(text: 'hi') }.to raise_error(RubyLLM::ConnectionError, 'cache down')
+      expect(server.tools_listed?).to be(true)
     end
 
     it 'still raises from a direct call to the server' do

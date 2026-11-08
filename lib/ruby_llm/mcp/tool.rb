@@ -45,6 +45,11 @@ module RubyLLM
 
       attr_reader :fixed_arguments, :wrap # :nodoc:
 
+      # The fixed arguments, with lambdas called on the MCP instance.
+      def resolved_fixed_arguments # :nodoc:
+        fixed_arguments.transform_values { |value| value.is_a?(Proc) ? @mcp.instance_exec(&value) : value }
+      end
+
       def initialize(mcp, definition, prefix: nil, as: nil, description: nil, fixed_arguments: {}, wrap: nil) # :nodoc:
         super()
         @mcp = mcp
@@ -104,7 +109,7 @@ module RubyLLM
       # Raises MCP::InputRequiredError when the server needs input that no
       # MCP.before_input_request callback gave.
       def call(**arguments)
-        answering_failures { @mcp.run(self, arguments.except(:tool_call)) }
+        @mcp.run(self, arguments.except(:tool_call))
       end
 
       # Resumes a call that paused on +task+, which it checks on once.
@@ -130,17 +135,6 @@ module RubyLLM
       end
 
       private
-
-      # A call the server fails gives the model a tool error, unless a
-      # handler is declared for it. Checking on a task still raises, since
-      # the task may still be running.
-      def answering_failures
-        yield
-      rescue StandardError => e
-        raise if @mcp.class.rescue_handler_for(e) || self.class.rescue_handler_for(e)
-
-        Outages.failed_call(@mcp, e) || raise
-      end
 
       def model_schema(schema)
         schema = SchemaDefinition.new(schema:).json_schema

@@ -190,6 +190,18 @@ RSpec.describe RubyLLM::Chat do
     expect { chat.ask('What time is it?') }.not_to raise_error
   end
 
+  it 'takes a namespaced tool instance a server adds as the tool choice by its qualified name' do
+    clock = Class.new(RubyLLM::Tool) do
+      namespace 'office'
+      def self.tool_name = 'time'
+      def execute = 'noon'
+    end
+
+    chat.with_mcp(files).with_tool_options(choice: clock.new)
+
+    expect(chat.tool_options[:choice]).to eq(:office_time)
+  end
+
   it 'names a tool choice class that is not a tool by its class name' do
     stub_const('Plain', Class.new)
 
