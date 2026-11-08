@@ -9,7 +9,11 @@ RSpec.describe RubyLLM::Chat do
 
   def render(model, provider:, protocol: nil, raw_content: nil)
     call = RubyLLM::ToolCall.new(id: 'call_1', name: 'echo', malformed_arguments: malformed)
-    chat = RubyLLM.chat(model:, provider:, protocol:, assume_model_exists: true)
+    echo = Class.new(RubyLLM::Tool) do
+      description 'Echoes its input'
+      def name = 'echo'
+    end
+    chat = RubyLLM.chat(model:, provider:, protocol:, assume_model_exists: true).with_tools(echo)
     chat.add_message(role: :user, content: 'List the files')
     chat.add_message(role: :assistant, content: nil, tool_calls: { 'call_1' => call }, raw_content:)
     chat.add_message(role: :tool, content: '{"error":"Try again"}', tool_call_id: 'call_1')

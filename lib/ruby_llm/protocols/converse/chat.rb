@@ -62,7 +62,8 @@ module RubyLLM
           system_messages, chat_messages = messages.partition { |msg| msg.role == :system }
           prompt_cache_options(caching)
           payload = {
-            messages: render_messages(chat_messages, caching:, citations:, search_results: search_results?(model))
+            messages: render_messages(chat_messages, caching:, citations:, search_results: search_results?(model),
+                                                     tool_text: tools.empty?)
           }
 
           system_blocks = render_system(system_messages, caching:)
@@ -169,17 +170,25 @@ module RubyLLM
           end
         end
 
-        def render_messages(messages, caching: nil, citations: false, search_results: false)
+        # Converse refuses toolUse and toolResult blocks in a request without
+        # a toolConfig, and has no tool choice of none, so a request that
+        # declares no tools, such as a summary of a chat that called them,
+        # gets its tool rounds as text (+tool_text+).
+        def render_messages(messages, caching: nil, citations: false, search_results: false, tool_text: false)
           rendered = []
           tool_result_blocks = []
+          calls = {}
 
           messages.each do |msg|
+            calls.merge!(msg.tool_calls.to_h)
             if msg.tool_result?
-              tool_result_blocks.concat(render_tool_result_blocks(msg, caching:, citations:, search_results:))
+              call = calls[msg.tool_call_id] if tool_text
+              tool_result_blocks.concat(render_tool_result_blocks(msg, caching:, citations:, search_results:,
+                                                                       tool_text:, call:))
               next
             end
 
-            message = render_non_tool_message(msg, caching:, citations:)
+            message = render_non_tool_message(msg, caching:, citations:, tool_text:)
             next tool_result_blocks.concat(message[:content]) if joins_tool_results?(message, tool_result_blocks)
 
             unless tool_result_blocks.empty?
@@ -197,8 +206,8 @@ module RubyLLM
           message && message[:role] == 'user' && !tool_result_blocks.empty?
         end
 
-        def render_non_tool_message(msg, caching: nil, citations: false)
-          content = render_message_content(msg, caching:, citations:)
+        def render_non_tool_message(msg, caching: nil, citations: false, tool_text: false)
+          content = render_message_content(msg, caching:, citations:, tool_text:)
           return nil if content.empty?
 
           {
@@ -207,11 +216,13 @@ module RubyLLM
           }
         end
 
-        def render_message_content(msg, caching: nil, citations: false)
+        def render_message_content(msg, caching: nil, citations: false, tool_text: false)
           blocks = render_structured_message_content(msg, citations:)
 
           if msg.tool_call?
             msg.tool_calls.each do |tool_call|
+              next blocks << tool_call_text_block(tool_call) if tool_text
+
               blocks << {
                 toolUse: {
                   toolUseId: tool_call.provider_call_id,
@@ -224,6 +235,10 @@ module RubyLLM
           blocks << converse_cache_block_for(caching, ttl: msg.cache_ttl) if cache_boundary?(msg, caching:)
 
           blocks
+        end
+
+        def tool_call_text_block(tool_call)
+          { text: "Called the #{tool_call.name} tool with #{tool_call.arguments.to_json}" }
         end
 
         def render_structured_message_content(msg, citations: false)
@@ -247,8 +262,13 @@ module RubyLLM
           [render_thinking_block(msg.thinking)].compact
         end
 
-        def render_tool_result_blocks(msg, caching: nil, citations: false, search_results: false)
-          blocks = [render_tool_result_block(msg, citations:, search_results:)]
+        def render_tool_result_blocks(msg, caching: nil, citations: false, search_results: false, tool_text: false,
+                                      call: nil)
+          blocks = if tool_text
+                     render_tool_result_text(msg, call, citations:)
+                   else
+                     [render_tool_result_block(msg, citations:, search_results:)]
+                   end
           blocks << converse_cache_block_for(caching, ttl: msg.cache_ttl) if cache_boundary?(msg, caching:)
           blocks
         end
@@ -260,6 +280,14 @@ module RubyLLM
               content: render_tool_result_content(msg, citations:, search_results:)
             }
           }
+        end
+
+        def render_tool_result_text(msg, call, citations: false)
+          label = call ? "The #{call.name} tool returned:" : 'The tool returned:'
+          first, *rest = render_tool_result_content(msg, citations:)
+          return [{ text: "#{label}\n#{first[:text]}" }, *rest] if first.key?(:text)
+
+          [{ text: label }, first, *rest]
         end
 
         def render_tool_result_content(msg, citations: false, search_results: false)
