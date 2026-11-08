@@ -124,8 +124,8 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
           sleep
         end.complete
       end
-      started.pop
-      thread.kill.join
+      expect(started.pop(timeout: 10)).to be(true)
+      expect(thread.kill.join(10)).to eq(thread)
 
       expect(chats.interrupted).to be_empty
       travel lease + 1
@@ -180,6 +180,15 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
       expect(row(chat)).to have_attributes(claim_token: nil, claimed_until: nil)
       expect(chats.interrupted).to be_empty
+    end
+
+    it 'releases the claim of a finished run when stopping its heartbeat fails' do
+      chat = asked
+      job = job_for(chat)
+      allow(job).to receive(:stop_claim_heartbeat).and_raise(ThreadError, 'stuck')
+
+      expect { job.complete }.to raise_error(ThreadError)
+      expect(row(chat)).to have_attributes(claim_token: nil, claimed_until: nil)
     end
 
     it 'leaves out a chat whose run paused for an approval' do

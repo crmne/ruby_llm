@@ -160,8 +160,11 @@ module RubyLLM
         exiting = !e.is_a?(Interrupt)
         raise
       ensure
-        stop_claim_heartbeat
-        exiting || Thread.current.status == 'aborting' ? forget_run_claim : release_run_claim(completed)
+        begin
+          stop_claim_heartbeat
+        ensure
+          exiting || Thread.current.status == 'aborting' ? forget_run_claim : release_run_claim(completed)
+        end
       end
 
       def run_claim_acquired?
