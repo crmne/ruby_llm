@@ -45,6 +45,8 @@ module RubyLLM
           { prompt_cache_key: options[:key], prompt_cache_retention: ttl }.compact
         end
 
+        def cache_option_names = PROMPT_CACHE_OPTIONS
+
         def inject_cache_breakpoint(item)
           item
         end

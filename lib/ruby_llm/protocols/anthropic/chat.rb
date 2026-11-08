@@ -527,6 +527,8 @@ module RubyLLM
                 "Anthropic prompt caching accepts :ttl, got #{format_cache_option_keys(unsupported)}"
         end
 
+        def cache_option_names = PROMPT_CACHE_OPTIONS
+
         def format_cache_option_keys(keys)
           keys.map { |key| ":#{key}" }.join(', ')
         end

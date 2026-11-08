@@ -218,6 +218,14 @@ module RubyLLM
       )
     end
 
+    def fallback_caching(caching, model:, protocol: nil) # :nodoc:
+      preprocessing_protocol(protocol, model).fallback_caching(caching)
+    end
+
+    def cache_key?(model:, protocol: nil) # :nodoc:
+      preprocessing_protocol(protocol, model).cache_key?
+    end
+
     def preprocess_messages(messages, model:, protocol: nil, unsupported_attachment: nil) # :nodoc:
       preprocessor = preprocessing_protocol(protocol, model)
       messages.map { |message| preprocessor.preprocess_message(message, unsupported_attachment:) }

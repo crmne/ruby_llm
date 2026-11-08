@@ -337,6 +337,8 @@ Replies stream, and `interval:` slows them down so a test can press Stop. See [T
 
 `rescue_from` on a tool turns its exceptions into results the model reads, as on an agent. Declare it on a base tool class, on `RubyLLM::CodeExecution`, or on an MCP server's class for its tools. See [Tool-Level Handlers]({% link _advanced/error-handling.md %}#tool-level-handlers).
 
+Prompt caching and fallbacks work together across providers. A fallback leaves out the caching options its provider has no use for, such as an OpenAI cache key on Claude, and a persisted chat with caching on sends a stable cache key of its own, so `caching` alone is enough. See [Caching with Fallbacks]({% link _core_features/prompt-caching.md %}#caching-with-fallbacks).
+
 A reply a fallback model wrote names it: `reply.model` and `reply.provider`, also on Rails records with those columns. See [Fallback Callbacks]({% link _advanced/error-handling.md %}#fallback-callbacks).
 
 `config.code_execution_max_file_size` raises the 10 MB cap on a file [code execution]({% link _advanced/code-execution.md %}#limits) returns, for code that makes videos or large exports.

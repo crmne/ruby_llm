@@ -40,6 +40,8 @@ module RubyLLM
           payload
         end
 
+        def cache_option_names = []
+
         def reject_caching_options(caching)
           return unless caching.is_a?(Hash) && caching.any?
 

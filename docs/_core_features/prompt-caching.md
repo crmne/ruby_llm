@@ -15,6 +15,7 @@ After reading this guide, you will know:
 * How to turn on provider prompt caching with `with_caching`.
 * How to mark an exact prompt prefix with `cache_until_here`.
 * How to choose cache lifetimes, per chat or per boundary, and read cache usage.
+* How cache keys group requests, and how caching works with fallbacks.
 * How to create, reuse, and expire an explicit cache with `RubyLLM.cache`.
 * How Rails persists explicit cache boundaries.
 
@@ -47,12 +48,34 @@ Options depend on the provider and model:
 
 | Setting | Availability |
 | --- | --- |
-| `key:` | OpenAI-compatible protocols and Mistral |
+| `key:` | OpenAI-compatible protocols, Mistral, and Meta |
 | `ttl:` | Supported OpenAI models, Anthropic, OpenRouter, and Bedrock Converse; accepted lifetimes vary |
 | `mode:` | Supported OpenAI-compatible models, using `"implicit"` or `"explicit"` |
 | `id:` | The name of an explicit Gemini or Vertex AI cache, described below |
 
 Leave options unset to use provider defaults. Some models support automatic caching but reject explicit lifetimes or boundaries.
+
+### Cache Keys
+
+A cache key tells the provider which requests share a prefix, so it can send them to the same cache. A persisted Rails chat sends a key of its own when caching is on: the same for every request in that conversation, from every process, and made from the record without showing its class or id. You don't need to pass one. Pass `key:` to group requests some other way, such as one key per account:
+
+```ruby
+chat.with_caching(key: "account-#{account.id}")
+```
+
+A chat without a record sends no key unless you pass one. Providers that take no key, such as Anthropic, never get one.
+
+### Caching with Fallbacks
+
+Caching and [fallbacks]({% link _advanced/error-handling.md %}#model-fallbacks) work together across providers. When a fallback model's provider has no use for a caching option, the fallback leaves it out and RubyLLM logs that at debug level. Anthropic caches by prefix, so a Claude fallback drops `key:` and keeps `ttl:`:
+
+```ruby
+chat = RubyLLM.chat(model: "{{ site.models.openai_current }}")
+              .with_caching(key: "support", ttl: "1h")
+              .with_fallbacks("{{ site.models.anthropic_haiku }}")
+```
+
+This applies only to fallback models. An option sent to a model you chose yourself still raises `ArgumentError` when its provider cannot take it. A fallback keeps an explicit cache's `id:`, because the prompt relies on the content it names.
 
 A longer lifetime can cost more to write. When the provider reports how many tokens it wrote at each lifetime, `response.tokens.cache_write_by_ttl` splits `cache_write` by TTL, and `response.cost.cache_write` prices each lifetime at its own rate:
 
@@ -181,7 +204,7 @@ chat.add_message(role: :user, content: long_context).cache_until_here
 chat.ask "Today's request: #{summary}"
 ```
 
-A reloaded chat renders the same request bytes as the turn that wrote it, so the next turn reuses the cached prefix. Tool call arguments keep the key order PostgreSQL `jsonb` and MySQL `json` columns store.
+A reloaded chat renders the same request bytes as the turn that wrote it, and sends the same [cache key](#cache-keys), so the next turn reuses the cached prefix. Tool call arguments keep the key order PostgreSQL `jsonb` and MySQL `json` columns store.
 
 The install generator creates both columns. For an existing app, see [Upgrading]({% link _reference/upgrading.md %}), which links to the guide for each older release.
 

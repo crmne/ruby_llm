@@ -16,6 +16,8 @@ module RubyLLM
 
       def chat_id; end
 
+      def cache_key; end
+
       def owner; end
 
       def cancellation_requested?
