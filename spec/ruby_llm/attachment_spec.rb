@@ -170,7 +170,7 @@ RSpec.describe RubyLLM::Attachment do
 
     it 'reads a download whose name says nothing to find its type' do
       png = File.binread(File.expand_path('../fixtures/ruby.png', __dir__))
-      stub_request(:get, 'https://example.com/download').to_return(body: png)
+      allow(RubyLLM::Transport::Connection).to receive(:download).and_return(png)
 
       expect(described_class.new('https://example.com/download').mime_type).to eq('image/png')
     end
