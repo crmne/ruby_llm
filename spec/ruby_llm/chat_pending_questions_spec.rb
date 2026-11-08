@@ -107,6 +107,17 @@ RSpec.describe RubyLLM::Chat do
     expect(results.sole).to eq('Refunded 40')
   end
 
+  it 'keeps the note a copy of the chat declines with out of the original' do
+    response = ask_for('issue_refund')
+    id = response.tool_calls.first.id
+
+    chat.dup.decline(id, 'Not yet')
+    chat.decline(id)
+    chat.complete
+
+    expect(results.sole).to eq('{"error":"The user denied the issue_refund tool call."}')
+  end
+
   it 'approves a call the chat has not seen yet without raising' do
     expect(chat.approve('call_later')).to eq(chat)
   end

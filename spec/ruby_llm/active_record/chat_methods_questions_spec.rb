@@ -198,6 +198,68 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(result_of(question)).to eq("Seat declined\n\nThe user declined: I will choose at the gate")
   end
 
+  it 'declines a call saved waiting for approval before calls were marked, as it approves one' do
+    declined = call('issue_refund', 'order_id' => '42')
+    approved = call('issue_refund', 'order_id' => '43')
+    chat = paused(declined, approved)
+    RubyLLM::ActiveRecord::ToolCall.where(tool_call_id: [declined.id, approved.id]).update_all(approval: nil)
+
+    Chat.find(chat.id).decline(declined.id, 'The order shipped already')
+    Chat.find(chat.id).approve(approved.id)
+    job_for(chat.id, refund).complete
+
+    expect(RubyLLM::ActiveRecord::ToolCall.find_by!(tool_call_id: declined.id).approval).to eq('denied')
+    expect(result_of(declined)).to eq('{"error":"The order shipped already"}')
+    expect(result_of(approved)).to eq('Refunded 43')
+  end
+
+  it 'declines an unmarked approval given as the question the chat it builds lists' do
+    approval = call('issue_refund', 'order_id' => '42')
+    chat = paused(approval)
+    RubyLLM::ActiveRecord::ToolCall.where(tool_call_id: approval.id).update_all(approval: nil)
+    question = job_for(chat.id, refund).to_llm.pending_questions.sole
+
+    Chat.find(chat.id).decline(question)
+
+    expect(question.response).to eq('action' => 'decline')
+    expect(RubyLLM::ActiveRecord::ToolCall.find_by!(tool_call_id: approval.id).approval).to eq('denied')
+  end
+
+  it 'refuses to decline an unmarked approval whose call is running' do
+    approval = call('issue_refund', 'order_id' => '42')
+    chat = paused(approval)
+    RubyLLM::ActiveRecord::ToolCall.where(tool_call_id: approval.id)
+                                   .update_all(approval: nil, claimed_until: 10.minutes.from_now)
+
+    expect { Chat.find(chat.id).decline(approval.id) }.to raise_error(RubyLLM::ToolCallRunningError)
+    expect(RubyLLM::ActiveRecord::ToolCall.find_by!(tool_call_id: approval.id).approval).to be_nil
+  end
+
+  it 'keeps the note of a declined approval out of the state questions wait in' do
+    approval = call('issue_refund', 'order_id' => '42')
+    chat = paused(approval)
+
+    Chat.find(chat.id).decline(approval.id, 'The order shipped already')
+
+    record = RubyLLM::ActiveRecord::ToolCall.find_by!(tool_call_id: approval.id)
+    expect(record.mcp_state).to be_nil
+    expect(record).not_to be_paused
+    expect(Chat.find(chat.id).pending_questions).to be_empty
+    expect(job_for(chat.id, refund)).not_to be_waiting
+  end
+
+  it 'forgets the note of a declined approval once the call is approved' do
+    approval = call('issue_refund', 'order_id' => '42')
+    chat = paused(approval)
+
+    Chat.find(chat.id).decline(approval.id, 'The order shipped already')
+    Chat.find(chat.id).approve(approval.id)
+    job_for(chat.id, refund).complete
+
+    expect(result_of(approval)).to eq('Refunded 42')
+    expect(RubyLLM::ActiveRecord::ToolCall.find_by!(tool_call_id: approval.id).mcp_result).to be_nil
+  end
+
   it 'says no with decline alone' do
     expect(Chat.method_defined?(:deny)).to be(false)
   end

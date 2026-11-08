@@ -507,7 +507,6 @@ module RubyLLM
       tool_call = Question.decided_call(tool_call, 'answer')
       name = remembered_tool_identity(tool_call) if remember
       record_tool_call_decision(tool_call, true)
-      forget_decline_note(tool_call)
       @tool_call_state.remember(name) if name && !tool_call_answered?(tool_call)
       self
     end
@@ -2823,16 +2822,11 @@ module RubyLLM
 
     def refuse(tool_call, note)
       record_tool_call_decision(tool_call, false)
-      record_tool_call_input(tool_call, { 'note' => note }) if note
+      @tool_call_state.record_decline_note(tool_call, note) if note
     end
 
     def decline_note(tool_call)
-      tool_call_input(tool_call)&.[]('note')
-    end
-
-    def forget_decline_note(tool_call)
-      call = tool_call.respond_to?(:id) ? tool_call : find_tool_call(tool_call)
-      record_tool_call_input(call, nil) if call && decline_note(call)
+      @tool_call_state.decline_note(tool_call)
     end
 
     def apply_tool_choice(choice)
