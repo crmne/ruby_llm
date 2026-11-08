@@ -135,6 +135,8 @@ The model sees a note as `{"error":"The order shipped already"}`. To give it a r
 question.decline(error: "Denied", reason: "Refunds over $500 need a manager")
 ```
 
+A declined call stays declined when the chat resumes without its tool, such as after an integration is disconnected: the model still gets the refusal, and the conversation goes on.
+
 When the user approves a call and says "don't ask again", pass `remember: true`:
 
 ```ruby

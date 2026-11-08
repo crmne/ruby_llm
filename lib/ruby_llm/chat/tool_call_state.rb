@@ -69,7 +69,7 @@ module RubyLLM
       end
 
       def denied?(tool_call)
-        @decisions[tool_call.id] == false
+        decision(tool_call) == false
       end
 
       def remember(identity)
