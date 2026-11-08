@@ -50,6 +50,7 @@ module RubyLLM
       included do
         before_save :resolve_model
         after_commit :remember_model_registry_stored, if: -> { @model_registry_loaded_into }
+        after_rollback -> { @model_registry_loaded_into = nil }
       end
 
       # Returns the record's attributes as a Hash, accepting the same options

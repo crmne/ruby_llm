@@ -248,6 +248,21 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
           expect(RubyLLM::ActiveRecord::Model.count).to eq(RubyLLM.models.all.size)
         end
       end
+
+      it 'does not count a rolled back load when the same chat commits later' do
+        in_rolled_back_test_transaction do
+          chat = Chat.new(model: model_id)
+          RubyLLM::ActiveRecord::Model.transaction do
+            chat.save!
+            raise ActiveRecord::Rollback
+          end
+
+          chat.model = RubyLLM::ActiveRecord::Model.from_llm(RubyLLM.models.find(model_id)).tap(&:save!)
+          chat.save!
+
+          expect(RubyLLM::ActiveRecord::Model.registry_stored?).to be(false)
+        end
+      end
     end
 
     [nil, ''].each do |name|
