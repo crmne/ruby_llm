@@ -186,6 +186,20 @@ RSpec.describe RubyLLM::Chat do
     expect(requests).to be_empty
   end
 
+  it 'renders the request with the note about servers that are down' do
+    chat.with_mcp(RubyLLM.mcp(url: answering('503 Service Unavailable'), name: 'linear'))
+        .add_message(role: :user, content: 'Hi')
+
+    expect(JSON.generate(chat.render)).to include("can't be reached right now").and include('linear')
+  end
+
+  it 'refuses to render a tool choice of a server that is down' do
+    chat.with_mcp(RubyLLM.mcp(url: answering('503 Service Unavailable'), name: 'linear'))
+        .with_tool_options(choice: :search_issues).add_message(role: :user, content: 'Hi')
+
+    expect { chat.render }.to raise_error(RubyLLM::InvalidToolChoiceError, /linear/)
+  end
+
   it 'keeps a test server answering after a request it cut off' do
     uri = URI(answering('503 Service Unavailable'))
     TCPSocket.open(uri.host, uri.port) { |socket| socket.write("POST /mcp HTTP/1.1\r\n") }

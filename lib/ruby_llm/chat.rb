@@ -1692,8 +1692,9 @@ module RubyLLM
     # its next completion, with #before_request hooks applied. Useful for
     # inspecting and testing request output.
     def render
+      check_tool_choice(@tool_prefs[:choice]) unless mcp.empty?
       @provider.render(
-        preprocessed_messages,
+        with_mcp_outages(preprocessed_messages),
         tools: request_tools,
         provider_tools: @provider_tools,
         tool_prefs: @tool_prefs,
