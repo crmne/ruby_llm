@@ -150,6 +150,20 @@ RSpec.describe RubyLLM::ActiveRecord::ClaimHeartbeat do
     expect(raw_connection).to equal(connection)
   end
 
+  it 'keeps an in-memory database' do
+    stub_const('HeartbeatMemory', Class.new(ActiveRecord::Base) { self.table_name = 'beats' })
+    HeartbeatMemory.establish_connection(adapter: 'sqlite3', database: ':memory:', pool: 1)
+    HeartbeatMemory.connection_pool.with_connection { |memory| memory.create_table(:beats) }
+    in_memory = described_class.new([HeartbeatMemory], interval) { HeartbeatMemory.create! }
+
+    in_memory.send(:beat)
+    in_memory.stop
+
+    expect(HeartbeatMemory.count).to eq(1)
+  ensure
+    HeartbeatMemory.remove_connection
+  end
+
   it 'keeps the connection on Rails 8' do
     skip 'Rails before 8 waits for SQLite holding the GVL' if before_rails8?
     connection = raw_connection

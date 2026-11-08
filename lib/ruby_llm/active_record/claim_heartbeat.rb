@@ -70,7 +70,7 @@ module RubyLLM
       end
 
       def busy?(error)
-        error.cause.is_a?(::SQLite3::BusyException) if defined?(::SQLite3::BusyException)
+        [error, error.cause].any?(::SQLite3::BusyException) if defined?(::SQLite3::BusyException)
       end
 
       def connected(pools, deadline, &)
@@ -86,7 +86,8 @@ module RubyLLM
       # run whose transaction holds the lock. The beat waits with the GVL
       # released instead, until its deadline, and then disconnects, so the
       # next query on that connection reconnects with the application's own
-      # busy settings.
+      # busy settings. An in-memory database has no other connection to wait
+      # for, and disconnecting would drop it.
       def waiting_until(connection, deadline)
         return yield unless gvl_held_while_busy?(connection)
 
@@ -99,7 +100,8 @@ module RubyLLM
       end
 
       def gvl_held_while_busy?(connection)
-        connection.adapter_name == 'SQLite' && ::ActiveRecord::VERSION::MAJOR < 8
+        connection.adapter_name == 'SQLite' && ::ActiveRecord::VERSION::MAJOR < 8 &&
+          connection.supports_concurrent_connections?
       end
 
       def monotonic_now
