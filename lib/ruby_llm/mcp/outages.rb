@@ -95,8 +95,11 @@ module RubyLLM
                              config: server.send(:config))
         end
 
+        # What the server wrote, or the error's own message when it wrote
+        # nothing, as an empty message would tell the model nothing.
         def failure_text(server, tool, error)
-          text = "The #{server.name} MCP server failed: #{error.provider_message || error.message}"
+          detail = [error.provider_message, error.message].find { |candidate| candidate.to_s.strip != '' }
+          text = "The #{server.name} MCP server failed: #{detail}"
           partly_run?(tool, error) ? "#{text.delete_suffix('.')}. #{PARTLY_RUN}" : text
         end
 

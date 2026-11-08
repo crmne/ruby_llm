@@ -111,6 +111,12 @@ RSpec.describe RubyLLM::MCP::Outages do
       expect(result).to include('The linear MCP server failed: Team ENG is archived')
     end
 
+    it 'gives the model the redacted message when the server wrote nothing' do
+      result = tool_result({ 'code' => -32_000, 'message' => ' ' })
+
+      expect(result).to include('The linear MCP server failed: The MCP server returned an error (-32000)')
+    end
+
     it 'keeps it out of the exception a direct call raises' do
       transport.failure = { 'code' => -32_000, 'message' => 'Team ENG is archived' }
 
