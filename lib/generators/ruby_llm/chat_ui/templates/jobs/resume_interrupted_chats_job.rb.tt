@@ -1,0 +1,3 @@
+class <%= resume_job_class_name %> < ApplicationJob
+  def perform = <%= chat_model_name %>.interrupted.find_each { |<%= chat_variable_name %>| <%= chat_job_class_name %>.perform_later(<%= chat_variable_name %>.id) }
+end

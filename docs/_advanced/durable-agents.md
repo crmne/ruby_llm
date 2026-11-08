@@ -18,6 +18,7 @@ After reading this guide, you will know:
 * How to survive deploys with ActiveJob Continuations.
 * How a tool call that asks a person parks the loop across processes.
 * Why only one process runs a chat at a time, and how a crashed run resumes.
+* How to run a durable queue in development.
 * How to stop a running agent from anywhere.
 * Why execution is at-least-once, and what that asks of your tools.
 
@@ -134,11 +135,36 @@ Claims rely on the database to make them visible to other processes, so call the
 | The person | Sees the partial reply, and the page stops streaming | Sees "Thinking…" until a job runs again | Sees what your job shows them | Sees what your job shows them |
 | Provider usage | An interrupted request is recorded as `:cancelled` with the tokens seen. One that already finished stays `:succeeded` | Lost for that attempt | Recorded as `:failed` | The request that finished stays `:succeeded` |
 
-The generated chat UI handles each of these: its job discards the cancel and tries again every minute while a dead process still holds the chat, and `complete` saves a failure in the chat's `reply_error` column for the page before it raises. With a queue that loses jobs on a crash, such as development's `:async`, a run only resumes when the next message arrives.
+The generated chat UI handles each of these: its job discards the cancel and tries again every minute while a dead process still holds the chat, `complete` saves a failure in the chat's `reply_error` column for the page before it raises, and `ResumeInterruptedChatsJob` answers a reply whose process died, every minute and at boot. See [Resuming a Crashed Run](#resuming-a-crashed-run).
 
 ## Resuming a Crashed Run
 
-A process that dies keeps its claims for up to a minute, until their leases expire. Until then, `complete` in another process returns without doing anything and `chat.running?` stays `true`. Check it after `complete` and try again later, so the conversation resumes once the claim expires:
+No job backend runs a reply that a crash or a deploy killed again by itself. Development's `:async` queue keeps its jobs in the server's memory, so they die with it. Solid Queue doesn't run a dead worker's jobs again either: once the worker has missed its heartbeats for five minutes, Solid Queue marks the jobs it held as failed. The transcript, the finished tool results, and the claims are all in the database, but nothing starts the turn again.
+
+The chat UI generator writes a job that does:
+
+```ruby
+class ResumeInterruptedChatsJob < ApplicationJob
+  def perform = Chat.interrupted.find_each { |chat| ChatResponseJob.perform_later(chat.id) }
+end
+```
+
+It runs every minute from Solid Queue's `config/recurring.yml`, and once when the web server boots, a minute later, after the claims of the process that died have expired:
+
+```ruby
+# config/initializers/resume_interrupted_chats.rb
+Rails.application.server { ResumeInterruptedChatsJob.set(wait: 1.minute).perform_later }
+```
+
+`Rails.application.server` runs when a web server loads `config.ru`, never in the console, a rake task, or a job worker. Don't write a polling worker or a boot sweep of your own: the generated job is both, and the claims let only one process answer each chat, however many servers boot at once.
+
+`Chat.interrupted` returns the chats whose turn stopped with work left and that no process holds: a person asked and no reply finished, a round of tools is unfinished, or a message is still queued. It leaves out chats that are complete, cancelled, running, or waiting for an answer, an approval, or a task. It's a scope, so it chains with your own and loads in batches:
+
+```ruby
+Chat.where(account: account).interrupted.find_each { |chat| CompleteJob.perform_later(chat.id) }
+```
+
+A job that finds another process holding the chat returns without doing anything, and `chat.running?` stays `true` until that process's claims expire, up to a minute after it died. Check it after `complete` and try again later, so a message that arrives in that minute still gets its answer:
 
 ```ruby
 class CompleteJob < ApplicationJob
@@ -153,6 +179,55 @@ end
 When the other process is alive, it finishes the work and the retry finds nothing to do. Don't clear the claim columns at boot to resume sooner: a process on another server that is still running would then share the chat, and both would run its tools.
 
 A process that dies mid-request removes nothing. Its assistant placeholder stays blank, and a tool call it was running keeps no result. RubyLLM leaves blank assistant messages out of every request, so the chat still works. Once the claims expire, the next `complete` runs the unfinished calls of the latest round again. A call in a round the conversation has moved past reaches the model with an error saying it didn't finish. Your records stay as they are.
+
+### A Durable Queue in Development
+
+With development's `:async` queue, stopping `bin/rails server` mid-reply loses the job, and the boot job answers the chat a minute after the next start. To run jobs as production does, run Solid Queue inside Puma. Its worker is a separate process, and the `async` cable adapter only reaches browsers connected to the process that broadcasts, so use Solid Cable as well. Add the queue and cable databases to development in `config/database.yml`, as production has them:
+
+```yaml
+development:
+  primary:
+    <<: *default
+    database: storage/development.sqlite3
+  queue:
+    <<: *default
+    database: storage/development_queue.sqlite3
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *default
+    database: storage/development_cable.sqlite3
+    migrations_paths: db/cable_migrate
+```
+
+Point Active Job and Action Cable at them:
+
+```ruby
+# config/environments/development.rb
+config.active_job.queue_adapter = :solid_queue
+config.solid_queue.connects_to = { database: { writing: :queue } }
+```
+
+```yaml
+# config/cable.yml
+development:
+  adapter: solid_cable
+  connects_to:
+    database:
+      writing: cable
+  polling_interval: 0.1.seconds
+  message_retention: 1.day
+```
+
+Solid Queue reads all of `config/recurring.yml` in an environment without a key of its own, so give it a `development:` key with the resume job:
+
+```yaml
+development:
+  resume_interrupted_chats:
+    class: ResumeInterruptedChatsJob
+    schedule: every minute
+```
+
+Then run `bin/rails db:prepare` and start the server with `SOLID_QUEUE_IN_PUMA=1 bin/rails server`.
 
 ## Stopping from Anywhere
 

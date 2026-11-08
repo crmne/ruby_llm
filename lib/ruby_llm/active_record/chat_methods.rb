@@ -14,6 +14,7 @@ require 'ruby_llm/active_record/chat_queue'
 require 'ruby_llm/active_record/chat_tool_call_state'
 require 'ruby_llm/active_record/chat_run'
 require 'ruby_llm/active_record/chat_agent_hooks'
+require 'ruby_llm/active_record/interrupted_chats'
 
 module RubyLLM
   module ActiveRecord
@@ -47,7 +48,23 @@ module RubyLLM
         CancelledError, Error, ConfigurationError, Faraday::Error, Timeout::Error, Errno::ETIMEDOUT
       ].freeze
 
+      ##
+      # :singleton-method: interrupted
+      #
+      # Returns the chats whose reply stopped partway and that no process
+      # is running: a process died, or a deploy stopped it, after the user
+      # asked, during a round of tools, or with messages still queued. A
+      # chat that is #complete?, #cancelled?, #running?, or #waiting? on a
+      # question or a task is left out. No job backend runs such a reply
+      # again by itself, so a recurring job completes them:
+      #
+      #   Chat.interrupted.find_each { |chat| ChatResponseJob.perform_later(chat.id) }
+      #
+      # Chains with other scopes. Returns none when the chats table has no
+      # claim columns, since then no process records that it runs a chat.
+
       included do
+        scope :interrupted, -> { InterruptedChats.new(self).relation }
         before_save :resolve_model
         after_commit :remember_model_registry_stored, if: -> { @model_registry_loaded_into }
         after_rollback -> { @model_registry_loaded_into = nil }

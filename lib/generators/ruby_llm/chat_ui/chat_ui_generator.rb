@@ -13,6 +13,7 @@ module RubyLLM
 
       source_root File.expand_path('templates', __dir__)
 
+      RECURRING_PATH = 'config/recurring.yml'
       CONTROLLER = File.expand_path('../../../../app/assets/javascripts/ruby_llm/chat_message_controller.js', __dir__)
 
       namespace 'ruby_llm:chat_ui'
@@ -128,6 +129,28 @@ module RubyLLM
 
       def create_jobs
         template 'jobs/chat_response_job.rb', "app/jobs/#{variable_name_for(chat_model_name)}_response_job.rb"
+        template 'jobs/resume_interrupted_chats_job.rb', "app/jobs/#{resume_job_class_name.underscore}.rb"
+      end
+
+      def schedule_resume_job
+        return unless app_file?(RECURRING_PATH)
+
+        source = File.read(File.join(destination_root, RECURRING_PATH))
+        return if behavior == :invoke && source.include?("class: #{resume_job_class_name}")
+
+        environments = recurring_environments(source)
+        if environments.empty?
+          append_to_file RECURRING_PATH, "\n#{recurring_task}"
+        else
+          environments.each do |environment|
+            inject_into_file RECURRING_PATH, recurring_task.indent(2), after: /^#{environment}:[ \t]*\n/
+          end
+        end
+      end
+
+      def resume_on_boot
+        initializer "#{resume_job_class_name.delete_suffix('Job').underscore}.rb",
+                    "Rails.application.server { #{resume_job_class_name}.set(wait: 1.minute).perform_later }\n"
       end
 
       def create_system_test
@@ -269,6 +292,20 @@ module RubyLLM
       def queued_message_controller_path = queued_message_model_name.underscore.pluralize
       def queued_message_controller_class_name = controller_class_name_for(queued_message_model_name)
       def chat_agent_class_name = "#{chat_model_name}Agent"
+      def resume_job_class_name = "ResumeInterrupted#{chat_variable_name.camelize.pluralize}Job"
+
+      def recurring_task
+        <<~YAML
+          #{resume_job_class_name.delete_suffix('Job').underscore}:
+            class: #{resume_job_class_name}
+            schedule: every minute
+        YAML
+      end
+
+      def recurring_environments(source)
+        environments = Dir[File.join(destination_root, 'config/environments/*.rb')].map { File.basename(_1, '.rb') }
+        environments.select { |environment| source.match?(/^#{environment}:[ \t]*$/) }
+      end
 
       def application_agent_chat_class?
         File.read(File.join(destination_root, APPLICATION_AGENT_PATH))
