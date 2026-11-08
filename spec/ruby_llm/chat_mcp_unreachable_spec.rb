@@ -176,6 +176,13 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  it 'keeps a test server answering after a request it cut off' do
+    uri = URI(answering('503 Service Unavailable'))
+    TCPSocket.open(uri.host, uri.port) { |socket| socket.write("POST /mcp HTTP/1.1\r\n") }
+
+    expect(Net::HTTP.post(uri, '{}').code).to eq('503')
+  end
+
   describe 'Retry-After' do
     before { stub_const('RubyLLM::MCP::Outages::BACKOFF', 0.05) }
 
