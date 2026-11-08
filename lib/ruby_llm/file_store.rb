@@ -55,7 +55,8 @@ module RubyLLM
     CACHED_TEXTS = 100
 
     UNSAFE_CHARACTERS = /[\x00-\x1f\x7f\\:*?"<>|]/
-    private_constant :UNSAFE_CHARACTERS
+    DIGEST_CHUNK = 1024 * 1024
+    private_constant :UNSAFE_CHARACTERS, :DIGEST_CHUNK
 
     class << self
       # Returns +name+ as a path inside a store: relative, with forward
@@ -107,9 +108,15 @@ module RubyLLM
         base.empty? ? 'file' : base
       end
 
-      # Returns the SHA-256 of +content+ in hex.
+      # Returns the SHA-256 of +content+, a String or an IO read to its
+      # end in chunks, in hex.
       def digest(content) # :nodoc:
-        Digest::SHA256.hexdigest(content)
+        return Digest::SHA256.hexdigest(content) unless content.respond_to?(:read)
+
+        digest = Digest::SHA256.new
+        buffer = String.new(capacity: DIGEST_CHUNK)
+        digest << buffer while content.read(DIGEST_CHUNK, buffer)
+        digest.hexdigest
       end
 
       # Returns the MIME type of +content+ written to +path+.

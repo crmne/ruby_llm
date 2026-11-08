@@ -173,7 +173,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-Every returned file is read into memory while it's saved, so keep the limit as low as your files allow. With a file store in a folder, code changes the files where they are, so neither limit applies: a file it writes stays in the folder whatever its size, and the result lists every changed path. Hidden files, symbolic links, and Python's `__pycache__` are never returned.
+Returned files aren't held in memory while the code runs. Without a file store, each one is copied to a tempfile in the system's temporary directory, and its attachment reads it from there. With a file store, each file reaches the store's `write` as an IO, one at a time, so a store that streams it never holds a whole file; the Active Storage store holds one file at a time. With a file store in a folder, code changes the files where they are, so neither limit applies: a file it writes stays in the folder whatever its size, and the result lists every changed path. Hidden files, symbolic links, and Python's `__pycache__` are never returned.
 
 ### What the Model Reads Back
 

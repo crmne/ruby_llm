@@ -158,6 +158,16 @@ RSpec.describe RubyLLM::Chat do
       expect(written).to eq(%w[notes.md out/chart.svg])
     end
 
+    it 'hands the store each file the run wrote as an IO, not a String' do
+      store = chat.file_store
+      allow(store).to receive(:write).and_call_original
+
+      run_code(files: %w[notes.md])
+
+      expect(store).to have_received(:write).with('out/chart.svg', an_instance_of(File))
+      expect(store).to have_received(:write).with('notes.md', an_instance_of(File))
+    end
+
     it 'tells the model when a run changed a file it had read' do
       chat.tools[:read_file].call(path: 'notes.md')
       chat.tools[:read_file].call(path: 'keep.txt')
