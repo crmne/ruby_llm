@@ -38,3 +38,6 @@ ignore:
   # Anthropic render_count_tokens_payload: the count is sliced to
   # COUNT_TOKENS_KEYS, which drops the temperature.
   - 5006a30d0b0b
+  # ClaimHeartbeat#waiting_until: a monotonic clock read as a Float never
+  # lands exactly on the deadline.
+  - 5e86f5e520d3
