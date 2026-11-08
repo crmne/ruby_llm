@@ -145,20 +145,26 @@ The chat UI generator writes a job that does:
 
 ```ruby
 class ResumeInterruptedChatsJob < ApplicationJob
-  def perform = Chat.interrupted.find_each { |chat| ChatResponseJob.perform_later(chat.id) }
+  def perform(boot: false)
+    Chat.interrupted.find_each { |chat| ChatResponseJob.perform_later(chat.id) }
+    expiry = Chat.where(claimed_until: Time.current..).maximum(:claimed_until) if boot
+    self.class.set(wait_until: expiry + 1.second).perform_later if expiry
+  end
 end
 ```
 
-It runs every minute from Solid Queue's `config/recurring.yml`, and once when the web server boots, a minute later, after the claims of the process that died have expired:
+It runs every minute from Solid Queue's `config/recurring.yml`, and as soon as the web server boots:
 
 ```ruby
 # config/initializers/resume_interrupted_chats.rb
-Rails.application.server { ResumeInterruptedChatsJob.set(wait: 1.minute).perform_later }
+Rails.application.server { ResumeInterruptedChatsJob.perform_later(boot: true) }
 ```
+
+A deploy or a restart stops its processes with a TERM, and a run stopped that way expires its claims as it exits, so the boot run answers its chat right away. A process killed outright, with a SIGKILL or by running out of memory, leaves claims that expire within a minute, so the boot run comes back once, a second after every claim held at boot has expired, and answers those chats about a minute after the kill. Only the boot run comes back, so the jobs can't pile up while chats are busy, and the run every minute catches anything else.
 
 `Rails.application.server` runs when a web server loads `config.ru`, never in the console, a rake task, or a job worker. Don't write a polling worker or a boot sweep of your own: the generated job is both, and the claims let only one process answer each chat, however many servers boot at once.
 
-`Chat.interrupted` returns the chats whose run died holding its claim, because a crash or a deploy stopped its process, once that claim has expired; a run that finishes, pauses, is cancelled, or fails releases its claim, so its chat never counts. A tool call that was running when its process shut down keeps its claim to expire too, the only record that it started. A live run whose tool works past `config.max_run_time` also shows up as interrupted, since its claims stop renewing then, so give a long tool a longer `config.max_run_time`, or have it [pause its call]({% link _tools/tool-execution.md %}#pausing-a-tool-call).
+`Chat.interrupted` returns the chats whose run died holding its claim, because a crash or a deploy stopped its process, once that claim has expired; a run that finishes, pauses, is cancelled, or fails releases its claim, so its chat never counts. A run stopped by a TERM, an exit, or a thread killed as its process exits keeps its claim but expires it, so its chat counts at once; Ctrl-C releases it, as a stop. A tool call that was running when its process shut down keeps its claim expired too, the only record that it started. A live run whose tool works past `config.max_run_time` also shows up as interrupted, since its claims stop renewing then, so give a long tool a longer `config.max_run_time`, or have it [pause its call]({% link _tools/tool-execution.md %}#pausing-a-tool-call).
 
 It's a scope, so it chains with your own and loads in batches:
 
@@ -166,7 +172,7 @@ It's a scope, so it chains with your own and loads in batches:
 Chat.where(account: account).interrupted.find_each { |chat| CompleteJob.perform_later(chat.id) }
 ```
 
-A job that finds another process holding the chat returns without doing anything, and `chat.running?` stays `true` until that process's claims expire, up to a minute after it died. Check it after `complete` and try again later, so a message that arrives in that minute still gets its answer:
+A job that finds another process holding the chat returns without doing anything, and `chat.running?` stays `true` until that process's claims expire: right away after a shutdown, up to a minute after a crash. Check it after `complete` and try again later, so a message that arrives in that minute still gets its answer:
 
 ```ruby
 class CompleteJob < ApplicationJob
@@ -184,7 +190,7 @@ A process that dies mid-request removes nothing. Its assistant placeholder stays
 
 ### A Durable Queue in Development
 
-With development's `:async` queue, stopping `bin/rails server` mid-reply loses the job, and the boot job answers the chat a minute after the next start. To run jobs as production does, run Solid Queue inside Puma. Its worker is a separate process, and the `async` cable adapter only reaches browsers connected to the process that broadcasts, so use Solid Cable as well. Add the queue and cable databases to development in `config/database.yml`, as production has them:
+With development's `:async` queue, stopping `bin/rails server` mid-reply loses the job, and the boot job answers the chat as soon as the server starts again. To run jobs as production does, run Solid Queue inside Puma. Its worker is a separate process, and the `async` cable adapter only reaches browsers connected to the process that broadcasts, so use Solid Cable as well. Add the queue and cable databases to development in `config/database.yml`, as production has them:
 
 ```yaml
 development:

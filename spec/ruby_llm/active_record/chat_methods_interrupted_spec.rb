@@ -138,7 +138,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(chats.interrupted).to contain_exactly(chat)
     end
 
-    it 'returns a chat whose run thread was killed as its process exited, once its claim expires' do
+    it 'returns a chat whose run thread was killed as its process exited, right away' do
       chat = asked
       started = Queue.new
       thread = Thread.new do
@@ -150,17 +150,36 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(started.pop(timeout: 10)).to be(true)
       expect(thread.kill.join(10)).to eq(thread)
 
-      expect(chats.interrupted).to be_empty
-      travel lease + 1
+      expect(row(chat).claim_token).to be_present
       expect(chats.interrupted).to contain_exactly(chat)
     end
 
-    it 'returns a chat whose run a TERM signal stopped, once its claim expires' do
+    it 'returns a chat whose run a TERM signal stopped, right away' do
       chat = asked
 
       expect { job_for(chat) { raise SignalException, 'TERM' }.complete }.to raise_error(SignalException)
-      travel lease + 1
+      expect(row(chat).claim_token).to be_present
       expect(chats.interrupted).to contain_exactly(chat)
+    end
+
+    it 'returns a chat whose run an exit stopped, right away' do
+      chat = asked
+
+      expect { job_for(chat) { exit }.complete }.to raise_error(SystemExit)
+      expect(chats.interrupted).to contain_exactly(chat)
+    end
+
+    it 'leaves the claim alone when another process took the chat over before the shutdown' do
+      chat = asked
+      taken = (lease * 2).from_now.change(usec: 0)
+      job = job_for(chat) do
+        Chat.where(id: chat.id).update_all(claim_token: 'other', claimed_until: taken)
+        raise SignalException, 'TERM'
+      end
+
+      expect { job.complete }.to raise_error(SignalException)
+      expect(row(chat)).to have_attributes(claim_token: 'other', claimed_until: taken)
+      expect(chats.interrupted).to be_empty
     end
 
     it 'leaves out a chat whose run Ctrl-C stopped, as a stop' do
@@ -171,13 +190,12 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(chats.interrupted).to be_empty
     end
 
-    it 'can run the chat again in the process that kept its claim, once the claim expires' do
+    it 'can run the chat again in the process that kept its claim' do
       chat = asked
       job = job_for(chat) { raise SignalException, 'TERM' }
       expect { job.complete }.to raise_error(SignalException)
       allow(job.to_llm.provider).to receive(:complete).and_return(reply)
 
-      travel lease + 1
       job.complete
 
       expect(row(chat)).to have_attributes(claim_token: nil, claimed_until: nil)
@@ -351,28 +369,59 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(started.pop(timeout: 10)).to be(true)
     expect(thread.kill.join(10)).to eq(thread)
 
-    expect(tool_call_rows(chat).sole).to have_attributes(result_id: nil, claimed_until: be_future)
-    expect(row(chat).claim_token).to be_present
-  end
-
-  it 'keeps the claim of a tool call that was running when a TERM signal stopped its run' do
-    chat = asked
-    job = posting_job(chat) { raise SignalException, 'TERM' }
-
-    expect { job.complete }.to raise_error(SignalException)
-    expect(tool_call_rows(chat).sole).to have_attributes(result_id: nil, claimed_until: be_future)
-  end
-
-  it 'keeps the claims of the chat and its running tool call together on shutdown, to expire alike' do
-    chat = asked
-    job = posting_job(chat) { raise SignalException, 'TERM' }
-
-    expect { job.complete }.to raise_error(SignalException)
-    expect(row(chat).claimed_until).to be_future
-    expect(tool_call_rows(chat).sole.claimed_until).to be_future
-    travel_to [row(chat).claimed_until, tool_call_rows(chat).sole.claimed_until].max + 1
+    expect(tool_call_rows(chat).sole).to have_attributes(result_id: nil, claimed_until: be_present, running?: false)
     expect(chats.interrupted).to contain_exactly(chat)
-    expect(tool_call_rows(chat).sole).to have_attributes(result_id: nil, running?: false)
+  end
+
+  it 'keeps the expired claim of a tool call that was running when a TERM signal stopped its run' do
+    chat = asked
+    job = posting_job(chat) { raise SignalException, 'TERM' }
+
+    expect { job.complete }.to raise_error(SignalException)
+    expect(tool_call_rows(chat).sole).to have_attributes(result_id: nil, claimed_until: be_present, running?: false)
+  end
+
+  it 'expires the claims of the chat and its running tool call on shutdown, so the chat resumes at once' do
+    chat = asked
+    job = posting_job(chat) { raise SignalException, 'TERM' }
+
+    expect { job.complete }.to raise_error(SignalException)
+    expect(row(chat)).to have_attributes(claim_token: be_present, claimed_until: be <= Time.current)
+    expect(tool_call_rows(chat).sole.claimed_until).to be <= Time.current
+    expect(chats.interrupted).to contain_exactly(chat)
+  end
+
+  # A column that keeps whole seconds rounds a fraction up, into the future.
+  it 'expires the claims on shutdown to the whole second, which has already passed' do
+    travel_to Time.current.change(usec: 900_000), with_usec: true
+    chat = asked
+    job = posting_job(chat) { raise SignalException, 'TERM' }
+
+    expect { job.complete }.to raise_error(SignalException)
+    expect(row(chat).claimed_until).to eq(Time.current.change(usec: 0))
+    expect(tool_call_rows(chat).sole.claimed_until).to eq(Time.current.change(usec: 0))
+  end
+
+  it 'leaves a free chat alone when a shutdown stops its run before the run claims it' do
+    chat = asked
+    job = job_for(chat)
+    allow(job).to receive(:run_claim_acquired?).and_raise(SignalException, 'TERM')
+
+    expect { job.complete }.to raise_error(SignalException)
+    expect(row(chat)).to have_attributes(claim_token: nil, claimed_until: nil)
+  end
+
+  it 'leaves the claim of a tool call alone when another process took it over before the shutdown' do
+    chat = asked
+    taken = (lease * 2).from_now.change(usec: 0)
+    job = posting_job(chat) do
+      RubyLLM::ActiveRecord::ToolCall.where(message_id: Message.where(chat_id: chat.id).select(:id))
+                                     .update_all(claimed_until: taken)
+      raise SignalException, 'TERM'
+    end
+
+    expect { job.complete }.to raise_error(SignalException)
+    expect(tool_call_rows(chat).sole.claimed_until).to eq(taken)
   end
 
   it 'releases the claim of a tool call that has not started when its run shuts down' do
@@ -381,7 +430,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
     expect { job.complete }.to raise_error(SignalException)
     running, waiting = tool_call_rows(chat)
-    expect(running.claimed_until).to be_future
+    expect(running.claimed_until).to be_present
     expect(waiting).to have_attributes(result_id: nil, claimed_until: nil)
   end
 

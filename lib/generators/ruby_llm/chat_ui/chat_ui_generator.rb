@@ -152,7 +152,7 @@ module RubyLLM
 
       def resume_on_boot
         initializer "#{resume_job_class_name.delete_suffix('Job').underscore}.rb",
-                    "Rails.application.server { #{resume_job_class_name}.set(wait: 1.minute).perform_later }\n"
+                    "Rails.application.server { #{resume_job_class_name}.perform_later(boot: true) }\n"
         return unless behavior == :invoke && app_file?('config.ru')
         return if File.read(File.join(destination_root, 'config.ru')).include?('load_server')
 

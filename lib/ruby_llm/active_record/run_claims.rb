@@ -70,17 +70,17 @@ module RubyLLM
       end
 
       # A call that was running when its process shut down may have done
-      # its work, such as a message it already sent, so it keeps its claim
-      # to expire with the chat's: the claim is the only record that it
-      # started. Every other call is released.
+      # its work, such as a message it already sent, so it keeps its claim,
+      # expired at once like the chat's: the expired claim is the only
+      # record that it started. Every other call is released.
       def release_persisted_tool_calls(tool_call_ids, stopped_by = nil) # :nodoc:
-        exiting = shutting_down?(stopped_by)
+        expired = Time.current.change(usec: 0) if shutting_down?(stopped_by)
         tool_call_ids.each do |tool_call_id|
           claim = claim_lock.synchronize { tool_call_claims.delete(tool_call_id) }
-          next if claim.nil? || (exiting && claim.started)
+          next unless claim
 
           RubyLLM::ActiveRecord::ToolCall.where(id: claim.row, result_id: nil, claimed_until: claim.written)
-                                         .update_all(claimed_until: nil)
+                                         .update_all(claimed_until: (expired if claim.started))
         end
       ensure
         stop_idle_claim_heartbeat
@@ -143,7 +143,8 @@ module RubyLLM
       end
 
       # A run stopped because its process is shutting down didn't end, so
-      # it leaves its claim to expire, and the chat counts as interrupted.
+      # it keeps its claim but expires it, and the chat counts as
+      # interrupted at once.
       def holding_run_claim(busy)
         if run_claims?
           start_claim_heartbeat
@@ -165,7 +166,7 @@ module RubyLLM
         begin
           stop_claim_heartbeat
         ensure
-          shutting_down?(stopped_by) ? forget_run_claim : release_run_claim(completed)
+          shutting_down?(stopped_by) ? expire_run_claim : release_run_claim(completed)
         end
       end
 
@@ -211,8 +212,12 @@ module RubyLLM
         ruby_llm_usages.klass.uncached { ruby_llm_usages.count }
       end
 
-      def forget_run_claim
+      # Whole seconds, so a column that rounds fractions up still holds a
+      # time that has passed.
+      def expire_run_claim
+        token = @run_claim_token
         @synced_usage_count = @synced_run_claim_token = @run_claim_token = nil
+        chat_row.where(claim_token: token).update_all(claimed_until: Time.current.change(usec: 0)) if token
       end
 
       def release_run_claim(completed)
