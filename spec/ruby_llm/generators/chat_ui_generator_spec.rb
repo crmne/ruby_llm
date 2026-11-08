@@ -639,6 +639,75 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       expect { generator.check_model_exists }.not_to raise_error
     end
 
+    describe 'scheduling the resume job' do
+      def recurring_path = File.join(destination, 'config/recurring.yml')
+
+      def cleanup
+        "  clear_jobs:\n    command: \"SolidQueue::Job.clear_finished_in_batches\"\n    schedule: every hour\n"
+      end
+
+      before do
+        FileUtils.mkdir_p(File.join(destination, 'config/environments'))
+        %w[development production test].each do |environment|
+          File.write(File.join(destination, "config/environments/#{environment}.rb"), '')
+        end
+      end
+
+      def schedule(source, times: 2)
+        File.write(recurring_path, source)
+        times.times { generator.schedule_resume_job }
+        ActiveSupport::ConfigurationFile.parse(recurring_path)
+      end
+
+      def resume_tasks(tasks)
+        tasks.values.select { |task| task.is_a?(Hash) && task['class'] == 'ResumeInterruptedChatsJob' }
+      end
+
+      it 'adds it once under production, as Rails writes the file' do
+        config = schedule("# examples:\n#   periodic_cleanup:\n\nproduction:\n#{cleanup}")
+
+        expect(resume_tasks(config['production'])).to eq([{ 'class' => 'ResumeInterruptedChatsJob',
+                                                            'schedule' => 'every minute' }])
+        expect(config['production']).to include('clear_jobs')
+      end
+
+      it 'adds it under headers with a comment or an anchor' do
+        config = schedule("development: &shared\n#{cleanup}\nproduction: # servers\n#{cleanup}")
+
+        expect(%w[development production].map { |environment| resume_tasks(config[environment]).size }).to eq([1, 1])
+      end
+
+      it 'adds it to a production that aliases another environment, keeping what it had' do
+        config = schedule("development: &shared\n#{cleanup}\nproduction: *shared\n")
+
+        expect(resume_tasks(config['production']).size).to eq(1)
+        expect(config['production']).to include('clear_jobs')
+        expect(resume_tasks(config['development']).size).to eq(1)
+      end
+
+      it 'adds production to a file that only names development' do
+        config = schedule("development:\n#{cleanup}")
+
+        expect(%w[development production].map { |environment| resume_tasks(config[environment]).size }).to eq([1, 1])
+      end
+
+      it 'adds it at the top of a file without environments' do
+        config = schedule(cleanup.gsub(/^  /, ''))
+
+        expect(resume_tasks(config).size).to eq(1)
+        expect(config).to include('clear_jobs')
+      end
+
+      it 'removes it on destroy' do
+        source = "development: &shared\n#{cleanup}\nproduction: # servers\n#{cleanup}"
+        schedule(source, times: 1)
+        generator.behavior = :revoke
+        generator.schedule_resume_job
+
+        expect(File.read(recurring_path)).to eq(source)
+      end
+    end
+
     it 'adds available_chat_models to the application controller there' do
       generator.add_available_chat_models_to_application_controller
 

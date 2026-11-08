@@ -132,20 +132,18 @@ module RubyLLM
         template 'jobs/resume_interrupted_chats_job.rb', "app/jobs/#{resume_job_class_name.underscore}.rb"
       end
 
+      # Solid Queue reads the key of the running environment, or the whole
+      # file when it has none, so the job goes under every environment the
+      # file names and production, and at the top of a file without any.
       def schedule_resume_job
         return unless app_file?(RECURRING_PATH)
+        return unschedule_resume_job if behavior == :revoke
 
-        source = File.read(File.join(destination_root, RECURRING_PATH))
-        environments = recurring_environments(source)
+        environments = recurring_environments
         if environments.empty?
-          append_to_file RECURRING_PATH, "\n#{recurring_task}" unless scheduled?(source)
+          append_to_file RECURRING_PATH, "\n#{recurring_task}" unless scheduled_in?(recurring_config)
         else
-          environments.each do |environment|
-            header = environment_header(environment)
-            next if scheduled?(source[/#{header}(?:(?:[ \t#].*)?\n)*/])
-
-            inject_into_file RECURRING_PATH, recurring_task.indent(2), after: header, force: true
-          end
+          (environments | ['production']).each { |environment| schedule_in(environment) }
         end
       end
 
@@ -303,17 +301,42 @@ module RubyLLM
         YAML
       end
 
-      def scheduled?(section)
-        behavior == :invoke && section.include?("class: #{resume_job_class_name}")
+      def schedule_in(environment)
+        return if scheduled_in?(recurring_config[environment])
+
+        source = File.read(File.join(destination_root, RECURRING_PATH))
+        name = Regexp.escape(environment)
+        if (aliased = source.match(/^#{name}:[ \t]*(\*[\w-]+)[ \t]*(?:#.*)?\n/))
+          gsub_file RECURRING_PATH, aliased[0], "#{environment}:\n  <<: #{aliased[1]}\n#{recurring_task.indent(2)}"
+        elsif (header = source[/^#{name}:[ \t]*(?:&[\w-]+[ \t]*)?(?:#.*)?\n/])
+          inject_into_file RECURRING_PATH, recurring_task.indent(2), after: header, force: true
+        elsif recurring_config.key?(environment)
+          say_status :skip, "add #{resume_job_class_name} to #{environment} in #{RECURRING_PATH}", :yellow
+        else
+          append_to_file RECURRING_PATH, "\n#{environment}:\n#{recurring_task.indent(2)}"
+        end
       end
 
-      def recurring_environments(source)
+      def unschedule_resume_job
+        [recurring_task.indent(2), recurring_task].each do |task|
+          gsub_file RECURRING_PATH, task, '', force: true
+        end
+      end
+
+      def scheduled_in?(tasks)
+        tasks.is_a?(Hash) && tasks.values.any? { |task| task.is_a?(Hash) && task['class'] == resume_job_class_name }
+      end
+
+      def recurring_config
+        config = ActiveSupport::ConfigurationFile.parse(File.join(destination_root, RECURRING_PATH))
+        config.is_a?(Hash) ? config : {}
+      rescue StandardError
+        {}
+      end
+
+      def recurring_environments
         environments = Dir[File.join(destination_root, 'config/environments/*.rb')].map { File.basename(_1, '.rb') }
-        environments.select { |environment| source.match?(environment_header(environment)) }
-      end
-
-      def environment_header(environment)
-        /^#{Regexp.escape(environment)}:[ \t]*(?:&[\w-]+[ \t]*)?(?:#.*)?\n/
+        environments & recurring_config.keys
       end
 
       def application_agent_chat_class?
