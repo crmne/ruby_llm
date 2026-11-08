@@ -26,7 +26,7 @@ Subscribe to these events as shown in [Instrumentation and Observability]({% lin
 | `agent.ruby_llm` | Around one run of a chat an agent configured | `agent_name`, `agent_description`, `chat`, `chat_id` |
 | `chat.ruby_llm` | Around one chat completion | `chat`, `provider`, `provider_class`, `model`, `model_info`, `input_messages`, `messages_after`, `response`, `streaming`, `tokens`, `cost`, `response_tokens`, `agent_name` |
 | `tool_call.ruby_llm` | Around one tool execution | `tool_name`, `tool_arguments`, `tool_call_id`, `result`, `agent_name` |
-| `mcp_unreachable.ruby_llm` | When a chat can't list an MCP server's tools and goes on without them, at most once a minute per server, or once per the server's `Retry-After` | `server`, `error` |
+| `mcp_unreachable.ruby_llm` | When a chat finds an MCP server down, listing its tools or calling one, and goes on without it, at most once a minute per server, or once per the server's `Retry-After` | `server`, `error`, `status` |
 | `code_execution.ruby_llm` | Around one [code execution]({% link _advanced/code-execution.md %}) run | `tool_name`, `tool_call_id`, `language`, `sandbox`, `timeout`, `network`, `duration`, `exit_code`, `timed_out`, `blocked_hosts`, `files` |
 | `embedding.ruby_llm` | Around one embedding request | `input`, `dimensions`, `embedding_dimensions`, `embedding_count`, `tokens`, `cost` |
 | `image.ruby_llm` | Around one image generation | `prompt`, `size`, `count`, `tokens`, `cost` |
@@ -61,6 +61,16 @@ A run opens one event, however many moves it takes. A turn that goes on to answe
 | `chat_id` | The ID of the Rails chat record, present only for a persisted chat |
 
 The workflow fields are added as usual. `chat.ruby_llm`, `compaction.ruby_llm`, and `tool_call.ruby_llm` also carry `agent_name` when the chat belongs to a named agent class, so subscribers can attribute model calls and tools without tracking the enclosing event.
+
+## MCP Events
+
+`mcp_unreachable.ruby_llm` fires when a chat finds an [MCP server down]({% link _tools/mcp.md %}#when-a-server-is-down) and goes on without its tools. It never carries the error's message, since a connection error's message can name the server's host or URL and a server's answer can quote anything.
+
+| Field | Contents |
+| --- | --- |
+| `server` | The server's name |
+| `error` | The error's class name, such as `"RubyLLM::ConnectionError"` or `"RubyLLM::ServiceUnavailableError"` |
+| `status` | The HTTP status the server answered, such as `503`, present only when it answered with one |
 
 ## Tokens and Cost
 
