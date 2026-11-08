@@ -12,9 +12,10 @@ module GeneratorTestHelpers
   ROOT_ENV = 'RUBYLLM_GENERATOR_TMP'
 
   # The folder under which each test process makes its own root. Defaults to
-  # the repository's gitignored tmp/, never Dir.tmpdir.
+  # the repository's gitignored tmp/, never Dir.tmpdir. A relative override is
+  # made absolute, since the specs change into the apps they build.
   def self.base_directory
-    ENV.fetch(ROOT_ENV) { File.expand_path('../../tmp/generator_apps', __dir__) }
+    File.expand_path(ENV.fetch(ROOT_ENV) { File.expand_path('../../tmp/generator_apps', __dir__) })
   end
 
   # This process's root, made on first use. A forked worker makes its own.
@@ -23,10 +24,12 @@ module GeneratorTestHelpers
     @roots[Process.pid] ||= create_root
   end
 
+  # Where the app called name lives in this process's root.
   def self.app_path(name)
     File.join(root, name)
   end
 
+  # Makes a new root under base, removed when the process that made it exits.
   def self.create_root(base = base_directory)
     path = File.join(base, "#{Process.pid}-#{SecureRandom.hex(6)}")
     FileUtils.mkdir_p(path)
@@ -35,6 +38,7 @@ module GeneratorTestHelpers
     path
   end
 
+  # Removes one root and forgets it, leaving every other root alone.
   def self.remove_root(path)
     FileUtils.rm_rf(path)
     @roots&.delete_if { |_pid, root| root == path }

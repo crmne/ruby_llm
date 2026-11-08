@@ -30,6 +30,7 @@ module MutationTesting
 
     private
 
+    # The spec files Git tracks or would track, or nil to glob instead.
     def git_listing
       return unless repository?
 

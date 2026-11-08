@@ -22,6 +22,13 @@ RSpec.describe GeneratorTestHelpers do
     expect(described_class.base_directory).to eq(base)
   end
 
+  it 'makes a relative RUBYLLM_GENERATOR_TMP absolute' do
+    allow(ENV).to receive(:fetch).and_call_original
+    allow(ENV).to receive(:fetch).with(described_class::ROOT_ENV).and_return('tmp/elsewhere')
+
+    expect(described_class.base_directory).to eq(File.expand_path('tmp/elsewhere'))
+  end
+
   it 'gives every root a folder of its own' do
     first = described_class.create_root(base)
     second = described_class.create_root(base)
