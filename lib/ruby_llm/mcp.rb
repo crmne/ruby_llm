@@ -49,7 +49,7 @@ module RubyLLM
 
     SETTINGS = %i[
       @url @allow_http @command @directory @env @headers @bearer_token @timeout @input_names @only @except @prefix
-      @tool_declarations @approvals @deferrals @callbacks @oauth @input_requests @extensions @log_level @rescue_handlers
+      @tool_declarations @approvals @deferrals @callbacks @oauth @input_requests @extensions @log_level
     ].freeze
     private_constant :SETTINGS, :INPUT_ROUNDS, :INPUT_REQUESTS, :INLINE_SETTINGS, :EXTENSIONS, :POLL_INTERVAL,
                      :LOG_LEVELS, :UNKNOWN_TOOL_ERRORS

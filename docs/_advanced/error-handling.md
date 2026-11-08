@@ -347,14 +347,18 @@ Name a method with `with:` or pass a block. Either runs on the tool instance, so
 
 A question from `ask` and a cancelled chat never reach a handler, so `rescue_from StandardError` doesn't swallow them.
 
-A subclass inherits the handlers its parent has when the subclass is defined. RubyLLM's own tools are defined before your code loads, so give them handlers directly, such as in an initializer:
+A subclass uses its parent's handlers, including ones declared after the subclass, and its own come first. A handler on `RubyLLM::Tool` itself covers every tool, RubyLLM's own included, such as in an initializer:
 
 ```ruby
 # config/initializers/ruby_llm.rb
-RubyLLM::CodeExecution.rescue_from StandardError do |error|
-  { error: "The code couldn't run (#{error.class.name.split("::").last})." }
+RubyLLM::Tool.rescue_from StandardError do |error|
+  { error: "The tool couldn't run (#{error.class.name.split("::").last})." }
 end
 ```
+
+Declare one on `RubyLLM::CodeExecution` to cover only code execution.
+
+Handlers run for the calls a chat makes, whether your tool defines `execute` or overrides `call`. When you call a tool yourself, as in `Weather.new.call(city: "Berlin")`, the exception reaches you.
 
 Handlers for an [MCP server's]({% link _tools/mcp.md %}#handling-tool-errors) tools go on its client class.
 

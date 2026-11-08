@@ -2,9 +2,10 @@
 
 module RubyLLM
   module Support
-    # The +rescue_from+ macro Agent and Tool share: handlers named with
-    # +with:+ or given as a block, searched in reverse declaration order,
-    # and run on the instance whose work raised.
+    # The +rescue_from+ macro Agent, Tool, and MCP share: handlers named
+    # with +with:+ or given as a block, searched in reverse declaration
+    # order from the class up through its ancestors when an exception is
+    # raised, and run on the instance whose work raised.
     module Rescuable # :nodoc:
       def self.included(base)
         base.extend(ClassMethods)
@@ -30,7 +31,11 @@ module RubyLLM
             exception_class = rescue_handler_class(class_name)
             return handler if exception_class && exception.is_a?(exception_class)
           end
-          nil
+          superclass.rescue_handler_for(exception) if superclass.respond_to?(:rescue_handler_for)
+        end
+
+        def rescue_handlers?
+          rescue_handlers.any? || (superclass.respond_to?(:rescue_handlers?) && superclass.rescue_handlers?)
         end
 
         private

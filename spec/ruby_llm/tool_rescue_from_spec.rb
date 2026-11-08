@@ -15,9 +15,9 @@ RSpec.describe RubyLLM::Tool do
     end
   end
 
-  def calls(*names)
+  def calls(*names, arguments: {})
     tool_calls = names.each_with_index.to_h do |name, index|
-      ["call_#{index}", RubyLLM::ToolCall.new(id: "call_#{index}", name:, arguments: {})]
+      ["call_#{index}", RubyLLM::ToolCall.new(id: "call_#{index}", name:, arguments:)]
     end
     RubyLLM::Message.new(role: :assistant, content: '', tool_calls:)
   end
@@ -30,6 +30,13 @@ RSpec.describe RubyLLM::Tool do
     chat.messages.select(&:tool_result?).map(&:content)
   end
 
+  def result_of(tool, name: 'lookup')
+    chat.with_tools(tool)
+    allow(chat.provider).to receive(:complete).and_return(calls(name), answer)
+    chat.ask('Go')
+    results.sole
+  end
+
   describe '.rescue_from' do
     it 'returns the named handler result as the call result' do
       tool = failing_tool do
@@ -40,7 +47,7 @@ RSpec.describe RubyLLM::Tool do
         def handle(error) = { error: "Failed: #{error.message}" }
       end
 
-      expect(tool.new.call).to eq(error: 'Failed: the service broke')
+      expect(result_of(tool)).to eq('{"error":"Failed: the service broke"}')
     end
 
     it 'calls a zero-arity handler without arguments' do
@@ -52,13 +59,13 @@ RSpec.describe RubyLLM::Tool do
         def handle = 'handled'
       end
 
-      expect(tool.new.call).to eq('handled')
+      expect(result_of(tool)).to eq('handled')
     end
 
     it 'runs a block handler on the tool instance' do
-      tool = failing_tool { rescue_from(RuntimeError) { |error| [name, error.message] } }
+      tool = failing_tool { rescue_from(RuntimeError) { |error| "#{name}: #{error.message}" } }
 
-      expect(tool.new.call).to eq(['lookup', 'the service broke'])
+      expect(result_of(tool)).to eq('lookup: the service broke')
     end
 
     it 'prefers the handler declared last' do
@@ -67,7 +74,7 @@ RSpec.describe RubyLLM::Tool do
         rescue_from(RuntimeError) { 'specific' }
       end
 
-      expect(tool.new.call).to eq('specific')
+      expect(result_of(tool)).to eq('specific')
     end
 
     it 'looks up exception classes named as Strings when an exception is raised' do
@@ -75,25 +82,37 @@ RSpec.describe RubyLLM::Tool do
         rescue_from('RubyLLM::MissingSpecError', 'RubyLLM::RateLimitError') { 'named' }
       end
 
-      expect(tool.new.call).to eq('named')
+      expect(result_of(tool)).to eq('named')
     end
 
     it 'raises exceptions no handler matches' do
       tool = failing_tool { rescue_from(ArgumentError) { 'unused' } }
 
-      expect { tool.new.call }.to raise_error(RuntimeError, 'the service broke')
+      expect { result_of(tool) }.to raise_error(RuntimeError, 'the service broke')
     end
 
-    it 'raises what a handler re-raises' do
-      tool = failing_tool { rescue_from(RuntimeError) { raise } }
+    it 'raises what a handler re-raises, running the handler once' do
+      runs = 0
+      tool = failing_tool do
+        rescue_from(RuntimeError) do
+          runs += 1
+          raise
+        end
+      end
 
-      expect { tool.new.call }.to raise_error(RuntimeError, 'the service broke')
+      expect { result_of(tool) }.to raise_error(RuntimeError, 'the service broke')
+      expect(runs).to eq(1)
     end
 
     it 'lets a handler end the turn with halt' do
       tool = failing_tool { rescue_from(RuntimeError) { halt 'stopped' } }
+      chat.with_tools(tool)
+      allow(chat.provider).to receive(:complete).and_return(calls('lookup'), answer)
 
-      expect(tool.new.call).to eq(RubyLLM::Tool::Halt.new('stopped'))
+      chat.ask('Go')
+
+      expect(chat.messages.last).to have_attributes(content: 'stopped', finish_reason: :halted)
+      expect(chat.provider).to have_received(:complete).once
     end
 
     it 'leaves questions from ask to the chat' do
@@ -102,14 +121,18 @@ RSpec.describe RubyLLM::Tool do
         rescue_from(StandardError) { 'swallowed' }
         def execute = ask('Window or aisle?')
       end
+      chat.with_tools(tool)
+      allow(chat.provider).to receive(:complete).and_return(calls('booking'), answer)
 
-      expect { tool.new.call }.to raise_error(RubyLLM::InputRequiredError)
+      chat.ask('Go')
+
+      expect(chat.pending_questions.map(&:message)).to eq(['Window or aisle?'])
     end
 
     it 'leaves cancellations alone' do
       tool = failing_tool(RubyLLM::CancelledError.new) { rescue_from(StandardError) { 'swallowed' } }
 
-      expect { tool.new.call }.to raise_error(RubyLLM::CancelledError)
+      expect { result_of(tool) }.to raise_error(RubyLLM::CancelledError)
     end
 
     it 'validates its arguments as Agent.rescue_from does' do
@@ -119,25 +142,69 @@ RSpec.describe RubyLLM::Tool do
       expect { failing_tool { rescue_from(Interrupt) { nil } } }.to raise_error(ArgumentError, /not a StandardError/)
     end
 
-    it 'gives subclasses the handlers declared before they are defined' do
-      parent = failing_tool { rescue_from(RuntimeError) { 'from the parent' } }
+    it 'gives subclasses the handlers their parents declare, even after the subclass is defined' do
+      parent = failing_tool
       child = Class.new(parent)
       parent.rescue_from(RuntimeError) { 'added later' }
-      child.rescue_from(ArgumentError) { 'only the child' }
 
-      expect(child.new.call).to eq('from the parent')
-      expect(parent.rescue_handlers.size).to eq(2)
+      expect(result_of(child)).to eq('added later')
+    end
+
+    it 'prefers a subclass handler to its parent one' do
+      parent = failing_tool
+      child = Class.new(parent) { rescue_from(RuntimeError) { 'from the child' } }
+      parent.rescue_from(RuntimeError) { 'from the parent' }
+
+      expect(result_of(child)).to eq('from the child')
+      expect(child.rescue_handlers.size).to eq(1)
+    end
+
+    it 'covers a tool that overrides call' do
+      tool = Class.new(described_class) do
+        def self.tool_name = 'lookup'
+        rescue_from(RuntimeError) { |error| "Recovered: #{error.message}" }
+        def call(**) = raise('call broke')
+      end
+
+      expect(result_of(tool)).to eq('Recovered: call broke')
+    end
+
+    it 'leaves a call you make yourself to you' do
+      tool = failing_tool { rescue_from(RuntimeError) { 'swallowed' } }
+
+      expect { tool.new.call }.to raise_error(RuntimeError, 'the service broke')
     end
 
     it 'handles an exception from resume' do
       tool = Class.new(described_class) do
         def self.tool_name = 'signature'
         rescue_from(RuntimeError) { |error| "Resume failed: #{error.message}" }
+        def execute = RubyLLM::Task.new(status: :working)
         def resume(_task, **) = raise('envelope missing')
       end
+      chat.with_tools(tool)
+      allow(chat.provider).to receive(:complete).and_return(calls('signature'), answer)
 
-      expect(tool.new.resume_call(RubyLLM::Task.new(status: :working).to_h, {}, tool_call: nil))
-        .to eq('Resume failed: envelope missing')
+      chat.ask('Go')
+      chat.complete
+
+      expect(results).to eq(['Resume failed: envelope missing'])
+    end
+
+    it 'resumes with the model arguments as keywords' do
+      tool = Class.new(described_class) do
+        def self.tool_name = 'signature'
+        def execute(envelope:) = RubyLLM::Task.new(status: :working, data: { 'envelope' => envelope })
+        def resume(_task, envelope:) = "Signed #{envelope}"
+      end
+      chat.with_tools(tool)
+      allow(chat.provider).to receive(:complete).and_return(calls('signature', arguments: { 'envelope' => 'E-1' }),
+                                                            answer)
+
+      chat.ask('Go')
+      chat.complete
+
+      expect(results).to eq(['Signed E-1'])
     end
   end
 
@@ -181,7 +248,10 @@ RSpec.describe RubyLLM::Tool do
   describe 'MCP tools' do
     let(:transport) do
       Class.new do
+        attr_reader :calls
+
         def request(message, **)
+          (@calls ||= []) << message[:params] if message[:method] == 'tools/call'
           case message[:method]
           when 'server/discover' then result(message, { 'supportedVersions' => ['2026-07-28'] })
           when 'tools/list' then result(message, { 'tools' => [{ 'name' => 'read_notes', 'inputSchema' => {} }] })
@@ -239,25 +309,49 @@ RSpec.describe RubyLLM::Tool do
       expect(results).to eq(['{"error":"Ada\'s laptop: Asleep"}'])
     end
 
-    it 'gives MCP subclasses the handlers of their parent' do
-      parent = laptop_class { rescue_from(RubyLLM::MCP::Error) { 'from the parent' } }
-      tool = Class.new(parent).new(owner: 'Ada').tools.first
+    def mcp_result_of(mcp)
+      chat.with_mcp(mcp)
+      allow(chat.provider).to receive(:complete).and_return(calls('read_notes'), answer)
+      chat.ask('Read my notes')
+      results.sole
+    end
 
-      expect(tool.call).to eq('from the parent')
+    it 'gives MCP subclasses the handlers of their parent, even after the subclass is defined' do
+      parent = laptop_class
+      child = Class.new(parent) { self.default_name = 'laptop' }
+      parent.rescue_from(RubyLLM::MCP::Error) { 'from the parent' }
+
+      expect(mcp_result_of(child.new(owner: 'Ada'))).to eq('from the parent')
     end
 
     it 'falls back to handlers declared on MCP::Tool' do
       RubyLLM::MCP::Tool.rescue_from(RubyLLM::MCP::Error) { |error| "#{name}: #{error.message}" }
-      tool = laptop_class.new(owner: 'Ada').tools.first
 
-      expect(tool.call).to eq('read_notes: Asleep')
+      expect(mcp_result_of(laptop_class.new(owner: 'Ada'))).to eq('read_notes: Asleep')
     end
 
     it 'prefers the MCP class handler to the MCP::Tool one' do
       RubyLLM::MCP::Tool.rescue_from(RubyLLM::MCP::Error) { 'from the tool class' }
-      tool = laptop_class { rescue_from(RubyLLM::MCP::Error) { 'from the server' } }.new(owner: 'Ada').tools.first
+      laptop = laptop_class { rescue_from(RubyLLM::MCP::Error) { 'from the server' } }
 
-      expect(tool.call).to eq('from the server')
+      expect(mcp_result_of(laptop.new(owner: 'Ada'))).to eq('from the server')
+    end
+
+    it 'sends the server the model arguments, without the tool call' do
+      laptop = laptop_class { rescue_from(RubyLLM::MCP::Error) { 'handled' } }.new(owner: 'Ada')
+      chat.with_mcp(laptop)
+      allow(chat.provider).to receive(:complete).and_return(calls('read_notes', arguments: { 'day' => 'today' }),
+                                                            answer)
+
+      chat.ask('Read my notes')
+
+      expect(laptop.class.transport.calls.map { |params| params[:arguments] }).to eq([{ day: 'today' }])
+    end
+
+    it 'leaves a call you make yourself to you' do
+      tool = laptop_class { rescue_from(RubyLLM::MCP::Error) { 'swallowed' } }.new(owner: 'Ada').tools.first
+
+      expect { tool.call }.to raise_error(RubyLLM::MCP::Error, /Asleep/)
     end
   end
 
@@ -266,22 +360,33 @@ RSpec.describe RubyLLM::Tool do
     let(:chat) { context.chat(model: model_for(:openai), provider: :openai).with_code_execution }
 
     around do |example|
-      saved = RubyLLM::CodeExecution.rescue_handlers.dup
+      saved = [RubyLLM::CodeExecution, described_class].to_h { |klass| [klass, klass.rescue_handlers.dup] }
       example.run
     ensure
-      RubyLLM::CodeExecution.instance_variable_set(:@rescue_handlers, saved)
+      saved.each { |klass, handlers| klass.instance_variable_set(:@rescue_handlers, handlers) }
+    end
+
+    def run_code
+      allow(chat.provider).to receive(:complete)
+        .and_return(calls('run_code', arguments: { 'language' => 'ruby', 'code' => 'puts 1' }), answer)
+      chat.ask('Run it')
+      results.sole
     end
 
     it 'runs a handler declared on CodeExecution' do
       RubyLLM::CodeExecution.rescue_from(RuntimeError) { |error| { error: "The sandbox failed: #{error.message}" } }
 
-      expect(chat.tools[:run_code].call(language: 'ruby', code: 'puts 1'))
-        .to eq(error: 'The sandbox failed: the sandbox broke')
+      expect(run_code).to eq('{"error":"The sandbox failed: the sandbox broke"}')
+    end
+
+    it 'runs a handler declared on Tool after CodeExecution is defined' do
+      described_class.rescue_from(RuntimeError) { 'from every tool' }
+
+      expect(run_code).to eq('from every tool')
     end
 
     it 'raises without a handler, as before' do
-      expect { chat.tools[:run_code].call(language: 'ruby', code: 'puts 1') }
-        .to raise_error(RuntimeError, 'the sandbox broke')
+      expect { run_code }.to raise_error(RuntimeError, 'the sandbox broke')
     end
   end
 end

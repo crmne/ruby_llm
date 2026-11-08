@@ -261,6 +261,17 @@ RSpec.describe RubyLLM::Agent do
       expect { parent_agent.ask('hi') }.to raise_error(RubyLLM::RateLimitError)
     end
 
+    it 'inherits handlers the parent declares after the subclass is defined' do
+      parent = Class.new(described_class) { model model_for(:openai, :temperature) }
+      child = Class.new(parent)
+      parent.rescue_from(RubyLLM::RateLimitError) { :added_later }
+
+      agent = child.new
+      allow(agent.chat).to receive(:ask).and_raise(rate_limit)
+
+      expect(agent.ask('hi')).to eq(:added_later)
+    end
+
     it 'lets a subclass override an inherited handler' do
       parent = Class.new(described_class) do
         model model_for(:openai, :temperature)
@@ -318,10 +329,27 @@ RSpec.describe RubyLLM::Agent do
       end
     end
 
+    it 'runs handlers a parent declares after the subclass is defined on a chat from ::chat' do
+      parent = Class.new(described_class) { model model_for(:openai, :temperature) }
+      child = Class.new(parent)
+      parent.rescue_from(RubyLLM::RateLimitError) { :added_later }
+
+      expect(rate_limited(child.chat).ask('hi')).to eq(:added_later)
+    end
+
     it 'leaves a chat alone when the agent declares no handlers' do
       chat = rate_limited(Class.new(described_class) { model model_for(:openai, :temperature) }.chat)
 
       expect { chat.ask('hi') }.to raise_error(RubyLLM::RateLimitError)
+    end
+
+    it 'leaves a chat alone when neither the agent nor its parents declare handlers' do
+      parent = Class.new(described_class) { model model_for(:openai, :temperature) }
+      chat = rate_limited(Class.new(parent).chat)
+      allow(chat).to receive(:rescuing_with)
+
+      expect { chat.ask('hi') }.to raise_error(RubyLLM::RateLimitError)
+      expect(chat).not_to have_received(:rescuing_with)
     end
 
     it 're-raises errors no handler matches on a chat from ::chat' do

@@ -100,12 +100,12 @@ module RubyLLM
       # Raises MCP::InputRequiredError when the server needs input that no
       # MCP.before_input_request callback gave.
       def call(**arguments)
-        rescuing { @mcp.run(self, arguments.except(:tool_call)) }
+        @mcp.run(self, arguments.except(:tool_call))
       end
 
       # Resumes a call that paused on +task+, which it checks on once.
       def resume(task, **arguments)
-        rescuing { @mcp.run(self, arguments, input: task.to_h) }
+        @mcp.run(self, arguments, input: task.to_h)
       end
 
       # Returns the MCP::Task a call paused on, from its saved state.
@@ -114,7 +114,7 @@ module RubyLLM
       end
 
       def resume_call(state, arguments, **) # :nodoc:
-        rescuing { @mcp.run(self, arguments, input: state) }
+        @mcp.run(self, arguments, input: state)
       end
 
       # Runs the handler the MCP class declares for +exception+, or else

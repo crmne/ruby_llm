@@ -2714,13 +2714,30 @@ module RubyLLM
 
     def invoke_tool(tool, tool_call, arguments)
       input = tool_call_input(tool_call)
-      result = input ? tool.resume_call(input, arguments, tool_call:) : tool.call(**arguments, tool_call:)
+      result = rescuing_tool(tool) do
+        input ? tool.resume_call(input, arguments, tool_call:) : tool.call(**arguments, tool_call:)
+      end
       return pause_tool_call(tool_call, result.to_h) if result.is_a?(Task)
 
       record_tool_call_input(tool_call, nil) if input
       with_decline_notes(result, input)
     rescue InputRequiredError => e
       pause_tool_call(tool_call, e.to_h)
+    end
+
+    # The one place a tool's Tool.rescue_from handlers run, so they cover
+    # every call a chat makes, whether the tool overrides Tool#call or
+    # Tool#execute. A question or a cancellation is how a call pauses or
+    # stops, not a failure, so it never reaches a handler; a handler may
+    # end the turn with Tool#halt.
+    def rescuing_tool(tool)
+      catch(Tool::HALT) do
+        yield
+      rescue InputRequiredError, CancelledError
+        raise
+      rescue StandardError => e
+        tool.rescue_with_handler(e)
+      end
     end
 
     def with_decline_notes(result, input)
