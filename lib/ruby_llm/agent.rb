@@ -499,10 +499,11 @@ module RubyLLM
 
       # Sets fallback models for chats this agent builds, applied via
       # Chat#with_fallbacks. Called with no arguments, returns the
-      # configured models.
+      # configured models. Keep the default +on:+: providers signal
+      # overload as HTTP 529 or 503, and the default covers both.
       #
       #   fallbacks "gpt-4.1-mini", "claude-haiku-4-5"
-      #   fallbacks "gpt-4.1-mini", on: [RubyLLM::RateLimitError]
+      #   fallbacks "gpt-4.1-mini", on: [*RubyLLM::Fallback::DEFAULT_ERRORS, RubyLLM::ContextLengthExceededError]
       #   fallbacks drop_unsupported: true
       #
       def fallbacks(*models, on: Fallback::DEFAULT_ERRORS, drop_unsupported: false)
