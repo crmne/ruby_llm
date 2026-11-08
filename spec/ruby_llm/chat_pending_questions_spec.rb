@@ -107,6 +107,16 @@ RSpec.describe RubyLLM::Chat do
     expect(results.sole).to eq('Refunded 40')
   end
 
+  it 'keeps the note on a copy of the chat apart from the original' do
+    response = ask_for('issue_refund')
+    chat.decline(chat.pending_questions.sole, 'Not yet')
+
+    chat.dup.approve(response.tool_calls.first.id)
+    chat.complete
+
+    expect(results.sole).to eq('{"error":"Not yet"}')
+  end
+
   it 'approves a call the chat has not seen yet without raising' do
     expect(chat.approve('call_later')).to eq(chat)
   end

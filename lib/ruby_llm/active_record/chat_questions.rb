@@ -107,8 +107,8 @@ module RubyLLM
         RubyLLM::ActiveRecord::ToolCall.uncached { find_tool_call(tool_call.id) }&.mcp_result&.[]('note')
       end
 
-      def record_persisted_decline_note(tool_call, note) # :nodoc:
-        chat_tool_calls.where(tool_call_id: tool_call.id, result_id: nil)
+      def record_persisted_decline_note(id, note) # :nodoc:
+        chat_tool_calls.where(tool_call_id: id, result_id: nil)
                        .update_all(mcp_result: note && { 'note' => note }, updated_at: Time.current)
       end
 
@@ -170,7 +170,7 @@ module RubyLLM
 
       def refuse(question, note)
         record_tool_call_decision(question.tool_call, 'denied')
-        record_persisted_decline_note(question.tool_call, note) if note
+        record_persisted_decline_note(question.tool_call.id, note) if note
       end
     end
   end

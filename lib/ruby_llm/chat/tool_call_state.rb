@@ -65,7 +65,11 @@ module RubyLLM
       end
 
       def record_decline_note(tool_call, note)
-        note ? @notes[tool_call.id] = note : @notes.delete(tool_call.id)
+        @notes[tool_call.id] = note
+      end
+
+      def forget_decline_note(id)
+        @notes.delete(id)
       end
 
       def denied?(tool_call)

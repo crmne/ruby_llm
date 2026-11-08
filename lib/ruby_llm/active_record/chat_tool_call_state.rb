@@ -32,7 +32,11 @@ module RubyLLM
       end
 
       def record_decline_note(tool_call, note)
-        @chat.record_persisted_decline_note(tool_call, note)
+        @chat.record_persisted_decline_note(tool_call.id, note)
+      end
+
+      def forget_decline_note(id)
+        @chat.record_persisted_decline_note(id, nil)
       end
 
       def settle(tool_call, &)
