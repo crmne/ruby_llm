@@ -10,10 +10,13 @@ module RubyLLM
     #
     # +details:+ adds fields after the response model. +report:+ replaces the
     # reporting of an operation whose result does not read like the others.
-    # +usage: false+ leaves tokens and cost off the event.
+    # +usage: false+ leaves tokens and cost off the event. +resolved:+ takes
+    # a Model already resolved, such as a fallback given as one, and skips
+    # the lookup.
     class Operation # :nodoc: all
       def initialize(name, model, owner:, context: nil, provider: nil, assume_model_exists: false,
-                     default: nil, operation: nil, category: nil, usage: true, details: nil, report: nil)
+                     default: nil, operation: nil, category: nil, usage: true, details: nil, report: nil,
+                     resolved: nil)
         @name = name
         @owner = owner
         @category = category
@@ -21,7 +24,11 @@ module RubyLLM
         @details = details
         @report = report
         @config = context&.config || RubyLLM.config
-        @model, @provider = resolve(model, default, operation, provider:, assume_model_exists:)
+        @model, @provider = if resolved
+                              [resolved, Provider.resolve!(resolved.provider).new(@config)]
+                            else
+                              resolve(model, default, operation, provider:, assume_model_exists:)
+                            end
       end
 
       def run(**fields)

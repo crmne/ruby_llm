@@ -60,6 +60,18 @@ RSpec.describe RubyLLM::Image do
     expect(paint(fallbacks: RubyLLM.models.find(gemini_model, provider: :gemini)).model).to eq(gemini_model)
   end
 
+  it 'paints with a fallback Model as given, without looking it up again' do
+    stub_request(:post, openai_url).to_return(rate_limited)
+    stub_request(:post, gemini_url).to_return(gemini_image)
+    custom = RubyLLM::Model.default(gemini_model, 'gemini')
+    allow(RubyLLM::Models).to receive(:resolve).and_call_original
+
+    paint(fallbacks: custom)
+
+    expect(RubyLLM::Models).not_to have_received(:resolve).with(custom, anything)
+    expect(instrumenter.events.find { |name, _| name == 'image.ruby_llm' }.last[:model_info]).to equal(custom)
+  end
+
   it 'skips a fallback whose model does not exist' do
     stub_request(:post, openai_url).to_return(rate_limited)
     stub_request(:post, gemini_url).to_return(gemini_image)

@@ -88,14 +88,14 @@ module RubyLLM
       queue = Array(fallbacks).flatten.compact.map { |fallback| Fallback.build(fallback) }
       operation = painting(model, provider:, assume_model_exists:, context:, owner:)
       begin
-        operation.run(prompt:, size:, count:, provider_options:, metadata:) do |provider_instance, resolved|
-          provider_instance.paint(prompt, model: resolved, size:, count:, with:, mask:, provider_options:)
+        operation.run(prompt:, size:, count:, provider_options:, metadata:) do |provider_instance, image_model|
+          provider_instance.paint(prompt, model: image_model, size:, count:, with:, mask:, provider_options:)
         end
       rescue StandardError => e
         raise unless Fallback.error?(e, Fallback::DEFAULT_ERRORS)
 
         _, operation = Fallback.next_usable(queue) do |fallback|
-          painting(fallback.id, provider: fallback.provider, context:, owner:)
+          painting(fallback.id, provider: fallback.provider, context:, owner:, resolved: fallback.model)
         end
         raise e unless operation
 
@@ -103,10 +103,10 @@ module RubyLLM
       end
     end
 
-    def self.painting(model, provider:, context:, owner:, assume_model_exists: false) # :nodoc:
+    def self.painting(model, provider:, context:, owner:, assume_model_exists: false, resolved: nil) # :nodoc:
       Accounting::Operation.new(
         'image', model, default: :default_image_model, category: :images, provider:, assume_model_exists:, context:,
-                        owner:,
+                        owner:, resolved:,
                         report: lambda { |event, result|
                           images = Support::Utils.to_safe_array(result)
                           event[:result] = result
