@@ -69,10 +69,15 @@ module RubyLLM
         raise
       end
 
-      def release_persisted_tool_calls(tool_call_ids) # :nodoc:
+      # A call that was running when its process shut down may have done
+      # its work, such as a message it already sent, so it keeps its claim
+      # to expire with the chat's: the claim is the only record that it
+      # started. Every other call is released.
+      def release_persisted_tool_calls(tool_call_ids, stopped_by = nil) # :nodoc:
+        exiting = shutting_down?(stopped_by)
         tool_call_ids.each do |tool_call_id|
           claim = claim_lock.synchronize { tool_call_claims.delete(tool_call_id) }
-          next unless claim
+          next if claim.nil? || (exiting && claim.started)
 
           RubyLLM::ActiveRecord::ToolCall.where(id: claim.row, result_id: nil, claimed_until: claim.written)
                                          .update_all(claimed_until: nil)
@@ -139,9 +144,6 @@ module RubyLLM
 
       # A run stopped because its process is shutting down didn't end, so
       # it leaves its claim to expire, and the chat counts as interrupted.
-      # That covers a thread killed at exit and a signal such as TERM, but
-      # not Interrupt: Ctrl-C in a console stops the run, and a job backend
-      # that interrupts a job on shutdown, as Sidekiq does, runs it again.
       def holding_run_claim(busy)
         if run_claims?
           start_claim_heartbeat
@@ -157,14 +159,24 @@ module RubyLLM
         resync_messages if @chat
         busy.call
       rescue SignalException, SystemExit => e
-        exiting = !e.is_a?(Interrupt)
+        stopped_by = e
         raise
       ensure
         begin
           stop_claim_heartbeat
         ensure
-          exiting || Thread.current.status == 'aborting' ? forget_run_claim : release_run_claim(completed)
+          shutting_down?(stopped_by) ? forget_run_claim : release_run_claim(completed)
         end
+      end
+
+      # Whether the process is shutting down: a thread killed at exit, or
+      # +stopped_by+ a signal such as TERM or an exit. Interrupt doesn't
+      # count: Ctrl-C in a console stops the run, and a job backend that
+      # interrupts a job on shutdown, as Sidekiq does, runs it again.
+      def shutting_down?(stopped_by)
+        return true if Thread.current.status == 'aborting'
+
+        (stopped_by.is_a?(SignalException) || stopped_by.is_a?(SystemExit)) && !stopped_by.is_a?(Interrupt)
       end
 
       def run_claim_acquired?
