@@ -23,13 +23,26 @@ module MutationTesting
 
     def spec_tree
       @spec_tree ||= begin
-        listed = MutationTesting.git(@root, 'ls-files', '--cached', '--others', '--exclude-standard', 'spec')
-        files = listed ? listed.lines(chomp: true) : Dir.glob('spec/**/*', base: @root)
+        files = git_listing || Dir.glob('spec/**/*', base: @root)
         add_files(Digest::SHA256.new, files.uniq.sort).hexdigest
       end
     end
 
     private
+
+    def git_listing
+      return unless repository?
+
+      MutationTesting.git(@root, 'ls-files', '--cached', '--others', '--exclude-standard', 'spec')&.lines(chomp: true)
+    end
+
+    # Git answers for the enclosing repository when the root is only a folder
+    # inside one, and lists nothing when that folder is ignored (a tmp/), so
+    # the spec tree comes from Git only when the root is a work tree's top.
+    def repository?
+      top = MutationTesting.git(@root, 'rev-parse', '--show-toplevel')
+      !top.nil? && File.realpath(top) == File.realpath(@root)
+    end
 
     def add_files(digest, paths)
       paths.each do |path|
