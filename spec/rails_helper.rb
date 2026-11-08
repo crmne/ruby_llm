@@ -36,4 +36,5 @@ DummyDatabase.rebuild
 
 RSpec.configure do |config|
   config.before(:suite) { DummyDatabase.rebuild if DummyDatabase.stale? }
+  config.before { RubyLLM::ActiveRecord::Model::STORED_REGISTRIES.clear }
 end

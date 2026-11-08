@@ -428,6 +428,10 @@ response.thinking.text  # => "15 * 20 is 300, and 15 * 3 is 45..."
 
 It is off by default, and a context can turn it on for one server. See [Reasoning Inside the Answer]({% link _core_features/thinking.md %}#reasoning-inside-the-answer).
 
+## Fixes
+
+Saving a chat on an empty `ruby_llm_models` table still loads the whole model registry, but only once per database and process. Transactional tests roll that load back after every test, and each test that saved a chat used to load the registry again ([#1554](https://github.com/crmne/ruby_llm/issues/1554)).
+
 ## Upgrades
 
 `bin/rails generate ruby_llm:upgrade` in 2.2 adds the columns chats and tool calls use for their claims, the tables for queued messages and chat files, and an `ApplicationAgent` for your agents to inherit from. Applications on 2.0 upgrade to 2.1 first. See [Upgrading]({% link _reference/upgrading.md %}).
