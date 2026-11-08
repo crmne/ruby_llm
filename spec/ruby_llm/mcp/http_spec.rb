@@ -26,6 +26,13 @@ RSpec.describe RubyLLM::MCP::HTTP do
     expect { described_class.new('http://localhost:3000/mcp') }.not_to raise_error
   end
 
+  it 'connects with the TLS options of the configuration it is given' do
+    tls = RubyLLM.context { |config| config.ssl = { ca_file: '/certs/internal-ca.pem' } }
+    http = described_class.new(url, config: tls.config)
+
+    expect(http.instance_variable_get(:@connection).ssl.ca_file).to eq('/certs/internal-ca.pem')
+  end
+
   it 'names the opt-in when it refuses plain HTTP' do
     expect { described_class.new('http://tools:4011/mcp') }.to raise_error(ArgumentError, /allow_http: true/)
   end

@@ -24,6 +24,32 @@ RSpec.describe 'Context connection settings' do # rubocop:disable RSpec/Describe
       expect(proxy_and_timeout(context.config)).to eq(['http://proxy.example:8080', 7])
     end
 
+    it 'applies the TLS options of the configuration it is given' do
+      tls = RubyLLM.context { |config| config.ssl = { ca_file: '/certs/internal-ca.pem' } }
+
+      expect(described_class.basic(tls.config).ssl.ca_file).to eq('/certs/internal-ca.pem')
+      expect(described_class.basic.ssl.ca_file).to be_nil
+    end
+
+    it 'gives contexts with different TLS options connections of their own' do
+      internal = RubyLLM.context { |config| config.ssl = { ca_file: '/certs/internal-ca.pem' } }
+      development = RubyLLM.context { |config| config.ssl = { verify: false } }
+      faraday = ->(ctx) { RubyLLM::Providers::OpenAI.new(ctx.config).connection.connection }
+
+      expect(faraday.call(internal)).not_to be(faraday.call(development))
+      expect(faraday.call(internal).ssl.ca_file).to eq('/certs/internal-ca.pem')
+      expect(faraday.call(development).ssl.verify).to be(false)
+    end
+
+    it 'leaves the global TLS options alone when a context changes its own' do
+      RubyLLM.configure { |config| config.ssl = { ca_file: '/certs/internal-ca.pem' } }
+      RubyLLM.context { |config| config.ssl[:verify] = false }
+
+      expect(RubyLLM.config.ssl).to eq(ca_file: '/certs/internal-ca.pem')
+    ensure
+      RubyLLM.configure { |config| config.ssl = nil }
+    end
+
     it 'falls back to the global configuration' do
       expect(proxy_and_timeout(RubyLLM.config)).to eq([nil, RubyLLM.config.request_timeout])
       expect(described_class.basic.options.timeout).to eq(RubyLLM.config.request_timeout)
