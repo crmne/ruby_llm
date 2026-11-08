@@ -186,6 +186,21 @@ RSpec.describe RubyLLM::Chat do
     expect(requests).to be_empty
   end
 
+  it 'refuses a required tool call when the servers that are down leave no tools' do
+    chat.with_mcp(RubyLLM.mcp(url: answering('503 Service Unavailable'), name: 'linear'))
+        .with_tool_options(choice: :required)
+
+    expect { chat.ask('Find the bug') }.to raise_error(
+      RubyLLM::InvalidToolChoiceError, /required needs a tool.*can't be reached right now: linear\z/
+    )
+    expect { chat.render }.to raise_error(RubyLLM::InvalidToolChoiceError, /required/)
+    expect(requests).to be_empty
+  end
+
+  it 'leaves a required tool call to the provider in a chat without MCP servers' do
+    expect(chat.with_tool_options(choice: :required).ask('Hi').content).to eq('Done')
+  end
+
   it 'renders the request with the note about servers that are down' do
     chat.with_mcp(RubyLLM.mcp(url: answering('503 Service Unavailable'), name: 'linear'))
         .add_message(role: :user, content: 'Hi')

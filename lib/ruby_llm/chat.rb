@@ -1692,7 +1692,7 @@ module RubyLLM
     # its next completion, with #before_request hooks applied. Useful for
     # inspecting and testing request output.
     def render
-      check_tool_choice(@tool_prefs[:choice]) unless mcp.empty?
+      check_requested_tool_choice
       @provider.render(
         with_mcp_outages(preprocessed_messages),
         tools: request_tools,
@@ -2315,7 +2315,7 @@ module RubyLLM
 
     def provider_completion(usage_recorder:, progress_recorder: nil, stream_tracker: nil, &)
       raise_if_cancelled!
-      check_tool_choice(@tool_prefs[:choice]) unless mcp.empty?
+      check_requested_tool_choice
 
       request_messages = with_mcp_outages(preprocessed_messages)
       tool_call_ids = ToolCallIds.new
@@ -2900,7 +2900,21 @@ module RubyLLM
     def check_tool_choice(choice, given = choice)
       return if choice.nil? || TOOL_CHOICE_MODES.include?(choice) || tools.key?(choice)
 
-      message = "Invalid tool choice: #{given}. Valid choices are: #{(TOOL_CHOICE_MODES + tools.keys).join(', ')}"
+      invalid_tool_choice("Invalid tool choice: #{given}. Valid choices are: " \
+                          "#{(TOOL_CHOICE_MODES + tools.keys).join(', ')}")
+    end
+
+    # A forced call with no tools to call would reach the provider without
+    # the constraint, since protocols drop a choice when there are no tools.
+    def check_requested_tool_choice
+      return if mcp.empty?
+
+      check_tool_choice(@tool_prefs[:choice])
+      invalid_tool_choice('Tool choice required needs a tool, and the chat has none') if
+        @tool_prefs[:choice] == :required && tools.empty?
+    end
+
+    def invalid_tool_choice(message)
       unreachable = mcp.unreachable
       message += ". These MCP servers can't be reached right now: #{unreachable.join(', ')}" if unreachable.any?
       raise InvalidToolChoiceError, message
