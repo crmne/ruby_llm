@@ -234,18 +234,34 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       end
     end
 
+    # The clock moves instead of the test waiting on it, and a heartbeat
+    # beats when the check needs one, so a stalled runner can't lapse the
+    # claim. Five seconds into the round, the waiting call's own deadline
+    # has passed, and the chat's claim, renewed by the first result, holds.
     it 'keeps a waiting call claimed while a callback after the call before it runs long' do
+      stub_const('RubyLLM::ActiveRecord::RunClaims::CLAIM_LEASE', 60)
+      freeze_time
       chat = round_chat
       claimed = []
       waiting = []
-      job = Chat.find(chat.id).with_tools(slow_lookup(claimed, alone: false))
+      run = lambda do |tool_call|
+        travel 2.seconds
+        claimed << claimed?(tool_call.id)
+      end
+      tool = Class.new(RubyLLM::Tool) do
+        define_method(:name) { 'lookup' }
+        define_method(:execute) do |tool_call:|
+          run.call(tool_call)
+          'found'
+        end
+      end
+      job = Chat.find(chat.id).with_tools(tool)
       job.after_message do |message|
         next unless message.role == :tool && waiting.empty?
 
-        # Four and a half seconds into the round, past the waiting call's
-        # own deadline, its claim still holds, however late the heartbeat.
-        sleep 2.5
-        waiting << within?(3) { claimed?(call_ids.last) }
+        travel 3.seconds
+        job.send(:renew_claim_leases)
+        waiting << claimed?(call_ids.last)
       end
       allow(job.to_llm.provider).to receive(:complete)
         .and_return(RubyLLM::Message.new(role: :assistant, content: 'Done', input_tokens: 1, output_tokens: 1))
@@ -254,6 +270,8 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
       expect(waiting).to eq([true])
       expect(claimed).to eq([true, true])
+    ensure
+      travel_back
     end
 
     # Another process takes something over between the two calls, as it
