@@ -166,6 +166,12 @@ RSpec.describe RubyLLM::MCP::Outages do
       expect(tool_result(dropped)).to include(partly_run)
     end
 
+    it 'says so for an idempotent tool that does not say whether it is destructive' do
+      transport.annotations = { 'idempotentHint' => true }
+
+      expect(tool_result(dropped)).to include(partly_run)
+    end
+
     it 'says nothing for an idempotent tool that is not destructive' do
       transport.annotations = { 'idempotentHint' => true, 'destructiveHint' => false }
 
