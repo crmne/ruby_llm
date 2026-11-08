@@ -627,6 +627,43 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       RUBY
     end
 
+    def initializer_after_generating(source)
+      path = File.join(destination, 'config/initializers/ruby_llm.rb')
+      FileUtils.mkdir_p(File.dirname(path))
+      File.write(path, source)
+      generator.context_budget
+      File.read(path)
+    end
+
+    it 'leaves a context budget set through RubyLLM.config alone' do
+      source = "RubyLLM.config.context_budget = { per_request: 0.5 }\nRubyLLM.configure do |config|\nend\n"
+
+      expect(initializer_after_generating(source)).to eq(source)
+    end
+
+    it 'adds it when only an unrelated method assigns the same name' do
+      source = "def tune(config)\n  config.context_budget = nil\nend\n\nRubyLLM.configure do |config|\nend\n"
+
+      expect(initializer_after_generating(source)).to end_with(<<~RUBY)
+        RubyLLM.configure do |config|
+          config.context_budget = { per_result: 0.25, per_request: 0.7 }
+        end
+      RUBY
+    end
+
+    it 'leaves the file alone when the end it finds is inside a heredoc' do
+      source = "RubyLLM.configure do |config|\n  config.openai_api_key = <<~KEY\nend\nKEY\nend\n"
+      path = File.join(destination, 'config/initializers/ruby_llm.rb')
+      FileUtils.mkdir_p(File.dirname(path))
+      File.write(path, source)
+      allow(generator).to receive(:say)
+
+      generator.context_budget
+
+      expect(File.read(path)).to eq(source)
+      expect(generator).to have_received(:say).with(/\AAdd config\.context_budget = /, :yellow)
+    end
+
     it 'says what to add without a configure block it can find' do
       path = File.join(destination, 'config/initializers/ruby_llm.rb')
       FileUtils.mkdir_p(File.dirname(path))

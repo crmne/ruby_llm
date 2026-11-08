@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'ripper'
+
 module RubyLLM
   module Generators
     # Shared helpers for RubyLLM generators
@@ -55,13 +57,25 @@ module RubyLLM
         path = 'config/initializers/ruby_llm.rb'
         initializer = File.join(destination_root, path)
         source = File.exist?(initializer) ? File.read(initializer) : ''
-        block = source.match(/^( *)RubyLLM\.configure do \|(\w+)\|\n.*?(?=^\1end\b)/m)
+        block = configure_block(source)
         return say("Add config.#{setting} = #{value} to your RubyLLM configuration", :yellow) unless block
 
         indent, name = block.captures
-        return if source.match?(/^\s*#{name}\.#{setting}\s*=/)
+        return if block[0].match?(/^\s*#{name}\.#{setting}\s*=/)
+        return if source.match?(/^\s*RubyLLM\.config\.#{setting}\s*=/)
 
         inject_into_file path, "#{indent}  #{name}.#{setting} = #{value}\n", after: block[0]
+      end
+
+      # The RubyLLM.configure block up to its closing +end+, or +nil+ when
+      # Ruby doesn't read the line that looks like it as that keyword, such
+      # as one inside a heredoc.
+      def configure_block(source)
+        block = source.match(/^( *)RubyLLM\.configure do \|(\w+)\|\n.*?(?=^\1end\b)/m)
+        return unless block
+
+        position = [source[0...block.end(0)].count("\n") + 1, block[1].length]
+        block if Ripper.lex(source).any? { |at, type, token| at == position && type == :on_kw && token == 'end' }
       end
 
       def explain_own_broadcasting(source)
