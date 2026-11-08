@@ -34,7 +34,7 @@ The generator:
 - Creates one migration for RubyLLM's eight supporting tables: models, tool calls, usages, queued messages, chat files, batches, MCP credentials, and provider files
 - Adds the `acts_as_chat` and `acts_as_message` declarations
 - Installs Active Storage, which `acts_as_message` uses for attachments
-- Creates an initializer for provider configuration
+- Creates an initializer for provider configuration and the context budget
 - Creates `app/agents/application_agent.rb`, the parent of your agents, pointed at your chat model
 
 Like Rails' own generators, it prints the files it creates and the one command you need next. Run it, set your provider's API key in `config/initializers/ruby_llm.rb`, and load the model registry:
@@ -80,7 +80,7 @@ bin/rails generate ruby_llm:chat_ui
 
 The generator creates:
 
-- **Agent**: `ChatAgent`, which the controllers and job create and load chats through, with a context budget
+- **Agent**: `ChatAgent`, which the controllers and job create and load chats through
 - **Controllers**: Create chats, save messages and enqueue their replies, queue and withdraw messages sent during a reply, and record approval decisions
 - **Views**: Render messages, their attachments, queued messages, and approval cards, and update them with Turbo Streams
 - **Jobs**: Request AI responses in the background and continue the conversation after a decision or with queued messages
@@ -151,13 +151,18 @@ Generate the classes it names first, with `ruby_llm:tool SendInvoice`, `ruby_llm
 
 Where the rest lives, with the default model names: `app/jobs/chat_response_job.rb` runs each turn and saves its errors, `ChatsController#cancel` is the Stop button, and `app/views/messages/_assistant.html.erb` renders a reply.
 
-The generated agent starts with a [context budget]({% link _core_features/chat-request-control.md %}#keeping-tool-results-in-budget) and [prompt caching]({% link _core_features/prompt-caching.md %}):
+The generated agent starts with [prompt caching]({% link _core_features/prompt-caching.md %}):
 
 ```ruby
 class ChatAgent < ApplicationAgent
-  context_budget per_result: 0.25, per_request: 0.7
   caching
 end
+```
+
+Its chats use the [context budget]({% link _core_features/chat-request-control.md %}#keeping-tool-results-in-budget) the install generator writes into `config/initializers/ruby_llm.rb`, so you can rewrite the agent freely:
+
+```ruby
+config.context_budget = { per_result: 0.25, per_request: 0.7 }
 ```
 
 A tool result longer than a quarter of the model's context window is cut when it is added, and a request that would take more than 70% of the window leaves out the oldest tool results. Without it, one tool result larger than the window stays in the transcript, and every later reply in that chat fails with `RubyLLM::ContextLengthExceededError`. Raise `per_request` if your tools return mostly prose, or remove the line to send every result whole.

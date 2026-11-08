@@ -7,16 +7,16 @@ module RubyLLM
     module ContextBudget # :nodoc:
       def apply_configuration(chat, input_values:, **)
         super.tap do
-          next unless @context_budget
+          next if @context_budget.nil?
 
-          chat.with_context_budget(evaluate(@context_budget, runtime_context(chat:, inputs: input_values)))
+          chat.with_context_budget(evaluate(@context_budget, runtime_context(chat:, inputs: input_values)) || nil)
         end
       end
 
       private
 
       def context_budget_option(budget, **shares, &block)
-        return Chat::ContextBudget.normalize(budget, **shares) unless block
+        return Chat::ContextBudget.normalize(budget, **shares) || false unless block
         raise ArgumentError, 'context_budget takes options or a block, not both' if shares.any? || budget != {}
 
         block

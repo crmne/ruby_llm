@@ -128,21 +128,34 @@ Compaction uses the current HTTP headers and `before_request` hooks. Generation 
 
 ## Keeping Tool Results in Budget
 
-Tools return as much as they find: a page of campaigns with their HTML, a whole spreadsheet, a log. One such result can fill the model's context window, and a few smaller ones add up over a long turn until requests fail. `with_context_budget` keeps tool results within shares of the model's context window:
+Tools return as much as they find: a page of campaigns with their HTML, a whole spreadsheet, a log. One such result can fill the model's context window, and a few smaller ones add up over a long turn until requests fail. A context budget keeps tool results within shares of the model's context window. Set it once in your configuration, and every chat and agent uses it:
 
 ```ruby
-chat = RubyLLM.chat.with_context_budget(per_result: 0.25, per_request: 0.7)
+RubyLLM.configure do |config|
+  config.context_budget = { per_result: 0.25, per_request: 0.7 }
+end
 ```
+
+The Rails install generator writes this line into `config/initializers/ruby_llm.rb`. Without it, chats have no budget. A [context]({% link _getting_started/configuration.md %}#giving-part-of-your-application-its-own-settings) can set its own.
 
 With `per_result`, a tool result longer than that share is cut when it is added, ending with a note telling the model how much it saw and to ask for a narrower query or the next page. The transcript keeps the cut result, so a persisted chat stores it too.
 
 With `per_request`, a request that would take more than that share leaves out the oldest tool results, each replaced by a one-line note telling the model to call the tool again if it needs it. Only the request changes: `chat.messages` keeps every result. The results of the latest round go out whenever they fit, since the model hasn't seen them yet. When that round alone is over the share, its oldest results are left out too, with a note telling the model to ask for less, so the chat can't get stuck failing every request. The cut point moves in steps of about 15% of the budget rather than one result at a time, so the start of the request stays the same for many rounds and the provider's prompt cache keeps working.
 
-Shares are of the context window the model registry lists for the model, and sizes are estimated from characters, at two a token, which is how dense JSON and HTML run. Set either share alone, and pass `nil` to remove the budget. Agents declare it with a macro:
+Shares are of the context window the model registry lists for the model, and sizes are estimated from characters, at two a token, which is how dense JSON and HTML run. Set either share alone.
+
+A chat or an agent with a budget of its own uses that instead. `with_context_budget` takes the same options, and `nil` turns the budget off for that chat:
+
+```ruby
+chat = RubyLLM.chat.with_context_budget(per_result: 0.1, per_request: 0.5)
+chat = RubyLLM.chat.with_context_budget(nil)
+```
+
+Agents declare it with a macro, which takes `nil` too:
 
 ```ruby
 class ResearchAgent < RubyLLM::Agent
-  context_budget per_result: 0.25, per_request: 0.7
+  context_budget per_result: 0.1, per_request: 0.5
 end
 ```
 

@@ -314,10 +314,12 @@ module RubyLLM
       end
 
       # Keeps tool results within shares of the model's context window in
-      # chats this agent builds, applied via Chat#with_context_budget.
+      # chats this agent builds, applied via Chat#with_context_budget, in
+      # place of Configuration#context_budget. Pass +nil+ for no budget.
       #
       #   context_budget per_result: 0.25, per_request: 0.7
       #   context_budget window: 128_000, per_request: 0.7
+      #   context_budget nil
       #
       # A block is evaluated for each chat, with the agent's inputs and
       # +chat+ in scope, and returns the options, or +nil+ for no budget.

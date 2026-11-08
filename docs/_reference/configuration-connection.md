@@ -287,6 +287,7 @@ Every setting that isn't a provider's, with its default. Provider keys and endpo
 | `faraday_adapter` | `:net_http` | Faraday adapter for requests. |
 | `auto_upload_large_files` | `true` | Upload attachments too large to send inline. |
 | `tool_concurrency` | `false` | `true` or `:threads`, or `:fibers`, to run tool calls at once. |
+| `context_budget` | `nil` | Shares of the context window every chat's tool results stay within, such as `{ per_result: 0.25, per_request: 0.7 }`. See [Keeping Tool Results in Budget]({% link _core_features/chat-request-control.md %}#keeping-tool-results-in-budget). |
 | `max_run_time` | `600` | Seconds a persisted chat's run may go without progress before it counts as crashed. |
 | `broadcast_messages` | `false` | `acts_as_message` broadcasts chats with Turbo. The chat UI generator turns it on. |
 | `split_think_tags` | `false` | `true` moves a leading `<think>` block into thinking on Chat Completions. |

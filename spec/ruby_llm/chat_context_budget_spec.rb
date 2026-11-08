@@ -418,6 +418,104 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  describe 'Configuration#context_budget' do
+    let(:configured) { { per_result: 0.25, per_request: 0.7 } }
+
+    around do |example|
+      original = RubyLLM.config.context_budget
+      RubyLLM.config.context_budget = configured
+      example.run
+    ensure
+      RubyLLM.config.context_budget = original
+    end
+
+    it 'applies to a plain chat' do
+      chat.with_tools(tool_returning('fetch', 'y' * 100_000))
+      allow(chat.provider).to receive(:complete).and_return(call_message('fetch'), answer)
+
+      chat.ask('Fetch')
+
+      expect(chat.context_budget).to eq(configured)
+      expect(chat.messages.find(&:tool_result?).content.length).to be < 100_000
+    end
+
+    it 'applies to an agent' do
+      expect(Class.new(RubyLLM::Agent).chat.context_budget).to eq(configured)
+    end
+
+    it "gives way to a chat's own budget" do
+      expect(chat.with_context_budget(per_request: 0.5).context_budget).to eq(per_request: 0.5)
+    end
+
+    it "gives way to an agent's own budget" do
+      agent = Class.new(RubyLLM::Agent) { context_budget per_request: 0.5 }
+
+      expect(agent.chat.context_budget).to eq(per_request: 0.5)
+    end
+
+    it 'turns off for a chat given nil' do
+      chat.with_tools(tool_returning('fetch', 'y' * 100_000)).with_context_budget(nil)
+      allow(chat.provider).to receive(:complete).and_return(call_message('fetch'), answer)
+
+      chat.ask('Fetch')
+
+      expect(chat.context_budget).to be_nil
+      expect(chat.messages.find(&:tool_result?).content.length).to eq(100_000)
+    end
+
+    it 'turns off for an agent given nil' do
+      expect(Class.new(RubyLLM::Agent) { context_budget nil }.chat.context_budget).to be_nil
+      expect(Class.new(RubyLLM::Agent) { context_budget { nil } }.chat.context_budget).to be_nil
+    end
+
+    it 'turns off for an existing chat an agent given nil takes' do
+      agent = Class.new(RubyLLM::Agent) { context_budget nil }
+
+      expect(agent.new(chat:).chat.context_budget).to be_nil
+    end
+
+    it "keeps to a context's own setting" do
+      context = RubyLLM.context { |config| config.context_budget = { per_request: 0.5 } }
+
+      expect(context.chat(model: model_for(:anthropic)).context_budget).to eq(per_request: 0.5)
+      expect(described_class.new(model: model_for(:anthropic)).context_budget).to eq(configured)
+      expect(RubyLLM.config.context_budget).to eq(configured)
+    end
+
+    it "takes the new context's setting when a chat moves to it" do
+      context = RubyLLM.context { |config| config.context_budget = nil }
+
+      expect(chat.with_context(context).context_budget).to be_nil
+      expect(chat.with_context(nil).context_budget).to eq(configured)
+    end
+
+    it "keeps a chat's own budget when it moves to another context" do
+      context = RubyLLM.context { |config| config.context_budget = { per_request: 0.5 } }
+
+      expect(chat.with_context_budget(nil).with_context(context).context_budget).to be_nil
+      expect(chat.with_context_budget(per_result: 0.1).with_context(nil).context_budget).to eq(per_result: 0.1)
+    end
+
+    it 'checks the setting like with_context_budget' do
+      expect { RubyLLM.config.context_budget = { per_result: 1.5 } }.to raise_error(ArgumentError, /per_result/)
+      expect { RubyLLM.config.context_budget = { per_turn: 0.5 } }.to raise_error(ArgumentError, /per_turn/)
+      expect { RubyLLM.config.context_budget = { window: 10_000 } }.to raise_error(ArgumentError, /per_result/)
+
+      RubyLLM.config.context_budget = { 'window' => 10_000, 'per_request' => 0.7 }
+
+      expect(RubyLLM.config.context_budget).to eq(window: 10_000, per_request: 0.7)
+    end
+
+    context 'when left unset' do
+      let(:configured) { nil }
+
+      it 'gives chats and agents no budget' do
+        expect(chat.context_budget).to be_nil
+        expect(Class.new(RubyLLM::Agent).chat.context_budget).to be_nil
+      end
+    end
+  end
+
   describe 'Message#with' do
     it 'returns a copy with changed fields, leaving the original alone' do
       message = RubyLLM::Message.new(role: :tool, content: 'long', tool_call_id: 'call_1')

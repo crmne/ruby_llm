@@ -102,7 +102,7 @@ module RubyLLM
     attr_reader :compaction
 
     # The shares of the context window set with #with_context_budget, or
-    # +nil+ when not configured.
+    # else Configuration#context_budget. Returns +nil+ when not configured.
     attr_reader :context_budget
 
     # The opaque per-user identifier set with #with_end_user, or
@@ -178,7 +178,7 @@ module RubyLLM
       @citations = false
       @caching = nil
       @compaction = nil
-      @context_budget = nil
+      @context_budget = @config.context_budget
       @code_execution = nil
       @code_execution_tool = nil
       @skills = []
@@ -1069,7 +1069,8 @@ module RubyLLM
     end
 
     # Keeps tool results within shares of the model's context window, from
-    # the model registry. Pass +nil+ to remove the budget. Returns +self+.
+    # the model registry, in place of Configuration#context_budget. Pass
+    # +nil+ to remove the budget. Returns +self+.
     #
     # +per_result+:: a tool result longer than this share is cut when it
     #                is added, ending with a note that tells the model to
@@ -1095,6 +1096,7 @@ module RubyLLM
     # once.
     def with_context_budget(budget = {}, **shares)
       @context_budget = ContextBudget.normalize(budget, **shares)
+      @context_budget_chosen = true
       @context_budget_warned = false
       self
     end
@@ -1303,6 +1305,7 @@ module RubyLLM
       @file_references&.forget(@attachment_replacements)
       with_model(@model.id, provider: @provider.slug, protocol: @protocol, assume_model_exists: true)
       apply_tool_concurrency(nil) unless @concurrency_chosen
+      @context_budget = @config.context_budget unless @context_budget_chosen
       self
     end
 
