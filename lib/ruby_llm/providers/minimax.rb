@@ -7,7 +7,7 @@ module RubyLLM
       protocol :anthropic, MiniMax::Anthropic
 
       def api_base
-        configured_api_base(:minimax_api_base, 'https://api.minimax.io/anthropic', endpoints: %r{/v1(?:/messages)?\z})
+        configured_api_base(:minimax_api_base, 'https://api.minimax.io/anthropic', endpoints: %r{/v1/messages\z})
       end
 
       def headers

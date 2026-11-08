@@ -12,8 +12,7 @@ module RubyLLM
       protocol :chat_completions, ChatCompletions
 
       def api_base
-        configured_api_base(:zai_api_base, 'https://api.z.ai/api/paas/v4',
-                            endpoints: Protocols::ChatCompletions::ENDPOINT_PATHS)
+        configured_api_base(:zai_api_base, 'https://api.z.ai/api/paas/v4', endpoints: Protocols::ChatCompletions::ENDPOINT_PATHS)
       end
 
       def headers

@@ -25,11 +25,6 @@ module RubyLLM
       protocol :async_videos, Protocols::Bedrock::AsyncVideos
       protocol :files, Protocols::Bedrock::Files
 
-      ENDPOINT_PATHS = %r{/model/[^/]+(?:/[\w-]+)?\z}
-      MANTLE_ENDPOINT_PATHS = %r{(?:/openai)?/v1(?:/chat/completions|/responses|/models)?\z|/anthropic/v1/messages\z}
-      OPENAI_COMPATIBLE_PATH = %r{/openai(?:/|\z)}
-      private_constant :ENDPOINT_PATHS, :MANTLE_ENDPOINT_PATHS, :OPENAI_COMPATIBLE_PATH
-
       def self.capabilities
         Bedrock::Capabilities
       end
@@ -97,7 +92,7 @@ module RubyLLM
 
       def mantle_api_base
         configured_api_base(:bedrock_mantle_api_base, "https://bedrock-mantle.#{bedrock_region}.api.aws",
-                            endpoints: MANTLE_ENDPOINT_PATHS)
+                            endpoints: %r{/(?:chat/completions|responses|messages)\z})
       end
 
       def mantle_connection
@@ -105,7 +100,8 @@ module RubyLLM
       end
 
       def api_base
-        bedrock_api_base("https://bedrock-runtime.#{bedrock_region}.amazonaws.com")
+        configured_api_base(:bedrock_api_base, "https://bedrock-runtime.#{bedrock_region}.amazonaws.com",
+                            endpoints: %r{/model/.*\z})
       end
 
       # Uploads are objects in the configured bucket, readable with any
@@ -116,11 +112,13 @@ module RubyLLM
       end
 
       def control_api_base
-        bedrock_api_base("https://bedrock.#{bedrock_region}.amazonaws.com")
+        configured_api_base(:bedrock_api_base, "https://bedrock.#{bedrock_region}.amazonaws.com",
+                            endpoints: %r{/model/.*\z})
       end
 
       def agent_api_base # :nodoc:
-        bedrock_api_base("https://bedrock-agent-runtime.#{bedrock_region}.amazonaws.com")
+        configured_api_base(:bedrock_api_base, "https://bedrock-agent-runtime.#{bedrock_region}.amazonaws.com",
+                            endpoints: %r{/model/.*\z})
       end
 
       def agent_connection # :nodoc:
@@ -242,10 +240,6 @@ module RubyLLM
       end
 
       private
-
-      def bedrock_api_base(default)
-        configured_api_base(:bedrock_api_base, default, endpoints: ENDPOINT_PATHS, rejects: OPENAI_COMPATIBLE_PATH)
-      end
 
       # Signs each attempt as it is sent, so a retry never replays a
       # signature that expired while the previous attempt waited.

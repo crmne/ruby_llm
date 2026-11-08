@@ -15,7 +15,7 @@ module RubyLLM
 
       def api_base
         configured_api_base(:elevenlabs_api_base, 'https://api.elevenlabs.io',
-                            endpoints: %r{/v1(?:/text-to-speech/[^/]+|/speech-to-text)?\z})
+                            endpoints: %r{/v1/(?:speech-to-text\z|text-to-speech/.*\z)})
       end
 
       def headers

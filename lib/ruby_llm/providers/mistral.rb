@@ -15,8 +15,7 @@ module RubyLLM
       end
 
       def api_base
-        configured_api_base(:mistral_api_base, 'https://api.mistral.ai/v1',
-                            endpoints: Protocols::ChatCompletions::ENDPOINT_PATHS)
+        configured_api_base(:mistral_api_base, 'https://api.mistral.ai/v1', endpoints: Protocols::ChatCompletions::ENDPOINT_PATHS)
       end
 
       def headers

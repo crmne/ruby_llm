@@ -7,7 +7,7 @@ module RubyLLM
       protocol :deepgram, Protocols::Deepgram
 
       def api_base
-        configured_api_base(:deepgram_api_base, 'https://api.deepgram.com', endpoints: %r{/v1(?:/listen|/speak)?\z})
+        configured_api_base(:deepgram_api_base, 'https://api.deepgram.com', endpoints: %r{/v1/(?:listen|speak)\z})
       end
 
       def headers

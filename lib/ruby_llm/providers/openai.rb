@@ -19,8 +19,7 @@ module RubyLLM
       end
 
       def api_base
-        configured_api_base(:openai_api_base, 'https://api.openai.com/v1',
-                            endpoints: Protocols::ChatCompletions::ENDPOINT_PATHS)
+        configured_api_base(:openai_api_base, 'https://api.openai.com/v1', endpoints: Protocols::ChatCompletions::ENDPOINT_PATHS)
       end
 
       def resolve_protocol(name, model, operation: nil, **options)

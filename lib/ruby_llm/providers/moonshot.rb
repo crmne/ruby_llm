@@ -12,8 +12,7 @@ module RubyLLM
       protocol :chat_completions, ChatCompletions
 
       def api_base
-        configured_api_base(:moonshot_api_base, 'https://api.moonshot.ai/v1',
-                            endpoints: Protocols::ChatCompletions::ENDPOINT_PATHS)
+        configured_api_base(:moonshot_api_base, 'https://api.moonshot.ai/v1', endpoints: Protocols::ChatCompletions::ENDPOINT_PATHS)
       end
 
       def headers

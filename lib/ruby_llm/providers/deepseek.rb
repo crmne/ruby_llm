@@ -14,8 +14,7 @@ module RubyLLM
       protocol :files, Protocols::DeepSeek::Files
 
       def api_base
-        configured_api_base(:deepseek_api_base, 'https://api.deepseek.com',
-                            endpoints: Protocols::ChatCompletions::ENDPOINT_PATHS)
+        configured_api_base(:deepseek_api_base, 'https://api.deepseek.com', endpoints: Protocols::ChatCompletions::ENDPOINT_PATHS)
       end
 
       def headers

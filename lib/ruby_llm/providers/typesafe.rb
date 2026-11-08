@@ -7,7 +7,7 @@ module RubyLLM
       protocol :system_one, Protocols::SystemOne
 
       def api_base
-        configured_api_base(:typesafe_api_base, 'https://api.typesafe.ai', endpoints: %r{/v1(?:/systemone)?\z})
+        configured_api_base(:typesafe_api_base, 'https://api.typesafe.ai', endpoints: %r{/v1/systemone\z})
       end
 
       def headers

@@ -19,8 +19,7 @@ module RubyLLM
 
       def api_base
         configured_api_base(:gemini_api_base, 'https://generativelanguage.googleapis.com/v1beta',
-                            endpoints: %r{/models(?:/[^/]+)?\z},
-                            rejects: %r{/openai(?:/|\z)})
+                            endpoints: %r{/models/[^/]+:\w+\z})
       end
 
       def headers

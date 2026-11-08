@@ -21,9 +21,7 @@ module RubyLLM
       protocol :system_one, SystemOne
 
       def api_base
-        configured_api_base(:ollama_api_base,
-                            example: 'http://localhost:11434/v1',
-                            endpoints: Protocols::ChatCompletions::ENDPOINT_PATHS)
+        configured_api_base(:ollama_api_base, example: 'http://localhost:11434/v1', endpoints: Protocols::ChatCompletions::ENDPOINT_PATHS)
       end
 
       def resolve_protocol(name, model, operation: nil, **options)

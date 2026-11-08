@@ -60,7 +60,7 @@ These are the signatures an application uses, for 2.2; on an older release, chec
 ```ruby
 RubyLLM.configure do |config|
   config.anthropic_api_key = ENV["ANTHROPIC_API_KEY"]
-  config.anthropic_api_base = ENV["ANTHROPIC_BASE_URL"]   # pass the base URL as the provider documents it; RubyLLM accepts the common forms, no normalising needed
+  config.anthropic_api_base = ENV["ANTHROPIC_BASE_URL"]   # use the base URL form in the configuration reference; RubyLLM raises if it includes an endpoint path
 end
 
 chat = RubyLLM.chat(model: "...")   # or Chat.create!(model: "...") with acts_as_chat

@@ -14,16 +14,10 @@ RSpec.describe RubyLLM::Providers::Azure::ChatCompletions do
   end
 
   describe '#azure_endpoint' do
-    it 'treats a chat endpoint URL as its deployment base' do
+    it 'posts straight to a base that already names the chat endpoint' do
       protocol = protocol_for(
         'https://res.openai.azure.com/openai/deployments/gpt/chat/completions?api-version=2025-01-01'
       )
-
-      expect(protocol.azure_endpoint(:chat)).to eq('chat/completions?api-version=2025-01-01')
-    end
-
-    it 'posts straight to a chat endpoint outside the paths it knows' do
-      protocol = protocol_for('https://grok.eastus2.models.ai.azure.com/chat/completions')
 
       expect(protocol.azure_endpoint(:chat)).to eq('')
     end
@@ -50,6 +44,24 @@ RSpec.describe RubyLLM::Providers::Azure::ChatCompletions do
       protocol = protocol_for('https://res.services.ai.azure.com')
 
       expect(protocol.azure_endpoint(:chat)).to eq('models/chat/completions?api-version=2024-05-01-preview')
+    end
+
+    it 'routes a base ending in /models through the resource, not /models/models' do
+      provider = protocol_for('https://res.services.ai.azure.com/models').instance_variable_get(:@provider)
+      protocol = described_class.new(provider, nil)
+
+      expect(provider.connection.connection.build_url(protocol.azure_endpoint(:chat)).to_s).to eq(
+        'https://res.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview'
+      )
+    end
+
+    it 'posts chat and responses under the openai/v1 base a /responses URL names' do
+      provider = protocol_for('https://res.openai.azure.com/openai/v1/responses').instance_variable_get(:@provider)
+      responses = RubyLLM::Providers::Azure::Responses.new(provider, nil)
+
+      expect(provider.connection.connection.build_url(described_class.new(provider, nil).completion_url).to_s)
+        .to eq('https://res.openai.azure.com/openai/v1/chat/completions')
+      expect(responses.completion_url).to eq('https://res.openai.azure.com/openai/v1/responses')
     end
 
     it 'resolves embeddings relative to a deployment or openai/v1 base' do

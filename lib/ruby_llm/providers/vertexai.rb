@@ -4,9 +4,6 @@ module RubyLLM
   module Providers
     # Google Vertex AI implementation
     class VertexAI < Provider
-      PROJECT_PATH = %r{/projects/[^/]+/locations/.*\z}
-      private_constant :PROJECT_PATH
-
       protocol :gemini, VertexAI::Gemini, batches: VertexAI::Gemini::Batches
       protocol :anthropic, VertexAI::Anthropic, batches: VertexAI::Anthropic::Batches
       protocol :mistral, VertexAI::Mistral
@@ -141,12 +138,16 @@ module RubyLLM
       end
 
       def api_base_for(location)
-        default = case location.to_s
-                  when 'global' then 'https://aiplatform.googleapis.com/v1beta1'
-                  when 'eu', 'us' then "https://aiplatform.#{location}.rep.googleapis.com/v1beta1"
-                  else "https://#{location}-aiplatform.googleapis.com/v1beta1"
-                  end
-        configured_api_base(:vertexai_api_base, default, endpoints: PROJECT_PATH)
+        if @config.vertexai_api_base
+          return configured_api_base(:vertexai_api_base, example: 'https://LOCATION-aiplatform.googleapis.com/v1beta1',
+                                                         endpoints: %r{/projects/.*\z})
+        end
+
+        case location.to_s
+        when 'global' then 'https://aiplatform.googleapis.com/v1beta1'
+        when 'eu', 'us' then "https://aiplatform.#{location}.rep.googleapis.com/v1beta1"
+        else "https://#{location}-aiplatform.googleapis.com/v1beta1"
+        end
       end
 
       def ranking_config # :nodoc:
@@ -155,8 +156,7 @@ module RubyLLM
       end
 
       def ranking_connection # :nodoc:
-        base = configured_api_base(:vertexai_ranking_api_base, 'https://discoveryengine.googleapis.com/v1',
-                                   endpoints: PROJECT_PATH)
+        base = @config.vertexai_ranking_api_base || 'https://discoveryengine.googleapis.com/v1'
         @ranking_connection ||= signed_connection(
           base, headers: { 'X-Goog-User-Project' => @config.vertexai_project_id }
         )
