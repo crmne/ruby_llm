@@ -2714,8 +2714,10 @@ module RubyLLM
 
     def invoke_tool(tool, tool_call, arguments)
       input = tool_call_input(tool_call)
-      result = rescuing_tool(tool) do
-        input ? tool.resume_call(input, arguments, tool_call:) : tool.call(**arguments, tool_call:)
+      result = Tool.asking(tool, input) do
+        rescuing_tool(tool) do
+          input ? tool.resume_call(input, arguments, tool_call:) : tool.call(**arguments, tool_call:)
+        end
       end
       return pause_tool_call(tool_call, result.to_h) if result.is_a?(Task)
 

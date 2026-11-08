@@ -129,6 +129,36 @@ RSpec.describe RubyLLM::Tool do
       expect(chat.pending_questions.map(&:message)).to eq(['Window or aisle?'])
     end
 
+    it 'lets a handler ask, and reads its answer when the call runs again' do
+      tool = Class.new(described_class) do
+        def self.tool_name = 'booking'
+        rescue_from(RuntimeError) { "Retry: #{ask('Try another date?', choices: %w[yes no])}" }
+        def execute = raise('sold out')
+      end
+      chat.with_tools(tool)
+      allow(chat.provider).to receive(:complete).and_return(calls('booking'), answer)
+
+      chat.ask('Go')
+      chat.answer(chat.pending_questions.sole.id, 'yes').complete
+
+      expect(results).to eq(['Retry: yes'])
+    end
+
+    it 'counts a handler question after the questions execute asked' do
+      tool = Class.new(described_class) do
+        def self.tool_name = 'booking'
+        rescue_from(RuntimeError) { "#{ask('Seat?')} then #{ask('Meal?')}" }
+        def execute = raise("no #{ask('Date?')}")
+      end
+      chat.with_tools(tool)
+      allow(chat.provider).to receive(:complete).and_return(calls('booking'), answer)
+
+      chat.ask('Go')
+      %w[Monday aisle pasta].each { |reply| chat.answer(chat.pending_questions.sole.id, reply).complete }
+
+      expect(results).to eq(['aisle then pasta'])
+    end
+
     it 'leaves cancellations alone' do
       tool = failing_tool(RubyLLM::CancelledError.new) { rescue_from(StandardError) { 'swallowed' } }
 

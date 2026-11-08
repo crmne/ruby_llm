@@ -110,6 +110,18 @@ module RubyLLM
     class << self
       attr_reader :parameters_schema_definition, :approval_resolver, :namespace_description # :nodoc:
 
+      # Opens the questions of the call a chat makes of +tool+, with
+      # +input+, the answers Chat saved for it, so the call and its
+      # ::rescue_from handler ask in turn and each reads its answers when
+      # the call runs again.
+      def asking(tool, input) # :nodoc:
+        previous = Fiber[ASKING]
+        Fiber[ASKING] = { 'input' => input, 'asked' => 0, 'tool' => tool }
+        yield
+      ensure
+        Fiber[ASKING] = previous
+      end
+
       def inherited(subclass) # :nodoc:
         super
         DUPED_INHERITED_CONFIG.each do |ivar, default|
@@ -676,11 +688,13 @@ module RubyLLM
       catch(HALT, &)
     end
 
+    # The call a chat makes of a tool takes the questions Tool.asking
+    # opened for it, which its handler then shares.
     def asking # :nodoc:
       previous = Fiber[ASKING]
       input = Fiber[RESUMING]
       Fiber[RESUMING] = nil
-      Fiber[ASKING] = { 'input' => input, 'asked' => 0 }
+      Fiber[ASKING] = previous&.delete('tool') == self ? previous : { 'input' => input, 'asked' => 0 }
       yield
     ensure
       Fiber[ASKING] = previous
