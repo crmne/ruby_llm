@@ -615,6 +615,9 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       ActiveJob::Base.queue_adapter = :test
       abort "the killed reply isn't held until its claim expires" unless #{model}.find(#{chat_id}).running?
       abort "a held chat counts as interrupted" if #{model}.interrupted.exists?(#{chat_id})
+      other = #{agent}.create!
+      other.add_message(role: :user, content: "Hello")
+      other.update_columns(claim_token: "died", claimed_until: #{model}.find(#{chat_id}).claimed_until + 10.seconds)
 
       Rails.application.load_server
       jobs = ActiveJob::Base.queue_adapter.enqueued_jobs
@@ -625,20 +628,21 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       abort "the boot run queued more than itself again: \#{jobs}" unless jobs.empty?
       abort "the boot run didn't come back for the claim: \#{later}" unless later&.dig("job_class") == "#{resume_job}"
       at = Time.zone.parse(later["scheduled_at"])
-      expires = #{model}.find(#{chat_id}).claimed_until
-      abort "the second run at \#{at} isn't right after the claim expires at \#{expires}" unless at.between?(expires, expires + 2.seconds)
+      expires = other.reload.claimed_until
+      abort "the second run at \#{at} isn't right after the last claim expires at \#{expires}" unless at.between?(expires, expires + 2.seconds)
 
       stub_replies "Picked up again"
       travel_to(at) do
         ActiveJob::Base.execute(later)
         abort "the second run queued itself again: \#{jobs}" if jobs.any? { |enqueued| enqueued["job_class"] == "#{resume_job}" }
-        reply = jobs.find { |enqueued| enqueued["job_class"] == "#{job}" }
-        abort "#{resume_job} didn't queue the reply: \#{jobs}" unless reply&.dig("arguments") == [ #{chat_id} ]
-        ActiveJob::Base.execute(reply)
+        replies = jobs.select { |enqueued| enqueued["job_class"] == "#{job}" }
+        abort "#{resume_job} didn't queue both replies: \#{jobs}" unless replies.map { |enqueued| enqueued["arguments"] }.sort == [ [ #{chat_id} ], [ other.id ] ].sort
+        ActiveJob::Base.execute(replies.find { |enqueued| enqueued["arguments"] == [ #{chat_id} ] })
       end
       answer = #{agent}.find(#{chat_id}).to_llm.messages.last.content
       abort "the reply didn't complete: \#{answer}" unless answer == "Picked up again"
       abort "a complete chat counts as interrupted" if #{model}.interrupted.exists?(#{chat_id})
+      other.destroy!
     RUBY
   end
 
@@ -1010,7 +1014,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         class ResumeInterruptedChatsJob < ApplicationJob
           def perform(boot: false)
             Chat.interrupted.find_each { |chat| ChatResponseJob.perform_later(chat.id) }
-            expiry = Chat.where(claimed_until: Time.current..).minimum(:claimed_until) if boot
+            expiry = Chat.where(claimed_until: Time.current..).maximum(:claimed_until) if boot
             self.class.set(wait_until: expiry + 1.second).perform_later if expiry
           end
         end
@@ -1133,7 +1137,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         class ResumeInterruptedLlmChatsJob < ApplicationJob
           def perform(boot: false)
             Llm::Chat.interrupted.find_each { |llm_chat| LlmChatResponseJob.perform_later(llm_chat.id) }
-            expiry = Llm::Chat.where(claimed_until: Time.current..).minimum(:claimed_until) if boot
+            expiry = Llm::Chat.where(claimed_until: Time.current..).maximum(:claimed_until) if boot
             self.class.set(wait_until: expiry + 1.second).perform_later if expiry
           end
         end

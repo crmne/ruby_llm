@@ -147,7 +147,7 @@ The chat UI generator writes a job that does:
 class ResumeInterruptedChatsJob < ApplicationJob
   def perform(boot: false)
     Chat.interrupted.find_each { |chat| ChatResponseJob.perform_later(chat.id) }
-    expiry = Chat.where(claimed_until: Time.current..).minimum(:claimed_until) if boot
+    expiry = Chat.where(claimed_until: Time.current..).maximum(:claimed_until) if boot
     self.class.set(wait_until: expiry + 1.second).perform_later if expiry
   end
 end
@@ -160,7 +160,7 @@ It runs every minute from Solid Queue's `config/recurring.yml`, and as soon as t
 Rails.application.server { ResumeInterruptedChatsJob.perform_later(boot: true) }
 ```
 
-A deploy or a restart stops its processes with a TERM, and a run stopped that way expires its claims as it exits, so the boot run answers its chat right away. A process killed outright, with a SIGKILL or by running out of memory, leaves claims that expire within a minute, so the boot run comes back once, a second after the earliest claim still held, and answers those chats about a minute after the kill. Only the boot run comes back, so the jobs can't pile up while chats are busy, and the run every minute catches anything else.
+A deploy or a restart stops its processes with a TERM, and a run stopped that way expires its claims as it exits, so the boot run answers its chat right away. A process killed outright, with a SIGKILL or by running out of memory, leaves claims that expire within a minute, so the boot run comes back once, a second after every claim held at boot has expired, and answers those chats about a minute after the kill. Only the boot run comes back, so the jobs can't pile up while chats are busy, and the run every minute catches anything else.
 
 `Rails.application.server` runs when a web server loads `config.ru`, never in the console, a rake task, or a job worker. Don't write a polling worker or a boot sweep of your own: the generated job is both, and the claims let only one process answer each chat, however many servers boot at once.
 

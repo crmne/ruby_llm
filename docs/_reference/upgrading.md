@@ -243,7 +243,7 @@ No queue runs the job a crash or a deploy killed again, so the 2.2 chat UI gener
 class ResumeInterruptedChatsJob < ApplicationJob
   def perform(boot: false)
     Chat.interrupted.find_each { |chat| ChatResponseJob.perform_later(chat.id) }
-    expiry = Chat.where(claimed_until: Time.current..).minimum(:claimed_until) if boot
+    expiry = Chat.where(claimed_until: Time.current..).maximum(:claimed_until) if boot
     self.class.set(wait_until: expiry + 1.second).perform_later if expiry
   end
 end
