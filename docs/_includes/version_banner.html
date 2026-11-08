@@ -1,4 +1,4 @@
-{%- comment -%} Tells readers of /next/ and /v1/ that they are not reading the stable docs. docs/bin/build-versions.sh copies it into every version. {%- endcomment -%}
+{%- comment -%} Tells readers of the 1.x docs, which keep their Just the Docs layout, that they are not reading the stable docs. docs/bin/prepare_version.rb adds it to that layout; the theme shows its own banner in the other versions. {%- endcomment -%}
 {%- assign channel = site.docs_channel -%}
 {%- if channel == 'next' or channel == 'v1' -%}
   {%- assign stable = site.data.versions.items | where: 'id', 'stable' | first -%}

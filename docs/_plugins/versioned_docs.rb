@@ -2,42 +2,31 @@
 
 require 'cgi'
 
-# Keeps the stable, next, and 1.x builds apart: canonicals and API discovery
-# stay inside the version, and every page outside the stable docs names its
-# version in the titles that search results and link previews show.
+# RubyLLM's part of the versioned docs. `jekyll-vitepress build` builds the
+# stable release at /, main at /next/, and the newest 1.x at /v1/, and the
+# theme labels titles, link previews, and canonicals in the first two. This
+# plugin names the version in templates (`site.docs_channel`), llms.txt, and
+# branded titles, and labels the titles of the 1.x docs, which keep their
+# Just the Docs layout.
 module VersionedDocs
   module_function
 
   TITLE_LABELS = { 'next' => 'RubyLLM Next', 'v1' => 'RubyLLM v1' }.freeze
   HEAD_TITLE = %r{<title>(.*?)</title>}m
-  PAGE_STATE_TITLE = /(<div id="vp-page-state"[^>]*\sdata-title=")[^"]*(")/
   SHARED_TITLE = /(<meta\s+(?:property|name)="(?:og|twitter):title"\s+content=")[^"]*(")/
 
   def prepare(site)
-    origin = site.config.fetch('url').delete_suffix('/')
-    base = site.config.fetch('baseurl', '').delete_suffix('/')
-    site.config['docs_channel'] = channel(site)
-    site.config['docs_unreleased'] = site.config['docs_channel'] == 'next'
-    pages = site.pages + site.collections.values.flat_map(&:docs)
-    pages.each do |page|
-      canonical = page.data['canonical_url']
-      page.data['canonical_url'] = canonical.delete_prefix(origin) if canonical&.start_with?("#{origin}/")
-    end
+    version = site.config['vitepress_version'] || {}
+    site.config['docs_channel'] = version['id']
+    site.config['docs_unreleased'] = version['kind'] == 'next'
 
     llms = site.config.dig('jekyll_vitepress', 'llms')
-    return unless llms
+    return unless llms && version['title']
 
-    label = site.data.dig('versions', 'current')
-    label = 'Next (unreleased)' if label == 'next'
-    llms['description'] = "Developer documentation for RubyLLM #{label}." if label
+    origin = site.config.fetch('url').delete_suffix('/')
+    base = site.config.fetch('baseurl', '').delete_suffix('/')
+    llms['description'] = "Developer documentation for RubyLLM #{version['title']}."
     llms['details'] = llms['details'].to_s.gsub("#{origin}/api/", "#{origin}#{base}/api/")
-  end
-
-  def channel(site)
-    versions = site.data['versions'] || {}
-    current = versions['current']
-    item = Array(versions['items']).find { |entry| [entry['id'], entry['title']].include?(current) }
-    item ? item['id'] : current
   end
 
   # A page whose title already begins with the site name, such as the
@@ -52,9 +41,10 @@ module VersionedDocs
     end
   end
 
+  # The 1.x docs render their own <head>, so their titles are labelled here.
   def label_titles(page)
     label = TITLE_LABELS[page.site.config['docs_channel']]
-    return unless label && page.output_ext == '.html' && page.output
+    return unless label && page.site.config['theme'] == 'just-the-docs' && page.output_ext == '.html' && page.output
 
     head, closing, body = page.output.partition(%r{</head>}i)
     return if closing.empty?
@@ -67,7 +57,6 @@ module VersionedDocs
     return unless title
 
     head = head.gsub(SHARED_TITLE) { "#{Regexp.last_match(1)}#{CGI.escapeHTML(title)}#{Regexp.last_match(2)}" }
-    body = body.sub(PAGE_STATE_TITLE) { "#{Regexp.last_match(1)}#{CGI.escapeHTML(title)}#{Regexp.last_match(2)}" }
     page.output = "#{head}#{closing}#{body}"
   end
 

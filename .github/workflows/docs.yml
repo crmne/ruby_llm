@@ -149,10 +149,11 @@ jobs:
 
       - name: Build stable, next, and 1.x documentation
         if: steps.registry.outputs.deploy == 'true'
-        run: docs/bin/build-versions.sh
+        working-directory: docs
+        run: bundle exec jekyll-vitepress build --baseurl "$BASE_PATH" --destination _site
         env:
           JEKYLL_ENV: production
-          BASE: ${{ steps.pages.outputs.base_path }}
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
           MODEL_REGISTRY_FILE: ${{ steps.registry.outputs.file }}
 
       - name: Plan IndexNow submission

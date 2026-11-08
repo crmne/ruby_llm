@@ -1,4 +1,4 @@
-{%- comment -%} Version selector. Reads docs/_data/versions.yml; same shape as the jekyll-vitepress theme. {%- endcomment -%}
+{%- comment -%} Version selector for the 1.x docs, which keep their Just the Docs layout. Reads the versions the theme puts in site.data.versions. {%- endcomment -%}
 {%- assign versions = site.data.versions -%}
 {%- if versions and versions.items and versions.items.size > 1 -%}
   {%- assign current_label = versions.current -%}

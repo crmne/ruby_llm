@@ -30,98 +30,20 @@ RSpec.describe 'Versioned documentation site', type: :task do
     Nokogiri::HTML(File.read(File.join(site, relative)))
   end
 
-  describe 'release selection' do
-    around { |example| GitEnvironment.without { example.run } }
-
-    before do
-      commands = [
-        %w[init --quiet],
-        %w[config commit.gpgsign false],
-        %w[config tag.gpgsign false],
-        ['-c', 'user.name=Docs Spec', '-c', 'user.email=docs@example.test',
-         'commit', '--quiet', '--allow-empty', '-m', 'Release fixture']
-      ]
-      commands.each do |args|
-        output, status = Open3.capture2e('git', '-C', site, *args)
-        raise output unless status.success?
-      end
-    end
-
-    it 'selects the newest stable and 1.x tags by version, excluding prereleases and unrelated tags' do
-      %w[1.16.0 v1.17.0 v2.9.0 v2.10.0 v3.0.0.rc1 v3.0.0-beta.1 backup].each do |tag|
-        system('git', '-C', site, 'tag', tag, exception: true)
-      end
-      output, status = Open3.capture2e(RbConfig.ruby, File.join(root, 'docs/bin/release_tags.rb'), site)
-
+  describe 'finishing the assembled site' do
+    def finish_site
+      docs = File.join(root, 'docs')
+      env = { 'VITEPRESS_DOCS' => docs, 'VITEPRESS_SITE' => site }
+      output, status = Open3.capture2e(env, RbConfig.ruby, File.join(docs, 'bin/finish_site.rb'))
       expect(status.success?).to be(true), output
-      expect(output.split).to eq(%w[v2.10.0 v1.17.0])
     end
 
-    it 'fails rather than substituting main when release tags are missing' do
-      output, status = Open3.capture2e(RbConfig.ruby, File.join(root, 'docs/bin/release_tags.rb'), site)
-
-      expect(status.success?).to be(false)
-      expect(output).to include('requires stable release tags and a 1.x release tag')
-    end
-  end
-
-  describe 'redirects' do
     before do
-      write_page('index.html', 'stable home')
-      write_page('chat/index.html', 'stable chat')
-      write_page('chat.md', 'stable chat markdown')
-      write_page('api/RubyLLM/Chat.html', 'stable API')
-      write_page('next/index.html', 'next home')
-      write_page('next/chat/index.html', 'next chat')
-      write_page('next/chat.md', 'next chat markdown')
-      write_page('next/api/RubyLLM/Chat.html', 'next API')
-      write_page('next/api/RubyLLM/Chat.md', 'next API markdown')
-      write_page('next/llms.txt', 'next index')
-      write_page('v1/index.html', 'legacy home')
-      write_page('v1/chat/index.html', 'legacy chat')
-      write_page('v1/rails/index.html', 'legacy Rails')
-      write_page('404.html', 'not found')
-      write_page('v1/404.html', 'old not found')
-      write_page('llms.txt', 'stable index')
-      write_page('robots.txt', "User-agent: *\nSitemap: https://rubyllm.com/sitemap.xml\n")
-    end
-
-    it 'keeps independent stable and next pages, API references, and machine-readable content' do
-      run_script('build_version_redirects.rb', site)
-
-      expect(File.read(File.join(site, 'chat/index.html'))).to eq('stable chat')
-      expect(File.read(File.join(site, 'next/chat/index.html'))).to eq('next chat')
-      expect(File.read(File.join(site, 'next/api/RubyLLM/Chat.html'))).to eq('next API')
-      expect(File.read(File.join(site, 'next/llms.txt'))).to eq('next index')
-      expect(File.read(File.join(site, 'next/chat.md'))).to eq('next chat markdown')
-      expect(File.read(File.join(site, 'next/api/RubyLLM/Chat.md'))).to eq('next API markdown')
-      expect(File).not_to exist(File.join(site, 'next/v1'))
-    end
-
-    it 'preserves legacy-only routes without replacing stable pages or error pages' do
-      run_script('build_version_redirects.rb', site)
-
-      expect(html('rails/index.html').at_css('a')['href']).to eq('/v1/rails/')
-      expect(html('rails/index.html').at_css('script').text).to include('window.location.search',
-                                                                        'window.location.hash')
-      expect(html('rails/index.html').at_css('meta[name=robots]')['content']).to eq('noindex,follow')
-      expect(File.read(File.join(site, 'v1/chat/index.html'))).to eq('legacy chat')
-      expect(File.read(File.join(site, '404.html'))).to eq('not found')
-    end
-
-    it 'exposes the next and legacy sitemaps without copying the stable machine-readable index' do
-      run_script('build_version_redirects.rb', site)
-
-      expect(File.read(File.join(site, 'robots.txt'))).to include(
-        'https://rubyllm.com/sitemap.xml', 'https://rubyllm.com/next/sitemap.xml', 'https://rubyllm.com/v1/sitemap.xml'
-      )
-      expect(File.read(File.join(site, 'llms.txt'))).to eq('stable index')
+      write_page('robots.txt', "User-agent: *\nAllow: /\nDisallow: /*.md$\n\nSitemap: https://rubyllm.com/sitemap.xml\n")
     end
 
     it 'lets AI agents fetch the Markdown twins that search engines skip' do
-      write_page('robots.txt', "User-agent: *\nAllow: /\nDisallow: /*.md$\n\nSitemap: https://rubyllm.com/sitemap.xml\n")
-
-      run_script('build_version_redirects.rb', site)
+      finish_site
       groups = File.read(File.join(site, 'robots.txt')).split(/\n{2,}/)
       ai_group = groups.find { |group| group.include?('User-agent: ClaudeBot') }
 
@@ -130,70 +52,61 @@ RSpec.describe 'Versioned documentation site', type: :task do
       expect(ai_group).not_to include('Disallow')
     end
 
-    it 'supports a Pages base path for legacy section redirects and sitemap discovery' do
-      run_script('build_version_redirects.rb', site, '/ruby_llm')
+    it 'publishes the model registry and the IndexNow key' do
+      finish_site
 
-      expect(html('rails/index.html').at_css('link[rel=canonical]')['href']).to eq('https://rubyllm.com/ruby_llm/v1/rails/')
-      expect(File.read(File.join(site, 'robots.txt'))).to include('https://rubyllm.com/ruby_llm/next/sitemap.xml')
+      expect(File.read(File.join(site, 'models.json'))).to eq(File.read(File.join(root, 'lib/ruby_llm/models.json')))
+      expect(Dir.children(site)).to include(match(/\A\h{32}\.txt\z/))
     end
   end
 
-  describe 'version selector' do
-    it 'labels the working tree as unreleased without pinning release versions' do
-      versions = YAML.load_file(File.join(root, 'docs/_data/versions.yml'))
+  describe 'versions' do
+    let(:config) { YAML.load_file(File.join(root, 'docs/_config.yml')) }
 
-      expect(versions['current']).to eq('next')
-      expect(versions['items']).to include(include('id' => 'stable', 'url' => '/'))
-      expect(versions['items']).to include(include('id' => 'next', 'url' => '/next/', 'title' => 'Next (unreleased)'))
-      expect(versions['items']).to include(include('id' => 'v1', 'url' => '/v1/'))
+    it 'publishes main at /next/ and keeps the newest 1.x, with its old URLs, at /v1/' do
+      versions = config.dig('jekyll_vitepress', 'versions')
+
+      expect(versions['next']).to be(true)
+      expect(versions['keep']).to eq([{ 'major' => 1, 'redirect_missing' => true }])
     end
 
-    it 'labels each channel from its selected tags and uses site-wide URLs within every version' do
-      { 'stable' => '2.10.0 (stable)', 'next' => 'Next (unreleased)', 'v1' => '1.17.0' }.each do |current, label|
-        path = write_page('versions.yml', File.read(File.join(root, 'docs/_data/versions.yml')))
-        run_script('prepare_versions.rb', path, current, '/ruby_llm', 'v2.10.0', '1.17.0')
-        versions = YAML.load_file(path)
+    it 'adds only the changelog to the versions the build fills in' do
+      versions = YAML.load_file(File.join(root, 'docs/_data/versions.yml'))
 
-        expect(versions['current']).to eq(label)
-        expect(versions['items'].pluck('url')).to eq([
-                                                       '/ruby_llm/', '/ruby_llm/next/', '/ruby_llm/v1/',
-                                                       'https://github.com/crmne/ruby_llm/releases'
-                                                     ])
-      end
+      expect(versions['items']).to eq([{ 'id' => 'changelog', 'title' => 'Changelog',
+                                         'url' => 'https://github.com/crmne/ruby_llm/releases',
+                                         'external' => true }])
+    end
+
+    it 'builds every release with the plugins the current docs use' do
+      overlay = config.dig('jekyll_vitepress', 'versions', 'overlay')
+
+      overlay.each { |path| expect(File).to exist(File.join(root, 'docs', path)) }
+      expect(overlay).to include('_plugins/versioned_docs.rb', '_plugins/social_cards.rb')
     end
   end
 
   describe 'versioned metadata' do
-    let(:versions) do
-      { 'current' => 'Next (unreleased)',
-        'items' => [{ 'id' => 'stable', 'title' => '2.1.1 (stable)' },
-                    { 'id' => 'next', 'title' => 'Next (unreleased)' },
-                    { 'id' => 'v1', 'title' => '1.16.0' }] }
-    end
-
     before do
       stub_const('Jekyll::Hooks', double(register: nil))
       load File.join(root, 'docs/_plugins/versioned_docs.rb')
     end
 
-    def rendered_page(output, channel:, title: 'RubyLLM')
-      site = double(config: { 'title' => title, 'docs_channel' => channel })
+    def rendered_page(output, channel:, theme: 'just-the-docs', title: 'RubyLLM')
+      site = double(config: { 'title' => title, 'docs_channel' => channel, 'theme' => theme })
       Struct.new(:site, :output_ext, :output).new(site, '.html', output)
     end
 
-    it 'keeps canonicals and API discovery within the selected version while retaining the live registry URL' do
-      pages = [double(data: { 'canonical_url' => 'https://rubyllm.com/available-models/' }),
-               double(data: { 'canonical_url' => 'https://example.com/reference/' })]
-      config = { 'url' => 'https://rubyllm.com', 'baseurl' => '/ruby_llm/next', 'jekyll_vitepress' => {
-        'llms' => { 'details' => 'https://rubyllm.com/api/index.md https://rubyllm.com/models.json' }
-      } }
-      jekyll_site = double(config:, pages:, collections: {}, data: { 'versions' => versions })
+    it 'names the version in templates and llms.txt, and keeps API discovery within it' do
+      config = { 'url' => 'https://rubyllm.com', 'baseurl' => '/ruby_llm/next',
+                 'vitepress_version' => { 'id' => 'next', 'kind' => 'next', 'title' => 'Next (unreleased)' },
+                 'jekyll_vitepress' => {
+                   'llms' => { 'details' => 'https://rubyllm.com/api/index.md https://rubyllm.com/models.json' }
+                 } }
 
-      VersionedDocs.prepare(jekyll_site)
+      VersionedDocs.prepare(double(config:))
 
       expect(config['docs_channel']).to eq('next')
-      expect(pages.first.data['canonical_url']).to eq('/available-models/')
-      expect(pages.last.data['canonical_url']).to eq('https://example.com/reference/')
       expect(config['docs_unreleased']).to be(true)
       expect(config.dig('jekyll_vitepress', 'llms')).to include(
         'description' => 'Developer documentation for RubyLLM Next (unreleased).',
@@ -201,22 +114,38 @@ RSpec.describe 'Versioned documentation site', type: :task do
       )
     end
 
-    it 'names the docs version in the page title and the titles link previews show' do
-      page = rendered_page(<<~HTML, channel: 'next')
+    it 'leaves a plain build without a version alone' do
+      llms = { 'description' => 'Developer documentation.', 'details' => '' }
+      config = { 'url' => 'https://rubyllm.com', 'jekyll_vitepress' => { 'llms' => llms } }
+
+      VersionedDocs.prepare(double(config:))
+
+      expect(config['docs_channel']).to be_nil
+      expect(config['docs_unreleased']).to be(false)
+      expect(llms['description']).to eq('Developer documentation.')
+    end
+
+    it 'names the docs version in the titles of the 1.x docs and their link previews' do
+      page = rendered_page(<<~HTML, channel: 'v1')
         <html><head><title>Chat | RubyLLM</title>
         <meta property="og:title" content="Chat"><meta name="twitter:title" content="Chat">
-        </head><body><div id="vp-page-state" hidden data-title="Chat | RubyLLM"></div>
-        <svg><title>Copy</title></svg></body></html>
+        </head><body><svg><title>Copy</title></svg></body></html>
       HTML
 
       VersionedDocs.label_titles(page)
       head = Nokogiri::HTML(page.output)
 
-      expect(head.at_css('head title').text).to eq('Chat | RubyLLM Next')
-      expect(head.at_css('meta[property="og:title"]')['content']).to eq('Chat | RubyLLM Next')
-      expect(head.at_css('meta[name="twitter:title"]')['content']).to eq('Chat | RubyLLM Next')
-      expect(head.at_css('#vp-page-state')['data-title']).to eq('Chat | RubyLLM Next')
+      expect(head.at_css('head title').text).to eq('Chat | RubyLLM v1')
+      expect(head.at_css('meta[property="og:title"]')['content']).to eq('Chat | RubyLLM v1')
+      expect(head.at_css('meta[name="twitter:title"]')['content']).to eq('Chat | RubyLLM v1')
       expect(head.at_css('svg title').text).to eq('Copy')
+    end
+
+    it 'leaves titles to the theme in the docs it renders' do
+      page = rendered_page('<html><head><title>Chat | RubyLLM Next</title></head></html>',
+                           channel: 'next', theme: 'jekyll-vitepress-theme')
+
+      expect { VersionedDocs.label_titles(page) }.not_to(change(page, :output))
     end
 
     it 'puts the version after the site name when a title starts with it' do
@@ -229,12 +158,6 @@ RSpec.describe 'Versioned documentation site', type: :task do
         .to eq('RubyLLMs explained | RubyLLM v1')
     end
 
-    it 'leaves stable titles alone' do
-      page = rendered_page('<html><head><title>Chat | RubyLLM</title></head></html>', channel: 'stable')
-
-      expect { VersionedDocs.label_titles(page) }.not_to(change(page, :output))
-    end
-
     it 'does not repeat the site name after a title that already starts with it' do
       home = double(data: { '_seo' => { 'page_title' => 'RubyLLM: the Ruby AI framework',
                                         'title' => 'RubyLLM: the Ruby AI framework | RubyLLM' } })
@@ -245,6 +168,32 @@ RSpec.describe 'Versioned documentation site', type: :task do
 
       expect(home.data.dig('_seo', 'title')).to eq('RubyLLM: the Ruby AI framework')
       expect(chat.data.dig('_seo', 'title')).to eq('Chat | RubyLLM')
+    end
+  end
+
+  describe 'preparing each version' do
+    def prepare(id, source)
+      env = { 'VITEPRESS_DOCS' => File.join(root, 'docs'), 'VITEPRESS_VERSION_SOURCE' => source,
+              'VITEPRESS_VERSION_ROOT' => root, 'VITEPRESS_VERSION_ID' => id }
+      output, status = Open3.capture2e(env, RbConfig.ruby, File.join(root, 'docs/bin/prepare_version.rb'))
+      expect(status.success?).to be(true), output
+    end
+
+    it 'gives the 1.x docs their version selector and banner, without the retired social image plugin' do
+      write_page('_config.yml', "plugins:\n  - jekyll-og-image\n  - jekyll-seo-tag\n")
+      write_page('_sass/custom/custom.scss', '')
+      write_page('_includes/head.html', '')
+      write_page('_includes/head_custom.html', '')
+      write_page('_layouts/default.html', "<body>\n    {% include components/header.html %}\n</body>\n")
+      write_page('_advanced/rails.md', File.read(File.join(root, 'spec/fixtures/docs/one_x_rails.md')))
+
+      prepare('v1', site)
+
+      expect(File.read(File.join(site, '_layouts/default.html')))
+        .to include("{% include version_banner.html %}\n    {% include version_select.html %}")
+      expect(File).to exist(File.join(site, '_includes/version_select.html'))
+      expect(YAML.load_file(File.join(site, '_config.yml'))['plugins']).not_to include('jekyll-og-image')
+      expect(File).not_to exist(File.join(site, '_reference/available-models.md'))
     end
   end
 

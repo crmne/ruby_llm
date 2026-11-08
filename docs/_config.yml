@@ -229,6 +229,24 @@ jekyll_vitepress:
     enabled: true
     pattern: https://github.com/crmne/ruby-llm-docs/edit/main/:path
     text: Edit page on Github
+  # `bundle exec jekyll-vitepress build` publishes the latest release at /,
+  # main at /next/, and the newest 1.x at /v1/.
+  versions:
+    next: true
+    keep:
+      - major: 1
+        redirect_missing: true
+    # Plugins every release is built with, whatever its own copy holds.
+    overlay:
+      - _plugins/versioned_docs.rb
+      - _plugins/llms_discovery.rb
+      - _plugins/social_cards.rb
+      - _plugins/social_cards
+      - _data/llms_areas.yml
+  build:
+    before_build: ruby bin/prepare_version.rb
+    after_build: SITE_BASE_URL="${VITEPRESS_VERSION_URL%/}" bin/build-api.sh "$VITEPRESS_VERSION_OUTPUT/api" "$VITEPRESS_VERSION_ROOT"
+    after_assemble: ruby bin/finish_site.rb
 
 plugins:
   - jekyll-redirect-from

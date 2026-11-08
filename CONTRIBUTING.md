@@ -172,8 +172,9 @@ build. Prerelease tags do not replace the stable documentation.
 
 Run `docs/bin/serve.sh` to preview all three versions. Changes to guides
 rebuild under `/next/`; restart the preview to regenerate API references.
-Run `docs/bin/build-versions.sh` for the complete deployment build. Both
-commands require the release tags in your local checkout.
+Run `bundle exec jekyll-vitepress build` in `docs/` for the complete
+deployment build. Both commands require the release tags in your local
+checkout.
 
 Pushing documentation or library changes to `main` updates `/next/`.
 Publishing a release also rebuilds the site, promoting its tagged docs
