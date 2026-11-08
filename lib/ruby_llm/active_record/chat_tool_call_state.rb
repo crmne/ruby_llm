@@ -35,10 +35,6 @@ module RubyLLM
         @chat.record_persisted_decline_note(tool_call.id, note)
       end
 
-      def forget_decline_note(id)
-        @chat.record_persisted_decline_note(id, nil)
-      end
-
       def settle(tool_call, &)
         @chat.settle_persisted_input(tool_call, &)
       end

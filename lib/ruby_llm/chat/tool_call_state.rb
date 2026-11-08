@@ -68,10 +68,6 @@ module RubyLLM
         @notes[tool_call.id] = note
       end
 
-      def forget_decline_note(id)
-        @notes.delete(id)
-      end
-
       def denied?(tool_call)
         @decisions[tool_call.id] == false
       end

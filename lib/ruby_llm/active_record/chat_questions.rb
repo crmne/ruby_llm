@@ -109,7 +109,7 @@ module RubyLLM
 
       def record_persisted_decline_note(id, note) # :nodoc:
         chat_tool_calls.where(tool_call_id: id, result_id: nil)
-                       .update_all(mcp_result: note && { 'note' => note }, updated_at: Time.current)
+                       .update_all(mcp_result: { 'note' => note }, updated_at: Time.current)
       end
 
       private

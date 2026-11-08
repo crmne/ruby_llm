@@ -507,7 +507,6 @@ module RubyLLM
       tool_call = Question.decided_call(tool_call, 'answer')
       name = remembered_tool_identity(tool_call) if remember
       record_tool_call_decision(tool_call, true)
-      @tool_call_state.forget_decline_note(tool_call.respond_to?(:id) ? tool_call.id : tool_call)
       @tool_call_state.remember(name) if name && !tool_call_answered?(tool_call)
       self
     end
