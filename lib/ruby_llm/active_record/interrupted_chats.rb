@@ -13,11 +13,11 @@ module RubyLLM
     # call blocks while it waits for approval, while a process holds its
     # claim, or while its +mcp_state+ holds a task or an unanswered
     # question. Databases query JSON in different ways, so Ruby reads the
-    # +mcp_state+ of the open calls on the chats SQL found, and the
-    # relation leaves out those whose open calls all block. It skips the
-    # query cache, since a job polls it for what other processes wrote.
-    # Without claim columns no row says whether a process holds a chat, so
-    # no chat counts as interrupted.
+    # +mcp_state+ of the open calls on the latest responses of the chats
+    # SQL found, and the relation leaves out those whose open calls all
+    # block. It skips the query cache, since a job polls it for what other
+    # processes wrote. Without claim columns no row says whether a process
+    # holds a chat, so no chat counts as interrupted.
     class InterruptedChats # :nodoc:
       BLANK_COLUMNS = %w[continuation thinking_text content_raw raw_content raw_reasoning].freeze
 
@@ -67,9 +67,9 @@ module RubyLLM
       def paused_calls(found)
         return [] unless tool_call_column?(:mcp_state)
 
-        messages = @messages.klass.where(@messages.foreign_key => found.select(@chat.primary_key))
+        responses = found.select(Arel.sql(sql("(#{newest('p') { |a| response(a) }})")))
         states = ToolCall.uncached do
-          ToolCall.where(message_type:, message_id: messages.select(message_key), result_id: nil)
+          ToolCall.where(message_type:, message_id: responses, result_id: nil)
                   .pluck(:id, :mcp_state)
         end
         states.filter_map { |id, state| id if paused?(state) }

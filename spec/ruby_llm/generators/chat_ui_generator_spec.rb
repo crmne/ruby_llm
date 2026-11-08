@@ -1319,6 +1319,11 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
                 #     class: CleanSoftDeletedRecordsJob
                 #     schedule: every hour
 
+                development:
+                  clear_development_jobs:
+                    command: "SolidQueue::Job.clear_finished_in_batches"
+                    schedule: every day
+
                 production:
                   clear_solid_queue_finished_jobs:
                     command: "SolidQueue::Job.clear_finished_in_batches(sleep_between_batches: 0.3)"
@@ -1332,8 +1337,10 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
 
               resume_job = config[:approval_flow][:resume_job]
               recurring = YAML.load_file('config/recurring.yml')
-              expect(recurring['production'].values).to include('class' => resume_job, 'schedule' => 'every minute')
-              expect(File.read('config/recurring.yml').scan("class: #{resume_job}").size).to eq(1)
+              %w[development production].each do |environment|
+                expect(recurring[environment].values).to include('class' => resume_job, 'schedule' => 'every minute')
+              end
+              expect(File.read('config/recurring.yml').scan("class: #{resume_job}").size).to eq(2)
             end
           end
         end

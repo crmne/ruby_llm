@@ -143,7 +143,7 @@ module RubyLLM
           append_to_file RECURRING_PATH, "\n#{recurring_task}"
         else
           environments.each do |environment|
-            inject_into_file RECURRING_PATH, recurring_task.indent(2), after: /^#{environment}:[ \t]*\n/
+            inject_into_file RECURRING_PATH, recurring_task.indent(2), after: /^#{environment}:[ \t]*\n/, force: true
           end
         end
       end
