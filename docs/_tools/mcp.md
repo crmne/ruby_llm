@@ -112,7 +112,7 @@ meta = RubyLLM::MCP::Client.new(tunnel).meta
 params = { name: "roots", arguments: {}, _meta: meta }
 ```
 
-This client declares no capabilities, so the server won't send those requests questions or extension features. A server on an older revision learns these fields from the `initialize` handshake instead, so leave them out there and keep any `_meta` of the request's own, such as a `progressToken`.
+On the 2026-07-28 revision, this client declares no capabilities, so the server won't send those requests questions or extension features. A server on an older revision takes the client's details and capabilities from its session's `initialize` handshake instead, which `meta` doesn't perform. Send it requests only in a session that has already been initialized, leave these fields out, and keep any `_meta` of the request's own, such as a `progressToken`.
 
 ### Inputs
 
