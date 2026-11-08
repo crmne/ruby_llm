@@ -320,6 +320,42 @@ When building [Tools]({% link _getting_started/tools.md %}), you need to decide 
     end
     ```
 
+## Tool-Level Handlers
+
+Writing the same `rescue` in every tool gets old. Declare `rescue_from` on a base class instead, and every tool that inherits from it hands the model a result instead of stopping the chat:
+
+```ruby
+class ApplicationTool < RubyLLM::Tool
+  rescue_from StandardError, with: :report_failure
+
+  rescue_from ActiveRecord::ConnectionNotEstablished do
+    raise
+  end
+
+  private
+
+  def report_failure(error)
+    Rails.error.report(error, context: { tool: name })
+    { error: "This tool failed unexpectedly (#{error.class.name.demodulize}). Trying the same call again won't help." }
+  end
+end
+```
+
+Name a method with `with:` or pass a block. Either runs on the tool instance, so `name` and the tool's own methods are available. The handler's return value becomes the call's result, exactly as if `execute` had returned it, and reaches `after_tool_result` callbacks too. Re-raise to stop the chat, as an exception without a handler does. Handlers are searched from the last declared to the first, so list general classes before specific ones. They run in the thread or fiber that runs the call, so they work the same with [concurrent tool execution]({% link _tools/tool-execution.md %}#concurrent-tool-execution).
+
+A question from `ask` and a cancelled chat never reach a handler, so `rescue_from StandardError` doesn't swallow them.
+
+A subclass inherits the handlers its parent has when the subclass is defined. RubyLLM's own tools are defined before your code loads, so give them handlers directly, such as in an initializer:
+
+```ruby
+# config/initializers/ruby_llm.rb
+RubyLLM::CodeExecution.rescue_from StandardError do |error|
+  { error: "The code couldn't run (#{error.class.name.split("::").last})." }
+end
+```
+
+Handlers for an [MCP server's]({% link _tools/mcp.md %}#handling-tool-errors) tools go on its client class.
+
 ## Agent-Level Handlers
 
 When you use [Agents]({% link _getting_started/agents.md %}), `rescue_from` moves error handling out of every call site and into the agent class:

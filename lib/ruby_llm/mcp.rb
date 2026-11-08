@@ -31,6 +31,7 @@ module RubyLLM
   # writing.
   class MCP
     include Support::Inspectable
+    include Support::Rescuable
 
     INPUT_ROUNDS = 10
     INPUT_REQUESTS = %i[form url].freeze
@@ -48,10 +49,31 @@ module RubyLLM
 
     SETTINGS = %i[
       @url @allow_http @command @directory @env @headers @bearer_token @timeout @input_names @only @except @prefix
-      @tool_declarations @approvals @deferrals @callbacks @oauth @input_requests @extensions @log_level
+      @tool_declarations @approvals @deferrals @callbacks @oauth @input_requests @extensions @log_level @rescue_handlers
     ].freeze
     private_constant :SETTINGS, :INPUT_ROUNDS, :INPUT_REQUESTS, :INLINE_SETTINGS, :EXTENSIONS, :POLL_INTERVAL,
                      :LOG_LEVELS, :UNKNOWN_TOOL_ERRORS
+
+    ##
+    # :singleton-method: rescue_from
+    # :call-seq: rescue_from(*exception_classes, with: nil, &block)
+    #
+    # Registers a handler for exceptions raised while one of the server's
+    # tools runs in a chat, the way Tool.rescue_from does for a Tool. Name
+    # the handler with +with:+ or pass a block; either runs on the MCP
+    # instance, so declared ::inputs are available. The handler's return
+    # value becomes the call's result. Re-raise to stop the chat.
+    #
+    #   class Linear < RubyLLM::MCP
+    #     url "https://mcp.linear.app/mcp"
+    #
+    #     rescue_from RubyLLM::MCP::Error do |error|
+    #       { error: "Linear couldn't answer: #{error.message}" }
+    #     end
+    #   end
+    #
+    # A handler declared here comes before one declared on MCP::Tool. Tool
+    # classes added with ::tool use their own handlers.
 
     class << self
       attr_writer :default_name # :nodoc:
@@ -352,9 +374,7 @@ module RubyLLM
         @deferrals = deferrals + [names.flatten.map(&:to_s)]
       end
 
-      def deferrals # :nodoc:
-        @deferrals || []
-      end
+      def deferrals = @deferrals || [] # :nodoc:
 
       # Registers a callback for the progress the server reports while it
       # works on a request. Pass a method name or a block; either runs on

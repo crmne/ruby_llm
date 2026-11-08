@@ -225,6 +225,7 @@ RubyLLM::Agent (class)
 RubyLLM::Agent extend Forwardable
 RubyLLM::Agent extend ModelOptions
 RubyLLM::Agent include Support::DeprecatedEnumerable
+RubyLLM::Agent include Support::Rescuable
 RubyLLM::Agent#add_message(message_or_attributes)
 RubyLLM::Agent#after_fallback(&block)
 RubyLLM::Agent#after_file_write(&block)
@@ -882,6 +883,7 @@ RubyLLM::Judgment#to_h
 RubyLLM::Judgment#tokens
 RubyLLM::MCP (class)
 RubyLLM::MCP include Support::Inspectable
+RubyLLM::MCP include Support::Rescuable
 RubyLLM::MCP#authorization_url(redirect_uri:)
 RubyLLM::MCP#authorize(params)
 RubyLLM::MCP#authorized?
@@ -917,6 +919,7 @@ RubyLLM::MCP.oauth(owner: nil, scopes: nil, client_id: nil, client_secret: nil, 
 RubyLLM::MCP.only(*names)
 RubyLLM::MCP.prefix(value = nil)
 RubyLLM::MCP.requires_approval(*names, **options)
+RubyLLM::MCP.rescue_from(*exception_classes, with: nil, &block)
 RubyLLM::MCP.timeout(seconds = nil)
 RubyLLM::MCP.tool(tool, as: nil, description: nil, fixed_arguments: nil, wrap: nil)
 RubyLLM::MCP.transport(value = nil, &block)
@@ -1414,6 +1417,7 @@ RubyLLM::Tokens#to_h
 RubyLLM::Tokens.aggregate(tokens)
 RubyLLM::Tokens.new(input: nil, output: nil, cache_read: nil, cache_write: nil, thinking: nil, characters: nil, audio_seconds: nil, search_units: nil, cache_write_by_ttl: nil, server_tool_use: nil, reported_cost: nil)
 RubyLLM::Tool (class)
+RubyLLM::Tool include Support::Rescuable
 RubyLLM::Tool#ask(message, choices: nil, url: nil, &fields)
 RubyLLM::Tool#call(tool_call: nil, **arguments)
 RubyLLM::Tool#defer
@@ -1445,6 +1449,7 @@ RubyLLM::Tool.parameters(schema = nil, &block)
 RubyLLM::Tool.provider_options -> hash
 RubyLLM::Tool.provider_options(options) -> self
 RubyLLM::Tool.requires_approval(&resolver)
+RubyLLM::Tool.rescue_from(*exception_classes, with: nil, &block)
 RubyLLM::Tool.tool_name
 RubyLLM::ToolCall (class)
 RubyLLM::ToolCall include Support::Inspectable

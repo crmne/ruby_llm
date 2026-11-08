@@ -44,6 +44,7 @@ module RubyLLM
     extend ModelOptions
     singleton_class.prepend JoinCallbacks, Ownership, Callbacks, ToolConversion, ContextBudget
     include Support::DeprecatedEnumerable
+    include Support::Rescuable
 
     DUPED_INHERITED_CONFIG = {
       :@chat_kwargs => {},
@@ -575,59 +576,6 @@ module RubyLLM
         @input_names = names.flatten.map(&:to_sym)
       end
 
-      # Registers a handler for exceptions raised by the chat operations of
-      # this agent's instances and of the chats and records ::chat, ::create,
-      # ::create!, and ::find return: #ask, #say, #ask_later, #complete,
-      # #generate, #run_tools, #step, #count_tokens, and #compact. Name the
-      # handler with +with:+ or pass a block; either runs on the agent instance,
-      # so the agent's #chat, inputs, and class name are available for instrumentation.
-      #
-      #   class ApplicationAgent < RubyLLM::Agent
-      #     rescue_from RubyLLM::RateLimitError, RubyLLM::ConnectionError, with: :handle_transient
-      #     rescue_from RubyLLM::BadRequestError do |error|
-      #       error_tracker.notify(error)
-      #       raise
-      #     end
-      #
-      #     private
-      #
-      #     def handle_transient(error)
-      #       metrics.increment("llm.api_error", type: "transient")
-      #       raise
-      #     end
-      #   end
-      #
-      # Handlers are searched in reverse declaration order, so the last
-      # matching one wins. Re-raise inside a handler to let the caller see
-      # the exception; otherwise the handler's return value becomes the
-      # operation's return value. Exceptions no handler matches are
-      # re-raised. Subclasses inherit the handlers declared when they are
-      # defined.
-      #
-      # Exception classes may be named as Strings, which defers constant
-      # lookup until an exception is raised. A class that can never match a
-      # StandardError, such as Interrupt, raises ArgumentError.
-      def rescue_from(*exception_classes, with: nil, &block)
-        raise ArgumentError, 'rescue_from needs a handler: pass with: or a block' unless with || block
-        raise ArgumentError, 'rescue_from takes with: or a block, not both' if with && block
-
-        exception_classes.flatten.each do |exception_class|
-          rescue_handlers << [rescue_handler_key(exception_class), with || block]
-        end
-      end
-
-      def rescue_handlers # :nodoc:
-        @rescue_handlers ||= []
-      end
-
-      def rescue_handler_for(exception) # :nodoc:
-        rescue_handlers.reverse_each do |class_name, handler|
-          exception_class = rescue_handler_class(class_name)
-          return handler if exception_class && exception.is_a?(exception_class)
-        end
-        nil
-      end
-
       def chat_kwargs # :nodoc:
         @chat_kwargs || {}
       end
@@ -795,23 +743,6 @@ module RubyLLM
         return if unsupported.empty?
 
         raise ArgumentError, "thinking accepts #{THINKING_OPTIONS.join(', ')}, got #{unsupported.join(', ')}"
-      end
-
-      def rescue_handler_key(exception_class)
-        case exception_class
-        when ->(klass) { klass.is_a?(Module) && !(klass.is_a?(Class) && (klass <=> StandardError).nil?) }
-          exception_class.name || exception_class
-        when String then exception_class
-        else raise ArgumentError, "#{exception_class.inspect} is not a StandardError class or its name"
-        end
-      end
-
-      def rescue_handler_class(class_name)
-        return class_name if class_name.is_a?(Module)
-
-        Object.const_get(class_name)
-      rescue NameError
-        nil
       end
 
       def copy_inherited_config_to(subclass)
@@ -1114,6 +1045,51 @@ module RubyLLM
     # Agent instances delegate the Chat conversation API to the wrapped
     # #chat without adapting its return values.
     def_delegators :chat, *CHAINABLE_CHAT_DELEGATES, *PASSTHROUGH_CHAT_DELEGATES
+
+    ##
+    # :singleton-method: rescue_from
+    # :call-seq: rescue_from(*exception_classes, with: nil, &block)
+    #
+    # Registers a handler for exceptions raised by the chat operations of
+    # this agent's instances and of the chats and records ::chat, ::create,
+    # ::create!, and ::find return: #ask, #say, #ask_later, #complete,
+    # #generate, #run_tools, #step, #count_tokens, and #compact. Name the
+    # handler with +with:+ or pass a block; either runs on the agent instance,
+    # so the agent's #chat, inputs, and class name are available for instrumentation.
+    #
+    #   class ApplicationAgent < RubyLLM::Agent
+    #     rescue_from RubyLLM::RateLimitError, RubyLLM::ConnectionError, with: :handle_transient
+    #     rescue_from RubyLLM::BadRequestError do |error|
+    #       error_tracker.notify(error)
+    #       raise
+    #     end
+    #
+    #     private
+    #
+    #     def handle_transient(error)
+    #       metrics.increment("llm.api_error", type: "transient")
+    #       raise
+    #     end
+    #   end
+    #
+    # Handlers are searched in reverse declaration order, so the last
+    # matching one wins. Re-raise inside a handler to let the caller see
+    # the exception; otherwise the handler's return value becomes the
+    # operation's return value. Exceptions no handler matches are
+    # re-raised. Subclasses inherit the handlers declared when they are
+    # defined.
+    #
+    # Exception classes may be named as Strings, which defers constant
+    # lookup until an exception is raised. A class that can never match a
+    # StandardError, such as Interrupt, raises ArgumentError.
+
+    ##
+    # :method: rescue_with_handler
+    # :call-seq: rescue_with_handler(exception)
+    #
+    # Runs the ::rescue_from handler matching +exception+ and returns its
+    # value, or re-raises when no handler matches. The chat operations call
+    # this for you.
 
     ##
     # :singleton-method: description
@@ -1836,19 +1812,6 @@ module RubyLLM
         define_singleton_method(name) { value } unless respond_to?(name)
       end
       self
-    end
-
-    # Runs the ::rescue_from handler matching +exception+ and returns its
-    # value, or re-raises when no handler matches. The chat operations call
-    # this for you.
-    def rescue_with_handler(exception)
-      handler = self.class.rescue_handler_for(exception)
-      raise exception unless handler
-
-      return instance_exec(exception, &handler) unless handler.is_a?(Symbol)
-
-      handler_method = method(handler)
-      handler_method.arity.zero? ? handler_method.call : handler_method.call(exception)
     end
 
     private
