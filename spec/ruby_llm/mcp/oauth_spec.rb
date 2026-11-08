@@ -436,6 +436,8 @@ RSpec.describe RubyLLM::MCP::OAuth do
       linear.deauthorize
 
       expect { live.tools }.to raise_error(RubyLLM::UnauthorizedError)
+      signed = a_request(:post, server_url).with { |request| request.headers.key?('Authorization') }
+      expect(signed).not_to have_been_made
       expect(refreshes).not_to have_been_made
       expect(store.read(key)).to be_nil
     end
