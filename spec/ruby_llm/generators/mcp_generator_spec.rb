@@ -10,7 +10,7 @@ RSpec.describe RubyLLM::Generators::MCPGenerator, :generator, type: :generator d
 
   let(:template_path) { File.expand_path('../../fixtures/templates', __dir__) }
   let(:app_name) { 'test_mcp_generator' }
-  let(:app_path) { File.join(Dir.tmpdir, app_name) }
+  let(:app_path) { GeneratorTestHelpers.app_path(app_name) }
 
   def run_rails_generate(*args)
     env = {
@@ -23,13 +23,13 @@ RSpec.describe RubyLLM::Generators::MCPGenerator, :generator, type: :generator d
 
   before(:all) do # rubocop:disable RSpec/BeforeAfterAll
     template_path = File.expand_path('../../fixtures/templates', __dir__)
-    GeneratorTestHelpers.cleanup_test_app(File.join(Dir.tmpdir, 'test_mcp_generator'))
+    GeneratorTestHelpers.cleanup_test_app(GeneratorTestHelpers.app_path('test_mcp_generator'))
     GeneratorTestHelpers.create_test_app('test_mcp_generator', template: 'default_models_template.rb',
                                                                template_path: template_path)
   end
 
   after(:all) do # rubocop:disable RSpec/BeforeAfterAll
-    GeneratorTestHelpers.cleanup_test_app(File.join(Dir.tmpdir, 'test_mcp_generator'))
+    GeneratorTestHelpers.cleanup_test_app(GeneratorTestHelpers.app_path('test_mcp_generator'))
   end
 
   it 'creates MCP server classes for a URL or a local command' do

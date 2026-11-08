@@ -1,9 +1,52 @@
 # frozen_string_literal: true
 
 require 'English'
+require 'fileutils'
 require 'open3'
-require 'tmpdir'
+require 'securerandom'
+
+# Builds throwaway Rails apps for the generator specs. Every test process gets
+# a root folder of its own, so checkouts, worktrees and parallel workers never
+# share an app path.
 module GeneratorTestHelpers
+  ROOT_ENV = 'RUBYLLM_GENERATOR_TMP'
+
+  # The folder under which each test process makes its own root. Defaults to
+  # the repository's gitignored tmp/, never Dir.tmpdir.
+  def self.base_directory
+    ENV.fetch(ROOT_ENV) { File.expand_path('../../tmp/generator_apps', __dir__) }
+  end
+
+  # This process's root, made on first use. A forked worker makes its own.
+  def self.root
+    @roots ||= {}
+    @roots[Process.pid] ||= create_root
+  end
+
+  def self.app_path(name)
+    File.join(root, name)
+  end
+
+  def self.create_root(base = base_directory)
+    path = File.join(base, "#{Process.pid}-#{SecureRandom.hex(6)}")
+    FileUtils.mkdir_p(path)
+    owner = Process.pid
+    at_exit { remove_root(path) if Process.pid == owner }
+    path
+  end
+
+  def self.remove_root(path)
+    FileUtils.rm_rf(path)
+    @roots&.delete_if { |_pid, root| root == path }
+  end
+
+  # test-queue workers leave with exit!, which skips at_exit, but they run the
+  # suite hooks, so each process removes its own root after its suite.
+  def self.remove_own_root
+    root = @roots&.[](Process.pid)
+    remove_root(root) if root
+  end
+
   def self.cleanup_test_app(app_path)
     FileUtils.rm_rf(app_path)
   end
@@ -21,7 +64,7 @@ module GeneratorTestHelpers
     root_env['BUNDLE_PATH'] = ENV['BUNDLE_PATH'] if ENV.key?('BUNDLE_PATH')
     root_env['BUNDLE_DISABLE_SHARED_GEMS'] = ENV['BUNDLE_DISABLE_SHARED_GEMS'] if ENV.key?('BUNDLE_DISABLE_SHARED_GEMS')
 
-    app_path = File.join(Dir.tmpdir, name)
+    path = app_path(name)
 
     create_command = [
       'bundle', 'exec', 'rails', 'new', name,
@@ -29,12 +72,12 @@ module GeneratorTestHelpers
       '--skip-bootsnap', '--skip-bundle', '--skip-kamal', '--skip-thruster',
       '--skip-asset-pipeline', '--skip-javascript', '--skip-hotwire'
     ]
-    output, status = run_command(root_env, create_command, chdir: Dir.tmpdir)
+    output, status = run_command(root_env, create_command, chdir: root)
     raise_command_error(name, create_command, status, output) unless status.success?
 
     app_env = root_env
     template_command = ['bundle', 'exec', 'rails', 'app:template', "LOCATION=#{template_file}"]
-    output, status = run_command(app_env, template_command, chdir: app_path)
+    output, status = run_command(app_env, template_command, chdir: path)
     raise_command_error(name, template_command, status, output) unless status.success?
   end
 
@@ -94,3 +137,5 @@ module GeneratorTestHelpers
     GeneratorTestHelpers.cleanup_test_app(app_path)
   end
 end
+
+RSpec.configure { |config| config.after(:suite) { GeneratorTestHelpers.remove_own_root } }
