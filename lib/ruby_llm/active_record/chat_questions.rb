@@ -104,13 +104,10 @@ module RubyLLM
       # replaces, and never in +mcp_state+, where a note would look like
       # a question the call waits on.
       def persisted_decline_note(tool_call) # :nodoc:
-        record = RubyLLM::ActiveRecord::ToolCall.uncached { find_tool_call(tool_call.id) }
-        record.mcp_result&.[]('note') if record&.has_attribute?(:mcp_result) && record.result_id.nil?
+        RubyLLM::ActiveRecord::ToolCall.uncached { find_tool_call(tool_call.id) }&.mcp_result&.[]('note')
       end
 
       def record_persisted_decline_note(tool_call, note) # :nodoc:
-        return unless RubyLLM::ActiveRecord::ToolCall.column_names.include?('mcp_result')
-
         chat_tool_calls.where(tool_call_id: tool_call.id, result_id: nil)
                        .update_all(mcp_result: note && { 'note' => note }, updated_at: Time.current)
       end
@@ -132,8 +129,6 @@ module RubyLLM
       # so #pending_questions can't list it, but it can be declined as
       # +approve+ approves it.
       def unmarked_approval(question)
-        return if question.is_a?(RubyLLM::Question) && !question.approval?
-
         record = RubyLLM::ActiveRecord::ToolCall.uncached { find_tool_call(persisted_question_id(question)) }
         return unless record && record.approval.nil? && record.result_id.nil?
 
