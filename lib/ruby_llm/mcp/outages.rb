@@ -150,12 +150,17 @@ module RubyLLM
         end
 
         # Settings, not classes, since RubyLLM.mcp builds a class per call.
-        # Settings that depend on runtime state can differ per object, so one
-        # tenant's server never sidelines another's.
+        # Settings that depend on runtime state can differ per object, and so
+        # can the connection settings of an object's context, so one tenant's
+        # server never sidelines another's.
         def key(server)
           settings = server.class
           endpoint = [settings.url, *settings.command]
-          settings.transport || !endpoint.compact.all?(String) ? server : endpoint
+          return server if settings.transport || !endpoint.compact.all?(String)
+
+          config = server.send(:config)
+          ssl = Transport::Connection.ssl_snapshot(config.ssl) if config.ssl
+          [*endpoint, config.http_proxy, ssl, config.faraday_adapter, config.request_timeout]
         end
 
         def monotonic_now

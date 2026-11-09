@@ -428,6 +428,19 @@ RSpec.describe RubyLLM::MCP::OAuth do
       expect(store.read(key)).to be_nil
       expect(linear_class.new(user: 'ada')).not_to be_authorized
     end
+
+    it 'raises UnauthorizedError when its token expires after another instance forgets the credentials' do
+      store.write(key, store.read(key).merge('expires_at' => 0))
+      live = linear_class.new(user: 'ada')
+      expect(live).to be_authorized
+      linear.deauthorize
+
+      expect { live.tools }.to raise_error(RubyLLM::UnauthorizedError)
+      signed = a_request(:post, server_url).with { |request| request.headers.key?('Authorization') }
+      expect(signed).not_to have_been_made
+      expect(refreshes).not_to have_been_made
+      expect(store.read(key)).to be_nil
+    end
   end
 
   describe '.refreshing' do
