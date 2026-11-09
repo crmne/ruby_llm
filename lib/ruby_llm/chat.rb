@@ -369,13 +369,15 @@ module RubyLLM
     # loop goes on with the turn that is running, so messages queued with
     # <tt>steer: false</tt> stay queued.
     def continue_turn(steering_only: true, &) # :nodoc:
-      until settled?(steering_only) || waiting?
-        boundary = !pending_tool_response
-        move = advance(steering_only:, &)
-        break if placeholder?(move)
+      within_run do
+        until settled?(steering_only) || waiting?
+          boundary = !pending_tool_response
+          move = advance(steering_only:, &)
+          break if placeholder?(move)
 
-        stalled = stalled_round?(stalled, generated: boundary, move:)
-        steering_only ||= boundary
+          stalled = stalled_round?(stalled, generated: boundary, move:)
+          steering_only ||= boundary
+        end
       end
       @cancelled = false
       pending_tool_response || halted_result || last_non_system_message || messages.last
@@ -898,6 +900,12 @@ module RubyLLM
     # and neither does another process taking over a persisted chat or an
     # error your streaming block raises. Pass +nil+ to remove all fallbacks
     # and restore the default error classes. Returns +self+.
+    #
+    # While a fallback is left, a timeout, a failed connection, or a retry
+    # wait longer than two seconds moves on to it at once instead of
+    # retrying the same model. A fallback that took over answers the rest
+    # of that #complete, including its tool rounds; the next one starts on
+    # the chat's own model.
     #
     #   chat.with_fallbacks("gpt-4.1-mini", "claude-haiku-4-5")
     #   chat.with_fallbacks(nil)
@@ -2062,6 +2070,7 @@ module RubyLLM
 
     def generate_with_fallbacks(&block)
       fallback_queue = fallbacks.dup
+      resume_stand_in(fallback_queue)
       attempt = 0
       active_fallback = nil
       streaming = block_given?
@@ -2079,7 +2088,9 @@ module RubyLLM
         chunks_yielded = false
 
         begin
-          result = generate_once(stream_tracker: proc { chunks_yielded = true }, usage_start:, &on_chunk)
+          result = with_fallback_ready(fallback_queue) do
+            generate_once(stream_tracker: proc { chunks_yielded = true }, usage_start:, &on_chunk)
+          end
           finish_fallback(active_fallback, response: result)
           return result
         rescue StandardError => e
@@ -2093,6 +2104,38 @@ module RubyLLM
     ensure
       @answering_fallback = false
       restore_parameters(drops)
+    end
+
+    # One #complete is a run. While it lasts, @stand_ins holds the
+    # fallback that took over once a model failed with an error in +on:+.
+    # Each later request in the run starts on that fallback, and its
+    # replies are marked as stood in, rather than waiting on the model that
+    # just failed again; the next run starts on the chat's own model.
+    def within_run
+      outer = @stand_ins
+      @stand_ins = []
+      yield
+    ensure
+      @stand_ins = outer
+    end
+
+    def resume_stand_in(fallback_queue)
+      stand_in = @stand_ins&.last
+      index = fallback_queue.index { |fallback| fallback.equal?(stand_in) }
+      return unless index
+
+      switch_to_fallback_model(fallback_queue[index])
+      fallback_queue.shift(index + 1)
+      @answering_fallback = true
+    end
+
+    # While a fallback is left, the transport hands a timeout, a failed
+    # connection, or a long retry wait to it instead of retrying the same
+    # model. Without one, the model is retried as configured.
+    def with_fallback_ready(fallback_queue, &)
+      return yield if fallback_queue.empty?
+
+      Transport::Connection.with_fallback_ready(method(:fallback_error?), &)
     end
 
     # Retries the same model without each parameter it rejects, when the
@@ -2189,6 +2232,7 @@ module RubyLLM
       fallback = switch_to_usable_fallback(fallback_queue)
       raise error unless fallback
 
+      @stand_ins&.replace([fallback])
       @answering_fallback = true
       attempt += 1
       fallback = fallback.with_attempt(
