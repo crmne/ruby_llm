@@ -213,7 +213,7 @@ When a provider retires a model, which chats move to which replacement is your a
 
 ```ruby
 # lib/tasks/models.rake
-task retire_model: "ruby_llm:load_models" do
+task retire_model: :environment do
   Chat.joins(:model)
       .where(ruby_llm_models: { provider: "anthropic", model_id: "claude-sonnet-4-5-20250929" })
       .find_each { |chat| chat.update!(model: "claude-sonnet-4-6", provider: "anthropic") }
@@ -222,7 +222,7 @@ end
 
 Match the ID the chats store, which is the one the registry resolved (`claude-sonnet-4-5` is stored as its dated ID). Messages and usage rows keep the model and cost they recorded, so `chat.cost` still counts past spend at the old prices, and the next request sends the whole history to the replacement.
 
-Setting the model looks the new ID up in RubyLLM's model table, which after a gem upgrade may not know the replacement yet, so load the registry first: the task above depends on `ruby_llm:load_models`, and a data migration, which runs before a deploy's `ruby_llm:load_models`, calls `RubyLLM.models.load_from_json` (or `RubyLLM.models.refresh`) at the start of `up`. Otherwise the update raises `RubyLLM::ModelNotFoundError`.
+Setting the model looks the new ID up in the registry, which in Rails is RubyLLM's model table, and raises `RubyLLM::ModelNotFoundError` when it doesn't know the replacement yet. So load the registry first and check that `RubyLLM.models.find("claude-sonnet-4-6", provider: :anthropic)` finds it: run `bin/rails ruby_llm:load_models` for the installed gem's catalog, or `RubyLLM.models.refresh` for the latest one, before the task. Both replace the stored catalog. A data migration runs before a deploy loads the catalog, so call `RubyLLM.models.load_from_json` at the start of `up`, which loads the installed catalog in memory only, or `RubyLLM.models.refresh` when that catalog doesn't have the replacement either.
 
 ## Exploring and Finding Models
 
