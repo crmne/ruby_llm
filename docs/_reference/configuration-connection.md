@@ -66,6 +66,8 @@ end
 
 When a provider reports how long to wait through rate-limit headers (the standard `Retry-After`, or OpenAI's `x-ratelimit-reset-requests` and `x-ratelimit-reset-tokens`), retries wait that long instead of the backoff interval. If the requested wait exceeds `retry_max_interval`, the request fails immediately with `RubyLLM::RateLimitError` rather than sleeping.
 
+A chat with [fallbacks]({% link _advanced/error-handling.md %}#model-fallbacks) left to try doesn't retry a timeout, a failed connection, or a wait longer than two seconds on the same model: the next fallback takes the request at once.
+
 These settings cover requests you can safely repeat. Requests that create something on the provider's side, such as submitting a batch, starting a video generation job, uploading a file, or creating a content cache, are sent once and raise on failure, because a retry after a lost response would create a second job.
 
 Example for high-latency connections:

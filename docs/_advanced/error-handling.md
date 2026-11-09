@@ -202,7 +202,9 @@ chat = RubyLLM.chat(model: "{{ site.models.default_chat }}")
 response = chat.ask "Summarize this incident report."
 ```
 
-Fallbacks are tried in order. The fallback only applies to that generation attempt; after the response finishes or the error bubbles up, the chat returns to its original model.
+Fallbacks are tried in order. A fallback stands in for the rest of that `ask` or `complete`: once the chat's model has failed, the tool rounds that follow go straight to the fallback that answered, instead of waiting on the failed model again. `before_fallback` runs once, when the model fails, and every reply the fallback writes is marked as stood in. The next `ask` or `complete` tries the chat's own model first again, because `chat.model` stays the model you chose. Calling `generate` or `step` yourself makes each request a run of its own, so each one starts on the chat's model.
+
+While a fallback is left to try, a request that fails isn't retried on the same model when retrying means a long wait. A timeout or a failed connection moves on to the next fallback at once, so a provider that accepts the connection and never answers costs one `request_timeout`, not one per retry. So does a rate limit or an overload whose `Retry-After` (or the provider's own timing header) asks for more than two seconds. Shorter waits, and errors without a wait, are still retried on the same model as [Automatic Retries](#automatic-retries) describes, since a second's wait usually costs less than switching models. The last model in the list, and a chat without fallbacks, retry as configured. An error `on:` leaves out is retried as configured too, because no fallback would take it.
 
 Leave out `on:` unless you have a reason to change it. The default, `RubyLLM::Fallback::DEFAULT_ERRORS`, covers every provider's rate limits, server errors, unavailable and overloaded services, timeouts, and connection failures. Providers signal the same trouble with different errors, so a list narrowed by name can miss one: an overloaded Anthropic model raises `OverloadedError`, but an overloaded OpenAI, Gemini or Bedrock model raises `ServiceUnavailableError`.
 
@@ -406,6 +408,8 @@ Retries are attempted for:
 `RubyLLM::ContextLengthExceededError` is not retried. Neither is a stream that fails after it has started delivering events, because the retry would replay them into the same response.
 
 RubyLLM honors `Retry-After` and `retry-after-ms` headers across providers. `Retry-After` takes precedence when both are present. Invalid millisecond delays fall back to provider-specific timing or the configured backoff. If the requested delay exceeds `retry_max_interval`, RubyLLM raises the error without retrying early.
+
+A chat with [fallbacks](#model-fallbacks) left to try retries less: a timeout, a failed connection, or a requested delay longer than two seconds goes to the next fallback instead of another attempt on the same model.
 
 Batch submissions, video generation jobs, file uploads, and content caches are never retried, because each creates something on the provider's side. When such a request reaches the provider but its response is lost, retrying would create a second job you still pay for, so RubyLLM raises the error and lets you decide whether to submit again.
 
