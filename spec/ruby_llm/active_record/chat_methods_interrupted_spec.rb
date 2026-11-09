@@ -373,6 +373,97 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(chats.interrupted).to contain_exactly(chat)
   end
 
+  # A network database's adapter, such as PostgreSQL's, waits on its socket
+  # for every query, which under a fiber scheduler yields to the scheduler.
+  # SQLite doesn't, so each query waits on a ready pipe first, as it would.
+  def waiting_on_a_socket_for_queries
+    reader, writer = IO.pipe
+    writer.write('ready')
+    socket = Object.new
+    socket.define_singleton_method(:start) { |*| reader.wait_readable(1) }
+    socket.define_singleton_method(:finish) { |*| nil }
+    subscriber = ActiveSupport::Notifications.subscribe('sql.active_record', socket)
+    yield
+  ensure
+    ActiveSupport::Notifications.unsubscribe(subscriber) if subscriber
+    [reader, writer].compact.each(&:close)
+  end
+
+  # Whether the fiber that ran each query +pattern+ matches was blocking,
+  # keeping its scheduler from running other fibers, while the block runs.
+  def blocking_for_updates(pattern, &)
+    blocking = []
+    record = ->(*, payload) { blocking << Fiber.current.blocking? if payload[:sql].match?(pattern) }
+    ActiveSupport::Notifications.subscribed(record, 'sql.active_record', &)
+    blocking
+  end
+
+  # Solid Queue's fiber workers and Async run a job in a fiber under a fiber
+  # scheduler. Once its thread is killed at exit, the fiber is cancelled or
+  # never resumed if it yields to the scheduler, as a query does.
+  it 'expires the claims of a run in a fiber whose thread was killed at exit, so the chat resumes at once' do
+    skip 'async runs on MRI' unless RUBY_ENGINE == 'ruby'
+    require 'async'
+    chat = asked
+    started = Queue.new
+    job = posting_job(chat) do
+      started << true
+      sleep
+    end
+    thread = Thread.new { Async { |task| task.async { job.complete } } }
+    waiting_on_a_socket_for_queries do
+      expect(started.pop(timeout: 10)).to be(true)
+      expect(thread.kill.join(10)).to eq(thread)
+    end
+
+    expect(row(chat)).to have_attributes(claim_token: be_present, claimed_until: be <= Time.current)
+    expect(tool_call_rows(chat).sole).to have_attributes(result_id: nil, claimed_until: be <= Time.current)
+    expect(chats.interrupted).to contain_exactly(chat)
+  end
+
+  # Blocking the fiber would hold up every other fiber on its scheduler.
+  it 'releases the claims of a run that finished in a fiber without blocking its scheduler' do
+    chat = asked
+    job = posting_job(chat) { 'Posted' }
+    releases = blocking_for_updates(/\AUPDATE \S+ SET "?claim_token"? = /) { in_reactor { job.complete } }
+
+    expect(releases).to be_present.and(all(be(false)))
+    expect(row(chat)).to have_attributes(claim_token: nil, claimed_until: nil)
+  end
+
+  it 'releases the claim of a tool call that paused for a question without blocking its scheduler' do
+    chat = asked
+    job = job_for(chat, seat) { calling('pick_seat') }
+    releases = blocking_for_updates(/\AUPDATE \S*ruby_llm_tool_calls\S* SET "?claimed_until"? = /) do
+      in_reactor { job.complete }
+    end
+
+    expect(job.pending_questions).to be_present
+    expect(releases).to be_present.and(all(be(false)))
+    expect(tool_call_rows(chat).sole).to have_attributes(result_id: nil, claimed_until: nil)
+  end
+
+  it 'releases the claims of a run in a fiber whose reactor Ctrl-C stopped, along with its tool call' do
+    skip 'async runs on MRI' unless RUBY_ENGINE == 'ruby'
+    require 'async'
+    chat = asked
+    started = Queue.new
+    job = posting_job(chat) do
+      started << true
+      sleep
+    end
+    thread = Thread.new { Async { |task| task.async { job.complete } } }
+    thread.report_on_exception = false
+    waiting_on_a_socket_for_queries do
+      expect(started.pop(timeout: 10)).to be(true)
+      thread.raise(Interrupt)
+      expect { thread.join(10) }.to raise_error(Interrupt)
+    end
+
+    expect(row(chat)).to have_attributes(claim_token: nil, claimed_until: nil)
+    expect(tool_call_rows(chat).sole).to have_attributes(result_id: nil, claimed_until: nil)
+  end
+
   it 'keeps the expired claim of a tool call that was running when a TERM signal stopped its run' do
     chat = asked
     job = posting_job(chat) { raise SignalException, 'TERM' }

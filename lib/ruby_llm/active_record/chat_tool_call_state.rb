@@ -57,8 +57,8 @@ module RubyLLM
         claimed
       end
 
-      def release(ids, stopped_by = nil)
-        @chat.release_persisted_tool_calls(ids, stopped_by)
+      def release(ids, stopped_by = nil, finished: false)
+        @chat.release_persisted_tool_calls(ids, stopped_by, finished:)
       end
 
       def started(tool_call)

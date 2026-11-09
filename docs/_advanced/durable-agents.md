@@ -130,10 +130,12 @@ Claims rely on the database to make them visible to other processes, so call the
 |---|---|---|---|---|
 | The job | Raises `RubyLLM::CancelledError` at the next event, or when the running tool returns | Is gone | Raises the error | Raises the error |
 | The reply so far | Kept as a reply that is `cancelled?`, if any text streamed | Lost: a blank placeholder stays, and requests leave it out | Removed if blank | Not affected |
-| Tool calls | A finished one keeps its result. The rest close as unfinished | A finished one keeps its result. The rest run again once the claims expire | Not affected | The incomplete round can be removed, with its finished results, so the model is asked again |
+| Tool calls | A finished one keeps its result. The rest close as unfinished | A finished one keeps its result. The rest, including one that had started, run again once the claims expire | Not affected | The incomplete round can be removed, with its finished results, so the model is asked again |
 | What continues | Nothing after a stop in a tool round or a kept reply, until a new message. A stop before any text left the question unanswered, so a later `complete` asks it again | The next `complete` once the chat and tool claims expire | The next `complete` or message | The next `complete` or message |
 | The person | Sees the partial reply, and the page stops streaming | Sees "Thinking…" until a job runs again | Sees what your job shows them | Sees what your job shows them |
 | Provider usage | An interrupted request is recorded as `:cancelled` with the tokens seen. One that already finished stays `:succeeded` | Lost for that attempt | Recorded as `:failed` | The request that finished stays `:succeeded` |
+
+A tool call that had started when its process died runs again on resume, even if it already did its work: execution is [at-least-once](#at-least-once-not-exactly-once). A tool with side effects, such as posting to Slack or charging a card, must be safe to run twice, for example by checking its own record of having run before it acts.
 
 The generated chat UI handles each of these: its job discards the cancel and tries again every minute while a dead process still holds the chat, `complete` saves a failure in the chat's `reply_error` column for the page before it raises, and `ResumeInterruptedChatsJob` answers a reply whose process died, every minute and at boot. See [Resuming a Crashed Run](#resuming-a-crashed-run).
 
