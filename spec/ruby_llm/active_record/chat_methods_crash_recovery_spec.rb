@@ -84,6 +84,46 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(sent).to eq([[:user, 'Look twice'], [:assistant, ''], [:tool, 'found', first_call],
                         [:tool, interrupted, second_call]])
     expect(result_of(second_call).content).to eq(interrupted)
+    expect(Message.exists?(placeholder.id)).to be(false)
+  end
+
+  # What a worker leaves when it is killed while the reply streams: the
+  # blank placeholder the reply streamed into, and its claim on the chat.
+  def killed_stream_chat
+    chat = Chat.create!(model: model_for(:openai))
+    chat.add_message(role: :user, content: 'Hello')
+    placeholder = chat.messages.create!(role: :assistant, content: '')
+    Chat.where(id: chat.id).update_all(claim_token: 'killed', claimed_until: 1.second.ago)
+    [chat, placeholder]
+  end
+
+  it 'replaces the blank placeholder of a killed stream with the resumed reply' do
+    chat, placeholder = killed_stream_chat
+    chat = resumed(chat)
+
+    expect(chat.complete.content).to eq('Answered')
+    expect(Message.exists?(placeholder.id)).to be(false)
+    expect(Chat.find(chat.id).messages.order(:id).map { |message| [message.role, message.content] })
+      .to eq([%w[user Hello], %w[assistant Answered]])
+  end
+
+  it 'keeps a blank reply that recorded usage when the next run writes after it' do
+    chat, placeholder = killed_stream_chat
+    chat.ruby_llm_usages.create!(message: placeholder, operation: 'chat', provider: 'openai', model: 'gpt-4.1',
+                                 status: 'succeeded')
+    chat = resumed(chat)
+
+    chat.send(:exclusively, -> {}) { chat.send(:persist_new_message) }
+
+    expect(Message.exists?(placeholder.id)).to be(true)
+  end
+
+  it 'leaves a blank placeholder alone outside a run that holds the claim' do
+    chat, placeholder = killed_stream_chat
+    chat = Chat.find(chat.id)
+
+    chat.send(:persist_new_message)
+
     expect(Message.exists?(placeholder.id)).to be(true)
   end
 

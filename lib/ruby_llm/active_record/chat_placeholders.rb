@@ -22,6 +22,7 @@ module RubyLLM
         return @message = unfinished if unfinished
 
         @message.destroy if blank_placeholder?
+        abandoned_placeholder_record&.destroy
 
         attrs = { role: :assistant, content: '' }
         @message = messages_association.create!(attrs)
@@ -30,12 +31,27 @@ module RubyLLM
       end
 
       def blank_placeholder?
-        return false unless @message&.persisted? && @message.content.blank?
-        return false unless @message.role.to_s == 'assistant'
-        return false if unfinished_record?(@message)
-        return false if @message.respond_to?(:attachments) && @message.attachments.attached?
+        blank_record?(@message)
+      end
 
-        !@message.ruby_llm_tool_calls.exists?
+      def blank_record?(record)
+        return false unless record&.persisted? && record.content.blank?
+        return false unless record.role.to_s == 'assistant'
+        return false if unfinished_record?(record)
+        return false if record.respond_to?(:attachments) && record.attachments.attached?
+
+        !record.ruby_llm_tool_calls.exists?
+      end
+
+      # A process killed before its reply arrived leaves its placeholder
+      # last, and the run that takes over the chat's claim writes a reply
+      # of its own, so it removes that one. A reply the model gave records
+      # usage, even a blank one.
+      def abandoned_placeholder_record
+        return unless @run_claim_token
+
+        record = messages_association.order(:id).last
+        record if blank_record?(record) && !record.ruby_llm_usages.exists?
       end
 
       def unfinished_message_record
