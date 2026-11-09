@@ -534,6 +534,14 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(requests.sole.last(2)).to contain_exactly([:tool, 'Seat window'], [:tool, interrupted_result])
     end
 
+    it 'tells the model the whole warning, even under a small budget for tool results' do
+      chat = asked
+      expect { posting_job(chat) { raise SignalException, 'TERM' }.complete }.to raise_error(SignalException)
+
+      expect(resuming(chat).with_context_budget(per_result: 0.000001).complete.content).to eq('Done')
+      expect(requests.sole.last).to eq([:tool, interrupted_result])
+    end
+
     it 'runs a call that had not started when its round was stopped' do
       chat = asked
       expect { posting_job(chat, calls: 2) { raise SignalException, 'TERM' }.complete }.to raise_error(SignalException)

@@ -2302,10 +2302,13 @@ module RubyLLM
               .map { |tool_call| unfinished_result(tool_call) }
     end
 
-    def unfinished_result(tool_call)
+    # A call +interrupted+ after it started may have done its work, so the
+    # model hears it may have partly run, as for an MCP call that broke off.
+    def unfinished_result(tool_call, interrupted: false)
+      content = UNFINISHED_TOOL_RESULT
+      content = { error: "The tool call did not finish. #{MCP::Outages::PARTLY_RUN}" }.to_json if interrupted
       (remote_refusal(tool_call) if tool_call.remote?) ||
-        Message.new(role: :tool, content: UNFINISHED_TOOL_RESULT, tool_call_id: tool_call.id,
-                    provider_call_id: tool_call.provider_call_id)
+        Message.new(role: :tool, content:, tool_call_id: tool_call.id, provider_call_id: tool_call.provider_call_id)
     end
 
     # A provider-executed call is closed with the refusal its provider
@@ -2480,7 +2483,7 @@ module RubyLLM
       end
       interrupted.to_h.each_value do |tool_call|
         run_callbacks(:before_message)
-        add_tool_result_message(tool_call, { error: "The tool call did not finish. #{MCP::Outages::PARTLY_RUN}" })
+        run_callbacks(:after_message, add_message(unfinished_result(tool_call, interrupted: true)))
       end
       runnable.to_h
     end
