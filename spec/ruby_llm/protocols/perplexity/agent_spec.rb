@@ -53,7 +53,7 @@ RSpec.describe RubyLLM::Protocols::Perplexity::Agent do
   it 'runs chat on the Agent API while embeddings keep their own protocol' do
     provider = chat.provider
 
-    expect(provider.send(:resolve_protocol, nil, chat.model)).to eq(described_class)
+    expect(provider.send(:resolve_protocol, nil, chat.model)).to be <= described_class
     expect(provider.send(:resolve_protocol, nil, chat.model, operation: :embed))
       .to eq(RubyLLM::Providers::Perplexity::ChatCompletions)
   end

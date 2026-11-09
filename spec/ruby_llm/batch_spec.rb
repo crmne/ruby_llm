@@ -362,9 +362,13 @@ RSpec.describe RubyLLM::Batch, :live do
     { provider: :gemini, model: model_for(:gemini) },
     { provider: :mistral, model: model_for(:mistral) },
     { provider: :openai, model: model_for(:openai) },
+    # Perplexity allows 1 request per second on its batch and file endpoints.
+    { provider: :perplexity, model: model_for(:perplexity), max_retries: 4 },
     { provider: :xai, model: model_for(:xai) }
   ].each do |model_info|
     context "with #{model_info[:provider]}/#{model_info[:model]}" do
+      before { RubyLLM.config.max_retries = model_info.fetch(:max_retries, 0) }
+
       it 'answers staged chats and appends the answers to their conversations' do
         chats = [
           RubyLLM.chat(model: model_info[:model], provider: model_info[:provider])

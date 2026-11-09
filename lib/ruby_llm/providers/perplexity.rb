@@ -14,7 +14,7 @@ module RubyLLM
       protocol :chat_completions, ChatCompletions
       protocol :router_chat_completions, Protocols::Perplexity::Router
       protocol :files, Protocols::Perplexity::Files
-      protocol :agent_responses, Protocols::Perplexity::Agent
+      protocol :agent_responses, Protocols::Perplexity::Agent, batches: Protocols::Perplexity::Batches
 
       def api_base
         configured_api_base(:perplexity_api_base, 'https://api.perplexity.ai',
@@ -70,6 +70,12 @@ module RubyLLM
         def configuration_requirements
           %i[perplexity_api_key]
         end
+      end
+
+      private
+
+      def batch_protocol
+        batch_protocol_for_name(:agent_responses)
       end
     end
   end
