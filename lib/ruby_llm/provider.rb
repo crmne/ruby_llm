@@ -82,7 +82,7 @@ module RubyLLM
     # retrying a rate-limited request, or +nil+ when the response carries
     # no timing information. The retry middleware already honors the
     # standard <tt>Retry-After</tt> header; override this to read
-    # provider-specific rate-limit headers.
+    # provider-specific rate-limit headers or the error body.
     #
     #   def retry_delay(response)
     #     response.response_headers['x-acme-ratelimit-reset']&.to_f

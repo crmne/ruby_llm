@@ -64,7 +64,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-When a provider reports how long to wait through rate-limit headers (the standard `Retry-After`, or OpenAI's `x-ratelimit-reset-requests` and `x-ratelimit-reset-tokens`), retries wait that long instead of the backoff interval. If the requested wait exceeds `retry_max_interval`, the request fails immediately with `RubyLLM::RateLimitError` rather than sleeping.
+When a provider reports how long to wait (the standard `Retry-After` header, OpenAI's `x-ratelimit-reset-requests` and `x-ratelimit-reset-tokens` headers, or the `RetryInfo` detail in a Gemini or Vertex AI error body), retries wait that long instead of the backoff interval. If the requested wait exceeds `retry_max_interval`, the request fails immediately with `RubyLLM::RateLimitError` rather than sleeping.
 
 A chat with [fallbacks]({% link _advanced/error-handling.md %}#model-fallbacks) left to try doesn't retry a timeout, a failed connection, or a wait longer than two seconds on the same model: the next fallback takes the request at once.
 
@@ -82,6 +82,8 @@ end
 ```
 
 A streaming request then fails when no bytes arrive for that many seconds, counted from sending the request and again from each chunk, so a stream that keeps sending runs as long as it needs. It fails as a request timeout does, with a `RubyLLM::ConnectionError` whose `timeout?` is `true`: while a [fallback]({% link _advanced/error-handling.md %}#model-fallbacks) is left to try, the next one takes the request at once, and otherwise it is retried as `max_retries` says. Requests that don't stream ignore it and keep `request_timeout`. The default, `nil`, leaves streams to `request_timeout` too.
+
+Set it longer than the longest silence you expect from a model that is thinking, because a low value cuts legitimate thinking off. A timeout there looks like any other stalled stream. Gemini sends no bytes while it thinks unless thought summaries are on (`includeThoughts`, which `with_thinking` sends unless you pass `display: :omitted`): `gemini-4-argon` on Vertex AI has been measured silent for 114 seconds before its first byte. Without thought summaries, give Gemini minutes, not seconds.
 
 Providers that send keep-alive comments while they queue a request count as sending bytes. RubyLLM sets the adapter's read timeout on streaming requests, which `:net_http`, `:net_http_persistent` and `:async_http` all apply to each wait for the next bytes. An adapter of your own sees it as `env.request.read_timeout`.
 
