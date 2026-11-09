@@ -50,6 +50,27 @@ RSpec.describe RubyLLM::Transport::Connection do
         .not_to be(RubyLLM::Providers::OpenAI.new(config).connection.connection(stream: true))
     end
 
+    it 'hands async-http its read timeout for streams, since it ignores the request option' do
+      seen = []
+      adapter = Class.new(Faraday::Adapter) do
+        define_method(:initialize) do |app = nil, opts = {}, &block|
+          seen << opts
+          super(app, opts, &block)
+        end
+      end
+      Faraday::Adapter.register_middleware(async_http: adapter)
+
+      [:async_http, adapter].each do |faraday_adapter|
+        connection = RubyLLM::Providers::OpenAI.new(configured(faraday_adapter:, stream_idle_timeout: 21)).connection
+        connection.connection(stream: true)
+      end
+
+      # Each provider builds its plain connection first, then the streaming one.
+      expect(seen).to eq([{}, { read_timeout: 21 }, {}, {}])
+    ensure
+      Faraday::Adapter.instance_variable_get(:@registered_middleware).delete(:async_http)
+    end
+
     it 'hands the TLS options to the adapter' do
       seen = nil
       adapter = Class.new(Faraday::Adapter) do
