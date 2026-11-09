@@ -58,7 +58,12 @@ RSpec.describe RubyLLM::Transport::Connection do
           super(app, opts, &block)
         end
       end
-      previous = Faraday::Adapter.registered_middleware[:async_http]
+      # Faraday 1 has no registered_middleware reader; fetch_middleware is its own.
+      previous = if Faraday::Adapter.respond_to?(:registered_middleware)
+                   Faraday::Adapter.registered_middleware[:async_http]
+                 else
+                   Faraday::Adapter.fetch_middleware(:async_http)
+                 end
       Faraday::Adapter.register_middleware(async_http: adapter)
 
       [:async_http, adapter].each do |faraday_adapter|
