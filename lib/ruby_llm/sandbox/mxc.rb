@@ -19,10 +19,15 @@ module RubyLLM
         'See https://rubyllm.com/sandboxes/#running-on-linux'
       LANDLOCK_OPT_IN = 'Or set config.sandbox_backend = :landlock to run on Landlock, which isolates less ' \
                         "and has no network access: #{DOCS}".freeze
+      MINIMUM_VERSION = '0.4.1'
+      private_constant :MINIMUM_VERSION
 
       attr_reader :policy, :libraries
 
+      # Raises ConfigurationError when the installed mxc is older than
+      # MINIMUM_VERSION.
       def initialize(policy, backend: :bubblewrap, libraries: [])
+        require_minimum_version
         @policy = policy
         @backend = backend
         @libraries = libraries
@@ -76,6 +81,16 @@ module RubyLLM
       end
 
       private
+
+      def require_minimum_version
+        return unless defined?(::MXC::VERSION)
+
+        installed = ::MXC::VERSION
+        return if Gem::Version.new(installed) >= Gem::Version.new(MINIMUM_VERSION)
+
+        raise ConfigurationError,
+              "RubyLLM's sandbox needs mxc #{MINIMUM_VERSION} or later; you have #{installed}. Run bundle update mxc."
+      end
 
       def run_by_line(run, command)
         pending = Hash.new { |buffers, stream| buffers[stream] = String.new(encoding: Encoding::BINARY) }

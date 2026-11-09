@@ -60,7 +60,7 @@ result = chat.messages.find(&:tool_result?)
 result.attachments.first.filename # => "revenue.png"
 ```
 
-Code execution needs [mxc](https://crmne.github.io/mxc/) 0.4.1 or later, so run `bundle update mxc` if you already use it.
+Code execution needs [mxc](https://crmne.github.io/mxc/) 0.4.1 or later, so run `bundle update mxc` if you already use it. With an older mxc, building the sandbox raises `RubyLLM::ConfigurationError` saying so.
 
 The model gets one tool, `run_code`, that runs Ruby, Python, JavaScript, or a shell script. The code was written by a model, so it never runs in your application's process. It runs in a sandbox, a class built on the [mxc gem](https://crmne.github.io/mxc/), which uses the operating system's own isolation: Bubblewrap on Linux and Seatbelt on macOS. The sandbox holds the whole policy: what the code reads, writes, and reaches, and how long it runs. Without a configured sandbox, `with_code_execution` raises instead of running anything.
 
