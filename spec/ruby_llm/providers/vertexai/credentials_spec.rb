@@ -120,40 +120,93 @@ RSpec.describe RubyLLM::Providers::VertexAI::Credentials do
       Faraday.default_connection = original
     end
 
-    def token_adapter(timeouts)
+    def token_adapter(requests, expires_in: 3600)
       Class.new(Faraday::Adapter) do
         define_method(:call) do |env|
           super(env)
-          timeouts << env.request.timeout
-          body = JSON.generate(access_token: 'adapter-token', expires_in: 3600, token_type: 'Bearer')
+          requests << env.request
+          body = JSON.generate(access_token: 'adapter-token', expires_in:, token_type: 'Bearer')
           save_response(env, 200, body, { 'Content-Type' => 'application/json' })
           @app.call(env)
         end
       end
     end
 
-    def use_default_connection(timeouts)
+    def use_default_connection(requests, expires_in: 3600)
       Faraday.default_connection = Faraday.new(request: { timeout: 3 }) do |faraday|
-        faraday.adapter(token_adapter(timeouts))
+        faraday.adapter(token_adapter(requests, expires_in:))
       end
     end
 
+    def with_https_proxy_env(url)
+      saved = ENV.to_h.slice('https_proxy', 'HTTPS_PROXY')
+      ENV['https_proxy'] = ENV['HTTPS_PROXY'] = url
+      yield
+    ensure
+      %w[https_proxy HTTPS_PROXY].each { |name| ENV[name] = saved[name] }
+    end
+
+    def token_request(requests)
+      authorization(service_account_key('ruby@test-project.iam.gserviceaccount.com'), token_timeout: 10)
+      requests.sole
+    end
+
     it 'leaves googleauth on it without a token timeout' do
-      timeouts = []
-      use_default_connection(timeouts)
+      requests = []
+      use_default_connection(requests)
 
       authorization(service_account_key('ruby@test-project.iam.gserviceaccount.com'))
 
-      expect(timeouts).to eq([3])
+      expect(requests.map(&:timeout)).to eq([3])
     end
 
     it 'fetches the token through it with the token timeout' do
-      timeouts = []
-      use_default_connection(timeouts)
+      requests = []
+      use_default_connection(requests)
       key = service_account_key('ruby@test-project.iam.gserviceaccount.com')
 
       expect(authorization(key, token_timeout: 10)).to eq('Bearer adapter-token')
-      expect(timeouts).to eq([10])
+      expect(requests.map(&:timeout)).to eq([10])
+    end
+
+    it 'keeps a proxy set on it' do
+      requests = []
+      use_default_connection(requests)
+      Faraday.default_connection.proxy = 'http://proxy.example.test:8080'
+
+      expect(token_request(requests).proxy.uri.to_s).to eq('http://proxy.example.test:8080')
+    end
+
+    it 'keeps a proxy turned off on it' do
+      requests = []
+      use_default_connection(requests)
+
+      with_https_proxy_env('http://env-proxy.example.test:3128') do
+        Faraday.default_connection.proxy = nil
+
+        expect(token_request(requests).proxy).to be_nil
+      end
+    end
+
+    it 'keeps a proxy turned off on it when the environment gains one later' do
+      requests = []
+      use_default_connection(requests, expires_in: 30)
+      Faraday.default_connection.proxy = nil
+      key = service_account_key('ruby@test-project.iam.gserviceaccount.com')
+      authorization(key, token_timeout: 10)
+
+      with_https_proxy_env('http://env-proxy.example.test:3128') { authorization(key, token_timeout: 10) }
+
+      expect(requests.map(&:proxy)).to eq([nil, nil])
+    end
+
+    it 'takes the proxy from the environment when it does' do
+      requests = []
+      use_default_connection(requests)
+
+      with_https_proxy_env('http://env-proxy.example.test:3128') do
+        expect(token_request(requests).proxy.uri.to_s).to eq('http://env-proxy.example.test:3128')
+      end
     end
   end
 
