@@ -9,18 +9,18 @@ module RubyLLM
       # Google credentials shared by every Vertex AI provider in the process.
       # googleauth keeps the access token on the credentials object and
       # refreshes it a minute before it expires, so sharing the object shares
-      # the token. A token request gives up after TOKEN_REQUEST_TIMEOUT
-      # seconds: every request waits while one refreshes the token, and
-      # googleauth tries a token endpoint that never answers six times.
+      # the token. With a token timeout, token requests go through a copy of
+      # Faraday's default connection, as googleauth's own would, with that
+      # timeout.
       class Credentials # :nodoc:
         CACHE = Support::ProcessCache.new
-        TOKEN_REQUEST_TIMEOUT = 10
 
         attr_reader :authorizer
 
         def self.for(config)
           key = config.vertexai_service_account_key
-          CACHE.fetch([source(key), SCOPES]) { new(key) }
+          timeout = config.vertexai_token_timeout
+          CACHE.fetch([source(key), SCOPES, timeout]) { new(key, token_timeout: timeout) }
         end
 
         def self.cache
@@ -34,7 +34,8 @@ module RubyLLM
         end
         private_class_method :source
 
-        def initialize(service_account_key)
+        def initialize(service_account_key, token_timeout: nil)
+          @token_timeout = token_timeout
           @authorizer = build(service_account_key)
           @lock = Mutex.new
         end
@@ -48,14 +49,14 @@ module RubyLLM
 
         def build(service_account_key)
           authorizer = google_credentials(service_account_key)
-          return authorizer unless authorizer.respond_to?(:configure_connection)
+          return authorizer unless @token_timeout && authorizer.respond_to?(:configure_connection)
 
-          authorizer.configure_connection(default_connection: token_connection)
+          authorizer.configure_connection(connection_builder: method(:token_connection))
           authorizer
         end
 
         def token_connection
-          Faraday.new(request: { timeout: TOKEN_REQUEST_TIMEOUT })
+          Faraday.default_connection.dup.tap { |connection| connection.options.timeout = @token_timeout }
         end
 
         def google_credentials(service_account_key)

@@ -201,6 +201,7 @@ module RubyLLM
             vertexai_batch_gcs_uri
             vertexai_ranking_api_base
             vertexai_ranking_config
+            vertexai_token_timeout
           ]
         end
 
