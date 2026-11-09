@@ -47,6 +47,13 @@ if defined?(Rails::Railtie)
         end
       end
 
+      initializer 'ruby_llm.solid_queue' do
+        ActiveSupport.on_load :solid_queue do
+          require 'ruby_llm/active_record/solid_queue_shutdown'
+          RubyLLM::ActiveRecord::SolidQueueShutdown.install(self)
+        end
+      end
+
       initializer 'ruby_llm.active_storage' do
         ActiveSupport.on_load :active_storage_blob do
           after_destroy { RubyLLM::ActiveRecord::ProviderFile.forget_blob(self) }

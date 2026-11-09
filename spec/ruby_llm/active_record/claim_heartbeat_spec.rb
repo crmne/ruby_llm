@@ -172,4 +172,48 @@ RSpec.describe RubyLLM::ActiveRecord::ClaimHeartbeat do
 
     expect(raw_connection).to equal(connection)
   end
+
+  describe 'hurrying' do
+    let(:interval) { 30 }
+
+    def beaten_within?(seconds, count)
+      deadline = Process.clock_gettime(Process::CLOCK_MONOTONIC) + seconds
+      sleep 0.02 until beats.size >= count || Process.clock_gettime(Process::CLOCK_MONOTONIC) > deadline
+      beats.size >= count
+    end
+
+    def beats = (@beats ||= Queue.new)
+
+    it 'beats at once and then every second, however long its interval' do
+      hurried = described_class.new([HeartbeatChat], interval) { beats << true }
+      described_class.hurry_all
+
+      expect(beaten_within?(2.5, 3)).to be(true)
+    ensure
+      hurried&.stop
+    end
+
+    it 'beats again soon when hurried while it beats' do
+      hurried = nil
+      hurried = described_class.new([HeartbeatChat], interval) do
+        hurried.hurry if beats.empty?
+        beats << true
+      end
+      hurried.hurry
+
+      expect(beaten_within?(2.5, 2)).to be(true)
+    ensure
+      hurried&.stop
+    end
+
+    it 'leaves a stopped heartbeat out' do
+      stopped = described_class.new([HeartbeatChat], interval) { beats << true }
+      stopped.stop
+      allow(stopped).to receive(:hurry)
+
+      described_class.hurry_all
+
+      expect(stopped).not_to have_received(:hurry)
+    end
+  end
 end

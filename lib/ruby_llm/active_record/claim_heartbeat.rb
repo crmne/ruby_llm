@@ -12,7 +12,32 @@ module RubyLLM
     # spans at least four intervals, so a claim outlasts a skipped beat,
     # but after two in a row it may lapse before the next one lands, so
     # the second logs a warning.
+    #
+    # Once its process is about to exit, ::hurry_all makes every live
+    # heartbeat beat at once and then every HURRIED_INTERVAL seconds, so a
+    # claim a run wrote just before learning of the exit is cut back too.
     class ClaimHeartbeat # :nodoc:
+      HURRIED_INTERVAL = 1
+
+      LIVE_LOCK = Mutex.new
+      private_constant :LIVE_LOCK
+
+      @live = Set.new
+
+      class << self
+        def hurry_all
+          LIVE_LOCK.synchronize { @live.to_a }.each(&:hurry)
+        end
+
+        def add(heartbeat)
+          LIVE_LOCK.synchronize { @live << heartbeat }
+        end
+
+        def delete(heartbeat)
+          LIVE_LOCK.synchronize { @live.delete(heartbeat) }
+        end
+      end
+
       def initialize(models, interval, &beat)
         @models = models
         @interval = interval
@@ -21,15 +46,26 @@ module RubyLLM
         @lock = Mutex.new
         @wake = ConditionVariable.new
         @stopped = false
+        @hurried = false
         @thread = start(::ActiveRecord::Base.connected_to_stack.to_a)
+        self.class.add(self)
       end
 
       def stop
+        self.class.delete(self)
         @lock.synchronize do
           @stopped = true
           @wake.signal
         end
         @thread.join
+      end
+
+      def hurry
+        @lock.synchronize do
+          @interval = [@interval, HURRIED_INTERVAL].min
+          @hurried = true
+          @wake.signal
+        end
       end
 
       private
@@ -46,7 +82,8 @@ module RubyLLM
 
       def stopped_after_interval?
         @lock.synchronize do
-          @wake.wait(@lock, @interval) unless @stopped
+          @wake.wait(@lock, @interval) unless @stopped || @hurried
+          @hurried = false
           @stopped
         end
       end
