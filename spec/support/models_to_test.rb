@@ -214,6 +214,7 @@ speech_models = [
   # Protocols::Deepgram::Speech specs cover that substitution.
   { provider: :deepgram, model: 'aura-2-thalia-en' },
   { provider: :gemini, model: 'gemini-2.5-flash-preview-tts' },
+  { provider: :minimax, model: 'speech-2.8-turbo', assume_model_exists: true },
   { provider: :mistral, model: 'voxtral-mini-tts-latest', voice: 'en_paul_neutral' },
   { provider: :ollama, model: 'phonon', assume_model_exists: true },
   { provider: :openai, model: 'gpt-4o-mini-tts' },
@@ -226,6 +227,7 @@ transcription_models = [
   { provider: :cohere, model: 'cohere-transcribe-03-2026' },
   { provider: :deepgram, model: 'nova-3-general' },
   { provider: :gemini, model: 'gemini-2.5-flash' },
+  { provider: :minimax, model: 'asr-1.0', assume_model_exists: true },
   { provider: :mistral, model: 'voxtral-mini-latest' },
   { provider: :openai, model: 'gpt-4o-transcribe-diarize' },
   { provider: :openai, model: 'whisper-1' },
@@ -238,6 +240,8 @@ TRANSCRIPTION_MODELS = filter_unrecorded_providers(transcription_models).freeze
 VIDEO_GENERATION_MODELS = [
   { provider: :gemini, model: 'gemini-omni-1.2-flash', assume_model_exists: true,
     provider_options: { response_format: { duration: '3s', resolution: '360p' } } },
+  { provider: :minimax, model: 'MiniMax-H3-Lite', assume_model_exists: true,
+    provider_options: { duration: 4, resolution: '480P' } },
   { provider: :xai, model: 'grok-imagine-video',
     provider_options: { duration: 1, resolution: '480p' } }
 ].freeze
@@ -247,6 +251,7 @@ image_generation_models = [
   { provider: :gemini, model: 'gemini-3.1-flash-lite-image', supports_size: false },
   { provider: :vertexai, model: 'gemini-3.1-flash-lite-image', supports_size: false },
   { provider: :openrouter, model: 'google/gemini-3.1-flash-lite-image', supports_size: false },
+  { provider: :minimax, model: 'image-01', supports_size: true, assume_model_exists: true },
   { provider: :xai, model: 'grok-imagine-image', supports_size: false }
 ].freeze
 IMAGE_GENERATION_MODELS = filter_local_providers(image_generation_models).freeze

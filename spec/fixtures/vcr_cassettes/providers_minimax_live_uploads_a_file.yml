@@ -1,0 +1,60 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.minimax.io/v1/files/upload
+    body:
+      encoding: UTF-8
+      string: "-------------RubyMultipartPost-b876a525ad0a4eca19785c24022810e6\r\nContent-Disposition:
+        form-data; name=\"purpose\"\r\n\r\nt2a_async_input\r\n-------------RubyMultipartPost-b876a525ad0a4eca19785c24022810e6\r\nContent-Disposition:
+        form-data; name=\"file\"; filename=\"ruby.txt\"\r\nContent-Length: 17\r\nContent-Type:
+        text/plain\r\nContent-Transfer-Encoding: binary\r\n\r\nRuby is the best.\r\n-------------RubyMultipartPost-b876a525ad0a4eca19785c24022810e6--\r\n"
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - multipart/form-data; boundary=-----------RubyMultipartPost-b876a525ad0a4eca19785c24022810e6
+      Content-Length:
+      - '432'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '174'
+      Trace-Id:
+      - 07416023034570a2775282c25ad9e4a7
+      Minimax-Request-Id:
+      - ee5d2baee5aa5ce79c9d61bb043b8193
+      Alb-Receive-Time:
+      - '1794256163.735'
+      Alb-Request-Id:
+      - 8dbf91e0aa8f80fb2346c43f57c3b43f84dd5030
+      Expires:
+      - Mon, 09 Nov 2026 20:29:24 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Mon, 09 Nov 2026 20:29:24 GMT
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-From:
+      - ak
+    body:
+      encoding: UTF-8
+      string: '{"file":{"file_id":461632589729988,"bytes":17,"created_at":1794256164,"filename":"ruby.txt","purpose":"t2a_async_input"},"base_resp":{"status_code":0,"status_msg":"success"}}'
+  recorded_at: Mon, 09 Nov 2026 20:29:24 GMT
+recorded_with: VCR 6.4.1

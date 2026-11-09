@@ -77,16 +77,18 @@ RSpec.describe RubyLLM::Transcription, :live do
   end
 
   describe 'basic functionality' do
-    each_model(TRANSCRIPTION_MODELS) do |provider, model|
+    each_model(TRANSCRIPTION_MODELS) do |provider, model, model_info|
       it "#{provider}/#{model} can transcribe audio" do
-        transcription = RubyLLM.transcribe(audio_path, model: model, provider: provider)
+        transcription = RubyLLM.transcribe(audio_path, model: model, provider: provider,
+                                                       **model_info.slice(:assume_model_exists))
 
         expect(transcription.text).to match(/ruby/i)
         expect(transcription.model).to eq(model)
       end
 
       it "#{provider}/#{model} can transcribe with language hint" do
-        transcription = RubyLLM.transcribe(audio_path, model: model, provider: provider, language: 'en')
+        transcription = RubyLLM.transcribe(audio_path, model: model, provider: provider, language: 'en',
+                                                       **model_info.slice(:assume_model_exists))
 
         expect(transcription.text).to match(/ruby/i)
         expect(transcription.model).to eq(model)

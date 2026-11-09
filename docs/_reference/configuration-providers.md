@@ -261,6 +261,18 @@ RubyLLM.configure do |config|
 end
 ```
 
+The same key reaches MiniMax's media API. These models aren't in the model registry, so pass `provider: :minimax, assume_model_exists: true`:
+
+```ruby
+RubyLLM.paint "A red kite over the sea", model: "image-01", provider: :minimax, assume_model_exists: true
+RubyLLM.animate "A wave at sunset", model: "MiniMax-H3-Lite", provider: :minimax, assume_model_exists: true
+RubyLLM.speak "Hello", model: "speech-2.8-turbo", voice: "English_expressive_narrator", provider: :minimax,
+                                                  assume_model_exists: true
+RubyLLM.transcribe "meeting.mp3", model: "asr-1.0", provider: :minimax, assume_model_exists: true
+```
+
+`paint` with `with:` keeps a person's likeness from a reference image; MiniMax has no masks. `animate` defaults to 768P, five seconds and 16:9 where the endpoint requires them, and `provider_options:` changes them. `transcribe` labels speakers with `speaker_names: []`. Files need a `purpose:` when uploaded; only generated files can be downloaded.
+
 MiniMax decides on its own when to call your tools: it accepts no `with_tool_options(choice:)` other than `:auto`. Of the [provider tools]({% link _tools/provider-tools.md %}), it runs only `with_provider_tools(:web_search)`, a beta on MiniMax's side; the others raise `RubyLLM::UnsupportedServerToolError`.
 
 ## Moonshot AI
