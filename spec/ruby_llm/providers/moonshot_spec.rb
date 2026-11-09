@@ -341,5 +341,24 @@ RSpec.describe RubyLLM::Providers::Moonshot do
       expect(context.chat(model: model_id, provider: :moonshot).count_tokens('Hello')).to eq(42)
       expect(request).to have_been_made
     end
+
+    it 'counts the staged message, tools and schema' do
+      body = nil
+      stub_request(:post, 'https://api.moonshot.ai/v1/tokenizers/estimate-token-count')
+        .with { |sent| body = JSON.parse(sent.body) }
+        .to_return(status: 200, body: { data: { total_tokens: 42 } }.to_json,
+                   headers: { 'Content-Type' => 'application/json' })
+      weather = Class.new(RubyLLM::Tool) do
+        def self.name = 'Weather'
+        description 'Gets the weather'
+      end
+      schema = { type: 'object', properties: { weather: { type: 'string' } }, additionalProperties: false }
+
+      context.chat(model: model_id, provider: :moonshot).with_tools(weather).with_schema(schema).count_tokens('Berlin?')
+
+      expect(body['messages'].last).to include('role' => 'user', 'content' => 'Berlin?')
+      expect(body['tools'].first.dig('function', 'name')).to eq('weather')
+      expect(body['response_format']['type']).to eq('json_schema')
+    end
   end
 end
