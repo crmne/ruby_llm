@@ -74,7 +74,7 @@
     const providers = provider.value === 'all' ? provider.options.length - 1 : 1;
     root.querySelector('.coverage-results').textContent = `${count} feature rows · ${providers} ${providers === 1 ? 'provider' : 'providers'} · ${version.selectedOptions[0].textContent}${filter.value === 'all' ? '' : ` · ${filter.selectedOptions[0].textContent}`}`;
     root.querySelector('.coverage-empty').hidden = count !== 0;
-    root.querySelector('caption').textContent = `RubyLLM provider features: ${version.selectedOptions[0].textContent}. ${current && version.value === 'v2' ? 'Solid red: built-in support. ' : version.value === 'compare' ? 'Red: new built-in support in 2.0. Gray: already in 1.16. ' : ''}Lighter red with braces: usable through raw options. Red stripes: partial. Outlined cross: missing. Dash: not documented in this API. Diagonal stroke: outside scope. Select a cell for implementation notes and evidence.`;
+    root.querySelector('caption').textContent = `RubyLLM provider features: ${version.selectedOptions[0].textContent}. ${current && version.value === 'v2' ? 'Solid red: built-in support. ' : version.value === 'compare' ? 'Red: new built-in support in 2.0. Gray: already in 1.16. ' : ''}Lighter red with braces: usable through raw options. Red stripes: partial. Outlined cross: missing. Dash: not in this API. Diagonal stroke: outside scope. Select a cell for implementation notes and evidence.`;
   }
 
   function listLinks(target, entries) {

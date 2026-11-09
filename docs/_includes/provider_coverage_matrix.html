@@ -30,7 +30,7 @@
 <noscript><p>Cell links open provider documentation. Download the audit data for implementation notes.</p></noscript>
 <div class="coverage-table-scroll" tabindex="0" role="region" aria-label="Provider feature comparison, scroll horizontally to see more providers">
 <table class="coverage-table">
-  <caption class="visually-hidden">Provider features. {% if include.current %}Solid red: built-in support.{% else %}Red: built-in support added in 2.0. Gray: already built in to 1.16.{% endif %} Lighter red with braces: usable through raw options. Outlined cross: missing. Red stripes: partial. Dash: not documented in this API. Diagonal stroke: outside scope. Question mark: unverified.</caption>
+  <caption class="visually-hidden">Provider features. {% if include.current %}Solid red: built-in support.{% else %}Red: built-in support added in 2.0. Gray: already built in to 1.16.{% endif %} Lighter red with braces: usable through raw options. Outlined cross: missing. Red stripes: partial. Dash: not in this API. Diagonal stroke: outside scope. Question mark: unverified.</caption>
   <thead><tr><th scope="col">Feature</th>{% for provider in coverage.providers %}<th scope="col" data-provider="{{ provider.id }}"><span>{{ provider.name }}</span></th>{% endfor %}</tr></thead>
   {% for group in coverage.groups %}
   <tbody data-group="{{ group.id }}"{% if include.additional %}{% if group.summary %} hidden{% endif %}{% else %}{% unless group.summary %} hidden{% endunless %}{% endif %}>
