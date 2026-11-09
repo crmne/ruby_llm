@@ -42,17 +42,35 @@ module RubyLLM
           apply_retry_delay(response, provider)
           self.class.parse_error(provider:, response: streaming_error_response(response))
         end
-      rescue RubyLLM::Error
-        apply_retry_delay(env, provider)
+      rescue RubyLLM::Error => e
+        apply_raised_retry_delay(env, provider, e)
         raise
+      end
+
+      # A rate limit reported inside a stream raises with no failed HTTP
+      # status, and without an env on Faraday 1, so its hint is only on the
+      # error's own response.
+      def apply_raised_retry_delay(env, provider, error)
+        return apply_retry_delay(env, provider) unless rate_limit_report?(error)
+
+        env[:streaming_error_response] ||= error.response
+        env[:response_headers] ||= Faraday::Utils::Headers.new
+        apply_retry_delay(env, provider, status: 429)
+      end
+
+      def rate_limit_report?(error)
+        return true if error.is_a?(RateLimitError)
+
+        [error.response&.body].flatten.grep(Hash).any? do |part|
+          part['error'].is_a?(Hash) && part['error']['code'] == 429
+        end
       end
 
       # The retry middleware only reads the standard Retry-After header, so
       # other retry hints are normalized into seconds here. A failed stream
       # usually raises while it is read, before on_complete, and keeps its
       # body in the stored streaming error rather than on the response.
-      def apply_retry_delay(response, provider)
-        status = response.respond_to?(:status) ? response.status : response[:status]
+      def apply_retry_delay(response, provider, status: response_status(response))
         return unless status && status >= 400
 
         headers = response[:response_headers]
@@ -60,6 +78,10 @@ module RubyLLM
 
         delay = millisecond_retry_delay(headers) || provider_retry_delay(provider, response, status)
         headers['Retry-After'] = delay.to_s if delay
+      end
+
+      def response_status(response)
+        response.respond_to?(:status) ? response.status : response[:status]
       end
 
       def provider_retry_delay(provider, response, status)

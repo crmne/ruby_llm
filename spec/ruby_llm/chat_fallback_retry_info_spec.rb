@@ -50,6 +50,17 @@ RSpec.describe RubyLLM::Chat do
            .with_fallbacks(RubyLLM::Model.default('gemini-2.5-flash-lite', 'gemini'))
   end
 
+  it 'waits as asked when a stream reports the rate limit after answering 200' do
+    error = rate_limited('1.5s')[:body]
+    vertex = stub_request(:post, provider_url)
+             .to_return(status: 200, headers: { 'Content-Type' => 'text/event-stream' }, body: "data: #{error}\n\n")
+             .then.to_return(reply('waited'))
+
+    expect(chat.ask('Hi') { |_chunk| nil }.content).to eq('waited')
+    expect(vertex).to have_been_requested.twice
+    expect(waits).to eq([1.5])
+  end
+
   {
     'a streaming request' => [->(conversation) { conversation.ask('Hi') { |_chunk| nil } }, :reply],
     'a request that does not stream' => [->(conversation) { conversation.ask('Hi') }, :json_reply]
