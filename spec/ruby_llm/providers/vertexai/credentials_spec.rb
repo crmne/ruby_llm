@@ -84,6 +84,40 @@ RSpec.describe RubyLLM::Providers::VertexAI::Credentials do
     expect(endpoint).to have_been_requested.once
   end
 
+  context 'when the token endpoint never answers' do
+    let(:silent) { TCPServer.new('127.0.0.1', 0) }
+
+    around do |example|
+      WebMock.disable!
+      accepted = []
+      acceptor = Thread.new { loop { accepted << silent.accept } }
+      example.run
+    ensure
+      WebMock.enable!
+      acceptor.kill.join
+      silent.close
+      accepted.each(&:close)
+    end
+
+    before { stub_const("#{described_class}::TOKEN_REQUEST_TIMEOUT", 0.1) }
+
+    it 'gives up on the token instead of waiting for it' do
+      credentials = described_class.new(service_account_key('ruby@test-project.iam.gserviceaccount.com'))
+      credentials.authorizer.token_credential_uri = "http://127.0.0.1:#{silent.addr[1]}/token"
+      allow(credentials.authorizer).to receive(:sleep)
+
+      expect { Timeout.timeout(5) { credentials.headers } }.to raise_error(Google::Auth::AuthorizationError)
+    end
+  end
+
+  it 'keeps credentials that fetch tokens through their own connection' do
+    external_account = Object.new
+    def external_account.apply(_headers) = { authorization: 'Bearer external-token' }
+    allow(Google::Auth).to receive(:get_application_default).and_return(external_account)
+
+    expect(described_class.new(nil).headers[:authorization]).to eq('Bearer external-token')
+  end
+
   it 'fetches its own token in a forked child' do
     endpoint = stub_token_endpoint
     key = service_account_key('ruby@test-project.iam.gserviceaccount.com')

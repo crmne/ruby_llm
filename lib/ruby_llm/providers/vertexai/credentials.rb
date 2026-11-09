@@ -9,9 +9,12 @@ module RubyLLM
       # Google credentials shared by every Vertex AI provider in the process.
       # googleauth keeps the access token on the credentials object and
       # refreshes it a minute before it expires, so sharing the object shares
-      # the token.
+      # the token. A token request gives up after TOKEN_REQUEST_TIMEOUT
+      # seconds: every request waits while one refreshes the token, and
+      # googleauth tries a token endpoint that never answers six times.
       class Credentials # :nodoc:
         CACHE = Support::ProcessCache.new
+        TOKEN_REQUEST_TIMEOUT = 10
 
         attr_reader :authorizer
 
@@ -44,6 +47,18 @@ module RubyLLM
         private
 
         def build(service_account_key)
+          authorizer = google_credentials(service_account_key)
+          return authorizer unless authorizer.respond_to?(:configure_connection)
+
+          authorizer.configure_connection(default_connection: token_connection)
+          authorizer
+        end
+
+        def token_connection
+          Faraday.new(request: { timeout: TOKEN_REQUEST_TIMEOUT })
+        end
+
+        def google_credentials(service_account_key)
           require 'googleauth'
           if service_account_key
             ::Google::Auth::ServiceAccountCredentials.make_creds(
