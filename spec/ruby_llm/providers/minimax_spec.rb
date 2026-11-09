@@ -147,6 +147,19 @@ RSpec.describe RubyLLM::Providers::MiniMax do
       expect(a_request(:post, messages_url)).not_to have_been_made
     end
 
+    it 'still counts tokens for a chat with a schema and calls: :one' do
+      stub_request(:post, 'https://api.minimax.io/anthropic/v1/messages/count_tokens')
+        .to_return(status: 200, body: { input_tokens: 7 }.to_json, headers: { 'Content-Type' => 'application/json' })
+      chat = context.chat(model: model_id, provider: :minimax)
+                    .with_schema({ type: 'object', properties: { fruit: { type: 'string' } } })
+                    .with_tools(lookup_tool).with_tool_options(choice: :auto, calls: :one)
+
+      expect(chat.count_tokens('Hi')).to eq(7)
+      expect(a_request(:post, 'https://api.minimax.io/anthropic/v1/messages/count_tokens').with do |request|
+        JSON.parse(request.body)['tool_choice'] == { 'type' => 'auto' }
+      end).to have_been_made
+    end
+
     it 'ignores calls: :one on a request without tools' do
       stub_messages(reply([{ type: 'text', text: 'Hi' }]))
 

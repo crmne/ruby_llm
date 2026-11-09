@@ -18,6 +18,10 @@ module RubyLLM
           super
         end
 
+        def render_count_tokens_payload(messages, tool_prefs: nil, **)
+          super(messages, **, schema: nil, tool_prefs: tool_prefs&.except(:calls))
+        end
+
         def server_tool_aliases
           SERVER_TOOL_ALIASES
         end
