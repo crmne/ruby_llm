@@ -166,24 +166,35 @@ RSpec.describe RubyLLM::Transport::WebsocketConnection do
     expect(Socket).to have_received(:tcp).with('::1', 9, connect_timeout: anything)
   end
 
-  it 'waits open_timeout for the socket to connect' do
-    config.open_timeout = 2
+  def connect_timeout_within(seconds_to_deadline)
     connection = described_class.new('ws://127.0.0.1:9/', headers: {}, config:)
     allow(Socket).to receive(:tcp).and_return(instance_double(Socket))
 
-    connection.send(:open_socket, 0)
+    connection.send(:open_socket, Process.clock_gettime(Process::CLOCK_MONOTONIC) + seconds_to_deadline)
 
-    expect(Socket).to have_received(:tcp).with('127.0.0.1', 9, connect_timeout: 2)
+    timeout = nil
+    expect(Socket).to have_received(:tcp).with('127.0.0.1', 9, connect_timeout: anything) do |*, connect_timeout:|
+      timeout = connect_timeout
+    end
+    timeout
+  end
+
+  it 'waits open_timeout for the socket to connect' do
+    config.open_timeout = 2
+
+    expect(connect_timeout_within(60)).to be_within(0.5).of(2)
   end
 
   it 'waits request_timeout for the socket to connect without an open_timeout' do
     config.request_timeout = 7
-    connection = described_class.new('ws://127.0.0.1:9/', headers: {}, config:)
-    allow(Socket).to receive(:tcp).and_return(instance_double(Socket))
 
-    connection.send(:open_socket, 0)
+    expect(connect_timeout_within(7)).to be_within(0.5).of(7)
+  end
 
-    expect(Socket).to have_received(:tcp).with('127.0.0.1', 9, connect_timeout: 7)
+  it 'never waits past the request deadline for the socket to connect' do
+    config.open_timeout = 5
+
+    expect(connect_timeout_within(0.2)).to be_within(0.15).of(0.2)
   end
 
   def with_silent_tls_server
