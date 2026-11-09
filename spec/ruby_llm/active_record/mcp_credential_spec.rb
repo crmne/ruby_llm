@@ -46,41 +46,6 @@ RSpec.describe RubyLLM::ActiveRecord::MCPCredential do
     expect(described_class.read(key)).not_to have_key('pending')
   end
 
-  it 'lets one process refresh a grant while the others wait for its token' do
-    skip 'needs fork' unless RUBY_ENGINE == 'ruby'
-    server_url = 'https://mcp.example.com/mcp'
-    key = "#{owner.to_gid}@#{server_url}"
-    described_class.write(key, {
-                            'access_token' => 'access-1', 'refresh_token' => 'refresh-1', 'expires_at' => 0,
-                            'client_id' => 'client', 'issuer' => 'https://auth.example.com',
-                            'server' => { 'issuer' => 'https://auth.example.com',
-                                          'token_endpoint' => 'https://auth.example.com/token' }
-                          }, owner:)
-    refreshes, refreshed = IO.pipe
-    tokens, token = IO.pipe
-    stub_request(:post, 'https://auth.example.com/token').to_return do
-      refreshed.puts('refresh')
-      sleep 0.2
-      { body: { access_token: 'access-2', refresh_token: 'refresh-2', expires_in: 3600 }.to_json }
-    end
-    described_class.connection_pool.disconnect!
-
-    workers = Array.new(2) do
-      fork do
-        token.puts RubyLLM::MCP::OAuth.new(server_url, owner:, scopes: nil, client_id: nil, client_secret: nil)
-                                      .access_token
-      ensure
-        exit!
-      end
-    end
-    workers.each { |worker| Process.wait(worker) }
-    [refreshed, token].each(&:close)
-
-    expect(tokens.read.split).to eq(%w[access-2 access-2])
-    expect(refreshes.read.split).to eq(['refresh'])
-    expect(described_class.read(key)['refresh_token']).to eq('refresh-2')
-  end
-
   it 'keeps the key of DPoP-bound tokens with them, encrypted' do
     key = OpenSSL::PKey::EC.generate('prime256v1')
     server_url = 'https://mcp.example.com/mcp'
@@ -115,5 +80,129 @@ RSpec.describe RubyLLM::ActiveRecord::MCPCredential do
     described_class.write('key', { 'access_token' => 'second' })
 
     expect(described_class.read('key')).to eq('access_token' => 'second')
+  end
+
+  describe 'across processes' do
+    let(:server_url) { 'https://mcp.example.com/mcp' }
+    let(:key) { "#{owner.to_gid}@#{server_url}" }
+    let(:server) { { 'issuer' => 'https://auth.example.com', 'token_endpoint' => 'https://auth.example.com/token' } }
+    let(:tokens) { { access_token: 'access-2', refresh_token: 'refresh-2', expires_in: 3600 } }
+
+    before { skip 'needs fork' unless RUBY_ENGINE == 'ruby' }
+
+    def oauth = RubyLLM::MCP::OAuth.new(server_url, owner:)
+
+    def store_expired_tokens
+      described_class.write(key, { 'access_token' => 'access-1', 'refresh_token' => 'refresh-1', 'expires_at' => 0,
+                                   'client_id' => 'client', 'issuer' => server['issuer'], 'server' => server }, owner:)
+    end
+
+    def store_pending_authorization
+      described_class.write(key, { 'pending' => {
+                              'client_id' => 'client', 'state' => 'state-1', 'verifier' => 'verifier-1',
+                              'redirect_uri' => 'https://app.example.com/callback', 'issuer' => server['issuer'],
+                              'expires_at' => Time.now.to_i + 600, 'server' => server
+                            } }, owner:)
+    end
+
+    # Runs +first+ in a process until it asks the token endpoint, then
+    # +second+ in another until SQLite makes it wait for the write lock,
+    # then lets both finish. Returns whether each succeeded and the lines
+    # they reported, in order.
+    def contend(first, second)
+      lines, events = IO.pipe
+      release, resume = IO.pipe
+      stub_request(:post, server['token_endpoint']).to_return do
+        events.puts 'exchanging'
+        release.gets
+        { body: tokens.to_json }
+      end
+      workers = [run_worker(events, 'first', &first)]
+      reported = [Timeout.timeout(10) { lines.gets.chomp }]
+      workers << run_worker(events, 'second') do
+        report_lock_wait(events)
+        second.call
+      end
+      reported << Timeout.timeout(10) { lines.gets.chomp }
+      resume.puts 'go', 'go'
+      succeeded = workers.map { |worker| reap(worker) }
+      events.close
+      [succeeded, reported + lines.read.lines(chomp: true)]
+    ensure
+      [events, resume].each { |io| io.close unless io.closed? }
+    end
+
+    def reap(worker)
+      Timeout.timeout(10) { Process.wait2(worker).last.success? }
+    rescue Timeout::Error
+      Process.kill(:KILL, worker)
+      Process.wait(worker)
+      false
+    end
+
+    def run_worker(events, name)
+      described_class.connection_pool.disconnect!
+      fork do
+        status = 1
+        events.puts "#{name} #{yield}"
+        status = 0
+      rescue Exception => e # rubocop:disable Lint/RescueException
+        events.puts "#{name} raised #{e.class}"
+      ensure
+        exit!(status)
+      end
+    end
+
+    def report_lock_wait(events)
+      reported = false
+      described_class.connection.raw_connection.busy_handler do |attempts|
+        events.puts 'waiting' unless reported
+        reported = true
+        sleep 0.001
+        attempts < 10_000
+      end
+    end
+
+    it 'keeps credentials forgotten while another process refreshes them' do
+      store_expired_tokens
+
+      succeeded, reported = contend(-> { oauth.access_token }, lambda {
+        oauth.deauthorize
+        'deauthorized'
+      })
+
+      expect(succeeded).to eq([true, true])
+      expect(reported.first(2)).to eq(%w[exchanging waiting])
+      expect(reported.drop(2)).to contain_exactly('first access-2', 'second deauthorized')
+      expect(described_class.where(key:)).not_to exist
+    end
+
+    it 'keeps credentials forgotten while another process completes their authorization' do
+      store_pending_authorization
+
+      succeeded, reported = contend(lambda {
+        oauth.authorize(code: 'code-1', state: 'state-1', iss: server['issuer'])
+        'authorized'
+      }, lambda {
+        oauth.deauthorize
+        'deauthorized'
+      })
+
+      expect(succeeded).to eq([true, true])
+      expect(reported.first(2)).to eq(%w[exchanging waiting])
+      expect(reported.drop(2)).to contain_exactly('first authorized', 'second deauthorized')
+      expect(described_class.where(key:)).not_to exist
+    end
+
+    it 'lets one process refresh a grant while the others wait for its token' do
+      store_expired_tokens
+
+      succeeded, reported = contend(-> { oauth.access_token }, -> { oauth.access_token })
+
+      expect(succeeded).to eq([true, true])
+      expect(reported.first(2)).to eq(%w[exchanging waiting])
+      expect(reported.drop(2)).to contain_exactly('first access-2', 'second access-2')
+      expect(described_class.read(key)).to include('access_token' => 'access-2', 'refresh_token' => 'refresh-2')
+    end
   end
 end
