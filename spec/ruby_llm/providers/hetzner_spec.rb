@@ -165,6 +165,12 @@ RSpec.describe RubyLLM::Providers::Hetzner do
 
       expect(chat.render).not_to include(:prompt_cache_key)
     end
+
+    it 'refuses an explicit cache id, which names content the prompt relies on' do
+      chat.with_caching(id: 'cached-content-1').add_message(role: :user, content: 'Hello')
+
+      expect { chat.render }.to raise_error(ArgumentError, /:id/)
+    end
   end
 
   describe 'attachments' do

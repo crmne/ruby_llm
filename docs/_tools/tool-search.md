@@ -149,7 +149,7 @@ See [Provider Tools]({% link _tools/provider-tools.md %}) for how raw tool defin
 
 ## Provider Support
 
-RubyLLM uses the provider's own tool search wherever it speaks Anthropic's Messages API or OpenAI's Responses API, including Claude on Bedrock and Vertex AI and GPT on Azure. xAI is the exception: it speaks the Responses API, but limits its tool search to alpha accounts. It does not check the model first: a model without tool search answers with the provider's error. Check the provider's documentation for the models that support it.
+RubyLLM uses the provider's own tool search wherever it speaks Anthropic's Messages API or OpenAI's Responses API, including Claude on Bedrock and Vertex AI and GPT on Azure. It does not check the model first: a model without tool search answers with the provider's error. Check the provider's documentation for the models that support it. xAI is the exception: it speaks the Responses API, but limits its tool search to alpha accounts, so xAI chats get RubyLLM's own search.
 
 Every other provider and protocol, such as Gemini, xAI, Bedrock's Converse API (which Claude uses only with `protocol: :converse`), and OpenAI's Chat Completions API, gets a `tool_search` tool from RubyLLM instead. Its description lists the deferred tools by name, and the model calls it with a few words, or with `select:` and tool names:
 

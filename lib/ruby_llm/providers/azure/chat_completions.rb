@@ -13,13 +13,7 @@ module RubyLLM
         include Azure::Videos
         include Azure::Images
         include Azure::Audio
-
-        # Foundry's REST reference lists /openai/v1/moderations, but resource
-        # and project endpoints answer it with the 404 of an unknown route
-        # and the catalog holds no moderation model.
-        def render_moderation_payload(*, **)
-          raise NotImplementedError
-        end
+        include Azure::Moderation
 
         def azure_endpoint(kind)
           parts = azure_base_parts

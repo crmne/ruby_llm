@@ -19,6 +19,10 @@ module RubyLLM
           false
         end
 
+        def apply_prompt_cache_params(_payload, caching)
+          prompt_cache_options(caching) if caching
+        end
+
         # The API names a rejected effort only in its message.
         def parse_unsupported_parameter(response)
           super || (:thinking if parse_error(response).to_s.match?(REJECTED_EFFORT))
