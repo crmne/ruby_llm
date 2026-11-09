@@ -39,6 +39,27 @@ module RubyLLM
       ].freeze
       private_constant :RUN_STATE
 
+      EXIT_LOCK = Mutex.new
+      private_constant :EXIT_LOCK
+
+      # Tells the runs of this process that it will exit by +time+ without
+      # unwinding, as a Solid Queue worker does once its shutdown timeout
+      # passes, so no run can expire its claims as it stops. Claims end by
+      # then from now on, and live heartbeats cut theirs back to it at once,
+      # so a chat still running at the exit counts as interrupted as the
+      # process ends rather than a lease later. A run that finishes first
+      # releases its claims as usual. The earliest time wins, to the whole
+      # second, which a column that rounds fractions up still holds.
+      def self.process_exits_by(time)
+        time = time.change(usec: 0)
+        EXIT_LOCK.synchronize { @exit_deadline = [@exit_deadline, time].compact.min }
+        ClaimHeartbeat.hurry_all
+      end
+
+      def self.exit_deadline # :nodoc:
+        @exit_deadline
+      end
+
       # The chats whose run died holding its claim. Every run that ends
       # releases its claim, so a token whose lease expired is left only by
       # a process that died or shut down mid-run. A chat someone stopped
@@ -283,12 +304,15 @@ module RubyLLM
 
       # Writes the chat's claim, moving its stored expiry forward and never
       # back: the heartbeat and a starting tool call write it from separate
-      # threads, and the older of two writes can land last. Returns whether
+      # threads, and the older of two writes can land last. The one way back
+      # is to the process's exit, past which no claim lasts. Returns whether
       # the claim is still this run's.
       def chat_claim_extended?(token, claimed_until)
+        exit_deadline = RunClaims.exit_deadline
+        cut = ' WHEN claimed_until > ? THEN ?' if exit_deadline
         chat_row.where(claim_token: token).update_all(
-          ['claimed_until = CASE WHEN claimed_until IS NULL OR claimed_until < ? THEN ? ELSE claimed_until END',
-           claimed_until, claimed_until]
+          ["claimed_until = CASE WHEN claimed_until IS NULL OR claimed_until < ? THEN ?#{cut} ELSE claimed_until END",
+           claimed_until, claimed_until, *([exit_deadline] * 2 if exit_deadline)]
         ) == 1
       end
 
@@ -305,7 +329,7 @@ module RubyLLM
         deadline = @run_claim_deadline
         return unless token && deadline > now
 
-        claimed_until = [now + CLAIM_LEASE, deadline].min
+        claimed_until = by_exit([now + CLAIM_LEASE, deadline].min)
         if chat_claim_extended?(token, claimed_until)
           @run_claim_renewed_at = now
         else
@@ -320,7 +344,7 @@ module RubyLLM
               deadline = tool_call_deadline(claim)
               next unless deadline
 
-              claimed_until = [now.change(usec: 0) + CLAIM_LEASE, deadline].min
+              claimed_until = by_exit([now.change(usec: 0) + CLAIM_LEASE, deadline].min)
               next if deadline <= now || claim.written.include?(claimed_until)
 
               [tool_call_id, claim.row, claim.written.dup, claim.written.push(claimed_until).last]
@@ -389,7 +413,12 @@ module RubyLLM
       end
 
       def leased_until(deadline, now)
-        @claim_heartbeat ? [now + CLAIM_LEASE, deadline].min : deadline
+        by_exit(@claim_heartbeat ? [now + CLAIM_LEASE, deadline].min : deadline)
+      end
+
+      def by_exit(claimed_until)
+        exit_deadline = RunClaims.exit_deadline
+        exit_deadline && exit_deadline < claimed_until ? exit_deadline : claimed_until
       end
 
       # A max_run_time shorter than the lease is the claim's whole life, so
