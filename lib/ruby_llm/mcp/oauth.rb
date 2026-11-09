@@ -196,8 +196,9 @@ module RubyLLM
         state = SecureRandom.urlsafe_base64(32)
         pending = client.merge('state' => state, 'verifier' => verifier, 'redirect_uri' => redirect_uri,
                                'issuer' => server['issuer'], 'scope' => scopes_for(server), 'resource' => resource,
-                               'dpop_key' => binding_key, 'expires_at' => Time.now.to_i + PENDING_FOR)
-        write(credential.to_h.merge('pending' => pending.merge('server' => server.slice(*SERVER_FIELDS))))
+                               'dpop_key' => binding_key, 'expires_at' => Time.now.to_i + PENDING_FOR,
+                               'server' => server.slice(*SERVER_FIELDS))
+        synchronize { write(store.read(key).to_h.merge('pending' => pending)) }
 
         query = { response_type: 'code', client_id: client['client_id'], redirect_uri:, state:,
                   code_challenge: Base64.urlsafe_encode64(Digest::SHA256.digest(verifier), padding: false),
