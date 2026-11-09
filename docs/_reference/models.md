@@ -207,6 +207,23 @@ Once nothing references an unlisted model, the next refresh deletes its row. A m
 
 Only the Rails registry keeps unlisted models. The registry file and the published `models.json` hold what the last refresh returned, so an unlisted model is not in them at all.
 
+### Replacing a Retired Model
+
+When a provider retires a model, which chats move to which replacement is your application's decision. Point new chats at the replacement (`config.default_model`, your agents' `model`, any `with_fallbacks` lists), then update the existing chats with plain Active Record:
+
+```ruby
+# lib/tasks/models.rake
+task retire_model: "ruby_llm:load_models" do
+  Chat.joins(:model)
+      .where(ruby_llm_models: { provider: "anthropic", model_id: "claude-sonnet-4-5-20250929" })
+      .find_each { |chat| chat.update!(model: "claude-sonnet-4-6", provider: "anthropic") }
+end
+```
+
+Match the ID the chats store, which is the one the registry resolved (`claude-sonnet-4-5` is stored as its dated ID). Messages and usage rows keep the model and cost they recorded, so `chat.cost` still counts past spend at the old prices, and the next request sends the whole history to the replacement.
+
+Setting the model looks the new ID up in RubyLLM's model table, which after a gem upgrade may not know the replacement yet, so load the registry first: the task above depends on `ruby_llm:load_models`, and a data migration, which runs before a deploy's `ruby_llm:load_models`, calls `RubyLLM.models.load_from_json` (or `RubyLLM.models.refresh`) at the start of `up`. Otherwise the update raises `RubyLLM::ModelNotFoundError`.
+
 ## Exploring and Finding Models
 
 Use `RubyLLM.models` to explore the registry.

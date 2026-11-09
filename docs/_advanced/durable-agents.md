@@ -129,13 +129,15 @@ Claims rely on the database to make them visible to other processes, so call the
 | | Stopped with `cancel` | Process dies | Request fails | Tool raises |
 |---|---|---|---|---|
 | The job | Raises `RubyLLM::CancelledError` at the next event, or when the running tool returns | Is gone | Raises the error | Raises the error |
-| The reply so far | Kept as a reply that is `cancelled?`, if any text streamed | Lost: a blank placeholder stays, and requests leave it out | Removed if blank | Not affected |
+| The reply so far | Kept as a reply that is `cancelled?`, if any text streamed | Not saved: the text streamed so far was only on the page. A blank placeholder stays, and requests leave it out | Removed if blank | Not affected |
 | Tool calls | A finished one keeps its result. The rest close as unfinished | A finished one keeps its result. Once the claims expire, the rest are answered as interrupted, and the model decides what to do | Not affected | The incomplete round can be removed, with its finished results, so the model is asked again |
 | What continues | Nothing after a stop in a tool round or a kept reply, until a new message. A stop before any text left the question unanswered, so a later `complete` asks it again | The next `complete` once the chat and tool claims expire | The next `complete` or message | The next `complete` or message |
-| The person | Sees the partial reply, and the page stops streaming | Sees "Thinking…" until a job runs again | Sees what your job shows them | Sees what your job shows them |
+| The person | Sees the partial reply, and the page stops streaming | Sees "Thinking…" until a job runs again, then a new reply | Sees what your job shows them | Sees what your job shows them |
 | Provider usage | An interrupted request is recorded as `:cancelled` with the tokens seen. One that already finished stays `:succeeded` | Lost for that attempt | Recorded as `:failed` | The request that finished stays `:succeeded` |
 
 A tool call that had started when its process stopped never runs again: the model gets an error saying the call did not finish and may have partly run, and decides whether to check or try again. A deploy or restart (TERM) releases the calls of the round that hadn't started yet, and those run on resume. A hard kill can't tell which calls had started, so every unfinished call of its round is answered that way. See [What a Crash Repeats](#what-a-crash-repeats).
+
+A hard kill (a SIGKILL, or running out of memory) drops the text the reply had streamed: RubyLLM saves a reply when it finishes or is cancelled, so until then that text exists only on the page. The resumed run asks the model again and regenerates the reply, which reaches the page through the same broadcasts as any other reply. A page that shows the generated broadcasts needs no extra code for this, and saving chunks yourself would not help, since the model writes the whole reply again.
 
 The generated chat UI handles each of these: its job discards the cancel and tries again every minute while a dead process still holds the chat, `complete` saves a failure in the chat's `reply_error` column for the page before it raises, and `ResumeInterruptedChatsJob` answers a reply whose process died, every minute and at boot. See [Resuming a Crashed Run](#resuming-a-crashed-run).
 
@@ -188,7 +190,7 @@ end
 
 When the other process is alive, it finishes the work and the retry finds nothing to do. Don't clear the claim columns at boot to resume sooner: a process on another server that is still running would then share the chat, and both would run its tools.
 
-A process that dies mid-request removes nothing. Its assistant placeholder stays blank, and a tool call it was running keeps no result. RubyLLM leaves blank assistant messages out of every request, so the chat still works. Once the claims expire, the next `complete` runs the unfinished calls of the latest round again. A call in a round the conversation has moved past reaches the model with an error saying it didn't finish. Your records stay as they are.
+A process that dies mid-request removes nothing. Its assistant placeholder stays blank, and a tool call it was running keeps no result. RubyLLM leaves blank assistant messages out of every request, so the chat still works. Once the claims expire, the next `complete` answers each call that had started with an error saying it did not finish, never running it again, and the model decides what to do, as [When a Run Is Interrupted](#when-a-run-is-interrupted) describes. Your records stay as they are.
 
 ### A Durable Queue in Development
 
