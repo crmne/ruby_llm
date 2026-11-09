@@ -1,0 +1,95 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/responses/compact"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","input":[{"role":"user","content":"The project codename
+        is Thimble. We write it in Ruby."},{"role":"assistant","content":[{"type":"output_text","text":"I
+        will remember the Thimble project and Ruby."}]}],"instructions":"Answer in
+        one short sentence."}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 09 Nov 2026 20:55:33 GMT
+      Content-Length:
+      - '709'
+    body:
+      encoding: UTF-8
+      string: '{"id":"resp_compact_1794257733215890628","object":"response.compaction","created_at":1794257733,"output":[{"type":"compaction","encrypted_content":"{\"type\":\"ollama_compaction\",\"version\":1,\"summary\":\"The
+        user introduced the Thimble project written in Ruby. The assistant acknowledged
+        the project details. No further actions or context provided.\",\"retained\":[{\"role\":\"user\",\"content\":\"The
+        project codename is Thimble. We write it in Ruby.\"},{\"role\":\"assistant\",\"content\":\"I
+        will remember the Thimble project and Ruby.\"}]}"}],"usage":{"input_tokens":345,"output_tokens":384,"total_tokens":729,"input_tokens_details":{"cached_tokens":0},"output_tokens_details":{"reasoning_tokens":0}}}'
+  recorded_at: Mon, 09 Nov 2026 20:55:33 GMT
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/responses"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","input":[{"type":"compaction","encrypted_content":"{\"type\":\"ollama_compaction\",\"version\":1,\"summary\":\"The
+        user introduced the Thimble project written in Ruby. The assistant acknowledged
+        the project details. No further actions or context provided.\",\"retained\":[{\"role\":\"user\",\"content\":\"The
+        project codename is Thimble. We write it in Ruby.\"},{\"role\":\"assistant\",\"content\":\"I
+        will remember the Thimble project and Ruby.\"}]}"},{"role":"user","content":"What
+        is the project codename?"}],"instructions":"Answer in one short sentence.","stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 09 Nov 2026 20:55:34 GMT
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"id":"resp_309432","object":"response","created_at":1794257734,"completed_at":1794257734,"status":"completed","incomplete_details":null,"model":"qwen3","previous_response_id":null,"instructions":"Answer
+        in one short sentence.","output":[{"id":"rs_resp_309432","type":"reasoning","summary":[{"type":"summary_text","text":"Okay,
+        the user asked, \"What is the project codename?\" Let me recall the conversation
+        history.\n\nEarlier, the user mentioned that the project codename is Thimble
+        and they''re writing it in Ruby. The assistant confirmed remembering the Thimble
+        project and Ruby. Now, the user is directly asking for the codename again.
+        Since the codename was already stated as Thimble, the answer should be straightforward.
+        I need to make sure there''s no confusion and that the answer is concise.
+        The user might be verifying the information or confirming details. The response
+        should just state the codename without extra information.\n"}],"encrypted_content":"Okay,
+        the user asked, \"What is the project codename?\" Let me recall the conversation
+        history.\n\nEarlier, the user mentioned that the project codename is Thimble
+        and they''re writing it in Ruby. The assistant confirmed remembering the Thimble
+        project and Ruby. Now, the user is directly asking for the codename again.
+        Since the codename was already stated as Thimble, the answer should be straightforward.
+        I need to make sure there''s no confusion and that the answer is concise.
+        The user might be verifying the information or confirming details. The response
+        should just state the codename without extra information.\n"},{"id":"msg_27174","type":"message","status":"completed","role":"assistant","content":[{"type":"output_text","text":"The
+        project codename is Thimble.","annotations":[],"logprobs":[]}]}],"error":null,"tools":[],"tool_choice":"auto","truncation":"disabled","parallel_tool_calls":true,"text":{"format":{"type":"text"}},"top_p":1,"presence_penalty":0,"frequency_penalty":0,"top_logprobs":0,"temperature":1,"reasoning":null,"usage":{"input_tokens":124,"output_tokens":139,"total_tokens":263,"input_tokens_details":{"cached_tokens":3},"output_tokens_details":{"reasoning_tokens":0}},"max_output_tokens":null,"max_tool_calls":null,"store":false,"background":false,"service_tier":"default","metadata":{},"safety_identifier":null,"prompt_cache_key":null}
+
+        '
+  recorded_at: Mon, 09 Nov 2026 20:55:34 GMT
+recorded_with: VCR 6.4.1

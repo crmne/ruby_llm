@@ -17,8 +17,18 @@ module RubyLLM
         include Ollama::Judgments
       end
 
+      # Ollama's stateless Responses API, which serves manual compaction.
+      class Responses < Protocols::Responses
+        include Protocols::Responses::Compaction
+
+        def render_image(image, image_url: image.for_llm, **)
+          super
+        end
+      end
+
       protocol :chat_completions, ChatCompletions
       protocol :system_one, SystemOne
+      protocol :responses, Responses
 
       def api_base
         configured_api_base(:ollama_api_base, example: 'http://localhost:11434/v1', endpoints: Protocols::ChatCompletions::ENDPOINT_PATHS)

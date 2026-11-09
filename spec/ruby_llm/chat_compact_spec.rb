@@ -127,7 +127,7 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.messages).to be_empty
   end
 
-  %i[xai openai azure].each do |provider|
+  %i[xai openai azure ollama].each do |provider|
     it "compacts and continues a conversation with #{provider}", :live do
       model = provider == :xai ? model_for(provider, :provider_tools) : model_for(provider)
       chat = RubyLLM.chat(model:, provider:, protocol: :responses).with_instructions('Answer in one short sentence.')

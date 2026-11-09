@@ -90,6 +90,30 @@ RSpec.describe RubyLLM::Providers::Ollama do
     end
   end
 
+  describe 'manual compaction' do
+    let(:provider) { described_class.new(RubyLLM.config) }
+    let(:model) { RubyLLM::Model.new(id: 'qwen3', provider: 'ollama') }
+
+    it 'compacts through the Responses protocol without changing the default chat route' do
+      expect(provider.send(:resolve_protocol, nil, model)).to eq(described_class::ChatCompletions)
+      expect(described_class::Responses.new(provider, model).compaction_url).to eq('responses/compact')
+    end
+
+    it 'sends remote images as data because /v1/responses rejects image URLs' do
+      stub_request(:get, 'https://example.com/ruby.png').to_return(body: 'png',
+                                                                   headers: { 'Content-Type' => 'image/png' })
+      image = RubyLLM::Attachment.new('https://example.com/ruby.png')
+
+      part = described_class::Responses.new(provider, model).send(:render_image, image)
+
+      expect(part).to include(type: 'input_image', image_url: start_with('data:image/png;base64,'))
+    end
+
+    it 'leaves Ollama Cloud without a Responses protocol' do
+      expect(RubyLLM::Providers::OllamaCloud.protocols).not_to include(:responses)
+    end
+  end
+
   describe 'judgments' do
     let(:provider) { described_class.new(RubyLLM.config) }
     let(:model) { RubyLLM::Model.new(id: 'clef-flash', provider: 'ollama') }
