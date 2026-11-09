@@ -7,9 +7,12 @@ module RubyLLM
       # Moonshot's dialect of the Chat Completions API.
       class ChatCompletions < Protocols::ChatCompletions
         include Moonshot::Chat
+        include Moonshot::Documents
       end
 
       protocol :chat_completions, ChatCompletions
+      protocol :responses, Moonshot::Responses
+      protocol :files, Protocols::Moonshot::Files
 
       def api_base
         configured_api_base(:moonshot_api_base, 'https://api.moonshot.ai/v1', endpoints: Protocols::ChatCompletions::ENDPOINT_PATHS)

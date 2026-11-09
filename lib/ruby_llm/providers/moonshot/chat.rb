@@ -26,6 +26,18 @@ module RubyLLM
           payload
         end
 
+        def count_tokens_url
+          'tokenizers/estimate-token-count'
+        end
+
+        def render_count_tokens_payload(messages, model:, **)
+          render_payload(messages, model:, temperature: nil, **).slice(:model, :messages, :tools, :response_format)
+        end
+
+        def parse_count_tokens_response(response)
+          response.body.dig('data', 'total_tokens')
+        end
+
         def apply_end_user(payload, identifier)
           payload.merge(safety_identifier: identifier)
         end
@@ -42,6 +54,8 @@ module RubyLLM
         end
 
         def supported_attachment?(attachment)
+          return attachment.image? if attachment.provider_file?
+
           Protocols::ChatCompletions::Media.supported_attachment?(
             attachment, document_attachments: :none, audio_attachments: false
           )
@@ -49,7 +63,7 @@ module RubyLLM
 
         def render_content(content, attachments = [])
           Protocols::ChatCompletions::Media.render_parts(content, attachments) do |attachment|
-            if attachment.type == :image && !attachment.provider_file?
+            if attachment.image?
               render_inline_image(attachment)
             else
               Protocols::ChatCompletions::Media.render_attachment(
@@ -59,9 +73,11 @@ module RubyLLM
           end
         end
 
-        # Moonshot reads images only from data URIs, so remote images travel inline.
+        # Moonshot reads images only from data URIs and its own file references,
+        # so remote images travel inline.
         def render_inline_image(image)
-          { type: 'image_url', image_url: { url: image.for_llm } }
+          url = image.provider_file? ? "ms://#{image.provider_file_id}" : image.for_llm
+          { type: 'image_url', image_url: { url: url } }
         end
       end
     end

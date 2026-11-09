@@ -366,6 +366,28 @@ RSpec.describe RubyLLM::Chat, :live do
       end
     end
 
+    context "with moonshot/#{model_for(:moonshot)} through Responses" do
+      let(:chat) do
+        RubyLLM.chat(model: model_for(:moonshot), provider: :moonshot, protocol: :responses)
+               .with_provider_tools(:web_search)
+      end
+
+      it 'searches and lists the sources it used' do
+        response = chat.ask('Search the web: what is the latest stable Ruby version? Answer in one sentence.')
+
+        expect(response.server_tool_calls).not_to be_empty
+        expect(response.web_sources.map(&:url)).to include(start_with('https://'))
+        expect(response.tokens.server_tool_use).to match('web_search_requests' => be_positive)
+      end
+
+      it 'streams a search and replays it so the conversation can continue' do
+        response = chat.ask('Search the web: what is the latest stable Ruby version?') { |_chunk| nil }
+
+        expect(response.server_tool_calls).not_to be_empty
+        expect(chat.ask('Thanks. Now just say OK.').content).to be_present
+      end
+    end
+
     context "with openai/#{model_for(:openai, :reasoning_effort)}" do
       let(:chat) do
         RubyLLM.chat(model: model_for(:openai, :reasoning_effort), provider: :openai).with_provider_tools(:web_search)

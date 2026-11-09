@@ -34,8 +34,9 @@ RSpec.describe RubyLLM::Providers::Moonshot do
   end
 
   it "speaks Moonshot's dialect of Chat Completions" do
-    expect(described_class.protocols).to eq(chat_completions: described_class::ChatCompletions)
+    expect(described_class.protocols[:chat_completions]).to eq(described_class::ChatCompletions)
     expect(described_class::ChatCompletions.superclass).to eq(RubyLLM::Protocols::ChatCompletions)
+    expect(described_class.protocols.keys).to eq(%i[chat_completions responses files])
   end
 
   it 'declares provider configuration' do
@@ -195,6 +196,150 @@ RSpec.describe RubyLLM::Providers::Moonshot do
 
       expect { protocol.render_content('Read this', [pdf]) }.to raise_error(RubyLLM::UnsupportedAttachmentError)
       expect { protocol.render_content('Hear this', [audio]) }.to raise_error(RubyLLM::UnsupportedAttachmentError)
+    end
+
+    it 'refers to an uploaded image by its Moonshot file reference' do
+      file = RubyLLM::UploadedFile.new(id: 'file-1', provider: 'moonshot', mime_type: 'image/png', purpose: 'image')
+
+      content = protocol.render_content('What is this?', [RubyLLM::Attachment.new(file)])
+
+      expect(content.last).to eq(type: 'image_url', image_url: { url: 'ms://file-1' })
+    end
+  end
+
+  describe 'documents in chat' do
+    let(:pdf_path) { File.expand_path('../../fixtures/sample.pdf', __dir__) }
+    let(:file_url) { 'https://api.moonshot.ai/v1/files' }
+
+    def extract_body
+      { content: '# Extracted', file_type: 'application/pdf', type: 'file' }.to_json
+    end
+
+    def stub_upload(id: 'file-1')
+      stub_request(:post, file_url).to_return(
+        status: 200,
+        body: { id:, object: 'file', bytes: 10, created_at: 1, filename: 'sample.pdf',
+                purpose: 'file-extract', status: 'ok', file_type: 'application/pdf' }.to_json,
+        headers: { 'Content-Type' => 'application/json' }
+      )
+    end
+
+    it 'sends the text Moonshot extracts from a PDF, uploading it once across turns' do
+      stub_completion
+      stub_upload
+      content = stub_request(:get, "#{file_url}/file-1/content")
+                .to_return(status: 200, body: extract_body, headers: { 'Content-Type' => 'application/json' })
+      chat = context.chat(model: model_id, provider: :moonshot)
+
+      chat.ask('Summarize', with: pdf_path)
+      chat.ask('Again')
+
+      expect(a_request(:post, completions_url).with { |request| request.body.include?('# Extracted') })
+        .to have_been_made.twice
+      expect(a_request(:post, file_url)).to have_been_made.once
+      expect(content).to have_been_made.twice
+      expect(chat.messages.first.attachments.first.mime_type).to eq('application/pdf')
+    end
+
+    it 'uploads again when the extracted file has gone' do
+      stub_completion
+      stub_upload
+      stub_request(:get, "#{file_url}/file-1/content")
+        .to_return({ status: 404, body: { error: { message: 'gone' } }.to_json,
+                     headers: { 'Content-Type' => 'application/json' } },
+                   { status: 200, body: extract_body, headers: { 'Content-Type' => 'application/json' } })
+      chat = context.chat(model: model_id, provider: :moonshot)
+
+      chat.ask('Summarize', with: pdf_path)
+
+      expect(a_request(:post, file_url)).to have_been_made.twice
+    end
+
+    it 'reads a file already uploaded for extraction' do
+      stub_completion
+      stub_request(:get, "#{file_url}/file-1/content")
+        .to_return(status: 200, body: extract_body, headers: { 'Content-Type' => 'application/json' })
+      file = RubyLLM::UploadedFile.new(id: 'file-1', provider: 'moonshot', filename: 'a.pdf',
+                                       mime_type: 'application/pdf', purpose: 'file-extract')
+
+      context.chat(model: model_id, provider: :moonshot).ask('Summarize', with: file)
+
+      expect(sent_body['messages'].first['content'].last['text']).to include('# Extracted')
+    end
+
+    it 'extracts a document for OCR and removes the upload' do
+      stub_upload
+      stub_request(:get, "#{file_url}/file-1/content")
+        .to_return(status: 200, body: extract_body, headers: { 'Content-Type' => 'application/json' })
+      delete = stub_request(:delete, "#{file_url}/file-1").to_return(status: 200, body: '{}')
+
+      ocr = context.ocr(pdf_path, model: model_id, provider: :moonshot)
+
+      expect(ocr.markdown).to eq('# Extracted')
+      expect(ocr.model).to eq(model_id)
+      expect(delete).to have_been_made
+    end
+
+    it 'refuses page selection for OCR' do
+      expect { context.ocr(pdf_path, model: model_id, provider: :moonshot, pages: [0]) }
+        .to raise_error(ArgumentError, /pages/)
+    end
+  end
+
+  describe 'files' do
+    def uploaded_purpose(file)
+      body = nil
+      stub_request(:post, 'https://api.moonshot.ai/v1/files')
+        .with { |request| body = request.body }
+        .to_return(status: 200, body: { id: 'f', bytes: 1, created_at: 1, filename: 'x', purpose: 'p' }.to_json,
+                   headers: { 'Content-Type' => 'application/json' })
+      provider.upload_file(file)
+      body[/name="purpose"\r\n\r\n([^\r]+)/, 1]
+    end
+
+    it 'extracts text from documents by default and stores images as images' do
+      expect(uploaded_purpose(File.expand_path('../../fixtures/sample.pdf', __dir__))).to eq('file-extract')
+      expect(uploaded_purpose(File.expand_path('../../fixtures/ruby.png', __dir__))).to eq('image')
+    end
+
+    it 'rejects a retention period' do
+      expect { provider.upload_file('x.pdf', expires_in: 60) }.to raise_error(ArgumentError, /expires_in/)
+    end
+
+    it 'unwraps extracted text and leaves other files as written' do
+      stub_request(:get, 'https://api.moonshot.ai/v1/files/a/content')
+        .to_return(status: 200, body: { content: 'text', type: 'file' }.to_json)
+      stub_request(:get, 'https://api.moonshot.ai/v1/files/b/content')
+        .to_return(status: 200, body: %({"custom_id":"0"}\n{"custom_id":"1"}\n))
+
+      expect(provider.download_file('a')).to eq('text')
+      expect(provider.download_file('b')).to include('custom_id')
+    end
+  end
+
+  describe 'responses' do
+    it 'sends user text as input_text parts, because Kimi drops web search for bare strings' do
+      request = stub_request(:post, 'https://api.moonshot.ai/v1/responses')
+                .with { |sent| JSON.parse(sent.body)['input'].first['content'].first['type'] == 'input_text' }
+                .to_return(status: 200, body: { id: 'r', status: 'completed', output: [] }.to_json,
+                           headers: { 'Content-Type' => 'application/json' })
+
+      context.chat(model: model_id, provider: :moonshot, protocol: :responses)
+             .with_provider_tools(:web_search).ask('Hello')
+
+      expect(request).to have_been_made
+    end
+  end
+
+  describe 'token counting' do
+    it 'estimates through the tokenizer endpoint' do
+      request = stub_request(:post, 'https://api.moonshot.ai/v1/tokenizers/estimate-token-count')
+                .with { |sent| JSON.parse(sent.body).keys.sort == %w[messages model] }
+                .to_return(status: 200, body: { data: { total_tokens: 42 } }.to_json,
+                           headers: { 'Content-Type' => 'application/json' })
+
+      expect(context.chat(model: model_id, provider: :moonshot).count_tokens('Hello')).to eq(42)
+      expect(request).to have_been_made
     end
   end
 end

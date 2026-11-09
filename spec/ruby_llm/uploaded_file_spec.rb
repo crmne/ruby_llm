@@ -12,6 +12,7 @@ RSpec.describe RubyLLM::UploadedFile, :live do
       { provider: :anthropic },
       { provider: :gemini },
       { provider: :mistral, options: { purpose: 'ocr' } },
+      { provider: :moonshot },
       { provider: :openai, options: { purpose: 'user_data' } },
       { provider: :xai }
     ].each do |upload_info|
@@ -31,6 +32,25 @@ RSpec.describe RubyLLM::UploadedFile, :live do
                         .ask('Summarize this document in one sentence.', with: file)
 
       expect(response.content).to match(/pdf|document|lorem|sample/i)
+    end
+
+    it "moonshot/#{model_for(:moonshot)} reuses an uploaded file in chat and downloads its text" do
+      file = RubyLLM.upload(pdf_path, provider: :moonshot)
+
+      response = RubyLLM.chat(model: model_for(:moonshot), provider: :moonshot)
+                        .ask('Summarize this document in one sentence.', with: file)
+
+      expect(response.content).to match(/pdf|document|lorem|sample/i)
+      expect(RubyLLM.download(file.id, provider: :moonshot).to_s).to match(/sample pdf/i)
+    end
+
+    it "moonshot/#{model_for(:moonshot)} reads an uploaded image by reference" do
+      file = RubyLLM.upload(File.expand_path('../fixtures/ruby.png', __dir__), provider: :moonshot)
+
+      response = RubyLLM.chat(model: model_for(:moonshot), provider: :moonshot)
+                        .ask('What gemstone is in this image? One word.', with: file)
+
+      expect(response.content).to match(/ruby/i)
     end
 
     it "gemini/#{model_for(:gemini)} reuses an uploaded file in chat" do

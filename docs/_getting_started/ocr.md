@@ -99,6 +99,8 @@ RubyLLM.ocr(
 
 See [Mistral Document AI](https://docs.mistral.ai/capabilities/document_ai/basic_ocr/) for more extraction options.
 
+Moonshot AI extracts a whole document as one page and takes no model. Pass any Kimi model, such as `model: "kimi-k3", provider: :moonshot`, and leave out `pages:`.
+
 For Cohere, `provider_options: { output_format: "blocks" }` includes text, image, and table blocks in `ocr.pages.first.raw["blocks"]`.
 
 ## Extracting Structured Data
