@@ -8,6 +8,7 @@ module RubyLLM
       # https://dev.meta.ai/docs/protocols/responses
       class Responses < Protocols::Responses
         include Protocols::Responses::TokenCounting
+        include Protocols::Meta::Transcription
 
         SERVER_TOOL_ALIASES = {
           web_search: { tool: { type: 'web_search' } }

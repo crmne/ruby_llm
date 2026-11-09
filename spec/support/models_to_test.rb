@@ -228,6 +228,7 @@ transcription_models = [
   { provider: :cohere, model: 'cohere-transcribe-03-2026' },
   { provider: :deepgram, model: 'nova-3-general' },
   { provider: :gemini, model: 'gemini-2.5-flash' },
+  { provider: :meta, model: 'muse-voice-transcribe-1.0' },
   { provider: :minimax, model: 'asr-1.0', assume_model_exists: true },
   { provider: :mistral, model: 'voxtral-mini-latest' },
   { provider: :openai, model: 'gpt-4o-transcribe-diarize' },

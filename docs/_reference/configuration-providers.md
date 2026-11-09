@@ -240,6 +240,8 @@ RubyLLM talks to Meta through its Responses API, which carries the model's encry
 
 Meta won't fetch many remote images, so RubyLLM downloads them and sends them inline.
 
+`muse-voice-transcribe-1.0` transcribes WAV only: mono, 16-bit PCM at 16 or 24 kHz, up to 10 minutes. Convert other audio first. Meta gives `language:` as a hint in its own words, such as `language: "English"`, and `prompt:` as keywords that bias recognition. Pass `speaker_names: []` for speaker labels, and a block streams the transcript over Server-Sent Events.
+
 Model ids ending in `-contributor`, like `muse-spark-1.3-contributor`, run the same model in Meta's Contributor mode: much cheaper tokens, in exchange for letting Meta train future models on everything you send and get back. Use them for synthetic test and evaluation prompts, never for your users' data or anything you can't share. See Meta's [pricing and rate limits](https://dev.meta.ai/docs/pricing-rate-limits) for the terms and the lower request limits.
 
 ## MiniMax

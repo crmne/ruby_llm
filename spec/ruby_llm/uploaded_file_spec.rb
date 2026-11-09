@@ -11,6 +11,7 @@ RSpec.describe RubyLLM::UploadedFile, :live do
     [
       { provider: :anthropic },
       { provider: :gemini },
+      { provider: :meta, options: { purpose: 'user_data' } },
       { provider: :mistral, options: { purpose: 'ocr' } },
       { provider: :moonshot },
       { provider: :openai, options: { purpose: 'user_data' } },
@@ -51,6 +52,21 @@ RSpec.describe RubyLLM::UploadedFile, :live do
                         .ask('What gemstone is in this image? One word.', with: file)
 
       expect(response.content).to match(/ruby/i)
+    end
+
+    it "meta/#{model_for(:meta)} reuses an uploaded file in chat" do
+      file = RubyLLM.upload(pdf_path, provider: :meta, purpose: 'user_data')
+
+      response = RubyLLM.chat(model: model_for(:meta), provider: :meta)
+                        .ask('Summarize this document in one sentence.', with: file)
+
+      expect(response.content).to match(/pdf|document|lorem|sample/i)
+    end
+
+    it 'meta downloads an uploaded file' do
+      file = RubyLLM.upload(pdf_path, provider: :meta, purpose: 'user_data')
+
+      expect(described_class.download(file.id, provider: :meta).to_blob.bytesize).to eq(File.size(pdf_path))
     end
 
     it "gemini/#{model_for(:gemini)} reuses an uploaded file in chat" do

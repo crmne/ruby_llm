@@ -41,9 +41,9 @@ module RubyLLM
     # The provider-reported processing status of the file.
     attr_reader :status
 
-    # The MIME type of the stored file. OpenAI, Azure, DeepSeek, and xAI do
-    # not report one: ::upload returns the content type it sent, and ::find
-    # returns +nil+.
+    # The MIME type of the stored file. OpenAI, Azure, DeepSeek, Meta, and
+    # xAI do not report one: ::upload returns the content type it sent, and
+    # ::find returns +nil+.
     attr_reader :mime_type
 
     # The purpose the file was uploaded for, such as <tt>"batch"</tt>, when
@@ -93,12 +93,12 @@ module RubyLLM
     #   RubyLLM::UploadedFile.upload(io, provider: :openai, purpose: "batch",
     #                                filename: "batch.jsonl")
     #
-    # OpenAI and Azure require +purpose:+. Cohere uses +purpose:+ for its
+    # OpenAI, Meta, and Azure require +purpose:+. Cohere uses +purpose:+ for its
     # dataset type, such as <tt>"embed-input"</tt>.
     # Pass +expires_in:+ as a number of
     # seconds to have the provider delete the file automatically; OpenAI,
-    # Anthropic, xAI, and Mistral support it, and Mistral rounds up to whole
-    # hours.
+    # Meta, Anthropic, xAI, and Mistral support it, and Mistral rounds up to
+    # whole hours.
     # Storage-backed providers (Vertex AI and Bedrock) store the file at
     # +uri:+ when given, otherwise at a generated object name under the
     # configured bucket. Providers that cannot carry +purpose:+,
