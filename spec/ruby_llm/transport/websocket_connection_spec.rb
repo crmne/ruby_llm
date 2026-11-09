@@ -186,6 +186,37 @@ RSpec.describe RubyLLM::Transport::WebsocketConnection do
     expect(Socket).to have_received(:tcp).with('127.0.0.1', 9, connect_timeout: 7)
   end
 
+  def with_silent_tls_server
+    server = TCPServer.new('127.0.0.1', 0)
+    accepted = []
+    acceptor = Thread.new { loop { accepted << server.accept } }
+    yield "wss://127.0.0.1:#{server.addr[1]}"
+  ensure
+    acceptor&.kill&.join
+    accepted&.each(&:close)
+    server&.close
+  end
+
+  def seconds_to_fail_opening(url)
+    started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+    expect { described_class.open(url, headers: {}, config:) { nil } }.to raise_error(RubyLLM::Error, /timed out/)
+    Process.clock_gettime(Process::CLOCK_MONOTONIC) - started
+  end
+
+  it 'waits open_timeout for the TLS handshake' do
+    config.request_timeout = 5
+    config.open_timeout = 0.2
+
+    with_silent_tls_server { |url| expect(seconds_to_fail_opening(url)).to be < 2 }
+  end
+
+  it 'never waits past request_timeout for the TLS handshake' do
+    config.request_timeout = 0.2
+    config.open_timeout = 5
+
+    with_silent_tls_server { |url| expect(seconds_to_fail_opening(url)).to be < 2 }
+  end
+
   it 'bounds a read when the peer sends no frames' do
     config.request_timeout = 0.5
     with_server(echo: false) do |url, _worker|

@@ -137,8 +137,9 @@ module RubyLLM
 
       def open_socket(deadline)
         port = @uri.port || (@uri.scheme == 'wss' ? 443 : 80)
+        opened_by = [monotonic_time + @open_timeout, deadline].min
         @socket = Socket.tcp(@uri.hostname, port, connect_timeout: @open_timeout)
-        secure_socket(deadline) if @uri.scheme == 'wss'
+        secure_socket(opened_by) if @uri.scheme == 'wss'
       end
 
       def close_socket
