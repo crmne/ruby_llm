@@ -229,7 +229,7 @@ chat.with_fallbacks("{{ site.models.openai_mini }}")
 chat.ask("Plan the migration") { |chunk| print chunk.content }
 ```
 
-A low value also cuts off a model that is only thinking. Gemini sends no bytes while it thinks unless thought summaries are on, and `gemini-4-argon` on Vertex AI has been measured silent for 114 seconds before its first byte. Keep the value above the longest thinking silence you expect: minutes, not seconds, for Gemini without thought summaries. [`with_thinking(display: :summarized)`]({% link _core_features/thinking.md %}#display) turns them on, and the stream then keeps delivering thoughts while the model thinks.
+A low value also cuts off a model that is only thinking. Gemini sends no bytes while it thinks unless thought summaries are on, and `gemini-4-argon` on Vertex AI has been measured silent for 114 seconds before its first byte. Keep the value above the longest thinking silence you expect: minutes, not seconds, for Gemini without thought summaries. [`with_thinking(display: :summarized)`]({% link _core_features/thinking.md %}#display) turns them on, which shortens those silences but doesn't guarantee a steady stream, so still leave room for pauses in thinking.
 
 To fall back on another error as well, such as to a model with a larger context window, pass `on:` with the whole default list plus that error:
 
