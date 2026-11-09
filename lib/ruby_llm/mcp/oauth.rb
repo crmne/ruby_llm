@@ -137,7 +137,7 @@ module RubyLLM
         return unless authorized?
 
         renew if expiring?
-        credential['access_token']
+        credential.to_h['access_token']
       end
 
       # Returns the headers that authorize a +verb+ request to the server:
