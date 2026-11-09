@@ -38,14 +38,19 @@ module RubyLLM
         env[:body].rewind if env[:body].respond_to?(:rewind)
         context&.[](STREAM_RESET_KEY)&.call
         @app.call(env).on_complete do |response|
-          apply_retry_delay(response, provider)
           context&.[](STREAM_FAILURE_KEY)&.call(response)
+          apply_retry_delay(response, provider)
           self.class.parse_error(provider:, response: streaming_error_response(response))
         end
+      rescue RubyLLM::Error
+        apply_retry_delay(env, provider)
+        raise
       end
 
       # The retry middleware only reads the standard Retry-After header, so
-      # other retry hints are normalized into seconds here.
+      # other retry hints are normalized into seconds here. A failed stream
+      # usually raises while it is read, before on_complete, and keeps its
+      # body in the stored streaming error rather than on the response.
       def apply_retry_delay(response, provider)
         status = response.respond_to?(:status) ? response.status : response[:status]
         return unless status && status >= 400
@@ -58,7 +63,7 @@ module RubyLLM
       end
 
       def provider_retry_delay(provider, response, status)
-        provider&.retry_delay(response) if status == 429
+        provider&.retry_delay(streaming_error_response(response)) if status == 429
       end
 
       def millisecond_retry_delay(headers)

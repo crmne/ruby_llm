@@ -271,7 +271,7 @@ module RubyLLM
         error_status = failed_http_status(env) || status || 500
 
         if faraday_1? || env.nil?
-          Struct.new(:body, :status).new(parsed_data, error_status)
+          Struct.new(:body, :status, :response_headers).new(parsed_data, error_status, env&.response_headers)
         else
           # Faraday writes body into the request until a status is set.
           env.merge(status: error_status, body: parsed_data)

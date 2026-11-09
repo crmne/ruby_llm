@@ -229,6 +229,8 @@ chat.with_fallbacks("{{ site.models.openai_mini }}")
 chat.ask("Plan the migration") { |chunk| print chunk.content }
 ```
 
+A low value also cuts off a model that is only thinking. Gemini sends no bytes while it thinks unless thought summaries are on, and `gemini-4-argon` on Vertex AI has been measured silent for 114 seconds before its first byte. Keep the value above the longest thinking silence you expect: minutes, not seconds, for Gemini without thought summaries.
+
 To fall back on another error as well, such as to a model with a larger context window, pass `on:` with the whole default list plus that error:
 
 ```ruby
@@ -419,7 +421,7 @@ Retries are attempted for:
 
 `RubyLLM::ContextLengthExceededError` is not retried. Neither is a stream that fails after it has started delivering events, because the retry would replay them into the same response.
 
-RubyLLM honors `Retry-After` and `retry-after-ms` headers across providers. `Retry-After` takes precedence when both are present. Invalid millisecond delays fall back to provider-specific timing or the configured backoff. If the requested delay exceeds `retry_max_interval`, RubyLLM raises the error without retrying early.
+RubyLLM honors `Retry-After` and `retry-after-ms` headers across providers, and on a 429 the provider-specific hints: OpenAI's reset headers and the `RetryInfo` detail in a Gemini or Vertex AI error body. `Retry-After` takes precedence when both are present. Invalid millisecond delays fall back to provider-specific timing or the configured backoff. If the requested delay exceeds `retry_max_interval`, RubyLLM raises the error without retrying early.
 
 A chat with [fallbacks](#model-fallbacks) left to try retries less: a timeout, a failed connection, or a requested delay longer than two seconds goes to the next fallback instead of another attempt on the same model.
 

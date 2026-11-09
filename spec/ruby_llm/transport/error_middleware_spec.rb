@@ -85,6 +85,10 @@ RSpec.describe RubyLLM::Transport::ErrorMiddleware do
       described_class.new(->(_env) { app_response }, provider: provider)
     end
 
+    def retry_info_body(delay)
+      { 'error' => { 'code' => 429, 'details' => [{ 'retryDelay' => delay }] } }
+    end
+
     def rate_limited_env(headers)
       Faraday::Env.from(
         status: 429,
@@ -99,6 +103,53 @@ RSpec.describe RubyLLM::Transport::ErrorMiddleware do
 
       expect { middleware_for(provider, env).call(Faraday::Env.new) }.to raise_error(RubyLLM::RateLimitError)
       expect(env[:response_headers]['Retry-After']).to eq('12.5')
+    end
+
+    it 'gives the provider the stored streaming error, whose body the response lacks' do
+      provider = RubyLLM::Providers::Gemini.allocate
+      env = rate_limited_env({})
+      env[:body] = nil
+      env[:streaming_error_response] = env.merge(body: retry_info_body('30s'))
+
+      expect { middleware_for(provider, env).call(Faraday::Env.new) }.to raise_error(RubyLLM::RateLimitError)
+      expect(env[:response_headers]['Retry-After']).to eq('30.0')
+    end
+
+    it 'reads a streaming error stored only once the response has ended' do
+      provider = RubyLLM::Providers::Gemini.allocate
+      env = rate_limited_env({})
+      env[:body] = nil
+      env[:request] = Faraday::RequestOptions.new(context: {
+                                                    described_class::STREAM_FAILURE_KEY => lambda { |response|
+                                                      response[:streaming_error_response] =
+                                                        response.merge(body: retry_info_body('30s'))
+                                                    }
+                                                  })
+
+      expect { middleware_for(provider, env).call(Faraday::Env.from(request: env[:request])) }
+        .to raise_error(RubyLLM::RateLimitError)
+      expect(env[:response_headers]['Retry-After']).to eq('30.0')
+    end
+
+    it 'applies the hint when the error is raised while the stream is read' do
+      provider = RubyLLM::Providers::Gemini.allocate
+      env = rate_limited_env({})
+      env[:body] = nil
+      app = lambda do |_env|
+        env[:streaming_error_response] = env.merge(body: retry_info_body('30s'))
+        raise RubyLLM::RateLimitError, 'Slow down'
+      end
+
+      expect { described_class.new(app, provider:).call(env) }.to raise_error(RubyLLM::RateLimitError)
+      expect(env[:response_headers]['Retry-After']).to eq('30.0')
+    end
+
+    it 'applies retry-after-ms when the error is raised while the stream is read' do
+      env = rate_limited_env('retry-after-ms' => '1500')
+      app = ->(_env) { raise RubyLLM::RateLimitError, 'Slow down' }
+
+      expect { described_class.new(app, provider: nil).call(env) }.to raise_error(RubyLLM::RateLimitError)
+      expect(env[:response_headers]['Retry-After']).to eq('1.5')
     end
 
     it 'keeps a Retry-After already sent by the provider' do
