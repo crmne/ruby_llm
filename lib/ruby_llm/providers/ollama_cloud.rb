@@ -7,6 +7,8 @@ module RubyLLM
       # Ollama Cloud's dialect of the Chat Completions API.
       class ChatCompletions < Ollama::ChatCompletions
         include OllamaCloud::Models
+
+        abstract :embedding_url, :speech_url, :transcription_url, :images_url, :moderation_url
       end
 
       # Ollama Cloud's dialect of the System One API for decision models such as Clef.

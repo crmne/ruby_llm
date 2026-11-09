@@ -85,6 +85,53 @@ RSpec.describe RubyLLM::Providers::OllamaCloud do
     end
   end
 
+  describe 'operations ollama.com does not serve' do
+    let(:audio_path) { File.expand_path('../../fixtures/ruby.wav', __dir__) }
+    let!(:route) do
+      stub_request(:post, %r{\Ahttps://ollama\.com/v1/}).to_return(
+        status: 404, headers: { 'Content-Type' => 'application/json' }, body: { error: 'path not found' }.to_json
+      )
+    end
+    let(:model) { { model: 'gemma4:31b', provider: :ollama_cloud, assume_model_exists: true } }
+
+    before do
+      RubyLLM.configure { |config| config.ollama_cloud_api_key = 'test' }
+    end
+
+    def expect_unsupported(label, &)
+      expect(&).to raise_error(RubyLLM::Error, "OllamaCloud doesn't support #{label}")
+      expect(route).not_to have_been_requested
+    end
+
+    it 'raises for embeddings without a request' do
+      expect_unsupported('embeddings') { RubyLLM.embed('Hello', **model) }
+    end
+
+    it 'raises for speech without a request' do
+      expect_unsupported('speech generation') { RubyLLM.speak('Hello', **model) }
+    end
+
+    it 'raises for streamed speech without a request' do
+      expect_unsupported('speech generation') { RubyLLM.speak('Hello', **model) { |_chunk| nil } }
+    end
+
+    it 'raises for transcription without a request' do
+      expect_unsupported('transcription') { RubyLLM.transcribe(audio_path, **model) }
+    end
+
+    it 'raises for streamed transcription without a request' do
+      expect_unsupported('transcription') { RubyLLM.transcribe(audio_path, **model) { |_chunk| nil } }
+    end
+
+    it 'raises for image generation without a request' do
+      expect_unsupported('image generation') { RubyLLM.paint('A red ruby', **model) }
+    end
+
+    it 'raises for moderation without a request' do
+      expect_unsupported('moderation') { RubyLLM.moderate('Hello', **model) }
+    end
+  end
+
   describe 'judgments' do
     let(:model) { RubyLLM::Model.default('clef:27b', 'ollama_cloud') }
     let(:question) { { urgent: { type: :probability, instructions: 'Is this urgent?' } } }

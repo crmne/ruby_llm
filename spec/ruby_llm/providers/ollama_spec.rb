@@ -166,4 +166,36 @@ RSpec.describe RubyLLM::Providers::Ollama do
       end.to raise_error(RubyLLM::BadRequestError, /voice "alloy" not found/)
     end
   end
+
+  describe 'operations a local server serves' do
+    let(:api_base) { RubyLLM.config.ollama_api_base.to_s.delete_suffix('/') }
+    let(:model) { { provider: :ollama, assume_model_exists: true } }
+
+    it 'embeds through /v1/embeddings' do
+      route = stub_request(:post, "#{api_base}/embeddings").to_return(
+        status: 200, headers: { 'Content-Type' => 'application/json' },
+        body: { model: 'nomic-embed-text', data: [{ embedding: [0.1, 0.2] }] }.to_json
+      )
+
+      expect(RubyLLM.embed('Hello', model: 'nomic-embed-text', **model).vectors).to eq([0.1, 0.2])
+      expect(route).to have_been_requested
+    end
+
+    it 'speaks through /v1/audio/speech' do
+      route = stub_request(:post, "#{api_base}/audio/speech").to_return(status: 200, body: 'RIFF')
+
+      expect(RubyLLM.speak('Hello', model: 'phonon', **model).to_blob).to eq('RIFF')
+      expect(route).to have_been_requested
+    end
+
+    it 'transcribes through /v1/audio/transcriptions' do
+      route = stub_request(:post, "#{api_base}/audio/transcriptions").to_return(
+        status: 200, headers: { 'Content-Type' => 'application/json' }, body: { text: 'Hello' }.to_json
+      )
+
+      audio_path = File.expand_path('../../fixtures/ruby.wav', __dir__)
+      expect(RubyLLM.transcribe(audio_path, model: 'gemma4', **model).text).to eq('Hello')
+      expect(route).to have_been_requested
+    end
+  end
 end
