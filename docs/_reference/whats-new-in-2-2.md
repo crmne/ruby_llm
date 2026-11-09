@@ -371,6 +371,8 @@ A chat with a [file store]({% link _core_features/file-stores.md %}#what-the-mod
 
 A chat bills its owner, set with `chat.with_owner(current_user)`, or in Rails named once with `acts_as_chat owner: :user`, which keeps the chat's files for that user too. See [One-Shot Operations]({% link _core_features/cost-and-usage-tracking.md %}#one-shot-operations).
 
+`with_tool_options(rounds: 25)` stops a model that loops on its tools: `complete` raises `RubyLLM::ToolRoundLimitError` once that many responses asking for tools have run, with every call answered, and another `complete` continues with a fresh count. It is off by default. See [Limiting Tool Calls]({% link _tools/tool-execution.md %}#limiting-tool-calls).
+
 Vertex AI takes the `eu` and `us` multi-region locations.
 
 The generated chat UI switches a chat's model mid-conversation. The message form has the same model picker as the new-chat form, and a message sent with another model moves the chat to it with `with_model`, so that reply and every later one use it. See [Adding a Chat UI]({% link _advanced/rails-generators.md %}#adding-a-chat-ui).

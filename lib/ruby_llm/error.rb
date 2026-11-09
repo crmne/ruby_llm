@@ -174,6 +174,13 @@ module RubyLLM
   # #approve or #decline decisions for calls that require approval.
   class PendingToolCallsError < StandardError; end
 
+  # Raised by Chat#complete when the limit set with
+  # <tt>Chat#with_tool_options(rounds:)</tt> is reached. Every tool call of
+  # the rounds that ran has its result, so the conversation stays valid and
+  # another #complete continues with a fresh count. Not a RubyLLM::Error,
+  # which a record takes for a failed request and a job may retry.
+  class ToolRoundLimitError < StandardError; end
+
   # Raised when a persisted tool call is declined after it started running.
   # The call keeps running and the model receives its result.
   class ToolCallRunningError < StandardError; end

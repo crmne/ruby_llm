@@ -35,6 +35,7 @@ module RubyLLM
     # The provider-neutral options #with_compaction accepts.
     COMPACTION_OPTIONS = %i[at instructions pause_after].freeze
     THINKING_OPTIONS = %i[effort budget display].freeze
+    TOOL_OPTIONS = %i[choice calls concurrency rounds].freeze
     PAUSED = Object.new.freeze
     TOOL_CHOICE_MODES = %i[auto none required].freeze
     AGENT_RUN_KEY = :ruby_llm_agent_run
@@ -46,7 +47,7 @@ module RubyLLM
     # Not a RubyLLM::Error, which a record takes for a failed request and
     # answers by removing the round.
     class StalledToolRound < StandardError; end # :nodoc:
-    private_constant :THINKING_OPTIONS, :PAUSED, :TOOL_CHOICE_MODES, :AGENT_RUN_KEY, :COPIED_STATE,
+    private_constant :THINKING_OPTIONS, :TOOL_OPTIONS, :PAUSED, :TOOL_CHOICE_MODES, :AGENT_RUN_KEY, :COPIED_STATE,
                      :UNFINISHED_TOOL_RESULT, :StalledToolRound
 
     # The Model the chat sends requests to.
@@ -137,10 +138,10 @@ module RubyLLM
 
     attr_reader :tool_prefs, :fallback_errors, :usage_entries # :nodoc:
 
-    # Returns the +choice+, +calls+, and +concurrency+ set with
+    # Returns the +choice+, +calls+, +concurrency+, and +rounds+ set with
     # #with_tool_options, with +nil+ for anything left at the default.
     def tool_options
-      { choice: tool_prefs[:choice], calls: tool_prefs[:calls], concurrency: concurrency }
+      { choice: tool_prefs[:choice], calls: tool_prefs[:calls], concurrency: concurrency, rounds: @tool_rounds }
     end
 
     # Creates a chat with +model:+, or with the configured default model
@@ -369,18 +370,21 @@ module RubyLLM
     # loop goes on with the turn that is running, so messages queued with
     # <tt>steer: false</tt> stay queued.
     def continue_turn(steering_only: true, &) # :nodoc:
+      rounds = 0
       within_run do
         until settled?(steering_only) || waiting?
           boundary = !pending_tool_response
+          raise_if_tool_rounds_spent!(rounds) if boundary
           move = advance(steering_only:, &)
           break if placeholder?(move)
 
+          rounds += 1 if boundary && pending_tool_response
           stalled = stalled_round?(stalled, generated: boundary, move:)
           steering_only ||= boundary
         end
       end
       @cancelled = false
-      pending_tool_response || halted_result || last_non_system_message || messages.last
+      turn_result
     end
 
     # Returns whether the chat has no pending response or tool execution:
@@ -845,12 +849,18 @@ module RubyLLM
     # a Tool class. +calls:+ limits how many tool calls one response may
     # contain (+:many+ or +:one+). +concurrency:+ runs tool calls
     # concurrently: +true+ or +:threads+ for threads, +:fibers+ for fibers.
-    # An omitted option is left unchanged; passing +nil+ explicitly resets
-    # that option (+concurrency: nil+ returns to the configured default).
-    # Returns +self+.
+    # +rounds:+ limits how many model responses that ask for tools one
+    # #complete may run, however many calls each holds. It is off by
+    # default. Once the last round's results are saved, #complete raises
+    # ToolRoundLimitError instead of asking the model again, and another
+    # #complete continues with a fresh count, as does a pause for a person.
+    # #step is not limited. An omitted option is left unchanged; passing
+    # +nil+ explicitly resets that option (+concurrency: nil+ returns to the
+    # configured default, +rounds: nil+ removes the limit). Returns +self+.
     #
     #   chat.with_tools(Weather, Search).with_tool_options(choice: :required)
     #   chat.with_tool_options(calls: :one, concurrency: :threads)
+    #   chat.with_tool_options(rounds: 25)
     #   chat.with_tool_options(choice: nil)
     #
     def with_tool_options(**options)
@@ -859,7 +869,8 @@ module RubyLLM
         when :choice then apply_tool_choice(value)
         when :calls then @tool_prefs[:calls] = value.nil? ? nil : normalize_calls(value)
         when :concurrency then apply_tool_concurrency(value)
-        else raise ArgumentError, "Unknown tool option: #{option}. Valid options are: choice, calls, concurrency"
+        when :rounds then @tool_rounds = normalize_rounds(value)
+        else raise ArgumentError, "Unknown tool option: #{option}. Valid options are: #{TOOL_OPTIONS.join(', ')}"
         end
       end
       self
@@ -1910,6 +1921,18 @@ module RubyLLM
       ids = pending_tool_response&.then { |response| pending_tool_calls(response).keys }
       raise StalledToolRound,
             "RubyLLM made no progress on tool calls #{Array(ids).join(', ')}: they neither ran nor wait"
+    end
+
+    def turn_result
+      pending_tool_response || halted_result || last_non_system_message || messages.last
+    end
+
+    def raise_if_tool_rounds_spent!(rounds)
+      return unless @tool_rounds && rounds >= @tool_rounds
+
+      raise ToolRoundLimitError,
+            "Reached the tool round limit (#{@tool_rounds}). Every tool call has its result, so call complete " \
+            'to continue, or raise the limit with with_tool_options(rounds:).'
     end
 
     def stop_tool_round
@@ -3017,6 +3040,12 @@ module RubyLLM
       else
         raise ArgumentError, "Invalid calls value: #{calls.inspect}. Valid values are: :many, :one, or 1"
       end
+    end
+
+    def normalize_rounds(rounds)
+      return rounds if rounds.nil? || (rounds.is_a?(Integer) && rounds.positive?)
+
+      raise ArgumentError, "Invalid rounds value: #{rounds.inspect}. Valid values are positive integers"
     end
 
     def normalize_tool_choice(choice)
