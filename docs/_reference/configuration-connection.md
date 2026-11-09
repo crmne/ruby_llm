@@ -54,6 +54,7 @@ Fine-tune how RubyLLM handles network connections:
 RubyLLM.configure do |config|
   # Basic settings
   config.request_timeout = 120        # Seconds to wait for response (default: 300)
+  config.connect_timeout = 10         # Seconds to wait for a connection to open (default: request_timeout)
   config.max_retries = 3              # Retry attempts on failure (default: 3)
 
   # Advanced retry behavior
@@ -63,6 +64,8 @@ RubyLLM.configure do |config|
   config.retry_max_interval = 30      # Longest delay to honor between retries (default: 30)
 end
 ```
+
+`request_timeout` also bounds opening the connection, and a connection that fails to open is retried, so a host you can't reach holds a request for `request_timeout` on every attempt. Set `connect_timeout` to give up on such a host sooner without cutting short a slow response. It covers finding the host, connecting, and the TLS handshake. Waiting for the answer after that, including the answer to a WebSocket upgrade, stays under `request_timeout`.
 
 When a provider reports how long to wait (the standard `Retry-After` header, OpenAI's `x-ratelimit-reset-requests` and `x-ratelimit-reset-tokens` headers, or the `RetryInfo` detail in a Gemini or Vertex AI error body), retries wait that long instead of the backoff interval. If the requested wait exceeds `retry_max_interval`, the request fails immediately with `RubyLLM::RateLimitError` rather than sleeping.
 
@@ -153,7 +156,7 @@ end
 
 The default `:net_http` adapter opens a new connection for every request. `:net_http_persistent` keeps a pool that every thread draws from, which suits Puma and Sidekiq. Twenty calls to a local HTTPS server take 2.0 ms each through `:net_http`, and 0.4 ms through `:net_http_persistent`, which connects once. On Falcon or Solid Queue fiber workers, use `:async_http` from the `async-http-faraday` gem instead. It keeps connections open for as long as the Async reactor that opened them runs, so calls made outside a reactor still connect every time.
 
-Contexts share connections when their connection settings match. Credentials travel with each request, so tenants with their own API keys reuse the same connections. A context that changes an API base, `request_timeout`, `stream_idle_timeout`, a retry setting, `http_proxy`, `ssl`, or `faraday_adapter` gets connections of its own. Each forked process, such as a Puma worker, opens its own connections instead of sharing its parent's.
+Contexts share connections when their connection settings match. Credentials travel with each request, so tenants with their own API keys reuse the same connections. A context that changes an API base, `request_timeout`, `stream_idle_timeout`, `connect_timeout`, a retry setting, `http_proxy`, `ssl`, or `faraday_adapter` gets connections of its own. Each forked process, such as a Puma worker, opens its own connections instead of sharing its parent's.
 
 ## Logging & Debugging
 
@@ -244,7 +247,7 @@ embedding = ctx.embed("Ruby is a joy to write")
 transcript = ctx.transcribe("interview.mp3")
 ```
 
-`paint`, `animate`, `animate_later`, `embed`, `embed_later`, `moderate`, `speak`, `transcribe`, `ocr`, `rerank`, `upload`, `download`, `cache`, and `mcp` all use the context's keys, endpoints, and connection settings. So do the downloads RubyLLM performs on your behalf: fetching a URL attachment for a chat, or reading `image.to_blob` and `video.to_blob` from a provider's hosted file, goes through the context's `http_proxy`, `ssl`, and `request_timeout` rather than the global ones.
+`paint`, `animate`, `animate_later`, `embed`, `embed_later`, `moderate`, `speak`, `transcribe`, `ocr`, `rerank`, `upload`, `download`, `cache`, and `mcp` all use the context's keys, endpoints, and connection settings. So do the downloads RubyLLM performs on your behalf: fetching a URL attachment for a chat, or reading `image.to_blob` and `video.to_blob` from a provider's hosted file, goes through the context's `http_proxy`, `ssl`, `request_timeout`, and `connect_timeout` rather than the global ones.
 
 ### Multi-Tenant Applications
 
@@ -294,6 +297,7 @@ Every setting that isn't a provider's, with its default. Provider keys and endpo
 | `model_registry_file` | OS user cache directory | Path of the writable registry cache. |
 | `model_registry_store` | `nil` | Object that answers `read`, and optionally `write(registry)`. |
 | `request_timeout` | `300` | Seconds before a request times out. |
+| `connect_timeout` | `nil` | Seconds to wait for a connection to open. `nil` waits as long as `request_timeout`. |
 | `stream_idle_timeout` | `nil` | Seconds a streaming request may go without receiving a byte before it times out. |
 | `video_generation_timeout` | `600` | Seconds `animate` waits for a video. |
 | `video_generation_poll_interval` | `5` | Seconds between checks on a video job. |

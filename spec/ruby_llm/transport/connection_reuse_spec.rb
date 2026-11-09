@@ -32,12 +32,29 @@ RSpec.describe RubyLLM::Transport::Connection do
       shared = faraday_for(config)
 
       {
-        openai_api_base: 'https://openai.example.test/v1', request_timeout: 7, http_proxy: 'http://proxy.example.test:8080',
+        openai_api_base: 'https://openai.example.test/v1', request_timeout: 7, connect_timeout: 2,
+        http_proxy: 'http://proxy.example.test:8080',
         faraday_adapter: :test, max_retries: 9, retry_interval: 2.5, retry_max_interval: 99,
         retry_interval_randomness: 0.9, retry_backoff_factor: 5, log_regexp_timeout: 3.0, ssl: { verify: false }
       }.each do |option, value|
         expect(faraday_for(configured(option => value))).not_to be(shared), "expected #{option} to separate connections"
       end
+    end
+
+    it 'hands the connect timeout to the adapter apart from the request timeout' do
+      seen = nil
+      adapter = Class.new(Faraday::Adapter) do
+        define_method(:call) do |env|
+          super(env)
+          seen = env.request
+          save_response(env, 200, '')
+          @app.call(env)
+        end
+      end
+      config = configured(faraday_adapter: adapter, request_timeout: 300, connect_timeout: 5)
+      RubyLLM::Providers::OpenAI.new(config).connection.post('chat/completions', {})
+
+      expect([seen.open_timeout, seen.timeout]).to eq([5, 300])
     end
 
     it 'gives streams a read timeout of their own and leaves other requests on the request timeout' do

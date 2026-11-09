@@ -3,6 +3,7 @@
 require 'socket'
 require 'openssl'
 require 'io/wait'
+require 'timeout'
 
 module RubyLLM
   module Transport # :nodoc:
@@ -31,6 +32,7 @@ module RubyLLM
 
         @headers = headers
         @timeout = config.request_timeout
+        @connect_timeout = config.connect_timeout || @timeout
         @messages = []
         @write_lock = Mutex.new
       end
@@ -136,8 +138,20 @@ module RubyLLM
 
       def open_socket(deadline)
         port = @uri.port || (@uri.scheme == 'wss' ? 443 : 80)
-        @socket = Socket.tcp(@uri.hostname, port, connect_timeout: @timeout)
-        secure_socket(deadline) if @uri.scheme == 'wss'
+        opened_by = [monotonic_time + @connect_timeout, deadline].min
+        @socket = connect_socket(port, opened_by)
+        secure_socket(opened_by) if @uri.scheme == 'wss'
+      end
+
+      # Socket.tcp times the lookup and each address on their own, so only
+      # the outer timeout holds the whole connect to one deadline.
+      def connect_socket(port, opened_by)
+        remaining = opened_by - monotonic_time
+        raise Error, 'WebSocket operation timed out' unless remaining.positive?
+
+        Timeout.timeout(remaining, Error, 'WebSocket operation timed out') do
+          Socket.tcp(@uri.hostname, port, connect_timeout: remaining, resolv_timeout: remaining)
+        end
       end
 
       def close_socket

@@ -28,9 +28,9 @@ module RubyLLM
       # The key a shared Faraday connection is cached under: the provider,
       # whether it streams, and everything ::build reads.
       Settings = Struct.new(
-        :provider, :stream, :api_base, :adapter, :timeout, :idle_timeout, :proxy, :ssl, :logger, :log_bodies,
-        :log_regexp_timeout, :max_retries, :retry_interval, :retry_max_interval, :retry_interval_randomness,
-        :retry_backoff_factor,
+        :provider, :stream, :api_base, :adapter, :timeout, :connect_timeout, :idle_timeout, :proxy, :ssl, :logger,
+        :log_bodies, :log_regexp_timeout, :max_retries, :retry_interval, :retry_max_interval,
+        :retry_interval_randomness, :retry_backoff_factor,
         keyword_init: true
       )
 
@@ -44,6 +44,7 @@ module RubyLLM
         Faraday.new do |f|
           f.use ReleaseRequest
           f.options.timeout = config.request_timeout
+          f.options.open_timeout = config.connect_timeout
           f.proxy = config.http_proxy if config.http_proxy
           f.ssl.update(ssl_snapshot(config.ssl)) if config.ssl
           f.response :logger,
@@ -210,6 +211,7 @@ module RubyLLM
           api_base: @api_base || @provider.api_base,
           adapter: @config.faraday_adapter,
           timeout: @config.request_timeout,
+          connect_timeout: @config.connect_timeout,
           idle_timeout: (@config.stream_idle_timeout if stream),
           proxy: @config.http_proxy,
           ssl: (self.class.ssl_snapshot(@config.ssl) if @config.ssl),
@@ -238,6 +240,7 @@ module RubyLLM
       # streaming connection it is the longest wait for the next bytes.
       def self.setup_timeout(faraday, settings)
         faraday.options.timeout = settings.timeout
+        faraday.options.open_timeout = settings.connect_timeout
         faraday.options.read_timeout = settings.idle_timeout if settings.idle_timeout
       end
 

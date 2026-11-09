@@ -10,6 +10,7 @@ RSpec.describe RubyLLM::Providers::Cohere do
       RubyLLM::Configuration,
       logger: nil,
       request_timeout: 300,
+      connect_timeout: nil,
       max_retries: 3,
       retry_interval: 0.1,
       retry_max_interval: 30,
