@@ -122,6 +122,49 @@ RSpec.describe RubyLLM::Providers::MiniMax do
     end
   end
 
+  describe 'options MiniMax cannot carry' do
+    def lookup_tool
+      stub_const('LookupTool', Class.new(RubyLLM::Tool) do
+        description 'Looks something up'
+
+        def execute = 'found'
+      end)
+    end
+
+    it 'raises for with_schema before sending, because its models ignore the schema' do
+      chat = context.chat(model: model_id, provider: :minimax)
+                    .with_schema({ type: 'object', properties: { fruit: { type: 'string' } } })
+
+      expect { chat.ask('Name a fruit') }
+        .to raise_error(ArgumentError, "MiniMax's Messages API has no structured output")
+      expect(a_request(:post, messages_url)).not_to have_been_made
+    end
+
+    it 'raises for calls: :one before sending, because the API ignores it' do
+      chat = context.chat(model: model_id, provider: :minimax).with_tools(lookup_tool).with_tool_options(calls: :one)
+
+      expect { chat.ask('Look it up') }.to raise_error(ArgumentError, 'MiniMax does not accept calls: :one')
+      expect(a_request(:post, messages_url)).not_to have_been_made
+    end
+
+    it 'ignores calls: :one on a request without tools' do
+      stub_messages(reply([{ type: 'text', text: 'Hi' }]))
+
+      context.chat(model: model_id, provider: :minimax).with_tool_options(calls: :one).ask('Hi')
+
+      expect(sent_body).not_to include('tool_choice')
+    end
+
+    it 'allows calls: :many, which is what the API does anyway' do
+      stub_messages(reply([{ type: 'text', text: 'Hi' }]))
+
+      context.chat(model: model_id, provider: :minimax)
+             .with_tools(lookup_tool).with_tool_options(calls: :many).ask('Hi')
+
+      expect(sent_body).to include('tools')
+    end
+  end
+
   describe 'attachments' do
     let(:protocol) { described_class::Anthropic.new(provider, RubyLLM.models.find(model_id, provider: :minimax)) }
 

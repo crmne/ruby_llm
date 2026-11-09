@@ -144,6 +144,41 @@ RSpec.describe RubyLLM::Providers::ZAI do
     end
   end
 
+  describe 'calls: :one' do
+    def lookup_tool
+      stub_const('LookupTool', Class.new(RubyLLM::Tool) do
+        description 'Looks something up'
+
+        def execute = 'found'
+      end)
+    end
+
+    it 'raises before sending, because the API ignores parallel_tool_calls' do
+      chat = context.chat(model: model_id, provider: :zai).with_tools(lookup_tool).with_tool_options(calls: :one)
+
+      expect { chat.ask('Look it up') }.to raise_error(ArgumentError, 'Z.ai does not accept calls: :one')
+      expect(a_request(:post, completions_url)).not_to have_been_made
+    end
+
+    it 'does nothing on a request without tools' do
+      stub_completion
+
+      context.chat(model: model_id, provider: :zai).with_tool_options(calls: :one).ask('Hello')
+
+      expect(sent_body).not_to include('parallel_tool_calls')
+    end
+
+    it 'allows calls: :many, leaving the undocumented field off the wire' do
+      stub_completion
+
+      context.chat(model: model_id, provider: :zai)
+             .with_tools(lookup_tool).with_tool_options(calls: :many).ask('Hello')
+
+      expect(sent_body).to include('tools')
+      expect(sent_body).not_to include('parallel_tool_calls')
+    end
+  end
+
   describe 'attachments' do
     let(:protocol) { described_class::Chat }
 

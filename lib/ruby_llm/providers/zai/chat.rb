@@ -22,6 +22,8 @@ module RubyLLM
         def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil,
                            schema: nil, thinking: nil, citations: false, caching: nil, tool_prefs: nil)
           payload = super
+          raise ArgumentError, 'Z.ai does not accept calls: :one' if payload.delete(:parallel_tool_calls) == false
+
           payload[:thinking] = { type: thinking.disabled? ? 'disabled' : 'enabled' } if thinking&.enabled?
           payload.delete(:reasoning_effort) if thinking&.disabled?
           payload
