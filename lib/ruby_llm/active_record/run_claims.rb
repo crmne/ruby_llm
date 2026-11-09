@@ -22,9 +22,10 @@ module RubyLLM
       private_constant :ClaimLost
 
       # A tool call this process claimed: its row, when its claim ends, the
-      # expiries written to the row, the seconds it may run, and whether it
-      # started.
-      ToolCallClaim = Struct.new(:row, :deadline, :written, :seconds, :started)
+      # expiries written to the row, the seconds it may run, whether it
+      # started, and whether it was interrupted: claimed from a process that
+      # had started it and stopped before it saved the result.
+      ToolCallClaim = Struct.new(:row, :deadline, :written, :seconds, :started, :interrupted)
       private_constant :ToolCallClaim
 
       CLAIM_LEASE = 60
@@ -72,19 +73,23 @@ module RubyLLM
       # A call that was running when its process shut down may have done
       # its work, such as a message it already sent, so it keeps its claim,
       # expired at once like the chat's: the expired claim is the only
-      # record that it started. Every other call is released. A round that
+      # record that it started. So does an interrupted call this run didn't
+      # get to answer, which stays interrupted for the next one. Every other
+      # call is released. A round that
       # stopped before it +finished+ writes its claims without yielding to a
       # fiber scheduler, as #unyielding explains, while one that finished
       # releases the calls that paused as usual.
       def release_persisted_tool_calls(tool_call_ids, stopped_by = nil, finished: false) # :nodoc:
-        expired = Time.current.change(usec: 0) if shutting_down?(stopped_by)
+        expired = Time.current.change(usec: 0)
+        shutting_down = shutting_down?(stopped_by)
         tool_call_ids.each do |tool_call_id|
           claim = claim_lock.synchronize { tool_call_claims.delete(tool_call_id) }
           next unless claim
 
+          kept = claim.interrupted || (claim.started && shutting_down)
           unyielding(!finished) do
             RubyLLM::ActiveRecord::ToolCall.where(id: claim.row, result_id: nil, claimed_until: claim.written)
-                                           .update_all(claimed_until: (expired if claim.started))
+                                           .update_all(claimed_until: (expired if kept))
           end
         end
       ensure
@@ -114,6 +119,14 @@ module RubyLLM
 
         write_run_claim(now) if @run_claim_token
         raise ClaimLost unless started_tool_call_claimed?(tool_call_id, claim, now)
+      end
+
+      # Whether this run claimed +tool_call_id+ from a process that had
+      # started it and stopped, by a shutdown or a crash, before it saved
+      # the result. Its claim is left expired, or lapses, while a call that
+      # never started is released.
+      def persisted_tool_call_interrupted?(tool_call_id) # :nodoc:
+        claim_lock.synchronize { tool_call_claims[tool_call_id]&.interrupted }
       end
 
       def tool_call_running_elsewhere?(tool_call) # :nodoc:
@@ -437,14 +450,25 @@ module RubyLLM
           approval = RubyLLM::ActiveRecord::ToolCall.arel_table[:approval]
           scope = scope.where(approval.eq(nil).or(approval.not_eq('denied')))
         end
-        return false unless scope.update_all(claimed_until:, updated_at: now) == 1
-
-        claim = ToolCallClaim.new(row, deadline, [claimed_until], seconds, false)
-        claim_lock.synchronize do
-          lost_tool_calls.delete(tool_call_id)
-          tool_call_claims[tool_call_id] = claim
+        claimed, expired = claim_tool_call_row(scope, { claimed_until:, updated_at: now })
+        if claimed
+          claim = ToolCallClaim.new(row, deadline, [claimed_until], seconds, false, expired)
+          claim_lock.synchronize do
+            lost_tool_calls.delete(tool_call_id)
+            tool_call_claims[tool_call_id] = claim
+          end
         end
-        true
+        claimed
+      end
+
+      # A released call has no expiry, while a call that started keeps its
+      # expired claim when its process shuts down, or lets it lapse when the
+      # process dies. Returns whether the claim was written, and whether it
+      # took over an expired one.
+      def claim_tool_call_row(scope, written)
+        return [true, false] if scope.where(claimed_until: nil).update_all(written) == 1
+
+        [scope.where.not(claimed_until: nil).update_all(written) == 1, true]
       end
 
       def extend_run_claim_for_tool_calls

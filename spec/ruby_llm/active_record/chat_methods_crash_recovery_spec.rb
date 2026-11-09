@@ -70,17 +70,32 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(chat).to be_waiting
   end
 
-  it 'runs the unfinished call again once the claims expire' do
+  # The crashed worker may have run the call before it died, so the model
+  # hears it was interrupted rather than the call running twice.
+  it 'answers the unfinished call as interrupted once the claims expire, without running it again' do
     chat, placeholder = crashed_chat
+    travel RubyLLM::ActiveRecord::RunClaims::CLAIM_LEASE + 1
+    chat = resumed(chat)
+    interrupted = { error: 'The tool call did not finish. ' \
+                           'The call may have partly run, so check before trying it again.' }.to_json
+
+    expect(chat.complete.content).to eq('Answered')
+    expect(executions).to be_empty
+    expect(sent).to eq([[:user, 'Look twice'], [:assistant, ''], [:tool, 'found', first_call],
+                        [:tool, interrupted, second_call]])
+    expect(result_of(second_call).content).to eq(interrupted)
+    expect(Message.exists?(placeholder.id)).to be(true)
+  end
+
+  it 'runs the unfinished call once the claims expire when the crashed worker had not claimed it' do
+    chat, = crashed_chat
+    RubyLLM::ActiveRecord::ToolCall.where(tool_call_id: second_call).update_all(claimed_until: nil)
     travel RubyLLM::ActiveRecord::RunClaims::CLAIM_LEASE + 1
     chat = resumed(chat)
 
     expect(chat.complete.content).to eq('Answered')
     expect(executions).to eq([:lookup])
-    expect(sent).to eq([[:user, 'Look twice'], [:assistant, ''], [:tool, 'found', first_call],
-                        [:tool, 'found', second_call]])
     expect(result_of(second_call).content).to eq('found')
-    expect(Message.exists?(placeholder.id)).to be(true)
   end
 
   it 'answers the unfinished call as unfinished once the user moved on' do

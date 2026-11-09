@@ -464,6 +464,105 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(tool_call_rows(chat).sole).to have_attributes(result_id: nil, claimed_until: nil)
   end
 
+  describe 'resuming a tool call that had started' do
+    def interrupted_result
+      { error: 'The tool call did not finish. The call may have partly run, so check before trying it again.' }.to_json
+    end
+
+    def runs = (@runs ||= [])
+    def requests = (@requests ||= [])
+
+    # The job that picks the chat up: its post_update records each run, and
+    # its model records what it was sent and replies.
+    def resuming(chat)
+      record = runs
+      job = Chat.find(chat.id).with_tools(posting { (record << :posted) && 'Posted' })
+      allow(job.to_llm.provider).to receive(:complete) do |messages, **|
+        requests << messages.map { |message| [message.role, message.content] }
+        reply
+      end
+      job
+    end
+
+    it 'answers a call a TERM signal stopped as interrupted, without running it again' do
+      chat = asked
+      expect { posting_job(chat) { raise SignalException, 'TERM' }.complete }.to raise_error(SignalException)
+
+      expect(resuming(chat).complete.content).to eq('Done')
+      expect(runs).to be_empty
+      expect(requests.sole.last).to eq([:tool, interrupted_result])
+      expect(tool_call_rows(chat).sole).to have_attributes(result_id: be_present, claimed_until: nil)
+    end
+
+    it 'answers a call whose process was killed as interrupted, once its claim expires, without running it again' do
+      skip 'needs fork' unless Process.respond_to?(:fork)
+      chat = asked
+      reader, writer = IO.pipe
+      pid = fork do
+        reader.close
+        posting_job(chat) do
+          writer.puts('posted')
+          writer.flush
+          exit!(0)
+        end.complete
+      ensure
+        exit!(1)
+      end
+      writer.close
+      Process.wait(pid)
+      travel lease + 1
+
+      expect(reader.read).to eq("posted\n")
+      expect(resuming(chat).complete.content).to eq('Done')
+      expect(runs).to be_empty
+      expect(requests.sole.last).to eq([:tool, interrupted_result])
+    ensure
+      reader&.close
+    end
+
+    it 'runs a call that paused on a question with its answer, though a TERM stopped its round' do
+      chat = asked
+      calls = %w[pick_seat post_update].map { |name| RubyLLM::ToolCall.new(id: "call_#{SecureRandom.hex(4)}", name:) }
+      answers = [RubyLLM::Message.new(role: :assistant, content: '', tool_calls: calls.index_by(&:id),
+                                      input_tokens: 1, output_tokens: 1)]
+      job = job_for(chat, seat, posting { raise SignalException, 'TERM' }) { answers.shift || reply }
+      expect { job.complete }.to raise_error(SignalException)
+      Chat.find(chat.id).tap { |record| record.answer(record.pending_questions.sole, 'window') }
+
+      resumed = resuming(chat).with_tools(seat)
+      expect(resumed.complete.content).to eq('Done')
+      expect(requests.sole.last(2)).to contain_exactly([:tool, 'Seat window'], [:tool, interrupted_result])
+    end
+
+    it 'tells the model the whole warning, even under a small budget for tool results' do
+      chat = asked
+      expect { posting_job(chat) { raise SignalException, 'TERM' }.complete }.to raise_error(SignalException)
+
+      expect(resuming(chat).with_context_budget(per_result: 0.000001).complete.content).to eq('Done')
+      expect(requests.sole.last).to eq([:tool, interrupted_result])
+    end
+
+    it 'keeps a call interrupted when the run that took it over failed before answering it' do
+      chat = asked
+      expect { posting_job(chat) { raise SignalException, 'TERM' }.complete }.to raise_error(SignalException)
+      failing = resuming(chat).before_message { raise ArgumentError, 'Broadcast failed' }
+
+      expect { failing.complete }.to raise_error(ArgumentError, 'Broadcast failed')
+      expect(resuming(chat).complete.content).to eq('Done')
+      expect(runs).to be_empty
+      expect(requests.sole.last).to eq([:tool, interrupted_result])
+    end
+
+    it 'runs a call that had not started when its round was stopped' do
+      chat = asked
+      expect { posting_job(chat, calls: 2) { raise SignalException, 'TERM' }.complete }.to raise_error(SignalException)
+
+      expect(resuming(chat).complete.content).to eq('Done')
+      expect(runs).to eq([:posted])
+      expect(requests.sole.last(2)).to eq([[:tool, interrupted_result], [:tool, 'Posted']])
+    end
+  end
+
   it 'keeps the expired claim of a tool call that was running when a TERM signal stopped its run' do
     chat = asked
     job = posting_job(chat) { raise SignalException, 'TERM' }

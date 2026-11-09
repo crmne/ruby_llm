@@ -82,7 +82,7 @@ Each piece has its own guide. Read the ones your agent needs.
 
 ## Running Twice Is Possible
 
-A durable agent runs each tool call at least once, not exactly once. A job that dies after a tool runs, but before its result is saved, runs that tool again. Write tools so that running them twice is safe. See [At-Least-Once, Not Exactly-Once]({% link _advanced/durable-agents.md %}#at-least-once-not-exactly-once).
+A durable agent doesn't run a tool call twice. When a job dies after a tool started, but before its result is saved, the model hears the call may have partly run and decides what to do, so give it a way to check. A model call can repeat. See [What a Crash Repeats]({% link _advanced/durable-agents.md %}#what-a-crash-repeats).
 
 ## Next Steps
 

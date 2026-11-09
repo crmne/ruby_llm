@@ -142,7 +142,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(roles(chat)).to eq(%w[user assistant])
   end
 
-  it 'takes over the tool call of a process that died while running it, within a lease' do
+  it 'takes over the tool call of a process that died while running it, within a lease, as interrupted' do
     chat = tool_call_chat
     pid = busy_process do |busy|
       Chat.find(chat.id).with_tools(lookup_tool do
@@ -162,8 +162,9 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
     job_for(chat).complete
 
-    expect(executions).to eq([:lookup])
+    expect(executions).to be_empty
     expect(roles(chat)).to eq(%w[user assistant tool assistant])
+    expect(tool_call_record.result.content).to include('may have partly run')
   end
 
   it 'keeps its claim while its model is silent for longer than the lease' do

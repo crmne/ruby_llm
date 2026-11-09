@@ -325,7 +325,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(requests).to eq([first_job])
   end
 
-  it 'leaves a crashed run alone until its claim expires, then runs it again' do
+  it 'leaves a crashed run alone until its claim expires, then answers its started call as interrupted' do
     chat = approved_chat
     freeze_time
     Chat.where(id: chat.id).update_all(claim_token: 'crashed', claimed_until: 10.minutes.from_now)
@@ -343,8 +343,9 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     resumed = job_for(chat)
     resumed.complete
 
-    expect(executions.size).to eq(1)
+    expect(executions).to be_empty
     expect(roles(chat)).to eq(%w[user assistant tool assistant])
+    expect(tool_call_record.result.content).to include('may have partly run')
     expect(resumed).not_to be_running
   ensure
     travel_back
@@ -373,6 +374,8 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     travel_back
   end
 
+  # The run that took over finds the call started, so it doesn't run it a
+  # second time.
   it 'discards the late result of a run whose claim expired and was taken over' do
     chat = approved_chat
     first_job = job_for(chat)
@@ -384,8 +387,9 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
     response = first_job.complete
 
-    expect(executions.size).to eq(2)
+    expect(executions.size).to eq(1)
     expect(roles(chat)).to eq(%w[user assistant tool assistant])
+    expect(tool_call_record.result.content).to include('may have partly run')
     expect(requests).to eq([second_job])
     expect(response.content).to eq('Done')
     expect(first_job).to be_complete

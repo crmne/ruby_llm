@@ -20,7 +20,7 @@ After reading this guide, you will know:
 * Why only one process runs a chat at a time, and how a crashed run resumes.
 * How to run a durable queue in development.
 * How to stop a running agent from anywhere.
-* Why execution is at-least-once, and what that asks of your tools.
+* What a crash repeats, what it doesn't, and what that asks of your tools.
 
 ## The Transcript Is the State
 
@@ -31,7 +31,7 @@ chat = SupportAgent.find(chat_id)
 chat.complete
 ```
 
-Each loop method reads the saved transcript to choose its next action. Tool calls with saved results are skipped, and only one process runs the chat at a time; see [One Process at a Time](#one-process-at-a-time). If a process stops before saving a result, that work may run again; see [At-Least-Once, Not Exactly-Once](#at-least-once-not-exactly-once).
+Each loop method reads the saved transcript to choose its next action. Tool calls with saved results are skipped, and only one process runs the chat at a time; see [One Process at a Time](#one-process-at-a-time). If a process stops before saving a result, a model call may run again, but a tool call that had started doesn't; see [What a Crash Repeats](#what-a-crash-repeats).
 
 This guide assumes `SupportAgent` uses a chat model with [Rails persistence]({% link _advanced/rails-persistence.md %}).
 
@@ -130,12 +130,12 @@ Claims rely on the database to make them visible to other processes, so call the
 |---|---|---|---|---|
 | The job | Raises `RubyLLM::CancelledError` at the next event, or when the running tool returns | Is gone | Raises the error | Raises the error |
 | The reply so far | Kept as a reply that is `cancelled?`, if any text streamed | Lost: a blank placeholder stays, and requests leave it out | Removed if blank | Not affected |
-| Tool calls | A finished one keeps its result. The rest close as unfinished | A finished one keeps its result. The rest, including one that had started, run again once the claims expire | Not affected | The incomplete round can be removed, with its finished results, so the model is asked again |
+| Tool calls | A finished one keeps its result. The rest close as unfinished | A finished one keeps its result. Once the claims expire, the rest are answered as interrupted, and the model decides what to do | Not affected | The incomplete round can be removed, with its finished results, so the model is asked again |
 | What continues | Nothing after a stop in a tool round or a kept reply, until a new message. A stop before any text left the question unanswered, so a later `complete` asks it again | The next `complete` once the chat and tool claims expire | The next `complete` or message | The next `complete` or message |
 | The person | Sees the partial reply, and the page stops streaming | Sees "Thinking…" until a job runs again | Sees what your job shows them | Sees what your job shows them |
 | Provider usage | An interrupted request is recorded as `:cancelled` with the tokens seen. One that already finished stays `:succeeded` | Lost for that attempt | Recorded as `:failed` | The request that finished stays `:succeeded` |
 
-A tool call that had started when its process died runs again on resume, even if it already did its work: execution is [at-least-once](#at-least-once-not-exactly-once). A tool with side effects, such as posting to Slack or charging a card, must be safe to run twice, for example by checking its own record of having run before it acts.
+A tool call that had started when its process stopped never runs again: the model gets an error saying the call did not finish and may have partly run, and decides whether to check or try again. A deploy or restart (TERM) releases the calls of the round that hadn't started yet, and those run on resume. A hard kill can't tell which calls had started, so every unfinished call of its round is answered that way. See [What a Crash Repeats](#what-a-crash-repeats).
 
 The generated chat UI handles each of these: its job discards the cancel and tries again every minute while a dead process still holds the chat, `complete` saves a failure in the chat's `reply_error` column for the page before it raises, and `ResumeInterruptedChatsJob` answers a reply whose process died, every minute and at boot. See [Resuming a Crashed Run](#resuming-a-crashed-run).
 
@@ -243,9 +243,11 @@ Then run `bin/rails db:prepare` and start the server with `SOLID_QUEUE_IN_PUMA=1
 
 `chat.cancel` on a persisted chat writes the request to the database, so a stop button in the web process halts a background job mid-stream at its next checkpoint. A stop pressed after a message is saved or queued, before its job claims the chat, stops that reply too. A stop with nothing to stop does nothing, and a message sent after a stop goes on. See [Cancelling a Background Stream]({% link _advanced/rails-streaming.md %}#cancelling-a-background-stream).
 
-## At-Least-Once, Not Exactly-Once
+## What a Crash Repeats
 
-Claims keep two healthy processes from running the same tool call or asking the model the same question. Interruption still never gives you exactly-once execution. A job that dies after the model responds but before the message is saved repeats that model call once its claim expires, and a job that dies after a tool runs but before its result is saved runs that tool again. Write tools so that running them twice is safe: `find_or_create_by!` over `create!`, and idempotency keys on external calls. The same rule applies to [approval resolvers]({% link _tools/tool-execution.md %}#requiring-approval), which may be consulted again on resume, and to code in a tool before it [asks]({% link _tools/tool-execution.md %}#asking-from-a-tool), which runs again once the person answers.
+Claims keep two healthy processes from running the same tool call or asking the model the same question. A crash doesn't run a tool call twice either. A call that had started when its process stopped, whether by a deploy, a crash, or a run that went past `config.max_run_time`, is answered with an error saying it did not finish and may have partly run. The model reads it and decides what to do, such as checking before trying again. Its work may be half done, so give the model a way to check it, such as a tool that looks up a payment, and make the work safe to repeat where you can: `find_or_create_by!` over `create!`, and idempotency keys on external calls.
+
+Model calls are at least once: a job that dies after the model responds but before the message is saved asks the model again once its claim expires. Some tool code runs again by design, too: [approval resolvers]({% link _tools/tool-execution.md %}#requiring-approval) may be consulted again on resume, and code in a tool before it [asks]({% link _tools/tool-execution.md %}#asking-from-a-tool) runs again once the person answers.
 
 [Batches]({% link _advanced/batches.md %}) are the same durability at scale: a batch is `generate` deferred for many chats at once, with `run_tools` run locally between rounds, and batch state persisted so any process can collect the results.
 

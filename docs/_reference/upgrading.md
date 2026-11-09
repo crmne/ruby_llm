@@ -18,7 +18,7 @@ After reading this guide, you will know:
 * How RubyLLM upgrades move from one release to the next.
 * How to upgrade a 2.1 application and its Rails schema to 2.2.
 * How persisted chats now run in one process at a time, and where a message sent during a reply waits.
-* What changes for a crashed job, a denial, pending approvals, an MCP input error, a stdio server's environment, a dropped MCP tool call, a write over a folder, a document URL, and a deploy that mixes versions.
+* What changes for a crashed job, a tool call a crash cut off, a denial, pending approvals, an MCP input error, a stdio server's environment, a dropped MCP tool call, a write over a folder, a document URL, and a deploy that mixes versions.
 * How approvals and questions became one list, and what changes for answers to a server's questions.
 * Which six waiting methods and `deny` are gone, and what replaces each.
 * What changes for agent `rescue_from` handlers and streamed transcription chunks.
@@ -260,7 +260,11 @@ production:
     schedule: every minute
 ```
 
-A live run renews its leases from a background thread, which checks out a database connection every 15 seconds and returns it, so leave room in your connection pool for one more connection per running chat. Raise `config.max_run_time` above your slowest model request without streaming and your slowest tool call: a run that goes longer than that without progress counts as crashed and may run again. A tool that runs longer than ten minutes can [pause its call]({% link _tools/tool-execution.md %}#long-running-tools) instead.
+A live run renews its leases from a background thread, which checks out a database connection every 15 seconds and returns it, so leave room in your connection pool for one more connection per running chat. Raise `config.max_run_time` above your slowest model request without streaming and your slowest tool call: a run that goes longer than that without progress counts as crashed: its model request may run again, and its running tool call is answered as interrupted. A tool that runs longer than ten minutes can [pause its call]({% link _tools/tool-execution.md %}#long-running-tools) instead.
+
+## Interrupted Tool Calls Don't Run Again
+
+In 2.1, a tool call ran again on resume when its process had stopped after the call started, so a deploy or a crash could post to Slack or charge a card twice. In 2.2, a call that had started is answered with an error saying it did not finish and may have partly run, and the model decides what to do. Calls that hadn't started still run after a deploy or restart. A hard kill can't tell which calls of its round had started, so all of its unfinished calls are answered that way. A tool that relied on running again should let the model check its work instead.
 
 ## Cancelled Chats Close Their Tool Calls
 
