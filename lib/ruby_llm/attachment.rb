@@ -185,7 +185,7 @@ module RubyLLM
     end
 
     def io_like? # :nodoc:
-      @source.respond_to?(:read) && !path? && !active_storage? && !provider_file?
+      @source.respond_to?(:read) && !path? && !url? && !active_storage? && !provider_file?
     end
 
     def active_storage? # :nodoc:
@@ -405,9 +405,9 @@ module RubyLLM
     end
 
     # An IO's bytes were examined already, so it isn't read in full for a
-    # second look. A URL is never one: open-uri makes URI objects readable.
+    # second look.
     def content_mime_type
-      io_like? && !url? ? @mime_type : RubyLLM::Files::MimeType.for(content)
+      io_like? ? @mime_type : RubyLLM::Files::MimeType.for(content)
     end
 
     def fetch_content

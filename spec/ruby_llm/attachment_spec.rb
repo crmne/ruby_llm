@@ -184,6 +184,13 @@ RSpec.describe RubyLLM::Attachment do
       expect(described_class.new(url).mime_type).to eq('image/png')
     end
 
+    it 'does not treat a URL open-uri made readable as an IO' do
+      url = URI('https://example.com/download')
+      url.define_singleton_method(:read) { |*| raise 'read through open-uri' }
+
+      expect(described_class.new(url, filename: 'a.pdf')).not_to be_io_like
+    end
+
     it 'stops following redirects after five' do
       loop_request = stub_request(:get, 'https://example.com/loop.png').to_return(redirect_to('/loop.png'))
 
