@@ -205,6 +205,44 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(after_beat).to eq([true])
   end
 
+  it 'keeps a claim that ends before the exit as it is' do
+    chat = question_chat
+    exits_by(1.hour.from_now)
+    claimed = []
+
+    job_for(chat) { claimed << Chat.find(chat.id).claimed_until }.complete
+
+    expect(claimed.sole).to be < 2.minutes.from_now
+  end
+
+  context 'when the heartbeat beats rarely' do
+    before { stub_const('RubyLLM::ActiveRecord::RunClaims::CLAIM_RENEWAL', 30) }
+
+    it 'cuts a live claim back to the exit at once' do
+      chat = question_chat
+      cut = []
+      job_for(chat) do
+        exits_by(3.seconds.from_now)
+        cut << within?(1) { Chat.find(chat.id).claimed_until == exit_deadline }
+      end.complete
+
+      expect(cut).to eq([true])
+    end
+
+    it 'cuts a claim extended past the exit back within a second or so' do
+      chat = question_chat
+      cut = []
+      job_for(chat) do
+        exits_by(5.seconds.from_now)
+        within?(1) { Chat.find(chat.id).claimed_until == exit_deadline }
+        Chat.where(id: chat.id).update_all(claimed_until: 1.minute.from_now)
+        cut << within?(2) { Chat.find(chat.id).claimed_until == exit_deadline }
+      end.complete
+
+      expect(cut).to eq([true])
+    end
+  end
+
   it 'keeps the earliest exit it was told of, to the whole second' do
     travel_to Time.current.change(usec: 900_000), with_usec: true
     exits_by(5.seconds.from_now)
