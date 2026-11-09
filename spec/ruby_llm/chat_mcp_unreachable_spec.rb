@@ -2,6 +2,7 @@
 
 require 'spec_helper'
 require 'socket'
+require_relative '../support/mcp_stream_server'
 
 RSpec.describe RubyLLM::Chat do
   include_context 'with configured RubyLLM'
@@ -309,6 +310,75 @@ RSpec.describe RubyLLM::Chat do
 
     expect(RubyLLM::MCP::Outages.down?(down)).to be(true)
     expect(RubyLLM::MCP::Outages.down?(other)).to be(false)
+  end
+
+  context 'when one context cannot connect but others can' do
+    let(:server) do
+      MCPStreams::Server.new do |request, reply|
+        case request.rpc_method
+        when 'server/discover'
+          reply.json(result: { resultType: 'complete', supportedVersions: ['2026-07-28'], capabilities: { tools: {} } })
+        else
+          sleep 0.3
+          reply.json(result: { resultType: 'complete', tools: [{ name: 'echo', inputSchema: { type: 'object' } }] })
+        end
+      end
+    end
+    let(:linear) { RubyLLM.mcp(url: server.url, name: 'linear').class }
+
+    def dead_proxy = "http://127.0.0.1:#{closed_port}"
+
+    def refusing_adapter
+      Class.new(Faraday::Adapter) { def call(_env) = raise(Faraday::ConnectionFailed, 'refused') }
+    end
+
+    after { server.close }
+
+    def through(&)
+      linear.new(context: RubyLLM.context(&))
+    end
+
+    def offered_after(failing)
+      expect(RubyLLM::MCP::Outages.tools(failing)).to eq([])
+      chat.with_mcp(linear.new).ask('Hi')
+      requests.last[:tools]
+    end
+
+    it 'still offers the tools when that context goes through a proxy that is down' do
+      expect(offered_after(through { |config| config.http_proxy = dead_proxy })).to eq([:echo])
+    end
+
+    it 'still offers the tools when that context uses an adapter that refuses the address' do
+      expect(offered_after(through { |config| config.faraday_adapter = refusing_adapter })).to eq([:echo])
+    end
+
+    it 'still offers the tools when that context gives up sooner' do
+      expect(offered_after(through { |config| config.request_timeout = 0.1 })).to eq([:echo])
+    end
+
+    it 'keeps other objects with the same connection settings waiting out the backoff' do
+      proxy = dead_proxy
+      RubyLLM::MCP::Outages.tools(through { |config| config.http_proxy = proxy })
+
+      expect(RubyLLM::MCP::Outages.down?(through { |config| config.http_proxy = proxy })).to be(true)
+    end
+  end
+
+  it 'keeps contexts with other TLS settings apart' do
+    linear = RubyLLM.mcp(url: "https://127.0.0.1:#{closed_port}/mcp", name: 'linear').class
+    RubyLLM::MCP::Outages.tools(linear.new(context: RubyLLM.context { |config| config.ssl = { verify: false } }))
+
+    expect(RubyLLM::MCP::Outages.down?(linear.new)).to be(false)
+  end
+
+  it 'keeps the backoff for other contexts when the TLS settings change in place afterwards' do
+    linear = RubyLLM.mcp(url: "https://127.0.0.1:#{closed_port}/mcp", name: 'linear').class
+    ssl = { verify: true }
+    RubyLLM::MCP::Outages.tools(linear.new(context: RubyLLM.context { |config| config.ssl = ssl }))
+    ssl[:verify] = false
+
+    expect(RubyLLM::MCP::Outages.down?(linear.new(context: RubyLLM.context { |config| config.ssl = { verify: true } })))
+      .to be(true)
   end
 
   it 'reports an outage once when chats find it at the same time' do
