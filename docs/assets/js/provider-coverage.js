@@ -39,7 +39,7 @@
       const link = cell.querySelector('.coverage-cell');
       link.dataset.status = state;
       link.querySelector('span').textContent = { na: '–', deprecated: '–', out_of_scope: '╱', unknown: '?', passthrough: '{}', missing: '×' }[state] || '';
-      const offering = cell.dataset.offered === 'true' ? 'offered' : cell.dataset.offered === 'false' ? 'not documented in this API' : 'unverified';
+      const offering = cell.dataset.offered === 'true' ? 'offered' : cell.dataset.offered === 'false' ? 'not in this API' : 'unverified';
       link.setAttribute('aria-label', `${link.title} Provider offering: ${offering}. View evidence.`);
     });
     root.querySelectorAll('[data-legend]').forEach(item => {
