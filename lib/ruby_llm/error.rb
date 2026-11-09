@@ -339,12 +339,18 @@ module RubyLLM
   #     retry_later if e.timeout?
   class ConnectionError < Error
     # Returns whether the request timed out, including while opening the
-    # connection, rather than failing to connect.
+    # connection or waiting for the next bytes of a stream, rather than
+    # failing to connect.
     def timeout?
       return true if cause.is_a?(Faraday::TimeoutError)
 
-      cause.respond_to?(:wrapped_exception) && cause.wrapped_exception.is_a?(Timeout::Error)
+      cause.respond_to?(:wrapped_exception) && TIMEOUTS.any? { |timeout| cause.wrapped_exception.is_a?(timeout) }
     end
+
+    # Some adapters, such as async-http-faraday, report a read that waited
+    # too long as a failed connection wrapping IO::TimeoutError.
+    TIMEOUTS = [Timeout::Error, IO::TimeoutError].freeze # :nodoc:
+    private_constant :TIMEOUTS
   end
 
   # Raised for HTTP 401 responses when the API key is missing or invalid.

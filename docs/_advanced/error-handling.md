@@ -217,6 +217,18 @@ Leave out `on:` unless you have a reason to change it. The default, `RubyLLM::Fa
 | HTTP 400 whose message says the service is currently overloaded | `RubyLLM::OverloadedError` |
 | A timeout or a failed connection | `RubyLLM::ConnectionError` |
 
+A provider that accepts a streaming request and then sends nothing still holds it for one `request_timeout`, which may be many minutes when you allow for long answers. Set [`stream_idle_timeout`]({% link _reference/configuration-connection.md %}#stalled-streams) to move on to the fallback as soon as a stream goes quiet:
+
+```ruby
+RubyLLM.configure do |config|
+  config.request_timeout = 1800
+  config.stream_idle_timeout = 60
+end
+
+chat.with_fallbacks("{{ site.models.openai_mini }}")
+chat.ask("Plan the migration") { |chunk| print chunk.content }
+```
+
 To fall back on another error as well, such as to a model with a larger context window, pass `on:` with the whole default list plus that error:
 
 ```ruby
