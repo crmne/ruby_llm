@@ -7,8 +7,25 @@ module RubyLLM
       module Chat
         module_function
 
+        REJECTED_EFFORT = /\AUnexpected reasoning effort /
+
         def render_role(role)
           role.to_s
+        end
+
+        # The API accepts cache fields and ignores them; it caches long
+        # prompts by itself.
+        def openai_prompt_caching?
+          false
+        end
+
+        def apply_prompt_cache_params(_payload, caching)
+          prompt_cache_options(caching) if caching
+        end
+
+        # The API names a rejected effort only in its message.
+        def parse_unsupported_parameter(response)
+          super || (:thinking if parse_error(response).to_s.match?(REJECTED_EFFORT))
         end
 
         def supported_attachment?(attachment)

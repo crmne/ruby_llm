@@ -218,6 +218,10 @@ RubyLLM.models.by_provider(:hetzner).map(&:id)
 
 Hetzner models accept text and images. Other attachments raise `RubyLLM::UnsupportedAttachmentError` before the request is sent.
 
+`with_thinking(effort:)` sends `reasoning_effort`, and each model takes its own values: `Qwen3.8-27B` takes `:none`, `:low`, `:medium` and `:xhigh`, its default. A value the model refuses raises `RubyLLM::UnsupportedParameterError`, with `parameter` set to `:thinking` and Hetzner's message listing the values it takes.
+
+Hetzner caches long prompts by itself and takes no cache options, so RubyLLM leaves out `with_caching` options and `cache_until_here` boundaries. Cached tokens are still reported.
+
 ## Meta
 
 Meta's Model API serves the Muse models. Create an API key at dev.meta.ai and set `meta_api_key`:
@@ -360,6 +364,8 @@ These headers are optional and only needed for organization-specific billing or 
 Pass your Azure deployment name as `model:`. It can differ from the underlying model's name. Listing a model in the catalog does not mean your resource has a deployment for it.
 
 Set `azure_api_base` to your resource URL, deployment URL, or `/openai/v1` base. Use a deployment that supports the operation you call.
+
+`RubyLLM.moderate` raises `RubyLLM::Error` for `:azure`. Live requests to Foundry's moderations route returned 404 on resource and project endpoints, and the model catalog holds no moderation model. Azure AI Content Safety is a separate product.
 
 When a deployment name differs from the model it deploys, declare it so RubyLLM uses that model's registry entry for pricing, limits, and capabilities:
 

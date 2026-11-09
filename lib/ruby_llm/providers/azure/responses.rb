@@ -11,6 +11,7 @@ module RubyLLM
         include Azure::Videos
         include Azure::Images
         include Azure::Audio
+        include Azure::Moderation
         include Protocols::Responses::Compaction
 
         def completion_url
