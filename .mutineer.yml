@@ -6,6 +6,8 @@ capture_timeout: 1200
 # Equivalent mutants. An id changes when its method changes, so recheck
 # the entry when you edit one of these methods.
 ignore:
+  # ZAI::TokenCounting#render_count_tokens_payload: temperature is sliced off the payload.
+  - e361f346507b
   # ActiveRecord::FileStore#rewindable: only Windows translates newlines
   # in a text-mode file, so binmode makes no difference on Linux.
   - b85a6284216a

@@ -29,7 +29,7 @@ puts ocr.markdown
 
 The file may be a local path, an `http(s)` URL, an IO object, or a `RubyLLM::Attachment`. Remote URLs must be publicly reachable.
 
-Mistral accepts PDFs, office documents, text files, and images. Cohere Parse accepts one image per request.
+Mistral accepts PDFs, office documents, text files, and images. Cohere Parse accepts one image per request. Z.ai's `glm-ocr` reads PDFs, JPG, and PNG files, and because it isn't in the model catalog, it needs `provider: :zai, assume_model_exists: true`.
 
 ## Working with Pages
 

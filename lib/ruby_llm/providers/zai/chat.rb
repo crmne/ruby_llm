@@ -43,14 +43,24 @@ module RubyLLM
 
         def supported_attachment?(attachment)
           Protocols::ChatCompletions::Media.supported_attachment?(
-            attachment, document_attachments: :none, audio_attachments: false
+            attachment, document_attachments: document_attachments(attachment), audio_attachments: false
           )
         end
 
         def render_content(content, attachments = [])
-          Protocols::ChatCompletions::Media.render_content(
-            content, attachments, document_attachments: :none, audio_attachments: false
-          )
+          Protocols::ChatCompletions::Media.render_parts(content, attachments) do |attachment|
+            Protocols::ChatCompletions::Media.render_attachment(
+              attachment, document_attachments: document_attachments(attachment),
+                          image_attachments: true, audio_attachments: false
+            )
+          end
+        end
+
+        # Files uploaded to Z.ai are referenced by id; other documents are not inlined.
+        def document_attachments(attachment)
+          return :none unless attachment.provider_file? && attachment.source.provider == 'zai'
+
+          attachment.audio? ? :none : :pdf
         end
       end
     end

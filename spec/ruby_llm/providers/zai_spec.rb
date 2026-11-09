@@ -34,7 +34,8 @@ RSpec.describe RubyLLM::Providers::ZAI do
   end
 
   it "speaks Z.ai's dialect of Chat Completions" do
-    expect(described_class.protocols).to eq(chat_completions: described_class::ChatCompletions)
+    expect(described_class.protocols).to eq(chat_completions: described_class::ChatCompletions,
+                                            files: RubyLLM::Protocols::ZAI::Files)
     expect(described_class::ChatCompletions.superclass).to eq(RubyLLM::Protocols::ChatCompletions)
   end
 
@@ -153,6 +154,27 @@ RSpec.describe RubyLLM::Providers::ZAI do
       content = protocol.render_content('What is this?', [image])
 
       expect(content.last).to eq(type: 'image_url', image_url: { url: 'https://example.com/ruby.png' })
+    end
+
+    it 'sends uploaded files by id' do
+      upload = RubyLLM::Attachment.new(RubyLLM::UploadedFile.new(id: 'file-1', provider: 'zai', filename: 'a.pdf'))
+
+      expect(protocol.supported_attachment?(upload)).to be(true)
+      expect(protocol.render_content('Read this', [upload]).last).to eq(type: 'file', file: { file_id: 'file-1' })
+    end
+
+    it 'refuses files uploaded elsewhere and uploaded audio' do
+      foreign = RubyLLM::Attachment.new(RubyLLM::UploadedFile.new(id: 'file-2', provider: 'openai', filename: 'a.pdf'))
+      audio = RubyLLM::Attachment.new(RubyLLM::UploadedFile.new(id: 'file-3', provider: 'zai', filename: 'a.mp3'))
+
+      expect(protocol.supported_attachment?(foreign)).to be(false)
+      expect(protocol.supported_attachment?(audio)).to be(false)
+    end
+
+    it 'refuses audio' do
+      audio = RubyLLM::Attachment.new(File.expand_path('../../fixtures/ruby.wav', __dir__))
+
+      expect(protocol.supported_attachment?(audio)).to be(false)
     end
 
     it 'rejects documents and audio' do

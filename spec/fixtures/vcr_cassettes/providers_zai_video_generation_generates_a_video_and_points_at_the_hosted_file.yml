@@ -1,0 +1,355 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.z.ai/api/paas/v4/videos/generations
+    body:
+      encoding: UTF-8
+      string: '{"model":"cogvideox-3","prompt":"a calm ocean wave at sunset","quality":"speed","size":"1280x720","fps":30,"duration":5}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 09 Nov 2026 20:28:44 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - 9edcb12288ea069f791599dc8f377b2c
+      Vary:
+      - Accept-Encoding
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 2026111004284400e6e12394934d58
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"2026111004284400e6e12394934d58","model":"cogvideox-3","request_id":"2026111004284400e6e12394934d58","task_status":"PROCESSING"}'
+  recorded_at: Mon, 09 Nov 2026 20:28:44 GMT
+- request:
+    method: get
+    uri: https://api.z.ai/api/paas/v4/async-result/2026111004284400e6e12394934d58
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 09 Nov 2026 20:28:55 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - 6080950ba648dbe933ad326d7bbb7544
+      Vary:
+      - Accept-Encoding
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 20261110042855f9fe816e7f704bd7
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"2026111004284400e6e12394934d58","model":"cogvideox-3","request_id":"2026111004284400e6e12394934d58","task_status":"PROCESSING"}'
+  recorded_at: Mon, 09 Nov 2026 20:28:55 GMT
+- request:
+    method: get
+    uri: https://api.z.ai/api/paas/v4/async-result/2026111004284400e6e12394934d58
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 09 Nov 2026 20:29:05 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - 719bf574be19190e00eb769cfd4a6b2b
+      Vary:
+      - Accept-Encoding
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 20261110042905400e0d3663df45df
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"2026111004284400e6e12394934d58","model":"cogvideox-3","request_id":"2026111004284400e6e12394934d58","task_status":"PROCESSING"}'
+  recorded_at: Mon, 09 Nov 2026 20:29:05 GMT
+- request:
+    method: get
+    uri: https://api.z.ai/api/paas/v4/async-result/2026111004284400e6e12394934d58
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 09 Nov 2026 20:29:15 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - 886035ea001a46f0897f450cd3404762
+      Vary:
+      - Accept-Encoding
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 20261110042915d016d4d94708498a
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"2026111004284400e6e12394934d58","model":"cogvideox-3","request_id":"2026111004284400e6e12394934d58","task_status":"PROCESSING"}'
+  recorded_at: Mon, 09 Nov 2026 20:29:15 GMT
+- request:
+    method: get
+    uri: https://api.z.ai/api/paas/v4/async-result/2026111004284400e6e12394934d58
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 09 Nov 2026 20:29:26 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - 5c7d4b986fcc672bc41a127074af8125
+      Vary:
+      - Accept-Encoding
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 2026111004292607cce6b045004970
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"2026111004284400e6e12394934d58","model":"cogvideox-3","request_id":"2026111004284400e6e12394934d58","task_status":"PROCESSING"}'
+  recorded_at: Mon, 09 Nov 2026 20:29:26 GMT
+- request:
+    method: get
+    uri: https://api.z.ai/api/paas/v4/async-result/2026111004284400e6e12394934d58
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 09 Nov 2026 20:29:36 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - d583d5448fef545090935a92f14b6bb9
+      Vary:
+      - Accept-Encoding
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 20261110042936088b30352a794d5d
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"2026111004284400e6e12394934d58","model":"cogvideox-3","request_id":"2026111004284400e6e12394934d58","task_status":"PROCESSING"}'
+  recorded_at: Mon, 09 Nov 2026 20:29:36 GMT
+- request:
+    method: get
+    uri: https://api.z.ai/api/paas/v4/async-result/2026111004284400e6e12394934d58
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 09 Nov 2026 20:29:57 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - b951f92b1e6a49df2d2349ed7424df5f
+      Vary:
+      - Accept-Encoding
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 202611100429563e294f0bb4564b53
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant"}}],"created":1794256197,"id":"2026111004284400e6e12394934d58","model":"cogvideox-3","request_id":"2026111004284400e6e12394934d58","task_status":"SUCCESS","usage":{"completion_tokens":0,"prompt_tokens":0,"total_tokens":0},"video_result":[{"cover_image_url":"https://mfile.z.ai/1794256180933-1e49ae9b46134e23b77fb2f3a4777b7b.png?ufileattname=202611100429401779706856fc4364_watermark.png","url":"https://mfile.z.ai/1794256180720-ae8a1db3130b4226830064442920bd91.mp4?ufileattname=2909a252-dc7c-11f1-8360-92d9c959708e_0.mp4"}]}'
+  recorded_at: Mon, 09 Nov 2026 20:29:57 GMT
+recorded_with: VCR 6.4.1

@@ -7,9 +7,13 @@ module RubyLLM
       # Z.ai's dialect of the Chat Completions API.
       class ChatCompletions < Protocols::ChatCompletions
         include ZAI::Chat
+        include ZAI::OCR
+        include ZAI::TokenCounting
+        include ZAI::Videos
       end
 
       protocol :chat_completions, ChatCompletions
+      protocol :files, Protocols::ZAI::Files
 
       def api_base
         configured_api_base(:zai_api_base, 'https://api.z.ai/api/paas/v4', endpoints: Protocols::ChatCompletions::ENDPOINT_PATHS)
