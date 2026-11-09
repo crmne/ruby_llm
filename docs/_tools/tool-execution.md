@@ -506,7 +506,7 @@ The limit is off by default, and `rounds: nil` removes it. A round is one model 
 
 `complete` raises `RubyLLM::ToolRoundLimitError` once the last round's results are saved, before asking the model again, so no tool call is left unanswered, and the model does not get to reply to that last round. The transcript stays valid. Call `complete` again and it continues with a fresh count, which is how an app offers a "Keep going" button. A pause for [an approval](#requiring-approval), a question, or [a task](#pausing-a-tool-call) starts the count again too. `step` is not limited, since you count those moves yourself.
 
-On a persisted chat, the error leaves the saved transcript as it is and releases the run's claim, so the chat is neither `running?` nor in `Chat.interrupted`. The error is not a `RubyLLM::Error`, so `retry_on RubyLLM::Error` does not run the job again for it. Each `complete` counts from zero, so a job that runs it again on a schedule runs that many rounds again. Handle the error instead:
+On a persisted chat, the error leaves the saved transcript as it is and releases the run's claim, so the chat is neither `running?` nor in `Chat.interrupted`. The error is not a `RubyLLM::Error`, so `retry_on RubyLLM::Error` does not run the job again for it. Each `complete` counts from zero, so a job that calls it on a schedule gets a full set of rounds each time. Handle the error instead:
 
 ```ruby
 class ChatResponseJob < ApplicationJob

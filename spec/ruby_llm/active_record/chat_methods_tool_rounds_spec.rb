@@ -76,6 +76,19 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(Chat.find(chat.id).messages.order(:id).last.content).to eq('Done')
   end
 
+  it 'saves the failed-reply message for the person, as any other stopped reply does' do
+    connection = ActiveRecord::Base.connection
+    ActiveRecord::Base.transaction do
+      connection.add_column(:chats, :reply_error, :string)
+      Chat.reset_column_information
+      stopped_job
+      expect(Chat.find(chat.id).reply_error).to eq('The reply failed. Send your message again.')
+      raise ActiveRecord::Rollback
+    end
+  ensure
+    Chat.reset_column_information
+  end
+
   it 'takes the limit from the agent in a job that finds the chat' do
     tool = lookup
     agent_class = Class.new(RubyLLM::Agent) do

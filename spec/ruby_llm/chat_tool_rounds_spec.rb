@@ -60,6 +60,10 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.tool_options).to include(rounds: 25, calls: :one)
     end
 
+    it 'carries over to a copy of the chat' do
+      expect(chat.with_tool_options(rounds: 25).dup.tool_options[:rounds]).to eq(25)
+    end
+
     it 'leaves the limit alone when another option changes' do
       chat.with_tool_options(rounds: 25).with_tool_options(calls: :one)
 
