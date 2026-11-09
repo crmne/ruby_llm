@@ -36,13 +36,15 @@ The generators print only the files they create and, when one is needed, the nex
 
 With `with_thinking` on, a stream can sit quiet for several seconds before text starts, while the model thinks. That is normal, not a stall.
 
+Adapt the generated chat page rather than replace it: add fields to its form, restyle its views, and extend its partials, such as `_assistant.html.erb`. A page of your own drops what the generated one already does, such as the model picker, Stop, queued messages, and crash recovery. Don't save stream chunks yourself, in a column or anywhere else: streaming reaches the page through the generated broadcasts, and RubyLLM saves the reply.
+
 You don't need to read the generated files or `lib/ruby_llm` to use this. With the default `Chat` model, `app/jobs/chat_response_job.rb` runs the turn and shows errors, `ChatsController#cancel` is Stop, `app/views/messages/_assistant.html.erb` renders a reply, and `app/agents/chat_agent.rb` says what the model can do. For anything else, read the one guide for that feature, and open source only when something fails or you need a signature.
 
 Code reads a chat's attachments, earlier ones too, at `attachments/<name>` in its run directory, which `RUN_DIR` names, or at `<name>` in the folder of a store in a folder. Python needs `:python` in `languages:`, which replaces the default of Ruby and shell, or `python:` packages. Without a converter, a model and provider that read PDFs get the file itself, so no PDF gem is needed.
 
 `durable-agents/#when-a-run-is-interrupted` says what cancel, a crash, and a failure each save and continue. A chat a deploy or restart (TERM) cut off resumes right away, and one a hard kill cut off within about a minute. A tool call the run had started is answered as interrupted, never run again, so give the model a way to check its work. Never clear `claim_token` or `claimed_until` yourself, at boot or otherwise. No job backend runs a killed reply again, so don't write a worker or a boot sweep; the generated `ResumeInterruptedChatsJob` does it, every minute and at boot. An app without it enqueues its reply job for `Chat.interrupted` (2.2), a scope of the chats whose run died holding its claim.
 
-RubyLLM's own suite covers streaming and reply assembly, persistence, the tool loop, usage and cost, retries, cancellation, and generated code; the official conformance suite covers its MCP client; and mxc's tests cover sandbox isolation. Don't probe those by hand. See [Verify](#verify-the-application-change) for the one command that checks the result.
+RubyLLM's own suite covers streaming and reply assembly, persistence, the tool loop, usage and cost, retries, cancellation, and generated code; the official conformance suite covers its MCP client; and mxc's tests cover sandbox isolation. Don't probe those by hand and don't write tests for them: see [Verify](#verify-the-application-change).
 
 Use the application's installed RubyLLM version and existing conventions. This skill describes the 2.x API; features marked 2.1 or 2.2 need that release or later. Check which version the application uses before choosing an API:
 
@@ -184,6 +186,8 @@ Pass Active Storage attachments through `with:` and retain the message attachmen
 
 On a page of your own, broadcast each chunk once, never accumulated text or re-rendered HTML, and hold chunks that arrive before their message, as the chat UI's Stimulus controller does. It ships with RubyLLM: with an import map, `export { default } from "ruby_llm/chat_message_controller"` in `app/javascript/controllers/chat_message_controller.js` registers it. See `rails-streaming/`.
 
+To move chats off a retired model, follow `models/#replacing-a-retired-model`: a few lines of Active Record, after loading the registry.
+
 For an upgrade, read the complete `upgrading/` guide before editing migrations, and upgrade one release at a time.
 
 ## Evaluate AI behavior
@@ -192,4 +196,4 @@ Specs check code; evaluations check how often the model gets the answer right (2
 
 ## Verify the application change
 
-`bin/rails test:system` is the smoke test: the test the generator writes in `test/system`, for a Minitest app, checks streaming, Stop, cost, and errors in a real browser with scripted replies, in seconds, and needs Chrome. Add to it with `RubyLLM::TestHelper` rather than writing a stand-in provider, a fault proxy, or driving a browser by hand. Test your own tools, including a scripted `tool_call`, instructions, and wiring. Report which provider behavior you actually exercised, and keep the implementation within the requested feature.
+`bin/rails test:system` is the smoke test: the test the generator writes in `test/system`, for a Minitest app, checks streaming, Stop, cost, and errors in a real browser with scripted replies, in seconds, and needs Chrome. Don't test how RubyLLM works: how fallbacks pick the next model, how switching models carries history, thinking, and cost, pricing, unknown stream events, interrupted tools, cancellation, and resuming are covered by its suite, so a test of them only re-checks the library. Test your own code: your tools, including a scripted `tool_call`, and the code you wrote around RubyLLM. Then extend the generated system test (or, in an app without one, its own test suite) with one case for each behaviour you were asked for, scripting chat replies with `RubyLLM::TestHelper` (it doesn't stub `RubyLLM.embed` or the other individual operations, so stub those in your own tests), rather than writing a stand-in provider, a fault proxy, or driving a browser by hand. Report which provider behavior you actually exercised, and keep the implementation within the requested feature.
