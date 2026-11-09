@@ -307,9 +307,19 @@ RubyLLM.configure do |config|
 end
 ```
 
-GLM-5.3 Flash and FlashX and the vision models, whose names carry a `v`, accept images alongside text; the other GLM models take text only. Other attachments raise `RubyLLM::UnsupportedAttachmentError` before the request is sent. Z.ai caches repeated prompts by itself, so `with_caching` sends nothing, and it accepts no `with_tool_options(choice:)` other than `:auto`.
+GLM-5.3 Flash and FlashX and the vision models, whose names carry a `v`, accept images alongside text; the other GLM models take text only. Other attachments, apart from files uploaded to Z.ai, raise `RubyLLM::UnsupportedAttachmentError` before the request is sent. Z.ai caches repeated prompts by itself, so `with_caching` sends nothing, and it accepts no `with_tool_options(choice:)` other than `:auto`.
 
 GLM-5.3 Flash always thinks, so `with_thinking(false)` raises, and it takes only the efforts `:low`, `:high`, and `:max`: Z.ai rejects any other.
+
+Beyond chat, Z.ai serves token counting through `chat.count_tokens`, video through `RubyLLM.animate`, and document parsing through `RubyLLM.ocr`. Its tokenizer counts messages and tools, and leaves out structured output and thinking settings. CogVideoX and GLM-OCR aren't in the model catalog, so name the provider and pass `assume_model_exists: true`:
+
+```ruby
+RubyLLM.animate("A calm ocean wave at sunset", model: "cogvideox-3", provider: :zai, assume_model_exists: true,
+                                               provider_options: { quality: "speed", duration: 5 })
+RubyLLM.ocr("scan.pdf", model: "glm-ocr", provider: :zai, assume_model_exists: true)
+```
+
+`RubyLLM.upload("report.pdf", provider: :zai)` stores a PDF or Office file with Z.ai, purpose `user_data` by default, and GLM-5.3 Flash can read it as a chat attachment. Z.ai has no way to read an uploaded file back, so `RubyLLM::UploadedFile.find` and `download` raise an error.
 
 ## Bedrock Credential Providers
 
