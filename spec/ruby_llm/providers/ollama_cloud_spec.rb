@@ -92,6 +92,7 @@ RSpec.describe RubyLLM::Providers::OllamaCloud do
         status: 404, headers: { 'Content-Type' => 'application/json' }, body: { error: 'path not found' }.to_json
       )
     end
+    let!(:remote_input) { stub_request(:get, %r{\Ahttps://assets\.example\.com/}).to_return(status: 500) }
     let(:model) { { model: 'gemma4:31b', provider: :ollama_cloud, assume_model_exists: true } }
 
     before do
@@ -101,6 +102,7 @@ RSpec.describe RubyLLM::Providers::OllamaCloud do
     def expect_unsupported(label, &)
       expect(&).to raise_error(RubyLLM::Error, "OllamaCloud doesn't support #{label}")
       expect(route).not_to have_been_requested
+      expect(remote_input).not_to have_been_requested
     end
 
     it 'raises for embeddings without a request' do
@@ -129,6 +131,28 @@ RSpec.describe RubyLLM::Providers::OllamaCloud do
 
     it 'raises for moderation without a request' do
       expect_unsupported('moderation') { RubyLLM.moderate('Hello', **model) }
+    end
+
+    it 'raises for remote audio without downloading it' do
+      expect_unsupported('transcription') { RubyLLM.transcribe('https://assets.example.com/ruby.wav', **model) }
+    end
+
+    it 'raises for streamed remote audio without downloading it' do
+      expect_unsupported('transcription') do
+        RubyLLM.transcribe('https://assets.example.com/ruby.wav', **model) { |_chunk| nil }
+      end
+    end
+
+    it 'raises for a remote image to edit without downloading it' do
+      expect_unsupported('image generation') do
+        RubyLLM.paint('Make it blue', with: 'https://assets.example.com/ruby.png', **model)
+      end
+    end
+
+    it 'raises for a remote image to moderate without downloading it' do
+      expect_unsupported('moderation') do
+        RubyLLM.moderate('Hello', with: 'https://assets.example.com/ruby.png', **model)
+      end
     end
   end
 
