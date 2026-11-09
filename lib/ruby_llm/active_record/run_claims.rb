@@ -447,14 +447,14 @@ module RubyLLM
           scope = scope.where(approval.eq(nil).or(approval.not_eq('denied')))
         end
         claimed, expired = claim_tool_call_row(scope, { claimed_until:, updated_at: now })
-        return false unless claimed
-
-        claim = ToolCallClaim.new(row, deadline, [claimed_until], seconds, false, expired)
-        claim_lock.synchronize do
-          lost_tool_calls.delete(tool_call_id)
-          tool_call_claims[tool_call_id] = claim
+        if claimed
+          claim = ToolCallClaim.new(row, deadline, [claimed_until], seconds, false, expired)
+          claim_lock.synchronize do
+            lost_tool_calls.delete(tool_call_id)
+            tool_call_claims[tool_call_id] = claim
+          end
         end
-        true
+        claimed
       end
 
       # A released call has no expiry, while a call that started keeps its
