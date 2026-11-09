@@ -389,6 +389,15 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     [reader, writer].compact.each(&:close)
   end
 
+  # Whether the fiber that ran each query +pattern+ matches was blocking,
+  # keeping its scheduler from running other fibers, while the block runs.
+  def blocking_for_updates(pattern, &)
+    blocking = []
+    record = ->(*, payload) { blocking << Fiber.current.blocking? if payload[:sql].match?(pattern) }
+    ActiveSupport::Notifications.subscribed(record, 'sql.active_record', &)
+    blocking
+  end
+
   # Solid Queue's fiber workers and Async run a job in a fiber under a fiber
   # scheduler. Once its thread is killed at exit, the fiber is cancelled or
   # never resumed if it yields to the scheduler, as a query does.
@@ -416,15 +425,22 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   it 'releases the claims of a run that finished in a fiber without blocking its scheduler' do
     chat = asked
     job = posting_job(chat) { 'Posted' }
-    releases = []
-    release = lambda do |*, payload|
-      releases << Fiber.current.blocking? if payload[:sql].match?(/\AUPDATE \S+ SET "?claim_token"? = /)
-    end
-
-    ActiveSupport::Notifications.subscribed(release, 'sql.active_record') { in_reactor { job.complete } }
+    releases = blocking_for_updates(/\AUPDATE \S+ SET "?claim_token"? = /) { in_reactor { job.complete } }
 
     expect(releases).to be_present.and(all(be(false)))
     expect(row(chat)).to have_attributes(claim_token: nil, claimed_until: nil)
+  end
+
+  it 'releases the claim of a tool call that paused for a question without blocking its scheduler' do
+    chat = asked
+    job = job_for(chat, seat) { calling('pick_seat') }
+    releases = blocking_for_updates(/\AUPDATE \S*ruby_llm_tool_calls\S* SET "?claimed_until"? = /) do
+      in_reactor { job.complete }
+    end
+
+    expect(job.pending_questions).to be_present
+    expect(releases).to be_present.and(all(be(false)))
+    expect(tool_call_rows(chat).sole).to have_attributes(result_id: nil, claimed_until: nil)
   end
 
   it 'releases the claims of a run in a fiber whose reactor Ctrl-C stopped, along with its tool call' do
