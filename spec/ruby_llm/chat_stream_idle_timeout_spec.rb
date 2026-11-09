@@ -152,9 +152,9 @@ RSpec.describe RubyLLM::Chat do
     it_behaves_like 'an idle timeout', :net_http_persistent
   end
 
-  it 'moves on to the fallback when the provider sends nothing' do
+  it 'moves on to the fallback at once when the provider sends nothing' do
     serve { |socket, model| answer(socket, 'From the fallback') unless model.start_with?(primary) }
-    chat = context.chat(model: primary, provider: :anthropic).with_fallbacks('claude-sonnet-4-5')
+    chat = context(retries: 3).chat(model: primary, provider: :anthropic).with_fallbacks('claude-sonnet-4-5')
 
     seconds, reply = stream(chat)
 

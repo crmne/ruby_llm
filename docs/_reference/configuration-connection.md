@@ -81,7 +81,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-A streaming request then fails when no bytes arrive for that many seconds, counted from sending the request and again from each chunk, so a stream that keeps sending runs as long as it needs. It fails as a request timeout does: with a `RubyLLM::ConnectionError` whose `timeout?` is `true`, retried as `max_retries` says, and handed to [fallbacks]({% link _advanced/error-handling.md %}#model-fallbacks) like any other timeout. Requests that don't stream ignore it and keep `request_timeout`. The default, `nil`, leaves streams to `request_timeout` too.
+A streaming request then fails when no bytes arrive for that many seconds, counted from sending the request and again from each chunk, so a stream that keeps sending runs as long as it needs. It fails as a request timeout does, with a `RubyLLM::ConnectionError` whose `timeout?` is `true`: while a [fallback]({% link _advanced/error-handling.md %}#model-fallbacks) is left to try, the next one takes the request at once, and otherwise it is retried as `max_retries` says. Requests that don't stream ignore it and keep `request_timeout`. The default, `nil`, leaves streams to `request_timeout` too.
 
 Providers that send keep-alive comments while they queue a request count as sending bytes. RubyLLM sets the adapter's read timeout on streaming requests, which `:net_http`, `:net_http_persistent` and `:async_http` all apply to each wait for the next bytes. An adapter of your own sees it as `env.request.read_timeout`.
 

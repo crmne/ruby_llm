@@ -217,7 +217,7 @@ Leave out `on:` unless you have a reason to change it. The default, `RubyLLM::Fa
 | HTTP 400 whose message says the service is currently overloaded | `RubyLLM::OverloadedError` |
 | A timeout or a failed connection | `RubyLLM::ConnectionError` |
 
-A provider that accepts a streaming request and then sends nothing only times out at `request_timeout`, which may be many minutes when you allow for long answers. Set [`stream_idle_timeout`]({% link _reference/configuration-connection.md %}#stalled-streams) to move on to the fallback once the stream goes quiet:
+A provider that accepts a streaming request and then sends nothing still holds it for one `request_timeout`, which may be many minutes when you allow for long answers. Set [`stream_idle_timeout`]({% link _reference/configuration-connection.md %}#stalled-streams) to move on to the fallback as soon as a stream goes quiet:
 
 ```ruby
 RubyLLM.configure do |config|
