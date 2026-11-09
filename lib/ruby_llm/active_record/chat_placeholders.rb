@@ -22,7 +22,7 @@ module RubyLLM
         return @message = unfinished if unfinished
 
         @message.destroy if blank_placeholder?
-        abandoned_placeholder_record&.destroy
+        remove_abandoned_placeholder
 
         attrs = { role: :assistant, content: '' }
         @message = messages_association.create!(attrs)
@@ -31,27 +31,27 @@ module RubyLLM
       end
 
       def blank_placeholder?
-        blank_record?(@message)
-      end
+        return false unless @message&.persisted? && @message.content.blank?
+        return false unless @message.role.to_s == 'assistant'
+        return false if unfinished_record?(@message)
+        return false if @message.respond_to?(:attachments) && @message.attachments.attached?
 
-      def blank_record?(record)
-        return false unless record&.persisted? && record.content.blank?
-        return false unless record.role.to_s == 'assistant'
-        return false if unfinished_record?(record)
-        return false if record.respond_to?(:attachments) && record.attachments.attached?
-
-        !record.ruby_llm_tool_calls.exists?
+        !@message.ruby_llm_tool_calls.exists?
       end
 
       # A process killed before its reply arrived leaves its placeholder
       # last, and the run that takes over the chat's claim writes a reply
       # of its own, so it removes that one. A reply the model gave records
-      # usage, even a blank one.
-      def abandoned_placeholder_record
+      # usage, even a blank one. The claim is renewed first, so a run that
+      # lost it never removes the placeholder of the run that took over.
+      def remove_abandoned_placeholder
         return unless @run_claim_token
 
-        record = messages_association.order(:id).last
-        record if blank_record?(record) && !record.ruby_llm_usages.exists?
+        transaction do
+          renew_run_claim(force: true)
+          record = messages_association.order(:id).last
+          record.destroy if to_llm.send(:placeholder?, record&.to_llm) && !record.ruby_llm_usages.exists?
+        end
       end
 
       def unfinished_message_record

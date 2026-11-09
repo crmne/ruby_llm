@@ -118,6 +118,30 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(Message.exists?(placeholder.id)).to be(true)
   end
 
+  it 'keeps a reply that saved only its thinking when the next run writes after it' do
+    chat, placeholder = killed_stream_chat
+    placeholder.update!(thinking_text: 'Pondering')
+    chat = resumed(chat)
+
+    chat.send(:exclusively, -> {}) { chat.send(:persist_new_message) }
+
+    expect(Message.exists?(placeholder.id)).to be(true)
+  end
+
+  it 'leaves the placeholder of the run that took the chat over to it' do
+    chat, = killed_stream_chat
+    chat = resumed(chat)
+    placeholder = nil
+
+    chat.send(:exclusively, -> {}) do
+      Chat.where(id: chat.id).update_all(claim_token: 'took over', claimed_until: 1.minute.from_now)
+      placeholder = chat.messages.create!(role: :assistant, content: '')
+      chat.send(:persist_new_message)
+    end
+
+    expect(Message.exists?(placeholder.id)).to be(true)
+  end
+
   it 'leaves a blank placeholder alone outside a run that holds the claim' do
     chat, placeholder = killed_stream_chat
     chat = Chat.find(chat.id)
