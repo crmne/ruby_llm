@@ -365,7 +365,7 @@ Pass your Azure deployment name as `model:`. It can differ from the underlying m
 
 Set `azure_api_base` to your resource URL, deployment URL, or `/openai/v1` base. Use a deployment that supports the operation you call.
 
-`RubyLLM.moderate` raises `RubyLLM::Error` for `:azure`. Foundry resources don't serve the moderations route, and their catalogs hold no moderation model. Azure AI Content Safety is a separate product.
+`RubyLLM.moderate` raises `RubyLLM::Error` for `:azure`. Live requests to Foundry's moderations route returned 404 on resource and project endpoints, and the model catalog holds no moderation model. Azure AI Content Safety is a separate product.
 
 When a deployment name differs from the model it deploys, declare it so RubyLLM uses that model's registry entry for pricing, limits, and capabilities:
 
