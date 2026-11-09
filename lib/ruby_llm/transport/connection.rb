@@ -19,8 +19,9 @@ module RubyLLM
       # The key a shared Faraday connection is cached under: the provider,
       # whether it streams, and everything ::build reads.
       Settings = Struct.new(
-        :provider, :stream, :api_base, :adapter, :timeout, :proxy, :ssl, :logger, :log_bodies, :log_regexp_timeout,
-        :max_retries, :retry_interval, :retry_max_interval, :retry_interval_randomness, :retry_backoff_factor,
+        :provider, :stream, :api_base, :adapter, :timeout, :open_timeout, :proxy, :ssl, :logger, :log_bodies,
+        :log_regexp_timeout, :max_retries, :retry_interval, :retry_max_interval, :retry_interval_randomness,
+        :retry_backoff_factor,
         keyword_init: true
       )
 
@@ -34,6 +35,7 @@ module RubyLLM
         Faraday.new do |f|
           f.use ReleaseRequest
           f.options.timeout = config.request_timeout
+          f.options.open_timeout = config.open_timeout
           f.proxy = config.http_proxy if config.http_proxy
           f.ssl.update(ssl_snapshot(config.ssl)) if config.ssl
           f.response :logger,
@@ -187,6 +189,7 @@ module RubyLLM
           api_base: @api_base || @provider.api_base,
           adapter: @config.faraday_adapter,
           timeout: @config.request_timeout,
+          open_timeout: @config.open_timeout,
           proxy: @config.http_proxy,
           ssl: (self.class.ssl_snapshot(@config.ssl) if @config.ssl),
           logger: logger,
@@ -212,6 +215,7 @@ module RubyLLM
 
       def self.setup_timeout(faraday, settings)
         faraday.options.timeout = settings.timeout
+        faraday.options.open_timeout = settings.open_timeout
       end
 
       def self.setup_logging(faraday, settings)

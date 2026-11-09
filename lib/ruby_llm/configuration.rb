@@ -270,6 +270,13 @@ module RubyLLM
     option :request_timeout, 300
 
     ##
+    # :attr_accessor: open_timeout
+    #
+    # Seconds to wait for a connection to open before timing out, or +nil+
+    # to wait as long as request_timeout. Default: +nil+.
+    option :open_timeout, nil
+
+    ##
     # :attr_accessor: max_retries
     #
     # Number of times to retry failed requests. Default: 3.

@@ -54,6 +54,7 @@ Fine-tune how RubyLLM handles network connections:
 RubyLLM.configure do |config|
   # Basic settings
   config.request_timeout = 120        # Seconds to wait for response (default: 300)
+  config.open_timeout = 10            # Seconds to wait for a connection to open (default: request_timeout)
   config.max_retries = 3              # Retry attempts on failure (default: 3)
 
   # Advanced retry behavior
@@ -63,6 +64,8 @@ RubyLLM.configure do |config|
   config.retry_max_interval = 30      # Longest delay to honor between retries (default: 30)
 end
 ```
+
+`request_timeout` also bounds opening the connection, and a connection that fails to open is retried, so a host you can't reach holds a request for `request_timeout` on every attempt. Set `open_timeout` to give up on such a host sooner without cutting short a slow response.
 
 When a provider reports how long to wait through rate-limit headers (the standard `Retry-After`, or OpenAI's `x-ratelimit-reset-requests` and `x-ratelimit-reset-tokens`), retries wait that long instead of the backoff interval. If the requested wait exceeds `retry_max_interval`, the request fails immediately with `RubyLLM::RateLimitError` rather than sleeping.
 
@@ -134,7 +137,7 @@ end
 
 The default `:net_http` adapter opens a new connection for every request. `:net_http_persistent` keeps a pool that every thread draws from, which suits Puma and Sidekiq. Twenty calls to a local HTTPS server take 2.0 ms each through `:net_http`, and 0.4 ms through `:net_http_persistent`, which connects once. On Falcon or Solid Queue fiber workers, use `:async_http` from the `async-http-faraday` gem instead. It keeps connections open for as long as the Async reactor that opened them runs, so calls made outside a reactor still connect every time.
 
-Contexts share connections when their connection settings match. Credentials travel with each request, so tenants with their own API keys reuse the same connections. A context that changes an API base, `request_timeout`, a retry setting, `http_proxy`, `ssl`, or `faraday_adapter` gets connections of its own. Each forked process, such as a Puma worker, opens its own connections instead of sharing its parent's.
+Contexts share connections when their connection settings match. Credentials travel with each request, so tenants with their own API keys reuse the same connections. A context that changes an API base, `request_timeout`, `open_timeout`, a retry setting, `http_proxy`, `ssl`, or `faraday_adapter` gets connections of its own. Each forked process, such as a Puma worker, opens its own connections instead of sharing its parent's.
 
 ## Logging & Debugging
 
@@ -225,7 +228,7 @@ embedding = ctx.embed("Ruby is a joy to write")
 transcript = ctx.transcribe("interview.mp3")
 ```
 
-`paint`, `animate`, `animate_later`, `embed`, `embed_later`, `moderate`, `speak`, `transcribe`, `ocr`, `rerank`, `upload`, `download`, `cache`, and `mcp` all use the context's keys, endpoints, and connection settings. So do the downloads RubyLLM performs on your behalf: fetching a URL attachment for a chat, or reading `image.to_blob` and `video.to_blob` from a provider's hosted file, goes through the context's `http_proxy`, `ssl`, and `request_timeout` rather than the global ones.
+`paint`, `animate`, `animate_later`, `embed`, `embed_later`, `moderate`, `speak`, `transcribe`, `ocr`, `rerank`, `upload`, `download`, `cache`, and `mcp` all use the context's keys, endpoints, and connection settings. So do the downloads RubyLLM performs on your behalf: fetching a URL attachment for a chat, or reading `image.to_blob` and `video.to_blob` from a provider's hosted file, goes through the context's `http_proxy`, `ssl`, `request_timeout`, and `open_timeout` rather than the global ones.
 
 ### Multi-Tenant Applications
 
@@ -275,6 +278,7 @@ Every setting that isn't a provider's, with its default. Provider keys and endpo
 | `model_registry_file` | OS user cache directory | Path of the writable registry cache. |
 | `model_registry_store` | `nil` | Object that answers `read`, and optionally `write(registry)`. |
 | `request_timeout` | `300` | Seconds before a request times out. |
+| `open_timeout` | `nil` | Seconds to wait for a connection to open. `nil` waits as long as `request_timeout`. |
 | `video_generation_timeout` | `600` | Seconds `animate` waits for a video. |
 | `video_generation_poll_interval` | `5` | Seconds between checks on a video job. |
 | `max_retries` | `3` | Retries after a transient failure. |

@@ -24,6 +24,13 @@ RSpec.describe 'Context connection settings' do # rubocop:disable RSpec/Describe
       expect(proxy_and_timeout(context.config)).to eq(['http://proxy.example:8080', 7])
     end
 
+    it 'applies the open timeout of the configuration it is given' do
+      quick = RubyLLM.context { |config| config.open_timeout = 2 }
+
+      expect(described_class.basic(quick.config).options.open_timeout).to eq(2)
+      expect(described_class.basic.options.open_timeout).to be_nil
+    end
+
     it 'applies the TLS options of the configuration it is given' do
       tls = RubyLLM.context { |config| config.ssl = { ca_file: '/certs/internal-ca.pem' } }
 

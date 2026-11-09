@@ -166,6 +166,26 @@ RSpec.describe RubyLLM::Transport::WebsocketConnection do
     expect(Socket).to have_received(:tcp).with('::1', 9, connect_timeout: anything)
   end
 
+  it 'waits open_timeout for the socket to connect' do
+    config.open_timeout = 2
+    connection = described_class.new('ws://127.0.0.1:9/', headers: {}, config:)
+    allow(Socket).to receive(:tcp).and_return(instance_double(Socket))
+
+    connection.send(:open_socket, 0)
+
+    expect(Socket).to have_received(:tcp).with('127.0.0.1', 9, connect_timeout: 2)
+  end
+
+  it 'waits request_timeout for the socket to connect without an open_timeout' do
+    config.request_timeout = 7
+    connection = described_class.new('ws://127.0.0.1:9/', headers: {}, config:)
+    allow(Socket).to receive(:tcp).and_return(instance_double(Socket))
+
+    connection.send(:open_socket, 0)
+
+    expect(Socket).to have_received(:tcp).with('127.0.0.1', 9, connect_timeout: 7)
+  end
+
   it 'bounds a read when the peer sends no frames' do
     config.request_timeout = 0.5
     with_server(echo: false) do |url, _worker|

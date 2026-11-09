@@ -31,6 +31,7 @@ module RubyLLM
 
         @headers = headers
         @timeout = config.request_timeout
+        @open_timeout = config.open_timeout || @timeout
         @messages = []
         @write_lock = Mutex.new
       end
@@ -136,7 +137,7 @@ module RubyLLM
 
       def open_socket(deadline)
         port = @uri.port || (@uri.scheme == 'wss' ? 443 : 80)
-        @socket = Socket.tcp(@uri.hostname, port, connect_timeout: @timeout)
+        @socket = Socket.tcp(@uri.hostname, port, connect_timeout: @open_timeout)
         secure_socket(deadline) if @uri.scheme == 'wss'
       end
 
