@@ -168,7 +168,7 @@ Keep the complete file ID and its provider when storing the reference. For gener
 
 ## Download Restrictions
 
-DeepSeek does not allow downloading uploaded images. Perplexity supports downloads of generated Agent files, without general file uploads.
+DeepSeek does not allow downloading uploaded images. Perplexity stores JSONL batch input with `purpose: "batch"` and accepts no other uploads. Its downloads cover batch files and files an Agent run generated, which use the ID `response_id/files/file_id`.
 
 Downloads depend on the provider. Anthropic and OpenRouter only allow downloading files created server-side; uploaded files are not downloadable through their Files APIs.
 

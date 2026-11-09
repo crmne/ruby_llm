@@ -221,8 +221,8 @@ RSpec.describe RubyLLM::Batch do
     end
 
     it 'refuses a provider that has no batch API' do
-      expect { described_class.find('batch_123', provider: :perplexity) }.to raise_error(
-        RubyLLM::Error, "perplexity doesn't support batch requests"
+      expect { described_class.find('batch_123', provider: :deepseek) }.to raise_error(
+        RubyLLM::Error, "deepseek doesn't support batch requests"
       )
     end
   end

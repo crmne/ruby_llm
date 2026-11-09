@@ -1,0 +1,614 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.perplexity.ai/v1/files
+    body:
+      encoding: UTF-8
+      string: "-------------RubyMultipartPost-4231b056c307e895381c67f3f3b510ac\r\nContent-Disposition:
+        form-data; name=\"purpose\"\r\n\r\nbatch\r\n-------------RubyMultipartPost-4231b056c307e895381c67f3f3b510ac\r\nContent-Disposition:
+        form-data; name=\"file\"; filename=\"ruby_llm_batch.jsonl\"\r\nContent-Length:
+        464\r\nContent-Type: application/jsonl\r\nContent-Transfer-Encoding: binary\r\n\r\n{\"custom_id\":\"0\",\"method\":\"POST\",\"url\":\"/v1/responses\",\"body\":{\"model\":\"openai/gpt-5.6-luna\",\"input\":[{\"role\":\"user\",\"content\":\"What
+        is 2 + 2? Just the number.\"}],\"store\":false,\"include\":[\"reasoning.encrypted_content\"]}}\n{\"custom_id\":\"1\",\"method\":\"POST\",\"url\":\"/v1/responses\",\"body\":{\"model\":\"openai/gpt-5.6-luna\",\"input\":[{\"role\":\"user\",\"content\":\"Name
+        the largest planet in our solar system. One word.\"}],\"store\":false,\"include\":[\"reasoning.encrypted_content\"]}}\r\n-------------RubyMultipartPost-4231b056c307e895381c67f3f3b510ac--\r\n"
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - multipart/form-data; boundary=-----------RubyMultipartPost-4231b056c307e895381c67f3f3b510ac
+      Content-Length:
+      - '889'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 09 Nov 2026 20:29:21 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Cache-Control:
+      - no-store
+      X-Ratelimit-Limit:
+      - '1'
+      X-Ratelimit-Remaining:
+      - '0'
+      X-Ratelimit-Reset:
+      - '1794256162'
+      X-Ratelimit-Used:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"bytes":464,"created_at":1794256161,"expires_at":1796848161,"filename":"ruby_llm_batch.jsonl","id":"file_01M7100JE5WHMPZDWPDSN2TNMM","object":"file","purpose":"batch"}
+
+        '
+  recorded_at: Mon, 09 Nov 2026 20:29:21 GMT
+- request:
+    method: post
+    uri: https://api.perplexity.ai/v1/batches
+    body:
+      encoding: UTF-8
+      string: '{"input_file_id":"file_01M7100JE5WHMPZDWPDSN2TNMM","endpoint":"/v1/responses","completion_window":"24h"}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Idempotency-Key:
+      - d8707d9c-2b98-469c-9c32-779490a21256
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 429
+      message: Too Many Requests
+    headers:
+      Date:
+      - Mon, 09 Nov 2026 20:29:21 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '116'
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Cache-Control:
+      - no-store
+      Retry-After:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: '{"error":{"message":"Rate limit exceeded, please try again later.","type":"request_rate_limit_exceeded","code":429}}'
+  recorded_at: Mon, 09 Nov 2026 20:29:21 GMT
+- request:
+    method: post
+    uri: https://api.perplexity.ai/v1/batches
+    body:
+      encoding: UTF-8
+      string: '{"input_file_id":"file_01M7100JE5WHMPZDWPDSN2TNMM","endpoint":"/v1/responses","completion_window":"24h"}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Idempotency-Key:
+      - d8707d9c-2b98-469c-9c32-779490a21256
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 09 Nov 2026 20:29:22 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Cache-Control:
+      - no-store
+      X-Ratelimit-Limit:
+      - '1'
+      X-Ratelimit-Remaining:
+      - '0'
+      X-Ratelimit-Reset:
+      - '1794256163'
+      X-Ratelimit-Used:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"cancelled_at":null,"cancelling_at":null,"completed_at":null,"completion_window":"24h","created_at":1794256162,"endpoint":"/v1/responses","error_file_id":null,"errors":null,"expired_at":null,"expires_at":1794428962,"failed_at":null,"finalizing_at":null,"id":"batch_01M7100KSWZN1JT3EQ77VDANJ5","in_progress_at":null,"input_file_id":"file_01M7100JE5WHMPZDWPDSN2TNMM","metadata":null,"object":"batch","output_file_id":null,"request_counts":{"completed":0,"failed":0,"total":2},"status":"validating","usage":{"input_tokens":0,"input_tokens_details":{"cached_tokens":0},"output_tokens":0,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":0}}
+
+        '
+  recorded_at: Mon, 09 Nov 2026 20:29:22 GMT
+- request:
+    method: get
+    uri: https://api.perplexity.ai/v1/batches/batch_01M7100KSWZN1JT3EQ77VDANJ5
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 429
+      message: Too Many Requests
+    headers:
+      Date:
+      - Mon, 09 Nov 2026 20:29:22 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '116'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cache-Control:
+      - no-store
+      Retry-After:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - BYPASS
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: '{"error":{"message":"Rate limit exceeded, please try again later.","type":"request_rate_limit_exceeded","code":429}}'
+  recorded_at: Mon, 09 Nov 2026 20:29:22 GMT
+- request:
+    method: get
+    uri: https://api.perplexity.ai/v1/batches/batch_01M7100KSWZN1JT3EQ77VDANJ5
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 09 Nov 2026 20:29:24 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cache-Control:
+      - no-store
+      X-Ratelimit-Limit:
+      - '1'
+      X-Ratelimit-Remaining:
+      - '0'
+      X-Ratelimit-Reset:
+      - '1794256165'
+      X-Ratelimit-Used:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - BYPASS
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"cancelled_at":null,"cancelling_at":null,"completed_at":null,"completion_window":"24h","created_at":1794256162,"endpoint":"/v1/responses","error_file_id":null,"errors":null,"expired_at":null,"expires_at":1794428962,"failed_at":null,"finalizing_at":null,"id":"batch_01M7100KSWZN1JT3EQ77VDANJ5","in_progress_at":1794256162,"input_file_id":"file_01M7100JE5WHMPZDWPDSN2TNMM","metadata":null,"object":"batch","output_file_id":null,"request_counts":{"completed":0,"failed":0,"total":2},"status":"in_progress","usage":{"input_tokens":0,"input_tokens_details":{"cached_tokens":0},"output_tokens":0,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":0}}
+
+        '
+  recorded_at: Mon, 09 Nov 2026 20:29:24 GMT
+- request:
+    method: get
+    uri: https://api.perplexity.ai/v1/batches/batch_01M7100KSWZN1JT3EQ77VDANJ5
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 09 Nov 2026 20:29:39 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cache-Control:
+      - no-store
+      X-Ratelimit-Limit:
+      - '1'
+      X-Ratelimit-Remaining:
+      - '0'
+      X-Ratelimit-Reset:
+      - '1794256180'
+      X-Ratelimit-Used:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - BYPASS
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"cancelled_at":null,"cancelling_at":null,"completed_at":1794256172,"completion_window":"24h","created_at":1794256162,"endpoint":"/v1/responses","error_file_id":null,"errors":null,"expired_at":null,"expires_at":1794428962,"failed_at":null,"finalizing_at":1794256172,"id":"batch_01M7100KSWZN1JT3EQ77VDANJ5","in_progress_at":1794256162,"input_file_id":"file_01M7100JE5WHMPZDWPDSN2TNMM","metadata":null,"object":"batch","output_file_id":"file_01M7100XHNJFM44ZGH0HC1CW3W","request_counts":{"completed":2,"failed":0,"total":2},"status":"completed","usage":{"input_tokens":74,"input_tokens_details":{"cached_tokens":0},"output_tokens":11,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":85}}
+
+        '
+  recorded_at: Mon, 09 Nov 2026 20:29:39 GMT
+- request:
+    method: get
+    uri: https://api.perplexity.ai/v1/batches/batch_01M7100KSWZN1JT3EQ77VDANJ5
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 429
+      message: Too Many Requests
+    headers:
+      Date:
+      - Mon, 09 Nov 2026 20:29:39 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '116'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cache-Control:
+      - no-store
+      Retry-After:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - BYPASS
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: '{"error":{"message":"Rate limit exceeded, please try again later.","type":"request_rate_limit_exceeded","code":429}}'
+  recorded_at: Mon, 09 Nov 2026 20:29:39 GMT
+- request:
+    method: get
+    uri: https://api.perplexity.ai/v1/batches/batch_01M7100KSWZN1JT3EQ77VDANJ5
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 09 Nov 2026 20:29:40 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cache-Control:
+      - no-store
+      X-Ratelimit-Limit:
+      - '1'
+      X-Ratelimit-Remaining:
+      - '0'
+      X-Ratelimit-Reset:
+      - '1794256181'
+      X-Ratelimit-Used:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - BYPASS
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"cancelled_at":null,"cancelling_at":null,"completed_at":1794256172,"completion_window":"24h","created_at":1794256162,"endpoint":"/v1/responses","error_file_id":null,"errors":null,"expired_at":null,"expires_at":1794428962,"failed_at":null,"finalizing_at":1794256172,"id":"batch_01M7100KSWZN1JT3EQ77VDANJ5","in_progress_at":1794256162,"input_file_id":"file_01M7100JE5WHMPZDWPDSN2TNMM","metadata":null,"object":"batch","output_file_id":"file_01M7100XHNJFM44ZGH0HC1CW3W","request_counts":{"completed":2,"failed":0,"total":2},"status":"completed","usage":{"input_tokens":74,"input_tokens_details":{"cached_tokens":0},"output_tokens":11,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":85}}
+
+        '
+  recorded_at: Mon, 09 Nov 2026 20:29:40 GMT
+- request:
+    method: get
+    uri: https://api.perplexity.ai/v1/files/file_01M7100XHNJFM44ZGH0HC1CW3W/content
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept:
+      - application/octet-stream
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 429
+      message: Too Many Requests
+    headers:
+      Date:
+      - Mon, 09 Nov 2026 20:29:40 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '116'
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Cache-Control:
+      - no-store
+      Retry-After:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Cf-Cache-Status:
+      - BYPASS
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: '{"error":{"message":"Rate limit exceeded, please try again later.","type":"request_rate_limit_exceeded","code":429}}'
+  recorded_at: Mon, 09 Nov 2026 20:29:41 GMT
+- request:
+    method: get
+    uri: https://api.perplexity.ai/v1/files/file_01M7100XHNJFM44ZGH0HC1CW3W/content
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept:
+      - application/octet-stream
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 09 Nov 2026 20:29:42 GMT
+      Content-Type:
+      - application/octet-stream
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Cache-Control:
+      - no-store
+      X-Content-Type-Options:
+      - nosniff
+      X-Ratelimit-Limit:
+      - '1'
+      X-Ratelimit-Remaining:
+      - '0'
+      X-Ratelimit-Reset:
+      - '1794256183'
+      X-Ratelimit-Used:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - BYPASS
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: |
+        {"id":"batch_req_01M7100KZEGSB8NPAM8CG1W22M","custom_id":"0","response":{"status_code":200,"request_id":"01M7100KZEGSB8NPAM8CG1W22M","body":{"background":true,"completed_at":1794256170,"created_at":1794256170,"error":null,"frequency_penalty":0,"id":"resp_01M7100KZEGSB8NPAM8CG1W22M","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"content":[{"annotations":[],"text":"4","type":"output_text"}],"id":"msg_31c8b17b-5b60-4786-bf94-eb0df2ad228e","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"flex","status":"completed","store":true,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0,"output_cost":0,"total_cost":0},"input_tokens":37,"input_tokens_details":{"cached_tokens":0},"output_tokens":5,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":42},"user":null}},"error":null}
+        {"id":"batch_req_01M7100KZESQRPKDX2KC6N8RA0","custom_id":"1","response":{"status_code":200,"request_id":"01M7100KZESQRPKDX2KC6N8RA0","body":{"background":true,"completed_at":1794256170,"created_at":1794256170,"error":null,"frequency_penalty":0,"id":"resp_01M7100KZESQRPKDX2KC6N8RA0","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"content":[{"annotations":[],"text":"Jupiter","type":"output_text"}],"id":"msg_0995eff1-dddb-4bc0-a55a-dbb0bc947922","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"flex","status":"completed","store":true,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0,"output_cost":0,"total_cost":0},"input_tokens":37,"input_tokens_details":{"cached_tokens":0},"output_tokens":6,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":43},"user":null}},"error":null}
+  recorded_at: Mon, 09 Nov 2026 20:29:42 GMT
+recorded_with: VCR 6.4.1
