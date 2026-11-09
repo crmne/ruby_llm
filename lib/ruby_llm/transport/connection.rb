@@ -6,6 +6,7 @@ require 'faraday/retry'
 require 'ruby_llm/transport/error_middleware'
 require 'ruby_llm/transport/signing_middleware'
 require 'ruby_llm/transport/usage_middleware'
+require 'time'
 require 'timeout'
 
 module RubyLLM
@@ -15,13 +16,21 @@ module RubyLLM
 
       IDEMPOTENT_KEY = :ruby_llm_idempotent
       STREAM_PROGRESS_KEY = :ruby_llm_stream_progress
+      FALLBACK_KEY = :ruby_llm_fallback_ready
+
+      # The longest wait, in seconds, a rate-limited or overloaded model's
+      # retry hint may ask for before a fallback takes the request instead.
+      # Providers often ask for a second or two, which costs less than
+      # moving to another model; waits of ten seconds or more are left to
+      # a fallback when one is configured.
+      FALLBACK_WAIT = 2
 
       # The key a shared Faraday connection is cached under: the provider,
       # whether it streams, and everything ::build reads.
       Settings = Struct.new(
-        :provider, :stream, :api_base, :adapter, :timeout, :open_timeout, :proxy, :ssl, :logger, :log_bodies,
-        :log_regexp_timeout, :max_retries, :retry_interval, :retry_max_interval, :retry_interval_randomness,
-        :retry_backoff_factor,
+        :provider, :stream, :api_base, :adapter, :timeout, :connect_timeout, :idle_timeout, :proxy, :ssl, :logger,
+        :log_bodies, :log_regexp_timeout, :max_retries, :retry_interval, :retry_max_interval,
+        :retry_interval_randomness, :retry_backoff_factor,
         keyword_init: true
       )
 
@@ -35,7 +44,7 @@ module RubyLLM
         Faraday.new do |f|
           f.use ReleaseRequest
           f.options.timeout = config.request_timeout
-          f.options.open_timeout = config.open_timeout
+          f.options.open_timeout = config.connect_timeout
           f.proxy = config.http_proxy if config.http_proxy
           f.ssl.update(ssl_snapshot(config.ssl)) if config.ssl
           f.response :logger,
@@ -78,6 +87,19 @@ module RubyLLM
 
       def self.cache
         CACHE
+      end
+
+      # Runs the block with a fallback model ready to take over its
+      # requests: +ready+ answers whether an error moves on to it. Until the
+      # block returns, a timeout or a failed connection is not retried on
+      # the same model, nor an error whose retry hint asks for a wait
+      # longer than FALLBACK_WAIT, when +ready+ accepts the error.
+      def self.with_fallback_ready(ready)
+        previous = Fiber[FALLBACK_KEY]
+        Fiber[FALLBACK_KEY] = ready
+        yield
+      ensure
+        Fiber[FALLBACK_KEY] = previous
       end
 
       # A frozen copy of +ssl+, so a value changed in place afterwards
@@ -189,7 +211,8 @@ module RubyLLM
           api_base: @api_base || @provider.api_base,
           adapter: @config.faraday_adapter,
           timeout: @config.request_timeout,
-          open_timeout: @config.open_timeout,
+          connect_timeout: @config.connect_timeout,
+          idle_timeout: (@config.stream_idle_timeout if stream),
           proxy: @config.http_proxy,
           ssl: (self.class.ssl_snapshot(@config.ssl) if @config.ssl),
           logger: logger,
@@ -213,9 +236,12 @@ module RubyLLM
         context[SigningMiddleware::CONTEXT_KEY] = @signer if @signer
       end
 
+      # Adapters time each read of a response with +read_timeout+, so on a
+      # streaming connection it is the longest wait for the next bytes.
       def self.setup_timeout(faraday, settings)
         faraday.options.timeout = settings.timeout
-        faraday.options.open_timeout = settings.open_timeout
+        faraday.options.open_timeout = settings.connect_timeout
+        faraday.options.read_timeout = settings.idle_timeout if settings.idle_timeout
       end
 
       def self.setup_logging(faraday, settings)
@@ -245,9 +271,10 @@ module RubyLLM
           interval_randomness: settings.retry_interval_randomness,
           backoff_factor: settings.retry_backoff_factor,
           methods: Faraday::Retry::Middleware::IDEMPOTENT_METHODS,
-          retry_if: lambda { |env, _exception|
+          retry_if: lambda { |env, exception|
             Support::Cancellation.check
-            env[:method] == :post && idempotent?(env) && !stream_delivered?(env)
+            env[:method] == :post && idempotent?(env) && !stream_delivered?(env) &&
+              !fall_back_instead?(env, exception)
           },
           exceptions: retry_exceptions
         }
@@ -262,13 +289,47 @@ module RubyLLM
         env[:request]&.context&.dig(IDEMPOTENT_KEY) != false
       end
 
+      # Whether a fallback set up by ::with_fallback_ready takes this
+      # failure instead of a retry on the same model.
+      def self.fall_back_instead?(env, exception)
+        ready = Fiber[FALLBACK_KEY]
+        return false unless ready && exception
+
+        error = exception.is_a?(RubyLLM::Error) ? exception : RubyLLM::ConnectionError.new(exception.message)
+        return false unless ready.call(error)
+
+        error.is_a?(RubyLLM::ConnectionError) || retry_wait(env, error) > FALLBACK_WAIT
+      end
+
+      # The wait in seconds the response's retry hints ask for, read as the
+      # retry middleware reads them, or 0 without one.
+      def self.retry_wait(env, error)
+        headers = env[:response_headers] || error.response&.headers || {}
+        %w[Retry-After RateLimit-Reset].filter_map { |name| header_seconds(headers[name]) }.max || 0
+      end
+
+      def self.header_seconds(value)
+        text = value.to_s.strip
+        Float(text, exception: false) || (Time.httpdate(text) - Time.now)
+      rescue ArgumentError
+        nil
+      end
+
       def self.setup_middleware(faraday, settings)
         faraday.request :multipart
         faraday.request :json
         faraday.use :llm_signing
         faraday.use JsonResponse
-        faraday.adapter(settings.adapter)
+        faraday.adapter(settings.adapter, **adapter_options(settings))
         faraday.use :llm_errors
+      end
+
+      # async-http-faraday reads its timeout for each read from its own
+      # options rather than the request's.
+      def self.adapter_options(settings)
+        return {} unless settings.adapter == :async_http && settings.idle_timeout
+
+        { read_timeout: settings.idle_timeout }
       end
 
       def self.setup_http_proxy(faraday, settings)
@@ -300,8 +361,8 @@ module RubyLLM
       end
 
       private_class_method :setup_timeout, :setup_logging, :logging_regexp, :setup_retry, :stream_delivered?,
-                           :idempotent?, :setup_middleware, :setup_http_proxy, :setup_ssl,
-                           :retry_exceptions
+                           :idempotent?, :fall_back_instead?, :retry_wait, :header_seconds, :setup_middleware,
+                           :adapter_options, :setup_http_proxy, :setup_ssl, :retry_exceptions
 
       def set_usage_tracker(request, tracker)
         context = request.options.context ||= {}

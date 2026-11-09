@@ -73,6 +73,28 @@ RSpec.describe RubyLLM::Sandbox do
       expect(runner.isolated.libraries).to eq(%w[psych.bundle libruby.dylib])
     end
 
+    it 'asks for mxc 0.4.1 or later when an MXC::Sandbox is first built with an older mxc' do
+      require 'mxc'
+      stub_const('MXC::VERSION', '0.4.0')
+
+      expect { described_class.resolve(MXC::Sandbox) }
+        .to raise_error(RubyLLM::ConfigurationError,
+                        "RubyLLM's sandbox needs mxc 0.4.1 or later; you have 0.4.0. Run bundle update mxc.")
+    end
+
+    it 'builds an MXC::Sandbox with mxc 0.4.1 or later' do
+      require 'mxc'
+      stub_const('MXC::VERSION', '0.4.1')
+
+      expect(described_class.resolve(MXC::Sandbox)).to be_a(RubyLLM::Sandbox::MXC)
+    end
+
+    it 'builds the runner without checking a version when mxc is not loaded' do
+      hide_const('MXC')
+
+      expect(RubyLLM::Sandbox::MXC.new(Class.new)).to be_a(RubyLLM::Sandbox::MXC)
+    end
+
     it 'runs an MXC::Sandbox from mxc before 0.4, which cannot grant libraries' do
       older = Class.new(MXC::Sandbox) do
         undef_method :with_libraries_of

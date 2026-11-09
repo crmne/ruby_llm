@@ -18,7 +18,7 @@ RSpec.describe RubyLLM::Transport::Connection do
         RubyLLM::Configuration,
         logger: nil,
         request_timeout: 300,
-        open_timeout: nil,
+        connect_timeout: nil,
         max_retries: 3,
         retry_interval: 0.1,
         retry_max_interval: 30,
@@ -59,6 +59,18 @@ RSpec.describe RubyLLM::Transport::Connection do
       request = Faraday::RequestOptions.from(context: { RubyLLM::Transport::Connection::IDEMPOTENT_KEY => false })
 
       expect(retry_options[:retry_if].call({ method: :post, request: request }, nil)).to be(false)
+    end
+
+    it 'retries an error without a response while a fallback is ready' do
+      connection = described_class.new(provider, config).connection
+      retry_handler = connection.builder.handlers.find { |handler| handler.klass == Faraday::Retry::Middleware }
+      retry_if = retry_handler.instance_variable_get(:@args).first[:retry_if]
+
+      retried = described_class.with_fallback_ready(->(_error) { true }) do
+        retry_if.call({ method: :post }, RubyLLM::RateLimitError.new('Slow down'))
+      end
+
+      expect(retried).to be(true)
     end
 
     it 'caps retry delays at retry_max_interval' do
@@ -119,6 +131,65 @@ RSpec.describe RubyLLM::Transport::Connection do
       expect(stub).to have_been_requested.once
     end
 
+    describe 'while a fallback is ready' do
+      def rate_limited(retry_after)
+        stub_request(:post, 'https://api.openai.com/v1/chat/completions')
+          .to_return(
+            { status: 429, headers: { 'Retry-After' => retry_after },
+              body: '{"error":{"message":"Rate limit reached"}}' },
+            { status: 200, headers: { 'Content-Type' => 'application/json' }, body: '{}' }
+          )
+      end
+
+      def post(ready: ->(_error) { true })
+        described_class.with_fallback_ready(ready) { provider.connection.post('chat/completions', {}) }
+      end
+
+      it 'waits out a retry hint of up to two seconds' do
+        stub = rate_limited('2')
+
+        expect(post.status).to eq(200)
+        expect(retry_delays).to eq([2.0])
+        expect(stub).to have_been_requested.twice
+      end
+
+      it 'leaves a longer retry hint to the fallback' do
+        stub = rate_limited('2.5')
+
+        expect { post }.to raise_error(RubyLLM::RateLimitError)
+        expect(stub).to have_been_requested.once
+      end
+
+      it 'reads a retry hint given as an HTTP date' do
+        stub = rate_limited((Time.now + 20).httpdate)
+
+        expect { post }.to raise_error(RubyLLM::RateLimitError)
+        expect(stub).to have_been_requested.once
+      end
+
+      it 'retries on a retry hint it cannot read' do
+        stub = rate_limited('soon')
+
+        expect(post.status).to eq(200)
+        expect(stub).to have_been_requested.twice
+      end
+
+      it 'waits as before when the fallback would not take the error' do
+        stub = rate_limited('20')
+
+        expect(post(ready: ->(error) { !error.is_a?(RubyLLM::RateLimitError) }).status).to eq(200)
+        expect(retry_delays).to eq([20.0])
+        expect(stub).to have_been_requested.twice
+      end
+
+      it 'leaves a timeout to the fallback' do
+        stub = stub_request(:post, 'https://api.openai.com/v1/chat/completions').to_raise(Net::ReadTimeout.new)
+
+        expect { post }.to raise_error(RubyLLM::ConnectionError)
+        expect(stub).to have_been_requested.once
+      end
+    end
+
     it 'retries a chat completion that fails with a server error' do
       stub = stub_request(:post, 'https://api.openai.com/v1/chat/completions')
              .to_return(
@@ -165,6 +236,7 @@ RSpec.describe RubyLLM::Transport::Connection do
       'a refused connection' => [Errno::ECONNREFUSED.new, Faraday::ConnectionFailed, false],
       'a timeout' => [Net::ReadTimeout.new, Faraday::TimeoutError, true],
       'a connection that timed out opening' => [Net::OpenTimeout.new, Faraday::ConnectionFailed, true],
+      'a read that waited too long' => [IO::TimeoutError.new('read timeout'), Faraday::ConnectionFailed, true],
       'a TLS failure' => [OpenSSL::SSL::SSLError.new('certificate verify failed'), Faraday::SSLError, false]
     }.each do |failure, (raised, wrapped, timeout)|
       it "raises a RubyLLM::ConnectionError after retrying #{failure}" do

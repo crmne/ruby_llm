@@ -116,7 +116,7 @@ RubyLLM checks for cancellation before model requests, before tool execution, an
 
 * At the next event, while a reply streams. A stream that only sends keep-alive comments has no event to stop at, so it goes on like a stalled one.
 * When the tool returns, while a tool is working. RubyLLM can't safely interrupt Ruby code. A sandbox run isn't stopped either: it finishes first, or ends at its timeout.
-* At `request_timeout`, while a request receives nothing at all. It isn't retried, and the partial reply stays. Lower `request_timeout` to bound how long a stalled provider can hold a chat.
+* At `request_timeout`, while a request receives nothing at all. It isn't retried, and the partial reply stays. Set [`stream_idle_timeout`]({% link _reference/configuration-connection.md %}#stalled-streams) to bound how long a stalled stream can hold a chat without shortening long answers.
 
 With `acts_as_chat`, a request from another process is read at most once a second at those same points.
 

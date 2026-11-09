@@ -16,8 +16,11 @@ RSpec.describe RubyLLM::Providers::VertexAI::Credentials do
     )
   end
 
-  def config(key)
-    RubyLLM::Configuration.new.tap { |config| config.vertexai_service_account_key = key }
+  def config(key, token_timeout: nil)
+    RubyLLM::Configuration.new.tap do |config|
+      config.vertexai_service_account_key = key
+      config.vertexai_token_timeout = token_timeout
+    end
   end
 
   def stub_token_endpoint(latency: 0)
@@ -30,8 +33,8 @@ RSpec.describe RubyLLM::Providers::VertexAI::Credentials do
     end
   end
 
-  def authorization(key)
-    described_class.for(config(key)).headers[:authorization]
+  def authorization(key, token_timeout: nil)
+    described_class.for(config(key, token_timeout:)).headers[:authorization]
   end
 
   it 'fetches one access token for every provider that shares a service account key' do
@@ -82,6 +85,145 @@ RSpec.describe RubyLLM::Providers::VertexAI::Credentials do
 
     expect(headers.uniq).to eq(['Bearer token-1'])
     expect(endpoint).to have_been_requested.once
+  end
+
+  context 'when the token endpoint never answers' do
+    let(:silent) { TCPServer.new('127.0.0.1', 0) }
+
+    around do |example|
+      WebMock.disable!
+      accepted = []
+      acceptor = Thread.new { loop { accepted << silent.accept } }
+      example.run
+    ensure
+      WebMock.enable!
+      acceptor.kill.join
+      silent.close
+      accepted.each(&:close)
+    end
+
+    it 'gives up on the token after the token timeout' do
+      credentials = described_class.new(service_account_key('ruby@test-project.iam.gserviceaccount.com'),
+                                        token_timeout: 0.1)
+      credentials.authorizer.token_credential_uri = "http://127.0.0.1:#{silent.addr[1]}/token"
+      allow(credentials.authorizer).to receive(:sleep)
+
+      expect { Timeout.timeout(5) { credentials.headers } }.to raise_error(Google::Auth::AuthorizationError)
+    end
+  end
+
+  context 'when Faraday has a default connection of its own' do
+    around do |example|
+      original = Faraday.default_connection
+      example.run
+    ensure
+      Faraday.default_connection = original
+    end
+
+    def token_adapter(requests, expires_in: 3600)
+      Class.new(Faraday::Adapter) do
+        define_method(:call) do |env|
+          super(env)
+          requests << env.request
+          body = JSON.generate(access_token: 'adapter-token', expires_in:, token_type: 'Bearer')
+          save_response(env, 200, body, { 'Content-Type' => 'application/json' })
+          @app.call(env)
+        end
+      end
+    end
+
+    def use_default_connection(requests, expires_in: 3600)
+      Faraday.default_connection = Faraday.new(request: { timeout: 3 }) do |faraday|
+        faraday.adapter(token_adapter(requests, expires_in:))
+      end
+    end
+
+    def with_https_proxy_env(url)
+      saved = ENV.to_h.slice('https_proxy', 'HTTPS_PROXY')
+      ENV['https_proxy'] = ENV['HTTPS_PROXY'] = url
+      yield
+    ensure
+      %w[https_proxy HTTPS_PROXY].each { |name| ENV[name] = saved[name] }
+    end
+
+    def token_request(requests)
+      authorization(service_account_key('ruby@test-project.iam.gserviceaccount.com'), token_timeout: 10)
+      requests.sole
+    end
+
+    it 'leaves googleauth on it without a token timeout' do
+      requests = []
+      use_default_connection(requests)
+
+      authorization(service_account_key('ruby@test-project.iam.gserviceaccount.com'))
+
+      expect(requests.map(&:timeout)).to eq([3])
+    end
+
+    it 'fetches the token through it with the token timeout' do
+      requests = []
+      use_default_connection(requests)
+      key = service_account_key('ruby@test-project.iam.gserviceaccount.com')
+
+      expect(authorization(key, token_timeout: 10)).to eq('Bearer adapter-token')
+      expect(requests.map(&:timeout)).to eq([10])
+    end
+
+    it 'keeps a proxy set on it' do
+      requests = []
+      use_default_connection(requests)
+      Faraday.default_connection.proxy = 'http://proxy.example.test:8080'
+
+      expect(token_request(requests).proxy.uri.to_s).to eq('http://proxy.example.test:8080')
+    end
+
+    it 'keeps a proxy turned off on it' do
+      requests = []
+      use_default_connection(requests)
+
+      with_https_proxy_env('http://env-proxy.example.test:3128') do
+        Faraday.default_connection.proxy = nil
+
+        expect(token_request(requests).proxy).to be_nil
+      end
+    end
+
+    it 'keeps a proxy turned off on it when the environment gains one later' do
+      requests = []
+      use_default_connection(requests, expires_in: 30)
+      Faraday.default_connection.proxy = nil
+      key = service_account_key('ruby@test-project.iam.gserviceaccount.com')
+      authorization(key, token_timeout: 10)
+
+      with_https_proxy_env('http://env-proxy.example.test:3128') { authorization(key, token_timeout: 10) }
+
+      expect(requests.map(&:proxy)).to eq([nil, nil])
+    end
+
+    it 'takes the proxy from the environment when it does' do
+      requests = []
+      use_default_connection(requests)
+
+      with_https_proxy_env('http://env-proxy.example.test:3128') do
+        expect(token_request(requests).proxy.uri.to_s).to eq('http://env-proxy.example.test:3128')
+      end
+    end
+  end
+
+  it 'keeps credentials that fetch tokens through their own connection' do
+    external_account = Object.new
+    def external_account.apply(_headers) = { authorization: 'Bearer external-token' }
+    allow(Google::Auth).to receive(:get_application_default).and_return(external_account)
+
+    expect(described_class.new(nil, token_timeout: 5).headers[:authorization]).to eq('Bearer external-token')
+  end
+
+  it 'shares credentials only between configurations with the same token timeout' do
+    key = service_account_key('ruby@test-project.iam.gserviceaccount.com')
+    credentials = described_class.for(config(key, token_timeout: 3))
+
+    expect(described_class.for(config(key, token_timeout: 3))).to be(credentials)
+    expect(described_class.for(config(key, token_timeout: 5))).not_to be(credentials)
   end
 
   it 'fetches its own token in a forked child' do

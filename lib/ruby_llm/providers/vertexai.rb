@@ -4,6 +4,8 @@ module RubyLLM
   module Providers
     # Google Vertex AI implementation
     class VertexAI < Provider
+      include Protocols::Gemini::RetryInfo
+
       protocol :gemini, VertexAI::Gemini, batches: VertexAI::Gemini::Batches
       protocol :anthropic, VertexAI::Anthropic, batches: VertexAI::Anthropic::Batches
       protocol :mistral, VertexAI::Mistral
@@ -201,6 +203,7 @@ module RubyLLM
             vertexai_batch_gcs_uri
             vertexai_ranking_api_base
             vertexai_ranking_config
+            vertexai_token_timeout
           ]
         end
 

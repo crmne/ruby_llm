@@ -131,6 +131,7 @@ RubyLLM.configure do |config|
   config.vertexai_ranking_api_base = ENV["VERTEXAI_RANKING_API_BASE"] # optional Discovery Engine endpoint
   config.vertexai_ranking_config = ENV["VERTEXAI_RANKING_CONFIG"] # optional full rankingConfig resource name
   config.vertexai_batch_gcs_uri = ENV["VERTEXAI_BATCH_GCS_URI"] # gs://bucket/prefix for batches and large attachments
+  config.vertexai_token_timeout = 10 # optional seconds to wait for an access token
 
   # xAI
   config.xai_api_key = ENV["XAI_API_KEY"]
@@ -401,6 +402,8 @@ RubyLLM supports both Vertex AI authentication methods:
 - Service Account JSON key via `config.vertexai_service_account_key`
 
 If `vertexai_service_account_key` is not set, RubyLLM uses ADC.
+
+RubyLLM shares one access token across the process and refreshes it before it expires, so every Vertex AI request waits while the token refreshes. googleauth sets no timeout on that token request and tries it six times, so a token endpoint that never answers holds those requests for minutes. Set `vertexai_token_timeout` to give up on each attempt after that many seconds. The token request still goes through Faraday's default connection, with its adapter, proxy, and TLS settings.
 
 ### Text to Speech
 

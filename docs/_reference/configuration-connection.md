@@ -54,7 +54,7 @@ Fine-tune how RubyLLM handles network connections:
 RubyLLM.configure do |config|
   # Basic settings
   config.request_timeout = 120        # Seconds to wait for response (default: 300)
-  config.open_timeout = 10            # Seconds to wait for a connection to open (default: request_timeout)
+  config.connect_timeout = 10         # Seconds to wait for a connection to open (default: request_timeout)
   config.max_retries = 3              # Retry attempts on failure (default: 3)
 
   # Advanced retry behavior
@@ -65,11 +65,30 @@ RubyLLM.configure do |config|
 end
 ```
 
-`request_timeout` also bounds opening the connection, and a connection that fails to open is retried, so a host you can't reach holds a request for `request_timeout` on every attempt. Set `open_timeout` to give up on such a host sooner without cutting short a slow response.
+`request_timeout` also bounds opening the connection, and a connection that fails to open is retried, so a host you can't reach holds a request for `request_timeout` on every attempt. Set `connect_timeout` to give up on such a host sooner without cutting short a slow response. It covers finding the host, connecting, and the TLS handshake. Waiting for the answer after that, including the answer to a WebSocket upgrade, stays under `request_timeout`.
 
-When a provider reports how long to wait through rate-limit headers (the standard `Retry-After`, or OpenAI's `x-ratelimit-reset-requests` and `x-ratelimit-reset-tokens`), retries wait that long instead of the backoff interval. If the requested wait exceeds `retry_max_interval`, the request fails immediately with `RubyLLM::RateLimitError` rather than sleeping.
+When a provider reports how long to wait (the standard `Retry-After` header, OpenAI's `x-ratelimit-reset-requests` and `x-ratelimit-reset-tokens` headers, or the `RetryInfo` detail in a Gemini or Vertex AI error body), retries wait that long instead of the backoff interval. If the requested wait exceeds `retry_max_interval`, the request fails immediately with `RubyLLM::RateLimitError` rather than sleeping.
+
+A chat with [fallbacks]({% link _advanced/error-handling.md %}#model-fallbacks) left to try doesn't retry a timeout, a failed connection, or a wait longer than two seconds on the same model: the next fallback takes the request at once.
 
 These settings cover requests you can safely repeat. Requests that create something on the provider's side, such as submitting a batch, starting a video generation job, uploading a file, or creating a content cache, are sent once and raise on failure, because a retry after a lost response would create a second job.
+
+#### Stalled Streams
+
+`request_timeout` has to be long enough for the slowest answer you expect, such as a reasoning model that thinks for minutes, so it is also how long a provider that accepts the request and then sends nothing can hold a chat. Set `stream_idle_timeout` to give up on a stream sooner when it goes quiet:
+
+```ruby
+RubyLLM.configure do |config|
+  config.request_timeout = 1800      # A long answer may take this long
+  config.stream_idle_timeout = 60    # But a stream may not go a minute without a byte
+end
+```
+
+A streaming request then fails when no bytes arrive for that many seconds, counted from sending the request and again from each chunk, so a stream that keeps sending runs as long as it needs. It fails as a request timeout does, with a `RubyLLM::ConnectionError` whose `timeout?` is `true`: while a [fallback]({% link _advanced/error-handling.md %}#model-fallbacks) is left to try, the next one takes the request at once, and otherwise it is retried as `max_retries` says. Requests that don't stream ignore it and keep `request_timeout`. The default, `nil`, leaves streams to `request_timeout` too.
+
+Set it longer than the longest silence you expect from a model that is thinking, because a low value cuts legitimate thinking off. A timeout there looks like any other stalled stream. Gemini sends no bytes while it thinks unless thought summaries are on (`includeThoughts`, which `with_thinking` sends unless you pass `display: :omitted`): `gemini-4-argon` on Vertex AI has been measured silent for 114 seconds before its first byte. Without thought summaries, give Gemini minutes, not seconds.
+
+Providers that send keep-alive comments while they queue a request count as sending bytes. RubyLLM sets the adapter's read timeout on streaming requests, which `:net_http`, `:net_http_persistent` and `:async_http` all apply to each wait for the next bytes. An adapter of your own sees it as `env.request.read_timeout`.
 
 Example for high-latency connections:
 
@@ -137,7 +156,7 @@ end
 
 The default `:net_http` adapter opens a new connection for every request. `:net_http_persistent` keeps a pool that every thread draws from, which suits Puma and Sidekiq. Twenty calls to a local HTTPS server take 2.0 ms each through `:net_http`, and 0.4 ms through `:net_http_persistent`, which connects once. On Falcon or Solid Queue fiber workers, use `:async_http` from the `async-http-faraday` gem instead. It keeps connections open for as long as the Async reactor that opened them runs, so calls made outside a reactor still connect every time.
 
-Contexts share connections when their connection settings match. Credentials travel with each request, so tenants with their own API keys reuse the same connections. A context that changes an API base, `request_timeout`, `open_timeout`, a retry setting, `http_proxy`, `ssl`, or `faraday_adapter` gets connections of its own. Each forked process, such as a Puma worker, opens its own connections instead of sharing its parent's.
+Contexts share connections when their connection settings match. Credentials travel with each request, so tenants with their own API keys reuse the same connections. A context that changes an API base, `request_timeout`, `stream_idle_timeout`, `connect_timeout`, a retry setting, `http_proxy`, `ssl`, or `faraday_adapter` gets connections of its own. Each forked process, such as a Puma worker, opens its own connections instead of sharing its parent's.
 
 ## Logging & Debugging
 
@@ -228,7 +247,7 @@ embedding = ctx.embed("Ruby is a joy to write")
 transcript = ctx.transcribe("interview.mp3")
 ```
 
-`paint`, `animate`, `animate_later`, `embed`, `embed_later`, `moderate`, `speak`, `transcribe`, `ocr`, `rerank`, `upload`, `download`, `cache`, and `mcp` all use the context's keys, endpoints, and connection settings. So do the downloads RubyLLM performs on your behalf: fetching a URL attachment for a chat, or reading `image.to_blob` and `video.to_blob` from a provider's hosted file, goes through the context's `http_proxy`, `ssl`, `request_timeout`, and `open_timeout` rather than the global ones.
+`paint`, `animate`, `animate_later`, `embed`, `embed_later`, `moderate`, `speak`, `transcribe`, `ocr`, `rerank`, `upload`, `download`, `cache`, and `mcp` all use the context's keys, endpoints, and connection settings. So do the downloads RubyLLM performs on your behalf: fetching a URL attachment for a chat, or reading `image.to_blob` and `video.to_blob` from a provider's hosted file, goes through the context's `http_proxy`, `ssl`, `request_timeout`, and `connect_timeout` rather than the global ones.
 
 ### Multi-Tenant Applications
 
@@ -278,7 +297,8 @@ Every setting that isn't a provider's, with its default. Provider keys and endpo
 | `model_registry_file` | OS user cache directory | Path of the writable registry cache. |
 | `model_registry_store` | `nil` | Object that answers `read`, and optionally `write(registry)`. |
 | `request_timeout` | `300` | Seconds before a request times out. |
-| `open_timeout` | `nil` | Seconds to wait for a connection to open. `nil` waits as long as `request_timeout`. |
+| `connect_timeout` | `nil` | Seconds to wait for a connection to open. `nil` waits as long as `request_timeout`. |
+| `stream_idle_timeout` | `nil` | Seconds a streaming request may go without receiving a byte before it times out. |
 | `video_generation_timeout` | `600` | Seconds `animate` waits for a video. |
 | `video_generation_poll_interval` | `5` | Seconds between checks on a video job. |
 | `max_retries` | `3` | Retries after a transient failure. |

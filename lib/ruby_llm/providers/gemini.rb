@@ -4,6 +4,8 @@ module RubyLLM
   module Providers
     # Native Gemini API implementation
     class Gemini < Provider
+      include Protocols::Gemini::RetryInfo
+
       protocol :gemini, Protocols::Gemini, batches: Protocols::Gemini::Batches
       protocol :interactions, Protocols::Interactions
       protocol :live_transcription, Protocols::Gemini::LiveTranscription

@@ -32,7 +32,7 @@ RSpec.describe RubyLLM::Transport::Connection do
       shared = faraday_for(config)
 
       {
-        openai_api_base: 'https://openai.example.test/v1', request_timeout: 7, open_timeout: 2,
+        openai_api_base: 'https://openai.example.test/v1', request_timeout: 7, connect_timeout: 2,
         http_proxy: 'http://proxy.example.test:8080',
         faraday_adapter: :test, max_retries: 9, retry_interval: 2.5, retry_max_interval: 99,
         retry_interval_randomness: 0.9, retry_backoff_factor: 5, log_regexp_timeout: 3.0, ssl: { verify: false }
@@ -41,7 +41,7 @@ RSpec.describe RubyLLM::Transport::Connection do
       end
     end
 
-    it 'hands the open timeout to the adapter apart from the request timeout' do
+    it 'hands the connect timeout to the adapter apart from the request timeout' do
       seen = nil
       adapter = Class.new(Faraday::Adapter) do
         define_method(:call) do |env|
@@ -51,10 +51,51 @@ RSpec.describe RubyLLM::Transport::Connection do
           @app.call(env)
         end
       end
-      config = configured(faraday_adapter: adapter, request_timeout: 300, open_timeout: 5)
+      config = configured(faraday_adapter: adapter, request_timeout: 300, connect_timeout: 5)
       RubyLLM::Providers::OpenAI.new(config).connection.post('chat/completions', {})
 
       expect([seen.open_timeout, seen.timeout]).to eq([5, 300])
+    end
+
+    it 'gives streams a read timeout of their own and leaves other requests on the request timeout' do
+      idle = RubyLLM::Providers::OpenAI.new(configured(stream_idle_timeout: 20)).connection
+
+      expect(idle.connection(stream: true).options.read_timeout).to eq(20)
+      expect(idle.connection.options.read_timeout).to be_nil
+      expect(idle.connection).to be(faraday_for(config))
+      expect(idle.connection(stream: true))
+        .not_to be(RubyLLM::Providers::OpenAI.new(config).connection.connection(stream: true))
+    end
+
+    it 'hands async-http its read timeout for streams, since it ignores the request option' do
+      seen = []
+      adapter = Class.new(Faraday::Adapter) do
+        define_method(:initialize) do |app = nil, opts = {}, &block|
+          seen << opts
+          super(app, opts, &block)
+        end
+      end
+      # Faraday 1 has no registered_middleware reader; fetch_middleware is its own.
+      previous = if Faraday::Adapter.respond_to?(:registered_middleware)
+                   Faraday::Adapter.registered_middleware[:async_http]
+                 else
+                   Faraday::Adapter.fetch_middleware(:async_http)
+                 end
+      Faraday::Adapter.register_middleware(async_http: adapter)
+
+      [:async_http, adapter].each do |faraday_adapter|
+        connection = RubyLLM::Providers::OpenAI.new(configured(faraday_adapter:, stream_idle_timeout: 21)).connection
+        connection.connection(stream: true)
+      end
+
+      # Each provider builds its plain connection first, then the streaming one.
+      expect(seen).to eq([{}, { read_timeout: 21 }, {}, {}])
+    ensure
+      if previous
+        Faraday::Adapter.register_middleware(async_http: previous)
+      else
+        Faraday::Adapter.unregister_middleware(:async_http)
+      end
     end
 
     it 'hands the TLS options to the adapter' do
