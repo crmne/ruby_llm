@@ -542,6 +542,17 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(requests.sole.last).to eq([:tool, interrupted_result])
     end
 
+    it 'keeps a call interrupted when the run that took it over failed before answering it' do
+      chat = asked
+      expect { posting_job(chat) { raise SignalException, 'TERM' }.complete }.to raise_error(SignalException)
+      failing = resuming(chat).before_message { raise ArgumentError, 'Broadcast failed' }
+
+      expect { failing.complete }.to raise_error(ArgumentError, 'Broadcast failed')
+      expect(resuming(chat).complete.content).to eq('Done')
+      expect(runs).to be_empty
+      expect(requests.sole.last).to eq([:tool, interrupted_result])
+    end
+
     it 'runs a call that had not started when its round was stopped' do
       chat = asked
       expect { posting_job(chat, calls: 2) { raise SignalException, 'TERM' }.complete }.to raise_error(SignalException)
