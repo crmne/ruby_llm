@@ -175,4 +175,10 @@ RSpec.describe RubyLLM::Providers::Azure::ChatCompletions do
     expect(result.text).to eq('Hello')
     expect(result.tokens.input).to eq(12)
   end
+
+  it 'says Azure has no moderation instead of calling a route Foundry does not serve' do
+    expect { context.moderate('Hello', model: 'omni-moderation-latest', provider: :azure, assume_model_exists: true) }
+      .to raise_error(RubyLLM::Error, /doesn't support moderation/)
+    expect(a_request(:any, /moderations/)).not_to have_been_made
+  end
 end

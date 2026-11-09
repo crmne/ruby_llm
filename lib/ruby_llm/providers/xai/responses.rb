@@ -33,6 +33,12 @@ module RubyLLM
           SERVER_TOOL_ALIASES
         end
 
+        # xAI answers tool_search and defer_loading with 403 for every
+        # account outside its alpha, so Chat brings its own search.
+        def tool_search?
+          false
+        end
+
         def document_urls?
           true
         end

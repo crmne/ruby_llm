@@ -92,6 +92,81 @@ RSpec.describe RubyLLM::Providers::Hetzner do
     end
   end
 
+  describe 'thinking controls' do
+    def rejected_effort
+      { error: { message: 'Unexpected reasoning effort high. Supported types are xhigh (default), medium, and low.',
+                 type: 'BadRequestError', param: nil, code: 400 } }
+    end
+
+    it 'reports a reasoning effort the model rejects as an unsupported thinking parameter' do
+      stub_request(:post, 'https://inference.hetzner.com/v1/chat/completions')
+        .to_return(status: 400, body: rejected_effort.to_json, headers: { 'Content-Type' => 'application/json' })
+      context = RubyLLM.context { |context_config| context_config.hetzner_api_key = 'test-key' }
+
+      chat = context.chat(model: model_id, provider: :hetzner).with_thinking(effort: :high)
+
+      expect { chat.ask('Hello') }.to raise_error(RubyLLM::UnsupportedParameterError) { |error|
+        expect(error.parameter).to eq(:thinking)
+        expect(error.message).to include('Supported types are xhigh')
+      }
+    end
+
+    it 'leaves other bad requests as they are' do
+      body = { error: { message: 'Invalid response_format', type: 'BadRequestError', param: nil, code: 400 } }
+      stub_request(:post, 'https://inference.hetzner.com/v1/chat/completions')
+        .to_return(status: 400, body: body.to_json, headers: { 'Content-Type' => 'application/json' })
+      context = RubyLLM.context { |context_config| context_config.hetzner_api_key = 'test-key' }
+
+      expect { context.chat(model: model_id, provider: :hetzner).ask('Hello') }
+        .to raise_error(RubyLLM::BadRequestError) { |error|
+          expect(error).not_to be_a(RubyLLM::UnsupportedParameterError)
+        }
+    end
+
+    context 'with the live API', :live do
+      include_context 'with configured RubyLLM'
+
+      it 'thinks at the efforts Qwen3.8-27B takes' do
+        response = RubyLLM.chat(model: model_id, provider: :hetzner)
+                          .with_thinking(effort: :xhigh)
+                          .ask('What is 17 times 23? Reply with the number.')
+
+        expect(response.content).to include('391')
+        expect(response.thinking&.text).to be_present
+      end
+
+      it 'names thinking when Qwen3.8-27B rejects an effort' do
+        chat = RubyLLM.chat(model: model_id, provider: :hetzner).with_thinking(effort: :high)
+
+        expect { chat.ask('Say ok') }.to raise_error(RubyLLM::UnsupportedParameterError) { |error|
+          expect(error.parameter).to eq(:thinking)
+        }
+      end
+    end
+  end
+
+  describe 'prompt caching' do
+    let(:chat) do
+      RubyLLM.context { |context_config| context_config.hetzner_api_key = 'test-key' }
+             .chat(model: model_id, provider: :hetzner)
+    end
+
+    it 'marks no cache boundary, because the API ignores one' do
+      chat.add_message(role: :user, content: 'A long handbook').cache_until_here
+
+      rendered = chat.render
+
+      expect(rendered.to_json).not_to include('prompt_cache_breakpoint')
+      expect(rendered[:messages].first[:content]).to eq('A long handbook')
+    end
+
+    it 'sends no cache key, because caching takes no request option' do
+      chat.with_caching(key: 'tenant-1').add_message(role: :user, content: 'Hello')
+
+      expect(chat.render).not_to include(:prompt_cache_key)
+    end
+  end
+
   describe 'attachments' do
     let(:protocol) { described_class::Chat }
 

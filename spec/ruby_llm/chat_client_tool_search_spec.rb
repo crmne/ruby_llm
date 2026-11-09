@@ -140,6 +140,29 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  describe 'on xAI, whose tool search is limited to alpha accounts' do
+    let(:grok) { RubyLLM.chat(model: model_for(:xai), provider: :xai) }
+
+    it 'sends a tool_search function and no deferred tools, so any key can use them' do
+      grok.with_tools(WeatherLookup, defer: true).add_message(role: :user, content: 'Hi')
+
+      tools = grok.render[:tools]
+
+      expect(tools.map { |tool| tool[:name] }).to eq(%w[tool_search])
+      expect(tools.to_json).not_to include('defer_loading')
+    end
+
+    it 'loads a deferred tool through its own search and calls it', :live do
+      chat = grok.with_tools(WeatherLookup, StockPrice, defer: true)
+
+      response = chat.ask('What is the weather in Berlin right now? Use your tools.')
+
+      calls = chat.messages.select(&:tool_call?).flat_map { |message| message.tool_calls.values.map(&:name) }
+      expect(calls).to include('tool_search', 'weather_lookup')
+      expect(response.content).to match(/sunny/i)
+    end
+  end
+
   describe 'on a provider with tool search' do
     it 'leaves the search to the provider' do
       native = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic)
