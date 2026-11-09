@@ -58,6 +58,7 @@ RSpec.describe RubyLLM::Transport::Connection do
           super(app, opts, &block)
         end
       end
+      previous = Faraday::Adapter.registered_middleware[:async_http]
       Faraday::Adapter.register_middleware(async_http: adapter)
 
       [:async_http, adapter].each do |faraday_adapter|
@@ -68,7 +69,11 @@ RSpec.describe RubyLLM::Transport::Connection do
       # Each provider builds its plain connection first, then the streaming one.
       expect(seen).to eq([{}, { read_timeout: 21 }, {}, {}])
     ensure
-      Faraday::Adapter.instance_variable_get(:@registered_middleware).delete(:async_http)
+      if previous
+        Faraday::Adapter.register_middleware(async_http: previous)
+      else
+        Faraday::Adapter.unregister_middleware(:async_http)
+      end
     end
 
     it 'hands the TLS options to the adapter' do
