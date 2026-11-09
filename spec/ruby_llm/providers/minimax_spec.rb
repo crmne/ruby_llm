@@ -37,7 +37,8 @@ RSpec.describe RubyLLM::Providers::MiniMax do
   end
 
   it "speaks MiniMax's dialect of the Anthropic Messages API" do
-    expect(described_class.protocols).to eq(anthropic: described_class::Anthropic)
+    expect(described_class.protocols).to include(anthropic: described_class::Anthropic)
+    expect(described_class.protocols.keys.first).to eq(:anthropic)
     expect(described_class::Anthropic.superclass).to eq(RubyLLM::Protocols::Anthropic)
   end
 

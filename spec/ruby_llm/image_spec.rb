@@ -91,7 +91,8 @@ RSpec.describe RubyLLM::Image, :live do
   describe 'basic functionality' do
     each_model(IMAGE_GENERATION_MODELS) do |provider, model, model_info|
       it "#{provider}/#{model} can paint images" do
-        image = RubyLLM.paint('a siamese cat', model: model, provider: provider)
+        image = RubyLLM.paint('a siamese cat', model: model, provider: provider,
+                                               **model_info.slice(:assume_model_exists))
 
         expect(image.mime_type).to include('image')
         expect(image.model).to eq(model)
@@ -102,7 +103,8 @@ RSpec.describe RubyLLM::Image, :live do
       next unless model_info[:supports_size]
 
       it "#{provider}/#{model} supports custom sizes" do
-        image = RubyLLM.paint('a siamese cat', size: '1792x1024', model: model, provider: provider)
+        image = RubyLLM.paint('a siamese cat', size: '1792x1024', model: model, provider: provider,
+                                               **model_info.slice(:assume_model_exists))
 
         expect(image.mime_type).to include('image')
         expect(image.model).to eq(model)
