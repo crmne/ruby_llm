@@ -70,6 +70,21 @@ A chat with [fallbacks]({% link _advanced/error-handling.md %}#model-fallbacks) 
 
 These settings cover requests you can safely repeat. Requests that create something on the provider's side, such as submitting a batch, starting a video generation job, uploading a file, or creating a content cache, are sent once and raise on failure, because a retry after a lost response would create a second job.
 
+#### Stalled Streams
+
+`request_timeout` has to be long enough for the slowest answer you expect, such as a reasoning model that thinks for minutes, so it is also how long a provider that accepts the request and then sends nothing can hold a chat. Set `stream_idle_timeout` to give up on a stream sooner when it goes quiet:
+
+```ruby
+RubyLLM.configure do |config|
+  config.request_timeout = 1800      # A long answer may take this long
+  config.stream_idle_timeout = 60    # But a stream may not go a minute without a byte
+end
+```
+
+A streaming request then fails when no bytes arrive for that many seconds, counted from sending the request and again from each chunk, so a stream that keeps sending runs as long as it needs. It fails as a request timeout does: with a `RubyLLM::ConnectionError` whose `timeout?` is `true`, retried as `max_retries` says, and handed to [fallbacks]({% link _advanced/error-handling.md %}#model-fallbacks) like any other timeout. Requests that don't stream ignore it and keep `request_timeout`. The default, `nil`, leaves streams to `request_timeout` too.
+
+Providers that send keep-alive comments while they queue a request count as sending bytes. RubyLLM sets the adapter's read timeout on streaming requests, which `:net_http`, `:net_http_persistent` and `:async_http` all apply to each wait for the next bytes. An adapter of your own sees it as `env.request.read_timeout`.
+
 Example for high-latency connections:
 
 ```ruby
@@ -136,7 +151,7 @@ end
 
 The default `:net_http` adapter opens a new connection for every request. `:net_http_persistent` keeps a pool that every thread draws from, which suits Puma and Sidekiq. Twenty calls to a local HTTPS server take 2.0 ms each through `:net_http`, and 0.4 ms through `:net_http_persistent`, which connects once. On Falcon or Solid Queue fiber workers, use `:async_http` from the `async-http-faraday` gem instead. It keeps connections open for as long as the Async reactor that opened them runs, so calls made outside a reactor still connect every time.
 
-Contexts share connections when their connection settings match. Credentials travel with each request, so tenants with their own API keys reuse the same connections. A context that changes an API base, `request_timeout`, a retry setting, `http_proxy`, `ssl`, or `faraday_adapter` gets connections of its own. Each forked process, such as a Puma worker, opens its own connections instead of sharing its parent's.
+Contexts share connections when their connection settings match. Credentials travel with each request, so tenants with their own API keys reuse the same connections. A context that changes an API base, `request_timeout`, `stream_idle_timeout`, a retry setting, `http_proxy`, `ssl`, or `faraday_adapter` gets connections of its own. Each forked process, such as a Puma worker, opens its own connections instead of sharing its parent's.
 
 ## Logging & Debugging
 
@@ -277,6 +292,7 @@ Every setting that isn't a provider's, with its default. Provider keys and endpo
 | `model_registry_file` | OS user cache directory | Path of the writable registry cache. |
 | `model_registry_store` | `nil` | Object that answers `read`, and optionally `write(registry)`. |
 | `request_timeout` | `300` | Seconds before a request times out. |
+| `stream_idle_timeout` | `nil` | Seconds a streaming request may go without receiving a byte before it times out. |
 | `video_generation_timeout` | `600` | Seconds `animate` waits for a video. |
 | `video_generation_poll_interval` | `5` | Seconds between checks on a video job. |
 | `max_retries` | `3` | Retries after a transient failure. |

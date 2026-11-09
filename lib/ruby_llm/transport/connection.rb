@@ -28,8 +28,9 @@ module RubyLLM
       # The key a shared Faraday connection is cached under: the provider,
       # whether it streams, and everything ::build reads.
       Settings = Struct.new(
-        :provider, :stream, :api_base, :adapter, :timeout, :proxy, :ssl, :logger, :log_bodies, :log_regexp_timeout,
-        :max_retries, :retry_interval, :retry_max_interval, :retry_interval_randomness, :retry_backoff_factor,
+        :provider, :stream, :api_base, :adapter, :timeout, :idle_timeout, :proxy, :ssl, :logger, :log_bodies,
+        :log_regexp_timeout, :max_retries, :retry_interval, :retry_max_interval, :retry_interval_randomness,
+        :retry_backoff_factor,
         keyword_init: true
       )
 
@@ -209,6 +210,7 @@ module RubyLLM
           api_base: @api_base || @provider.api_base,
           adapter: @config.faraday_adapter,
           timeout: @config.request_timeout,
+          idle_timeout: (@config.stream_idle_timeout if stream),
           proxy: @config.http_proxy,
           ssl: (self.class.ssl_snapshot(@config.ssl) if @config.ssl),
           logger: logger,
@@ -232,8 +234,11 @@ module RubyLLM
         context[SigningMiddleware::CONTEXT_KEY] = @signer if @signer
       end
 
+      # Adapters time each read of a response with +read_timeout+, so on a
+      # streaming connection it is the longest wait for the next bytes.
       def self.setup_timeout(faraday, settings)
         faraday.options.timeout = settings.timeout
+        faraday.options.read_timeout = settings.idle_timeout if settings.idle_timeout
       end
 
       def self.setup_logging(faraday, settings)
@@ -312,8 +317,16 @@ module RubyLLM
         faraday.request :json
         faraday.use :llm_signing
         faraday.use JsonResponse
-        faraday.adapter(settings.adapter)
+        faraday.adapter(settings.adapter, **adapter_options(settings))
         faraday.use :llm_errors
+      end
+
+      # async-http-faraday reads its timeout for each read from its own
+      # options rather than the request's.
+      def self.adapter_options(settings)
+        return {} unless settings.adapter == :async_http && settings.idle_timeout
+
+        { read_timeout: settings.idle_timeout }
       end
 
       def self.setup_http_proxy(faraday, settings)
@@ -346,7 +359,7 @@ module RubyLLM
 
       private_class_method :setup_timeout, :setup_logging, :logging_regexp, :setup_retry, :stream_delivered?,
                            :idempotent?, :fall_back_instead?, :retry_wait, :header_seconds, :setup_middleware,
-                           :setup_http_proxy, :setup_ssl, :retry_exceptions
+                           :adapter_options, :setup_http_proxy, :setup_ssl, :retry_exceptions
 
       def set_usage_tracker(request, tracker)
         context = request.options.context ||= {}

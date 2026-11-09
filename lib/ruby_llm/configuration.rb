@@ -270,6 +270,20 @@ module RubyLLM
     option :request_timeout, 300
 
     ##
+    # :attr_accessor: stream_idle_timeout
+    #
+    # Seconds a streaming request may go without receiving a byte, from
+    # sending the request or since the last chunk, before it fails with a
+    # ConnectionError whose +timeout?+ is +true+, as a request_timeout
+    # does, so fallbacks take over. +request_timeout+ still bounds opening
+    # the connection and sending the request. Requests that don't stream
+    # ignore it. Default: +nil+, which leaves streams to +request_timeout+.
+    #
+    #   config.request_timeout = 1800
+    #   config.stream_idle_timeout = 60
+    option :stream_idle_timeout
+
+    ##
     # :attr_accessor: max_retries
     #
     # Number of times to retry failed requests. Default: 3.

@@ -40,6 +40,16 @@ RSpec.describe RubyLLM::Transport::Connection do
       end
     end
 
+    it 'gives streams a read timeout of their own and leaves other requests on the request timeout' do
+      idle = RubyLLM::Providers::OpenAI.new(configured(stream_idle_timeout: 20)).connection
+
+      expect(idle.connection(stream: true).options.read_timeout).to eq(20)
+      expect(idle.connection.options.read_timeout).to be_nil
+      expect(idle.connection).to be(faraday_for(config))
+      expect(idle.connection(stream: true))
+        .not_to be(RubyLLM::Providers::OpenAI.new(config).connection.connection(stream: true))
+    end
+
     it 'hands the TLS options to the adapter' do
       seen = nil
       adapter = Class.new(Faraday::Adapter) do
