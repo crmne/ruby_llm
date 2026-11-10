@@ -1,0 +1,48 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://agent.deepgram.com/v1/think
+    body:
+      encoding: UTF-8
+      string: '{"model":"phonellm-mini-alpha-2-fp8","messages":[{"role":"user","content":"What
+        is 2+2?"}],"stream":false,"reasoning_effort":"low"}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Token <DEEPGRAM_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Dg-Project-Id:
+      - <DEEPGRAM_PROJECT_ID>
+      Vary:
+      - accept-encoding
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings
+      Dg-Request-Id:
+      - 01a1c5fd-9a3f-7e00-ba03-6f6f5cede207
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Tue, 10 Nov 2026 15:04:55 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTA2ZTFmNjBjLTRjM2MtNGQ0OS1iOTFjLTU5NmQ5NWZhM2NkNyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJPa2F5LCB0aGUgdXNlciBhc2tlZCBcIldoYXQgaXMgMisyP1wiIFRoYXQncyBhIHByZXR0eSBiYXNpYyBtYXRoIHF1ZXN0aW9uLiBMZXQgbWUgdGhpbmsgYWJvdXQgdGhpcyBjYXJlZnVsbHkuXG5cbkZpcnN0LCBJIHNob3VsZCBjb25maXJtIHRoYXQgMisyIGlzIGEgc2ltcGxlIGFkZGl0aW9uIHByb2JsZW0uIEluIHN0YW5kYXJkIGFyaXRobWV0aWMsIDIgcGx1cyAyIGVxdWFscyA0LiBCdXQgSSByZWNhbGwgdGhhdCBzb21ldGltZXMgcGVvcGxlIGFzayB0aGlzIHRvIHRlc3QgaWYgc29tZW9uZSBpcyBiZWluZyB0b28gbGl0ZXJhbCBvciBpZiB0aGV5J3JlIGluIGEgc3BlY2lmaWMgY29udGV4dCBsaWtlIGEgZGlmZmVyZW50IG51bWJlciBiYXNlLiBcblxuSG1tLCB0aGUgdXNlciBkaWRuJ3QgbWVudGlvbiBhbnkgc3BlY2lhbCBjb250ZXh0LCBzbyBJIHNob3VsZCBwcm9iYWJseSBzdGljayB0byB0aGUgc3RhbmRhcmQgYmFzZSAxMCBhbnN3ZXIuIEkgd29uZGVyIGlmIHRoZXkncmUganVzdCBjaGVja2luZyBpZiBJIGNhbiBkbyBiYXNpYyBtYXRoLCBvciBpZiB0aGV5J3JlIHNldHRpbmcgdXAgZm9yIGEgdHJpY2sgcXVlc3Rpb24uIFxuXG5JIHNob3VsZCBhbHNvIGNvbnNpZGVyIHdoeSBzb21lb25lIHdvdWxkIGFzayB0aGlzLiBNYXliZSB0aGV5J3JlIGEgY2hpbGQgbGVhcm5pbmcgbWF0aCwgb3Igc29tZW9uZSB0ZXN0aW5nIEFJIGNhcGFiaWxpdGllcy4gQ291bGQgYWxzbyBiZSBhIHJlZmVyZW5jZSB0byB0aGF0IGZhbW91cyBcIjIrMj01XCIgcHJvcGFnYW5kYSBmcm9tIE9yd2VsbCdzIDE5ODQsIGJ1dCB0aGF0IHNlZW1zIHVubGlrZWx5IGZvciBzdWNoIGEgc2ltcGxlIHF1ZXN0aW9uLiBcblxuU2luY2UgdGhlIHF1ZXN0aW9uIGlzIHNvIHN0cmFpZ2h0Zm9yd2FyZCwgSSdsbCBnaXZlIHRoZSBzdGFuZGFyZCBhbnN3ZXIgYnV0IEknbGwga2VlcCBpdCBzaW1wbGUgYW5kIGNsZWFyLiBObyBuZWVkIHRvIG92ZXJjb21wbGljYXRlIGl0IHVubGVzcyB0aGUgdXNlciBmb2xsb3dzIHVwIHdpdGggbW9yZSBjb250ZXh0LiBcblxuVGhlIGFuc3dlciBpcyBkZWZpbml0ZWx5IDQuIEknbGwgbWFrZSBzdXJlIHRvIHN0YXRlIGl0IGNvbmZpZGVudGx5IGJ1dCB3aXRob3V0IGJlaW5nIGNvbmRlc2NlbmRpbmcuIElmIHRoZXkgd2FudCB0byBrbm93IGFib3V0IG90aGVyIG51bWJlciBiYXNlcyBvciBwaGlsb3NvcGhpY2FsIGludGVycHJldGF0aW9ucywgdGhleSBjYW4gYXNrIGEgZm9sbG93LXVwIHF1ZXN0aW9uLiBcblxuSSBzaG91bGQgYWxzbyBiZSBjYXJlZnVsIG5vdCB0byBhZGQgdW5uZWNlc3NhcnkgaW5mb3JtYXRpb24gdGhhdCBtaWdodCBjb25mdXNlIGEgYmVnaW5uZXIuIEp1c3QgdGhlIGNsZWFuIGFuc3dlcjogMisyPTQuXG48L3RoaW5rPlxuVGhlIGFuc3dlciBpcyAqKjQqKi4gSW4gc3RhbmRhcmQgYXJpdGhtZXRpYyAoYmFzZSAxMCksIDIgKyAyIGVxdWFscyA0LiBcblxuSWYgeW91J3JlIGFza2luZyBmb3IgY29udGV4dDogIFxuLSBJbiBhbnkgc3RhbmRhcmQgbnVtYmVyIHN5c3RlbSAobGlrZSBiaW5hcnksIGhleGFkZWNpbWFsLCBldGMuKSwgMiArIDIgd2lsbCBzdGlsbCBlcXVhbCA0IGluIGJhc2UgMTAsIG9yIGl0cyBlcXVpdmFsZW50IGluIHRoYXQgYmFzZSAoZS5nLiwgMTAgaW4gYmFzZSAyLCBidXQgdGhhdCdzIG5vdCB0aGUgcXVlc3Rpb24gaGVyZSkuICBcbi0gVGhpcyBpcyBhIGZ1bmRhbWVudGFsIGFyaXRobWV0aWMgZmFjdCwgc28gbm8gYWR2YW5jZWQgbWF0aCBvciBwaGlsb3NvcGh5IGlzIG5lZWRlZC4g8J+YiiIsInJlZnVzYWwiOm51bGwsInJvbGUiOiJhc3Npc3RhbnQifSwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJsb2dwcm9icyI6bnVsbH1dLCJjcmVhdGVkIjoxNzk0MzIzMDk0LCJtb2RlbCI6InBob25lbGxtLW1pbmktYWxwaGEtMi1mcDgiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyMywiY29tcGxldGlvbl90b2tlbnMiOjQzNiwidG90YWxfdG9rZW5zIjo0NTksInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfX19
+  recorded_at: Tue, 10 Nov 2026 15:04:56 GMT
+recorded_with: VCR 6.4.1
