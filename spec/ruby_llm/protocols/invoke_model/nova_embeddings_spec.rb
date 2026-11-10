@@ -23,6 +23,47 @@ RSpec.describe RubyLLM::Protocols::InvokeModel::NovaEmbeddings do
       )
     end
 
+    def media_params(filename)
+      attachment = RubyLLM::Attachment.new(File.expand_path("../../../fixtures/#{filename}", __dir__))
+      params = protocol.send(:render_embedding_payload, nil, dimensions: nil, task_type: nil, attachment:,
+                                                             provider_options: {})[:singleEmbeddingParams]
+      [params.except(:embeddingPurpose), attachment.encoded]
+    end
+
+    it 'renders an image, audio or video instead of text' do
+      params, bytes = media_params('ruby.png')
+      expect(params).to eq(image: { format: 'png', source: { bytes: } })
+
+      params, bytes = media_params('ruby.wav')
+      expect(params).to eq(audio: { format: 'wav', source: { bytes: } })
+
+      params, bytes = media_params('ruby_clip.mp4')
+      expect(params).to eq(video: { format: 'mp4', embeddingMode: 'AUDIO_VIDEO_COMBINED', source: { bytes: } })
+    end
+
+    it 'names a video by its extension, or its MIME type without one' do
+      render = lambda do |attachment|
+        protocol.send(:render_embedding_payload, nil, dimensions: nil, task_type: nil, attachment:,
+                                                      provider_options: {}).dig(:singleEmbeddingParams, :video, :format)
+      end
+
+      mov = RubyLLM::Attachment.new(StringIO.new('x'), filename: 'clip.mov', mime_type: 'video/quicktime')
+      expect(render.call(mov)).to eq('mov')
+      expect(render.call(RubyLLM::Attachment.new(StringIO.new('x'), mime_type: 'video/webm'))).to eq('webm')
+    end
+
+    it 'rejects what a single input cannot hold' do
+      model = 'amazon.nova-2-multimodal-embeddings-v1:0'
+      image = File.expand_path('../../../fixtures/ruby.png', __dir__)
+      pdf = File.expand_path('../../../fixtures/sample.pdf', __dir__)
+
+      expect { protocol.embed('Hi', model:, dimensions: nil, with: image) }.to raise_error(ArgumentError, /not both/)
+      expect { protocol.embed(nil, model:, dimensions: nil, with: [image, image]) }
+        .to raise_error(ArgumentError, /one attachment at a time/)
+      expect { protocol.embed(nil, model:, dimensions: nil, with: pdf) }
+        .to raise_error(RubyLLM::UnsupportedAttachmentError)
+    end
+
     it 'omits embeddingDimension without dimensions' do
       payload = protocol.send(:render_embedding_payload, 'Hello', dimensions: nil, task_type: nil,
                                                                   provider_options: {})

@@ -325,6 +325,7 @@ TEST_MODELS = {
     { provider: :bedrock, model: 'us.cohere.embed-v4:0' }
   ],
   document_embedding: [{ provider: :bedrock, model: 'amazon.nova-2-multimodal-embeddings-v1:0' }],
+  local_multimodal_embedding: [{ provider: :ollama, model: 'embeddinggemma-2' }],
   passage_embedding: [{ provider: :perplexity, model: 'pplx-embed-v1-0.6b' }],
   ocr: [
     { provider: :mistral, model: 'mistral-ocr-latest' },

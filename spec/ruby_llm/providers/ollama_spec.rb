@@ -5,6 +5,38 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Providers::Ollama do
   include_context 'with configured RubyLLM'
 
+  describe 'multimodal embeddings' do
+    let(:protocol) { described_class::ChatCompletions.new(described_class.new(RubyLLM.config), nil) }
+    let(:image) { RubyLLM::Attachment.new(File.expand_path('../../fixtures/ruby.png', __dir__)) }
+    let(:audio) { RubyLLM::Attachment.new(File.expand_path('../../fixtures/ruby.wav', __dir__)) }
+    let(:video) { RubyLLM::Attachment.new(File.expand_path('../../fixtures/ruby_clip.mp4', __dir__)) }
+
+    def render(text, with)
+      protocol.send(:render_embedding_payload, text, model: 'm', dimensions: nil, with:)
+    end
+
+    it 'puts text, image and audio in one input object' do
+      expect(render('The logo', [image, audio])).to eq(
+        model: 'm', input: { text: 'The logo', image: image.encoded, audio: audio.encoded }
+      )
+    end
+
+    it 'leaves out empty text' do
+      expect(render(nil, [image])[:input]).to eq(image: image.encoded)
+    end
+
+    it 'keeps plain text as it was' do
+      expect(protocol.send(:render_embedding_payload, %w[a b], model: 'm', dimensions: 8))
+        .to eq(model: 'm', input: %w[a b], dimensions: 8)
+    end
+
+    it 'rejects what one input object cannot hold' do
+      expect { render(nil, [video]) }.to raise_error(RubyLLM::UnsupportedAttachmentError)
+      expect { render(nil, [image, image]) }.to raise_error(ArgumentError, /one image/)
+      expect { render(%w[a b], [image]) }.to raise_error(ArgumentError, /one text at a time/)
+    end
+  end
+
   describe '#headers' do
     it 'returns empty headers when no API key is configured' do
       RubyLLM.configure { |config| config.ollama_api_key = nil }
