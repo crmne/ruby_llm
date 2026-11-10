@@ -217,6 +217,14 @@ RSpec.describe RubyLLM::Providers::Moonshot do
         .to eq(type: 'video_url', video_url: { url: 'ms://file-1' })
     end
 
+    it 'accepts uploaded images and videos, and refuses other uploaded files' do
+      upload = ->(mime_type) { RubyLLM::Attachment.new(RubyLLM::UploadedFile.new(id: 'f', provider: 'moonshot', mime_type:)) }
+
+      expect(protocol.supported_attachment?(upload.call('image/png'))).to be(true)
+      expect(protocol.supported_attachment?(upload.call('video/mp4'))).to be(true)
+      expect(protocol.supported_attachment?(upload.call('application/pdf'))).to be(false)
+    end
+
     it 'refers to an uploaded image by its Moonshot file reference' do
       file = RubyLLM::UploadedFile.new(id: 'file-1', provider: 'moonshot', mime_type: 'image/png', purpose: 'image')
 

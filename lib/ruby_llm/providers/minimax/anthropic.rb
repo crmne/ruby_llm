@@ -37,8 +37,6 @@ module RubyLLM
         private
 
         def render_content(content, attachments = [], citations: false)
-          return super unless attachments.any?(&:video?)
-
           blocks = super(content, [], citations:)
           attachments.each do |attachment|
             blocks.concat(attachment.video? ? [render_video(attachment)] : super(nil, [attachment], citations:))
