@@ -125,11 +125,16 @@ RSpec.describe RubyLLM::ActiveRecord::MCPCredential do
       end
       reported << Timeout.timeout(10) { lines.gets.chomp }
       resume.puts 'go', 'go'
-      succeeded = workers.map { |worker| reap(worker) }
+      succeeded = []
+      succeeded << reap(workers.shift) until workers.empty?
       events.close
       [succeeded, reported + lines.read.lines(chomp: true)]
     ensure
-      [events, resume].each { |io| io.close unless io.closed? }
+      workers&.each do |worker|
+        Process.kill(:KILL, worker)
+        Process.wait(worker)
+      end
+      [lines, events, release, resume].compact.each { |io| io.close unless io.closed? }
     end
 
     def reap(worker)
@@ -147,7 +152,7 @@ RSpec.describe RubyLLM::ActiveRecord::MCPCredential do
         events.puts "#{name} #{yield}"
         status = 0
       rescue Exception => e # rubocop:disable Lint/RescueException
-        events.puts "#{name} raised #{e.class}"
+        events.puts "#{name} raised #{e.class}: #{e.message.lines.first&.chomp}"
       ensure
         exit!(status)
       end
