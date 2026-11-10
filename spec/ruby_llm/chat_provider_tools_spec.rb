@@ -149,6 +149,14 @@ RSpec.describe RubyLLM::Chat, :live do
       expect(payload.dig(:toolConfig, :tools)).to include({ systemTool: { name: 'nova_grounding' } })
     end
 
+    it 'renders the Bedrock code execution alias as the Nova code interpreter system tool' do
+      payload = RubyLLM.chat(model: model_for(:bedrock), provider: :bedrock)
+                       .with_provider_tools(:code_execution)
+                       .render
+
+      expect(payload.dig(:toolConfig, :tools)).to eq([{ systemTool: { name: 'nova_code_interpreter' } }])
+    end
+
     it 'keeps Bedrock function tools alongside the grounding tool' do
       weather = Class.new(RubyLLM::Tool) do
         def self.name = 'Weather'
@@ -691,6 +699,31 @@ RSpec.describe RubyLLM::Chat, :live do
   end
 
   describe 'code execution' do
+    context "with bedrock/#{model_for(:bedrock)}" do
+      let(:chat) do
+        RubyLLM.chat(model: model_for(:bedrock), provider: :bedrock).with_provider_tools(:code_execution)
+      end
+
+      it 'runs code server-side, keeps the result, and continues from the local transcript' do
+        response = chat.ask('Use the code interpreter to compute 123456789 * 987654321. Reply with only the product.')
+
+        expect(response.content).to include('121932631112635269')
+        expect(response.server_tool_calls).to include(have_attributes(name: 'nova_code_interpreter'))
+        expect(response.server_tool_calls).to include(have_attributes(type: 'nova_code_interpreter_result'))
+        follow_up = chat.ask('Without running anything, what was the result?')
+        expect(follow_up.content.delete(',')).to include('121932631112635269')
+      end
+
+      it 'streams a code interpreter run' do
+        chunks = []
+        response = chat.ask('Use the code interpreter to multiply 37 by 19.') { |chunk| chunks << chunk }
+
+        expect(chunks.filter_map(&:content).join).to eq(response.content)
+        expect(response.content).to include('703')
+        expect(response.server_tool_calls).to include(have_attributes(name: 'nova_code_interpreter'))
+      end
+    end
+
     context "with anthropic/#{model_for(:anthropic)}" do
       let(:chat) do
         RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic).with_provider_tools(:code_execution)
