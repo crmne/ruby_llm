@@ -300,6 +300,8 @@ TEST_MODELS = {
   alternate_chat: [{ provider: :openai, model: 'gpt-4.1-mini' }],
   alternate_batch: [{ provider: :openai, model: 'gpt-5.6-terra' }],
   alternate_embedding: [{ provider: :openai, model: 'text-embedding-3-large' }],
+  batch: [{ provider: :openrouter, model: 'google/gemini-3.7-flash' }],
+  batch_embedding: [{ provider: :openrouter, model: 'google/gemini-embedding-001' }],
   alternate_speech: [{ provider: :openai, model: 'tts-1' }],
   reasoning_effort: [{ provider: :openai, model: 'gpt-5.2' }],
   adaptive_thinking: [{ provider: :anthropic, model: 'claude-sonnet-5' }],
