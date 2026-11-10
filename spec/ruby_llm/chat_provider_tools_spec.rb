@@ -584,7 +584,8 @@ RSpec.describe RubyLLM::Chat, :live do
 
         expect(chunks).not_to be_empty
         expect(response.content).to be_present
-        expect(response.citations.map(&:url)).to include('https://www.ruby-lang.org/en/downloads/')
+        # OpenAI's search tags its citation links with ?utm_source=openai; RubyLLM keeps the URL as given.
+        expect(response.citations.map(&:url)).to include(start_with('https://www.ruby-lang.org/en/downloads/'))
         expect(response.tokens.server_tool_use).to match('web_search_requests' => be_positive)
       end
     end
