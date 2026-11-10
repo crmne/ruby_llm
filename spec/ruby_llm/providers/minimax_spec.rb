@@ -141,6 +141,65 @@ RSpec.describe RubyLLM::Providers::MiniMax do
       expect(a_request(:post, messages_url)).not_to have_been_made
     end
 
+    describe 'structured output on MiniMax-Text-01' do
+      let(:v2_url) { 'https://api.minimax.io/v1/text/chatcompletion_v2' }
+      let(:chat) do
+        context.chat(model: described_class::STRUCTURED_OUTPUT_MODEL, provider: :minimax, assume_model_exists: true)
+               .with_schema({ name: 'fruit_choice',
+                              schema: { type: 'object', properties: { fruit: { type: 'string' } } } })
+      end
+
+      def stub_v2(content)
+        stub_request(:post, v2_url).to_return(
+          status: 200,
+          body: { choices: [{ message: { role: 'assistant', content: content }, finish_reason: 'stop' }] }.to_json,
+          headers: { 'Content-Type' => 'application/json' }
+        )
+      end
+
+      it 'removes the wrapper named after the schema' do
+        stub_v2('{"fruit_choice":{"fruit":"apple"}}')
+
+        expect(chat.ask('Name a fruit').parsed).to eq('fruit' => 'apple')
+      end
+
+      it 'keeps an answer that has other keys or a second key beside the schema name' do
+        stub_v2('{"fruit_choice":{"fruit":"apple"},"note":"x"}')
+
+        expect(chat.ask('Name a fruit').parsed).to eq('fruit_choice' => { 'fruit' => 'apple' }, 'note' => 'x')
+      end
+
+      it 'keeps an answer that is not a JSON object' do
+        stub_v2('[1, 2]')
+
+        expect(chat.ask('Name a fruit').content).to eq('[1, 2]')
+      end
+
+      it 'keeps an answer that is not JSON' do
+        stub_v2('apple')
+
+        expect(chat.ask('Name a fruit').content).to eq('apple')
+      end
+
+      it 'reads a message without text' do
+        stub_request(:post, v2_url).to_return(
+          status: 200,
+          body: { choices: [{ message: { role: 'assistant', content: nil }, finish_reason: 'stop' }] }.to_json,
+          headers: { 'Content-Type' => 'application/json' }
+        )
+
+        expect(chat.ask('Name a fruit').content).to be_nil.or eq('')
+      end
+
+      it 'keeps a wrapper-shaped answer when the request had no schema' do
+        protocol = described_class::ChatCompletions.new(provider, RubyLLM::Model.default('MiniMax-Text-01', 'minimax'))
+        data = { 'choices' => [{ 'message' => { 'role' => 'assistant',
+                                                'content' => '{"fruit_choice":{"fruit":"apple"}}' } }] }
+
+        expect(protocol.parse_completion_body(data, raw: nil).content).to eq('{"fruit_choice":{"fruit":"apple"}}')
+      end
+    end
+
     it 'raises for calls: :one before sending, because the API ignores it' do
       chat = context.chat(model: model_id, provider: :minimax).with_tools(lookup_tool).with_tool_options(calls: :one)
 

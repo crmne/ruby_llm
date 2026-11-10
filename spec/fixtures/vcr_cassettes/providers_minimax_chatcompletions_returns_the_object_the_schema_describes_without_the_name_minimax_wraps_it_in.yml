@@ -1,0 +1,63 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.minimax.io/v1/text/chatcompletion_v2
+    body:
+      encoding: UTF-8
+      string: '{"model":"MiniMax-Text-01","messages":[{"role":"user","content":"Name
+        a fruit."}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"fruit_choice","schema":{"type":"object","properties":{"fruit":{"type":"string","enum":["apple","banana"]}},"required":["fruit"],"additionalProperties":false},"strict":true}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '570'
+      Trace-Id:
+      - 07424aab04f1a283a1c87007371ac84a
+      X-Session-Id:
+      - dab152836acc5852d680476ea8a99a34
+      X-Mm-Request-Id:
+      - 2092934004998157135_1794316203p8dy1i
+      Minimax-Request-Id:
+      - 275eb6fcde20996bcaf19ccdd24dad5e
+      Alb-Receive-Time:
+      - '1794316203.678'
+      Alb-Request-Id:
+      - a78a5eaa2b0da89340eb7ae5b5fdabd2f1820653
+      Expires:
+      - Tue, 10 Nov 2026 13:10:05 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Tue, 10 Nov 2026 13:10:05 GMT
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-From:
+      - ak
+    body:
+      encoding: UTF-8
+      string: '{"id":"07424aab04f1a283a1c87007371ac84a","choices":[{"finish_reason":"stop","index":0,"message":{"content":"{\n  \"fruit_choice\":   {\n    \"fruit\":
+        \"apple\"\n  }\n}","role":"assistant","name":"MiniMax AI","audio_content":""}}],"created":1794316203,"model":"MiniMax-Text-01","object":"chat.completion","usage":{"total_tokens":734,"total_characters":0,"prompt_tokens":715,"completion_tokens":19},"input_sensitive":false,"output_sensitive":false,"input_sensitive_type":0,"output_sensitive_type":0,"output_sensitive_int":0,"base_resp":{"status_code":0,"status_msg":""}}
+
+        '
+  recorded_at: Tue, 10 Nov 2026 13:10:05 GMT
+recorded_with: VCR 6.4.1
