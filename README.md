@@ -22,7 +22,7 @@ RubyLLM.paint("a sunset over mountains in watercolor").save("sunset.png")
 
 <div align="center">
 
-[Website](https://rubyllm.com/) · [Getting Started](https://rubyllm.com/getting-started/) · [What's New in 2.1](https://rubyllm.com/whats-new-in-2-1/)
+[Website](https://rubyllm.com/) · [Getting Started](https://rubyllm.com/getting-started/) · [What's New in 2.2](https://rubyllm.com/whats-new-in-2-2/)
 
 Battle tested at [<picture><source media="(prefers-color-scheme: dark)" srcset="https://chatwithwork.com/logotype-dark.svg"><img src="https://chatwithwork.com/logotype.svg" alt="Chat with Work" height="30" align="absmiddle"></picture>](https://chatwithwork.com) - *Fully private work AI*
 
@@ -49,7 +49,7 @@ Build with the models you want. Move between hosted and local providers without 
 
 ## A complete AI framework for Ruby
 
-More than a client for model APIs. RubyLLM gives your application the conventions, the runtime, and every piece in between, designed to work together. Everything below ships in RubyLLM 2.1.
+More than a client for model APIs. RubyLLM gives your application the conventions, the runtime, and every piece in between, designed to work together. Everything below ships in RubyLLM 2.2.
 
 ### Conversations
 
@@ -96,15 +96,13 @@ More than a client for model APIs. RubyLLM gives your application the convention
 * **Observability:** Instrumentation events and OpenTelemetry tracing
 * **Async:** Fiber-based concurrency
 * **Model registry:** Browse capabilities, limits, and pricing across providers
-* **Providers:** OpenAI, Azure, xAI, Anthropic, Gemini, VertexAI, Bedrock, Cohere, DeepSeek, Hetzner, Mistral, Ollama, Ollama Cloud, OpenRouter, Perplexity, GPUStack, ElevenLabs, Deepgram, TypeSafe, and any OpenAI-compatible API
+* **Providers:** OpenAI, Azure, xAI, Anthropic, Gemini, VertexAI, Bedrock, Cohere, DeepSeek, Hetzner, Meta, MiniMax, Mistral, Moonshot AI, Ollama, Ollama Cloud, OpenRouter, Perplexity, GPUStack, ElevenLabs, Deepgram, TypeSafe, Z.ai, and any OpenAI-compatible API
 
-### Coming in 2.2
+### New in 2.2
 
-These are on `main` and documented under [rubyllm.com/next](https://rubyllm.com/next/whats-new-in-2-2/):
-
-* **Code execution:** Let the model run Ruby, Python, JavaScript, and shell in a sandbox on your servers with [`with_code_execution`](https://rubyllm.com/next/code-execution/)
-* **Skills:** Teach the model your workflows with folders of instructions and scripts in the Agent Skills format with [`with_skills`](https://rubyllm.com/next/skills/)
-* **File stores:** Keep attachments and long tool results out of the conversation with [`with_file_store`](https://rubyllm.com/next/file-stores/)
+* **Code execution:** Let the model run Ruby, Python, JavaScript, and shell in a sandbox on your servers with [`with_code_execution`](https://rubyllm.com/code-execution/)
+* **Skills:** Teach the model your workflows with folders of instructions and scripts in the Agent Skills format with [`with_skills`](https://rubyllm.com/skills/)
+* **File stores:** Keep attachments and long tool results out of the conversation with [`with_file_store`](https://rubyllm.com/file-stores/)
 * **Message queueing:** Add messages while a chat runs with `queue`
 * **More providers:** Meta, MiniMax, Moonshot AI, and Z.ai
 
@@ -181,7 +179,7 @@ Start your Rails server and visit `http://localhost:3000/chats` to try the chat 
 
 ## Start with one line. Add files, tools, and agents
 
-These examples use **2.1.1**. Follow [Getting Started](https://rubyllm.com/getting-started/) to install it and configure the providers you want to try. For 1.x, use the [1.x docs](https://rubyllm.com/v1/).
+These examples use **2.2.0**. Follow [Getting Started](https://rubyllm.com/getting-started/) to install it and configure the providers you want to try. For 1.x, use the [1.x docs](https://rubyllm.com/v1/).
 
 ```ruby
 # Just ask
@@ -308,10 +306,10 @@ response.parsed
 
 ## Installation
 
-Install RubyLLM 2.1:
+Install RubyLLM 2.2:
 
 ```bash
-bundle add ruby_llm --version 2.1.1
+bundle add ruby_llm --version 2.2.0
 ```
 
 Configure a provider in your script, or in `config/initializers/ruby_llm.rb` in Rails:
@@ -325,6 +323,8 @@ end
 ```
 
 Configure the other providers used by the examples as needed: Gemini for files, xAI for video, Mistral for OCR, and Cohere for reranking. [Getting Started](https://rubyllm.com/getting-started/) shows each setup beside its example. Upgrading an existing app? Follow the [upgrade guide](https://rubyllm.com/upgrading/).
+
+Coming from ruby-openai or langchainrb? Follow the [ruby-openai migration guide](https://rubyllm.com/migrate/ruby-openai/), or see [every migration and comparison guide](https://rubyllm.com/migrating-from/).
 
 ## AI coding assistants
 
