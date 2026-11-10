@@ -220,4 +220,25 @@ RSpec.describe RubyLLM::Providers::ZAI do
       expect { protocol.render_content('Hear this', [audio]) }.to raise_error(RubyLLM::UnsupportedAttachmentError)
     end
   end
+
+  describe 'web search citations' do
+    def citations_for(extra)
+      body = { choices: [{ message: { role: 'assistant', content: 'Hi' }, finish_reason: 'stop' }] }.merge(extra)
+      stub_request(:post, completions_url)
+        .to_return(status: 200, body: body.to_json, headers: { 'Content-Type' => 'application/json' })
+      context.chat(model: model_id, provider: :zai).ask('Hi').citations
+    end
+
+    it 'builds citations from the web_search array, skipping malformed entries' do
+      citations = citations_for(web_search: ['bad', { link: 'https://a.test', title: 'A', content: 'text' }])
+
+      expect(citations.map(&:to_h)).to contain_exactly(
+        include(url: 'https://a.test', title: 'A', cited_text: 'text', source_index: 1)
+      )
+    end
+
+    it 'has no citations without the array' do
+      expect(citations_for({})).to eq([])
+    end
+  end
 end
