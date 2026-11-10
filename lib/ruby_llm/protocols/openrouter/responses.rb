@@ -25,18 +25,6 @@ module RubyLLM
           {}
         end
 
-        def merge_server_tool_entries(payload, entries)
-          entries.each do |entry|
-            tool = Support::Utils.deep_symbolize_keys(entry)
-            next unless tool[:type] == 'mcp'
-            next if tool[:require_approval].to_s == 'never'
-
-            raise ArgumentError,
-                  "OpenRouter MCP requires explicit require_approval: 'never'; approval events are not returned"
-          end
-          super
-        end
-
         def parse_usage(usage)
           super.merge(reported_cost: reported_cost(usage))
         end

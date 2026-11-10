@@ -255,7 +255,6 @@ Some services use an existing connector or require additional settings:
 | xAI | Use `allowed_tools` to select tools; allowed calls execute automatically |
 | Mistral | Use `connector_id:` for a connector configured in Mistral Studio |
 | Bedrock Mantle | Use `connector_id:` with an accessible Lambda or AgentCore Gateway ARN; Gateway requires `require_approval: "never"` |
-| OpenRouter Responses | Explicit `require_approval: "never"`; approval requests are unavailable |
 
 Vertex AI connects remote MCP through a hosted Deep Research agent. Use the [Hosted Research API]({% link _advanced/hosted-research.md %}) for its single-turn report and job lifecycle.
 
