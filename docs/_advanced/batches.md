@@ -207,7 +207,7 @@ The batch workflow above is shared. These differences affect which requests you 
 | Azure | Requires a batch-capable deployment. Azure embedding batches are not currently available through RubyLLM. |
 | Bedrock | Chat batches do not support tools or structured output. Region and batch-size limits depend on the model. |
 | Cohere | Chat batches do not support structured output, forced tool choice, or retrieval documents. |
-| OpenRouter | Requires a model with batch access. Batches accept text input and output, with one protocol per batch. Embedding task types and provider-routing preferences are unavailable. Cancellation is not supported. |
+| OpenRouter | Requires a model with a batch endpoint, and some of those need your own provider key. Send images and files as public URLs: OpenRouter only accepts inline ones on some accounts and providers. Batches return text and embeddings, with one protocol per batch. Embedding task types and provider-routing preferences are unavailable. Cancellation is not supported. |
 | Vertex AI | Text embedding batches require matching dimensions and parameters across requests. |
 
 See [batch setup]({% link _reference/configuration-providers.md %}#batch-processing) for dependencies, cloud storage, and permissions. Bedrock and Vertex AI keep batch files in your configured bucket after processing or cancellation; your application controls their cleanup.
