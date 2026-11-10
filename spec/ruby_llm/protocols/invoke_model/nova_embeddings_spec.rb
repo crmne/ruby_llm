@@ -41,6 +41,17 @@ RSpec.describe RubyLLM::Protocols::InvokeModel::NovaEmbeddings do
       expect(params).to eq(video: { format: 'mp4', embeddingMode: 'AUDIO_VIDEO_COMBINED', source: { bytes: } })
     end
 
+    it 'names a video by its extension, or its MIME type without one' do
+      render = lambda do |attachment|
+        protocol.send(:render_embedding_payload, nil, dimensions: nil, task_type: nil, attachment:,
+                                                      provider_options: {}).dig(:singleEmbeddingParams, :video, :format)
+      end
+
+      mov = RubyLLM::Attachment.new(StringIO.new('x'), filename: 'clip.mov', mime_type: 'video/quicktime')
+      expect(render.call(mov)).to eq('mov')
+      expect(render.call(RubyLLM::Attachment.new(StringIO.new('x'), mime_type: 'video/webm'))).to eq('webm')
+    end
+
     it 'rejects what a single input cannot hold' do
       model = 'amazon.nova-2-multimodal-embeddings-v1:0'
       image = File.expand_path('../../../fixtures/ruby.png', __dir__)
