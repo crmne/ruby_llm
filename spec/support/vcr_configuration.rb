@@ -121,10 +121,6 @@ VCR.configure do |config|
   config.filter_sensitive_data('<DEEPGRAM_PROJECT_ID>') do |interaction|
     interaction.response.headers['Dg-Project-Id']&.first
   end
-  config.filter_sensitive_data('<X_REQUEST_ID>') { |interaction| interaction.response.headers['X-Request-Id']&.first }
-  config.filter_sensitive_data('<REQUEST_ID>') { |interaction| interaction.response.headers['Request-Id']&.first }
-  config.filter_sensitive_data('<CF_RAY>') { |interaction| interaction.response.headers['Cf-Ray']&.first }
-  config.filter_sensitive_data('<PROXY_STATUS>') { |interaction| interaction.response.headers['Proxy-Status']&.first }
 
   # Filter large strings used to test "context length exceeded" error handling
   config.filter_sensitive_data('<MASSIVE_TEXT>') { 'a' * 1_000_000 }
@@ -171,6 +167,14 @@ VCR.configure do |config|
 
         message.body = message.body.gsub(project_number, 'projects/<GOOGLE_CLOUD_PROJECT>')
       end
+    end
+
+    # Replace request-tracing headers in the headers only. Some providers reuse the
+    # value as a resource ID in the body (xAI returns a job's ID as X-Request-Id),
+    # and a global filter would overwrite that ID and break replay.
+    { 'X-Request-Id' => '<X_REQUEST_ID>', 'Request-Id' => '<REQUEST_ID>', 'Cf-Ray' => '<CF_RAY>',
+      'Proxy-Status' => '<PROXY_STATUS>' }.each do |header, placeholder|
+      interaction.response.headers[header] = [placeholder] if interaction.response.headers[header]
     end
 
     if interaction.response.headers['Set-Cookie']
