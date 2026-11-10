@@ -1,0 +1,140 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://agent.deepgram.com/v1/think
+    body:
+      encoding: UTF-8
+      string: '{"model":"think-fast","messages":[{"role":"user","content":"What is
+        the weather in Berlin? Use the tool."}],"stream":true,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the current weather for one city","parameters":{"type":"object","properties":{"city":{"type":"string","description":"The
+        city name"}},"required":["city"],"additionalProperties":false,"strict":true}}}],"stream_options":{"include_usage":true}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Token <DEEPGRAM_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/event-stream
+      Cache-Control:
+      - no-cache
+      Dg-Project-Id:
+      - <DEEPGRAM_PROJECT_ID>
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings
+      Dg-Request-Id:
+      - 01a1c5fd-965b-7250-91ff-f4af45f8fcdb
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Tue, 10 Nov 2026 15:04:53 GMT
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"id":"chatcmpl-5e728920-fd72-41d9-beae-f8550301a717","choices":[{"index":0,"delta":{"content":"Checking","role":"assistant"},"finish_reason":null,"logprobs":null}],"created":1794323093,"model":"think-fast","object":"chat.completion.chunk"}
+
+        data: {"id":"chatcmpl-5e728920-fd72-41d9-beae-f8550301a717","choices":[{"index":0,"delta":{"content":" Berlin"},"finish_reason":null,"logprobs":null}],"created":1794323093,"model":"think-fast","object":"chat.completion.chunk"}
+
+        data: {"id":"chatcmpl-5e728920-fd72-41d9-beae-f8550301a717","choices":[{"index":0,"delta":{"content":"."},"finish_reason":null,"logprobs":null}],"created":1794323093,"model":"think-fast","object":"chat.completion.chunk"}
+
+        data: {"id":"chatcmpl-5e728920-fd72-41d9-beae-f8550301a717","choices":[{"index":0,"delta":{"content":"\n\n"},"finish_reason":null,"logprobs":null}],"created":1794323093,"model":"think-fast","object":"chat.completion.chunk"}
+
+        data: {"id":"chatcmpl-5e728920-fd72-41d9-beae-f8550301a717","choices":[{"index":0,"delta":{"content":"","tool_calls":[{"index":0,"id":"call-fad3f251-7dae-44c7-97b2-115f9b918a84","type":"function","function":{"name":"weather","arguments":"{\"city\":\"Berlin\"}"}}]},"finish_reason":null,"logprobs":null}],"created":1794323093,"model":"think-fast","object":"chat.completion.chunk"}
+
+        data: {"id":"chatcmpl-5e728920-fd72-41d9-beae-f8550301a717","choices":[{"index":0,"delta":{},"finish_reason":"tool_calls","logprobs":null}],"created":1794323093,"model":"think-fast","object":"chat.completion.chunk"}
+
+        data: {"id":"chatcmpl-5e728920-fd72-41d9-beae-f8550301a717","choices":[],"created":1794323093,"model":"think-fast","object":"chat.completion.chunk","usage":{"prompt_tokens":300,"completion_tokens":30,"total_tokens":330,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}
+
+        data: [DONE]
+
+  recorded_at: Tue, 10 Nov 2026 15:04:53 GMT
+- request:
+    method: post
+    uri: https://agent.deepgram.com/v1/think
+    body:
+      encoding: UTF-8
+      string: '{"model":"think-fast","messages":[{"role":"user","content":"What is
+        the weather in Berlin? Use the tool."},{"role":"assistant","content":"Checking
+        Berlin.\n\n","tool_calls":[{"id":"call-fad3f251-7dae-44c7-97b2-115f9b918a84","type":"function","function":{"name":"weather","arguments":"{\"city\":\"Berlin\"}"}}]},{"role":"tool","content":"Berlin:
+        15 degrees","tool_call_id":"call-fad3f251-7dae-44c7-97b2-115f9b918a84"}],"stream":true,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the current weather for one city","parameters":{"type":"object","properties":{"city":{"type":"string","description":"The
+        city name"}},"required":["city"],"additionalProperties":false,"strict":true}}}],"stream_options":{"include_usage":true}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Token <DEEPGRAM_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/event-stream
+      Cache-Control:
+      - no-cache
+      Dg-Project-Id:
+      - <DEEPGRAM_PROJECT_ID>
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings
+      Dg-Request-Id:
+      - 01a1c5fd-986e-75b2-b990-708663ae2082
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Tue, 10 Nov 2026 15:04:53 GMT
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"id":"chatcmpl-9ca14ea1-5185-4191-8b68-cf623ec42946","choices":[{"index":0,"delta":{"content":"It","role":"assistant"},"finish_reason":null,"logprobs":null}],"created":1794323093,"model":"think-fast","object":"chat.completion.chunk"}
+
+        data: {"id":"chatcmpl-9ca14ea1-5185-4191-8b68-cf623ec42946","choices":[{"index":0,"delta":{"content":"'s"},"finish_reason":null,"logprobs":null}],"created":1794323093,"model":"think-fast","object":"chat.completion.chunk"}
+
+        data: {"id":"chatcmpl-9ca14ea1-5185-4191-8b68-cf623ec42946","choices":[{"index":0,"delta":{"content":" fifteen"},"finish_reason":null,"logprobs":null}],"created":1794323093,"model":"think-fast","object":"chat.completion.chunk"}
+
+        data: {"id":"chatcmpl-9ca14ea1-5185-4191-8b68-cf623ec42946","choices":[{"index":0,"delta":{"content":" degrees"},"finish_reason":null,"logprobs":null}],"created":1794323093,"model":"think-fast","object":"chat.completion.chunk"}
+
+        data: {"id":"chatcmpl-9ca14ea1-5185-4191-8b68-cf623ec42946","choices":[{"index":0,"delta":{"content":" in"},"finish_reason":null,"logprobs":null}],"created":1794323093,"model":"think-fast","object":"chat.completion.chunk"}
+
+        data: {"id":"chatcmpl-9ca14ea1-5185-4191-8b68-cf623ec42946","choices":[{"index":0,"delta":{"content":" Berlin"},"finish_reason":null,"logprobs":null}],"created":1794323093,"model":"think-fast","object":"chat.completion.chunk"}
+
+        data: {"id":"chatcmpl-9ca14ea1-5185-4191-8b68-cf623ec42946","choices":[{"index":0,"delta":{"content":" right"},"finish_reason":null,"logprobs":null}],"created":1794323093,"model":"think-fast","object":"chat.completion.chunk"}
+
+        data: {"id":"chatcmpl-9ca14ea1-5185-4191-8b68-cf623ec42946","choices":[{"index":0,"delta":{"content":" now"},"finish_reason":null,"logprobs":null}],"created":1794323093,"model":"think-fast","object":"chat.completion.chunk"}
+
+        data: {"id":"chatcmpl-9ca14ea1-5185-4191-8b68-cf623ec42946","choices":[{"index":0,"delta":{"content":"."},"finish_reason":null,"logprobs":null}],"created":1794323093,"model":"think-fast","object":"chat.completion.chunk"}
+
+        data: {"id":"chatcmpl-9ca14ea1-5185-4191-8b68-cf623ec42946","choices":[{"index":0,"delta":{},"finish_reason":"stop","logprobs":null}],"created":1794323093,"model":"think-fast","object":"chat.completion.chunk"}
+
+        data: {"id":"chatcmpl-9ca14ea1-5185-4191-8b68-cf623ec42946","choices":[],"created":1794323093,"model":"think-fast","object":"chat.completion.chunk","usage":{"prompt_tokens":353,"completion_tokens":10,"total_tokens":363,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}
+
+        data: [DONE]
+
+  recorded_at: Tue, 10 Nov 2026 15:04:53 GMT
+recorded_with: VCR 6.4.1
+...

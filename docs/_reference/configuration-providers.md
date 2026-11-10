@@ -587,7 +587,7 @@ RubyLLM uses each base URL as you give it and adds each request's path to it, so
 | `bedrock_api_base` | `https://bedrock-runtime.REGION.amazonaws.com` |
 | `bedrock_mantle_api_base` | `https://bedrock-mantle.REGION.api.aws` |
 | `cohere_api_base` | `https://api.cohere.com` |
-| `deepgram_api_base` | `https://api.deepgram.com` |
+| `deepgram_api_base` | `https://api.deepgram.com`; without a custom base, chat goes to `https://agent.deepgram.com` |
 | `deepseek_api_base` | `https://api.deepseek.com` |
 | `elevenlabs_api_base` | `https://api.elevenlabs.io` |
 | `gemini_api_base` | `https://generativelanguage.googleapis.com/v1beta` |

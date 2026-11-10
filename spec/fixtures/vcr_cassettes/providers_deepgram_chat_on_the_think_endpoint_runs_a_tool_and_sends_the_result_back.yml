@@ -1,0 +1,99 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://agent.deepgram.com/v1/think
+    body:
+      encoding: UTF-8
+      string: '{"model":"think-fast","messages":[{"role":"user","content":"What is
+        the weather in Berlin? Use the tool."}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the current weather for one city","parameters":{"type":"object","properties":{"city":{"type":"string","description":"The
+        city name"}},"required":["city"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Token <DEEPGRAM_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Dg-Project-Id:
+      - <DEEPGRAM_PROJECT_ID>
+      Vary:
+      - accept-encoding
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings
+      Dg-Request-Id:
+      - 01a1c5fd-9273-7f51-a13d-31a3907a37ec
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Tue, 10 Nov 2026 15:04:52 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-3689c286-ac7c-4643-a60e-06a17fab3d3f","choices":[{"index":0,"message":{"content":"Checking
+        Berlin''s weather.\n\n","refusal":null,"tool_calls":[{"id":"call-9d3e566b-fde4-453c-af05-ac0d04fbbf47","type":"function","function":{"name":"weather","arguments":"{\"city\":\"Berlin\"}"}}],"role":"assistant"},"finish_reason":"tool_calls","logprobs":null}],"created":1794323092,"model":"think-fast","object":"chat.completion","usage":{"prompt_tokens":300,"completion_tokens":32,"total_tokens":332,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}'
+  recorded_at: Tue, 10 Nov 2026 15:04:52 GMT
+- request:
+    method: post
+    uri: https://agent.deepgram.com/v1/think
+    body:
+      encoding: UTF-8
+      string: '{"model":"think-fast","messages":[{"role":"user","content":"What is
+        the weather in Berlin? Use the tool."},{"role":"assistant","content":"Checking
+        Berlin''s weather.\n\n","tool_calls":[{"id":"call-9d3e566b-fde4-453c-af05-ac0d04fbbf47","type":"function","function":{"name":"weather","arguments":"{\"city\":\"Berlin\"}"}}]},{"role":"tool","content":"Berlin:
+        15 degrees","tool_call_id":"call-9d3e566b-fde4-453c-af05-ac0d04fbbf47"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the current weather for one city","parameters":{"type":"object","properties":{"city":{"type":"string","description":"The
+        city name"}},"required":["city"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Token <DEEPGRAM_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Dg-Project-Id:
+      - <DEEPGRAM_PROJECT_ID>
+      Vary:
+      - accept-encoding
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings
+      Dg-Request-Id:
+      - 01a1c5fd-9490-7200-b03f-73f5a31357a2
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Tue, 10 Nov 2026 15:04:52 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-a6c69aeb-9369-4db1-ba43-1846a1d66464","choices":[{"index":0,"message":{"content":"It''s
+        fifteen degrees in Berlin right now.","refusal":null,"role":"assistant"},"finish_reason":"stop","logprobs":null}],"created":1794323092,"model":"think-fast","object":"chat.completion","usage":{"prompt_tokens":355,"completion_tokens":10,"total_tokens":365,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}'
+  recorded_at: Tue, 10 Nov 2026 15:04:52 GMT
+recorded_with: VCR 6.4.1

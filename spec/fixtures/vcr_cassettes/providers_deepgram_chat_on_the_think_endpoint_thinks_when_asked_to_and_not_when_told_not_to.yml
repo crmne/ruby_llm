@@ -1,0 +1,99 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://agent.deepgram.com/v1/think
+    body:
+      encoding: UTF-8
+      string: '{"model":"think-fast","messages":[{"role":"user","content":"A shop
+        sells pens at 3 for 4 euros. How many euros do 27 pens cost?"}],"stream":false,"reasoning_effort":"low"}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Token <DEEPGRAM_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Dg-Project-Id:
+      - <DEEPGRAM_PROJECT_ID>
+      Vary:
+      - accept-encoding
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings
+      Dg-Request-Id:
+      - 01a1c5fd-a2fa-7903-afbd-4b67ddea413a
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Tue, 10 Nov 2026 15:04:58 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLWZjYmY2MzU1LWZiMWEtNDVkMC04ZjVlLTk4MTU0OWFhNzRhYSIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuU2luY2UgMyBwZW5zIGNvc3QgNCBldXJvcywgZmlyc3QgZmluZCBob3cgbWFueSBzZXRzIG9mIDMgYXJlIGluIDI3OiAgXG4yNyDDtyAzID0gOSBzZXRzLiAgXG5cbkVhY2ggc2V0IGNvc3RzIDQgZXVyb3MsIHNvIDkgw5cgNCA9ICoqMzYgZXVyb3MqKi4iLCJyZWZ1c2FsIjpudWxsLCJyb2xlIjoiYXNzaXN0YW50IiwicmVhc29uaW5nX2NvbnRlbnQiOiJIZXJlJ3MgYSB0aGlua2luZyBwcm9jZXNzOlxuXG4xLiAgKipBbmFseXplIHRoZSBVc2VyIElucHV0OioqXG4gICAtIFNob3Agc2VsbHMgcGVucyBhdCAzIGZvciA0IGV1cm9zLlxuICAgLSBRdWVzdGlvbjogSG93IG1hbnkgZXVyb3MgZG8gMjcgcGVucyBjb3N0P1xuXG4yLiAgKipJZGVudGlmeSBLZXkgSW5mb3JtYXRpb246KipcbiAgIC0gUHJpY2UgcmF0ZTogMyBwZW5zID0gNCBldXJvc1xuICAgLSBRdWFudGl0eSBuZWVkZWQ6IDI3IHBlbnNcblxuMy4gICoqRGV0ZXJtaW5lIHRoZSBNYXRoZW1hdGljYWwgUmVsYXRpb25zaGlwOioqXG4gICAtIFRoaXMgaXMgYSBwcm9wb3J0aW9uL3JhdGlvIHByb2JsZW0uXG4gICAtIEZpbmQgaG93IG1hbnkgZ3JvdXBzIG9mIDMgYXJlIGluIDI3OiAyNyDDtyAzID0gOSBncm91cHNcbiAgIC0gRWFjaCBncm91cCBjb3N0cyA0IGV1cm9zLCBzbyB0b3RhbCBjb3N0ID0gOSDDlyA0ID0gMzYgZXVyb3NcblxuNC4gICoqVmVyaWZ5OioqXG4gICAtIFBlciBwZW4gcHJpY2U6IDQvMyBldXJvcyDiiYggMS4zMzMuLi4gZXVyb3NcbiAgIC0gMjcgcGVucyDDlyAoNC8zKSA9ICgyNyDDlyA0KSAvIDMgPSAxMDggLyAzID0gMzYgZXVyb3NcbiAgIC0gTWF0Y2hlcy5cblxuNS4gICoqRm9ybXVsYXRlIE91dHB1dDoqKlxuICAgLSBTdGF0ZSB0aGUgY2FsY3VsYXRpb24gY2xlYXJseSBhbmQgY29uY2lzZWx5LlxuICAgLSBBbnN3ZXI6IDM2IGV1cm9zLlxuXG4gICBEcmFmdDogU2luY2UgMyBwZW5zIGNvc3QgNCBldXJvcywgMjcgcGVucyBpcyA5IHNldHMgb2YgMyBwZW5zICgyNyDDtyAzID0gOSkuIEVhY2ggc2V0IGNvc3RzIDQgZXVyb3MsIHNvIDkgw5cgNCA9IDM2IGV1cm9zLiBUaGUgYW5zd2VyIGlzIDM2LlxuXG42LiAgKipGaW5hbCBDaGVjazoqKlxuICAgLSBRdWVzdGlvbjogXCJIb3cgbWFueSBldXJvcyBkbyAyNyBwZW5zIGNvc3Q/XCJcbiAgIC0gQW5zd2VyOiAzNiBldXJvcy5cbiAgIC0gQWxsIHN0ZXBzIGNvcnJlY3QsIG5vIGFtYmlndWl0eS4gUmVhZHku4pyFXG4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJsb2dwcm9icyI6bnVsbH1dLCJjcmVhdGVkIjoxNzk0MzIzMDk2LCJtb2RlbCI6InRoaW5rLWZhc3QiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjozMiwiY29tcGxldGlvbl90b2tlbnMiOjQyMSwidG90YWxfdG9rZW5zIjo0NTMsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjozNjR9fX0=
+  recorded_at: Tue, 10 Nov 2026 15:04:58 GMT
+- request:
+    method: post
+    uri: https://agent.deepgram.com/v1/think
+    body:
+      encoding: UTF-8
+      string: '{"model":"think-fast","messages":[{"role":"user","content":"A shop
+        sells pens at 3 for 4 euros. How many euros do 27 pens cost?"}],"stream":false,"reasoning_effort":"none"}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Token <DEEPGRAM_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Dg-Project-Id:
+      - <DEEPGRAM_PROJECT_ID>
+      Vary:
+      - accept-encoding
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings
+      Dg-Request-Id:
+      - 01a1c5fd-acc2-7e31-ad3c-22a03446d86d
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Tue, 10 Nov 2026 15:04:59 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-06fb5466-e1e6-4f31-ae30-bbd6cbe68388","choices":[{"index":0,"message":{"content":"To
+        determine the cost of 27 pens, we can break the problem down into logical
+        steps.\n\n### Step 1: Determine the number of sets\nThe pens are sold in sets
+        of 3. First, we find out how many such sets are in 27 pens.\n\n$$27 \\div
+        3 = 9 \\text{ sets}$$\n\n### Step 2: Calculate the total cost\nEach set of
+        3 pens costs 4 euros. Since there are 9 sets, we multiply the number of sets
+        by the cost per set.\n\n$$9 \\times 4 = 36 \\text{ euros}$$\n\n### Conclusion\n27
+        pens cost **36 euros**.","refusal":null,"role":"assistant"},"finish_reason":"stop","logprobs":null}],"created":1794323098,"model":"think-fast","object":"chat.completion","usage":{"prompt_tokens":34,"completion_tokens":147,"total_tokens":181,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}'
+  recorded_at: Tue, 10 Nov 2026 15:04:59 GMT
+recorded_with: VCR 6.4.1

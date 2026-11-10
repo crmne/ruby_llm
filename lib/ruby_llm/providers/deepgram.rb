@@ -2,12 +2,31 @@
 
 module RubyLLM
   module Providers
-    # Integrates Deepgram transcription and speech synthesis.
+    # Integrates Deepgram transcription, speech synthesis, and chat.
     class Deepgram < Provider
+      # Deepgram's dialect of the Chat Completions API.
+      class ChatCompletions < Protocols::ChatCompletions
+        include Deepgram::Chat
+      end
+
+      THINK_BASE = 'https://agent.deepgram.com'
+      private_constant :THINK_BASE
+
       protocol :deepgram, Protocols::Deepgram
+      protocol :chat_completions, ChatCompletions
 
       def api_base
-        configured_api_base(:deepgram_api_base, 'https://api.deepgram.com', endpoints: %r{/v1/(?:listen|speak)\z})
+        configured_api_base(:deepgram_api_base, 'https://api.deepgram.com', endpoints: %r{/v1/(?:listen|speak|think)\z})
+      end
+
+      # Chat runs on its own host. Speech, transcription, and the model
+      # listing stay on the Deepgram protocol.
+      def protocol_for(model, operation: nil, **)
+        operation ? super : protocols[:chat_completions]
+      end
+
+      def think_url # :nodoc:
+        "#{(@config.deepgram_api_base || THINK_BASE).chomp('/')}/v1/think"
       end
 
       def headers
