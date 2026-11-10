@@ -56,6 +56,8 @@ These need attention when upgrading. The [upgrade guide](https://rubyllm.com/upg
 - **Code execution needs a host that can start its sandbox.** On Linux that means Bubblewrap with unprivileged user namespaces; the [Sandboxes guide](https://rubyllm.com/sandboxes/) covers hosts that block them.
 - **A few provider routes are not verified on a live account yet.** Bedrock Mantle's `/openai/v1` path, `judge` on Ollama Cloud, and `gpt-image-2` on Azure follow each provider's documentation but have no recording.
 - **Perplexity Orchestrator is unverified.** `protocol: :router_chat_completions` follows Perplexity's documentation, but Orchestrator is in limited preview and our key gets HTTP 403, so its tool choice, parallel tool control and cache boundaries have no live recording until Perplexity grants access.
+- **On Gemini's Interactions API, tools plus `with_schema` can loop.** The model can keep calling the tool after each result. Use tools or a schema alone, or Gemini's default protocol.
+- **xAI batches can be slow.** A batch can stay pending for a long time before xAI processes it, so poll with patience.
 - **MCP Apps need a UI supplied by your application.** The conformance baseline still excludes the older-server elicitation-defaults scenario.
 - **Provider access still determines availability.** Hosted tools, media, and judgments depend on the selected service and account. See [provider coverage](https://rubyllm.com/provider-coverage/) for what each one supports.
 
