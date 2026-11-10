@@ -422,6 +422,38 @@ RSpec.describe RubyLLM::Chat, :live do
       end
     end
 
+    context "with zai/#{model_for(:zai)}" do
+      let(:chat) { RubyLLM.chat(model: model_for(:zai), provider: :zai) }
+
+      it 'renders the alias with its options inside the web_search key' do
+        payload = chat.with_provider_tools(web_search: { count: 3 }).render
+
+        expect(payload[:tools]).to eq(
+          [{ type: 'web_search', web_search: { enable: true, search_result: true, count: 3 } }]
+        )
+      end
+
+      it 'searches, cites the sources, and continues from the local transcript' do
+        response = chat.with_provider_tools(web_search: { count: 3 })
+                       .ask('Search the web: when was Ruby 3.4.0 released? One sentence.')
+
+        expect(response.content).to include('2024')
+        expect(response.citations).not_to be_empty
+        expect(response.citations.first).to have_attributes(url: a_string_matching(%r{\Ahttps?://}))
+        expect(response.citations.first.title).not_to be_empty
+        expect(chat.ask('What year was that? Reply with the year only.').content).to include('2024')
+      end
+
+      it 'streams a search and collects the citations from the last chunk' do
+        chunks = []
+        response = chat.with_provider_tools(web_search: { count: 3 })
+                       .ask('Search the web: when was Ruby 3.4.0 released? One sentence.') { |chunk| chunks << chunk }
+
+        expect(chunks.filter_map(&:content).join).to eq(response.content)
+        expect(response.citations).not_to be_empty
+      end
+    end
+
     context "with openai/#{model_for(:openai, :reasoning_effort)}" do
       let(:chat) do
         RubyLLM.chat(model: model_for(:openai, :reasoning_effort), provider: :openai).with_provider_tools(:web_search)
