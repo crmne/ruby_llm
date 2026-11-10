@@ -12,6 +12,29 @@ module RubyLLM
 
         def finish_reasons = FINISH_REASONS
 
+        # A tool that supplies numbered sources gets reference chunks back,
+        # whose reference_ids are the keys of that tool's own result.
+        def extract_citations(message_data, data, content)
+          references = reference_citations(message_data['content'])
+          references.any? ? references : super
+        end
+
+        def parse_chunk_citations(delta, data)
+          references = reference_citations(delta['content'], offsets: false)
+          references.any? ? references : super
+        end
+
+        def reference_citations(content, offsets: true)
+          return [] unless content.is_a?(Array)
+
+          position = 0
+          content.flat_map do |part|
+            position += part['text'].to_s.length if part['type'] == 'text'
+            span = offsets ? { start_index: position, end_index: position } : {}
+            Array(part['reference_ids']).map { |id| Citation.new(source_index: id, **span) }
+          end
+        end
+
         def render_role(role)
           role.to_s
         end
