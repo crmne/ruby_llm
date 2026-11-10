@@ -51,6 +51,17 @@ RSpec.describe RubyLLM::OCR, :live do
       expect(ocr.markdown).to include('12345')
     end
 
+    it 'vertexai/mistral-ocr-2505 extracts markdown from a PDF' do
+      context = RubyLLM.context { |config| config.vertexai_location = 'us-central1' }
+
+      ocr = context.ocr(pdf_path, model: 'mistral-ocr-2505', provider: :vertexai)
+
+      expect(ocr.pages.length).to eq(1)
+      expect(ocr.markdown).to match(/sample pdf/i)
+      expect(ocr.model).to eq('mistral-ocr-2505')
+      expect(ocr.usage['pages_processed']).to eq(1)
+    end
+
     it 'uses the default OCR model when none is given' do
       ocr = RubyLLM.ocr(pdf_path)
 

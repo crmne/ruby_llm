@@ -10,6 +10,7 @@ module RubyLLM
         include Providers::Mistral::Embeddings
         include Providers::Mistral::Media
         include Providers::Mistral::Models
+        include Providers::Mistral::OCR
 
         # The Mistral model families Vertex AI serves directly. Shared by the
         # registry (which models to list) and protocol_for (where to route them).
@@ -21,6 +22,10 @@ module RubyLLM
 
         def stream_url
           "#{@provider.model_path(@model.id, publisher: 'mistralai')}:streamRawPredict"
+        end
+
+        def ocr_url
+          completion_url
         end
       end
     end
