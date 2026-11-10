@@ -308,6 +308,7 @@ TEST_MODELS = {
   router: [{ provider: :perplexity, model: 'perplexity/kimi-k3' }],
   agent: [{ provider: :perplexity, model: 'openai/gpt-5.6-luna' }],
   mcp: [
+    { provider: :openrouter, model: 'openai/gpt-5.2', protocol: :responses, approval: true },
     { provider: :openai, model: 'gpt-5.6-luna', protocol: :responses, approval: true },
     { provider: :azure, model: 'gpt-5.6-luna', protocol: :responses, approval: true },
     { provider: :gemini, model: 'gemini-3.8-flash', protocol: :interactions, approval: false }

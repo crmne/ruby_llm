@@ -43,16 +43,6 @@ RSpec.describe RubyLLM::Protocols::OpenRouter::Responses do
       .to include(RubyLLM::Providers::OpenRouter::ChatCompletions)
   end
 
-  it 'rejects MCP without explicit approval-free execution before making a request' do
-    [nil, 'always', { never: { tool_names: ['search'] } }].each do |approval|
-      options = { name: 'docs', url: 'https://example.test/mcp' }
-      options[:require_approval] = approval if approval
-      expect { chat.with_provider_tools(mcp: options).ask('Search documentation.') }
-        .to raise_error(ArgumentError, /requires explicit require_approval/)
-    end
-    expect(a_request(:post, 'https://openrouter.ai/api/v1/responses')).not_to have_been_made
-  end
-
   it 'retains only MCP data actually present in incomplete upstream stream events' do
     event = { 'type' => 'response.mcp_call_arguments.done', 'item_id' => 'mcp-1', 'arguments' => '{"query":"Ruby"}' }
     chunk = protocol.send(:build_chunk, event)
@@ -82,7 +72,7 @@ RSpec.describe RubyLLM::Protocols::OpenRouter::Responses do
     expect(message.cost.total).to be > 0
   end
 
-  it 'records remote MCP arguments without inventing omitted tool names or results', :live do
+  it 'records the remote MCP calls it runs, with their tool names and results', :live do
     chunks = []
     prompt = 'Use microsoft_docs_search to find Microsoft documentation about Ruby. Summarize in one sentence.'
     message = RubyLLM.chat(model:, provider: :openrouter, protocol: :responses).with_max_output_tokens(700)
@@ -91,11 +81,10 @@ RSpec.describe RubyLLM::Protocols::OpenRouter::Responses do
                      .ask(prompt) do |chunk|
       chunks << chunk
     end
-    calls = chunks.flat_map(&:server_tool_calls).select { |call| call.type == 'mcp_call' }
-    expect(calls).not_to be_empty
-    expect(calls.first.input).to include('Ruby')
-    expect(calls.first.name).to be_nil
-    expect(calls.first.result).to be_nil
+    call = message.server_tool_calls.find { |server_call| server_call.type == 'mcp_call' }
+    expect(chunks.flat_map(&:server_tool_calls).map(&:type)).to include('mcp_call')
+    expect(call).to have_attributes(name: 'microsoft_docs_search', input: a_string_including('Ruby'))
+    expect(call.result).not_to be_nil
     expect(message.content).not_to be_empty
     expect(message.tokens.input).to be > 0
     expect(message.tokens.output).to be > 0
