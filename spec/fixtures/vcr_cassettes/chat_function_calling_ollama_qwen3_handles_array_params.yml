@@ -11,7 +11,7 @@ http_interactions:
         of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -26,24 +26,31 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 Oct 2026 21:11:25 GMT
+      - Tue, 10 Nov 2026 17:41:56 GMT
       Content-Length:
-      - '1317'
+      - '1836'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-943","object":"chat.completion","created":1791753085,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
-        the user wants me to call the array params tool with the tags [\"red\", \"blue\"]
-        and get the combined tags. Let me check the function definition.\n\nThe tool''s
-        function is described as having an array_params parameter which is an array
-        of strings. The description says it''s for combining tags. So the function
-        probably takes an array of tags and returns them combined, maybe as a single
-        string or a list.\n\nSince the user specified the tags as [\"red\", \"blue\"],
-        I need to pass that array as the argument. The function''s parameters expect
-        an object with a tags array. So the arguments should be {\"tags\": [\"red\",
-        \"blue\"]}.\n\nI should structure the tool_call with the name \"array_params\"
-        and the arguments as a JSON object with the tags array. That should correctly
-        invoke the tool with the provided tags.\n","tool_calls":[{"id":"call_h1d6wcj3","index":0,"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":162,"prompt_tokens_details":{"cached_tokens":2},"completion_tokens":199,"total_tokens":361}}
+      string: '{"id":"chatcmpl-761","object":"chat.completion","created":1794332516,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+        let''s tackle this user query. The user wants me to call the array params
+        tool with the tags [\"red\", \"blue\"] and then tell them the combined tags.\n\nFirst,
+        I need to check the available tools. The provided tool has a function that
+        takes an array of strings called tags. The description says it''s for combining
+        tags, so I assume the function will process the array and return the combined
+        result.\n\nThe user specified the tags as [\"red\", \"blue\"], so I should
+        structure the tool call with those exact values. The function''s parameters
+        expect an array under the \"tags\" key. I need to make sure the JSON is correctly
+        formatted with the tags array.\n\nWait, the function''s parameters are defined
+        as an object with an array under \"tags\". So the arguments should be {\"tags\":
+        [\"red\", \"blue\"]}. That''s straightforward. No other parameters are mentioned,
+        so I don''t need to include anything else.\n\nI should generate the tool_call
+        JSON with the name \"array_params\" and the arguments as specified. Then,
+        after the tool response, the assistant should inform the user that the tags
+        have been combined. Since the tool''s purpose is to combine them, the response
+        might just be the combined list, but the user wants the final answer after
+        the tool call. So the assistant''s reply should state the combined tags as
+        the final answer.\n","tool_calls":[{"id":"call_4s2dgwnn","index":0,"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":162,"prompt_tokens_details":{"cached_tokens":2},"completion_tokens":305,"total_tokens":467}}
 
         '
-  recorded_at: Sun, 11 Oct 2026 21:11:25 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:41:56 GMT
+recorded_with: VCR 6.4.1

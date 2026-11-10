@@ -9,7 +9,7 @@ http_interactions:
         on a plain white background"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Xi-Api-Key:
       - "<ELEVENLABS_API_KEY>"
       Content-Type:
@@ -24,13 +24,15 @@ http_interactions:
       message: Payment Required
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:07:03 GMT
+      - Tue, 10 Nov 2026 17:28:00 GMT
       Server:
       - uvicorn
+      Content-Length:
+      - '200'
       Content-Type:
       - application/json
       Vary:
-      - Accept-Language, Accept-Encoding
+      - Accept-Language
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Allow-Headers:
@@ -42,18 +44,16 @@ http_interactions:
       Strict-Transport-Security:
       - max-age=1800;
       X-Trace-Id:
-      - b93757827de62c230c322cd508cc0975
+      - 83831a2f91626ab0c71c5b753fd8c25e
       X-Region:
       - us-central1
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-      Transfer-Encoding:
-      - chunked
+      - h3=":443"; ma=2592000
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"detail":{"type":"payment_required","code":"paid_plan_required","message":"This
-        endpoint requires a Pro plan or above.","status":"paid_plan_required","request_id":"b93757827de62c230c322cd508cc0975"}}'
-  recorded_at: Sun, 11 Oct 2026 21:07:03 GMT
-recorded_with: VCR 6.4.0
+        endpoint requires a Pro plan or above.","status":"paid_plan_required","request_id":"83831a2f91626ab0c71c5b753fd8c25e"}}'
+  recorded_at: Tue, 10 Nov 2026 17:28:00 GMT
+recorded_with: VCR 6.4.1

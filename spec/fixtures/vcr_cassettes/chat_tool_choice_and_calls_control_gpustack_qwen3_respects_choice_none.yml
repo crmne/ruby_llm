@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":"none"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,21 +27,21 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:19:24 GMT
+      - Tue, 10 Nov 2026 17:53:31 GMT
+      Server:
+      - istio-envoy
       Access-Control-Allow-Origin:
       - ''
       Content-Type:
       - application/json; charset=utf-8
-      Resp-Start-Time:
-      - '1791753566271'
-      Server:
-      - istio-envoy
       Req-Cost-Time:
-      - '1308'
+      - '1282'
       Req-Arrive-Time:
-      - '1791753564962'
+      - '1794333211943'
+      Resp-Start-Time:
+      - '1794333213225'
       X-Envoy-Upstream-Service-Time:
-      - '1304'
+      - '1275'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -55,8 +55,8 @@ http_interactions:
         to get the current weather for that location. Let me check the function parameters.
         The function requires latitude and longitude as strings. The user has already
         given those values, so I should format them into the tool call correctly.
-        I''ll make sure to include both parameters in the JSON object under the arguments.
-        No other properties are needed since the function doesn''t require anything
-        else. Alright, that''s all I need to do here.\n"}}],"created":1791753566,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":170,"prompt_tokens":231,"total_tokens":401,"prompt_tokens_details":{"cached_tokens":230}},"id":"chatcmpl-pApXJXVzL7W8sp4gYbVO4TBb4taYFaXV","timings":{"cache_n":230,"prompt_n":1,"prompt_ms":8.949,"prompt_per_token_ms":8.949,"prompt_per_second":111.74432897530451,"predicted_n":170,"predicted_ms":1253.699,"predicted_per_token_ms":7.41833727810651,"predicted_per_second":134.8010965949562}}'
-  recorded_at: Sun, 11 Oct 2026 21:19:26 GMT
-recorded_with: VCR 6.4.0
+        I''ll make sure to include both parameters in the JSON object under the arguments
+        section. No other properties are needed since the function doesn''t require
+        anything else. Alright, that should do it.\n"}}],"created":1794333213,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":167,"prompt_tokens":231,"total_tokens":398,"prompt_tokens_details":{"cached_tokens":230}},"id":"chatcmpl-q7RiVdSOaKzQcpX5JrN6R9YjVzBHjjHS","timings":{"cache_n":230,"prompt_n":1,"prompt_ms":8.842,"prompt_per_token_ms":8.842,"prompt_per_second":113.0965844831486,"predicted_n":167,"predicted_ms":1227.91,"predicted_per_token_ms":7.397048192771085,"predicted_per_second":135.18906108753896}}'
+  recorded_at: Tue, 10 Nov 2026 17:53:33 GMT
+recorded_with: VCR 6.4.1

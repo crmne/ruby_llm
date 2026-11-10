@@ -9,7 +9,7 @@ http_interactions:
         the creator of the programming language Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,90 +26,23 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - fb036d5c394cd0c23173b2be8d69965e24bc9914
+      - 81e02665bdd918cf59b66804d554f8e53171f5d2
       X-Build-Time:
-      - '2026-10-09T17:17:18-07:00'
+      - '2026-11-09T17:12:20-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '1212'
+      - '833'
       Date:
-      - Sun, 11 Oct 2026 21:08:51 GMT
+      - Tue, 10 Nov 2026 17:36:36 GMT
       Server:
       - Google Frontend
-      X-Cloud-Trace-Context:
-      - 07dc29cd5c04fc4ce18a7ee17b5c618f/1948639676797396452
       Traceparent:
-      - 00-07dc29cd5c04fc4ce18a7ee17b5c618f-1b0af57632bda5e4-00
-      Via:
-      - 1.1 google
-      Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTY1OCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTE3NTI5MzEsIm1vZGVsIjoiZ3B0LW9zczoxMjBiIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgKipSdWJ5Kiogd2FzIGNyZWF0ZWQgYnkgKipZdWtpaGlyb+KAr+KAnE1hdHrigJ3igK9NYXRzdW1vdG8qKiwgYSBKYXBhbmVzZSBzb2Z0d2FyZSBlbmdpbmVlci4gIFxuTWF0c3Vtb3RvIGJlZ2FuIHdvcmsgb24gUnVieSBpbiAxOTkzIGFuZCByZWxlYXNlZCB0aGUgZmlyc3QgcHVibGljIHZlcnNpb24gKDAuOTUpIGluIERlY2VtYmVy4oCvMTk5NS4gSGUgZGVzaWduZWQgUnVieSB0byBibGVuZCB0aGUgYmVzdCBmZWF0dXJlcyBvZiBleGlzdGluZyBsYW5ndWFnZXPigJRzdWNoIGFzIFBlcmzigJlzIHRleHTigJFwcm9jZXNzaW5nIHByb3dlc3MsIFNtYWxsdGFsa+KAmXMgcHVyZSBvYmplY3TigJFvcmllbnRlZCBtb2RlbCwgYW5kIFB5dGhvbuKAmXMgc2ltcGxpY2l0eeKAlHdoaWxlIGVtcGhhc2l6aW5nIHByb2dyYW1tZXIgaGFwcGluZXNzIGFuZCBwcm9kdWN0aXZpdHkuIFNpbmNlIHRoZW4sIE1hdHogaGFzIHJlbWFpbmVkIGFuIGFjdGl2ZSBmaWd1cmUgaW4gdGhlIFJ1YnkgY29tbXVuaXR5LCBndWlkaW5nIGl0cyBldm9sdXRpb24gYW5kIGFkdm9jYXRpbmcgZm9yIGl0cyBwaGlsb3NvcGh5IG9mIOKAnG9wdGltaXppbmcgZm9yIGRldmVsb3BlciBqb3ku4oCdIiwicmVhc29uaW5nIjoiVXNlciBhc2tzOiBcIldobyBpcyB0aGUgY3JlYXRvciBvZiB0aGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgUnVieT9cIiBTaW1wbGUgYW5zd2VyOiBZdWtpaGlybyBcIk1hdHpcIiBNYXRzdW1vdG8sIGEgSmFwYW5lc2UgcHJvZ3JhbW1lciwgY3JlYXRlZCBSdWJ5IGluIHRoZSBtaWQtMTk5MHMgKDE5OTUpLiBQcm92aWRlIGRldGFpbHMgbWF5YmUuIE5lZWQgdG8gcmVzcG9uZCBpbiBjb252ZXJzYXRpb25hbCB0b25lLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NzcsImNvbXBsZXRpb25fdG9rZW5zIjoxOTksInRvdGFsX3Rva2VucyI6Mjc2LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6NDh9fX0K
-  recorded_at: Sun, 11 Oct 2026 21:08:51 GMT
-- request:
-    method: post
-    uri: https://ollama.com/v1/chat/completions
-    body:
-      encoding: UTF-8
-      string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"Who is
-        the creator of the programming language Ruby?"},{"role":"assistant","content":"The
-        programming language **Ruby** was created by **Yukihiro “Matz” Matsumoto**,
-        a Japanese software engineer.  \nMatsumoto began work on Ruby in 1993 and
-        released the first public version (0.95) in December 1995. He designed Ruby
-        to blend the best features of existing languages—such as Perl’s text‑processing
-        prowess, Smalltalk’s pure object‑oriented model, and Python’s simplicity—while
-        emphasizing programmer happiness and productivity. Since then, Matz has remained
-        an active figure in the Ruby community, guiding its evolution and advocating
-        for its philosophy of “optimizing for developer joy.”","reasoning":"User asks:
-        \"Who is the creator of the programming language Ruby?\" Simple answer: Yukihiro
-        \"Matz\" Matsumoto, a Japanese programmer, created Ruby in the mid-1990s (1995).
-        Provide details maybe. Need to respond in conversational tone.","reasoning_content":"User
-        asks: \"Who is the creator of the programming language Ruby?\" Simple answer:
-        Yukihiro \"Matz\" Matsumoto, a Japanese programmer, created Ruby in the mid-1990s
-        (1995). Provide details maybe. Need to respond in conversational tone."},{"role":"user","content":"What
-        year did he create Ruby?"}],"stream":false}'
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - application/json
-      X-Build-Commit:
-      - fb036d5c394cd0c23173b2be8d69965e24bc9914
-      X-Build-Time:
-      - '2026-10-09T17:17:18-07:00'
-      X-Frame-Options:
-      - DENY
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      Content-Length:
-      - '843'
-      Date:
-      - Sun, 11 Oct 2026 21:08:52 GMT
-      Server:
-      - Google Frontend
+      - 00-497812658a357856c3363d588ae9c830-182116813ebc0584-00
       X-Cloud-Trace-Context:
-      - 2cb1e3b53d029577c6dc28fd2465e232/6506288301588510852
-      Traceparent:
-      - 00-2cb1e3b53d029577c6dc28fd2465e232-5a4afabd0e767884-00
+      - 497812658a357856c3363d588ae9c830/1738695675500823940
       Via:
       - 1.1 google
       Alt-Svc:
@@ -117,6 +50,68 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTEzMSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTE3NTI5MzIsIm1vZGVsIjoiZ3B0LW9zczoxMjBiIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJZdWtpaGlyb+KAr+KAnE1hdHrigJ3igK9NYXRzdW1vdG8gYmVnYW4gKipkZXZlbG9waW5nIFJ1YnkgaW4gMTk5MyoqLCBhbmQgdGhlIGxhbmd1YWdl4oCZcyBmaXJzdCBwdWJsaWMgcmVsZWFzZSAodmVyc2lvbuKArzAuOTUpIGNhbWUgb3V0IGluICoqRGVjZW1iZXLigK8xOTk1KiouIFNvIHRoZSBjcmVhdGlvbiB3b3JrIHN0YXJ0ZWQgaW4gMTk5Mywgd2l0aCB0aGUgaW5pdGlhbCBwdWJsaWMgdmVyc2lvbiBhcHBlYXJpbmcgaW4gMTk5NS4iLCJyZWFzb25pbmciOiJUaGUgdXNlciBhc2tlZDogXCJXaGF0IHllYXIgZGlkIGhlIGNyZWF0ZSBSdWJ5P1wiIFdlIG5lZWQgdG8gYW5zd2VyLiBSdWJ5IHdhcyBjcmVhdGVkIHN0YXJ0aW5nIGluIDE5OTMsIGZpcnN0IHB1YmxpYyByZWxlYXNlIDE5OTUuIFNvIGFuc3dlciB5ZWFyIGNyZWF0ZWQ/IFdlIGNhbiBjbGFyaWZ5OiBzdGFydGVkIGRldmVsb3BtZW50IGluIDE5OTMsIHJlbGVhc2VkIGZpcnN0IHZlcnNpb24gMTk5NS4gUHJvdmlkZSBhbnN3ZXIuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyMjcsImNvbXBsZXRpb25fdG9rZW5zIjoxMzcsInRvdGFsX3Rva2VucyI6MzY0LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6NDh9fX0K
-  recorded_at: Sun, 11 Oct 2026 21:08:52 GMT
-recorded_with: VCR 6.4.0
+        eyJpZCI6ImNoYXRjbXBsLTQ2NiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQzMzIxOTYsIm1vZGVsIjoiZ3B0LW9zczoxMjBiIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgKipSdWJ5Kiogd2FzIGNyZWF0ZWQgYnkgKipZdWtpaGlyb+KAr01hdHN1bW90byoqLCBvZnRlbiBrbm93biBieSBoaXMgbmlja25hbWUgKirigJxNYXR6LuKAnSoqIEhlIGJlZ2FuIGRldmVsb3BpbmcgUnVieSBpbiB0aGUgbWlk4oCRMTk5MHMgYW5kIHJlbGVhc2VkIHRoZSBmaXJzdCBwdWJsaWMgdmVyc2lvbiAoMC45NSkgaW4gRGVjZW1iZXLigK8xOTk1LiBNYXRzdW1vdG8gZGVzaWduZWQgUnVieSB0byBiZSBhIHNpbXBsZSwgZXhwcmVzc2l2ZSwgYW5kIG9iamVjdOKAkW9yaWVudGVkIGxhbmd1YWdlIHRoYXQgZW1waGFzaXplcyBwcm9ncmFtbWVyIGhhcHBpbmVzcy4iLCJyZWFzb25pbmciOiJUaGUgdXNlciBhc2tzIGEgc3RyYWlnaHRmb3J3YXJkIGZhY3R1YWwgcXVlc3Rpb246IFdobyBpcyB0aGUgY3JlYXRvciBvZiBSdWJ5PyBBbnN3ZXI6IFl1a2loaXJvIFwiTWF0elwiIE1hdHN1bW90by4gUHJvdmlkZSBzb21lIGNvbnRleHQuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo3NywiY29tcGxldGlvbl90b2tlbnMiOjEyNCwidG90YWxfdG9rZW5zIjoyMDEsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjo0OH19fQo=
+  recorded_at: Tue, 10 Nov 2026 17:36:37 GMT
+- request:
+    method: post
+    uri: https://ollama.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"Who is
+        the creator of the programming language Ruby?"},{"role":"assistant","content":"The
+        programming language **Ruby** was created by **Yukihiro Matsumoto**, often
+        known by his nickname **“Matz.”** He began developing Ruby in the mid‑1990s
+        and released the first public version (0.95) in December 1995. Matsumoto designed
+        Ruby to be a simple, expressive, and object‑oriented language that emphasizes
+        programmer happiness.","reasoning":"The user asks a straightforward factual
+        question: Who is the creator of Ruby? Answer: Yukihiro \"Matz\" Matsumoto.
+        Provide some context.","reasoning_content":"The user asks a straightforward
+        factual question: Who is the creator of Ruby? Answer: Yukihiro \"Matz\" Matsumoto.
+        Provide some context."},{"role":"user","content":"What year did he create
+        Ruby?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      X-Build-Commit:
+      - 81e02665bdd918cf59b66804d554f8e53171f5d2
+      X-Build-Time:
+      - '2026-11-09T17:12:20-08:00'
+      X-Frame-Options:
+      - DENY
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Content-Length:
+      - '878'
+      Date:
+      - Tue, 10 Nov 2026 17:36:38 GMT
+      Server:
+      - Google Frontend
+      X-Cloud-Trace-Context:
+      - 34ff2fc2ac9cdeabc647b01efca460af/18184569741314465134
+      Traceparent:
+      - 00-34ff2fc2ac9cdeabc647b01efca460af-fc5c91d5705d9d6e-00
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTQ4OCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQzMzIxOTgsIm1vZGVsIjoiZ3B0LW9zczoxMjBiIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJZdWtpaGlyb+KAr01hdHN1bW90byAoYWthIOKAnE1hdHrigJ0pIGJlZ2FuIHdvcmtpbmcgb24gUnVieSBpbiAqKjE5OTMqKiwgYW5kIHRoZSBsYW5ndWFnZeKAmXMgZmlyc3QgcHVibGljIHJlbGVhc2Ug4oCTIHZlcnNpb27igK8wLjk1IOKAkyB3YXMgbWFkZSBhdmFpbGFibGUgaW4gKipEZWNlbWJlcuKArzE5OTUqKi4gIFxuXG5Tbywgd2hpbGUgdGhlIGRldmVsb3BtZW50IHN0YXJ0ZWQgaW4gMTk5MywgUnVieSBpcyBnZW5lcmFsbHkgcmVnYXJkZWQgYXMgaGF2aW5nIGJlZW4gKmNyZWF0ZWQqIChpLmUuLCBmaXJzdCByZWxlYXNlZCkgaW4gKioxOTk1KiouIiwicmVhc29uaW5nIjoiVXNlciBhc2tzOiBcIldoYXQgeWVhciBkaWQgaGUgY3JlYXRlIFJ1Ynk/XCIgU28gYW5zd2VyOiBtaWQtMTk5MHMsIGZpcnN0IHB1YmxpYyByZWxlYXNlIDE5OTUuIEhlIHN0YXJ0ZWQgY3JlYXRpbmcgaW4gMTk5My4gVGhlIHllYXIgb2YgY3JlYXRpb24gY291bGQgYmUgY29uc2lkZXJlZCAxOTk1IHdoZW4gZmlyc3QgcmVsZWFzZWQuIFByb3ZpZGUgY2xhcmlmaWNhdGlvbi4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjE3NiwiY29tcGxldGlvbl90b2tlbnMiOjE0NiwidG90YWxfdG9rZW5zIjozMjIsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjo0OH19fQo=
+  recorded_at: Tue, 10 Nov 2026 17:36:38 GMT
+recorded_with: VCR 6.4.1

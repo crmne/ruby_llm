@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -29,53 +29,53 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - fb036d5c394cd0c23173b2be8d69965e24bc9914
+      - 81e02665bdd918cf59b66804d554f8e53171f5d2
       X-Build-Time:
-      - '2026-10-09T17:17:18-07:00'
+      - '2026-11-09T17:12:20-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '641'
+      - '668'
       Date:
-      - Sun, 11 Oct 2026 21:06:33 GMT
+      - Tue, 10 Nov 2026 17:30:33 GMT
       Server:
       - Google Frontend
       Traceparent:
-      - 00-7e3b24dbd16034c5f4c07fa9be6f17f6-6adefbe31f040c83-00
+      - 00-9d3f0f7c5fc69513d04f8e35f5cb479e-dd0d3f71aece3bf7-00
       X-Cloud-Trace-Context:
-      - 7e3b24dbd16034c5f4c07fa9be6f17f6/7700869365746633859
+      - 9d3f0f7c5fc69513d04f8e35f5cb479e/15928457214575918071
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-800","object":"chat.completion","created":1791752793,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"The
-        user asks weather in Berlin with coordinates. We need to call the weather
-        function with latitude and longitude strings.","tool_calls":[{"id":"call_96gum3i8","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":169,"completion_tokens":62,"total_tokens":231,"prompt_tokens_details":{"cached_tokens":64}}}
+      string: '{"id":"chatcmpl-190","object":"chat.completion","created":1794331833,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"User
+        wants the weather in Berlin using coordinates (52.5200, 13.4050). Need to
+        call weather function with latitude as string, longitude as string.\n\n","tool_calls":[{"id":"call_3x0azp0t","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":169,"completion_tokens":74,"total_tokens":243,"prompt_tokens_details":{"cached_tokens":32}}}
 
         '
-  recorded_at: Sun, 11 Oct 2026 21:06:33 GMT
+  recorded_at: Tue, 10 Nov 2026 17:30:33 GMT
 - request:
     method: post
     uri: https://ollama.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_96gum3i8","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning":"The
-        user asks weather in Berlin with coordinates. We need to call the weather
-        function with latitude and longitude strings.","reasoning_content":"The user
-        asks weather in Berlin with coordinates. We need to call the weather function
-        with latitude and longitude strings."},{"role":"tool","content":"Current weather
-        at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_96gum3i8"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_3x0azp0t","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning":"User
+        wants the weather in Berlin using coordinates (52.5200, 13.4050). Need to
+        call weather function with latitude as string, longitude as string.\n\n","reasoning_content":"User
+        wants the weather in Berlin using coordinates (52.5200, 13.4050). Need to
+        call weather function with latitude as string, longitude as string.\n\n"},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_3x0azp0t"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -92,9 +92,9 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - fb036d5c394cd0c23173b2be8d69965e24bc9914
+      - 81e02665bdd918cf59b66804d554f8e53171f5d2
       X-Build-Time:
-      - '2026-10-09T17:17:18-07:00'
+      - '2026-11-09T17:12:20-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
@@ -102,20 +102,20 @@ http_interactions:
       Content-Length:
       - '450'
       Date:
-      - Sun, 11 Oct 2026 21:06:34 GMT
+      - Tue, 10 Nov 2026 17:30:34 GMT
       Server:
       - Google Frontend
-      X-Cloud-Trace-Context:
-      - 9e6f8587b7346e2204c6d536a5ebe22c/2208504911983071712
       Traceparent:
-      - 00-9e6f8587b7346e2204c6d536a5ebe22c-1ea62f842b74d1e0-00
+      - 00-0f4203f3bf72657c3d08720b4ad34201-ea73d2a199da83b5-00
+      X-Cloud-Trace-Context:
+      - 0f4203f3bf72657c3d08720b4ad34201/16894078218709664693
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTY2MSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTE3NTI3OTQsIm1vZGVsIjoiZ3B0LW9zczoxMjBiIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiAoYXTigK81Mi41MjAw4oCvTizigK8xMy40MDUw4oCvRSkgaXMgKioxNeKAr8KwQyoqIHdpdGggYSB3aW5kIHNwZWVkIG9mICoqMTDigK9rbS9oKiouIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyNTksImNvbXBsZXRpb25fdG9rZW5zIjo0NSwidG90YWxfdG9rZW5zIjozMDQsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxOTJ9fX0K
-  recorded_at: Sun, 11 Oct 2026 21:06:34 GMT
-recorded_with: VCR 6.4.0
+        eyJpZCI6ImNoYXRjbXBsLTczNiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQzMzE4MzQsIm1vZGVsIjoiZ3B0LW9zczoxMjBiIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiAoYXTigK81Mi41MjAw4oCvTizigK8xMy40MDUw4oCvRSkgaXMgKioxNeKAr8KwQyoqIHdpdGggYSB3aW5kIHNwZWVkIG9mICoqMTDigK9rbS9oKiouIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyNzEsImNvbXBsZXRpb25fdG9rZW5zIjo0NSwidG90YWxfdG9rZW5zIjozMTYsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxOTJ9fX0K
+  recorded_at: Tue, 10 Nov 2026 17:30:34 GMT
+recorded_with: VCR 6.4.1

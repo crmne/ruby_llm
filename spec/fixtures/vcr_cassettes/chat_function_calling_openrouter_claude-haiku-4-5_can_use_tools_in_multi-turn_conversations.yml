@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Http-Referer:
@@ -31,7 +31,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:12:36 GMT
+      - Tue, 10 Nov 2026 17:42:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -41,9 +41,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1791753156-JhuNErTmaYoaEVxXR6Hw
+      - gen-1794332567-lzHaARqpzlYoUHdCVH41
       Access-Control-Expose-Headers:
-      - X-Generation-Id,X-Provider-Name,request-id,cf-ray
+      - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
+      X-Openrouter-Release:
+      - api;11e69a63-8b87-4321-b835-a27e03c5ff81
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -57,26 +59,28 @@ http_interactions:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n{\"id\":\"gen-1791753156-JhuNErTmaYoaEVxXR6Hw\",\"object\":\"chat.completion\",\"created\":1791753156,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
-        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_use\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_013zsJTFRf7nbdicbKYMN5Tc\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
+      string: "\n         \n{\"id\":\"gen-1794332567-lzHaARqpzlYoUHdCVH41\",\"object\":\"chat.completion\",\"created\":1794332567,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
+        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_use\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_01RrKtkTdtPR54Vr9YasUooR\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
         \\\"52.5200\\\", \\\"longitude\\\": \\\"13.4050\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":633,\"completion_tokens\":75,\"total_tokens\":708,\"cost\":0.001008,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.001008,\"upstream_inference_prompt_cost\":0.000633,\"upstream_inference_completions_cost\":0.000375},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Sun, 11 Oct 2026 21:12:37 GMT
+  recorded_at: Tue, 10 Nov 2026 17:42:48 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_013zsJTFRf7nbdicbKYMN5Tc","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_013zsJTFRf7nbdicbKYMN5Tc"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01RrKtkTdtPR54Vr9YasUooR","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_01RrKtkTdtPR54Vr9YasUooR"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Http-Referer:
@@ -95,7 +99,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:12:37 GMT
+      - Tue, 10 Nov 2026 17:42:49 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -105,9 +109,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1791753157-W95OXBiV3ZMTVeeBEPgh
+      - gen-1794332568-j1GacIK5oepeWGQimlhJ
       Access-Control-Expose-Headers:
-      - X-Generation-Id,X-Provider-Name,request-id,cf-ray
+      - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
+      X-Openrouter-Release:
+      - api;11e69a63-8b87-4321-b835-a27e03c5ff81
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -121,29 +127,30 @@ http_interactions:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        CiAgICAgICAgIAp7ImlkIjoiZ2VuLTE3OTE3NTMxNTctVzk1T1hCaVYzWk1UVmVlQkVQZ2giLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzkxNzUzMTU3LCJtb2RlbCI6ImFudGhyb3BpYy9jbGF1ZGUtaGFpa3UtNC41IiwicHJvdmlkZXIiOiJBbWF6b24gQmVkcm9jayIsInN5c3RlbV9maW5nZXJwcmludCI6bnVsbCwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJuYXRpdmVfZmluaXNoX3JlYXNvbiI6ImVuZF90dXJuIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGlzOlxuLSAqKlRlbXBlcmF0dXJlKio6IDE1wrBDXG4tICoqV2luZCoqOiAxMCBrbS9oXG5cbkl0J3MgYSBtaWxkIGRheSB3aXRoIGxpZ2h0IHdpbmRzLiBZb3UgbWlnaHQgd2FudCB0byBicmluZyBhIGxpZ2h0IGphY2tldCBpZiB5b3UncmUgaGVhZGluZyBvdXQhIiwicmVmdXNhbCI6bnVsbCwicmVhc29uaW5nIjpudWxsfX1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo3NDgsImNvbXBsZXRpb25fdG9rZW5zIjo1NCwidG90YWxfdG9rZW5zIjo4MDIsImNvc3QiOjAuMDAxMDE4LCJpc19ieW9rIjpmYWxzZSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjAsImNhY2hlX3dyaXRlX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJ2aWRlb190b2tlbnMiOjB9LCJjb3N0X2RldGFpbHMiOnsidXBzdHJlYW1faW5mZXJlbmNlX2Nvc3QiOjAuMDAxMDE4LCJ1cHN0cmVhbV9pbmZlcmVuY2VfcHJvbXB0X2Nvc3QiOjAuMDAwNzQ4LCJ1cHN0cmVhbV9pbmZlcmVuY2VfY29tcGxldGlvbnNfY29zdCI6MC4wMDAyN30sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjB9fX0=
-  recorded_at: Sun, 11 Oct 2026 21:12:38 GMT
+        CiAgICAgICAgIAp7ImlkIjoiZ2VuLTE3OTQzMzI1NjgtajFHYWNJSzVvZXBlV0dRaW1saEoiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzk0MzMyNTY4LCJtb2RlbCI6ImFudGhyb3BpYy9jbGF1ZGUtaGFpa3UtNC41IiwicHJvdmlkZXIiOiJBbWF6b24gQmVkcm9jayIsInN5c3RlbV9maW5nZXJwcmludCI6bnVsbCwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJuYXRpdmVfZmluaXNoX3JlYXNvbiI6ImVuZF90dXJuIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSB3ZWF0aGVyIGluIEJlcmxpbiBpcyBjdXJyZW50bHk6XG4tICoqVGVtcGVyYXR1cmUqKjogMTXCsEMgKDU5wrBGKVxuLSAqKldpbmQqKjogMTAga20vaCAoNi4yIG1waClcblxuSXQncyBhIG1pbGQgZGF5IHdpdGggZ2VudGxlIHdpbmRzISIsInJlZnVzYWwiOm51bGwsInJlYXNvbmluZyI6bnVsbH19XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NzQ4LCJjb21wbGV0aW9uX3Rva2VucyI6NTIsInRvdGFsX3Rva2VucyI6ODAwLCJjb3N0IjowLjAwMTAwOCwiaXNfYnlvayI6ZmFsc2UsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowLCJjYWNoZV93cml0ZV90b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwidmlkZW9fdG9rZW5zIjowfSwiY29zdF9kZXRhaWxzIjp7InVwc3RyZWFtX2luZmVyZW5jZV9jb3N0IjowLjAwMTAwOCwidXBzdHJlYW1faW5mZXJlbmNlX3Byb21wdF9jb3N0IjowLjAwMDc0OCwidXBzdHJlYW1faW5mZXJlbmNlX2NvbXBsZXRpb25zX2Nvc3QiOjAuMDAwMjZ9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImltYWdlX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowfX19
+  recorded_at: Tue, 10 Nov 2026 17:42:49 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_013zsJTFRf7nbdicbKYMN5Tc","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_013zsJTFRf7nbdicbKYMN5Tc"},{"role":"assistant","content":"The
-        current weather in Berlin is:\n- **Temperature**: 15°C\n- **Wind**: 10 km/h\n\nIt''s
-        a mild day with light winds. You might want to bring a light jacket if you''re
-        heading out!"},{"role":"user","content":"What''s the weather in Paris? (48.8575,
-        2.3514)"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01RrKtkTdtPR54Vr9YasUooR","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_01RrKtkTdtPR54Vr9YasUooR"},{"role":"assistant","content":"The
+        weather in Berlin is currently:\n- **Temperature**: 15°C (59°F)\n- **Wind**:
+        10 km/h (6.2 mph)\n\nIt''s a mild day with gentle winds!"},{"role":"user","content":"What''s
+        the weather in Paris? (48.8575, 2.3514)"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Http-Referer:
@@ -162,7 +169,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:12:39 GMT
+      - Tue, 10 Nov 2026 17:42:50 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -172,9 +179,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1791753158-kkAM2hj9Kb0a20QiSfrJ
+      - gen-1794332569-p0TtP37syxL1olJFwYsz
       Access-Control-Expose-Headers:
-      - X-Generation-Id,X-Provider-Name,request-id,cf-ray
+      - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
+      X-Openrouter-Release:
+      - api;11e69a63-8b87-4321-b835-a27e03c5ff81
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -188,31 +197,32 @@ http_interactions:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n{\"id\":\"gen-1791753158-kkAM2hj9Kb0a20QiSfrJ\",\"object\":\"chat.completion\",\"created\":1791753158,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
-        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_use\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_0182L6JjAuctpTX4MZaB5A4r\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
-        \\\"48.8575\\\", \\\"longitude\\\": \\\"2.3514\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":824,\"completion_tokens\":75,\"total_tokens\":899,\"cost\":0.001199,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.001199,\"upstream_inference_prompt_cost\":0.000824,\"upstream_inference_completions_cost\":0.000375},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Sun, 11 Oct 2026 21:12:39 GMT
+      string: "\n         \n{\"id\":\"gen-1794332569-p0TtP37syxL1olJFwYsz\",\"object\":\"chat.completion\",\"created\":1794332569,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
+        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_use\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_01Dvx2pVuFDs7uidTELVLWQP\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
+        \\\"48.8575\\\", \\\"longitude\\\": \\\"2.3514\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":822,\"completion_tokens\":75,\"total_tokens\":897,\"cost\":0.001197,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.001197,\"upstream_inference_prompt_cost\":0.000822,\"upstream_inference_completions_cost\":0.000375},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Tue, 10 Nov 2026 17:42:50 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_013zsJTFRf7nbdicbKYMN5Tc","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_013zsJTFRf7nbdicbKYMN5Tc"},{"role":"assistant","content":"The
-        current weather in Berlin is:\n- **Temperature**: 15°C\n- **Wind**: 10 km/h\n\nIt''s
-        a mild day with light winds. You might want to bring a light jacket if you''re
-        heading out!"},{"role":"user","content":"What''s the weather in Paris? (48.8575,
-        2.3514)"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_0182L6JjAuctpTX4MZaB5A4r","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":"Current
-        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_0182L6JjAuctpTX4MZaB5A4r"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01RrKtkTdtPR54Vr9YasUooR","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_01RrKtkTdtPR54Vr9YasUooR"},{"role":"assistant","content":"The
+        weather in Berlin is currently:\n- **Temperature**: 15°C (59°F)\n- **Wind**:
+        10 km/h (6.2 mph)\n\nIt''s a mild day with gentle winds!"},{"role":"user","content":"What''s
+        the weather in Paris? (48.8575, 2.3514)"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01Dvx2pVuFDs7uidTELVLWQP","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":"Current
+        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_01Dvx2pVuFDs7uidTELVLWQP"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Http-Referer:
@@ -231,7 +241,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:12:40 GMT
+      - Tue, 10 Nov 2026 17:42:51 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -241,9 +251,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1791753159-TL7yP5f0xpOFlTCHKKRj
+      - gen-1794332570-UH4NdA90mIR2pfuvOfrY
       Access-Control-Expose-Headers:
-      - X-Generation-Id,X-Provider-Name,request-id,cf-ray
+      - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
+      X-Openrouter-Release:
+      - api;11e69a63-8b87-4321-b835-a27e03c5ff81
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -257,9 +269,11 @@ http_interactions:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        CiAgICAgICAgIAp7ImlkIjoiZ2VuLTE3OTE3NTMxNTktVEw3eVA1ZjB4cE9GbFRDSEtLUmoiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzkxNzUzMTU5LCJtb2RlbCI6ImFudGhyb3BpYy9jbGF1ZGUtaGFpa3UtNC41IiwicHJvdmlkZXIiOiJBbWF6b24gQmVkcm9jayIsInN5c3RlbV9maW5nZXJwcmludCI6bnVsbCwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJuYXRpdmVfZmluaXNoX3JlYXNvbiI6ImVuZF90dXJuIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gUGFyaXMgaXM6XG4tICoqVGVtcGVyYXR1cmUqKjogMTXCsENcbi0gKipXaW5kKio6IDEwIGttL2hcblxuSW50ZXJlc3RpbmdseSwgUGFyaXMgaGFzIHRoZSBzYW1lIHdlYXRoZXIgY29uZGl0aW9ucyBhcyBCZXJsaW4gcmlnaHQgbm93ISBCb3RoIGNpdGllcyBhcmUgYXQgMTXCsEMgd2l0aCAxMCBrbS9oIHdpbmRzLiBJdCdzIGEgcGxlYXNhbnQsIG1pbGQgZGF5IGluIGJvdGggbG9jYXRpb25zLiIsInJlZnVzYWwiOm51bGwsInJlYXNvbmluZyI6bnVsbH19XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6OTM5LCJjb21wbGV0aW9uX3Rva2VucyI6NzUsInRvdGFsX3Rva2VucyI6MTAxNCwiY29zdCI6MC4wMDEzMTQsImlzX2J5b2siOmZhbHNlLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiY2FjaGVfd3JpdGVfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsInZpZGVvX3Rva2VucyI6MH0sImNvc3RfZGV0YWlscyI6eyJ1cHN0cmVhbV9pbmZlcmVuY2VfY29zdCI6MC4wMDEzMTQsInVwc3RyZWFtX2luZmVyZW5jZV9wcm9tcHRfY29zdCI6MC4wMDA5MzksInVwc3RyZWFtX2luZmVyZW5jZV9jb21wbGV0aW9uc19jb3N0IjowLjAwMDM3NX0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjB9fX0=
-  recorded_at: Sun, 11 Oct 2026 21:12:41 GMT
-recorded_with: VCR 6.4.0
+        CiAgICAgICAgIAp7ImlkIjoiZ2VuLTE3OTQzMzI1NzAtVUg0TmRBOTBtSVIycGZ1dk9mclkiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzk0MzMyNTcwLCJtb2RlbCI6ImFudGhyb3BpYy9jbGF1ZGUtaGFpa3UtNC41IiwicHJvdmlkZXIiOiJBbWF6b24gQmVkcm9jayIsInN5c3RlbV9maW5nZXJwcmludCI6bnVsbCwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJuYXRpdmVfZmluaXNoX3JlYXNvbiI6ImVuZF90dXJuIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSB3ZWF0aGVyIGluIFBhcmlzIGlzIGN1cnJlbnRseTpcbi0gKipUZW1wZXJhdHVyZSoqOiAxNcKwQyAoNTnCsEYpXG4tICoqV2luZCoqOiAxMCBrbS9oICg2LjIgbXBoKVxuXG5JbnRlcmVzdGluZ2x5LCBQYXJpcyBoYXMgdGhlIHNhbWUgd2VhdGhlciBjb25kaXRpb25zIGFzIEJlcmxpbiBhdCB0aGUgbW9tZW50IC0gbWlsZCB0ZW1wZXJhdHVyZXMgd2l0aCBnZW50bGUgd2luZHMhIiwicmVmdXNhbCI6bnVsbCwicmVhc29uaW5nIjpudWxsfX1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo5MzcsImNvbXBsZXRpb25fdG9rZW5zIjo2NiwidG90YWxfdG9rZW5zIjoxMDAzLCJjb3N0IjowLjAwMTI2NywiaXNfYnlvayI6ZmFsc2UsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowLCJjYWNoZV93cml0ZV90b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwidmlkZW9fdG9rZW5zIjowfSwiY29zdF9kZXRhaWxzIjp7InVwc3RyZWFtX2luZmVyZW5jZV9jb3N0IjowLjAwMTI2NywidXBzdHJlYW1faW5mZXJlbmNlX3Byb21wdF9jb3N0IjowLjAwMDkzNywidXBzdHJlYW1faW5mZXJlbmNlX2NvbXBsZXRpb25zX2Nvc3QiOjAuMDAwMzN9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImltYWdlX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowfX19
+  recorded_at: Tue, 10 Nov 2026 17:42:51 GMT
+recorded_with: VCR 6.4.1

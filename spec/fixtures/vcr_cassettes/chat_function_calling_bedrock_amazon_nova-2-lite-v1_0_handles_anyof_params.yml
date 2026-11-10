@@ -6,18 +6,18 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Call the any-of params
-        tool for task \"Review PR\" with status \"pending\" and report the result."}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"any_of_params","description":"Uses
+        tool for task \"Review PR\" with status \"pending\" and report the result."}]}],"inferenceConfig":{"maxTokens":65535},"toolConfig":{"tools":[{"toolSpec":{"name":"any_of_params","description":"Uses
         params DSL any_of support","inputSchema":{"json":{"type":"object","properties":{"task":{"type":"string","description":"Task
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false}}}}]}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261011T210800Z
+      - 20261110T173222Z
       X-Amz-Content-Sha256:
-      - 48f3f081baee18ce7096c0a34f2ca6489e327293bef478db273cce6049533275
+      - 6d9b66b67a5a8311f4d7632767ddeb29bbbcd2d91c2e160af91e7a52a5a0ca3b
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -31,18 +31,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:08:01 GMT
+      - Tue, 10 Nov 2026 17:32:25 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '323'
+      - '324'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 2476f361-67fd-443c-9b36-7d9c2efdf778
+      - 6c76e61b-1a72-4d30-9fc9-a54a017b8d10
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":492},"output":{"message":{"content":[{"toolUse":{"input":{"task":"Review
-        PR","status":"pending"},"name":"any_of_params","toolUseId":"tooluse_ou7dfW0TlbpHeFQx59o3yb"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":978,"outputTokens":38,"serverToolUsage":{},"totalTokens":1016}}'
-  recorded_at: Sun, 11 Oct 2026 21:08:01 GMT
-recorded_with: VCR 6.4.0
+      string: '{"metrics":{"latencyMs":1526},"output":{"message":{"content":[{"toolUse":{"input":{"task":"Review
+        PR","status":"pending"},"name":"any_of_params","toolUseId":"tooluse_ZCTvFBGr64uvE8OlkDQc0J"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":978,"outputTokens":38,"serverToolUsage":{},"totalTokens":1016}}'
+  recorded_at: Tue, 10 Nov 2026 17:32:25 GMT
+recorded_with: VCR 6.4.1

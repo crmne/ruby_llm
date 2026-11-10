@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":"none"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -29,7 +29,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 Oct 2026 21:18:41 GMT
+      - Tue, 10 Nov 2026 17:52:29 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -46,14 +46,16 @@ http_interactions:
       - 'true'
       X-Xai-Model-Address:
       - http://localhost:9988
+      X-Watermark:
+      - 'false'
       Traceparent:
-      - 00-f7203f58dfbe176ac07edd540986c7a5-058436e60007a99c-00
+      - 00-358cbf0bbc1a28940f027537e2fbee2c-989605ba0001e7c3-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - ac54f447-3057-424a-bae1-3e5d8bfe4f87
+      - bda88a79-72b6-42d6-9520-5c222c95a0bf
       Azureml-Model-Session:
-      - d20261009040854-b7570cce
+      - d20261110015917-e7d4cb48
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -87,7 +89,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - ac54f447-3057-424a-bae1-3e5d8bfe4f87
+      - bda88a79-72b6-42d6-9520-5c222c95a0bf
+      X-Http2-Stream-Id:
+      - '367'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -97,6 +101,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImZmYTc4NzhjLWUyODMtNDQ1ZS04ZDI1LTYzZDA2ODUyN2Y5NiIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJJJ20gc29ycnksIGJ1dCBJIGRvbid0IGhhdmUgcmVhbC10aW1lIHdlYXRoZXIgZGF0YSBhdmFpbGFibGUgaW4gbXkga25vd2xlZGdlIGJhc2UuIEZvciB0aGUgbW9zdCBhY2N1cmF0ZSBhbmQgY3VycmVudCBpbmZvcm1hdGlvbiBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApLCBJJ2QgcmVjb21tZW5kIGNoZWNraW5nIGEgcmVsaWFibGUgd2VhdGhlciBzZXJ2aWNlIGxpa2Ugd2VhdGhlci5jb20gb3IgeW91ciBsb2NhbCBhcHAuIEdlbmVyYWxseSwgQmVybGluIGluIHRoaXMgc2Vhc29uIHRlbmRzIHRvIGhhdmUgbWlsZCBzdW1tZXJzIHdpdGggdGVtcGVyYXR1cmVzIGFyb3VuZCAyMC0yNcKwQyAoNjgtNzfCsEYpLCBidXQgaXQgY2FuIHZhcnkhIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyODgsImNvbXBsZXRpb25fdG9rZW5zIjo4MywidG90YWxfdG9rZW5zIjozNzEsImF1ZGlvX3Byb21wdF90b2tlbnMiOjAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjo0MTAsImF1ZGlvX3Rva2VucyI6MCwidGV4dF90b2tlbnMiOjI4OCwiaW1hZ2VfdG9rZW5zIjowfSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sIm51bV9zb3VyY2VzX3VzZWQiOjB9LCJjcmVhdGVkIjoxNzkxNzUzNTIxLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJwcm9tcHRfZmlsdGVyX3Jlc3VsdHMiOm51bGx9
-  recorded_at: Sun, 11 Oct 2026 21:18:42 GMT
-recorded_with: VCR 6.4.0
+        eyJpZCI6IjxYX1JFUVVFU1RfSUQ+IiwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkknbSBzb3JyeSwgYnV0IGJhc2VkIG9uIG15IGxhc3QgYXZhaWxhYmxlIGtub3dsZWRnZSwgSSBkb24ndCBoYXZlIHJlYWwtdGltZSB3ZWF0aGVyIGRhdGEgZm9yIEJlcmxpbi4gVHlwaWNhbGx5LCBpdCBoYXMgYSB0ZW1wZXJhdGUgc2Vhc29uYWwgY2xpbWF0ZSB3aXRoIGNvb2wgd2ludGVycyAoYXZlcmFnZSBhcm91bmQgMi0zwrBDIGluIEphbnVhcnkpIGFuZCBtaWxkIHN1bW1lcnMgKGFyb3VuZCAyNMKwQyBpbiBKdWx5KS4gRm9yIGN1cnJlbnQgY29uZGl0aW9ucywgSSdkIHJlY29tbWVuZCBjaGVja2luZyBhIHJlbGlhYmxlIHdlYXRoZXIgc2VydmljZS4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjQ1NiwiY29tcGxldGlvbl90b2tlbnMiOjY2LCJ0b3RhbF90b2tlbnMiOjUyMiwiYXVkaW9fcHJvbXB0X3Rva2VucyI6MCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjMxNCwiYXVkaW9fdG9rZW5zIjowLCJ0ZXh0X3Rva2VucyI6NDU2LCJpbWFnZV90b2tlbnMiOjB9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MH0sImNyZWF0ZWQiOjE3OTQzMzMxNDksIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInByb21wdF9maWx0ZXJfcmVzdWx0cyI6bnVsbH0=
+  recorded_at: Tue, 10 Nov 2026 17:52:30 GMT
+recorded_with: VCR 6.4.1

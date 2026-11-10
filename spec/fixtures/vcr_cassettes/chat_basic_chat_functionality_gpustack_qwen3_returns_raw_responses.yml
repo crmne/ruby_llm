@@ -9,7 +9,7 @@ http_interactions:
         capital of France?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,43 +23,29 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Req-Cost-Time:
-      - '1961'
+      Req-Arrive-Time:
+      - '1794331946792'
+      X-Envoy-Upstream-Service-Time:
+      - '1943'
       Resp-Start-Time:
-      - '1791752876985'
+      - '1794331948740'
+      Date:
+      - Tue, 10 Nov 2026 17:32:25 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
       - ''
       Content-Type:
       - application/json; charset=utf-8
-      Req-Arrive-Time:
-      - '1791752875024'
-      X-Envoy-Upstream-Service-Time:
-      - '1957'
-      Date:
-      - Sun, 11 Oct 2026 21:07:54 GMT
+      Req-Cost-Time:
+      - '1948'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"The
-        capital of France is **Paris**. It is the most populous city in France and
-        serves as the country''s political, economic, and cultural center.","reasoning_content":"Okay,
-        the user is asking for the capital of France. Let me think. I know that France
-        is a country in Europe, and its capital is a major city. The most common answer
-        I remember is Paris. But wait, maybe I should double-check to make sure I''m
-        not mixing up any other cities. Let me recall... Paris is the capital, right?
-        I think that''s correct. There''s also Lyon, which is a big city, but not
-        the capital. Marseille is another major city, but again, not the capital.
-        So, yes, Paris is the capital of France. I should confirm that there''s no
-        confusion with other countries, like maybe the capital of another country
-        in Europe. For example, the capital of Italy is Rome, and Germany''s is Berlin.
-        So, no, France''s capital is definitely Paris. I don''t think there''s any
-        other city that''s considered the capital. Let me just make sure there''s
-        no historical context where the capital might have changed. I don''t recall
-        any such changes. So the answer is Paris.\n"}}],"created":1791752876,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":251,"prompt_tokens":15,"total_tokens":266,"prompt_tokens_details":{"cached_tokens":4}},"id":"chatcmpl-UgCoqoms6OBIymCetUjdLztGaoMMGXsL","timings":{"cache_n":4,"prompt_n":11,"prompt_ms":15.806,"prompt_per_token_ms":1.436909090909091,"prompt_per_second":695.9382512969759,"predicted_n":251,"predicted_ms":1927.077,"predicted_per_token_ms":7.708308,"predicted_per_second":129.73015608613457}}'
-  recorded_at: Sun, 11 Oct 2026 21:07:56 GMT
-recorded_with: VCR 6.4.0
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGNhcGl0YWwgb2YgRnJhbmNlIGlzICoqUGFyaXMqKi4gSXQgaXMgbm90IG9ubHkgdGhlIHBvbGl0aWNhbCBhbmQgYWRtaW5pc3RyYXRpdmUgY2VudGVyIG9mIHRoZSBjb3VudHJ5IGJ1dCBhbHNvIGEgbWFqb3IgY3VsdHVyYWwsIGVjb25vbWljLCBhbmQgaGlzdG9yaWNhbCBodWIuIEtub3duIGZvciBsYW5kbWFya3MgbGlrZSB0aGUgRWlmZmVsIFRvd2VyLCBMb3V2cmUgTXVzZXVtLCBhbmQgTm90cmUtRGFtZSBDYXRoZWRyYWwsIFBhcmlzIGhhcyBiZWVuIHRoZSBzZWF0IG9mIHRoZSBGcmVuY2ggZ292ZXJubWVudCBzaW5jZSB0aGUgMTN0aCBjZW50dXJ5LiDwn4er8J+HtyIsInJlYXNvbmluZ19jb250ZW50IjoiT2theSwgdGhlIHVzZXIgaXMgYXNraW5nIGZvciB0aGUgY2FwaXRhbCBvZiBGcmFuY2UuIExldCBtZSByZWNhbGwuIEkga25vdyB0aGF0IEZyYW5jZSBpcyBhIGNvdW50cnkgaW4gRXVyb3BlLiBUaGUgY2FwaXRhbCBpcyBhIGNpdHkgdGhhdCdzIHRoZSBzZWF0IG9mIGdvdmVybm1lbnQuIEZyb20gd2hhdCBJIHJlbWVtYmVyLCB0aGUgY2FwaXRhbCBvZiBGcmFuY2UgaXMgUGFyaXMuIFdhaXQsIGJ1dCBJIHNob3VsZCBtYWtlIHN1cmUuIFNvbWV0aW1lcyBwZW9wbGUgY29uZnVzZSBpdCB3aXRoIG90aGVyIGNpdGllcyBsaWtlIEx5b24gb3IgTWFyc2VpbGxlLCBidXQgdGhvc2UgYXJlIG1ham9yIGNpdGllcyBidXQgbm90IGNhcGl0YWxzLiBMZXQgbWUgdGhpbmsuIFBhcmlzIGlzIHRoZSBtb3N0IHdlbGwta25vd24gY2FwaXRhbC4gWWVzLCBJJ20gcHJldHR5IGNvbmZpZGVudCBpdCdzIFBhcmlzLiBJIHNob3VsZCBhbHNvIG1lbnRpb24gdGhhdCBQYXJpcyBpcyBub3Qgb25seSB0aGUgY2FwaXRhbCBidXQgYWxzbyBhIG1ham9yIGN1bHR1cmFsIGFuZCBlY29ub21pYyBodWIuIE1heWJlIGFkZCBhIGJpdCBhYm91dCBpdHMgaGlzdG9yeSwgbGlrZSBiZWluZyB0aGUgc2VhdCBvZiB0aGUgRnJlbmNoIGdvdmVybm1lbnQgc2luY2UgdGhlIDEzdGggY2VudHVyeS4gQnV0IHRoZSB1c2VyIG1pZ2h0IGp1c3Qgd2FudCB0aGUgc3RyYWlnaHRmb3J3YXJkIGFuc3dlci4gTGV0IG1lIGNoZWNrIGlmIHRoZXJlJ3MgYW55IGNoYW5jZSBpdCdzIGRpZmZlcmVudC4gTm8sIEkgdGhpbmsgaXQncyBkZWZpbml0ZWx5IFBhcmlzLiBTbyB0aGUgYW5zd2VyIGlzIFBhcmlzLlxuIn19XSwiY3JlYXRlZCI6MTc5NDMzMTk0OCwibW9kZWwiOiJxd2VuMy1uYXRpdmUiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJiMTA4MzAtNDY1ZTQ5YjljIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjI2MSwicHJvbXB0X3Rva2VucyI6MTUsInRvdGFsX3Rva2VucyI6Mjc2LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6NH19LCJpZCI6ImNoYXRjbXBsLXQwbEs0T01pVWUyeHFwSVc0YzNGckEzalRvUlpEV01ZIiwidGltaW5ncyI6eyJjYWNoZV9uIjo0LCJwcm9tcHRfbiI6MTEsInByb21wdF9tcyI6MTcuNDI5LCJwcm9tcHRfcGVyX3Rva2VuX21zIjoxLjU4NDQ1NDU0NTQ1NDU0NTMsInByb21wdF9wZXJfc2Vjb25kIjo2MzEuMTMyMDIxMzQzNzM3NSwicHJlZGljdGVkX24iOjI2MSwicHJlZGljdGVkX21zIjoxOTExLjExNiwicHJlZGljdGVkX3Blcl90b2tlbl9tcyI6Ny4zNTA0NDYxNTM4NDYxNTMsInByZWRpY3RlZF9wZXJfc2Vjb25kIjoxMzYuMDQ2MTYzNjAyODM3Mjh9fQ==
+  recorded_at: Tue, 10 Nov 2026 17:32:28 GMT
+recorded_with: VCR 6.4.1

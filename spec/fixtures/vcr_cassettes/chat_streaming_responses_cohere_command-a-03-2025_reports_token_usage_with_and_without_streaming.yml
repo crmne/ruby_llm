@@ -9,7 +9,7 @@ http_interactions:
         with exactly: 1, 2, 3"}]}],"stream":true,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -38,11 +38,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - d17e7e3e3442e1d12af4960ba9c800e8
+      - 4c3b1a3950bea8227d3643e258972c53
       Date:
-      - Sun, 11 Oct 2026 21:06:16 GMT
+      - Tue, 10 Nov 2026 17:30:20 GMT
       X-Envoy-Upstream-Service-Time:
-      - '146'
+      - '6283'
       Server:
       - envoy
       Via:
@@ -55,7 +55,7 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message-start
-        data: {"id":"7e5c0659-0573-424c-a02f-d503b5f57ad8","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+        data: {"id":"842908c1-cd0e-42a1-9597-78952667f82e","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
 
         event: content-start
         data: {"type":"content-start","index":0,"delta":{"message":{"content":{"type":"text","text":""}}}}
@@ -79,11 +79,11 @@ http_interactions:
         data: {"type":"content-end","index":0}
 
         event: message-end
-        data: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":12,"output_tokens":7},"tokens":{"input_tokens":507,"output_tokens":11},"cached_tokens":448}}}
+        data: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":12,"output_tokens":7},"tokens":{"input_tokens":507,"output_tokens":11},"cached_tokens":464}}}
 
         data: [DONE]
 
-  recorded_at: Sun, 11 Oct 2026 21:06:16 GMT
+  recorded_at: Tue, 10 Nov 2026 17:30:21 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
@@ -93,7 +93,7 @@ http_interactions:
         with exactly: 1, 2, 3"}]}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -126,23 +126,23 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - c97bd2d9aaf480f5f02f24d7d39165dd
+      - 348f7ebf5b5425bbca69404357a2e787
       Date:
-      - Sun, 11 Oct 2026 21:06:16 GMT
+      - Tue, 10 Nov 2026 17:30:21 GMT
       X-Envoy-Upstream-Service-Time:
-      - '192'
+      - '314'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      - h3=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"831eb738-07f9-4a1f-87fc-892765c393ed","message":{"role":"assistant","content":[{"type":"text","text":"1,
-        2, 3"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":12,"output_tokens":7},"tokens":{"input_tokens":507,"output_tokens":11},"cached_tokens":448}}'
-  recorded_at: Sun, 11 Oct 2026 21:06:16 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"798bae38-d788-40d7-80ac-8d1f071c8d54","message":{"role":"assistant","content":[{"type":"text","text":"1,
+        2, 3"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":12,"output_tokens":7},"tokens":{"input_tokens":507,"output_tokens":11},"cached_tokens":464}}'
+  recorded_at: Tue, 10 Nov 2026 17:30:21 GMT
+recorded_with: VCR 6.4.1
 ...

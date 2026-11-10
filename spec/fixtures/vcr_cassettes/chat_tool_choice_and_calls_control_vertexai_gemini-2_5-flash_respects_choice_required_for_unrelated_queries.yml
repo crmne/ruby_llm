@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Pragma:
-      - no-cache
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Date:
-      - Sun, 11 Oct 2026 21:20:22 GMT
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
+      - Tue, 10 Nov 2026 17:54:56 GMT
+      Pragma:
+      - no-cache
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 11 Oct 2026 21:20:22 GMT
+  recorded_at: Tue, 10 Nov 2026 17:54:56 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -70,7 +70,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}],"toolConfig":{"functionCallingConfig":{"mode":"any"}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -84,6 +84,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Goog-Request-Id:
+      - cFrzauKOMaOBtfAPiJ3rkQE
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -91,7 +93,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:20:23 GMT
+      - Tue, 10 Nov 2026 17:54:57 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -117,11 +119,11 @@ http_interactions:
                     "functionCall": {
                       "name": "weather",
                       "args": {
-                        "latitude": "52.5200",
-                        "longitude": "13.4050"
+                        "longitude": "13.4050",
+                        "latitude": "52.5200"
                       }
                     },
-                    "thoughtSignature": "AY89a19WsZIC1jUwV1D+axZgTn1l/bYDR93CLS4NuN/YCriOj20nJ/H1+KufOInrsm48uEn7xYshWt/Vap7F4ATQVoXX5DBcV24E8QF+mKRcYWxMmQRUdUFtMx8/wMS/qFX7V3HrpOAGczlj3cI2eino1LPloy878GkszrlKbQ9q/Zu5Go15MIx6MTUbyk8RkyrmeNtNLMp174vPodkC2dyg/Jd8B0whQHwys+vLjCu7XuRbhWpWYOf1/HnIN/l2dUZL4iwJD7kZQeitowyGx3/rW9ai+SM2rhwJ6BLB9vELTLGtAhd8Kk7J7UxYXHC0m7hfAuzf8LZ1RSHMBMnnbST28TxCcXj0pWXr46S1+TsYPpnuxGMWzBn/UqteIU67/ShkxlPjqq96yO8V5fMyiP3U+64YT92NoHKIABTLWf1J1Hv5zIxmgGMYMRm9R7PynU+muiolET6TTScTukgxFcZb03UB7gLluQcQrlINXt6D9vytpuM2yHIgI6PEO8wP4GpimtaYTgHtdPX+xsmWnyoVV8R+fzepSekFsoTM1NaP1GKqilCz726fRtvmZRUAxy38S4XVMqXkk7FJADJEIA3ZHYtApwgTA+Emsz2P1T/VsPpT2gjEmB6t"
+                    "thoughtSignature": "AY89a1/XJuGEJbx3HO6YcBOOMbu4Nz129SgCsUR9vCWhYX2RQSV0A40c2/WfUoMcIzLcqRAbq7nXCiFYjwpv3OURBKPKDHTpspfTNq8IAuB+uU/+LXJIwTRKDoktdyp+cIn7A871Z6Sl6s3Ths/OIrgRoBit/19Nr97g/sZbOso760ZhLDG9Tq+rik0xcVTGVLDBFDSd+56I6U8AbZVjnvq7dKly5N4/RXXM9hqF2NLI4stquHfmL5qkalHh8Z2jkgAtyCyzXoDMQw2W+Wgl6OdIINV2lBkQsIFpdbPZG1TQJyfEEfRIzZm/Jksj/CRL8dTis9a+9rcE6VNgg3nWr0uwMAkvImFfX5AS56oLdva0Y5ho9OASrsR3SRlDwGxql04F4N4odd5t4bM2ZyDllMJ+cAFCaMF01illMKvia2PApzWbOv9aMl6zZvaHs2OipSLe068VVVi56a+i8/k4+vQl2XteXR5hlRJsylM1O8HtjfMXOZpzkk/OT2TAmk/OIwzhK5vUhCFmuXt4AUMo2WUOKsGUSAv+z0Y/Qr9YfPM7cR8dq8UJNgx0bdhXJCE7529wBmqsEM5Bymv9tHOVmu/k6/62E8fvZIR3U73flAUgZHDVWKD+a+jigH5O"
                   }
                 ]
               },
@@ -131,7 +133,7 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 40,
             "candidatesTokenCount": 28,
-            "totalTokenCount": 143,
+            "totalTokenCount": 139,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -145,20 +147,20 @@ http_interactions:
                 "tokenCount": 28
               }
             ],
-            "thoughtsTokenCount": 75
+            "thoughtsTokenCount": 71
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-10-11T21:20:22.558274Z",
-          "responseId": "lv3LasKJIrW3mPUPuNrKuQQ"
+          "createTime": "2026-11-10T17:54:56.804706Z",
+          "responseId": "cFrzauKOMaOBtfAPiJ3rkQE"
         }
-  recorded_at: Sun, 11 Oct 2026 21:20:23 GMT
+  recorded_at: Tue, 10 Nov 2026 17:54:57 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"When was the fall of
-        Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"AY89a19WsZIC1jUwV1D+axZgTn1l/bYDR93CLS4NuN/YCriOj20nJ/H1+KufOInrsm48uEn7xYshWt/Vap7F4ATQVoXX5DBcV24E8QF+mKRcYWxMmQRUdUFtMx8/wMS/qFX7V3HrpOAGczlj3cI2eino1LPloy878GkszrlKbQ9q/Zu5Go15MIx6MTUbyk8RkyrmeNtNLMp174vPodkC2dyg/Jd8B0whQHwys+vLjCu7XuRbhWpWYOf1/HnIN/l2dUZL4iwJD7kZQeitowyGx3/rW9ai+SM2rhwJ6BLB9vELTLGtAhd8Kk7J7UxYXHC0m7hfAuzf8LZ1RSHMBMnnbST28TxCcXj0pWXr46S1+TsYPpnuxGMWzBn/UqteIU67/ShkxlPjqq96yO8V5fMyiP3U+64YT92NoHKIABTLWf1J1Hv5zIxmgGMYMRm9R7PynU+muiolET6TTScTukgxFcZb03UB7gLluQcQrlINXt6D9vytpuM2yHIgI6PEO8wP4GpimtaYTgHtdPX+xsmWnyoVV8R+fzepSekFsoTM1NaP1GKqilCz726fRtvmZRUAxy38S4XVMqXkk7FJADJEIA3ZHYtApwgTA+Emsz2P1T/VsPpT2gjEmB6t"}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"AY89a1/XJuGEJbx3HO6YcBOOMbu4Nz129SgCsUR9vCWhYX2RQSV0A40c2/WfUoMcIzLcqRAbq7nXCiFYjwpv3OURBKPKDHTpspfTNq8IAuB+uU/+LXJIwTRKDoktdyp+cIn7A871Z6Sl6s3Ths/OIrgRoBit/19Nr97g/sZbOso760ZhLDG9Tq+rik0xcVTGVLDBFDSd+56I6U8AbZVjnvq7dKly5N4/RXXM9hqF2NLI4stquHfmL5qkalHh8Z2jkgAtyCyzXoDMQw2W+Wgl6OdIINV2lBkQsIFpdbPZG1TQJyfEEfRIzZm/Jksj/CRL8dTis9a+9rcE6VNgg3nWr0uwMAkvImFfX5AS56oLdva0Y5ho9OASrsR3SRlDwGxql04F4N4odd5t4bM2ZyDllMJ+cAFCaMF01illMKvia2PApzWbOv9aMl6zZvaHs2OipSLe068VVVi56a+i8/k4+vQl2XteXR5hlRJsylM1O8HtjfMXOZpzkk/OT2TAmk/OIwzhK5vUhCFmuXt4AUMo2WUOKsGUSAv+z0Y/Qr9YfPM7cR8dq8UJNgx0bdhXJCE7529wBmqsEM5Bymv9tHOVmu/k6/62E8fvZIR3U73flAUgZHDVWKD+a+jigH5O"}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{"maxOutputTokens":4096},"systemInstruction":{"parts":[{"text":"Your
         location is Berlin, at latitude 52.5200 and longitude 13.4050."}]},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parametersJsonSchema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
@@ -166,7 +168,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -180,6 +182,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Goog-Request-Id:
+      - cVrzao3UOP63mLAPx92liA8
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -187,7 +191,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:20:25 GMT
+      - Tue, 10 Nov 2026 17:54:58 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -210,7 +214,7 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "The fall of the Western Roman Empire is traditionally dated to 476 CE, when the last Western Roman Emperor, Romulus Augustulus, was deposed by the Germanic chieftain Odoacer. However, the Eastern Roman Empire (Byzantine Empire) continued to thrive for many centuries after this date."
+                    "text": "The fall of the Western Roman Empire is traditionally dated to 476 CE, when the last Western Roman Emperor, Romulus Augustulus, was deposed by the Germanic chieftain Odoacer. However, the decline of the Roman Empire was a long and complex process, with many contributing factors over several centuries."
                   }
                 ]
               },
@@ -218,26 +222,26 @@ http_interactions:
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 172,
-            "candidatesTokenCount": 60,
-            "totalTokenCount": 232,
+            "promptTokenCount": 168,
+            "candidatesTokenCount": 62,
+            "totalTokenCount": 230,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 172
+                "tokenCount": 168
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 60
+                "tokenCount": 62
               }
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-10-11T21:20:24.002425Z",
-          "responseId": "mP3LavkSs8-YsA_B3dmRAQ"
+          "createTime": "2026-11-10T17:54:57.928269Z",
+          "responseId": "cVrzao3UOP63mLAPx92liA8"
         }
-  recorded_at: Sun, 11 Oct 2026 21:20:25 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:54:58 GMT
+recorded_with: VCR 6.4.1

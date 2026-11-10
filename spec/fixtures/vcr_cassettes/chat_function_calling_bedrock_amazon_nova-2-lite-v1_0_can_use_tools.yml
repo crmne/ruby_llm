@@ -6,19 +6,19 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"What''s the weather
-        in Berlin? (52.5200, 13.4050)"}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
+        in Berlin? (52.5200, 13.4050)"}]}],"inferenceConfig":{"maxTokens":65535},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
         current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}}]}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261011T210612Z
+      - 20261110T172923Z
       X-Amz-Content-Sha256:
-      - 30d3018c3e47998784f9a2926cc21ad9050ac6fe3b92cba23950d3eb332108ca
+      - ac1f8aff4d5d34655fd978648029d52e3da6a1ca793429422609569ab87c81eb
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -32,39 +32,39 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:14 GMT
+      - Tue, 10 Nov 2026 17:29:24 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '323'
+      - '322'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - ff5a457d-8ff7-447a-ab6b-c8f76a8cce12
+      - 77b02cea-316e-4846-a1fc-5e9381310293
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":1207},"output":{"message":{"content":[{"toolUse":{"input":{"latitude":"52.5200","longitude":"13.4050"},"name":"weather","toolUseId":"tooluse_2VJMgvFXWJFjBuea85na7h"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":986,"outputTokens":42,"serverToolUsage":{},"totalTokens":1028}}'
-  recorded_at: Sun, 11 Oct 2026 21:06:14 GMT
+      string: '{"metrics":{"latencyMs":518},"output":{"message":{"content":[{"toolUse":{"input":{"latitude":"52.5200","longitude":"13.4050"},"name":"weather","toolUseId":"tooluse_jTtEJLm2IBa6DJgHMnWNkg"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":986,"outputTokens":42,"serverToolUsage":{},"totalTokens":1028}}'
+  recorded_at: Tue, 10 Nov 2026 17:29:24 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"What''s the weather
-        in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_2VJMgvFXWJFjBuea85na7h","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_2VJMgvFXWJFjBuea85na7h","content":[{"text":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
+        in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_jTtEJLm2IBa6DJgHMnWNkg","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_jTtEJLm2IBa6DJgHMnWNkg","content":[{"text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}]}],"inferenceConfig":{"maxTokens":65535},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
         current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}}]}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261011T210614Z
+      - 20261110T172924Z
       X-Amz-Content-Sha256:
-      - 37660ec6c4a572ee504c6fba9ab0d7d17fe607ce2000d04fc467c4d152d6641f
+      - 19b78d8bbabca82571846192a7ea8cc7e1fca8dce0c33509cb4ad65cdafa4cb1
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -78,18 +78,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:15 GMT
+      - Tue, 10 Nov 2026 17:29:25 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '301'
+      - '294'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 43da46e7-2c79-4ed2-b97e-1f730358d137
+      - 30e459d9-d670-4b6a-8535-02673015183f
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6NzMzfSwib3V0cHV0Ijp7Im1lc3NhZ2UiOnsiY29udGVudCI6W3sidGV4dCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluICg1Mi41MjAwLCAxMy40MDUwKSBpcyAqKjE1wrBDKiogd2l0aCBhIHdpbmQgc3BlZWQgb2YgKioxMCBrbS9oKiouIn1dLCJyb2xlIjoiYXNzaXN0YW50In19LCJzdG9wUmVhc29uIjoiZW5kX3R1cm4iLCJ1c2FnZSI6eyJpbnB1dFRva2VucyI6MTA3OCwib3V0cHV0VG9rZW5zIjozMywic2VydmVyVG9vbFVzYWdlIjp7fSwidG90YWxUb2tlbnMiOjExMTF9fQ==
-  recorded_at: Sun, 11 Oct 2026 21:06:16 GMT
-recorded_with: VCR 6.4.0
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6NTgxfSwib3V0cHV0Ijp7Im1lc3NhZ2UiOnsiY29udGVudCI6W3sidGV4dCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluICg1Mi41MjAwLCAxMy40MDUwKSBpcyAqKjE1wrBDKiogd2l0aCB3aW5kcyBvZiAqKjEwIGttL2gqKi4ifV0sInJvbGUiOiJhc3Npc3RhbnQifX0sInN0b3BSZWFzb24iOiJlbmRfdHVybiIsInVzYWdlIjp7ImlucHV0VG9rZW5zIjoxMDc4LCJvdXRwdXRUb2tlbnMiOjMxLCJzZXJ2ZXJUb29sVXNhZ2UiOnt9LCJ0b3RhbFRva2VucyI6MTEwOX19
+  recorded_at: Tue, 10 Nov 2026 17:29:25 GMT
+recorded_with: VCR 6.4.1

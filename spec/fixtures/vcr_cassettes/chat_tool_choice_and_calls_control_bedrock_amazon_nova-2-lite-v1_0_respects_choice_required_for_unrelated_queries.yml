@@ -13,11 +13,11 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}}],"toolChoice":{"any":{}}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261011T211858Z
+      - 20261110T175247Z
       X-Amz-Content-Sha256:
       - 7a0a0494af6194b9b31e90fc475f4044988c09b3d24c733f3083b2d154a0c776
       Authorization:
@@ -33,7 +33,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:19:00 GMT
+      - Tue, 10 Nov 2026 17:52:48 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -41,18 +41,18 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 8b7212ae-aa08-4748-aed6-413a204b5316
+      - d696f221-4e01-46a1-bf20-25addeda527b
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":647},"output":{"message":{"content":[{"toolUse":{"input":{"latitude":"52.5200","longitude":"13.4050"},"name":"weather","toolUseId":"tooluse_8xIpbFYusHa8e98GasVQmr"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":995,"outputTokens":42,"serverToolUsage":{},"totalTokens":1037}}'
-  recorded_at: Sun, 11 Oct 2026 21:19:00 GMT
+      string: '{"metrics":{"latencyMs":605},"output":{"message":{"content":[{"toolUse":{"input":{"latitude":"52.5200","longitude":"13.4050"},"name":"weather","toolUseId":"tooluse_1lL26TlYkVDeik1FMzjKlp"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":995,"outputTokens":42,"serverToolUsage":{},"totalTokens":1037}}'
+  recorded_at: Tue, 10 Nov 2026 17:52:49 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"When was the fall of
-        Rome?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_8xIpbFYusHa8e98GasVQmr","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_8xIpbFYusHa8e98GasVQmr","content":[{"text":"Current
+        Rome?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_1lL26TlYkVDeik1FMzjKlp","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_1lL26TlYkVDeik1FMzjKlp","content":[{"text":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}]}],"system":[{"text":"Your
         location is Berlin, at latitude 52.5200 and longitude 13.4050."}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
         current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
@@ -60,13 +60,13 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}}]}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261011T211900Z
+      - 20261110T175249Z
       X-Amz-Content-Sha256:
-      - bd7cea24677f5e9d1be040a13f48d2fa7c1a1a1cccf4cd00d2d7752625543db6
+      - 4f598d06252654693056c8a76733a613404b6a97ff91bf6681b75bcb845f4ec1
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -80,22 +80,26 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:19:01 GMT
+      - Tue, 10 Nov 2026 17:52:51 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '520'
+      - '863'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - dce4e6af-0200-4473-a93a-6715bec360e0
+      - 7fe3224b-28c0-4dbf-a77b-2ea1c1475127
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":678},"output":{"message":{"content":[{"text":"The
-        fall of Rome occurred in 476 AD when the last Roman emperor, Romulus Augustulus,
-        was deposed by the Germanic chieftain Odoacer. This event is traditionally
-        considered the end of the Western Roman Empire. \n\nWould you like to know
-        more about this historical period or the events leading up to the fall of
-        Rome?"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":1087,"outputTokens":69,"serverToolUsage":{},"totalTokens":1156}}'
-  recorded_at: Sun, 11 Oct 2026 21:19:01 GMT
-recorded_with: VCR 6.4.0
+      string: '{"metrics":{"latencyMs":1553},"output":{"message":{"content":[{"text":"The
+        fall of the Western Roman Empire is generally considered to have occurred
+        in **476 AD**. This is the year when the last Roman emperor, Romulus Augustulus,
+        was deposed by the Germanic chieftain Odoacer, marking the end of Roman imperial
+        rule in the West.\n\nHowever, it''s worth noting that the decline of the Roman
+        Empire was a long and complex process that unfolded over several centuries.
+        The Eastern Roman Empire (also known as the Byzantine Empire) continued to
+        exist for nearly another thousand years, until the fall of Constantinople
+        in 1453. \n\nWould you like to know more about the fall of Rome, or perhaps
+        about the current weather in Berlin?"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":1087,"outputTokens":135,"serverToolUsage":{},"totalTokens":1222}}'
+  recorded_at: Tue, 10 Nov 2026 17:52:51 GMT
+recorded_with: VCR 6.4.1

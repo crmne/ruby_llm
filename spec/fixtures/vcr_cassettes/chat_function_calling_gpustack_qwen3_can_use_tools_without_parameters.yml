@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,22 +24,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Req-Cost-Time:
+      - '686'
+      Req-Arrive-Time:
+      - '1794332200624'
+      Resp-Start-Time:
+      - '1794332201311'
       Date:
-      - Sun, 11 Oct 2026 21:09:06 GMT
+      - Tue, 10 Nov 2026 17:36:40 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '683'
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
       - ''
       Content-Type:
       - application/json; charset=utf-8
-      Req-Cost-Time:
-      - '825'
-      Resp-Start-Time:
-      - '1791752947968'
-      X-Envoy-Upstream-Service-Time:
-      - '822'
-      Req-Arrive-Time:
-      - '1791752947142'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -48,32 +48,29 @@ http_interactions:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"role":"assistant","content":"","reasoning_content":"Okay,
         the user wants to know which language to learn using the best_language_to_learn
-        tool. Let me check the tools provided. The function is called best_language_to_learn,
-        and it doesn''t require any parameters. So I just need to call that function
-        without any arguments. The response should come back with the best language,
-        which I can then present to the user. Alright, let''s make the tool call.\n","tool_calls":[{"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"},"id":"XLGVNdHEJOLSrFZNw57EX1UZqgrHx4pJ"}]}}],"created":1791752947,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":105,"prompt_tokens":163,"total_tokens":268,"prompt_tokens_details":{"cached_tokens":162}},"id":"chatcmpl-C4j1zKb91fGKmutCjnlquEPB5j4HyskU","timings":{"cache_n":162,"prompt_n":1,"prompt_ms":8.547,"prompt_per_token_ms":8.547,"prompt_per_second":117.00011700011699,"predicted_n":105,"predicted_ms":768.676,"predicted_per_token_ms":7.391115384615385,"predicted_per_second":135.29757661225275}}'
-  recorded_at: Sun, 11 Oct 2026 21:09:07 GMT
+        tool. Let me check the tool''s parameters. The function doesn''t require any
+        arguments, so I just need to call it without any parameters. I''ll make sure
+        to structure the tool call correctly in JSON inside the specified XML tags.\n","tool_calls":[{"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"},"id":"KthnB90zd20ORNYbsrrlEJ17UofvR9I5"}]}}],"created":1794332201,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":86,"prompt_tokens":163,"total_tokens":249,"prompt_tokens_details":{"cached_tokens":51}},"id":"chatcmpl-UQ6Ja9iuYMqshyGxmUXOcHtQto68tBjn","timings":{"cache_n":51,"prompt_n":112,"prompt_ms":28.327,"prompt_per_token_ms":0.25291964285714286,"prompt_per_second":3953.824972640943,"predicted_n":86,"predicted_ms":626.861,"predicted_per_token_ms":7.374835294117647,"predicted_per_second":135.59624861013845}}'
+  recorded_at: Tue, 10 Nov 2026 17:36:41 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"Use the best_language_to_learn
-        tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"XLGVNdHEJOLSrFZNw57EX1UZqgrHx4pJ","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
+        tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"KthnB90zd20ORNYbsrrlEJ17UofvR9I5","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
         the user wants to know which language to learn using the best_language_to_learn
-        tool. Let me check the tools provided. The function is called best_language_to_learn,
-        and it doesn''t require any parameters. So I just need to call that function
-        without any arguments. The response should come back with the best language,
-        which I can then present to the user. Alright, let''s make the tool call.\n","reasoning_content":"Okay,
+        tool. Let me check the tool''s parameters. The function doesn''t require any
+        arguments, so I just need to call it without any parameters. I''ll make sure
+        to structure the tool call correctly in JSON inside the specified XML tags.\n","reasoning_content":"Okay,
         the user wants to know which language to learn using the best_language_to_learn
-        tool. Let me check the tools provided. The function is called best_language_to_learn,
-        and it doesn''t require any parameters. So I just need to call that function
-        without any arguments. The response should come back with the best language,
-        which I can then present to the user. Alright, let''s make the tool call.\n"},{"role":"tool","content":"Ruby","tool_call_id":"XLGVNdHEJOLSrFZNw57EX1UZqgrHx4pJ"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        tool. Let me check the tool''s parameters. The function doesn''t require any
+        arguments, so I just need to call it without any parameters. I''ll make sure
+        to structure the tool call correctly in JSON inside the specified XML tags.\n"},{"role":"tool","content":"Ruby","tool_call_id":"KthnB90zd20ORNYbsrrlEJ17UofvR9I5"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -88,21 +85,21 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:09:07 GMT
+      - Tue, 10 Nov 2026 17:36:40 GMT
       Server:
       - istio-envoy
-      Req-Cost-Time:
-      - '707'
-      Resp-Start-Time:
-      - '1791752948679'
-      X-Envoy-Upstream-Service-Time:
-      - '702'
       Access-Control-Allow-Origin:
       - ''
+      Req-Arrive-Time:
+      - '1794332201316'
+      X-Envoy-Upstream-Service-Time:
+      - '107'
       Content-Type:
       - application/json; charset=utf-8
-      Req-Arrive-Time:
-      - '1791752947971'
+      Req-Cost-Time:
+      - '111'
+      Resp-Start-Time:
+      - '1794332201427'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -110,11 +107,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"The
-        best language to learn, according to the tool, is **Ruby**.","reasoning_content":"Okay,
-        the user asked which language to learn, and the tool returned \"Ruby\". I
-        need to present that as the answer. Let me make sure there''s no additional
-        context needed. Since the function didn''t require any parameters, the response
-        is straightforward. I''ll just state that Ruby is the best language to learn
-        based on the tool''s recommendation.\n"}}],"created":1791752948,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":91,"prompt_tokens":282,"total_tokens":373,"prompt_tokens_details":{"cached_tokens":267}},"id":"chatcmpl-tvQhSa6EoMuFzyQkAWyPFpz1LjUKXY3M","timings":{"cache_n":267,"prompt_n":15,"prompt_ms":14.034,"prompt_per_token_ms":0.9356000000000001,"prompt_per_second":1068.832834544677,"predicted_n":91,"predicted_ms":681.331,"predicted_per_token_ms":7.570344444444444,"predicted_per_second":132.09438584183016}}'
-  recorded_at: Sun, 11 Oct 2026 21:09:08 GMT
-recorded_with: VCR 6.4.0
+        best language to learn is Ruby."}}],"created":1794332201,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":13,"prompt_tokens":263,"total_tokens":276,"prompt_tokens_details":{"cached_tokens":248}},"id":"chatcmpl-DOTYC4TMlVS1ItKW0MHGZ7lsxdbMflRZ","timings":{"cache_n":248,"prompt_n":15,"prompt_ms":13.787,"prompt_per_token_ms":0.9191333333333334,"prompt_per_second":1087.9814317835642,"predicted_n":13,"predicted_ms":87.082,"predicted_per_token_ms":7.256833333333333,"predicted_per_second":137.80115293631292}}'
+  recorded_at: Tue, 10 Nov 2026 17:36:41 GMT
+recorded_with: VCR 6.4.1

@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:08:29 GMT
+      - Tue, 10 Nov 2026 17:34:45 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,31 +33,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a12ccb-af71-7e22-b3d2-7a096fff1a95
+      - 01a1c686-cab2-7f96-b108-c6829f14c8c5
       X-Kong-Request-Id:
-      - 01a12ccb-af71-7e22-b3d2-7a096fff1a95
+      - 01a1c686-cab2-7f96-b108-c6829f14c8c5
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '97364'
+      - '99334'
       X-Ratelimit-Tokens-Query-Cost:
-      - '111'
+      - '132'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
       - '95'
       X-Envoy-Upstream-Service-Time:
-      - '768'
+      - '815'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '769'
+      - '816'
       X-Kong-Proxy-Latency:
-      - '14'
+      - '16'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -72,11 +72,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"b923c21a2ac748c78c23ea0f51cd5912","created":1791752908,"model":"mistral-small-latest","usage":{"prompt_tokens":43,"total_tokens":111,"completion_tokens":68,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"I''m
-        afraid I can''t provide real-time weather updates. However, I can tell you
-        that the weather is a fascinating topic, often unpredictable and always changing,
-        much like the comic \"XKCD7392\" illustrates the unpredictability of life.
-        For current weather information, I recommend checking a reliable weather service
-        or app."}}]}'
-  recorded_at: Sun, 11 Oct 2026 21:08:29 GMT
-recorded_with: VCR 6.4.0
+      string: !binary |-
+        eyJpZCI6IjJiYTk4ZTUxZWMxODRhZGE5YjU0NDA3OTAzMWI1YjliIiwiY3JlYXRlZCI6MTc5NDMzMjA4NCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjQzLCJ0b3RhbF90b2tlbnMiOjEzMiwiY29tcGxldGlvbl90b2tlbnMiOjg5LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MH0sInNlcnZpY2VfdGllciI6InN0YW5kYXJkIn0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGwsImNvbnRlbnQiOiJJJ20gYWZyYWlkIEkgY2FuJ3QgcHJvdmlkZSByZWFsLXRpbWUgd2VhdGhlciB1cGRhdGVzLCBidXQgSSBjYW4gdGVsbCB5b3UgdGhhdCB0aGUgd2VhdGhlciBpcyBhIGNvbXBsZXggc3lzdGVtIGluZmx1ZW5jZWQgYnkgdmFyaW91cyBmYWN0b3JzIGxpa2UgdGVtcGVyYXR1cmUsIGh1bWlkaXR5LCBhbmQgYXRtb3NwaGVyaWMgcHJlc3N1cmUuIEZvciB0aGUgbW9zdCBhY2N1cmF0ZSBhbmQgdXAtdG8tZGF0ZSBpbmZvcm1hdGlvbiwgSSByZWNvbW1lbmQgY2hlY2tpbmcgYSByZWxpYWJsZSB3ZWF0aGVyIHNlcnZpY2Ugb3IgYXBwLiBBbmQgcmVtZW1iZXIsIGV2ZW4gdGhlIGJlc3Qgd2VhdGhlciBmb3JlY2FzdHMgY2FuIGJlIGFzIHVucHJlZGljdGFibGUgYXMgYSBwbG90IHR3aXN0IGluIGFuIFhLQ0QgY29taWPigJRYS0NENzM5MiEifX1dfQ==
+  recorded_at: Tue, 10 Nov 2026 17:34:45 GMT
+recorded_with: VCR 6.4.1

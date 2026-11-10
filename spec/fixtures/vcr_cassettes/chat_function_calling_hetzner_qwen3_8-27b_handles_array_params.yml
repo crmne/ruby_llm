@@ -11,7 +11,7 @@ http_interactions:
         of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,25 +26,20 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 04 Nov 2026 19:44:14 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
+      - Tue, 10 Nov 2026 17:37:22 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
       - Origin
-      Server:
-      - HeRay
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":348,"completion_tokens":80,"total_tokens":428,"completion_tokens_details":{"reasoning_tokens":47},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-8bc085f79cc4dd68","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":348,"completion_tokens":72,"total_tokens":420,"completion_tokens_details":{"reasoning_tokens":39},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-b3ad3d96de62aa02","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
         [\"red\", \"blue\"]}"}}],"reasoning":"We need respond to user: \"Call the
         array params tool with tags [\"red\",\"blue\"] and tell me the combined tags.\"
-        Need invoke array_params with tags array. Then tell combined tags. Simple.
-        Need final after tool.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-e1b55343-684c-4717-a45b-e28b44fd59d5","object":"chat.completion","created":1793821449,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Wed, 04 Nov 2026 19:44:14 GMT
-recorded_with: VCR 6.4.0
+        Need use tool array_params. Done maybe. Need call.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-5396f151-8318-48f1-9f22-9a23a25c53ec","object":"chat.completion","created":1794332242,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Tue, 10 Nov 2026 17:37:23 GMT
+recorded_with: VCR 6.4.1

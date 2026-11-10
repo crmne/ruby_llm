@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,12 +20,12 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Sun, 11 Oct 2026 21:07:39 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Tue, 10 Nov 2026 17:32:47 GMT
       Pragma:
       - no-cache
       Content-Type:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 11 Oct 2026 21:07:39 GMT
+  recorded_at: Tue, 10 Nov 2026 17:32:47 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
@@ -66,7 +66,7 @@ http_interactions:
         Alice who is 28 years old"}]}],"generationConfig":{"responseMimeType":"application/json","responseJsonSchema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"number"}},"required":["name","age"],"additionalProperties":false}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -80,6 +80,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Goog-Request-Id:
+      - P1XzapOrFdOcusEPpaeb-A4
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -87,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:07:41 GMT
+      - Tue, 10 Nov 2026 17:32:49 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -111,7 +113,7 @@ http_interactions:
                 "parts": [
                   {
                     "text": "{\"name\":\"Alice\",\"age\":28}",
-                    "thoughtSignature": "AY89a1+g1nrjrSW7P+/SIBQTDe8jcFwKC3Nf+O1uiNCWHS6RQgSy7ZLT6Act54rv7pervLOdaTv0paN/19Q8vUtxDcw0W6F+rC7RxTrh4Kev39WBxM4geShehHyfxgy1hKzMt0pA81/mCKZI4D5zjGrJ0UiUgLElENocHL5TNTYd8jpeLzlWpYTP/KDX031oESNnOc4TFpDCzskjhY1p4IMPeBxvl/4e895Bv0yyGLkNupJsmGn6jmvGOiQ4+Y9SRhQuUytDFCQbN9jJHGCFXVbzv6xc+Tu89MA+88RiL1OrfIXmMzG/ysFIY8yS53nZtvYs/Q5VsNPucktfElhhzzAKh8oLajUyiEfBFKBWIFQ5IS2UPkybmZIOva1na8SVip8oG/TjsHru928QOBix3MXSrmerqDCfMQFWLDoRWS3X4uWJk6cQ0h2x68BQVnj7ZPnFFwxBszBR/DfQIa9gCHupY5IKoLIu2iETdzzBcIcE9ImBdzDZfKl8q75sUNgnbm9iz1Y28hmBIAHgCtD3LH9PYtqDESRiBMMuPD/EMPV8ZBtjENqRrJ4lvLwEKSW2hpaBJij0SeWoIITEUb3xEmaDV8sQJ6LMijAugjcaBeGUhi4IYjTHP6dsRdS0Qn7OSzTQmXNLAdazjk6lo/n0ittTRZcPaEi9j0tZUXFvo+g380Ri+cuuxWQSfWvjmss5VPMJIAGD+S8keJiVPDXpLDqJU9uS6Ebb+p+ILIMXtND/43VxZoEM2ldit8dgfn2BU3zNHDVis2ZIKy9WMNjKyUxyLs0LkPMZuu2iibHEj5ouSdOEqO49hykDrnG0++jQhH3X+COfv/d2DGH4WQxS8qb70th27iyLzrI8ErBWnHjtRLhqknaS9Aq+8o4h9k63c8IS/weunf/k8RkXZkSNtEmycTASX4r3t8BCm+0mouFw4oCcp7uYUaAL9p8JlWtqpPVcOpRjUGHgYJPagVwr1F9WBEn75of4PAY1xWV58yaxwLlJfC9OPtsq/h6e1Uz/mvuqOTJJ1Ra8bp6ksuupAxTeceEmMkP4rVMQGSmxtlYVrxg1xur+4Xr1tF9h0kX31bPMDjgkSeRAkuE1JmHV8Ht5DPoGqutefD8dXxqL/jQE8+r8AfJSI6kpYeM6cqlkofRqbdE0BKZQ3Nm3QIiFU6LjOB84lRmdj/1uyUeYnF4qbOrF"
+                    "thoughtSignature": "AY89a18fOn7f3b/btP6fC6Q9JTp2UFGhaF5M9N9R1Vjwt5zudo3o0SUSIg6rTBxKBvWbjA/YoWFa6YbO3JqgDno//4xrTIa3Tlei446clgXXLQZHNSTdokpN1qliHSegbQWdGR1bb4v+7l4Oew6NoIv189p0Lv6XmiCvUQmTs0FvM1n7RXDk9yV9A/xXUZcaAEE14T0/PamESQo/un3iR9CtyMqjYbyu/4qhIASuOBNV8HF4d2+o3yD5AKBbaQNzKsYmZEt0++Xl3k56XWrIfxVbwEz4Ca6Cz4bf54vIHLtDIllwYreqtlG0cjg/W4PqUNCZhH1Qoy1jKbKpXwmBMFeF1PDeOj8lG6CEcx6+i0puG5VR3/QC4eicndBXO0QdgD4voTJnv4NvqubWpZ1fvu5i2cdY+Zo4swRAGsdVnGAYhy7pihOIB7aBUtjR7i7xGHb0Ui3EmLBCpj5oODqrULW9Q5NVHjuPnstWa1xBWOnvXtbhi8Y5KsW457h48nO1gtOwx+b+HyR0odvKOTuCQ34Tps/KIe8rkSaxdZxtmuwPn4WMDx779EhhI1Y+SJsNghsUqB+knCMjFadWPICi5aOfT+zuXUothlVTXrrIJVhrvetuEJ7hcxX1i+1lfvn1lgGYZ8OWi1+2w527CKVVZ2zLu1xbHu4Vd3h1qccqZHY4jinTPHkR7yWU4KvW3FIQgnuKn2dMVdTi+OWCwVGoOo9vbzRLf4LN9CjekDnHq/7m3pdU/lrt4E3ZBZoY0NVg5Wa3ArhIJgK8EjjrL7pNHWkCZgZFFKMt0ZPLkeL9zahud5VvTcWyYDHQtkZxjHc3ws2yrrYeWiqK2HwMPhqtgm7K7nrZtbNePnTDZGahAIlh510hvsBVik6nKWpe67yIadtYwsJ+wkz+PfmfYmYd2iKZLTr5mszGEz6uDOUxQ0x2xAPm/LEPJ4Sw+X4BqWre8PKx3HKv99Vn9EmImaXbglxalcNqY0cEt9KyPv6I1GHzE2+oPYH/GHQutdGD1duMbCT7yu0XQOSFJ5kNKUod5XPOW3Hh8CSAL7/pxL8/IhHsqSqkew5csincqEGI7DwJj+S0ht/5bYO73sqRm3u+/Rkx6vtvOF9BKLMqG91D67vb9wBP01eU06Evox8XGnYjJWv61qjhOqTVG5iPlbeUQDCS1u0/g2yo771ptY+S+w2nvUaCx3JO3pmFbdwmM9ofMyhitSlydYEEXmFQG/1J0RkHLwzw0557nhQR9CUL8q0DogHDkOkVV35fLc9T/1gxwZ7a6U0ouNX3"
                   }
                 ]
               },
@@ -121,7 +123,7 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 77,
             "candidatesTokenCount": 10,
-            "totalTokenCount": 339,
+            "totalTokenCount": 356,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -135,11 +137,11 @@ http_interactions:
                 "tokenCount": 10
               }
             ],
-            "thoughtsTokenCount": 252
+            "thoughtsTokenCount": 269
           },
           "modelVersion": "gemini-3-flash-preview",
-          "createTime": "2026-10-11T21:07:39.698266Z",
-          "responseId": "m_rLaprPKpyCu_EP096zmQs"
+          "createTime": "2026-11-10T17:32:47.349587Z",
+          "responseId": "P1XzapOrFdOcusEPpaeb-A4"
         }
-  recorded_at: Sun, 11 Oct 2026 21:07:41 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:32:49 GMT
+recorded_with: VCR 6.4.1

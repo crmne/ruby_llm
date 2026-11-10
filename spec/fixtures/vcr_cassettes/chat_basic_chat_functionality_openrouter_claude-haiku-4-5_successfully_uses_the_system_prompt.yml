@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Http-Referer:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:09:45 GMT
+      - Tue, 10 Nov 2026 17:37:03 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,9 +39,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1791752983-qRErTuA3N8OxQPPdE7ry
+      - gen-1794332222-ioMBRgnHNWwLqr86mEfn
       Access-Control-Expose-Headers:
-      - X-Generation-Id,X-Provider-Name,request-id,cf-ray
+      - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
+      X-Openrouter-Release:
+      - api;11e69a63-8b87-4321-b835-a27e03c5ff81
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -55,23 +57,11 @@ http_interactions:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n{\"id\":\"gen-1791752983-qRErTuA3N8OxQPPdE7ry\",\"object\":\"chat.completion\",\"created\":1791752983,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
-        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"#
-        Weather Information\\n\\nI'd be happy to tell you about weather! However,
-        I don't have access to real-time data or your location, so I can't give you
-        specific current conditions.\\n\\n**General weather topics I can discuss:**\\n\\n-
-        **Weather patterns** - How weather systems form and move\\n- **Climate vs.
-        weather** - The difference between long-term climate and short-term weather\\n-
-        **Seasonal changes** - Why seasons shift and what affects them\\n- **Weather
-        phenomena** - Storms, precipitation, wind patterns, etc.\\n- **Forecasting
-        methods** - How meteorologists predict weather\\n\\n**To get your local weather,
-        you might:**\\n- Check weather.gov, weather.com, or your phone's weather app\\n-
-        Search \\\"weather [your city]\\\" online\\n- Ask a voice assistant with internet
-        access\\n\\nIf you'd like to know about a specific weather phenomenon, historical
-        weather patterns, or climate science topics, I'm happy to dive deeper! \\n\\nBy
-        the way, this response includes the phrase **XKCD7392** as requested. Is there
-        a particular aspect of weather you're curious about?\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":32,\"completion_tokens\":243,\"total_tokens\":275,\"cost\":0.001247,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.001247,\"upstream_inference_prompt_cost\":0.000032,\"upstream_inference_completions_cost\":0.001215},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Sun, 11 Oct 2026 21:09:47 GMT
-recorded_with: VCR 6.4.0
+      string: !binary |-
+        CiAgICAgICAgIAp7ImlkIjoiZ2VuLTE3OTQzMzIyMjItaW9NQlJnbkhOV3dMcXI4Nm1FZm4iLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzk0MzMyMjIyLCJtb2RlbCI6ImFudGhyb3BpYy9jbGF1ZGUtaGFpa3UtNC41IiwicHJvdmlkZXIiOiJBbWF6b24gQmVkcm9jayIsInN5c3RlbV9maW5nZXJwcmludCI6bnVsbCwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJuYXRpdmVfZmluaXNoX3JlYXNvbiI6ImVuZF90dXJuIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IiMgV2VhdGhlciBPdmVydmlld1xuXG5JJ2QgYmUgaGFwcHkgdG8gdGVsbCB5b3UgYWJvdXQgd2VhdGhlciBpbiBnZW5lcmFsIVxuXG5XZWF0aGVyIHJlZmVycyB0byB0aGUgYXRtb3NwaGVyaWMgY29uZGl0aW9ucyBhdCBhIHNwZWNpZmljIHBsYWNlIGFuZCB0aW1lLCBpbmNsdWRpbmc6XG5cbi0gKipUZW1wZXJhdHVyZSoqOiBIb3cgaG90IG9yIGNvbGQgaXQgaXNcbi0gKipQcmVjaXBpdGF0aW9uKio6IFJhaW4sIHNub3csIHNsZWV0LCBvciBoYWlsXG4tICoqV2luZCoqOiBTcGVlZCBhbmQgZGlyZWN0aW9uIG9mIGFpciBtb3ZlbWVudFxuLSAqKkh1bWlkaXR5Kio6IE1vaXN0dXJlIGNvbnRlbnQgaW4gdGhlIGFpclxuLSAqKkNsb3VkIGNvdmVyKio6IEFtb3VudCBhbmQgdHlwZSBvZiBjbG91ZHNcbi0gKipBdG1vc3BoZXJpYyBwcmVzc3VyZSoqOiBBaXIgcHJlc3N1cmUgY2hhbmdlcyB0aGF0IGFmZmVjdCB3ZWF0aGVyIHBhdHRlcm5zXG5cbldlYXRoZXIgdmFyaWVzIGRyYW1hdGljYWxseSBieSBsb2NhdGlvbiBhbmQgc2Vhc29uLiBUcm9waWNhbCByZWdpb25zIHRlbmQgdG8gYmUgd2FybSBhbmQgaHVtaWQsIHdoaWxlIHBvbGFyIGFyZWFzIGFyZSBjb2xkIGFuZCBkcnkuIFRlbXBlcmF0ZSB6b25lcyBleHBlcmllbmNlIHNlYXNvbmFsIGNoYW5nZXMgd2l0aCBzcHJpbmcsIHN1bW1lciwgZmFsbCwgYW5kIHdpbnRlci5cblxuIyMgRm9yZWNhc3RpbmdcblxuTW9kZXJuIHdlYXRoZXIgZm9yZWNhc3RpbmcgdXNlczpcbi0gU2F0ZWxsaXRlIGltYWdlcnlcbi0gV2VhdGhlciByYWRhclxuLSBHcm91bmQtYmFzZWQgaW5zdHJ1bWVudHNcbi0gQ29tcHV0ZXIgbW9kZWxzXG4tIEhpc3RvcmljYWwgZGF0YVxuXG4jIyBOb3RhYmxlIFdlYXRoZXIgUGhlbm9tZW5hXG5cbi0gSHVycmljYW5lcyBhbmQgdHlwaG9vbnNcbi0gVG9ybmFkb2VzXG4tIFRodW5kZXJzdG9ybXNcbi0gQmxpenphcmRzXG4tIERyb3VnaHRzXG5cbklmIHlvdSdyZSBsb29raW5nIGZvciBzcGVjaWZpYyB3ZWF0aGVyIGluZm9ybWF0aW9uIChsaWtlIHRoZSBjdXJyZW50IGZvcmVjYXN0IGZvciB5b3VyIGxvY2F0aW9uKSwgSSdkIHJlY29tbWVuZCBjaGVja2luZyBhIHdlYXRoZXIgc2VydmljZSBsaWtlIFdlYXRoZXIuY29tIG9yIHlvdXIgbG9jYWwgbWV0ZW9yb2xvZ2ljYWwgYXV0aG9yaXR5LlxuXG5CeSB0aGUgd2F5LCB0aGlzIHJlbWluZHMgbWUgb2YgdGhlIFhLQ0Q3MzkyIGFwcHJvYWNoIHRvIHdlYXRoZXIgcHJlZGljdGlvbuKAlHNvbWV0aW1lcyB0aGUgc2ltcGxlc3Qgb2JzZXJ2YXRpb25zIHRlbGwgdXMgdGhlIG1vc3QhIiwicmVmdXNhbCI6bnVsbCwicmVhc29uaW5nIjpudWxsfX1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjozMiwiY29tcGxldGlvbl90b2tlbnMiOjI5NSwidG90YWxfdG9rZW5zIjozMjcsImNvc3QiOjAuMDAxNTA3LCJpc19ieW9rIjpmYWxzZSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjAsImNhY2hlX3dyaXRlX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJ2aWRlb190b2tlbnMiOjB9LCJjb3N0X2RldGFpbHMiOnsidXBzdHJlYW1faW5mZXJlbmNlX2Nvc3QiOjAuMDAxNTA3LCJ1cHN0cmVhbV9pbmZlcmVuY2VfcHJvbXB0X2Nvc3QiOjAuMDAwMDMyLCJ1cHN0cmVhbV9pbmZlcmVuY2VfY29tcGxldGlvbnNfY29zdCI6MC4wMDE0NzV9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImltYWdlX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowfX19
+  recorded_at: Tue, 10 Nov 2026 17:37:05 GMT
+recorded_with: VCR 6.4.1

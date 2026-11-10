@@ -5,12 +5,12 @@ http_interactions:
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5.6","input":[{"role":"user","content":"Roll a die for
-        me"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"dice_roll","description":"Rolls
+      string: '{"model":"gpt-6.1-sol","input":[{"role":"user","content":"Roll a die
+        for me"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:15:37 GMT
+      - Tue, 10 Nov 2026 17:47:57 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -45,11 +45,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID
+      - X-Request-ID, Server-Timing-Total
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '696'
+      - '1383'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -76,31 +76,36 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0ea2ac87eef1b966016acbfc78896c87d2ae7c7c4f6db6c376",
+          "id": "resp_09849e3b17713490016af358cc779487d287d9cbd5e6b37ff5",
           "object": "response",
-          "created_at": 1791753336,
+          "created_at": 1794332876,
           "status": "completed",
-          "access_programs": null,
+          "access_programs": {
+            "cyber": "standard"
+          },
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1791753337,
+          "completed_at": 1794332877,
           "error": null,
           "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
           "incomplete_details": null,
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
-          "model": "gpt-5.6-sol",
+          "model": "gpt-6.1-sol",
           "moderation": null,
           "output": [
             {
-              "id": "fc_0ea2ac87eef1b966016acbfc79170c87d297248f3403b37ea7",
+              "id": "fc_09849e3b17713490016af358cdac1487d2b5fd2db44151815e",
               "type": "function_call",
               "status": "completed",
               "arguments": "{}",
-              "call_id": "call_CZoO5s0FwfucR5yzWeY8haJg",
+              "call_id": "call_XquOjQfLdYmq6JLvDK8pZtde",
               "name": "dice_roll"
             }
           ],
@@ -178,18 +183,18 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 11 Oct 2026 21:15:37 GMT
+  recorded_at: Tue, 10 Nov 2026 17:47:57 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5.6","input":[{"role":"user","content":"Roll a die for
-        me"},{"type":"function_call","call_id":"call_CZoO5s0FwfucR5yzWeY8haJg","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_CZoO5s0FwfucR5yzWeY8haJg","output":"{\"roll\":1}"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"dice_roll","description":"Rolls
+      string: '{"model":"gpt-6.1-sol","input":[{"role":"user","content":"Roll a die
+        for me"},{"type":"function_call","call_id":"call_XquOjQfLdYmq6JLvDK8pZtde","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_XquOjQfLdYmq6JLvDK8pZtde","output":"{\"roll\":2}"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -204,7 +209,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:15:38 GMT
+      - Tue, 10 Nov 2026 17:47:59 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -224,11 +229,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID
+      - X-Request-ID, Server-Timing-Total
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1034'
+      - '1200'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -238,11 +243,11 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '1000000'
       X-Ratelimit-Remaining-Requests:
-      - '4998'
+      - '4999'
       X-Ratelimit-Remaining-Tokens:
       - '1000000'
       X-Ratelimit-Reset-Requests:
-      - 24ms
+      - 12ms
       X-Ratelimit-Reset-Tokens:
       - 0s
       X-Request-Id:
@@ -255,27 +260,32 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_06090f1f77928230016acbfc79774087d2ab544eea12e1222d",
+          "id": "resp_03c97a9473f43900016af358cdec3487d29bbb2a6c96037b46",
           "object": "response",
-          "created_at": 1791753337,
+          "created_at": 1794332877,
           "status": "completed",
-          "access_programs": null,
+          "access_programs": {
+            "cyber": "standard"
+          },
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1791753338,
+          "completed_at": 1794332879,
           "error": null,
           "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
           "incomplete_details": null,
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
-          "model": "gpt-5.6-sol",
+          "model": "gpt-6.1-sol",
           "moderation": null,
           "output": [
             {
-              "id": "msg_06090f1f77928230016acbfc7a0ba487d2b88b83bc32b5e65f",
+              "id": "msg_03c97a9473f43900016af358cee0c087d2b78222b7760a43fa",
               "type": "message",
               "status": "completed",
               "content": [
@@ -283,7 +293,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "\ud83c\udfb2 You rolled a **1**."
+                  "text": "You rolled a **2**."
                 }
               ],
               "phase": "final_answer",
@@ -355,14 +365,14 @@ http_interactions:
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 13,
+            "output_tokens": 11,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 91
+            "total_tokens": 89
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 11 Oct 2026 21:15:38 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:47:59 GMT
+recorded_with: VCR 6.4.1

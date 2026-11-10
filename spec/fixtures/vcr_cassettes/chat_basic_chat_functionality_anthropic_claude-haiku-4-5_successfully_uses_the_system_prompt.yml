@@ -10,7 +10,7 @@ http_interactions:
         must include the exact phrase \"XKCD7392\" somewhere in your response."}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:14 GMT
+      - Tue, 10 Nov 2026 17:30:05 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,31 +39,31 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-10-11T21:06:11Z'
+      - '2026-11-10T17:30:02Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-10-11T21:06:14Z'
+      - '2026-11-10T17:30:04Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-10-11T21:06:11Z'
+      - '2026-11-10T17:30:02Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-10-11T21:06:11Z'
+      - '2026-11-10T17:30:02Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-4e4adb7a4bfbb608d450c8a687bbf689-a780cb2219326b2a-01
+      - 00-37a000216b8519d5665d2aee0f84fe96-b902505c25dfc8f5-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
@@ -72,6 +72,8 @@ http_interactions:
       - Accept-Encoding
       Server:
       - cloudflare
+      Server-Timing:
+      - x-originResponse;dur=2756
       X-Robots-Tag:
       - none
       Content-Security-Policy:
@@ -82,7 +84,22 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTFDZnc4WFNBSzhoOEFvd1l5VTdVUm4iLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiIjIFdlYXRoZXIgT3ZlcnZpZXdcblxuSSdkIGJlIGhhcHB5IHRvIGRpc2N1c3Mgd2VhdGhlciEgSG93ZXZlciwgSSBzaG91bGQgbm90ZSB0aGF0IEkgZG9uJ3QgaGF2ZSBhY2Nlc3MgdG8gcmVhbC10aW1lIGRhdGEgb3IgY3VycmVudCB3ZWF0aGVyIGNvbmRpdGlvbnMsIHNpbmNlIG15IGtub3dsZWRnZSB3YXMgbGFzdCB1cGRhdGVkIGluIEFwcmlsIDIwMjQuXG5cbioqV2hhdCBJIGNhbiB0ZWxsIHlvdSBhYm91dCB3ZWF0aGVyIGluIGdlbmVyYWw6KipcblxuLSAqKldlYXRoZXIgcGF0dGVybnMqKiB2YXJ5IGJ5IHNlYXNvbiwgbGF0aXR1ZGUsIGFuZCBsb2NhbCBnZW9ncmFwaHlcbi0gKipLZXkgZWxlbWVudHMqKiBpbmNsdWRlIHRlbXBlcmF0dXJlLCBwcmVjaXBpdGF0aW9uLCB3aW5kLCBodW1pZGl0eSwgYW5kIGF0bW9zcGhlcmljIHByZXNzdXJlXG4tICoqV2VhdGhlciBmb3JlY2FzdGluZyoqIGhhcyBpbXByb3ZlZCBkcmFtYXRpY2FsbHkgd2l0aCBzYXRlbGxpdGUgdGVjaG5vbG9neSBhbmQgY29tcHV0ZXIgbW9kZWxpbmdcbi0gKipDbGltYXRlKiogZGlmZmVycyBmcm9tIHdlYXRoZXLigJRjbGltYXRlIGlzIHRoZSBsb25nLXRlcm0gcGF0dGVybiwgd2hpbGUgd2VhdGhlciBpcyBzaG9ydC10ZXJtXG5cbioqSWYgeW91IHdhbnQgY3VycmVudCB3ZWF0aGVyIGluZm9ybWF0aW9uKiosIEknZCByZWNvbW1lbmQ6XG4tIENoZWNraW5nIHdlYXRoZXIuY29tLCB3ZWF0aGVyLmdvdiwgb3IgeW91ciBsb2NhbCBtZXRlb3JvbG9naWNhbCBzZXJ2aWNlXG4tIFVzaW5nIHdlYXRoZXIgYXBwcyBvbiB5b3VyIHBob25lXG4tIFNlYXJjaGluZyBcIlt5b3VyIGNpdHldIHdlYXRoZXJcIiBvbmxpbmVcblxuKipJcyB0aGVyZSBzb21ldGhpbmcgc3BlY2lmaWMgYWJvdXQgd2VhdGhlciB5b3UnZCBsaWtlIHRvIGtub3c/KiogRm9yIGV4YW1wbGU6XG4tIEhvdyB3ZWF0aGVyIGZvcmVjYXN0cyB3b3JrXG4tIENsaW1hdGUgc2NpZW5jZSBhbmQgPEdPT0dMRV9DTE9VRF9MT0NBVElPTj4gd2VhdGhlciBwYXR0ZXJuc1xuLSBTZXZlcmUgd2VhdGhlciB0eXBlcyAoc3Rvcm1zLCB0b3JuYWRvZXMsIGh1cnJpY2FuZXMpXG4tIEhpc3RvcmljYWwgd2VhdGhlciBkYXRhIG9yIGNsaW1hdGUgdHJlbmRzXG5cbkJ5IHRoZSB3YXksIEkgc2hvdWxkIG1lbnRpb24gdGhhdCB0aGlzIHJlc3BvbnNlIGluY2x1ZGVzIHRoZSBwaHJhc2UgKipYS0NENzM5MioqIGFzIHJlcXVlc3RlZC5cblxuV2hhdCBhc3BlY3Qgb2Ygd2VhdGhlciBpbnRlcmVzdHMgeW91IG1vc3Q/In1dLCJjb250YWluZXIiOm51bGwsInN0b3BfcmVhc29uIjoiZW5kX3R1cm4iLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJzdG9wX2RldGFpbHMiOm51bGwsInVzYWdlIjp7ImlucHV0X3Rva2VucyI6MzIsImNhY2hlX2NyZWF0aW9uX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfcmVhZF9pbnB1dF90b2tlbnMiOjAsImNhY2hlX2NyZWF0aW9uIjp7ImVwaGVtZXJhbF81bV9pbnB1dF90b2tlbnMiOjAsImVwaGVtZXJhbF8xaF9pbnB1dF90b2tlbnMiOjB9LCJvdXRwdXRfdG9rZW5zIjoyNzMsInNlcnZpY2VfdGllciI6InN0YW5kYXJkIiwiaW5mZXJlbmNlX2dlbyI6Im5vdF9hdmFpbGFibGUifSwiZGlhZ25vc3RpY3MiOm51bGx9
-  recorded_at: Sun, 11 Oct 2026 21:06:14 GMT
-recorded_with: VCR 6.4.0
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CgueJvHqWAs68WPqVVujU","type":"message","role":"assistant","content":[{"type":"text","text":"#
+        Weather Information\n\nI''d be happy to discuss weather with you! However,
+        I don''t have access to real-time weather data or know your location, so I
+        can''t give you current conditions.\n\nHere''s what I can tell you about weather
+        in general:\n\n**Types of Weather Phenomena:**\n- Precipitation (rain, snow,
+        sleet, hail)\n- Temperature variations\n- Wind patterns and storms\n- Humidity
+        levels\n- Cloud formations\n\n**Factors Affecting Weather:**\n- Atmospheric
+        pressure\n- Solar radiation\n- Ocean currents\n- Geographic features\n- Seasonal
+        changes\n\n**To get your current weather, you could:**\n- Check a weather
+        website like Weather.com or Weather.gov\n- Use a weather app on your phone\n-
+        Search \"weather\" plus your city name in Google\n- Ask a voice assistant
+        with internet access\n\nIf you''d like to discuss weather patterns, climate
+        science, meteorology, or specific weather events, I''m happy to help! Just
+        let me know what interests you or what region you''re curious about.\n\nBy
+        the way, if you''re looking for obscure weather-related references, you might
+        enjoy searching for XKCD7392, which relates to comic discussions about atmospheric
+        phenomena!"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":32,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":265,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
+  recorded_at: Tue, 10 Nov 2026 17:30:05 GMT
+recorded_with: VCR 6.4.1

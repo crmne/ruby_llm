@@ -9,7 +9,7 @@ http_interactions:
         compute 123456789 * 987654321 and report the exact product."}]}],"generationConfig":{},"tools":[{"code_execution":{}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -32,7 +32,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:08:01 GMT
+      - Tue, 10 Nov 2026 17:34:09 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -42,7 +42,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=3078
+      - gfet4t7; dur=2590
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -58,21 +58,21 @@ http_interactions:
                   {
                     "executableCode": {
                       "language": "PYTHON",
-                      "code": "a = 123456789\nb = 987654321\nresult = a * b\nprint(result)\n",
-                      "id": "call_1159415"
+                      "code": "num1 = 123456789\nnum2 = 987654321\nproduct = num1 * num2\nprint(product)\n",
+                      "id": "call_14756567267599076683"
                     },
-                    "thoughtSignature": "Ep4CCpsCAWkUfRMBWaFPgtZ2rcW5B98+FXo3ruwSyWjkg2iq5C1aqbuS3v+GXuYlWqA4B4jdfplNWDMVERgjqJAAstGyFbjjxqLSOlRbFJ0XjVyydhK3IIIs48GVwac8Zmr6gDTQ+fuICsYChMMtSvWkg/tVgCs94Zlqhehs/hUgOfjGyRvtqF1mqa4lF+2ELxPiZV14GNVzjOYh4LLjfSyIOB4I+R0guWA6Qewh95509ZxmCZlGE8Fkav6dnxJYvGGUTmgYdyVW3UhMiaHwRAqMpoYHiCWGVHF78G8FSoSDm5sHcDV/uvUVuoM66OAeNhgFJ+wwjsOlfOMeQHTFoMImknBDSTPQz2qTt8ik2LslVi5ZUJes8YJZOC6zOnLL0w=="
+                    "thoughtSignature": "EoQCCoECAWkUfROYN6nss2qZFFq4LABt3giJRI6aLasQchKTk9qlnKcDtuogaBFDHpvhc02TPJBCG5Tf3tuANzCUqZ49pOqbL7/tt63vpXONtmA7YgzwCIyYZ9uuhk06HtkBExYKh9tUVqFpo1JKTpmepho6YF3HKsv0zVjNFuEAO7L4+273dBdJ/sV5lkj4G388IV0Li8RQobQDHcHh5TxuHV4UchQmjESEjnXbvgti6CJ+48F2srCQuosQxjvejVOExSlDaKkDsRH+aDnHfqnRd9lMcyUk3XJLt5RLetWFumqZ7kdRNICcEW2x7wlu35QZoMa1wsueR2XL7SXF4LoSyNs1rR8="
                   },
                   {
                     "codeExecutionResult": {
                       "outcome": "OUTCOME_OK",
                       "output": "121932631112635269\n",
-                      "id": "call_1159415"
+                      "id": "call_14756567267599076683"
                     }
                   },
                   {
-                    "text": "The exact product of $123,456,789 \\times 987,654,321$ is:\n\n**121,932,631,112,635,269** (or `121932631112635269`)",
-                    "thoughtSignature": "EuwDCukDAWkUfRNdhA2wTjvWpbMJSk9Ht/8wdAn8RjsSqUISsJqcFUyJjVslI0qsPj8pOwjwFU6b3CfqoSpblZ83dUFGrX5TKwgCXYAeP7qkDvAN37TnkItnD+aNDuKEWMgnt+d7aUMGusTzxr9pTami3kBCvvonSWUdnw5s+f7GsRNf7YzVJWbPp+HkHyQfDx2WesAnfwJNsvx6hO/3rlTqmBQNsKwYho19W0zbGGiXUOp/4bul3dmmG7wnlxVvBunBarzbAspSPLiT8evCTth0o1xARp7/yoq6nWrjXhYMAiB93g0kCWunmxx69AHdlJOE6eN7qvTMC96UYCJccwFkyj0w3niXq5ZjGfM5tBhhFBSv04RobfYjmWu+6NvnNm8kDKlZxxnFX6TucwdJ4jq7kSXnNqpoiVNWP/9O7XCOOT7cWFUopRYzbo9Q10cSD1D9KzIUwRiNO3SKgHAVvc58dqGmGmRqxjrGSGhaeB/UX0yNsU5mte2o9ETpmAwPN5X0GxYBabUau0KwXEhr0pF2MYh3GDaEUxNWhoyjEmuvYy9pITqBAOppowCoJb+kw5J0buAbXdyfZTggT/Y0mqlwetmgcU6mFCyWYTdCIPX6YsqFhgyTPkOIKKwuCxYDx1OELEaq0uiWo1249oB+"
+                    "text": "The exact product of 123,456,789 and 987,654,321 is **121,932,631,112,635,269** (or `121932631112635269`).",
+                    "thoughtSignature": "EokCCoYCAWkUfRPaVAMJD+OnN1QGu/G7m5m1ZwTg2ZxjLxy6hjN2c4UmaLsK8z5I+sTXxNxXaqiP07btgTSKUEptmW7R+fuJZZCeGDNmrcO8asKLQpwU/oHzw072weK8yZYYxdJoq8d4p3NuRyOr1FhaPmoWkbAYKfFUQBZ2j2A8nfkg1zd6CeDzBbwjd6vknsEEKAwXvQfDXVzRYt4qXV0a0WsQOT1x9tPflbpmdtJMI2ok/GiqN+aNHakM9jfamGamQ74XcwUCPveGr6SU1b18+A5UzfXgwyVKASWiiEA6xMnp34t5M7KXB8KhdyiXry9Bo5yoT9gYZ3RUj86fN/PyGyi+L5KeERiI4A=="
                   }
                 ],
                 "role": "model"
@@ -82,43 +82,43 @@ http_interactions:
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 88,
+            "promptTokenCount": 81,
             "candidatesTokenCount": 131,
-            "totalTokenCount": 600,
+            "totalTokenCount": 463,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 88
+                "tokenCount": 81
               }
             ],
-            "toolUsePromptTokenCount": 155,
+            "toolUsePromptTokenCount": 152,
             "toolUsePromptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 155
+                "tokenCount": 152
               }
             ],
-            "thoughtsTokenCount": 226,
+            "thoughtsTokenCount": 99,
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-3.6-flash",
-          "responseId": "rvrLar2eHcjQvdIPpOC3gA8"
+          "responseId": "j1XzapPIGrHZvdIPudL56AU"
         }
-  recorded_at: Sun, 11 Oct 2026 21:08:01 GMT
+  recorded_at: Tue, 10 Nov 2026 17:34:09 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Use code execution to
-        compute 123456789 * 987654321 and report the exact product."}]},{"role":"model","parts":[{"executableCode":{"language":"PYTHON","code":"a
-        = 123456789\nb = 987654321\nresult = a * b\nprint(result)\n","id":"call_1159415"},"thoughtSignature":"Ep4CCpsCAWkUfRMBWaFPgtZ2rcW5B98+FXo3ruwSyWjkg2iq5C1aqbuS3v+GXuYlWqA4B4jdfplNWDMVERgjqJAAstGyFbjjxqLSOlRbFJ0XjVyydhK3IIIs48GVwac8Zmr6gDTQ+fuICsYChMMtSvWkg/tVgCs94Zlqhehs/hUgOfjGyRvtqF1mqa4lF+2ELxPiZV14GNVzjOYh4LLjfSyIOB4I+R0guWA6Qewh95509ZxmCZlGE8Fkav6dnxJYvGGUTmgYdyVW3UhMiaHwRAqMpoYHiCWGVHF78G8FSoSDm5sHcDV/uvUVuoM66OAeNhgFJ+wwjsOlfOMeQHTFoMImknBDSTPQz2qTt8ik2LslVi5ZUJes8YJZOC6zOnLL0w=="},{"codeExecutionResult":{"outcome":"OUTCOME_OK","output":"121932631112635269\n","id":"call_1159415"}},{"text":"The
-        exact product of $123,456,789 \\times 987,654,321$ is:\n\n**121,932,631,112,635,269**
-        (or `121932631112635269`)","thoughtSignature":"EuwDCukDAWkUfRNdhA2wTjvWpbMJSk9Ht/8wdAn8RjsSqUISsJqcFUyJjVslI0qsPj8pOwjwFU6b3CfqoSpblZ83dUFGrX5TKwgCXYAeP7qkDvAN37TnkItnD+aNDuKEWMgnt+d7aUMGusTzxr9pTami3kBCvvonSWUdnw5s+f7GsRNf7YzVJWbPp+HkHyQfDx2WesAnfwJNsvx6hO/3rlTqmBQNsKwYho19W0zbGGiXUOp/4bul3dmmG7wnlxVvBunBarzbAspSPLiT8evCTth0o1xARp7/yoq6nWrjXhYMAiB93g0kCWunmxx69AHdlJOE6eN7qvTMC96UYCJccwFkyj0w3niXq5ZjGfM5tBhhFBSv04RobfYjmWu+6NvnNm8kDKlZxxnFX6TucwdJ4jq7kSXnNqpoiVNWP/9O7XCOOT7cWFUopRYzbo9Q10cSD1D9KzIUwRiNO3SKgHAVvc58dqGmGmRqxjrGSGhaeB/UX0yNsU5mte2o9ETpmAwPN5X0GxYBabUau0KwXEhr0pF2MYh3GDaEUxNWhoyjEmuvYy9pITqBAOppowCoJb+kw5J0buAbXdyfZTggT/Y0mqlwetmgcU6mFCyWYTdCIPX6YsqFhgyTPkOIKKwuCxYDx1OELEaq0uiWo1249oB+"}]},{"role":"user","parts":[{"text":"Thanks.
+        compute 123456789 * 987654321 and report the exact product."}]},{"role":"model","parts":[{"executableCode":{"language":"PYTHON","code":"num1
+        = 123456789\nnum2 = 987654321\nproduct = num1 * num2\nprint(product)\n","id":"call_14756567267599076683"},"thoughtSignature":"EoQCCoECAWkUfROYN6nss2qZFFq4LABt3giJRI6aLasQchKTk9qlnKcDtuogaBFDHpvhc02TPJBCG5Tf3tuANzCUqZ49pOqbL7/tt63vpXONtmA7YgzwCIyYZ9uuhk06HtkBExYKh9tUVqFpo1JKTpmepho6YF3HKsv0zVjNFuEAO7L4+273dBdJ/sV5lkj4G388IV0Li8RQobQDHcHh5TxuHV4UchQmjESEjnXbvgti6CJ+48F2srCQuosQxjvejVOExSlDaKkDsRH+aDnHfqnRd9lMcyUk3XJLt5RLetWFumqZ7kdRNICcEW2x7wlu35QZoMa1wsueR2XL7SXF4LoSyNs1rR8="},{"codeExecutionResult":{"outcome":"OUTCOME_OK","output":"121932631112635269\n","id":"call_14756567267599076683"}},{"text":"The
+        exact product of 123,456,789 and 987,654,321 is **121,932,631,112,635,269**
+        (or `121932631112635269`).","thoughtSignature":"EokCCoYCAWkUfRPaVAMJD+OnN1QGu/G7m5m1ZwTg2ZxjLxy6hjN2c4UmaLsK8z5I+sTXxNxXaqiP07btgTSKUEptmW7R+fuJZZCeGDNmrcO8asKLQpwU/oHzw072weK8yZYYxdJoq8d4p3NuRyOr1FhaPmoWkbAYKfFUQBZ2j2A8nfkg1zd6CeDzBbwjd6vknsEEKAwXvQfDXVzRYt4qXV0a0WsQOT1x9tPflbpmdtJMI2ok/GiqN+aNHakM9jfamGamQ74XcwUCPveGr6SU1b18+A5UzfXgwyVKASWiiEA6xMnp34t5M7KXB8KhdyiXry9Bo5yoT9gYZ3RUj86fN/PyGyi+L5KeERiI4A=="}]},{"role":"user","parts":[{"text":"Thanks.
         Now just say OK."}]}],"generationConfig":{},"tools":[{"code_execution":{}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -141,7 +141,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:08:02 GMT
+      - Tue, 10 Nov 2026 17:34:10 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -151,7 +151,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1110
+      - gfet4t7; dur=1102
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -165,8 +165,8 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "OK.",
-                    "thoughtSignature": "ErwBCrkBAWkUfROm1jYSegULmOo86oA17GrP60hVBIAlOywYGXmj5USqXss8ROpXViQwWtIBRDSwy5o5sFMqYvKBYIdRYGJh786GMlpMyYtx6Xi9fMmoU8Lk0RFTbi0OYy9RThfWgR9IS5ZRIIsvfnw4povfQgFDsUIsSeRH8P2zc8Idin4phw1GZM4zso00xfj8x2TLc4JgozeY4gu4OAuYEiONDSwI+WrHain5QOxAj6+4faHxZpHi69dXnaA="
+                    "text": "OK",
+                    "thoughtSignature": "ErUBCrIBAWkUfRNZhO14TubvJJjmHHmu3m48S36bnVgvrkdnvkZL+x5lley5PhJoxy9U45NND6/xX7ieic4XgeUaTDFIK2d7CZGl+8ArR+WkkqFWS49MGQRRQogf2Xwh+GVvvIv09q/G6ZLb0jM45qhe5jy/pe4UWbQoVOfKkVwR4KLXXH7nKI1l1ymUvfi3/TSCUAMT3mo/h+7uSo9MRF158o9NldHgs7sYRrIR6iIlEElVks1kzQ=="
                   }
                 ],
                 "role": "model"
@@ -176,20 +176,20 @@ http_interactions:
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 349,
-            "candidatesTokenCount": 2,
-            "totalTokenCount": 373,
+            "promptTokenCount": 218,
+            "candidatesTokenCount": 1,
+            "totalTokenCount": 239,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 349
+                "tokenCount": 218
               }
             ],
-            "thoughtsTokenCount": 22,
+            "thoughtsTokenCount": 20,
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-3.6-flash",
-          "responseId": "sfrLapz6Jfif28oPpuLz6A8"
+          "responseId": "klXzauyQBMC5kdUPhqX3sAk"
         }
-  recorded_at: Sun, 11 Oct 2026 21:08:02 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:34:11 GMT
+recorded_with: VCR 6.4.1

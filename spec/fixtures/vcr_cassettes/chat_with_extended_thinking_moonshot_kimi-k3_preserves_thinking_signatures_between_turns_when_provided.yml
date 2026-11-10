@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 06 Nov 2026 16:28:18 GMT
+      - Tue, 10 Nov 2026 17:39:21 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -42,7 +42,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - 0ce7b26d-d9ff-11f1-aee7-00163e5443c0
+      - a1307853-dd2d-11f1-bafc-00163e789b79
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -54,7 +54,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - 919dbf341a96099d571aff739d9bcada
+      - 46c0252967aef5dd94e38413c6615a4c
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -65,23 +65,23 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-2f2e0afd5aeafeeb4e3f4ad53","object":"chat.completion","created":1793982489,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"5
-        + 3 = **8**","reasoning_content":"The user is asking a simple arithmetic question:
-        5 + 3. This equals 8. This is a straightforward factual question with a clear
-        answer. I should just answer directly and concisely. No need for extensive
-        explanation for such a simple question."},"finish_reason":"stop"}],"usage":{"prompt_tokens":94,"completion_tokens":72,"total_tokens":166,"completion_tokens_details":{"reasoning_tokens":51},"prompt_tokens_details":{"cache_write_tokens":0}}}'
-  recorded_at: Fri, 06 Nov 2026 16:28:18 GMT
+      string: '{"id":"chatcmpl-2f2e0a3d4adbe9ee105076e2c","object":"chat.completion","created":1794332350,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"5
+        + 3 = 8.","reasoning_content":"The user asks simple arithmetic. Answer directly:
+        8. Need final concise. Ensure no unnecessary tool mention. Final answer maybe
+        \"8\". Since desired oververbosity 5 but simple question, concise. We can
+        say \"5 + 3 = 8.\" Done."},"finish_reason":"stop"}],"usage":{"prompt_tokens":94,"completion_tokens":75,"total_tokens":169,"completion_tokens_details":{"reasoning_tokens":54},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Tue, 10 Nov 2026 17:39:21 GMT
 - request:
     method: post
     uri: https://api.moonshot.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"kimi-k3","messages":[{"role":"user","content":"What is 5
-        + 3?"},{"role":"assistant","content":"5 + 3 = **8**","reasoning_content":"The
-        user is asking a simple arithmetic question: 5 + 3. This equals 8. This is
-        a straightforward factual question with a clear answer. I should just answer
-        directly and concisely. No need for extensive explanation for such a simple
-        question."},{"role":"user","content":"Now multiply that by 2"}],"stream":false,"reasoning_effort":"medium"}'
+        + 3?"},{"role":"assistant","content":"5 + 3 = 8.","reasoning_content":"The
+        user asks simple arithmetic. Answer directly: 8. Need final concise. Ensure
+        no unnecessary tool mention. Final answer maybe \"8\". Since desired oververbosity
+        5 but simple question, concise. We can say \"5 + 3 = 8.\" Done."},{"role":"user","content":"Now
+        multiply that by 2"}],"stream":false,"reasoning_effort":"medium"}'
     headers:
       User-Agent:
       - Faraday v2.15.1
@@ -99,7 +99,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 06 Nov 2026 16:28:26 GMT
+      - Tue, 10 Nov 2026 17:39:26 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -117,7 +117,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - 13211eef-d9ff-11f1-843d-00163e11f3af
+      - a9ca57b6-dd2d-11f1-bfbe-00163e1de4ea
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -129,7 +129,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - efe016881176404899a599119731c4ed
+      - bbf274f30ed2a521e20e77456b3cb9ca
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -140,7 +140,8 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTJmMmUwYjY5N2QzYmExZjRlNTc4NjM3NmMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzkzOTgyNDk5LCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ijggw5cgMiA9ICoqMTYqKiIsInJlYXNvbmluZ19jb250ZW50IjoiVGhlIHVzZXIgYXNrZWQgd2hhdCA1ICsgMyBpcywgd2hpY2ggaXMgOC4gTm93IHRoZXkgd2FudCB0byBtdWx0aXBseSB0aGF0IHJlc3VsdCBieSAyLlxuXG44IMOXIDIgPSAxNiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTkzLCJjb21wbGV0aW9uX3Rva2VucyI6NTUsInRvdGFsX3Rva2VucyI6MjQ4LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjM0fSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlX3dyaXRlX3Rva2VucyI6MH19fQ==
-  recorded_at: Fri, 06 Nov 2026 16:28:26 GMT
+      string: '{"id":"chatcmpl-2f2e0137744d2b876e0931e14","object":"chat.completion","created":1794332362,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"16","reasoning_content":"The
+        user says ''Now multiply that by 2'' referring to previous result 8. 8*2=16.
+        Need final concise. We have called tool. Answer 16."},"finish_reason":"stop"}],"usage":{"prompt_tokens":196,"completion_tokens":52,"total_tokens":248,"completion_tokens_details":{"reasoning_tokens":38},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Tue, 10 Nov 2026 17:39:26 GMT
 recorded_with: VCR 6.4.1

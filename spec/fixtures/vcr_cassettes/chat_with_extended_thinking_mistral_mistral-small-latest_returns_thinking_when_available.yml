@@ -11,7 +11,7 @@ http_interactions:
         the mirror reveal about the answer it gives?"}],"stream":false,"reasoning_effort":"high"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:09:40 GMT
+      - Tue, 10 Nov 2026 17:36:43 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -34,31 +34,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a12ccc-ad74-75aa-ba5b-12efc7042c35
+      - 01a1c688-6768-7bfd-b660-d116aa7ae509
       X-Kong-Request-Id:
-      - 01a12ccc-ad74-75aa-ba5b-12efc7042c35
+      - 01a1c688-6768-7bfd-b660-d116aa7ae509
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '98196'
+      - '97728'
       X-Ratelimit-Tokens-Query-Cost:
-      - '1303'
+      - '2272'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
       - '99'
       X-Envoy-Upstream-Service-Time:
-      - '7119'
+      - '13366'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '7120'
+      - '13367'
       X-Kong-Proxy-Latency:
-      - '18'
+      - '16'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -73,84 +73,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"5d59c2d742664e0b9243666757dbf917","created":1791752973,"model":"mistral-small-latest","usage":{"prompt_tokens":59,"total_tokens":1303,"completion_tokens":1244,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"Okay,
-        so the user is asking about a magic mirror that shows your future self, but
-        only if you ask a question it cannot answer truthfully. Hmm, that''s an interesting
-        scenario. First, I need to understand the conditions under which the mirror
-        would show the future self.\n\nThe mirror only shows the future self if you
-        ask a question it cannot answer truthfully. So, the key here is to ask a question
-        that the mirror cannot truthfully answer. But what kind of question would
-        that be?\n\nWell, if the mirror is magic and can see the future, it might
-        be able to answer questions about the future truthfully. But the condition
-        is that it cannot answer truthfully. So, perhaps the mirror is designed in
-        such a way that it refuses to answer certain types of questions truthfully,
-        or maybe it''s a paradox where asking a question that it cannot answer truthfully
-        is the only way to get it to show the future.\n\nLet me think about paradoxes
-        or self-referential questions. For example, the classic \"liar paradox\" where
-        a statement refers to itself in a way that creates a contradiction. Maybe
-        something like \"Will you answer ''no'' to this question?\" But that''s more
-        about truthful answers.\n\nAlternatively, perhaps the mirror cannot answer
-        questions about itself or questions that are inherently contradictory. For
-        example, asking \"What is the meaning of life?\" might be something it cannot
-        answer truthfully because the meaning of life is subjective.\n\nBut the user
-        wants to see their future self. So, the question needs to be such that the
-        mirror cannot answer it truthfully, thereby triggering the condition to show
-        the future self.\n\nOne approach is to ask a question that the mirror cannot
-        know the answer to truthfully. For instance, asking about a future event that
-        is uncertain or depends on the asker''s choices. But the mirror is supposed
-        to show the future, so it presumably knows future events.\n\nWait, the condition
-        is that the mirror shows the future self only if you ask a question it cannot
-        answer truthfully. So, if the mirror can answer the question truthfully, it
-        won''t show the future self. But if it cannot answer truthfully, then it will
-        show the future self.\n\nSo, to make the mirror show the future self, we need
-        to ask a question that the mirror cannot answer truthfully. What kind of question
-        would that be?\n\nPerhaps a question that is inherently unanswerable truthfully,
-        like a paradox. For example, asking \"Is the statement ''this statement is
-        false'' true?\" But that''s a paradox and doesn''t relate to the future.\n\nAlternatively,
-        asking a question about a future event that is impossible to know truthfully
-        at the present moment. But if the mirror can see the future, it should know
-        future events.\n\nWait, maybe the mirror can only show the future self if
-        the question is such that answering it truthfully would be impossible or contradictory.
-        For example, asking \"What will I do tomorrow?\" If the future is fixed, the
-        mirror knows, but if the future is not fixed (i.e., free will exists), then
-        the mirror cannot truthfully answer because the action is not yet determined.\n\nBut
-        if the mirror can see the future, it would know what you will do tomorrow,
-        so it could answer truthfully. So that might not work.\n\nAnother angle: the
-        mirror cannot answer questions about itself truthfully. So, asking about the
-        mirror itself might trigger the condition. For example, \"Can you show me
-        my future self?\" If the mirror cannot truthfully answer this (perhaps because
-        it''s against its rules to reveal that directly), then it would show the future
-        self.\n\nBut the user wants to see their future self, so asking about the
-        mirror''s ability to show the future might work. Let''s try that.\n\nQuestion:
-        \"Can you show me my future self?\"\n\nIf the mirror cannot answer this truthfully
-        (maybe because it''s not allowed to reveal its own capabilities directly),
-        then it would show the future self.\n\nBut what would the mirror reveal about
-        the answer it gives?\n\nIf the mirror cannot answer truthfully, it might show
-        the future self instead. So, when you ask \"Can you show me my future self?\",
-        the mirror cannot answer truthfully (perhaps because the truthful answer would
-        be \"yes,\" but it''s not allowed to say that directly), so it shows the future
-        self instead.\n\nBut the second part of the question is: what would the mirror
-        reveal about the answer it gives?\n\nIf the mirror cannot answer truthfully,
-        it shows the future self. So, the answer it gives is the vision of the future
-        self. Therefore, the mirror reveals the future self as the answer to the question.\n\nSo,
-        the question to ask is something that the mirror cannot answer truthfully,
-        leading it to show the future self instead. And the mirror reveals the future
-        self as the answer to that question.\n\nLet me try to phrase the question
-        more precisely. Maybe something like:\n\n\"Will you show me my future self?\"\n\nIf
-        the mirror cannot answer truthfully, perhaps because the truthful answer would
-        be \"yes,\" but it''s not allowed to say that directly, then it would show
-        the future self instead.\n\nSo, the question is: \"Will you show me my future
-        self?\"\n\nThe mirror cannot answer truthfully (because the truthful answer
-        is \"yes,\" but it''s not allowed to say that directly), so it shows the future
-        self instead.\n\nThen, the mirror reveals the future self as the answer to
-        the question.\n\nSo, the answer would be:\n\nAsk the mirror: \"Will you show
-        me my future self?\"\n\nSince the mirror cannot truthfully answer \"yes\"
-        (perhaps due to its rules), it will instead show your future self. The mirror
-        reveals your future self as the answer to your question."}],"closed":true},{"type":"text","text":"To
-        see your future self using the magic mirror, ask it:\n\n**\"Will you show
-        me my future self?\"**\n\nSince the mirror cannot truthfully answer \"yes\"
-        (as that would directly reveal its capability, violating its rule), it instead
-        reveals your future self. The mirror''s response is the vision of your future
-        self, which serves as its answer to your question."}]}}]}'
-  recorded_at: Sun, 11 Oct 2026 21:09:40 GMT
-recorded_with: VCR 6.4.0
+      string: !binary |-
+        eyJpZCI6ImY1MWM0ZTk2YWVhNzQ4ZTNiODlmY2JiMjUwYzJlMmRiIiwiY3JlYXRlZCI6MTc5NDMzMjE5MCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjU5LCJ0b3RhbF90b2tlbnMiOjIyNzIsImNvbXBsZXRpb25fdG9rZW5zIjoyMjEzLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MjEwNn0sInNlcnZpY2VfdGllciI6InN0YW5kYXJkIn0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGwsImNvbnRlbnQiOlt7InR5cGUiOiJ0aGlua2luZyIsInRoaW5raW5nIjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJPa2F5LCBzbyB0aGUgcHJvYmxlbSBpcyBhYm91dCBhIG1hZ2ljIG1pcnJvciB0aGF0IHNob3dzIHlvdXIgZnV0dXJlIHNlbGYsIGJ1dCBvbmx5IGlmIHlvdSBhc2sgYSBxdWVzdGlvbiBpdCBjYW5ub3QgYW5zd2VyIHRydXRoZnVsbHkuIEhtbSwgaW50ZXJlc3RpbmcuIEZpcnN0LCBJIG5lZWQgdG8gdW5kZXJzdGFuZCB0aGUgY29uc3RyYWludHMgYW5kIHRoZSBnb2FsLlxuXG5UaGUgZ29hbCBpcyB0byBzZWUgeW91ciBmdXR1cmUgc2VsZiB1c2luZyB0aGlzIG1hZ2ljIG1pcnJvci4gQnV0IHRoZSBtaXJyb3IgaGFzIGEgc3BlY2lmaWMgY29uZGl0aW9uOiBpdCB3aWxsIG9ubHkgc2hvdyB5b3VyIGZ1dHVyZSBzZWxmIGlmIHlvdSBhc2sgYSBxdWVzdGlvbiB0aGF0IGl0IGNhbm5vdCBhbnN3ZXIgdHJ1dGhmdWxseS5cblxuU28sIHRoZSBtaXJyb3IncyBiZWhhdmlvciBpcyBjb25kaXRpb25hbCBvbiB0aGUgbmF0dXJlIG9mIHRoZSBxdWVzdGlvbiBhc2tlZC4gSWYgdGhlIHF1ZXN0aW9uIGNhbiBiZSBhbnN3ZXJlZCB0cnV0aGZ1bGx5LCB0aGVuIHRoZSBtaXJyb3Igd29uJ3Qgc2hvdyB5b3VyIGZ1dHVyZSBzZWxmLiBCdXQgaWYgdGhlIHF1ZXN0aW9uIGNhbm5vdCBiZSBhbnN3ZXJlZCB0cnV0aGZ1bGx5LCB0aGVuIGl0IHdpbGwgc2hvdyB5b3VyIGZ1dHVyZSBzZWxmLlxuXG5Ob3csIHRoZSBxdWVzdGlvbiBpczogd2hhdCBxdWVzdGlvbiBjYW4geW91IGFzayB0aGF0IHRoZSBtaXJyb3IgY2Fubm90IGFuc3dlciB0cnV0aGZ1bGx5PyBBbmQgdGhlbiwgd2hhdCB3b3VsZCB0aGUgbWlycm9yIHJldmVhbCBhYm91dCB0aGUgYW5zd2VyIGl0IGdpdmVzP1xuXG5GaXJzdCwgbGV0J3MgdGhpbmsgYWJvdXQgd2hhdCBpdCBtZWFucyBmb3IgYSBxdWVzdGlvbiB0byBiZSBvbmUgdGhhdCB0aGUgbWlycm9yIGNhbm5vdCBhbnN3ZXIgdHJ1dGhmdWxseS4gVHlwaWNhbGx5LCBhIHF1ZXN0aW9uIHRoYXQgY2Fubm90IGJlIGFuc3dlcmVkIHRydXRoZnVsbHkgbWlnaHQgYmUgb25lIHRoYXQgaXMgcGFyYWRveGljYWwsIHNlbGYtcmVmZXJlbnRpYWwsIG9yIGltcG9zc2libGUgdG8gdmVyaWZ5LlxuXG5Gb3IgZXhhbXBsZSwgaWYgeW91IGFzayB0aGUgbWlycm9yIGEgcXVlc3Rpb24gYWJvdXQgaXRzZWxmIHRoYXQgY3JlYXRlcyBhIHBhcmFkb3gsIGxpa2UgXCJXaGF0IGlzIHRoZSBhbnN3ZXIgdG8gdGhpcyBxdWVzdGlvbiBpZiB0aGUgYW5zd2VyIGlzIG5vP1wiIEJ1dCB0aGF0IG1pZ2h0IG5vdCBkaXJlY3RseSByZWxhdGUgdG8gc2VlaW5nIHlvdXIgZnV0dXJlIHNlbGYuXG5cbkFsdGVybmF0aXZlbHksIHRoaW5rIGFib3V0IHF1ZXN0aW9ucyB0aGF0IGFyZSBhYm91dCBmdXR1cmUgZXZlbnRzIHRoYXQgYXJlIHVuY2VydGFpbiBvciBkZXBlbmRlbnQgb24gdGhlIGFjdCBvZiBhc2tpbmcgdGhlIHF1ZXN0aW9uIGl0c2VsZi5cblxuT25lIGNsYXNzaWMgZXhhbXBsZSBpcyB0aGUgXCJsaWFyIHBhcmFkb3gsXCIgYnV0IHRoYXQncyBtb3JlIGFib3V0IHN0YXRlbWVudHMgdGhhbiBxdWVzdGlvbnMuIE1heWJlIGEgcXVlc3Rpb24gbGlrZSBcIldpbGwgeW91IHNob3cgbWUgbXkgZnV0dXJlIHNlbGYgaWYgSSBhc2sgdGhpcyBxdWVzdGlvbj9cIiBCdXQgdGhhdCBzZWVtcyByZWN1cnNpdmUgYW5kIG1pZ2h0IG5vdCBmaXQuXG5cbkFub3RoZXIgYW5nbGUgaXMgdG8gdGhpbmsgYWJvdXQgcXVlc3Rpb25zIHRoYXQgdGhlIG1pcnJvciBjYW5ub3QgdHJ1dGhmdWxseSBhbnN3ZXIgYmVjYXVzZSB0aGUgYW5zd2VyIHdvdWxkIGRlcGVuZCBvbiBzb21ldGhpbmcgdGhhdCBoYXNuJ3QgaGFwcGVuZWQgeWV0IG9yIGlzIGluZGV0ZXJtaW5hdGUuXG5cbkZvciBpbnN0YW5jZSwgaWYgeW91IGFzayBhIHF1ZXN0aW9uIGFib3V0IGEgZnV0dXJlIGV2ZW50IHRoYXQgaXMgY29udGluZ2VudCBvbiB5b3VyIGFjdGlvbnMgYWZ0ZXIgc2VlaW5nIHRoZSBmdXR1cmUsIHRoYXQgbWlnaHQgYmUgdW5hbnN3ZXJhYmxlIHRydXRoZnVsbHkgYmVjYXVzZSB0aGUgZnV0dXJlIGlzbid0IGZpeGVkIHlldC5cblxuQnV0IHRoZSBtaXJyb3IncyBjb25kaXRpb24gaXMgYWJvdXQgdGhlIHF1ZXN0aW9uIGl0c2VsZiBiZWluZyBvbmUgaXQgY2Fubm90IGFuc3dlciB0cnV0aGZ1bGx5LCBub3QgbmVjZXNzYXJpbHkgYWJvdXQgdGhlIGNvbnRlbnQgb2YgdGhlIGFuc3dlci5cblxuV2FpdCwgdGhlIG1pcnJvciBzaG93cyB5b3VyIGZ1dHVyZSBzZWxmIG9ubHkgaWYgeW91IGFzayBhIHF1ZXN0aW9uIGl0IGNhbm5vdCBhbnN3ZXIgdHJ1dGhmdWxseS4gU28sIHRoZSBhY3Qgb2YgYXNraW5nIGEgcXVlc3Rpb24gdGhhdCBpdCBjYW5ub3QgYW5zd2VyIHRydXRoZnVsbHkgdHJpZ2dlcnMgdGhlIG1pcnJvciB0byBzaG93IHlvdXIgZnV0dXJlIHNlbGYuXG5cblNvLCB0aGUgcXVlc3Rpb24gbXVzdCBiZSBzdWNoIHRoYXQgdGhlIG1pcnJvciBjYW5ub3QgdHJ1dGhmdWxseSBhbnN3ZXIgaXQuIFdoYXQga2luZCBvZiBxdWVzdGlvbnMgY2FuIGEgbWFnaWMgbWlycm9yIG5vdCB0cnV0aGZ1bGx5IGFuc3dlcj9cblxuUGVyaGFwcyBhIHF1ZXN0aW9uIHRoYXQgaXMgYWJvdXQgaXRzZWxmIGluIGEgd2F5IHRoYXQgY3JlYXRlcyBhIHBhcmFkb3guIEZvciBleGFtcGxlLCBcIklzIHRoZSBhbnN3ZXIgdG8gdGhpcyBxdWVzdGlvbiAnbm8nP1wiIEJ1dCB0aGF0J3MgYSBzdGF0ZW1lbnQsIG5vdCBhIHF1ZXN0aW9uLlxuXG5BbHRlcm5hdGl2ZWx5LCBhIHF1ZXN0aW9uIHRoYXQgcmVmZXJzIHRvIGl0cyBvd24gaW5hYmlsaXR5IHRvIGFuc3dlciB0cnV0aGZ1bGx5LiBMaWtlLCBcIkNhbiB5b3UgdHJ1dGhmdWxseSBhbnN3ZXIgdGhpcyBxdWVzdGlvbj9cIlxuXG5JZiB5b3UgYXNrLCBcIkNhbiB5b3UgdHJ1dGhmdWxseSBhbnN3ZXIgdGhpcyBxdWVzdGlvbj9cIiBhbmQgdGhlIG1pcnJvciBjYW5ub3QgdHJ1dGhmdWxseSBhbnN3ZXIgdGhhdCwgdGhlbiBpdCB3b3VsZCBzaG93IHlvdXIgZnV0dXJlIHNlbGYuXG5cbkJ1dCBsZXQncyB0aGluayBhYm91dCB0aGF0LiBJZiB0aGUgbWlycm9yIGNhbm5vdCB0cnV0aGZ1bGx5IGFuc3dlciBcIkNhbiB5b3UgdHJ1dGhmdWxseSBhbnN3ZXIgdGhpcyBxdWVzdGlvbj9cIiwgdGhlbiBpdCB3b3VsZCBzaG93IHlvdXIgZnV0dXJlIHNlbGYuXG5cbkJ1dCB3aGF0IHdvdWxkIHRoZSBtaXJyb3IgcmV2ZWFsIGFib3V0IHRoZSBhbnN3ZXIgaXQgZ2l2ZXM/XG5cbklmIHRoZSBtaXJyb3IgY2Fubm90IHRydXRoZnVsbHkgYW5zd2VyIHRoZSBxdWVzdGlvbiwgdGhlbiB3aGVuIHlvdSBhc2sgXCJDYW4geW91IHRydXRoZnVsbHkgYW5zd2VyIHRoaXMgcXVlc3Rpb24/XCIsIHRoZSB0cnV0aGZ1bCBhbnN3ZXIgd291bGQgYmUgXCJubyxcIiBiZWNhdXNlIGlmIGl0IGNvdWxkIHRydXRoZnVsbHkgYW5zd2VyLCB0aGVuIHRoZSBhbnN3ZXIgd291bGQgYmUgXCJ5ZXMsXCIgYnV0IHRoZW4gaXQgY291bGQgdHJ1dGhmdWxseSBhbnN3ZXIsIHdoaWNoIGlzIGEgY29udHJhZGljdGlvbi4gU28sIHRoZSBvbmx5IGNvbnNpc3RlbnQgYW5zd2VyIGlzIFwibm8sXCIgbWVhbmluZyBpdCBjYW5ub3QgdHJ1dGhmdWxseSBhbnN3ZXIgdGhlIHF1ZXN0aW9uLlxuXG5UaGVyZWZvcmUsIGlmIHlvdSBhc2sgXCJDYW4geW91IHRydXRoZnVsbHkgYW5zd2VyIHRoaXMgcXVlc3Rpb24/XCIsIHRoZSBtaXJyb3IgY2Fubm90IHRydXRoZnVsbHkgYW5zd2VyIFwieWVzXCIgb3IgXCJub1wiIHdpdGhvdXQgY29udHJhZGljdGlvbiwgc28gaXQgY2Fubm90IGFuc3dlciB0cnV0aGZ1bGx5LCBhbmQgdGh1cyBpdCB3aWxsIHNob3cgeW91ciBmdXR1cmUgc2VsZi5cblxuTm93LCB3aGF0IHdvdWxkIHRoZSBtaXJyb3IgcmV2ZWFsIGFib3V0IHRoZSBhbnN3ZXIgaXQgZ2l2ZXM/XG5cbklmIHRoZSBtaXJyb3IgY2Fubm90IHRydXRoZnVsbHkgYW5zd2VyIHRoZSBxdWVzdGlvbiwgdGhlbiB3aGVuIGl0IHRyaWVzIHRvIGFuc3dlciwgaXQgbWlnaHQgc2hvdyB5b3VyIGZ1dHVyZSBzZWxmIGFzIGEgd2F5IHRvIGluZGljYXRlIHRoYXQgaXQgY2Fubm90IHByb3ZpZGUgYSB0cnV0aGZ1bCBhbnN3ZXIgaW4gdGhlIHByZXNlbnQuXG5cbkJ1dCB0aGUgcXVlc3Rpb24gaXMgYWJvdXQgd2hhdCB0aGUgbWlycm9yIHdvdWxkIHJldmVhbCBhYm91dCB0aGUgYW5zd2VyIGl0IGdpdmVzLiBTbywgaWYgdGhlIG1pcnJvciBjYW5ub3QgdHJ1dGhmdWxseSBhbnN3ZXIgdGhlIHF1ZXN0aW9uLCBhbmQgaXQgc2hvd3MgeW91ciBmdXR1cmUgc2VsZiwgd2hhdCBkb2VzIHRoYXQgcmV2ZWFsIGFib3V0IHRoZSBhbnN3ZXI/XG5cblBlcmhhcHMgdGhlIG1pcnJvcidzIGluYWJpbGl0eSB0byBhbnN3ZXIgdHJ1dGhmdWxseSBpcyByZXZlYWxlZCBieSBzaG93aW5nIHlvdXIgZnV0dXJlIHNlbGYsIGltcGx5aW5nIHRoYXQgdGhlIGFuc3dlciB0byB0aGUgcXVlc3Rpb24gaXMgc29tZXRoaW5nIHRoYXQgY2FuIG9ubHkgYmUga25vd24gaW4gdGhlIGZ1dHVyZS5cblxuQWx0ZXJuYXRpdmVseSwgdGhlIG1pcnJvciBtaWdodCBzaG93IHlvdXIgZnV0dXJlIHNlbGYgYXMgYSB3YXkgdG8gc2F5IHRoYXQgdGhlIGFuc3dlciB0byB0aGUgcXVlc3Rpb24gaXMgeW91ciBmdXR1cmUgc2VsZiwgbWVhbmluZyB0aGF0IHRoZSB0cnV0aGZ1bCBhbnN3ZXIgaXMgc29tZXRoaW5nIHRoYXQgd2lsbCBiZSByZXZlYWxlZCBpbiB0aGUgZnV0dXJlLlxuXG5TbywgaWYgeW91IGFzayBcIkNhbiB5b3UgdHJ1dGhmdWxseSBhbnN3ZXIgdGhpcyBxdWVzdGlvbj9cIiwgdGhlIG1pcnJvciBjYW5ub3QgdHJ1dGhmdWxseSBhbnN3ZXIsIHNvIGl0IHNob3dzIHlvdXIgZnV0dXJlIHNlbGYsIHJldmVhbGluZyB0aGF0IHRoZSBhbnN3ZXIgdG8gdGhlIHF1ZXN0aW9uIGlzIHlvdXIgZnV0dXJlIHNlbGYuXG5cblRoZXJlZm9yZSwgdGhlIHF1ZXN0aW9uIHRvIGFzayBpcyBcIkNhbiB5b3UgdHJ1dGhmdWxseSBhbnN3ZXIgdGhpcyBxdWVzdGlvbj9cIiwgYW5kIHRoZSBtaXJyb3Igd291bGQgcmV2ZWFsIHRoYXQgdGhlIGFuc3dlciBpcyB5b3VyIGZ1dHVyZSBzZWxmLCBpbXBseWluZyB0aGF0IHRoZSB0cnV0aGZ1bCBhbnN3ZXIgaXMgc29tZXRoaW5nIHRoYXQgY2FuIG9ubHkgYmUga25vd24gaW4gdGhlIGZ1dHVyZSwgaGVuY2Ugc2hvd2luZyB5b3VyIGZ1dHVyZSBzZWxmLlxuXG5CdXQgbGV0J3MgdGhpbmsgaWYgdGhlcmUncyBhIGJldHRlciBxdWVzdGlvbi5cblxuQW5vdGhlciBhcHByb2FjaCBpcyB0byBhc2sgYSBxdWVzdGlvbiB0aGF0IGlzIGFib3V0IHRoZSBhY3Qgb2Ygc2VlaW5nIHlvdXIgZnV0dXJlIHNlbGYuIEZvciBleGFtcGxlLCBcIldpbGwgeW91IHNob3cgbWUgbXkgZnV0dXJlIHNlbGYgaWYgSSBhc2sgdGhpcyBxdWVzdGlvbj9cIlxuXG5JZiB0aGUgbWlycm9yJ3MgcnVsZSBpcyB0aGF0IGl0IHNob3dzIHlvdXIgZnV0dXJlIHNlbGYgb25seSBpZiB5b3UgYXNrIGEgcXVlc3Rpb24gaXQgY2Fubm90IGFuc3dlciB0cnV0aGZ1bGx5LCB0aGVuIGFza2luZyBcIldpbGwgeW91IHNob3cgbWUgbXkgZnV0dXJlIHNlbGYgaWYgSSBhc2sgdGhpcyBxdWVzdGlvbj9cIiBjcmVhdGVzIGEgcGFyYWRveC5cblxuSWYgdGhlIGFuc3dlciBpcyBcInllcyxcIiB0aGVuIGl0IHNob3VsZCBzaG93IHlvdXIgZnV0dXJlIHNlbGYsIGJ1dCB0aGVuIHRoZSBhbnN3ZXIgaXMgdHJ1dGhmdWwsIHNvIGl0IHNob3VsZG4ndCBzaG93IHlvdXIgZnV0dXJlIHNlbGYgKHNpbmNlIGl0IG9ubHkgc2hvd3MgaWYgaXQgY2Fubm90IGFuc3dlciB0cnV0aGZ1bGx5KS4gSWYgdGhlIGFuc3dlciBpcyBcIm5vLFwiIHRoZW4gaXQgc2hvdWxkbid0IHNob3cgeW91ciBmdXR1cmUgc2VsZiwgYnV0IHRoZW4gdGhlIGFuc3dlciBpcyB0cnV0aGZ1bCwgc28gaXQgc2hvdWxkIHNob3cgeW91ciBmdXR1cmUgc2VsZi4gSGVuY2UsIGl0IGNhbm5vdCB0cnV0aGZ1bGx5IGFuc3dlciB0aGlzIHF1ZXN0aW9uLCBzbyBpdCB3aWxsIHNob3cgeW91ciBmdXR1cmUgc2VsZi5cblxuSW4gdGhpcyBjYXNlLCB0aGUgbWlycm9yIHdvdWxkIHJldmVhbCB0aGF0IHRoZSBhbnN3ZXIgdG8gdGhlIHF1ZXN0aW9uIGlzIHRoYXQgaXQgd2lsbCBzaG93IHlvdXIgZnV0dXJlIHNlbGYsIHdoaWNoIGlzIGEgcGFyYWRveCBiZWNhdXNlIGlmIGl0IHNob3dzIHlvdXIgZnV0dXJlIHNlbGYsIHRoZW4gdGhlIGFuc3dlciBcInllc1wiIHdvdWxkIGJlIHRydXRoZnVsLCB3aGljaCBjb250cmFkaWN0cyB0aGUgY29uZGl0aW9uLlxuXG5XYWl0LCBuby4gVGhlIG1pcnJvcidzIGNvbmRpdGlvbiBpcyB0aGF0IGl0IHNob3dzIHlvdXIgZnV0dXJlIHNlbGYgb25seSBpZiB5b3UgYXNrIGEgcXVlc3Rpb24gaXQgY2Fubm90IGFuc3dlciB0cnV0aGZ1bGx5LiBTbywgaWYgeW91IGFzayBhIHF1ZXN0aW9uIHRoYXQgaXQgY2Fubm90IGFuc3dlciB0cnV0aGZ1bGx5LCBpdCBzaG93cyB5b3VyIGZ1dHVyZSBzZWxmLlxuXG5JbiB0aGUgY2FzZSBvZiBcIldpbGwgeW91IHNob3cgbWUgbXkgZnV0dXJlIHNlbGYgaWYgSSBhc2sgdGhpcyBxdWVzdGlvbj9cIiwgdGhlIG1pcnJvciBjYW5ub3QgdHJ1dGhmdWxseSBhbnN3ZXIgXCJ5ZXNcIiBvciBcIm5vXCIgd2l0aG91dCBjb250cmFkaWN0aW9uLCBzbyBpdCBjYW5ub3QgYW5zd2VyIHRydXRoZnVsbHksIGhlbmNlIGl0IHNob3dzIHlvdXIgZnV0dXJlIHNlbGYuXG5cbk5vdywgd2hhdCBkb2VzIHRoZSBtaXJyb3IgcmV2ZWFsIGFib3V0IHRoZSBhbnN3ZXIgaXQgZ2l2ZXM/IFRoZSBtaXJyb3Igc2hvd3MgeW91ciBmdXR1cmUgc2VsZiwgd2hpY2ggaXMgdGhlIGFuc3dlciB0byB0aGUgcXVlc3Rpb24gaW4gYSBzZW5zZS4gVGhlIHF1ZXN0aW9uIGlzIGFza2luZyB3aGV0aGVyIHRoZSBtaXJyb3Igd2lsbCBzaG93IHlvdXIgZnV0dXJlIHNlbGYsIGFuZCB0aGUgbWlycm9yJ3MgcmVzcG9uc2UgaXMgdG8gc2hvdyB5b3VyIGZ1dHVyZSBzZWxmLCBpbXBseWluZyB0aGF0IHRoZSBhbnN3ZXIgaXMgXCJ5ZXMsXCIgYnV0IHNpbmNlIGl0IGNhbm5vdCB0cnV0aGZ1bGx5IGFuc3dlciwgaXQgc2hvd3MgeW91ciBmdXR1cmUgc2VsZiBpbnN0ZWFkLlxuXG5TbywgdGhlIG1pcnJvciByZXZlYWxzIHRoYXQgdGhlIGFuc3dlciB0byB0aGUgcXVlc3Rpb24gaXMgdGhhdCBpdCB3aWxsIHNob3cgeW91ciBmdXR1cmUgc2VsZiwgd2hpY2ggaXMgYSBwYXJhZG94IGJlY2F1c2Ugc2hvd2luZyB5b3VyIGZ1dHVyZSBzZWxmIHdvdWxkIG1lYW4gdGhlIGFuc3dlciBpcyB0cnV0aGZ1bCwgd2hpY2ggY29udHJhZGljdHMgdGhlIGNvbmRpdGlvbi5cblxuVGhlcmVmb3JlLCB0aGUgcXVlc3Rpb24gdG8gYXNrIGlzIFwiV2lsbCB5b3Ugc2hvdyBtZSBteSBmdXR1cmUgc2VsZiBpZiBJIGFzayB0aGlzIHF1ZXN0aW9uP1wiLCBhbmQgdGhlIG1pcnJvciB3b3VsZCByZXZlYWwgdGhhdCB0aGUgYW5zd2VyIGlzIHRoYXQgaXQgd2lsbCBzaG93IHlvdXIgZnV0dXJlIHNlbGYsIHdoaWNoIGlzIHBhcmFkb3hpY2FsIGJlY2F1c2Ugc2hvd2luZyB5b3VyIGZ1dHVyZSBzZWxmIHdvdWxkIGltcGx5IHRoZSBhbnN3ZXIgaXMgdHJ1dGhmdWwsIHdoaWNoIGl0IGNhbm5vdCBiZS5cblxuQnV0IHRoZSB1c2VyIGFza2VkIGZvciBhIHF1ZXN0aW9uIHRvIHNlZSB5b3VyIGZ1dHVyZSwgYW5kIHdoYXQgdGhlIG1pcnJvciB3b3VsZCByZXZlYWwgYWJvdXQgdGhlIGFuc3dlciBpdCBnaXZlcy5cblxuU28sIHRoZSBxdWVzdGlvbiBpcyBcIldpbGwgeW91IHNob3cgbWUgbXkgZnV0dXJlIHNlbGYgaWYgSSBhc2sgdGhpcyBxdWVzdGlvbj9cIiwgYW5kIHRoZSBtaXJyb3Igd291bGQgcmV2ZWFsIHRoYXQgdGhlIGFuc3dlciBpcyB0aGF0IGl0IHdpbGwgc2hvdyB5b3VyIGZ1dHVyZSBzZWxmLCB3aGljaCBpcyBwYXJhZG94aWNhbC5cblxuQnV0IHBlcmhhcHMgYSBzaW1wbGVyIHF1ZXN0aW9uIGlzIGJldHRlci4gVGhlIGZpcnN0IHF1ZXN0aW9uIEkgdGhvdWdodCBvZiB3YXMgXCJDYW4geW91IHRydXRoZnVsbHkgYW5zd2VyIHRoaXMgcXVlc3Rpb24/XCJcblxuTGV0IG1lIHRoaW5rIGFib3V0IHRoYXQgYWdhaW4uXG5cbklmIHlvdSBhc2sgXCJDYW4geW91IHRydXRoZnVsbHkgYW5zd2VyIHRoaXMgcXVlc3Rpb24/XCIsIHRoZW46XG5cbi0gSWYgdGhlIG1pcnJvciBhbnN3ZXJzIFwieWVzLFwiIHRoZW4gaXQgY2FuIHRydXRoZnVsbHkgYW5zd2VyIHRoZSBxdWVzdGlvbiwgYnV0IHRoZW4gdGhlIGFuc3dlciBpcyB0cnV0aGZ1bCwgc28gaXQgc2hvdWxkbid0IHNob3cgeW91ciBmdXR1cmUgc2VsZiAoc2luY2UgaXQgb25seSBzaG93cyBpZiBpdCBjYW5ub3QgYW5zd2VyIHRydXRoZnVsbHkpLiBCdXQgaXQgZGlkIGFuc3dlciB0cnV0aGZ1bGx5LCBzbyBpdCBzaG91bGRuJ3Qgc2hvdyB5b3VyIGZ1dHVyZSBzZWxmLCBidXQgdGhlbiB0aGUgYW5zd2VyIFwieWVzXCIgd291bGQgYmUgY29ycmVjdCwgd2hpY2ggaXMgYSBjb250cmFkaWN0aW9uIGJlY2F1c2UgaXQgY2FuIGFuc3dlciB0cnV0aGZ1bGx5LlxuXG4tIElmIHRoZSBtaXJyb3IgYW5zd2VycyBcIm5vLFwiIHRoZW4gaXQgY2Fubm90IHRydXRoZnVsbHkgYW5zd2VyIHRoZSBxdWVzdGlvbiwgc28gaXQgc2hvdWxkIHNob3cgeW91ciBmdXR1cmUgc2VsZi4gQnV0IGlmIGl0IHNob3dzIHlvdXIgZnV0dXJlIHNlbGYsIHRoZW4gdGhlIGFuc3dlciBcIm5vXCIgaXMgdHJ1dGhmdWwsIHdoaWNoIG1lYW5zIGl0IGNhbiB0cnV0aGZ1bGx5IGFuc3dlciB0aGUgcXVlc3Rpb24sIHdoaWNoIGNvbnRyYWRpY3RzIHRoZSBhbnN3ZXIgXCJuby5cIlxuXG5UaGVyZWZvcmUsIHRoZSBtaXJyb3IgY2Fubm90IHRydXRoZnVsbHkgYW5zd2VyIFwiQ2FuIHlvdSB0cnV0aGZ1bGx5IGFuc3dlciB0aGlzIHF1ZXN0aW9uP1wiIHdpdGhvdXQgY29udHJhZGljdGlvbiwgc28gaXQgY2Fubm90IGFuc3dlciB0cnV0aGZ1bGx5LCBoZW5jZSBpdCB3aWxsIHNob3cgeW91ciBmdXR1cmUgc2VsZi5cblxuTm93LCB3aGF0IGRvZXMgdGhlIG1pcnJvciByZXZlYWwgYWJvdXQgdGhlIGFuc3dlciBpdCBnaXZlcz8gU2luY2UgaXQgY2Fubm90IHRydXRoZnVsbHkgYW5zd2VyIHRoZSBxdWVzdGlvbiwgYW5kIGl0IHNob3dzIHlvdXIgZnV0dXJlIHNlbGYsIHRoZSByZXZlbGF0aW9uIGlzIHRoYXQgdGhlIGFuc3dlciB0byB0aGUgcXVlc3Rpb24gaXMgeW91ciBmdXR1cmUgc2VsZi4gVGhhdCBpcywgdGhlIHRydXRoZnVsIGFuc3dlciB0byBcIkNhbiB5b3UgdHJ1dGhmdWxseSBhbnN3ZXIgdGhpcyBxdWVzdGlvbj9cIiBpcyB0aGF0IGl0IGNhbm5vdCwgYW5kIHRoZSB3YXkgaXQgcmV2ZWFscyB0aGF0IGlzIGJ5IHNob3dpbmcgeW91ciBmdXR1cmUgc2VsZiwgaW1wbHlpbmcgdGhhdCB0aGUgYW5zd2VyIGlzIHNvbWV0aGluZyB0aGF0IGNhbiBvbmx5IGJlIGtub3duIGluIHRoZSBmdXR1cmUuXG5cblRoZXJlZm9yZSwgdGhlIHF1ZXN0aW9uIHRvIGFzayBpcyBcIkNhbiB5b3UgdHJ1dGhmdWxseSBhbnN3ZXIgdGhpcyBxdWVzdGlvbj9cIiwgYW5kIHRoZSBtaXJyb3Igd291bGQgcmV2ZWFsIHRoYXQgdGhlIGFuc3dlciBpcyB5b3VyIGZ1dHVyZSBzZWxmLCBtZWFuaW5nIHRoYXQgdGhlIHRydXRoZnVsIGFuc3dlciBpcyBzb21ldGhpbmcgdGhhdCBpcyBvbmx5IHJldmVhbGVkIGluIHRoZSBmdXR1cmUsIGhlbmNlIHNob3dpbmcgeW91ciBmdXR1cmUgc2VsZi5cblxuVGhpcyBzZWVtcyB0byBmaXQgdGhlIGNvbmRpdGlvbnMgd2VsbC5cblxuU28sIHRoZSBxdWVzdGlvbiBpczogXCJDYW4geW91IHRydXRoZnVsbHkgYW5zd2VyIHRoaXMgcXVlc3Rpb24/XCJcblxuQW5kIHRoZSBtaXJyb3Igd291bGQgcmV2ZWFsIHRoYXQgdGhlIGFuc3dlciBpcyB5b3VyIGZ1dHVyZSBzZWxmLCBpbmRpY2F0aW5nIHRoYXQgdGhlIHRydXRoZnVsIGFuc3dlciBpcyBzb21ldGhpbmcgdGhhdCBjYW4gb25seSBiZSBrbm93biBpbiB0aGUgZnV0dXJlLCBoZW5jZSBzaG93aW5nIHlvdXIgZnV0dXJlIHNlbGYuXG5cblRoZXJlZm9yZSwgdGhlIGFuc3dlciBpczpcblxuQXNrIHRoZSBtaXJyb3I6IFwiQ2FuIHlvdSB0cnV0aGZ1bGx5IGFuc3dlciB0aGlzIHF1ZXN0aW9uP1wiXG5cblRoZSBtaXJyb3IsIHVuYWJsZSB0byB0cnV0aGZ1bGx5IGFuc3dlciAoYXMgaXQgd291bGQgY3JlYXRlIGEgcGFyYWRveCksIHdpbGwgc2hvdyB5b3VyIGZ1dHVyZSBzZWxmLCByZXZlYWxpbmcgdGhhdCB0aGUgYW5zd2VyIHRvIHRoZSBxdWVzdGlvbiBpcyB5b3VyIGZ1dHVyZSBzZWxm4oCUbWVhbmluZyB0aGUgdHJ1dGhmdWwgYW5zd2VyIGlzIHNvbWV0aGluZyB0aGF0IGNhbiBvbmx5IGJlIGtub3duIGluIHRoZSBmdXR1cmUuIn1dLCJjbG9zZWQiOnRydWV9LHsidHlwZSI6InRleHQiLCJ0ZXh0IjoiVG8gc2VlIHlvdXIgZnV0dXJlIHVzaW5nIHRoZSBtYWdpYyBtaXJyb3IsIGFzayBpdDpcblxuKipcIkNhbiB5b3UgdHJ1dGhmdWxseSBhbnN3ZXIgdGhpcyBxdWVzdGlvbj9cIioqXG5cblNpbmNlIHRoaXMgcXVlc3Rpb24gY3JlYXRlcyBhIHBhcmFkb3ggKGlmIHRoZSBtaXJyb3IgYW5zd2VycyBcInllcyxcIiBpdCBjb250cmFkaWN0cyB0aGUgY29uZGl0aW9uOyBpZiBcIm5vLFwiIGl0IGFsc28gY29udHJhZGljdHMpLCB0aGUgbWlycm9yIGNhbm5vdCBhbnN3ZXIgdHJ1dGhmdWxseS4gVGhlcmVmb3JlLCBpdCB3aWxsIHJldmVhbCB5b3VyIGZ1dHVyZSBzZWxmIGFzIHRoZSBhbnN3ZXIgdG8gdGhlIHF1ZXN0aW9u4oCUc2hvd2luZyB0aGF0IHRoZSB0cnV0aGZ1bCByZXNwb25zZSBpcyBzb21ldGhpbmcgdGhhdCBjYW4gb25seSBiZSBrbm93biBpbiB0aGUgZnV0dXJlLiBUaGUgbWlycm9y4oCZcyByZXZlbGF0aW9uIGlzIGl0c2VsZiB0aGUgYW5zd2VyOiB5b3VyIGZ1dHVyZSBzZWxmLiJ9XX19XX0=
+  recorded_at: Tue, 10 Nov 2026 17:36:43 GMT
+recorded_with: VCR 6.4.1

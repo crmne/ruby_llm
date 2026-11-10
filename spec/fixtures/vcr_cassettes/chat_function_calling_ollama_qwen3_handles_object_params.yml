@@ -13,7 +13,7 @@ http_interactions:
         window to schedule"}},"required":["window"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -28,20 +28,27 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 Oct 2026 21:11:29 GMT
+      - Tue, 10 Nov 2026 17:42:01 GMT
       Content-Length:
-      - '1032'
+      - '1564'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-799","object":"chat.completion","created":1791753089,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+      string: '{"id":"chatcmpl-811","object":"chat.completion","created":1794332521,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
         the user wants me to call the object params tool with a window starting on
-        2025-01-01 and ending on 2025-01-02. Let me check the function signature provided.
-        The tool requires a window object with start and end in ISO format. The parameters
-        are correctly formatted as dates. I need to structure the JSON arguments with
-        the window containing those dates. Make sure the keys are ''start'' and ''end''
-        under the ''window'' object. No other parameters are needed. Let me put that
-        into the tool_call format.\n","tool_calls":[{"id":"call_hvroq6a0","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":205,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":174,"total_tokens":379}}
+        2025-01-01 and ending on 2025-01-02. Let me check the function definition
+        again to make sure I get the parameters right.\n\nThe function is called \"object_params\"
+        and it requires a \"window\" object with \"start\" and \"end\" as ISO strings.
+        The user provided both dates, so I need to structure the arguments correctly.
+        \n\nWait, the function''s parameters are expecting an object with a window
+        that has start and end. So the arguments should be a JSON object like {\"window\":
+        {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}. \n\nI need to make
+        sure the keys are correctly named and the dates are in the right format. The
+        user specified \"include the result,\" which probably means after calling
+        the tool, I should present the result. But the tool call itself just needs
+        the parameters. \n\nSo the tool call should be properly formatted in JSON
+        within the XML tags. Let me double-check the syntax to avoid any errors. Alright,
+        that should do it.\n","tool_calls":[{"id":"call_jyt81s29","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":205,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":303,"total_tokens":508}}
 
         '
-  recorded_at: Sun, 11 Oct 2026 21:11:29 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:42:01 GMT
+recorded_with: VCR 6.4.1

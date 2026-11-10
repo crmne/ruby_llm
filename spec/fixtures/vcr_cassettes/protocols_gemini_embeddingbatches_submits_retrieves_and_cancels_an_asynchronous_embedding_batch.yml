@@ -5,10 +5,10 @@ http_interactions:
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:asyncBatchEmbedContent
     body:
       encoding: UTF-8
-      string: '{"batch":{"displayName":"ruby_llm_cc22d6d40868c43b","inputConfig":{"requests":{"requests":[{"request":{"model":"models/gemini-embedding-001","content":{"parts":[{"text":"Ruby"}]},"outputDimensionality":64},"metadata":{"custom_id":"0","model":"gemini-embedding-001","array_input":false,"embedding_index":0,"embedding_count":1}}]}}}}'
+      string: '{"batch":{"displayName":"ruby_llm_beca2e27eff57bfd","inputConfig":{"requests":{"requests":[{"request":{"model":"models/gemini-embedding-001","content":{"parts":[{"text":"Ruby"}]},"outputDimensionality":64},"metadata":{"custom_id":"0","model":"gemini-embedding-001","array_input":false,"embedding_index":0,"embedding_count":1}}]}}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -29,7 +29,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:07:16 GMT
+      - Tue, 10 Nov 2026 17:28:04 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -39,7 +39,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=5308
+      - gfet4t7; dur=4633
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -48,31 +48,31 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "name": "batches/wzd8newvpkshmxboc8s0sntnwk1gqxvs7kqp",
+          "name": "batches/ntho6smojo5cnkq46e7xw9214nd0j1gzdibb",
           "metadata": {
             "@type": "type.googleapis.com/google.ai.generativelanguage.v1main.EmbedContentBatch",
             "model": "models/gemini-embedding-001",
-            "displayName": "ruby_llm_cc22d6d40868c43b",
-            "createTime": "2026-10-11T21:07:11.530317443Z",
-            "updateTime": "2026-10-11T21:07:11.530317443Z",
+            "displayName": "ruby_llm_beca2e27eff57bfd",
+            "createTime": "2026-11-10T17:28:00.259213099Z",
+            "updateTime": "2026-11-10T17:28:00.259213099Z",
             "batchStats": {
               "requestCount": "1",
               "pendingRequestCount": "1"
             },
             "state": "BATCH_STATE_PENDING",
-            "name": "batches/wzd8newvpkshmxboc8s0sntnwk1gqxvs7kqp"
+            "name": "batches/ntho6smojo5cnkq46e7xw9214nd0j1gzdibb"
           }
         }
-  recorded_at: Sun, 11 Oct 2026 21:07:16 GMT
+  recorded_at: Tue, 10 Nov 2026 17:28:04 GMT
 - request:
     method: get
-    uri: https://generativelanguage.googleapis.com/v1beta/batches/wzd8newvpkshmxboc8s0sntnwk1gqxvs7kqp
+    uri: https://generativelanguage.googleapis.com/v1beta/batches/ntho6smojo5cnkq46e7xw9214nd0j1gzdibb
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Accept-Encoding:
@@ -91,7 +91,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:07:16 GMT
+      - Tue, 10 Nov 2026 17:28:04 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -101,7 +101,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=258
+      - gfet4t7; dur=337
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -110,31 +110,31 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "name": "batches/wzd8newvpkshmxboc8s0sntnwk1gqxvs7kqp",
+          "name": "batches/ntho6smojo5cnkq46e7xw9214nd0j1gzdibb",
           "metadata": {
             "@type": "type.googleapis.com/google.ai.generativelanguage.v1main.EmbedContentBatch",
             "model": "models/gemini-embedding-001",
-            "displayName": "ruby_llm_cc22d6d40868c43b",
-            "createTime": "2026-10-11T21:07:11.530317443Z",
-            "updateTime": "2026-10-11T21:07:11.530317443Z",
+            "displayName": "ruby_llm_beca2e27eff57bfd",
+            "createTime": "2026-11-10T17:28:00.259213099Z",
+            "updateTime": "2026-11-10T17:28:00.259213099Z",
             "batchStats": {
               "requestCount": "1",
               "pendingRequestCount": "1"
             },
             "state": "BATCH_STATE_RUNNING",
-            "name": "batches/wzd8newvpkshmxboc8s0sntnwk1gqxvs7kqp"
+            "name": "batches/ntho6smojo5cnkq46e7xw9214nd0j1gzdibb"
           }
         }
-  recorded_at: Sun, 11 Oct 2026 21:07:16 GMT
+  recorded_at: Tue, 10 Nov 2026 17:28:04 GMT
 - request:
     method: post
-    uri: https://generativelanguage.googleapis.com/v1beta/batches/wzd8newvpkshmxboc8s0sntnwk1gqxvs7kqp:cancel
+    uri: https://generativelanguage.googleapis.com/v1beta/batches/ntho6smojo5cnkq46e7xw9214nd0j1gzdibb:cancel
     body:
       encoding: UTF-8
       string: "{}"
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -155,7 +155,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:07:18 GMT
+      - Tue, 10 Nov 2026 17:28:05 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -165,7 +165,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1481
+      - gfet4t7; dur=1192
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -173,16 +173,16 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: "{}\n"
-  recorded_at: Sun, 11 Oct 2026 21:07:18 GMT
+  recorded_at: Tue, 10 Nov 2026 17:28:05 GMT
 - request:
     method: get
-    uri: https://generativelanguage.googleapis.com/v1beta/batches/wzd8newvpkshmxboc8s0sntnwk1gqxvs7kqp
+    uri: https://generativelanguage.googleapis.com/v1beta/batches/ntho6smojo5cnkq46e7xw9214nd0j1gzdibb
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Accept-Encoding:
@@ -201,7 +201,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:07:18 GMT
+      - Tue, 10 Nov 2026 17:28:06 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -211,7 +211,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=331
+      - gfet4t7; dur=273
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -220,26 +220,26 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "name": "batches/wzd8newvpkshmxboc8s0sntnwk1gqxvs7kqp",
+          "name": "batches/ntho6smojo5cnkq46e7xw9214nd0j1gzdibb",
           "metadata": {
             "@type": "type.googleapis.com/google.ai.generativelanguage.v1main.EmbedContentBatch",
             "model": "models/gemini-embedding-001",
-            "displayName": "ruby_llm_cc22d6d40868c43b",
-            "createTime": "2026-10-11T21:07:11.530317443Z",
-            "endTime": "2026-10-11T21:07:17.295511Z",
-            "updateTime": "2026-10-11T21:07:17.295511Z",
+            "displayName": "ruby_llm_beca2e27eff57bfd",
+            "createTime": "2026-11-10T17:28:00.259213099Z",
+            "endTime": "2026-11-10T17:28:05.251718Z",
+            "updateTime": "2026-11-10T17:28:05.251718Z",
             "batchStats": {
               "requestCount": "1",
               "pendingRequestCount": "1"
             },
             "state": "BATCH_STATE_CANCELLED",
-            "name": "batches/wzd8newvpkshmxboc8s0sntnwk1gqxvs7kqp"
+            "name": "batches/ntho6smojo5cnkq46e7xw9214nd0j1gzdibb"
           },
           "done": true,
           "error": {
             "code": 13,
-            "message": "Batch wzd8newvpkshmxboc8s0sntnwk1gqxvs7kqp failed without error."
+            "message": "Batch ntho6smojo5cnkq46e7xw9214nd0j1gzdibb failed without error."
           }
         }
-  recorded_at: Sun, 11 Oct 2026 21:07:18 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:28:06 GMT
+recorded_with: VCR 6.4.1

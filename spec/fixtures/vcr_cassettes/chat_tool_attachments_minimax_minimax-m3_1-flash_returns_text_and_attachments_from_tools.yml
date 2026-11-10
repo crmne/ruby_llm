@@ -10,7 +10,7 @@ http_interactions:
         a sample text file named ruby.txt","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.0
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -29,25 +29,25 @@ http_interactions:
       Content-Length:
       - '439'
       Trace-Id:
-      - '07266873e79a668fc68ce63ce33ab47d'
+      - '07428c01686e56e90c6eb24d0c47f1b9'
       X-Session-Id:
       - 6a952ca10e53ca172943a84d6831750c
       X-Mm-Request-Id:
-      - 2092934004998157135_1792488819sysmpp
+      - 2092934004998157135_1794332929a1a4gn
       Minimax-Request-Id:
-      - 1eb5c9715b3a3e550fbafbb682439190
+      - 1f2fb95f87edc1f5764d481c9294e74b
       Alb-Receive-Time:
-      - '1792488819.046'
+      - '1794332929.436'
       Alb-Request-Id:
-      - dd7c16315c94ee66f06220d66af3af119a451ae3
+      - 400b73d34db099d8496e1759df53e51b7c2c1966
       Expires:
-      - Tue, 20 Oct 2026 09:33:39 GMT
+      - Tue, 10 Nov 2026 17:48:50 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Tue, 20 Oct 2026 09:33:39 GMT
+      - Tue, 10 Nov 2026 17:48:50 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -56,9 +56,9 @@ http_interactions:
       - ak
     body:
       encoding: UTF-8
-      string: '{"id":"07266873e79a668fc68ce63ce33ab47d","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"I''ll
-        fetch the file first.","type":"text"},{"type":"tool_use","id":"call_01a158a8cc08703fa0b32ab6","name":"file_fetch","input":{}}],"usage":{"input_tokens":218,"output_tokens":25,"cache_creation_input_tokens":0,"cache_read_input_tokens":229},"stop_reason":"tool_use","base_resp":{"status_code":0,"status_msg":""}}'
-  recorded_at: Tue, 20 Oct 2026 09:33:39 GMT
+      string: '{"id":"07428c01686e56e90c6eb24d0c47f1b9","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"I''ll
+        fetch the file first.","type":"text"},{"type":"tool_use","id":"call_01a1c693af78738bb613e0b6","name":"file_fetch","input":{}}],"usage":{"input_tokens":258,"output_tokens":25,"cache_creation_input_tokens":0,"cache_read_input_tokens":189},"stop_reason":"tool_use","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Tue, 10 Nov 2026 17:48:50 GMT
 - request:
     method: post
     uri: https://api.minimax.io/anthropic/v1/messages
@@ -66,13 +66,13 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"Call
         file_fetch to get ruby.txt, then repeat the contents of the attached file."}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        fetch the file first."},{"type":"tool_use","id":"call_01a158a8cc08703fa0b32ab6","name":"file_fetch","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"call_01a158a8cc08703fa0b32ab6","content":[{"type":"text","text":"Fetched
+        fetch the file first."},{"type":"tool_use","id":"call_01a1c693af78738bb613e0b6","name":"file_fetch","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"call_01a1c693af78738bb613e0b6","content":[{"type":"text","text":"Fetched
         the file."},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]}]}],"stream":false,"max_tokens":524288,"tools":[{"name":"file_fetch","description":"Fetches
         a sample text file named ruby.txt","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.0
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -91,25 +91,25 @@ http_interactions:
       Content-Length:
       - '340'
       Trace-Id:
-      - '072668748fb51250abcf57b8b3e09609'
+      - '07428c02967a8029b1407e39a3317f85'
       X-Session-Id:
       - 6a952ca10e53ca172943a84d6831750c
       X-Mm-Request-Id:
-      - 2092934004998157135_1792488820pizpsf
+      - 2092934004998157135_1794332930ildoym
       Minimax-Request-Id:
-      - ff311fcbbf1e00d4b185d80d0fff3bea
+      - '08f84a4ea419f416e2ac23ee7e18c929'
       Alb-Receive-Time:
-      - '1792488820.664'
+      - '1794332930.215'
       Alb-Request-Id:
-      - cd0adeef4ac836fc6eb94cf240f38114951cec55
+      - 499d598ec2835b2c1ee4fb07c9dc5de6ef912ed8
       Expires:
-      - Tue, 20 Oct 2026 09:33:52 GMT
+      - Tue, 10 Nov 2026 17:48:50 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Tue, 20 Oct 2026 09:33:52 GMT
+      - Tue, 10 Nov 2026 17:48:50 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -118,7 +118,7 @@ http_interactions:
       - ak
     body:
       encoding: UTF-8
-      string: '{"id":"072668748fb51250abcf57b8b3e09609","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"Ruby
+      string: '{"id":"07428c02967a8029b1407e39a3317f85","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"Ruby
         is the best.","type":"text"}],"usage":{"input_tokens":63,"output_tokens":7,"cache_creation_input_tokens":0,"cache_read_input_tokens":447},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
-  recorded_at: Tue, 20 Oct 2026 09:33:52 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:48:50 GMT
+recorded_with: VCR 6.4.1

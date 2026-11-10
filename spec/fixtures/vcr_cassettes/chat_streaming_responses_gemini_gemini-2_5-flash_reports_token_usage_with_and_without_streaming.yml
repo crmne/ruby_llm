@@ -9,7 +9,7 @@ http_interactions:
         2, 3"}]}],"generationConfig":{"temperature":0.0}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -34,7 +34,7 @@ http_interactions:
       Transfer-Encoding:
       - chunked
       Date:
-      - Sun, 11 Oct 2026 21:06:20 GMT
+      - Tue, 10 Nov 2026 17:30:26 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -44,7 +44,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=674
+      - gfet4t7; dur=577
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
@@ -52,10 +52,10 @@ http_interactions:
       string: "data: {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \"1,
         2, 3\"}],\"role\": \"model\"},\"finishReason\": \"STOP\",\"index\": 0}],\"usageMetadata\":
         {\"promptTokenCount\": 13,\"candidatesTokenCount\": 7,\"totalTokenCount\":
-        60,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\": 13}],\"thoughtsTokenCount\":
-        40,\"serviceTier\": \"standard\"},\"modelVersion\": \"gemini-2.5-flash\",\"responseId\":
-        \"TPrLavmPC6eUxN8Ph6uHqAg\"}\r\n\r\n"
-  recorded_at: Sun, 11 Oct 2026 21:06:20 GMT
+        59,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\": 13}],\"thoughtsTokenCount\":
+        39,\"serviceTier\": \"standard\"},\"modelVersion\": \"gemini-2.5-flash\",\"responseId\":
+        \"sVTzaqe9J7-lkdUPqayzoQw\"}\r\n\r\n"
+  recorded_at: Tue, 10 Nov 2026 17:30:26 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
@@ -65,7 +65,7 @@ http_interactions:
         2, 3"}]}],"generationConfig":{"temperature":0.0}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -88,7 +88,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:06:21 GMT
+      - Tue, 10 Nov 2026 17:30:26 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -98,7 +98,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=509
+      - gfet4t7; dur=674
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -124,18 +124,18 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 13,
             "candidatesTokenCount": 7,
-            "totalTokenCount": 48,
+            "totalTokenCount": 59,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 13
               }
             ],
-            "thoughtsTokenCount": 28,
+            "thoughtsTokenCount": 39,
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "TPrLaqW-N9GPxN8PqfDS2Ac"
+          "responseId": "slTzaqHwE4edkdUP7dDMoQY"
         }
-  recorded_at: Sun, 11 Oct 2026 21:06:21 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:30:26 GMT
+recorded_with: VCR 6.4.1

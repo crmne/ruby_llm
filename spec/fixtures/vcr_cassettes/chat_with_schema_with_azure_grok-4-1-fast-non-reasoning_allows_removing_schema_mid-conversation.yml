@@ -9,7 +9,7 @@ http_interactions:
         a person named Bob"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 Oct 2026 21:06:21 GMT
+      - Tue, 10 Nov 2026 17:30:27 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -43,14 +43,16 @@ http_interactions:
       - 'true'
       X-Xai-Model-Address:
       - http://localhost:9988
+      X-Watermark:
+      - 'false'
       Traceparent:
-      - 00-a4a1efbdeb8a997e63a075d392a8e8bf-87fd4db200069350-00
+      - 00-1a9bd08725c297810f788d9b3699acc7-e6bf025900025601-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - 80097335-6021-4796-9209-7964977a73da
+      - e6aa52ba-c59c-4965-ba85-64c099b4d1cd
       Azureml-Model-Session:
-      - d20261009040854-b7570cce
+      - d20261110015917-e7d4cb48
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -84,7 +86,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - 80097335-6021-4796-9209-7964977a73da
+      - e6aa52ba-c59c-4965-ba85-64c099b4d1cd
+      X-Http2-Stream-Id:
+      - '815'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -93,19 +97,19 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"a1dbb5ac-5dba-4661-873d-445c5f23731a","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":42}"},"finish_reason":"stop"}],"usage":{"prompt_tokens":78,"completion_tokens":9,"total_tokens":87,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":163,"audio_tokens":0,"text_tokens":78,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1791752781,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Sun, 11 Oct 2026 21:06:21 GMT
+      string: '{"id":"<X_REQUEST_ID>","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}"},"finish_reason":"stop"}],"usage":{"prompt_tokens":246,"completion_tokens":9,"total_tokens":255,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":158,"audio_tokens":0,"text_tokens":246,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794331827,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Tue, 10 Nov 2026 17:30:27 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
     body:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"Generate
-        a person named Bob"},{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":42}"},{"role":"user","content":"Now
+        a person named Bob"},{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}"},{"role":"user","content":"Now
         just tell me about Ruby"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -122,7 +126,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 Oct 2026 21:06:22 GMT
+      - Tue, 10 Nov 2026 17:30:27 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -139,14 +143,16 @@ http_interactions:
       - 'true'
       X-Xai-Model-Address:
       - http://localhost:9988
+      X-Watermark:
+      - 'false'
       Traceparent:
-      - 00-4d90e30593c730af9f4017f9ab752953-3097c94300042fb2-00
+      - 00-888d2b15f3bdb5cd562b2d11d979a75a-4f24a72800013358-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - d416109c-a4a7-45a0-88c0-b7200e400bf7
+      - 80054f6c-eb7c-46d1-bf45-53f32ea8e2e3
       Azureml-Model-Session:
-      - d20261009040854-b7570cce
+      - d20261110015917-e7d4cb48
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -158,9 +164,9 @@ http_interactions:
       X-Ratelimit-Key:
       - grok-4-1-fast-non-reasoning
       X-Ratelimit-Remaining-Requests:
-      - '47'
+      - '49'
       X-Ratelimit-Reset-Requests:
-      - '4'
+      - '1'
       X-Ratelimit-Limit-Requests:
       - '50'
       X-Ratelimit-Renewalperiod-Requests:
@@ -168,7 +174,7 @@ http_interactions:
       X-Ratelimit-Abusepenalty-Active:
       - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '49914'
+      - '49940'
       X-Ratelimit-Reset-Tokens:
       - '0'
       X-Ratelimit-Limit-Tokens:
@@ -180,7 +186,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - d416109c-a4a7-45a0-88c0-b7200e400bf7
+      - 80054f6c-eb7c-46d1-bf45-53f32ea8e2e3
+      X-Http2-Stream-Id:
+      - '575'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -189,6 +197,6 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"2080b921-42f3-4dec-9617-dc0d070d61df","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Ruby\",\"age\":28}"},"finish_reason":"stop"}],"usage":{"prompt_tokens":31,"completion_tokens":9,"total_tokens":40,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":161,"audio_tokens":0,"text_tokens":31,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1791752782,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Sun, 11 Oct 2026 21:06:22 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"<X_REQUEST_ID>","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Ruby\",\"age\":28}"},"finish_reason":"stop"}],"usage":{"prompt_tokens":199,"completion_tokens":9,"total_tokens":208,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":161,"audio_tokens":0,"text_tokens":199,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794331827,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Tue, 10 Nov 2026 17:30:28 GMT
+recorded_with: VCR 6.4.1

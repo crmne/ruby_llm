@@ -9,7 +9,7 @@ http_interactions:
         capital of France?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:10:57 GMT
+      - Tue, 10 Nov 2026 17:37:56 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,16 +35,16 @@ http_interactions:
       - max-age=31536000
       Set-Cookie:
       - "<COOKIE>"
+      X-Watermark:
+      - 'false'
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '9999558'
+      - '10000000'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
-      Cf-Cache-Status:
-      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -52,25 +52,27 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '197.0'
+      - '250.5'
       X-Metrics-E2e-Ms:
-      - '1579.7'
+      - '2298.9'
       Traceparent:
-      - 00-fba7df8b0d32825fe309c1fa7e80f3be-e685a9bc0004d1d7-01
+      - 00-7abeeb5fcb9a114c0931c52bb41c78c5-a374d11d0003ef45-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1791753055,"completed_at":1791753057,"id":"6d6fa458-f79a-9e38-8671-64c0986d09f8","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_6d6fa458-f79a-9e38-8671-64c0986d09f8","summary":[{"text":"The
-        question asks for the capital of France.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"DJMc6y9bji2VRuKXILdj/+GG7mPMpkEhR4KGIW3QTSOGOokFUgLoXsYSDawJ7kQhspoR95I//ZfojF9NiaO2fEIoyI+sSiUBYg46GAXLK4r1KsXUFS7lw+CC673+deomCcVZcbEA8zVSJp0+LSBsFHd8ZWR0cbq/pHz0HI/ghlVk8O23t6fpOKfy6hvc2Q9Rz476UOX3VlQlVPtvIbXCesQw8W4xQFCh4LQHAennPfSj83Vcdf2UWn8lZ9x2ucXLKrLKC+Czn00LqzsQUO3kgA+rK53p/V6Dw697lKnzNl+PPmgKoyvpXKSlYh9BuKlRHjZDBgkCSsWyXETm5yGqkO+BizbM2T5z0PjwQyMtERtqE7HNMadKLcXR1SMOIdUF4Km9bpOh0p5HP6cqp6FI9MShQZJbWyop9YT2I68QwATfbNPjZQX67L9HmQGBn6fj5AN0jG4pJxnrH7eJELFTLpfVSSynESpn4Lbu92QC7h9OmklYV5Ae0+xwuozCpmuTfhFjid47ev+/vuYzAcGjKvFRBndI2WuntSnnj2FPeQMHMU8FKMHcoc9ZSwTE+q+vDBpnMkPQmneLAIsmY9pyUbAGb4RTCNvVbKVI97n16Zykj9dFNA2+YGF0JZ/Wfr3tk4iKdcna5JLNJ95TJYTqB+aoYuE7g1Z6qP+VH9omqlCsBa7Va0yLkEJdTV9bzmcoGhECo5aszl6p9/2VUUDoGla3lPFNsGQJg+ZMAiC9tq15MQ"},{"content":[{"type":"output_text","text":"The
-        capital of France is Paris.","logprobs":[],"annotations":[]}],"id":"msg_6d6fa458-f79a-9e38-8671-64c0986d09f8","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":199,"input_tokens_details":{"cached_tokens":128},"output_tokens":116,"output_tokens_details":{"reasoning_tokens":109},"total_tokens":315,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":4043500,"context_details":{"input_tokens":199,"output_tokens":123}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Sun, 11 Oct 2026 21:10:57 GMT
-recorded_with: VCR 6.4.0
+      string: '{"created_at":1794332274,"completed_at":1794332276,"id":"<X_REQUEST_ID>","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_<X_REQUEST_ID>","summary":[{"text":"The
+        question asks for the capital of France.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"Ns7KJT5n9wHuCbRPqMoaV1GJhbvtJQ6IM1qJ61BO0WHgTEYfzGMH289LetiVLO4bUXchUksF6aaDrQy4SgeCML7cbiscM1dg2EB+YB70k4DCNyf2FkXq40R1+7OMgskgkIVRCqsBanavjgxizSfGsaJEnTzZnbfmjF++lPvjvsD1KybqRKk9YxV9gSEBhjBDg5Wb+2f7m3GVtXv2tBhXprnA+Ky3wtOJdSUyN9XYTwc7KVMQK9dTyuaqY6yXMQTW8GE8XPMs/OnynrG7WgVoDxlAjZIN6uGxBh2LXMe/1e2l+EXZfrEYLD8wdy0IrIIcEqcjc6g6hNVr72w4th8k2FvpSo7nSzf10p4vXVNqQvQaiRXF3zyGNW8aM7xU6UH0aly3IWcIe4sULIVbs+8hMfr2G4vMQcvsLJvV0DO4afGfKiv9QcWHTYny6xWMpd/TXfgR7MqaeLBMOQdPw9PLSHu/7D+3OH95kipNsU8egrRFSbt4fgHQhuNpOrdi+7oAGx7t75EJy6/CNm92E5xt4p2yXVNsLYaZz1uv/lCW6puCtL0VKQBtvxLwqpw5ZbeR3t1heovA"},{"content":[{"type":"output_text","text":"Paris
+        is the capital of France.","logprobs":[],"annotations":[]}],"id":"msg_<X_REQUEST_ID>","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":199,"input_tokens_details":{"cached_tokens":128},"output_tokens":149,"output_tokens_details":{"reasoning_tokens":142},"total_tokens":348,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":4868500,"context_details":{"input_tokens":199,"output_tokens":157}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Tue, 10 Nov 2026 17:37:56 GMT
+recorded_with: VCR 6.4.1

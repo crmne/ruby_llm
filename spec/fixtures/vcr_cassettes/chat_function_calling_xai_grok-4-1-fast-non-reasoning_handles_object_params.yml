@@ -13,7 +13,7 @@ http_interactions:
         window to schedule"}},"required":["window"],"additionalProperties":false},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:15:11 GMT
+      - Tue, 10 Nov 2026 17:45:07 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,6 +39,8 @@ http_interactions:
       - max-age=31536000
       Set-Cookie:
       - "<COOKIE>"
+      X-Watermark:
+      - 'false'
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
@@ -47,8 +49,6 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
-      Cf-Cache-Status:
-      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -56,27 +56,30 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '667.0'
+      - '390.8'
       X-Metrics-E2e-Ms:
-      - '3254.1'
+      - '5501.5'
       Traceparent:
-      - 00-f6fc5dde2e271ab816398d26aa6c0c27-910e355a0004c4df-01
+      - 00-2c56297f650ea5d868498fb1d4a9f7de-04f1eb7300039e2c-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1791753308,"completed_at":1791753311,"id":"d7bfb750-5428-9c1d-8f16-1dd2a5c35b64","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_d7bfb750-5428-9c1d-8f16-1dd2a5c35b64","summary":[{"text":"Calling
-        the object params tool with window start 2025-01-01 and end 2025-01-02.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"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"},{"arguments":"{\"window\":{\"start\":\"2025-01-01\",\"end\":\"2025-01-02\"}}","call_id":"call-4957a74b-322f-446b-937e-304b5bbfd634-0","name":"object_params","type":"function_call","id":"fc_d7bfb750-5428-9c1d-8f16-1dd2a5c35b64_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Uses
+      string: '{"created_at":1794332702,"completed_at":1794332707,"id":"<X_REQUEST_ID>","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_<X_REQUEST_ID>","summary":[{"text":"I
+        will call the object params tool with window start 2025-01-01 and end 2025-01-02
+        and include the result.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"A4qse4yfyT+5pfM+sJEqYM00qaYo0c6U2sVz3fgxmYHF5kaNHggDHQUjKTa3xiAmpGwRwvzMj1kkdpIKa0pObkYqaxH7oaUjCv4ikdpqIKmxLoifXn6V1GgU4uM4AWEyd1wcud5XHPVWQWGbIqxUHxEV1lreMxhmLb53OtRDNx6i+xTgKEJQ/672NfkkyhKp+HrsEdYNj6GkwFwwppLTMWSM0AJFNxgddDhJDt1qZga53+53V9dGODINMwFnTj0OXrlGjSi4JbvPpBP9EBjKk3uaxqlRRhR7+MDHy8KWbP5NfVSbbqmLM+8aBYvxYCNF8UiJ9f+cjtkd3adUKICIYwJKSZtYCl9jBuvtmHWREYexvbRmoubWwH2yb224azxFqmygqMtZkdK+K98T5E0obC7OIusPuaLhY3oj7iZyphyOsqI46IlQULPBywCqcn4aQRJ/h44a9MXK+4F7SFYyFamzFjBIZUyDZ87D3TGvm+PGzdrRKzGDuZxTp+OrSnZC2WHtL5blL3P11daE9c6Ee9kzMJ0YSMaproecXJCeVFON+fg5UmffHGD+tu8sHhIxxphcgLl/+0LknLhfikiAjaWYttKiBuVBNXP64JgkOM2Sqmf5cxi0znGZMJVqnt1DnDnnWAAjPBH5yTHTNPqPK801D1vMPGq5nHG+lNYXddZMSre6MMxNb/Meq1rZ2gzbT2stxpe3cbmUpP3W+hGm8phKAaoOYfBu/u1MyZ0qRB3c7OAUne+Rl3f1YNjBTNcRpzwqRQOw7IjdHydTqWXEaQZdzXo0Ybtdwyxn/Wtz5fdKdYvPNPmeApRLFEKY7VmJSG/gUrP3L3lL0JIucT987uNtOQcSHeLApfpaTS9dPaaePACrQXynfsk0imylDnDhTj9qpn/spWvF0IYrI+NYowTo3wHZTo5LzQ99F/DBZTP2GjerGa4sWqlEbqAgm38L9g"},{"arguments":"{\"window\":{\"start\":\"2025-01-01\",\"end\":\"2025-01-02\"}}","call_id":"call-cb8f0720-02a3-4168-81e8-40acb5cb4250-0","name":"object_params","type":"function_call","id":"fc_<X_REQUEST_ID>_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Uses
         params DSL object support","name":"object_params","parameters":{"type":"object","properties":{"window":{"type":"object","properties":{"start":{"type":"string","description":"ISO
         start"},"end":{"type":"string","description":"ISO end"}},"required":["start","end"],"additionalProperties":false,"description":"Time
-        window to schedule"}},"required":["window"],"additionalProperties":false},"strict":false}],"top_p":0.95,"usage":{"input_tokens":361,"input_tokens_details":{"cached_tokens":128},"output_tokens":392,"output_tokens_details":{"reasoning_tokens":361},"total_tokens":753,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":12968500,"context_details":{"input_tokens":361,"output_tokens":395}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Sun, 11 Oct 2026 21:15:11 GMT
-recorded_with: VCR 6.4.0
+        window to schedule"}},"required":["window"],"additionalProperties":false},"strict":false}],"top_p":0.95,"usage":{"input_tokens":361,"input_tokens_details":{"cached_tokens":128},"output_tokens":414,"output_tokens_details":{"reasoning_tokens":383},"total_tokens":775,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":13518500,"context_details":{"input_tokens":361,"output_tokens":417}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Tue, 10 Nov 2026 17:45:07 GMT
+recorded_with: VCR 6.4.1

@@ -12,7 +12,7 @@ http_interactions:
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,22 +26,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Server:
-      - istio-envoy
       Req-Cost-Time:
-      - '1345'
-      Req-Arrive-Time:
-      - '1791752960159'
-      X-Envoy-Upstream-Service-Time:
-      - '1342'
-      Access-Control-Allow-Origin:
-      - ''
+      - '2623'
+      Resp-Start-Time:
+      - '1794332214480'
+      Date:
+      - Tue, 10 Nov 2026 17:36:51 GMT
       Content-Type:
       - application/json; charset=utf-8
-      Resp-Start-Time:
-      - '1791752961504'
-      Date:
-      - Sun, 11 Oct 2026 21:09:19 GMT
+      Req-Arrive-Time:
+      - '1794332211856'
+      X-Envoy-Upstream-Service-Time:
+      - '2620'
+      Server:
+      - istio-envoy
+      Access-Control-Allow-Origin:
+      - ''
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -49,15 +49,25 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"role":"assistant","content":"","reasoning_content":"Okay,
-        the user wants me to call the any_of_params function for the task \"Review
-        PR\" with status \"pending\". Let me check the function''s parameters. The
-        function requires \"task\" and \"status\". The status can be either \"pending\",
-        \"done\", or null. Since the user specified \"pending\", which is in the enum,
-        that''s valid. I need to structure the JSON arguments with task as \"Review
-        PR\" and status as \"pending\". No additional properties are allowed, so I''ll
-        make sure not to include anything else. Let me verify the required fields
-        again. Both task and status are required, so this should work. Alright, time
-        to format the tool call.\n","tool_calls":[{"type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
-        \"Review PR\", \"status\": \"pending\"}"},"id":"6ucRgqJJ7YUVkUSFS2q7GFSLTkqpSP2Y"}]}}],"created":1791752961,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":172,"prompt_tokens":223,"total_tokens":395,"prompt_tokens_details":{"cached_tokens":222}},"id":"chatcmpl-KuXxxDjY7dTccwoadTwB0Rx67qriPNph","timings":{"cache_n":222,"prompt_n":1,"prompt_ms":8.306,"prompt_per_token_ms":8.306,"prompt_per_second":120.39489525644115,"predicted_n":172,"predicted_ms":1282.52,"predicted_per_token_ms":7.500116959064328,"predicted_per_second":133.33125409350342}}'
-  recorded_at: Sun, 11 Oct 2026 21:09:21 GMT
-recorded_with: VCR 6.4.0
+        let''s see. The user wants me to call the any_of_params function for a task
+        called \"Review PR\" with status \"pending\" and then report the result.\n\nFirst,
+        I need to check the function definition. The function is named any_of_params
+        and it takes two parameters: task and status. The task is a string, and the
+        status is an optional parameter that can be either \"pending\", \"done\",
+        or null. The anyOf in the status parameter means that it can be one of those
+        three options.\n\nThe user specified the task as \"Review PR\" and the status
+        as \"pending\". Both are required parameters according to the schema. Since
+        \"pending\" is one of the allowed enum values, this should be valid. \n\nI
+        need to structure the tool call correctly. The function name is any_of_params,
+        and the arguments should include both task and status. The status here is
+        a string, so I don''t need to use null. \n\nWait, the user said \"with status
+        ''pending''\". So the arguments should be {\"task\": \"Review PR\", \"status\":
+        \"pending\"}. That''s straightforward. \n\nI don''t see any issues here. The
+        parameters match the required fields, and the status is a valid enum value.
+        So the tool call should be correct. Let me make sure I''m not missing any
+        additional properties. The additionalProperties is set to false, so only task
+        and status are allowed. \n\nYes, that''s all. So the JSON object for the tool
+        call will be properly formatted with those arguments.\n","tool_calls":[{"type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
+        \"Review PR\", \"status\": \"pending\"}"},"id":"c7qHYR3stEj9vSeWw4Zzcac9e0nY4yEQ"}]}}],"created":1794332214,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":346,"prompt_tokens":223,"total_tokens":569,"prompt_tokens_details":{"cached_tokens":51}},"id":"chatcmpl-K6pw7NwHBQvtbQfBKM3HhjPRi8MwtUGh","timings":{"cache_n":51,"prompt_n":172,"prompt_ms":42.305,"prompt_per_token_ms":0.24595930232558139,"prompt_per_second":4065.713272662806,"predicted_n":346,"predicted_ms":2558.098,"predicted_per_token_ms":7.414776811594203,"predicted_per_second":134.86582609423095}}'
+  recorded_at: Tue, 10 Nov 2026 17:36:54 GMT
+recorded_with: VCR 6.4.1

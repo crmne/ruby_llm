@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}],"tool_choice":"none"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:20:32 GMT
+      - Tue, 10 Nov 2026 17:55:07 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,6 +38,8 @@ http_interactions:
       - max-age=31536000
       Set-Cookie:
       - "<COOKIE>"
+      X-Watermark:
+      - 'false'
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
@@ -46,8 +48,6 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
-      Cf-Cache-Status:
-      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -55,30 +55,32 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '359.1'
+      - '282.7'
       X-Metrics-E2e-Ms:
-      - '4421.9'
+      - '4351.4'
       Traceparent:
-      - 00-9d5654174d13f93dbbc1de4bda355ab3-b8c1848b0006a416-01
+      - 00-fb8f33a64d71a9b7c918fe505254c0a6-646604b300041606-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1791753628,"completed_at":1791753632,"id":"07612123-06cf-9653-a547-56f5f0a8e9a8","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_07612123-06cf-9653-a547-56f5f0a8e9a8","summary":[{"text":"Checking
-        the weather in Berlin.\n\nThere''s a contradiction in the instructions. The
-        system mentions a weather tool, but then forbids calling any tools.\n\nI cannot
-        answer directly. I have no access to live weather data.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"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"},{"content":[{"type":"output_text","text":"I
-        don''t have access to real-time weather data.","logprobs":[],"annotations":[]}],"id":"msg_07612123-06cf-9653-a547-56f5f0a8e9a8","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"none","tools":[{"type":"function","description":"Gets
+      string: '{"created_at":1794333303,"completed_at":1794333307,"id":"<X_REQUEST_ID>","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_<X_REQUEST_ID>","summary":[{"text":"The
+        user asked about the weather in Berlin.\n\nThe coordinates match Berlin exactly.
+        The system instructions forbid tool calls, creating a contradiction.\n\nI
+        cannot call the weather tool. I lack current weather data for Berlin.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"Lxxag3N+tfK8d5ksqff9e9FRHnsrkoeg9THJBIpm/DyFspqLyc3Qx07eP0UA7UF7CP+PQaIzm5r428hgkGKJdy4W/Zc2svgN83cwll1HgVVWhDnYoC5bssqKrhuDNH7/sQNyXHHtvyrc3GldLeDV/1HoI7f+dDn86x2JSyDYXZahmXXcn11KEujZ9+7XN9aQ8JWNN7tdrpzIJEbVcoVIFyZ0IVCTrTuaHQhUCkdmsZoxEpw51EJNkv0N8zIeTKEnuw02s/YERVoNiq8ZMnUDGRla1XsRoW0BCcYdvFcSohN+nE86kxV9ZbMJ0UM5cJkF0jireGx8MNtT/lSOCPvv+gtS3yPN6zOLvgHOuu6ViNWKVw73GTwz3XCRnUK0+1r9VgNkuZ3gzI7ask7B1wH877/P+Npyfx9IySNiiq/vGbyZ/syF4GU4iyEb32+EPXIejgoMGZihFp/KdVA/KIZiJdLT9OpF8HiIgVCfuFm6FR/H1W8IYbYjvy32NlZNtaxkDXi7YrFdp9ItN4xFkuUlOud+vdKJnRkF0TFLmylo64q6ZFwXS097QKkghKUsxPjHKcebjbrHh8J7vIeGa/fec5LsFCPFUB4F+6ZbgFB9UyH62B743CZDU/lJ3LsncQ8P1FGD0ap4nYqZG2yTyB7KgsHKfc8+DxjEWsvmNwD//A0thaNcY5CpVScoeEA0PLqGzjmLDGlTvwfZ2UY39TSfL8bq31HFuaEfxbOJwrx4HW2Ssjn/KwoG43cIeo2DyOa/dSOBGxIfESImI7ErX5NpPWn+fo18xJ+dykFfgZvmh+4VFvKw//EUMbZk3VYonCeAaB7f6n7PhlgrWBoS+qS0UCXwZCehffJ+2UcXcccgcnqGzxxeCvngaYJ6cibKBHA5UCC4vXu3mHf8AQQbVk5At2jVFVkQuEQd+LgEXCps9ywEQ4KoQeFgu2gr82ot/wFqykhWgUN+z2IMrUYHnL4qW3ACfNvhjiaWS3IyfibYS3t+V+Rc7SabkZha1BTeOHEovRb7uauK0mA7bk7zfmWotZRf//9KKCXXIEVMHRpjd4eiUDR/rurmfu1lFC17GGzleKsI7ehyeAJnS2cmXehG8e/SArnocNgCC0nOunzt"},{"content":[{"type":"output_text","text":"I
+        don''t have access to real-time weather data.","logprobs":[],"annotations":[]}],"id":"msg_<X_REQUEST_ID>","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"none","tools":[{"type":"function","description":"Gets
         current weather for a location","name":"weather","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":359,"input_tokens_details":{"cached_tokens":128},"output_tokens":540,"output_tokens_details":{"reasoning_tokens":530},"total_tokens":899,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":16643500,"context_details":{"input_tokens":359,"output_tokens":548}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Sun, 11 Oct 2026 21:20:32 GMT
-recorded_with: VCR 6.4.0
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":359,"input_tokens_details":{"cached_tokens":128},"output_tokens":401,"output_tokens_details":{"reasoning_tokens":391},"total_tokens":760,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":13168500,"context_details":{"input_tokens":359,"output_tokens":409}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Tue, 10 Nov 2026 17:55:07 GMT
+recorded_with: VCR 6.4.1

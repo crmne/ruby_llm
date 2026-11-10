@@ -15,7 +15,7 @@ http_interactions:
         or hostile"]}}}'
     headers:
       User-Agent:
-      - Faraday v2.15.0
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Http-Referer:
@@ -34,7 +34,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 21 Oct 2026 10:41:07 GMT
+      - Tue, 10 Nov 2026 17:27:03 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -44,9 +44,9 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
-      - X-Generation-Id,X-Provider-Name,request-id,cf-ray
+      - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
       X-Generation-Id:
-      - gen-dec-1792579266-vpaqYfwmfBOZwCXLQ6pF
+      - gen-dec-1794331622-sa46Z4ZotVe8CYZyOrr4
       X-Provider-Name:
       - TypeSafe
       Set-Cookie:
@@ -62,9 +62,11 @@ http_interactions:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"typesafe/jev-1.14-20261014","answers":{"urgent":{"type":"noul","noul":0.97},"department":{"type":"choice","choice":"billing","probabilities":{"billing":1,"technical":0,"other":0},"confidence":1},"frustration":{"type":"score","score":0.36,"legend":{"0":"Calm
-        and polite","1":"Expresses frustration","2":"Angry or hostile"},"probabilities":{"0":0.64,"1":0.36,"2":0},"confidence":0.46}},"usage":{"input_tokens":428,"output_tokens":70,"cost":0.000017976},"id":"gen-dec-1792579266-vpaqYfwmfBOZwCXLQ6pF","provider":"TypeSafe"}'
-  recorded_at: Wed, 21 Oct 2026 10:41:07 GMT
-recorded_with: VCR 6.4.0
+      string: '{"model":"typesafe/jev-1.14-20261014","answers":{"urgent":{"type":"noul","noul":0.97},"department":{"type":"choice","choice":"billing","probabilities":{"billing":1,"technical":0,"other":0},"confidence":1},"frustration":{"type":"score","score":0.35,"legend":{"0":"Calm
+        and polite","1":"Expresses frustration","2":"Angry or hostile"},"probabilities":{"0":0.65,"1":0.35,"2":0},"confidence":0.48}},"usage":{"input_tokens":428,"output_tokens":70,"cost":0.000017976,"is_byok":false,"cost_details":{"upstream_inference_cost":0.000017976,"upstream_inference_prompt_cost":0.000017976,"upstream_inference_completions_cost":0}},"id":"gen-dec-1794331622-sa46Z4ZotVe8CYZyOrr4","provider":"TypeSafe"}'
+  recorded_at: Tue, 10 Nov 2026 17:27:03 GMT
+recorded_with: VCR 6.4.1

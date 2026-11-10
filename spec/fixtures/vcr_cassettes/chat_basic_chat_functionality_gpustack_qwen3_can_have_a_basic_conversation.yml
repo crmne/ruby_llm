@@ -9,7 +9,7 @@ http_interactions:
         2?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,42 +23,29 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Content-Type:
+      - application/json; charset=utf-8
       Req-Cost-Time:
-      - '1942'
+      - '1857'
+      Req-Arrive-Time:
+      - '1794331944922'
       Resp-Start-Time:
-      - '1791752875011'
+      - '1794331946779'
       X-Envoy-Upstream-Service-Time:
-      - '1932'
+      - '1853'
       Date:
-      - Sun, 11 Oct 2026 21:07:52 GMT
+      - Tue, 10 Nov 2026 17:32:24 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
       - ''
-      Content-Type:
-      - application/json; charset=utf-8
-      Req-Arrive-Time:
-      - '1791752873069'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"2
-        + 2 equals **4**. \n\nThis is a basic arithmetic operation where adding two
-        units to another two units results in a total of four units.","reasoning_content":"Okay,
-        the user is asking \"What''s 2 + 2?\" That''s a basic math question. Let me
-        think. Well, 2 plus 2 is straightforward. In elementary arithmetic, adding
-        2 and 2 together should give 4. But maybe I should double-check to make sure
-        I''m not making a mistake. Let me visualize it. If I have two apples and then
-        add two more, I have four apples. Yeah, that makes sense. Alternatively, using
-        number lines: starting at 2 and moving 2 units to the right lands me at 4.
-        Another way is to use the concept of addition as combining quantities. Both
-        numbers are the same, so doubling 2 gives 4. I don''t think there''s any trick
-        here. The user might just be testing if I know the basic addition facts. Maybe
-        they''re a student learning the basics or someone verifying their own knowledge.
-        Either way, the answer is definitely 4. I should present it clearly and confirm
-        that there''s no hidden complexity in the question.\n"}}],"created":1791752875,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":249,"prompt_tokens":16,"total_tokens":265,"prompt_tokens_details":{"cached_tokens":5}},"id":"chatcmpl-S764MuobB6KL3LxVGrOFq0JL2PfQKTc0","timings":{"cache_n":5,"prompt_n":11,"prompt_ms":21.519,"prompt_per_token_ms":1.9562727272727272,"prompt_per_second":511.17616989637065,"predicted_n":249,"predicted_ms":1903.419,"predicted_per_token_ms":7.675076612903227,"predicted_per_second":130.29185901790407}}'
-  recorded_at: Sun, 11 Oct 2026 21:07:55 GMT
-recorded_with: VCR 6.4.0
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGFuc3dlciB0byAyICsgMiBpcyAqKjQqKi4gTGV0IG1lIGtub3cgaWYgeW91IG5lZWQgaGVscCB3aXRoIGFueXRoaW5nIGVsc2UhIPCfmIoiLCJyZWFzb25pbmdfY29udGVudCI6Ik9rYXksIHRoZSB1c2VyIGlzIGFza2luZywgXCJXaGF0J3MgMiArIDI/XCIgVGhhdCdzIGEgc3RyYWlnaHRmb3J3YXJkIGFyaXRobWV0aWMgcXVlc3Rpb24uIExldCBtZSB0aGluayBhYm91dCBob3cgdG8gYXBwcm9hY2ggdGhpcy5cblxuRmlyc3QsIEkga25vdyB0aGF0IDIgKyAyIGlzIGEgYmFzaWMgYWRkaXRpb24gcHJvYmxlbS4gSW4gZWxlbWVudGFyeSBtYXRoLCB0aGlzIGlzIHVzdWFsbHkgb25lIG9mIHRoZSBmaXJzdCBwcm9ibGVtcyBzdHVkZW50cyBsZWFybi4gVGhlIGFuc3dlciBpcyA0LiBCdXQgbWF5YmUgdGhlIHVzZXIgaXMgdGVzdGluZyBpZiBJIGNhbiBwcm92aWRlIGEgc2ltcGxlIGFuc3dlciBvciBpZiB0aGVyZSdzIGEgdHJpY2sgaGVyZS4gTGV0IG1lIG1ha2Ugc3VyZSB0aGVyZSdzIG5vIGhpZGRlbiBtZWFuaW5nIG9yIGNvbnRleHQuIFRoZSBxdWVzdGlvbiBzZWVtcyBzdHJhaWdodGZvcndhcmQuXG5cbkkgc2hvdWxkIGFsc28gY29uc2lkZXIgaWYgdGhlIHVzZXIgaXMgdXNpbmcgdGhpcyBhcyBhIHdheSB0byBjaGVjayBteSB1bmRlcnN0YW5kaW5nIG9mIGJhc2ljIG1hdGguIFNpbmNlIEknbSBhbiBBSSwgSSBzaG91bGQgY29uZmlybSB0aGF0IEkgY2FuIGhhbmRsZSBzdWNoIHNpbXBsZSBxdWVyaWVzLiBUaGUgYW5zd2VyIGlzIGRlZmluaXRlbHkgNC4gVGhlcmUncyBubyBhbWJpZ3VpdHkgaGVyZS4gSSBjYW4gZXhwbGFpbiBpdCBpbiBhIGNvdXBsZSBvZiB3YXlzLCBsaWtlIGNvdW50aW5nIG9iamVjdHMgb3IgdXNpbmcgbnVtYmVyIGxpbmVzLCBidXQgc2luY2UgdGhlIHVzZXIganVzdCBhc2tlZCBmb3IgdGhlIHJlc3VsdCwgdGhlIGFuc3dlciBpcyA0LiBJIHNob3VsZCBwcmVzZW50IGl0IGNsZWFybHkgYW5kIGNvbmNpc2VseS4gTWF5YmUgYWRkIGEgZnJpZW5kbHkgbm90ZSB0byBsZXQgdGhlbSBrbm93IEknbSBoZXJlIHRvIGhlbHAgd2l0aCBtb3JlIHF1ZXN0aW9ucy5cbiJ9fV0sImNyZWF0ZWQiOjE3OTQzMzE5NDYsIm1vZGVsIjoicXdlbjMtbmF0aXZlIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiYjEwODMwLTQ2NWU0OWI5YyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjoyNTEsInByb21wdF90b2tlbnMiOjE2LCJ0b3RhbF90b2tlbnMiOjI2NywicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjN9fSwiaWQiOiJjaGF0Y21wbC1tQjdENmNVSlBxaVpWem9sZmE2UVo0ZXZIYWFJY3diOSIsInRpbWluZ3MiOnsiY2FjaGVfbiI6MywicHJvbXB0X24iOjEzLCJwcm9tcHRfbXMiOjM2LjAyLCJwcm9tcHRfcGVyX3Rva2VuX21zIjoyLjc3MDc2OTIzMDc2OTIzMSwicHJvbXB0X3Blcl9zZWNvbmQiOjM2MC45MTA2MDUyMTkzMjI2LCJwcmVkaWN0ZWRfbiI6MjUxLCJwcmVkaWN0ZWRfbXMiOjE4MTIuNTA4LCJwcmVkaWN0ZWRfcGVyX3Rva2VuX21zIjo3LjI1MDAzMiwicHJlZGljdGVkX3Blcl9zZWNvbmQiOjEzNy45MzA0MjU2ODYzOTY5N319
+  recorded_at: Tue, 10 Nov 2026 17:32:26 GMT
+recorded_with: VCR 6.4.1

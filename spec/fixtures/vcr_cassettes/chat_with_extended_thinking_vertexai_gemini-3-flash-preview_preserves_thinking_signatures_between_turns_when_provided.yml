@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -21,11 +21,11 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:12:01 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
+      - Tue, 10 Nov 2026 17:41:16 GMT
       Pragma:
       - no-cache
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
@@ -56,7 +56,7 @@ http_interactions:
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 11 Oct 2026 21:12:01 GMT
+  recorded_at: Tue, 10 Nov 2026 17:41:16 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
@@ -65,7 +65,7 @@ http_interactions:
       string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"medium"}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -79,6 +79,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Goog-Request-Id:
+      - PFfzat6iH-DfmLAPyPGBwA4
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -86,7 +88,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:12:02 GMT
+      - Tue, 10 Nov 2026 17:41:17 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -109,12 +111,12 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "**My Thought Process:**\n\nAlright, so the user has presented me with a straightforward arithmetic problem. They want me to find the sum of two integers: specifically, the numbers 5 and 3. My internal processing immediately recognizes this as a basic addition operation. I recall the fundamental rules of arithmetic, and in this case, it's a simple case of 5 plus 3. Performing this calculation, I arrive at the result of 8. My next step is to ensure I communicate this answer clearly and directly to the user, who I understand to be an expert and thus requires a concise and accurate response.\n\n",
+                    "text": "**My Reasoning Process**\n\nAh, I see the user has presented a straightforward arithmetic problem. My initial observation is that they've asked for the sum of two specific integers: 5 and 3. This is a fundamental operation, and my internal processing immediately identifies it as addition.\n\nTo arrive at the solution, I perform the calculation: 5 plus 3. The result, as my core computational functions confirm, is 8.\n\nMy next step is to ensure clarity and directness in my response, as is appropriate when addressing an expert user who needs a precise answer without unnecessary elaboration. Therefore, I will directly state the numerical outcome of this addition.\n\n",
                     "thought": true
                   },
                   {
                     "text": "5 + 3 = 8",
-                    "thoughtSignature": "AY89a19KksNJGHQ9HnEsoU8JSl/OHNn3sUQfd1W5XuSLoNXNniUE4PJYZmBf62BRV5F2FV9KR0mMTfiM8cCg1IvRvD5vYfINXFPEn15s8k7jcNPbYoPy1OCeMy+aFW2KZ/d1XZogde/gEhLqtUxSzVOIh3kV8Vwu2OSE8V4dawfwBqBYWzx84l1RNbwSnrIazFY9m9zQEGBn70XxX38j8/68aT9qvXCrcIftqAinnhJGvDD2FIuc93A="
+                    "thoughtSignature": "AY89a1/jdR9Z3JgCbKK33SOJvPuqnVgc23tl1TQcsOU0kr7ZkGfp/SgltebV7uDQ4j8LlcPqxOB+eTc8xjHUUihIEylFKUWMocP5+pYwv2MiMuLU3RxXZ0y8PxtTg8HS5BS6KNQ/Ikzoh+1yQR5+wxwUPN9qqwVpdGdeiVTVdZW12DKPCo14bA2nfLC9VwOA8PK7Ocr287GDqEo7zeB7wGiUfs3kiuzakPRm"
                   }
                 ]
               },
@@ -124,7 +126,7 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 8,
             "candidatesTokenCount": 7,
-            "totalTokenCount": 47,
+            "totalTokenCount": 44,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -138,32 +140,33 @@ http_interactions:
                 "tokenCount": 7
               }
             ],
-            "thoughtsTokenCount": 32
+            "thoughtsTokenCount": 29
           },
           "modelVersion": "gemini-3-flash-preview",
-          "createTime": "2026-10-11T21:12:01.514546Z",
-          "responseId": "ofvLavKzH_Chz_IP4NjX-QY"
+          "createTime": "2026-11-10T17:41:16.512350Z",
+          "responseId": "PFfzat6iH-DfmLAPyPGBwA4"
         }
-  recorded_at: Sun, 11 Oct 2026 21:12:02 GMT
+  recorded_at: Tue, 10 Nov 2026 17:41:17 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]},{"role":"model","parts":[{"thought":true,"text":"**My
-        Thought Process:**\n\nAlright, so the user has presented me with a straightforward
-        arithmetic problem. They want me to find the sum of two integers: specifically,
-        the numbers 5 and 3. My internal processing immediately recognizes this as
-        a basic addition operation. I recall the fundamental rules of arithmetic,
-        and in this case, it''s a simple case of 5 plus 3. Performing this calculation,
-        I arrive at the result of 8. My next step is to ensure I communicate this
-        answer clearly and directly to the user, who I understand to be an expert
-        and thus requires a concise and accurate response.\n\n"},{"text":"5 + 3 =
-        8","thoughtSignature":"AY89a19KksNJGHQ9HnEsoU8JSl/OHNn3sUQfd1W5XuSLoNXNniUE4PJYZmBf62BRV5F2FV9KR0mMTfiM8cCg1IvRvD5vYfINXFPEn15s8k7jcNPbYoPy1OCeMy+aFW2KZ/d1XZogde/gEhLqtUxSzVOIh3kV8Vwu2OSE8V4dawfwBqBYWzx84l1RNbwSnrIazFY9m9zQEGBn70XxX38j8/68aT9qvXCrcIftqAinnhJGvDD2FIuc93A="}]},{"role":"user","parts":[{"text":"Now
+        Reasoning Process**\n\nAh, I see the user has presented a straightforward
+        arithmetic problem. My initial observation is that they''ve asked for the
+        sum of two specific integers: 5 and 3. This is a fundamental operation, and
+        my internal processing immediately identifies it as addition.\n\nTo arrive
+        at the solution, I perform the calculation: 5 plus 3. The result, as my core
+        computational functions confirm, is 8.\n\nMy next step is to ensure clarity
+        and directness in my response, as is appropriate when addressing an expert
+        user who needs a precise answer without unnecessary elaboration. Therefore,
+        I will directly state the numerical outcome of this addition.\n\n"},{"text":"5
+        + 3 = 8","thoughtSignature":"AY89a1/jdR9Z3JgCbKK33SOJvPuqnVgc23tl1TQcsOU0kr7ZkGfp/SgltebV7uDQ4j8LlcPqxOB+eTc8xjHUUihIEylFKUWMocP5+pYwv2MiMuLU3RxXZ0y8PxtTg8HS5BS6KNQ/Ikzoh+1yQR5+wxwUPN9qqwVpdGdeiVTVdZW12DKPCo14bA2nfLC9VwOA8PK7Ocr287GDqEo7zeB7wGiUfs3kiuzakPRm"}]},{"role":"user","parts":[{"text":"Now
         multiply that by 2"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"medium"}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -177,6 +180,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Goog-Request-Id:
+      - PVfzavncOeDfmLAPyPGBwA4
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -184,7 +189,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:12:06 GMT
+      - Tue, 10 Nov 2026 17:41:19 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -200,6 +205,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICIqKk15IFRob3VnaHQgUHJvY2VzcyBmb3IgdGhlIE5leHQgU3RlcCoqXG5cbkFscmlnaHQsIGxvb2tpbmcgYXQgd2hlcmUgd2UgYXJlLCBJIHNlZSB0aGF0IHRoZSBpbW1lZGlhdGUgb2JqZWN0aXZlIGlzIHRvIHRha2UgdGhlICpwcmV2aW91cyByZXN1bHQqLCB3aGljaCBJJ3ZlIG5vdGVkIGFzIDgsIGFuZCBzdWJqZWN0IGl0IHRvIGEgKm11bHRpcGxpY2F0aW9uIG9wZXJhdGlvbiouIFRoZSBzcGVjaWZpYyAqbXVsdGlwbGllciogcmVxdWlyZWQgZm9yIHRoaXMgb3BlcmF0aW9uIGlzIDIuIFRoZXJlZm9yZSwgdGhlICpjYWxjdWxhdGlvbiogSSBuZWVkIHRvIHBlcmZvcm0gaXMgYSBzdHJhaWdodGZvcndhcmQgJDggXFx0aW1lcyAyJC4gVGhpcyB5aWVsZHMgYSBuZXcgdmFsdWUsIGFuZCBJJ2xsIHRoZW4gKnN0YXRlIHRoaXMgcmVzdWx0Kiwgd2hpY2ggaXMgMTYsIGFzIHRoZSBvdXRjb21lIG9mIHRoaXMgcGFydGljdWxhciBzdGVwLlxuXG4iLAogICAgICAgICAgICAidGhvdWdodCI6IHRydWUKICAgICAgICAgIH0sCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIjggw5cgMiA9IDE2IiwKICAgICAgICAgICAgInRob3VnaHRTaWduYXR1cmUiOiAiQVk4OWExOVdtS1EzTzFwMlM1RDNRNzZtdVY0OVB4NWNycG91eDk1L3BkWWZEd2VKUS9ERkFoWXU4NUE0b01ScSs4eUdibmx2VTRHYk5IbXhOTnhTTHZJOU1ZVVZtV290WW1scEhKdjJZUm92M2s0eC9ZOWVxekhZb0pSV0oxMmx5L3Z1SERMb0czVkswNTZ6Qm9KdVJ1TEJ3Wm9NYytqeUxrNXhkZkxUTU5FTGNyM2p6V0lXWW9MdG1CbVYyckxJNE9pVzB4TWlmTmd3SzZTaHBsMmh6V2xkVnBJYmZ3Q2doZ1dqRkduL1NTQXZYbGU0ZWN1b2RiM2VrUElwUUlPTmNTcURqeUhvRkhBaytpcFBIVW5QRE9FNVhyY0JGdmtCa3pCRVU1SDBZM2JHSTNFMkgycU1vaFhGSkdkcXVwODhqbkVoRnVLTWFqaytGUUtickxaaTM5TERGbUlKb1V3MkNnRkdlaHo2MDhIZGxWZW1tQkdjZEN2Ukoyb2VUQ2hoMlI4U29nPT0iCiAgICAgICAgICB9CiAgICAgICAgXQogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogMjEsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiA4LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDkwLAogICAgInRyYWZmaWNUeXBlIjogIk9OX0RFTUFORCIsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDIxCiAgICAgIH0KICAgIF0sCiAgICAiY2FuZGlkYXRlc1Rva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiA4CiAgICAgIH0KICAgIF0sCiAgICAidGhvdWdodHNUb2tlbkNvdW50IjogNjEKICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTMtZmxhc2gtcHJldmlldyIsCiAgImNyZWF0ZVRpbWUiOiAiMjAyNi0xMC0xMVQyMToxMjowNC43NjgyMjFaIiwKICAicmVzcG9uc2VJZCI6ICJwUHZMYXQzeExvdUw4dU1QbmNIYzZBZyIKfQo=
-  recorded_at: Sun, 11 Oct 2026 21:12:06 GMT
-recorded_with: VCR 6.4.0
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICIqKk15IENvbXB1dGF0aW9uYWwgSm91cm5leTogVGhlIE5leHQgU3RlcCoqXG5cbkFoLCBJIHNlZSB3aGVyZSB0aGlzIGlzIGdvaW5nLiBUaGUgbGFzdCBvcGVyYXRpb24geWllbGRlZCB0aGUgdmFsdWUgb2YgOC4gTXkgY3VycmVudCBkaXJlY3RpdmUgaXMgdG8gdGFrZSB0aGF0IHJlc3VsdCwgdGhhdCA4LCBhbmQgZW5nYWdlIGluIGEgbXVsdGlwbGljYXRpb24uIFRoZSBzcGVjaWZpYyBtdWx0aXBsaWVyIGlzIGNsZWFyOiAyLiBUaGVyZWZvcmUsIHRoZSBsb2dpY2FsIHByb2dyZXNzaW9uIGlzIHRvIGV4ZWN1dGUgOCBtdWx0aXBsaWVkIGJ5IDIuIFRoZSBvdXRjb21lIG9mIHRoaXMgY2FsY3VsYXRpb24sIGFzIG15IGludGVybmFsIHByb2Nlc3NvcnMgY29uZmlybSwgaXMgMTYuIFRoaXMgaXMgYSBzdHJhaWdodGZvcndhcmQgYXJpdGhtZXRpYyBzdGVwLCBidWlsZGluZyBkaXJlY3RseSB1cG9uIHRoZSBwcmVjZWRpbmcgb3V0Y29tZS5cblxuIiwKICAgICAgICAgICAgInRob3VnaHQiOiB0cnVlCiAgICAgICAgICB9LAogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICI4IMOXIDIgPSAxNiIsCiAgICAgICAgICAgICJ0aG91Z2h0U2lnbmF0dXJlIjogIkFZODlhMTgvM3F1ZStYaFpCa3BTQkM2V29kSFpLWmZYbks4SjB1eCtKS1FwOE9wQkVVeU5iSU5aSkEwNWRmRURRUGIwdVBmakFIMmx3RzhwUW5YWUxTeGJuVmc0ZUp3a3cxUGlaUnRxUHlUZkdwOUJkWWEraTZ4RDl0QkN4OGQ0bnd1Lzhlbkl3K2RnSkpKWmI2T0FTeldXQzZUVWk2ait5VmFnMUdFbXRpSEFvQk5kcGYxY0YzSW80Z095UDNZZW1Ia0Y3RkVxR0tUOTdPUXBwdEpTZ1Q5SGhUa1lBQjNyWngwSWNNNlFyK2VSbTZZSW9vUHJhVXdxdUxEaEJkeDBoRlZCRDl1VUlWNlUwM2hhdSttRXpuS1poM1NoRkVGWHZOSmt2M05QaGhndDI1Y3gxNitOTmtZM3loazFxZXArS0haV2taazZjUDJiSTFnMzZUdFcwcnIvbkUwTjhJb0l2V3FFdlE9PSIKICAgICAgICAgIH0KICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiAyMSwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDgsCiAgICAidG90YWxUb2tlbkNvdW50IjogODQsCiAgICAidHJhZmZpY1R5cGUiOiAiT05fREVNQU5EIiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMjEKICAgICAgfQogICAgXSwKICAgICJjYW5kaWRhdGVzVG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDgKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiA1NQogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMy1mbGFzaC1wcmV2aWV3IiwKICAiY3JlYXRlVGltZSI6ICIyMDI2LTExLTEwVDE3OjQxOjE3Ljk0NTc4NVoiLAogICJyZXNwb25zZUlkIjogIlBWZnphdm5jT2VEZm1MQVB5UEdCd0E0Igp9Cg==
+  recorded_at: Tue, 10 Nov 2026 17:41:19 GMT
+recorded_with: VCR 6.4.1

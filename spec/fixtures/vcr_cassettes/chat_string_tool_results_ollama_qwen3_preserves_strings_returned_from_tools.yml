@@ -11,7 +11,7 @@ http_interactions:
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -26,43 +26,51 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 Oct 2026 21:18:10 GMT
+      - Tue, 10 Nov 2026 17:51:49 GMT
       Content-Length:
-      - '831'
+      - '1033'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-279","object":"chat.completion","created":1791753490,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+      string: '{"id":"chatcmpl-214","object":"chat.completion","created":1794333109,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
         the user wants me to process the query \"test data\". Let me check the tools
         available. There''s a function called content_returning that takes a query
-        as a parameter. The description says it returns a processed string result.
-        So I need to call that function with the query \"test data\". I''ll structure
-        the tool call accordingly.\n","tool_calls":[{"id":"call_ixcb8fe3","index":0,"type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
-        data\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":142,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":95,"total_tokens":237}}
+        as a string. The description says it processes the query and returns a result.
+        Since the user provided the query \"test data\", I should call this function
+        with that exact string. I need to make sure the arguments are correctly formatted
+        as JSON. So the function name is content_returning, and the argument is {\"query\":
+        \"test data\"}. I''ll structure the tool_call accordingly.\n","tool_calls":[{"id":"call_zhnrgpds","index":0,"type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":142,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":137,"total_tokens":279}}
 
         '
-  recorded_at: Sun, 11 Oct 2026 21:18:10 GMT
+  recorded_at: Tue, 10 Nov 2026 17:51:49 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"Process this
-        query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"call_ixcb8fe3","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"call_zhnrgpds","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
         data\"}"}}],"reasoning":"Okay, the user wants me to process the query \"test
         data\". Let me check the tools available. There''s a function called content_returning
-        that takes a query as a parameter. The description says it returns a processed
-        string result. So I need to call that function with the query \"test data\".
-        I''ll structure the tool call accordingly.\n","reasoning_content":"Okay, the
-        user wants me to process the query \"test data\". Let me check the tools available.
-        There''s a function called content_returning that takes a query as a parameter.
-        The description says it returns a processed string result. So I need to call
-        that function with the query \"test data\". I''ll structure the tool call
-        accordingly.\n"},{"role":"tool","content":"Processed: test data","tool_call_id":"call_ixcb8fe3"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        that takes a query as a string. The description says it processes the query
+        and returns a result. Since the user provided the query \"test data\", I should
+        call this function with that exact string. I need to make sure the arguments
+        are correctly formatted as JSON. So the function name is content_returning,
+        and the argument is {\"query\": \"test data\"}. I''ll structure the tool_call
+        accordingly.\n","reasoning_content":"Okay, the user wants me to process the
+        query \"test data\". Let me check the tools available. There''s a function
+        called content_returning that takes a query as a string. The description says
+        it processes the query and returns a result. Since the user provided the query
+        \"test data\", I should call this function with that exact string. I need
+        to make sure the arguments are correctly formatted as JSON. So the function
+        name is content_returning, and the argument is {\"query\": \"test data\"}.
+        I''ll structure the tool_call accordingly.\n"},{"role":"tool","content":"Processed:
+        test data","tool_call_id":"call_zhnrgpds"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
         a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -77,24 +85,22 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 Oct 2026 21:18:12 GMT
+      - Tue, 10 Nov 2026 17:51:50 GMT
       Content-Length:
-      - '1121'
+      - '1017'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-392","object":"chat.completion","created":1791753492,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        processed result for the query \"test data\" is:  \n**Processed: test data**  \n\nLet
-        me know if you need further assistance!","reasoning":"Okay, the user asked
-        to process the query \"test data\". I called the content_returning function
-        with that query, and the response was \"Processed: test data\". Now I need
-        to present this result to the user. Since the function''s purpose is to process
-        the query, the straightforward way is to confirm that the processing was done
-        and show the result. I should make sure to mention the original query and
-        the processed output clearly. Let me check if there''s any additional context
-        needed, but since the user''s instruction was straightforward, a simple response
-        should suffice. Alright, time to put it all together in a natural, conversational
-        way.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":252,"prompt_tokens_details":{"cached_tokens":143},"completion_tokens":163,"total_tokens":415}}
+      string: '{"id":"chatcmpl-444","object":"chat.completion","created":1794333110,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        query has been processed successfully.\n\n**Result:**  \nProcessed: test data","reasoning":"Okay,
+        the user asked to process the query \"test data\". I called the content_returning
+        function with that query, and the response was \"Processed: test data\". Now
+        I need to present this result to the user. Since the user''s original request
+        was just to process the query, and the tool''s response is straightforward,
+        I should confirm that the processing is done. Maybe add a simple message like
+        \"The query has been processed successfully.\" and include the result. Let
+        me check if there''s anything else needed. The user didn''t specify further
+        actions, so a concise response should be best.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":294,"prompt_tokens_details":{"cached_tokens":143},"completion_tokens":140,"total_tokens":434}}
 
         '
-  recorded_at: Sun, 11 Oct 2026 21:18:12 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:51:50 GMT
+recorded_with: VCR 6.4.1

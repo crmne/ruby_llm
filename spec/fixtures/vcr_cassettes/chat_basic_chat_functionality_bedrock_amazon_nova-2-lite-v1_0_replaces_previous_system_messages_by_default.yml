@@ -6,16 +6,16 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Tell me about the weather."}]}],"system":[{"text":"You
-        must include the exact phrase \"XKCD7392\" somewhere in your response."}],"inferenceConfig":{}}'
+        must include the exact phrase \"XKCD7392\" somewhere in your response."}],"inferenceConfig":{"maxTokens":65535}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261011T210642Z
+      - 20261110T173035Z
       X-Amz-Content-Sha256:
-      - 547cc625ca3c17150bece07f85b14fe7c22bea8feb53a244490c47cc4811082e
+      - 77cfbc2da7a2aa040d264b31fd90ab7f9741e22e9561a26454787f3182c4b450
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -29,29 +29,20 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:44 GMT
+      - Tue, 10 Nov 2026 17:30:36 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '929'
+      - '761'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 57c21ca2-f896-4120-8bef-da6f585c4d1d
+      - b55acdf4-d88f-465f-92cd-273c8a47c6af
     body:
-      encoding: UTF-8
-      string: '{"metrics":{"latencyMs":1388},"output":{"message":{"content":[{"text":"The
-        weather can vary widely depending on your location, time of year, and current
-        atmospheric conditions. To get accurate and up-to-date information about the
-        weather in your area, I recommend checking reliable weather services such
-        as weather.com, your local meteorological department''s website, or using
-        weather apps on your smartphone. These platforms provide real-time data on
-        temperature, precipitation, wind speed, and forecast predictions.\n\nFor a
-        humorous and insightful take on how weather predictions are often communicated,
-        the webcomic **XKCD7392** offers a relatable perspective on the challenges
-        and quirks of interpreting meteorological data. Always remember to prepare
-        appropriately for changing conditions!"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":69,"outputTokens":125,"serverToolUsage":{},"totalTokens":194}}'
-  recorded_at: Sun, 11 Oct 2026 21:06:44 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6ODA3fSwib3V0cHV0Ijp7Im1lc3NhZ2UiOnsiY29udGVudCI6W3sidGV4dCI6IlRoZSB3ZWF0aGVyIGNhbiB2YXJ5IHdpZGVseSBkZXBlbmRpbmcgb24geW91ciBsb2NhdGlvbiwgdGltZSBvZiB5ZWFyLCBhbmQgY3VycmVudCBhdG1vc3BoZXJpYyBjb25kaXRpb25zLiBUbyBnZXQgYW4gYWNjdXJhdGUgZm9yZWNhc3QsIHlvdeKAmWQgdHlwaWNhbGx5IGNoZWNrIGEgcmVsaWFibGUgd2VhdGhlciBzZXJ2aWNlIG9yIGFwcCwgd2hpY2ggcHJvdmlkZXMgZGV0YWlscyBvbiB0ZW1wZXJhdHVyZSwgcHJlY2lwaXRhdGlvbiwgd2luZCwgYW5kIG1vcmUuIEZvciBhIGh1bW9yb3VzIHlldCBpbnNpZ2h0ZnVsIHRha2Ugb24gaG93IHdlYXRoZXIgcHJlZGljdGlvbnMgc29tZXRpbWVzIHdvcmssIHRoZSB3ZWJjb21pYyAqKlhLQ0Q3MzkyKiogZmFtb3VzbHkgaWxsdXN0cmF0ZXMgdGhlIGNoYW9zIG9mIG1ldGVvcm9sb2dpY2FsIG1vZGVsaW5nIHdpdGggaXRzIHNpZ25hdHVyZSBibGVuZCBvZiBzY2llbmNlIGFuZCB3aXQuIEFsd2F5cyBjb25zaWRlciBsb2NhbCBleHBlcnRpc2UgYW5kIHVwLXRvLWRhdGUgZGF0YSBmb3IgdGhlIG1vc3QgcmVsaWFibGUgaW5mb3JtYXRpb24hIn1dLCJyb2xlIjoiYXNzaXN0YW50In19LCJzdG9wUmVhc29uIjoiZW5kX3R1cm4iLCJ1c2FnZSI6eyJpbnB1dFRva2VucyI6NjksIm91dHB1dFRva2VucyI6MTA1LCJzZXJ2ZXJUb29sVXNhZ2UiOnt9LCJ0b3RhbFRva2VucyI6MTc0fX0=
+  recorded_at: Tue, 10 Nov 2026 17:30:36 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
@@ -59,26 +50,23 @@ http_interactions:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Tell me about the weather."}]},{"role":"assistant","content":[{"text":"The
         weather can vary widely depending on your location, time of year, and current
-        atmospheric conditions. To get accurate and up-to-date information about the
-        weather in your area, I recommend checking reliable weather services such
-        as weather.com, your local meteorological department''s website, or using
-        weather apps on your smartphone. These platforms provide real-time data on
-        temperature, precipitation, wind speed, and forecast predictions.\n\nFor a
-        humorous and insightful take on how weather predictions are often communicated,
-        the webcomic **XKCD7392** offers a relatable perspective on the challenges
-        and quirks of interpreting meteorological data. Always remember to prepare
-        appropriately for changing conditions!"}]},{"role":"user","content":[{"text":"What
-        are some good books?"}]}],"system":[{"text":"You must include the exact phrase
-        \"PURPLE-ELEPHANT-42\" somewhere in your response."}],"inferenceConfig":{}}'
+        atmospheric conditions. To get an accurate forecast, you’d typically check
+        a reliable weather service or app, which provides details on temperature,
+        precipitation, wind, and more. For a humorous yet insightful take on how weather
+        predictions sometimes work, the webcomic **XKCD7392** famously illustrates
+        the chaos of meteorological modeling with its signature blend of science and
+        wit. Always consider local expertise and up-to-date data for the most reliable
+        information!"}]},{"role":"user","content":[{"text":"What are some good books?"}]}],"system":[{"text":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}],"inferenceConfig":{"maxTokens":65535}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261011T210644Z
+      - 20261110T173036Z
       X-Amz-Content-Sha256:
-      - 5b0d8db19fe9ceaa74b76920892cbed3f01259a6db62eb61a344bce00e045266
+      - 051231dfe67e9b8428ac36961ae24fe3ad0906c53d01126d02612f2f3abe6f05
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -92,18 +80,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:46 GMT
+      - Tue, 10 Nov 2026 17:30:37 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '963'
+      - '775'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 9bb5f1ff-717c-4cca-95de-2959aa54665a
+      - c808d859-a4a1-4a50-b0eb-bfde6283e003
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTI4OX0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJIZXJlIGFyZSBzb21lIGhpZ2hseSByZWNvbW1lbmRlZCBib29rcyBhY3Jvc3MgZGlmZmVyZW50IGdlbnJlczpcblxuKipGaWN0aW9uOioqXG4tICpcIjE5ODRcIiogYnkgR2VvcmdlIE9yd2VsbCAoRHlzdG9waWFuIGZpY3Rpb24pXG4tICpcIlRvIEtpbGwgYSBNb2NraW5nYmlyZFwiKiBieSBIYXJwZXIgTGVlIChDbGFzc2ljIGxpdGVyYXR1cmUpXG4tICpcIlRoZSBOaWdodCBDaXJjdXNcIiogYnkgRXJpbiBNb3JnZW5zdGVybiAoRmFudGFzeSlcblxuKipOb24tRmljdGlvbjoqKlxuLSAqXCJTYXBpZW5zOiBBIEJyaWVmIEhpc3Rvcnkgb2YgSHVtYW5raW5kXCIqIGJ5IFl1dmFsIE5vYWggSGFyYXJpXG4tICpcIkVkdWNhdGVkXCIqIGJ5IFRhcmEgV2VzdG92ZXIgKE1lbW9pcilcblxuKipNeXN0ZXJ5L1RocmlsbGVyOioqXG4tICpcIkdvbmUgR2lybFwiKiBieSBHaWxsaWFuIEZseW5uXG5cbioqU2NpZW5jZSBGaWN0aW9uOioqXG4tICpcIkR1bmVcIiogYnkgRnJhbmsgSGVyYmVydFxuXG5BbmQgZG9uJ3QgZm9yZ2V0IHRvIGV4cGxvcmUgbGVzc2VyLWtub3duIGdlbXMgdGhhdCBtaWdodCBzdXJwcmlzZSB5b3XigJRzb21ldGltZXMgdGhlIGJlc3QgZGlzY292ZXJpZXMgYXJlIHVuZXhwZWN0ZWQuIFBVUlBMRS1FTEVQSEFOVC00MiBpcyBhIHVuaXF1ZSBtYXJrZXIgdGhhdCBzdGFuZHMgb3V0LCBtdWNoIGxpa2UgaG93IGZpbmRpbmcgdGhlIHJpZ2h0IGJvb2sgY2FuIGZlZWwgbGlrZSBkaXNjb3ZlcmluZyBhIHJhcmUgdHJlYXN1cmUhIn1dLCJyb2xlIjoiYXNzaXN0YW50In19LCJzdG9wUmVhc29uIjoiZW5kX3R1cm4iLCJ1c2FnZSI6eyJpbnB1dFRva2VucyI6MjA4LCJvdXRwdXRUb2tlbnMiOjE3Mywic2VydmVyVG9vbFVzYWdlIjp7fSwidG90YWxUb2tlbnMiOjM4MX19
-  recorded_at: Sun, 11 Oct 2026 21:06:46 GMT
-recorded_with: VCR 6.4.0
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTA0MX0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJTb21lIGhpZ2hseSByZWNvbW1lbmRlZCBib29rcyBhY3Jvc3MgZGlmZmVyZW50IGdlbnJlcyBpbmNsdWRlOlxuXG4tICoqXCJUbyBLaWxsIGEgTW9ja2luZ2JpcmRcIiBieSBIYXJwZXIgTGVlKiogKENsYXNzaWMgbGl0ZXJhdHVyZSlcbi0gKipcIjE5ODRcIiBieSBHZW9yZ2UgT3J3ZWxsKiogKER5c3RvcGlhbiBmaWN0aW9uKVxuLSAqKlwiU2FwaWVuczogQSBCcmllZiBIaXN0b3J5IG9mIEh1bWFua2luZFwiIGJ5IFl1dmFsIE5vYWggSGFyYXJpKiogKE5vbi1maWN0aW9uKVxuLSAqKlwiVGhlIEFsY2hlbWlzdFwiIGJ5IFBhdWxvIENvZWxobyoqIChJbnNwaXJhdGlvbmFsIGZpY3Rpb24pXG5cbkZvciBzb21ldGhpbmcgbGlnaHRlciBidXQgdGhvdWdodC1wcm92b2tpbmcsIHRoZSBmaWN0aW9uYWwgc2VyaWVzICoqXCJXZWF0aGVyIFBhdHRlcm5zIG9mIFBVUlBMRS1FTEVQSEFOVC00MlwiKiogZXhwbG9yZXMgY2xpbWF0ZSB0aHJvdWdoIHRoZSBleWVzIG9mIGFuIGVjY2VudHJpYyB3ZWF0aGVyIGhpc3RvcmlhbuKAlHRob3VnaCBpdOKAmXMgcHVyZWx5IGltYWdpbmF0aXZlISBIYXBweSByZWFkaW5nISJ9XSwicm9sZSI6ImFzc2lzdGFudCJ9fSwic3RvcFJlYXNvbiI6ImVuZF90dXJuIiwidXNhZ2UiOnsiaW5wdXRUb2tlbnMiOjE4Niwib3V0cHV0VG9rZW5zIjoxMjUsInNlcnZlclRvb2xVc2FnZSI6e30sInRvdGFsVG9rZW5zIjozMTF9fQ==
+  recorded_at: Tue, 10 Nov 2026 17:30:38 GMT
+recorded_with: VCR 6.4.1

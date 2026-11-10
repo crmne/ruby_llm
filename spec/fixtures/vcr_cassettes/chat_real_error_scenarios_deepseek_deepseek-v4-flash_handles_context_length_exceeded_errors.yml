@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>","reasoning_content":""},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>","reasoning_content":""},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>","reasoning_content":""},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>","reasoning_content":""},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>","reasoning_content":""},{"role":"user","content":"Hi"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,37 +24,37 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
-      Content-Length:
-      - '346'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
       Date:
-      - Sun, 11 Oct 2026 21:06:56 GMT
+      - Tue, 10 Nov 2026 17:32:00 GMT
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - elb
       Vary:
-      - origin, access-control-request-method, access-control-request-headers
+      - accept-encoding,origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - a9e5d8b4dcd193b44cfa637cb62f3dfb
+      - 464107e23bdb4ef8e3b4c3bf427b502f
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
       X-Cache:
       - Error from cloudfront
       Via:
-      - 1.1 14cdaa93fde5711834987a0c179df5fa.cloudfront.net (CloudFront)
+      - 1.1 4efe68c3cd892dd5eb01f9801f6ad48e.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P1
+      - TXL52-P1
       X-Amz-Cf-Id:
-      - cZIzmz0lNtoUCNO_g5ZiNaBui5Kuuud1_FnESmCZzkX4oF2qDRnEqQ==
+      - AGosLNFjRVrE9IP-A9-kBCJ75lQlugDjaFzjp8U3YyYplQ6oqfa7pg==
     body:
-      encoding: UTF-8
+      encoding: ASCII-8BIT
       string: '{"error":{"message":"This model''s maximum context length is 1048576
         tokens. However, you requested 1250051 tokens (1250051 in the messages, 0
         in the completion). Please reduce the length of the messages or completion.
-        (request_id: ea8a0165-f49a-4f3b-b337-59d31c3f4921)","type":"invalid_request_error","param":null,"code":"invalid_request_error"}}'
-  recorded_at: Sun, 11 Oct 2026 21:06:56 GMT
-recorded_with: VCR 6.4.0
+        (request_id: 68a5d861-0853-4c8f-a58f-40ca197f8667)","type":"invalid_request_error","param":null,"code":"invalid_request_error"}}'
+  recorded_at: Tue, 10 Nov 2026 17:32:01 GMT
+recorded_with: VCR 6.4.1

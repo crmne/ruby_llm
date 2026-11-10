@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"Hello"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Http-Referer:
@@ -27,7 +27,7 @@ http_interactions:
       message: Unauthorized
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:13 GMT
+      - Tue, 10 Nov 2026 17:31:31 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,7 +37,9 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
-      - X-Generation-Id,X-Provider-Name,request-id,cf-ray
+      - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
+      X-Openrouter-Error-Origin:
+      - client
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -51,8 +53,10 @@ http_interactions:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
     body:
       encoding: UTF-8
       string: '{"error":{"message":"Missing Authentication header","code":401}}'
-  recorded_at: Sun, 11 Oct 2026 21:06:13 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:31:31 GMT
+recorded_with: VCR 6.4.1

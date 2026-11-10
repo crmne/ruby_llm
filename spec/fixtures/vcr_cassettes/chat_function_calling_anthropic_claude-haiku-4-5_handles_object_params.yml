@@ -13,7 +13,7 @@ http_interactions:
         window to schedule"}},"required":["window"],"additionalProperties":false}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -30,7 +30,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:07:13 GMT
+      - Tue, 10 Nov 2026 17:31:20 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -42,31 +42,31 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-10-11T21:07:12Z'
+      - '2026-11-10T17:31:19Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-10-11T21:07:13Z'
+      - '2026-11-10T17:31:20Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-10-11T21:07:12Z'
+      - '2026-11-10T17:31:19Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-10-11T21:07:12Z'
+      - '2026-11-10T17:31:19Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-c14bcae0cda5344e59ea153582804dd8-866d504fb0a2c28d-01
+      - 00-3e61057c16345c7abc390632bb875f22-0ed05dc9aab5bdf2-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
@@ -75,6 +75,8 @@ http_interactions:
       - Accept-Encoding
       Server:
       - cloudflare
+      Server-Timing:
+      - x-originResponse;dur=757
       X-Robots-Tag:
       - none
       Content-Security-Policy:
@@ -85,6 +87,6 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cfw8by72J1zASDtrMzRZ3","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01S5uPiWCY5f5mVixXsrAh33","name":"object_params","input":{"window":{"start":"2025-01-01","end":"2025-01-02"}},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":657,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":81,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}'
-  recorded_at: Sun, 11 Oct 2026 21:07:13 GMT
-recorded_with: VCR 6.4.0
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CgueQbk2c4pLZUWUefiZf","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01Cj45hLYM2UAsPxrvQ1UZSC","name":"object_params","input":{"window":{"start":"2025-01-01","end":"2025-01-02"}},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":657,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":75,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
+  recorded_at: Tue, 10 Nov 2026 17:31:20 GMT
+recorded_with: VCR 6.4.1

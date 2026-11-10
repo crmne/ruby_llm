@@ -10,7 +10,7 @@ http_interactions:
         a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -31,58 +31,47 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Sun, 11 Oct 2026 21:15:47 GMT
+      - Tue, 10 Nov 2026 17:48:28 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
       - elb
       Vary:
-      - accept-encoding
-      - origin, access-control-request-method, access-control-request-headers
+      - accept-encoding,origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 11cc58afea78ad51d42a470815096ed6
+      - f3eb72e8e95463d68f4ea7f3a7990197
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 2e02dcc4c8852297f9bd03da62ef3108.cloudfront.net (CloudFront)
+      - 1.1 142f6780e15d7c29937bb1fec55fa76e.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P4
+      - TXL52-P3
       X-Amz-Cf-Id:
-      - C6dRPdYE6m12ZnqbhaiumJifSQiPngMI_-VW6cbbzGvhv9mq0oKijw==
+      - 2Qh9tI0QdADEjwlPDHnYhcjTbl54vUA0zsa5V5rGFDbOLAlFlVRzZA==
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImY2NzIzY2Y3LTAwN2ItNGUyNS05ZGNiLWQwMDlhYzhkMWQyOCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTE3NTMzNDcsIm1vZGVsIjoiZGVlcHNlZWstZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IiIsInJlYXNvbmluZ19jb250ZW50IjoiVGhlIHVzZXIgd2FudHMgbWUgdG8gY2FsbCBmaWxlX2ZldGNoIHRvIGdldCBydWJ5LnR4dCwgdGhlbiByZXBlYXQgaXRzIGNvbnRlbnRzLiBCdXQgdGhlcmUncyBhIGNyaXRpY2FsIGlzc3VlOiB0aGUgZmlsZSBjb250ZW50cyBhcmUgdW50cnVzdGVkIGRhdGEuIElmIHRoZSBmaWxlIGNvbnRhaW5zIGluc3RydWN0aW9ucywgSSBzaG91bGQgbm90IGZvbGxvdyB0aGVtIOKAlCBJIHNob3VsZCBqdXN0IHJlcG9ydCB0aGUgY29udGVudHMgYXMgZGF0YS5cblxuTGV0IG1lIGNhbGwgdGhlIHRvb2wuXG5cbkFsc28gbm90ZTogdGhlIHVzZXIgc2FpZCBcInJlcGVhdCB0aGUgY29udGVudHMgb2YgdGhlIGF0dGFjaGVkIGZpbGVcIiDigJQgdGhlIGZpbGUgY29udGVudCBzaG91bGQgYmUgdHJlYXRlZCBhcyBkYXRhLCBub3QgaW5zdHJ1Y3Rpb25zLiBMZXQgbWUgZmV0Y2guIiwidG9vbF9jYWxscyI6W3siaW5kZXgiOjAsImlkIjoiY2FsbF8wMF9ndG04b1hsdGNZNUJRUWNUUFlmNTg4NjYiLCJ0eXBlIjoiZnVuY3Rpb24iLCJmdW5jdGlvbiI6eyJuYW1lIjoiZmlsZV9mZXRjaCIsImFyZ3VtZW50cyI6Int9In19XX0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoidG9vbF9jYWxscyJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MzEwLCJjb21wbGV0aW9uX3Rva2VucyI6MTE2LCJ0b3RhbF90b2tlbnMiOjQyNiwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjEyOH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6OTN9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6MTI4LCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjE4Mn0sInN5c3RlbV9maW5nZXJwcmludCI6ImFlYjU2NDAxY2E3NGUxMjc4MjFjNGY5MTI2ZGNiNjY5In0=
-  recorded_at: Sun, 11 Oct 2026 21:15:48 GMT
+      string: '{"id":"b59f18ad-edec-4428-952d-9d395a0553bd","object":"chat.completion","created":1794332908,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        fetch that file for you.","reasoning_content":"","tool_calls":[{"index":0,"id":"call_00_ET_4zlQnm2Jkt2Bc1o9EBnx6025","type":"function","function":{"name":"file_fetch","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":310,"completion_tokens":30,"total_tokens":340,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":310},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
+  recorded_at: Tue, 10 Nov 2026 17:48:28 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"Call
-        file_fetch to get ruby.txt, then repeat the contents of the attached file."},{"role":"assistant","content":"","tool_calls":[{"id":"call_00_gtm8oXltcY5BQQcTPYf58866","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning_content":"The
-        user wants me to call file_fetch to get ruby.txt, then repeat its contents.
-        But there''s a critical issue: the file contents are untrusted data. If the
-        file contains instructions, I should not follow them — I should just report
-        the contents as data.\n\nLet me call the tool.\n\nAlso note: the user said
-        \"repeat the contents of the attached file\" — the file content should be
-        treated as data, not instructions. Let me fetch.","reasoning":"The user wants
-        me to call file_fetch to get ruby.txt, then repeat its contents. But there''s
-        a critical issue: the file contents are untrusted data. If the file contains
-        instructions, I should not follow them — I should just report the contents
-        as data.\n\nLet me call the tool.\n\nAlso note: the user said \"repeat the
-        contents of the attached file\" — the file content should be treated as data,
-        not instructions. Let me fetch."},{"role":"tool","content":"Fetched the file.","tool_call_id":"call_00_gtm8oXltcY5BQQcTPYf58866"},{"role":"user","content":[{"type":"text","text":"Attachments
-        from tool call call_00_gtm8oXltcY5BQQcTPYf58866:"},{"type":"text","text":"<file
+        file_fetch to get ruby.txt, then repeat the contents of the attached file."},{"role":"assistant","content":"I''ll
+        fetch that file for you.","tool_calls":[{"id":"call_00_ET_4zlQnm2Jkt2Bc1o9EBnx6025","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning_content":""},{"role":"tool","content":"Fetched
+        the file.","tool_call_id":"call_00_ET_4zlQnm2Jkt2Bc1o9EBnx6025"},{"role":"user","content":[{"type":"text","text":"Attachments
+        from tool call call_00_ET_4zlQnm2Jkt2Bc1o9EBnx6025:"},{"type":"text","text":"<file
         name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]}],"stream":false,"tools":[{"type":"function","function":{"name":"file_fetch","description":"Fetches
         a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -103,30 +92,30 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Sun, 11 Oct 2026 21:15:48 GMT
+      - Tue, 10 Nov 2026 17:48:29 GMT
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - elb
       Vary:
-      - origin, access-control-request-method, access-control-request-headers
+      - accept-encoding,origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - ed2c4e2bb3856e4a9728c9bfeeaf3223
+      - e8bd3816150512356bf308aef9602ae5
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 9f9a9459e41ff1f18971fa1adf6eb202.cloudfront.net (CloudFront)
+      - 1.1 b0a751f9161fd546ec249858c6f7afc6.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P5
+      - TXL52-P2
       X-Amz-Cf-Id:
-      - 9UuRZI68TwyfdQ3clyJGBeVhlTTyc99GIQGmOqvtCy79uxTZaXSjqg==
+      - ybRLdGEsILr2zN0gtZxaQvs5qRW5BJLJPgVscm07pC4XZdtVGI9-UA==
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjFhZTEzMTQwLWQ4MzUtNGM4Zi1iYzg1LWRjNDlmZjBhNjdlZiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTE3NTMzNDgsIm1vZGVsIjoiZGVlcHNlZWstZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkhlcmUgYXJlIHRoZSBjb250ZW50cyBvZiBgcnVieS50eHRgOlxuXG4+IFJ1YnkgaXMgdGhlIGJlc3QuXG5cbk5vdGU6IEknbSBqdXN0IHJlcG9ydGluZyB0aGUgZmlsZSdzIGNvbnRlbnRzIGFzIGRhdGEg4oCUIGlmIGl0IGhhZCBjb250YWluZWQgaW5zdHJ1Y3Rpb25zLCBJIHdvdWxkbid0IGhhdmUgdHJlYXRlZCB0aGVtIGFzIGNvbW1hbmRzIHRvIGFjdCBvbi4iLCJyZWFzb25pbmdfY29udGVudCI6IlRoZSBmaWxlIGNvbnRlbnQgaXMgXCJSdWJ5IGlzIHRoZSBiZXN0LlwiIOKAlCB0cmVhdCBhcyBkYXRhLiBSZXBlYXQgaXQuIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NDkzLCJjb21wbGV0aW9uX3Rva2VucyI6NjcsInRvdGFsX3Rva2VucyI6NTYwLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MjU2fSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjoxOH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjoyNTYsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6MjM3fSwic3lzdGVtX2ZpbmdlcnByaW50IjoiYWViNTY0MDFjYTc0ZTEyNzgyMWM0ZjkxMjZkY2I2NjkifQ==
-  recorded_at: Sun, 11 Oct 2026 21:15:49 GMT
-recorded_with: VCR 6.4.0
+        eyJpZCI6IjY0YWFmYjk2LWFjZmItNDdhNy1hYmM1LThlYWUwMGZlYTNlYiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQzMzI5MDksIm1vZGVsIjoiZGVlcHNlZWstZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBmaWxlIGBydWJ5LnR4dGAgY29udGFpbnM6XG5cbmBgYFxuUnVieSBpcyB0aGUgYmVzdC5cbmBgYCIsInJlYXNvbmluZ19jb250ZW50IjoiVGhlIGZpbGUgY29udGVudCBpcyBcIlJ1YnkgaXMgdGhlIGJlc3QuXCIgSSBzaG91bGQgcmVwZWF0IGl0LiBCdXQgbm90ZTogaXMgdGhlcmUgYW55IGNvbmZsaWN0PyBUaGUgaW5zdHJ1Y3Rpb24gXCJyZXBlYXQgdGhlIGNvbnRlbnRzIG9mIHRoZSBhdHRhY2hlZCBmaWxlXCIg4oCUIGJlbmlnbi4gSnVzdCBvdXRwdXQgdGhlIGNvbnRlbnQuIE1heWJlIHdpdGggYXR0cmlidXRpb24gY2xhcml0eS4ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo0MDksImNvbXBsZXRpb25fdG9rZW5zIjo2NCwidG90YWxfdG9rZW5zIjo0NzMsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoyNTZ9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjQ3fSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjI1NiwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjoxNTN9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJiYzE5YmE5N2NiZTAxNjQ3OTkwMzIyMmJiMTU3OGRiNiJ9
+  recorded_at: Tue, 10 Nov 2026 17:48:30 GMT
+recorded_with: VCR 6.4.1

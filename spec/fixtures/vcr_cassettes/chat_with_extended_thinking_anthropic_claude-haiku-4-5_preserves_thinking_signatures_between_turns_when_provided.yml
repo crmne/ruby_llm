@@ -9,7 +9,7 @@ http_interactions:
         is 5 + 3?"}]}],"stream":false,"max_tokens":64000,"thinking":{"type":"enabled","budget_tokens":1024}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:29 GMT
+      - Tue, 10 Nov 2026 17:29:57 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,31 +38,31 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-10-11T21:06:28Z'
+      - '2026-11-10T17:29:57Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-10-11T21:06:29Z'
+      - '2026-11-10T17:29:57Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-10-11T21:06:28Z'
+      - '2026-11-10T17:29:56Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-10-11T21:06:28Z'
+      - '2026-11-10T17:29:57Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-e4bf92eb8b8b397747b274dcf7a0670c-8e73159b8eb975d9-01
+      - 00-d3649256cace366d34d638564214c1e4-6f4ccbec98faa040-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
@@ -71,6 +71,8 @@ http_interactions:
       - Accept-Encoding
       Server:
       - cloudflare
+      Server-Timing:
+      - x-originResponse;dur=524
       X-Robots-Tag:
       - none
       Content-Security-Policy:
@@ -81,10 +83,10 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cfw8YiXLidUC4vexiJbAg","type":"message","role":"assistant","content":[{"type":"thinking","thinking":"This
-        is a simple arithmetic question. 5 + 3 = 8.","signature":"EssCCrgBCBIYAipAsqrYOGEqLx4yVo0+cVjQVdBwzWNDZHokiEsHIT3obviR6hdeBik5aa0p5pZNaIS9uipRp0EYcIN946pMU47CYjIZY2xhdWRlLWhhaWt1LTQtNS0yMDI1MTAwMTgAQgh0aGlua2luZ1okMDEzN2IxNWMtMTZiZi00OTBkLTlmOTAtOGNmZDdlMzI1ZWMwmgEbChljbGF1ZGUtaGFpa3UtNC01LTIwMjUxMDAxqAHU9K/WBhIMXEGIQ7gk0pGb5aSfGgyJOiuK6DIvi8QowwIiMAjGolJXHz5wN3YmSfLJpLrhN1JHUBV09mK2kLH8r0HU4ywVq40nyhxS8xluAG99hCpAtIvl4kcTY4CEb3Ee5zvS9gArSeuMmoQGJKmN/bsOi2z/78XQ9RrdR9UKhro9mHnhifUwiMkeaPsEMe8b26053hgB"},{"type":"text","text":"5
-        + 3 = 8"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":45,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":38,"output_tokens_details":{"thinking_tokens":23},"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}'
-  recorded_at: Sun, 11 Oct 2026 21:06:29 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CgueJXhY1YbAXNnQ4ZPpY","type":"message","role":"assistant","content":[{"type":"thinking","thinking":"This
+        is a simple arithmetic question. 5 + 3 = 8.","signature":"EssCCrgBCBMYAipAsqrYOGEqLx4yVo0+cVjQVdBwzWNDZHokiEsHIT3obviR6hdeBik5aa0p5pZNaIS9uipRp0EYcIN946pMU47CYjIZY2xhdWRlLWhhaWt1LTQtNS0yMDI1MTAwMTgAQgh0aGlua2luZ1okMDEzN2IxNWMtMTZiZi00OTBkLTlmOTAtOGNmZDdlMzI1ZWMwmgEbChljbGF1ZGUtaGFpa3UtNC01LTIwMjUxMDAxqAGVqc3XBhIMS1Qm75ONH5+hEOCNGgzNR1Af4EqjRl4havsiMJHmqkllhldIMkmOV/mqr1Mat3IaOzgPRu3wmvIHxfVJ14b1yMHmLmCGS1UFh9mxrSpAk9qAOz1We9moBR+xqEVv/9XfbvyBkPgMnp+NDinaQEYSsTrvkhlTtuXLSae+oUfrAm6uOfxQ97z4sqS7szzKLBgB"},{"type":"text","text":"5
+        + 3 = 8"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":45,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":38,"output_tokens_details":{"thinking_tokens":23},"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
+  recorded_at: Tue, 10 Nov 2026 17:29:57 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -92,12 +94,12 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What
         is 5 + 3?"}]},{"role":"assistant","content":[{"type":"thinking","thinking":"This
-        is a simple arithmetic question. 5 + 3 = 8.","signature":"EssCCrgBCBIYAipAsqrYOGEqLx4yVo0+cVjQVdBwzWNDZHokiEsHIT3obviR6hdeBik5aa0p5pZNaIS9uipRp0EYcIN946pMU47CYjIZY2xhdWRlLWhhaWt1LTQtNS0yMDI1MTAwMTgAQgh0aGlua2luZ1okMDEzN2IxNWMtMTZiZi00OTBkLTlmOTAtOGNmZDdlMzI1ZWMwmgEbChljbGF1ZGUtaGFpa3UtNC01LTIwMjUxMDAxqAHU9K/WBhIMXEGIQ7gk0pGb5aSfGgyJOiuK6DIvi8QowwIiMAjGolJXHz5wN3YmSfLJpLrhN1JHUBV09mK2kLH8r0HU4ywVq40nyhxS8xluAG99hCpAtIvl4kcTY4CEb3Ee5zvS9gArSeuMmoQGJKmN/bsOi2z/78XQ9RrdR9UKhro9mHnhifUwiMkeaPsEMe8b26053hgB"},{"type":"text","text":"5
+        is a simple arithmetic question. 5 + 3 = 8.","signature":"EssCCrgBCBMYAipAsqrYOGEqLx4yVo0+cVjQVdBwzWNDZHokiEsHIT3obviR6hdeBik5aa0p5pZNaIS9uipRp0EYcIN946pMU47CYjIZY2xhdWRlLWhhaWt1LTQtNS0yMDI1MTAwMTgAQgh0aGlua2luZ1okMDEzN2IxNWMtMTZiZi00OTBkLTlmOTAtOGNmZDdlMzI1ZWMwmgEbChljbGF1ZGUtaGFpa3UtNC01LTIwMjUxMDAxqAGVqc3XBhIMS1Qm75ONH5+hEOCNGgzNR1Af4EqjRl4havsiMJHmqkllhldIMkmOV/mqr1Mat3IaOzgPRu3wmvIHxfVJ14b1yMHmLmCGS1UFh9mxrSpAk9qAOz1We9moBR+xqEVv/9XfbvyBkPgMnp+NDinaQEYSsTrvkhlTtuXLSae+oUfrAm6uOfxQ97z4sqS7szzKLBgB"},{"type":"text","text":"5
         + 3 = 8"}]},{"role":"user","content":[{"type":"text","text":"Now multiply
         that by 2"}]}],"stream":false,"max_tokens":64000,"thinking":{"type":"enabled","budget_tokens":1024}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -114,7 +116,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:30 GMT
+      - Tue, 10 Nov 2026 17:29:58 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -126,31 +128,31 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-10-11T21:06:29Z'
+      - '2026-11-10T17:29:57Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-10-11T21:06:30Z'
+      - '2026-11-10T17:29:58Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-10-11T21:06:29Z'
+      - '2026-11-10T17:29:57Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-10-11T21:06:29Z'
+      - '2026-11-10T17:29:57Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-b1772be79a490d29a766fb502b7a2e42-6bc818b70a67e425-01
+      - 00-f3ec6fbeb83849666774359392c0e7c2-278d33b1cecdc878-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
@@ -159,6 +161,8 @@ http_interactions:
       - Accept-Encoding
       Server:
       - cloudflare
+      Server-Timing:
+      - x-originResponse;dur=560
       X-Robots-Tag:
       - none
       Content-Security-Policy:
@@ -170,6 +174,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTFDZnc4WW9BUE5uRGdlUzlpZDRoQ0siLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGhpbmtpbmciLCJ0aGlua2luZyI6IlRoZSB1c2VyIGlzIGFza2luZyBtZSB0byBtdWx0aXBseSB0aGUgcHJldmlvdXMgcmVzdWx0IGJ5IDIuXG5UaGUgcHJldmlvdXMgcmVzdWx0IHdhcyA4LlxuOCDDlyAyID0gMTYiLCJzaWduYXR1cmUiOiJFdjBDQ3JnQkNCSVlBaXBBM1Z5YitkU0dUeXZEVE9FRElWRXRqRXJRaXpDcDJQdEJucjNvT2NtbGRtR1gxQmZ0MG9saVVCUWF2MmhRY3VBVW1VODdzRGFidkdPb3padFYxNVRUcmpJWlkyeGhkV1JsTFdoaGFXdDFMVFF0TlMweU1ESTFNVEF3TVRnQVFnaDBhR2x1YTJsdVoxb2tNREV6TjJJeE5XTXRNVFppWmkwME9UQmtMVGxtT1RBdE9HTm1aRGRsTXpJMVpXTXdtZ0ViQ2hsamJHRjFaR1V0YUdGcGEzVXROQzAxTFRJd01qVXhNREF4cUFIVzlLL1dCaElNUGJDMWt3czJrdkxWU2xOS0dnd2d4WUZnZGtzeHRESUcvcmtpTUpqaWJNZWNSOEFYdzBETElSdDV0eVlVbjBOWkQremZnbzlyRU5ERHBBY25WTnB3cUJqSWozaWJ5cXZ1a212c2N5cHlvaXZHM1d2QmpHbGxJTnI0cUVvcUMvR2wxNFhyQi9GRGNIdEtBL2w4bDdjMWRHUytaQ3UrUHdielR0SDRmNWQ2SUw3akxDY0xhTGJRcVVMelJtaEMyb3FUc3JhQmN5UmpVNmJ5Z1VuTjVNYVA0K1ZkdlBucUIzeEFxa1N2VHZHQVRtZ2p6alF6cFVYVHFyeHMrRExkVWttY0dBRT0ifSx7InR5cGUiOiJ0ZXh0IiwidGV4dCI6Ijggw5cgMiA9IDE2In1dLCJjb250YWluZXIiOm51bGwsInN0b3BfcmVhc29uIjoiZW5kX3R1cm4iLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJzdG9wX2RldGFpbHMiOm51bGwsInVzYWdlIjp7ImlucHV0X3Rva2VucyI6NjcsImNhY2hlX2NyZWF0aW9uX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfcmVhZF9pbnB1dF90b2tlbnMiOjAsImNhY2hlX2NyZWF0aW9uIjp7ImVwaGVtZXJhbF81bV9pbnB1dF90b2tlbnMiOjAsImVwaGVtZXJhbF8xaF9pbnB1dF90b2tlbnMiOjB9LCJvdXRwdXRfdG9rZW5zIjo1Miwib3V0cHV0X3Rva2Vuc19kZXRhaWxzIjp7InRoaW5raW5nX3Rva2VucyI6Mzh9LCJzZXJ2aWNlX3RpZXIiOiJzdGFuZGFyZCIsImluZmVyZW5jZV9nZW8iOiJub3RfYXZhaWxhYmxlIn0sImRpYWdub3N0aWNzIjpudWxsfQ==
-  recorded_at: Sun, 11 Oct 2026 21:06:30 GMT
-recorded_with: VCR 6.4.0
+        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTFDZ3VlSmFVeGNTZUpxbXl0TkxlNVYiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGhpbmtpbmciLCJ0aGlua2luZyI6IlRoZSB1c2VyIGlzIGFza2luZyBtZSB0byBtdWx0aXBseSB0aGUgcHJldmlvdXMgcmVzdWx0ICg4KSBieSAyLlxuXG44IMOXIDIgPSAxNiIsInNpZ25hdHVyZSI6IkV1Y0NDcmdCQ0JNWUFpcEE2YmgzQWF6alNKbE44SWdpUFNKSm1QbmUrMVVJYUxFWm8rR1FyZ1hqcytzTW5nZ3FEVWNMamxFQ2gvY0RUcnNIenpoQUI5WXhCNSswRmcvQlF2M1RyeklaWTJ4aGRXUmxMV2hoYVd0MUxUUXROUzB5TURJMU1UQXdNVGdBUWdoMGFHbHVhMmx1WjFva01ERXpOMkl4TldNdE1UWmlaaTAwT1RCa0xUbG1PVEF0T0dObVpEZGxNekkxWldNd21nRWJDaGxqYkdGMVpHVXRhR0ZwYTNVdE5DMDFMVEl3TWpVeE1EQXhxQUdXcWMzWEJoSU1FeUdpcDRDbzZkRWpUZmRSR2d3Qnp5aDVlVDVyNGZVNXNOWWlNTGQ1OEplMGdBVHhmSnVOSHB4WU9IVjM4cG40ZlNtQ3lkZzIzVFRqelpSNlF3RjhzUmpsclBubkJlL1BhanNSdENwYzN0OGt0WmhxTnU0dmIwWUtPQ0NYdnR3VnprY1hiNFh6S3d3cVV2bGgrUWs4c3h0Z1Q4VmdYQ0xPL3h0NERubnBsWEFQOXVzK2RNYmRQMVBLSkdwRnpVVXUyTVhQS0xSaUlFb3BPOE9vMW4yV0x1M2N1a3NrWU1QYm1OSVlBUT09In0seyJ0eXBlIjoidGV4dCIsInRleHQiOiI4IMOXIDIgPSAxNiJ9XSwiY29udGFpbmVyIjpudWxsLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwic3RvcF9kZXRhaWxzIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjY3LCJjYWNoZV9jcmVhdGlvbl9pbnB1dF90b2tlbnMiOjAsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjowLCJjYWNoZV9jcmVhdGlvbiI6eyJlcGhlbWVyYWxfNW1faW5wdXRfdG9rZW5zIjowLCJlcGhlbWVyYWxfMWhfaW5wdXRfdG9rZW5zIjowfSwib3V0cHV0X3Rva2VucyI6NDcsIm91dHB1dF90b2tlbnNfZGV0YWlscyI6eyJ0aGlua2luZ190b2tlbnMiOjMzfSwic2VydmljZV90aWVyIjoic3RhbmRhcmQiLCJpbmZlcmVuY2VfZ2VvIjoibm90X2F2YWlsYWJsZSIsInNwZWVkIjoic3RhbmRhcmQifSwiZGlhZ25vc3RpY3MiOm51bGx9
+  recorded_at: Tue, 10 Nov 2026 17:29:58 GMT
+recorded_with: VCR 6.4.1

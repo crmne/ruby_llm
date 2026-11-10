@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"Hi"}]}],"stream":false,"max_tokens":64000}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -25,7 +25,7 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:17 GMT
+      - Tue, 10 Nov 2026 17:31:34 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,7 +39,7 @@ http_interactions:
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-4fc765807abd6f1426ff032bba31c933-fab9518b544ec055-01
+      - 00-0e91eacd831f44b0a7f68f8dde2f43e7-f8d6577d46c7277a-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
@@ -48,6 +48,8 @@ http_interactions:
       - Accept-Encoding
       Server:
       - cloudflare
+      Server-Timing:
+      - x-originResponse;dur=2679
       X-Robots-Tag:
       - none
       Content-Security-Policy:
@@ -59,6 +61,6 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"type":"error","error":{"type":"invalid_request_error","message":"prompt
-        is too long: 3333404 tokens > 200000 maximum"},"request_id":"req_011Cfw8XgxZHMi5RVcjNn8Zp"}'
-  recorded_at: Sun, 11 Oct 2026 21:06:17 GMT
-recorded_with: VCR 6.4.0
+        is too long: 3333404 tokens > 200000 maximum"},"request_id":"<REQUEST_ID>"}'
+  recorded_at: Tue, 10 Nov 2026 17:31:34 GMT
+recorded_with: VCR 6.4.1

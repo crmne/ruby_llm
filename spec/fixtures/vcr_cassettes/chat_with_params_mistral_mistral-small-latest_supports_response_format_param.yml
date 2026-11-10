@@ -9,7 +9,7 @@ http_interactions:
         is the square root of 64? Answer with a JSON object with the key `result`."}],"stream":false,"response_format":{"type":"json_object"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:22 GMT
+      - Tue, 10 Nov 2026 17:31:09 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,31 +32,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a12cc9-c15a-7958-a5cb-94044aaa1f9c
+      - 01a1c683-81ae-78bb-a277-ce16cba7d96f
       X-Kong-Request-Id:
-      - 01a12cc9-c15a-7958-a5cb-94044aaa1f9c
+      - 01a1c683-81ae-78bb-a277-ce16cba7d96f
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '82832'
+      - '99495'
       X-Ratelimit-Tokens-Query-Cost:
-      - '31'
+      - '43'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
       - '99'
       X-Envoy-Upstream-Service-Time:
-      - '646'
+      - '232'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '647'
+      - '233'
       X-Kong-Proxy-Latency:
-      - '14'
+      - '15'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -71,7 +71,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"25cd3f0ad8d94c4c9f2f875aa5b90796","created":1791752782,"model":"mistral-small-latest","usage":{"prompt_tokens":24,"total_tokens":31,"completion_tokens":7,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\"result\":
+      string: '{"id":"d61ed83d30aa4007b18d54bad8324f40","created":1794331869,"model":"mistral-small-latest","usage":{"prompt_tokens":36,"total_tokens":43,"completion_tokens":7,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\"result\":
         8}"}}]}'
-  recorded_at: Sun, 11 Oct 2026 21:06:22 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:31:09 GMT
+recorded_with: VCR 6.4.1

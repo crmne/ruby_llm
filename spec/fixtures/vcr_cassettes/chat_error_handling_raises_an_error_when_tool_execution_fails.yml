@@ -5,11 +5,12 @@ http_interactions:
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5.6","input":[{"role":"user","content":"What is the weather?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"broken","description":"Gets
+      string: '{"model":"gpt-6.1-sol","input":[{"role":"user","content":"What is the
+        weather?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"broken","description":"Gets
         current weather","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"tool_choice":"required"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:21:00 GMT
+      - Tue, 10 Nov 2026 17:56:07 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -44,11 +45,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID
+      - X-Request-ID, Server-Timing-Total
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '680'
+      - '1140'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -75,31 +76,36 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_012d8184609c0dad016acbfdbc34e887d2a39e70b13d1beda6",
+          "id": "resp_02940f7d0c29124f016af35ab5f99c87d2a13d7225645d2f97",
           "object": "response",
-          "created_at": 1791753660,
+          "created_at": 1794333366,
           "status": "completed",
-          "access_programs": null,
+          "access_programs": {
+            "cyber": "standard"
+          },
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1791753660,
+          "completed_at": 1794333367,
           "error": null,
           "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
           "incomplete_details": null,
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
-          "model": "gpt-5.6-sol",
+          "model": "gpt-6.1-sol",
           "moderation": null,
           "output": [
             {
-              "id": "fc_012d8184609c0dad016acbfdbcc0e487d2af77e7ed9b006e45",
+              "id": "fc_02940f7d0c29124f016af35ab6fbe087d299f8af31ce2e2281",
               "type": "function_call",
               "status": "completed",
               "arguments": "{}",
-              "call_id": "call_hpUKYpWqGywszwj9wP6O7tya",
+              "call_id": "call_h7XJnE2fTeGDQmZVOHY7g1m0",
               "name": "broken"
             }
           ],
@@ -177,5 +183,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 11 Oct 2026 21:21:00 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:56:07 GMT
+recorded_with: VCR 6.4.1

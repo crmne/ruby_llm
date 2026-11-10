@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 06 Nov 2026 16:19:21 GMT
+      - Tue, 10 Nov 2026 17:34:18 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,7 +48,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1664'
+      - '1340'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -75,16 +75,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_097e4b7d556265ca016aedfe07e74887d29fadddf38f95dcab",
+          "id": "resp_00eea3261670f77c016af355998a4887d29c9cf380a786c4fa",
           "object": "response",
-          "created_at": 1793981959,
+          "created_at": 1794332057,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1793981961,
+          "completed_at": 1794332058,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
@@ -98,7 +98,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_097e4b7d556265ca016aedfe0883c487d2b375a6c4577b5bc8",
+              "id": "msg_00eea3261670f77c016af3559a0fb487d2b1177ea8770f5157",
               "type": "message",
               "status": "completed",
               "content": [
@@ -106,7 +106,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "My favorite Ruby feature is **blocks + yield (and the whole \u201cRuby-style iteration\u201d syntax)**\u2014especially because they make it easy to express control flow in a readable way.\n\nFor example:\n\n```ruby\n[1, 2, 3].map { |n| n * 2 }\n```\n\nThat `{ ... }` block is super flexible: it works with `map`, `each`, `select`, `File.open`, custom methods using `yield`, etc., and it keeps the intent clear without tons of ceremony."
+                  "text": "My favorite Ruby feature is **blocks with iterators**\u2014especially how naturally they let you inject behavior into methods.\n\nFor example, `map`, `select`, `each`, and friends make it feel like you\u2019re defining *what* you want done rather than *how* to loop:\n\n```ruby\nnums = [1, 2, 3, 4]\nsquares = nums.map { |n| n * n }\n```\n\nIt\u2019s concise, expressive, and shows off Ruby\u2019s \u201cmake the common case easy\u201d philosophy."
                 }
               ],
               "phase": "final_answer",
@@ -163,14 +163,14 @@ http_interactions:
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 112,
+            "output_tokens": 114,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 124
+            "total_tokens": 126
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Fri, 06 Nov 2026 16:19:21 GMT
+  recorded_at: Tue, 10 Nov 2026 17:34:18 GMT
 recorded_with: VCR 6.4.1

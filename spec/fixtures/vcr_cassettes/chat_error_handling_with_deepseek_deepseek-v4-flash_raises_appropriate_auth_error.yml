@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"Hello"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,35 +24,35 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
-      Content-Length:
-      - '204'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
       Date:
-      - Sun, 11 Oct 2026 21:06:12 GMT
+      - Tue, 10 Nov 2026 17:31:28 GMT
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - elb
       Vary:
-      - origin, access-control-request-method, access-control-request-headers
+      - accept-encoding,origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 941eb91c557cc030459039d79bd2dff0
+      - 5ce911f1ec849e6e043f1031a1c127f2
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
       X-Cache:
       - Error from cloudfront
       Via:
-      - 1.1 83dede49b3c78b7f99a0399a34264ed6.cloudfront.net (CloudFront)
+      - 1.1 0996579236e052d74cb05219740670d6.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P2
+      - TXL52-P3
       X-Amz-Cf-Id:
-      - DNfGQcQ1IP2ap_N1Q56Tu8C7TqCSQhEsEBdMGp6mi00Nkcil2zHZrg==
+      - Z2bTiFAFMeEg9Kk6jNBgeLPjy8RplRgHhQRjemytU6jfzBWvhIaDIQ==
     body:
-      encoding: UTF-8
+      encoding: ASCII-8BIT
       string: '{"error":{"message":"Authentication Fails, Your api key: ****-key is
-        invalid (request_id: 4a8d2127-22c9-406b-a654-c144b6fb1d25)","type":"authentication_error","param":null,"code":"invalid_request_error"}}'
-  recorded_at: Sun, 11 Oct 2026 21:06:12 GMT
-recorded_with: VCR 6.4.0
+        invalid (request_id: f549517e-af83-4531-a3fd-24686d0142e3)","type":"authentication_error","param":null,"code":"invalid_request_error"}}'
+  recorded_at: Tue, 10 Nov 2026 17:31:28 GMT
+recorded_with: VCR 6.4.1

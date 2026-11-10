@@ -12,7 +12,7 @@ http_interactions:
         email"}},"required":["email"],"additionalProperties":false,"strict":true},"strict":false}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.0
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 25 Oct 2026 18:59:52 GMT
+      - Tue, 10 Nov 2026 17:29:30 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -51,7 +51,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '745'
+      - '927'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -78,18 +78,21 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0b5aa41dcd7ba4e5016ade51a7796487d292b58e7a87a85923",
+          "id": "resp_0f97e9b729ef95a6016af35479489887d2a3a0259f09e4a1d2",
           "object": "response",
-          "created_at": 1792954791,
+          "created_at": 1794331769,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1792954792,
+          "completed_at": 1794331770,
           "error": null,
           "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
           "incomplete_details": null,
           "instructions": null,
           "max_output_tokens": null,
@@ -98,11 +101,11 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "fc_0b5aa41dcd7ba4e5016ade51a8107c87d2a91554dec0b97007",
+              "id": "fc_0f97e9b729ef95a6016af3547a066887d2aa1633105ae454a1",
               "type": "function_call",
               "status": "completed",
               "arguments": "{\"email\":\"ada@example.com\"}",
-              "call_id": "call_sxffLRrjTMY5X2MvHQjGPNAu",
+              "call_id": "call_7tuBg5i1PoOoH5hVIip5DPeh",
               "name": "customer_lookup",
               "namespace": "crm"
             }
@@ -195,21 +198,21 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 25 Oct 2026 18:59:52 GMT
+  recorded_at: Tue, 10 Nov 2026 17:29:30 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.4","input":[{"role":"user","content":"Which plan is
-        the customer ada@example.com on? Use your tools."},{"id":"fc_0b5aa41dcd7ba4e5016ade51a8107c87d2a91554dec0b97007","type":"function_call","status":"completed","arguments":"{\"email\":\"ada@example.com\"}","call_id":"call_sxffLRrjTMY5X2MvHQjGPNAu","name":"customer_lookup","namespace":"crm"},{"type":"function_call_output","call_id":"call_sxffLRrjTMY5X2MvHQjGPNAu","output":"{\"email\":\"ada@example.com\",\"name\":\"Ada
+        the customer ada@example.com on? Use your tools."},{"id":"fc_0f97e9b729ef95a6016af3547a066887d2aa1633105ae454a1","type":"function_call","status":"completed","arguments":"{\"email\":\"ada@example.com\"}","call_id":"call_7tuBg5i1PoOoH5hVIip5DPeh","name":"customer_lookup","namespace":"crm"},{"type":"function_call_output","call_id":"call_7tuBg5i1PoOoH5hVIip5DPeh","output":"{\"email\":\"ada@example.com\",\"name\":\"Ada
         Lovelace\",\"plan\":\"Pro\"}"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"namespace","name":"crm","description":"Customer
         records","tools":[{"type":"function","name":"customer_lookup","description":"Finds
         a customer by email","parameters":{"type":"object","properties":{"email":{"type":"string","description":"Customer
         email"}},"required":["email"],"additionalProperties":false,"strict":true},"strict":false}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.0
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -224,7 +227,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 25 Oct 2026 18:59:53 GMT
+      - Tue, 10 Nov 2026 17:29:31 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -248,7 +251,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '821'
+      - '940'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -275,18 +278,21 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0b5aa41dcd7ba4e5016ade51a8715087d28aedfe6b18240a17",
+          "id": "resp_0f97e9b729ef95a6016af3547a488487d29c6a2f32c2c23524",
           "object": "response",
-          "created_at": 1792954792,
+          "created_at": 1794331770,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1792954793,
+          "completed_at": 1794331771,
           "error": null,
           "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
           "incomplete_details": null,
           "instructions": null,
           "max_output_tokens": null,
@@ -295,7 +301,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0b5aa41dcd7ba4e5016ade51a90ebc87d290f823124b1e54f5",
+              "id": "msg_0f97e9b729ef95a6016af3547af79487d29255590db005a949",
               "type": "message",
               "status": "completed",
               "content": [
@@ -398,5 +404,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 25 Oct 2026 18:59:53 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:29:31 GMT
+recorded_with: VCR 6.4.1

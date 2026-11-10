@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"Hi"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -37,23 +37,23 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - f1b7fb78f9a68ec12797ececb1602e14
+      - bce96bdf9c8e6172dc93297cba794fab
       Date:
-      - Sun, 11 Oct 2026 21:06:47 GMT
+      - Tue, 10 Nov 2026 17:31:57 GMT
       X-Envoy-Upstream-Service-Time:
-      - '4608'
+      - '3853'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"error_type":"TOO_MANY_TOKENS","id":"1e4c0b64-e207-4155-b8a2-80f273473b3b","message":"too
+      string: '{"error_type":"TOO_MANY_TOKENS","id":"9ec522db-277b-4e95-8d57-4175fa79ab7f","message":"too
         many tokens: size limit exceeded by 25836 tokens. Try using shorter or fewer
         inputs. The limit for this model is 288000 tokens."}'
-  recorded_at: Sun, 11 Oct 2026 21:06:47 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:31:57 GMT
+recorded_with: VCR 6.4.1

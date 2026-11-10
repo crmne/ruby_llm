@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,42 +26,44 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
-      - Fri, 02 Oct 2026 22:02:41 GMT
+      - Tue, 03 Nov 2026 01:08:56 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"6ac02a01-9c6"
+      - W/"6ae93428-9c6"
       Expires:
-      - Sun, 11 Oct 2026 21:16:10 GMT
+      - Tue, 10 Nov 2026 17:41:37 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 9D9C:2F48DF:4FCDA41:508CDB6:6ACBFA41
+      - EABE:9FB17:208869:20DA2B:6AF354F8
       X-Github-Edge-Region:
       - fra
       Accept-Ranges:
       - bytes
       Date:
-      - Sun, 11 Oct 2026 21:06:15 GMT
+      - Tue, 10 Nov 2026 17:31:44 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '5'
+      - '8'
       X-Served-By:
-      - cache-ber1080035-BER
+      - cache-ber1080055-BER
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1791752775.122952,VS0,VE1
+      - S1794331905.994403,VS0,VE2
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - ba5750fdcde0b33b396eb408fe052ac8c1f65e32
+      - 94c5516d57b03b4ec2af4d4b12d7584ec2d984fe
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +99,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Sun, 11 Oct 2026 21:06:15 GMT
+  recorded_at: Tue, 10 Nov 2026 17:31:45 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
@@ -140,7 +142,7 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -157,7 +159,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 Oct 2026 21:06:15 GMT
+      - Tue, 10 Nov 2026 17:31:45 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -174,14 +176,16 @@ http_interactions:
       - 'true'
       X-Xai-Model-Address:
       - http://localhost:9988
+      X-Watermark:
+      - 'false'
       Traceparent:
-      - 00-9dfaebb61e4337261c52c36f2adb2aa8-652a041900066c70-00
+      - 00-f1a8c5cafa0cdf0257d6218baaf581db-a218cc4a00013f74-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - 8679e9c3-336a-4b7f-a6ac-f4d0ba1dc629
+      - db951b8a-3777-4d0f-95ab-0214db253b0d
       Azureml-Model-Session:
-      - d20261009040854-b7570cce
+      - d20261110012600-4baac0fe
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -215,7 +219,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - 8679e9c3-336a-4b7f-a6ac-f4d0ba1dc629
+      - db951b8a-3777-4d0f-95ab-0214db253b0d
+      X-Http2-Stream-Id:
+      - '659'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -224,20 +230,21 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"7ba8bd73-da71-49dc-8a62-51b33b41d218","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"This
-        is the **Ruby License** (also known as the Ruby License or matz''s original
-        license), a permissive open-source license for the Ruby programming language,
-        authored by Yukihiro Matsumoto (matz).\n\n### Key Points:\n- **Copyright**:
-        Held by Yukihiro Matsumoto.\n- **Permissions**:\n  - Free redistribution of
-        verbatim source copies (with notices preserved).\n  - Modification allowed,
-        but with specific conditions (e.g., public domain mods, internal use, non-standard
-        names, or author arrangements).\n  - Binary distribution permitted with source
-        availability or pointers to originals.\n  - Can be embedded/modified into
-        other software (even commercial), but excludes third-party files (see `LEGAL`
-        file).\n- **No warranty**: Provided \"AS IS\" without guarantees.\n- **Alternative**:
-        Ruby can also use the 2-clause BSD License (BSDL).\n\nIt''s similar to other
-        permissive licenses like BSD/MIT but has unique clauses for modifications
-        and binaries. This version appears from older Ruby distributions (pre-2.0
-        era); modern Ruby primarily uses the 2-clause BSD."},"finish_reason":"stop"}],"usage":{"prompt_tokens":524,"completion_tokens":214,"total_tokens":738,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":169,"audio_tokens":0,"text_tokens":524,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1791752775,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Sun, 11 Oct 2026 21:06:17 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"<X_REQUEST_ID>","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"This
+        is the **Ruby License** (also known as the Ruby BSDL or Matsumoto''s 2-clause
+        BSD-like license), which governs the distribution and modification of the
+        Ruby programming language.\n\n### Key Points:\n- **Copyright**: Yukihiro Matsumoto
+        (matz).\n- **Permissions**:\n  - Freely redistribute **verbatim source** copies
+        (with notices intact).\n  - **Modify** the software, but must either:\n    -
+        Make mods public domain/freely available.\n    - Use only internally in your
+        org.\n    - Name non-standard binaries distinctly + point to original.\n    -
+        Arrange directly with author.\n  - Distribute **binaries** with source access
+        or original distro instructions.\n  - Embed modified parts in other (even
+        commercial) software.\n- **Exclusions**: Some files have different terms (see
+        `LEGAL` file); scripts/libs you generate are yours.\n- **No Warranty**: Provided
+        \"AS IS\".\n\nIt''s a **permissive open-source license** (similar to 2-clause
+        BSD), allowing broad commercial use while requiring attribution and source
+        availability options. Ruby''s official distros include this as `COPYING` or
+        `license.txt`."},"finish_reason":"stop"}],"usage":{"prompt_tokens":692,"completion_tokens":232,"total_tokens":924,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":161,"audio_tokens":0,"text_tokens":692,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794331905,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Tue, 10 Nov 2026 17:31:47 GMT
+recorded_with: VCR 6.4.1

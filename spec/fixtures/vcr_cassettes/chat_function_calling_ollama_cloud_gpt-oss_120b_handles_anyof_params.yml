@@ -12,7 +12,7 @@ http_interactions:
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -29,34 +29,35 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - fb036d5c394cd0c23173b2be8d69965e24bc9914
+      - 81e02665bdd918cf59b66804d554f8e53171f5d2
       X-Build-Time:
-      - '2026-10-09T17:17:18-07:00'
+      - '2026-11-09T17:12:20-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '612'
+      - '710'
       Date:
-      - Sun, 11 Oct 2026 21:11:46 GMT
+      - Tue, 10 Nov 2026 17:42:17 GMT
       Server:
       - Google Frontend
       X-Cloud-Trace-Context:
-      - 6e2865e68eb5b57fdfd27d3e029bb1a3/14644584415654286197
+      - 75a4bfb036ed9a08b6ed78ba23d6eb93/13796727956080230542
       Traceparent:
-      - 00-6e2865e68eb5b57fdfd27d3e029bb1a3-cb3c03ef8a4b9375-00
+      - 00-75a4bfb036ed9a08b6ed78ba23d6eb93-bf77d2fa54dd008e-00
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-311","object":"chat.completion","created":1791753106,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"We
-        need to call the any_of_params tool with given parameters. Use the function
-        any_of_params.","tool_calls":[{"id":"call_14550vqa","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"status\":\"pending\",\"task\":\"Review
-        PR\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":162,"completion_tokens":57,"total_tokens":219,"prompt_tokens_details":{"cached_tokens":64}}}
+      string: '{"id":"chatcmpl-424","object":"chat.completion","created":1794332537,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"User
+        wants to call the any_of_params tool with task \"Review PR\" and status \"pending\".
+        Then report the result. So we need to invoke the function with appropriate
+        parameters. Let''s do that.","tool_calls":[{"id":"call_sca0wb58","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
+        PR\",\"status\":\"pending\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":162,"completion_tokens":77,"total_tokens":239,"prompt_tokens_details":{"cached_tokens":64}}}
 
         '
-  recorded_at: Sun, 11 Oct 2026 21:11:47 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:42:17 GMT
+recorded_with: VCR 6.4.1

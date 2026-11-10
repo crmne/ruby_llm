@@ -12,7 +12,7 @@ http_interactions:
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:15:08 GMT
+      - Tue, 10 Nov 2026 17:45:01 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,6 +38,8 @@ http_interactions:
       - max-age=31536000
       Set-Cookie:
       - "<COOKIE>"
+      X-Watermark:
+      - 'false'
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
@@ -55,11 +57,11 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '357.9'
+      - '319.4'
       X-Metrics-E2e-Ms:
-      - '2629.6'
+      - '3035.2'
       Traceparent:
-      - 00-b8c5fbc3bfef75a5ec3bd007187036e5-696e182a0006a32a-01
+      - 00-2f42ef418b5d578c72ec18a39d449a5e-2eef0f610004cba3-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -72,11 +74,11 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1791753305,"completed_at":1791753308,"id":"152beb10-5e3c-92a6-b5be-5d5d522c7331","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_152beb10-5e3c-92a6-b5be-5d5d522c7331","summary":[{"text":"I
-        need to call the any-of params tool for the \"Review PR\" task with status
-        \"pending\" and report the result.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"erSvxVk0o4hHS1lULKv+YBD+lwFRqedJWxaPqQQVXDnwkstzYSyz/lEs1YE1lUUD6wXhxMl/sECEVvuqYWf2qdeAsSAFyV8caWXEyvUM+C49wGUrAHaLgc2V+JzYKQ8nP0prFGSJ7wbbO6qC+lHTzCg61nRIG5l+zJexv3oFcii+B/SZxgzrAE/KvPs3ktZ1M21CsO9KhgGTz3sivoX0Bj0j8hl8pHoyRw20r+zXbil64G8P5WGro1AMdCOs+7BezhKDIaJYdUWlnFzoT2GAt9npFZWTXqo6GNiwO2JRR7WX5LE9VI/OuAoWNS3rXVJRBGNUBcHg3677CdgZ9ROvJM+vqxudQF+6IARFBCVb4t215X64E5jKsmGiYTkalZ9PJCHIGWrbx2LN9wRdclumiKq0S8rMY6cyCDCyF2zLaMlByIzE1BrnVeeSuG4sIG7itvD1PuC+35KHPQW7XA1d/xk56iHluSdUu/d6bcvdKYlQBE/tLc7L+ywvruEz2ut7bE2yfDT/vb1A7CjXzf9BtQRIbnYu8kIcRBuay1nw3soulKRFil/WhGmwB15cZcFOxD7kvgxfzcMJ/xIyGIaDBbEtzSSDFM0r3aEfnrJgSJ3LvjD1kAKY3iuy/IvmruNuBzJ+89Cz39pOmVj0NEqYZklwluqlGRPO0gKUWWzVOA8Z/j/wTwcGKsvV9MrVkQkc/HLOMvQA+GIC6cIaFdPDmM8ZaqTLC4NKZf8DpExK+nwk+MTAW55knk4l4Ci7HuJg/EFIearjtSeWQlP+z9PhKyRXJ9qTgiOnMQoZ4XHXt9ww87CVtgdzTAGbinVQilM49iRtQKwJnPuGA1g/zUkm2zWjHjpGpzYnOW4gPECx1cAWwLyCDRKP7yhAOssbeIyhfvT3MxcD5fdwcfQAUE9ousD1RtxiPjBT2U7WVt/uWcq1TjcKZBcEP3xjCU1jFAvT0tKAJDhR5Gu+yPPq0k16pNJ+bU/zn6S9jCxBNAy8GLVTKUR7xCc2Lh/sOL/z+b6rtEi2MU5C+2gQYOhlUHjuq7K2V7lPcWa/POJA1OIpXwF5kUjJ9s++H8rETwV4qmK6fHlWMo8oHyfKflawoFoW13b/zaHnN3kVmzdgZXpk/1WGS/2mhSd+nDaD0pKW5S8UmDSNPPJXwqL/BOEIwrmJIRHpz5YhVFrsP3ZzkxeIRirJv+owXfRLEe7jySfBmJ4V4QvsK5Z79oopcwvuL3HRZVEFPTuZ"},{"arguments":"{\"task\":\"Review
-        PR\",\"status\":\"pending\"}","call_id":"call-0130b6dd-9dd8-433b-bea1-b8ea3a435b93-0","name":"any_of_params","type":"function_call","id":"fc_152beb10-5e3c-92a6-b5be-5d5d522c7331_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Uses
+      string: '{"created_at":1794332699,"completed_at":1794332701,"id":"<X_REQUEST_ID>","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_<X_REQUEST_ID>","summary":[{"text":"Calling
+        the any-of params tool for task \"Review PR\" with status \"pending\" and
+        reporting the result.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"/LRx2OMS6Irdv0fJYcRAFkpINnVFLjduh2yfr3kDL/zbAGk/BedFPrXZPBlu8PJlx5ItJANRubvtMLBFtQYWom/TXsG/1wKI8QH3/n4KJiVfUhD65xwsApoTPeQC0ZaiY7KoCPceiSdJnyU5+Wdcjr2BIzg3CJmUC4HJVHa1oGED88tRLu0eOvws4F7f5FkqMaUTAuru413mNgG4GpZ8g+Oe6PUB+vVHqKIiJXl9ylDYkLUgLUv+xJuUHUQiBvcP0bSBB+UPa7Zdl1G0WrUJevEQNcANLzEI9IwdKrrEwheMq2dxVAcMHIP105Hv0o0WRyqrLcP4i7ysbg1Hqu6CU4bUXZKCw0h5HHmg1lzb8IKwpBDZAE6ZeS1w2WR31RfnmWLM9c715lshPuz1wQHfT3hOFZAg8IJ3ciJdOom0MaFEE1HzHHKwSli/Toet/DvwHth6QQqggteW6NYmDDAmOb3QR5gJyWk9zOZ5ZgStJIqA+2TkHkvaFEvbuXqe4k9QCJdQNrXN44jXEPSGrJCikUZfQFiMg3xzGofFMp9x50C3GmnfedWAJFmZaJtwrdIiYRpD/eCP22BL/aA1zX18udPVx/HyOeVzqYCUwxr6atqcYHacba9wvkzRzoIEdLkqXuTSQYlYKWeBCcoLNnexvKnRVCB9ghWt2Mc5Y4Px38Nyxw"},{"arguments":"{\"task\":\"Review
+        PR\",\"status\":\"pending\"}","call_id":"call-ac81dd1a-c3c8-4f46-8f49-200837e4d3a9-0","name":"any_of_params","type":"function_call","id":"fc_<X_REQUEST_ID>_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Uses
         params DSL any_of support","name":"any_of_params","parameters":{"type":"object","properties":{"task":{"type":"string","description":"Task
-        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false},"strict":false}],"top_p":0.95,"usage":{"input_tokens":337,"input_tokens_details":{"cached_tokens":128},"output_tokens":217,"output_tokens_details":{"reasoning_tokens":201},"total_tokens":554,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":8293500,"context_details":{"input_tokens":337,"output_tokens":220}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Sun, 11 Oct 2026 21:15:08 GMT
-recorded_with: VCR 6.4.0
+        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false},"strict":false}],"top_p":0.95,"usage":{"input_tokens":337,"input_tokens_details":{"cached_tokens":128},"output_tokens":222,"output_tokens_details":{"reasoning_tokens":206},"total_tokens":559,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":8418500,"context_details":{"input_tokens":337,"output_tokens":226}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Tue, 10 Nov 2026 17:45:01 GMT
+recorded_with: VCR 6.4.1

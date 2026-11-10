@@ -10,7 +10,7 @@ http_interactions:
         is the best.</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -35,7 +35,7 @@ http_interactions:
       Num-Chars:
       - '2668'
       Num-Tokens:
-      - '53'
+      - '83'
       Pragma:
       - no-cache
       Vary:
@@ -43,11 +43,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - cf3b0fe40a3c3235a205c525d6e7d90a
+      - dac575f7a577a5c0b6ea9f677a5e8c5a
       Date:
-      - Sun, 11 Oct 2026 21:06:25 GMT
+      - Tue, 10 Nov 2026 17:32:25 GMT
       X-Envoy-Upstream-Service-Time:
-      - '466'
+      - '28348'
       Server:
       - envoy
       Via:
@@ -58,9 +58,11 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"e90c03fe-fe1d-4cc4-8c42-8521019ff2bc","message":{"role":"assistant","content":[{"type":"text","text":"The
-        file `ruby.txt` contains the following plain text:\n\n**\"Ruby is the best.\"**"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":30,"output_tokens":23},"tokens":{"input_tokens":525,"output_tokens":26},"cached_tokens":448}}'
-  recorded_at: Sun, 11 Oct 2026 21:06:25 GMT
+      string: '{"id":"7179a493-3d8e-413e-a35b-4e00804069e1","message":{"role":"assistant","content":[{"type":"text","text":"The
+        file `ruby.txt` contains the following text:\n\n**Ruby is the best.**\n\nIt''s
+        a plain text file (as indicated by the `text/plain` MIME type) with a simple
+        statement expressing enthusiasm for the Ruby programming language."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":30,"output_tokens":53},"tokens":{"input_tokens":525,"output_tokens":56},"cached_tokens":464}}'
+  recorded_at: Tue, 10 Nov 2026 17:32:25 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
@@ -69,12 +71,14 @@ http_interactions:
       string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]},{"role":"assistant","content":[{"type":"text","text":"The
-        file `ruby.txt` contains the following plain text:\n\n**\"Ruby is the best.\"**"}]},{"role":"user","content":[{"type":"text","text":"and
+        file `ruby.txt` contains the following text:\n\n**Ruby is the best.**\n\nIt''s
+        a plain text file (as indicated by the `text/plain` MIME type) with a simple
+        statement expressing enthusiasm for the Ruby programming language."}]},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -97,9 +101,9 @@ http_interactions:
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Num-Chars:
-      - '3007'
+      - '3149'
       Num-Tokens:
-      - '143'
+      - '209'
       Pragma:
       - no-cache
       Vary:
@@ -107,11 +111,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - d3818d6c7e95a57484ab6200b70d0d76
+      - 6f15a16f325bf0d35385d8ebc00e3942
       Date:
-      - Sun, 11 Oct 2026 21:06:26 GMT
+      - Tue, 10 Nov 2026 17:32:26 GMT
       X-Envoy-Upstream-Service-Time:
-      - '907'
+      - '1242'
       Server:
       - envoy
       Via:
@@ -122,9 +126,11 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"f6f095b0-237c-4987-b7ba-dc96f9881c85","message":{"role":"assistant","content":[{"type":"text","text":"The
-        file `ruby.xml` contains the following XML content:\n\n```xml\n\u003ctruism\u003eRuby
-        is the best\u003c/truism\u003e\n```\n\nHere, the text **\"Ruby is the best\"**
-        is enclosed within a `\u003ctruism\u003e` tag."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":88,"output_tokens":55},"tokens":{"input_tokens":591,"output_tokens":58},"cached_tokens":512}}'
-  recorded_at: Sun, 11 Oct 2026 21:06:26 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"1da50325-0181-4b12-bc28-95ca54267faf","message":{"role":"assistant","content":[{"type":"text","text":"The
+        file `ruby.xml` is an XML file (as indicated by the `application/xml` MIME
+        type) and contains the following structured data:\n\n```xml\n\u003ctruism\u003eRuby
+        is the best\u003c/truism\u003e\n```\n\nHere, the text \"Ruby is the best\"
+        is enclosed within a custom XML tag `\u003ctruism\u003e`. This structure allows
+        the content to be interpreted as a statement or assertion within an XML context."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":118,"output_tokens":91},"tokens":{"input_tokens":621,"output_tokens":94},"cached_tokens":464}}'
+  recorded_at: Tue, 10 Nov 2026 17:32:26 GMT
+recorded_with: VCR 6.4.1

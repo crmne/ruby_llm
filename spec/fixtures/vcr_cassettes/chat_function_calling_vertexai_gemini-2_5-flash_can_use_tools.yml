@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Sun, 11 Oct 2026 21:06:47 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Pragma:
       - no-cache
+      Date:
+      - Tue, 10 Nov 2026 17:30:44 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -56,7 +56,7 @@ http_interactions:
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 11 Oct 2026 21:06:47 GMT
+  recorded_at: Tue, 10 Nov 2026 17:30:44 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -69,7 +69,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -83,6 +83,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Goog-Request-Id:
+      - xFTzapyRE9-48uMPtt2O8A0
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -90,7 +92,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:06:48 GMT
+      - Tue, 10 Nov 2026 17:30:45 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -116,22 +118,21 @@ http_interactions:
                     "functionCall": {
                       "name": "weather",
                       "args": {
-                        "longitude": "13.4050",
-                        "latitude": "52.5200"
+                        "latitude": "52.5200",
+                        "longitude": "13.4050"
                       }
                     },
-                    "thoughtSignature": "CpEEAY89a19kv8x8Z4J39gQdOK2G59oL2kTSVqWgEO0vLUCeMuI4Eagef+2b2j65I2frMnJvklCmlUM4n20/wzI8QPwl26J2ORJ8zWrLod9CxpyMnQHbdZ2VhAjHIqZ6jRBEWJjTN7gJSqzbpos0i7Ot9vpq2/O7kGf2CnuaZu89JMPFKI2b+q8W1DYweIi3fK9iD9o/9uR8T+owE4oxc+Q7A0mgpWp2viU/USkCHV6FTKUJuJVyIn50RgKHydxyXC5fUTdhQ38THfgfJRM2W01ZxRqwXywWBFFx79nKeNDGiAbRPKmtYmcY4hfmLkIH7wpM2h7j8TZ0YOKen9Ubv+zG3aizwmrwbj4RQpQ0NuNQieztt0OTE7tTSxWH8D+N7R5c0int7SILmwlkjbbKrCT4D+eYsRn6AiAhGeVZpHwabxD9eadfechViOFUKxRzUvj9ENyw55aDSSpu2/dK1hH4H/U2Iq1kpagSAALRaOFtM3tC9brPvJFLnxJdLJMMHJOfKic9faHddqOYOOW3VuBk4ZQgM7OqgrAKhBpbs8E1saq+xVUrwnQtmH0p6NhveVw8F+vFx13sQYgwWxZCPz+i9z6N+pnaX/hmTTioF6KlNysfr51WYYVmg9QEG463qgi0lB8Z0Yco8cvWgAYGlQkchGLfPco4zwKQjnqBqjYTu5Y7R79rJ2SRzKSKMKye6orMnA=="
+                    "thoughtSignature": "AY89a18KCtZjplWJ17MfPQD/3NNYRiUnNjAWJqgU67F2mjBs4aD8lIWQPBk/+f4iAaF2DIm3m7ivpsBAjFq1TR25bDK/O9ynV1ZtHXeI6ExDlwiIflF60oxWS/PN819yz9/ZDQzZulfPbwg3qXQsrBq6Z2uVPxnkWIBOoAi2Ohl4btpM1dvYVQ+y5kOodMaB2nwxUHrbOotBFD3UAA7xFeh7aLYmcv1ENS4FdpVbjesseryAWYEKexSCvQ+aqZ0q2zfk+h0QUoFvyhvJ6GoBrfXbIweQ4duM6GIhm6ZoWLqamQkmwiBAt3BqcZYamVIIOtcgGyox+Mb3ti2P0PkX41NYpWi7Aftzk1/hAswXSJk0FoCC3PCgmhtZv7LYPQ6Xh9ex7kmziBEuO6HCvp0DPTb5/h6fZTuPPPriu6rjBTh2Y82MCmV0LMKchAjg4X7Ev7W8aD51YE9Tzq9bC7twx+grGe+7fvRmaU16SIL3mGhxvVdiJyV86hobc9SinmE3C1iwUx8g+1wvj0sqlrUA5H7sCnADOu+dGd9lf3Y="
                   }
                 ]
               },
-              "finishReason": "STOP",
-              "avgLogprobs": -0.612732214086196
+              "finishReason": "STOP"
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 33,
-            "candidatesTokenCount": 17,
-            "totalTokenCount": 149,
+            "candidatesTokenCount": 28,
+            "totalTokenCount": 126,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -142,30 +143,30 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 17
+                "tokenCount": 28
               }
             ],
-            "thoughtsTokenCount": 99
+            "thoughtsTokenCount": 65
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-10-11T21:06:47.349075Z",
-          "responseId": "Z_rLapOnFayGu_EPrvPjgQc"
+          "createTime": "2026-11-10T17:30:44.313500Z",
+          "responseId": "xFTzapyRE9-48uMPtt2O8A0"
         }
-  recorded_at: Sun, 11 Oct 2026 21:06:48 GMT
+  recorded_at: Tue, 10 Nov 2026 17:30:45 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the weather in
-        Berlin? (52.5200, 13.4050)"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"CpEEAY89a19kv8x8Z4J39gQdOK2G59oL2kTSVqWgEO0vLUCeMuI4Eagef+2b2j65I2frMnJvklCmlUM4n20/wzI8QPwl26J2ORJ8zWrLod9CxpyMnQHbdZ2VhAjHIqZ6jRBEWJjTN7gJSqzbpos0i7Ot9vpq2/O7kGf2CnuaZu89JMPFKI2b+q8W1DYweIi3fK9iD9o/9uR8T+owE4oxc+Q7A0mgpWp2viU/USkCHV6FTKUJuJVyIn50RgKHydxyXC5fUTdhQ38THfgfJRM2W01ZxRqwXywWBFFx79nKeNDGiAbRPKmtYmcY4hfmLkIH7wpM2h7j8TZ0YOKen9Ubv+zG3aizwmrwbj4RQpQ0NuNQieztt0OTE7tTSxWH8D+N7R5c0int7SILmwlkjbbKrCT4D+eYsRn6AiAhGeVZpHwabxD9eadfechViOFUKxRzUvj9ENyw55aDSSpu2/dK1hH4H/U2Iq1kpagSAALRaOFtM3tC9brPvJFLnxJdLJMMHJOfKic9faHddqOYOOW3VuBk4ZQgM7OqgrAKhBpbs8E1saq+xVUrwnQtmH0p6NhveVw8F+vFx13sQYgwWxZCPz+i9z6N+pnaX/hmTTioF6KlNysfr51WYYVmg9QEG463qgi0lB8Z0Yco8cvWgAYGlQkchGLfPco4zwKQjnqBqjYTu5Y7R79rJ2SRzKSKMKye6orMnA=="}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        Berlin? (52.5200, 13.4050)"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"AY89a18KCtZjplWJ17MfPQD/3NNYRiUnNjAWJqgU67F2mjBs4aD8lIWQPBk/+f4iAaF2DIm3m7ivpsBAjFq1TR25bDK/O9ynV1ZtHXeI6ExDlwiIflF60oxWS/PN819yz9/ZDQzZulfPbwg3qXQsrBq6Z2uVPxnkWIBOoAi2Ohl4btpM1dvYVQ+y5kOodMaB2nwxUHrbOotBFD3UAA7xFeh7aLYmcv1ENS4FdpVbjesseryAWYEKexSCvQ+aqZ0q2zfk+h0QUoFvyhvJ6GoBrfXbIweQ4duM6GIhm6ZoWLqamQkmwiBAt3BqcZYamVIIOtcgGyox+Mb3ti2P0PkX41NYpWi7Aftzk1/hAswXSJk0FoCC3PCgmhtZv7LYPQ6Xh9ex7kmziBEuO6HCvp0DPTb5/h6fZTuPPPriu6rjBTh2Y82MCmV0LMKchAjg4X7Ev7W8aD51YE9Tzq9bC7twx+grGe+7fvRmaU16SIL3mGhxvVdiJyV86hobc9SinmE3C1iwUx8g+1wvj0sqlrUA5H7sCnADOu+dGd9lf3Y="}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parametersJsonSchema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -179,6 +180,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Goog-Request-Id:
+      - xVTzaub6Eu7ntfAP-_nT8Q8
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -186,7 +189,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:06:48 GMT
+      - Tue, 10 Nov 2026 17:30:46 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -202,6 +205,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJUaGUgd2VhdGhlciBpbiBCZXJsaW4gaXMgMTXCsEMgd2l0aCBhIHdpbmQgb2YgMTAga20vaC4iCiAgICAgICAgICB9CiAgICAgICAgXQogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiLAogICAgICAiYXZnTG9ncHJvYnMiOiAtMC4wOTkzNjU3NDUyNzE5NTUyMTQKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiAxODksCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiAyMSwKICAgICJ0b3RhbFRva2VuQ291bnQiOiAyMTAsCiAgICAidHJhZmZpY1R5cGUiOiAiT05fREVNQU5EIiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMTg5CiAgICAgIH0KICAgIF0sCiAgICAiY2FuZGlkYXRlc1Rva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAyMQogICAgICB9CiAgICBdCiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0yLjUtZmxhc2giLAogICJjcmVhdGVUaW1lIjogIjIwMjYtMTAtMTFUMjE6MDY6NDguMTM0NzI2WiIsCiAgInJlc3BvbnNlSWQiOiAiYVByTGFzYWNDSktCX05VUGpkYmxrUTgiCn0K
-  recorded_at: Sun, 11 Oct 2026 21:06:48 GMT
-recorded_with: VCR 6.4.0
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJUaGUgd2VhdGhlciBpbiBCZXJsaW4gaXMgMTXCsEMsIHdpdGggd2luZCBhdCAxMCBrbS9oLiIKICAgICAgICAgIH0KICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiAxNTUsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiAyMSwKICAgICJ0b3RhbFRva2VuQ291bnQiOiAxNzYsCiAgICAidHJhZmZpY1R5cGUiOiAiT05fREVNQU5EIiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMTU1CiAgICAgIH0KICAgIF0sCiAgICAiY2FuZGlkYXRlc1Rva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAyMQogICAgICB9CiAgICBdCiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0yLjUtZmxhc2giLAogICJjcmVhdGVUaW1lIjogIjIwMjYtMTEtMTBUMTc6MzA6NDUuMzEwNjMwWiIsCiAgInJlc3BvbnNlSWQiOiAieFZUemF1YjZFdTdudGZBUC1fblQ4UTgiCn0K
+  recorded_at: Tue, 10 Nov 2026 17:30:46 GMT
+recorded_with: VCR 6.4.1

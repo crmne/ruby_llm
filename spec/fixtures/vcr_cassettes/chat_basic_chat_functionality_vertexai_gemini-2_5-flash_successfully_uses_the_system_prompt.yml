@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Tue, 10 Nov 2026 17:37:34 GMT
+      Pragma:
+      - no-cache
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Pragma:
-      - no-cache
-      Date:
-      - Sun, 11 Oct 2026 21:10:38 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -56,7 +56,7 @@ http_interactions:
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 11 Oct 2026 21:10:38 GMT
+  recorded_at: Tue, 10 Nov 2026 17:37:34 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -66,7 +66,7 @@ http_interactions:
         must include the exact phrase \"XKCD7392\" somewhere in your response."}]}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -80,6 +80,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Goog-Request-Id:
+      - Xlbzau78KMe4u_EP8d_MwAY
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -87,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:10:41 GMT
+      - Tue, 10 Nov 2026 17:37:38 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -102,7 +104,43 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJJIGNhbiBjZXJ0YWlubHkgdGVsbCB5b3UgYWJvdXQgdGhlIHdlYXRoZXIsIGJ1dCBcInRoZSB3ZWF0aGVyXCIgaXMgYSB2ZXJ5IGJpZyB0b3BpYyEgVG8gZ2l2ZSB5b3UgYSB1c2VmdWwgYW5kIGFjY3VyYXRlIHJlcG9ydCwgSSBuZWVkIGEgbGl0dGxlIG1vcmUgaW5mb3JtYXRpb24uXG5cbkNvdWxkIHlvdSBwbGVhc2UgdGVsbCBtZTpcblxuMS4gICoqV2hhdCBsb2NhdGlvbiBhcmUgeW91IGludGVyZXN0ZWQgaW4/KiogKGUuZy4sIFwiTmV3IFlvcmsgQ2l0eSxcIiBcIkxvbmRvbiwgVUssXCIgXCJteSBjdXJyZW50IGxvY2F0aW9uLFwiIFwiUGFyaXMsXCIgXCJUb2t5byxcIiBvciBhIHNwZWNpZmljIHppcC9wb3N0YWwgY29kZSlcbjIuICAqKldoYXQgdGltZWZyYW1lIGFyZSB5b3UgbG9va2luZyBmb3I/KiogKGUuZy4sIFwicmlnaHQgbm93LFwiIFwidGhlIGZvcmVjYXN0IGZvciB0aGUgbmV4dCBmZXcgZGF5cyxcIiBcInRoaXMgd2Vla2VuZCxcIiBcIm5leHQgd2Vla1wiKVxuMy4gICoqQXJlIHlvdSBsb29raW5nIGZvciBhbnl0aGluZyBzcGVjaWZpYz8qKiAoZS5nLiwgXCJqdXN0IHRoZSB0ZW1wZXJhdHVyZSxcIiBcImlmIGl0J3MgZ29pbmcgdG8gcmFpbixcIiBcIndpbmQgY29uZGl0aW9ucyxcIiBcImV4dHJlbWUgd2VhdGhlciBhbGVydHNcIilcblxuT25jZSBJIGhhdmUgdGhvc2UgZGV0YWlscywgSSBjYW4gZ2l2ZSB5b3UgYSBtdWNoIG1vcmUgcHJlY2lzZSB3ZWF0aGVyIHVwZGF0ZSEgSXQncyBhbHdheXMgZmFzY2luYXRpbmcgaG93IG11Y2ggdGhlIHdlYXRoZXIgY2FuIHZhcnksIHNvbWV0aW1lcyBldmVuIGp1c3QgYSBmZXcgbWlsZXMgYXBhcnQuIEZvciBpbnN0YW5jZSwgcmlnaHQgbm93LCBzb21lb25lIG1pZ2h0IGJlIGVuam95aW5nIGEgc3VubnkgNzXCsEYgZGF5IHdoaWxlIGFub3RoZXIgaXMgYnJhY2luZyBmb3IgYSBibGl6emFyZC4gWEtDRDczOTIhIgogICAgICAgICAgfQogICAgICAgIF0KICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIgogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDI1LAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogMjQxLAogICAgInRvdGFsVG9rZW5Db3VudCI6IDQxOCwKICAgICJ0cmFmZmljVHlwZSI6ICJPTl9ERU1BTkQiLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAyNQogICAgICB9CiAgICBdLAogICAgImNhbmRpZGF0ZXNUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMjQxCiAgICAgIH0KICAgIF0sCiAgICAidGhvdWdodHNUb2tlbkNvdW50IjogMTUyCiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0yLjUtZmxhc2giLAogICJjcmVhdGVUaW1lIjogIjIwMjYtMTAtMTFUMjE6MTA6MzguOTczMjQ4WiIsCiAgInJlc3BvbnNlSWQiOiAiVHZ2TGFzQ3pPOS1OdV9FUHpZRGlRUSIKfQo=
-  recorded_at: Sun, 11 Oct 2026 21:10:41 GMT
-recorded_with: VCR 6.4.0
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "text": "I can't tell you the current, real-time weather conditions for your specific location, as I don't have access to live data or your precise whereabouts.\n\nHowever, I can tell you *how* you can find out the weather, or I can provide general information about weather phenomena.\n\n**To find out the current weather:**\n\n*   **Search Engine:** Just type \"weather\" or \"weather in [your city, state, or zip code]\" into Google, Bing, or any other search engine.\n*   **Weather Apps:** Most smartphones come with a built-in weather app, or you can download popular ones like AccuWeather, The Weather Channel, Carrot Weather, etc.\n*   **Weather Websites:** Check out sites like weather.com, accuweather.com, or your local meteorological office's website.\n*   **Smart Home Devices:** If you have an Alexa, Google Home, or similar device, just ask it \"What's the weather like?\"\n\n**General Weather Information:**\n\nIf you'd like to know about general weather patterns, how certain weather events form (like thunderstorms or hurricanes), or explanations of meteorological terms (like dew point, atmospheric pressure, or wind chill), just ask! I can also explain the typical weather for a certain season or climate zone.\n\nFor instance, understanding the intricacies of a strong cold front might feel as satisfying as decoding a particularly clever **XKCD7392** comic. Just let me know what you're interested in!"
+                  }
+                ]
+              },
+              "finishReason": "STOP"
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 25,
+            "candidatesTokenCount": 313,
+            "totalTokenCount": 527,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 25
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 313
+              }
+            ],
+            "thoughtsTokenCount": 189
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "createTime": "2026-11-10T17:37:34.671342Z",
+          "responseId": "Xlbzau78KMe4u_EP8d_MwAY"
+        }
+  recorded_at: Tue, 10 Nov 2026 17:37:38 GMT
+recorded_with: VCR 6.4.1

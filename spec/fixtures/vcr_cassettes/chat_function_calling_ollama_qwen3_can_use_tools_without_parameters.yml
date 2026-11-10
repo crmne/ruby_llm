@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -25,46 +25,41 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 Oct 2026 21:11:10 GMT
+      - Tue, 10 Nov 2026 17:41:38 GMT
       Content-Length:
-      - '953'
+      - '865'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-260","object":"chat.completion","created":1791753070,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+      string: '{"id":"chatcmpl-969","object":"chat.completion","created":1794332498,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
         the user wants to know which programming language they should learn using
         the best_language_to_learn tool. Let me check the tools provided. The available
-        function is best_language_to_learn, which seems to require no arguments. Since
-        there''s no specific input needed, I should call that function directly. I
-        don''t have any parameters to pass, so the arguments object will be empty.
-        Just need to make sure the tool call is properly formatted in JSON within
-        the XML tags.\n","tool_calls":[{"id":"call_0pmxv9f0","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":139,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":116,"total_tokens":255}}
+        function is best_language_to_learn, which takes no arguments. Since there''s
+        no specific input needed, I just need to call that function. I''ll make sure
+        to structure the tool call correctly in JSON within the specified XML tags.\n","tool_calls":[{"id":"call_g9gxohp0","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":139,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":98,"total_tokens":237}}
 
         '
-  recorded_at: Sun, 11 Oct 2026 21:11:10 GMT
+  recorded_at: Tue, 10 Nov 2026 17:41:38 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"Use the best_language_to_learn
-        tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"call_0pmxv9f0","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
+        tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"call_g9gxohp0","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
         the user wants to know which programming language they should learn using
         the best_language_to_learn tool. Let me check the tools provided. The available
-        function is best_language_to_learn, which seems to require no arguments. Since
-        there''s no specific input needed, I should call that function directly. I
-        don''t have any parameters to pass, so the arguments object will be empty.
-        Just need to make sure the tool call is properly formatted in JSON within
-        the XML tags.\n","reasoning_content":"Okay, the user wants to know which programming
-        language they should learn using the best_language_to_learn tool. Let me check
-        the tools provided. The available function is best_language_to_learn, which
-        seems to require no arguments. Since there''s no specific input needed, I
-        should call that function directly. I don''t have any parameters to pass,
-        so the arguments object will be empty. Just need to make sure the tool call
-        is properly formatted in JSON within the XML tags.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call_0pmxv9f0"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        function is best_language_to_learn, which takes no arguments. Since there''s
+        no specific input needed, I just need to call that function. I''ll make sure
+        to structure the tool call correctly in JSON within the specified XML tags.\n","reasoning_content":"Okay,
+        the user wants to know which programming language they should learn using
+        the best_language_to_learn tool. Let me check the tools provided. The available
+        function is best_language_to_learn, which takes no arguments. Since there''s
+        no specific input needed, I just need to call that function. I''ll make sure
+        to structure the tool call correctly in JSON within the specified XML tags.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call_g9gxohp0"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -79,12 +74,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 Oct 2026 21:11:12 GMT
+      - Tue, 10 Nov 2026 17:41:40 GMT
       Content-Length:
-      - '1153'
+      - '1352'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTg3OSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTE3NTMwNzIsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzICoqUnVieSoqLiBJdCdzIGtub3duIGZvciBpdHMgc2ltcGxpY2l0eSwgcmVhZGFiaWxpdHksIGFuZCB2ZXJzYXRpbGl0eSwgbWFraW5nIGl0IGEgZ3JlYXQgY2hvaWNlIGZvciBiZWdpbm5lcnMgYW5kIGV4cGVyaWVuY2VkIGRldmVsb3BlcnMgYWxpa2UuIFdoZXRoZXIgeW91J3JlIGludG8gd2ViIGRldmVsb3BtZW50LCBkYXRhIGFuYWx5c2lzLCBvciBzY3JpcHRpbmcsIFJ1Ynkgb2ZmZXJzIGEgc21vb3RoIGxlYXJuaW5nIGN1cnZlIGFuZCBhIHZpYnJhbnQgY29tbXVuaXR5LiDwn4yfIExldCBtZSBrbm93IGlmIHlvdSdkIGxpa2UgbW9yZSBkZXRhaWxzISIsInJlYXNvbmluZyI6Ik9rYXksIHRoZSB1c2VyIGFza2VkIHdoaWNoIGxhbmd1YWdlIHRvIGxlYXJuLCBhbmQgdGhlIHRvb2wgcmV0dXJuZWQgXCJSdWJ5XCIuIEkgbmVlZCB0byBwcmVzZW50IHRoaXMgYW5zd2VyIGNsZWFybHkuIExldCBtZSBjb25maXJtIHRoYXQgUnVieSBpcyBpbmRlZWQgY29uc2lkZXJlZCB0aGUgYmVzdCBsYW5ndWFnZSBiYXNlZCBvbiB0aGUgdG9vbCdzIGRhdGEuIFNpbmNlIHRoZXJlIGFyZSBubyBhZGRpdGlvbmFsIHBhcmFtZXRlcnMgb3IgY29udGV4dCBwcm92aWRlZCwgSSdsbCBzaW1wbHkgc3RhdGUgdGhhdCBSdWJ5IGlzIHRoZSByZWNvbW1lbmRlZCBsYW5ndWFnZS4gTWF5YmUgYWRkIGEgYnJpZWYgcmVhc29uLCBsaWtlIGl0cyB2ZXJzYXRpbGl0eSBhbmQgZWFzZSBvZiBsZWFybmluZywgdG8gZ2l2ZSBtb3JlIHZhbHVlLiBNYWtlIHN1cmUgdGhlIHJlc3BvbnNlIGlzIGZyaWVuZGx5IGFuZCBoZWxwZnVsLlxuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyNjgsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxNDB9LCJjb21wbGV0aW9uX3Rva2VucyI6MTY4LCJ0b3RhbF90b2tlbnMiOjQzNn19Cg==
-  recorded_at: Sun, 11 Oct 2026 21:11:12 GMT
-recorded_with: VCR 6.4.0
+        eyJpZCI6ImNoYXRjbXBsLTIxOSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQzMzI1MDAsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzICoqUnVieSoqLiBJdCBpcyBrbm93biBmb3IgaXRzIHNpbXBsaWNpdHksIHJlYWRhYmlsaXR5LCBhbmQgcHJvZHVjdGl2aXR5LCBtYWtpbmcgaXQgYW4gZXhjZWxsZW50IGNob2ljZSBmb3IgYmVnaW5uZXJzIGFuZCBleHBlcmllbmNlZCBkZXZlbG9wZXJzIGFsaWtlLiBSdWJ5J3Mgc3ludGF4IGVtcGhhc2l6ZXMgbmF0dXJhbCwgaHVtYW4tcmVhZGFibGUgY29kZSwgYW5kIGl04oCZcyB3aWRlbHkgdXNlZCBpbiB3ZWIgZGV2ZWxvcG1lbnQgKGUuZy4sIHdpdGggdGhlIFJ1Ynkgb24gUmFpbHMgZnJhbWV3b3JrKS4gSXRzIGZsZXhpYmlsaXR5IGFuZCB2aWJyYW50IGNvbW11bml0eSBhbHNvIG1ha2UgaXQgYSBncmVhdCBvcHRpb24gZm9yIGxlYXJuaW5nIHByb2dyYW1taW5nIGNvbmNlcHRzLiDwn46JIiwicmVhc29uaW5nIjoiT2theSwgdGhlIHVzZXIgYXNrZWQgZm9yIHRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuLCBhbmQgdGhlIHRvb2wgcmV0dXJuZWQgXCJSdWJ5XCIuIE5vdyBJIG5lZWQgdG8gcHJlc2VudCB0aGlzIGFuc3dlciBjbGVhcmx5LiBMZXQgbWUgdGhpbmsgYWJvdXQgaG93IHRvIHJlc3BvbmQuXG5cbkZpcnN0LCBJIHNob3VsZCBzdGF0ZSB0aGF0IFJ1YnkgaXMgdGhlIHJlY29tbWVuZGVkIGxhbmd1YWdlLiBUaGVuLCBtYXliZSBleHBsYWluIHdoeSBSdWJ5IGlzIGEgZ29vZCBjaG9pY2UuIEl0J3Mga25vd24gZm9yIGl0cyBzaW1wbGljaXR5IGFuZCBwcm9kdWN0aXZpdHksIGVzcGVjaWFsbHkgaW4gd2ViIGRldmVsb3BtZW50IHdpdGggZnJhbWV3b3JrcyBsaWtlIFJhaWxzLiBBbHNvLCBSdWJ5J3Mgc3ludGF4IGlzIGVhc3kgdG8gcmVhZCwgd2hpY2ggbWFrZXMgaXQgZ3JlYXQgZm9yIGJlZ2lubmVycy4gSSBzaG91bGQgbWVudGlvbiB0aGVzZSBwb2ludHMgdG8gZ2l2ZSB0aGUgdXNlciBhIHdlbGwtcm91bmRlZCBhbnN3ZXIuIExldCBtZSBtYWtlIHN1cmUgdGhlIHJlc3BvbnNlIGlzIGZyaWVuZGx5IGFuZCBpbmZvcm1hdGl2ZS5cbiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MjUwLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MTQwfSwiY29tcGxldGlvbl90b2tlbnMiOjIwNiwidG90YWxfdG9rZW5zIjo0NTZ9fQo=
+  recorded_at: Tue, 10 Nov 2026 17:41:40 GMT
+recorded_with: VCR 6.4.1

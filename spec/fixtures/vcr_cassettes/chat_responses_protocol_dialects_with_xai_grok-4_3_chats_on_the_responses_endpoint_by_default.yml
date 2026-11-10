@@ -9,7 +9,7 @@ http_interactions:
         2? Just the number."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:07:43 GMT
+      - Tue, 10 Nov 2026 17:33:45 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,6 +35,8 @@ http_interactions:
       - max-age=31536000
       Set-Cookie:
       - "<COOKIE>"
+      X-Watermark:
+      - 'false'
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
@@ -43,8 +45,6 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
-      Cf-Cache-Status:
-      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -52,26 +52,28 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '228.2'
+      - '220.5'
       X-Metrics-E2e-Ms:
-      - '1756.9'
+      - '1726.7'
       Traceparent:
-      - 00-8dd374a2ca6aa533da833ac9736c893f-b7d6611e0004cee6-01
+      - 00-49664b74ba23032ac6553ee14ab0fa2d-3afe26260004031d-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1791752861,"completed_at":1791752863,"id":"d3b8f7d1-a32d-9fa2-827e-f1b239324143","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_d3b8f7d1-a32d-9fa2-827e-f1b239324143","summary":[{"text":"The
-        user wants the result of 2 + 2.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"h4qgtd7Q5K0vYVyibpUmy0SJCcYPFMvZgcWluNDPoPU86zjH/nvPTd4qCL2Rvg1Ydhhqd6yoTJ6/Wh4TR8CC2VtG3Lc/dpsLD8XP96M3AZCMXBVM9T8pb/9L5aN0r/6K2O78VgeCkWsqRyIs9FyjBJ4S7RKdrHRLsJUPADHFWcSXcLjfY8DdYUE1Ond+BK4a9v6SPloXUB+HrAv9frZvaeoWVWFgRbOAd9wBLNdV+5ITm/gA+84ed9nEzEIiL2xP2cwD/L3kbTuihAbFLdDL3DrbduBz72Dyp3nBlukY54NZ22GLD/6PA1x3m92iEt8Mv6MkYCcO/n5RFh6yN8idWQtTHyWjBnHd6Th2RSNSXhv0+pv99AZSy2u9b6BZI5yUpDNmEAWLZx2qjmK6p+wJoemY0KKvTTYdqKBmtxH/0/FJIs0hWK2rlr9Mag35qIN65sraYoW4l82ALYII1BHBtsT5LjzvrZ7gSCSPdw5JyNeAQkHtmuenQ7lNR3Xmwnmia54pgs7T0cidvLKlTyapiq7o4x3nV47u9s2ZyqU28HIgaA+inMwD+E7sOxDJDRqFIe//lUY/Zd0+AQoZGmUbvZ/iZkOCxUbNU8nP2f1kmbElu+agsrlce2a9WMdFUQj8Q2gMpgD6Wp5A8f18Pbys/T3qBWE9gYmxoQNav+YQJgTHDdAmfSH420pwX/Gk8qHSHnM1teassH4xHD1g/HD+EOpbRv4lHJ2lC4yTcURHRUoTsmIBrextCsk1dpPcd8a671UEeU0zy0hKkcdXCL6oE0zUzZ7ZQ2Ci7VfPHvUm1m/beZp1gKTe7FCFUsfETNQVoDmOmknBFBQXClvODt1Vlb5trA"},{"content":[{"type":"output_text","text":"4","logprobs":[],"annotations":[]}],"id":"msg_d3b8f7d1-a32d-9fa2-827e-f1b239324143","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":204,"input_tokens_details":{"cached_tokens":128},"output_tokens":147,"output_tokens_details":{"reasoning_tokens":146},"total_tokens":351,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":4881000,"context_details":{"input_tokens":204,"output_tokens":155}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Sun, 11 Oct 2026 21:07:43 GMT
+      string: '{"created_at":1794332023,"completed_at":1794332025,"id":"<X_REQUEST_ID>","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_<X_REQUEST_ID>","summary":[{"text":"The
+        user asked for the result of 2 + 2.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"UqX7q4jX2KulDxuO0Itkx3KYcQZwIyTS7MXPg/HkhOYQ0GyFXWbPBGG0ogvqA91Om8FYvx5EOWBlupv06av2CWK1pRwX9yzpdeHZfaZdFNy+BbGaO/jL9a/gKOWC1PVqI0CteqXeQdCl9B9pBL8YqKMBoXDYnNx7pALBgNe9N6yfFyNjM2e0CvYhCAzKrnxc91uNsmNA/4IcZhYYaqyUuemDXrm/Qz8njv5KvhrBtr+Sg9wiSRO+M8MRGa0+mbgJnGNhhDXyB5tIsxh3dInNnkUc8mFBVLbEyyBhwfycT9YfczMgoVV+fmYPRLxpwpPcSuSXfTYj9caZZSZHFRqs9E541adL+UrXiKtlgFauF56jucEMUSmq0w6bANOp72Bykvaa7GWfZDLpdbbaun8tjJNKM5Bb4vVuSz+Gg5mrEoKVuXyQDJXVLzpxVD66WmXpCr1sXjlhyueMZ+1kRdY"},{"content":[{"type":"output_text","text":"4","logprobs":[],"annotations":[]}],"id":"msg_<X_REQUEST_ID>","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":204,"input_tokens_details":{"cached_tokens":128},"output_tokens":124,"output_tokens_details":{"reasoning_tokens":123},"total_tokens":328,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":4306000,"context_details":{"input_tokens":204,"output_tokens":131}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Tue, 10 Nov 2026 17:33:45 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/responses
@@ -79,11 +81,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4.3","input":[{"role":"user","content":"What is 2 +
         2? Just the number."},{"type":"reasoning","summary":[{"type":"summary_text","text":"The
-        user wants the result of 2 + 2."}],"encrypted_content":"h4qgtd7Q5K0vYVyibpUmy0SJCcYPFMvZgcWluNDPoPU86zjH/nvPTd4qCL2Rvg1Ydhhqd6yoTJ6/Wh4TR8CC2VtG3Lc/dpsLD8XP96M3AZCMXBVM9T8pb/9L5aN0r/6K2O78VgeCkWsqRyIs9FyjBJ4S7RKdrHRLsJUPADHFWcSXcLjfY8DdYUE1Ond+BK4a9v6SPloXUB+HrAv9frZvaeoWVWFgRbOAd9wBLNdV+5ITm/gA+84ed9nEzEIiL2xP2cwD/L3kbTuihAbFLdDL3DrbduBz72Dyp3nBlukY54NZ22GLD/6PA1x3m92iEt8Mv6MkYCcO/n5RFh6yN8idWQtTHyWjBnHd6Th2RSNSXhv0+pv99AZSy2u9b6BZI5yUpDNmEAWLZx2qjmK6p+wJoemY0KKvTTYdqKBmtxH/0/FJIs0hWK2rlr9Mag35qIN65sraYoW4l82ALYII1BHBtsT5LjzvrZ7gSCSPdw5JyNeAQkHtmuenQ7lNR3Xmwnmia54pgs7T0cidvLKlTyapiq7o4x3nV47u9s2ZyqU28HIgaA+inMwD+E7sOxDJDRqFIe//lUY/Zd0+AQoZGmUbvZ/iZkOCxUbNU8nP2f1kmbElu+agsrlce2a9WMdFUQj8Q2gMpgD6Wp5A8f18Pbys/T3qBWE9gYmxoQNav+YQJgTHDdAmfSH420pwX/Gk8qHSHnM1teassH4xHD1g/HD+EOpbRv4lHJ2lC4yTcURHRUoTsmIBrextCsk1dpPcd8a671UEeU0zy0hKkcdXCL6oE0zUzZ7ZQ2Ci7VfPHvUm1m/beZp1gKTe7FCFUsfETNQVoDmOmknBFBQXClvODt1Vlb5trA"},{"role":"assistant","content":[{"type":"output_text","text":"4"}]},{"role":"user","content":"Now
+        user asked for the result of 2 + 2."}],"encrypted_content":"UqX7q4jX2KulDxuO0Itkx3KYcQZwIyTS7MXPg/HkhOYQ0GyFXWbPBGG0ogvqA91Om8FYvx5EOWBlupv06av2CWK1pRwX9yzpdeHZfaZdFNy+BbGaO/jL9a/gKOWC1PVqI0CteqXeQdCl9B9pBL8YqKMBoXDYnNx7pALBgNe9N6yfFyNjM2e0CvYhCAzKrnxc91uNsmNA/4IcZhYYaqyUuemDXrm/Qz8njv5KvhrBtr+Sg9wiSRO+M8MRGa0+mbgJnGNhhDXyB5tIsxh3dInNnkUc8mFBVLbEyyBhwfycT9YfczMgoVV+fmYPRLxpwpPcSuSXfTYj9caZZSZHFRqs9E541adL+UrXiKtlgFauF56jucEMUSmq0w6bANOp72Bykvaa7GWfZDLpdbbaun8tjJNKM5Bb4vVuSz+Gg5mrEoKVuXyQDJXVLzpxVD66WmXpCr1sXjlhyueMZ+1kRdY"},{"role":"assistant","content":[{"type":"output_text","text":"4"}]},{"role":"user","content":"Now
         multiply that by 3. Just the number."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -98,7 +100,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:07:45 GMT
+      - Tue, 10 Nov 2026 17:33:46 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -109,6 +111,8 @@ http_interactions:
       - max-age=31536000
       Set-Cookie:
       - "<COOKIE>"
+      X-Watermark:
+      - 'false'
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
@@ -117,8 +121,6 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
-      Cf-Cache-Status:
-      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -126,23 +128,26 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '344.4'
+      - '215.0'
       X-Metrics-E2e-Ms:
-      - '1689.0'
+      - '1221.0'
       Traceparent:
-      - 00-7357e41d7dbe3665531738a78f22ffae-ddc6c07f0004b728-01
+      - 00-2cf631895c8adfc0fa775fa52105b0e4-578843ce0003fa80-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1791752863,"completed_at":1791752865,"id":"9b485b97-b437-9777-b37e-e06fd1d0cc14","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_9b485b97-b437-9777-b37e-e06fd1d0cc14","summary":[],"type":"reasoning","status":"completed","encrypted_content":"yWsj8bLa6mdKfheGsm5uGsshZXlzTypqw8Gp61r+ioV7elES5+jtz5FpoCL3E4do/mMwd6W1rHX9oeuYSpNycvcty5MzE7P/44GV/OLX5Bv1RtYtzBNsJ2lk1NnjzTqmfOM5PtKig2xh/pOKltepQ8id5IySoWb0WY7TzqaXgyk+dksag2M91oJi9+5CUE9xFS48WJd2Pm4DzrCBaYjAaO6K6gLoMnSJjXm6BHTJqYz72Za3KX4GVxJ6SgNJ/GamTohfhotSH8WFnHmKtU38W2f/2VDPEXeF5SXiF52fEj7P6ZLu8EUrLA6cA/njsajNb4eO+Qh++UKNwTwT4nQYA5Xr0hwRdt9L/a8jd3hqEspELCzW9EkEuSPC5deAXopsz+pxXURzHKCXmVwVs3W6fRVfS8bmDxBpPcSNUUrSSp1TxvSu+eAExn7MqF9Uinord5rNAA4hprL1Zi4XFWNt5IF1YE6zoPni3CU4F2Db4v1yZFLAEdCwHUH00FSGtPbHG4F8TPE1H9X6+J1f0dD5E6P2HYlD+wff32HgB+WAQMWZcmvO8BkLRxxdRUylG4lYVQIzmuiy+tKm7Y3WcGPw5pT1UJKQ/P+G220Viup5wY2ddp6/"},{"content":[{"type":"output_text","text":"12","logprobs":[],"annotations":[]}],"id":"msg_9b485b97-b437-9777-b37e-e06fd1d0cc14","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":373,"input_tokens_details":{"cached_tokens":128},"output_tokens":120,"output_tokens_details":{"reasoning_tokens":119},"total_tokens":493,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":6318500,"context_details":{"input_tokens":373,"output_tokens":129}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Sun, 11 Oct 2026 21:07:45 GMT
-recorded_with: VCR 6.4.0
+      string: '{"created_at":1794332025,"completed_at":1794332026,"id":"<X_REQUEST_ID>","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_<X_REQUEST_ID>","summary":[{"text":"The
+        user wants the number multiplied by 3.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"uRKVpeLurm+GpFH6alo7KUZWP/uwX8tw9Q5k/Qqp0BdhTLhIJGjJMkoXYg+pDJ582Bb3Cgc2xVLDg0td+cMt7L3tJcWfdeOHU3ArXbAuDAFnTWBwTa2p+h+taipZ8O+UfTjTneoNsK5Y0f7+CkUz3qNZZxilLOuX6zkjVFmnA+VY75HYXf2arh1tsu5SM+8LDoXylpJiPSdrrMO+XPUxMLXvNhzoigsXFlToc2GXQ9EjtvwqCQ8hZ26U/kfGL8JdGuFghinnpaK6JFreoUY2bqwy183BQzkFOuRIo3SoAkLNgZoI5o5grW3fpP+B1ojVWmXXhLR5Y2fxup2sKOHpBPXXGxrauCs"},{"content":[{"type":"output_text","text":"12","logprobs":[],"annotations":[]}],"id":"msg_<X_REQUEST_ID>","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":350,"input_tokens_details":{"cached_tokens":128},"output_tokens":85,"output_tokens_details":{"reasoning_tokens":84},"total_tokens":435,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":5156000,"context_details":{"input_tokens":350,"output_tokens":94}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Tue, 10 Nov 2026 17:33:46 GMT
+recorded_with: VCR 6.4.1

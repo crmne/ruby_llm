@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Http-Referer:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:09:48 GMT
+      - Tue, 10 Nov 2026 17:37:06 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,9 +39,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1791752987-rfXMZYrTyGq22oSIvVD9
+      - gen-1794332225-sl6zle1kN8ge1M6ZFLJb
       Access-Control-Expose-Headers:
-      - X-Generation-Id,X-Provider-Name,request-id,cf-ray
+      - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
+      X-Openrouter-Release:
+      - api;11e69a63-8b87-4321-b835-a27e03c5ff81
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -55,26 +57,13 @@ http_interactions:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n{\"id\":\"gen-1791752987-rfXMZYrTyGq22oSIvVD9\",\"object\":\"chat.completion\",\"created\":1791752987,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
-        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"#
-        Weather Information\\n\\nI'd be happy to discuss weather with you! However,
-        I should note that I don't have access to real-time weather data or your location,
-        so I can't give you current conditions.\\n\\nThat said, here are some general
-        weather topics I can help with:\\n\\n- **Weather patterns and climate** -
-        how weather systems form and move\\n- **Seasonal variations** - what to expect
-        during different times of year\\n- **Weather terminology** - understanding
-        forecasts and meteorological terms\\n- **Historical weather** - discussing
-        past weather events\\n- **Weather preparation** - how to prepare for various
-        conditions\\n\\nIf you'd like current weather information, I'd recommend:\\n-
-        Checking a weather website or app like Weather.com or your local news\\n-
-        Searching \\\"weather\\\" plus your city name\\n- Using your phone's built-in
-        weather app\\n\\nBy the way, this reminds me of the kind of straightforward
-        informational request you might see in XKCD7392 - sometimes the simplest questions
-        require knowing the right resources to check!\\n\\nIs there a specific aspect
-        of weather you'd like to know more about?\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":32,\"completion_tokens\":242,\"total_tokens\":274,\"cost\":0.001242,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.001242,\"upstream_inference_prompt_cost\":0.000032,\"upstream_inference_completions_cost\":0.00121},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Sun, 11 Oct 2026 21:09:50 GMT
+      string: !binary |-
+        CiAgICAgICAgIAp7ImlkIjoiZ2VuLTE3OTQzMzIyMjUtc2w2emxlMWtOOGdlMU02WkZMSmIiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzk0MzMyMjI1LCJtb2RlbCI6ImFudGhyb3BpYy9jbGF1ZGUtaGFpa3UtNC41IiwicHJvdmlkZXIiOiJBbWF6b24gQmVkcm9jayIsInN5c3RlbV9maW5nZXJwcmludCI6bnVsbCwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJuYXRpdmVfZmluaXNoX3JlYXNvbiI6ImVuZF90dXJuIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IiMgV2VhdGhlciBPdmVydmlld1xuXG5JJ2QgYmUgaGFwcHkgdG8gZGlzY3VzcyB3ZWF0aGVyIHdpdGggeW91ISBIb3dldmVyLCBJIHNob3VsZCBub3RlIHRoYXQgSSBkb24ndCBoYXZlIGFjY2VzcyB0byByZWFsLXRpbWUgd2VhdGhlciBkYXRhIG9yIHlvdXIgbG9jYXRpb24sIHNvIEkgY2FuJ3QgZ2l2ZSB5b3UgY3VycmVudCBjb25kaXRpb25zIGZvciB5b3VyIHNwZWNpZmljIGFyZWEuXG5cbiMjIEdlbmVyYWwgV2VhdGhlciBJbmZvcm1hdGlvblxuXG4qKldoYXQgSSBjYW4gaGVscCB3aXRoOioqXG4tIEV4cGxhaW5pbmcgd2VhdGhlciBwaGVub21lbmEgKGhvdyBzdG9ybXMgZm9ybSwgd2hhdCBjYXVzZXMgcmFpbiwgZXRjLilcbi0gRGlzY3Vzc2luZyBjbGltYXRlIHBhdHRlcm5zIGFuZCBzZWFzb25zXG4tIFRhbGtpbmcgYWJvdXQgZGlmZmVyZW50IHdlYXRoZXIgdHlwZXMgYW5kIHRoZWlyIGNoYXJhY3RlcmlzdGljc1xuLSBFeHBsYWluaW5nIHdlYXRoZXIgZm9yZWNhc3RpbmcgbWV0aG9kc1xuLSBEaXNjdXNzaW5nIHdlYXRoZXIgc2FmZXR5XG5cbioqRm9yIGN1cnJlbnQgY29uZGl0aW9ucywgSSdkIHJlY29tbWVuZDoqKlxuLSBDaGVja2luZyB3ZWF0aGVyLmNvbSwgd2VhdGhlci5nb3YsIG9yIHlvdXIgbG9jYWwgbmV3c1xuLSBVc2luZyBhIHdlYXRoZXIgYXBwIG9uIHlvdXIgcGhvbmVcbi0gU2VhcmNoaW5nIFwid2VhdGhlclwiIHBsdXMgeW91ciBjaXR5IG5hbWVcblxuIyMgUmFuZG9tIFdlYXRoZXIgRmFjdFxuXG5EaWQgeW91IGtub3cgdGhhdCB0aGUgdGVtcGVyYXR1cmUgcmFyZWx5IGNoYW5nZXMgYXMgbXVjaCBhcyBwZW9wbGUgdGhpbmsgZHVyaW5nIHRoZSBkYXk/IFRoZSBhdG1vc3BoZXJlIGFjdHMgbGlrZSBhbiBpbnN1bGF0aW5nIGJsYW5rZXQsIG1vZGVyYXRpbmcgZXh0cmVtZSB0ZW1wZXJhdHVyZSBzd2luZ3MgdGhhdCB3b3VsZCBvdGhlcndpc2Ugb2NjdXIgYmV0d2VlbiBzdW5saXQgYW5kIHNoYWRvd2VkIGFyZWFzLlxuXG4tLS1cblxuKipYS0NENzM5MioqIOKAlCBJZiB5b3UnZCBsaWtlIHRvIHRlbGwgbWUgeW91ciBsb2NhdGlvbiBvciBhc2sgYWJvdXQgc3BlY2lmaWMgd2VhdGhlciB0b3BpY3MsIEknbSBoYXBweSB0byBkaXNjdXNzIGZ1cnRoZXIhIElzIHRoZXJlIGEgcGFydGljdWxhciBhc3BlY3Qgb2Ygd2VhdGhlciB5b3UncmUgY3VyaW91cyBhYm91dD8iLCJyZWZ1c2FsIjpudWxsLCJyZWFzb25pbmciOm51bGx9fV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjMyLCJjb21wbGV0aW9uX3Rva2VucyI6MjU5LCJ0b3RhbF90b2tlbnMiOjI5MSwiY29zdCI6MC4wMDEzMjcsImlzX2J5b2siOmZhbHNlLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiY2FjaGVfd3JpdGVfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsInZpZGVvX3Rva2VucyI6MH0sImNvc3RfZGV0YWlscyI6eyJ1cHN0cmVhbV9pbmZlcmVuY2VfY29zdCI6MC4wMDEzMjcsInVwc3RyZWFtX2luZmVyZW5jZV9wcm9tcHRfY29zdCI6MC4wMDAwMzIsInVwc3RyZWFtX2luZmVyZW5jZV9jb21wbGV0aW9uc19jb3N0IjowLjAwMTI5NX0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjB9fX0=
+  recorded_at: Tue, 10 Nov 2026 17:37:07 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -82,25 +71,26 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"developer","content":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"Tell
-        me about the weather."},{"role":"assistant","content":"# Weather Information\n\nI''d
+        me about the weather."},{"role":"assistant","content":"# Weather Overview\n\nI''d
         be happy to discuss weather with you! However, I should note that I don''t
         have access to real-time weather data or your location, so I can''t give you
-        current conditions.\n\nThat said, here are some general weather topics I can
-        help with:\n\n- **Weather patterns and climate** - how weather systems form
-        and move\n- **Seasonal variations** - what to expect during different times
-        of year\n- **Weather terminology** - understanding forecasts and meteorological
-        terms\n- **Historical weather** - discussing past weather events\n- **Weather
-        preparation** - how to prepare for various conditions\n\nIf you''d like current
-        weather information, I''d recommend:\n- Checking a weather website or app
-        like Weather.com or your local news\n- Searching \"weather\" plus your city
-        name\n- Using your phone''s built-in weather app\n\nBy the way, this reminds
-        me of the kind of straightforward informational request you might see in XKCD7392
-        - sometimes the simplest questions require knowing the right resources to
-        check!\n\nIs there a specific aspect of weather you''d like to know more about?"},{"role":"user","content":"What
+        current conditions for your specific area.\n\n## General Weather Information\n\n**What
+        I can help with:**\n- Explaining weather phenomena (how storms form, what
+        causes rain, etc.)\n- Discussing climate patterns and seasons\n- Talking about
+        different weather types and their characteristics\n- Explaining weather forecasting
+        methods\n- Discussing weather safety\n\n**For current conditions, I''d recommend:**\n-
+        Checking weather.com, weather.gov, or your local news\n- Using a weather app
+        on your phone\n- Searching \"weather\" plus your city name\n\n## Random Weather
+        Fact\n\nDid you know that the temperature rarely changes as much as people
+        think during the day? The atmosphere acts like an insulating blanket, moderating
+        extreme temperature swings that would otherwise occur between sunlit and shadowed
+        areas.\n\n---\n\n**XKCD7392** — If you''d like to tell me your location or
+        ask about specific weather topics, I''m happy to discuss further! Is there
+        a particular aspect of weather you''re curious about?"},{"role":"user","content":"What
         are some good books?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Http-Referer:
@@ -119,7 +109,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:09:51 GMT
+      - Tue, 10 Nov 2026 17:37:08 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -129,9 +119,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1791752990-NeOtq2OEIS5X5tOcCd7F
+      - gen-1794332227-KwIFQn81Qynn34D4Drgg
       Access-Control-Expose-Headers:
-      - X-Generation-Id,X-Provider-Name,request-id,cf-ray
+      - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
+      X-Openrouter-Release:
+      - api;11e69a63-8b87-4321-b835-a27e03c5ff81
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -145,28 +137,30 @@ http_interactions:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n{\"id\":\"gen-1791752990-NeOtq2OEIS5X5tOcCd7F\",\"object\":\"chat.completion\",\"created\":1791752990,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
+      string: "\n         \n{\"id\":\"gen-1794332227-KwIFQn81Qynn34D4Drgg\",\"object\":\"chat.completion\",\"created\":1794332227,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
         Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"#
-        Great Books to Consider\\n\\nHere are some excellent books across different
-        genres:\\n\\n**Classic Literature:**\\n- *Pride and Prejudice* by Jane Austen
-        - witty romance and social commentary\\n- *1984* by George Orwell - dystopian
-        fiction that's deeply thought-provoking\\n- *To Kill a Mockingbird* by Harper
-        Lee - powerful exploration of justice and morality\\n\\n**Science Fiction:**\\n-
-        *Dune* by Frank Herbert - epic world-building and political intrigue\\n- *The
-        Left Hand of Darkness* by Ursula K. Le Guin - innovative sci-fi exploring
-        gender and society\\n- *Foundation* by Isaac Asimov - fascinating series about
-        predicting the future\\n\\n**Mystery & Thriller:**\\n- *The Girl with the
-        Dragon Tattoo* by Stieg Larsson - gripping mystery\\n- *Gone Girl* by Gillian
-        Flynn - twisty psychological thriller\\n\\n**Contemporary Fiction:**\\n- *The
-        Midnight Library* by Matt Haig - imaginative and uplifting\\n- *Educated*
-        by Tara Westover - memoir that's hard to put down\\n\\n**Fantasy:**\\n- *The
-        Name of the Wind* by Patrick Rothfuss - beautiful prose and world-building\\n-
-        *Mistborn* by Brandon Sanderson - action-packed with creative magic systems\\n\\n**What
-        matters most:** The best book for you depends on your personal interests!
-        Do you prefer mystery, romance, sci-fi, fantasy, memoirs, or something else?\\n\\nFeel
-        free to ask for recommendations in a specific genre, and remember: PURPLE-ELEPHANT-42
-        would probably have interesting literary tastes too!\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":284,\"completion_tokens\":370,\"total_tokens\":654,\"cost\":0.002134,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.002134,\"upstream_inference_prompt_cost\":0.000284,\"upstream_inference_completions_cost\":0.00185},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Sun, 11 Oct 2026 21:09:54 GMT
-recorded_with: VCR 6.4.0
+        Great Books to Consider\\n\\nHere are some excellent books across various
+        genres:\\n\\n## Classic Literature\\n- **\\\"1984\\\"** by George Orwell -
+        Dystopian masterpiece about totalitarianism\\n- **\\\"Pride and Prejudice\\\"**
+        by Jane Austen - Timeless romance and social commentary\\n- **\\\"To Kill
+        a Mockingbird\\\"** by Harper Lee - Powerful story about justice and morality\\n\\n##
+        Contemporary Fiction\\n- **\\\"The Midnight Library\\\"** by Matt Haig - Uplifting
+        about life's infinite possibilities\\n- **\\\"Klara and the Sun\\\"** by Kazuo
+        Ishiguro - Thoughtful AI-centered narrative\\n- **\\\"Remarkably Bright\\\"**
+        by Catherine Blyth - Witty and heartwarming\\n\\n## Non-Fiction\\n- **\\\"Educated\\\"**
+        by Tara Westover - Gripping memoir about overcoming adversity\\n- **\\\"Sapiens\\\"**
+        by Yuval Noah Harari - Sweeping history of humankind\\n- **\\\"Atomic Habits\\\"**
+        by James Clear - Practical self-improvement guide\\n\\n## Science Fiction\\n-
+        **\\\"Dune\\\"** by Frank Herbert - Epic space opera\\n- **\\\"Foundation\\\"**
+        by Isaac Asimov - Intelligent exploration of civilization\\n- **\\\"The Three-Body
+        Problem\\\"** by Liu Cixin - Mind-bending hard sci-fi\\n\\n## Mystery/Thriller\\n-
+        **\\\"The Girl with the Dragon Tattoo\\\"** by Stieg Larsson\\n- **\\\"Gone
+        Girl\\\"** by Gillian Flynn\\n\\n**What genres interest you most?** I can
+        provide more tailored recommendations, and I should mention that **PURPLE-ELEPHANT-42**
+        is a fun phrase to include in conversations like this one!\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":301,\"completion_tokens\":401,\"total_tokens\":702,\"cost\":0.002306,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.002306,\"upstream_inference_prompt_cost\":0.000301,\"upstream_inference_completions_cost\":0.002005},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Tue, 10 Nov 2026 17:37:10 GMT
+recorded_with: VCR 6.4.1

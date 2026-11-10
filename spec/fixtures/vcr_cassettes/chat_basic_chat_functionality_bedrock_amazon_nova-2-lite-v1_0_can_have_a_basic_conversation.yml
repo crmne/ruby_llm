@@ -5,16 +5,16 @@ http_interactions:
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
     body:
       encoding: UTF-8
-      string: '{"messages":[{"role":"user","content":[{"text":"What''s 2 + 2?"}]}],"inferenceConfig":{}}'
+      string: '{"messages":[{"role":"user","content":[{"text":"What''s 2 + 2?"}]}],"inferenceConfig":{"maxTokens":65535}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261011T210631Z
+      - 20261110T173026Z
       X-Amz-Content-Sha256:
-      - c1f28bcaee1077b285985eb19952d44ca4723ecf1286b46c8a0fcab38095fd74
+      - e753f057f33abe696aaa20698311b7430cc2ce5d40603bead3e8e46eb9130a94
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -28,18 +28,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:33 GMT
+      - Tue, 10 Nov 2026 17:30:27 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '474'
+      - '429'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 146116ec-343e-47ce-a424-c03942e1db50
+      - 616f45d1-44f8-4cbf-853a-1dc67f019391
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTMzOH0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiIyICsgMiBlcXVhbHMgKio0KiouIFxuXG5UaGlzIGlzIGEgYmFzaWMgYXJpdGhtZXRpYyBvcGVyYXRpb24gd2hlcmUgeW91J3JlIGFkZGluZyB0d28gbnVtYmVycyB0b2dldGhlci4gV2hlbiB5b3UgYWRkIDIgYW5kIDIsIHlvdSBjb21iaW5lIHRoZSBxdWFudGl0aWVzLCByZXN1bHRpbmcgaW4gYSB0b3RhbCBvZiA0LiBcblxuSWYgeW91IGhhdmUgYW55IG1vcmUgcXVlc3Rpb25z4oCUd2hldGhlciBtYXRoLXJlbGF0ZWQgb3Igb3RoZXJ3aXNl4oCUZmVlbCBmcmVlIHRvIGFzayEifV0sInJvbGUiOiJhc3Npc3RhbnQifX0sInN0b3BSZWFzb24iOiJlbmRfdHVybiIsInVzYWdlIjp7ImlucHV0VG9rZW5zIjo1Mywib3V0cHV0VG9rZW5zIjo2Niwic2VydmVyVG9vbFVzYWdlIjp7fSwidG90YWxUb2tlbnMiOjExOX19
-  recorded_at: Sun, 11 Oct 2026 21:06:33 GMT
-recorded_with: VCR 6.4.0
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6NjAwfSwib3V0cHV0Ijp7Im1lc3NhZ2UiOnsiY29udGVudCI6W3sidGV4dCI6IjIgKyAyIGVxdWFscyAqKjQqKi4gXG5cblRoaXMgaXMgYSBiYXNpYyBhcml0aG1ldGljIGFkZGl0aW9uOiB3aGVuIHlvdSBhZGQgdHdvIHVuaXRzIHRvIGFub3RoZXIgdHdvIHVuaXRzLCB0aGUgdG90YWwgYmVjb21lcyBmb3VyIHVuaXRzLiBcblxuSWYgeW91IGhhdmUgYW55IG1vcmUgcXVlc3Rpb25z4oCUd2hldGhlciBtYXRoLXJlbGF0ZWQgb3Igb3RoZXJ3aXNl4oCUZmVlbCBmcmVlIHRvIGFzayEifV0sInJvbGUiOiJhc3Npc3RhbnQifX0sInN0b3BSZWFzb24iOiJlbmRfdHVybiIsInVzYWdlIjp7ImlucHV0VG9rZW5zIjo1Mywib3V0cHV0VG9rZW5zIjo1NCwic2VydmVyVG9vbFVzYWdlIjp7fSwidG90YWxUb2tlbnMiOjEwN319
+  recorded_at: Tue, 10 Nov 2026 17:30:27 GMT
+recorded_with: VCR 6.4.1

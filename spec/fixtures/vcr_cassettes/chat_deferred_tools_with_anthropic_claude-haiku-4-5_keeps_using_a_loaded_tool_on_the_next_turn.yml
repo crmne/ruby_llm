@@ -13,7 +13,7 @@ http_interactions:
         symbol"}},"required":["ticker"],"additionalProperties":false,"strict":true},"defer_loading":true},{"type":"tool_search_tool_bm25_20251119","name":"tool_search_tool_bm25"}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -30,7 +30,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:35 GMT
+      - Tue, 10 Nov 2026 17:29:22 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -42,55 +42,57 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '9999000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-10-11T21:06:34Z'
+      - '2026-11-10T17:29:22Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-10-11T21:06:35Z'
+      - '2026-11-10T17:29:22Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-10-11T21:06:33Z'
+      - '2026-11-10T17:29:21Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '11999000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-10-11T21:06:34Z'
+      - '2026-11-10T17:29:22Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-628ee041d3e5750f53a6a66a461ad599-d576862c89ead9b2-01
+      - 00-928dbfca8c4a509009224eeb4a95c7c6-8b15e35a11773a1d-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
       - "<ANTHROPIC_WORKSPACE_ID>"
       Vary:
       - Accept-Encoding
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
       Server:
       - cloudflare
-      Cf-Cache-Status:
-      - DYNAMIC
+      Server-Timing:
+      - x-originResponse;dur=1722
       X-Robots-Tag:
       - none
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Cf-Cache-Status:
+      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cfw8Z5SgFh6nqLgSCpRM6","type":"message","role":"assistant","content":[{"type":"text","text":"I''ll
-        search for a tool that can get current weather information for you."},{"type":"server_tool_use","id":"srvtoolu_01B3y94YdxnHi8XyzKK9NbM9","name":"tool_search_tool_bm25","input":{"query":"weather
-        current Berlin","limit":5}},{"type":"tool_search_tool_result","tool_use_id":"srvtoolu_01B3y94YdxnHi8XyzKK9NbM9","content":{"type":"tool_search_tool_search_result","tool_references":[{"type":"tool_reference","tool_name":"weather_lookup"},{"type":"tool_reference","tool_name":"stock_price"}]}},{"type":"text","text":"Great!
-        I found a weather lookup tool. Now let me use it to get the current weather
-        in Berlin."},{"type":"tool_use","id":"toolu_017qyWkWeXWE9Vsg1GiSY8Rz","name":"weather_lookup","input":{"city":"Berlin"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":1677,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":170,"service_tier":"standard","inference_geo":"not_available","server_tool_use":{"web_search_requests":0,"web_fetch_requests":0}},"diagnostics":null}'
-  recorded_at: Sun, 11 Oct 2026 21:06:35 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CgueFtqS1whtrqfP6Jasv","type":"message","role":"assistant","content":[{"type":"text","text":"I''ll
+        search for a weather tool that can help you get current weather information
+        for Berlin."},{"type":"server_tool_use","id":"srvtoolu_015vdBBLdnJWFbn9e344mwN7","name":"tool_search_tool_bm25","input":{"query":"current
+        weather Berlin","limit":5}},{"type":"tool_search_tool_result","tool_use_id":"srvtoolu_015vdBBLdnJWFbn9e344mwN7","content":{"type":"tool_search_tool_search_result","tool_references":[{"type":"tool_reference","tool_name":"weather_lookup"},{"type":"tool_reference","tool_name":"stock_price"}]}},{"type":"text","text":"Great!
+        I found a weather lookup tool. Now let me get the current weather for Berlin."},{"type":"tool_use","id":"toolu_01KzRyvFMRgLn88harBDfAS9","name":"weather_lookup","input":{"city":"Berlin"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":1680,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":170,"service_tier":"standard","inference_geo":"not_available","speed":"standard","server_tool_use":{"web_search_requests":0,"web_fetch_requests":0}},"diagnostics":null}'
+  recorded_at: Tue, 10 Nov 2026 17:29:22 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -98,10 +100,10 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What
         is the weather in Berlin right now? Use your tools."}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        search for a tool that can get current weather information for you."},{"type":"server_tool_use","id":"srvtoolu_01B3y94YdxnHi8XyzKK9NbM9","name":"tool_search_tool_bm25","input":{"query":"weather
-        current Berlin","limit":5}},{"type":"tool_search_tool_result","tool_use_id":"srvtoolu_01B3y94YdxnHi8XyzKK9NbM9","content":{"type":"tool_search_tool_search_result","tool_references":[{"type":"tool_reference","tool_name":"weather_lookup"},{"type":"tool_reference","tool_name":"stock_price"}]}},{"type":"text","text":"Great!
-        I found a weather lookup tool. Now let me use it to get the current weather
-        in Berlin."},{"type":"tool_use","id":"toolu_017qyWkWeXWE9Vsg1GiSY8Rz","name":"weather_lookup","input":{"city":"Berlin"},"caller":{"type":"direct"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_017qyWkWeXWE9Vsg1GiSY8Rz","content":[{"type":"text","text":"Sunny
+        search for a weather tool that can help you get current weather information
+        for Berlin."},{"type":"server_tool_use","id":"srvtoolu_015vdBBLdnJWFbn9e344mwN7","name":"tool_search_tool_bm25","input":{"query":"current
+        weather Berlin","limit":5}},{"type":"tool_search_tool_result","tool_use_id":"srvtoolu_015vdBBLdnJWFbn9e344mwN7","content":{"type":"tool_search_tool_search_result","tool_references":[{"type":"tool_reference","tool_name":"weather_lookup"},{"type":"tool_reference","tool_name":"stock_price"}]}},{"type":"text","text":"Great!
+        I found a weather lookup tool. Now let me get the current weather for Berlin."},{"type":"tool_use","id":"toolu_01KzRyvFMRgLn88harBDfAS9","name":"weather_lookup","input":{"city":"Berlin"},"caller":{"type":"direct"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01KzRyvFMRgLn88harBDfAS9","content":[{"type":"text","text":"Sunny
         and 22°C in Berlin"}]}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"weather_lookup","description":"Looks
         up the current weather for a city","input_schema":{"type":"object","properties":{"city":{"type":"string","description":"City
         name"}},"required":["city"],"additionalProperties":false,"strict":true},"defer_loading":true},{"name":"stock_price","description":"Looks
@@ -109,7 +111,7 @@ http_interactions:
         symbol"}},"required":["ticker"],"additionalProperties":false,"strict":true},"defer_loading":true},{"type":"tool_search_tool_bm25_20251119","name":"tool_search_tool_bm25"}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -126,7 +128,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:36 GMT
+      - Tue, 10 Nov 2026 17:29:23 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -138,52 +140,54 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '9999000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-10-11T21:06:35Z'
+      - '2026-11-10T17:29:23Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-10-11T21:06:35Z'
+      - '2026-11-10T17:29:23Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-10-11T21:06:35Z'
+      - '2026-11-10T17:29:23Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '11999000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-10-11T21:06:35Z'
+      - '2026-11-10T17:29:23Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-733d26620f8cbf954dc8287bb0c5827a-ff533fa531b486c3-01
+      - 00-7f47e5a5d74825dc478f5f321730ce33-b7084d021e6ad163-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
       - "<ANTHROPIC_WORKSPACE_ID>"
       Vary:
       - Accept-Encoding
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
       Server:
       - cloudflare
-      Cf-Cache-Status:
-      - DYNAMIC
+      Server-Timing:
+      - x-originResponse;dur=582
       X-Robots-Tag:
       - none
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Cf-Cache-Status:
+      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTFDZnc4WkVZZEd2aldqVFA2MmdGTHIiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiBpcyAqKnN1bm55IGFuZCAyMsKwQyoqIChhcHByb3hpbWF0ZWx5IDcywrBGKS4ifV0sImNvbnRhaW5lciI6bnVsbCwic3RvcF9yZWFzb24iOiJlbmRfdHVybiIsInN0b3Bfc2VxdWVuY2UiOm51bGwsInN0b3BfZGV0YWlscyI6bnVsbCwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjoxMDcwLCJjYWNoZV9jcmVhdGlvbl9pbnB1dF90b2tlbnMiOjAsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjowLCJjYWNoZV9jcmVhdGlvbiI6eyJlcGhlbWVyYWxfNW1faW5wdXRfdG9rZW5zIjowLCJlcGhlbWVyYWxfMWhfaW5wdXRfdG9rZW5zIjowfSwib3V0cHV0X3Rva2VucyI6MjQsInNlcnZpY2VfdGllciI6InN0YW5kYXJkIiwiaW5mZXJlbmNlX2dlbyI6Im5vdF9hdmFpbGFibGUifSwiZGlhZ25vc3RpY3MiOm51bGx9
-  recorded_at: Sun, 11 Oct 2026 21:06:36 GMT
+        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTFDZ3VlRzJvUXMxbzdZY0F2ZkFqOWEiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiBpcyAqKnN1bm55IHdpdGggYSB0ZW1wZXJhdHVyZSBvZiAyMsKwQyAoYXBwcm94aW1hdGVseSA3MsKwRikqKi4gTmljZSB3ZWF0aGVyISJ9XSwiY29udGFpbmVyIjpudWxsLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwic3RvcF9kZXRhaWxzIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjEwNzAsImNhY2hlX2NyZWF0aW9uX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfcmVhZF9pbnB1dF90b2tlbnMiOjAsImNhY2hlX2NyZWF0aW9uIjp7ImVwaGVtZXJhbF81bV9pbnB1dF90b2tlbnMiOjAsImVwaGVtZXJhbF8xaF9pbnB1dF90b2tlbnMiOjB9LCJvdXRwdXRfdG9rZW5zIjozMCwic2VydmljZV90aWVyIjoic3RhbmRhcmQiLCJpbmZlcmVuY2VfZ2VvIjoibm90X2F2YWlsYWJsZSIsInNwZWVkIjoic3RhbmRhcmQifSwiZGlhZ25vc3RpY3MiOm51bGx9
+  recorded_at: Tue, 10 Nov 2026 17:29:23 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -191,12 +195,13 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What
         is the weather in Berlin right now? Use your tools."}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        search for a tool that can get current weather information for you."},{"type":"server_tool_use","id":"srvtoolu_01B3y94YdxnHi8XyzKK9NbM9","name":"tool_search_tool_bm25","input":{"query":"weather
-        current Berlin","limit":5}},{"type":"tool_search_tool_result","tool_use_id":"srvtoolu_01B3y94YdxnHi8XyzKK9NbM9","content":{"type":"tool_search_tool_search_result","tool_references":[{"type":"tool_reference","tool_name":"weather_lookup"},{"type":"tool_reference","tool_name":"stock_price"}]}},{"type":"text","text":"Great!
-        I found a weather lookup tool. Now let me use it to get the current weather
-        in Berlin."},{"type":"tool_use","id":"toolu_017qyWkWeXWE9Vsg1GiSY8Rz","name":"weather_lookup","input":{"city":"Berlin"},"caller":{"type":"direct"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_017qyWkWeXWE9Vsg1GiSY8Rz","content":[{"type":"text","text":"Sunny
+        search for a weather tool that can help you get current weather information
+        for Berlin."},{"type":"server_tool_use","id":"srvtoolu_015vdBBLdnJWFbn9e344mwN7","name":"tool_search_tool_bm25","input":{"query":"current
+        weather Berlin","limit":5}},{"type":"tool_search_tool_result","tool_use_id":"srvtoolu_015vdBBLdnJWFbn9e344mwN7","content":{"type":"tool_search_tool_search_result","tool_references":[{"type":"tool_reference","tool_name":"weather_lookup"},{"type":"tool_reference","tool_name":"stock_price"}]}},{"type":"text","text":"Great!
+        I found a weather lookup tool. Now let me get the current weather for Berlin."},{"type":"tool_use","id":"toolu_01KzRyvFMRgLn88harBDfAS9","name":"weather_lookup","input":{"city":"Berlin"},"caller":{"type":"direct"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01KzRyvFMRgLn88harBDfAS9","content":[{"type":"text","text":"Sunny
         and 22°C in Berlin"}]}]},{"role":"assistant","content":[{"type":"text","text":"The
-        current weather in Berlin is **sunny and 22°C** (approximately 72°F)."}]},{"role":"user","content":[{"type":"text","text":"And
+        current weather in Berlin is **sunny with a temperature of 22°C (approximately
+        72°F)**. Nice weather!"}]},{"role":"user","content":[{"type":"text","text":"And
         in Paris?"}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"weather_lookup","description":"Looks
         up the current weather for a city","input_schema":{"type":"object","properties":{"city":{"type":"string","description":"City
         name"}},"required":["city"],"additionalProperties":false,"strict":true},"defer_loading":true},{"name":"stock_price","description":"Looks
@@ -204,7 +209,7 @@ http_interactions:
         symbol"}},"required":["ticker"],"additionalProperties":false,"strict":true},"defer_loading":true},{"type":"tool_search_tool_bm25_20251119","name":"tool_search_tool_bm25"}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -221,7 +226,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:36 GMT
+      - Tue, 10 Nov 2026 17:29:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -233,31 +238,31 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '9999000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-10-11T21:06:36Z'
+      - '2026-11-10T17:29:24Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-10-11T21:06:36Z'
+      - '2026-11-10T17:29:24Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-10-11T21:06:36Z'
+      - '2026-11-10T17:29:23Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '11999000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-10-11T21:06:36Z'
+      - '2026-11-10T17:29:24Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-8be1b66584d4b380002dac05a6c15d8a-cca6d4bd4f8bbe69-01
+      - 00-2c6d5e97d9d4ce60b6371976f9fb573b-d43ab6226f5479b0-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
@@ -266,6 +271,8 @@ http_interactions:
       - Accept-Encoding
       Server:
       - cloudflare
+      Server-Timing:
+      - x-originResponse;dur=592
       X-Robots-Tag:
       - none
       Content-Security-Policy:
@@ -276,8 +283,8 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cfw8ZHdAWoL2QTwzQQxFZ","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01Fm8NmBDia2qaT5uwGjZMRx","name":"weather_lookup","input":{"city":"Paris"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":1101,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":54,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}'
-  recorded_at: Sun, 11 Oct 2026 21:06:36 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CgueG5tDG7B1Qg4XaqCBQ","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01R1fzi7FMbfZuY6KWvBMrEj","name":"weather_lookup","input":{"city":"Paris"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":1107,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":54,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
+  recorded_at: Tue, 10 Nov 2026 17:29:24 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -285,13 +292,14 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What
         is the weather in Berlin right now? Use your tools."}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        search for a tool that can get current weather information for you."},{"type":"server_tool_use","id":"srvtoolu_01B3y94YdxnHi8XyzKK9NbM9","name":"tool_search_tool_bm25","input":{"query":"weather
-        current Berlin","limit":5}},{"type":"tool_search_tool_result","tool_use_id":"srvtoolu_01B3y94YdxnHi8XyzKK9NbM9","content":{"type":"tool_search_tool_search_result","tool_references":[{"type":"tool_reference","tool_name":"weather_lookup"},{"type":"tool_reference","tool_name":"stock_price"}]}},{"type":"text","text":"Great!
-        I found a weather lookup tool. Now let me use it to get the current weather
-        in Berlin."},{"type":"tool_use","id":"toolu_017qyWkWeXWE9Vsg1GiSY8Rz","name":"weather_lookup","input":{"city":"Berlin"},"caller":{"type":"direct"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_017qyWkWeXWE9Vsg1GiSY8Rz","content":[{"type":"text","text":"Sunny
+        search for a weather tool that can help you get current weather information
+        for Berlin."},{"type":"server_tool_use","id":"srvtoolu_015vdBBLdnJWFbn9e344mwN7","name":"tool_search_tool_bm25","input":{"query":"current
+        weather Berlin","limit":5}},{"type":"tool_search_tool_result","tool_use_id":"srvtoolu_015vdBBLdnJWFbn9e344mwN7","content":{"type":"tool_search_tool_search_result","tool_references":[{"type":"tool_reference","tool_name":"weather_lookup"},{"type":"tool_reference","tool_name":"stock_price"}]}},{"type":"text","text":"Great!
+        I found a weather lookup tool. Now let me get the current weather for Berlin."},{"type":"tool_use","id":"toolu_01KzRyvFMRgLn88harBDfAS9","name":"weather_lookup","input":{"city":"Berlin"},"caller":{"type":"direct"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01KzRyvFMRgLn88harBDfAS9","content":[{"type":"text","text":"Sunny
         and 22°C in Berlin"}]}]},{"role":"assistant","content":[{"type":"text","text":"The
-        current weather in Berlin is **sunny and 22°C** (approximately 72°F)."}]},{"role":"user","content":[{"type":"text","text":"And
-        in Paris?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01Fm8NmBDia2qaT5uwGjZMRx","name":"weather_lookup","input":{"city":"Paris"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01Fm8NmBDia2qaT5uwGjZMRx","content":[{"type":"text","text":"Sunny
+        current weather in Berlin is **sunny with a temperature of 22°C (approximately
+        72°F)**. Nice weather!"}]},{"role":"user","content":[{"type":"text","text":"And
+        in Paris?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01R1fzi7FMbfZuY6KWvBMrEj","name":"weather_lookup","input":{"city":"Paris"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01R1fzi7FMbfZuY6KWvBMrEj","content":[{"type":"text","text":"Sunny
         and 22°C in Paris"}]}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"weather_lookup","description":"Looks
         up the current weather for a city","input_schema":{"type":"object","properties":{"city":{"type":"string","description":"City
         name"}},"required":["city"],"additionalProperties":false,"strict":true},"defer_loading":true},{"name":"stock_price","description":"Looks
@@ -299,7 +307,7 @@ http_interactions:
         symbol"}},"required":["ticker"],"additionalProperties":false,"strict":true},"defer_loading":true},{"type":"tool_search_tool_bm25_20251119","name":"tool_search_tool_bm25"}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -316,7 +324,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:37 GMT
+      - Tue, 10 Nov 2026 17:29:25 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -328,31 +336,31 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '9999000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-10-11T21:06:37Z'
+      - '2026-11-10T17:29:24Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-10-11T21:06:37Z'
+      - '2026-11-10T17:29:24Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-10-11T21:06:37Z'
+      - '2026-11-10T17:29:24Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '11999000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-10-11T21:06:37Z'
+      - '2026-11-10T17:29:24Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-b215f608a842c7d280080b98102e4875-7928778354235e62-01
+      - 00-314bf50d3d20df0bf8284de8f5a00a1f-1ea4940feb227b93-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
@@ -361,6 +369,8 @@ http_interactions:
       - Accept-Encoding
       Server:
       - cloudflare
+      Server-Timing:
+      - x-originResponse;dur=479
       X-Robots-Tag:
       - none
       Content-Security-Policy:
@@ -372,6 +382,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTFDZnc4Wk1HU2N5eGhnUnoxeFVkVFoiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIFBhcmlzIGlzICoqc3VubnkgYW5kIDIywrBDKiogKGFwcHJveGltYXRlbHkgNzLCsEYpIC0gdGhlIHNhbWUgYXMgQmVybGluISJ9XSwiY29udGFpbmVyIjpudWxsLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwic3RvcF9kZXRhaWxzIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjExNzYsImNhY2hlX2NyZWF0aW9uX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfcmVhZF9pbnB1dF90b2tlbnMiOjAsImNhY2hlX2NyZWF0aW9uIjp7ImVwaGVtZXJhbF81bV9pbnB1dF90b2tlbnMiOjAsImVwaGVtZXJhbF8xaF9pbnB1dF90b2tlbnMiOjB9LCJvdXRwdXRfdG9rZW5zIjozMCwic2VydmljZV90aWVyIjoic3RhbmRhcmQiLCJpbmZlcmVuY2VfZ2VvIjoibm90X2F2YWlsYWJsZSJ9LCJkaWFnbm9zdGljcyI6bnVsbH0=
-  recorded_at: Sun, 11 Oct 2026 21:06:37 GMT
-recorded_with: VCR 6.4.0
+        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTFDZ3VlRzkyeHIxcjdCM1dmV1JDQ1IiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIFBhcmlzIGlzICoqc3Vubnkgd2l0aCBhIHRlbXBlcmF0dXJlIG9mIDIywrBDIChhcHByb3hpbWF0ZWx5IDcywrBGKSoqLiBTYW1lIHBsZWFzYW50IGNvbmRpdGlvbnMgYXMgQmVybGluISJ9XSwiY29udGFpbmVyIjpudWxsLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwic3RvcF9kZXRhaWxzIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjExODIsImNhY2hlX2NyZWF0aW9uX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfcmVhZF9pbnB1dF90b2tlbnMiOjAsImNhY2hlX2NyZWF0aW9uIjp7ImVwaGVtZXJhbF81bV9pbnB1dF90b2tlbnMiOjAsImVwaGVtZXJhbF8xaF9pbnB1dF90b2tlbnMiOjB9LCJvdXRwdXRfdG9rZW5zIjozMywic2VydmljZV90aWVyIjoic3RhbmRhcmQiLCJpbmZlcmVuY2VfZ2VvIjoibm90X2F2YWlsYWJsZSIsInNwZWVkIjoic3RhbmRhcmQifSwiZGlhZ25vc3RpY3MiOm51bGx9
+  recorded_at: Tue, 10 Nov 2026 17:29:25 GMT
+recorded_with: VCR 6.4.1

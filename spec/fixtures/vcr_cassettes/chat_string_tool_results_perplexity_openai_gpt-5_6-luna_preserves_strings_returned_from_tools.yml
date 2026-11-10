@@ -26,16 +26,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 06 Nov 2026 16:32:44 GMT
+      - Tue, 10 Nov 2026 17:51:57 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
       Server:
       - cloudflare
       X-Ratelimit-Limit:
@@ -43,38 +40,41 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1793982765'
+      - '1794333118'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Access-Control-Allow-Origin:
       - "*"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"background":false,"completed_at":1793982762,"created_at":1793982762,"error":null,"frequency_penalty":0,"id":"resp_<X_REQUEST_ID>","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"arguments":"{\"query\":\"test
-        data\"}","call_id":"call_Qx2jgU7bf0aasmlTq2PKmB50","id":"fc_56636e22-ad73-4e70-b719-e54df3946f16","name":"content_returning","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"content_returning","description":"Returns
+      string: '{"background":false,"completed_at":1794333115,"created_at":1794333115,"error":null,"frequency_penalty":0,"id":"resp_<X_REQUEST_ID>","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"arguments":"{\"query\":\"test
+        data\"}","call_id":"call_I0tNcCwzdl3OCJV4sIkO4JGN","id":"fc_e407f1ce-893c-4679-843a-8800fade7ea4","name":"content_returning","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"content_returning","description":"Returns
         a processed string result","parameters":{"additionalProperties":false,"properties":{"query":{"description":"Query
-        to process","type":"string"}},"required":["query"],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00001,"output_cost":0.00004,"total_cost":0.00005},"input_tokens":74,"input_tokens_details":{"cached_tokens":0},"output_tokens":34,"output_tokens_details":{"reasoning_tokens":12},"total_tokens":108},"user":null}
+        to process","type":"string"}},"required":["query"],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00001,"output_cost":0.00005,"total_cost":0.00006},"input_tokens":74,"input_tokens_details":{"cached_tokens":0},"output_tokens":38,"output_tokens_details":{"reasoning_tokens":16},"total_tokens":112},"user":null}
 
         '
-  recorded_at: Fri, 06 Nov 2026 16:32:44 GMT
+  recorded_at: Tue, 10 Nov 2026 17:51:57 GMT
 - request:
     method: post
     uri: https://api.perplexity.ai/v1/agent
     body:
       encoding: UTF-8
       string: '{"model":"openai/gpt-5.6-luna","input":[{"role":"user","content":"Process
-        this query: test data"},{"type":"function_call","call_id":"call_Qx2jgU7bf0aasmlTq2PKmB50","name":"content_returning","arguments":"{\"query\":\"test
-        data\"}"},{"type":"function_call_output","call_id":"call_Qx2jgU7bf0aasmlTq2PKmB50","output":"Processed:
+        this query: test data"},{"type":"function_call","call_id":"call_I0tNcCwzdl3OCJV4sIkO4JGN","name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"},{"type":"function_call_output","call_id":"call_I0tNcCwzdl3OCJV4sIkO4JGN","output":"Processed:
         test data"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"content_returning","description":"Returns
         a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true},"strict":false}]}'
@@ -95,7 +95,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 06 Nov 2026 16:32:46 GMT
+      - Tue, 10 Nov 2026 17:51:58 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -112,7 +112,7 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1793982766'
+      - '1794333119'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
@@ -129,11 +129,11 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"background":false,"completed_at":1793982764,"created_at":1793982764,"error":null,"frequency_penalty":0,"id":"resp_<X_REQUEST_ID>","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"content":[{"annotations":[],"text":"Processed:
-        test data","type":"output_text"}],"id":"msg_cc850b58-96d0-4b8a-9257-81c1849d4bfe","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"content_returning","description":"Returns
+      string: '{"background":false,"completed_at":1794333117,"created_at":1794333117,"error":null,"frequency_penalty":0,"id":"resp_<X_REQUEST_ID>","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"content":[{"annotations":[],"text":"Processed:
+        test data","type":"output_text"}],"id":"msg_c01d475a-50c9-4c9a-813c-b7fe34322911","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"content_returning","description":"Returns
         a processed string result","parameters":{"additionalProperties":false,"properties":{"query":{"description":"Query
         to process","type":"string"}},"required":["query"],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00002,"output_cost":0.00001,"total_cost":0.00003},"input_tokens":110,"input_tokens_details":{"cached_tokens":0},"output_tokens":8,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":118},"user":null}
 
         '
-  recorded_at: Fri, 06 Nov 2026 16:32:46 GMT
+  recorded_at: Tue, 10 Nov 2026 17:51:58 GMT
 recorded_with: VCR 6.4.1

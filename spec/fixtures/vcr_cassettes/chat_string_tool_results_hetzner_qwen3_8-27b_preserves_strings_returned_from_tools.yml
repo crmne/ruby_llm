@@ -11,7 +11,7 @@ http_interactions:
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,41 +26,39 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 04 Nov 2026 19:47:25 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
+      - Tue, 10 Nov 2026 17:51:17 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
       - Origin
-      Server:
-      - HeRay
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":330,"completion_tokens":47,"total_tokens":377,"completion_tokens_details":{"reasoning_tokens":17},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-ba9b8ad7c0f678de","type":"function","function":{"name":"content_returning","arguments":"{\"query\":
-        \"test data\"}"}}],"reasoning":"User asks to process the query \"test data\"
-        using content_returning tool.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-ab8dab28-053b-417e-ae17-e31f8c84b399","object":"chat.completion","created":1793821611,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Wed, 04 Nov 2026 19:47:25 GMT
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":330,"completion_tokens":60,"total_tokens":390,"completion_tokens_details":{"reasoning_tokens":30},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-b3a20cd9e75e89b1","type":"function","function":{"name":"content_returning","arguments":"{\"query\":
+        \"test data\"}"}}],"reasoning":"The user is asking to process the query \"test
+        data\" using the content_returning tool. This is a straightforward request
+        to use the tool.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-232515f5-2c5b-4a93-8b2c-51e25174bf90","object":"chat.completion","created":1794333077,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Tue, 10 Nov 2026 17:51:18 GMT
 - request:
     method: post
     uri: https://inference.hetzner.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"Qwen3.8-27B","messages":[{"role":"user","content":"Process
-        this query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"chatcmpl-tool-ba9b8ad7c0f678de","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
-        data\"}"}}],"reasoning":"User asks to process the query \"test data\" using
-        content_returning tool.\n","reasoning_content":"User asks to process the query
-        \"test data\" using content_returning tool.\n"},{"role":"tool","content":"Processed:
-        test data","tool_call_id":"chatcmpl-tool-ba9b8ad7c0f678de"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        this query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"chatcmpl-tool-b3a20cd9e75e89b1","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}],"reasoning":"The user is asking to process the query \"test data\"
+        using the content_returning tool. This is a straightforward request to use
+        the tool.\n","reasoning_content":"The user is asking to process the query
+        \"test data\" using the content_returning tool. This is a straightforward
+        request to use the tool.\n"},{"role":"tool","content":"Processed: test data","tool_call_id":"chatcmpl-tool-b3a20cd9e75e89b1"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
         a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -75,23 +73,20 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 04 Nov 2026 19:47:29 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
+      - Tue, 10 Nov 2026 17:51:17 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
       - Origin
-      Server:
-      - HeRay
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":396,"completion_tokens":36,"total_tokens":432,"completion_tokens_details":{"reasoning_tokens":19},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\nThe
-        query has been processed. Result: **Processed: test data**","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"The
-        tool returned \"Processed: test data\". I''ll present this result to the user.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-83484969-e7ae-41aa-840a-0e92c5a0513c","object":"chat.completion","created":1793821646,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Wed, 04 Nov 2026 19:47:29 GMT
-recorded_with: VCR 6.4.0
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":409,"completion_tokens":40,"total_tokens":449,"completion_tokens_details":{"reasoning_tokens":19},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\nThe
+        query has been processed. Here''s the result:\n\n**Processed: test data**","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"The
+        tool returned \"Processed: test data\". I should present this result to the
+        user.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-57c4aaa2-9eec-4d3e-b930-f66cb3af6379","object":"chat.completion","created":1794333078,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Tue, 10 Nov 2026 17:51:19 GMT
+recorded_with: VCR 6.4.1

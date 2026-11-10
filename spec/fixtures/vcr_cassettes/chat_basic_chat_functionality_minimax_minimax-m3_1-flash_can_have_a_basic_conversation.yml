@@ -9,7 +9,7 @@ http_interactions:
         2 + 2?"}]}],"stream":false,"max_tokens":524288}'
     headers:
       User-Agent:
-      - Faraday v2.15.0
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,27 +26,27 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
-      - '324'
+      - '543'
       Trace-Id:
-      - 072667700f4bb97a346cf8da987cde40
+      - '0742888b5d361aad60c1a8d771183b03'
       X-Session-Id:
       - 81d6ff1324767c884061a36e80294eed
       X-Mm-Request-Id:
-      - 2092934004998157135_1792488560f1e7ce
+      - 2092934004998157135_1794332043jkftm7
       Minimax-Request-Id:
-      - 997f13541f4ac673292005eed2325e03
+      - 14b7744237775f07e5a658c0a4340681
       Alb-Receive-Time:
-      - '1792488560.484'
+      - '1794332043.335'
       Alb-Request-Id:
-      - 1541f3b6c82a75dffdd1c5252332b44aa16f2dda
+      - 5ca91fc203b7b9eae15c1e1ac7697f2b6d561431
       Expires:
-      - Tue, 20 Oct 2026 09:29:23 GMT
+      - Tue, 10 Nov 2026 17:34:04 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Tue, 20 Oct 2026 09:29:23 GMT
+      - Tue, 10 Nov 2026 17:34:04 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -55,6 +55,7 @@ http_interactions:
       - ak
     body:
       encoding: UTF-8
-      string: '{"id":"072667700f4bb97a346cf8da987cde40","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"4","type":"text"}],"usage":{"input_tokens":12,"output_tokens":3,"cache_creation_input_tokens":0,"cache_read_input_tokens":197},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
-  recorded_at: Tue, 20 Oct 2026 09:29:23 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"0742888b5d361aad60c1a8d771183b03","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"thinking":"We
+        need answer simple. Need perhaps \"4\". No complication.","signature":"10b7df477b14c9b4b85c7f0f8d2c2732e859ea2c11defaad1bd85c418e7e9f75","type":"thinking"},{"text":"4","type":"text"}],"usage":{"input_tokens":209,"output_tokens":17,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens_details":{"thinking_tokens":13}},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Tue, 10 Nov 2026 17:34:04 GMT
+recorded_with: VCR 6.4.1

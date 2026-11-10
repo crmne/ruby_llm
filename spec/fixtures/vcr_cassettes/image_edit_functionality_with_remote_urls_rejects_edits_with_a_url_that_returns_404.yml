@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"gpt-image-1.5","prompt":"turn the logo to green","n":1,"images":[{"image_url":"https://rubyllm.com/some-asset-that-does-not-exist.png"}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:09:15 GMT
+      - Tue, 10 Nov 2026 17:30:44 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -39,12 +39,12 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Openai-Processing-Ms:
-      - '344'
+      - '334'
       Server:
       - cloudflare
       Access-Control-Expose-Headers:
       - CF-Ray
-      - X-Request-ID
+      - X-Request-ID, Server-Timing-Total
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -68,5 +68,5 @@ http_interactions:
             "code": "invalid_value"
           }
         }
-  recorded_at: Sun, 11 Oct 2026 21:09:15 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:30:44 GMT
+recorded_with: VCR 6.4.1

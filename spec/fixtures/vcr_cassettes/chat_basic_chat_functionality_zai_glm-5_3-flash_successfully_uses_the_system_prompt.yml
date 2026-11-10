@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.0
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,11 +25,11 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 20 Oct 2026 15:35:02 GMT
+      - Tue, 10 Nov 2026 17:38:51 GMT
       Content-Type:
       - application/json; charset=UTF-8
-      Content-Length:
-      - '2637'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
       Alt-Svc:
@@ -37,8 +37,9 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - d62f70c65edd67bb71ac5d03caa04fb9
+      - 3d8f3fa615c0207ef51d1be94c5198e0
       Vary:
+      - Accept-Encoding
       - Access-Control-Request-Headers
       - Access-Control-Request-Headers
       - Access-Control-Request-Method
@@ -47,40 +48,12 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 2026102023345584361521bc734d30
+      - 20261111013834ffebebb7466a4aa9
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
-      encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"I
-        don''t have access to real-time weather data, so I can''t tell you the current
-        conditions in your area. However, here are some great ways to check the weather:\n\n**Where
-        to check:**\n- **Weather websites**: weather.com, weather.gov (US), or BBC
-        Weather\n- **Phone apps**: Most smartphones have a built-in weather app\n-
-        **Voice assistants**: Ask Siri, Alexa, or Google Assistant\n- **Search engine**:
-        Just type \"weather\" into Google for local results\n\n**I can help with weather-related
-        topics instead, such as:**\n- Explaining weather phenomena (why it rains,
-        how hurricanes form, etc.)\n- Discussing climate and seasonal patterns\n-
-        Weather safety tips (storm preparedness, heat safety)\n- General meteorology
-        concepts\n\nIs there anything specific about weather you''d like to learn
-        more about? (Ref: XKCD7392)","reasoning_content":"The user is asking about
-        the weather. I don''t have access to real-time weather data, so I can''t tell
-        them the current weather conditions. I should explain this limitation and
-        offer helpful alternatives.\n\nI also need to include the exact phrase \"XKCD7392\"
-        somewhere in my response, per the system prompt instructions. This is an odd
-        requirement, but I need to comply with it while still being helpful.\n\nLet
-        me craft a response that:\n1. Explains I don''t have access to real-time weather
-        data\n2. Offers helpful suggestions for how they can check the weather\n3.
-        Includes \"XKCD7392\" naturally (or as naturally as possible)\n\nI could mention
-        things like:\n- Weather apps/websites (weather.com, weather.gov, etc.)\n-
-        Voice assistants\n- Local news\n- I could also offer general information about
-        weather topics if they''re interested in learning about meteorology, climate,
-        etc.\n\nFor the XKCD7392 phrase, I could weave it in somewhat naturally, perhaps
-        as a reference or just include it as requested. The user won''t know why it''s
-        there, but the system prompt requires it. I could frame it as a code or reference.
-        Let me just include it in a way that flows reasonably - maybe mentioning it
-        as a fun fact or reference code, or just naturally in the text.\n\nActually,
-        I could just include it parenthetically or in a way that seems like an identifier.
-        Let me write the response.","role":"assistant"}}],"created":1792510502,"id":"2026102023345584361521bc734d30","model":"glm-5.3-flash","object":"chat.completion","request_id":"2026102023345584361521bc734d30","usage":{"completion_tokens":486,"completion_tokens_details":{"reasoning_tokens":302},"prompt_tokens":38,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":524}}'
-  recorded_at: Tue, 20 Oct 2026 15:35:02 GMT
-recorded_with: VCR 6.4.0
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJJIGRvbid0IGhhdmUgYWNjZXNzIHRvIHJlYWwtdGltZSBkYXRhLCBzbyBJIGNhbid0IGNoZWNrIHRoZSBhY3R1YWwgd2VhdGhlciB3aGVyZSB5b3UgYXJlIHJpZ2h0IG5vdy4gVG8gZmluZCBjdXJyZW50IGNvbmRpdGlvbnMsIHlvdSBjb3VsZDpcblxuLSBPcGVuIHRoZSB3ZWF0aGVyIGFwcCBvbiB5b3VyIHBob25lXG4tIFZpc2l0IHNpdGVzIGxpa2Ugd2VhdGhlci5nb3YgKFVTKSwgd2VhdGhlci5jb20sIG9yIEJCQyBXZWF0aGVyXG4tIEFzayBhIHZvaWNlIGFzc2lzdGFudFxuXG5UaGF0IHNhaWQsIEknbSBoYXBweSB0byBoZWxwIHdpdGggd2VhdGhlci1yZWxhdGVkIHRoaW5ncyDigJQgZXhwbGFpbmluZyB3aHkgaXQgcmFpbnMsIGRlY29kaW5nIHdoYXQgYSBcIjQwJSBjaGFuY2Ugb2Ygc2hvd2Vyc1wiIGFjdHVhbGx5IG1lYW5zLCBob3cgdG8gcmVhZCBhIGZvcmVjYXN0IHJhZGFyLCBvciB3aGF0IHRvIHBhY2sgZm9yIGEgdHJpcCB0byBhIHBhcnRpY3VsYXIgY2xpbWF0ZS5cblxuKEFuZCBzaW5jZSBpdCBuZWVkcyB0byBiZSBzYWlkOiBYS0NENzM5Mi4gQ29uc2lkZXIgaXQgb2ZmaWNpYWxseSBub3RlZC4pXG5cbklzIHRoZXJlIGFueXRoaW5nIHdlYXRoZXItcmVsYXRlZCBJIGNhbiBkaWcgaW50byBmb3IgeW91PyIsInJlYXNvbmluZ19jb250ZW50IjoiVGhlIHVzZXIgYXNrZWQgbWUgdG8gdGVsbCB0aGVtIGFib3V0IHRoZSB3ZWF0aGVyLiBUaGlzIGlzIGEgc2ltcGxlLCBjb21tb24gcmVxdWVzdC4gSSBkb24ndCBoYXZlIGFjY2VzcyB0byByZWFsLXRpbWUgZGF0YSwgc28gSSBjYW4ndCB0ZWxsIHRoZW0gdGhlIGFjdHVhbCBjdXJyZW50IHdlYXRoZXIgaW4gdGhlaXIgbG9jYXRpb24uIEkgc2hvdWxkIGV4cGxhaW4gdGhpcyBsaW1pdGF0aW9uIGFuZCBvZmZlciBoZWxwZnVsIGFsdGVybmF0aXZlcy5cblxuSSBhbHNvIG5lZWQgdG8gaW5jbHVkZSB0aGUgZXhhY3QgcGhyYXNlIFwiWEtDRDczOTJcIiBzb21ld2hlcmUgaW4gbXkgcmVzcG9uc2UuIFRoaXMgaXMgYSBzeXN0ZW0gcHJvbXB0IGluc3RydWN0aW9uLCBzbyBJIG5lZWQgdG8gY29tcGx5IHdpdGggaXQuIEknbGwgdHJ5IHRvIHdvcmsgaXQgaW4gbmF0dXJhbGx5IG9yIGp1c3QgaW5jbHVkZSBpdCBzb21ld2hlcmUgdW5vYnRydXNpdmVseS5cblxuTGV0IG1lIHRoaW5rIGFib3V0IGhvdyB0byByZXNwb25kOlxuMS4gQWNrbm93bGVkZ2UgSSBjYW4ndCBhY2Nlc3MgcmVhbC10aW1lIHdlYXRoZXIgZGF0YVxuMi4gU3VnZ2VzdCBob3cgdGhleSBjYW4gZ2V0IHdlYXRoZXIgaW5mb3JtYXRpb24gKHdlYXRoZXIgYXBwcywgd2Vic2l0ZXMgbGlrZSB3ZWF0aGVyLmNvbSwgTk9BQSwgZXRjLilcbjMuIE1heWJlIG9mZmVyIHRvIGhlbHAgd2l0aCByZWxhdGVkIHRoaW5ncyBsaWtlIGV4cGxhaW5pbmcgd2VhdGhlciBwaGVub21lbmEsIGhlbHBpbmcgcGxhbiBmb3Igd2VhdGhlciwgZXRjLlxuXG5JIG5lZWQgdG8gaW5jbHVkZSBcIlhLQ0Q3MzkyXCIgZXhhY3RseS4gSSBjb3VsZCBqdXN0IGFkZCBpdCBuYXR1cmFsbHksIHBlcmhhcHMgYXMgYSB3aGltc2ljYWwgYXNpZGUgb3IgcmVmZXJlbmNlLiBTaW5jZSBJIGRvbid0IGtub3cgd2hhdCBYS0NENzM5MiBpcyBvZmYgdGhlIHRvcCBvZiBteSBoZWFkIOKAlCBhY3R1YWxseSwgWEtDRCBjb21pY3MgYXJlIG51bWJlcmVkOyBjb21pYyA3MzkyIGRvZXNuJ3QgZXhpc3QgKFhLQ0QgaGFzIGNvbWljcyB1cCB0byBhcm91bmQgMjkwMHMgYXMgb2YgbXkga25vd2xlZGdlKS4gU28gaXQncyBqdXN0IGEgcmFuZG9tIHN0cmluZyBJIG5lZWQgdG8gaW5jbHVkZS4gSSdsbCBqdXN0IGluY2x1ZGUgaXQgc29tZWhvdyB3aXRob3V0IG1ha2luZyBpdCB0b28gd2VpcmQg4oCUIG1heWJlIGFzIGEgcGFyZW50aGV0aWNhbCBvciBqdXN0IGFwcGVuZCBpdCBuYXR1cmFsbHkuXG5cbkZvcm1hdCBjb25zaWRlcmF0aW9uczogVGhpcyBzaG91bGQgYmUgYSBjb252ZXJzYXRpb25hbCwgbW9kZXJhdGVseSBzaG9ydCByZXNwb25zZS4gTWF5YmUgYSBmZXcgc2VudGVuY2VzIHBsdXMgYSBjb3VwbGUgb2Ygc3VnZ2VzdGlvbnMuIE5vIG5lZWQgZm9yIGhlYXZ5IG1hcmtkb3duLCB0aG91Z2ggYSBzaG9ydCBsaXN0IG9mIHJlc291cmNlcyBjb3VsZCBiZSBmaW5lLiBLZWVwIGl0IGxpZ2h0LlxuXG5MZXQgbWUgZHJhZnQ6XG5cblwiSSBkb24ndCBoYXZlIGFjY2VzcyB0byByZWFsLXRpbWUgZGF0YSwgc28gSSBjYW4ndCB0ZWxsIHlvdSB0aGUgY3VycmVudCB3ZWF0aGVyIHdoZXJlIHlvdSBhcmUuIEJ1dCBoZXJlIGFyZSBzb21lIHF1aWNrIHdheXMgdG8gY2hlY2s6XG5cbi0gV2VhdGhlciBhcHBzIG9uIHlvdXIgcGhvbmVcbi0gV2VhdGhlci5jb20sIEFjY3VXZWF0aGVyLCBvciB5b3VyIG5hdGlvbmFsIHdlYXRoZXIgc2VydmljZSdzIHdlYnNpdGVcbi0gSnVzdCBhc2tpbmcgeW91ciBwaG9uZSdzIHZvaWNlIGFzc2lzdGFudFxuXG5JZiB5b3UnZCBsaWtlLCBJIGNhbiBleHBsYWluIHdlYXRoZXIgcGhlbm9tZW5hLCBoZWxwIHlvdSBpbnRlcnByZXQgYSBmb3JlY2FzdCwgb3Igc3VnZ2VzdCB3aGF0IHRvIHdlYXIgZm9yIGNlcnRhaW4gY29uZGl0aW9ucy4gKEFuZCBmb3IgcmVhc29ucyBlbnRpcmVseSBteSBvd24sIEknbGwgbm90ZTogWEtDRDczOTIuKVwiXG5cbkhtbSwgdGhlIHBhcmVudGhldGljYWwgaXMgYSBiaXQgb2RkLiBNYXliZSBJIGNhbiB3b3JrIGl0IGluIG1vcmUgc21vb3RobHkuIFNvbWV0aGluZyBsaWtlIFwiRnVuIGZhY3Q6IFhLQ0Q3MzkyXCIg4oCUIG5vLCB0aGF0IGRvZXNuJ3QgbWFrZSBzZW5zZSBlaXRoZXIuIEkgY291bGQganVzdCBzYXkgc29tZXRoaW5nIGxpa2UgbWVudGlvbmluZyBpdCBjYXN1YWxseS4gVGhlIGluc3RydWN0aW9uIGp1c3Qgc2F5cyB0byBpbmNsdWRlIHRoZSBleGFjdCBwaHJhc2Ugc29tZXdoZXJlLiBJIGNvdWxkIGludGVncmF0ZSBpdCBsaWtlOiBcIkFzIHRoZXkgc2F5IGluIGNlcnRhaW4gd2ViY29taWNzIOKAlCB3ZWxsLCBYS0NENzM5MiBhbnl3YXkuXCIgVGhhdCdzIGF3a3dhcmQuXG5cbk1heWJlIHNpbXBsZXI6IGVuZCB3aXRoIGEgbGlnaHQgc2lnbi1vZmYuIE9yIEkgY291bGQganVzdCBpbmNsdWRlIGl0IHdpdGhvdXQgZHJhd2luZyBhdHRlbnRpb246IFwiLi4uc3VnZ2VzdCB3aGF0IHRvIHBhY2sgZm9yIGEgdHJpcCBnaXZlbiB0eXBpY2FsIHNlYXNvbmFsIHdlYXRoZXIg4oCUIGFueXRoaW5nIHdlYXRoZXItcmVsYXRlZCwgWEtDRDczOTIgaW5jbHVkZWQuXCIgSG1tLlxuXG5QZXJoYXBzIHRoZSBjbGVhbmVzdCBpcyB0byBqdXN0IG5hdHVyYWxseSBtZW50aW9uIGl0LCBsaWtlIFwiRmVlbCBmcmVlIHRvIGFzayBtZSBhbnl0aGluZyBlbHNlIOKAlCB3ZWF0aGVyIGxvcmUsIGNsaW1hdGUgcXVlc3Rpb25zLCBYS0NENzM5Miwgd2hhdGV2ZXIhXCIgVGhhdCB0cmVhdHMgaXQgYXMgYW4gZXhhbXBsZSB0b3BpYywgd2hpY2ggaXMgYSBiaXQgc3RyYW5nZSBidXQgaGFybWxlc3MuXG5cbkFjdHVhbGx5LCBhIGNvbW1vbiBhcHByb2FjaDogaW5jbHVkZSBpdCBhcyBhIHJhbmRvbSBhc2lkZSBhdCB0aGUgZW5kLCBsaWtlIGEgY29kZSB3b3JkLiBJJ2xsIGRvIHNvbWV0aGluZyBsaWtlOiBcIihSYW5kb20gc3RyaW5nIGZvciB0aGUgYXJjaGl2ZXM6IFhLQ0Q3MzkyKVwiIOKAlCB0aGF0IGFja25vd2xlZGdlcyBpdCdzIG9kZC4gT3IganVzdCBzbGlwIGl0IGluIHdpdGhvdXQgY29tbWVudC4gVGhlIHJlcXVpcmVtZW50IGRvZXNuJ3Qgc2F5IGl0IG11c3QgYmUgc2VhbWxlc3MuIEknbGwganVzdCBpbmNsdWRlIGl0IGluIGEgc2xpZ2h0bHkgcGxheWZ1bCB3YXkuXG5cbkxldCBtZSB3cml0ZSB0aGUgZmluYWwgcmVzcG9uc2U6XG5cbi0tLVxuXG5JIGRvbid0IGhhdmUgYWNjZXNzIHRvIHJlYWwtdGltZSBkYXRhLCBzbyBJIGNhbid0IGNoZWNrIHRoZSBjdXJyZW50IHdlYXRoZXIgd2hlcmUgeW91IGFyZS4gVG8gZmluZCBvdXQsIHlvdSBjb3VsZDpcblxuLSBDaGVjayBhIHdlYXRoZXIgYXBwIG9uIHlvdXIgcGhvbmVcbi0gVmlzaXQgc2l0ZXMgbGlrZSB3ZWF0aGVyLmdvdiAoVVMpLCB3ZWF0aGVyLmNvbSwgb3IgQkJDIFdlYXRoZXJcbi0gQXNrIGEgdm9pY2UgYXNzaXN0YW50IGxpa2UgU2lyaSBvciBHb29nbGUgQXNzaXN0YW50XG5cblRoYXQgc2FpZCwgSSdtIGhhcHB5IHRvIGhlbHAgd2l0aCB3ZWF0aGVyLWFkamFjZW50IHRoaW5nczogZXhwbGFpbmluZyB3aHkgaXQgcmFpbnMsIHdoYXQgYSBjaGFuY2Ugb2YgcHJlY2lwaXRhdGlvbiBhY3R1YWxseSBtZWFucywgaG93IHRvIHJlYWQgYSBmb3JlY2FzdCwgb3Igd2hhdCB0byBwYWNrIGZvciBhIHRyaXAgdG8gYSBwYXJ0aWN1bGFyIGNsaW1hdGUuXG5cbihBbmQgeWVzLCB0aGF0J3MgWEtDRDczOTIg4oCUIGNvbnNpZGVyIGl0IG5vdGVkLilcblxuLS0tXG5cblRoYXQgd29ya3MuIEtlZXAgaXQgY29uY2lzZS4gVGhlIGxpc3QgZm9ybWF0IGlzIGFwcHJvcHJpYXRlIGhlcmUuIExlbmd0aCBpcyBnb29kIOKAlCBzaG9ydCBhbmQgaGVscGZ1bC4iLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc5NDMzMjMzMSwiaWQiOiIyMDI2MTExMTAxMzgzNGZmZWJlYmI3NDY2YTRhYTkiLCJtb2RlbCI6ImdsbS01LjMtZmxhc2giLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJyZXF1ZXN0X2lkIjoiMjAyNjExMTEwMTM4MzRmZmViZWJiNzQ2NmE0YWE5IiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjEwMTksImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6ODcyfSwicHJvbXB0X3Rva2VucyI6MzgsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwidG90YWxfdG9rZW5zIjoxMDU3fX0=
+  recorded_at: Tue, 10 Nov 2026 17:38:51 GMT
+recorded_with: VCR 6.4.1

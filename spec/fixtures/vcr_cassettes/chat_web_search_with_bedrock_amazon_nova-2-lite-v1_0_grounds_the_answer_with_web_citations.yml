@@ -6,16 +6,16 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Search the web: what
-        is the latest stable Ruby version? Cite your source."}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"systemTool":{"name":"nova_grounding"}}]}}'
+        is the latest stable Ruby version? Cite your source."}]}],"inferenceConfig":{"maxTokens":65535},"toolConfig":{"tools":[{"systemTool":{"name":"nova_grounding"}}]}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261011T210733Z
+      - 20261110T173335Z
       X-Amz-Content-Sha256:
-      - a28e1d7f145ec6abf9e71788a74513f7e39e26432272e2faecb469dc1e7c3457
+      - f578e390438ad8efc48a215c32b1870d5711c48b86afb3bbd9cbef2ddaf81490
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -29,33 +29,26 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:07:37 GMT
+      - Tue, 10 Nov 2026 17:33:38 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '2632'
+      - '1658'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - ff358fd7-c575-4339-ac40-8eece0816f3a
+      - 2c66e924-215b-4abe-9862-ceea9b041a4d
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":3474},"output":{"message":{"content":[{"toolUse":{"input":{"query":"latest
-        stable Ruby version"},"name":"nova_grounding","toolUseId":"tooluse_hCgnRX442Ua-x9IfGcXB7g","type":"server_tool_use"}},{"toolResult":{"content":[{"text":"[HIDDEN]"}],"status":"success","toolUseId":"tooluse_hCgnRX442Ua-x9IfGcXB7g","type":"nova_grounding_result"}},{"text":"The
-        latest stable Ruby version is **4.0.7**, released on September 15, 2026. This
-        version is a regular bugfix release for the 4.0.x series, which began with
-        Ruby 4.0.0 on December 25, 2025"},{"citationsContent":{"citations":[{"location":{"web":{"domain":"ruby-lang.org","url":"https://www.ruby-lang.org/en/downloads/releases/"}}}]}},{"citationsContent":{"citations":[{"location":{"web":{"domain":"issoh.co.jp","url":"https://www.issoh.co.jp/tech/details/10592/"}}}]}},{"citationsContent":{"citations":[{"location":{"web":{"domain":"endoflife.date","url":"https://endoflife.date/ruby"}}}]}},{"text":".\n\nRuby
-        follows a release cycle where new major versions are typically released annually
-        around Christmas (e.g., Ruby 4.0.0 on December 25, 2025), with regular patch
-        releases following every two months"},{"citationsContent":{"citations":[{"location":{"web":{"domain":"dev.to","url":"https://dev.to/hsbt/is-your-ruby-version-still-supported-a-maintainers-guide-to-rubys-release-cycle-799"}}}]}},{"text":".\n\nKey
-        points about Ruby 4.0:\n- **Major features**: Introduces Ruby Box (definition
-        isolation), ZJIT (next-gen JIT compiler), and Ractor improvements.\n- **Support
-        status**: Ruby 4.0 is currently in \"normal maintenance,\" meaning it receives
-        regular bug fixes and security patches"},{"citationsContent":{"citations":[{"location":{"web":{"domain":"ruby-lang.org","url":"https://www.ruby-lang.org/en/downloads/branches/"}}}]}},{"text":".\n-
-        **Compatibility**: While Ruby 4.0 maintains compatibility with Ruby 3.x for
-        most code, there are breaking changes (e.g., removed old APIs), so migration
-        may be required"},{"citationsContent":{"citations":[{"location":{"web":{"domain":"issoh.co.jp","url":"https://www.issoh.co.jp/tech/details/10592/"}}}]}},{"text":".\n\nFor
-        new projects, Ruby 4.0.7 is recommended. Existing projects on older versions
-        should plan upgrades, as older series like Ruby 3.2 have reached end-of-life"},{"citationsContent":{"citations":[{"location":{"web":{"domain":"dev.to","url":"https://dev.to/hsbt/is-your-ruby-version-still-supported-a-maintainers-guide-to-rubys-release-cycle-799"}}}]}},{"text":"."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":141,"outputTokens":275,"serverToolUsage":{},"totalTokens":416}}'
-  recorded_at: Sun, 11 Oct 2026 21:07:37 GMT
-recorded_with: VCR 6.4.0
+      string: '{"metrics":{"latencyMs":2381},"output":{"message":{"content":[{"toolUse":{"input":{"query":"latest
+        stable Ruby version"},"name":"nova_grounding","toolUseId":"tooluse_5dnQlRwiGE-1niuzLBtJ1w","type":"server_tool_use"}},{"toolResult":{"content":[{"text":"[HIDDEN]"}],"status":"success","toolUseId":"tooluse_5dnQlRwiGE-1niuzLBtJ1w","type":"nova_grounding_result"}},{"text":"The
+        latest stable Ruby version is 4.0.9, released on October 23, 2026. This version
+        includes fixes for several CVEs related to Ruby''s Onigmo regex engine that
+        could potentially be exploited for remote code execution"},{"citationsContent":{"citations":[{"location":{"web":{"domain":"ruby-lang.org","url":"https://www.ruby-lang.org/en/downloads/releases/"}}}]}},{"citationsContent":{"citations":[{"location":{"web":{"domain":"ruby-lang.org","url":"https://www.ruby-lang.org/en/news/2025/07/15/ruby-3-4-5-released/"}}}]}},{"text":".\n\nRuby
+        follows a bi-monthly release schedule, with the next scheduled release expected
+        in November 2026"},{"citationsContent":{"citations":[{"location":{"web":{"domain":"ruby-lang.org","url":"https://www.ruby-lang.org/en/downloads/releases/"}}}]}},{"text":".
+        Ruby 4.0 introduced significant features like Ruby Box for definition isolation
+        and ZJIT, a next-generation JIT compiler, building upon the improvements of
+        Ruby 3.x series"},{"citationsContent":{"citations":[{"location":{"web":{"domain":"copyprogramming.com","url":"https://copyprogramming.com/howto/shell-check-latest-ruby-version-from-terminal"}}}]}},{"text":"."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":141,"outputTokens":160,"serverToolUsage":{},"totalTokens":301}}'
+  recorded_at: Tue, 10 Nov 2026 17:33:38 GMT
+recorded_with: VCR 6.4.1

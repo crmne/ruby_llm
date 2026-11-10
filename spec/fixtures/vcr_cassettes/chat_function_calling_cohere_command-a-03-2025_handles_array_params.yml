@@ -12,7 +12,7 @@ http_interactions:
         of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -37,7 +37,7 @@ http_interactions:
       Num-Chars:
       - '6902'
       Num-Tokens:
-      - '98'
+      - '101'
       Pragma:
       - no-cache
       Vary:
@@ -45,23 +45,23 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 641a78991d54a7f291e71cd0d8b451fe
+      - 29e31060cd59b29fcf43124fb7cb1b39
       Date:
-      - Sun, 11 Oct 2026 21:08:25 GMT
+      - Tue, 10 Nov 2026 17:35:30 GMT
       X-Envoy-Upstream-Service-Time:
-      - '729'
+      - '18815'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      - h3=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"f9a5df42-dcc0-4d77-b859-b1b60162775d","message":{"role":"assistant","tool_plan":"I
-        will use the array_params tool with the tags \"red\" and \"blue\" to find
-        the combined tags.","tool_calls":[{"id":"array_params_d8hn27skhgev","type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":64,"output_tokens":34},"tokens":{"input_tokens":1470,"output_tokens":66},"cached_tokens":992}}'
-  recorded_at: Sun, 11 Oct 2026 21:08:25 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"b4825982-ac31-4976-9d7c-d4a011cfac0b","message":{"role":"assistant","tool_plan":"I
+        will call the array_params tool with the tags \"red\" and \"blue\" and relay
+        the combined tags to the user.","tool_calls":[{"id":"array_params_1vprycpey4pg","type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":64,"output_tokens":37},"tokens":{"input_tokens":1470,"output_tokens":69},"cached_tokens":1008}}'
+  recorded_at: Tue, 10 Nov 2026 17:35:30 GMT
+recorded_with: VCR 6.4.1

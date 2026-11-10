@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"Qwen3.8-27B","messages":[{"role":"user","content":"Hello"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -22,16 +22,12 @@ http_interactions:
       code: 401
       message: Unauthorized
     headers:
-      Date:
-      - Wed, 04 Nov 2026 19:33:12 GMT
       Content-Length:
       - '12'
-      Connection:
-      - keep-alive
-      Server:
-      - HeRay
+      Date:
+      - Tue, 10 Nov 2026 17:31:29 GMT
     body:
       encoding: UTF-8
       string: unauthorized
-  recorded_at: Wed, 04 Nov 2026 19:33:12 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:31:29 GMT
+recorded_with: VCR 6.4.1

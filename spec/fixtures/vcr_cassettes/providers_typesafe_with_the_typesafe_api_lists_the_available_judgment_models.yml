@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Accept-Encoding:
@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:07:00 GMT
+      - Tue, 10 Nov 2026 17:26:46 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -29,13 +29,15 @@ http_interactions:
       Connection:
       - keep-alive
       X-Typesafe-Request-Id:
-      - req_01a12cca571d717496cc085ff094b2b6
-      Set-Cookie:
-      - "<COOKIE>"
+      - req_01a1c67f7f147fafa7e941a9c25209e9
+      X-Envoy-Upstream-Service-Time:
+      - '2'
       Server:
       - cloudflare
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -43,7 +45,8 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"models":[{"name":"jev-latest","description":"The latest iteration
-        of TypeSafe''s System One Model: Jev","release_date":"2026-09-10T18:38:01.391457+00:00"},{"name":"jev-preview","description":"A
-        preview version of `jev-latest`: should be better in most ways","release_date":"2026-09-10T18:39:06.057655+00:00"}]}'
-  recorded_at: Sun, 11 Oct 2026 21:07:00 GMT
-recorded_with: VCR 6.4.0
+        of TypeSafe''s System One Model: Jev","release_date":"2026-10-22T02:00:00+00:00"},{"name":"jev-preview","description":"Preview
+        the next version of Jev before it gets promoted to jev-latest. Most of the
+        time this is the same as jev-latest","release_date":"2026-10-14T20:14:00+00:00"}]}'
+  recorded_at: Tue, 10 Nov 2026 17:26:46 GMT
+recorded_with: VCR 6.4.1

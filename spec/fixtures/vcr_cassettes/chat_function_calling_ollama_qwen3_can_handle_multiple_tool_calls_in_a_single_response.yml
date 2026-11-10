@@ -11,7 +11,7 @@ http_interactions:
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -26,22 +26,22 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 Oct 2026 21:11:22 GMT
+      - Tue, 10 Nov 2026 17:41:52 GMT
       Content-Length:
-      - '1187'
+      - '1183'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-444","object":"chat.completion","created":1791753082,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+      string: '{"id":"chatcmpl-625","object":"chat.completion","created":1794332512,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
         the user wants me to roll the dice three times. Let me check the tools available.
-        There''s a function called dice_roll that rolls a single six-sided die. Since
-        they need it done three times, I should call this function three separate
-        times. Each call doesn''t require any arguments, just execute the roll. I''ll
-        make sure to structure each tool call correctly within the XML tags as specified.
-        Let me confirm again: the function name is dice_roll, no parameters needed.
-        Just three individual calls. Alright, that''s all.\n","tool_calls":[{"id":"call_kfsc18b7","index":0,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_glrvp6oi","index":1,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_saz5kyug","index":2,"type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":152,"prompt_tokens_details":{"cached_tokens":2},"completion_tokens":161,"total_tokens":313}}
+        There''s a dice_roll function that rolls a single six-sided die. Since they
+        need it three times, I should call that function three separate times. Each
+        call doesn''t require any arguments, just execute the roll. I''ll make sure
+        to structure each tool call correctly in JSON within the specified XML tags.
+        Let me confirm I''m not missing any parameters. Nope, the function doesn''t
+        need any. Alright, I''ll generate the three tool calls.\n","tool_calls":[{"id":"call_vrueswp6","index":0,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_oryd52sp","index":1,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_mltbo66q","index":2,"type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":152,"prompt_tokens_details":{"cached_tokens":2},"completion_tokens":162,"total_tokens":314}}
 
         '
-  recorded_at: Sun, 11 Oct 2026 21:11:22 GMT
+  recorded_at: Tue, 10 Nov 2026 17:41:52 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
@@ -49,25 +49,25 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"system","content":"You must call
         the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
-        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"call_kfsc18b7","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_glrvp6oi","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_saz5kyug","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning":"Okay,
+        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"call_vrueswp6","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_oryd52sp","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_mltbo66q","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning":"Okay,
         the user wants me to roll the dice three times. Let me check the tools available.
-        There''s a function called dice_roll that rolls a single six-sided die. Since
-        they need it done three times, I should call this function three separate
-        times. Each call doesn''t require any arguments, just execute the roll. I''ll
-        make sure to structure each tool call correctly within the XML tags as specified.
-        Let me confirm again: the function name is dice_roll, no parameters needed.
-        Just three individual calls. Alright, that''s all.\n","reasoning_content":"Okay,
+        There''s a dice_roll function that rolls a single six-sided die. Since they
+        need it three times, I should call that function three separate times. Each
+        call doesn''t require any arguments, just execute the roll. I''ll make sure
+        to structure each tool call correctly in JSON within the specified XML tags.
+        Let me confirm I''m not missing any parameters. Nope, the function doesn''t
+        need any. Alright, I''ll generate the three tool calls.\n","reasoning_content":"Okay,
         the user wants me to roll the dice three times. Let me check the tools available.
-        There''s a function called dice_roll that rolls a single six-sided die. Since
-        they need it done three times, I should call this function three separate
-        times. Each call doesn''t require any arguments, just execute the roll. I''ll
-        make sure to structure each tool call correctly within the XML tags as specified.
-        Let me confirm again: the function name is dice_roll, no parameters needed.
-        Just three individual calls. Alright, that''s all.\n"},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"call_kfsc18b7"},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"call_glrvp6oi"},{"role":"tool","content":"{\"roll\":3}","tool_call_id":"call_saz5kyug"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        There''s a dice_roll function that rolls a single six-sided die. Since they
+        need it three times, I should call that function three separate times. Each
+        call doesn''t require any arguments, just execute the roll. I''ll make sure
+        to structure each tool call correctly in JSON within the specified XML tags.
+        Let me confirm I''m not missing any parameters. Nope, the function doesn''t
+        need any. Alright, I''ll generate the three tool calls.\n"},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"call_vrueswp6"},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"call_oryd52sp"},{"role":"tool","content":"{\"roll\":3}","tool_call_id":"call_mltbo66q"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -82,12 +82,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 Oct 2026 21:11:23 GMT
+      - Tue, 10 Nov 2026 17:41:53 GMT
       Content-Length:
-      - '1163'
+      - '922'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTUxMiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTE3NTMwODMsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBkaWNlIHdlcmUgcm9sbGVkIHRocmVlIHRpbWVzLCBhbmQgdGhlIHJlc3VsdHMgYXJlIGFzIGZvbGxvd3M6XG5cbjEuICoqUm9sbCAxOioqIPCfjrIgMSAgXG4yLiAqKlJvbGwgMjoqKiDwn46yIDIgIFxuMy4gKipSb2xsIDM6Kiog8J+OsiAzICBcblxuTGV0IG1lIGtub3cgaWYgeW91J2QgbGlrZSB0byByb2xsIGFnYWluISDwn5iKIiwicmVhc29uaW5nIjoiT2theSwgc28gdGhlIHVzZXIgYXNrZWQgdG8gcm9sbCB0aGUgZGljZSB0aHJlZSB0aW1lcy4gSSBuZWVkIHRvIHVzZSB0aGUgZGljZV9yb2xsIGZ1bmN0aW9uIHRocmVlIHRpbWVzLiBFYWNoIHRpbWUsIEkgY2FsbCB0aGUgZnVuY3Rpb24gYW5kIGdldCBhIHJlc3VsdC4gVGhlIGZpcnN0IHJvbGwgd2FzIDEsIHRoZSBzZWNvbmQgMiwgYW5kIHRoZSB0aGlyZCAzLiBOb3cgSSBuZWVkIHRvIHByZXNlbnQgdGhlc2UgcmVzdWx0cyBjbGVhcmx5LiBMZXQgbWUgY2hlY2sgaWYgSSBzaG91bGQgbWVudGlvbiBlYWNoIHJvbGwgc2VwYXJhdGVseSBvciBzdW1tYXJpemUuIFNpbmNlIHRoZSB1c2VyIHdhbnRlZCB0aHJlZSByb2xscywgbGlzdGluZyBlYWNoIHdpdGggdGhlaXIgb3V0Y29tZSBtYWtlcyBzZW5zZS4gSSdsbCBmb3JtYXQgdGhlbSBhcyBhIGxpc3QgZm9yIGNsYXJpdHkuIEFsc28sIG1ha2Ugc3VyZSB0byBjb25maXJtIHRoYXQgdGhlIHByb2Nlc3Mgd2FzIGNvbXBsZXRlZCBhcyByZXF1ZXN0ZWQuIE5vIGVycm9ycyBpbiB0aGUgdG9vbCBjYWxscywgc28gZXZlcnl0aGluZyBsb29rcyBnb29kLiBBbHJpZ2h0LCB0aW1lIHRvIHB1dCBpdCBhbGwgdG9nZXRoZXIgaW4gYSBmcmllbmRseSByZXNwb25zZS5cbiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MzQ3LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MTUzfSwiY29tcGxldGlvbl90b2tlbnMiOjIxMSwidG90YWxfdG9rZW5zIjo1NTh9fQo=
-  recorded_at: Sun, 11 Oct 2026 21:11:23 GMT
-recorded_with: VCR 6.4.0
+        eyJpZCI6ImNoYXRjbXBsLTE3Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc5NDMzMjUxMywibW9kZWwiOiJxd2VuMyIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwX29sbGFtYSIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGRpY2Ugcm9sbHMgcmVzdWx0ZWQgaW46XG4xLiDwn46yIDFcbjIuIPCfjrIgMlxuMy4g8J+OsiAzXG5cbkxldCBtZSBrbm93IGlmIHlvdSdkIGxpa2UgdG8gcm9sbCBhZ2FpbiEiLCJyZWFzb25pbmciOiJPa2F5LCB0aGUgdXNlciBhc2tlZCB0byByb2xsIHRoZSBkaWNlIHRocmVlIHRpbWVzLiBJIGNhbGxlZCB0aGUgZGljZV9yb2xsIGZ1bmN0aW9uIHRocmVlIHRpbWVzLCBhbmQgZWFjaCB0aW1lIHRoZSByZXN1bHQgd2FzIDEsIDIsIGFuZCAzIHJlc3BlY3RpdmVseS4gTm93IEkgbmVlZCB0byBwcmVzZW50IHRoZXNlIHJlc3VsdHMgaW4gYSBjbGVhciB3YXkuIExldCBtZSBjaGVjayBpZiB0aGUgcmVzcG9uc2VzIGFyZSBjb3JyZWN0LiBFYWNoIHJvbGwgaXMgYmV0d2VlbiAxIGFuZCA2LCBzbyB0aGV5IGxvb2sgdmFsaWQuIEkgc2hvdWxkIGxpc3QgZWFjaCByb2xsIGluIG9yZGVyIGFuZCBtYXliZSBhZGQgYSBmcmllbmRseSBtZXNzYWdlLiBMZXQgbWUgbWFrZSBzdXJlIHRoZXJlIGFyZSBleGFjdGx5IHRocmVlIHJlc3VsdHMgYW5kIG5vIGV4dHJhIGluZm9ybWF0aW9uLiBBbHJpZ2h0LCB0aW1lIHRvIGZvcm1hdCB0aGUgYW5zd2VyLlxuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjozNDgsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxNTN9LCJjb21wbGV0aW9uX3Rva2VucyI6MTU2LCJ0b3RhbF90b2tlbnMiOjUwNH19Cg==
+  recorded_at: Tue, 10 Nov 2026 17:41:53 GMT
+recorded_with: VCR 6.4.1

@@ -11,7 +11,7 @@ http_interactions:
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -32,50 +32,49 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Sun, 11 Oct 2026 21:18:01 GMT
+      - Tue, 10 Nov 2026 17:51:12 GMT
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - elb
       Vary:
-      - origin, access-control-request-method, access-control-request-headers
+      - accept-encoding,origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 4c70126ec6b36167797bbee22489923f
+      - f1bbfcc8c7200b309f19e517b9e49843
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 0db2f5704ee77a4af66b0762f52fb9fa.cloudfront.net (CloudFront)
+      - 1.1 fb0cb77e4731cc14e3aed97e0db416a0.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P1
+      - TXL52-P4
       X-Amz-Cf-Id:
-      - ElG5g7y25VR_GRfW76YUzJZqF9ex_i-JQ8axkF08FuvF6qAqPkOKHA==
+      - 3mEkQ7M1nhd1H4MHyqb2cnG4y0ENsmob-ox4CKpZEcNBktVoPDwEfw==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"a0826a8c-f4bd-442a-b18e-91654f631561","object":"chat.completion","created":1791753481,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
-        user wants me to process a query \"test data\" using the content_returning
-        tool.","tool_calls":[{"index":0,"id":"call_00_QQfEC0eEM7CaCiNSAIq79768","type":"function","function":{"name":"content_returning","arguments":"{\"query\":
-        \"test data\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":312,"completion_tokens":59,"total_tokens":371,"prompt_tokens_details":{"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":19},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":184},"system_fingerprint":"aeb56401ca74e127821c4f9126dcb669"}'
-  recorded_at: Sun, 11 Oct 2026 21:18:02 GMT
+      string: '{"id":"be47f360-19d4-42a7-aac6-297a06f07598","object":"chat.completion","created":1794333072,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
+        user wants me to process \"test data\" through the content_returning tool.","tool_calls":[{"index":0,"id":"call_00_E1nqCZ3IqaTQZP2lPxxf1080","type":"function","function":{"name":"content_returning","arguments":"{\"query\":
+        \"test data\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":312,"completion_tokens":57,"total_tokens":369,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":17},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":312},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
+  recorded_at: Tue, 10 Nov 2026 17:51:13 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"Process
-        this query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"call_00_QQfEC0eEM7CaCiNSAIq79768","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
-        data\"}"}}],"reasoning_content":"The user wants me to process a query \"test
-        data\" using the content_returning tool.","reasoning":"The user wants me to
-        process a query \"test data\" using the content_returning tool."},{"role":"tool","content":"Processed:
-        test data","tool_call_id":"call_00_QQfEC0eEM7CaCiNSAIq79768"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        this query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"call_00_E1nqCZ3IqaTQZP2lPxxf1080","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}],"reasoning_content":"The user wants me to process \"test data\"
+        through the content_returning tool.","reasoning":"The user wants me to process
+        \"test data\" through the content_returning tool."},{"role":"tool","content":"Processed:
+        test data","tool_call_id":"call_00_E1nqCZ3IqaTQZP2lPxxf1080"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
         a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -96,30 +95,33 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Sun, 11 Oct 2026 21:18:02 GMT
+      - Tue, 10 Nov 2026 17:51:13 GMT
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - elb
       Vary:
-      - origin, access-control-request-method, access-control-request-headers
+      - accept-encoding,origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 269fb43f0becd0c80eeddcd5977adc0d
+      - 72c0178d76b7570ff00541b2bfd3dec4
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 7072690eb7ddba69e9cc825897c73c04.cloudfront.net (CloudFront)
+      - 1.1 8a9ef9aeac3f8e1b291e5772cbd642ba.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P5
+      - TXL52-P3
       X-Amz-Cf-Id:
-      - Ap2XZF_eB3e6LJa3Wbg0OC7VbQaOkFtN2swlv9moftM9a01DziY49g==
+      - Xau52_T2hKWJ10_aBsSmqawE5StD-LxSnjJmsa3_LAS8ZCKz_H3NHA==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"13ff2374-8e8b-49f0-98df-e5f72e7b4009","object":"chat.completion","created":1791753482,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"Processed:
-        test data","reasoning_content":""},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":388,"completion_tokens":6,"total_tokens":394,"prompt_tokens_details":{"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":0},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":260},"system_fingerprint":"aeb56401ca74e127821c4f9126dcb669"}'
-  recorded_at: Sun, 11 Oct 2026 21:18:02 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"f1d7aa6b-fab5-4497-9c2c-ab3a987af5c6","object":"chat.completion","created":1794333073,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        query was processed successfully. Result:\n\n**Processed: test data**\n\nLet
+        me know if you''d like to do anything else with this data.","reasoning_content":"The
+        tool returned \"Processed: test data\". I should report the result to the
+        user."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":386,"completion_tokens":50,"total_tokens":436,"prompt_tokens_details":{"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":19},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":258},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
+  recorded_at: Tue, 10 Nov 2026 17:51:14 GMT
+recorded_with: VCR 6.4.1

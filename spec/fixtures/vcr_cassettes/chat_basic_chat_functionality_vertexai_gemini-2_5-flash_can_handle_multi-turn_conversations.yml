@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Tue, 10 Nov 2026 17:37:30 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Pragma:
       - no-cache
-      Date:
-      - Sun, 11 Oct 2026 21:10:34 GMT
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -56,7 +56,7 @@ http_interactions:
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 11 Oct 2026 21:10:34 GMT
+  recorded_at: Tue, 10 Nov 2026 17:37:30 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -66,7 +66,7 @@ http_interactions:
         the programming language Ruby?"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -80,6 +80,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Goog-Request-Id:
+      - WlbzaoGEEYGPu_EP_vaKgAI
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -87,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:10:36 GMT
+      - Tue, 10 Nov 2026 17:37:31 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -110,7 +112,7 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "The creator of the programming language Ruby is **Yukihiro \"Matz\" Matsumoto**. He is a Japanese computer scientist and software engineer."
+                    "text": "The creator of the programming language Ruby is **Yukihiro Matsumoto** (often referred to as **Matz**)."
                   }
                 ]
               },
@@ -119,8 +121,8 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 10,
-            "candidatesTokenCount": 27,
-            "totalTokenCount": 181,
+            "candidatesTokenCount": 24,
+            "totalTokenCount": 140,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -131,16 +133,16 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 27
+                "tokenCount": 24
               }
             ],
-            "thoughtsTokenCount": 144
+            "thoughtsTokenCount": 106
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-10-11T21:10:34.951527Z",
-          "responseId": "SvvLaueJOsbL1PIP1uC28AQ"
+          "createTime": "2026-11-10T17:37:30.279041Z",
+          "responseId": "WlbzaoGEEYGPu_EP_vaKgAI"
         }
-  recorded_at: Sun, 11 Oct 2026 21:10:36 GMT
+  recorded_at: Tue, 10 Nov 2026 17:37:31 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -148,12 +150,12 @@ http_interactions:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Who is the creator of
         the programming language Ruby?"}]},{"role":"model","parts":[{"text":"The creator
-        of the programming language Ruby is **Yukihiro \"Matz\" Matsumoto**. He is
-        a Japanese computer scientist and software engineer."}]},{"role":"user","parts":[{"text":"What
-        year did he create Ruby?"}]}],"generationConfig":{}}'
+        of the programming language Ruby is **Yukihiro Matsumoto** (often referred
+        to as **Matz**)."}]},{"role":"user","parts":[{"text":"What year did he create
+        Ruby?"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -167,6 +169,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Goog-Request-Id:
+      - W1bzaubMNtmVu_EP_omloQQ
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -174,7 +178,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:10:37 GMT
+      - Tue, 10 Nov 2026 17:37:33 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -197,7 +201,7 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "Yukihiro \"Matz\" Matsumoto started working on Ruby in **1993**, and it was first publicly released in **1995**."
+                    "text": "Yukihiro Matsumoto (Matz) started designing Ruby in **1993**.\n\nThe first public release of Ruby (version 0.95) was on **December 21, 1995**."
                   }
                 ]
               },
@@ -205,27 +209,27 @@ http_interactions:
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 45,
-            "candidatesTokenCount": 32,
-            "totalTokenCount": 181,
+            "promptTokenCount": 41,
+            "candidatesTokenCount": 47,
+            "totalTokenCount": 247,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 45
+                "tokenCount": 41
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 32
+                "tokenCount": 47
               }
             ],
-            "thoughtsTokenCount": 104
+            "thoughtsTokenCount": 159
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-10-11T21:10:36.485018Z",
-          "responseId": "TPvLaprNHeWLvPgP6uql-QI"
+          "createTime": "2026-11-10T17:37:31.894566Z",
+          "responseId": "W1bzaubMNtmVu_EP_omloQQ"
         }
-  recorded_at: Sun, 11 Oct 2026 21:10:37 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:37:33 GMT
+recorded_with: VCR 6.4.1

@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,50 +27,53 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - fb036d5c394cd0c23173b2be8d69965e24bc9914
+      - 81e02665bdd918cf59b66804d554f8e53171f5d2
       X-Build-Time:
-      - '2026-10-09T17:17:18-07:00'
+      - '2026-11-09T17:12:20-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '605'
+      - '671'
       Date:
-      - Sun, 11 Oct 2026 21:11:35 GMT
+      - Tue, 10 Nov 2026 17:42:07 GMT
       Server:
       - Google Frontend
       Traceparent:
-      - 00-f9720064c3e4bfbc4e3bcf228caef036-f70b3ae6122a6139-00
+      - 00-ad14d85e80668f5ef6ed6c19e762f20f-d27f0ba276729015-00
       X-Cloud-Trace-Context:
-      - f9720064c3e4bfbc4e3bcf228caef036/17801386711933673785
+      - ad14d85e80668f5ef6ed6c19e762f20f/15167854862406946837
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-819","object":"chat.completion","created":1791753095,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"We
-        need to use the tool best_language_to_learn. We need to call it with no arguments.
-        Then produce answer based on result.","tool_calls":[{"id":"call_ru0khz7i","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":132,"completion_tokens":51,"total_tokens":183,"prompt_tokens_details":{"cached_tokens":64}}}
+      string: '{"id":"chatcmpl-273","object":"chat.completion","created":1794332527,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"The
+        user asks to use the best_language_to_learn tool to tell which language to
+        learn. So we need to call the function best_language_to_learn (no parameters).
+        Then we need to output result.","tool_calls":[{"id":"call_xrt0fpn4","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":132,"completion_tokens":65,"total_tokens":197,"prompt_tokens_details":{"cached_tokens":64}}}
 
         '
-  recorded_at: Sun, 11 Oct 2026 21:11:35 GMT
+  recorded_at: Tue, 10 Nov 2026 17:42:07 GMT
 - request:
     method: post
     uri: https://ollama.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"Use the
-        best_language_to_learn tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"call_ru0khz7i","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"We
-        need to use the tool best_language_to_learn. We need to call it with no arguments.
-        Then produce answer based on result.","reasoning_content":"We need to use
-        the tool best_language_to_learn. We need to call it with no arguments. Then
-        produce answer based on result."},{"role":"tool","content":"Ruby","tool_call_id":"call_ru0khz7i"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        best_language_to_learn tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"call_xrt0fpn4","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
+        user asks to use the best_language_to_learn tool to tell which language to
+        learn. So we need to call the function best_language_to_learn (no parameters).
+        Then we need to output result.","reasoning_content":"The user asks to use
+        the best_language_to_learn tool to tell which language to learn. So we need
+        to call the function best_language_to_learn (no parameters). Then we need
+        to output result."},{"role":"tool","content":"Ruby","tool_call_id":"call_xrt0fpn4"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -87,30 +90,34 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - fb036d5c394cd0c23173b2be8d69965e24bc9914
+      - 81e02665bdd918cf59b66804d554f8e53171f5d2
       X-Build-Time:
-      - '2026-10-09T17:17:18-07:00'
+      - '2026-11-09T17:12:20-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '841'
+      - '560'
       Date:
-      - Sun, 11 Oct 2026 21:11:36 GMT
+      - Tue, 10 Nov 2026 17:42:07 GMT
       Server:
       - Google Frontend
-      Traceparent:
-      - 00-cef1d3782244aa1cd406edf3e6282eec-7d10c503a8e04a17-00
       X-Cloud-Trace-Context:
-      - cef1d3782244aa1cd406edf3e6282eec/9011919473877207575
+      - 222160cf80bb8078d556566e2ccc598d/6174002677416038642
+      Traceparent:
+      - 00-222160cf80bb8078d556566e2ccc598d-55ae76b94db190f2-00
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTY3NCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTE3NTMwOTYsIm1vZGVsIjoiZ3B0LW9zczoxMjBiIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJCYXNlZCBvbiB0aGUgdG9vbOKAmXMgcmVjb21tZW5kYXRpb24sIHRoZSBiZXN0IGxhbmd1YWdlIGZvciB5b3UgdG8gbGVhcm4gcmlnaHQgbm93IGlzICoqUnVieSoqLiBcblxuUnVieSBpcyBrbm93biBmb3IgaXRzIGNsZWFuLCByZWFkYWJsZSBzeW50YXggYW5kIHN0cm9uZyBjb21tdW5pdHksIGVzcGVjaWFsbHkgcG9wdWxhciBpbiB3ZWIgZGV2ZWxvcG1lbnQgKHZpYSBSdWJ5IG9uIFJhaWxzKSwgc2NyaXB0aW5nLCBhbmQgcHJvdG90eXBpbmcuIElmIHlvdeKAmXJlIGludGVyZXN0ZWQgaW4gYnVpbGRpbmcgd2ViIGFwcGxpY2F0aW9ucywgYXV0b21hdGluZyB0YXNrcywgb3IganVzdCBlbmpveWluZyBhIGxhbmd1YWdlIHRoYXQgZW1waGFzaXplcyBkZXZlbG9wZXIgaGFwcGluZXNzLCBSdWJ5IGlzIGEgc29saWQgY2hvaWNlLiBcblxuTGV0IG1lIGtub3cgaWYgeW914oCZZCBsaWtlIHJlc291cmNlcywgbGVhcm5pbmcgcGF0aHMsIG9yIHByb2plY3QgaWRlYXMgdG8gZ2V0IHN0YXJ0ZWQhIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxOTgsImNvbXBsZXRpb25fdG9rZW5zIjoxMDUsInRvdGFsX3Rva2VucyI6MzAzLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MTYwfX19Cg==
-  recorded_at: Sun, 11 Oct 2026 21:11:36 GMT
-recorded_with: VCR 6.4.0
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-23","object":"chat.completion","created":1794332527,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"Based
+        on the latest data, **Ruby** is the recommended language for you to learn.
+        It offers a friendly syntax, a strong community, and is especially valuable
+        for web development with frameworks like Ruby on Rails. Happy coding!"},"finish_reason":"stop"}],"usage":{"prompt_tokens":212,"completion_tokens":49,"total_tokens":261,"prompt_tokens_details":{"cached_tokens":176}}}
+
+        '
+  recorded_at: Tue, 10 Nov 2026 17:42:07 GMT
+recorded_with: VCR 6.4.1

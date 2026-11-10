@@ -14,7 +14,7 @@ http_interactions:
         civil"],"Angry or hostile"]}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:07:00 GMT
+      - Tue, 10 Nov 2026 17:26:46 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,21 +37,23 @@ http_interactions:
       Connection:
       - keep-alive
       X-Typesafe-Request-Id:
-      - req_01a12cca55357a74afb0a8307872cb3d
-      Set-Cookie:
-      - "<COOKIE>"
+      - req_01a1c67f7da07e2991299907fbf93be7
+      X-Envoy-Upstream-Service-Time:
+      - '19'
       Server:
       - cloudflare
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"jev-1.13.0","answers":{"urgent":{"type":"noul","noul":0.93},"department":{"type":"choice","choice":"Billing
-        & payments","confidence":1.0,"probabilities":{"Billing & payments":1.0,"Other":0.0}},"frustration":{"type":"score","score":0.28,"confidence":0.58,"legend":{"0":{"description":"Calm
-        and polite"},"1":["Frustrated","Still civil"],"2":"Angry or hostile"},"probabilities":{"0":0.72,"1":0.28,"2":0.0}}},"usage":{"input_tokens":439,"output_tokens":67}}'
-  recorded_at: Sun, 11 Oct 2026 21:07:00 GMT
-recorded_with: VCR 6.4.0
+      string: '{"model":"jev-1.14.0","answers":{"urgent":{"type":"noul","noul":0.95},"department":{"type":"choice","choice":"Billing
+        & payments","confidence":1.0,"probabilities":{"Billing & payments":1.0,"Other":0.0}},"frustration":{"type":"score","score":0.22,"confidence":0.67,"legend":{"0":{"description":"Calm
+        and polite"},"1":["Frustrated","Still civil"],"2":"Angry or hostile"},"probabilities":{"0":0.78,"1":0.22,"2":0.0}}},"usage":{"input_tokens":439,"output_tokens":67}}'
+  recorded_at: Tue, 10 Nov 2026 17:26:46 GMT
+recorded_with: VCR 6.4.1

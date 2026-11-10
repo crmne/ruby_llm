@@ -10,7 +10,7 @@ http_interactions:
         a sample text file named ruby.txt","parametersJsonSchema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -33,7 +33,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:15:50 GMT
+      - Tue, 10 Nov 2026 17:48:30 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -43,7 +43,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=744
+      - gfet4t7; dur=731
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -61,7 +61,7 @@ http_interactions:
                       "name": "file_fetch",
                       "args": {}
                     },
-                    "thoughtSignature": "Cu4CAWkUfROEG5Tac21OLlpwv7EerDqK1svoFtDrAPoifOGd13iyQOi05KBrEUNkObEiLWW0mNepGvYSr0Cc4oy/QdSj8skfKxhEUmHsbS2jgaT3DtLz/hl2MOw0q2yqCGrgpEMhlg9IWZUvCfOIyZjq+nG/WXe4j5ibNh30RA+gQYMWrcvPqMcqf2yuES7m+etGL3omzdgsn5h4h84GX2hpd2/zTpGpYH6gQJWXH6dqtnBJ4vkVmGqYkPlLIg5PxulVpQ6Oa4nQux5+97/sNw83iM+MT3DqtJ2jAiEyJiKMunZ+i06NYh22WAIFlWCgJVnOoHmo8KOVaZh/Ly9s26c/D6ilyZWtfum8xHu8IOBnVdEer1GqdjQ9soLoa/kof4K4kY8u1QTFJW1j7JXM5l9FcdsRf32maiBseZ604ss+4oBDBqxw5ulOHf1l4tLabcG1IgKcEca9ysOM1iSFszLHGsY4sZQHW1WoQPMB3v2M"
+                    "thoughtSignature": "CqcBAWkUfRN1+X52TLpQqD7c4Jvyp+ujcDfBHz3IZ2nwCBlE/HnW1Hy48wuANEE4J6Jmw431Xfw4CWeqSd5DpNIQtadvDfBInUFmKl4JmMzVOhg+Ym2CIsRqdsg3jAfWc3R0oy/XwbaEC2qD3CD2h9cEkMW64HBoG3nFA4qkSF33ldeubE5GbvqpNCtocua5H3vmaT+OVtgTg0VyE3pkoLxmQ2dFMV77fuQ="
                   }
                 ],
                 "role": "model"
@@ -74,33 +74,33 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 51,
             "candidatesTokenCount": 10,
-            "totalTokenCount": 141,
+            "totalTokenCount": 95,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 51
               }
             ],
-            "thoughtsTokenCount": 80,
+            "thoughtsTokenCount": 34,
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "hfzLarOfK-ec28oPwOzBsQo"
+          "responseId": "7ljzas7bHM3RvdIP_sygqQY"
         }
-  recorded_at: Sun, 11 Oct 2026 21:15:50 GMT
+  recorded_at: Tue, 10 Nov 2026 17:48:31 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Call file_fetch to get
-        ruby.txt, then repeat the contents of the attached file."}]},{"role":"model","parts":[{"functionCall":{"name":"file_fetch","args":{}},"thoughtSignature":"Cu4CAWkUfROEG5Tac21OLlpwv7EerDqK1svoFtDrAPoifOGd13iyQOi05KBrEUNkObEiLWW0mNepGvYSr0Cc4oy/QdSj8skfKxhEUmHsbS2jgaT3DtLz/hl2MOw0q2yqCGrgpEMhlg9IWZUvCfOIyZjq+nG/WXe4j5ibNh30RA+gQYMWrcvPqMcqf2yuES7m+etGL3omzdgsn5h4h84GX2hpd2/zTpGpYH6gQJWXH6dqtnBJ4vkVmGqYkPlLIg5PxulVpQ6Oa4nQux5+97/sNw83iM+MT3DqtJ2jAiEyJiKMunZ+i06NYh22WAIFlWCgJVnOoHmo8KOVaZh/Ly9s26c/D6ilyZWtfum8xHu8IOBnVdEer1GqdjQ9soLoa/kof4K4kY8u1QTFJW1j7JXM5l9FcdsRf32maiBseZ604ss+4oBDBqxw5ulOHf1l4tLabcG1IgKcEca9ysOM1iSFszLHGsY4sZQHW1WoQPMB3v2M"}]},{"role":"user","parts":[{"functionResponse":{"name":"file_fetch","response":{"name":"file_fetch","content":[{"text":"Fetched
-        the file."}]}}},{"text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>"}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"file_fetch","description":"Fetches
+        ruby.txt, then repeat the contents of the attached file."}]},{"role":"model","parts":[{"functionCall":{"name":"file_fetch","args":{}},"thoughtSignature":"CqcBAWkUfRN1+X52TLpQqD7c4Jvyp+ujcDfBHz3IZ2nwCBlE/HnW1Hy48wuANEE4J6Jmw431Xfw4CWeqSd5DpNIQtadvDfBInUFmKl4JmMzVOhg+Ym2CIsRqdsg3jAfWc3R0oy/XwbaEC2qD3CD2h9cEkMW64HBoG3nFA4qkSF33ldeubE5GbvqpNCtocua5H3vmaT+OVtgTg0VyE3pkoLxmQ2dFMV77fuQ="}]},{"role":"user","parts":[{"functionResponse":{"name":"file_fetch","response":{"name":"file_fetch","content":[{"text":"Fetched
+        the file."},{"text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"file_fetch","description":"Fetches
         a sample text file named ruby.txt","parametersJsonSchema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -123,7 +123,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:15:51 GMT
+      - Tue, 10 Nov 2026 17:48:31 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -133,7 +133,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=962
+      - gfet4t7; dur=714
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -147,11 +147,8 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "\n"
-                  },
-                  {
                     "text": "Ruby is the best.",
-                    "thoughtSignature": "CtICAWkUfRPeU/Ovd3nSoEsE/8+QD1Se2+JCo/WudxFaAG7rE1GnMayKLnFyCOeh793pYNSUBW2UDbKvgb8uHtWo2DjGi5nkqzKZur0vD3Kb6jOn9Ob/4vQgZ1m12GnaldDOMbkcX9o4X2U4hDe1zBXMBFbD54xUYGrXkSZg3YDjOfhQlCv6pElXL3arRjOGwkcAxC2WhOJIVnAafHz81HhCugYE/8jOiNfcWXHMvmhK67nTAAls76xadwlLVKhRnSdmXVVYLVvwFwhJI8Qx6P0X+3QMZKAEzXJhdyNhas5MBoFJ/ccmH93wVOYTzkiE1xc80Y3H4pXTvK8bt96pzgs83eWgSEci4kT+3iBZ6iQ1yz6fC6ONWUrAhKRtAAyh5WJbvf5QoJWdYjHQ+It7mJBl8+OWF6wJ37zcF5CbjmbO0aUNGpzPWHI80PYDZEa5vin304s="
+                    "thoughtSignature": "CrsBAWkUfROxuwpEzBLowMjsCy8oKKQWb4WZmvMnSTnINmkSuyZimQwiy3gPnRDOzokxsMRlvtQgWpnTb85RHxnBPgwMSn/w2usyueQ9oCc5T++VjmqM7/AKkidfZbrwAyvZl1cmJuWsxt9ifjLvF8WR8ImF46VJd1vu7uI4ew0j8gBDFEgd1V9eQS2P4qspEQOAN1CR8j/aB8qsrEeTB9viQ90PVbL5XJJc3q9C+yvbqxcHdjuOJoGwWbS2HA=="
                   }
                 ],
                 "role": "model"
@@ -161,20 +158,20 @@ http_interactions:
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 113,
+            "promptTokenCount": 120,
             "candidatesTokenCount": 5,
-            "totalTokenCount": 194,
+            "totalTokenCount": 163,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 113
+                "tokenCount": 120
               }
             ],
-            "thoughtsTokenCount": 76,
+            "thoughtsTokenCount": 38,
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "hvzLavKaINmJxN8P56iKyAQ"
+          "responseId": "71jzas2GFrzYkdUP29PJ2Ak"
         }
-  recorded_at: Sun, 11 Oct 2026 21:15:51 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:48:31 GMT
+recorded_with: VCR 6.4.1

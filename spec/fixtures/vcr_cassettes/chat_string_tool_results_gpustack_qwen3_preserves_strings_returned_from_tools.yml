@@ -11,7 +11,7 @@ http_interactions:
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,22 +25,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Envoy-Upstream-Service-Time:
+      - '1107'
       Content-Type:
       - application/json; charset=utf-8
-      Req-Cost-Time:
-      - '1056'
       Req-Arrive-Time:
-      - '1791753484193'
-      X-Envoy-Upstream-Service-Time:
-      - '1045'
+      - '1794333076020'
+      Resp-Start-Time:
+      - '1794333077131'
+      Date:
+      - Tue, 10 Nov 2026 17:51:15 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
       - ''
-      Resp-Start-Time:
-      - '1791753485249'
-      Date:
-      - Sun, 11 Oct 2026 21:18:03 GMT
+      Req-Cost-Time:
+      - '1111'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -48,43 +48,44 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"role":"assistant","content":"","reasoning_content":"Okay,
-        the user wants me to process the query \"test data\". Let me check the tools
-        available. There''s a function called content_returning that takes a query
-        parameter. The description says it returns a processed string result. Since
-        the user provided the query \"test data\", I should call this function with
-        that exact query. I need to make sure the arguments are correctly formatted
-        as JSON. No other tools are available, so I just need to use this one. Alright,
-        I''ll structure the tool call with the name and the query argument.\n","tool_calls":[{"type":"function","function":{"name":"content_returning","arguments":"{\"query\":
-        \"test data\"}"},"id":"JRTXNDvEmYeibVocIdxIVugf9U1XayqL"}]}}],"created":1791753485,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":135,"prompt_tokens":171,"total_tokens":306,"prompt_tokens_details":{"cached_tokens":170}},"id":"chatcmpl-nZtNnxUV3nVBb88uL6Ol20UcbDfnTdvd","timings":{"cache_n":170,"prompt_n":1,"prompt_ms":8.703,"prompt_per_token_ms":8.703,"prompt_per_second":114.90290704354821,"predicted_n":135,"predicted_ms":990.448,"predicted_per_token_ms":7.391402985074627,"predicted_per_second":135.2923121658078}}'
-  recorded_at: Sun, 11 Oct 2026 21:18:05 GMT
+        the user wants me to process the query \"test data\". Let me check the available
+        tools. There''s a function called content_returning that takes a query parameter.
+        The description says it returns a processed string result. Since the user
+        provided the query \"test data\", I should call this function with that exact
+        query. I need to make sure the arguments are correctly formatted as JSON.
+        No other tools are available, so I just use this one. Alright, the tool call
+        should include the name \"content_returning\" and the arguments as {\"query\":
+        \"test data\"}.\n","tool_calls":[{"type":"function","function":{"name":"content_returning","arguments":"{\"query\":
+        \"test data\"}"},"id":"HzTVCwIFTwQ0coetGavdRk4ZZ5uItEEn"}]}}],"created":1794333077,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":143,"prompt_tokens":171,"total_tokens":314,"prompt_tokens_details":{"cached_tokens":51}},"id":"chatcmpl-hE0pThDuODGL4XISLJmpLfSnulTD3Efi","timings":{"cache_n":51,"prompt_n":120,"prompt_ms":33.476,"prompt_per_token_ms":0.27896666666666664,"prompt_per_second":3584.6576651929745,"predicted_n":143,"predicted_ms":1033.645,"predicted_per_token_ms":7.2791901408450705,"predicted_per_second":137.3779198854539}}'
+  recorded_at: Tue, 10 Nov 2026 17:51:17 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"Process this
-        query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"JRTXNDvEmYeibVocIdxIVugf9U1XayqL","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"HzTVCwIFTwQ0coetGavdRk4ZZ5uItEEn","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
         data\"}"}}],"reasoning":"Okay, the user wants me to process the query \"test
-        data\". Let me check the tools available. There''s a function called content_returning
+        data\". Let me check the available tools. There''s a function called content_returning
         that takes a query parameter. The description says it returns a processed
         string result. Since the user provided the query \"test data\", I should call
         this function with that exact query. I need to make sure the arguments are
-        correctly formatted as JSON. No other tools are available, so I just need
-        to use this one. Alright, I''ll structure the tool call with the name and
-        the query argument.\n","reasoning_content":"Okay, the user wants me to process
-        the query \"test data\". Let me check the tools available. There''s a function
-        called content_returning that takes a query parameter. The description says
-        it returns a processed string result. Since the user provided the query \"test
-        data\", I should call this function with that exact query. I need to make
-        sure the arguments are correctly formatted as JSON. No other tools are available,
-        so I just need to use this one. Alright, I''ll structure the tool call with
-        the name and the query argument.\n"},{"role":"tool","content":"Processed:
-        test data","tool_call_id":"JRTXNDvEmYeibVocIdxIVugf9U1XayqL"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        correctly formatted as JSON. No other tools are available, so I just use this
+        one. Alright, the tool call should include the name \"content_returning\"
+        and the arguments as {\"query\": \"test data\"}.\n","reasoning_content":"Okay,
+        the user wants me to process the query \"test data\". Let me check the available
+        tools. There''s a function called content_returning that takes a query parameter.
+        The description says it returns a processed string result. Since the user
+        provided the query \"test data\", I should call this function with that exact
+        query. I need to make sure the arguments are correctly formatted as JSON.
+        No other tools are available, so I just use this one. Alright, the tool call
+        should include the name \"content_returning\" and the arguments as {\"query\":
+        \"test data\"}.\n"},{"role":"tool","content":"Processed: test data","tool_call_id":"HzTVCwIFTwQ0coetGavdRk4ZZ5uItEEn"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
         a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -98,22 +99,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Tue, 10 Nov 2026 17:51:16 GMT
       Access-Control-Allow-Origin:
       - ''
+      Resp-Start-Time:
+      - '1794333077395'
+      X-Envoy-Upstream-Service-Time:
+      - '255'
+      Server:
+      - istio-envoy
       Content-Type:
       - application/json; charset=utf-8
       Req-Cost-Time:
-      - '206'
-      X-Envoy-Upstream-Service-Time:
-      - '203'
-      Date:
-      - Sun, 11 Oct 2026 21:18:04 GMT
-      Server:
-      - istio-envoy
+      - '259'
       Req-Arrive-Time:
-      - '1791753485253'
-      Resp-Start-Time:
-      - '1791753485460'
+      - '1794333077136'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -121,6 +122,7 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"The
-        processed result for the query \"test data\" is:  \n**Processed: test data**"}}],"created":1791753485,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":24,"prompt_tokens":323,"total_tokens":347,"prompt_tokens_details":{"cached_tokens":305}},"id":"chatcmpl-87CKRVurgR3CLsun6JxXlTFimTpKbGzG","timings":{"cache_n":305,"prompt_n":18,"prompt_ms":20.692,"prompt_per_token_ms":1.1495555555555557,"prompt_per_second":869.9014111734003,"predicted_n":24,"predicted_ms":175.866,"predicted_per_token_ms":7.6463478260869575,"predicted_per_second":130.78139037676414}}'
-  recorded_at: Sun, 11 Oct 2026 21:18:05 GMT
-recorded_with: VCR 6.4.0
+        processed result for the query \"test data\" is: **Processed: test data**.
+        Let me know if you need further assistance!"}}],"created":1794333077,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":33,"prompt_tokens":331,"total_tokens":364,"prompt_tokens_details":{"cached_tokens":313}},"id":"chatcmpl-P76KlBmI9i4mimvRrOkNOUaJd0686DfB","timings":{"cache_n":313,"prompt_n":18,"prompt_ms":13.584,"prompt_per_token_ms":0.7546666666666666,"prompt_per_second":1325.0883392226149,"predicted_n":33,"predicted_ms":235.11,"predicted_per_token_ms":7.3471875,"predicted_per_second":136.10650333886267}}'
+  recorded_at: Tue, 10 Nov 2026 17:51:17 GMT
+recorded_with: VCR 6.4.1

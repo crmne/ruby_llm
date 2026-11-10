@@ -6,18 +6,18 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Call the array params
-        tool with tags [\"red\",\"blue\"] and tell me the combined tags."}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"array_params","description":"Uses
+        tool with tags [\"red\",\"blue\"] and tell me the combined tags."}]}],"inferenceConfig":{"maxTokens":65535},"toolConfig":{"tools":[{"toolSpec":{"name":"array_params","description":"Uses
         params DSL array support","inputSchema":{"json":{"type":"object","properties":{"tags":{"type":"array","description":"List
         of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false}}}}]}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261011T210759Z
+      - 20261110T173221Z
       X-Amz-Content-Sha256:
-      - 741ce2b46859cef085dccfd3fcc7991bbd94abc87e0a3a2a9f0ab71ada4c5d50
+      - d1a3a488b7674e748728fdf8f63ef75fee3eec8c8a3ce87dd2b147af7118a6b9
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -31,7 +31,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:08:00 GMT
+      - Tue, 10 Nov 2026 17:32:22 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -39,9 +39,9 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 21b2662a-8358-4291-b24c-674dda33e411
+      - 7a2a678b-719a-44f9-b706-651a8ebb7bb7
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":455},"output":{"message":{"content":[{"toolUse":{"input":{"tags":["red","blue"]},"name":"array_params","toolUseId":"tooluse_04VGiUJFhIygSm1EegjfIz"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":944,"outputTokens":30,"serverToolUsage":{},"totalTokens":974}}'
-  recorded_at: Sun, 11 Oct 2026 21:08:00 GMT
-recorded_with: VCR 6.4.0
+      string: '{"metrics":{"latencyMs":411},"output":{"message":{"content":[{"toolUse":{"input":{"tags":["red","blue"]},"name":"array_params","toolUseId":"tooluse_8kiXdJJCD8qvJKn5v8GNRO"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":944,"outputTokens":30,"serverToolUsage":{},"totalTokens":974}}'
+  recorded_at: Tue, 10 Nov 2026 17:32:22 GMT
+recorded_with: VCR 6.4.1

@@ -9,7 +9,7 @@ http_interactions:
         the creator of the programming language Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,38 +24,37 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 04 Nov 2026 19:46:41 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
+      - Tue, 10 Nov 2026 17:32:49 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
       - Origin
-      Server:
-      - HeRay
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJtb2RlbCI6IlF3ZW4vUXdlbjMuOC0yN0IiLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo2MiwiY29tcGxldGlvbl90b2tlbnMiOjM2LCJ0b3RhbF90b2tlbnMiOjk4LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjEzfSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjAsImNyZWF0ZWRfY2FjaGVfdG9rZW5zIjowLCJtdWx0aW1vZGFsX3Rva2VucyI6bnVsbH19LCJjaG9pY2VzIjpbeyJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGNyZWF0b3Igb2YgdGhlIHByb2dyYW1taW5nIGxhbmd1YWdlIFJ1YnkgaXMgKipZdWtpaGlybyDigJxNYXR64oCdIE1hdHN1bW90byoqLiIsInJvbGUiOiJhc3Npc3RhbnQiLCJyZWZ1c2FsIjpudWxsLCJhbm5vdGF0aW9ucyI6bnVsbCwiYXVkaW8iOm51bGwsImZ1bmN0aW9uX2NhbGwiOm51bGwsInJlYXNvbmluZyI6IldlIG5lZWQgYW5zd2VyIHNpbXBsZSBxdWVzdGlvbi4gRG9uZS4gTmVlZCBmaW5hbCBjb25jaXNlLlxuIn0sImluZGV4IjowLCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJzdG9wX3JlYXNvbiI6bnVsbCwidG9rZW5faWRzIjpudWxsLCJyb3V0ZWRfZXhwZXJ0cyI6bnVsbH1dLCJpZCI6ImNoYXRjbXBsLWMwMDAwOTY3LTQxM2QtNDhiYi1hMTQ4LWMzMzg5OTYxZGM3YiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTM4MjE1MzIsInN5c3RlbV9maW5nZXJwcmludCI6bnVsbCwicHJvbXB0X2xvZ3Byb2JzIjpudWxsLCJwcm9tcHRfdG9rZW5faWRzIjpudWxsLCJwcm9tcHRfdGV4dCI6bnVsbCwia3ZfdHJhbnNmZXJfcGFyYW1zIjpudWxsLCJlY190cmFuc2Zlcl9wYXJhbXMiOm51bGwsIm1ldHJpY3MiOm51bGx9
-  recorded_at: Wed, 04 Nov 2026 19:46:41 GMT
+      encoding: UTF-8
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":62,"completion_tokens":47,"total_tokens":109,"completion_tokens_details":{"reasoning_tokens":25},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\nRuby
+        was created by **Yukihiro Matsumoto**, often known as **Matz**.","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"We
+        need answer simple factual: creator of Ruby is Yukihiro Matsumoto (Matz).
+        Need final concise.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-5e4a3a23-9624-4452-87bb-1d78ea317316","object":"chat.completion","created":1794331969,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Tue, 10 Nov 2026 17:32:50 GMT
 - request:
     method: post
     uri: https://inference.hetzner.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"Qwen3.8-27B","messages":[{"role":"user","content":"Who is
-        the creator of the programming language Ruby?"},{"role":"assistant","content":"\n\nThe
-        creator of the programming language Ruby is **Yukihiro “Matz” Matsumoto**.","reasoning":"We
-        need answer simple question. Done. Need final concise.\n","reasoning_content":"We
-        need answer simple question. Done. Need final concise.\n"},{"role":"user","content":"What
+        the creator of the programming language Ruby?"},{"role":"assistant","content":"\n\nRuby
+        was created by **Yukihiro Matsumoto**, often known as **Matz**.","reasoning":"We
+        need answer simple factual: creator of Ruby is Yukihiro Matsumoto (Matz).
+        Need final concise.\n","reasoning_content":"We need answer simple factual:
+        creator of Ruby is Yukihiro Matsumoto (Matz). Need final concise.\n"},{"role":"user","content":"What
         year did he create Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -70,26 +69,24 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 04 Nov 2026 19:46:48 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
+      - Tue, 10 Nov 2026 17:32:50 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
       - Origin
-      Server:
-      - HeRay
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":116,"completion_tokens":93,"total_tokens":209,"completion_tokens_details":{"reasoning_tokens":61},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\nYukihiro
-        Matsumoto started creating Ruby in **1993**, and it was first publicly released
-        in **1995**.","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"User
-        asks: \"What year did he create Ruby?\" Need answer. Need likely Yukihiro
-        Matsumoto created Ruby in 1993, public release 1995. Wording \"create\" maybe
-        started in 1993. Need maybe specify. Keep concise.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-cf81c7e1-be99-4cf5-89b1-386caffcd703","object":"chat.completion","created":1793821602,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Wed, 04 Nov 2026 19:46:48 GMT
-recorded_with: VCR 6.4.0
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":127,"completion_tokens":160,"total_tokens":287,"completion_tokens_details":{"reasoning_tokens":134},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\nHe
+        created Ruby in **1993** (it was first released publicly in 1995).","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"User
+        asks year Ruby created. Need answer. Ruby development started in 1993, first
+        public release 1995 (1996? Ruby 1.0 released in 1996? Let''s verify from knowledge:
+        Yukihiro Matsumoto created Ruby in 1993; first released publicly in 1995;
+        Ruby 1.0 in 1996? The common answer: 1993. Question \"What year did he create
+        Ruby?\" likely expects 1993. Could mention public release 1995 to be precise.
+        Need final concise.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-fdad1e13-0413-4a1d-8073-aa821498ab2b","object":"chat.completion","created":1794331970,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Tue, 10 Nov 2026 17:32:52 GMT
+recorded_with: VCR 6.4.1

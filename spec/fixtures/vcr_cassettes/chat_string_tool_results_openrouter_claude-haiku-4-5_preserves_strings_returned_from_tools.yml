@@ -11,7 +11,7 @@ http_interactions:
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Http-Referer:
@@ -30,7 +30,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:18:18 GMT
+      - Tue, 10 Nov 2026 17:51:54 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -40,9 +40,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1791753497-1CYEc2Vht9hw97sC40Ie
+      - gen-1794333114-8VkzxS39G7IaNE7tGlx5
       Access-Control-Expose-Headers:
-      - X-Generation-Id,X-Provider-Name,request-id,cf-ray
+      - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
+      X-Openrouter-Release:
+      - api;11e69a63-8b87-4321-b835-a27e03c5ff81
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -56,25 +58,27 @@ http_interactions:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n{\"id\":\"gen-1791753497-1CYEc2Vht9hw97sC40Ie\",\"object\":\"chat.completion\",\"created\":1791753497,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
-        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_use\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_01Pr13n6f5gMeuJhvL7o3TvD\",\"function\":{\"name\":\"content_returning\",\"arguments\":\"{\\\"query\\\":
+      string: "\n         \n{\"id\":\"gen-1794333114-8VkzxS39G7IaNE7tGlx5\",\"object\":\"chat.completion\",\"created\":1794333114,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
+        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_use\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_01AN3viurph2mjbMsPnjhCNt\",\"function\":{\"name\":\"content_returning\",\"arguments\":\"{\\\"query\\\":
         \\\"test data\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":582,\"completion_tokens\":55,\"total_tokens\":637,\"cost\":0.000857,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.000857,\"upstream_inference_prompt_cost\":0.000582,\"upstream_inference_completions_cost\":0.000275},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Sun, 11 Oct 2026 21:18:18 GMT
+  recorded_at: Tue, 10 Nov 2026 17:51:54 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"Process
-        this query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01Pr13n6f5gMeuJhvL7o3TvD","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
-        data\"}"}}]},{"role":"tool","content":"Processed: test data","tool_call_id":"toolu_bdrk_01Pr13n6f5gMeuJhvL7o3TvD"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        this query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01AN3viurph2mjbMsPnjhCNt","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}]},{"role":"tool","content":"Processed: test data","tool_call_id":"toolu_bdrk_01AN3viurph2mjbMsPnjhCNt"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
         a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Http-Referer:
@@ -93,7 +97,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:18:19 GMT
+      - Tue, 10 Nov 2026 17:51:55 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -103,9 +107,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1791753498-WjH0ZMebU7vypH98Ede7
+      - gen-1794333115-kKtmxvyvuOGKrb12XPWA
       Access-Control-Expose-Headers:
-      - X-Generation-Id,X-Provider-Name,request-id,cf-ray
+      - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
+      X-Openrouter-Release:
+      - api;11e69a63-8b87-4321-b835-a27e03c5ff81
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -119,11 +125,13 @@ http_interactions:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n{\"id\":\"gen-1791753498-WjH0ZMebU7vypH98Ede7\",\"object\":\"chat.completion\",\"created\":1791753498,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
-        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"I've
-        processed your query \\\"test data\\\". The result returned is: **Processed:
-        test data**\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":654,\"completion_tokens\":24,\"total_tokens\":678,\"cost\":0.000774,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.000774,\"upstream_inference_prompt_cost\":0.000654,\"upstream_inference_completions_cost\":0.00012},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Sun, 11 Oct 2026 21:18:19 GMT
-recorded_with: VCR 6.4.0
+      string: "\n         \n{\"id\":\"gen-1794333115-kKtmxvyvuOGKrb12XPWA\",\"object\":\"chat.completion\",\"created\":1794333115,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
+        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"The
+        query \\\"test data\\\" has been successfully processed. The result is: **Processed:
+        test data**\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":654,\"completion_tokens\":25,\"total_tokens\":679,\"cost\":0.000779,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.000779,\"upstream_inference_prompt_cost\":0.000654,\"upstream_inference_completions_cost\":0.000125},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Tue, 10 Nov 2026 17:51:55 GMT
+recorded_with: VCR 6.4.1

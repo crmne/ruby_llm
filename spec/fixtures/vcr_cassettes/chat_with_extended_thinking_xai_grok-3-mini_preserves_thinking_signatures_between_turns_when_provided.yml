@@ -9,7 +9,7 @@ http_interactions:
         3?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"reasoning":{"effort":"medium"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:13:19 GMT
+      - Tue, 10 Nov 2026 17:42:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,6 +35,8 @@ http_interactions:
       - max-age=31536000
       Set-Cookie:
       - "<COOKIE>"
+      X-Watermark:
+      - 'false'
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
@@ -43,8 +45,6 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
-      Cf-Cache-Status:
-      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -52,26 +52,28 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '280.3'
+      - '198.2'
       X-Metrics-E2e-Ms:
-      - '1547.8'
+      - '2814.5'
       Traceparent:
-      - 00-195899b5039e1f22b613fe73b7a4cf91-0602674400069fe0-01
+      - 00-137d4b9d9109bf31c5c1acc6c9e500f1-9825468f00040e7a-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1791753197,"completed_at":1791753199,"id":"e0e2d177-f07a-985b-97c6-925104424249","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_e0e2d177-f07a-985b-97c6-925104424249","summary":[{"text":"This
-        is a simple arithmetic question.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"6jt32oB8m32xjaGLtoj4HYjrmP/ktwgQBv+HK+GcrnLmh1jW+MeKgkzk8qSC0kimzLvj5siQR9YwBOIVXMaliAAUMPXM0fbQk0TlVE/ZHJpPAdtKiXoUsV8H1jDPK8z7kTr6KAkPz7BcRv3W6PVbCNRbmC0JCipM9id8Vb4+kxvgnLLUNVAtJOr8KX7j1nr656tmub49fNvH36FgWhSgPtMZuBHgetatKCh0mMDYl9QkLhl/kYznvyY14XwGoCBYrCKvfUkX/18rV82iH9n2u4r3/I6zUBqHKK1gsswt9O/llAIi+O/7T8LSCC0TFxZ4OybHrehdJJe8yL8YyW4skcHYAguO4KHkkTQfvoxLD2+sxBFrSSNgxlv69lvLWncpFwHQs7Ti2cqFRohGblZ9QNaVqZ3QdNunpik90EnH8XPQo2pHjoz7FNydl5kuF6BSO24R3irdLhfftvixWSzpkjCfxfqxTUzO4OpoMIgFSltJeJmHKdXAArc5AYWNAPcRUnLeeB4zlJS6ZM4AskONygAbiVWKHU4dcVuusWuh98VTCIoFl65qRGK6x57EDnA/wqqPl/sD9gYIZ47d25lx6s1+MuI4GUx+cjNcWfCupXGyS665dZCxLXQFw9dRcPRm0H7sO6mkrHWgJNVgTxpMprA5OTVZE8aCoAlB+JoE0kJIzYhF3Q8IzEw7ydhzFkD50mSVtrE2BXmeSshtSN45HKpiNSwa0PxnqfNgwLFvYsrOQLRBT7tfuXL/t60sJCkLDIGccCXHMrU1D3t1xWODHslRNXRhvY5ks5uxUDzA3X0bdZ1yL1KvQFreRyx/Kx0rOCBTHsHyn73WengspxhjfEb1zz/y12TO3JgO4pilWIMCKz5kiAFKxfpLHc+jl3P/bopdwWjxRe6VIb1Lj6UPaFac7hH7JLF/aT6UWf7IiZXAXnAkinG9MKUJXN3a/nf0Py3TUxAA95XLYO/MiHwPP/5XxH3A+v6Rcj/fb/oIQa0lYxPuxDuqAlW7smzi5T1WvfonYYymNln/lAIN30ToZr6nXGMK6l1rQtonBwYF2idfUWNzIPEFXQDj"},{"content":[{"type":"output_text","text":"**8**","logprobs":[],"annotations":[]}],"id":"msg_e0e2d177-f07a-985b-97c6-925104424249","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"medium","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":200,"input_tokens_details":{"cached_tokens":128},"output_tokens":192,"output_tokens_details":{"reasoning_tokens":189},"total_tokens":392,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":5956000,"context_details":{"input_tokens":200,"output_tokens":200}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Sun, 11 Oct 2026 21:13:19 GMT
+      string: '{"created_at":1794332542,"completed_at":1794332544,"id":"<X_REQUEST_ID>","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_<X_REQUEST_ID>","summary":[{"text":"This
+        is a simple arithmetic problem.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"qM32fPgr+f8hyyXYHgEnG8QOfj/BjhZlg0f1BCo6dGSBroWUJtSuqF01CVUoqmRNovRSwLC8Ogo3dGebANaeSZysaAlzF2ntuQYZ5gX4+KCvkSFhj8UNjGQrbchr6mdXSyEqbGfS0WchygGmg5rcZCr1OTl8PWG6YibEybpcQPShU46tXGtIx6ZHzulRdugXfR1spcUVzLHLnCHdvn/kB1OxnVj/d8medQJ5JPUq6hiGS+CinkDDLPJ0UYwmd4RVmQth2imBRGAmynPo966DnaY4v+Ez3peey3SJqTqA49aSSEeAL5n6ErZZfatS18QKFFEvxMg9c4+BKfYAl3R+0pXS2c9qK4yThM+UpId+tdXi4zUbltFWKh4UYaTSdQzpKl9TRyBATDfVEgqyEM2SBhGK/KUO+uuMC+BjaJOCjBAAdoV1UfAse1iS1IDJtnoeqXG1dY8YZMmdeI+UCOe1C31MS+WUrZg39Dr/fjce01RcTbi3ymTavqNUD31oSwYTWrrh9wvi57piZ1C+46JPYN3qLKLPfTj27WR78dyz/q1YS0FEdWzVKOQDYnCMUSiyjuVu2809zHefVTjI8T8EYQIizfEKT6JX+IMclKFPx9jVaSNJOxatdNnOT+3GSf6DiD5mdVoyaA"},{"content":[{"type":"output_text","text":"**8**","logprobs":[],"annotations":[]}],"id":"msg_<X_REQUEST_ID>","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"medium","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":200,"input_tokens_details":{"cached_tokens":128},"output_tokens":178,"output_tokens_details":{"reasoning_tokens":175},"total_tokens":378,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":5606000,"context_details":{"input_tokens":200,"output_tokens":185}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Tue, 10 Nov 2026 17:42:24 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/responses
@@ -79,11 +81,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4.3","input":[{"role":"user","content":"What is 5 +
         3?"},{"type":"reasoning","summary":[{"type":"summary_text","text":"This is
-        a simple arithmetic question."}],"encrypted_content":"6jt32oB8m32xjaGLtoj4HYjrmP/ktwgQBv+HK+GcrnLmh1jW+MeKgkzk8qSC0kimzLvj5siQR9YwBOIVXMaliAAUMPXM0fbQk0TlVE/ZHJpPAdtKiXoUsV8H1jDPK8z7kTr6KAkPz7BcRv3W6PVbCNRbmC0JCipM9id8Vb4+kxvgnLLUNVAtJOr8KX7j1nr656tmub49fNvH36FgWhSgPtMZuBHgetatKCh0mMDYl9QkLhl/kYznvyY14XwGoCBYrCKvfUkX/18rV82iH9n2u4r3/I6zUBqHKK1gsswt9O/llAIi+O/7T8LSCC0TFxZ4OybHrehdJJe8yL8YyW4skcHYAguO4KHkkTQfvoxLD2+sxBFrSSNgxlv69lvLWncpFwHQs7Ti2cqFRohGblZ9QNaVqZ3QdNunpik90EnH8XPQo2pHjoz7FNydl5kuF6BSO24R3irdLhfftvixWSzpkjCfxfqxTUzO4OpoMIgFSltJeJmHKdXAArc5AYWNAPcRUnLeeB4zlJS6ZM4AskONygAbiVWKHU4dcVuusWuh98VTCIoFl65qRGK6x57EDnA/wqqPl/sD9gYIZ47d25lx6s1+MuI4GUx+cjNcWfCupXGyS665dZCxLXQFw9dRcPRm0H7sO6mkrHWgJNVgTxpMprA5OTVZE8aCoAlB+JoE0kJIzYhF3Q8IzEw7ydhzFkD50mSVtrE2BXmeSshtSN45HKpiNSwa0PxnqfNgwLFvYsrOQLRBT7tfuXL/t60sJCkLDIGccCXHMrU1D3t1xWODHslRNXRhvY5ks5uxUDzA3X0bdZ1yL1KvQFreRyx/Kx0rOCBTHsHyn73WengspxhjfEb1zz/y12TO3JgO4pilWIMCKz5kiAFKxfpLHc+jl3P/bopdwWjxRe6VIb1Lj6UPaFac7hH7JLF/aT6UWf7IiZXAXnAkinG9MKUJXN3a/nf0Py3TUxAA95XLYO/MiHwPP/5XxH3A+v6Rcj/fb/oIQa0lYxPuxDuqAlW7smzi5T1WvfonYYymNln/lAIN30ToZr6nXGMK6l1rQtonBwYF2idfUWNzIPEFXQDj"},{"role":"assistant","content":[{"type":"output_text","text":"**8**"}]},{"role":"user","content":"Now
+        a simple arithmetic problem."}],"encrypted_content":"qM32fPgr+f8hyyXYHgEnG8QOfj/BjhZlg0f1BCo6dGSBroWUJtSuqF01CVUoqmRNovRSwLC8Ogo3dGebANaeSZysaAlzF2ntuQYZ5gX4+KCvkSFhj8UNjGQrbchr6mdXSyEqbGfS0WchygGmg5rcZCr1OTl8PWG6YibEybpcQPShU46tXGtIx6ZHzulRdugXfR1spcUVzLHLnCHdvn/kB1OxnVj/d8medQJ5JPUq6hiGS+CinkDDLPJ0UYwmd4RVmQth2imBRGAmynPo966DnaY4v+Ez3peey3SJqTqA49aSSEeAL5n6ErZZfatS18QKFFEvxMg9c4+BKfYAl3R+0pXS2c9qK4yThM+UpId+tdXi4zUbltFWKh4UYaTSdQzpKl9TRyBATDfVEgqyEM2SBhGK/KUO+uuMC+BjaJOCjBAAdoV1UfAse1iS1IDJtnoeqXG1dY8YZMmdeI+UCOe1C31MS+WUrZg39Dr/fjce01RcTbi3ymTavqNUD31oSwYTWrrh9wvi57piZ1C+46JPYN3qLKLPfTj27WR78dyz/q1YS0FEdWzVKOQDYnCMUSiyjuVu2809zHefVTjI8T8EYQIizfEKT6JX+IMclKFPx9jVaSNJOxatdNnOT+3GSf6DiD5mdVoyaA"},{"role":"assistant","content":[{"type":"output_text","text":"**8**"}]},{"role":"user","content":"Now
         multiply that by 2"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"reasoning":{"effort":"medium"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -98,7 +100,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:13:20 GMT
+      - Tue, 10 Nov 2026 17:42:28 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -109,6 +111,8 @@ http_interactions:
       - max-age=31536000
       Set-Cookie:
       - "<COOKIE>"
+      X-Watermark:
+      - 'false'
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
@@ -117,9 +121,6 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
-      Content-Security-Policy-Report-Only:
-      - script-src 'unsafe-inline' 'unsafe-eval'; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=idiUKfk.shHAIzaYierPxlRfr4hRDoEVS3Nrf8pMojE-1791753199.186095-1.0.1.1-HEXV7QRLGlyQR1zHuXux4QsoFxtmWOPkLHVWxHrntxHA4vIDx_PrGt9Bjxpn7mtJerY1YUQK2p97zAapIxtSQgv7TPPBKQClUvaXNgUSr_nazkrJZ3.dQVtQxcKSGDZ1X6GO5HlOuyGipcOkVPcUSe4AtF7_oVzjN38zcJw.4Pw;
-        report-to cf-csp-endpoint
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -127,11 +128,11 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '309.5'
+      - '278.5'
       X-Metrics-E2e-Ms:
-      - '1386.6'
+      - '3107.0'
       Traceparent:
-      - 00-8502176c2e34112236c80c44281eeaa8-824bdbb900069322-01
+      - 00-27d421c6036d6abca6bc5a734b908acf-9b6ab77900043e61-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -140,17 +141,13 @@ http_interactions:
       - "*"
       Cf-Cache-Status:
       - DYNAMIC
-      Report-To:
-      - '{"group":"cf-csp-endpoint","max_age":86400,"endpoints":[{"url":"https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=idiUKfk.shHAIzaYierPxlRfr4hRDoEVS3Nrf8pMojE-1791753199.186095-1.0.1.1-HEXV7QRLGlyQR1zHuXux4QsoFxtmWOPkLHVWxHrntxHA4vIDx_PrGt9Bjxpn7mtJerY1YUQK2p97zAapIxtSQgv7TPPBKQClUvaXNgUSr_nazkrJZ3.dQVtQxcKSGDZ1X6GO5HlOuyGipcOkVPcUSe4AtF7_oVzjN38zcJw.4Pw"}]}'
-      Reporting-Endpoints:
-      - cf-csp-endpoint="https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=idiUKfk.shHAIzaYierPxlRfr4hRDoEVS3Nrf8pMojE-1791753199.186095-1.0.1.1-HEXV7QRLGlyQR1zHuXux4QsoFxtmWOPkLHVWxHrntxHA4vIDx_PrGt9Bjxpn7mtJerY1YUQK2p97zAapIxtSQgv7TPPBKQClUvaXNgUSr_nazkrJZ3.dQVtQxcKSGDZ1X6GO5HlOuyGipcOkVPcUSe4AtF7_oVzjN38zcJw.4Pw"
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1791753199,"completed_at":1791753200,"id":"5fa14566-9f9a-96e5-834b-4729ae956e6b","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_5fa14566-9f9a-96e5-834b-4729ae956e6b","summary":[{"text":"The
-        user wants the previous value multiplied by 2.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"YJqQkb+TZezJxXoPbPGRktUEZORMXLV9Vsy2g4VL059HqQXotreMdPKqopdHpyvjNDRboLxqfiI/19GVdd2n9AtiLy9jtqYzBVK3sRSnmXGKM3VYk2YB9JIPwl4lTAGvo7mFMvmQ1Atz//PHFPpe9BenBRDPHoMtn/j07AAUcuzT4/kFFx8Mb3ujOSrUm6fKjVNz6t+RaytuMtwVJf31Qa30xJbWQqI1FXky6Zh+MbdERYSHZggptuGZc3fHUassdLYadKZ286bkX8TVngchW+qqVx7K4JEmoQHEdCc7+HkLpT3oo0QORvvNgbHaEZNi0kfm72TUDBUYKicRmE4Kc9Azp3h+r4I1ZB/4hhUgH9lwvmKNrqUDOGFGTVN2adcYV+aw2KDagNHikTd7WezAH8YgfhG/QvsKph8LKUtfVjpva/f4HBd62Y5k8kdbHNkrKxpQjadH85lLtaKGxkrVEh1riDUm4qfjfkg5z5ZsWT6dP9wskrnKNkf+ogLPYP8GNejb9JK00c9+GWcBXQVCPK0dt7KmBEF7fV3jCtyViAATPdN6zTywq6G69NDEdY859uY+AkAgCNbYXy4V9egLPKlNdumIuG3NQLllK5RHCRAoNFoRs38iQtkXpcvJ0ShAJ6IwtcnNJgJ+TOTBaC57L8y9DaA/I6YkQsrV1cnCqIeIrZOvG98zEQj/64n5MY9UA7XE7TZ/dlsJU+O0FGM1Aw"},{"content":[{"type":"output_text","text":"**16**","logprobs":[],"annotations":[]}],"id":"msg_5fa14566-9f9a-96e5-834b-4729ae956e6b","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"medium","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":409,"input_tokens_details":{"cached_tokens":128},"output_tokens":129,"output_tokens_details":{"reasoning_tokens":126},"total_tokens":538,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":6993500,"context_details":{"input_tokens":409,"output_tokens":137}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Sun, 11 Oct 2026 21:13:20 GMT
-recorded_with: VCR 6.4.0
+      string: '{"created_at":1794332545,"completed_at":1794332548,"id":"<X_REQUEST_ID>","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_<X_REQUEST_ID>","summary":[{"text":"The
+        user previously asked what 5 plus 3 equals.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"9pvZzU+Ft23/BNMIT2lyg8WvkupCfRVkAgD+C6/KkcvtPvKIKZiRVVbxxhmehGvUCPIkNcA+ei3x95cvCGTWheyi/IMpbSIoQZUKdDgg9i3tI/vgaZTw5Yf+0zj/jwvcNCx6sC1D/7uMImj4SdiFWj6vK74JkJmdKWzcdDjVBWZ5FVTem0dUYUhFpMI4Iix2TG2hAsXKF5PS/x3Wvog9Azw4BCKIcQoomy3EkMzJ9UD8UsdEzjQvZl7YBSoU90zj9E4rMQGIESwXxtYaG15ux2oVTgaqQR2vGVT9ODAnCyZ8saWP4C2DD1eTC3Sro+hFc1Wre33qlmaPKoTV/RK9nH9ssh3XU6j2w239IPStf6h7YrpMeayrLCV9De/d2dHjSeXgJToeLB2rolJjypkaiwTZtl1ZbJnBTCUsCXn8lJIt9K5+I57wqBR3/42MAuq8mO6pHrPPLX62/3SIQ+DDUzv1iAJv+jL/ISX56iUngXwaXrYl2FIGz71B8GNDyDHi25c2rTor+DnqfvHPGW/vyHbsOKBkSZgtESVZ3bcZMsVFIq3hWbyIog+jgSHDYAIJIRE12ouKCLmdPcbHf5WZ7R9Mp26pDx9xYJNafdwoIv7QwHUXhMWJc5VzRv//FCB8CF6TmH6EhD62yaaRhRY"},{"content":[{"type":"output_text","text":"**16**","logprobs":[],"annotations":[]}],"id":"msg_<X_REQUEST_ID>","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"medium","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":395,"input_tokens_details":{"cached_tokens":128},"output_tokens":198,"output_tokens_details":{"reasoning_tokens":195},"total_tokens":593,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":8543500,"context_details":{"input_tokens":395,"output_tokens":206}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Tue, 10 Nov 2026 17:42:28 GMT
+recorded_with: VCR 6.4.1

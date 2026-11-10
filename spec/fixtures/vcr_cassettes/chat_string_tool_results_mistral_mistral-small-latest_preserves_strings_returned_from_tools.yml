@@ -11,7 +11,7 @@ http_interactions:
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:18:09 GMT
+      - Tue, 10 Nov 2026 17:51:28 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -34,15 +34,15 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a12cd4-8ba7-75ab-be5f-92c162493951
+      - 01a1c696-1808-734a-afae-f6ca6c227d70
       X-Kong-Request-Id:
-      - 01a12cd4-8ba7-75ab-be5f-92c162493951
+      - 01a1c696-1808-734a-afae-f6ca6c227d70
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99680'
+      - '99713'
       X-Ratelimit-Tokens-Query-Cost:
       - '112'
       X-Ratelimit-Limit-Req-Minute:
@@ -50,15 +50,15 @@ http_interactions:
       X-Ratelimit-Remaining-Req-Minute:
       - '99'
       X-Envoy-Upstream-Service-Time:
-      - '369'
+      - '446'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '370'
+      - '448'
       X-Kong-Proxy-Latency:
-      - '14'
+      - '13'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -73,22 +73,22 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"51a63f3e666d4c529d5c1d69403617d8","created":1791753489,"model":"mistral-small-latest","usage":{"prompt_tokens":99,"total_tokens":112,"completion_tokens":13,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"EgqkqDl35","type":"function","function":{"name":"content_returning","arguments":"{\"query\":
+      string: '{"id":"f32bfc0ac8374c8f95a1a4d84c4a64bc","created":1794333087,"model":"mistral-small-latest","usage":{"prompt_tokens":99,"total_tokens":112,"completion_tokens":13,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"ivcIi320K","type":"function","function":{"name":"content_returning","arguments":"{\"query\":
         \"test data\"}"},"index":0}],"content":""}}]}'
-  recorded_at: Sun, 11 Oct 2026 21:18:09 GMT
+  recorded_at: Tue, 10 Nov 2026 17:51:28 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"Process
-        this query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"EgqkqDl35","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
-        data\"}"}}]},{"role":"tool","content":"Processed: test data","tool_call_id":"EgqkqDl35"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        this query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"ivcIi320K","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}]},{"role":"tool","content":"Processed: test data","tool_call_id":"ivcIi320K"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
         a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -103,7 +103,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:18:10 GMT
+      - Tue, 10 Nov 2026 17:51:28 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -111,31 +111,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a12cd4-8d75-7aef-a33a-c8d21d64cac7
+      - 01a1c696-1a0e-7ec9-a5d4-596bd7e2e8c8
       X-Kong-Request-Id:
-      - 01a12cd4-8d75-7aef-a33a-c8d21d64cac7
+      - 01a1c696-1a0e-7ec9-a5d4-596bd7e2e8c8
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99626'
+      - '99666'
       X-Ratelimit-Tokens-Query-Cost:
-      - '56'
+      - '49'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
       - '98'
       X-Envoy-Upstream-Service-Time:
-      - '324'
+      - '325'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '325'
+      - '327'
       X-Kong-Proxy-Latency:
-      - '14'
+      - '16'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -150,7 +150,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"c5fde4152754421eaea213f20c68d3ba","created":1791753489,"model":"mistral-small-latest","usage":{"prompt_tokens":119,"total_tokens":136,"completion_tokens":17,"prompt_tokens_details":{"cached_tokens":80},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
-        processed result for your query \"test data\" is: **test data**"}}]}'
-  recorded_at: Sun, 11 Oct 2026 21:18:10 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"d58785f6d13843ecba66695844f68ca7","created":1794333088,"model":"mistral-small-latest","usage":{"prompt_tokens":119,"total_tokens":129,"completion_tokens":10,"prompt_tokens_details":{"cached_tokens":80},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        processed result is: **test data**"}}]}'
+  recorded_at: Tue, 10 Nov 2026 17:51:28 GMT
+recorded_with: VCR 6.4.1

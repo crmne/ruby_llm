@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 06 Nov 2026 13:00:55 GMT
+      - Tue, 10 Nov 2026 17:32:53 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Pragma:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Fri, 06 Nov 2026 13:00:55 GMT
+  recorded_at: Tue, 10 Nov 2026 17:32:53 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:streamGenerateContent?alt=sse
@@ -91,7 +91,7 @@ http_interactions:
       Transfer-Encoding:
       - chunked
       Date:
-      - Fri, 06 Nov 2026 13:00:58 GMT
+      - Tue, 10 Nov 2026 17:32:56 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -105,17 +105,15 @@ http_interactions:
     body:
       encoding: UTF-8
       string: "data: {\"candidates\": [{\"content\": {\"role\": \"model\",\"parts\":
-        [{\"text\": \"The latest stable Ruby version is 4.0.9. This information is
-        consistent across the official Ruby website and its GitHub releases page.\"}]}}],\"usageMetadata\":
-        {\"trafficType\": \"ON_DEMAND\"},\"modelVersion\": \"gemini-2.5-flash\",\"createTime\":
-        \"2026-11-06T13:00:55.881315Z\",\"responseId\": \"h8_taqPlNenChcIPtu2b8Ag\"}\r\n\r\ndata:
-        {\"candidates\": [{\"content\": {\"role\": \"model\",\"parts\": [{\"text\":
-        \" Ruby 4.0 is currently the latest stable branch, with regular updates.\"}]}}],\"usageMetadata\":
-        {\"trafficType\": \"ON_DEMAND\"},\"modelVersion\": \"gemini-2.5-flash\",\"createTime\":
-        \"2026-11-06T13:00:55.881315Z\",\"responseId\": \"h8_taqPlNenChcIPtu2b8Ag\"}\r\n\r\ndata:
-        {\"candidates\": [{\"content\": {\"role\": \"model\",\"parts\": [{\"text\":
-        \"\"}]},\"finishReason\": \"STOP\",\"groundingMetadata\": {\"webSearchQueries\":
-        [\"latest stable ruby version\",\"ruby official website\"],\"searchEntryPoint\":
+        [{\"text\": \"The latest\"}]}}],\"usageMetadata\": {\"trafficType\": \"ON_DEMAND\"},\"modelVersion\":
+        \"gemini-2.5-flash\",\"createTime\": \"2026-11-10T17:32:54.087843Z\",\"responseId\":
+        \"RlXzaqOuBcuotfAP5rmY2AI\"}\r\n\r\ndata: {\"candidates\": [{\"content\":
+        {\"role\": \"model\",\"parts\": [{\"text\": \" stable Ruby version is 4.0.9.
+        This version was released on October 23, 2026.\"}]}}],\"usageMetadata\": {\"trafficType\":
+        \"ON_DEMAND\"},\"modelVersion\": \"gemini-2.5-flash\",\"createTime\": \"2026-11-10T17:32:54.087843Z\",\"responseId\":
+        \"RlXzaqOuBcuotfAP5rmY2AI\"}\r\n\r\ndata: {\"candidates\": [{\"content\":
+        {\"role\": \"model\",\"parts\": [{\"text\": \"\"}]},\"finishReason\": \"STOP\",\"groundingMetadata\":
+        {\"webSearchQueries\": [\"latest stable Ruby version\",\"Ruby releases\"],\"searchEntryPoint\":
         {\"renderedContent\": \"\\u003cstyle\\u003e\\n.container {\\n  align-items:
         center;\\n  border-radius: 8px;\\n  display: flex;\\n  font-family: Google
         Sans, Roboto, sans-serif;\\n  font-size: 14px;\\n  line-height: 20px;\\n  padding:
@@ -177,23 +175,21 @@ http_interactions:
         0-11.01 3.4-13.45 8.36l5.03 3.85A8.86 8.86 0 0 1 24 14.14z\\\" fill=\\\"#EA4335\\\"/\\u003e\\n
         \   \\u003c/svg\\u003e\\n    \\u003cdiv class=\\\"gradient-container\\\"\\u003e\\u003cdiv
         class=\\\"gradient\\\"\\u003e\\u003c/div\\u003e\\u003c/div\\u003e\\n  \\u003c/div\\u003e\\n
-        \ \\u003cdiv class=\\\"carousel\\\"\\u003e\\n\\u003ca class=\\\"chip\\\" href=\\\"https://www.google.com/search?q=latest+stable+ruby+version&client=app-vertex-grounding&safesearch=active\\\"\\u003elatest
-        stable ruby version\\u003c/a\\u003e\\n  \\u003c/div\\u003e\\n\\u003c/div\\u003e\"},\"groundingChunks\":
-        [{\"web\": {\"uri\": \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFAgIM8bd5MnJmc9S43zuPa1rOdwDX74cWV5TAst-SFeNsvp2CHWQ9vqSbneTUq1V9fmdmZr3HTBCIWpRSWY4TVyBZTwm6mWePqVq0zjiW5rv7Pob8viCuLj2HJjwqK6fHEjA==\",\"title\":
-        \"ruby-lang.org\",\"domain\": \"ruby-lang.org\"}},{\"web\": {\"uri\": \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGGSB8a7fvXzBKVvRrODuf4J5JXs1N6uCo1-SKBzXkUPIhGrXaKRIzZI9nygXfbytCgXbN0lmMdXVaI1L1f3A_YnLPuaRA7tZ_A2gJOOW0VLi3_XC4vcb2dL0WFYJfDibg=\",\"title\":
-        \"github.com\",\"domain\": \"github.com\"}},{\"web\": {\"uri\": \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGVQrm1Mf2SWbRVN24Pb7b6QK10zmTCh9DTmDnpW02Tr4f1d-H7Ql3fDWEEG40aVi2VnRK5n7pZqlVMUsm12T183hTc_K7M91hxXPWpaogHyl1yp9oAWWdzc1_OgEFgKxffE_FFhYQDXQJbUHJvPV3_moDIiuluH3iAiSoiq0L2XT9djlarKfhIgCLOv4joxuOcFsObXzlySgYDFtHqn-tAvIM=\",\"title\":
-        \"dev.to\",\"domain\": \"dev.to\"}}],\"groundingSupports\": [{\"segment\":
-        {\"endIndex\": 40,\"text\": \"The latest stable Ruby version is 4.0.9.\"},\"groundingChunkIndices\":
-        [0,1]},{\"segment\": {\"startIndex\": 41,\"endIndex\": 134,\"text\": \"This
-        information is consistent across the official Ruby website and its GitHub
-        releases page.\"},\"groundingChunkIndices\": [0,1]},{\"segment\": {\"startIndex\":
-        135,\"endIndex\": 204,\"text\": \"Ruby 4.0 is currently the latest stable
-        branch, with regular updates.\"},\"groundingChunkIndices\": [2]}]}}],\"usageMetadata\":
-        {\"promptTokenCount\": 16,\"candidatesTokenCount\": 68,\"totalTokenCount\":
-        239,\"trafficType\": \"ON_DEMAND\",\"promptTokensDetails\": [{\"modality\":
-        \"TEXT\",\"tokenCount\": 16}],\"candidatesTokensDetails\": [{\"modality\":
-        \"TEXT\",\"tokenCount\": 68}],\"thoughtsTokenCount\": 155},\"modelVersion\":
-        \"gemini-2.5-flash\",\"createTime\": \"2026-11-06T13:00:55.881315Z\",\"responseId\":
-        \"h8_taqPlNenChcIPtu2b8Ag\"}\r\n\r\n"
-  recorded_at: Fri, 06 Nov 2026 13:00:58 GMT
+        \ \\u003cdiv class=\\\"carousel\\\"\\u003e\\n\\u003ca class=\\\"chip\\\" href=\\\"https://www.google.com/search?q=latest+stable+Ruby+version&client=app-vertex-grounding&safesearch=active\\\"\\u003elatest
+        stable Ruby version\\u003c/a\\u003e\\n\\u003ca class=\\\"chip\\\" href=\\\"https://www.google.com/search?q=Ruby+releases&client=app-vertex-grounding&safesearch=active\\\"\\u003eRuby
+        releases\\u003c/a\\u003e\\n  \\u003c/div\\u003e\\n\\u003c/div\\u003e\"},\"groundingChunks\":
+        [{\"web\": {\"uri\": \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHKYXomOkNaDRb7Dm4iLqGYR6FoujaOCH-fpxzJIGr-3jbVp4K9nEqiPf36gb-O7IieWdzhrZ6PrMXd52-oefeFZZauOxIJ8onFNkXzYPuyOb9e4wvlv4IrIFDyeOtGvrjivTTguCca0w8CyRTUAkck21YZotrgGhgy3js=\",\"title\":
+        \"ruby-lang.org\",\"domain\": \"ruby-lang.org\"}},{\"web\": {\"uri\": \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGjeWcUJPzFzayONEU-C4kbQuSdEOIjf6ZtpN1Ua3rbSbStTGx7SAcItgWgheRpFSNxWhS6JwOSD2be4cwl94GuEKpR8E1l9HeP2BGCus-HotMxjX6IC6CTY0Xu23c5sA==\",\"title\":
+        \"github.com\",\"domain\": \"github.com\"}},{\"web\": {\"uri\": \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGaxH06ol2ZcycfgiNTTbMQov0Iupinss6HFwpXRvOzAmt9nOW96gjOeDxuQn3JTfqLBL_Kx6Rq6x1E86GCblcNs9iRhD6NsGyBEOVfgkIAHAR_7zcnV-jXJY5V_oD-2LFW\",\"title\":
+        \"ruby-lang.org\",\"domain\": \"ruby-lang.org\"}}],\"groundingSupports\":
+        [{\"segment\": {\"endIndex\": 40,\"text\": \"The latest stable Ruby version
+        is 4.0.9.\"},\"groundingChunkIndices\": [0,1,2]},{\"segment\": {\"startIndex\":
+        41,\"endIndex\": 87,\"text\": \"This version was released on October 23, 2026.\"},\"groundingChunkIndices\":
+        [0]}]}}],\"usageMetadata\": {\"promptTokenCount\": 16,\"candidatesTokenCount\":
+        47,\"totalTokenCount\": 273,\"trafficType\": \"ON_DEMAND\",\"promptTokensDetails\":
+        [{\"modality\": \"TEXT\",\"tokenCount\": 16}],\"candidatesTokensDetails\":
+        [{\"modality\": \"TEXT\",\"tokenCount\": 47}],\"thoughtsTokenCount\": 210},\"modelVersion\":
+        \"gemini-2.5-flash\",\"createTime\": \"2026-11-10T17:32:54.087843Z\",\"responseId\":
+        \"RlXzaqOuBcuotfAP5rmY2AI\"}\r\n\r\n"
+  recorded_at: Tue, 10 Nov 2026 17:32:56 GMT
 recorded_with: VCR 6.4.1

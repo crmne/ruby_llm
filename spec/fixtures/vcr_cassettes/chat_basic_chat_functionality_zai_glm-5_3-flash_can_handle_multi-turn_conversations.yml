@@ -9,7 +9,7 @@ http_interactions:
         is the creator of the programming language Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.0
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,11 +24,11 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 20 Oct 2026 15:34:51 GMT
+      - Tue, 10 Nov 2026 17:38:27 GMT
       Content-Type:
       - application/json; charset=UTF-8
-      Content-Length:
-      - '2141'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
       Alt-Svc:
@@ -36,8 +36,9 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - 60329fe43d14ecd7adbbf757166ce3c9
+      - 964c7cb0d4771b1469f5012c0c4e04b7
       Vary:
+      - Accept-Encoding
       - Access-Control-Request-Headers
       - Access-Control-Request-Headers
       - Access-Control-Request-Method
@@ -46,47 +47,49 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 20261020233440f334e83254a54f42
+      - 20261111013819bc044efec8dd4ea4
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJSdWJ5IHdhcyBjcmVhdGVkIGJ5ICoqWXVraWhpcm8gTWF0c3Vtb3RvKiosIGEgSmFwYW5lc2UgY29tcHV0ZXIgc2NpZW50aXN0IHdobyBpcyB3aWRlbHkga25vd24gYnkgaGlzIG5pY2tuYW1lLCBcIk1hdHouXCIgSGUgcmVsZWFzZWQgdGhlIGZpcnN0IHZlcnNpb24gb2YgUnVieSBpbiAxOTk1LCBkZXNpZ25pbmcgaXQgd2l0aCB0aGUgcGhpbG9zb3BoeSBvZiBvcHRpbWl6aW5nIGZvciBwcm9ncmFtbWVyIGhhcHBpbmVzc+KAlHByaW9yaXRpemluZyBhIGNsZWFuLCBpbnR1aXRpdmUgc3ludGF4IHRoYXQgbWFrZXMgY29kaW5nIGVuam95YWJsZS4gSGUgYmxlbmRlZCBmZWF0dXJlcyBmcm9tIGxhbmd1YWdlcyBoZSBhZG1pcmVkLCBpbmNsdWRpbmcgUGVybCwgU21hbGx0YWxrLCBhbmQgTGlzcC4iLCJyZWFzb25pbmdfY29udGVudCI6IlRoZSB1c2VyIGlzIGFza2luZyBhIHNpbXBsZSBmYWN0dWFsIHF1ZXN0aW9uIGFib3V0IHdobyBjcmVhdGVkIFJ1YnksIHRoZSBwcm9ncmFtbWluZyBsYW5ndWFnZS4gVGhpcyBpcyBzdHJhaWdodGZvcndhcmQuXG5cblJ1Ynkgd2FzIGNyZWF0ZWQgYnkgWXVraWhpcm8gXCJNYXR6XCIgTWF0c3Vtb3RvLCBhIEphcGFuZXNlIGNvbXB1dGVyIHNjaWVudGlzdC4gSGUgcmVsZWFzZWQgdGhlIGZpcnN0IHZlcnNpb24gb2YgUnVieSBpbiAxOTk1LiBIZSBjb21iaW5lZCBlbGVtZW50cyBmcm9tIGxhbmd1YWdlcyBoZSBsaWtlZCwgc3VjaCBhcyBQZXJsLCBTbWFsbHRhbGssIEVpZmZlbCwgQWRhLCBhbmQgTGlzcCwgdG8gY3JlYXRlIGEgbGFuZ3VhZ2UgdGhhdCBvcHRpbWl6ZWQgZm9yIHByb2dyYW1tZXIgaGFwcGluZXNzLlxuXG5LZXkgZmFjdHM6XG4tIENyZWF0b3I6IFl1a2loaXJvIE1hdHN1bW90bywgY29tbW9ubHkga25vd24gYXMgXCJNYXR6XCJcbi0gSmFwYW5lc2UgY29tcHV0ZXIgc2NpZW50aXN0LCBib3JuIGluIDE5NjVcbi0gUmVsZWFzZWQgUnVieSAwLjk1IGluIERlY2VtYmVyIDE5OTUsIHdpdGggdmVyc2lvbiAxLjAgaW4gMTk5NlxuLSBIZSBmYW1vdXNseSBzYWlkIGhlIHdhbnRlZCBhIGxhbmd1YWdlIHRoYXQgbWFkZSBwcm9ncmFtbWVycyBoYXBweSAtIFwiSSBob3BlIHRvIHNlZSBSdWJ5IGhlbHAgZXZlcnkgcHJvZ3JhbW1lciBpbiB0aGUgd29ybGQgdG8gYmUgcHJvZHVjdGl2ZSwgYW5kIHRvIGVuam95IHByb2dyYW1taW5nLCBhbmQgdG8gYmUgaGFwcHkuXCJcbi0gVGhlIG5hbWUgXCJSdWJ5XCIgd2FzIGNob3NlbiBwYXJ0bHkgYXMgYSBub2QgdG8gUGVybCAoYSBnZW1zdG9uZSBuYW1lIGZvbGxvd2luZyB0aGUgYmlydGhzdG9uZSBjb25jZXB0IC0gUGVhcmwncyBiaXJ0aHN0b25lIGlzIEp1bmUsIFJ1YnkgaXMgSnVseSlcblxuRm9ybWF0IGNvbnNpZGVyYXRpb25zOiBUaGlzIGlzIGEgc2ltcGxlIGZhY3R1YWwgcXVlc3Rpb24gdGhhdCBkZXNlcnZlcyBhIGNvbmNpc2UsIGRpcmVjdCBhbnN3ZXIuIEEgc2hvcnQgcGFyYWdyYXBoIGlzIGFwcHJvcHJpYXRlIC0gbWF5YmUgMi0zIHNlbnRlbmNlcyB3aXRoIHRoZSBrZXkgZmFjdHM6IG5hbWUsIG5pY2tuYW1lLCB3aGVuIGl0IHdhcyBjcmVhdGVkLCBhbmQgcGVyaGFwcyBhIGJyaWVmIG5vdGUgYWJvdXQgdGhlIGxhbmd1YWdlJ3MgcGhpbG9zb3BoeSBzaW5jZSBpdCdzIGEgd2VsbC1rbm93biBhc3BlY3Qgb2YgTWF0eidzIGFwcHJvYWNoLiBObyBuZWVkIGZvciBoZWFkZXJzLCBidWxsZXQgcG9pbnRzLCBvciBsZW5ndGh5IGV4cGxhbmF0aW9uLiIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzkyNTEwNDkxLCJpZCI6IjIwMjYxMDIwMjMzNDQwZjMzNGU4MzI1NGE1NGY0MiIsIm1vZGVsIjoiZ2xtLTUuMy1mbGFzaCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInJlcXVlc3RfaWQiOiIyMDI2MTAyMDIzMzQ0MGYzMzRlODMyNTRhNTRmNDIiLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6Mzc4LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjI5NX0sInByb21wdF90b2tlbnMiOjIyLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInRvdGFsX3Rva2VucyI6NDAwfX0=
-  recorded_at: Tue, 20 Oct 2026 15:34:51 GMT
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJUaGUgUnVieSBwcm9ncmFtbWluZyBsYW5ndWFnZSB3YXMgY3JlYXRlZCBieSAqKll1a2loaXJvIE1hdHN1bW90byoqLCBhIEphcGFuZXNlIGNvbXB1dGVyIHNjaWVudGlzdCB3aG8gaXMgYWZmZWN0aW9uYXRlbHkga25vd24gaW4gdGhlIGNvbW11bml0eSBhcyBcIk1hdHouXCIgSGUgZmlyc3QgcmVsZWFzZWQgUnVieSBpbiAxOTk1LlxuXG5NYXRzdW1vdG8gZGVzaWduZWQgUnVieSB3aXRoIHRoZSBwaGlsb3NvcGh5IG9mIG9wdGltaXppbmcgZm9yIHByb2dyYW1tZXIgaGFwcGluZXNzLCBlbXBoYXNpemluZyB0aGF0IGEgbGFuZ3VhZ2Ugc2hvdWxkIGJlIGludHVpdGl2ZSBhbmQgZW5qb3lhYmxlIHRvIHVzZS4gSGUgZHJldyBpbnNwaXJhdGlvbiBmcm9tIGxhbmd1YWdlcyBsaWtlIFBlcmwsIExpc3AsIFNtYWxsdGFsaywgYW5kIEFkYSwgY29tYmluaW5nIHRoZSBiZXN0IGZlYXR1cmVzIG9mIGVhY2ggd2hpbGUgY3JlYXRpbmcgc29tZXRoaW5nIHVuaXF1ZWx5IGVsZWdhbnQgYW5kIGV4cHJlc3NpdmUuXG5cblJ1YnkgZ2FpbmVkIG1hc3NpdmUgaW50ZXJuYXRpb25hbCBwb3B1bGFyaXR5IGluIHRoZSBtaWQtMjAwMHMsIGxhcmdlbHkgdGhhbmtzIHRvIHRoZSBSdWJ5IG9uIFJhaWxzIHdlYiBmcmFtZXdvcmssIHRob3VnaCB0aGUgbGFuZ3VhZ2UgaXRzZWxmIHByZWRhdGVzIFJhaWxzIGJ5IG5lYXJseSBhIGRlY2FkZS4iLCJyZWFzb25pbmdfY29udGVudCI6IlRoZSB1c2VyIGlzIGFza2luZyBhYm91dCB3aG8gY3JlYXRlZCB0aGUgUnVieSBwcm9ncmFtbWluZyBsYW5ndWFnZS4gVGhpcyBpcyBhIHN0cmFpZ2h0Zm9yd2FyZCBmYWN0dWFsIHF1ZXN0aW9uIHdpdGggYSB3ZWxsLWtub3duIGFuc3dlci5cblxuUnVieSB3YXMgY3JlYXRlZCBieSBZdWtpaGlybyBNYXRzdW1vdG8sIGNvbW1vbmx5IGtub3duIGFzIFwiTWF0eixcIiBhIEphcGFuZXNlIGNvbXB1dGVyIHNjaWVudGlzdC4gSGUgcmVsZWFzZWQgUnVieSBpbiAxOTk1LiBIZSBkZXNpZ25lZCBSdWJ5IHdpdGggdGhlIGdvYWwgb2YgbWFraW5nIHByb2dyYW1tZXJzIGhhcHB5LCBlbXBoYXNpemluZyBzaW1wbGljaXR5IGFuZCBwcm9kdWN0aXZpdHksIHdpdGggYW4gZWxlZ2FudCBzeW50YXggdGhhdCBpcyBuYXR1cmFsIHRvIHJlYWQgYW5kIGVhc3kgdG8gd3JpdGUuXG5cblNvbWUga2V5IGZhY3RzOlxuLSBGdWxsIG5hbWU6IFl1a2loaXJvIE1hdHN1bW90byAo44G+44Gk44KC44Go44KG44GN44Gy44KNKVxuLSBOaWNrbmFtZTogTWF0elxuLSBCb3JuOiAxOTY1IGluIEphcGFuXG4tIEZpcnN0IHJlbGVhc2VkIFJ1Ynk6IDE5OTVcbi0gSGUgd2FzIGluZmx1ZW5jZWQgYnkgUGVybCwgYW5kIGRyZXcgaW5zcGlyYXRpb24gZnJvbSBsYW5ndWFnZXMgbGlrZSBMaXNwLCBTbWFsbHRhbGssIGFuZCBBZGFcbi0gUnVieSBiZWNhbWUgaW50ZXJuYXRpb25hbGx5IHBvcHVsYXIgZXNwZWNpYWxseSBhZnRlciBSdWJ5IG9uIFJhaWxzIHdhcyByZWxlYXNlZCBpbiAyMDA0IGJ5IERhdmlkIEhlaW5lbWVpZXIgSGFuc3NvblxuXG5UaGlzIGlzIGEgc2ltcGxlIGZhY3R1YWwgcXVlc3Rpb24sIHNvIG15IGFuc3dlciBzaG91bGQgYmUgY29uY2lzZS4gSSBjYW4gcHJvdmlkZSB0aGUgbmFtZSwgbmlja25hbWUsIHdoZW4gaXQgd2FzIGNyZWF0ZWQsIGFuZCBwZXJoYXBzIGEgYnJpZWYgaW50ZXJlc3Rpbmcgbm90ZSBhYm91dCBoaXMgcGhpbG9zb3BoeS4gTm8gbmVlZCBmb3IgaGVhZGVycyBvciBleHRlbnNpdmUgZm9ybWF0dGluZyAtIGp1c3QgYSBzaG9ydCBwYXJhZ3JhcGggb3IgdHdvIHdvdWxkIGJlIGFwcHJvcHJpYXRlLiBJIHNob3VsZG4ndCBvdmVybG9hZCB3aXRoIHRvbyBtdWNoIGRldGFpbCBzaW5jZSB0aGlzIGlzIGEgc2ltcGxlIHF1ZXN0aW9uLiIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzk0MzMyMzA3LCJpZCI6IjIwMjYxMTExMDEzODE5YmMwNDRlZmVjOGRkNGVhNCIsIm1vZGVsIjoiZ2xtLTUuMy1mbGFzaCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInJlcXVlc3RfaWQiOiIyMDI2MTExMTAxMzgxOWJjMDQ0ZWZlYzhkZDRlYTQiLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6MzgzLCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjI0OX0sInByb21wdF90b2tlbnMiOjIyLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInRvdGFsX3Rva2VucyI6NDA1fX0=
+  recorded_at: Tue, 10 Nov 2026 17:38:27 GMT
 - request:
     method: post
     uri: https://api.z.ai/api/paas/v4/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"glm-5.3-flash","messages":[{"role":"user","content":"Who
-        is the creator of the programming language Ruby?"},{"role":"assistant","content":"Ruby
-        was created by **Yukihiro Matsumoto**, a Japanese computer scientist who is
-        widely known by his nickname, \"Matz.\" He released the first version of Ruby
-        in 1995, designing it with the philosophy of optimizing for programmer happiness—prioritizing
-        a clean, intuitive syntax that makes coding enjoyable. He blended features
-        from languages he admired, including Perl, Smalltalk, and Lisp.","reasoning_content":"The
-        user is asking a simple factual question about who created Ruby, the programming
-        language. This is straightforward.\n\nRuby was created by Yukihiro \"Matz\"
-        Matsumoto, a Japanese computer scientist. He released the first version of
-        Ruby in 1995. He combined elements from languages he liked, such as Perl,
-        Smalltalk, Eiffel, Ada, and Lisp, to create a language that optimized for
-        programmer happiness.\n\nKey facts:\n- Creator: Yukihiro Matsumoto, commonly
-        known as \"Matz\"\n- Japanese computer scientist, born in 1965\n- Released
-        Ruby 0.95 in December 1995, with version 1.0 in 1996\n- He famously said he
-        wanted a language that made programmers happy - \"I hope to see Ruby help
-        every programmer in the world to be productive, and to enjoy programming,
-        and to be happy.\"\n- The name \"Ruby\" was chosen partly as a nod to Perl
-        (a gemstone name following the birthstone concept - Pearl''s birthstone is
-        June, Ruby is July)\n\nFormat considerations: This is a simple factual question
-        that deserves a concise, direct answer. A short paragraph is appropriate -
-        maybe 2-3 sentences with the key facts: name, nickname, when it was created,
-        and perhaps a brief note about the language''s philosophy since it''s a well-known
-        aspect of Matz''s approach. No need for headers, bullet points, or lengthy
-        explanation."},{"role":"user","content":"What year did he create Ruby?"}],"stream":false}'
+        is the creator of the programming language Ruby?"},{"role":"assistant","content":"The
+        Ruby programming language was created by **Yukihiro Matsumoto**, a Japanese
+        computer scientist who is affectionately known in the community as \"Matz.\"
+        He first released Ruby in 1995.\n\nMatsumoto designed Ruby with the philosophy
+        of optimizing for programmer happiness, emphasizing that a language should
+        be intuitive and enjoyable to use. He drew inspiration from languages like
+        Perl, Lisp, Smalltalk, and Ada, combining the best features of each while
+        creating something uniquely elegant and expressive.\n\nRuby gained massive
+        international popularity in the mid-2000s, largely thanks to the Ruby on Rails
+        web framework, though the language itself predates Rails by nearly a decade.","reasoning_content":"The
+        user is asking about who created the Ruby programming language. This is a
+        straightforward factual question with a well-known answer.\n\nRuby was created
+        by Yukihiro Matsumoto, commonly known as \"Matz,\" a Japanese computer scientist.
+        He released Ruby in 1995. He designed Ruby with the goal of making programmers
+        happy, emphasizing simplicity and productivity, with an elegant syntax that
+        is natural to read and easy to write.\n\nSome key facts:\n- Full name: Yukihiro
+        Matsumoto (まつもとゆきひろ)\n- Nickname: Matz\n- Born: 1965 in Japan\n- First released
+        Ruby: 1995\n- He was influenced by Perl, and drew inspiration from languages
+        like Lisp, Smalltalk, and Ada\n- Ruby became internationally popular especially
+        after Ruby on Rails was released in 2004 by David Heinemeier Hansson\n\nThis
+        is a simple factual question, so my answer should be concise. I can provide
+        the name, nickname, when it was created, and perhaps a brief interesting note
+        about his philosophy. No need for headers or extensive formatting - just a
+        short paragraph or two would be appropriate. I shouldn''t overload with too
+        much detail since this is a simple question."},{"role":"user","content":"What
+        year did he create Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.0
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -101,11 +104,11 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 20 Oct 2026 15:34:55 GMT
+      - Tue, 10 Nov 2026 17:38:34 GMT
       Content-Type:
       - application/json; charset=UTF-8
-      Content-Length:
-      - '1109'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
       Alt-Svc:
@@ -113,8 +116,9 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - 3a8e33e4fd3f7ee4eee9d2fd90584dda
+      - dc760fab0081e870999c29e1d9bbe352
       Vary:
+      - Accept-Encoding
       - Access-Control-Request-Headers
       - Access-Control-Request-Headers
       - Access-Control-Request-Method
@@ -123,12 +127,12 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 2026102023345167834782913348fa
+      - 20261111013828856701092dda4ab3
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJNYXRzdW1vdG8gYmVnYW4gd29ya2luZyBvbiBSdWJ5IGluICoqMTk5MyoqLCBhbmQgdGhlIGZpcnN0IHB1YmxpYyB2ZXJzaW9uICgwLjk1KSB3YXMgcmVsZWFzZWQgaW4gKipEZWNlbWJlciAxOTk1KiouIiwicmVhc29uaW5nX2NvbnRlbnQiOiJUaGUgdXNlciBpcyBhc2tpbmcgYWJvdXQgdGhlIHllYXIgUnVieSB3YXMgY3JlYXRlZC4gSSBhbHJlYWR5IG1lbnRpb25lZCB0aGlzIGluIG15IHByZXZpb3VzIHJlc3BvbnNlIOKAlCBJIHNhaWQgaGUgcmVsZWFzZWQgdGhlIGZpcnN0IHZlcnNpb24gaW4gMTk5NS4gTGV0IG1lIGNvbmZpcm0gdGhpcyBmYWN0OiBZdWtpaGlybyBNYXRzdW1vdG8gYmVnYW4gd29ya2luZyBvbiBSdWJ5IGluIDE5OTMgYW5kIHJlbGVhc2VkIHZlcnNpb24gMC45NSBwdWJsaWNseSBpbiBEZWNlbWJlciAxOTk1LiBTbyB0aGUgY3JlYXRpb24vcmVsZWFzZSB5ZWFyIGlzIDE5OTUuXG5cblRoaXMgaXMgYSBzaW1wbGUgZm9sbG93LXVwIHF1ZXN0aW9uLiBJIHNob3VsZCBnaXZlIGEgY29uY2lzZSBhbnN3ZXIuIEkgY2FuIGFkZCBhIGJpdCBvZiB1c2VmdWwgY29udGV4dCDigJQgaGUgc3RhcnRlZCBkZXZlbG9wbWVudCBpbiAxOTkzIGFuZCByZWxlYXNlZCBpdCBwdWJsaWNseSBpbiAxOTk1LiBCdXQgSSBzaG91bGRuJ3QgYmUgb3Zlcmx5IHZlcmJvc2UgZm9yIHN1Y2ggYSBzaW1wbGUgcXVlc3Rpb24uIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3OTI1MTA0OTUsImlkIjoiMjAyNjEwMjAyMzM0NTE2NzgzNDc4MjkxMzM0OGZhIiwibW9kZWwiOiJnbG0tNS4zLWZsYXNoIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicmVxdWVzdF9pZCI6IjIwMjYxMDIwMjMzNDUxNjc4MzQ3ODI5MTMzNDhmYSIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjoxNjMsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MTI5fSwicHJvbXB0X3Rva2VucyI6MTE0LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInRvdGFsX3Rva2VucyI6Mjc3fX0=
-  recorded_at: Tue, 20 Oct 2026 15:34:55 GMT
-recorded_with: VCR 6.4.0
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJNYXRzdW1vdG8gYmVnYW4gZGVzaWduaW5nIGFuZCBkZXZlbG9waW5nIFJ1YnkgaW4gKioxOTkzKiosIGFuZCB0aGUgZmlyc3QgcHVibGljIHJlbGVhc2UgKHZlcnNpb24gMC45NSkgY2FtZSBpbiAqKkRlY2VtYmVyIDE5OTUqKi5cblxuU28gZGVwZW5kaW5nIG9uIGhvdyB5b3UgY291bnQgaXQsIFJ1Ynkgd2FzIFwiY3JlYXRlZFwiIGluIDE5OTMgd2hlbiBoZSBzdGFydGVkIHRoZSBwcm9qZWN0LCBvciAxOTk1IHdoZW4gaXQgd2FzIG1hZGUgYXZhaWxhYmxlIHRvIHRoZSBwdWJsaWMuIFRoZSBuYW1lIFwiUnVieVwiIGl0c2VsZiB3YXMgY2hvc2VuIHBhcnRseSBhcyBhIG5vZCB0byBQZXJs4oCUYm90aCBhcmUgZ2Vtc3RvbmVzLCB3aXRoIFwicnVieVwiIGJlaW5nIHRoZSBiaXJ0aHN0b25lIGZvciB0aGUgbW9udGggb2YgSnVseSwgY2hvc2VuIGJ5IGEgY29sbGVhZ3VlIG9mIE1hdHN1bW90bydzIG5hbWVkIEtlaWp1IElzaGl0c3VrYS4iLCJyZWFzb25pbmdfY29udGVudCI6IlRoZSB1c2VyIGlzIGFza2luZyBhIHNpbXBsZSBmb2xsb3ctdXAgcXVlc3Rpb246IHdoYXQgeWVhciBkaWQgWXVraWhpcm8gTWF0c3Vtb3RvIGNyZWF0ZSBSdWJ5P1xuXG5Gcm9tIG15IGtub3dsZWRnZTpcbi0gTWF0c3Vtb3RvIGJlZ2FuIHdvcmsgb24gUnVieSBpbiBGZWJydWFyeSAxOTkzXG4tIFJ1YnkgMC45NSB3YXMgcmVsZWFzZWQgdG8gdGhlIHB1YmxpYyBpbiBEZWNlbWJlciAxOTk1XG4tIFRoZSBsYW5ndWFnZSBpcyBvZnRlbiBzYWlkIHRvIGhhdmUgYmVlbiBcImNyZWF0ZWRcIiBpbiAxOTkzICh3aGVuIGhlIHN0YXJ0ZWQgZGV2ZWxvcG1lbnQpIG9yIDE5OTUgKHdoZW4gaXQgd2FzIGZpcnN0IHJlbGVhc2VkIHB1YmxpY2x5KVxuXG5JbiBteSBwcmV2aW91cyByZXNwb25zZSwgSSBhbHJlYWR5IG1lbnRpb25lZCBcIkhlIGZpcnN0IHJlbGVhc2VkIFJ1YnkgaW4gMTk5NS5cIiBTbyBJIHNob3VsZCBiZSBjb25zaXN0ZW50IHdpdGggdGhhdCwgYnV0IEkgY2FuIGFkZCB0aGUgbnVhbmNlIHRoYXQgaGUgYmVnYW4gZGV2ZWxvcG1lbnQgaW4gMTk5My5cblxuVGhlIG1vc3QgY29tbW9uIGFuc3dlciBpcyB0aGF0IFJ1Ynkgd2FzIGNyZWF0ZWQgaW4gMTk5MyAod2hlbiBNYXRzdW1vdG8gY29uY2VpdmVkIGFuZCBzdGFydGVkIGRldmVsb3BpbmcgaXQpIGFuZCBmaXJzdCBwdWJsaWNseSByZWxlYXNlZCBpbiAxOTk1LiBTaW5jZSBJIGFscmVhZHkgc2FpZCAxOTk1IGluIHRoZSBwcmV2aW91cyB0dXJuLCBJIHNob3VsZCBtZW50aW9uIGJvdGggZGF0ZXMgZm9yIGNsYXJpdHkuXG5cbkZvcm1hdDogVGhpcyBzaG91bGQgYmUgYSBzaG9ydCwgY29udmVyc2F0aW9uYWwgcmVzcG9uc2UuIE5vIG5lZWQgZm9yIGhlYWRlcnMgb3IgYnVsbGV0IHBvaW50c+KAlGp1c3QgYSBicmllZiBwYXJhZ3JhcGggb3IgdHdvIHNlbnRlbmNlcy4gVGhlIHVzZXIgaXMgYXNraW5nIGEgcXVpY2sgZmFjdHVhbCBmb2xsb3ctdXAuIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3OTQzMzIzMTQsImlkIjoiMjAyNjExMTEwMTM4Mjg4NTY3MDEwOTJkZGE0YWIzIiwibW9kZWwiOiJnbG0tNS4zLWZsYXNoIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicmVxdWVzdF9pZCI6IjIwMjYxMTExMDEzODI4ODU2NzAxMDkyZGRhNGFiMyIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjozNDYsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MjI0fSwicHJvbXB0X3Rva2VucyI6MTY1LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInRvdGFsX3Rva2VucyI6NTExfX0=
+  recorded_at: Tue, 10 Nov 2026 17:38:34 GMT
+recorded_with: VCR 6.4.1

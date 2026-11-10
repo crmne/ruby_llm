@@ -11,7 +11,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}],"toolConfig":{"functionCallingConfig":{"mode":"any","allowedFunctionNames":["weather"]}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -34,7 +34,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:19:24 GMT
+      - Tue, 10 Nov 2026 17:53:31 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -44,7 +44,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=812
+      - gfet4t7; dur=1104
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -61,11 +61,11 @@ http_interactions:
                     "functionCall": {
                       "name": "weather",
                       "args": {
-                        "latitude": "52.5200",
-                        "longitude": "13.4050"
+                        "longitude": "12.4964",
+                        "latitude": "41.9028"
                       }
                     },
-                    "thoughtSignature": "CtcCAWkUfRP6M/NPjhwCpZ3KGSkwCr5e06mft+KJs3XSfUaQadQ3Ah49p1Q7Z1LF65nk1krEAqeJHpC8+R4Ar4rOCnzOmffHLAuL1XsGrR/qLn9BQii6AJc02IPwtCu7l5P1TYxLtTObzLirFmjlIwN5uw3xBc2NDCLW9nLP4PbTyyoUWkilQkXToHGgsqZLI5cWCdo2ZksgNnZCZCfHXVfCBdeDYwaTq4BkPMHzqexUChgq5zkQilB+OvAI1iHdnTVTZE9Pyw/R7CRftO0nfmSJ2g/ky+93Id/8/T8g8vrIt/cPCg9jxN7vWDUz4+PcQWNtxrNH1OQub0lxRlIGgosrEgc8fGwnjDULm883DzjGifxefXay80Gi9BFmJAyjasLEhRvDT2g9RDxJcNmfGH6r/J2cRMJgI8arBQs5QabC3M+L+4+oYgrgB14lHDBjpkK3kE8ou8eyWw=="
+                    "thoughtSignature": "CtECAWkUfRMN5JGrqmTqo9dIRC0dyyyjzsTpF1I7Yzpug2JRyquh+rMn0ott9kIUGD9CXgtvst9PCvLJz2wL9qzLSAOVJacLSbzbCNBmSzFC33oF0ait+W8gB0WMbCf9VvDh3XTbDKYT0+wOq2Hs7lK+JYu0eJqNrSwRmCMWUHP/ByZtZPGt70b+7yAR5CwvG+Su3bwcrYZo7zHXQo0TepPyeidMqOR1VlGxgxvfrXELzIkm3uW1ErAwJamU34UrtC9LWEgiOMNPhpLH4Ceu50J9LVPOoQnF/mswCUF9SatiAV2UBXWLAWeA5egxJJB7bzlke2c3wLACP/TV/ST9hhI7r1vnByXlwQCf62+Q3FE0d5OZ9qMRgi5aDk87wHT5cRkPSD3iDXmQEzoxBiUsnr4mnSZxCPjuChaA6TTDCBjK3Qpqe7SqqGKsxby9DcKD8hBwDQ=="
                   }
                 ],
                 "role": "model"
@@ -78,33 +78,33 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 85,
             "candidatesTokenCount": 30,
-            "totalTokenCount": 174,
+            "totalTokenCount": 175,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 85
               }
             ],
-            "thoughtsTokenCount": 59,
+            "thoughtsTokenCount": 60,
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "W_3Lav7DLfnzvdIPm-GnkQQ"
+          "responseId": "Glrzaq-SFtbOvdIPy-L68AQ"
         }
-  recorded_at: Sun, 11 Oct 2026 21:19:24 GMT
+  recorded_at: Tue, 10 Nov 2026 17:53:31 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"CtcCAWkUfRP6M/NPjhwCpZ3KGSkwCr5e06mft+KJs3XSfUaQadQ3Ah49p1Q7Z1LF65nk1krEAqeJHpC8+R4Ar4rOCnzOmffHLAuL1XsGrR/qLn9BQii6AJc02IPwtCu7l5P1TYxLtTObzLirFmjlIwN5uw3xBc2NDCLW9nLP4PbTyyoUWkilQkXToHGgsqZLI5cWCdo2ZksgNnZCZCfHXVfCBdeDYwaTq4BkPMHzqexUChgq5zkQilB+OvAI1iHdnTVTZE9Pyw/R7CRftO0nfmSJ2g/ky+93Id/8/T8g8vrIt/cPCg9jxN7vWDUz4+PcQWNtxrNH1OQub0lxRlIGgosrEgc8fGwnjDULm883DzjGifxefXay80Gi9BFmJAyjasLEhRvDT2g9RDxJcNmfGH6r/J2cRMJgI8arBQs5QabC3M+L+4+oYgrgB14lHDBjpkK3kE8ou8eyWw=="}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"41.9028","longitude":"12.4964"}},"thoughtSignature":"CtECAWkUfRMN5JGrqmTqo9dIRC0dyyyjzsTpF1I7Yzpug2JRyquh+rMn0ott9kIUGD9CXgtvst9PCvLJz2wL9qzLSAOVJacLSbzbCNBmSzFC33oF0ait+W8gB0WMbCf9VvDh3XTbDKYT0+wOq2Hs7lK+JYu0eJqNrSwRmCMWUHP/ByZtZPGt70b+7yAR5CwvG+Su3bwcrYZo7zHXQo0TepPyeidMqOR1VlGxgxvfrXELzIkm3uW1ErAwJamU34UrtC9LWEgiOMNPhpLH4Ceu50J9LVPOoQnF/mswCUF9SatiAV2UBXWLAWeA5egxJJB7bzlke2c3wLACP/TV/ST9hhI7r1vnByXlwQCf62+Q3FE0d5OZ9qMRgi5aDk87wHT5cRkPSD3iDXmQEzoxBiUsnr4mnSZxCPjuChaA6TTDCBjK3Qpqe7SqqGKsxby9DcKD8hBwDQ=="}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parametersJsonSchema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -127,7 +127,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:19:24 GMT
+      - Tue, 10 Nov 2026 17:53:31 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -137,43 +137,14 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=514
+      - gfet4t7; dur=677
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "candidates": [
-            {
-              "content": {
-                "parts": [
-                  {
-                    "text": "I am sorry, I cannot answer historical questions. I can only provide information about the weather."
-                  }
-                ],
-                "role": "model"
-              },
-              "finishReason": "STOP",
-              "index": 0
-            }
-          ],
-          "usageMetadata": {
-            "promptTokenCount": 172,
-            "candidatesTokenCount": 19,
-            "totalTokenCount": 191,
-            "promptTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 172
-              }
-            ],
-            "serviceTier": "standard"
-          },
-          "modelVersion": "gemini-2.5-flash",
-          "responseId": "XP3Lapv1JZCExN8P7IuIsQg"
-        }
-  recorded_at: Sun, 11 Oct 2026 21:19:24 GMT
-recorded_with: VCR 6.4.0
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIkkgY2FuJ3QgdGVsbCB5b3UgYWJvdXQgdGhlIGZhbGwgb2YgUm9tZSwgYnV0IEkgY2FuIHRlbGwgeW91IHRoYXQgdGhlIGN1cnJlbnQgd2VhdGhlciBpbiBSb21lIGlzIDE1wrBDIHdpdGggYSB3aW5kIG9mIDEwIGttL2guIgogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgInJvbGUiOiAibW9kZWwiCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJpbmRleCI6IDAKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiAxNzIsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiA0MCwKICAgICJ0b3RhbFRva2VuQ291bnQiOiAyMTIsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDE3MgogICAgICB9CiAgICBdLAogICAgInNlcnZpY2VUaWVyIjogInN0YW5kYXJkIgogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMi41LWZsYXNoIiwKICAicmVzcG9uc2VJZCI6ICJHMXJ6YXFQUklQdXh2ZElQNHJ1UnFRVSIKfQo=
+  recorded_at: Tue, 10 Nov 2026 17:53:31 GMT
+recorded_with: VCR 6.4.1

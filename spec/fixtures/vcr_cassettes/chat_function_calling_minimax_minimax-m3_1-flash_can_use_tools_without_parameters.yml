@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.0
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,27 +27,27 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
-      - '447'
+      - '449'
       Trace-Id:
-      - '0726685c6e063086991a26d6a29d07fa'
+      - '074289af95d3667c145a3676b7d66dfd'
       X-Session-Id:
       - 2d0af558050409753676d45251536c2f
       X-Mm-Request-Id:
-      - 2092934004998157135_17924887960dwq1g
+      - 2092934004998157135_1794332335zvxoy6
       Minimax-Request-Id:
-      - eeae664743234c2cf1782b1f0df27958
+      - 35d90a53c63c5587ac067725ec49d26b
       Alb-Receive-Time:
-      - '1792488796.195'
+      - '1794332335.68'
       Alb-Request-Id:
-      - 6822e4a1b85d98c49b2e7e8585244cf474a50699
+      - d0ae9e3c858f4cf3af02c8d54addfef01a964629
       Expires:
-      - Tue, 20 Oct 2026 09:33:17 GMT
+      - Tue, 10 Nov 2026 17:38:56 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Tue, 20 Oct 2026 09:33:17 GMT
+      - Tue, 10 Nov 2026 17:38:56 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -56,9 +56,9 @@ http_interactions:
       - ak
     body:
       encoding: UTF-8
-      string: '{"id":"0726685c6e063086991a26d6a29d07fa","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"I''ll
-        check that for you.","type":"text"},{"type":"tool_use","id":"call_ce15a1cc9ed7476bb6df8055","name":"best_language_to_learn","input":{}}],"usage":{"input_tokens":446,"output_tokens":28,"cache_creation_input_tokens":0,"cache_read_input_tokens":0},"stop_reason":"tool_use","base_resp":{"status_code":0,"status_msg":""}}'
-  recorded_at: Tue, 20 Oct 2026 09:33:17 GMT
+      string: '{"id":"074289af95d3667c145a3676b7d66dfd","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"I''ll
+        check that for you.","type":"text"},{"type":"tool_use","id":"call_01a1c68aa0b475068574cbba","name":"best_language_to_learn","input":{}}],"usage":{"input_tokens":255,"output_tokens":28,"cache_creation_input_tokens":0,"cache_read_input_tokens":191},"stop_reason":"tool_use","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Tue, 10 Nov 2026 17:38:56 GMT
 - request:
     method: post
     uri: https://api.minimax.io/anthropic/v1/messages
@@ -66,11 +66,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"Use
         the best_language_to_learn tool to tell me which language to learn."}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        check that for you."},{"type":"tool_use","id":"call_ce15a1cc9ed7476bb6df8055","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"call_ce15a1cc9ed7476bb6df8055","content":[{"type":"text","text":"Ruby"}]}]}],"stream":false,"max_tokens":524288,"tools":[{"name":"best_language_to_learn","description":"Gets
+        check that for you."},{"type":"tool_use","id":"call_01a1c68aa0b475068574cbba","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"call_01a1c68aa0b475068574cbba","content":[{"type":"text","text":"Ruby"}]}]}],"stream":false,"max_tokens":524288,"tools":[{"name":"best_language_to_learn","description":"Gets
         the best language to learn","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
-      - Faraday v2.15.0
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -87,27 +87,27 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
-      - '939'
+      - '943'
       Trace-Id:
-      - '0726685dd3c1a4fa9e8d5887198248f9'
+      - '074289b054c3ea73e0f18391a1d0f06e'
       X-Session-Id:
       - 2d0af558050409753676d45251536c2f
       X-Mm-Request-Id:
-      - 2092934004998157135_1792488797jxiw9n
+      - 2092934004998157135_1794332336w9tmdq
       Minimax-Request-Id:
-      - 8dcef19f211f990667dbcec2c7f56d83
+      - 4185cad6f926c4170257f7524ab504d6
       Alb-Receive-Time:
-      - '1792488797.595'
+      - '1794332336.686'
       Alb-Request-Id:
-      - e4cb5a1b6f642048be6ddf1742ac58119717ac6c
+      - edaabe72f934523f0068fe306e37b20a959cb523
       Expires:
-      - Tue, 20 Oct 2026 09:33:19 GMT
+      - Tue, 10 Nov 2026 17:39:02 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Tue, 20 Oct 2026 09:33:19 GMT
+      - Tue, 10 Nov 2026 17:39:02 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -115,15 +115,8 @@ http_interactions:
       X-From:
       - ak
     body:
-      encoding: UTF-8
-      string: '{"id":"0726685dd3c1a4fa9e8d5887198248f9","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"The
-        tool says **Ruby** is the best language to learn.\n\nRuby is a dynamic, open-source
-        programming language focused on developer productivity and simplicity. It''s
-        known for its clean, readable syntax (\"Rails-style\" conventions), and it''s
-        the language behind the Ruby on Rails web framework, which powers many web
-        applications. It''s also popular for scripting, static site generation (Jekyll),
-        and DevOps tooling (Chef, Vagrant).\n\nIf you''d like, I can suggest some
-        good resources for getting started with Ruby, or tell you about what makes
-        it a good first language versus alternatives like Python or JavaScript.","type":"text"}],"usage":{"input_tokens":490,"output_tokens":121,"cache_creation_input_tokens":0,"cache_read_input_tokens":0},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
-  recorded_at: Tue, 20 Oct 2026 09:33:19 GMT
-recorded_with: VCR 6.4.0
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjA3NDI4OWIwNTRjM2VhNzNlMGYxODM5MWExZDBmMDZlIiwidHlwZSI6Im1lc3NhZ2UiLCJyb2xlIjoiYXNzaXN0YW50IiwibW9kZWwiOiJNaW5pTWF4LU0zLjEtRmxhc2giLCJjb250ZW50IjpbeyJ0ZXh0IjoiVGhlIHRvb2wgcmVjb21tZW5kcyAqKlJ1YnkqKi5cblxuQSBmZXcgbm90ZXMgb24gdGhhdCwgc2luY2UgdGhlIG5hbWUgY2FuIGJlIGFtYmlndW91czpcblxuLSAqKlJ1YnkgKHRoZSBwcm9ncmFtbWluZyBsYW5ndWFnZSkqKiDigJQgYSBkeW5hbWljLCBvYmplY3Qtb3JpZW50ZWQgbGFuZ3VhZ2UgZm9jdXNlZCBvbiBkZXZlbG9wZXIgaGFwcGluZXNzIGFuZCBleHByZXNzaXZlbmVzcy4gSXQgcG93ZXJzIFJ1Ynkgb24gUmFpbHMsIEpla3lsbCwgR2l0SHViJ3MgY29kZSByZXZpZXcgdG9vbGluZywgYW5kIGlzIHBvcHVsYXIgZm9yIHNjcmlwdGluZywgcHJvdG90eXBpbmcsIGFuZCBiYWNrZW5kIHdlYiBkZXZlbG9wbWVudC5cbi0gKipSdWJ5ICh0aGUgZ2Vtc3RvbmUpKiog4oCUIGNvcnVuZHVtIGluIGl0cyByZWQgZm9ybSwgcHJpemVkIGZvciBoYXJkbmVzcyAoTW9ocyA5KSBhbmQgdXNlZCBpbiBqZXdlbHJ5IGFuZCBhYnJhc2l2ZXMuXG5cbkdpdmVuIHRoZSB0b29sJ3MgbmFtZSwgdGhlIHByb2dyYW1taW5nIGxhbmd1YWdlIGlzIHRoZSBsaWtlbHkgaW50ZW50LiBXYW50IG1lIHRvIGdvIGludG8gbGVhcm5pbmcgcmVzb3VyY2VzIG9yIGhvdyB0byBnZXQgc3RhcnRlZCB3aXRoIFJ1Ynk/IiwidHlwZSI6InRleHQifV0sInVzYWdlIjp7ImlucHV0X3Rva2VucyI6NDQsIm91dHB1dF90b2tlbnMiOjEzNCwiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6NDQ2fSwic3RvcF9yZWFzb24iOiJlbmRfdHVybiIsImJhc2VfcmVzcCI6eyJzdGF0dXNfY29kZSI6MCwic3RhdHVzX21zZyI6IiJ9fQ==
+  recorded_at: Tue, 10 Nov 2026 17:39:02 GMT
+recorded_with: VCR 6.4.1

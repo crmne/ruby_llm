@@ -6,19 +6,19 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Call the object params
-        tool with window start 2025-01-01 and end 2025-01-02 and include the result."}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"object_params","description":"Uses
+        tool with window start 2025-01-01 and end 2025-01-02 and include the result."}]}],"inferenceConfig":{"maxTokens":65535},"toolConfig":{"tools":[{"toolSpec":{"name":"object_params","description":"Uses
         params DSL object support","inputSchema":{"json":{"type":"object","properties":{"window":{"type":"object","properties":{"start":{"type":"string","description":"ISO
         start"},"end":{"type":"string","description":"ISO end"}},"required":["start","end"],"additionalProperties":false,"description":"Time
         window to schedule"}},"required":["window"],"additionalProperties":false}}}}]}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261011T210801Z
+      - 20261110T173225Z
       X-Amz-Content-Sha256:
-      - 5ef4711275d33ef174f22de3252766c77db0ef21876dedd7e1f3d8655ffc7e54
+      - d0e562b3b653e526537ddbb67390ae44fca44ddd83b96d5d7917d14420e1d64d
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -32,7 +32,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:08:03 GMT
+      - Tue, 10 Nov 2026 17:32:26 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -40,9 +40,9 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 0f33fbe1-429d-46a1-8feb-410bf0190240
+      - 41c4fdc6-c56e-4b83-a6b8-ff2bf6813d19
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":563},"output":{"message":{"content":[{"toolUse":{"input":{"window":{"start":"2025-01-01","end":"2025-01-02"}},"name":"object_params","toolUseId":"tooluse_KDXlmZRJuFYM1lCr13ITya"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":994,"outputTokens":45,"serverToolUsage":{},"totalTokens":1039}}'
-  recorded_at: Sun, 11 Oct 2026 21:08:03 GMT
-recorded_with: VCR 6.4.0
+      string: '{"metrics":{"latencyMs":861},"output":{"message":{"content":[{"toolUse":{"input":{"window":{"start":"2025-01-01","end":"2025-01-02"}},"name":"object_params","toolUseId":"tooluse_3s1guzB4BX41lNVunDm5lz"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":994,"outputTokens":45,"serverToolUsage":{},"totalTokens":1039}}'
+  recorded_at: Tue, 10 Nov 2026 17:32:26 GMT
+recorded_with: VCR 6.4.1
