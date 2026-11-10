@@ -215,6 +215,15 @@ RSpec.describe RubyLLM::Providers::MiniMax do
       expect(rendered_blocks(video).last.dig(:source, :media_type)).to eq('video/mov')
     end
 
+    it 'treats video as unsupported outside user messages, so a converter can replace it' do
+      video = RubyLLM::Attachment.new('https://example.com/clip.mp4', mime_type: 'video/mp4')
+      supported = ->(role) { protocol.send(:supported_message_attachment?, RubyLLM::Message.new(role:, content: 'x'), video) }
+
+      expect(supported.call(:user)).to be(true)
+      expect(supported.call(:tool)).to be(false)
+      expect(supported.call(:system)).to be(false)
+    end
+
     it 'accepts video attachments' do
       video = RubyLLM::Attachment.new('https://example.com/clip.mp4', mime_type: 'video/mp4')
 
