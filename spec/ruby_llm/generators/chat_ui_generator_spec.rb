@@ -90,6 +90,9 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     # The shipped Stimulus controller refreshes the page when this stream connects.
     expect(chat_show).to match(/turbo_stream_from @\w+, data: \{ chat_stream: true \} %>/)
     expect(tool_calls_partial).to include('message.content.present?')
+    # One assistant message has one template, so what an app adds to _assistant also shows on a reply that calls a tool.
+    expect(tool_calls_partial).to match(%r{render "[\w/]*messages/assistant", assistant: message, nested: true})
+    expect(tool_calls_partial).not_to include('data-chat-message-target')
     expect(chat_show).to include('.model&.label || default_model_display_name')
     expect(chat_show).to include('button_to "Stop", cancel_')
     expect(chat_show).to include('.cost.total')
@@ -402,6 +405,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         "Checking the docs first.", "notes/summary.md" ].each do |text|
         abort "show page lacks \#{text}" unless html.include?(text)
       end
+      duplicates = html.scan(/\\bid="(#{message_key}_\\d+)"/).flatten.tally.select { |_id, count| count > 1 }
+      abort "show page repeats a message's id: \#{duplicates.keys}" if duplicates.any?
       abort "show page offers the message form" if html.include?('name="#{message_key}[content]"')
       abort "show page hides the call that asked" if html.include?('_tool_call_call_seat"] { display: none; }')
 
@@ -1799,6 +1804,11 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
             'app/views/chats/index.html.erb',
             includes: ['bg-green-50', 'class="w-full"'],
             excludes: ['<p style="color: green">']
+          )
+          expect_file_content(
+            'app/views/messages/_tool_calls.html.erb',
+            includes: ['render "messages/assistant", assistant: message, nested: true'],
+            excludes: ['data-chat-message-target']
           )
         end
       end

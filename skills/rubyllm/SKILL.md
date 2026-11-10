@@ -36,7 +36,7 @@ The generators print only the files they create and, when one is needed, the nex
 
 With `with_thinking` on, a stream can sit quiet for several seconds before text starts, while the model thinks. That is normal, not a stall.
 
-Adapt the generated chat page rather than replace it: add fields to its form, restyle its views, and extend its partials, such as `_assistant.html.erb`. A page of your own drops what the generated one already does, such as the model picker, Stop, queued messages, and crash recovery. Don't save stream chunks yourself, in a column or anywhere else: streaming reaches the page through the generated broadcasts, and RubyLLM saves the reply.
+Adapt the generated chat page rather than replace it: add fields to its form, restyle its views, and extend its partials, such as `_assistant.html.erb`. A reply that also calls a tool shows its text through `_tool_calls.html.erb`, which renders `_assistant` for that text, so a change to the assistant card in `_assistant` shows on those replies too. A page of your own drops what the generated one already does, such as the model picker, Stop, queued messages, and crash recovery. Don't save stream chunks yourself, in a column or anywhere else: streaming reaches the page through the generated broadcasts, and RubyLLM saves the reply.
 
 You don't need to read the generated files or `lib/ruby_llm` to use this. With the default `Chat` model, `app/jobs/chat_response_job.rb` runs the turn and shows errors, `ChatsController#cancel` is Stop, `app/views/messages/_assistant.html.erb` renders a reply, and `app/agents/chat_agent.rb` says what the model can do. For anything else, read the one guide for that feature, and open source only when something fails or you need a signature.
 
