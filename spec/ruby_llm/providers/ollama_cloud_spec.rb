@@ -149,6 +149,20 @@ RSpec.describe RubyLLM::Providers::OllamaCloud do
       end
     end
 
+    it 'raises for an image to embed before looking at it' do
+      expect_unsupported('embeddings') do
+        RubyLLM.embed('Hello', with: 'https://assets.example.com/ruby.png', **model)
+      end
+    end
+
+    it 'raises for a local image to moderate without reading it' do
+      image_path = File.expand_path('../../fixtures/ruby.png', __dir__)
+      allow(File).to receive(:binread).and_call_original
+
+      expect_unsupported('moderation') { RubyLLM.moderate('Hello', with: image_path, **model) }
+      expect(File).not_to have_received(:binread).with(Pathname.new(image_path))
+    end
+
     it 'raises for a remote image to moderate without downloading it' do
       expect_unsupported('moderation') do
         RubyLLM.moderate('Hello', with: 'https://assets.example.com/ruby.png', **model)
