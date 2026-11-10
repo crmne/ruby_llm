@@ -8,6 +8,7 @@ module RubyLLM
       protocol :media, Protocols::MiniMax
       protocol :files, Protocols::MiniMax::Files
       protocol :chat_completions, MiniMax::ChatCompletions
+      protocol :responses, MiniMax::Responses
 
       MEDIA_OPERATIONS = %i[paint animate speak transcribe].freeze
 
@@ -26,8 +27,11 @@ module RubyLLM
         super
       end
 
-      def protocol_for(model, schema: nil, **)
-        schema && model.id == STRUCTURED_OUTPUT_MODEL ? protocols[:chat_completions] : super
+      def protocol_for(model, schema: nil, thinking: nil, tool_prefs: nil, provider_tools: [], messages: [], **)
+        return protocols[:chat_completions] if schema && model.id == STRUCTURED_OUTPUT_MODEL
+        return protocols[:responses] if web_search_route?(schema, thinking, tool_prefs, provider_tools, messages)
+
+        super
       end
 
       def api_base
@@ -72,6 +76,21 @@ module RubyLLM
       end
 
       private
+
+      # Only Responses cites web pages, but it ignores an attached PDF, so a
+      # chat that holds one stays on Messages, which reads it. Messages also
+      # raises on what MiniMax cannot carry and honours a thinking budget or
+      # off switch, all of which Responses would drop.
+      def web_search_route?(schema, thinking, tool_prefs, provider_tools, messages)
+        return false unless provider_tools.any? { |entry| entry[:name] == :web_search }
+        return false if messages_only_request?(schema, thinking, tool_prefs)
+
+        messages.none? { |message| message.attachments.any?(&:pdf?) }
+      end
+
+      def messages_only_request?(schema, thinking, tool_prefs)
+        schema || tool_prefs&.dig(:calls) == :one || (thinking && !thinking.effort)
+      end
 
       def failure_code(response)
         return unless response.body.to_s.include?('base_resp')

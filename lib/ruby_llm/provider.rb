@@ -141,7 +141,8 @@ module RubyLLM
                  max_output_tokens: nil, thinking: nil, citations: false, caching: nil, tool_prefs: nil,
                  protocol: nil, before_request: [], usage_recorder: nil, progress_recorder: nil,
                  provider_tools: [], compaction: nil, end_user: nil, &)
-      protocol_class = resolve_protocol(protocol, model, tools:, schema:, thinking:, tool_prefs:, citations:)
+      protocol_class = resolve_protocol(protocol, model, tools:, schema:, thinking:, tool_prefs:, citations:,
+                                                         provider_tools:, messages:)
       protocol_class.new(self, model).complete(
         messages,
         tools: tools,
@@ -185,7 +186,8 @@ module RubyLLM
     def render(messages, tools:, temperature:, model:, provider_options: {}, schema: nil, thinking: nil, # :nodoc:
                max_output_tokens: nil, citations: false, caching: nil, tool_prefs: nil, protocol: nil,
                before_request: [], provider_tools: [], compaction: nil, end_user: nil)
-      protocol_class = resolve_protocol(protocol, model, tools:, schema:, thinking:, tool_prefs:, citations:)
+      protocol_class = resolve_protocol(protocol, model, tools:, schema:, thinking:, tool_prefs:, citations:,
+                                                         provider_tools:, messages:)
       protocol_class.new(self, model).render(
         messages,
         tools: tools,

@@ -71,12 +71,97 @@ RSpec.describe RubyLLM::Providers::MiniMax do
     expect(RubyLLM.models.find(model_id, provider: :minimax).context_window).to eq(1_000_000)
   end
 
-  it 'sends web search as the version MiniMax runs' do
-    stub_messages(reply([{ type: 'text', text: 'Found it' }]))
+  describe 'web search' do
+    let(:responses_url) { 'https://api.minimax.io/v1/responses' }
+    let(:pdf) { File.expand_path('../../fixtures/sample.pdf', __dir__) }
 
-    context.chat(model: model_id, provider: :minimax).with_provider_tools(:web_search).ask('Search the web')
+    def stub_responses(output = [])
+      stub_request(:post, responses_url).to_return(
+        status: 200,
+        body: { id: 'r1', status: 'completed', model: model_id, output:,
+                usage: { input_tokens: 1, output_tokens: 1 } }.to_json,
+        headers: { 'Content-Type' => 'application/json' }
+      )
+    end
 
-    expect(sent_body['tools']).to eq([{ 'type' => 'web_search_20250305', 'name' => 'web_search' }])
+    def responses_body
+      body = nil
+      expect(a_request(:post, responses_url).with { |request| body = JSON.parse(request.body) }).to have_been_made
+      body
+    end
+
+    def output_text(text, annotations = [])
+      [{ type: 'message', role: 'assistant', status: 'completed',
+         content: [{ type: 'output_text', text:, annotations: }] }]
+    end
+
+    it 'runs on Responses, which holds no state and returns citations' do
+      stub_responses
+
+      context.chat(model: model_id, provider: :minimax).with_provider_tools(:web_search).ask('Search the web')
+
+      expect(responses_body).to include('tools' => [{ 'type' => 'web_search' }], 'store' => false)
+    end
+
+    it 'stays on Messages when the chat holds a PDF, which Responses ignores' do
+      stub_messages(reply([{ type: 'text', text: 'Found it' }]))
+
+      context.chat(model: model_id, provider: :minimax).with_provider_tools(:web_search).ask('Search', with: pdf)
+
+      expect(sent_body['tools']).to eq([{ 'type' => 'web_search_20250305', 'name' => 'web_search' }])
+    end
+
+    it 'stays on Messages for a thinking budget, which Responses has no field for' do
+      stub_messages(reply([{ type: 'text', text: 'Found it' }]))
+
+      context.chat(model: model_id, provider: :minimax).with_provider_tools(:web_search)
+             .with_thinking(budget: 2000).ask('Search')
+
+      expect(a_request(:post, messages_url)).to have_been_made
+    end
+
+    it 'runs a thinking effort on Responses' do
+      stub_responses
+
+      context.chat(model: model_id, provider: :minimax).with_provider_tools(:web_search)
+             .with_thinking(effort: :low).ask('Search')
+
+      expect(responses_body['reasoning']).to eq('effort' => 'low')
+    end
+
+    it 'stays on Messages without web search' do
+      stub_messages(reply([{ type: 'text', text: 'Hi' }]))
+
+      context.chat(model: model_id, provider: :minimax).ask('Hello')
+
+      expect(a_request(:post, messages_url)).to have_been_made
+    end
+
+    it 'parses citations with their quoted snippet and no offsets' do
+      stub_responses(output_text('Ruby 4.0.9', [{ type: 'url_citation', title: 'Ruby', url: 'https://ruby-lang.org/',
+                                                  start_index: 0, end_index: 0, content: 'stable is 4.0.9' }]))
+
+      response = context.chat(model: model_id, provider: :minimax).with_provider_tools(:web_search).ask('Latest Ruby?')
+
+      citation = response.citations.first
+      expect(citation).to have_attributes(url: 'https://ruby-lang.org/', title: 'Ruby', cited_text: 'stable is 4.0.9',
+                                          start_index: nil, end_index: nil)
+    end
+
+    it 'keeps a web search turn out of a later Messages request' do
+      stub_messages(reply([{ type: 'text', text: 'Read it' }]))
+      raw = [{ 'type' => 'web_search_call', 'status' => 'completed', 'action' => { 'type' => 'search' } }]
+      chat = context.chat(model: model_id, provider: :minimax).with_provider_tools(:web_search)
+      chat.add_message(role: :user, content: 'Search')
+      chat.add_message(role: :assistant, content: 'Done', raw_content: raw)
+
+      chat.ask('Read this', with: pdf)
+
+      expect(sent_body['messages'][1]).to eq('role' => 'assistant',
+                                             'content' => [{
+                                               'type' => 'text', 'text' => 'Done'
+                                             }])
+    end
   end
 
   it 'rejects the other provider tools, which the endpoint does not run' do
@@ -238,6 +323,38 @@ RSpec.describe RubyLLM::Providers::MiniMax do
              .with_tools(lookup_tool).with_tool_options(calls: :many).ask('Hi')
 
       expect(sent_body).to include('tools')
+    end
+  end
+
+  describe 'web search citations', :live do
+    it 'returns the pages a web search cites' do
+      chat = RubyLLM.chat(model: model_id, provider: :minimax).with_provider_tools(:web_search)
+
+      response = chat.ask('Use web search. What is the latest stable Ruby version? One short sentence.')
+
+      expect(response.content).to match(/Ruby/i)
+      expect(response.citations).to include(have_attributes(url: match(%r{\Ahttps?://})))
+      expect(response.web_sources.map(&:url)).to include(response.citations.first.url)
+    end
+
+    it 'streams the pages a web search cites' do
+      chat = RubyLLM.chat(model: model_id, provider: :minimax).with_provider_tools(:web_search)
+
+      response = chat.ask('Use web search. What is the latest stable Ruby version? One short sentence.') do |_chunk|
+        nil
+      end
+
+      expect(response.citations).to include(have_attributes(url: match(%r{\Ahttps?://})))
+      expect(response.web_sources).not_to be_empty
+    end
+
+    it 'keeps reading a PDF attached after a cited web search turn' do
+      chat = RubyLLM.chat(model: model_id, provider: :minimax).with_provider_tools(:web_search)
+      chat.ask('Use web search. What is the latest stable Ruby version? One short sentence.')
+
+      answer = chat.ask("Quote this document's title.", with: File.expand_path('../../fixtures/sample.pdf', __dir__))
+
+      expect(answer.content).to match(/sample pdf/i)
     end
   end
 
