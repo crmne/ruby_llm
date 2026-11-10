@@ -1,0 +1,195 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-large-latest","messages":[{"role":"system","content":"Use
+        the lookup tool, then answer and cite the sources you use with reference chunks."},{"role":"user","content":"When
+        was Ruby 3.4.0 released, and what parser became the default?"}],"stream":true,"tools":[{"type":"function","function":{"name":"lookup","description":"Find
+        numbered sources about a topic.","parameters":{"type":"object","properties":{"topic":{"type":"string"}},"required":["topic"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Nov 2026 13:18:32 GMT
+      Content-Type:
+      - text/event-stream; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - 01a1c59c-373b-74cd-bd40-1118287738b8
+      X-Kong-Request-Id:
+      - 01a1c59c-373b-74cd-bd40-1118287738b8
+      X-Max-Retry-Attempts-Reached:
+      - 'false'
+      X-Ratelimit-Limit-Req-Minute:
+      - '15'
+      X-Ratelimit-Remaining-Req-Minute:
+      - '12'
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '400000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '399344'
+      X-Envoy-Upstream-Service-Time:
+      - '674'
+      Server:
+      - cloudflare
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '716'
+      X-Kong-Proxy-Latency:
+      - '18'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"id":"3de39ae74414495798bcc3f5abf296a0","object":"chat.completion.chunk","created":1794316711,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+
+        data: {"id":"3de39ae74414495798bcc3f5abf296a0","object":"chat.completion.chunk","created":1794316711,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"tool_calls":[{"id":"zyMu7Mx4T","type":"function","function":{"name":"lookup","arguments":"{\"topic\": \"Ruby 3.4.0 release date and default parser\"}"},"index":0}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":109,"total_tokens":130,"completion_tokens":21,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"p":"abcde"}
+
+        data: [DONE]
+
+  recorded_at: Tue, 10 Nov 2026 13:18:32 GMT
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-large-latest","messages":[{"role":"system","content":"Use
+        the lookup tool, then answer and cite the sources you use with reference chunks."},{"role":"user","content":"When
+        was Ruby 3.4.0 released, and what parser became the default?"},{"role":"assistant","content":"","tool_calls":[{"id":"zyMu7Mx4T","type":"function","function":{"name":"lookup","arguments":"{\"topic\":\"Ruby
+        3.4.0 release date and default parser\"}"}}]},{"role":"tool","content":"{\"0\":{\"url\":\"https://example.test/a\",\"title\":\"Ruby
+        releases\",\"source\":\"example\",\"snippets\":[[\"Ruby 3.4.0 was released
+        on 25 December 2024.\"]],\"description\":null,\"date\":null},\"1\":{\"url\":\"https://example.test/b\",\"title\":\"Ruby
+        3.4 notes\",\"source\":\"example\",\"snippets\":[[\"Prism became the default
+        parser in Ruby 3.4.\"]],\"description\":null,\"date\":null}}","tool_call_id":"zyMu7Mx4T"}],"stream":true,"tools":[{"type":"function","function":{"name":"lookup","description":"Find
+        numbered sources about a topic.","parameters":{"type":"object","properties":{"topic":{"type":"string"}},"required":["topic"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Nov 2026 13:18:33 GMT
+      Content-Type:
+      - text/event-stream; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - 01a1c59c-3a70-7ead-9b4a-a1ecbefab7b5
+      X-Kong-Request-Id:
+      - 01a1c59c-3a70-7ead-9b4a-a1ecbefab7b5
+      X-Max-Retry-Attempts-Reached:
+      - 'false'
+      X-Ratelimit-Limit-Req-Minute:
+      - '15'
+      X-Ratelimit-Remaining-Req-Minute:
+      - '11'
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '400000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '399221'
+      X-Envoy-Upstream-Service-Time:
+      - '430'
+      Server:
+      - cloudflare
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '431'
+      X-Kong-Proxy-Latency:
+      - '16'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+
+        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":"Ruby"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz01234"}
+
+        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":" 3.4"},"finish_reason":null}],"p":"abcdefghijklmno"}
+
+        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":".0 was released"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz0"}
+
+        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":" on **2"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz01234"}
+
+        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":"5 December 2"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz0"}
+
+        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":"024**."},"finish_reason":null}],"p":"abcdefghij"}
+
+        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":" Additionally, the **"},"finish_reason":null}],"p":"abcde"}
+
+        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":"Prism parser"},"finish_reason":null}],"p":"abcdefghijkl"}
+
+        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":" became"},"finish_reason":null}],"p":"abcdefghijkl"}
+
+        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":" the default"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz"}
+
+        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":" parser** in this"},"finish_reason":null}],"p":"abcdefghijklmnopq"}
+
+        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":" release"},"finish_reason":null}],"p":"abcdef"}
+
+        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":[{"type":"reference","reference_ids":[0,1]}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstu"}
+
+        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":"."},"finish_reason":null}],"p":"ab"}
+
+        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":""},"finish_reason":"stop"}],"usage":{"prompt_tokens":237,"total_tokens":279,"completion_tokens":42,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"p":"abcdefghijklmnopqrs"}
+
+        data: [DONE]
+
+  recorded_at: Tue, 10 Nov 2026 13:18:33 GMT
+recorded_with: VCR 6.4.1
+...
