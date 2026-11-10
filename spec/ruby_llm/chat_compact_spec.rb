@@ -129,7 +129,13 @@ RSpec.describe RubyLLM::Chat do
 
   %i[xai openai azure ollama].each do |provider|
     it "compacts and continues a conversation with #{provider}", :live do
-      model = provider == :xai ? model_for(provider, :provider_tools) : model_for(provider)
+      # Azure's Grok deployment now answers 500 when a compaction item is sent back, though the
+      # request is the one it accepted before; Azure's OpenAI models still continue from one.
+      model = case provider
+              when :xai then model_for(provider, :provider_tools)
+              when :azure then model_for(provider, :thinking)
+              else model_for(provider)
+              end
       chat = RubyLLM.chat(model:, provider:, protocol: :responses).with_instructions('Answer in one short sentence.')
       chat.ask_later('The project codename is Thimble. We write it in Ruby.')
       chat.add_message(role: :assistant, content: 'I will remember the Thimble project and Ruby.')
