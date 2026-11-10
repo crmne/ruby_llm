@@ -10,6 +10,16 @@ module RubyLLM
         class Responses < Protocols::Responses
           include Mantle
 
+          # AWS Web Search fetches pages as part of the web_search tool, with
+          # no separate fetch tool to enable.
+          SERVER_TOOL_ALIASES = Protocols::Responses::SERVER_TOOL_ALIASES.merge(
+            web_fetch: { tool: { type: 'web_search' } }
+          ).freeze
+
+          def server_tool_aliases
+            SERVER_TOOL_ALIASES
+          end
+
           def completion_url
             "#{openai_api_path}/responses"
           end

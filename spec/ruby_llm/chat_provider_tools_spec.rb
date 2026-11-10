@@ -730,6 +730,27 @@ RSpec.describe RubyLLM::Chat, :live do
     end
   end
 
+  describe 'bedrock mantle web fetch' do
+    let(:chat) { RubyLLM.chat(model: 'openai.gpt-5.6-luna', provider: :bedrock, protocol: :mantle_responses) }
+
+    it 'renders the web fetch alias as the web search tool that fetches pages' do
+      payload = chat.with_provider_tools(web_fetch: { external_web_access: false }).render
+
+      expect(payload[:tools]).to eq([{ type: 'web_search', external_web_access: false }])
+    end
+
+    it 'opens a public page' do
+      response = chat.with_provider_tools(web_fetch: { external_web_access: false }).ask(
+        'Open https://rubyllm.com/ and tell me in one short sentence what that page says RubyLLM is.'
+      )
+
+      expect(response.content).to include('Ruby')
+      expect(response.server_tool_calls).to include(
+        have_attributes(input: include('type' => 'open_page', 'url' => a_string_starting_with('https://rubyllm.com')))
+      )
+    end
+  end
+
   describe 'perplexity hosted tools' do
     let(:chat) { RubyLLM.chat(model: model_for(:perplexity), provider: :perplexity) }
 
