@@ -160,7 +160,10 @@ RSpec.describe RubyLLM::Providers::MiniMax do
       it 'removes the wrapper named after the schema' do
         stub_v2('{"fruit_choice":{"fruit":"apple"}}')
 
-        expect(chat.ask('Name a fruit').parsed).to eq('fruit' => 'apple')
+        response = chat.ask('Name a fruit')
+
+        expect(response.parsed).to eq('fruit' => 'apple')
+        expect(response.raw.body.dig('choices', 0, 'message', 'content')).to eq('{"fruit_choice":{"fruit":"apple"}}')
       end
 
       it 'keeps an answer that has other keys or a second key beside the schema name' do

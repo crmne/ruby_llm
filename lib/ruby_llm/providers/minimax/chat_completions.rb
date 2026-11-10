@@ -32,8 +32,9 @@ module RubyLLM
           parsed = parse_json(content)
           return data unless parsed.is_a?(Hash) && parsed.keys == [@schema_name]
 
-          data['choices'][0]['message']['content'] = JSON.generate(parsed[@schema_name])
-          data
+          choice = data['choices'][0]
+          message = choice['message'].merge('content' => JSON.generate(parsed[@schema_name]))
+          data.merge('choices' => [choice.merge('message' => message), *data['choices'][1..]])
         end
 
         def parse_json(content)
