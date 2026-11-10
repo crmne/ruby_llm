@@ -7,10 +7,8 @@ module RubyLLM
         include RubyLLM::Batch::Helpers
 
         TERMINAL_STATUSES = %w[completed failed expired cancelled].freeze
-        MEDIA_TYPES = %w[image image_url input_image input_audio audio video video_url input_video file input_file
-                         document].freeze
         Response = Struct.new(:body)
-        private_constant :TERMINAL_STATUSES, :MEDIA_TYPES, :Response
+        private_constant :TERMINAL_STATUSES, :Response
 
         def create_batch(requests)
           model = single_batch_model!(requests, 'OpenRouter')
@@ -68,8 +66,8 @@ module RubyLLM
               raise ArgumentError,
                     'OpenRouter embedding batches accept text only, without task_type or provider preferences'
             end
-          elsif batch_media?(body) || body.keys.intersect?(%i[modalities audio image_config])
-            raise ArgumentError, 'OpenRouter batches accept text input and output only'
+          elsif body.keys.intersect?(%i[modalities audio image_config])
+            raise ArgumentError, 'OpenRouter batches return text only'
           end
         end
 
@@ -77,14 +75,6 @@ module RubyLLM
           case input
           when String then true
           when Array then input.flatten.all? { |part| part.is_a?(String) || part.is_a?(Integer) }
-          else false
-          end
-        end
-
-        def batch_media?(value)
-          case value
-          when Hash then MEDIA_TYPES.include?(value[:type]) || value.values.any? { |part| batch_media?(part) }
-          when Array then value.any? { |part| batch_media?(part) }
           else false
           end
         end

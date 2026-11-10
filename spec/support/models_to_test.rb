@@ -306,6 +306,8 @@ TEST_MODELS = {
   alternate_chat: [{ provider: :openai, model: 'gpt-4.1-mini' }],
   alternate_batch: [{ provider: :openai, model: 'gpt-5.6-terra' }],
   alternate_embedding: [{ provider: :openai, model: 'text-embedding-3-large' }],
+  batch: [{ provider: :openrouter, model: 'google/gemini-3.7-flash' }],
+  batch_embedding: [{ provider: :openrouter, model: 'google/gemini-embedding-001' }],
   alternate_speech: [{ provider: :openai, model: 'tts-1' }],
   reasoning_effort: [{ provider: :openai, model: 'gpt-5.2' }],
   adaptive_thinking: [{ provider: :anthropic, model: 'claude-sonnet-5' }],
@@ -314,6 +316,7 @@ TEST_MODELS = {
   router: [{ provider: :perplexity, model: 'perplexity/kimi-k3' }],
   agent: [{ provider: :perplexity, model: 'openai/gpt-5.6-luna' }],
   mcp: [
+    { provider: :openrouter, model: 'openai/gpt-5.2', protocol: :responses, approval: true },
     { provider: :openai, model: 'gpt-5.6-luna', protocol: :responses, approval: true },
     { provider: :azure, model: 'gpt-5.6-luna', protocol: :responses, approval: true },
     { provider: :gemini, model: 'gemini-3.8-flash', protocol: :interactions, approval: false }
@@ -330,6 +333,7 @@ TEST_MODELS = {
     { provider: :bedrock, model: 'us.cohere.embed-v4:0' }
   ],
   document_embedding: [{ provider: :bedrock, model: 'amazon.nova-2-multimodal-embeddings-v1:0' }],
+  local_multimodal_embedding: [{ provider: :ollama, model: 'embeddinggemma-2' }],
   passage_embedding: [{ provider: :perplexity, model: 'pplx-embed-v1-0.6b' }],
   ocr: [
     { provider: :mistral, model: 'mistral-ocr-latest' },

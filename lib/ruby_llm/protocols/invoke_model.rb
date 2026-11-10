@@ -28,6 +28,21 @@ module RubyLLM
         raise UnsupportedAttachmentError, attachments.first.mime_type if attachments.any?
       end
 
+      def embedding_attachments(text, with)
+        attachments = Attachment.wrap(with, config: @config)
+        if attachments.any? && text.is_a?(Array)
+          raise ArgumentError, 'embed one text at a time when embedding attachments'
+        end
+
+        attachments
+      end
+
+      def single_embedding_attachment(attachments, label)
+        raise ArgumentError, "#{label} embeds one attachment at a time" if attachments.size > 1
+
+        attachments.first
+      end
+
       def parse_single_embedding_responses(responses, model:, text:)
         vectors = responses.map { |response| parse_embedding(response.body) }
         input_tokens = Tokens.aggregate(embedding_attempt_tokens(responses)).input

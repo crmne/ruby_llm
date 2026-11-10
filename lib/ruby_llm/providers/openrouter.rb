@@ -52,7 +52,7 @@ module RubyLLM
       end
 
       def batch_api_base
-        "#{api_base.sub(%r{/v1/?\z}, '')}/beta/batches"
+        "#{api_base}/batches"
       end
 
       def headers

@@ -6,7 +6,7 @@ RSpec.describe RubyLLM::Protocols::OpenRouter::Batches do
   let(:context) { RubyLLM.context { |config| config.openrouter_api_key = 'test' } }
   let(:model) { model_for(:openrouter) }
   let(:embedding_model) { model_for(:openrouter, :embedding) }
-  let(:endpoint) { 'https://openrouter.ai/api/beta/batches' }
+  let(:endpoint) { 'https://openrouter.ai/api/v1/batches' }
 
   def batch_data(model:, results: [], api: '/v1/chat/completions', status: 'completed', count: results.size)
     { id: 'batch-ruby', status:, endpoint: api, model:, request_counts: { total: count }, results: }
@@ -128,13 +128,31 @@ RSpec.describe RubyLLM::Protocols::OpenRouter::Batches do
     end
   end
 
-  it 'rejects multimodal requests and unsupported embedding options before submitting' do
-    image = context.chat(model:, provider: :openrouter).ask_later('Describe.', with: 'spec/fixtures/ruby.png')
+  it 'sends a public image URL as it stands and leaves inline media to the provider' do
+    bodies = []
+    stub_request(:post, endpoint).with { |req| bodies << JSON.parse(req.body) }
+                                 .to_return_json(body: batch_data(model:, status: 'validating', count: 1))
+    image_url = 'https://example.com/ruby.png'
+    stub_request(:get, image_url).to_return(status: 200, body: 'png', headers: { 'Content-Type' => 'image/png' })
+
+    [image_url, 'spec/fixtures/ruby.png'].each do |file|
+      RubyLLM.batch(context.chat(model:, provider: :openrouter).ask_later('Describe.', with: file))
+    end
+
+    urls = bodies.map { |body| body.dig('requests', 0, 'body', 'messages', 0, 'content', 1, 'image_url', 'url') }
+    expect(urls.first).to eq(image_url)
+    expect(urls.last).to start_with('data:image/png;base64,')
+    expect(a_request(:get, image_url)).not_to have_been_made
+  end
+
+  it 'rejects unsupported embedding options and non-text output before submitting' do
     embeddings = context.embed_later('Ruby', model: embedding_model, provider: :openrouter)
     allow(embeddings).to receive(:render).and_return(model: embedding_model, input: 'Ruby', input_type: 'query')
-    [image, embeddings].each do |request|
-      expect { RubyLLM.batch(request) }.to raise_error(ArgumentError, /text/)
-    end
+    audio = context.chat(model:, provider: :openrouter).ask_later('Say Ruby.')
+    allow(audio).to receive(:render).and_return(model:, messages: [], modalities: %w[text audio])
+
+    expect { RubyLLM.batch(embeddings) }.to raise_error(ArgumentError, /text only/)
+    expect { RubyLLM.batch(audio) }.to raise_error(ArgumentError, /text only/)
     expect(a_request(:post, endpoint)).not_to have_been_made
   end
 

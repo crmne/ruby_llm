@@ -1,0 +1,120 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.z.ai/api/paas/v4/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"glm-5.3-flash","messages":[{"role":"user","content":"Search
+        the web: when was Ruby 3.4.0 released? One sentence."}],"stream":false,"tools":[{"type":"web_search","web_search":{"enable":true,"search_result":true,"count":3}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Nov 2026 12:56:50 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - a03e2ade4b62ca99069c8894638ac0a6
+      Vary:
+      - Accept-Encoding
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 202611102056451bcbac706739453f
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJSdWJ5IDMuNC4wIHdhcyByZWxlYXNlZCBvbiBEZWNlbWJlciAyNSwgMjAyNCwgd2l0aCBSdWJ5IDMuNC4xIGZvbGxvd2luZyB0aGUgc2FtZSBkYXkuIiwicmVhc29uaW5nX2NvbnRlbnQiOiJUaGUgdXNlciBhc2tzOiB3aGVuIHdhcyBSdWJ5IDMuNC4wIHJlbGVhc2VkPyBPbmUgc2VudGVuY2UuXG5cbkZyb20gdGhlIHJlZmVyZW5jZSBpbmZvcm1hdGlvbiwgUnVieSAzLjQuMCB3YXMgcmVsZWFzZWQgb24gRGVjZW1iZXIgMjUsIDIwMjQgKHNvdXJjZTogcnVieS1sYW5nLm9yZyBuZXdzIDIwMjQvMTIvMjUvcnVieS0zLTQtMC1yZWxlYXNlZCkuIEFsc28gbm90ZSBSdWJ5IDMuNC4xIHdhcyByZWxlYXNlZCB0aGUgc2FtZSBkYXkuXG5cblRoZSB1c2VyIHF1ZXJ5IGlzIGluIEVuZ2xpc2gsIHNvIHJlc3BvbmQgaW4gRW5nbGlzaC4gT25lIHNlbnRlbmNlLiIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzk0MzE1NDEwLCJpZCI6IjIwMjYxMTEwMjA1NjQ1MWJjYmFjNzA2NzM5NDUzZiIsIm1vZGVsIjoiZ2xtLTUuMy1mbGFzaCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInJlcXVlc3RfaWQiOiIyMDI2MTExMDIwNTY0NTFiY2JhYzcwNjczOTQ1M2YiLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6MTI4LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjk1fSwicHJvbXB0X3Rva2VucyI6MTI5MywicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJ0b3RhbF90b2tlbnMiOjE0MjF9LCJ3ZWJfc2VhcmNoIjpbeyJjb250ZW50Ijoi55uu5b2VXG5SdWJ5IDMuNC4wIOWPkeW4g1xuUnVieSAzLjQuMCDmraPlvI/lj5HluIPvvIHmraTniYjmnKzluKbmnaXkuoZcbuWdl+WPguaVsOW8leeUqOOAgem7mOiupOino+aekOWZqOWIh+aNouS4uiBQcmlzbeOAgXNvY2tldCDlupPmlK/mjIEgSGFwcHkgRXllYmFsbHMgVmVyc2lvbiAy44CBWUpJVCDmgKfog73mj5DljYfjgIHmqKHlnZfljJYgR0Mg562J6K+45aSa5pS56L+b44CCXG7kuLvopoHmm7TmlrDvvJpcbml0IOWdl+WPguaVsOW8leeUqDog566A5YyW5Y2V6KGM5Z2X55qE57yW5YaZ77yM57G75Ly85LqOXG7pu5jorqTop6PmnpDlmajliIfmjaLkuLogUHJpc206IOWGhemDqOaUuei/m++8jOWvueeUqOaIt+WPr+ingeeahOWPmOWMluW+iOWwj++8jOS9huWPr+S7peaPkOWNh+aAp+iDveOAglxuSGFwcHkgRXllYmFsbHMgVmVyc2lvbiAyIOaUr+aMgTpcbuW6k+eOsOWcqOaUr+aMgSBIYXBweSBFeWViYWxscyBWZXJzaW9uIDIgKFJGQyA4MzA1Ke+8jOWPr+S7peabtOacieaViOWcsOi/m+ihjCBJUHY2IOWSjCBJUHY0IOi/nuaOpe+8jOWHj+Wwkei/nuaOpeW7tui/n+OAglxuWUpJVCDlop7lvLo6IOWcqCB4ODYtNjQg5ZKMIGFybTY0IOW5s+WPsOS4iu+8jOWkp+WkmuaVsOWfuuWHhua1i+ivleeahOaAp+iDvemDveacieaJgOaPkOWNh++8jOWQjOaXtuWHj+WwkeS6huWGheWtmOS9v+eUqOOAguaWsOWinuS6huWRveS7pOihjOmAiemhueWSjCBSdWJ5IEFQSe+8jOW5tui/m+ihjOS6huWkmumhueS8mOWMluOAglxu5qih5Z2X5YyWIEdDOiDlhYHorrjliqjmgIHliqDovb3kuI3lkIznmoQgR0Mg5a6e546w77yM5Li65pyq5p2l55qEIEdDIOWPkeWxleaPkOS+m+S6huabtOWkmuWPr+iDveaAp+OAguebruWJjeaPkOS+m+S6huS4gOS4quWfuuS6jiBNTVRrIOeahOWunumqjOaApyBHQyDlupPjgIJcbuivreiogOWPmOabtDog5a+55pyq5Ya757uT5a2X56ym5Liy5a2X6Z2i6YeP55qE5L+u5pS55Y+R5Ye65byD55So6K2m5ZGK77yM5pSv5oyB5Zyo5pa55rOV6LCD55So5Lit5L2/55SoXG7moLjlv4Pnsbvmm7TmlrA6XG7moIflh4blupPmm7TmlrA6XG7lhbzlrrnmgKfpl67popg6IOmUmeivr+S/oeaBr+WSjOWbnua6r+aYvuekuuacieaJgOabtOaUue+8jFxu546w5Zyo5o6l5Y+X55yB55Wl5bCP5pWw6YOo5YiG55qE5Y2B6L+b5Yi25a2X56ym5Liy44CC5LiA5Lqb5bey5byD55So55qE5bi46YeP6KKr56e76Zmk44CCXG7mnaXmupDvvJogaHR0cHM6Ly93d3cucnVieS1sYW5nLm9yZy9lbi9uZXdzLzIwMjQvMTIvMjUvcnVieS0zLTQtMC1yZWxlYXNlZC9cblJ1Ynkg6ZqP5ZCO5LqO5ZCM5pel5Y+R5biD5LqGIDMuNC4xIOeJiOacrOOAgiDor6bmg4Xor7flj4LogIPvvJogaHR0cHM6Ly93d3cucnVieS1sYW5nLm9yZy9lbi9uZXdzLzIwMjQvMTIvMjUvcnVieS0zLTQtMS1yZWxlYXNlZC9cbkNvLW9wIFRyYW5zbGF0b3IgdjAuNi4yIOeJiOacrOWPkeW4g++8mumHjeaWsOiuvuiuoeeahOaetuaehOWPiuabtOWkmuWKn+iDvVxuQ28tb3AgVHJhbnNsYXRvciDmmK/kuIDkuKogUHl0aG9uIOWMhe+8jOaXqOWcqOS9v+eUqOWFiOi/m+eahOWkp+ivreiogOaooeWeiyAoIExMTSApIOaKgOacr+WSjCBBenVyZSBBSSDmnI3liqHoh6rliqjkuLrmgqjnmoTpobnnm67ov5vooYzlpJror63oqIDnv7vor5HjgILor6Xpobnnm67ml6jlnKjnroDljJblsIblhoXlrrnnv7vor5HmiJDlpJrnp43or63oqIDnmoTov4fnqIvvvIzkvb/lvIDlj5HkurrlkZjlj6/ku6Xovbvmnb7orr/pl67lubbmj5Dpq5jmlYjnjofjgIJcbui/keaXpe+8jENvLW9wIFRyYW5zbGF0b3Ig5Y+R5biD5LqGIHYwLjYuMiDniYjmnKzvvIzluKbmnaXkuobph43lpKfnmoTmnrbmnoTmlLnov5vlkozmlrDlip/og73vvIwiLCJpY29uIjoiIiwibGluayI6Imh0dHBzOi8veC1jbWQuYmxvZy5jc2RuLm5ldC9hcnRpY2xlL2RldGFpbHMvMTQ0Nzg1MjY3IiwibWVkaWEiOiIiLCJwdWJsaXNoX2RhdGUiOiIyMDI0LTEyLTMwIiwicmVmZXIiOiJyZWZfMSIsInRpdGxlIjoiQ28tb3AgVHJhbnNsYXRvciB2MC42LjIg54mI5pys5Y+R5biD77ya6YeN5paw6K6+6K6h55qE5p625p6E5Y+K5pu05aSa5Yqf6IO9In0seyJjb250ZW50IjoiNeaciDE35pel77yMUnVieSAzLjQuMOmihOiniOeJiOW3sue7j+WPkeW4g++8jOatpOeJiOacrOWwhumihOiuvua/gOa0u+WGsOWGu+Wtl+espuS4suWtl+mdoumHj+KAne+8iEZyb3plbiBTdHJpbmcgTGl0ZXJhbHPvvInlip/og73jgILoh6rmraTniYjmnKzlvIDlp4vvvIzlpoLpnIDkv67mlLnmnKrliqDmnInprZTms5Xms6jph4rigJ3moIforrDnmoTlrZfnrKbkuLLvvIzlsIbooqvlvLrliLbmt7vliqDnm7jlhbPms6jph4rjgIJcbuaNruaCie+8jFJ1Ynnoh6oyLjPniYjotbflvJXlhaXkuoblhrvnu5PigJ3mnLrliLbvvIzpgJrov4fkvb/nlKhmcm96ZW5zdHJpbmdsaXRlcmFs77yaIHRydWXprZTms5Xms6jph4rvvIzlj6/ku6Tmlofku7blhoXmiYDmnInlrZfnrKbkuLLlrZfpnaLph4/pu5jorqTkuLrlhrvnu5PnirbmgIHvvIzpmLLmraLlvIDlj5Hov4fnqIvkuK3ml6DmhI/kv67mlLnlrZfnrKbkuLLvvIzmj5Dpq5jku6PnoIHnqLPlrprmgKfkuI7mgKfog73vvIzpmY3kvY7lhoXlrZjljaDnlKjjgIJcbuWAvOW+l+WFs+azqOeahOaYr++8jFJ1YnnlnKgyLjPniYjlvJXlhaVmcm96ZW5zdHJpbmdsaXRlcmFs5pe277yM5Y6f5pys6K6h5YiS5LqOUnVieSAzLjDniYjpu5jorqTlvIDlkK/lrZfnrKbkuLLlrZfpnaLph4/lhrvnu5Plip/og73vvIznhLbogIzlm6DlhbzlrrnmgKfpl67popjogIzlu7bmnJ/jgILlsL3nrqHlpoLmraTvvIxSdWJ55Yib5aeL5Lq65p2+5pys6KGM5byY5L6d54S25pyf5b6F5Zyo5pyq5p2l5a6e546w6L+Z5LiA5Yqf6IO944CCXG7kuLrkuobnoa7kv53mlrDlip/og73nmoTpobrliKnlrp7mlr3vvIzpnIDopoHliLblrprlkIjnkIbnmoTov4Hnp7vnrZbnlaXku6Xop6PlhrPlkJHlkI7lhbzlrrnmgKfpl67popjjgILkuLrmraTvvIzlvIDlj5Hlm6LpmJ/lvJXlhaXkuoblvIPnlKjorqHliJLooajigJ3vvIzlvZPnlKjmiLflnKhSdWJ5IDMuNC4w54mI5L+u5pS55peg6a2U5rOV5rOo6YeK55qE5a2X56ym5Liy5pe277yM57O757uf5bCG5by65Yi26KaB5rGC5re75YqgZnJvemVuc3RyaW5nbGl0ZXJhbOKAneagh+iusOOAglxuUnVieeWboumYn+W8uuiwg++8jOatpOasoeWGs+etluaXqOWcqOaPkOWNh+ivreiogOaAp+iDveWPiuWPr+mdoOaAp++8jOiZveeEtuWPr+iDveWvuVxu5byA5Y+R6ICFXG7pgKDmiJDkuIDlrprlvbHlk43vvIzkvYbmnIDnu4jnm67nmoTlnKjkuo7miZPpgKDmm7TkuLrpq5jmlYjjgIHnqLPlrprnmoRcbue8lueoi1xu546v5aKD44CCIiwiaWNvbiI6Imh0dHBzOi8vc2ZpbGUuY2hhdGdsbS5jbi9zZWFyY2hJbWFnZS93d3dfZWxlY2ZhbnNfY29tX2ljb25fbmV3LmpwZyIsImxpbmsiOiJodHRwczovL3d3dy5lbGVjZmFucy5jb20vZC8yODUxMDQ5Lmh0bWwiLCJtZWRpYSI6IueUteWtkOWPkeeDp+WPi+e9kSIsInB1Ymxpc2hfZGF0ZSI6IjIwMjQtMDUtMTciLCJyZWZlciI6InJlZl8yIiwidGl0bGUiOiLplJDor4RSdWJ5IDMuNC4wIOm7mOiupOWQr+eUqOWtl+espuS4suWtl+mdoumHj+WGu+e7k+WKn+iDvSJ9LHsiY29udGVudCI6IjUg5pyIIDE3IOaXpea2iOaBr++8jFJ1YnkgMy40LjAg6aaW5Liq6aKE6KeI54mI5bey5Y+R5biD77yM6K+l54mI5pys5bCG5Li66buY6K6k5ZCv55So5Ya757uT5a2X56ym5Liy5a2X6Z2i6YeP77yIRnJvemVuIFN0cmluZyBMaXRlcmFsc++8ieS9nOWHhuWkh++8jOS7juivpeeJiOacrOi1t++8jOeUqOaIt+WcqOS/ruaUueacquWMheWQqyBmcm96ZW5zdHJpbmdsaXRlcmFs6a2U5rOV5rOo6YeK4oCd5a2X56ym5Liy5pe277yM6L2v5Lu25Lya6KaB5rGC55So5oi35Yqg5LiK55u45YWz5rOo6YeK44CCXG7mja7ku4vnu43vvIxSdWJ5IOS7jiAyLjMg54mI5pys6LW35byV5YWl5LqG6L+Z6aG55Ya757uT4oCd5py65Yi277yM5byA5Y+R6ICF5Y+v5Lul5L2/55SoIGZyb3plbnN0cmluZ2xpdGVyYWw6IHRydWUg6a2U5rOV5rOo6YeK77yM5L2/5paH5Lu25Lit55qE5omA5pyJ5a2X56ym5Liy5a2X6Z2i6YeP6buY6K6k5aSE5LqO5Ya757uT54q25oCB77yM5LuO6ICM6YG/5YWN5Zyo5byA5Y+R6ICF57yW5YaZ56iL5bqP5pe25oSP5aSW5L+u5pS55LqG5a2X56ym5Liy77yM5ZCM5pe26L+Y6IO95o+Q5Y2H56iL5bqP55qE56iz5a6a5oCn5ZKM5oCn6IO977yM5YeP5bCR5LiN5b+F6KaB55qEIFJBTSDliIbphY3jgIJcbklUIOS5i+WutuazqOaEj+WIsOOAglJ1Ynkg5ZyoIDIuMyDniYjmnKzkuK3lvJXlhaUgZnJvemVuc3RyaW5nbGl0ZXJhbCDml7bvvIzljp/orqHliJLlnKggUnVieSAzLjAg5pe26buY6K6k5Ya757uT5a2X56ym5Liy5a2X5Y+Y6YeP77yM5L2G55Sx5LqO5aSn6YeP55qE5YW85a655oCn6Zeu6aKY77yM6L+Z5LiA6K6h5YiS6KKr5o6o6L+f44CC5LiN6L+HIFJ1Ynkg5Yib5aeL5Lq65p2+5pys6KGM5byY77yIWXVraWhpcm8gTWF0c3Vtb3Rv77yJ5LuN5biM5pyb5Zyo5pyq5p2l4oCd6buY6K6k5ZCv55So6L+Z5LiA5Yqf6IO944CCXG7kuLrkuoborqnov5nkuIDlip/og73nmoTlkK/nlKjmm7TliqDlj6/ooYzvvIzpnIDopoHkuIDkuKrlkIjnkIbnmoTov4Hnp7vorqHliJLmnaXop6PlhrPlkJHlkI7lhbzlrrnmgKfnmoTpl67popjjgILlm6DmraTlvIDlj5Hlm6LpmJ/lvJXlhaXkuobkuIDpobnlvIPnlKjorqHliJLooajigJ3vvIzlnKjnlKjmiLfkvb/nlKggUnVieSAzLjQuMCDkv67mlLnmsqHmnInnm7jlhbPprZTms5Xms6jph4rnmoTlrZfnrKbkuLLml7bvvIzns7vnu5/kvr/kvJropoHmsYLnlKjmiLfliqDkuIpmcm96ZW5zdHJpbmdsaXRlcmFs4oCd44CCXG5SdWJ5IOWboumYn+ihqOekuu+8jOebuOWFs+WPluiIjeaYr+WinuW8uuivreiogOaAp+iDveWSjOWPr+mdoOaAp+aWuemdoueahOmHjeimgeS4vuaOqu+8jOWwveeuoeWPr+iDvemcgOimgeW8gOWPkeiAhei/m+ihjOS4gOS6m+iwg+aVtO+8jOS9huacgOe7iOebruagh+aYr+aPkOS+m+abtOmrmOaViOOAgeabtOeos+WumueahOe8lueoi+eOr+Wig+OAglxuamF2YeebuOWFs+WtpuS5oOi1hOa6kOOAgeeUteinhuWJp+etiei1hOa6kOS4i+i9ve+8jOivt+eCueWHu1xu5p2l6IeqOiBJVOS5i+WutiIsImljb24iOiJodHRwczovL3NmaWxlLmNoYXRnbG0uY24vc2VhcmNoSW1hZ2UvYmxvZ19jc2RuX25ldF9pY29uX25ldy5qcGciLCJsaW5rIjoiaHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3d3dzMzMDAzMDAvYXJ0aWNsZS9kZXRhaWxzLzEzOTAwOTcwNCIsIm1lZGlhIjoiQ1NETuWNmuWuoiIsInB1Ymxpc2hfZGF0ZSI6IjIwMjQtMDUtMTciLCJyZWZlciI6InJlZl8zIiwidGl0bGUiOiJSdWJ56I63IDMuNC4wIOmmluS4qumihOiniOeJiOabtOaWsO+8jOW8gOWni+imgeaxguW8gOWPkeiAhea3u+WKoOKAnOWGu+e7k+Wtl+espuS4suWtl+mdoumHj+KAnemtlOazleazqOmHiiJ9XX0=
+  recorded_at: Tue, 10 Nov 2026 12:56:50 GMT
+- request:
+    method: post
+    uri: https://api.z.ai/api/paas/v4/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"glm-5.3-flash","messages":[{"role":"user","content":"Search
+        the web: when was Ruby 3.4.0 released? One sentence."},{"role":"assistant","content":"Ruby
+        3.4.0 was released on December 25, 2024, with Ruby 3.4.1 following the same
+        day.","reasoning_content":"The user asks: when was Ruby 3.4.0 released? One
+        sentence.\n\nFrom the reference information, Ruby 3.4.0 was released on December
+        25, 2024 (source: ruby-lang.org news 2024/12/25/ruby-3-4-0-released). Also
+        note Ruby 3.4.1 was released the same day.\n\nThe user query is in English,
+        so respond in English. One sentence."},{"role":"user","content":"What year
+        was that? Reply with the year only."}],"stream":false,"tools":[{"type":"web_search","web_search":{"enable":true,"search_result":true,"count":3}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Nov 2026 12:56:53 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - 6eacb1f346666a6f67bfafc5329797c8
+      Vary:
+      - Accept-Encoding
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 2026111020565039b5e29b17c8484d
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiIyMDI0IiwicmVhc29uaW5nX2NvbnRlbnQiOiJUaGUgdXNlciBhc2tzIFwiV2hhdCB5ZWFyIHdhcyB0aGF0P1wiIHJlZmVycmluZyB0byBSdWJ5IDMuNC4wJ3MgcmVsZWFzZSwgd2hpY2ggd2FzIERlY2VtYmVyIDI1LCAyMDI0LiBSZXBseSB3aXRoIHRoZSB5ZWFyIG9ubHkuIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3OTQzMTU0MTMsImlkIjoiMjAyNjExMTAyMDU2NTAzOWI1ZTI5YjE3Yzg0ODRkIiwibW9kZWwiOiJnbG0tNS4zLWZsYXNoIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicmVxdWVzdF9pZCI6IjIwMjYxMTEwMjA1NjUwMzliNWUyOWIxN2M4NDg0ZCIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjo0MSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjozN30sInByb21wdF90b2tlbnMiOjExOTIsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwidG90YWxfdG9rZW5zIjoxMjMzfSwid2ViX3NlYXJjaCI6W3siY29udGVudCI6IuOAkOWTquS4gOW5tOaYr+awkeWbveWFg+W5tOOAkeawkeWbve+8jOaYr+S4reWbveWOhuWPsuS4iuS4gOS4qumHjeimgeeahOaXtuacn++8jOaMh+eahOaYrzE5MTLlubToh7MxOTQ55bm06Ze077yM5Lit5Y2O5rCR5Zu95oiQ56uL5ZCO55qE5pe25Luj44CC5a+55LqO6K645aSa5a+55Y6G5Y+y5oSf5YW06Laj55qE5Lq65p2l6K+077yM5LqG6Kej5rCR5Zu95YWD5bm04oCd5YW35L2T5piv5ZOq5LiA5bm077yM5piv5LiA5Liq5Z+656GA5L2G5YWz6ZSu55qE6Zeu6aKY44CCXG7mgLvnu5PvvJpcbuawkeWbveWFg+W5tOaMh+eahOaYr+S4reWNjuawkeWbveaIkOeri+eahOesrOS4gOW5tO+8jOWNszE5MTLlubTjgILov5nkuIDlubTmoIflv5fnnYDmuIXmnJ3nu5/msrvnmoTnu5PmnZ/lkozkuK3ljY7msJHlm73nmoTlvIDlp4vvvIzlhbfmnInph43opoHnmoTljoblj7LmhI/kuYnjgILku6XkuIvmmK/lhbPkuo7msJHlm73lhYPlubTnmoTnroDopoHmgLvnu5PvvJpcbuS4gOOAgeawkeWbveWFg+W5tOeahOWumuS5iVxu5rCR5Zu95YWD5bm05piv5oyH5Lit5Y2O5rCR5Zu95oiQ56uL55qE56ys5LiA5bm077yM5Lmf5bCx5pivMTkxMuW5tOOAgui/meS4gOW5tOeahOWIsOadpe+8jOaEj+WRs+edgOS4reWbveato+W8j+i/m+WFpeS6huS4gOS4quaWsOeahOaUv+ayu+S9k+WItuKAlOKAlOWFseWSjOWItu+8jOe7k+adn+S6humVv+i+vuS4pOWNg+S9meW5tOeahOW4neWItuS8oOe7n+OAglxu5LqM44CB5Y6G5Y+y6IOM5pmvXG4xOTEx5bm077yM6L6b5Lql6Z2p5ZG954iG5Y+R77yM5o6o57+75LqG5riF5pyd55qE57uf5rK744CCMTkxMuW5tDHmnIgx5pel77yM5a2Z5Lit5bGx5Zyo5Y2X5Lqs5a6j5biD5oiQ56uL5Lit5Y2O5rCR5Zu977yM5bm25bCx5Lu75Li05pe25aSn5oC757uf77yM5qCH5b+X552A5rCR5Zu957qq5bm055qE5byA5aeL44CCXG7kuInjgIHmsJHlm73nuqrlubTkuI7lhazlhYPnuqrlubTnmoTmjaLnrpdcbuawkeWbvee6quW5tOaYr+S7pTE5MTLlubTkuLrlhYPlubTvvIzlm6DmraTvvJpcbi0g5rCR5Zu95YWD5bm0IOWFrOWFgzE5MTLlubRcbi0g5rCR5Zu95Y2B5bm0IOWFrOWFgzE5MjHlubRcbi0g5rCR5Zu95LiJ5Y2B5bm0IOWFrOWFgzE5NDDlubRcbuWbm+OAgeihqOagvOWxleekulxu5LqU44CB57uT6K+tXG7kuobop6Plk6rkuIDlubTmmK/msJHlm73lhYPlubTigJ3kuI3ku4XmmK/lr7nljoblj7Lml7bpl7TngrnnmoTmjozmj6HvvIzkuZ/mmK/nkIbop6PkuK3lm73ov5Hku6Plj7LnmoTph43opoHkuIDmraXjgIIxOTEy5bm05L2c5Li65rCR5Zu95YWD5bm077yM5Luj6KGo5LqG5Lit5Zu95LuO5bCB5bu65bid5Yi25ZCR546w5Luj5Zu95a626L2s5Z6L55qE6LW354K577yM5YW35pyJ5rex6L+c55qE5Y6G5Y+y5b2x5ZON44CCIiwiaWNvbiI6IiIsImxpbmsiOiJodHRwczovL3d3dy5ndHVhbmIuY29tL3JpY3dkLzIwMjYwMi8zMzY4Mzg1Lmh0bWwiLCJtZWRpYSI6IiIsInB1Ymxpc2hfZGF0ZSI6IjIwMjYtMDItMDEiLCJyZWZlciI6InJlZl8xIiwidGl0bGUiOiLlk6rkuIDlubTmmK/msJHlm73lhYPlubQifSx7ImNvbnRlbnQiOiI/P+WFrOWFgzE5NTjlubTigJTigJTmg7Plv5jpg73lv5jkuI3kuobnmoTkuIDlubTvvIHnh4Png6fnmoTlsoHmnIjvvJvmsrjohb7nmoTlubTku6PvvIHov5nlubTlpI/mnKrnp4vliJ3vvIzluoTnqLzplb/lir/oia/lpb3vvIzkuLDmlLblnKjmnJvjgILmraTml7bvvIzlhajlm73mjoDotbfkuoblpKfot4Pov5vigJ3pq5jmva7vvIzlkITooYzlkITkuJrmiZPmk4Lmr5Tmi7zvvIznurfnurfmiqXmjbfmlL7ljavmmJ/mraPlvZPot4Pov5vlho3liJvmlrDorrDlvZXnmoTpo47lj6PmtarlsJbkuYvpmYXvvIzlhajlm73lpKfpg6jliIblnLDmlrnmiJDnq4vkuobkurrmsJHlhaznpL7igJ3jgILkuJzpo47igJ3jgIHlkJHpmLPigJ3jgIHog5zliKnigJ3kvJflpJrniYzljL7lj5bku6PkuobkuaHmlL/lupzigJ3lhazlhbHlpKfpo5/loILlupTov5DogIznlJ/jgILplIXnopfnk6Lnm4blvZLkuoblhazvvJvoh6rnlZnlnLDjgIHmiL/liY3lsYvlkI7nmoToj5zlm63lrZDjgIHlkITnp43moJHmnKjjgIHpuKHpuK3puYXni5fnrYnpg73lvZLnlJ/kuqfpmJ/pm4bkvZPnu4/okKXjgILlrabnlJ/ku6zlkIPlnKjkuoblrabmoKHvvIzkvY/ov5vkuobmlZnlrqTjgILpnZLlo67lirPliqjlipvvvIzkvY/lnKjppbLlhbvmiYDnmoTlpKfngpXlpKfpk7rmraPlvZPku6XlhazigJ3kuLrlvaLlvI/nmoTmtarmva7kuK3vvIzmt7Hnv7vlnLDigJ3lvIDlp4vkuobvvIzkupLnm7jlj6vlj7fmiqXmjbfvvIzotornv7votormt7HvvIHmraPlvZPmr5Tmt7HigJ3nmoTpq5jmva7kuK3vvIzlpKfngrzpkqLpk4HigJ3lvIDlp4vkuobjgILljp/mnKznmoTlhpzmsJHvvIzovazouqvmiJDkuLrpkqLpk4Hlt6XkurrvvIzmnJ/nm7znnYDpq5jngonmnpfnq4vvvIzpk4HmsLTlpZTmtYHlhqzlraPliLDkuobvvIzluoTnqLzln4vlnKjlpKfpm6rph4zvvIzml6Dlipvpl67mtKXjgILpnZLlo67lubTkuIrlsbHnoI3moJHng6fngq3vvIzku6Xmj5Dpq5jngrzpk4HngonmuKnluqbjgILlkITlrrbmiorpk4HplIXnoLjnoo7vvIzov57lkIzplIHlpLTpkqXljJnnrYnkuIDotbfkvZzkuLrlhbHkuqfigJ3vvIzkuqTpq5jngonlm57ngonvvIzku6Xlop7liqDmiqXmjbfnmoTpkqLpk4HmlqTmlbDmgqDmgqDlsoHmnIjvvIznu7Xnu7XorrDlv4bvvIExOTU45bm055qE5pWF5LqL77yM6ZWM5Yi75Zyo5Lq65Lus55qE6K6w5b+G6YeM77yM5Lmf6L295YWl5paw5Lit5Zu955qE5Y+y5YaM5Lit77yB5aOw5piO77ya5bCK6YeN6JGX5L2c5p2D5rOV77yM5Ym956qD6ICF6L+96LSj44CCIiwiaWNvbiI6Imh0dHBzOi8vc2ZpbGUuY2hhdGdsbS5jbi9zZWFyY2hJbWFnZS9iYWlqaWFoYW9fYmFpZHVfY29tX2ljb25fbmV3LmpwZyIsImxpbmsiOiJodHRwczovL2JhaWppYWhhby5iYWlkdS5jb20vcz9pZD0xNjk2MTE3NTQ0ODUzNDg0NTc4IiwibWVkaWEiOiLnmb7lrrblj7ciLCJwdWJsaXNoX2RhdGUiOiIyMDIxLTA0LTA0IiwicmVmZXIiOiJyZWZfMiIsInRpdGxlIjoi5ZOq5LiA5bm05a+55L2g5p2l6K+05piv6Iez5LuK5pyA6Zq+5b+Y55qE5LiA5bm077yfIn0seyJjb250ZW50Ijoi5YyG5YyG6YKj5bm0LOWFtuWunuWwseaYr+S4gOe+pOadpeS4jeWPiuiAgeWOu+WwseW3sue7j+i/q+S4jeWPiuW+heeahOWbnuW/hueahOWFs+S6juS4lue6quS5i+S6pOmCo+WHoOW5tOeahOmdkuaYpeWbnuW/hizpgqPkupvlm57lv4bph4zmnInmtYHlt53mnqss5Lmf5pyJ5bCP54eV5a2QLOacieivuuWfuuS6mizmm7TmnInlpKflk6XlpKcs5pyJ5Yia6LWa6ZKx56ys5LiA5qG26YeR55qEUVEs6L+Y5pyJ6Z+p5pel5LiW55WM5p2vLOWMl+S6rOeUs+WlpeaIkOWKn+OAglxu44CK5YyG5YyG6YKj5bm044CL77ya5Yiw5bqV5piv5ZOq5LiA5bm077yfXG7mhJ/lk6VcbuOAiuWMhuWMhumCo+W5tOOAi+azvua4reWIhuaYjueahOWPo+eikeihqOeOsOWFtuWunuW5tuS4jeS7pOS6uui0ueino+KAlOKAlOOAiuWMhuWMhumCo+W5tOOAi+ecn+ato+aJk+WKqOeahO+8jOaYr+mCo+aJueadpeS4jeWPiuiAgeWOu+WwseW3sue7j+i/q+S4jeWPiuW+heW+l+WbnuW/hueahDgw5ZCO77yM5pu056Gu5YiH55qE6K+077yM5piv5YWz5LqO5LiA5Luj5Lq65YWx5ZCM6K6w5b+G55qE6ZuG5L2T54uC5qyi44CC5LuO6L+Y54+g5qC85qC844CB5Yiw54GM56+u6auY5omL44CB5LuO6K+65Z+65Lqa5Yiw5paw5qaC5b+15L2c5paH77yM5Yiw6YKj5Liq5LiB6aaZ6Iqx5LiA5qC355qE5aWz5a2p77yM5Lul5Y+K55Sz5aWl5oiQ5Yqf44CB6Z+p5pel5LiW55WM5p2v44CCXG7jgIrljIbljIbpgqPlubTjgIvlhbfkvZPlj5HnlJ/lnKgyMDAw5bm05aSP5aSp6IezMjAwMuW5tOOAgumCo+WHoOW5tO+8jDg15ZCO55qE5L2c6ICF5Lmd5aSc6Iy06L+Y5Zyo5LiK5Lit5a2m44CC6YKj5LmI6Zeu6aKY5p2l5LqG77yM6YKj5Lqb5bm05Yiw5bqV5Y+R55Sf5LqG5LuA5LmI77yfXG4x44CB6L+Y54+g5qC85qC8XG7pgqPkuIDlubTvvIzotbXolofov5jmmK/jgIrov5jnj6DmoLzmoLzjgIvph4znmoTlsI/nh5XlrZDvvIwxMOW5tOWQju+8jOW3suS4uuS6uuWmu+eahOi1teiWh+aLjeS6huS4gOmDqOi3n+OAiuWMhuWMhumCo+W5tOOAi+aYr+aVjOS6uueahOeUteW9se+8jOWPq+OAiuiHtOmdkuaYpeOAi+OAglxuMuOAgeWkp+WTpeWkp+OAgeivuuWfuuS6mlxu56ysMemhteS4i+S4gOmhtSIsImljb24iOiIiLCJsaW5rIjoiaHR0cHM6Ly9kb2MuZG9jc291LmNvbS9iYjQxMDc4MjA5MDVhMjEzNGM1Mzg0YzNkLmh0bWwiLCJtZWRpYSI6IiIsInB1Ymxpc2hfZGF0ZSI6IiIsInJlZmVyIjoicmVmXzMiLCJ0aXRsZSI6IuOAiuWMhuWMhumCo+W5tOOAi++8muWIsOW6leaYr+WTquS4gOW5tO+8nyJ9XX0=
+  recorded_at: Tue, 10 Nov 2026 12:56:53 GMT
+recorded_with: VCR 6.4.1

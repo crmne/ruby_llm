@@ -11,6 +11,14 @@ module RubyLLM
           'model_context_window_exceeded' => :max_tokens
         ).freeze
 
+        # Search results come back only when the tool sets search_result.
+        SERVER_TOOL_ALIASES = {
+          web_search: lambda { |options|
+            settings = { enable: true, search_result: true }.merge(Support::Utils.deep_symbolize_keys(options))
+            { tool: { type: 'web_search', web_search: settings } }
+          }
+        }.freeze
+
         module_function
 
         def finish_reasons = FINISH_REASONS
@@ -31,6 +39,20 @@ module RubyLLM
 
         def apply_end_user(payload, identifier)
           payload.merge(user_id: identifier)
+        end
+
+        # Sources from the web_search tool arrive in a top-level web_search
+        # array, on the last chunk when streaming.
+        def parse_root_citations(data)
+          results = data['web_search']
+          return super unless results.is_a?(Array) && results.any?
+
+          results.each_with_index.filter_map do |result, index|
+            next unless result.is_a?(Hash)
+
+            Citation.new(url: result['link'], title: result['title'], cited_text: result['content'],
+                         source_index: index)
+          end
         end
 
         # Z.ai caches prompt prefixes by itself and takes no cache controls.

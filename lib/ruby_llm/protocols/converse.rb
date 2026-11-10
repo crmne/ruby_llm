@@ -16,7 +16,9 @@ module RubyLLM
       SERVER_TOOL_ALIASES = {
         web_search: lambda { |options|
           { tool: { systemTool: { name: 'nova_grounding' }.merge(Support::Utils.deep_symbolize_keys(options)) } }
-        }
+        },
+        code_execution: { tool: { systemTool: { name: 'nova_code_interpreter' } } },
+        code_interpreter: { tool: { systemTool: { name: 'nova_code_interpreter' } } }
       }.freeze
 
       def server_tool_aliases

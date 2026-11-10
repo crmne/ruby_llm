@@ -149,6 +149,14 @@ RSpec.describe RubyLLM::Chat, :live do
       expect(payload.dig(:toolConfig, :tools)).to include({ systemTool: { name: 'nova_grounding' } })
     end
 
+    it 'renders the Bedrock code execution alias as the Nova code interpreter system tool' do
+      payload = RubyLLM.chat(model: model_for(:bedrock), provider: :bedrock)
+                       .with_provider_tools(:code_execution)
+                       .render
+
+      expect(payload.dig(:toolConfig, :tools)).to eq([{ systemTool: { name: 'nova_code_interpreter' } }])
+    end
+
     it 'keeps Bedrock function tools alongside the grounding tool' do
       weather = Class.new(RubyLLM::Tool) do
         def self.name = 'Weather'
@@ -411,6 +419,38 @@ RSpec.describe RubyLLM::Chat, :live do
         expect(chunks.filter_map(&:content).join).to eq(response.content)
         expect(response.server_tool_calls).to include(have_attributes(type: 'web_search_call'))
         expect(response.tokens.server_tool_use).not_to be_empty
+      end
+    end
+
+    context "with zai/#{model_for(:zai)}" do
+      let(:chat) { RubyLLM.chat(model: model_for(:zai), provider: :zai) }
+
+      it 'renders the alias with its options inside the web_search key' do
+        payload = chat.with_provider_tools(web_search: { count: 3 }).render
+
+        expect(payload[:tools]).to eq(
+          [{ type: 'web_search', web_search: { enable: true, search_result: true, count: 3 } }]
+        )
+      end
+
+      it 'searches, cites the sources, and continues from the local transcript' do
+        response = chat.with_provider_tools(web_search: { count: 3 })
+                       .ask('Search the web: when was Ruby 3.4.0 released? One sentence.')
+
+        expect(response.content).to include('2024')
+        expect(response.citations).not_to be_empty
+        expect(response.citations.first).to have_attributes(url: a_string_matching(%r{\Ahttps?://}))
+        expect(response.citations.first.title).not_to be_empty
+        expect(chat.ask('What year was that? Reply with the year only.').content).to include('2024')
+      end
+
+      it 'streams a search and collects the citations from the last chunk' do
+        chunks = []
+        response = chat.with_provider_tools(web_search: { count: 3 })
+                       .ask('Search the web: when was Ruby 3.4.0 released? One sentence.') { |chunk| chunks << chunk }
+
+        expect(chunks.filter_map(&:content).join).to eq(response.content)
+        expect(response.citations).not_to be_empty
       end
     end
 
@@ -690,7 +730,75 @@ RSpec.describe RubyLLM::Chat, :live do
     end
   end
 
+  describe 'perplexity hosted tools' do
+    let(:chat) { RubyLLM.chat(model: model_for(:perplexity), provider: :perplexity) }
+
+    it 'renders the web fetch and code execution aliases as its own tools' do
+      payload = chat.with_provider_tools(:web_fetch, :code_execution).render
+
+      expect(payload[:tools]).to eq([{ type: 'fetch_url' }, { type: 'sandbox' }])
+    end
+
+    it 'fetches a public page and counts the fetch' do
+      response = chat.with_provider_tools(:web_fetch).ask(
+        'Use fetch_url to read https://www.ruby-lang.org/en/news/2024/12/25/ruby-3-4-0-released/. ' \
+        'Which parser does that release make the default? One word.'
+      )
+
+      expect(response.content).to match(/Prism/i)
+      expect(response.server_tool_calls).to include(have_attributes(type: 'fetch_url_results'))
+      expect(response.tokens.server_tool_use).to eq('web_fetch_requests' => 1)
+    end
+
+    it 'runs code in its sandbox and continues from the local transcript' do
+      response = chat.with_provider_tools(:code_execution).ask(
+        'Use the sandbox to compute 123456789 * 987654321. Reply with only the product.'
+      )
+
+      expect(response.content).to include('121932631112635269')
+      expect(response.server_tool_calls).to include(have_attributes(type: 'sandbox_results'))
+      expect(response.tokens.server_tool_use).to eq('code_execution_requests' => 1)
+      expect(chat.ask('Without running anything, what was the result?').content).to include('121932631112635269')
+    end
+
+    it 'streams a sandbox run' do
+      chunks = []
+      response = chat.with_provider_tools(:code_execution).ask('Use the sandbox to multiply 37 by 19.') do |chunk|
+        chunks << chunk
+      end
+
+      expect(chunks.filter_map(&:content).join).to eq(response.content)
+      expect(response.content).to include('703')
+      expect(response.server_tool_calls).to include(have_attributes(type: 'sandbox_results'))
+    end
+  end
+
   describe 'code execution' do
+    context "with bedrock/#{model_for(:bedrock)}" do
+      let(:chat) do
+        RubyLLM.chat(model: model_for(:bedrock), provider: :bedrock).with_provider_tools(:code_execution)
+      end
+
+      it 'runs code server-side, keeps the result, and continues from the local transcript' do
+        response = chat.ask('Use the code interpreter to compute 123456789 * 987654321. Reply with only the product.')
+
+        expect(response.content).to include('121932631112635269')
+        expect(response.server_tool_calls).to include(have_attributes(name: 'nova_code_interpreter'))
+        expect(response.server_tool_calls).to include(have_attributes(type: 'nova_code_interpreter_result'))
+        follow_up = chat.ask('Without running anything, what was the result?')
+        expect(follow_up.content.delete(',')).to include('121932631112635269')
+      end
+
+      it 'streams a code interpreter run' do
+        chunks = []
+        response = chat.ask('Use the code interpreter to multiply 37 by 19.') { |chunk| chunks << chunk }
+
+        expect(chunks.filter_map(&:content).join).to eq(response.content)
+        expect(response.content).to include('703')
+        expect(response.server_tool_calls).to include(have_attributes(name: 'nova_code_interpreter'))
+      end
+    end
+
     context "with anthropic/#{model_for(:anthropic)}" do
       let(:chat) do
         RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic).with_provider_tools(:code_execution)

@@ -6,6 +6,7 @@ RSpec.describe RubyLLM::Batch, :live do
   let(:model) { model_for(:anthropic) }
 
   def wait_for(batch)
+    sleep 15 if VCR.current_cassette.recording?
     120.times do
       break if batch.refresh.complete?
 
@@ -362,6 +363,7 @@ RSpec.describe RubyLLM::Batch, :live do
     { provider: :gemini, model: model_for(:gemini) },
     { provider: :mistral, model: model_for(:mistral) },
     { provider: :openai, model: model_for(:openai) },
+    { provider: :openrouter, model: model_for(:openrouter, :batch) },
     # Perplexity allows 1 request per second on its batch and file endpoints.
     { provider: :perplexity, model: model_for(:perplexity), max_retries: 4 },
     { provider: :xai, model: model_for(:xai) }
@@ -388,6 +390,36 @@ RSpec.describe RubyLLM::Batch, :live do
         expect(batch.messages.second.content).to match(/jupiter/i)
         expect(chats.second.messages.map(&:role)).to eq(%i[user assistant])
       end
+    end
+  end
+
+  context "with openrouter/#{model_for(:openrouter, :batch)} attachments" do
+    it 'reads a public image URL' do
+      image_url = 'https://raw.githubusercontent.com/crmne/ruby_llm/main/spec/fixtures/ruby.png'
+      chat = RubyLLM.chat(model: model_for(:openrouter, :batch), provider: :openrouter)
+                    .ask_later('What gemstone does this logo show? One word.', with: image_url)
+
+      batch = wait_for RubyLLM.batch(chat)
+
+      expect(batch).to be_complete
+      expect(batch.messages.first.content).to match(/ruby/i)
+    end
+  end
+
+  context "with openrouter/#{model_for(:openrouter, :batch_embedding)} embeddings" do
+    it 'embeds staged texts and hydrates each request result' do
+      model = model_for(:openrouter, :batch_embedding)
+      requests = [
+        RubyLLM.embed_later('Ruby is a programmer best friend', model:, provider: :openrouter),
+        RubyLLM.embed_later('Batches come back within a day', model:, provider: :openrouter)
+      ]
+
+      batch = wait_for RubyLLM.batch(requests)
+
+      expect(batch).to be_complete
+      expect(batch.results.first.vectors).to all(be_a(Numeric))
+      expect(batch.results.second.vectors).to all(be_a(Numeric))
+      expect(batch.cost.total).to be_positive
     end
   end
 

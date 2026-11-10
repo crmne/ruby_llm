@@ -27,6 +27,33 @@ RSpec.describe RubyLLM::Protocols::InvokeModel::CohereEmbeddings do
     end
   end
 
+  describe 'multimodal request shape' do
+    let(:image) { RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__)) }
+
+    def render(text, attachments)
+      protocol.send(:render_embedding_payload, text, dimensions: 256, attachments:, provider_options: {})
+    end
+
+    it 'sends text and images as one input' do
+      expect(render('Logo', [image])).to eq(
+        input_type: 'search_document',
+        inputs: [{ content: [{ type: 'text', text: 'Logo' },
+                             { type: 'image_url', image_url: { url: "data:image/png;base64,#{image.encoded}" } }] }],
+        embedding_types: ['float'],
+        output_dimension: 256
+      )
+    end
+
+    it 'leaves empty text out' do
+      expect(render(nil, [image])[:inputs].first[:content].map { |part| part[:type] }).to eq(['image_url'])
+    end
+
+    it 'rejects several texts with attachments' do
+      expect { protocol.embed(%w[a b], model: 'us.cohere.embed-v4:0', dimensions: nil, with: image) }
+        .to raise_error(ArgumentError, /one text at a time/)
+    end
+  end
+
   describe 'request shape' do
     it 'renders texts with a default input type' do
       payload = protocol.send(:render_embedding_payload, %w[one two], model: 'us.cohere.embed-v4:0',

@@ -79,7 +79,7 @@ chat = RubyLLM.chat(model: "{{ site.models.openrouter_provider_tools }}",
 response = chat.ask "Run Python to calculate 17 times 23."
 ```
 
-On OpenAI and Azure, `:web_search` also opens pages; a separate `:web_fetch` tool is unnecessary. Bedrock web search requires a Nova 2 model. Mistral's default protocol already supports image generation and configured MCP connectors.
+On OpenAI and Azure, `:web_search` also opens pages; a separate `:web_fetch` tool is unnecessary. Bedrock web search and code execution require a Nova 2 model. Code execution runs only in N. Virginia, Oregon, and Tokyo, and the Bedrock role needs the `bedrock:InvokeTool` permission, which the default role for Bedrock API keys does not grant. Mistral's default protocol already supports image generation and configured MCP connectors.
 
 ## Native Client Toolsets
 
@@ -255,7 +255,6 @@ Some services use an existing connector or require additional settings:
 | xAI | Use `allowed_tools` to select tools; allowed calls execute automatically |
 | Mistral | Use `connector_id:` for a connector configured in Mistral Studio |
 | Bedrock Mantle | Use `connector_id:` with an accessible Lambda or AgentCore Gateway ARN; Gateway requires `require_approval: "never"` |
-| OpenRouter Responses | Explicit `require_approval: "never"`; approval requests are unavailable |
 
 Vertex AI connects remote MCP through a hosted Deep Research agent. Use the [Hosted Research API]({% link _advanced/hosted-research.md %}) for its single-turn report and job lifecycle.
 

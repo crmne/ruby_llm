@@ -10,6 +10,10 @@ module RubyLLM
         include ZAI::OCR
         include ZAI::TokenCounting
         include ZAI::Videos
+
+        def server_tool_aliases
+          ZAI::Chat::SERVER_TOOL_ALIASES
+        end
       end
 
       protocol :chat_completions, ChatCompletions
