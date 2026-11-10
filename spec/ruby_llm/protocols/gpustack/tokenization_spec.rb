@@ -41,4 +41,43 @@ RSpec.describe RubyLLM::Protocols::GPUStack::Tokenization do
 
     expect(context.tokenize('Ruby', model:, provider: :gpustack).ids).to eq([123])
   end
+
+  describe 'Chat#count_tokens' do
+    let(:chat) { context.chat(model:, provider: :gpustack) }
+
+    it 'counts the conversation through the model proxy tokenizer' do
+      request = stub_request(:post, 'https://gpu.example.test/cluster/model/proxy/42/tokenize')
+                .with(headers: { 'Authorization' => 'Bearer isolated-key' },
+                      body: { model:, messages: [{ role: 'system', content: 'Be terse.' },
+                                                 { role: 'user', content: 'Hello Ruby' }] })
+                .to_return_json(body: { tokens: [1, 2, 3, 4], count: 4, max_model_len: 2048 })
+
+      count = chat.with_instructions('Be terse.').count_tokens('Hello Ruby')
+
+      expect(count).to eq(4)
+      expect(chat.messages.map(&:role)).to eq([:system])
+      expect(request).to have_been_requested.once
+    end
+
+    it 'includes declared tools and leaves out generation-only fields' do
+      tool = Class.new(RubyLLM::Tool) do
+        def self.name = 'Weather'
+        description 'Reports the weather'
+      end
+      request = stub_request(:post, 'https://gpu.example.test/cluster/model/proxy/42/tokenize').with do |req|
+        body = JSON.parse(req.body)
+        body.keys.sort == %w[messages model tools] && body['tools'].first.dig('function', 'name') == 'weather'
+      end.to_return_json(body: { tokens: [1], count: 1 })
+
+      expect(chat.with_tools(tool).with_schema({ type: 'object', properties: {} }).count_tokens('Hi')).to eq(1)
+      expect(request).to have_been_requested.once
+    end
+
+    it 'rejects the gateway base before issuing a request' do
+      context.config.gpustack_api_base = 'https://gpu.example.test/cluster/v1'
+
+      expect { chat.count_tokens('Ruby') }.to raise_error(RubyLLM::Error, %r{/model/proxy/ROUTE_ID/v1})
+      expect(a_request(:post, /gpu.example.test/)).not_to have_been_made
+    end
+  end
 end
