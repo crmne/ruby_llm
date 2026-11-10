@@ -8,6 +8,7 @@ module RubyLLM
       # instead of summaries, both in responses and in the stream.
       class Responses < Protocols::Responses
         SERVER_TOOL_ALIASES = {
+          web_search: { tool: { type: 'web_search' } },
           apply_patch: { tool: { type: 'custom', name: 'apply_patch' } }
         }.freeze
 
@@ -19,6 +20,16 @@ module RubyLLM
           raise ArgumentError, 'DeepSeek has no thinking budget; use effort:' if thinking&.budget
 
           super
+        end
+
+        SERVER_TOOL_USAGE_NAMES = { 'tool_search' => 'web_search', 'tool_fetch' => 'web_fetch' }.freeze
+
+        # DeepSeek counts searches and page opens in usage, unlike tool_usage
+        # on the other Responses APIs.
+        def parse_server_tool_use(response)
+          response.dig('usage', 'server_tool_use').to_h.transform_keys do |tool|
+            "#{SERVER_TOOL_USAGE_NAMES.fetch(tool, tool)}_requests"
+          end
         end
 
         def apply_end_user(payload, identifier)

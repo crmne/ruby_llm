@@ -388,6 +388,32 @@ RSpec.describe RubyLLM::Chat, :live do
       end
     end
 
+    context 'with deepseek/deepseek-v4-pro through Responses' do
+      let(:chat) { RubyLLM.chat(model: 'deepseek-v4-pro', provider: :deepseek, protocol: :responses) }
+      let(:question) do
+        'Search the web, then open https://www.ruby-lang.org/en/news/2024/12/25/ruby-3-4-0-released/ ' \
+          'and tell me which parser became the default. One sentence.'
+      end
+
+      it 'searches, opens the page, counts both, and continues from the local transcript' do
+        response = chat.with_provider_tools(:web_search).ask(question)
+
+        expect(response.content).to match(/Prism/i)
+        expect(response.server_tool_calls.map { |call| call.input['type'] }).to include('search', 'open_page')
+        expect(response.tokens.server_tool_use).to eq('web_search_requests' => 1, 'web_fetch_requests' => 1)
+        expect(chat.ask('Which Ruby version was that? Reply with the version only.').content).to include('3.4')
+      end
+
+      it 'streams a search with its tool calls' do
+        chunks = []
+        response = chat.with_provider_tools(:web_search).ask(question) { |chunk| chunks << chunk }
+
+        expect(chunks.filter_map(&:content).join).to eq(response.content)
+        expect(response.server_tool_calls).to include(have_attributes(type: 'web_search_call'))
+        expect(response.tokens.server_tool_use).not_to be_empty
+      end
+    end
+
     context "with openai/#{model_for(:openai, :reasoning_effort)}" do
       let(:chat) do
         RubyLLM.chat(model: model_for(:openai, :reasoning_effort), provider: :openai).with_provider_tools(:web_search)
