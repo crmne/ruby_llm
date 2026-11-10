@@ -29,6 +29,38 @@ module RubyLLM
         def provider_file_references?
           false
         end
+
+        def supported_attachment?(attachment)
+          attachment.video? || super
+        end
+
+        private
+
+        def render_content(content, attachments = [], citations: false)
+          return super unless attachments.any?(&:video?)
+
+          blocks = super(content, [], citations:)
+          attachments.each do |attachment|
+            blocks.concat(attachment.video? ? [render_video(attachment)] : super(nil, [attachment], citations:))
+          end
+          blocks
+        end
+
+        def append_formatted_content(content_blocks, msg, citations: false)
+          content_blocks.concat(render_content(msg.content, msg.attachments, citations:))
+        end
+
+        def render_video(video)
+          { type: 'video', source: video_source(video) }
+        end
+
+        # MiniMax's fetcher is refused by many hosts, so remote videos travel inline.
+        def video_source(video)
+          return { type: 'url', url: "mm_file://#{video.provider_file_id}" } if video.provider_file?
+
+          media_type = video.mime_type == 'video/quicktime' ? 'video/mov' : video.mime_type
+          { type: 'base64', media_type:, data: video.encoded }
+        end
       end
     end
   end

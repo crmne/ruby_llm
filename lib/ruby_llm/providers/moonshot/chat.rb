@@ -54,9 +54,9 @@ module RubyLLM
         end
 
         def supported_attachment?(attachment)
-          return attachment.image? if attachment.provider_file?
+          return attachment.image? || attachment.video? if attachment.provider_file?
 
-          Protocols::ChatCompletions::Media.supported_attachment?(
+          attachment.video? || Protocols::ChatCompletions::Media.supported_attachment?(
             attachment, document_attachments: :none, audio_attachments: false
           )
         end
@@ -65,6 +65,8 @@ module RubyLLM
           Protocols::ChatCompletions::Media.render_parts(content, attachments) do |attachment|
             if attachment.image?
               render_inline_image(attachment)
+            elsif attachment.video?
+              render_inline_video(attachment)
             else
               Protocols::ChatCompletions::Media.render_attachment(
                 attachment, document_attachments: :none, image_attachments: true, audio_attachments: false
@@ -73,11 +75,18 @@ module RubyLLM
           end
         end
 
-        # Moonshot reads images only from data URIs and its own file references,
-        # so remote images travel inline.
         def render_inline_image(image)
-          url = image.provider_file? ? "ms://#{image.provider_file_id}" : image.for_llm
-          { type: 'image_url', image_url: { url: url } }
+          { type: 'image_url', image_url: { url: inline_url(image) } }
+        end
+
+        def render_inline_video(video)
+          { type: 'video_url', video_url: { url: inline_url(video) } }
+        end
+
+        # Moonshot reads media only from data URIs and its own file references,
+        # so remote files travel inline.
+        def inline_url(attachment)
+          attachment.provider_file? ? "ms://#{attachment.provider_file_id}" : attachment.for_llm
         end
       end
     end

@@ -44,6 +44,8 @@ module RubyLLM
         end
 
         def supported_attachment?(attachment)
+          return true if inline_video?(attachment)
+
           Protocols::ChatCompletions::Media.supported_attachment?(
             attachment, document_attachments: document_attachments(attachment), audio_attachments: false
           )
@@ -51,6 +53,8 @@ module RubyLLM
 
         def render_content(content, attachments = [])
           Protocols::ChatCompletions::Media.render_parts(content, attachments) do |attachment|
+            next render_video(attachment) if inline_video?(attachment)
+
             Protocols::ChatCompletions::Media.render_attachment(
               attachment, document_attachments: document_attachments(attachment),
                           image_attachments: true, audio_attachments: false
@@ -58,9 +62,18 @@ module RubyLLM
           end
         end
 
-        # Files uploaded to Z.ai are referenced by id; other documents are not inlined.
+        def inline_video?(attachment)
+          attachment.video? && !attachment.provider_file?
+        end
+
+        def render_video(video)
+          { type: 'video_url', video_url: { url: video.url_or_data_uri } }
+        end
+
+        # PDFs travel inline as data URIs, and files uploaded to Z.ai by id.
         def document_attachments(attachment)
-          return :none unless attachment.provider_file? && attachment.source.provider == 'zai'
+          return :pdf unless attachment.provider_file?
+          return :none unless attachment.source.provider == 'zai'
 
           attachment.audio? ? :none : :pdf
         end

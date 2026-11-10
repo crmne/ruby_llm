@@ -52,6 +52,21 @@ module RubyLLM
           item
         end
 
+        def supported_attachment?(attachment)
+          %i[audio video].include?(attachment.type) || super
+        end
+
+        # Meta's fetcher is refused by many hosts, so remote media travels inline.
+        def render_attachment(attachment)
+          return super if attachment.provider_file?
+
+          case attachment.type
+          when :video then { type: 'input_video', video_url: attachment.for_llm }
+          when :audio then { type: 'input_audio', input_audio: { data: attachment.encoded, format: attachment.format } }
+          else super
+          end
+        end
+
         # Meta refuses to fetch many remote images, so images travel inline.
         def render_image(image, image_url: image.for_llm, **)
           super

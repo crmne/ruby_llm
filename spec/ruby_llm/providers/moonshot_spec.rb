@@ -198,6 +198,25 @@ RSpec.describe RubyLLM::Providers::Moonshot do
       expect { protocol.render_content('Hear this', [audio]) }.to raise_error(RubyLLM::UnsupportedAttachmentError)
     end
 
+    it 'sends remote videos inline, because Moonshot reads only data URIs' do
+      video = RubyLLM::Attachment.new('https://example.com/clip.mp4')
+      stub_request(:get, 'https://example.com/clip.mp4')
+        .to_return(status: 200, body: 'mp4 bytes', headers: { 'Content-Type' => 'video/mp4' })
+
+      data_uri = "data:video/mp4;base64,#{Base64.strict_encode64('mp4 bytes')}"
+      expect(protocol.render_content('What is this?', [video]).last)
+        .to eq(type: 'video_url', video_url: { url: data_uri })
+    end
+
+    it 'refers to an uploaded video by its Moonshot file reference' do
+      file = RubyLLM::UploadedFile.new(id: 'file-1', provider: 'moonshot', mime_type: 'video/mp4', purpose: 'video')
+      attachment = RubyLLM::Attachment.new(file)
+
+      expect(protocol.supported_attachment?(attachment)).to be(true)
+      expect(protocol.render_content('What is this?', [attachment]).last)
+        .to eq(type: 'video_url', video_url: { url: 'ms://file-1' })
+    end
+
     it 'refers to an uploaded image by its Moonshot file reference' do
       file = RubyLLM::UploadedFile.new(id: 'file-1', provider: 'moonshot', mime_type: 'image/png', purpose: 'image')
 

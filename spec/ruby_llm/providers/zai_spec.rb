@@ -212,11 +212,31 @@ RSpec.describe RubyLLM::Providers::ZAI do
       expect(protocol.supported_attachment?(audio)).to be(false)
     end
 
-    it 'rejects documents and audio' do
+    it 'sends PDFs inline as file data' do
       pdf = RubyLLM::Attachment.new(File.expand_path('../../fixtures/sample.pdf', __dir__))
+
+      expect(protocol.supported_attachment?(pdf)).to be(true)
+      expect(protocol.render_content('Read this', [pdf]).last)
+        .to eq(type: 'file', file: { filename: 'sample.pdf', file_data: pdf.for_llm })
+    end
+
+    it 'sends videos by URL or as data URIs' do
+      remote = RubyLLM::Attachment.new('https://example.com/clip.mp4', mime_type: 'video/mp4')
+      local = RubyLLM::Attachment.new(File.expand_path('../../fixtures/ruby_clip.mp4', __dir__))
+
+      expect(protocol.render_content('Watch this', [remote, local]).drop(1)).to eq(
+        [
+          { type: 'video_url', video_url: { url: 'https://example.com/clip.mp4' } },
+          { type: 'video_url', video_url: { url: local.for_llm } }
+        ]
+      )
+    end
+
+    it 'rejects office documents and audio' do
+      document = RubyLLM::Attachment.new(File.expand_path('../../fixtures/sample.docx', __dir__))
       audio = RubyLLM::Attachment.new(File.expand_path('../../fixtures/ruby.wav', __dir__))
 
-      expect { protocol.render_content('Read this', [pdf]) }.to raise_error(RubyLLM::UnsupportedAttachmentError)
+      expect { protocol.render_content('Read this', [document]) }.to raise_error(RubyLLM::UnsupportedAttachmentError)
       expect { protocol.render_content('Hear this', [audio]) }.to raise_error(RubyLLM::UnsupportedAttachmentError)
     end
   end

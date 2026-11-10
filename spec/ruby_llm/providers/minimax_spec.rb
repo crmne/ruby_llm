@@ -185,5 +185,40 @@ RSpec.describe RubyLLM::Providers::MiniMax do
     it 'never uploads files to the provider' do
       expect(protocol.provider_file_references?).to be(false)
     end
+
+    def rendered_blocks(*attachments)
+      message = RubyLLM::Message.new(role: :user, content: 'What is this?', attachments:)
+      protocol.send(:append_formatted_content, [], message)
+    end
+
+    it 'sends videos inline or by uploaded file, keeping attachment order' do
+      stub_request(:get, 'https://example.com/clip.mp4')
+        .to_return(status: 200, body: 'mp4 bytes', headers: { 'Content-Type' => 'video/mp4' })
+      local = RubyLLM::Attachment.new(File.expand_path('../../fixtures/ruby_clip.mp4', __dir__))
+      remote = RubyLLM::Attachment.new('https://example.com/clip.mp4')
+      image = RubyLLM::Attachment.new('https://example.com/ruby.png', mime_type: 'image/png')
+      upload = RubyLLM::Attachment.new(RubyLLM::UploadedFile.new(id: '42', provider: 'minimax', mime_type: 'video/mp4'))
+
+      expect(rendered_blocks(local, image, remote, upload).drop(1)).to eq(
+        [
+          { type: 'video', source: { type: 'base64', media_type: 'video/mp4', data: local.encoded } },
+          { type: 'image', source: { type: 'url', url: 'https://example.com/ruby.png' } },
+          { type: 'video', source: { type: 'base64', media_type: 'video/mp4', data: remote.encoded } },
+          { type: 'video', source: { type: 'url', url: 'mm_file://42' } }
+        ]
+      )
+    end
+
+    it 'names QuickTime videos the way MiniMax documents them' do
+      video = RubyLLM::Attachment.new(StringIO.new('mov'), filename: 'clip.mov', mime_type: 'video/quicktime')
+
+      expect(rendered_blocks(video).last.dig(:source, :media_type)).to eq('video/mov')
+    end
+
+    it 'accepts video attachments' do
+      video = RubyLLM::Attachment.new('https://example.com/clip.mp4', mime_type: 'video/mp4')
+
+      expect(protocol.supported_attachment?(video)).to be(true)
+    end
   end
 end
