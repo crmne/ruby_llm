@@ -144,7 +144,7 @@ RubyLLM.paint("A mountain village at sunrise",
 
 Each fallback gets the same prompt and options, and runs only after an error that [chat fallbacks]({% link _advanced/error-handling.md %}#model-fallbacks) move on from by default: a rate limit, a server error, an overloaded or unavailable service, or a connection failure. A rejected prompt raises at once. A fallback can be a model ID or a `RubyLLM::Model`, and one whose model can't be found is skipped. When every model fails, the last error is raised.
 
-While a fallback is left, a timeout, a failed connection, or a rate limit that asks you to wait more than 2 seconds moves on to it at once instead of being [retried]({% link _advanced/error-handling.md %}#automatic-retries) on the same model, as it does for chats. A shorter wait, or an error without one, is retried on the same model first. The last model retries as configured.
+While a fallback is left, a timeout, a failed connection, or a rate limit that asks you to wait more than 2 seconds moves on to it at once instead of being [retried]({% link _advanced/error-handling.md %}#automatic-retries) on the same model, as it does for chats. A rate limit or server error with a shorter wait, or with none, is retried on the same model first. The last model retries as configured.
 
 Each attempt has its own `image.ruby_llm` event and usage entry, so failed attempts the provider billed still reach your [usage tracking]({% link _core_features/cost-and-usage-tracking.md %}).
 

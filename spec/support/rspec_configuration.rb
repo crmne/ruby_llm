@@ -30,10 +30,14 @@ RSpec.configure do |config|
 
   # Examples set RubyLLM.config directly, so each one gets back the values it
   # started with: a retry count left behind otherwise reaches every later
-  # example in the same worker.
+  # example in the same worker. Hashes and arrays are copied, since options
+  # such as file_converters are changed in place.
   config.around do |example|
     global = RubyLLM.config
-    saved = RubyLLM::Configuration.options.to_h { |key| [key, global.instance_variable_get(:"@#{key}")] }
+    saved = RubyLLM::Configuration.options.to_h do |key|
+      value = global.instance_variable_get(:"@#{key}")
+      [key, value.is_a?(Hash) || value.is_a?(Array) ? value.dup : value]
+    end
     example.run
   ensure
     saved.each { |key, value| global.instance_variable_set(:"@#{key}", value) }
