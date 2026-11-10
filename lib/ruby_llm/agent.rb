@@ -193,8 +193,8 @@ module RubyLLM
       end
 
       # Sets how chats this agent builds use their tools, applied via
-      # Chat#with_tool_options. Accepts +choice:+, +calls:+, and
-      # +concurrency:+. A block defers evaluation until the chat is built.
+      # Chat#with_tool_options. Accepts +choice:+, +calls:+, +concurrency:+,
+      # and +rounds:+. A block defers evaluation until the chat is built.
       # Called with no arguments, returns the configured options.
       #
       #   tool_options choice: :required, calls: :one

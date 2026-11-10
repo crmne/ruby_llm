@@ -81,11 +81,11 @@ Without `calls:`, the provider's default applies. OpenAI and Anthropic honor `ca
 
 ### Clearing Tools and Options
 
-Call `with_tools(nil)` to clear the attached tool list. It leaves the options set with `with_tool_options` in place; pass `nil` options to reset `choice`, `calls`, and `concurrency`:
+Call `with_tools(nil)` to clear the attached tool list. It leaves the options set with `with_tool_options` in place; pass `nil` options to reset `choice`, `calls`, `concurrency`, and `rounds`:
 
 ```ruby
 chat.with_tools(nil)       # forget the tools, keep the options
-chat.with_tool_options(choice: nil, calls: nil, concurrency: nil) # reset all three
+chat.with_tool_options(choice: nil, calls: nil, concurrency: nil, rounds: nil) # reset all four
 ```
 
 ## Asking a Person
@@ -488,7 +488,37 @@ The callback runs in the thread or fiber that reports, before the tool's result.
 
 ### Limiting Tool Calls
 
-To cap a runaway loop, give the loop a step budget instead of raising inside a callback:
+Some models, small ones especially, call the same tool over and over and never answer. Stop that loop with `rounds:`:
+
+```ruby
+chat = RubyLLM.chat(model: "{{ site.models.openai_tools }}")
+              .with_tools(Weather)
+              .with_tool_options(rounds: 25)
+
+begin
+  chat.ask "Check weather for every major city..."
+rescue RubyLLM::ToolRoundLimitError
+  chat.complete if keep_going?
+end
+```
+
+The limit is off by default, and `rounds: nil` removes it. A round is one model response that asks for tools, however many calls it holds; `calls:` limits the calls in each response. Set the limit per chat or with the `tool_options` macro on an [agent]({% link _getting_started/agents.md %}).
+
+`complete` raises `RubyLLM::ToolRoundLimitError` once the last round's results are saved, before asking the model again, so no tool call is left unanswered, and the model does not get to reply to that last round. The transcript stays valid. Call `complete` again and it continues with a fresh count, which is how an app offers a "Keep going" button. A pause for [an approval](#requiring-approval), a question, or [a task](#pausing-a-tool-call) starts the count again too. `step` is not limited, since you count those moves yourself.
+
+On a persisted chat, the error leaves the saved transcript as it is and releases the run's claim, so the chat is neither `running?` nor in `Chat.interrupted`. The error is not a `RubyLLM::Error`, so `retry_on RubyLLM::Error` does not run the job again for it. Each `complete` counts from zero, so a job that calls it on a schedule gets a full set of rounds each time. Handle the error instead:
+
+```ruby
+class ChatResponseJob < ApplicationJob
+  discard_on RubyLLM::ToolRoundLimitError
+
+  def perform(chat_id)
+    ChatAgent.find(chat_id).complete
+  end
+end
+```
+
+When you need your own budget, such as counting only the calls that failed, drive the loop yourself:
 
 ```ruby
 chat = RubyLLM.chat(model: "{{ site.models.openai_tools }}")

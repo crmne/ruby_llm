@@ -238,7 +238,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
       expect(chat.tools.keys).to eq([:weather])
       expect(branch.tools.keys).to eq(%i[weather search])
-      expect(chat.tool_options).to eq(choice: nil, calls: nil, concurrency: nil)
+      expect(chat.tool_options).to eq(choice: nil, calls: nil, concurrency: nil, rounds: nil)
       expect(chat.temperature).to be_nil
       expect(chat.provider_tools).to be_empty
       expect(chat.headers).to eq('X-Trace' => 'original')
