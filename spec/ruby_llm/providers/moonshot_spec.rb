@@ -33,8 +33,18 @@ RSpec.describe RubyLLM::Providers::Moonshot do
     body
   end
 
+  it 'charges batches at 60 percent of the standard rate' do
+    model = RubyLLM.models.find('kimi-k2.6', provider: :moonshot)
+    tokens = RubyLLM::Tokens.new(input: 1_000_000, output: 1_000_000)
+
+    cost = provider.batch_cost(tokens, model:)
+
+    expect(cost.input).to be_within(1e-9).of(model.pricing.text_tokens.standard.input_per_million * 0.6)
+    expect(cost.output).to be_within(1e-9).of(model.pricing.text_tokens.standard.output_per_million * 0.6)
+  end
+
   it "speaks Moonshot's dialect of Chat Completions" do
-    expect(described_class.protocols[:chat_completions]).to eq(described_class::ChatCompletions)
+    expect(described_class.protocols[:chat_completions]).to be < described_class::ChatCompletions
     expect(described_class::ChatCompletions.superclass).to eq(RubyLLM::Protocols::ChatCompletions)
     expect(described_class.protocols.keys).to eq(%i[chat_completions responses files])
   end

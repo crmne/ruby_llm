@@ -393,6 +393,18 @@ RSpec.describe RubyLLM::Batch, :live do
     end
   end
 
+  context 'with moonshot/kimi-k2.6' do
+    it 'answers a staged chat and appends the answer to its conversation' do
+      chat = RubyLLM.chat(model: 'kimi-k2.6', provider: :moonshot).ask_later('What is 2 + 2? Just the number.')
+
+      batch = wait_for RubyLLM.batch(chat)
+
+      expect(batch).to be_complete
+      expect(batch.messages.first.content).to include('4')
+      expect(chat.messages.map(&:role)).to eq(%i[user assistant])
+    end
+  end
+
   context "with openrouter/#{model_for(:openrouter, :batch)} attachments" do
     it 'reads a public image URL' do
       image_url = 'https://raw.githubusercontent.com/crmne/ruby_llm/main/spec/fixtures/ruby.png'
