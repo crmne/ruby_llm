@@ -31,7 +31,7 @@ The file may be a local path, an `http(s)` URL, an IO object, or a `RubyLLM::Att
 
 Mistral accepts PDFs, office documents, text files, and images. Cohere Parse accepts one image per request. Z.ai's `glm-ocr` reads PDFs, JPG, and PNG files, and because it isn't in the model catalog, it needs `provider: :zai, assume_model_exists: true`.
 
-On Vertex AI, `model: "mistral-ocr-2505", provider: :vertexai` reads the same formats. Enable the model in Model Garden first, and set `vertexai_location` to `us-central1` or `europe-west4`, because the `global` location doesn't serve it.
+On Vertex AI, `model: "mistral-ocr-2505", provider: :vertexai` reads the same formats. Enable the model in Model Garden first, and set `vertexai_location` to `us-central1` or `europe-west4`, because the `global` location doesn't serve it. This model ignores `table_format`, so tables stay in the markdown.
 
 ## Working with Pages
 
