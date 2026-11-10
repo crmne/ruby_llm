@@ -35,6 +35,21 @@ RSpec.describe RubyLLM::Protocols::ZAI::Files do
     expect { protocol.download('a.pdf') }.to raise_error(RubyLLM::Error, /does not support downloading/)
   end
 
+  it 'uploads an inline PDF on its own for a model that reads file ids', :live do
+    reply = RubyLLM.chat(model: 'glm-5.3-flash', provider: :zai)
+                   .ask('What is the title of this document?', with: pdf_path)
+
+    expect(reply.content).to match(/sample pdf/i)
+  end
+
+  it 'reads a PDF from a public URL', :live do
+    url = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
+
+    reply = RubyLLM.chat(model: 'glm-5.3-flash', provider: :zai).ask('What is the title of this document?', with: url)
+
+    expect(reply.content).to match(/dummy pdf/i)
+  end
+
   it 'uploads a PDF and answers from it in chat', :live do
     file = RubyLLM.upload(pdf_path, provider: :zai)
     expect(file).to have_attributes(filename: 'sample.pdf', purpose: 'user_data', byte_size: File.size(pdf_path))

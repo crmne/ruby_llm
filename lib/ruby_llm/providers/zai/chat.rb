@@ -12,12 +12,19 @@ module RubyLLM
         ).freeze
 
         # Search results come back only when the tool sets search_result.
+        FILE_MODEL_PREFIX = 'glm-5.3-flash'
+
         SERVER_TOOL_ALIASES = {
           web_search: lambda { |options|
             settings = { enable: true, search_result: true }.merge(Support::Utils.deep_symbolize_keys(options))
             { tool: { type: 'web_search', web_search: settings } }
           }
         }.freeze
+
+        # The GLM-5.3-Flash series is the one that reads files.
+        def self.reads_files?(model)
+          model&.id.to_s.start_with?(FILE_MODEL_PREFIX)
+        end
 
         module_function
 
@@ -66,6 +73,8 @@ module RubyLLM
         end
 
         def supported_attachment?(attachment)
+          return true if remote_pdf?(attachment)
+
           Protocols::ChatCompletions::Media.supported_attachment?(
             attachment, document_attachments: document_attachments(attachment), audio_attachments: false
           )
@@ -73,11 +82,18 @@ module RubyLLM
 
         def render_content(content, attachments = [])
           Protocols::ChatCompletions::Media.render_parts(content, attachments) do |attachment|
+            next { type: 'file', file: { file_url: attachment.source.to_s } } if remote_pdf?(attachment)
+
             Protocols::ChatCompletions::Media.render_attachment(
               attachment, document_attachments: document_attachments(attachment),
                           image_attachments: true, audio_attachments: false
             )
           end
+        end
+
+        # The API fetches a remote PDF itself.
+        def remote_pdf?(attachment)
+          attachment.url? && attachment.pdf? && Chat.reads_files?(@model)
         end
 
         # Files uploaded to Z.ai are referenced by id; other documents are not inlined.
