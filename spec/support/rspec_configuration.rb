@@ -28,6 +28,21 @@ RSpec.configure do |config|
     FileUtils.rm_f(cassette_path) if example.exception
   end
 
+  # Examples set RubyLLM.config directly, so each one gets back the values it
+  # started with: a retry count left behind otherwise reaches every later
+  # example in the same worker. Hashes and arrays are copied, since options
+  # such as file_converters are changed in place.
+  config.around do |example|
+    global = RubyLLM.config
+    saved = RubyLLM::Configuration.options.to_h do |key|
+      value = global.instance_variable_get(:"@#{key}")
+      [key, value.is_a?(Hash) || value.is_a?(Array) ? value.dup : value]
+    end
+    example.run
+  ensure
+    saved.each { |key, value| global.instance_variable_set(:"@#{key}", value) }
+  end
+
   # Connections, credentials, and confirmed provider files outlive a call,
   # so each example starts without the previous example's middleware,
   # adapters, tokens, and files.

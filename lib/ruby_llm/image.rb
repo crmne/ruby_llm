@@ -88,8 +88,10 @@ module RubyLLM
       queue = Array(fallbacks).flatten.compact.map { |fallback| Fallback.build(fallback) }
       operation = painting(model, provider:, assume_model_exists:, context:, owner:)
       begin
-        operation.run(prompt:, size:, count:, provider_options:, metadata:) do |provider_instance, image_model|
-          provider_instance.paint(prompt, model: image_model, size:, count:, with:, mask:, provider_options:)
+        with_fallback_ready(queue) do
+          operation.run(prompt:, size:, count:, provider_options:, metadata:) do |provider_instance, image_model|
+            provider_instance.paint(prompt, model: image_model, size:, count:, with:, mask:, provider_options:)
+          end
         end
       rescue StandardError => e
         raise unless Fallback.error?(e, Fallback::DEFAULT_ERRORS)
@@ -102,6 +104,17 @@ module RubyLLM
         retry
       end
     end
+
+    # While a fallback is left, a timeout, a failed connection, or a long
+    # retry wait moves on to it instead of retrying the same model, as
+    # Chat#with_fallbacks does. Every error the transport retries is one
+    # paint falls back on, so the fallback takes each of them.
+    def self.with_fallback_ready(queue, &)
+      return yield if queue.empty?
+
+      Transport::Connection.with_fallback_ready(->(_error) { true }, &)
+    end
+    private_class_method :with_fallback_ready
 
     def self.painting(model, provider:, context:, owner:, assume_model_exists: false, resolved: nil) # :nodoc:
       Accounting::Operation.new(
