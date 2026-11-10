@@ -24,8 +24,10 @@ RSpec.describe RubyLLM::TestHelper do
     expect(chat.ask('Hi').content).to eq('Hello there')
   end
 
-  %i[azure bedrock].each do |provider|
+  # Azure needs its endpoint before a request can even be built.
+  { azure: { azure_api_base: 'https://rubyllm.services.ai.azure.com' }, bedrock: {} }.each do |provider, settings|
     it "answers on #{provider}, which checks its own credentials" do
+      settings.each { |key, value| RubyLLM.config.public_send(:"#{key}=", value) }
       stub_replies 'Hello'
       chat = RubyLLM.chat(model: model_for(provider), provider:, assume_model_exists: true)
 

@@ -28,6 +28,17 @@ RSpec.configure do |config|
     FileUtils.rm_f(cassette_path) if example.exception
   end
 
+  # Examples set RubyLLM.config directly, so each one gets back the values it
+  # started with: a retry count left behind otherwise reaches every later
+  # example in the same worker.
+  config.around do |example|
+    global = RubyLLM.config
+    saved = RubyLLM::Configuration.options.to_h { |key| [key, global.instance_variable_get(:"@#{key}")] }
+    example.run
+  ensure
+    saved.each { |key, value| global.instance_variable_set(:"@#{key}", value) }
+  end
+
   # Connections, credentials, and confirmed provider files outlive a call,
   # so each example starts without the previous example's middleware,
   # adapters, tokens, and files.

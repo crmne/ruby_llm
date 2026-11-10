@@ -32,7 +32,7 @@ RSpec.describe RubyLLM::Image do
            usageMetadata: { promptTokenCount: 4, candidatesTokenCount: 9 } })
   end
 
-  def paint(**)
+  def paint(context: self.context, **)
     described_class.paint('A paper boat', model: openai_model, provider: :openai, context:, **)
   end
 
@@ -95,6 +95,54 @@ RSpec.describe RubyLLM::Image do
 
     expect { paint(fallbacks: [gemini_model]) }.to raise_error(RubyLLM::BadRequestError)
     expect(fallback).not_to have_been_requested
+  end
+
+  describe 'with retries configured' do
+    let(:retrying) do
+      RubyLLM.context do |config|
+        config.openai_api_key = 'test'
+        config.gemini_api_key = 'test'
+        config.max_retries = 2
+        config.instrumenter = instrumenter
+      end
+    end
+
+    # The waits are not slept, so the last model's long one costs nothing.
+    before do
+      allow(Faraday::Retry::Middleware).to receive(:new).and_wrap_original do |constructor, *args|
+        constructor.call(*args).tap { |middleware| allow(middleware).to receive(:sleep) }
+      end
+    end
+
+    def rate_limited_for(seconds)
+      rate_limited.merge(headers: { 'Content-Type' => 'application/json', 'Retry-After' => seconds })
+    end
+
+    it 'paints with the next model instead of waiting out a long Retry-After' do
+      openai = stub_request(:post, openai_url).to_return(rate_limited_for('20'))
+      stub_request(:post, gemini_url).to_return(gemini_image)
+
+      image = paint(fallbacks: [gemini_model], context: retrying)
+
+      expect(image.model).to eq(gemini_model)
+      expect(openai).to have_been_requested.once
+    end
+
+    it 'retries the same model when the wait is short' do
+      openai = stub_request(:post, openai_url).to_return(rate_limited_for('0.1'))
+      stub_request(:post, gemini_url).to_return(gemini_image)
+
+      expect(paint(fallbacks: [gemini_model], context: retrying).model).to eq(gemini_model)
+      expect(openai).to have_been_requested.times(3)
+    end
+
+    it 'waits out a long Retry-After on the last model' do
+      stub_request(:post, openai_url).to_return(rate_limited)
+      gemini = stub_request(:post, gemini_url).to_return(rate_limited_for('20'))
+
+      expect { paint(fallbacks: [gemini_model], context: retrying) }.to raise_error(RubyLLM::RateLimitError)
+      expect(gemini).to have_been_requested.times(3)
+    end
   end
 
   it 'raises the error without fallbacks, as before' do
