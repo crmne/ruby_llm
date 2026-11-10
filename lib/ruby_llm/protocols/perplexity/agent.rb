@@ -8,7 +8,20 @@ module RubyLLM
       # instructions, or a model in provider/model form.
       class Agent < Responses
         PRESETS = %w[fast low medium high xhigh wide-research].freeze
-        SERVER_TOOL_USAGE_NAMES = { 'search_web' => 'web_search', 'fetch_url' => 'web_fetch' }.freeze
+        SERVER_TOOL_ALIASES = Responses::SERVER_TOOL_ALIASES.merge(
+          web_fetch: { tool: { type: 'fetch_url' } },
+          code_execution: { tool: { type: 'sandbox' } },
+          code_interpreter: { tool: { type: 'sandbox' } }
+        ).freeze
+        SERVER_TOOL_USAGE_NAMES = {
+          'search_web' => 'web_search',
+          'fetch_url' => 'web_fetch',
+          'sandbox' => 'code_execution'
+        }.freeze
+
+        def server_tool_aliases
+          SERVER_TOOL_ALIASES
+        end
 
         def completion_url
           @provider.agent_url
