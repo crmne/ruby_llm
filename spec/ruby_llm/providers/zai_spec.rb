@@ -212,6 +212,67 @@ RSpec.describe RubyLLM::Providers::ZAI do
       expect(protocol.supported_attachment?(audio)).to be(false)
     end
 
+    context 'with an inline PDF' do
+      let(:chat_url) { 'https://api.z.ai/api/paas/v4/chat/completions' }
+
+      def pdf_path = File.expand_path('../../fixtures/sample.pdf', __dir__)
+
+      before do
+        stub_request(:post, 'https://api.z.ai/api/paas/v4/files').to_return(
+          status: 200,
+          body: { id: 'file-9', object: 'file', filename: 'sample.pdf', purpose: 'user_data', bytes: 3 }.to_json,
+          headers: { 'Content-Type' => 'application/json' }
+        )
+        stub_request(:post, chat_url).to_return(
+          status: 200,
+          body: { id: 'c', model: 'm', usage: { prompt_tokens: 1, completion_tokens: 1 },
+                  choices: [{ index: 0, finish_reason: 'stop', message: { role: 'assistant', content: 'ok' } }] }
+                .to_json,
+          headers: { 'Content-Type' => 'application/json' }
+        )
+      end
+
+      def zai_context(auto_upload: true)
+        RubyLLM.context do |config|
+          config.zai_api_key = 'test'
+          config.auto_upload_large_files = auto_upload
+        end
+      end
+
+      it 'uploads it and sends the file id' do
+        zai_context.chat(model: 'glm-5.3-flash', provider: :zai).ask('Read', with: pdf_path)
+
+        expect(a_request(:post, chat_url).with do |request|
+          JSON.parse(request.body).dig('messages', 0, 'content').include?(
+            { 'type' => 'file', 'file' => { 'file_id' => 'file-9' } }
+          )
+        end).to have_been_made
+      end
+
+      it 'raises on a model that cannot read a file id' do
+        chat = zai_context.chat(model: 'glm-5.2', provider: :zai, assume_model_exists: true)
+
+        expect { chat.ask('Read', with: pdf_path) }.to raise_error(RubyLLM::UnsupportedAttachmentError)
+        expect(a_request(:post, 'https://api.z.ai/api/paas/v4/files')).not_to have_been_made
+      end
+
+      it 'raises when automatic upload is off' do
+        chat = zai_context(auto_upload: false).chat(model: 'glm-5.3-flash', provider: :zai)
+
+        expect { chat.ask('Read', with: pdf_path) }.to raise_error(RubyLLM::UnsupportedAttachmentError)
+      end
+    end
+
+    it 'sends a PDF URL through on the series that reads files, and refuses it elsewhere' do
+      flash = described_class::ChatCompletions.new(provider, RubyLLM::Model.default('glm-5.3-flash', 'zai'))
+      other = described_class::ChatCompletions.new(provider, RubyLLM::Model.default('glm-5.2', 'zai'))
+      pdf = RubyLLM::Attachment.new('https://example.com/a.pdf')
+
+      expect(flash.send(:render_content, 'Read', [pdf]).last)
+        .to eq(type: 'file', file: { file_url: 'https://example.com/a.pdf' })
+      expect(other.send(:supported_attachment?, pdf)).to be(false)
+    end
+
     it 'rejects documents and audio' do
       pdf = RubyLLM::Attachment.new(File.expand_path('../../fixtures/sample.pdf', __dir__))
       audio = RubyLLM::Attachment.new(File.expand_path('../../fixtures/ruby.wav', __dir__))

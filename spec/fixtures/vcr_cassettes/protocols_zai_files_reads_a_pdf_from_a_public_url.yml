@@ -1,0 +1,66 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.z.ai/api/paas/v4/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"glm-5.3-flash","messages":[{"role":"user","content":[{"type":"text","text":"What
+        is the title of this document?"},{"type":"file","file":{"file_url":"https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"}}]}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Nov 2026 15:17:20 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - 695837909476f2745214590d340639aa
+      Vary:
+      - Accept-Encoding
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 20261110231711427f660010684ca6
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"The
+        title of this document is **\"Dummy PDF file\"**.\n\nThis is the only text
+        content on the page, appearing as a heading near the top of the document.
+        The rest of the page is blank, and the rest of the page is blank.","reasoning_content":"The
+        user is asking about the title of a document. Looking at the provided information:\n-
+        Document name: dummy.pdf\n- The image shows the text \"Dummy PDF file\" as
+        the only content on the page\n- The parse result confirms: \"Dummy PDF file\"\n\nThe
+        title of the document appears to be \"Dummy PDF file\" based on the content
+        shown in the image. The document itself contains only this single line of
+        text.","role":"assistant"}}],"created":1794323840,"id":"20261110231711427f660010684ca6","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261110231711427f660010684ca6","usage":{"completion_tokens":141,"completion_tokens_details":{"reasoning_tokens":87},"prompt_tokens":1660,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":1801}}'
+  recorded_at: Tue, 10 Nov 2026 15:17:20 GMT
+recorded_with: VCR 6.4.1
