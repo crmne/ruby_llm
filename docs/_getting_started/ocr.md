@@ -33,6 +33,8 @@ Mistral accepts PDFs, office documents, text files, and images. Cohere Parse acc
 
 On Vertex AI, `model: "mistral-ocr-2505", provider: :vertexai` reads the same formats. Enable the model in Model Garden first, and set `vertexai_location` to `us-central1` or `europe-west4`, because the `global` location doesn't serve it. This model ignores `table_format`, so tables stay in the markdown.
 
+On Azure, deploy `mistral-document-ai-2512` in Foundry and pass its deployment name with `provider: :azure`. See [Azure Deployments]({% link _reference/configuration-providers.md %}#azure-deployments) for the endpoint and credentials.
+
 ## Working with Pages
 
 `RubyLLM.ocr` returns a `RubyLLM::OCR` result. `#markdown` joins every page; `#pages` gives you each page separately:

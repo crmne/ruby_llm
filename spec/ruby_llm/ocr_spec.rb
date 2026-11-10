@@ -62,6 +62,15 @@ RSpec.describe RubyLLM::OCR, :live do
       expect(ocr.usage['pages_processed']).to eq(1)
     end
 
+    it 'azure/mistral-document-ai-2512 extracts markdown from a PDF' do
+      ocr = RubyLLM.ocr(pdf_path, model: 'mistral-document-ai-2512', provider: :azure)
+
+      expect(ocr.pages.length).to eq(1)
+      expect(ocr.markdown).to match(/sample pdf/i)
+      expect(ocr.model).to eq('mistral-document-ai-2512')
+      expect(ocr.usage['pages_processed']).to eq(1)
+    end
+
     it 'uses the default OCR model when none is given' do
       ocr = RubyLLM.ocr(pdf_path)
 
