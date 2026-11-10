@@ -11,6 +11,17 @@ module RubyLLM
           web_search: { tool: { type: 'web_search_20250305', name: 'web_search' } }
         }.freeze
 
+        def render_payload(messages, tools:, schema: nil, tool_prefs: nil, **)
+          raise ArgumentError, "MiniMax's Messages API has no structured output" if schema
+          raise ArgumentError, 'MiniMax does not accept calls: :one' if tools.any? && tool_prefs&.dig(:calls) == :one
+
+          super
+        end
+
+        def render_count_tokens_payload(messages, tool_prefs: nil, **)
+          super(messages, **, schema: nil, tool_prefs: tool_prefs&.except(:calls))
+        end
+
         def server_tool_aliases
           SERVER_TOOL_ALIASES
         end

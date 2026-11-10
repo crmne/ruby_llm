@@ -310,7 +310,7 @@ A WAV file for streamed transcription whose odd final chunk has no pad byte is n
 
 ## Chat Options a Provider Cannot Carry Raise
 
-These chat options were dropped, or downgraded with a log line. They now raise when the request is built.
+These chat options were dropped, ignored by the provider, or downgraded with a log line. They now raise when the request is built.
 
 | Option | Raises on | Do instead |
 | --- | --- | --- |
@@ -319,6 +319,8 @@ These chat options were dropped, or downgraded with a log line. They now raise w
 | `with_thinking(effort: :high, display: :full)` | Gemini | Use `display: :summarized` or `display: :omitted` |
 | `with_tool_options(choice: :none)` with tools | Bedrock Converse | Remove the tools |
 | `with_tool_options(calls: :one)` | Mistral Conversations | Use Chat Completions |
+| `with_schema` | MiniMax | Use a provider with structured output |
+| `with_tool_options(calls: :one)` | MiniMax, Moonshot, Z.ai | Remove `calls: :one`; these APIs have no such setting |
 | `with_caching(id:)` | Gemini Interactions | Use the default protocol |
 | `with_caching(ttl:)` or `with_caching(id:)` | Cohere | Use bare `with_caching`; Cohere caches on its own |
 | System attachments | Gemini Interactions | Attach to a user message |

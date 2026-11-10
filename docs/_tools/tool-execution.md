@@ -77,7 +77,7 @@ chat.with_tools(Weather, Calculator).with_tool_options(calls: :one)
 chat.with_tools(Weather, Calculator).with_tool_options(calls: 1)
 ```
 
-Without `calls:`, the provider's default applies. OpenAI and Anthropic honor `calls: :one`; Gemini can still return several calls. Multiple calls run sequentially unless you enable [concurrent execution](#concurrent-tool-execution).
+Without `calls:`, the provider's default applies. OpenAI and Anthropic honor `calls: :one`; Gemini can still return several calls. MiniMax, Moonshot, and Z.ai have no such setting, so `calls: :one` raises `ArgumentError` on them. Multiple calls run sequentially unless you enable [concurrent execution](#concurrent-tool-execution).
 
 ### Clearing Tools and Options
 

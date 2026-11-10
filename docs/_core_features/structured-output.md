@@ -152,7 +152,7 @@ RubyLLM.models.find("{{ site.models.default_chat }}").supports?(:structured_outp
 RubyLLM.models.chat_models.select { |model| model.supports?(:structured_output) }
 ```
 
-Support varies by model and deployment. A provider can reject a schema or an unsupported JSON Schema keyword. Anthropic document citations cannot be combined with structured output.
+Support varies by model and deployment. A provider can reject a schema or an unsupported JSON Schema keyword. Anthropic document citations cannot be combined with structured output. MiniMax's M3 models ignore a schema, so `with_schema` raises `ArgumentError` on MiniMax.
 
 DeepSeek requires `protocol: :responses` to enforce a schema. Its default Chat Completions protocol raises `ArgumentError`:
 
