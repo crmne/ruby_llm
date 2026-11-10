@@ -1,0 +1,323 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/files
+    body:
+      encoding: UTF-8
+      string: "-------------RubyMultipartPost-ff2be0c6e5ffe646c73e125df5ab7190\r\nContent-Disposition:
+        form-data; name=\"purpose\"\r\n\r\nbatch\r\n-------------RubyMultipartPost-ff2be0c6e5ffe646c73e125df5ab7190\r\nContent-Disposition:
+        form-data; name=\"file\"; filename=\"ruby_llm_batch.jsonl\"\r\nContent-Length:
+        164\r\nContent-Type: application/jsonl\r\nContent-Transfer-Encoding: binary\r\n\r\n{\"custom_id\":\"0\",\"method\":\"POST\",\"url\":\"/v1/chat/completions\",\"body\":{\"model\":\"kimi-k2.6\",\"messages\":[{\"role\":\"user\",\"content\":\"What
+        is 2 + 2? Just the number.\"}]}}\r\n-------------RubyMultipartPost-ff2be0c6e5ffe646c73e125df5ab7190--\r\n"
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - multipart/form-data; boundary=-----------RubyMultipartPost-ff2be0c6e5ffe646c73e125df5ab7190
+      Content-Length:
+      - '589'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Nov 2026 15:00:12 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 6dc7b08d-dd17-11f1-bca3-00163e603a82
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 832b19bf0d7fef9627bdaf87a2b01687
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch-6af3317c90c3fa000ccdbd32","object":"file","bytes":164,"created_at":1794322812,"filename":"ruby_llm_batch.jsonl","purpose":"batch","status":"created","status_details":""}'
+  recorded_at: Tue, 10 Nov 2026 15:00:12 GMT
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/batches
+    body:
+      encoding: UTF-8
+      string: '{"input_file_id":"batch-6af3317c90c3fa000ccdbd32","endpoint":"/v1/chat/completions","completion_window":"24h"}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Nov 2026 15:00:12 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 6deb38cb-dd17-11f1-b86c-00163e7a3687
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - b89304df0b4d642f83ef69ea68da4f65
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af3317c90c3fa000ccdbd34","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af3317c90c3fa000ccdbd32","completion_window":"24h","status":"validating","created_at":1794322812,"expires_at":1794409212,"request_counts":{"completed":0,"failed":0,"total":1}}'
+  recorded_at: Tue, 10 Nov 2026 15:00:12 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af3317c90c3fa000ccdbd34
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Nov 2026 15:02:12 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - b5a38422-dd17-11f1-bca3-00163e603a82
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 1fc3ded832cabc9f0bc63abafaf3d8cb
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af3317c90c3fa000ccdbd34","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af3317c90c3fa000ccdbd32","completion_window":"24h","status":"completed","output_file_id":"batch-6af3319737f19400013908ab","created_at":1794322812,"in_progress_at":1794322831,"finalizing_at":1794322839,"completed_at":1794322868,"expires_at":1794409212,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Tue, 10 Nov 2026 15:02:12 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af3317c90c3fa000ccdbd34
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Nov 2026 15:02:12 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - b5c8d9ca-dd17-11f1-b649-00163e4c88ae
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 84917fcf32142c377479596407bc5e37
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af3317c90c3fa000ccdbd34","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af3317c90c3fa000ccdbd32","completion_window":"24h","status":"completed","output_file_id":"batch-6af3319737f19400013908ab","created_at":1794322812,"in_progress_at":1794322831,"finalizing_at":1794322839,"completed_at":1794322868,"expires_at":1794409212,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Tue, 10 Nov 2026 15:02:13 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/files/batch-6af3319737f19400013908ab/content
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept:
+      - application/octet-stream
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Nov 2026 15:02:13 GMT
+      Content-Type:
+      - text/plain
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - b5ec88a5-dd17-11f1-a3c5-00163e63708b
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      X-Msh-Trace-Id:
+      - d5495bfaa1782972a3d184bdbeee4321
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"0","custom_id":"0","error":null,"response":{"request_id":"chatcmpl-6af331929d1d7bb286ab9ad8","status_code":200,"body":{"id":"chatcmpl-6af331929d1d7bb286ab9ad8","object":"chat.completion","created":1794322834,"model":"kimi-k2.6","choices":[{"index":0,"message":{"role":"assistant","content":"4","reasoning_content":"The
+        user is asking for the answer to 2 + 2, and specifically requests \"Just the
+        number.\" This is a straightforward mathematical question. The answer is 4.
+        I should provide only the number without any additional text or explanation
+        to comply with the user''s request.\n\nWait, let me check if there are any
+        tricks or alternative interpretations. Sometimes people joke about 2 + 2 being
+        5 in some contexts (like Orwell''s 1984, or rounding in certain mathematical
+        contexts), but the literal arithmetic answer is 4. The user asked for \"just
+        the number,\" so I should literally output:\n\n4\n\nNo punctuation, no explanation,
+        just the digit."},"finish_reason":"stop"}],"usage":{"prompt_tokens":19,"completion_tokens":139,"total_tokens":158,"completion_tokens_details":{"reasoning_tokens":136}}}}}'
+  recorded_at: Tue, 10 Nov 2026 15:02:13 GMT
+recorded_with: VCR 6.4.1

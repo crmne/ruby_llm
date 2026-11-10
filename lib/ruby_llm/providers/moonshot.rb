@@ -10,7 +10,7 @@ module RubyLLM
         include Moonshot::Documents
       end
 
-      protocol :chat_completions, ChatCompletions
+      protocol :chat_completions, ChatCompletions, batches: Protocols::ChatCompletions::Batches
       protocol :responses, Moonshot::Responses
       protocol :files, Protocols::Moonshot::Files
 
@@ -25,6 +25,8 @@ module RubyLLM
       def account_identity
         account_digest(api_base, @config.moonshot_api_key)
       end
+
+      def batch_cost_multiplier(**) = 0.6
 
       class << self
         def open_telemetry_name # :nodoc:
