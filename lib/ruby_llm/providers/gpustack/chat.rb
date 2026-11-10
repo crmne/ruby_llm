@@ -16,10 +16,16 @@ module RubyLLM
         end
 
         # vLLM truncates the rendered prompt to its last tokens. It summarizes
-        # nothing, and the cut can reach the system prompt.
+        # nothing, and the cut can reach the system prompt. Truncating to the
+        # model's own limit without an output limit leaves no room to answer,
+        # and vLLM rejects the request.
         def apply_compaction(payload, compaction)
           log_ignored_compaction_options(compaction)
-          payload.merge(truncate_prompt_tokens: compaction.fetch(:at, -1), truncation_side: 'left')
+          limit = compaction[:at] || (-1 if payload.key?(:max_tokens))
+          return payload.merge(truncate_prompt_tokens: limit, truncation_side: 'left') if limit
+
+          RubyLLM.logger.debug { "#{@provider.name} needs at: or an output limit to truncate, not truncating" }
+          payload
         end
 
         def log_ignored_compaction_options(compaction)
