@@ -698,6 +698,49 @@ RSpec.describe RubyLLM::Chat, :live do
     end
   end
 
+  describe 'perplexity hosted tools' do
+    let(:chat) { RubyLLM.chat(model: model_for(:perplexity), provider: :perplexity) }
+
+    it 'renders the web fetch and code execution aliases as its own tools' do
+      payload = chat.with_provider_tools(:web_fetch, :code_execution).render
+
+      expect(payload[:tools]).to eq([{ type: 'fetch_url' }, { type: 'sandbox' }])
+    end
+
+    it 'fetches a public page and counts the fetch' do
+      response = chat.with_provider_tools(:web_fetch).ask(
+        'Use fetch_url to read https://www.ruby-lang.org/en/news/2024/12/25/ruby-3-4-0-released/. ' \
+        'Which parser does that release make the default? One word.'
+      )
+
+      expect(response.content).to match(/Prism/i)
+      expect(response.server_tool_calls).to include(have_attributes(type: 'fetch_url_results'))
+      expect(response.tokens.server_tool_use).to eq('web_fetch_requests' => 1)
+    end
+
+    it 'runs code in its sandbox and continues from the local transcript' do
+      response = chat.with_provider_tools(:code_execution).ask(
+        'Use the sandbox to compute 123456789 * 987654321. Reply with only the product.'
+      )
+
+      expect(response.content).to include('121932631112635269')
+      expect(response.server_tool_calls).to include(have_attributes(type: 'sandbox_results'))
+      expect(response.tokens.server_tool_use).to eq('code_execution_requests' => 1)
+      expect(chat.ask('Without running anything, what was the result?').content).to include('121932631112635269')
+    end
+
+    it 'streams a sandbox run' do
+      chunks = []
+      response = chat.with_provider_tools(:code_execution).ask('Use the sandbox to multiply 37 by 19.') do |chunk|
+        chunks << chunk
+      end
+
+      expect(chunks.filter_map(&:content).join).to eq(response.content)
+      expect(response.content).to include('703')
+      expect(response.server_tool_calls).to include(have_attributes(type: 'sandbox_results'))
+    end
+  end
+
   describe 'code execution' do
     context "with bedrock/#{model_for(:bedrock)}" do
       let(:chat) do
