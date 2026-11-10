@@ -1,0 +1,194 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/responses"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","input":[{"role":"user","content":"Search the web:
+        what is the latest stable Ruby version? Answer in one short sentence."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"web_search"}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 10 Nov 2026 16:16:47 GMT
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"id":"resp_284661","object":"response","created_at":1794327407,"completed_at":1794327407,"status":"completed","incomplete_details":null,"model":"qwen3","previous_response_id":null,"instructions":null,"output":[{"id":"rs_presearch","type":"reasoning","summary":[{"type":"summary_text","text":"Okay,
+        the user is asking for the latest stable Ruby version. I need to find that
+        information. Let me think about how to approach this.\n\nFirst, I remember
+        that Ruby versions are managed by the Ruby Language Team. The latest stable
+        version as of my last update was 3.2, but that might not be the most current.
+        Since the user wants the latest, I should check the official Ruby website
+        or their GitHub repository. \n\nWait, the tools provided include a web search
+        function. I should use that to get the most up-to-date information. The query
+        should be straightforward: \"latest stable Ruby version\". Let me make sure
+        to phrase it correctly for the search. \n\nI need to execute the web_search
+        function with the query \"latest stable Ruby version\". Once I get the results,
+        I''ll look for the official announcement or the Ruby 3.2.x release notes.
+        But maybe there''s a newer version like 3.3.0 or 3.2.3. Let me check the search
+        results. \n\nWait, as of my knowledge cutoff in October 2023, the latest was
+        3.2.3. But if there''s a newer one, the search will confirm. Let me proceed
+        with the search to ensure accuracy.\n"}],"encrypted_content":"Okay, the user
+        is asking for the latest stable Ruby version. I need to find that information.
+        Let me think about how to approach this.\n\nFirst, I remember that Ruby versions
+        are managed by the Ruby Language Team. The latest stable version as of my
+        last update was 3.2, but that might not be the most current. Since the user
+        wants the latest, I should check the official Ruby website or their GitHub
+        repository. \n\nWait, the tools provided include a web search function. I
+        should use that to get the most up-to-date information. The query should be
+        straightforward: \"latest stable Ruby version\". Let me make sure to phrase
+        it correctly for the search. \n\nI need to execute the web_search function
+        with the query \"latest stable Ruby version\". Once I get the results, I''ll
+        look for the official announcement or the Ruby 3.2.x release notes. But maybe
+        there''s a newer version like 3.3.0 or 3.2.3. Let me check the search results.
+        \n\nWait, as of my knowledge cutoff in October 2023, the latest was 3.2.3.
+        But if there''s a newer one, the search will confirm. Let me proceed with
+        the search to ensure accuracy.\n"},{"id":"ws_284661_1","type":"web_search_call","status":"completed","action":{"type":"search","query":"latest
+        stable Ruby version"}},{"id":"rs_resp_284661","type":"reasoning","summary":[{"type":"summary_text","text":"Okay,
+        let me figure out the latest stable Ruby version. The user asked for the latest
+        stable version, so I need to check the official sources.\n\nLooking at the
+        web search results, the first link is the Ruby Releases page. On that page,
+        there''s a table listing various Ruby versions. The top entry is Ruby 4.0.9
+        with a release date of 2026-10-23. Then there''s Ruby 3.4.12 and 3.3.13 with
+        the same date. \n\nAnother page mentions Ruby 4.0.9 was released on October
+        23, 2026. The Homebrew formulae list also shows stable version 4.0.9. The
+        2026 archives confirm that Ruby 4.0.9 was released on October 23, 2026. \n\nSo,
+        the latest stable version as of now is Ruby 4.0.9. I should make sure there''s
+        no newer version listed, but the table and the news posts all point to 4.0.9
+        being the latest. The preview versions like 4.1.0-preview1 are not stable
+        yet. Therefore, the answer is Ruby 4.0.9.\n"}],"encrypted_content":"Okay,
+        let me figure out the latest stable Ruby version. The user asked for the latest
+        stable version, so I need to check the official sources.\n\nLooking at the
+        web search results, the first link is the Ruby Releases page. On that page,
+        there''s a table listing various Ruby versions. The top entry is Ruby 4.0.9
+        with a release date of 2026-10-23. Then there''s Ruby 3.4.12 and 3.3.13 with
+        the same date. \n\nAnother page mentions Ruby 4.0.9 was released on October
+        23, 2026. The Homebrew formulae list also shows stable version 4.0.9. The
+        2026 archives confirm that Ruby 4.0.9 was released on October 23, 2026. \n\nSo,
+        the latest stable version as of now is Ruby 4.0.9. I should make sure there''s
+        no newer version listed, but the table and the news posts all point to 4.0.9
+        being the latest. The preview versions like 4.1.0-preview1 are not stable
+        yet. Therefore, the answer is Ruby 4.0.9.\n"},{"id":"msg_101457","type":"message","status":"completed","role":"assistant","content":[{"type":"output_text","text":"The
+        latest stable Ruby version is **Ruby 4.0.9**, released on October 23, 2026.","annotations":[],"logprobs":[]}]}],"error":null,"tools":[{"type":"web_search"}],"tool_choice":"auto","truncation":"disabled","parallel_tool_calls":true,"text":{"format":{"type":"text"}},"top_p":1,"presence_penalty":0,"frequency_penalty":0,"top_logprobs":0,"temperature":1,"reasoning":null,"usage":{"input_tokens":12185,"output_tokens":579,"total_tokens":12764,"input_tokens_details":{"cached_tokens":312},"output_tokens_details":{"reasoning_tokens":0}},"max_output_tokens":null,"max_tool_calls":null,"store":false,"background":false,"service_tier":"default","metadata":{},"safety_identifier":null,"prompt_cache_key":null}
+
+        '
+  recorded_at: Tue, 10 Nov 2026 16:16:47 GMT
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/responses"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","input":[{"role":"user","content":"Search the web:
+        what is the latest stable Ruby version? Answer in one short sentence."},{"id":"rs_presearch","type":"reasoning","summary":[{"type":"summary_text","text":"Okay,
+        the user is asking for the latest stable Ruby version. I need to find that
+        information. Let me think about how to approach this.\n\nFirst, I remember
+        that Ruby versions are managed by the Ruby Language Team. The latest stable
+        version as of my last update was 3.2, but that might not be the most current.
+        Since the user wants the latest, I should check the official Ruby website
+        or their GitHub repository. \n\nWait, the tools provided include a web search
+        function. I should use that to get the most up-to-date information. The query
+        should be straightforward: \"latest stable Ruby version\". Let me make sure
+        to phrase it correctly for the search. \n\nI need to execute the web_search
+        function with the query \"latest stable Ruby version\". Once I get the results,
+        I''ll look for the official announcement or the Ruby 3.2.x release notes.
+        But maybe there''s a newer version like 3.3.0 or 3.2.3. Let me check the search
+        results. \n\nWait, as of my knowledge cutoff in October 2023, the latest was
+        3.2.3. But if there''s a newer one, the search will confirm. Let me proceed
+        with the search to ensure accuracy.\n"}],"encrypted_content":"Okay, the user
+        is asking for the latest stable Ruby version. I need to find that information.
+        Let me think about how to approach this.\n\nFirst, I remember that Ruby versions
+        are managed by the Ruby Language Team. The latest stable version as of my
+        last update was 3.2, but that might not be the most current. Since the user
+        wants the latest, I should check the official Ruby website or their GitHub
+        repository. \n\nWait, the tools provided include a web search function. I
+        should use that to get the most up-to-date information. The query should be
+        straightforward: \"latest stable Ruby version\". Let me make sure to phrase
+        it correctly for the search. \n\nI need to execute the web_search function
+        with the query \"latest stable Ruby version\". Once I get the results, I''ll
+        look for the official announcement or the Ruby 3.2.x release notes. But maybe
+        there''s a newer version like 3.3.0 or 3.2.3. Let me check the search results.
+        \n\nWait, as of my knowledge cutoff in October 2023, the latest was 3.2.3.
+        But if there''s a newer one, the search will confirm. Let me proceed with
+        the search to ensure accuracy.\n"},{"id":"ws_284661_1","type":"web_search_call","status":"completed","action":{"type":"search","query":"latest
+        stable Ruby version"}},{"id":"rs_resp_284661","type":"reasoning","summary":[{"type":"summary_text","text":"Okay,
+        let me figure out the latest stable Ruby version. The user asked for the latest
+        stable version, so I need to check the official sources.\n\nLooking at the
+        web search results, the first link is the Ruby Releases page. On that page,
+        there''s a table listing various Ruby versions. The top entry is Ruby 4.0.9
+        with a release date of 2026-10-23. Then there''s Ruby 3.4.12 and 3.3.13 with
+        the same date. \n\nAnother page mentions Ruby 4.0.9 was released on October
+        23, 2026. The Homebrew formulae list also shows stable version 4.0.9. The
+        2026 archives confirm that Ruby 4.0.9 was released on October 23, 2026. \n\nSo,
+        the latest stable version as of now is Ruby 4.0.9. I should make sure there''s
+        no newer version listed, but the table and the news posts all point to 4.0.9
+        being the latest. The preview versions like 4.1.0-preview1 are not stable
+        yet. Therefore, the answer is Ruby 4.0.9.\n"}],"encrypted_content":"Okay,
+        let me figure out the latest stable Ruby version. The user asked for the latest
+        stable version, so I need to check the official sources.\n\nLooking at the
+        web search results, the first link is the Ruby Releases page. On that page,
+        there''s a table listing various Ruby versions. The top entry is Ruby 4.0.9
+        with a release date of 2026-10-23. Then there''s Ruby 3.4.12 and 3.3.13 with
+        the same date. \n\nAnother page mentions Ruby 4.0.9 was released on October
+        23, 2026. The Homebrew formulae list also shows stable version 4.0.9. The
+        2026 archives confirm that Ruby 4.0.9 was released on October 23, 2026. \n\nSo,
+        the latest stable version as of now is Ruby 4.0.9. I should make sure there''s
+        no newer version listed, but the table and the news posts all point to 4.0.9
+        being the latest. The preview versions like 4.1.0-preview1 are not stable
+        yet. Therefore, the answer is Ruby 4.0.9.\n"},{"id":"msg_101457","type":"message","status":"completed","role":"assistant","content":[{"type":"output_text","text":"The
+        latest stable Ruby version is **Ruby 4.0.9**, released on October 23, 2026.","annotations":[],"logprobs":[]}]},{"role":"user","content":"Reply
+        with only the major version number from your answer."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"web_search"}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 10 Nov 2026 16:16:48 GMT
+      Content-Length:
+      - '1895'
+    body:
+      encoding: UTF-8
+      string: '{"id":"resp_131129","object":"response","created_at":1794327408,"completed_at":1794327408,"status":"completed","incomplete_details":null,"model":"qwen3","previous_response_id":null,"instructions":null,"output":[{"id":"rs_resp_131129","type":"reasoning","summary":[{"type":"summary_text","text":"Okay,
+        the user asked for the latest stable Ruby version and I provided it as Ruby
+        4.0.9. Now they want just the major version number. The major version is the
+        first number in the version string, which is 4 here. So I should reply with
+        \"4\" alone. Let me make sure there''s no other part of the answer that needs
+        to be included. The user specified to reply with only the major version, so
+        yes, just \"4\" is correct.\n"}],"encrypted_content":"Okay, the user asked
+        for the latest stable Ruby version and I provided it as Ruby 4.0.9. Now they
+        want just the major version number. The major version is the first number
+        in the version string, which is 4 here. So I should reply with \"4\" alone.
+        Let me make sure there''s no other part of the answer that needs to be included.
+        The user specified to reply with only the major version, so yes, just \"4\"
+        is correct.\n"},{"id":"msg_254644","type":"message","status":"completed","role":"assistant","content":[{"type":"output_text","text":"4","annotations":[],"logprobs":[]}]}],"error":null,"tools":[{"type":"web_search"}],"tool_choice":"auto","truncation":"disabled","parallel_tool_calls":true,"text":{"format":{"type":"text"}},"top_p":1,"presence_penalty":0,"frequency_penalty":0,"top_logprobs":0,"temperature":1,"reasoning":null,"usage":{"input_tokens":205,"output_tokens":106,"total_tokens":311,"input_tokens_details":{"cached_tokens":149},"output_tokens_details":{"reasoning_tokens":0}},"max_output_tokens":null,"max_tool_calls":null,"store":false,"background":false,"service_tier":"default","metadata":{},"safety_identifier":null,"prompt_cache_key":null}
+
+        '
+  recorded_at: Tue, 10 Nov 2026 16:16:48 GMT
+recorded_with: VCR 6.4.1
