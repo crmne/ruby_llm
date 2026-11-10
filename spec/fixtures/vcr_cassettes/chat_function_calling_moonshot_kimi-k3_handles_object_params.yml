@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 06 Nov 2026 16:30:51 GMT
+      - Tue, 10 Nov 2026 17:41:26 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -46,7 +46,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - 6be61a55-d9ff-11f1-8fe3-00163e09d8c2
+      - ee7f8d6a-dd2d-11f1-b768-00163e05d0f4
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -58,7 +58,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - c2bebcaceb6092d1f4ace94349e32db3
+      - 195749417d5d6c79ebbe7b886ce65cf8
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -69,8 +69,9 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-f2388097-b22b-91dc-ad9a-a3645b73e925","object":"chat.completion","created":1793982647,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"object_params_0_92a24232","type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}],"reasoning_content":"The
+      string: '{"id":"chatcmpl-1842ac19-386d-9466-b538-911cae8c54c4","object":"chat.completion","created":1794332477,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        call the `object_params` tool with the specified window.","tool_calls":[{"index":0,"id":"object_params_0_58b80eed","type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}],"reasoning_content":"The
         user wants me to call the object_params tool with a window that has start
-        \"2025-01-01\" and end \"2025-01-02\". Let me make that call."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":238,"completion_tokens":110,"total_tokens":348,"completion_tokens_details":{"reasoning_tokens":40},"prompt_tokens_details":{"cache_write_tokens":0}}}'
-  recorded_at: Fri, 06 Nov 2026 16:30:51 GMT
+        \"2025-01-01\" and end \"2025-01-02\", and include the result in my response."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":238,"completion_tokens":125,"total_tokens":363,"completion_tokens_details":{"reasoning_tokens":42},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Tue, 10 Nov 2026 17:41:26 GMT
 recorded_with: VCR 6.4.1

@@ -9,7 +9,7 @@ http_interactions:
         the weather in Berlin? (52.5200, 13.4050)"}],"stream":false,"tool_choice":"none"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Http-Referer:
@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:20:00 GMT
+      - Tue, 10 Nov 2026 17:54:33 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,9 +38,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1791753599-yIGIjpdV4todJzO0tEEO
+      - gen-1794333272-28X8JJYBpT6TFG92Azf8
       Access-Control-Expose-Headers:
-      - X-Generation-Id,X-Provider-Name,request-id,cf-ray
+      - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
+      X-Openrouter-Release:
+      - api;11e69a63-8b87-4321-b835-a27e03c5ff81
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -54,16 +56,18 @@ http_interactions:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n{\"id\":\"gen-1791753599-yIGIjpdV4todJzO0tEEO\",\"object\":\"chat.completion\",\"created\":1791753599,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
+      string: "\n         \n{\"id\":\"gen-1794333272-28X8JJYBpT6TFG92Azf8\",\"object\":\"chat.completion\",\"created\":1794333272,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
         Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"I
-        don't have access to real-time weather data or the ability to check current
-        conditions. To find out the weather in Berlin, I'd recommend:\\n\\n1. **Weather
-        websites**: weather.com, weather.de, or your local weather service\\n2. **Google
-        Search**: Just search \\\"Berlin weather\\\"\\n3. **Weather apps**: Most smartphone
-        weather apps will show current conditions\\n4. **German meteorological service**:
-        Deutscher Wetterdienst (DWD)\\n\\nIf you let me know what time period you're
-        interested in, I can discuss typical Berlin weather patterns for that season!\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":26,\"completion_tokens\":129,\"total_tokens\":155,\"cost\":0.000671,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.000671,\"upstream_inference_prompt_cost\":0.000026,\"upstream_inference_completions_cost\":0.000645},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Sun, 11 Oct 2026 21:20:01 GMT
-recorded_with: VCR 6.4.0
+        don't have access to real-time weather data or the internet, so I can't tell
+        you the current weather in Berlin.\\n\\nTo check the weather, you can use:\\n-
+        **Weather websites**: weather.com, weather.gov, or your local meteorological
+        service\\n- **Search engines**: Google \\\"Berlin weather\\\"\\n- **Weather
+        apps**: Apple Weather, Weather.com app, AccuWeather, etc.\\n- **Local sources**:
+        Deutscher Wetterdienst (DWD) - Germany's national weather service\\n\\nIs
+        there anything else about Berlin I can help you with?\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":26,\"completion_tokens\":130,\"total_tokens\":156,\"cost\":0.000676,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.000676,\"upstream_inference_prompt_cost\":0.000026,\"upstream_inference_completions_cost\":0.00065},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Tue, 10 Nov 2026 17:54:34 GMT
+recorded_with: VCR 6.4.1

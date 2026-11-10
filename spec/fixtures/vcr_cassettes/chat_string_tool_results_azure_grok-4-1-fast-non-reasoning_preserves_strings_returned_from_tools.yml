@@ -11,7 +11,7 @@ http_interactions:
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -28,7 +28,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 Oct 2026 21:17:55 GMT
+      - Tue, 10 Nov 2026 17:51:01 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -45,14 +45,16 @@ http_interactions:
       - 'true'
       X-Xai-Model-Address:
       - http://localhost:9988
+      X-Watermark:
+      - 'false'
       Traceparent:
-      - 00-bf6486e52770a7c65adc0f6b319e103b-9ad7958c0006b862-00
+      - 00-2a947b45cf39af4558512f158d12aec0-989605ba0001e60d-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - 494555c6-4c63-4e62-a5a6-f85350e880aa
+      - 9348ad21-26d9-4441-827d-9d3141c76ee5
       Azureml-Model-Session:
-      - d20261009040854-b7570cce
+      - d20261110015917-e7d4cb48
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -86,7 +88,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - 494555c6-4c63-4e62-a5a6-f85350e880aa
+      - 9348ad21-26d9-4441-827d-9d3141c76ee5
+      X-Http2-Stream-Id:
+      - '851'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -95,22 +99,22 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"27542121-c851-4a21-bddb-46e5c260a1e8","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_46776036","index":0,"type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
-        data\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":208,"completion_tokens":27,"total_tokens":235,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":314,"audio_tokens":0,"text_tokens":208,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1791753476,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Sun, 11 Oct 2026 21:17:56 GMT
+      string: '{"id":"<X_REQUEST_ID>","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_90510145","index":0,"type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":376,"completion_tokens":27,"total_tokens":403,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":314,"audio_tokens":0,"text_tokens":376,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794333062,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Tue, 10 Nov 2026 17:51:03 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
     body:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"Process
-        this query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"call_46776036","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
-        data\"}"}}]},{"role":"tool","content":"Processed: test data","tool_call_id":"call_46776036"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        this query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"call_90510145","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}]},{"role":"tool","content":"Processed: test data","tool_call_id":"call_90510145"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
         a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -127,7 +131,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 Oct 2026 21:17:56 GMT
+      - Tue, 10 Nov 2026 17:51:03 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -144,14 +148,16 @@ http_interactions:
       - 'true'
       X-Xai-Model-Address:
       - http://localhost:9988
+      X-Watermark:
+      - 'false'
       Traceparent:
-      - 00-72c55c2fe2573c28556afa7ea5fafc6c-87fd4db200069794-00
+      - 00-51f350284a00aa71d20a311b88085714-e6bf0259000266a2-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - 34f94ae2-294f-4635-8c1e-eaa2c75ab904
+      - 76890ba8-a3a1-433a-bd2d-3edcad328a07
       Azureml-Model-Session:
-      - d20261009040854-b7570cce
+      - d20261110015917-e7d4cb48
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -185,7 +191,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - 34f94ae2-294f-4635-8c1e-eaa2c75ab904
+      - 76890ba8-a3a1-433a-bd2d-3edcad328a07
+      X-Http2-Stream-Id:
+      - '63'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -194,7 +202,7 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"9eee7c8f-cbd1-43e7-b98b-842d3737be8a","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"Processed:
-        test data"},"finish_reason":"stop"}],"usage":{"prompt_tokens":250,"completion_tokens":4,"total_tokens":254,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":376,"audio_tokens":0,"text_tokens":250,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1791753476,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Sun, 11 Oct 2026 21:17:56 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"<X_REQUEST_ID>","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"Processed:
+        test data"},"finish_reason":"stop"}],"usage":{"prompt_tokens":418,"completion_tokens":4,"total_tokens":422,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":376,"audio_tokens":0,"text_tokens":418,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794333063,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Tue, 10 Nov 2026 17:51:03 GMT
+recorded_with: VCR 6.4.1

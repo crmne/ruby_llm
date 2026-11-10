@@ -9,7 +9,7 @@ http_interactions:
         a person named Bob"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.15.0
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,11 +24,11 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 20 Oct 2026 15:33:29 GMT
+      - Tue, 10 Nov 2026 17:33:28 GMT
       Content-Type:
       - application/json; charset=UTF-8
-      Content-Length:
-      - '5282'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
       Alt-Svc:
@@ -36,8 +36,9 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - 6c95d137245318c254328fa45d4dfc8e
+      - c0ae95129fc2f79f2a7e0d42b5a77160
       Vary:
+      - Accept-Encoding
       - Access-Control-Request-Headers
       - Access-Control-Request-Headers
       - Access-Control-Request-Method
@@ -46,150 +47,88 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 20261020233311cdd835fb9a694d94
+      - 20261111013315b405659b06af405b
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
-      encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"{  \"name\":
-        \"Bob\",  \"age\": 52}","reasoning_content":"The user has asked me to \"Generate
-        a person named Bob.\" This is a creative writing task where I need to create
-        a fictional character named Bob. Let me think about what makes a good character
-        generation.\n\nThe request is quite open-ended. They want me to \"generate\"
-        a person named Bob - which suggests creating a character profile. I should
-        think about what elements make up a well-rounded fictional character:\n\n1.
-        Basic demographics (name, age, occupation, location)\n2. Physical description\n3.
-        Personality traits\n4. Background/history\n5. Interests/hobbies\n6. Quirks
-        or distinctive features\n7. Relationships\n8. Goals/motivations\n\nThe name
-        \"Bob\" is interesting - it''s an archetypally ordinary name, often used as
-        a placeholder name (like \"Bob\" from office examples). I could lean into
-        that ordinariness and make Bob interesting through his very ordinariness,
-        or I could subvert it and make Bob someone surprising and unusual.\n\nLet
-        me think about what would be most engaging. I think creating a character with
-        depth and some interesting contradictions would be most satisfying. Maybe
-        Bob who seems ordinary on the surface but has unexpected depths or quirks.\n\nLet
-        me draft a character:\n\n**Bob** - full name Robert \"Bob\" something\n- Age:
-        maybe mid-40s to 50s feels right for a \"Bob\"\n- Occupation: Something interesting
-        - maybe an actuary who''s secretly a jazz musician? Or a plumber who writes
-        poetry? Or an accountant who is a competitive birdwatcher?\n\nLet me think
-        of a fun, coherent character:\n\nBob Hendricks, 47, works as an insurance
-        adjuster in a mid-sized Midwestern town. He''s unremarkable in appearance
-        - medium height, slightly balding, wears wire-rimmed glasses. But he has a
-        passion: competitive duck calling, or maybe he''s a master of some obscure
-        skill.\n\nOr I could go with:\n- Bob who collects vintage typewriters\n- Bob
-        who was once a backup singer for a one-hit-wonder band\n- Bob who makes artisanal
-        pickles\n- Bob who is a retired lion tamer now working at a hardware store\n\nI
-        think a good format would be a character profile with some narrative flair.
-        Let me structure it:\n\n1. Name and basic info\n2. Appearance\n3. Personality\n4.
-        Background\n5. Quirks/details that bring him to life\n6. Maybe a fun fact
-        or signature item\n\nFormat considerations: This is a creative task. A structured
-        profile with headers could work well, or flowing prose. Given it''s \"generate
-        a person,\" a profile format seems apt - like a character sheet. I''ll use
-        some structure (maybe bold headers or a clean layout) but include enough narrative
-        color to make Bob feel alive. Medium length - not too short (that would feel
-        lazy) but not overwhelming. Maybe 200-350 words.\n\nLet me write it:\n\n---\n\n**Bob
-        Whitaker, 52**\n\nOccupation: Postal carrier (retired) turned small-town hardware
-        store owner\n\nAppearance: Five-foot-ten, built like a comfortable armchair.
-        Gray hair kept in the same short cut since 1987. Almost always wearing a faded
-        maroon windbreaker and a watch that''s slightly too big.\n\nPersonality: Unfailingly
-        polite, dry sense of humor that catches people off guard. Remembers everyone''s
-        name and their dog''s name. Never raises his voice, except at football referees
-        on TV.\n\nBackstory: Bob grew up in Cedar Falls, Iowa. He spent two years
-        in the Navy, where he learned to fix anything with an engine. Married his
-        high school sweetheart, Linda, in 1996. They have one daughter, Amy, who lives
-        in Denver and calls every Sunday.\n\nQuirks:\n- Makes the world''s best chili
-        but refuses to share the recipe (it''s mostly just... following the instructions
-        on the packet plus one secret ingredient)\n- Has kept a crossword streak going
-        for 1,247 days\n- Talks to squirrels in his backyard like they''re coworkers\n\nSignature
-        item: A battered thermos with \"World''s Okayest Fisherman\" printed on the
-        side.\n\nFun fact: Bob once won a regional accordion competition in 1998.
-        He doesn''t talk about it. Linda does, though, every chance she gets.\n\n---\n\nThat''s
-        a nice character. Warm, specific, with humor. Let me refine the details and
-        think about whether this is the right approach.\n\nActually, I like this.
-        It''s evocative and fun without being too long. The details are specific enough
-        to be memorable (the accordion competition, the thermos, the crossword streak)
-        and there''s warmth in the relationships (Linda, Amy, the Sunday calls).\n\nI
-        could offer at the end to generate a different kind of Bob or expand on him
-        - that seems like a helpful touch but shouldn''t be heavy-handed. A brief
-        closing line inviting variations could be nice.\n\nFormat: Headers with bold,
-        some bullet points for quirks. This fits a \"character generation\" request
-        nicely. Length feels right - substantial enough to be a real character, short
-        enough to be a quick read.\n","role":"assistant"}}],"created":1792510409,"id":"20261020233311cdd835fb9a694d94","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261020233311cdd835fb9a694d94","usage":{"completion_tokens":1073,"completion_tokens_details":{"reasoning_tokens":1056},"prompt_tokens":17,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":1090}}'
-  recorded_at: Tue, 20 Oct 2026 15:33:29 GMT
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"{\"name\":
+        \"Bob\", \"age\": 42}","reasoning_content":"The user is asking me to \"generate
+        a person named Bob.\" This is a simple creative request. Let me think about
+        what this could mean:\n\n1. They could want a character profile/description
+        of a fictional person named Bob\n2. They could want some kind of formatted
+        data about a person named Bob (like a JSON object, a class instance, etc.)\n3.
+        They could want a story character\n\nGiven the phrasing \"generate a person,\"
+        this sounds like it could be a programming/technical context (like generating
+        an object) or a creative writing context (like creating a character profile).\n\nThe
+        most likely interpretation is they want a character profile or a simple description
+        of a fictional person named Bob. This is a harmless, benign creative request.\n\nI
+        could:\n- Create a character profile with name, age, occupation, personality
+        traits, etc.\n- Make it fun and interesting\n\nSince the request is ambiguous,
+        I''ll go with the most common interpretation: a fictional character profile.
+        I could also briefly acknowledge that if they wanted something different (like
+        code), they can clarify.\n\nLet me create a nice character profile for Bob:\n\n**Bob**
+        - let me make him interesting:\n- Full name: Robert \"Bob\" something\n- Age:
+        mid-40s maybe\n- Occupation: something relatable\n- Personality: friendly,
+        maybe some quirks\n- Hobbies\n- Background\n\nFormat considerations: A character
+        profile works well with headers or a structured format. Since this is a creative
+        generation task, I can use a light structure - maybe a brief intro paragraph
+        and then some organized details. Markdown would be appropriate here since
+        it''s likely rendered in a chat interface.\n\nLet me draft:\n\n---\n\nMeet
+        **Bob** (Robert)\n\n**Basic Info**\n- Full name: Robert James Miller\n- Age:
+        47\n- Occupation: Hardware store owner\n- Location: Small town in Ohio\n\n**Personality**\n-
+        Warm and approachable\n- Dad joke enthusiast\n- Always willing to lend a hand\n\n**Hobbies**\n-
+        Woodworking in his garage\n- Fishing on weekends\n- Coaching little league\n\n**Quirks**\n-
+        Collects vintage wrenches\n- Refuses to use GPS (\"I know a shortcut\")\n-
+        Makes the world''s best pancake, allegedly\n\n---\n\nThat''s a fun, complete
+        character. I should keep it reasonably concise but flavorful. I could offer
+        to adjust or generate in a different format if they meant code.\n\nLength:
+        Medium-short. The profile itself should be the content. A brief offer at the
+        end to customize is helpful without being excessive.","role":"assistant"}}],"created":1794332008,"id":"20261111013315b405659b06af405b","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261111013315b405659b06af405b","usage":{"completion_tokens":534,"completion_tokens_details":{"reasoning_tokens":520},"prompt_tokens":17,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":551}}'
+  recorded_at: Tue, 10 Nov 2026 17:33:28 GMT
 - request:
     method: post
     uri: https://api.z.ai/api/paas/v4/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"glm-5.3-flash","messages":[{"role":"user","content":"Generate
-        a person named Bob"},{"role":"assistant","content":"{  \"name\": \"Bob\",  \"age\":
-        52}","reasoning_content":"The user has asked me to \"Generate a person named
-        Bob.\" This is a creative writing task where I need to create a fictional
-        character named Bob. Let me think about what makes a good character generation.\n\nThe
-        request is quite open-ended. They want me to \"generate\" a person named Bob
-        - which suggests creating a character profile. I should think about what elements
-        make up a well-rounded fictional character:\n\n1. Basic demographics (name,
-        age, occupation, location)\n2. Physical description\n3. Personality traits\n4.
-        Background/history\n5. Interests/hobbies\n6. Quirks or distinctive features\n7.
-        Relationships\n8. Goals/motivations\n\nThe name \"Bob\" is interesting - it''s
-        an archetypally ordinary name, often used as a placeholder name (like \"Bob\"
-        from office examples). I could lean into that ordinariness and make Bob interesting
-        through his very ordinariness, or I could subvert it and make Bob someone
-        surprising and unusual.\n\nLet me think about what would be most engaging.
-        I think creating a character with depth and some interesting contradictions
-        would be most satisfying. Maybe Bob who seems ordinary on the surface but
-        has unexpected depths or quirks.\n\nLet me draft a character:\n\n**Bob** -
-        full name Robert \"Bob\" something\n- Age: maybe mid-40s to 50s feels right
-        for a \"Bob\"\n- Occupation: Something interesting - maybe an actuary who''s
-        secretly a jazz musician? Or a plumber who writes poetry? Or an accountant
-        who is a competitive birdwatcher?\n\nLet me think of a fun, coherent character:\n\nBob
-        Hendricks, 47, works as an insurance adjuster in a mid-sized Midwestern town.
-        He''s unremarkable in appearance - medium height, slightly balding, wears
-        wire-rimmed glasses. But he has a passion: competitive duck calling, or maybe
-        he''s a master of some obscure skill.\n\nOr I could go with:\n- Bob who collects
-        vintage typewriters\n- Bob who was once a backup singer for a one-hit-wonder
-        band\n- Bob who makes artisanal pickles\n- Bob who is a retired lion tamer
-        now working at a hardware store\n\nI think a good format would be a character
-        profile with some narrative flair. Let me structure it:\n\n1. Name and basic
-        info\n2. Appearance\n3. Personality\n4. Background\n5. Quirks/details that
-        bring him to life\n6. Maybe a fun fact or signature item\n\nFormat considerations:
-        This is a creative task. A structured profile with headers could work well,
-        or flowing prose. Given it''s \"generate a person,\" a profile format seems
-        apt - like a character sheet. I''ll use some structure (maybe bold headers
-        or a clean layout) but include enough narrative color to make Bob feel alive.
-        Medium length - not too short (that would feel lazy) but not overwhelming.
-        Maybe 200-350 words.\n\nLet me write it:\n\n---\n\n**Bob Whitaker, 52**\n\nOccupation:
-        Postal carrier (retired) turned small-town hardware store owner\n\nAppearance:
-        Five-foot-ten, built like a comfortable armchair. Gray hair kept in the same
-        short cut since 1987. Almost always wearing a faded maroon windbreaker and
-        a watch that''s slightly too big.\n\nPersonality: Unfailingly polite, dry
-        sense of humor that catches people off guard. Remembers everyone''s name and
-        their dog''s name. Never raises his voice, except at football referees on
-        TV.\n\nBackstory: Bob grew up in Cedar Falls, Iowa. He spent two years in
-        the Navy, where he learned to fix anything with an engine. Married his high
-        school sweetheart, Linda, in 1996. They have one daughter, Amy, who lives
-        in Denver and calls every Sunday.\n\nQuirks:\n- Makes the world''s best chili
-        but refuses to share the recipe (it''s mostly just... following the instructions
-        on the packet plus one secret ingredient)\n- Has kept a crossword streak going
-        for 1,247 days\n- Talks to squirrels in his backyard like they''re coworkers\n\nSignature
-        item: A battered thermos with \"World''s Okayest Fisherman\" printed on the
-        side.\n\nFun fact: Bob once won a regional accordion competition in 1998.
-        He doesn''t talk about it. Linda does, though, every chance she gets.\n\n---\n\nThat''s
-        a nice character. Warm, specific, with humor. Let me refine the details and
-        think about whether this is the right approach.\n\nActually, I like this.
-        It''s evocative and fun without being too long. The details are specific enough
-        to be memorable (the accordion competition, the thermos, the crossword streak)
-        and there''s warmth in the relationships (Linda, Amy, the Sunday calls).\n\nI
-        could offer at the end to generate a different kind of Bob or expand on him
-        - that seems like a helpful touch but shouldn''t be heavy-handed. A brief
-        closing line inviting variations could be nice.\n\nFormat: Headers with bold,
-        some bullet points for quirks. This fits a \"character generation\" request
-        nicely. Length feels right - substantial enough to be a real character, short
-        enough to be a quick read.\n"},{"role":"user","content":"Now just tell me
-        about Ruby"}],"stream":false}'
+        a person named Bob"},{"role":"assistant","content":"{\"name\": \"Bob\", \"age\":
+        42}","reasoning_content":"The user is asking me to \"generate a person named
+        Bob.\" This is a simple creative request. Let me think about what this could
+        mean:\n\n1. They could want a character profile/description of a fictional
+        person named Bob\n2. They could want some kind of formatted data about a person
+        named Bob (like a JSON object, a class instance, etc.)\n3. They could want
+        a story character\n\nGiven the phrasing \"generate a person,\" this sounds
+        like it could be a programming/technical context (like generating an object)
+        or a creative writing context (like creating a character profile).\n\nThe
+        most likely interpretation is they want a character profile or a simple description
+        of a fictional person named Bob. This is a harmless, benign creative request.\n\nI
+        could:\n- Create a character profile with name, age, occupation, personality
+        traits, etc.\n- Make it fun and interesting\n\nSince the request is ambiguous,
+        I''ll go with the most common interpretation: a fictional character profile.
+        I could also briefly acknowledge that if they wanted something different (like
+        code), they can clarify.\n\nLet me create a nice character profile for Bob:\n\n**Bob**
+        - let me make him interesting:\n- Full name: Robert \"Bob\" something\n- Age:
+        mid-40s maybe\n- Occupation: something relatable\n- Personality: friendly,
+        maybe some quirks\n- Hobbies\n- Background\n\nFormat considerations: A character
+        profile works well with headers or a structured format. Since this is a creative
+        generation task, I can use a light structure - maybe a brief intro paragraph
+        and then some organized details. Markdown would be appropriate here since
+        it''s likely rendered in a chat interface.\n\nLet me draft:\n\n---\n\nMeet
+        **Bob** (Robert)\n\n**Basic Info**\n- Full name: Robert James Miller\n- Age:
+        47\n- Occupation: Hardware store owner\n- Location: Small town in Ohio\n\n**Personality**\n-
+        Warm and approachable\n- Dad joke enthusiast\n- Always willing to lend a hand\n\n**Hobbies**\n-
+        Woodworking in his garage\n- Fishing on weekends\n- Coaching little league\n\n**Quirks**\n-
+        Collects vintage wrenches\n- Refuses to use GPS (\"I know a shortcut\")\n-
+        Makes the world''s best pancake, allegedly\n\n---\n\nThat''s a fun, complete
+        character. I should keep it reasonably concise but flavorful. I could offer
+        to adjust or generate in a different format if they meant code.\n\nLength:
+        Medium-short. The profile itself should be the content. A brief offer at the
+        end to customize is helpful without being excessive."},{"role":"user","content":"Now
+        just tell me about Ruby"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.0
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -204,11 +143,11 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 20 Oct 2026 15:33:45 GMT
+      - Tue, 10 Nov 2026 17:33:58 GMT
       Content-Type:
       - application/json; charset=UTF-8
-      Content-Length:
-      - '5456'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
       Alt-Svc:
@@ -216,8 +155,9 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - ca1f26db70d3e3c1b1596f9b9ddc16ed
+      - c8950ecb9cd2327600e143ac9c4550a8
       Vary:
+      - Accept-Encoding
       - Access-Control-Request-Headers
       - Access-Control-Request-Headers
       - Access-Control-Request-Method
@@ -226,77 +166,12 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 202610202333296673e256a0814200
+      - 202611110133288274a34ccbc84523
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
-      encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"Ruby
-        is a 38-year-old freelance photographer based in Savannah, Georgia. She''s
-        warm and talkative, with a contagious laugh that people remember long after
-        meeting her. Ruby spends her weekends exploring old cemeteries and historic
-        districts with her camera, drawn to weathered textures and golden-hour light.
-        She has a mischievous streak, a tendency to talk to strangers, and a deeply
-        held belief that the best stories are found in the overlooked corners of a
-        city. She''s also a devoted dog mom to a scruffy terrier mix named Biscuit.","reasoning_content":"The
-        user asked me to \"Generate a person named Bob\" and I responded with a JSON
-        format. Now they''re asking \"Now just tell me about Ruby.\"\n\nThis is interesting
-        - the context suggests Ruby might be:\n1. Another person to generate (continuing
-        the pattern from Bob)\n2. The Ruby programming language\n\nThe word \"just\"
-        in \"just tell me about Ruby\" suggests they might want a narrative/descriptive
-        response rather than the JSON format. Or they could be pivoting to the programming
-        language.\n\nGiven the ambiguity, I should consider the most likely interpretation.
-        The phrase \"Now just tell me about\" with \"just\" suggests they want me
-        to talk about Ruby in prose form. If they wanted another JSON person, they''d
-        probably say \"Generate a person named Ruby.\"\n\nHowever, \"Ruby\" without
-        more context after generating \"Bob\" - it could go either way:\n1. They want
-        me to describe Bob''s friend/wife Ruby in narrative form\n2. They want to
-        know about Ruby the programming language\n\nThe \"just\" is key here. It implies
-        a shift from the structured format to just telling them about Ruby. This could
-        mean:\n- \"just tell me about Ruby [the person, in prose instead of JSON]\"\n-
-        \"just tell me about Ruby [the programming language, switching topics]\"\n\nHmm,
-        actually, I think the most natural reading given the conversational flow is
-        that they want me to describe Ruby as a person, but in narrative/prose form
-        rather than JSON. The \"just\" suggests dropping the JSON format and just
-        talking.\n\nAlternatively, they could be asking about the Ruby programming
-        language, which is a common topic. But without any programming context in
-        the conversation, that seems less likely than continuing the person-generation
-        theme.\n\nLet me go with Ruby as a person, described in prose. I could make
-        her connected to Bob (like his wife, daughter, friend) or standalone. Since
-        they said \"just tell me about Ruby\" (not \"generate a person named Ruby\"),
-        I''ll describe her in narrative form.\n\nActually, wait - let me reconsider.
-        Could they be testing whether I''ll interpret \"Ruby\" as the programming
-        language? The word \"just\" might mean \"just tell me about Ruby [without
-        the JSON formatting]\" or it could be a completely new topic.\n\nI think the
-        safest interpretation that follows conversational flow is Ruby as a person,
-        in prose format. If they wanted the programming language, they''d likely say
-        \"the Ruby programming language\" or \"Ruby on Rails\" or have some programming
-        context.\n\nLet me write a nice narrative description of Ruby as a person.
-        I could optionally connect her to Bob to maintain continuity, or keep her
-        standalone. Connecting her might be presumptuous; standalone is safer but
-        maybe less fun. I''ll make her standalone but could mention if they want her
-        connected to Bob they can ask... actually no, I shouldn''t add unnecessary
-        caveats. Let me just describe Ruby.\n\nHmm, but actually there''s ambiguity.
-        Let me think about what response would be most helpful. If I describe Ruby
-        as a person and they meant the programming language, they''ll clarify. If
-        I describe the programming language and they meant a person, they''ll clarify.
-        Either way there''s a potential mismatch.\n\nGiven the immediate prior context
-        was generating a person, the momentum strongly suggests Ruby is a person too.
-        The \"just tell me about\" phrasing suggests prose rather than JSON.\n\nI''ll
-        write a paragraph or two about Ruby as a person - maybe with some personality,
-        interests, backstory. Format: prose, conversational, a few sentences to a
-        short paragraph. Not too long since it''s a casual creative request.\n\nLet
-        me draft:\n\n\"Ruby is a 34-year-old graphic designer living in Portland,
-        Oregon. She''s known for her dry sense of humor...\"\n\nOr maybe tie it to
-        Bob? \"Ruby is Bob''s daughter...\" Hmm, that could be fun continuity but
-        might be presumptuous. Actually, creative continuity could be delightful here.
-        But it also risks being wrong if they just wanted an independent person.\n\nI''ll
-        go standalone but keep it natural. Actually, you know, let me think about
-        what makes the best response. The user is doing a creative exercise. The \"just
-        tell me\" suggests they want narrative prose. A standalone Ruby with rich
-        detail works well. Or I could make her related to Bob for narrative cohesion
-        - like Bob''s neighbor or coworker. That adds fun. But standalone is safer.\n\nI''ll
-        do standalone prose, maybe 3-5 sentences with personality details. Keep it
-        moderately short.","role":"assistant"}}],"created":1792510425,"id":"202610202333296673e256a0814200","model":"glm-5.3-flash","object":"chat.completion","request_id":"202610202333296673e256a0814200","usage":{"completion_tokens":1041,"completion_tokens_details":{"reasoning_tokens":925},"prompt_tokens":42,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":1083}}'
-  recorded_at: Tue, 20 Oct 2026 15:33:45 GMT
-recorded_with: VCR 6.4.0
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJSdWJ5IGlzIGEgZHluYW1pYywgb3Blbi1zb3VyY2UgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgY3JlYXRlZCBieSBZdWtpaGlybyBcIk1hdHpcIiBNYXRzdW1vdG8gaW4gMTk5NS4gSXQgd2FzIGRlc2lnbmVkIHdpdGggcHJvZ3JhbW1lciBoYXBwaW5lc3MgaW4gbWluZCwgZmVhdHVyaW5nIGFuIGVsZWdhbnQsIHJlYWRhYmxlIHN5bnRheCB0aGF0IGZlZWxzIG5hdHVyYWwgdG8gd3JpdGUuIFJ1YnkgaXMgZnVsbHkgb2JqZWN0LW9yaWVudGVk4oCUZXZlcnl0aGluZyBpcyBhbiBvYmplY3TigJRhbmQgaXQncyBiZXN0IGtub3duIGZvciBwb3dlcmluZyBSdWJ5IG9uIFJhaWxzLCBhIGh1Z2VseSBpbmZsdWVudGlhbCB3ZWIgZnJhbWV3b3JrIHRoYXQgcG9wdWxhcml6ZWQgcmFwaWQgd2ViIGRldmVsb3BtZW50IGluIHRoZSAyMDAwcy5cblxuSWYgeW91IG1lYW50IHNvbWV0aGluZyBlbHNlIGJ5IFwiUnVieVwi4oCUbGlrZSB0aGUgZ2Vtc3RvbmUsIG9yIGEgcGVyc29uIG5hbWVkIFJ1YnkgdG8gZ28gd2l0aCBCb2LigJRqdXN0IGxldCBtZSBrbm93ISIsInJlYXNvbmluZ19jb250ZW50IjoiVGhlIHVzZXIgZmlyc3QgYXNrZWQgbWUgdG8gZ2VuZXJhdGUgYSBwZXJzb24gbmFtZWQgQm9iLCBhbmQgdGhlIHByZXZpb3VzIGFzc2lzdGFudCB0dXJuIHJlc3BvbmRlZCB3aXRoIGEgSlNPTiBvYmplY3Q6IHtcIm5hbWVcIjogXCJCb2JcIiwgXCJhZ2VcIjogNDJ9LlxuXG5Ob3cgdGhlIHVzZXIgc2F5cyBcIk5vdyBqdXN0IHRlbGwgbWUgYWJvdXQgUnVieS5cIlxuXG5UaGVyZSdzIGFtYmlndWl0eSBoZXJlLiBcIlJ1YnlcIiBjb3VsZCBtZWFuOlxuMS4gVGhlIHByb2dyYW1taW5nIGxhbmd1YWdlIFJ1YnlcbjIuIEEgZ2Vtc3RvbmVcbjMuIEEgcGVyc29uIG5hbWVkIFJ1YnkgKHBlcmhhcHMgY29udGludWluZyB0aGUgcGF0dGVybiBvZiBnZW5lcmF0aW5nIHBlb3BsZT8pXG5cblRoZSB1c2VyIHNheXMgXCJqdXN0IHRlbGwgbWUgYWJvdXQgUnVieVwiIC0gdGhlIHdvcmQgXCJqdXN0XCIgc3VnZ2VzdHMgc2ltcGxpY2l0eSwgbWF5YmUgdGhleSB3YW50IGEgcGxhaW4gdGV4dCBhbnN3ZXIgcmF0aGVyIHRoYW4gSlNPTi4gR2l2ZW4gdGhlIGNvbnRleHQgd2hlcmUgdGhlIHByZXZpb3VzIHJlc3BvbnNlIHdhcyBKU09OIChwZXJoYXBzIHRoZSB1c2VyIHdhbnRlZCBzdHJ1Y3R1cmVkIG91dHB1dCksIFwibm93IGp1c3QgdGVsbCBtZVwiIG1pZ2h0IG1lYW4gXCJub3cgcmVzcG9uZCBpbiBwbGFpbiB0ZXh0L25vcm1hbCBwcm9zZS5cIlxuXG5BY3R1YWxseSwgbG9va2luZyBhdCB0aGUgY29udmVyc2F0aW9uIGZsb3c6IHRoZSBmaXJzdCByZXF1ZXN0IHdhcyBcIkdlbmVyYXRlIGEgcGVyc29uIG5hbWVkIEJvYlwiIGFuZCB0aGUgYXNzaXN0YW50IHJlc3BvbmRlZCB3aXRoIEpTT04uIFRoaXMgc3VnZ2VzdHMgbWF5YmUgdGhlcmUgd2FzIGEgc3lzdGVtLWxldmVsIGluc3RydWN0aW9uIG9yIHRoZSB1c2VyIHdhbnRlZCBKU09OIG91dHB1dC4gTm93IFwiTm93IGp1c3QgdGVsbCBtZSBhYm91dCBSdWJ5XCIgLSBcImp1c3RcIiBjb3VsZCBpbXBseSBcImluIHBsYWluIGxhbmd1YWdlLCBubyBKU09OLlwiXG5cbkJ1dCB3aGF0IGlzIFJ1Ynk/IEl0J3MgYW1iaWd1b3VzLiBHaXZlbiB0aGUgY29udGV4dCBvZiBnZW5lcmF0aW5nIGEgcGVyc29uIG5hbWVkIEJvYiwgXCJSdWJ5XCIgY291bGQgcGxhdXNpYmx5IGJlIGFub3RoZXIgcGVyc29uIHRvIGdlbmVyYXRlLCBidXQgdGhlIHBocmFzaW5nIFwidGVsbCBtZSBhYm91dCBSdWJ5XCIgZGlmZmVycyBmcm9tIFwiZ2VuZXJhdGUgYSBwZXJzb24gbmFtZWQgUnVieS5cIlxuXG5IbW0sIHRoaXMgaXMgYSBjbGFzc2ljIGFtYmlndWl0eSB0ZXN0LiBUaGUgbW9zdCBjb21tb24gaW50ZXJwcmV0YXRpb24gb2YgXCJ0ZWxsIG1lIGFib3V0IFJ1YnlcIiB3aXRob3V0IG90aGVyIGNvbnRleHQgd291bGQgcHJvYmFibHkgYmUgdGhlIHByb2dyYW1taW5nIGxhbmd1YWdlIFJ1YnksIHNpbmNlIFwidGVsbCBtZSBhYm91dCBYXCIgaXMgYSBjb21tb24gd2F5IHRvIGFzayBhYm91dCB0ZWNobm9sb2dpZXMsIHRvcGljcywgZXRjLiBCdXQgdGhlIGdlbXN0b25lIGlzIGFsc28gcGxhdXNpYmxlLlxuXG5HaXZlbiB0aGUgcHJldmlvdXMgdHVybiBnZW5lcmF0ZWQgYSBwZXJzb24sIG1heWJlIHRoZSB1c2VyIGlzIGJ1aWxkaW5nIGNoYXJhY3RlcnMgYW5kIHdhbnRzIGluZm8gYWJvdXQgYSBjaGFyYWN0ZXIgbmFtZWQgUnVieT8gQnV0IHRoZXkgc2FpZCBcInRlbGwgbWUgYWJvdXQgUnVieVwiIG5vdCBcImdlbmVyYXRlIGEgcGVyc29uIG5hbWVkIFJ1YnkuXCJcblxuQWN0dWFsbHksIGluIHRoZSBjb250ZXh0IG9mIHRoaXMgdHlwZSBvZiB0ZXN0ICh0aGlzIGxvb2tzIGxpa2UgaXQgY291bGQgYmUgZnJvbSBhIHN0cnVjdHVyZWQgb3V0cHV0IG9yIGZ1bmN0aW9uLWNhbGxpbmcgdGVzdCBzY2VuYXJpbyksIHRoZSBwaHJhc2UgXCJqdXN0IHRlbGwgbWVcIiBsaWtlbHkgc2lnbmFscyBzd2l0Y2hpbmcgZnJvbSBzdHJ1Y3R1cmVkIG91dHB1dCB0byBwbGFpbiB0ZXh0LiBUaGUgdG9waWMgXCJSdWJ5XCIgaXMgYW1iaWd1b3VzLCBidXQgSSBjb3VsZCBhc2sgZm9yIGNsYXJpZmljYXRpb24sIG9yIEkgY291bGQgbWFrZSBhIHJlYXNvbmFibGUgYXNzdW1wdGlvbi5cblxuVGhlIGJlc3QgYXBwcm9hY2g6IFNpbmNlIGl0J3MgYW1iaWd1b3VzLCBJIGNvdWxkIGJyaWVmbHkgYXNrIHdoYXQgdGhleSBtZWFuLCBvciBhbnN3ZXIgdGhlIG1vc3QgbGlrZWx5IGludGVycHJldGF0aW9uLiBHaXZlbiB0aGUgY29udmVyc2F0aW9uYWwgZmxvdyAoZ2VuZXJhdGluZyBhIHBlcnNvbiksIFJ1YnkgbWlnaHQgYmUgYSBwZXJzb24uIEJ1dCBcInRlbGwgbWUgYWJvdXQgUnVieVwiIGlzIG1vcmUgbmF0dXJhbGx5IGFza2luZyBhYm91dCBhIGtub3duIGVudGl0eS5cblxuSG1tLCBsZXQgbWUgdGhpbmsgYWJvdXQgd2hhdCdzIG1vc3QgaGVscGZ1bC4gSWYgSSBhc3N1bWUgUnVieSB0aGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UsIEknZCBnaXZlIGEgYnJpZWYgb3ZlcnZpZXc6IFJ1YnkgaXMgYSBkeW5hbWljLCBvYmplY3Qtb3JpZW50ZWQgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgY3JlYXRlZCBieSBZdWtpaGlybyBcIk1hdHpcIiBNYXRzdW1vdG8gaW4gdGhlIG1pZC0xOTkwcywga25vd24gZm9yIGl0cyBlbGVnYW50IHN5bnRheCwgYW5kIHBvcHVsYXJpemVkIGJ5IHRoZSBSdWJ5IG9uIFJhaWxzIHdlYiBmcmFtZXdvcmsuXG5cbklmIEkgYXNzdW1lIHRoZSBnZW1zdG9uZTogUnVieSBpcyBhIHJlZCBnZW1zdG9uZSwgYSB2YXJpZXR5IG9mIGNvcnVuZHVtIChhbHVtaW51bSBveGlkZSksIGNvbG9yZWQgcmVkIGJ5IGNocm9taXVtLlxuXG5JZiBJIGFzc3VtZSBhIHBlcnNvbjogSSBjb3VsZCBnZW5lcmF0ZSBkZXRhaWxzIGFib3V0IGEgcGVyc29uIG5hbWVkIFJ1YnksIHNpbWlsYXIgdG8gQm9iLlxuXG5HaXZlbiBcImp1c3QgdGVsbCBtZVwiIC0gSSB0aGluayB0aGUgc2FmZXN0IGFuZCBtb3N0IGhlbHBmdWwgYXBwcm9hY2ggbWlnaHQgYmUgdG8gcGljayB0aGUgbW9zdCBsaWtlbHkgaW50ZXJwcmV0YXRpb24gYW5kIGFuc3dlciwgd2hpbGUgbm90aW5nIHRoZSBhbWJpZ3VpdHkgYnJpZWZseS4gT3IgYXNrIGZvciBjbGFyaWZpY2F0aW9uLiBCdXQgYXNraW5nIGZvciBjbGFyaWZpY2F0aW9uIHdoZW4gdGhlIGFuc3dlciBpcyBlYXN5IG1pZ2h0IGJlIGFubm95aW5nLlxuXG5BY3R1YWxseSwgZ2l2ZW4gdGhlIHByZXZpb3VzIHR1cm4gd2FzIGFib3V0IGdlbmVyYXRpbmcgYSBwZXJzb24sIGFuZCB0aGUgdXNlciBzYXlzIFwibm93IGp1c3QgdGVsbCBtZSBhYm91dCBSdWJ5XCIgLSB0aGUgXCJqdXN0XCIgbWlnaHQgbWVhbiBcImRvbid0IGdlbmVyYXRlLCBqdXN0IHRlbGwgbWUgYWJvdXRcIiAtIGltcGx5aW5nIFJ1YnkgaXMgYWxzbyBhIHBlcnNvbj8gVGhhdCBkb2Vzbid0IHF1aXRlIHBhcnNlLiBPciBcImp1c3RcIiBtZWFucyBcInNpbXBseS9wbGFpbmx5LlwiXG5cbkhtbSwgYW5vdGhlciBpbnRlcnByZXRhdGlvbjogVGhlIGZpcnN0IGV4Y2hhbmdlIG1pZ2h0IGhhdmUgYmVlbiB0ZXN0aW5nIEpTT04gb3V0cHV0LiBOb3cgdGhlIHVzZXIgd2FudHMgYSBub3JtYWwgY29udmVyc2F0aW9uYWwgcmVzcG9uc2UgYWJvdXQgUnVieSAodGhlIHByb2dyYW1taW5nIGxhbmd1YWdlIGJlaW5nIHRoZSBtb3N0IGNvbW1vbiBcInRlbGwgbWUgYWJvdXQgUnVieVwiIHF1ZXJ5IGluIHRlY2ggY29udGV4dHMpLlxuXG5JIHRoaW5rIHRoZSBtb3N0IHJlYXNvbmFibGUgcmVzcG9uc2U6IEdpdmUgYSBicmllZiBvdmVydmlldyBvZiBSdWJ5LiBCdXQgd2hpY2ggUnVieT8gTGV0IG1lIGNvbnNpZGVyIHRoZSBjb252ZXJzYXRpb24gY29udGV4dCBtb3JlLiBUaGUgY29udmVyc2F0aW9uIHN0YXJ0ZWQgd2l0aCBnZW5lcmF0aW5nIGEgcGVyc29uIG5hbWVkIEJvYiAtIHJldHVybmVkIEpTT04uIFRoZW4gXCJOb3cganVzdCB0ZWxsIG1lIGFib3V0IFJ1YnlcIiAtIGlmIHRoZSB1c2VyIHdlcmUgY29udGludWluZyB0aGUgcGVyc29uLWdlbmVyYXRpb24gdGhlbWUsIHRoZXknZCBsaWtlbHkgc2F5IFwiTm93IGdlbmVyYXRlIGEgcGVyc29uIG5hbWVkIFJ1YnkuXCIgSW5zdGVhZCB0aGV5IHNheSBcInRlbGwgbWUgYWJvdXQgUnVieVwiIHdoaWNoIHN1Z2dlc3RzIGFuIGluZm9ybWF0aW9uYWwgcXVlcnkgYWJvdXQgc29tZXRoaW5nIHRoYXQgZXhpc3RzIC0gdGhlIHByb2dyYW1taW5nIGxhbmd1YWdlIG9yIGdlbXN0b25lLlxuXG5CZXR3ZWVuIHRoZSBsYW5ndWFnZSBhbmQgdGhlIGdlbXN0b25lLCBpbiBhIGNoYXQgY29udGV4dCwgXCJ0ZWxsIG1lIGFib3V0IFJ1YnlcIiB3aXRob3V0IGZ1cnRoZXIgY29udGV4dC4uLiBJJ2Qgc2F5IHByb2dyYW1taW5nIGxhbmd1YWdlIGlzIHNsaWdodGx5IG1vcmUgY29tbW9uIGluIG15IGV4cGVyaWVuY2Ugb2Ygc3VjaCBxdWVyaWVzLCBidXQgaXQncyBnZW51aW5lbHkgYW1iaWd1b3VzLiBcblxuQSBnb29kIHJlc3BvbnNlIGNvdWxkIGFkZHJlc3MgdGhlIGFtYmlndWl0eTogXCJSdWJ5IGNvdWxkIHJlZmVyIHRvIGEgZmV3IHRoaW5ncyAtIGhlcmUncyBhYm91dCB0aGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UuLi4gaWYgeW91IG1lYW50IHRoZSBnZW1zdG9uZSwgbGV0IG1lIGtub3cuXCIgT3IgSSBjb3VsZCBnaXZlIGEgc2hvcnQgcGFyYWdyYXBoIGNvdmVyaW5nIHRoZSBtb3N0IGxpa2VseSBvbmUgYW5kIG9mZmVyIGFsdGVybmF0aXZlcy5cblxuR2l2ZW4gdGhlIGluc3RydWN0aW9uIFwianVzdCB0ZWxsIG1lIGFib3V0IFJ1YnksXCIgdGhlIHVzZXIgcHJvYmFibHkgd2FudHMgYSBjb25jaXNlIGFuc3dlci4gSSdsbCBnbyB3aXRoIHRoZSBwcm9ncmFtbWluZyBsYW5ndWFnZSBhcyB0aGUgcHJpbWFyeSBpbnRlcnByZXRhdGlvbiwgbWVudGlvbiBpdCBicmllZmx5LCBhbmQgb2ZmZXIgdGhlIGdlbXN0b25lIGFzIGFuIGFsdGVybmF0aXZlLiBBY3R1YWxseSwgbWF5YmUgSSBzaG91bGQga2VlcCBpdCBzaG9ydCBhbmQgY2xlYW4gLSBhIGJyaWVmIHBhcmFncmFwaCBhYm91dCBSdWJ5IHRoZSBsYW5ndWFnZSwgdGhlbiBvbmUgbGluZSBhc2tpbmcgaWYgdGhleSBtZWFudCBzb21ldGhpbmcgZWxzZS5cblxuRm9ybWF0OiBTaG9ydCBwcm9zZSwgbm8gaGVhZGVycyBuZWVkZWQuIE1heWJlIDItNCBzZW50ZW5jZXMgYWJvdXQgUnVieSB0aGUgbGFuZ3VhZ2UsIHRoZW4gYSBxdWljayBjbGFyaWZpY2F0aW9uIG9mZmVyLiBLZWVwIGl0IGNvbmNpc2Ugc2luY2UgdGhleSBzYWlkIFwianVzdCB0ZWxsIG1lLlwiXG5cbkFsdGVybmF0aXZlbHksIGdpdmVuIHRoZSBwZXJzb24tZ2VuZXJhdGlvbiBjb250ZXh0LCBzaG91bGQgSSB0cmVhdCBSdWJ5IGFzIGEgcGVyc29uPyBJZiB0aGUgdXNlciBpcyBkb2luZyBjaGFyYWN0ZXIgZ2VuZXJhdGlvbiwgXCJ0ZWxsIG1lIGFib3V0IFJ1YnlcIiBjb3VsZCBtZWFuIFwiZ2l2ZSBtZSBpbmZvIGFib3V0IHRoZSBwZXJzb24gUnVieVwiIC0gYnV0IFJ1Ynkgd2Fzbid0IGdlbmVyYXRlZCB5ZXQsIHNvIHRoZXJlJ3Mgbm8gZXN0YWJsaXNoZWQgUnVieS4gVGhhdCBpbnRlcnByZXRhdGlvbiBzZWVtcyB3ZWFrZXIuXG5cbkxldCBtZSBkcmFmdDpcblxuXCJSdWJ5IGlzIGEgZHluYW1pYywgb3Blbi1zb3VyY2UgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgY3JlYXRlZCBieSBZdWtpaGlybyAnTWF0eicgTWF0c3Vtb3RvIGluIDE5OTUuIEl0J3MgZGVzaWduZWQgZm9yIHByb2dyYW1tZXIgcHJvZHVjdGl2aXR5IGFuZCBmdW4sIHdpdGggYW4gZWxlZ2FudCBzeW50YXggdGhhdCdzIGVhc3kgdG8gcmVhZCBhbmQgd3JpdGUuIFJ1YnkgaXMgYmVzdCBrbm93biBmb3IgcG93ZXJpbmcgUnVieSBvbiBSYWlscywgYSBwb3B1bGFyIHdlYiBmcmFtZXdvcmssIGFuZCBpdCBlbXBoYXNpemVzIG9iamVjdC1vcmllbnRlZCBwcm9ncmFtbWluZ+KAlGV2ZXJ5dGhpbmcgaW4gUnVieSBpcyBhbiBvYmplY3QuXG5cbklmIHlvdSBtZWFudCBzb21ldGhpbmcgZWxzZSBieSAnUnVieScgKHRoZSBnZW1zdG9uZSwgb3IgcGVyaGFwcyBhIHBlcnNvbiBuYW1lZCBSdWJ5IHRvIGdvIGFsb25nIHdpdGggQm9iKSwganVzdCBsZXQgbWUga25vdyFcIlxuXG5UaGF0J3MgY29uY2lzZSBhbmQgY292ZXJzIHRoZSBhbWJpZ3VpdHkuIFRoYXQgc2VlbXMgZ29vZC4gTGVuZ3RoIGlzIGFwcHJvcHJpYXRlIC0gc2hvcnQsIGRpcmVjdCwgd2l0aCBhIGNsYXJpZnlpbmcgb2ZmZXIuIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3OTQzMzIwMzgsImlkIjoiMjAyNjExMTEwMTMzMjg4Mjc0YTM0Y2NiYzg0NTIzIiwibW9kZWwiOiJnbG0tNS4zLWZsYXNoIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicmVxdWVzdF9pZCI6IjIwMjYxMTExMDEzMzI4ODI3NGEzNGNjYmM4NDUyMyIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjoxMzk0LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjEyNzd9LCJwcm9tcHRfdG9rZW5zIjozOSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJ0b3RhbF90b2tlbnMiOjE0MzN9fQ==
+  recorded_at: Tue, 10 Nov 2026 17:33:58 GMT
+recorded_with: VCR 6.4.1

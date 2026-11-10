@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"Qwen3.8-27B","messages":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"Hi"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,19 +23,15 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Wed, 04 Nov 2026 19:50:38 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
+      - Tue, 10 Nov 2026 17:32:04 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
       - Origin
-      Server:
-      - HeRay
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
     body:
       encoding: UTF-8
       string: '{"error":{"message":"This model''s maximum context length is 262144
@@ -43,5 +39,5 @@ http_interactions:
         least 262145 input tokens, for a total of at least 262145 tokens. Please reduce
         the length of the input prompt or the number of requested output tokens. (parameter=input_tokens,
         value=262145)","type":"BadRequestError","param":"input_tokens","code":400}}'
-  recorded_at: Wed, 04 Nov 2026 19:50:38 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:32:07 GMT
+recorded_with: VCR 6.4.1

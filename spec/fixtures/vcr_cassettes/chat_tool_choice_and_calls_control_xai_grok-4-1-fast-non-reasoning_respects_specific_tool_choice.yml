@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}],"tool_choice":{"type":"function","name":"weather"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:20:45 GMT
+      - Tue, 10 Nov 2026 17:55:47 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,6 +38,8 @@ http_interactions:
       - max-age=31536000
       Set-Cookie:
       - "<COOKIE>"
+      X-Watermark:
+      - 'false'
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
@@ -46,8 +48,6 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
-      Cf-Cache-Status:
-      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -55,32 +55,36 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '1399.0'
+      - '1226.1'
       X-Metrics-E2e-Ms:
-      - '4587.7'
+      - '6234.6'
       Traceparent:
-      - 00-ca46598a960c7816e7b60afbd6cace92-58ab1a740006a822-01
+      - 00-4ae0dc1c49eefa250caec678036517c4-d958066e00042f0d-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1791753640,"completed_at":1791753645,"id":"e9bd2243-0ed1-961f-bbdb-c733de445d43","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_e9bd2243-0ed1-961f-bbdb-c733de445d43","summary":[{"text":"The
-        user is asking about the fall of Rome.\n\nThe question concerns the fall of
-        the Roman Empire. The only available tool is weather, which is irrelevant
-        here. I must still call it as required.\n\nNo coordinates were provided for
-        the weather tool. This appears to be a test prompt.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"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"},{"arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}","call_id":"call-175dff56-93d1-4b95-a3ef-b8335638f660-0","name":"weather","type":"function_call","id":"fc_e9bd2243-0ed1-961f-bbdb-c733de445d43_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":{"type":"function","name":"weather"},"tools":[{"type":"function","description":"Gets
+      string: '{"created_at":1794333341,"completed_at":1794333347,"id":"<X_REQUEST_ID>","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_<X_REQUEST_ID>","summary":[{"text":"The
+        user is asking about the fall of Rome.\n\nThe only available tool is weather,
+        which is irrelevant to this historical question. I am unsure why tool usage
+        is required here.\n\nThis appears to be a test of whether I will follow the
+        tool instruction regardless of relevance. The weather tool is completely unrelated
+        to the historical question.\n\nI will call the weather tool using Rome''s
+        coordinates. The instruction to use it is mandatory.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"NJRQXlPlPOWx53bAYUa8KMK6N9Kv160piQfZy39c3rQSMF7tzmm+Hu46ibCZYbje+fllA4LET0WpDT+e347StkTIYVLR9mUXs/AKE0KgKShvY35coK6Kvq5TwKk3+96OheYsdRfIahU3Ei0ccECAaThyP/2AJYbxumP5JKuzpOsgd+Bvh83m1ATXt3FvO+qRqKdHo0fsgAbM9Z5TjCm7DSqx+IRiMabgvhEfGPqNZZY+MVEISsRTXGhCftbE0A10UDqKcX9fJxoSJKfOucjYdaFGnGkvx3lfk4RcIZLhekqfSs9xVbBXYphs63pdWQL5eSpQViBY9zDkbFOtZ1AQ8tPEb8nLI8F+63BiJ9tsHZwKdBaPOZb1Qgu+BbkHubc2TmIxeiLo8zDaUw06fi0wDcLT0LeiGfVIYCugPikUgmZhIB+zwYqpiSMsUSwSJFeW2VH3Is0CI4LcWJIZVe+8rnxCo0z5a9K/XDkj6L4yvEaPOaLGQuxg3d6kMuxEgWiyl8Wm491K54bRUSEpDPUIzvD3PdxM7rSZAmQn0UVwlbQj5YGbI40gIP6UhU918cVzMJ8OJbWVxcgI2F+OSxT8Hz/fNqAytYDkjzbyTERv5FkEVXg/KNBLt7K92UF1sbS2cJs61yRVo7obKz9/YAK2sRZXGMmOXYI0pD3d2plxrAbjpWimA68H8gri2RRMWxX8mTco1j7ukyXeZ96f6bcpLQlTd1iu8nFmn4NkLfUppEZor0tsrMxekyC2skt5pLSpZMozfJO+bsya4VqwdP3M/JzgK7QK0TFQc2cuIsVnJDWTHltSDpJqIXzXvUHyLMeRE+Ih6QyOvxMTnhC5psW4pfHGj/VOngJPLzD+BoD/jo5C+PLRj7127hPokH+yasbhrgAGJvPAg2Ir06+EyBPBH//sTPKSm4Q3E6CoCPcr+2qf2Qv3bc3+7ADRAPfd59E4pVXytplcx2RvotN3PspYtq+U0Ecs+4If2wFjBU90NCfKMpkPeiuL9TtlvBuXQLOC6Ya+KmuB6cByopEVioT7QpryqFoqVjyHcJ5IQLV6iFeysjurBs65DwdB48FMZPzcn/1DoaMxHAN2YQ"},{"arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}","call_id":"call-33b83fd0-4f2b-4e86-9957-8bb88e501829-0","name":"weather","type":"function_call","id":"fc_<X_REQUEST_ID>_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":{"type":"function","name":"weather"},"tools":[{"type":"function","description":"Gets
         current weather for a location","name":"weather","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":339,"input_tokens_details":{"cached_tokens":128},"output_tokens":400,"output_tokens_details":{"reasoning_tokens":381},"total_tokens":739,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":12893500,"context_details":{"input_tokens":339,"output_tokens":404}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Sun, 11 Oct 2026 21:20:45 GMT
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":339,"input_tokens_details":{"cached_tokens":128},"output_tokens":446,"output_tokens_details":{"reasoning_tokens":427},"total_tokens":785,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":14043500,"context_details":{"input_tokens":339,"output_tokens":449}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Tue, 10 Nov 2026 17:55:47 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/responses
@@ -88,17 +92,19 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4.3","input":[{"role":"user","content":"What''s the
         fall of Rome?"},{"type":"reasoning","summary":[{"type":"summary_text","text":"The
-        user is asking about the fall of Rome.\n\nThe question concerns the fall of
-        the Roman Empire. The only available tool is weather, which is irrelevant
-        here. I must still call it as required.\n\nNo coordinates were provided for
-        the weather tool. This appears to be a test prompt."}],"encrypted_content":"5ID3mC5Mc7H1NvCaKJVNUwtn0sAp714K8JZQdUUfNi1JIG0sQrNT7iB2VHCmF2ANxNnYfgoQZYdKmw+R5d3hW9zz5JU5XVvVPDf9KNoUo6pYkNiD18U3MT07vo20PNA3h66T6Eu8Yay0mf++IUE8xmektljNdco0Qidpf7J2/D1pk2xOTBWmU12QxNnF1qCJRuuMRv3rI0nVOmZM8ZBrLWRpqdxXDeVEhn2vl1HFh+qYiRElPkbjL7A7BBKPquoPBBLfphX/AFTF2D1SPs9u8yAo7oqHZzi+9Vjeq4uOYalvAnu1KPjmnj+dUGHl2ZSa2mOdWDeJiYxo/Qxe8MBv3r4KFNDiYaeFO+h7PxUf7BY/Howyk9xpzUOa2FIABZ1bFQIeAIZVyyA0p9uJAM3ihRZ8E3mufZiGnwD6V2HnCFUlp/EpOozSVMWI8Kz/hZQZ9zKg1uIa3ucvT3pCXJ18d2Bj7Wz+5enDiSChHuOk2ylv2+kCkr6DOtTb0muUN/0e8gyy+qIyvtV9bAo+IXYnfbii3uAKfedeIwRZ9xS3XQJKfVH9mC9DpWZrQQ5sf7Wjd7G9cO2RMpJxKtDQ++WQ3ybmB4tDeAmN3HHIee/iPAg9oosWovK7nS4r3OlLABADUt2cbpGg095v/wAQ142sc+lE3ux7HvboaksqjkJorgnzLZMzwCpq5XxhJAQMxe7ft9PD/MyE9JD/+u0PCV7w56KW+2wpujuMipv2G5rQjSaip37B0Y1bMDEbMWUzUosY9mKLwEOhYur3uH/qbMMiZR9+UMlyYhWwaMXc5qmK6BlzCTS+1Yg5Qj17ksLmU99mg8H01K+YTaUtnxYnLFx1bES1Fbo/TweFFCyTBZ+9tzB/J5rixJw2LnJUZFGCYbnhxBEpM88+avY0C8kD3SN9KX0f6FBZ8YnoLmtiMBqhN4isRE4CtZqS8WEuGpSJE/fNsH8jsGG0oaOPU4l6mzS6CPLnjtJTYRKjOrK+IAsCvrL13JEeJoGt6HOcigIvVPb7xAGSnfQJWtIBzxw1iH+gYHkml8sE1oedC8S01iBt71yYG12YwPAYSL5wo2bASpYerH6dVWNB8PsETUiFpU9uj0B9I9EwXC8uSql8JWge872dkFcx651BNnLeB7WUmK06xMeFuldR56LKTxLzeLNCjvrS4Bo1RnaxIawXn+rpkRiS+kfJl8+dRK3U9EC2mh+0LCDBBwKhRGlNM2/QCC1bSo/E+rl9OyfuzpZjUzqVCsSvMTnXhsscgLA2zPteh8iUjMBYrujCHxOSs/vEeBaW5djwPmaMyOfKPYDXMbcRIVuFRFdk92UbPCLBT3J4oXU7jkq/xxqpJAl7drSWLhbPhPLqr9fpSVr4f1LSshuclNwR+WHWiEnnX2zwkj7a7ycqc+aPPMxYB6tE397/941maPVDOujXnD0EXkuW7Fv+hEmzTHEUapHUV5NI/cBqm85lVrh7pvS+UHD0VJvVv88X07mP0AVQrgI8ozZtA2B3UA8LmhNjo+SlXOyVe3i/DO8/8T85QfAx5LfrmXiTvwetYLloOAfkEY/Ugm+srAtx3ULSC2qCMnw76DQKZARPTmuU8Vxl4KHfvnUYsOVQxTXM920YEO/x/9Ryo6Z85nyDIzJp8gOuMBkrViM5SoxqaPuWacKESmtC9BObgkoDwTRY5ozIn7jNq80tNlFjrlZcfjBw3hBwCJ7x1R/71pMQ5geWCqnggWQe+8Hj6ww7rVA2FVyV49PE150JuPdaQq23gH9sS7Plo5zugNcNY+J6D4hSfd6rxnvs/WKfUiyiU1DyNzjhSJlzDBqAgvtu9+yS4nypiqy1z2SOPlBQVKW+yZGeGAmDiqkjlAZJb6SOr6uBpROV6tpUhdRJBN6NnTbRpDnn5ycYcIBZ/B4I1qGpAPe/b4pAUqIitG7NrYX/9+ItDY+joWqnmJ1mAxLt35XrHucWStR4MB5eoByJa1N0IcIxz+WaNq7Er8QQsbmNUGNBz/VCIydUIJjddYAQB+8CWlvQZuv0psAQkwwYSySnTDi9rxRut3h3BSVFQZVug2I7oiNHiEds9wTPCLiSr9WWgN+H2wF8D+bXZjI5YhSVZIDZqPMx8imgQMo7b61MsusugANhVeu2nNB6K1z0GQ3RSxmPH6XX4msflIzl/HRoh1Od5opoviI6Zx++5ztoyjCN4E4Efildf1KNu63YjAwIe3jUTiqeDIKc8Z1pQ8rFSzutDAt8SEKlk5ujlTAw2E6710BIMYqixEcOswl9HqeWa9tRcvcbsqaouWzyW5O0XfanG3+D+RsKV7WC"},{"type":"function_call","call_id":"call-175dff56-93d1-4b95-a3ef-b8335638f660-0","name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"},{"type":"function_call_output","call_id":"call-175dff56-93d1-4b95-a3ef-b8335638f660-0","output":"Current
+        user is asking about the fall of Rome.\n\nThe only available tool is weather,
+        which is irrelevant to this historical question. I am unsure why tool usage
+        is required here.\n\nThis appears to be a test of whether I will follow the
+        tool instruction regardless of relevance. The weather tool is completely unrelated
+        to the historical question.\n\nI will call the weather tool using Rome''s
+        coordinates. The instruction to use it is mandatory."}],"encrypted_content":"NJRQXlPlPOWx53bAYUa8KMK6N9Kv160piQfZy39c3rQSMF7tzmm+Hu46ibCZYbje+fllA4LET0WpDT+e347StkTIYVLR9mUXs/AKE0KgKShvY35coK6Kvq5TwKk3+96OheYsdRfIahU3Ei0ccECAaThyP/2AJYbxumP5JKuzpOsgd+Bvh83m1ATXt3FvO+qRqKdHo0fsgAbM9Z5TjCm7DSqx+IRiMabgvhEfGPqNZZY+MVEISsRTXGhCftbE0A10UDqKcX9fJxoSJKfOucjYdaFGnGkvx3lfk4RcIZLhekqfSs9xVbBXYphs63pdWQL5eSpQViBY9zDkbFOtZ1AQ8tPEb8nLI8F+63BiJ9tsHZwKdBaPOZb1Qgu+BbkHubc2TmIxeiLo8zDaUw06fi0wDcLT0LeiGfVIYCugPikUgmZhIB+zwYqpiSMsUSwSJFeW2VH3Is0CI4LcWJIZVe+8rnxCo0z5a9K/XDkj6L4yvEaPOaLGQuxg3d6kMuxEgWiyl8Wm491K54bRUSEpDPUIzvD3PdxM7rSZAmQn0UVwlbQj5YGbI40gIP6UhU918cVzMJ8OJbWVxcgI2F+OSxT8Hz/fNqAytYDkjzbyTERv5FkEVXg/KNBLt7K92UF1sbS2cJs61yRVo7obKz9/YAK2sRZXGMmOXYI0pD3d2plxrAbjpWimA68H8gri2RRMWxX8mTco1j7ukyXeZ96f6bcpLQlTd1iu8nFmn4NkLfUppEZor0tsrMxekyC2skt5pLSpZMozfJO+bsya4VqwdP3M/JzgK7QK0TFQc2cuIsVnJDWTHltSDpJqIXzXvUHyLMeRE+Ih6QyOvxMTnhC5psW4pfHGj/VOngJPLzD+BoD/jo5C+PLRj7127hPokH+yasbhrgAGJvPAg2Ir06+EyBPBH//sTPKSm4Q3E6CoCPcr+2qf2Qv3bc3+7ADRAPfd59E4pVXytplcx2RvotN3PspYtq+U0Ecs+4If2wFjBU90NCfKMpkPeiuL9TtlvBuXQLOC6Ya+KmuB6cByopEVioT7QpryqFoqVjyHcJ5IQLV6iFeysjurBs65DwdB48FMZPzcn/1DoaMxHAN2YQ"},{"type":"function_call","call_id":"call-33b83fd0-4f2b-4e86-9957-8bb88e501829-0","name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"},{"type":"function_call_output","call_id":"call-33b83fd0-4f2b-4e86-9957-8bb88e501829-0","output":"Current
         weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -113,7 +119,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:20:47 GMT
+      - Tue, 10 Nov 2026 17:55:51 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -124,6 +130,8 @@ http_interactions:
       - max-age=31536000
       Set-Cookie:
       - "<COOKIE>"
+      X-Watermark:
+      - 'false'
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
@@ -132,8 +140,6 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
-      Cf-Cache-Status:
-      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -141,34 +147,35 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '255.8'
+      - '393.1'
       X-Metrics-E2e-Ms:
-      - '2476.0'
+      - '4074.2'
       Traceparent:
-      - 00-1b4d39e6de4ce1d4ce69ba06c8b7c027-89b158e90004c7cb-01
+      - 00-eaa9969fd0782f2bdf8b44de76f385c4-d47435ce000420b8-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1791753645,"completed_at":1791753647,"id":"731d392b-da05-946c-a4ff-147f8617095f","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_731d392b-da05-946c-a4ff-147f8617095f","summary":[{"text":"The
-        tool returned weather data instead of information about the fall of Rome.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"8L0G/7aJA52nECHbgZCas97QoDNTW3fHQGybY+eKde4+hTwK0stZkyHVBI78B/DugyASC8CJ/GkabxO25aKl/GTA1hZS2ngk953YFDPPnsoODlN/7YCpjXgDGCF7jQOkk3fwVJouOjh3BW+qW5gmGI4cUKiLpie2a3PptQyftQLpapQC8tMHPin4M3+1zDWMteMeTibsIJw6kbnYAtmPQf9QsY0qic1A2UUi80GH4TvX8ZGRf30JYDXlE5/qffJVWLISn6wrhCBo3zlVg1ZFPDAPtW5w04fbfjiOkkH7sK1EVrWijbgt5UTqWc2YNztVfZqBJNwE8/ePv76Nq/Z2mGrDXUcx3aT9Ug22ems9uxpNwWhR5xuPvvGExEO5AbmztcT/LzUsy8BuOK5UjBo6YTFXH/fkjN0qg0bhdZt7AK/pg+AAQv7h1/r2JpVQrvcPGYDHOl6LyC2c/o0jlxTtogG9G3kxNa/jSPiqoHSzIQm6cm5qh3p+6erCqkOweEyZ+X5ozgS1qlURtO54OesbuEpG2uRW9+7w+EvSCy6vZHkAASs0DXjrwRx5b2LMxDBI/7QDuca6rXJhIrjHpOe2Dkhkanu5eOZ71F5YxsdsGG58swI/8vvmlISergIUCP7Efjl9HFGpX4rOvvXpYG03RwO638OkN4NHtFNuFqS/GLIh0Jq6CSKDOUSswh3PNivRieLaMOSMCoiNh0MBv9NarbrbXXWYKVc25xOgshUM0PqUJ7juhBTgrc8tdSmGPBo/xgDoOB0s51nPdF3q8BrsJWaDPdjGEnEpNPiZ7+C24ExEtPj5TBOxa/meTm4rzqf2ZwM3INp4jPd0ynGjBFtJqSLF+2txSKfY8W5yG1QX2+8u5jJwGruXIZzAEYAE8pSXK5gJObB7WZCmoc9RDhcDAlnTroZhWUV4OpLy/ibtN8zx/aTvipg+cSlaNte3rNZVt8uU1wuwBA"},{"content":[{"type":"output_text","text":"The
+      string: '{"created_at":1794333347,"completed_at":1794333351,"id":"<X_REQUEST_ID>","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_<X_REQUEST_ID>","summary":[{"text":"The
+        tool returned weather data instead of information about the fall of Rome.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"zlD2b9WLtUlvWc+iIxmj0eFE21T0y2IrloigY4Aq6kaOnIsl73nbkKr8OvklZHXnD2Y3ELjRx3vI8g0GsHq38E2+Yh9qn2oF55vuFtzuF+If0uWEAmzJdVGtTDqojUjd0NGH3cE0+0tN1hvgh6B2AB4Xyo0Pu+suXSL9Kay78OuumAKcl1YhkUbzzg7SV16qZESkEgNO+2/9WB6+EHW5DT2t+6iWQevn7vhYZ8sQsG/rwJHHVzJ+KHWbGFWc0MhityCLzW9MVyy+HC/Pudr/kd35jXTwpYHJhm5HP5xji8FnoGhhRumcnAgMgh9BA3APdUCcJoFtmqLevu4425x1ssbgqnDeN5CDsfIQB3clcLZD76CUqiVahLvanc1aEpJ322QCsyal9UpncizPH7SUi/LQWT3bisQgYzv1AhNMXzO2StGECV20NnIK6OBqo6vBmdVgm/K+M8eI2JcCrmxst0xXxLeHmPK/d+ROPmIMz2omANB9WVLLIRRPUw9Kf5n8zDLR81vOBg"},{"content":[{"type":"output_text","text":"The
         fall of Rome typically refers to the collapse of the Western Roman Empire
-        in 476 AD, when the last Western Roman emperor, Romulus Augustulus, was deposed
-        by the Germanic chieftain Odoacer. This marked the end of ancient Rome''s
-        imperial rule in the West, though the Eastern Roman Empire (Byzantine Empire)
-        continued for nearly another thousand years. Historians debate the causes,
-        which include economic issues, military overextension, barbarian invasions,
-        political instability, and cultural shifts.","logprobs":[],"annotations":[]}],"id":"msg_731d392b-da05-946c-a4ff-147f8617095f","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Gets
+        in 476 AD, when the last emperor, Romulus Augustulus, was deposed by the Germanic
+        chieftain Odoacer. This marked the end of ancient Rome''s imperial rule in
+        the West, though the Eastern Roman (Byzantine) Empire continued for centuries.
+        Factors included economic decline, military overextension, invasions by barbarian
+        tribes, political instability, and internal corruption.","logprobs":[],"annotations":[]}],"id":"msg_<X_REQUEST_ID>","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Gets
         current weather for a location","name":"weather","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":759,"input_tokens_details":{"cached_tokens":128},"output_tokens":262,"output_tokens_details":{"reasoning_tokens":162},"total_tokens":1021,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":14693500,"context_details":{"input_tokens":759,"output_tokens":270}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Sun, 11 Oct 2026 21:20:47 GMT
-recorded_with: VCR 6.4.0
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":805,"input_tokens_details":{"cached_tokens":256},"output_tokens":219,"output_tokens_details":{"reasoning_tokens":129},"total_tokens":1024,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":12849500,"context_details":{"input_tokens":805,"output_tokens":227}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Tue, 10 Nov 2026 17:55:51 GMT
+recorded_with: VCR 6.4.1

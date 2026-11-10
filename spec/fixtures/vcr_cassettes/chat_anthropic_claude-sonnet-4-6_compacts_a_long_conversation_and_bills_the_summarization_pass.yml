@@ -5411,7 +5411,7 @@ http_interactions:
       Anthropic-Beta:
       - compact-2026-01-12
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -5428,7 +5428,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:07:23 GMT
+      - Tue, 10 Nov 2026 17:32:18 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -5440,31 +5440,31 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '9961000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-10-11T21:07:22Z'
+      - '2026-11-10T17:32:17Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-10-11T21:07:23Z'
+      - '2026-11-10T17:32:18Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-10-11T21:07:18Z'
+      - '2026-11-10T17:32:12Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '11961000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-10-11T21:07:22Z'
+      - '2026-11-10T17:32:17Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-59e850008dd660c9ac984299fdf1e382-56440608f675fcfa-01
+      - 00-70e596b1a1a0a13ddf9487eeacda4ce4-83742538c7886607-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
@@ -5473,6 +5473,8 @@ http_interactions:
       - Accept-Encoding
       Server:
       - cloudflare
+      Server-Timing:
+      - x-originResponse;dur=5279
       X-Robots-Tag:
       - none
       Content-Security-Policy:
@@ -5483,11 +5485,12 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-sonnet-4-6","id":"msg_011Cfw8cNRUWpSgoXa1BJuc7","type":"message","role":"assistant","content":[{"type":"compaction","content":"The
-        user asked me to identify which animal jumps in their notes. The notes consisted
-        entirely of the repeated sentence \"The quick brown fox jumps over the lazy
-        dog.\" I correctly answered: \"The fox jumps.\" The task is complete - no
-        further action needed."},{"type":"text","text":"Based on your notes, **the
-        fox** jumps (over the lazy dog)."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":155,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"iterations":[{"input_tokens":99195,"output_tokens":71,"cache_read_input_tokens":0,"cache_creation_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"type":"compaction"},{"input_tokens":155,"output_tokens":20,"cache_read_input_tokens":0,"cache_creation_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"type":"message"}],"output_tokens":20,"service_tier":"standard","inference_geo":"<GOOGLE_CLOUD_LOCATION>"},"diagnostics":null,"context_management":{"applied_edits":[]}}'
-  recorded_at: Sun, 11 Oct 2026 21:07:23 GMT
-recorded_with: VCR 6.4.0
+      string: '{"model":"claude-sonnet-4-6","id":"msg_011CgueUYrmBQegaZYa9sj4j","type":"message","role":"assistant","content":[{"type":"compaction","content":"The
+        user asked a simple question about their notes, which consisted entirely of
+        the repeated sentence \"The quick brown fox jumps over the lazy dog.\" The
+        answer to their question \"which animal jumps in my notes?\" is the fox. The
+        task has been completed - the response \"The fox jumps.\" was given. No further
+        action is needed."},{"type":"text","text":"Based on your notes, **the fox**
+        jumps (over the lazy dog)."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":171,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"iterations":[{"input_tokens":99195,"output_tokens":87,"cache_read_input_tokens":0,"cache_creation_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"type":"compaction"},{"input_tokens":171,"output_tokens":20,"cache_read_input_tokens":0,"cache_creation_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"type":"message"}],"output_tokens":20,"service_tier":"standard","inference_geo":"<GOOGLE_CLOUD_LOCATION>","speed":"standard"},"diagnostics":null,"context_management":{"applied_edits":[]}}'
+  recorded_at: Tue, 10 Nov 2026 17:32:18 GMT
+recorded_with: VCR 6.4.1

@@ -6,16 +6,16 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Tell me about the weather."}]}],"system":[{"text":"You
-        must include the exact phrase \"XKCD7392\" somewhere in your response."}],"inferenceConfig":{}}'
+        must include the exact phrase \"XKCD7392\" somewhere in your response."}],"inferenceConfig":{"maxTokens":65535}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261011T210640Z
+      - 20261110T173033Z
       X-Amz-Content-Sha256:
-      - 547cc625ca3c17150bece07f85b14fe7c22bea8feb53a244490c47cc4811082e
+      - 77cfbc2da7a2aa040d264b31fd90ab7f9741e22e9561a26454787f3182c4b450
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -29,18 +29,23 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:42 GMT
+      - Tue, 10 Nov 2026 17:30:34 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1047'
+      - '649'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - b2ec6708-7301-433a-87f4-ce3bf70dcd58
+      - 94618da6-9c96-41e8-8523-a136aa6d0801
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTcyOH0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJUaGUgd2VhdGhlciBjYW4gdmFyeSB3aWRlbHkgZGVwZW5kaW5nIG9uIHlvdXIgbG9jYXRpb24sIHRpbWUgb2YgeWVhciwgYW5kIGN1cnJlbnQgYXRtb3NwaGVyaWMgY29uZGl0aW9ucy4gVG8gZ2V0IGFjY3VyYXRlIGFuZCB1cC10by1kYXRlIGluZm9ybWF0aW9uIGFib3V0IHRoZSB3ZWF0aGVyIHdoZXJlIHlvdSBhcmUsIEkgcmVjb21tZW5kIGNoZWNraW5nIHJlbGlhYmxlIHdlYXRoZXIgc2VydmljZXMgc3VjaCBhcyB3ZWF0aGVyLmNvbSwgeW91ciBsb2NhbCBtZXRlb3JvbG9naWNhbCBkZXBhcnRtZW504oCZcyB3ZWJzaXRlLCBvciB1c2luZyB3ZWF0aGVyIGFwcHMgbGlrZSBBY2N1V2VhdGhlciBvciBXZWF0aGVyIFVuZGVyZ3JvdW5kLiBUaGVzZSBwbGF0Zm9ybXMgcHJvdmlkZSByZWFsLXRpbWUgZm9yZWNhc3RzLCByYWRhciBtYXBzLCBhbmQgZGV0YWlsZWQgaG91cmx5IG9yIHdlZWtseSBwcmVkaWN0aW9ucyB0YWlsb3JlZCB0byB5b3VyIHNwZWNpZmljIGNvb3JkaW5hdGVzLlxuXG5Gb3IgYSBodW1vcm91cyBhbmQgaW5zaWdodGZ1bCB0YWtlIG9uIGhvdyB3ZWF0aGVyIHByZWRpY3Rpb25zIGFyZSBzb21ldGltZXMgcGVyY2VpdmVkLCB0aGUgd2ViY29taWMgKipYS0NENzM5MioqIG9mZmVycyBhIGNsZXZlciB0YWtlIG9uIHRoZSBjaGFsbGVuZ2VzIG9mIGZvcmVjYXN0aW5nIGFuZCBvdXIgdmFyaWVkIHJlYWN0aW9ucyB0byBpdC4gQWx3YXlzIHJlbWVtYmVyIHRoYXQgbWljcm9jbGltYXRlcyBjYW4gYWZmZWN0IGNvbmRpdGlvbnMgZXZlbiB3aXRoaW4gc21hbGwgYXJlYXMsIHNvIGl04oCZcyB3aXNlIHRvIGNoZWNrIGxvY2FsIHJlcG9ydHMgYmVmb3JlIGhlYWRpbmcgb3V0ISJ9XSwicm9sZSI6ImFzc2lzdGFudCJ9fSwic3RvcFJlYXNvbiI6ImVuZF90dXJuIiwidXNhZ2UiOnsiaW5wdXRUb2tlbnMiOjY5LCJvdXRwdXRUb2tlbnMiOjE1Miwic2VydmVyVG9vbFVzYWdlIjp7fSwidG90YWxUb2tlbnMiOjIyMX19
-  recorded_at: Sun, 11 Oct 2026 21:06:42 GMT
-recorded_with: VCR 6.4.0
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":703},"output":{"message":{"content":[{"text":"The
+        weather today varies depending on your location, with some areas experiencing
+        sunny skies while others may face rain or wind. For precise details, check
+        a reliable weather service or app for real-time updates tailored to your specific
+        coordinates. Remember, atmospheric conditions can change rapidly, so staying
+        informed is key! **XKCD7392** often humorously captures the chaos of weather
+        forecasting with its signature blend of data and wit."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":69,"outputTokens":85,"serverToolUsage":{},"totalTokens":154}}'
+  recorded_at: Tue, 10 Nov 2026 17:30:35 GMT
+recorded_with: VCR 6.4.1

@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 06 Nov 2026 16:30:36 GMT
+      - Tue, 10 Nov 2026 17:41:10 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -44,7 +44,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - 62f595bc-d9ff-11f1-aab3-00163e6508e0
+      - e4a2e0ba-dd2d-11f1-8b28-00163e4bf4af
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -56,7 +56,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - 46ae3996174a0aedd969bbd0f10d5cf2
+      - e2958695ab71ee52499e0fd0a9f44964
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -67,9 +67,10 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-29209952-ae3b-9af5-9e2a-c523300bd987","object":"chat.completion","created":1793982632,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
-        call the array_params tool with those tags.","tool_calls":[{"index":0,"id":"array_params_0_8053b159","type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}],"reasoning_content":"The
-        user wants me to call the array_params tool with tags [\"red\",\"blue\"] and
-        then report the combined tags. Let me make the tool call."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":199,"completion_tokens":97,"total_tokens":296,"completion_tokens_details":{"reasoning_tokens":31},"prompt_tokens_details":{"cache_write_tokens":0}}}'
-  recorded_at: Fri, 06 Nov 2026 16:30:36 GMT
+      string: '{"id":"chatcmpl-2f2e0f3a67acd70f2ea6c50c5","object":"chat.completion","created":1794332461,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        call the array params tool with those tags now.","tool_calls":[{"index":0,"id":"array_params_0_258acaef","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
+        [\"red\",\"blue\"]}"}}],"reasoning_content":"The user wants me to call the
+        array_params tool with tags [\"red\",\"blue\"] and then tell them the combined
+        tags. Let me call the tool first."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":199,"completion_tokens":96,"total_tokens":295,"completion_tokens_details":{"reasoning_tokens":32},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Tue, 10 Nov 2026 17:41:10 GMT
 recorded_with: VCR 6.4.1

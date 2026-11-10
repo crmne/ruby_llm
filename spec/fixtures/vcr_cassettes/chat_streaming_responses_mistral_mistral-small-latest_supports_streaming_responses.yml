@@ -9,7 +9,7 @@ http_interactions:
         from 1 to 3"}],"stream":true}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:35 GMT
+      - Tue, 10 Nov 2026 17:30:56 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -32,21 +32,29 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a12cc9-f365-7216-b8a4-2cafdde3d815
+      - 01a1c683-4d14-764b-82b7-bf406009116a
       X-Kong-Request-Id:
-      - 01a12cc9-f365-7216-b8a4-2cafdde3d815
+      - 01a1c683-4d14-764b-82b7-bf406009116a
       X-Max-Retry-Attempts-Reached:
       - 'false'
+      X-Ratelimit-Limit-Req-Minute:
+      - '100'
+      X-Ratelimit-Remaining-Req-Minute:
+      - '97'
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '100000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '99550'
       X-Envoy-Upstream-Service-Time:
-      - '250'
+      - '158'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '251'
+      - '159'
       X-Kong-Proxy-Latency:
-      - '10'
+      - '16'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -62,16 +70,16 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"ad499387f2564a6daf0daeee68a4e8ab","object":"chat.completion.chunk","created":1791752795,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+        data: {"id":"af1769a4bf3e4f889dc39d61f48919ed","object":"chat.completion.chunk","created":1794331856,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
 
-        data: {"id":"ad499387f2564a6daf0daeee68a4e8ab","object":"chat.completion.chunk","created":1791752795,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"1"},"finish_reason":null}],"p":"abcdefghijklmnop"}
+        data: {"id":"af1769a4bf3e4f889dc39d61f48919ed","object":"chat.completion.chunk","created":1794331856,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"1"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz0123456789"}
 
-        data: {"id":"ad499387f2564a6daf0daeee68a4e8ab","object":"chat.completion.chunk","created":1791752795,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":", 2,"},"finish_reason":null}],"p":"abcdefghijklmnopqrs"}
+        data: {"id":"af1769a4bf3e4f889dc39d61f48919ed","object":"chat.completion.chunk","created":1794331856,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":", 2,"},"finish_reason":null}],"p":"abcde"}
 
-        data: {"id":"ad499387f2564a6daf0daeee68a4e8ab","object":"chat.completion.chunk","created":1791752795,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":" 3"},"finish_reason":"stop"}],"usage":{"prompt_tokens":22,"total_tokens":30,"completion_tokens":8,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"p":"abcdefghijklmnopqrstuvwxyz012"}
+        data: {"id":"af1769a4bf3e4f889dc39d61f48919ed","object":"chat.completion.chunk","created":1794331856,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":" 3"},"finish_reason":"stop"}],"usage":{"prompt_tokens":22,"total_tokens":30,"completion_tokens":8,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"p":"abcdefgh"}
 
         data: [DONE]
 
-  recorded_at: Sun, 11 Oct 2026 21:06:35 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:30:56 GMT
+recorded_with: VCR 6.4.1
 ...

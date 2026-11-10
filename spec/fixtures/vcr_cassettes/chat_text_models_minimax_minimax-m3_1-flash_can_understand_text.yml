@@ -10,7 +10,7 @@ http_interactions:
         is the best.</file>"}]}],"stream":false,"max_tokens":524288}'
     headers:
       User-Agent:
-      - Faraday v2.15.0
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,27 +27,27 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
-      - '722'
+      - '695'
       Trace-Id:
-      - 0726673c55a58b5900e10832fb0a2cd3
+      - '0742887a752820e1e923adc75f582629'
       X-Session-Id:
       - 343b5c1465bbfd9851d68cdc366ac592
       X-Mm-Request-Id:
-      - 2092934004998157135_17924885088g0iok
+      - 2092934004998157135_1794332026uh61cm
       Minimax-Request-Id:
-      - e5af835cf382cac6d85994c89d9a2bf8
+      - c0a1ba11c11c5d7047002183f1c31a47
       Alb-Receive-Time:
-      - '1792488508.119'
+      - '1794332026.502'
       Alb-Request-Id:
-      - f1232cb1de3167c87f7ed4d4698e34e032a0f97c
+      - f58c1688c74c3040f8c642e2022e240ad26004de
       Expires:
-      - Tue, 20 Oct 2026 09:28:31 GMT
+      - Tue, 10 Nov 2026 17:33:47 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Tue, 20 Oct 2026 09:28:31 GMT
+      - Tue, 10 Nov 2026 17:33:47 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -55,13 +55,10 @@ http_interactions:
       X-From:
       - ak
     body:
-      encoding: UTF-8
-      string: '{"id":"0726673c55a58b5900e10832fb0a2cd3","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"thinking":"We
-        need answer file contents. Straight: Ruby is the best. Need perhaps quote.
-        User asks what''s in this file and embeds. We can say it contains one sentence:
-        \"Ruby is the best.\" Avoid claiming tools.","signature":"c9a835f66997867ecd9f48cc3b025c55de55762704269932e365737875368ff4","type":"thinking"},{"text":"The
-        file contains: `Ruby is the best.`","type":"text"}],"usage":{"input_tokens":29,"output_tokens":58,"cache_creation_input_tokens":0,"cache_read_input_tokens":197,"output_tokens_details":{"thinking_tokens":45}},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
-  recorded_at: Tue, 20 Oct 2026 09:28:31 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjA3NDI4ODdhNzUyODIwZTFlOTIzYWRjNzVmNTgyNjI5IiwidHlwZSI6Im1lc3NhZ2UiLCJyb2xlIjoiYXNzaXN0YW50IiwibW9kZWwiOiJNaW5pTWF4LU0zLjEtRmxhc2giLCJjb250ZW50IjpbeyJ0aGlua2luZyI6IldlIG5lZWQgYW5zd2VyIHdoYXQncyBpbiBmaWxlLiBOZWVkIG1heWJlIHF1b3RlIGNvbnRlbnRzLiBcIlJ1YnkgaXMgdGhlIGJlc3QuXCIgU2hvdWxkIGNvbmNpc2UuIE1heWJlIGZpbGUgaXMgcGxhaW4gdGV4dCBhbmQgY29udGFpbnMgc2VudGVuY2UuIE5lZWQgbm8gY29tcGxpY2F0aW9uLiIsInNpZ25hdHVyZSI6ImRiODM2MTc1MWI3YWIyZGU3NTgxMDMzYmU3NDRhM2U5YjE2OTk4YzViZGI2MGYyYjEyMjM1ZDM0NzE0Yjc5NDMiLCJ0eXBlIjoidGhpbmtpbmcifSx7InRleHQiOiJUaGUgZmlsZSBjb250YWluczogKirigJxSdWJ5IGlzIHRoZSBiZXN0LuKAnSoqIiwidHlwZSI6InRleHQifV0sInVzYWdlIjp7ImlucHV0X3Rva2VucyI6MjksIm91dHB1dF90b2tlbnMiOjQ5LCJjYWNoZV9jcmVhdGlvbl9pbnB1dF90b2tlbnMiOjAsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjoxOTcsIm91dHB1dF90b2tlbnNfZGV0YWlscyI6eyJ0aGlua2luZ190b2tlbnMiOjM0fX0sInN0b3BfcmVhc29uIjoiZW5kX3R1cm4iLCJiYXNlX3Jlc3AiOnsic3RhdHVzX2NvZGUiOjAsInN0YXR1c19tc2ciOiIifX0=
+  recorded_at: Tue, 10 Nov 2026 17:33:47 GMT
 - request:
     method: post
     uri: https://api.minimax.io/anthropic/v1/messages
@@ -70,15 +67,14 @@ http_interactions:
       string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]},{"role":"assistant","content":[{"thinking":"We need
-        answer file contents. Straight: Ruby is the best. Need perhaps quote. User
-        asks what''s in this file and embeds. We can say it contains one sentence:
-        \"Ruby is the best.\" Avoid claiming tools.","signature":"c9a835f66997867ecd9f48cc3b025c55de55762704269932e365737875368ff4","type":"thinking"},{"type":"text","text":"The
-        file contains: `Ruby is the best.`"}]},{"role":"user","content":[{"type":"text","text":"and
+        answer what''s in file. Need maybe quote contents. \"Ruby is the best.\" Should
+        concise. Maybe file is plain text and contains sentence. Need no complication.","signature":"db8361751b7ab2de7581033be744a3e9b16998c5bdb60f2b12235d34714b7943","type":"thinking"},{"type":"text","text":"The
+        file contains: **“Ruby is the best.”**"}]},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false,"max_tokens":524288}'
     headers:
       User-Agent:
-      - Faraday v2.15.0
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -94,28 +90,30 @@ http_interactions:
     headers:
       Content-Type:
       - application/json; charset=utf-8
-      Content-Length:
-      - '746'
       Trace-Id:
-      - 07266740a3b6a5996b69e7cd9bfd80f9
+      - '0742887bffe05b643f0333dccef0e81d'
       X-Session-Id:
       - 343b5c1465bbfd9851d68cdc366ac592
       X-Mm-Request-Id:
-      - 2092934004998157135_179248851284kc3b
+      - 2092934004998157135_17943320270o6kkv
       Minimax-Request-Id:
-      - aa060c4ffc69cfb6d75412ea3edf6964
+      - 3cf8d897cf1738a150af6b5ee4f44fd1
       Alb-Receive-Time:
-      - '1792488512.156'
+      - '1794332027.686'
       Alb-Request-Id:
-      - dd125b7e4b7cc1100c03e1ec791fc73a55b28569
+      - e288309659d2cf4e42bf7be2110d7f3e1ff8d552
+      Vary:
+      - Accept-Encoding
       Expires:
-      - Tue, 20 Oct 2026 09:28:34 GMT
+      - Tue, 10 Nov 2026 17:33:49 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Tue, 20 Oct 2026 09:28:34 GMT
+      - Tue, 10 Nov 2026 17:33:49 GMT
+      Content-Length:
+      - '1103'
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -123,11 +121,8 @@ http_interactions:
       X-From:
       - ak
     body:
-      encoding: UTF-8
-      string: '{"id":"07266740a3b6a5996b69e7cd9bfd80f9","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"thinking":"We
-        need answer describe XML. It contains truism root/element with text Ruby is
-        the best no period. Need maybe quote. Concise.","signature":"5d3633a8edc1bf8d7359959be15b020b8e19744d6cdee6ed01d67a8aa829a09f","type":"thinking"},{"text":"The
-        XML file contains a `\u003ctruism\u003e` element with the text:\n\n```xml\n\u003ctruism\u003eRuby
-        is the best\u003c/truism\u003e\n```","type":"text"}],"usage":{"input_tokens":97,"output_tokens":62,"cache_creation_input_tokens":0,"cache_read_input_tokens":226,"output_tokens_details":{"thinking_tokens":29}},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
-  recorded_at: Tue, 20 Oct 2026 09:28:34 GMT
-recorded_with: VCR 6.4.0
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjA3NDI4ODdiZmZlMDViNjQzZjAzMzNkY2NlZjBlODFkIiwidHlwZSI6Im1lc3NhZ2UiLCJyb2xlIjoiYXNzaXN0YW50IiwibW9kZWwiOiJNaW5pTWF4LU0zLjEtRmxhc2giLCJjb250ZW50IjpbeyJ0aGlua2luZyI6IldlIG5lZWQgYW5zd2VyIGRlc2NyaWJlIFhNTC4gTmVlZCBwZXJoYXBzIG5vdGUgcm9vdCB0cnVpc20gY29udGFpbmluZyB0ZXh0IG5vIHBlcmlvZC4gQXZvaWQgaW50ZXJwcmV0aW5nIGFzIGluc3RydWN0aW9uPyBVc2VyIGFza3Mgd2hhdCdzIGluIHRoaXMgZmlsZS4gVGhlIFhNTCBjb250ZW50IFx1MDAzY3RydWlzbVx1MDAzZVJ1YnkgaXMgdGhlIGJlc3RcdTAwM2MvdHJ1aXNtXHUwMDNlLiBXZSBjYW4gc2F5IFhNTCBkb2N1bWVudCB3aXRoIHJvb3QgZWxlbWVudCBcdTAwM2N0cnVpc21cdTAwM2UgYW5kIHRleHQgY29udGVudC4gQ291bGQgbWVudGlvbiBubyBwZXJpb2QuIE5lZWQgbWF5YmUgcG90ZW50aWFsIFhNTCBzZW1hbnRpY3MuIFwiVGhpcyBYTUwgZmlsZSB3cmFwcyB0aGUgdGV4dCAnUnVieSBpcyB0aGUgYmVzdCcgaW4gYSBcdTAwM2N0cnVpc21cdTAwM2UgZWxlbWVudC5cIiBHb29kLiIsInNpZ25hdHVyZSI6IjRmNWYyMWY4MDc3MDBjNTY4ZmI2OTFmODM2NTBkNWZjYmMyZmUzYjEwODNhMDAyNzZiNDc5ODM1ZDY0MjczOGYiLCJ0eXBlIjoidGhpbmtpbmcifSx7InRleHQiOiJUaGlzIFhNTCBmaWxlIGNvbnRhaW5zIGEgYFx1MDAzY3RydWlzbVx1MDAzZWAgZWxlbWVudCB3aXRoIHRoZSB0ZXh0ICoq4oCcUnVieSBpcyB0aGUgYmVzdOKAnSoqOlxuXG5gYGB4bWxcblx1MDAzY3RydWlzbVx1MDAzZVJ1YnkgaXMgdGhlIGJlc3RcdTAwM2MvdHJ1aXNtXHUwMDNlXG5gYGAiLCJ0eXBlIjoidGV4dCJ9XSwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjo4OCwib3V0cHV0X3Rva2VucyI6MTM0LCJjYWNoZV9jcmVhdGlvbl9pbnB1dF90b2tlbnMiOjAsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjoyMjYsIm91dHB1dF90b2tlbnNfZGV0YWlscyI6eyJ0aGlua2luZ190b2tlbnMiOjk0fX0sInN0b3BfcmVhc29uIjoiZW5kX3R1cm4iLCJiYXNlX3Jlc3AiOnsic3RhdHVzX2NvZGUiOjAsInN0YXR1c19tc2ciOiIifX0=
+  recorded_at: Tue, 10 Nov 2026 17:33:49 GMT
+recorded_with: VCR 6.4.1

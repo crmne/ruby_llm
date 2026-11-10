@@ -11,7 +11,7 @@ http_interactions:
         name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -26,11 +26,11 @@ http_interactions:
       message: OK
     headers:
       Content-Length:
-      - '3952'
+      - '2430'
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 Oct 2026 21:07:16 GMT
+      - Tue, 10 Nov 2026 17:27:34 GMT
       Server:
       - istio-envoy
       Vary:
@@ -70,7 +70,9 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Apim-Request-Id:
-      - 0a736468-7653-4f0e-a9fd-01b76b36a354
+      - b1c1429b-956f-4d56-aac9-67ccab034134
+      X-Http2-Stream-Id:
+      - '961'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -81,82 +83,14 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "resp_0f17d114720d8b4c016acbfa848e6c81979b1a6cd2db4c275e",
+          "id": "resp_0f840cee92e621b0016af35409296c8190a2eecd38db6bc98b",
           "object": "response",
-          "created_at": 1791752836,
+          "created_at": 1794331657,
           "status": "completed",
+          "access_programs": null,
           "background": false,
-          "completed_at": 1791752837,
-          "content_filters": [
-            {
-              "blocked": false,
-              "source_type": "prompt",
-              "content_filter_raw": [],
-              "content_filter_results": {
-                "hate": {
-                  "filtered": false,
-                  "severity": "safe"
-                },
-                "sexual": {
-                  "filtered": false,
-                  "severity": "safe"
-                },
-                "violence": {
-                  "filtered": false,
-                  "severity": "safe"
-                },
-                "self_harm": {
-                  "filtered": false,
-                  "severity": "safe"
-                },
-                "jailbreak": {
-                  "detected": false,
-                  "filtered": false
-                }
-              },
-              "content_filter_offsets": {
-                "start_offset": 0,
-                "end_offset": 76,
-                "check_offset": 0
-              }
-            },
-            {
-              "blocked": false,
-              "source_type": "completion",
-              "content_filter_raw": [],
-              "content_filter_results": {
-                "protected_material_text": {
-                  "detected": false,
-                  "filtered": false
-                },
-                "protected_material_code": {
-                  "detected": false,
-                  "filtered": false
-                },
-                "hate": {
-                  "filtered": false,
-                  "severity": "safe"
-                },
-                "sexual": {
-                  "filtered": false,
-                  "severity": "safe"
-                },
-                "violence": {
-                  "filtered": false,
-                  "severity": "safe"
-                },
-                "self_harm": {
-                  "filtered": false,
-                  "severity": "safe"
-                }
-              },
-              "content_filter_offsets": {
-                "start_offset": 0,
-                "end_offset": 17,
-                "check_offset": 0
-              }
-            }
-          ],
+          "completed_at": 1794331659,
+          "content_filters": null,
           "error": null,
           "frequency_penalty": 0.0,
           "incomplete_details": null,
@@ -167,11 +101,11 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "fc_0f17d114720d8b4c016acbfa8521448197a930cb015ef1efe9",
+              "id": "fc_0f840cee92e621b0016af35409b9648190b6a6f31bdf9c5c5f",
               "type": "function_call",
               "status": "completed",
               "arguments": "{\"city\":\"Berlin\"}",
-              "call_id": "call_XPSk9vzVctORO0VLMrNKlcYs",
+              "call_id": "call_xCCSsLeyCnVhXcinNxtl5wFX",
               "name": "azure_weather"
             }
           ],
@@ -256,20 +190,20 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 11 Oct 2026 21:07:17 GMT
+  recorded_at: Tue, 10 Nov 2026 17:27:39 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/openai/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"What''s
-        the weather in Berlin? Use the tool."},{"type":"function_call","call_id":"call_XPSk9vzVctORO0VLMrNKlcYs","name":"azure_weather","arguments":"{\"city\":\"Berlin\"}"},{"type":"function_call_output","call_id":"call_XPSk9vzVctORO0VLMrNKlcYs","output":"Current
+        the weather in Berlin? Use the tool."},{"type":"function_call","call_id":"call_xCCSsLeyCnVhXcinNxtl5wFX","name":"azure_weather","arguments":"{\"city\":\"Berlin\"}"},{"type":"function_call_output","call_id":"call_xCCSsLeyCnVhXcinNxtl5wFX","output":"Current
         weather in Berlin: 15C, wind 10 km/h"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"azure_weather","description":"Gets
         current weather for a city","parameters":{"type":"object","properties":{"city":{"type":"string","description":"City
         name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -284,11 +218,11 @@ http_interactions:
       message: OK
     headers:
       Content-Length:
-      - '4116'
+      - '3429'
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 Oct 2026 21:07:17 GMT
+      - Tue, 10 Nov 2026 17:27:38 GMT
       Server:
       - istio-envoy
       Vary:
@@ -328,7 +262,9 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Apim-Request-Id:
-      - 178d32f0-e2bf-47da-9828-3f4361721b6d
+      - 378f8371-6b46-4f9a-97e6-0a43f7cc8c4f
+      X-Http2-Stream-Id:
+      - '173'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -339,55 +275,24 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "resp_0c289824bdbb98fc016acbfa85b070819799266571842762b9",
+          "id": "resp_00553a0e5125dc00016af3540baa3481979703cd3c4588beb1",
           "object": "response",
-          "created_at": 1791752837,
+          "created_at": 1794331659,
           "status": "completed",
+          "access_programs": null,
           "background": false,
-          "completed_at": 1791752838,
+          "completed_at": 1794331661,
           "content_filters": [
-            {
-              "blocked": false,
-              "source_type": "prompt",
-              "content_filter_raw": [],
-              "content_filter_results": {
-                "hate": {
-                  "filtered": false,
-                  "severity": "safe"
-                },
-                "sexual": {
-                  "filtered": false,
-                  "severity": "safe"
-                },
-                "violence": {
-                  "filtered": false,
-                  "severity": "safe"
-                },
-                "self_harm": {
-                  "filtered": false,
-                  "severity": "safe"
-                },
-                "jailbreak": {
-                  "detected": false,
-                  "filtered": false
-                }
-              },
-              "content_filter_offsets": {
-                "start_offset": 0,
-                "end_offset": 153,
-                "check_offset": 0
-              }
-            },
             {
               "blocked": false,
               "source_type": "completion",
               "content_filter_raw": [],
               "content_filter_results": {
-                "protected_material_code": {
+                "protected_material_text": {
                   "detected": false,
                   "filtered": false
                 },
-                "protected_material_text": {
+                "protected_material_code": {
                   "detected": false,
                   "filtered": false
                 },
@@ -425,7 +330,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0c289824bdbb98fc016acbfa861cb8819786233dddb9aaa852",
+              "id": "msg_00553a0e5125dc00016af3540c340c8197828f4ed3a7edb2e5",
               "type": "message",
               "status": "completed",
               "content": [
@@ -433,7 +338,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "The weather in Berlin is currently **15\u00b0C**, with winds at **10 km/h**."
+                  "text": "The weather in Berlin is currently **15\u00b0C**, with winds of **10 km/h**."
                 }
               ],
               "phase": "final_answer",
@@ -521,5 +426,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 11 Oct 2026 21:07:18 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:27:41 GMT
+recorded_with: VCR 6.4.1

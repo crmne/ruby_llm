@@ -11,7 +11,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -40,11 +40,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 569c064c265e35e3005dfbc91dc7aeb3
+      - 7f5abf963911811b534856a768890917
       Date:
-      - Sun, 11 Oct 2026 21:08:14 GMT
+      - Tue, 10 Nov 2026 17:33:30 GMT
       X-Envoy-Upstream-Service-Time:
-      - '724'
+      - '204'
       Server:
       - envoy
       Via:
@@ -57,7 +57,7 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message-start
-        data: {"id":"16d7da88-3186-469d-abab-cb1cd9315fa6","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+        data: {"id":"fb1be4de-da50-4205-9599-6d110bba8c99","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
 
         event: tool-plan-delta
         data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"I"}}}
@@ -120,17 +120,17 @@ http_interactions:
         data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"."}}}
 
         event: tool-call-start
-        data: {"type":"tool-call-start","index":0,"delta":{"message":{"tool_calls":{"id":"best_language_to_learn_bq42senprws9","type":"function","function":{"name":"best_language_to_learn","arguments":""}}}}}
+        data: {"type":"tool-call-start","index":0,"delta":{"message":{"tool_calls":{"id":"best_language_to_learn_wzh5yct72g3g","type":"function","function":{"name":"best_language_to_learn","arguments":""}}}}}
 
         event: tool-call-end
         data: {"type":"tool-call-end","index":0}
 
         event: message-end
-        data: {"type":"message-end","delta":{"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":52,"output_tokens":28},"tokens":{"input_tokens":1484,"output_tokens":58},"cached_tokens":992}}}
+        data: {"type":"message-end","delta":{"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":52,"output_tokens":28},"tokens":{"input_tokens":1484,"output_tokens":58},"cached_tokens":1008}}}
 
         data: [DONE]
 
-  recorded_at: Sun, 11 Oct 2026 21:08:15 GMT
+  recorded_at: Tue, 10 Nov 2026 17:33:41 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
@@ -138,11 +138,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"command-a-03-2025","messages":[{"role":"system","content":[{"type":"text","text":"You
         must use tools whenever possible."}]},{"role":"user","content":[{"type":"text","text":"Call
-        best_language_to_learn and repeat the programming language it returns."}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"best_language_to_learn_bq42senprws9","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","tool_call_id":"best_language_to_learn_bq42senprws9","content":"Ruby"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        best_language_to_learn and repeat the programming language it returns."}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"best_language_to_learn_wzh5yct72g3g","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","tool_call_id":"best_language_to_learn_wzh5yct72g3g","content":"Ruby"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -171,24 +171,24 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 28821e4fd9e68779208ce265110d6171
+      - 44c2a9606dbf42322038ef28648c4bb2
       Date:
-      - Sun, 11 Oct 2026 21:08:15 GMT
+      - Tue, 10 Nov 2026 17:33:41 GMT
       X-Envoy-Upstream-Service-Time:
-      - '10'
+      - '7'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      - h3=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
       string: |+
         event: message-start
-        data: {"id":"68e2fa87-587e-4da1-ae6d-e27a823139a1","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+        data: {"id":"2bc5ba42-eb63-46da-9f02-aa5ba848c050","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
 
         event: content-start
         data: {"type":"content-start","index":0,"delta":{"message":{"content":{"type":"text","text":""}}}}
@@ -197,7 +197,7 @@ http_interactions:
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"Ruby"}}}}
 
         event: citation-start
-        data: {"type":"citation-start","index":0,"delta":{"message":{"citations":{"start":0,"end":4,"text":"Ruby","sources":[{"type":"tool","id":"best_language_to_learn_bq42senprws9:0","tool_output":{"content":"Ruby"}}],"type":"TEXT_CONTENT"}}}}
+        data: {"type":"citation-start","index":0,"delta":{"message":{"citations":{"start":0,"end":4,"text":"Ruby","sources":[{"type":"tool","id":"best_language_to_learn_wzh5yct72g3g:0","tool_output":{"content":"Ruby"}}],"type":"TEXT_CONTENT"}}}}
 
         event: citation-end
         data: {"type":"citation-end","index":0}
@@ -206,11 +206,11 @@ http_interactions:
         data: {"type":"content-end","index":0}
 
         event: message-end
-        data: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":55,"output_tokens":1},"tokens":{"input_tokens":1571,"output_tokens":15},"cached_tokens":112}}}
+        data: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":55,"output_tokens":1},"tokens":{"input_tokens":1571,"output_tokens":15},"cached_tokens":128}}}
 
         data: [DONE]
 
-  recorded_at: Sun, 11 Oct 2026 21:08:15 GMT
+  recorded_at: Tue, 10 Nov 2026 17:33:44 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
@@ -218,12 +218,12 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"command-a-03-2025","messages":[{"role":"system","content":[{"type":"text","text":"You
         must use tools whenever possible."}]},{"role":"user","content":[{"type":"text","text":"Call
-        best_language_to_learn and repeat the programming language it returns."}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"best_language_to_learn_bq42senprws9","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","tool_call_id":"best_language_to_learn_bq42senprws9","content":"Ruby"},{"role":"assistant","content":[{"type":"text","text":"Ruby"}]},{"role":"user","content":[{"type":"text","text":"Call
+        best_language_to_learn and repeat the programming language it returns."}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"best_language_to_learn_wzh5yct72g3g","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","tool_call_id":"best_language_to_learn_wzh5yct72g3g","content":"Ruby"},{"role":"assistant","content":[{"type":"text","text":"Ruby"}]},{"role":"user","content":[{"type":"text","text":"Call
         best_language_to_learn again and repeat the programming language it returns."}]}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -252,9 +252,9 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - d56e39177672fc70d41d3926093c5d21
+      - c8c5308b08dace19b64f5c5071a101ca
       Date:
-      - Sun, 11 Oct 2026 21:08:15 GMT
+      - Tue, 10 Nov 2026 17:33:44 GMT
       X-Envoy-Upstream-Service-Time:
       - '7'
       Server:
@@ -262,27 +262,27 @@ http_interactions:
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      - h3=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
       string: |+
         event: message-start
-        data: {"id":"f1c8cb0a-e84f-40c0-ad46-291546bbc9cf","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+        data: {"id":"c8a1bdfb-280e-4a9c-b446-b80be8ee810e","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
 
         event: tool-call-start
-        data: {"type":"tool-call-start","index":0,"delta":{"message":{"tool_calls":{"id":"best_language_to_learn_vg9sppftcwcr","type":"function","function":{"name":"best_language_to_learn","arguments":""}}}}}
+        data: {"type":"tool-call-start","index":0,"delta":{"message":{"tool_calls":{"id":"best_language_to_learn_yv98c14n8qf6","type":"function","function":{"name":"best_language_to_learn","arguments":""}}}}}
 
         event: tool-call-end
         data: {"type":"tool-call-end","index":0}
 
         event: message-end
-        data: {"type":"message-end","delta":{"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":74,"output_tokens":8},"tokens":{"input_tokens":1597,"output_tokens":38},"cached_tokens":992}}}
+        data: {"type":"message-end","delta":{"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":74,"output_tokens":8},"tokens":{"input_tokens":1597,"output_tokens":38},"cached_tokens":128}}}
 
         data: [DONE]
 
-  recorded_at: Sun, 11 Oct 2026 21:08:16 GMT
+  recorded_at: Tue, 10 Nov 2026 17:33:44 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
@@ -290,12 +290,12 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"command-a-03-2025","messages":[{"role":"system","content":[{"type":"text","text":"You
         must use tools whenever possible."}]},{"role":"user","content":[{"type":"text","text":"Call
-        best_language_to_learn and repeat the programming language it returns."}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"best_language_to_learn_bq42senprws9","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","tool_call_id":"best_language_to_learn_bq42senprws9","content":"Ruby"},{"role":"assistant","content":[{"type":"text","text":"Ruby"}]},{"role":"user","content":[{"type":"text","text":"Call
-        best_language_to_learn again and repeat the programming language it returns."}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"best_language_to_learn_vg9sppftcwcr","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","tool_call_id":"best_language_to_learn_vg9sppftcwcr","content":"Ruby"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        best_language_to_learn and repeat the programming language it returns."}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"best_language_to_learn_wzh5yct72g3g","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","tool_call_id":"best_language_to_learn_wzh5yct72g3g","content":"Ruby"},{"role":"assistant","content":[{"type":"text","text":"Ruby"}]},{"role":"user","content":[{"type":"text","text":"Call
+        best_language_to_learn again and repeat the programming language it returns."}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"best_language_to_learn_yv98c14n8qf6","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","tool_call_id":"best_language_to_learn_yv98c14n8qf6","content":"Ruby"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -324,24 +324,24 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 9293ba7638089fe13c6d23662efefdad
+      - 379f7e50eae5e61a27fef89d21849544
       Date:
-      - Sun, 11 Oct 2026 21:08:16 GMT
+      - Tue, 10 Nov 2026 17:33:45 GMT
       X-Envoy-Upstream-Service-Time:
-      - '7'
+      - '9'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      - h3=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
       string: |+
         event: message-start
-        data: {"id":"c346af1a-59ce-41bb-8025-b280f2263b6d","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+        data: {"id":"a456aa82-24a0-4019-afb1-4edf7fa7b1a2","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
 
         event: content-start
         data: {"type":"content-start","index":0,"delta":{"message":{"content":{"type":"text","text":""}}}}
@@ -353,10 +353,10 @@ http_interactions:
         data: {"type":"content-end","index":0}
 
         event: message-end
-        data: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":77,"output_tokens":1},"tokens":{"input_tokens":1684,"output_tokens":4},"cached_tokens":1600}}}
+        data: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":77,"output_tokens":1},"tokens":{"input_tokens":1684,"output_tokens":4},"cached_tokens":128}}}
 
         data: [DONE]
 
-  recorded_at: Sun, 11 Oct 2026 21:08:16 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:33:57 GMT
+recorded_with: VCR 6.4.1
 ...

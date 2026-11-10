@@ -11,7 +11,7 @@ http_interactions:
       Accept-Encoding:
       - identity
       User-Agent:
-      - Faraday v2.15.0
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -28,25 +28,25 @@ http_interactions:
       Vary:
       - Accept-Encoding
       Trace-Id:
-      - '072667934715a9d02d1f927d32b76950'
+      - '074287cbe6d523c1f61367d5e2a6bd7a'
       X-Session-Id:
       - cdf8143f9fdeea1e518ed8e45fe7b8db
       X-Mm-Request-Id:
-      - 2092934004998157135_1792488595iuxf6i
+      - 2092934004998157135_1794331851lx1ogn
       Minimax-Request-Id:
-      - 6ec177831ed109a56498d7b1b0d15fc2
+      - 10cda987e643cb54c971f10de8e74f0a
       Alb-Receive-Time:
-      - '1792488595.402'
+      - '1794331851.301'
       Alb-Request-Id:
-      - 664d46b73893f2788c28f1f2de2264cfd4854f8c
+      - 7884ec4ebc2cbb8102a6c5bc2dacb7d635ab94d4
       Expires:
-      - Tue, 20 Oct 2026 09:29:59 GMT
+      - Tue, 10 Nov 2026 17:30:54 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Tue, 20 Oct 2026 09:29:59 GMT
+      - Tue, 10 Nov 2026 17:30:54 GMT
       Transfer-Encoding:
       - chunked
       Connection:
@@ -60,7 +60,7 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message_start
-        data: {"type":"message_start","message":{"id":"072667934715a9d02d1f927d32b76950","type":"message","role":"assistant","content":[],"model":"MiniMax-M3.1-Flash","stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":0,"output_tokens":0}}}
+        data: {"type":"message_start","message":{"id":"074287cbe6d523c1f61367d5e2a6bd7a","type":"message","role":"assistant","content":[],"model":"MiniMax-M3.1-Flash","stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":0,"output_tokens":0}}}
 
         event: ping
         data: {"type":"ping"}
@@ -69,37 +69,25 @@ http_interactions:
         data: {"type":"content_block_start","index":0,"content_block":{"type":"thinking","thinking":""}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"We"}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"We need answer si"}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" need answer"}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"mple. Need count "}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" count from"}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"1 to 3 likely \"1, 2, 3.\""}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" 1 to 3. Likely \""}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" Could say 1, 2, 3"}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"1, 2, "}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":". Ensure no ove"}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"3.\""}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"rcomplication."}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" Need"}}
-
-        event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" perhaps"}}
-
-        event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" exactly"}}
-
-        event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"."}}
-
-        event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"signature_delta","signature":"57e5857048347fdce2360791ebf91c410e3d6d3ea89f61be29ac750ef0d9ada5"}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"signature_delta","signature":"1a65721690929a61e4465ce20ce3aad52a32ec143a61177dea927d4b4afc7b4d"}}
 
         event: content_block_stop
         data: {"type":"content_block_stop","index":0}
@@ -108,20 +96,17 @@ http_interactions:
         data: {"type":"content_block_start","index":1,"content_block":{"type":"text","text":""}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"text_delta","text":"1, 2, "}}
-
-        event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"text_delta","text":"3."}}
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"text_delta","text":"1, 2, 3."}}
 
         event: content_block_stop
         data: {"type":"content_block_stop","index":1}
 
         event: message_delta
-        data: {"type":"message_delta","delta":{"stop_reason":"end_turn"},"usage":{"input_tokens":12,"output_tokens":36,"cache_read_input_tokens":197,"output_tokens_details":{"thinking_tokens":25}}}
+        data: {"type":"message_delta","delta":{"stop_reason":"end_turn"},"usage":{"input_tokens":81,"output_tokens":50,"cache_read_input_tokens":128,"output_tokens_details":{"thinking_tokens":41}}}
 
         event: message_stop
         data: {"type":"message_stop"}
 
-  recorded_at: Tue, 20 Oct 2026 09:30:00 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:30:54 GMT
+recorded_with: VCR 6.4.1
 ...

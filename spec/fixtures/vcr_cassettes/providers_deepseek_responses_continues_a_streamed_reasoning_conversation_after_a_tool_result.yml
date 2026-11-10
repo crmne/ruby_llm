@@ -10,7 +10,7 @@ http_interactions:
         the current reference number","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"reasoning":{"effort":"low"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -31,7 +31,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Sun, 11 Oct 2026 21:07:17 GMT
+      - Tue, 10 Nov 2026 17:26:30 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -39,121 +39,145 @@ http_interactions:
       Cache-Control:
       - no-cache
       Vary:
-      - origin, access-control-request-method, access-control-request-headers
+      - accept-encoding,origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 585adde4852e2eb62c0a5ed2fb90b40e
+      - 50246b915e299f0f6aaa7d5aaa743083
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 140f2df55faad62e5a3398dbaec419ac.cloudfront.net (CloudFront)
+      - 1.1 8a9ef9aeac3f8e1b291e5772cbd642ba.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P1
+      - TXL52-P3
       X-Amz-Cf-Id:
-      - XzIAkDyT_OWoJEqwiI8s6ENbGboenCg_k2mnt48BMx_IfO-jMIDXzg==
+      - 1JTuzvDu27gBWPKFfBhmcpwozR4M8AAZR9p0JZdTf8BxdS15xrP19g==
     body:
-      encoding: UTF-8
+      encoding: ASCII-8BIT
       string: |+
         event: response.created
-        data: {"type":"response.created","response":{"id":"7e7f4501-27c1-4656-9d40-be5568799e68","object":"response","created_at":1791752837,"status":"in_progress","background":false,"completed_at":null,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":"low","summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[{"type":"function","name":"lookup_number","description":"Returns the current reference number","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":0}
+        data: {"type":"response.created","response":{"id":"203f07f3-210c-485d-bc61-ded4f229795d","object":"response","created_at":1794331590,"status":"in_progress","background":false,"completed_at":null,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":"low","summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[{"type":"function","name":"lookup_number","description":"Returns the current reference number","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":0}
 
         event: response.in_progress
-        data: {"type":"response.in_progress","response":{"id":"7e7f4501-27c1-4656-9d40-be5568799e68","object":"response","created_at":1791752837,"status":"in_progress","background":false,"completed_at":null,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":"low","summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[{"type":"function","name":"lookup_number","description":"Returns the current reference number","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":1}
+        data: {"type":"response.in_progress","response":{"id":"203f07f3-210c-485d-bc61-ded4f229795d","object":"response","created_at":1794331590,"status":"in_progress","background":false,"completed_at":null,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":"low","summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[{"type":"function","name":"lookup_number","description":"Returns the current reference number","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":1}
 
         event: response.output_item.added
-        data: {"type":"response.output_item.added","item":{"type":"reasoning","id":"7715c46d-2bd2-4b98-9355-447940c858bd","status":"in_progress","content":[],"summary":[],"encrypted_content":"7e7f4501-27c1-4656-9d40-be5568799e68-0"},"output_index":0,"sequence_number":2}
+        data: {"type":"response.output_item.added","item":{"type":"reasoning","id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","status":"in_progress","content":[],"summary":[],"encrypted_content":"203f07f3-210c-485d-bc61-ded4f229795d-0"},"output_index":0,"sequence_number":2}
 
         event: response.content_part.added
-        data: {"type":"response.content_part.added","content_index":0,"item_id":"7715c46d-2bd2-4b98-9355-447940c858bd","output_index":0,"part":{"type":"reasoning_text","text":""},"sequence_number":3}
+        data: {"type":"response.content_part.added","content_index":0,"item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"part":{"type":"reasoning_text","text":""},"sequence_number":3}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":"The","item_id":"7715c46d-2bd2-4b98-9355-447940c858bd","output_index":0,"sequence_number":4}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":"The","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":4}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" user","item_id":"7715c46d-2bd2-4b98-9355-447940c858bd","output_index":0,"sequence_number":5}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" user","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":5}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" wants","item_id":"7715c46d-2bd2-4b98-9355-447940c858bd","output_index":0,"sequence_number":6}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" wants","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":6}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" me","item_id":"7715c46d-2bd2-4b98-9355-447940c858bd","output_index":0,"sequence_number":7}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" me","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":7}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" to","item_id":"7715c46d-2bd2-4b98-9355-447940c858bd","output_index":0,"sequence_number":8}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" to","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":8}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" call","item_id":"7715c46d-2bd2-4b98-9355-447940c858bd","output_index":0,"sequence_number":9}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" call","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":9}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" lookup","item_id":"7715c46d-2bd2-4b98-9355-447940c858bd","output_index":0,"sequence_number":10}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" lookup","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":10}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":"_number","item_id":"7715c46d-2bd2-4b98-9355-447940c858bd","output_index":0,"sequence_number":11}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":"_number","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":11}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" and","item_id":"7715c46d-2bd2-4b98-9355-447940c858bd","output_index":0,"sequence_number":12}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" and","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":12}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" tell","item_id":"7715c46d-2bd2-4b98-9355-447940c858bd","output_index":0,"sequence_number":13}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" report","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":13}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" them","item_id":"7715c46d-2bd2-4b98-9355-447940c858bd","output_index":0,"sequence_number":14}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" the","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":14}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" the","item_id":"7715c46d-2bd2-4b98-9355-447940c858bd","output_index":0,"sequence_number":15}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" reference","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":15}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" reference","item_id":"7715c46d-2bd2-4b98-9355-447940c858bd","output_index":0,"sequence_number":16}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" number","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":16}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" number","item_id":"7715c46d-2bd2-4b98-9355-447940c858bd","output_index":0,"sequence_number":17}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":".","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":17}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":".","item_id":"7715c46d-2bd2-4b98-9355-447940c858bd","output_index":0,"sequence_number":18}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" This","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":18}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" Let","item_id":"7715c46d-2bd2-4b98-9355-447940c858bd","output_index":0,"sequence_number":19}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" is","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":19}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" me","item_id":"7715c46d-2bd2-4b98-9355-447940c858bd","output_index":0,"sequence_number":20}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" a","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":20}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" do","item_id":"7715c46d-2bd2-4b98-9355-447940c858bd","output_index":0,"sequence_number":21}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" simple","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":21}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" that","item_id":"7715c46d-2bd2-4b98-9355-447940c858bd","output_index":0,"sequence_number":22}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":",","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":22}
 
         event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":".","item_id":"7715c46d-2bd2-4b98-9355-447940c858bd","output_index":0,"sequence_number":23}
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" harmless","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":23}
+
+        event: response.reasoning_text.delta
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" request","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":24}
+
+        event: response.reasoning_text.delta
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":".","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":25}
+
+        event: response.reasoning_text.delta
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" Let","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":26}
+
+        event: response.reasoning_text.delta
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" me","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":27}
+
+        event: response.reasoning_text.delta
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" call","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":28}
+
+        event: response.reasoning_text.delta
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" the","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":29}
+
+        event: response.reasoning_text.delta
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" tool","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":30}
+
+        event: response.reasoning_text.delta
+        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":".","item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":31}
 
         event: response.reasoning_text.done
-        data: {"type":"response.reasoning_text.done","content_index":0,"item_id":"7715c46d-2bd2-4b98-9355-447940c858bd","output_index":0,"sequence_number":24,"text":"The user wants me to call lookup_number and tell them the reference number. Let me do that."}
+        data: {"type":"response.reasoning_text.done","content_index":0,"item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"sequence_number":32,"text":"The user wants me to call lookup_number and report the reference number. This is a simple, harmless request. Let me call the tool."}
 
         event: response.content_part.done
-        data: {"type":"response.content_part.done","content_index":0,"item_id":"7715c46d-2bd2-4b98-9355-447940c858bd","output_index":0,"part":{"type":"reasoning_text","text":"The user wants me to call lookup_number and tell them the reference number. Let me do that."},"sequence_number":25}
+        data: {"type":"response.content_part.done","content_index":0,"item_id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","output_index":0,"part":{"type":"reasoning_text","text":"The user wants me to call lookup_number and report the reference number. This is a simple, harmless request. Let me call the tool."},"sequence_number":33}
 
         event: response.output_item.done
-        data: {"type":"response.output_item.done","item":{"type":"reasoning","id":"7715c46d-2bd2-4b98-9355-447940c858bd","status":"completed","content":[{"type":"reasoning_text","text":"The user wants me to call lookup_number and tell them the reference number. Let me do that."}],"summary":[],"encrypted_content":"7e7f4501-27c1-4656-9d40-be5568799e68-0"},"output_index":0,"sequence_number":26}
+        data: {"type":"response.output_item.done","item":{"type":"reasoning","id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","status":"completed","content":[{"type":"reasoning_text","text":"The user wants me to call lookup_number and report the reference number. This is a simple, harmless request. Let me call the tool."}],"summary":[],"encrypted_content":"203f07f3-210c-485d-bc61-ded4f229795d-0"},"output_index":0,"sequence_number":34}
 
         event: response.output_item.added
-        data: {"type":"response.output_item.added","item":{"type":"function_call","id":"188303fd-165c-4000-b585-1e09f2a85e35","status":"in_progress","arguments":"","call_id":"call_00_Fi5doMkTKnpRw3pXuRLy7413","name":"lookup_number"},"output_index":1,"sequence_number":27}
+        data: {"type":"response.output_item.added","item":{"type":"function_call","id":"c30d0500-33d9-432f-b617-174404457f7f","status":"in_progress","arguments":"","call_id":"call_00_R1JJtr2PE5H3fJBNyIwO2766","name":"lookup_number"},"output_index":1,"sequence_number":35}
 
         event: response.function_call_arguments.delta
-        data: {"type":"response.function_call_arguments.delta","delta":"{}","item_id":"188303fd-165c-4000-b585-1e09f2a85e35","output_index":1,"sequence_number":28}
+        data: {"type":"response.function_call_arguments.delta","delta":"{}","item_id":"c30d0500-33d9-432f-b617-174404457f7f","output_index":1,"sequence_number":36}
 
         event: response.function_call_arguments.done
-        data: {"type":"response.function_call_arguments.done","arguments":"{}","item_id":"188303fd-165c-4000-b585-1e09f2a85e35","output_index":1,"sequence_number":29}
+        data: {"type":"response.function_call_arguments.done","arguments":"{}","item_id":"c30d0500-33d9-432f-b617-174404457f7f","output_index":1,"sequence_number":37}
 
         event: response.output_item.done
-        data: {"type":"response.output_item.done","item":{"type":"function_call","id":"188303fd-165c-4000-b585-1e09f2a85e35","status":"completed","arguments":"{}","call_id":"call_00_Fi5doMkTKnpRw3pXuRLy7413","name":"lookup_number"},"output_index":1,"sequence_number":30}
+        data: {"type":"response.output_item.done","item":{"type":"function_call","id":"c30d0500-33d9-432f-b617-174404457f7f","status":"completed","arguments":"{}","call_id":"call_00_R1JJtr2PE5H3fJBNyIwO2766","name":"lookup_number"},"output_index":1,"sequence_number":38}
 
         event: response.completed
-        data: {"type":"response.completed","response":{"id":"7e7f4501-27c1-4656-9d40-be5568799e68","object":"response","created_at":1791752837,"status":"completed","background":false,"completed_at":1791752837,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[{"type":"reasoning","id":"7715c46d-2bd2-4b98-9355-447940c858bd","status":"completed","content":[{"type":"reasoning_text","text":"The user wants me to call lookup_number and tell them the reference number. Let me do that."}],"summary":[],"encrypted_content":"7e7f4501-27c1-4656-9d40-be5568799e68-0"},{"type":"function_call","id":"188303fd-165c-4000-b585-1e09f2a85e35","status":"completed","arguments":"{}","call_id":"call_00_Fi5doMkTKnpRw3pXuRLy7413","name":"lookup_number"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":"low","summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[{"type":"function","name":"lookup_number","description":"Returns the current reference number","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":299,"input_tokens_details":{"cached_tokens":128},"output_tokens":43,"output_tokens_details":{"reasoning_tokens":20},"total_tokens":342},"user":null,"metadata":{}},"sequence_number":31}
+        data: {"type":"response.completed","response":{"id":"203f07f3-210c-485d-bc61-ded4f229795d","object":"response","created_at":1794331590,"status":"completed","background":false,"completed_at":1794331591,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[{"type":"reasoning","id":"d4b7f54b-94c7-4fad-a721-1c32ac7a3fff","status":"completed","content":[{"type":"reasoning_text","text":"The user wants me to call lookup_number and report the reference number. This is a simple, harmless request. Let me call the tool."}],"summary":[],"encrypted_content":"203f07f3-210c-485d-bc61-ded4f229795d-0"},{"type":"function_call","id":"c30d0500-33d9-432f-b617-174404457f7f","status":"completed","arguments":"{}","call_id":"call_00_R1JJtr2PE5H3fJBNyIwO2766","name":"lookup_number"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":"low","summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[{"type":"function","name":"lookup_number","description":"Returns the current reference number","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":299,"input_tokens_details":{"cached_tokens":0},"output_tokens":51,"output_tokens_details":{"reasoning_tokens":28},"total_tokens":350},"user":null,"metadata":{}},"sequence_number":39}
 
-  recorded_at: Sun, 11 Oct 2026 21:07:17 GMT
+  recorded_at: Tue, 10 Nov 2026 17:26:31 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/responses
@@ -161,12 +185,12 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-v4-flash","input":[{"role":"user","content":"Call
         lookup_number and tell me the reference number it returns."},{"type":"reasoning","content":[{"type":"reasoning_text","text":"The
-        user wants me to call lookup_number and tell them the reference number. Let
-        me do that."}]},{"type":"function_call","call_id":"call_00_Fi5doMkTKnpRw3pXuRLy7413","name":"lookup_number","arguments":"{}"},{"type":"function_call_output","call_id":"call_00_Fi5doMkTKnpRw3pXuRLy7413","output":"137"}],"stream":true,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"lookup_number","description":"Returns
+        user wants me to call lookup_number and report the reference number. This
+        is a simple, harmless request. Let me call the tool."}]},{"type":"function_call","call_id":"call_00_R1JJtr2PE5H3fJBNyIwO2766","name":"lookup_number","arguments":"{}"},{"type":"function_call_output","call_id":"call_00_R1JJtr2PE5H3fJBNyIwO2766","output":"137"}],"stream":true,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"lookup_number","description":"Returns
         the current reference number","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"reasoning":{"effort":"low"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -187,7 +211,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Sun, 11 Oct 2026 21:07:17 GMT
+      - Tue, 10 Nov 2026 17:26:31 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -195,108 +219,72 @@ http_interactions:
       Cache-Control:
       - no-cache
       Vary:
-      - origin, access-control-request-method, access-control-request-headers
+      - accept-encoding,origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 4e19c20a1388c22f91659222bf5cb1a8
+      - ac44b78b0fb092ca673debc6ff2aae18
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 89c50b6a052f3d7c2c7b36108c6288f2.cloudfront.net (CloudFront)
+      - 1.1 584d7d1dfdb42e5bab983f65bcf240a4.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - TXL50-P5
       X-Amz-Cf-Id:
-      - ZD1IKehFpHl3m-1SauH43D3275fJUYn1v90KIZZbrRzMmhiMwASCrQ==
+      - qRnVBTufK8oKm63oLe7SVQl6EHcpPsTDSam2G05GE7fqS3CsXA_QMQ==
     body:
-      encoding: UTF-8
+      encoding: ASCII-8BIT
       string: |+
         event: response.created
-        data: {"type":"response.created","response":{"id":"f4975073-abc8-4ad2-aa3e-c30aa8dcd09a","object":"response","created_at":1791752837,"status":"in_progress","background":false,"completed_at":null,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":"low","summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[{"type":"function","name":"lookup_number","description":"Returns the current reference number","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":0}
+        data: {"type":"response.created","response":{"id":"cffc847a-b660-4569-b0f8-e53263d5c41a","object":"response","created_at":1794331591,"status":"in_progress","background":false,"completed_at":null,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":"low","summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[{"type":"function","name":"lookup_number","description":"Returns the current reference number","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":0}
 
         event: response.in_progress
-        data: {"type":"response.in_progress","response":{"id":"f4975073-abc8-4ad2-aa3e-c30aa8dcd09a","object":"response","created_at":1791752837,"status":"in_progress","background":false,"completed_at":null,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":"low","summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[{"type":"function","name":"lookup_number","description":"Returns the current reference number","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":1}
+        data: {"type":"response.in_progress","response":{"id":"cffc847a-b660-4569-b0f8-e53263d5c41a","object":"response","created_at":1794331591,"status":"in_progress","background":false,"completed_at":null,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":"low","summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[{"type":"function","name":"lookup_number","description":"Returns the current reference number","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":1}
 
         event: response.output_item.added
-        data: {"type":"response.output_item.added","item":{"type":"reasoning","id":"f9e4a1ac-4567-4d34-83f5-4a55756cc7d2","status":"in_progress","content":[],"summary":[],"encrypted_content":"f4975073-abc8-4ad2-aa3e-c30aa8dcd09a-0"},"output_index":0,"sequence_number":2}
+        data: {"type":"response.output_item.added","item":{"type":"message","id":"1169785f-6670-4fda-9ca4-e78b23a60052","status":"in_progress","content":[],"phase":"final_answer","role":"assistant"},"output_index":0,"sequence_number":2}
 
         event: response.content_part.added
-        data: {"type":"response.content_part.added","content_index":0,"item_id":"f9e4a1ac-4567-4d34-83f5-4a55756cc7d2","output_index":0,"part":{"type":"reasoning_text","text":""},"sequence_number":3}
-
-        event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":"The","item_id":"f9e4a1ac-4567-4d34-83f5-4a55756cc7d2","output_index":0,"sequence_number":4}
-
-        event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" reference","item_id":"f9e4a1ac-4567-4d34-83f5-4a55756cc7d2","output_index":0,"sequence_number":5}
-
-        event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" number","item_id":"f9e4a1ac-4567-4d34-83f5-4a55756cc7d2","output_index":0,"sequence_number":6}
-
-        event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" is","item_id":"f9e4a1ac-4567-4d34-83f5-4a55756cc7d2","output_index":0,"sequence_number":7}
-
-        event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":" ","item_id":"f9e4a1ac-4567-4d34-83f5-4a55756cc7d2","output_index":0,"sequence_number":8}
-
-        event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":"137","item_id":"f9e4a1ac-4567-4d34-83f5-4a55756cc7d2","output_index":0,"sequence_number":9}
-
-        event: response.reasoning_text.delta
-        data: {"type":"response.reasoning_text.delta","content_index":0,"delta":".","item_id":"f9e4a1ac-4567-4d34-83f5-4a55756cc7d2","output_index":0,"sequence_number":10}
-
-        event: response.reasoning_text.done
-        data: {"type":"response.reasoning_text.done","content_index":0,"item_id":"f9e4a1ac-4567-4d34-83f5-4a55756cc7d2","output_index":0,"sequence_number":11,"text":"The reference number is 137."}
-
-        event: response.content_part.done
-        data: {"type":"response.content_part.done","content_index":0,"item_id":"f9e4a1ac-4567-4d34-83f5-4a55756cc7d2","output_index":0,"part":{"type":"reasoning_text","text":"The reference number is 137."},"sequence_number":12}
-
-        event: response.output_item.done
-        data: {"type":"response.output_item.done","item":{"type":"reasoning","id":"f9e4a1ac-4567-4d34-83f5-4a55756cc7d2","status":"completed","content":[{"type":"reasoning_text","text":"The reference number is 137."}],"summary":[],"encrypted_content":"f4975073-abc8-4ad2-aa3e-c30aa8dcd09a-0"},"output_index":0,"sequence_number":13}
-
-        event: response.output_item.added
-        data: {"type":"response.output_item.added","item":{"type":"message","id":"0302dbd9-67a8-43c7-97e4-0bdd4449b50a","status":"in_progress","content":[],"phase":"final_answer","role":"assistant"},"output_index":1,"sequence_number":14}
-
-        event: response.content_part.added
-        data: {"type":"response.content_part.added","content_index":0,"item_id":"0302dbd9-67a8-43c7-97e4-0bdd4449b50a","output_index":1,"part":{"type":"output_text","annotations":[],"logprobs":[],"text":""},"sequence_number":15}
+        data: {"type":"response.content_part.added","content_index":0,"item_id":"1169785f-6670-4fda-9ca4-e78b23a60052","output_index":0,"part":{"type":"output_text","annotations":[],"logprobs":[],"text":""},"sequence_number":3}
 
         event: response.output_text.delta
-        data: {"type":"response.output_text.delta","content_index":0,"delta":"The","item_id":"0302dbd9-67a8-43c7-97e4-0bdd4449b50a","logprobs":[],"output_index":1,"sequence_number":16}
+        data: {"type":"response.output_text.delta","content_index":0,"delta":"The","item_id":"1169785f-6670-4fda-9ca4-e78b23a60052","logprobs":[],"output_index":0,"sequence_number":4}
 
         event: response.output_text.delta
-        data: {"type":"response.output_text.delta","content_index":0,"delta":" reference","item_id":"0302dbd9-67a8-43c7-97e4-0bdd4449b50a","logprobs":[],"output_index":1,"sequence_number":17}
+        data: {"type":"response.output_text.delta","content_index":0,"delta":" reference","item_id":"1169785f-6670-4fda-9ca4-e78b23a60052","logprobs":[],"output_index":0,"sequence_number":5}
 
         event: response.output_text.delta
-        data: {"type":"response.output_text.delta","content_index":0,"delta":" number","item_id":"0302dbd9-67a8-43c7-97e4-0bdd4449b50a","logprobs":[],"output_index":1,"sequence_number":18}
+        data: {"type":"response.output_text.delta","content_index":0,"delta":" number","item_id":"1169785f-6670-4fda-9ca4-e78b23a60052","logprobs":[],"output_index":0,"sequence_number":6}
 
         event: response.output_text.delta
-        data: {"type":"response.output_text.delta","content_index":0,"delta":" returned","item_id":"0302dbd9-67a8-43c7-97e4-0bdd4449b50a","logprobs":[],"output_index":1,"sequence_number":19}
+        data: {"type":"response.output_text.delta","content_index":0,"delta":" returned","item_id":"1169785f-6670-4fda-9ca4-e78b23a60052","logprobs":[],"output_index":0,"sequence_number":7}
 
         event: response.output_text.delta
-        data: {"type":"response.output_text.delta","content_index":0,"delta":" is","item_id":"0302dbd9-67a8-43c7-97e4-0bdd4449b50a","logprobs":[],"output_index":1,"sequence_number":20}
+        data: {"type":"response.output_text.delta","content_index":0,"delta":" is","item_id":"1169785f-6670-4fda-9ca4-e78b23a60052","logprobs":[],"output_index":0,"sequence_number":8}
 
         event: response.output_text.delta
-        data: {"type":"response.output_text.delta","content_index":0,"delta":" **","item_id":"0302dbd9-67a8-43c7-97e4-0bdd4449b50a","logprobs":[],"output_index":1,"sequence_number":21}
+        data: {"type":"response.output_text.delta","content_index":0,"delta":" **","item_id":"1169785f-6670-4fda-9ca4-e78b23a60052","logprobs":[],"output_index":0,"sequence_number":9}
 
         event: response.output_text.delta
-        data: {"type":"response.output_text.delta","content_index":0,"delta":"137","item_id":"0302dbd9-67a8-43c7-97e4-0bdd4449b50a","logprobs":[],"output_index":1,"sequence_number":22}
+        data: {"type":"response.output_text.delta","content_index":0,"delta":"137","item_id":"1169785f-6670-4fda-9ca4-e78b23a60052","logprobs":[],"output_index":0,"sequence_number":10}
 
         event: response.output_text.delta
-        data: {"type":"response.output_text.delta","content_index":0,"delta":"**.","item_id":"0302dbd9-67a8-43c7-97e4-0bdd4449b50a","logprobs":[],"output_index":1,"sequence_number":23}
+        data: {"type":"response.output_text.delta","content_index":0,"delta":"**.","item_id":"1169785f-6670-4fda-9ca4-e78b23a60052","logprobs":[],"output_index":0,"sequence_number":11}
 
         event: response.output_text.done
-        data: {"type":"response.output_text.done","content_index":0,"item_id":"0302dbd9-67a8-43c7-97e4-0bdd4449b50a","logprobs":[],"output_index":1,"sequence_number":24,"text":"The reference number returned is **137**."}
+        data: {"type":"response.output_text.done","content_index":0,"item_id":"1169785f-6670-4fda-9ca4-e78b23a60052","logprobs":[],"output_index":0,"sequence_number":12,"text":"The reference number returned is **137**."}
 
         event: response.content_part.done
-        data: {"type":"response.content_part.done","content_index":0,"item_id":"0302dbd9-67a8-43c7-97e4-0bdd4449b50a","output_index":1,"part":{"type":"output_text","annotations":[],"logprobs":[],"text":"The reference number returned is **137**."},"sequence_number":25}
+        data: {"type":"response.content_part.done","content_index":0,"item_id":"1169785f-6670-4fda-9ca4-e78b23a60052","output_index":0,"part":{"type":"output_text","annotations":[],"logprobs":[],"text":"The reference number returned is **137**."},"sequence_number":13}
 
         event: response.output_item.done
-        data: {"type":"response.output_item.done","item":{"type":"message","id":"0302dbd9-67a8-43c7-97e4-0bdd4449b50a","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"The reference number returned is **137**."}],"phase":"final_answer","role":"assistant"},"output_index":1,"sequence_number":26}
+        data: {"type":"response.output_item.done","item":{"type":"message","id":"1169785f-6670-4fda-9ca4-e78b23a60052","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"The reference number returned is **137**."}],"phase":"final_answer","role":"assistant"},"output_index":0,"sequence_number":14}
 
         event: response.completed
-        data: {"type":"response.completed","response":{"id":"f4975073-abc8-4ad2-aa3e-c30aa8dcd09a","object":"response","created_at":1791752837,"status":"completed","background":false,"completed_at":1791752838,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[{"type":"reasoning","id":"f9e4a1ac-4567-4d34-83f5-4a55756cc7d2","status":"completed","content":[{"type":"reasoning_text","text":"The reference number is 137."}],"summary":[],"encrypted_content":"f4975073-abc8-4ad2-aa3e-c30aa8dcd09a-0"},{"type":"message","id":"0302dbd9-67a8-43c7-97e4-0bdd4449b50a","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"The reference number returned is **137**."}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":"low","summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[{"type":"function","name":"lookup_number","description":"Returns the current reference number","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":355,"input_tokens_details":{"cached_tokens":128},"output_tokens":16,"output_tokens_details":{"reasoning_tokens":7},"total_tokens":371},"user":null,"metadata":{}},"sequence_number":27}
+        data: {"type":"response.completed","response":{"id":"cffc847a-b660-4569-b0f8-e53263d5c41a","object":"response","created_at":1794331591,"status":"completed","background":false,"completed_at":1794331592,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[{"type":"message","id":"1169785f-6670-4fda-9ca4-e78b23a60052","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"The reference number returned is **137**."}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":"low","summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[{"type":"function","name":"lookup_number","description":"Returns the current reference number","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":363,"input_tokens_details":{"cached_tokens":128},"output_tokens":9,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":372},"user":null,"metadata":{}},"sequence_number":15}
 
-  recorded_at: Sun, 11 Oct 2026 21:07:18 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:26:32 GMT
+recorded_with: VCR 6.4.1
 ...

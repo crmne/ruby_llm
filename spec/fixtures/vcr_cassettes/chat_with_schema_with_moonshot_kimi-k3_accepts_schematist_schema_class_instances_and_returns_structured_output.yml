@@ -9,7 +9,7 @@ http_interactions:
         person named Alice who is 28 years old"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"PersonSchemaClass","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"number"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.15.0
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 20 Oct 2026 12:01:20 GMT
+      - Tue, 10 Nov 2026 17:32:22 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -34,21 +34,19 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Internal-Adhoc-Canary:
-      - '4225118297'
-      Msh-Context-Cache-Token-Boosted-Nvme:
-      - '0'
+      - '2666295442'
       Msh-Gid:
-      - <MOONSHOT_GROUP_ID>
+      - "<MOONSHOT_GROUP_ID>"
       Msh-Org-Id:
-      - <MOONSHOT_ORGANIZATION_ID>
+      - "<MOONSHOT_ORGANIZATION_ID>"
       Msh-Project-Id:
-      - <MOONSHOT_PROJECT_ID>
+      - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - f4ce1881-cc7d-11f1-9843-6a12de751308
+      - aab3bf65-dd2c-11f1-a234-00163e4282b3
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
-      - <MOONSHOT_USER_ID>
+      - "<MOONSHOT_USER_ID>"
       Msh-Usage-Cache-Write-Tokens-1h:
       - '0'
       Msh-Usage-Cache-Write-Tokens-5m:
@@ -56,7 +54,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - 4912bb74ab3273d4c4ecce98e22f8b4d
+      - 7cafc99e87f63f37019c9f9fe0b01a20
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -67,9 +65,11 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-6ad7580e2f656e7d7c55dd73","object":"chat.completion","created":1792497678,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":
-        \"Alice\", \"age\": 28}","reasoning_content":"The user wants a JSON object
-        with name \"Alice\" and age 28. The schema requires \"name\" (string) and
-        \"age\" (number). Simple response."},"finish_reason":"stop"}],"usage":{"prompt_tokens":187,"completion_tokens":63,"total_tokens":250,"completion_tokens_details":{"reasoning_tokens":36},"prompt_tokens_details":{"cache_write_tokens":0}}}'
-  recorded_at: Tue, 20 Oct 2026 12:01:20 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"chatcmpl-2f2e090530d3f7550f535c765","object":"chat.completion","created":1794331934,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Alice\",\"age\":28}","reasoning_content":"We
+        need answer to user: \"Generate a person named Alice who is 28 years old\".
+        There''s a system-ish instruction in user message saying response must be
+        raw JSON matching schema {\"name\": string, \"age\": number}. Need output
+        only JSON, no markdown. Should set name Alice age 28. Final raw JSON. Ensure
+        no extra text. final only JSON."},"finish_reason":"stop"}],"usage":{"prompt_tokens":187,"completion_tokens":96,"total_tokens":283,"completion_tokens_details":{"reasoning_tokens":74},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Tue, 10 Nov 2026 17:32:22 GMT
+recorded_with: VCR 6.4.1

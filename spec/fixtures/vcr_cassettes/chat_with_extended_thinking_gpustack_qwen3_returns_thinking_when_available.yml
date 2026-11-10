@@ -9,7 +9,7 @@ http_interactions:
         3? Think briefly before answering."}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,22 +23,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Resp-Start-Time:
-      - '1791752966060'
-      Date:
-      - Sun, 11 Oct 2026 21:09:23 GMT
-      Server:
-      - istio-envoy
-      Content-Type:
-      - application/json; charset=utf-8
-      X-Envoy-Upstream-Service-Time:
-      - '1539'
       Access-Control-Allow-Origin:
       - ''
+      Content-Type:
+      - application/json; charset=utf-8
       Req-Cost-Time:
-      - '1543'
+      - '3963'
       Req-Arrive-Time:
-      - '1791752964516'
+      - '1794331984130'
+      X-Envoy-Upstream-Service-Time:
+      - '3958'
+      Date:
+      - Tue, 10 Nov 2026 17:33:03 GMT
+      Server:
+      - istio-envoy
+      Resp-Start-Time:
+      - '1794331988093'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -46,14 +46,12 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"5
-        + 3 = 8.","reasoning_content":"Okay, the user is asking what 5 plus 3 is.
-        Let me think. Basic arithmetic, right? So 5 and 3. Adding them together. Let
-        me count: 5 + 1 is 6, then +2 is 7, +3 would be 8? Wait, no, that''s not right.
-        Wait, 5 + 3. Let me break it down. 5 + 2 is 7, and then +1 more makes 8. Wait,
-        but maybe I should just add them directly. 5 + 3 equals 8. Yeah, that''s correct.
-        I should make sure there''s no trick here. The question seems straightforward.
-        Maybe the user is testing if I''m paying attention. But no, the answer is
-        just 8. Let me double-check. 5 + 3 = 8. Yep, that''s right. So the answer
-        should be 8.\n"}}],"created":1791752966,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":205,"prompt_tokens":21,"total_tokens":226,"prompt_tokens_details":{"cached_tokens":1}},"id":"chatcmpl-0drnhATMvduEkIilxWcFU0HrNx5do9Ph","timings":{"cache_n":1,"prompt_n":20,"prompt_ms":20.857,"prompt_per_token_ms":1.04285,"prompt_per_second":958.9106774703937,"predicted_n":205,"predicted_ms":1498.049,"predicted_per_token_ms":7.343377450980392,"predicted_per_second":136.1771210421021}}'
-  recorded_at: Sun, 11 Oct 2026 21:09:26 GMT
-recorded_with: VCR 6.4.0
+        + 3 = 8.","reasoning_content":"Okay, the user is asking 5 plus 3. Let me make
+        sure I do this right. So, 5 and 3. Adding them together. 5 + 3... Hmm, 5 plus
+        2 is 7, so adding one more makes it 8. Wait, is that correct? Let me count
+        again. 5 + 3. Starting at 5, count 3 more: 6, 7, 8. Yes, that''s 8. I think
+        that''s right. Maybe I should double-check by using another method. If I split
+        3 into 2 and 1, then 5 + 2 is 7, then add 1 more to get 8. Yep, same result.
+        Alright, I''m confident the answer is 8.\n"}}],"created":1794331988,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":179,"prompt_tokens":21,"total_tokens":200,"prompt_tokens_details":{"cached_tokens":4}},"id":"chatcmpl-PRVy3NJqMtptNr4hiAMWAXghLaKdfI7B","timings":{"cache_n":4,"prompt_n":17,"prompt_ms":14.325,"prompt_per_token_ms":0.8426470588235294,"prompt_per_second":1186.73647469459,"predicted_n":179,"predicted_ms":1304.165,"predicted_per_token_ms":7.326769662921348,"predicted_per_second":136.4857974259392}}'
+  recorded_at: Tue, 10 Nov 2026 17:33:08 GMT
+recorded_with: VCR 6.4.1

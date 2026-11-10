@@ -10,7 +10,7 @@ http_interactions:
         the current reference number","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sat, 17 Oct 2026 16:29:55 GMT
+      - Tue, 10 Nov 2026 17:27:08 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -45,11 +45,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID
+      - X-Request-ID, Server-Timing-Total
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1366'
+      - '1589'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -76,18 +76,21 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_068f4a6602aafdaf016ad3a282553087d2aad4d494bb57f9f5",
+          "id": "resp_07eb117115f5f2a3016af353ea835487d2baf858a80be41af2",
           "object": "response",
-          "created_at": 1792254594,
+          "created_at": 1794331626,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1792254595,
+          "completed_at": 1794331628,
           "error": null,
           "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
           "incomplete_details": null,
           "instructions": null,
           "max_output_tokens": null,
@@ -96,7 +99,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_068f4a6602aafdaf016ad3a2835b9087d2a5fa3a4f1ca90662",
+              "id": "msg_07eb117115f5f2a3016af353eb977087d2a93cad1918d659c6",
               "type": "message",
               "status": "completed",
               "content": [
@@ -104,18 +107,18 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "I\u2019ll fetch the current reference number and report it."
+                  "text": "I'll fetch the reference number and report it."
                 }
               ],
               "phase": "commentary",
               "role": "assistant"
             },
             {
-              "id": "fc_068f4a6602aafdaf016ad3a283981487d2816db702dfceaef4",
+              "id": "fc_07eb117115f5f2a3016af353ebf4bc87d28919eb49240637ae",
               "type": "function_call",
               "status": "completed",
               "arguments": "{}",
-              "call_id": "call_N5DS2iF9EomWlfXiPO9ugpTZ",
+              "call_id": "call_Htgp1nNfRNPshUpqDjKOx77V",
               "name": "lookup_number"
             }
           ],
@@ -184,28 +187,28 @@ http_interactions:
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 32,
+            "output_tokens": 30,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 88
+            "total_tokens": 86
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sat, 17 Oct 2026 16:29:55 GMT
+  recorded_at: Tue, 10 Nov 2026 17:27:08 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.4","input":[{"role":"user","content":"Say in one short
-        sentence what you will do, then call lookup_number and tell me the number."},{"role":"assistant","content":[{"type":"output_text","text":"I’ll
-        fetch the current reference number and report it."}],"phase":"commentary"},{"type":"function_call","call_id":"call_N5DS2iF9EomWlfXiPO9ugpTZ","name":"lookup_number","arguments":"{}"},{"type":"function_call_output","call_id":"call_N5DS2iF9EomWlfXiPO9ugpTZ","output":"137"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"lookup_number","description":"Returns
+        sentence what you will do, then call lookup_number and tell me the number."},{"role":"assistant","content":[{"type":"output_text","text":"I''ll
+        fetch the reference number and report it."}],"phase":"commentary"},{"type":"function_call","call_id":"call_Htgp1nNfRNPshUpqDjKOx77V","name":"lookup_number","arguments":"{}"},{"type":"function_call_output","call_id":"call_Htgp1nNfRNPshUpqDjKOx77V","output":"137"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"lookup_number","description":"Returns
         the current reference number","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -220,7 +223,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sat, 17 Oct 2026 16:29:57 GMT
+      - Tue, 10 Nov 2026 17:27:08 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -240,11 +243,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID
+      - X-Request-ID, Server-Timing-Total
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1480'
+      - '727'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -254,11 +257,11 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '1000000'
       X-Ratelimit-Remaining-Requests:
-      - '4998'
+      - '4999'
       X-Ratelimit-Remaining-Tokens:
       - '1000000'
       X-Ratelimit-Reset-Requests:
-      - 24ms
+      - 12ms
       X-Ratelimit-Reset-Tokens:
       - 0s
       X-Request-Id:
@@ -271,18 +274,21 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0510efe5ec7707ce016ad3a2840de487d2863aa8d2a59ae00d",
+          "id": "resp_021279873bba0a14016af353ec264c87d299f63692089bfbe2",
           "object": "response",
-          "created_at": 1792254596,
+          "created_at": 1794331628,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1792254597,
+          "completed_at": 1794331628,
           "error": null,
           "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
           "incomplete_details": null,
           "instructions": null,
           "max_output_tokens": null,
@@ -291,7 +297,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0510efe5ec7707ce016ad3a285118c87d2bc650d1f2c1d6695",
+              "id": "msg_021279873bba0a14016af353ecb48087d2b828ff6a65d881c8",
               "type": "message",
               "status": "completed",
               "content": [
@@ -299,7 +305,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "I fetched the current reference number: 137."
+                  "text": "The number is 137."
                 }
               ],
               "phase": "final_answer",
@@ -366,35 +372,35 @@ http_interactions:
           "top_p": 0.98,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 100,
+            "input_tokens": 98,
             "input_tokens_details": {
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 14,
+            "output_tokens": 10,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 114
+            "total_tokens": 108
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sat, 17 Oct 2026 16:29:57 GMT
+  recorded_at: Tue, 10 Nov 2026 17:27:08 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.4","input":[{"role":"user","content":"Say in one short
-        sentence what you will do, then call lookup_number and tell me the number."},{"role":"assistant","content":[{"type":"output_text","text":"I’ll
-        fetch the current reference number and report it."}],"phase":"commentary"},{"type":"function_call","call_id":"call_N5DS2iF9EomWlfXiPO9ugpTZ","name":"lookup_number","arguments":"{}"},{"type":"function_call_output","call_id":"call_N5DS2iF9EomWlfXiPO9ugpTZ","output":"137"},{"role":"assistant","content":[{"type":"output_text","text":"I
-        fetched the current reference number: 137."}],"phase":"final_answer"},{"role":"user","content":"Add
-        one to it and give me only the result."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"lookup_number","description":"Returns
+        sentence what you will do, then call lookup_number and tell me the number."},{"role":"assistant","content":[{"type":"output_text","text":"I''ll
+        fetch the reference number and report it."}],"phase":"commentary"},{"type":"function_call","call_id":"call_Htgp1nNfRNPshUpqDjKOx77V","name":"lookup_number","arguments":"{}"},{"type":"function_call_output","call_id":"call_Htgp1nNfRNPshUpqDjKOx77V","output":"137"},{"role":"assistant","content":[{"type":"output_text","text":"The
+        number is 137."}],"phase":"final_answer"},{"role":"user","content":"Add one
+        to it and give me only the result."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"lookup_number","description":"Returns
         the current reference number","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -409,7 +415,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sat, 17 Oct 2026 16:29:58 GMT
+      - Tue, 10 Nov 2026 17:27:09 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -429,11 +435,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID
+      - X-Request-ID, Server-Timing-Total
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1069'
+      - '682'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -460,18 +466,21 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0f8c835af5cb02c7016ad3a285db4087d2a545b150ec3bd31c",
+          "id": "resp_0bc06afb9ff12f12016af353ecf9a487d2816bb93b6919864b",
           "object": "response",
-          "created_at": 1792254597,
+          "created_at": 1794331629,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1792254598,
+          "completed_at": 1794331629,
           "error": null,
           "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
           "incomplete_details": null,
           "instructions": null,
           "max_output_tokens": null,
@@ -480,7 +489,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0f8c835af5cb02c7016ad3a286cf9c87d2aeadd855903c44aa",
+              "id": "msg_0bc06afb9ff12f12016af353ed8c0c87d29f04a3128cb7c1aa",
               "type": "message",
               "status": "completed",
               "content": [
@@ -555,7 +564,7 @@ http_interactions:
           "top_p": 0.98,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 131,
+            "input_tokens": 125,
             "input_tokens_details": {
               "cache_write_tokens": 0,
               "cached_tokens": 0
@@ -564,10 +573,10 @@ http_interactions:
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 136
+            "total_tokens": 130
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sat, 17 Oct 2026 16:29:58 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:27:09 GMT
+recorded_with: VCR 6.4.1

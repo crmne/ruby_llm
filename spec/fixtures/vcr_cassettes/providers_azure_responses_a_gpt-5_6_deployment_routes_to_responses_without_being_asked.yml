@@ -9,7 +9,7 @@ http_interactions:
         nothing else."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -24,11 +24,11 @@ http_interactions:
       message: OK
     headers:
       Content-Length:
-      - '3554'
+      - '3581'
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 Oct 2026 21:07:15 GMT
+      - Tue, 10 Nov 2026 17:27:32 GMT
       Server:
       - istio-envoy
       Vary:
@@ -68,7 +68,9 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Apim-Request-Id:
-      - 525ae3a5-3bba-4a91-86e4-a76ed9066d4a
+      - a387a116-29f1-492d-8199-016e252fe11c
+      X-Http2-Stream-Id:
+      - '15'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -79,12 +81,13 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "resp_0ff5e034e5fe6b27016acbfa83c9948195941a314632a97944",
+          "id": "resp_0e4f5e52937b6c9f016af3540553088190837ba4ffb3f82841",
           "object": "response",
-          "created_at": 1791752835,
+          "created_at": 1794331653,
           "status": "completed",
+          "access_programs": null,
           "background": false,
-          "completed_at": 1791752836,
+          "completed_at": 1794331654,
           "content_filters": [
             {
               "blocked": false,
@@ -123,11 +126,11 @@ http_interactions:
               "source_type": "completion",
               "content_filter_raw": [],
               "content_filter_results": {
-                "protected_material_text": {
+                "protected_material_code": {
                   "detected": false,
                   "filtered": false
                 },
-                "protected_material_code": {
+                "protected_material_text": {
                   "detected": false,
                   "filtered": false
                 },
@@ -165,7 +168,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0ff5e034e5fe6b27016acbfa8427c881958a0e49ecb1740351",
+              "id": "msg_0e4f5e52937b6c9f016af35405ea408190870c22d14f023c69",
               "type": "message",
               "status": "completed",
               "content": [
@@ -239,5 +242,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 11 Oct 2026 21:07:16 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:27:34 GMT
+recorded_with: VCR 6.4.1

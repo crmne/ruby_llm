@@ -9,7 +9,7 @@ http_interactions:
         named Bob"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"text":{"format":{"type":"json_schema","name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:07:48 GMT
+      - Tue, 10 Nov 2026 17:32:56 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,6 +35,8 @@ http_interactions:
       - max-age=31536000
       Set-Cookie:
       - "<COOKIE>"
+      X-Watermark:
+      - 'false'
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
@@ -43,8 +45,6 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
-      Cf-Cache-Status:
-      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -52,27 +52,29 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '821.0'
+      - '426.4'
       X-Metrics-E2e-Ms:
-      - '4646.6'
+      - '3745.3'
       Traceparent:
-      - 00-773acc11ad0f6e5f073d6622b907b152-8f2b43c40004c265-01
+      - 00-24746aac914ebb9af40bc16034eb1274-2b2c7dd60003ec76-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1791752864,"completed_at":1791752868,"id":"173ec5db-53c9-9745-969e-aea09e1b0db4","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_173ec5db-53c9-9745-969e-aea09e1b0db4","summary":[{"text":"Generating
-        a person named Bob.\n\nThe response must be a JSON object with name and age.
-        I''ll use 30 for the age.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"sCgA+VHaOn3taLu+NzhKOr1k8lFiZ8OTJrmjDuCqqk7eQieq80Qd/Dacuz61CkbYFDBTm+ZcYPL3TG9EANontMS+e1fwpb5eHlK5W6jUiNZAiE0fK0hRlAbFYwkn/u+Y9KMAWTrxNqsZuLb4M27tCJtgGtVavTtj8s5HdhooxKvGKm4Eq81b+YllQcU0gJ1HNLSVcNYaEsd/rTJfg7TYpvyhnI3FREAnp612s2ItUpj/dbYEZcrwzsx3TqOp36yTmZFTwRhX7sypf/VphZxnogSMk5sgPB2+nlmLiaK4etxfSMiBd8sjnex+u8TNvgsLZcDOWCmnfDorDTAG6MHxB4jzvUuI1T79KZYw2at5TurQ+GOmxgVtHESKBuOK1W8aRwVqoVs0NA9twU7HEs714555BcbubCIy45Zi5VgCe2s8unWv8va7z+WS7c0wdXZsCS9jy+jlCUS3lbd1t+1kk+5KPBpKpzNJOVjBpoFYI0ppjTNHn9SPCF7n5WGz9DccvSTroG54s50HF6p8BjPcdnKrpZnpCMX6Y4Sbd7yqwCcjrtlyuoTW3vNBMoln8+ecALNFhnJhdM8QkUurxbQAV9e0rDPrmcO/Sk0Tpy3TNc7InkP5S39HxoxW2U9/ZBU1Rjptv0opw/is6Gcm0AuIYjId0PhcgnE/jIXth7MbhIDrWDGb9kjWduv62wObfp5NHpRN1AaM2W8j1SsVX6nNU4gVUKVxf5Wj53f+IFgeLHq/UzbDtGs0eE497Ku4evmP+wKVogjwCRrk3GpcUH5rtFhZ9/aii4iasjyOH6zYW0GlQAYmsF8wNfMPWwaPwtULyBxUmUckdmr4wIdIXXBIXGhg6yrx6AoEsD4GElEU2aORNPUkCFe3lyfQfETe9V2eHe184HUE99hwGD1Mk7zYkRp7xcCSz7dqDmGnWQgavSzJCke+Kb1bJr3dO55t/W4acaKER4PB0vJLm8wooQ8vzh3S5r5LhBZTQVTJpX574w1s8NKsPcEQqXpDnpz0+aHzsnYK50Zv8Yr9w/6vuG2pVPw3dxC2RgiaBFpro75ffSWLxoDy13PuR2HlXA+IFuXLuL7Y3+8qYySgNs5LkWnfF2FEIuOLpMLZfxRuFVbmLdDfwRywXjZjnimBvNe23Dq7cra9A7PNVCakbCBDAWdPL0c+np44JhYrZzk4JduZNoTkcpOVJj3LCvyEfnjmqf0wAeA5K4ylPmlqaI9OTF0ETFid3xE5bowZfuNti8orJ+Z2Z747WWaVZ9RM+vVSJ3eCUV6OdnX2Sqa8S+HK/GENJ2hJGWJuef+AJ0r3DVsSadPNt5pDLMBDLTs93dEKe0NAS2Da9YkJN8E+tqe+be/X3eCp+uNm56dCSqsfK7lJa1qqsjVrsmoArgVl5gZHNYj95JsTGZVDy7FkQzbtaiWXpSTki1piD3F4jzd9uCz70amVtqB8g0PM2R7egoPHJ49MXvwS2TNrDH/U3B4U8SEsYPLg8uHapGup9Zao3bQjpSOfzPCU0XuYoGeKh9zdoQ3cXANPOT24y4yWUznCdkPMWMzQBDIXroJTBfR6JCF6i23VJShrwSrTRTAkdqw0e+9EGWkvm7h5mS8acfAojAwhG2nMA2pTAPCeN0ekYqTbdcHvVAeV+W2HT6WmenBeJy4aL8RJYZH/t3pd2IlX436ujtYUEtvRd/qqd2NLh9VG6undZI5ZoksccJoA4DhYdyyY0QommLRVXwTsx2R16hMM4luX5t7h0RDABfjGxbDNgKmooUDTQNbyWlUdWyRv+A16325YE1AgpDyVicCgiUFs7K0QnSnXo6CnkCyX/RATF/mBp2qrHphm5q50SmuisiXiqexBkUUQ94DDAMRfk4mI9Ya45EC0jURDpWmsMCh3rpc7ZYu/twdR3FepYa9UBzx5"},{"content":[{"type":"output_text","text":"{\"name\":\"Bob\",\"age\":30}","logprobs":[],"annotations":[]}],"id":"msg_173ec5db-53c9-9745-969e-aea09e1b0db4","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"json_schema","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false}}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":248,"input_tokens_details":{"cached_tokens":128},"output_tokens":334,"output_tokens_details":{"reasoning_tokens":325},"total_tokens":582,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":10106000,"context_details":{"input_tokens":248,"output_tokens":342}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Sun, 11 Oct 2026 21:07:48 GMT
+      string: '{"created_at":1794331972,"completed_at":1794331976,"id":"<X_REQUEST_ID>","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_<X_REQUEST_ID>","summary":[{"text":"Generating
+        a person named Bob.\n\nThe schema requires both name and age. Age will be
+        30.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"4Q14aEpwbHaChakoF+3kGGVONxnnbe/+jzwiJNrYwaglPdXDKL/MtV2tUN2pBHoKMjCtpsJToLZ9Md6VMitdeQjb3UUT4Zj6B97shBYTW9mPbikLC9VQVD9JlumLoa11PKq01Q5pF9CaKR2D5Tg0fUGFOsKnE0AUtc3HCBYfhbSGx9jSkKL96/BdtO3QJHJ8YA02pT+AZjPJ6KuS6kIHBesp2C46pP3tYullAQB9C0WK97kU/Gsm27F8SHek82UYc+wrlMEoyB5X2JQwyyzz1bCIBIhVCDtelCTAQ8cAhg7IUJdWcou6MfbbQzctKET5Y1kVXF1J+alD+j5+uD26qJdtR2XO29DCgMy2Gaqm5KbV+QCay4Cx13Th0jsHJ0KB1/J93Z9uJpktgyY/o6lzfTNb7+jyX40Q5ZJoEBnOTXIfOiIptUcaboWoM/Iaae6/D8BEJoBDfmFKqMrmnScXg02sJscne2OQzO7Cljpgd+M2pBG2RRxKlIqoNqa5gELb2roTYXmTiTrBhGq1WYlhcOzO+UQX29VgBD6quvvwXiGXpXiVRwZEs4goIKYhpHbh+ifSH4JM5lhkp30PkU7TAqhMbbqLgEIdzNJhVAbP2/yZ0RdFYEisASCsYfG7TSvyt2zu1dX0RQAF0wJPsAGdAsNDvOyAvXkP1Zt6QAXrBkQq+XdLwc2xJ2HI5km2UpjPq8RISc2B9FZR37zRn7g2x9pq356ZM1Rgk6Kpm51tdlzCMy2zb7K2RGYxfw9TSh0xXaVa"},{"content":[{"type":"output_text","text":"{\"name\":\"Bob\",\"age\":30}","logprobs":[],"annotations":[]}],"id":"msg_<X_REQUEST_ID>","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"json_schema","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false}}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":248,"input_tokens_details":{"cached_tokens":128},"output_tokens":238,"output_tokens_details":{"reasoning_tokens":229},"total_tokens":486,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":7706000,"context_details":{"input_tokens":248,"output_tokens":246}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Tue, 10 Nov 2026 17:32:56 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/responses
@@ -80,12 +82,12 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4.3","input":[{"role":"user","content":"Generate a person
         named Bob"},{"type":"reasoning","summary":[{"type":"summary_text","text":"Generating
-        a person named Bob.\n\nThe response must be a JSON object with name and age.
-        I''ll use 30 for the age."}],"encrypted_content":"sCgA+VHaOn3taLu+NzhKOr1k8lFiZ8OTJrmjDuCqqk7eQieq80Qd/Dacuz61CkbYFDBTm+ZcYPL3TG9EANontMS+e1fwpb5eHlK5W6jUiNZAiE0fK0hRlAbFYwkn/u+Y9KMAWTrxNqsZuLb4M27tCJtgGtVavTtj8s5HdhooxKvGKm4Eq81b+YllQcU0gJ1HNLSVcNYaEsd/rTJfg7TYpvyhnI3FREAnp612s2ItUpj/dbYEZcrwzsx3TqOp36yTmZFTwRhX7sypf/VphZxnogSMk5sgPB2+nlmLiaK4etxfSMiBd8sjnex+u8TNvgsLZcDOWCmnfDorDTAG6MHxB4jzvUuI1T79KZYw2at5TurQ+GOmxgVtHESKBuOK1W8aRwVqoVs0NA9twU7HEs714555BcbubCIy45Zi5VgCe2s8unWv8va7z+WS7c0wdXZsCS9jy+jlCUS3lbd1t+1kk+5KPBpKpzNJOVjBpoFYI0ppjTNHn9SPCF7n5WGz9DccvSTroG54s50HF6p8BjPcdnKrpZnpCMX6Y4Sbd7yqwCcjrtlyuoTW3vNBMoln8+ecALNFhnJhdM8QkUurxbQAV9e0rDPrmcO/Sk0Tpy3TNc7InkP5S39HxoxW2U9/ZBU1Rjptv0opw/is6Gcm0AuIYjId0PhcgnE/jIXth7MbhIDrWDGb9kjWduv62wObfp5NHpRN1AaM2W8j1SsVX6nNU4gVUKVxf5Wj53f+IFgeLHq/UzbDtGs0eE497Ku4evmP+wKVogjwCRrk3GpcUH5rtFhZ9/aii4iasjyOH6zYW0GlQAYmsF8wNfMPWwaPwtULyBxUmUckdmr4wIdIXXBIXGhg6yrx6AoEsD4GElEU2aORNPUkCFe3lyfQfETe9V2eHe184HUE99hwGD1Mk7zYkRp7xcCSz7dqDmGnWQgavSzJCke+Kb1bJr3dO55t/W4acaKER4PB0vJLm8wooQ8vzh3S5r5LhBZTQVTJpX574w1s8NKsPcEQqXpDnpz0+aHzsnYK50Zv8Yr9w/6vuG2pVPw3dxC2RgiaBFpro75ffSWLxoDy13PuR2HlXA+IFuXLuL7Y3+8qYySgNs5LkWnfF2FEIuOLpMLZfxRuFVbmLdDfwRywXjZjnimBvNe23Dq7cra9A7PNVCakbCBDAWdPL0c+np44JhYrZzk4JduZNoTkcpOVJj3LCvyEfnjmqf0wAeA5K4ylPmlqaI9OTF0ETFid3xE5bowZfuNti8orJ+Z2Z747WWaVZ9RM+vVSJ3eCUV6OdnX2Sqa8S+HK/GENJ2hJGWJuef+AJ0r3DVsSadPNt5pDLMBDLTs93dEKe0NAS2Da9YkJN8E+tqe+be/X3eCp+uNm56dCSqsfK7lJa1qqsjVrsmoArgVl5gZHNYj95JsTGZVDy7FkQzbtaiWXpSTki1piD3F4jzd9uCz70amVtqB8g0PM2R7egoPHJ49MXvwS2TNrDH/U3B4U8SEsYPLg8uHapGup9Zao3bQjpSOfzPCU0XuYoGeKh9zdoQ3cXANPOT24y4yWUznCdkPMWMzQBDIXroJTBfR6JCF6i23VJShrwSrTRTAkdqw0e+9EGWkvm7h5mS8acfAojAwhG2nMA2pTAPCeN0ekYqTbdcHvVAeV+W2HT6WmenBeJy4aL8RJYZH/t3pd2IlX436ujtYUEtvRd/qqd2NLh9VG6undZI5ZoksccJoA4DhYdyyY0QommLRVXwTsx2R16hMM4luX5t7h0RDABfjGxbDNgKmooUDTQNbyWlUdWyRv+A16325YE1AgpDyVicCgiUFs7K0QnSnXo6CnkCyX/RATF/mBp2qrHphm5q50SmuisiXiqexBkUUQ94DDAMRfk4mI9Ya45EC0jURDpWmsMCh3rpc7ZYu/twdR3FepYa9UBzx5"},{"role":"assistant","content":[{"type":"output_text","text":"{\"name\":\"Bob\",\"age\":30}"}]},{"role":"user","content":"Now
+        a person named Bob.\n\nThe schema requires both name and age. Age will be
+        30."}],"encrypted_content":"4Q14aEpwbHaChakoF+3kGGVONxnnbe/+jzwiJNrYwaglPdXDKL/MtV2tUN2pBHoKMjCtpsJToLZ9Md6VMitdeQjb3UUT4Zj6B97shBYTW9mPbikLC9VQVD9JlumLoa11PKq01Q5pF9CaKR2D5Tg0fUGFOsKnE0AUtc3HCBYfhbSGx9jSkKL96/BdtO3QJHJ8YA02pT+AZjPJ6KuS6kIHBesp2C46pP3tYullAQB9C0WK97kU/Gsm27F8SHek82UYc+wrlMEoyB5X2JQwyyzz1bCIBIhVCDtelCTAQ8cAhg7IUJdWcou6MfbbQzctKET5Y1kVXF1J+alD+j5+uD26qJdtR2XO29DCgMy2Gaqm5KbV+QCay4Cx13Th0jsHJ0KB1/J93Z9uJpktgyY/o6lzfTNb7+jyX40Q5ZJoEBnOTXIfOiIptUcaboWoM/Iaae6/D8BEJoBDfmFKqMrmnScXg02sJscne2OQzO7Cljpgd+M2pBG2RRxKlIqoNqa5gELb2roTYXmTiTrBhGq1WYlhcOzO+UQX29VgBD6quvvwXiGXpXiVRwZEs4goIKYhpHbh+ifSH4JM5lhkp30PkU7TAqhMbbqLgEIdzNJhVAbP2/yZ0RdFYEisASCsYfG7TSvyt2zu1dX0RQAF0wJPsAGdAsNDvOyAvXkP1Zt6QAXrBkQq+XdLwc2xJ2HI5km2UpjPq8RISc2B9FZR37zRn7g2x9pq356ZM1Rgk6Kpm51tdlzCMy2zb7K2RGYxfw9TSh0xXaVa"},{"role":"assistant","content":[{"type":"output_text","text":"{\"name\":\"Bob\",\"age\":30}"}]},{"role":"user","content":"Now
         just tell me about Ruby"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -100,7 +102,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:07:59 GMT
+      - Tue, 10 Nov 2026 17:33:02 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -111,6 +113,8 @@ http_interactions:
       - max-age=31536000
       Set-Cookie:
       - "<COOKIE>"
+      X-Watermark:
+      - 'false'
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
@@ -119,8 +123,6 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
-      Cf-Cache-Status:
-      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -128,32 +130,27 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '235.5'
+      - '217.8'
       X-Metrics-E2e-Ms:
-      - '10629.6'
+      - '6210.0'
       Traceparent:
-      - 00-8b3945d1d62fe092ca0211e0b2aa031c-9b94b7890004cfee-01
+      - 00-499745d580d3b8ab23be80d8478191b6-c576a7de00040d03-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1791752869,"completed_at":1791752879,"id":"4a3f073b-a6a4-9fd7-ade9-1b8f05f1ac48","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_4a3f073b-a6a4-9fd7-ade9-1b8f05f1ac48","summary":[{"text":"The
-        user wants information about Ruby.\n\nThe user shifted from requesting a JSON
-        person to asking about Ruby.\n\nThe JSON schema instruction applied only to
-        the previous Bob query. I will answer normally about Ruby, likely the programming
-        language.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"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"},{"content":[{"type":"output_text","text":"Ruby
-        is a dynamic, open-source programming language focused on simplicity and productivity.
-        It features an elegant, readable syntax inspired by Perl, Smalltalk, and Lisp.
-        Ruby powers the Ruby on Rails web framework and emphasizes developer happiness
-        with principles like \"convention over configuration.\" It''s interpreted,
-        object-oriented, and widely used for web development, scripting, and automation.","logprobs":[],"annotations":[]}],"id":"msg_4a3f073b-a6a4-9fd7-ade9-1b8f05f1ac48","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":548,"input_tokens_details":{"cached_tokens":128},"output_tokens":939,"output_tokens_details":{"reasoning_tokens":868},"total_tokens":1487,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":28981000,"context_details":{"input_tokens":548,"output_tokens":947}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Sun, 11 Oct 2026 21:07:59 GMT
-recorded_with: VCR 6.4.0
+      string: '{"created_at":1794331976,"completed_at":1794331982,"id":"<X_REQUEST_ID>","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_<X_REQUEST_ID>","summary":[{"text":"I''ll
+        explain Ruby.\n\nThe system prompt requires JSON output. I''ll provide a JSON
+        response about Ruby.\n\nI''ll map \"Ruby\" to the name field and pick an age.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"0YeOEMk68Utp3bbCZX6U/KuqKBGMJKsEtyK5DdYzR7vwiZm8bTf25KS0gySo0T2r7qpoZ+WXd0s25Fbb0YWtp1dYaGgJBH+jLSBIY9qMpYBpD8W0LyxRrqdUdLc5gNcqJ1e9y8mrMseiB5p3a/aZqaIgJAQnd9Fvyf4Wwq5t15l6U8N5YcUQGfyhH1QqpNc1e7NfqV5ojBuKRQQvB1gF5cHL9ua7vXVIuTL0cBq+VPYiOiZ1M+/REYIXX5zX5+w+KABKVxbhQUlItaGmrDI95FYt2xCDTLRm2eon8nTCJJwDXBNo3twh8SwlOAOmQJ/64hBNoWgR/ier50/13pkjPY/sa6IDskjAmU5A99cF6ZmpXVBZJpRimYDFRXOD0fYMjasqbh+UDdGP0Pd/lrRAOlgKzRLfFcyag6yVYYDc1E4Ye1KZoGQEj0PwVrKkjXgdUK4VcVV/xVEZLUOWfwqxcmLB1RzAO1lq+4bx/zvy4WX+Z2JFxdHA6KzStsEwaTreziTo1EEyDj3eMzGllDm4RSqNcYOkh9DWEm3sgtPwaWHl5I0qQiMXvLaWpBIB5VxCYnFlWDD2bB92dstIuI2i5v3tHR6rdFNtTqFIWVlwEeM8LcR23midseashn6ub8kkPSDV6dp3dcBF4dFMOetrGJdBniYzwh8cq3MfZn1K8mJfiMqDjSMmlRCrFrIV6l2khjEhIcuG17HOyAyZvgOoe0t0gknnh5zG9jcFb9aQ+mrfy1q7/XX6ayDW0wLbxg2TZyKRoGeCfLh41nATVzoqLMa6NRRfy163FtQjdSHLNE0mc5qqZUw7AJ0bxAZpdF5RcMeJC0E4jYsHjWO0Iyl/jc+VrDgn/X9APAUJVmuaHREAyqPwioyYAFcIJ8+3v2OijOSpnxgAv2+DmZ4q7M0E4ns+H3lDTBk/YbRcSAploH/Mavgm4nb8agPSP7A2LWXDXQ5SYtpBGYAP+GxEL6879Axr/9JAEPHsrex2Iq380FCG7qlR70AN+BNHI1aXWatmimIKWq69SQ129b4H0YoHsnYL/R1F3EzoWJ+JakcK853w6EABdmxJnwoEzHFIAaRloPV6pxj9+Qmh2B14yWHLX9VC9T7z4koBfNmzc0DgP03s+ZGAYcx6Uwdtu7olp75XLijttgMcR/WgvKYeWnYYPCOJWKiEeE87PU53Ybn4JdnyCBUCdIlS+O/c8YyuA06T9y6WMgP01ZfHRk7nXK5M1vNurY19S1fKisDwjCDvtfz33i0bitpR2nu0l8xwL1h+hiTxD9oDZuP+gp8QaFTWbYdQuBmVUdmDpThXaBSIzeRvAuPxiopNzvKNg7RBW0toUwtXy09576Tf38W/oXEm0FvxeM0Mf+YC3BMvrGASqT+6zwZsMOeBWT+yhS4bAstNvsrQtp4sINW3B8M90KFRyc8dewr3+vZnTM8/LJyouY8"},{"content":[{"type":"output_text","text":"{\"name\":\"Ruby\",\"age\":28}","logprobs":[],"annotations":[]}],"id":"msg_<X_REQUEST_ID>","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":452,"input_tokens_details":{"cached_tokens":128},"output_tokens":514,"output_tokens_details":{"reasoning_tokens":505},"total_tokens":966,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":17156000,"context_details":{"input_tokens":452,"output_tokens":522}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Tue, 10 Nov 2026 17:33:02 GMT
+recorded_with: VCR 6.4.1

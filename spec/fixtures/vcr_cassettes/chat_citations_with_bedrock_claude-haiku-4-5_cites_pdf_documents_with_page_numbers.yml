@@ -13,7 +13,7 @@ http_interactions:
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261105T194557Z
+      - 20261110T173240Z
       X-Amz-Content-Sha256:
       - c21cd3ced12ab593ebcdf8ab0be88d3c5ada36aab7dbe7b0a73f140e9165c398
       Authorization:
@@ -29,38 +29,37 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 05 Nov 2026 19:46:00 GMT
+      - Tue, 10 Nov 2026 17:32:42 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1674'
+      - '1520'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 04c0c0cf-ffed-46ca-ae6c-0576cb443142
+      - '088cef7e-a9a1-465f-a1a9-2117762c1af2'
       X-Amzn-Bedrock-Invocation-Latency:
-      - '1573'
+      - '1134'
       X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
       - '0'
       X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
       - '0'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '147'
+      - '122'
       X-Amzn-Bedrock-Input-Token-Count:
       - '4250'
     body:
       encoding: UTF-8
-      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_slwvhy6qjmgrx26y6dbgnfeexowmrx2lxwsobed4q7bs3fksxzsa","type":"message","role":"assistant","content":[{"citations":[{"type":"page_location","cited_text":"Sample
+      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_oxxxczhbj7i4wmhjemfwqpbvj7u234zo46ojsfecj7ecgwgr6hhq","type":"message","role":"assistant","content":[{"citations":[{"type":"page_location","cited_text":"Sample
         PDF\r\nThis is a simple PDF file. ","document_index":0,"document_title":"sample.pdf","start_page_number":1,"end_page_number":2}],"type":"text","text":"The
-        document is a simple PDF file"},{"type":"text","text":", and "},{"citations":[{"type":"page_location","cited_text":"Sample
-        PDF\r\nThis is a simple PDF file. Fun fun fun.\r\n","document_index":0,"document_title":"sample.pdf","start_page_number":1,"end_page_number":2}],"type":"text","text":"it
-        contains the title \"Sample PDF\" followed by \"This is a simple PDF file.
-        Fun fun fun.\""},{"type":"text","text":"\n\nThe remainder of the document
-        consists of "},{"citations":[{"type":"page_location","cited_text":"Lorem ipsum
+        document is a simple PDF file titled \"Sample PDF\""},{"type":"text","text":".
+        "},{"citations":[{"type":"page_location","cited_text":"Sample PDF\r\nThis
+        is a simple PDF file. Fun fun fun.\r\n","document_index":0,"document_title":"sample.pdf","start_page_number":1,"end_page_number":2}],"type":"text","text":"It
+        contains the text \"This is a simple PDF file. Fun fun fun.\""},{"type":"text","text":"
+        followed by "},{"citations":[{"type":"page_location","cited_text":"Lorem ipsum
         dolor sit amet, consectetuer adipiscing elit. ","document_index":0,"document_title":"sample.pdf","start_page_number":1,"end_page_number":2}],"type":"text","text":"Lorem
-        ipsum placeholder text, starting with \"Lorem ipsum dolor sit amet, consectetuer
-        adipiscing elit.\""},{"type":"text","text":" This filler text continues throughout
-        the document and includes various Latin phrases and words typical of Lorem
-        ipsum content used as a placeholder in design and publishing."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":4250,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":147,"service_tier":"standard"}}'
-  recorded_at: Thu, 05 Nov 2026 19:46:00 GMT
+        ipsum text beginning with \"Lorem ipsum dolor sit amet, consectetuer adipiscing
+        elit.\""},{"type":"text","text":" The rest of the document consists of extended
+        Lorem ipsum placeholder text."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":4250,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":122,"service_tier":"standard"}}'
+  recorded_at: Tue, 10 Nov 2026 17:32:42 GMT
 recorded_with: VCR 6.4.1

@@ -5,16 +5,16 @@ http_interactions:
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
     body:
       encoding: UTF-8
-      string: '{"messages":[{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"Hi"}]}],"inferenceConfig":{}}'
+      string: '{"messages":[{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"Hi"}]}],"inferenceConfig":{"maxTokens":65535}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261011T210621Z
+      - 20261110T173137Z
       X-Amz-Content-Sha256:
-      - 55c2ebe2434295cc9874d7c4cac19f2b478ee12be2a057acb1a85087330a2ba0
+      - 21ce48cd3ea5255d4f97ed7d743671c3c797b97016338a580cb6b1328afc383c
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -28,7 +28,7 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:39 GMT
+      - Tue, 10 Nov 2026 17:31:51 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -36,7 +36,7 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - d6d40fde-76c9-46a7-82c8-6ee849212c13
+      - b8a1a8f0-10b6-4075-8cd8-13f34a084661
       X-Amzn-Errortype:
       - ValidationException:http://internal.amazon.com/coral/com.amazon.bedrock/
     body:
@@ -44,5 +44,5 @@ http_interactions:
       string: '{"message":"The model returned the following errors: Input Tokens Exceeded:
         Number of input tokens exceeds maximum length. Please update the input to
         try again."}'
-  recorded_at: Sun, 11 Oct 2026 21:06:39 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:31:51 GMT
+recorded_with: VCR 6.4.1

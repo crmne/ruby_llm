@@ -9,7 +9,7 @@ http_interactions:
         is the capital of France","Ruby is a programming language created by Matz"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Http-Referer:
@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:07:16 GMT
+      - Tue, 10 Nov 2026 17:26:36 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,7 +38,7 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
-      - X-Generation-Id,X-Provider-Name,request-id,cf-ray
+      - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -52,11 +52,13 @@ http_interactions:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"rerank-2.5-lite","results":[{"index":1,"relevance_score":0.828125,"document":{"text":"Ruby
-        is a programming language created by Matz"}},{"index":0,"relevance_score":0.306640625,"document":{"text":"Paris
+      string: '{"model":"rerank-2.5-lite","results":[{"index":1,"relevance_score":0.8296598196029663,"document":{"text":"Ruby
+        is a programming language created by Matz"}},{"index":0,"relevance_score":0.3053441345691681,"document":{"text":"Paris
         is the capital of France"}}],"usage":{"total_tokens":17,"cost":3.4e-7},"provider":"VoyageAI
-        by MongoDB","id":"gen-rerank-1791752836-K5snBh3Uw1HGSBxKLKg6"}'
-  recorded_at: Sun, 11 Oct 2026 21:07:16 GMT
-recorded_with: VCR 6.4.0
+        by MongoDB","id":"gen-rerank-1794331596-nfsTDsrcC8oQ2RzBpZXV"}'
+  recorded_at: Tue, 10 Nov 2026 17:26:36 GMT
+recorded_with: VCR 6.4.1

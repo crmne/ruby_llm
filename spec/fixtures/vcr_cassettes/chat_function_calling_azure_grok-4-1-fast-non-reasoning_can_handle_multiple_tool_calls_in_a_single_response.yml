@@ -11,7 +11,7 @@ http_interactions:
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -28,7 +28,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 Oct 2026 21:07:29 GMT
+      - Tue, 10 Nov 2026 17:31:49 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -45,14 +45,16 @@ http_interactions:
       - 'true'
       X-Xai-Model-Address:
       - http://localhost:9988
+      X-Watermark:
+      - 'false'
       Traceparent:
-      - 00-5904588c102203b8fb4598f7840ab3cd-9418c5840005ff4e-00
+      - 00-d891b3c1566ccdaf952bcf8c7c9d29ed-d315fe850000c743-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - 9dfd2a4b-5060-42f3-bd8d-fa8047e5a622
+      - 43609e27-f76e-4b99-8975-b23859be5fd9
       Azureml-Model-Session:
-      - d20261009040854-b7570cce
+      - d20261110015917-e7d4cb48
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -64,9 +66,9 @@ http_interactions:
       X-Ratelimit-Key:
       - grok-4-1-fast-non-reasoning
       X-Ratelimit-Remaining-Requests:
-      - '45'
+      - '49'
       X-Ratelimit-Reset-Requests:
-      - '6'
+      - '1'
       X-Ratelimit-Limit-Requests:
       - '50'
       X-Ratelimit-Renewalperiod-Requests:
@@ -86,7 +88,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - 9dfd2a4b-5060-42f3-bd8d-fa8047e5a622
+      - 43609e27-f76e-4b99-8975-b23859be5fd9
+      X-Http2-Stream-Id:
+      - '465'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -95,8 +99,8 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"14ae8731-33fa-4da4-8b43-f9322fda78c3","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_84874878","index":0,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_67931250","index":1,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_74050796","index":2,"type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":219,"completion_tokens":45,"total_tokens":264,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":159,"audio_tokens":0,"text_tokens":219,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1791752850,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Sun, 11 Oct 2026 21:07:30 GMT
+      string: '{"id":"<X_REQUEST_ID>","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_79662726","index":0,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_75235806","index":1,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_36303693","index":2,"type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":387,"completion_tokens":45,"total_tokens":432,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":159,"audio_tokens":0,"text_tokens":387,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794331909,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Tue, 10 Nov 2026 17:31:50 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
@@ -104,11 +108,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"system","content":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
-        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"call_84874878","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_67931250","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_74050796","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"call_84874878"},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"call_67931250"},{"role":"tool","content":"{\"roll\":3}","tool_call_id":"call_74050796"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"call_79662726","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_75235806","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_36303693","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"call_79662726"},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"call_75235806"},{"role":"tool","content":"{\"roll\":3}","tool_call_id":"call_36303693"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -125,7 +129,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 Oct 2026 21:07:30 GMT
+      - Tue, 10 Nov 2026 17:31:50 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -142,14 +146,16 @@ http_interactions:
       - 'true'
       X-Xai-Model-Address:
       - http://localhost:9988
+      X-Watermark:
+      - 'false'
       Traceparent:
-      - 00-f05726ebf01e1e0aac29cfc8a299e0b0-c0fcaa540005c0b8-00
+      - 00-8711541d4cca1f8dacc45cf0ed79ba0f-397da403000279e8-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - ff71a953-4201-48c7-a651-fa08b1371069
+      - 59b7d88b-e610-42c4-95e8-2be8f50a039c
       Azureml-Model-Session:
-      - d20261009040854-b7570cce
+      - d20261110015917-e7d4cb48
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -161,9 +167,9 @@ http_interactions:
       X-Ratelimit-Key:
       - grok-4-1-fast-non-reasoning
       X-Ratelimit-Remaining-Requests:
-      - '45'
+      - '49'
       X-Ratelimit-Reset-Requests:
-      - '6'
+      - '1'
       X-Ratelimit-Limit-Requests:
       - '50'
       X-Ratelimit-Renewalperiod-Requests:
@@ -183,7 +189,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - ff71a953-4201-48c7-a651-fa08b1371069
+      - 59b7d88b-e610-42c4-95e8-2be8f50a039c
+      X-Http2-Stream-Id:
+      - '137'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -192,7 +200,7 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"35f5c61f-8759-40e9-b430-814a9384c236","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        dice rolls are: 1, 2, 3!"},"finish_reason":"stop"}],"usage":{"prompt_tokens":298,"completion_tokens":14,"total_tokens":312,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":387,"audio_tokens":0,"text_tokens":298,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1791752851,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Sun, 11 Oct 2026 21:07:31 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"<X_REQUEST_ID>","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        three dice rolls are: 1, 2, 3!"},"finish_reason":"stop"}],"usage":{"prompt_tokens":466,"completion_tokens":15,"total_tokens":481,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":387,"audio_tokens":0,"text_tokens":466,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794331910,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Tue, 10 Nov 2026 17:31:51 GMT
+recorded_with: VCR 6.4.1

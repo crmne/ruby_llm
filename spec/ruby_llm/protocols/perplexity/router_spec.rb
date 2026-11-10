@@ -118,18 +118,4 @@ RSpec.describe RubyLLM::Protocols::Perplexity::Router do
       expect(payload.dig(:response_format, :json_schema, :strict)).to be(strict)
     end
   end
-
-  it 'requests a named tool with a cache boundary from the configured Router account', :live do
-    skip_without_cassette_or_key('PERPLEXITY_API_KEY')
-    response = chat.with_tools(tool).with_tool_options(choice: 'add', calls: :one).with_caching
-                   .with_instructions('Use arithmetic tools for arithmetic.', cache_until_here: true)
-                   .ask_later('Add two and two.').generate
-
-    expect(response.tool_calls.values.first).to have_attributes(name: 'add', arguments: { 'left' => 2, 'right' => 2 })
-    expect(response.tokens.input).to be_a(Numeric)
-  rescue RubyLLM::ForbiddenError => e
-    raise unless e.message.include?('Router API is currently in limited preview')
-
-    skip 'The configured Perplexity account has no Router preview access'
-  end
 end

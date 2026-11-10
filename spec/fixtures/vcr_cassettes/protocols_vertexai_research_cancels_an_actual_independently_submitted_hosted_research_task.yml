@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,12 +20,12 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Sun, 11 Oct 2026 21:07:00 GMT
       Pragma:
       - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Tue, 10 Nov 2026 17:28:16 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 11 Oct 2026 21:07:00 GMT
+  recorded_at: Tue, 10 Nov 2026 17:28:16 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions
@@ -66,7 +66,7 @@ http_interactions:
         the official Ruby documentation homepage."}],"background":true,"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:07:01 GMT
+      - Tue, 10 Nov 2026 17:28:18 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -102,17 +102,17 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"ChAzZTFjMGY1MGQ4YjcyZjg2EAgaATAqBG1haW4","status":"in_progress","object":"interaction","agent":"deep-research-preview-04-2026"}'
-  recorded_at: Sun, 11 Oct 2026 21:07:01 GMT
+      string: '{"id":"ChA5NDVkZTY2MWM4M2YyMDhhEAgaAjUyKgRtYWlu","status":"in_progress","object":"interaction","agent":"deep-research-preview-04-2026"}'
+  recorded_at: Tue, 10 Nov 2026 17:28:18 GMT
 - request:
     method: post
-    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChAzZTFjMGY1MGQ4YjcyZjg2EAgaATAqBG1haW4/cancel
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChA5NDVkZTY2MWM4M2YyMDhhEAgaAjUyKgRtYWlu/cancel
     body:
       encoding: UTF-8
       string: "{}"
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -133,7 +133,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:07:02 GMT
+      - Tue, 10 Nov 2026 17:28:19 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -148,9 +148,9 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"ChAzZTFjMGY1MGQ4YjcyZjg2EAgaATAqBG1haW4","status":"cancelled","usage":{"total_tokens":382,"total_input_tokens":366,"input_tokens_by_modality":[{"modality":"text","tokens":366}],"total_output_tokens":16,"output_tokens_by_modality":[{"modality":"text","tokens":16}]},"service_tier":"standard","steps":[{"type":"user_input","content":[{"text":"Find
+      string: '{"id":"ChA5NDVkZTY2MWM4M2YyMDhhEAgaAjUyKgRtYWlu","status":"cancelled","usage":{"total_tokens":382,"total_input_tokens":366,"input_tokens_by_modality":[{"modality":"text","tokens":366}],"total_output_tokens":16,"output_tokens_by_modality":[{"modality":"text","tokens":16}]},"service_tier":"standard","steps":[{"type":"user_input","content":[{"text":"Find
         the official Ruby documentation homepage.","type":"text"}]},{"error":{"code":1,"message":"The
         operation was cancelled."},"type":"model_output"}],"errors":[{"message":"The
         operation was cancelled.","code":"cancelled"}],"object":"interaction"}'
-  recorded_at: Sun, 11 Oct 2026 21:07:02 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:28:19 GMT
+recorded_with: VCR 6.4.1

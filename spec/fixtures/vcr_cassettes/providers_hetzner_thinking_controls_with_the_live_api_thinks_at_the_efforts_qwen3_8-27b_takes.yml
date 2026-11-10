@@ -24,23 +24,19 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 09 Nov 2026 20:19:47 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
+      - Tue, 10 Nov 2026 17:27:22 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
       - Origin
-      Server:
-      - HeRay
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":67,"completion_tokens":52,"total_tokens":119,"completion_tokens_details":{"reasoning_tokens":46},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\n391","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"We
-        need answer user asks \"What is 17 times 23? Reply with the number.\" Simple
-        multiplication: 17*23 = 391. Need final only number. Ensure no extra.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-8b65b317-2f83-414e-bb4e-43b050fc833d","object":"chat.completion","created":1794255587,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Mon, 09 Nov 2026 20:19:47 GMT
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":67,"completion_tokens":60,"total_tokens":127,"completion_tokens_details":{"reasoning_tokens":54},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\n391","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"We
+        need answer simple multiplication. 17*23 = 17*20 + 17*3 = 340+51=391. User
+        requests reply with number only likely. Final: 391.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-b714fdaa-cf7a-4dcb-8167-ed81305ff17a","object":"chat.completion","created":1794331642,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Tue, 10 Nov 2026 17:27:23 GMT
 recorded_with: VCR 6.4.1

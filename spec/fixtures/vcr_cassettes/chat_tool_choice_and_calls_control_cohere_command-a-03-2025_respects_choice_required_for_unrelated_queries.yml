@@ -13,7 +13,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false}}}],"tool_choice":"REQUIRED"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -46,11 +46,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 83164c09aecddaaf7f8a10ab3dcbd9b5
+      - 1a196d82bb1d6e1642ad551ddc17d9b7
       Date:
-      - Sun, 11 Oct 2026 21:19:05 GMT
+      - Tue, 10 Nov 2026 17:53:12 GMT
       X-Envoy-Upstream-Service-Time:
-      - '569'
+      - '763'
       Server:
       - envoy
       Via:
@@ -61,9 +61,9 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"afd7b6d7-3f12-4c95-9eca-636cfe32fcad","message":{"role":"assistant","tool_plan":"I
-        will use one or more of the available tools to find the answer","tool_calls":[{"id":"weather_673mjwnnqbwb","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":106,"output_tokens":36},"tokens":{"input_tokens":1568,"output_tokens":50},"cached_tokens":992}}'
-  recorded_at: Sun, 11 Oct 2026 21:19:05 GMT
+      string: '{"id":"44f9ce31-66ab-415c-98cf-aff97daccafc","message":{"role":"assistant","tool_plan":"I
+        will use one or more of the available tools to find the answer","tool_calls":[{"id":"weather_8nbsmjgt4t5p","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":106,"output_tokens":36},"tokens":{"input_tokens":1568,"output_tokens":50},"cached_tokens":720}}'
+  recorded_at: Tue, 10 Nov 2026 17:53:12 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
@@ -71,14 +71,14 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"command-a-03-2025","messages":[{"role":"system","content":[{"type":"text","text":"Your
         location is Berlin, at latitude 52.5200 and longitude 13.4050."}]},{"role":"user","content":[{"type":"text","text":"When
-        was the fall of Rome?"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"weather_673mjwnnqbwb","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","tool_call_id":"weather_673mjwnnqbwb","content":"Current
+        was the fall of Rome?"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"weather_8nbsmjgt4t5p","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","tool_call_id":"weather_8nbsmjgt4t5p","content":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"stream":false,"max_tokens":4096,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -103,7 +103,7 @@ http_interactions:
       Num-Chars:
       - '7719'
       Num-Tokens:
-      - '183'
+      - '176'
       Pragma:
       - no-cache
       Vary:
@@ -111,11 +111,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 4737f5a0d9d77938c00329929e71a66f
+      - 800dc80124982851dedad1ae29b67579
       Date:
-      - Sun, 11 Oct 2026 21:19:06 GMT
+      - Tue, 10 Nov 2026 17:53:14 GMT
       X-Envoy-Upstream-Service-Time:
-      - '711'
+      - '1822'
       Server:
       - envoy
       Via:
@@ -127,6 +127,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjlhZTJkYzNlLTI5YzQtNGMzOS1hM2U2LWE4Y2QzNmMyMTU1NSIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IkknbSBzb3JyeSwgSSBkb24ndCBoYXZlIHRoZSB0b29scyB0byBhbnN3ZXIgeW91ciBxdWVzdGlvbi5cblxuVGhlIHdlYXRoZXIgaW4gQmVybGluIGlzIGN1cnJlbnRseSAxNcKwQywgd2l0aCB3aW5kIHNwZWVkcyBvZiAxMCBrbS9oLiJ9XSwiY2l0YXRpb25zIjpbeyJzdGFydCI6OTUsImVuZCI6MTI5LCJ0ZXh0IjoiMTXCsEMsIHdpdGggd2luZCBzcGVlZHMgb2YgMTAga20vaC4iLCJzb3VyY2VzIjpbeyJ0eXBlIjoidG9vbCIsImlkIjoid2VhdGhlcl82NzNtandubnFid2I6MCIsInRvb2xfb3V0cHV0Ijp7ImNvbnRlbnQiOiJDdXJyZW50IHdlYXRoZXIgYXQgNTIuNTIwMCwgMTMuNDA1MDogMTXCsEMsIFdpbmQ6IDEwIGttL2gifX1dLCJ0eXBlIjoiVEVYVF9DT05URU5UIn1dfSwiZmluaXNoX3JlYXNvbiI6IkNPTVBMRVRFIiwidXNhZ2UiOnsiYmlsbGVkX3VuaXRzIjp7ImlucHV0X3Rva2VucyI6MTQzLCJvdXRwdXRfdG9rZW5zIjo0MH0sInRva2VucyI6eyJpbnB1dF90b2tlbnMiOjE2ODcsIm91dHB1dF90b2tlbnMiOjUyfSwiY2FjaGVkX3Rva2VucyI6OTkyfX0=
-  recorded_at: Sun, 11 Oct 2026 21:19:06 GMT
-recorded_with: VCR 6.4.0
+        eyJpZCI6IjJmYzg0MGIxLWUzZDgtNDA0OS1hYTk3LTU4YmY5NTIxN2ViZiIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IkknbSBzb3JyeSwgSSdtIG5vdCBhYmxlIHRvIGFuc3dlciB5b3VyIHF1ZXN0aW9uLiBUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiBpcyAxNcKwQyB3aXRoIDEwIGttL2ggd2luZHMuIn1dLCJjaXRhdGlvbnMiOlt7InN0YXJ0Ijo4MiwiZW5kIjoxMDYsInRleHQiOiIxNcKwQyB3aXRoIDEwIGttL2ggd2luZHMuIiwic291cmNlcyI6W3sidHlwZSI6InRvb2wiLCJpZCI6IndlYXRoZXJfOG5ic21qZ3Q0dDVwOjAiLCJ0b29sX291dHB1dCI6eyJjb250ZW50IjoiQ3VycmVudCB3ZWF0aGVyIGF0IDUyLjUyMDAsIDEzLjQwNTA6IDE1wrBDLCBXaW5kOiAxMCBrbS9oIn19XSwidHlwZSI6IlRFWFRfQ09OVEVOVCJ9XX0sImZpbmlzaF9yZWFzb24iOiJDT01QTEVURSIsInVzYWdlIjp7ImJpbGxlZF91bml0cyI6eyJpbnB1dF90b2tlbnMiOjE0Mywib3V0cHV0X3Rva2VucyI6MzN9LCJ0b2tlbnMiOnsiaW5wdXRfdG9rZW5zIjoxNjg3LCJvdXRwdXRfdG9rZW5zIjo0NX0sImNhY2hlZF90b2tlbnMiOjEyOH19
+  recorded_at: Tue, 10 Nov 2026 17:53:14 GMT
+recorded_with: VCR 6.4.1

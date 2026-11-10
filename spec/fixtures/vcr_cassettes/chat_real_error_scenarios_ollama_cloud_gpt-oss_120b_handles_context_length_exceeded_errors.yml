@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"Hi"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -19,37 +19,38 @@ http_interactions:
       - "*/*"
   response:
     status:
-      code: 500
-      message: Internal Server Error
+      code: 400
+      message: Bad Request
     headers:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - fb036d5c394cd0c23173b2be8d69965e24bc9914
+      - 81e02665bdd918cf59b66804d554f8e53171f5d2
       X-Build-Time:
-      - '2026-10-09T17:17:18-07:00'
+      - '2026-11-09T17:12:20-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '134'
+      - '194'
       Date:
-      - Sun, 11 Oct 2026 21:07:15 GMT
+      - Tue, 10 Nov 2026 17:36:15 GMT
       Server:
       - Google Frontend
       Traceparent:
-      - 00-9d7d9b73ffe2a68c5a6c0986c3492869-26a2c97b5dae751b-00
+      - 00-d779a506a93ce29b50a83c3a03b46267-a6d49aac5d960cf3-00
       X-Cloud-Trace-Context:
-      - 9d7d9b73ffe2a68c5a6c0986c3492869/2784009051358262555
+      - d779a506a93ce29b50a83c3a03b46267/12021403370453863667
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"error":{"message":"Internal Server Error (ref: b125bdb6-5b2f-49ac-8cb4-fd084e1481a9)","type":"api_error","param":null,"code":null}}
+      string: '{"error":{"message":"The prompt is too long: 1250128, model maximum
+        context length: 131072 (ref: <X_REQUEST_ID>)","type":"invalid_request_error","param":null,"code":null}}
 
         '
-  recorded_at: Sun, 11 Oct 2026 21:07:15 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:36:15 GMT
+recorded_with: VCR 6.4.1

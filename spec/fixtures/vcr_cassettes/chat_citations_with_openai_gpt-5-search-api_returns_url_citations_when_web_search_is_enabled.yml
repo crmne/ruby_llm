@@ -9,7 +9,7 @@ http_interactions:
         is the latest stable version of Ruby? Cite your sources."}],"stream":false,"web_search_options":{}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:07:01 GMT
+      - Tue, 10 Nov 2026 17:33:14 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,7 +48,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '6355'
+      - '5995'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -75,59 +75,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "id": "chatcmpl-9d70b2b3-d718-452c-b97d-ece1a0e8f833",
-          "object": "chat.completion",
-          "created": 1791752820,
-          "model": "gpt-5-search-api-2025-10-14",
-          "choices": [
-            {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "The latest stable version of Ruby is **Ruby 4.0.7** ([ruby-lang.org](https://www.ruby-lang.org/en/downloads/?utm_source=openai))\n\nAnother stable version currently available is **Ruby 3.4.11** ([ruby-lang.org](https://www.ruby-lang.org/en/downloads/?utm_source=openai))",
-                "refusal": null,
-                "annotations": [
-                  {
-                    "type": "url_citation",
-                    "url_citation": {
-                      "end_index": 128,
-                      "start_index": 52,
-                      "title": "Download Ruby | Ruby",
-                      "url": "https://www.ruby-lang.org/en/downloads/?utm_source=openai"
-                    }
-                  },
-                  {
-                    "type": "url_citation",
-                    "url_citation": {
-                      "end_index": 268,
-                      "start_index": 192,
-                      "title": "Download Ruby | Ruby",
-                      "url": "https://www.ruby-lang.org/en/downloads/?utm_source=openai"
-                    }
-                  }
-                ]
-              },
-              "finish_reason": "stop"
-            }
-          ],
-          "usage": {
-            "prompt_tokens": 16576,
-            "completion_tokens": 92,
-            "total_tokens": 16668,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 0,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
-          },
-          "system_fingerprint": null
-        }
-  recorded_at: Sun, 11 Oct 2026 21:07:01 GMT
-recorded_with: VCR 6.4.0
+      string: !binary |-
+        ewogICJpZCI6ICJjaGF0Y21wbC0yZDE4MDViMS1jNmYxLTRhNDUtOWM5MC0zNWRiMmFiYTBlMmIiLAogICJvYmplY3QiOiAiY2hhdC5jb21wbGV0aW9uIiwKICAiY3JlYXRlZCI6IDE3OTQzMzE5OTQsCiAgIm1vZGVsIjogImdwdC01LXNlYXJjaC1hcGktMjAyNS0xMC0xNCIsCiAgImNob2ljZXMiOiBbCiAgICB7CiAgICAgICJpbmRleCI6IDAsCiAgICAgICJtZXNzYWdlIjogewogICAgICAgICJyb2xlIjogImFzc2lzdGFudCIsCiAgICAgICAgImNvbnRlbnQiOiAiQXMgb2YgKipOb3ZlbWJlciAxMCwgMjAyNioqLCB0aGUgbGF0ZXN0IHN0YWJsZSBSdWJ5IHZlcnNpb25zIGJ5IG1ham9yIHJlbGVhc2UgbGluZSBhcmU6XG5cbi0gUnVieSA0LjA6IHZlcnNpb24gKio0LjAuOSoqIChbZ2l0aHViLmNvbV0oaHR0cHM6Ly9naXRodWIuY29tL3J1YnkvcnVieS9yZWxlYXNlcz91dG1fc291cmNlPW9wZW5haSkpICBcbi0gUnVieSAzLjQ6IHZlcnNpb24gKiozLjQuMTIqKiAoW3ZlcnNpb25yZWxlYXNlLmNvbV0oaHR0cHM6Ly92ZXJzaW9ucmVsZWFzZS5jb20vcHJvamVjdHMvcnVieS1sYW5nLm9yZz91dG1fc291cmNlPW9wZW5haSkpICBcbi0gUnVieSAzLjM6IHZlcnNpb24gKiozLjMuMTMqKiAoW2dpdGh1Yi5jb21dKGh0dHBzOi8vZ2l0aHViLmNvbS9ydWJ5L3J1YnkvcmVsZWFzZXM/dXRtX3NvdXJjZT1vcGVuYWkpKSAgXG5cbklmIGJ5IOKAnGxhdGVzdCBzdGFibGXigJ0geW91IG1lYW4gdGhlIG1vc3QgcmVjZW50ICptYWpvciogcmVsZWFzZSwgdGhhdCB3b3VsZCBiZSAqKlJ1YnkgNC4wLjkqKi4gTGV0IG1lIGtub3cgaWYgeW91IG1lYW50IGEgc3BlY2lmaWMgYnJhbmNoIChlLmcuIDMueCkgb3Igc29tZXRoaW5nIGVsc2UhIiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogWwogICAgICAgICAgewogICAgICAgICAgICAidHlwZSI6ICJ1cmxfY2l0YXRpb24iLAogICAgICAgICAgICAidXJsX2NpdGF0aW9uIjogewogICAgICAgICAgICAgICJlbmRfaW5kZXgiOiAxOTAsCiAgICAgICAgICAgICAgInN0YXJ0X2luZGV4IjogMTE5LAogICAgICAgICAgICAgICJ0aXRsZSI6ICJSZWxlYXNlcyDCtyBydWJ5L3J1YnkgwrcgR2l0SHViIiwKICAgICAgICAgICAgICAidXJsIjogImh0dHBzOi8vZ2l0aHViLmNvbS9ydWJ5L3J1YnkvcmVsZWFzZXM/dXRtX3NvdXJjZT1vcGVuYWkiCiAgICAgICAgICAgIH0KICAgICAgICAgIH0sCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0eXBlIjogInVybF9jaXRhdGlvbiIsCiAgICAgICAgICAgICJ1cmxfY2l0YXRpb24iOiB7CiAgICAgICAgICAgICAgImVuZF9pbmRleCI6IDMxNSwKICAgICAgICAgICAgICAic3RhcnRfaW5kZXgiOiAyMjQsCiAgICAgICAgICAgICAgInRpdGxlIjogIlJ1YnkgfCBWZXJzaW9uIFJlbGVhc2UiLAogICAgICAgICAgICAgICJ1cmwiOiAiaHR0cHM6Ly92ZXJzaW9ucmVsZWFzZS5jb20vcHJvamVjdHMvcnVieS1sYW5nLm9yZz91dG1fc291cmNlPW9wZW5haSIKICAgICAgICAgICAgfQogICAgICAgICAgfSwKICAgICAgICAgIHsKICAgICAgICAgICAgInR5cGUiOiAidXJsX2NpdGF0aW9uIiwKICAgICAgICAgICAgInVybF9jaXRhdGlvbiI6IHsKICAgICAgICAgICAgICAiZW5kX2luZGV4IjogNDIwLAogICAgICAgICAgICAgICJzdGFydF9pbmRleCI6IDM0OSwKICAgICAgICAgICAgICAidGl0bGUiOiAiUmVsZWFzZXMgwrcgcnVieS9ydWJ5IMK3IEdpdEh1YiIsCiAgICAgICAgICAgICAgInVybCI6ICJodHRwczovL2dpdGh1Yi5jb20vcnVieS9ydWJ5L3JlbGVhc2VzP3V0bV9zb3VyY2U9b3BlbmFpIgogICAgICAgICAgICB9CiAgICAgICAgICB9CiAgICAgICAgXQogICAgICB9LAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiAxNjQzOCwKICAgICJjb21wbGV0aW9uX3Rva2VucyI6IDIxNywKICAgICJ0b3RhbF90b2tlbnMiOiAxNjY1NSwKICAgICJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJjYWNoZWRfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAKICAgIH0sCiAgICAiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgInJlYXNvbmluZ190b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMCwKICAgICAgImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMCwKICAgICAgInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMAogICAgfQogIH0sCiAgInN5c3RlbV9maW5nZXJwcmludCI6IG51bGwKfQo=
+  recorded_at: Tue, 10 Nov 2026 17:33:14 GMT
+recorded_with: VCR 6.4.1

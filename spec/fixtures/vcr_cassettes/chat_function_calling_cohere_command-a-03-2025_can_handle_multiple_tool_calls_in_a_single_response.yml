@@ -11,7 +11,7 @@ http_interactions:
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -44,11 +44,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - d8961c8b973e1a942a5b0996ebd1dfd9
+      - acd093c6f8726eb1c686bc43aa23ec66
       Date:
-      - Sun, 11 Oct 2026 21:08:22 GMT
+      - Tue, 10 Nov 2026 17:35:09 GMT
       X-Envoy-Upstream-Service-Time:
-      - '861'
+      - '7163'
       Server:
       - envoy
       Via:
@@ -59,9 +59,9 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"c75689a9-b30b-4e3c-9bc3-f9b97e12ba18","message":{"role":"assistant","tool_plan":"I
-        will roll the dice 3 times.","tool_calls":[{"id":"dice_roll_n1sfpvxxmvtg","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"dice_roll_34hwjmc96g43","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"dice_roll_2nks2a0cwre1","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":57,"output_tokens":21},"tokens":{"input_tokens":1490,"output_tokens":95},"cached_tokens":992}}'
-  recorded_at: Sun, 11 Oct 2026 21:08:22 GMT
+      string: '{"id":"11d4fd7e-84cd-4975-adf8-0dabcdf3cd84","message":{"role":"assistant","tool_plan":"I
+        will roll the dice 3 times.","tool_calls":[{"id":"dice_roll_4gzvvgxe7mhn","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"dice_roll_9r7s499ps82t","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"dice_roll_pmyhxs4g246d","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":57,"output_tokens":21},"tokens":{"input_tokens":1490,"output_tokens":95},"cached_tokens":128}}'
+  recorded_at: Tue, 10 Nov 2026 17:35:09 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
@@ -69,11 +69,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"command-a-03-2025","messages":[{"role":"system","content":[{"type":"text","text":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."}]},{"role":"user","content":[{"type":"text","text":"Roll
-        the dice 3 times"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"dice_roll_n1sfpvxxmvtg","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"dice_roll_34hwjmc96g43","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"dice_roll_2nks2a0cwre1","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","tool_call_id":"dice_roll_n1sfpvxxmvtg","content":"{\"roll\":1}"},{"role":"tool","tool_call_id":"dice_roll_34hwjmc96g43","content":"{\"roll\":2}"},{"role":"tool","tool_call_id":"dice_roll_2nks2a0cwre1","content":"{\"roll\":3}"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        the dice 3 times"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"dice_roll_4gzvvgxe7mhn","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"dice_roll_9r7s499ps82t","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"dice_roll_pmyhxs4g246d","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","tool_call_id":"dice_roll_4gzvvgxe7mhn","content":"{\"roll\":1}"},{"role":"tool","tool_call_id":"dice_roll_9r7s499ps82t","content":"{\"roll\":2}"},{"role":"tool","tool_call_id":"dice_roll_pmyhxs4g246d","content":"{\"roll\":3}"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -98,7 +98,7 @@ http_interactions:
       Num-Chars:
       - '7868'
       Num-Tokens:
-      - '91'
+      - '93'
       Pragma:
       - no-cache
       Vary:
@@ -106,22 +106,22 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 60060e9788d4ed31c6ef31f08284b82c
+      - e95396f466b5bb2c11ad609b0cfc42f7
       Date:
-      - Sun, 11 Oct 2026 21:08:24 GMT
+      - Tue, 10 Nov 2026 17:35:11 GMT
       X-Envoy-Upstream-Service-Time:
-      - '1884'
+      - '1999'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"84d2fc5b-278d-4ce8-ae07-060a4fb20227","message":{"role":"assistant","content":[{"type":"text","text":"Here
-        are the results of the three dice rolls:\n- 1\n- 2\n- 3"}],"citations":[{"start":48,"end":49,"text":"1","sources":[{"type":"tool","id":"dice_roll_n1sfpvxxmvtg:0","tool_output":{"roll":"1"}}],"type":"TEXT_CONTENT"},{"start":52,"end":53,"text":"2","sources":[{"type":"tool","id":"dice_roll_34hwjmc96g43:0","tool_output":{"roll":"2"}}],"type":"TEXT_CONTENT"},{"start":56,"end":57,"text":"3","sources":[{"type":"tool","id":"dice_roll_2nks2a0cwre1:0","tool_output":{"roll":"3"}}],"type":"TEXT_CONTENT"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":69,"output_tokens":22},"tokens":{"input_tokens":1703,"output_tokens":55},"cached_tokens":992}}'
-  recorded_at: Sun, 11 Oct 2026 21:08:24 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"3037d9d9-5269-4a0f-943f-487dba0ad7d8","message":{"role":"assistant","content":[{"type":"text","text":"I
+        rolled the dice three times and got the following results:\n- 1\n- 2\n- 3"}],"citations":[{"start":63,"end":64,"text":"1","sources":[{"type":"tool","id":"dice_roll_4gzvvgxe7mhn:0","tool_output":{"roll":"1"}}],"type":"TEXT_CONTENT"},{"start":67,"end":68,"text":"2","sources":[{"type":"tool","id":"dice_roll_9r7s499ps82t:0","tool_output":{"roll":"2"}}],"type":"TEXT_CONTENT"},{"start":71,"end":72,"text":"3","sources":[{"type":"tool","id":"dice_roll_pmyhxs4g246d:0","tool_output":{"roll":"3"}}],"type":"TEXT_CONTENT"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":69,"output_tokens":24},"tokens":{"input_tokens":1703,"output_tokens":57},"cached_tokens":1008}}'
+  recorded_at: Tue, 10 Nov 2026 17:35:11 GMT
+recorded_with: VCR 6.4.1

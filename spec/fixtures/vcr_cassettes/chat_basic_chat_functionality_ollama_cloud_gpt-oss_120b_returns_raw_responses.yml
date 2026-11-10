@@ -9,7 +9,7 @@ http_interactions:
         is the capital of France?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,33 +26,34 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - fb036d5c394cd0c23173b2be8d69965e24bc9914
+      - 81e02665bdd918cf59b66804d554f8e53171f5d2
       X-Build-Time:
-      - '2026-10-09T17:17:18-07:00'
+      - '2026-11-09T17:12:20-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '453'
+      - '540'
       Date:
-      - Sun, 11 Oct 2026 21:08:49 GMT
+      - Tue, 10 Nov 2026 17:36:36 GMT
       Server:
       - Google Frontend
-      Traceparent:
-      - 00-945a412f61970d293ff655f1ef91bfd3-1ad769760aad0502-00
       X-Cloud-Trace-Context:
-      - 945a412f61970d293ff655f1ef91bfd3/1934130520685085954
+      - c05cc4a9dd6cc7116e68fb55a7903463/17664183594502147503
+      Traceparent:
+      - 00-c05cc4a9dd6cc7116e68fb55a7903463-f523c963ed954daf-00
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-626","object":"chat.completion","created":1791752929,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        capital of France is **Paris**.","reasoning":"User asks simple question: capital
-        of France is Paris. Provide answer."},"finish_reason":"stop"}],"usage":{"prompt_tokens":74,"completion_tokens":33,"total_tokens":107,"prompt_tokens_details":{"cached_tokens":48}}}
+      string: '{"id":"chatcmpl-390","object":"chat.completion","created":1794332195,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        capital of France is **Paris**.","reasoning":"The user asks \"What is the
+        capital of France?\" It''s a straightforward question. Answer: Paris.\n\nProbably
+        also add a bit of context if needed.\n\nProceed."},"finish_reason":"stop"}],"usage":{"prompt_tokens":74,"completion_tokens":51,"total_tokens":125,"prompt_tokens_details":{"cached_tokens":48}}}
 
         '
-  recorded_at: Sun, 11 Oct 2026 21:08:49 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:36:36 GMT
+recorded_with: VCR 6.4.1

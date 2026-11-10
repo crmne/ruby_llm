@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"gpt-5.4","input":[{"role":"user","content":"What is 5 + 3?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"reasoning":{"effort":"medium"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:11:10 GMT
+      - Tue, 10 Nov 2026 17:40:32 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -43,11 +43,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID
+      - X-Request-ID, Server-Timing-Total
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '686'
+      - '781'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -59,11 +59,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '999638'
+      - '1000000'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 21ms
+      - 0s
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Set-Cookie:
@@ -74,18 +74,21 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_01455bf70f12d6d4016acbfb6dd8e887d2997006191b39d128",
+          "id": "resp_00ef03d7008fd6fc016af357101a0087d2ab431c8df75cb1b2",
           "object": "response",
-          "created_at": 1791753069,
+          "created_at": 1794332432,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1791753070,
+          "completed_at": 1794332432,
           "error": null,
           "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
           "incomplete_details": null,
           "instructions": null,
           "max_output_tokens": null,
@@ -94,7 +97,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_01455bf70f12d6d4016acbfb6e6ffc87d2a88028c458d5c273",
+              "id": "msg_00ef03d7008fd6fc016af35710c9f087d2bb888fa832cd3d8a",
               "type": "message",
               "status": "completed",
               "content": [
@@ -168,17 +171,17 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 11 Oct 2026 21:11:10 GMT
+  recorded_at: Tue, 10 Nov 2026 17:40:32 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5.4","input":[{"role":"user","content":"What is 5 + 3?"},{"role":"assistant","content":[{"type":"output_text","text":"8"}]},{"role":"user","content":"Now
+      string: '{"model":"gpt-5.4","input":[{"role":"user","content":"What is 5 + 3?"},{"role":"assistant","content":[{"type":"output_text","text":"8"}],"phase":"final_answer"},{"role":"user","content":"Now
         multiply that by 2"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"reasoning":{"effort":"medium"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -193,7 +196,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:11:11 GMT
+      - Tue, 10 Nov 2026 17:40:34 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -213,11 +216,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID
+      - X-Request-ID, Server-Timing-Total
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '942'
+      - '1087'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -227,13 +230,13 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '1000000'
       X-Ratelimit-Remaining-Requests:
-      - '4998'
+      - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '999785'
+      - '1000000'
       X-Ratelimit-Reset-Requests:
-      - 24ms
-      X-Ratelimit-Reset-Tokens:
       - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Set-Cookie:
@@ -244,18 +247,21 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_01b5a80ca41906ac016acbfb6ebc6887d2a5dce1ae10a3348a",
+          "id": "resp_0e0b6b753262e197016af35710f45487d2ad10d862afe269b6",
           "object": "response",
-          "created_at": 1791753070,
+          "created_at": 1794332433,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1791753071,
+          "completed_at": 1794332433,
           "error": null,
           "frequency_penalty": 0.0,
+          "image": {
+            "context_compression": "disabled"
+          },
           "incomplete_details": null,
           "instructions": null,
           "max_output_tokens": null,
@@ -264,14 +270,14 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "rs_01b5a80ca41906ac016acbfb6f6d8487d28c93a58dfbb4fef1",
+              "id": "rs_0e0b6b753262e197016af357119bb887d2bb70f18421027b5a",
               "type": "reasoning",
               "content": [],
-              "encrypted_content": "gAAAAABqy_tvomr_CSeF4Y5fqWN-bpjIlRwD2HNxq0z0N5Tf2QGTPX0ApiDHh0iWDWMxEdx9fMFQsk70qOj0NheOS1HpE6qf_3h5M9E9D9Za03cr_P6YNQ_PpW4MOV-WZxYA_aBnBBbfa_tRB6UgyZjkkkvsJ-JdhI3blu_G2WSPSRTMq8sBK-YhDOBETgtUkbi4qg-oEVnYw535vN59lAFxaemrXBkgCsXd0pTW9YhsdHzKodWDcbRFnZX-DllrK-aFyHTSGskVtXQwv1gJ5HDEVZdM0fkOP6LmumeS1DarqrubX8v7SfFusfNUEAifh1wZYPlgvGAnzRjZYBtEoOAGD2wVlJR83QzVUMuD34UWkM6JdnM_NOscCRacCH7HwPltrsQhBbAz6cXp8hAlItRJOew0F3rTlP4lzU3HDoDj3d1ZMdqQopHdJBvM8TeE4U1jx444MiFz7zRybmq6MyJkPNUYBe9qsq6f-EKxwRKljgxbGnJMb5L8x4pXuGKQoxk12ngx91L3OOgXP-zOH4uhDtf81jA60wSE7ZPrps2G_8UD3T0ThPEyKoj-qF8_5sB_xBOW_TqRL-wH4ltEmw69N1zOzLYbQeAD-POh36CrfkWznA8F6mAzJx_9-z8bXDXKhfQ9kr7I4rMzdYthafosgGBlYB_-5nj6T_BsXdQ7Eyd7AHyg02Vrg08D9EGGZgc9qXrECob7_180EFug5vqs_kKOyXp1HrsfowvdPBSDZzLm7M1FHJb8aqskCeLHL1ISP1mPJAFCnhWfL2jdFx7yIzCns9Fgxij9h440KdMnQxaz1P9iG9xMvyJxtb15Hfi7DQkWBKgwEQ4RrvspRQaj9Xd-JO9iA0lYNl5LBJxK8Ye4BkwbqfouAj1gxT2-d4kPeyBJB99RNvzqqA-g4tnQ6dHTn-vcN8_meFLa8QomUzMSWE7VtK_SKV6ifUPKJpk4_J3-d5w3FJLzWze6JVzxF89NQidwCZKoVaySeXS3BD9-PYFeUotH1Yo6_Z4PYnxNz-XIFP7T7WE25RIlNgGAHgOPZwb7tu4d6B1skmUd6zj0QmrfwcWDJm1ed7dSKeiM8EsMJYiBAZlHS7r_M1TFry8yUNx6dpbK0DexmcYsyBj5YJVmZTYUzqiY0fXqY4wbLTJslGyABi_UujtBXjTtt-ok8dpurCxP3VQIk85V_1Z2mi1dBFbQgvhRd4Ay-gu0aTVaKmuV-WRglO7gfMuTY8T2-h4kU-r6bMLDEDT0DlRdm5A3yqIS3y9BrY9855bFc4xLXRLqJCPAKJDY13dvRjxRzvSAxksd4eqmPRYPIkHbgepgAQlW5SSF7ooj7rardUnxXLi-LB79pclvbyu-DOHjFoIyqh5vPAjosHY1Di-P5YV6p0_yw6OznKzjREoNxAPBS8QlX4P9OjtNgQhVSNTJGZIeSlvlFCELU1UvZwU1NNpKKz05O14vTyJGma4RYlwyXLn2td_ar01rA-pof1vvXIUXkq-9_JGzX3xsNgXxvb-4rGs=",
+              "encrypted_content": "gAAAAABq81cSA7mQg9j08Xu_R3I2enlO7zSs4JgmrifnryAgGMfnL7LR4Y8NgCrKnlU-v9Iw3xyrRVTUO9l9yjAwbuIGWQ8LOWEWxwYen0XjXgAhmLNdx8bzdhmf1LHwdc1GLJb8v21sz102TdFv3pi1ctEuTEzHJ9LP8ezawlUqZiJwBsE1g_R_Y5J5eNEl3GcZ5FiatI0qb6gMlcZH_Z9LnOuLYsdtDyS_SBo8SZMKXIRRNNDH2UzPtjj2_9VWWHAo4IzXkEA08FGrojXyDjJKTS3wzEZp_ZokAi_lR50pZrb6JHqtj2WxP2YbCV40muryNPrYWmWsWI8UE7dcub2OEhtYbv9Y3QVDpus3YDCRxI8sr0N9V-g0V60kZ-knDO768q4l88_abIjForGIO5AypCAIZwviEs_TQPKOhoVz68Eh2ecWbFqwneckZN5qH3rv8702Re_34T3yhx55DPRw7Ii5vl79gXQ9tpiAisav2idWtw_cItpGpIPlqBVkrGJJqhEOLLfQybwgDNHwr35qXm49fzXWILAzCPwNfYvCe93O-hti8VpgR19CiqgIidSbzBT-dbEIpQA1IyF0B6kn-uriJoLN_4SOGfSzZHP6ztg3OdSMc3SiMwfs8DvHVO6UcXsQs7B6Gspu3K54I95QIv_n2QX_wdN5B3hK9TKcJs6vwSiTsEVPMJ2kNe029vmNe6Wa4aLAsAZpVKt7bYDq6TzdGFSpjbcw3Zhvt6QpXACDOTL7zWDMOOBBsM5Aaql9pX-kNVn9miXx_IyckqqGkrEfQoBUyU6-DcISvaRTZFr54XMK3UERtMm9Wt2k7ms5l-DmTcLl5rfnmEOGAJhiOcDRzZtId-EcAf72uEk_GfiSA7udr2A2Vh9O36TQ8yUKSSqxDQhNCoskQrstxekQpZ_cp1nPZFzWipXa6A66YVKHo_Wg86MJ7fhfFTBK7zBlc2nI8QinB-TMTYvz4zy2ojU4BxngDA3u01wM4STKdRk4ylQNe84onD7ViA7csQ6FYrwEoOZEUFV6OcL0aGIGNN80Ql14SAeLObvuFko_xjJ5xACznVaY2KAsJEJ5ZDL-JGlaYvq0KM8GTYhmN7-a2xJVlxdc05DHA7o8pC-W_vPBiBt1WQLkjF5tuvZ4O-8qP83fvVZ8FdNCuR0iRF8aI2rf4A7sRqlSUtYTH2Eol7Cy4d4b6BZgskwWOEAsSrUqiNLn_UShglFyfniC6BrM25rcVoSlro_E_qkq13pkZ3ZThpXhz0p8P0qCKHVWzwBroLcR1shm-mYUO6O7fZI-BAC4pG_aYz85RvYt8-aULjx6ClIFVKakWkv7V2TTJY9XTkIqGdCkAQpoPXiTT7yDpkDfQM-uZp9ZX9Kx9BQ75KyPTgyGzQ-1GZqKqBpoQojaQKYrjhf0vsw2s_LRpJiHQY-bWqZDYJ48M0Q_eY3QwvUdrdd-2qsYXcjG1w_nBfB2YrJJVSiK3zzvFwFruT4CHYxpPn0tAPX6F2k2TeFBNb59Z8ENMb4x8lumc8MKG0bO1ukkrYftYWfNnOS3cp7_OP7OMLXVwaq3pzi8TM7JgCdmK6mpdejjJv35VkZ_E01hC3aOOGMSGPrdQdZte-oNqCiNZCSDdtFGeM3243OpCqhLsI6clsdYbL9d93pmzKKPIMbgdpK9iRNz-rvB-IMwAXhoWVODrqEelnozv9twnPjpGqCDLkY=",
               "summary": []
             },
             {
-              "id": "msg_01b5a80ca41906ac016acbfb6f7f8c87d2be8d1ba5329a0be0",
+              "id": "msg_0e0b6b753262e197016af35711d62087d2bf3e1fe7e6662fab",
               "type": "message",
               "status": "completed",
               "content": [
@@ -345,5 +351,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sun, 11 Oct 2026 21:11:11 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:40:34 GMT
+recorded_with: VCR 6.4.1

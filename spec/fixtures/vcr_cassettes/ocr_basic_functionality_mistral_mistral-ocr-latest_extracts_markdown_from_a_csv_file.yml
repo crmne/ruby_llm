@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"mistral-ocr-latest","document":{"type":"document_url","document_url":"data:text/csv;base64,aW52b2ljZSxhbW91bnQsZHVlCjEyMzQ1LDEwLjAwLDIwMjctMDEtMDEKNjc4OTAsMjUuNTAsMjAyNy0wMi0wMQo="}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:07:11 GMT
+      - Tue, 10 Nov 2026 17:28:17 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -31,25 +31,25 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a12cca-8153-7513-89a4-910ff7a9c68b
+      - 01a1c680-e196-781f-a216-4b4f04af5df8
       X-Kong-Request-Id:
-      - 01a12cca-8153-7513-89a4-910ff7a9c68b
+      - 01a1c680-e196-781f-a216-4b4f04af5df8
       X-Ratelimit-Limit-Ocr-Pages-Minute:
-      - '125'
+      - '1250'
       X-Ratelimit-Remaining-Ocr-Pages-Minute:
-      - '123'
+      - '1248'
       X-Ratelimit-Ocr-Pages-Query-Cost:
       - '1'
       X-Envoy-Upstream-Service-Time:
-      - '62'
+      - '147'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '63'
+      - '150'
       X-Kong-Proxy-Latency:
-      - '14'
+      - '20'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -66,5 +66,5 @@ http_interactions:
       encoding: ASCII-8BIT
       string: '{"pages":[{"index":0,"markdown":"|  invoice | amount | due  |\n| ---
         | --- | --- |\n|  12345 | 10.00 | 2027-01-01  |\n|  67890 | 25.50 | 2027-02-01  |","images":[],"tables":[],"hyperlinks":[],"header":null,"footer":null,"dimensions":null,"confidence_scores":null,"blocks":null}],"model":"mistral-ocr-latest","document_annotation":null,"usage_info":{"pages_processed":1,"doc_size_bytes":65}}'
-  recorded_at: Sun, 11 Oct 2026 21:07:11 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:28:17 GMT
+recorded_with: VCR 6.4.1

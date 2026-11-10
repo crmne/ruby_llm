@@ -9,7 +9,7 @@ http_interactions:
         is 5 + 3?"}]}],"stream":false,"thinking":{"type":"enabled"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -42,9 +42,9 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 720c22635268317f8a7309416671b091
+      - f7f06fd6eb3525d34afe6815d513e47c
       Date:
-      - Sun, 11 Oct 2026 21:08:59 GMT
+      - Tue, 10 Nov 2026 17:32:38 GMT
       X-Envoy-Upstream-Service-Time:
       - '486'
       Server:
@@ -52,16 +52,16 @@ http_interactions:
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"4b99726d-617b-4ad9-82a4-cc4abaa5353b","message":{"role":"assistant","content":[{"type":"thinking","thinking":"The
+      string: '{"id":"af4939bb-2e25-47de-8e69-2b23762fe4f6","message":{"role":"assistant","content":[{"type":"thinking","thinking":"The
         user is asking for the sum of 5 and 3. Since this is a straightforward arithmetic
         problem, I don''t need to use any tools. I can calculate the result directly."},{"type":"text","text":"The
-        sum of 5 and 3 is 8."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":8,"output_tokens":50},"tokens":{"input_tokens":1394,"output_tokens":55,"reasoning_tokens":38},"cached_tokens":1344}}'
-  recorded_at: Sun, 11 Oct 2026 21:08:59 GMT
+        sum of 5 and 3 is 8."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":8,"output_tokens":50},"tokens":{"input_tokens":1394,"output_tokens":55,"reasoning_tokens":38},"cached_tokens":1360}}'
+  recorded_at: Tue, 10 Nov 2026 17:32:38 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
@@ -73,7 +73,7 @@ http_interactions:
         multiply that by 2"}]}],"stream":false,"thinking":{"type":"enabled"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -98,7 +98,7 @@ http_interactions:
       Num-Chars:
       - '6876'
       Num-Tokens:
-      - '191'
+      - '184'
       Pragma:
       - no-cache
       Vary:
@@ -106,11 +106,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 50d4d93975dcf76cba5dc6707beca4ac
+      - 15ca7dfbb6aadddbbbf73b6bd5095135
       Date:
-      - Sun, 11 Oct 2026 21:09:01 GMT
+      - Tue, 10 Nov 2026 17:32:39 GMT
       X-Envoy-Upstream-Service-Time:
-      - '1376'
+      - '1447'
       Server:
       - envoy
       Via:
@@ -121,15 +121,15 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"b3dd309b-536e-49a8-a567-62f766f7ef29","message":{"role":"assistant","content":[{"type":"thinking","thinking":"Okay,
+      string: '{"id":"68f90025-e6cb-4149-a077-4eb9fe86325a","message":{"role":"assistant","content":[{"type":"thinking","thinking":"Okay,
         the user first asked, \"What is 5 + 3?\" and I responded with the sum, which
-        is 8. Now they''re asking to multiply that result by 2. So the next step is
-        to take 8 and multiply it by 2. Let me check the calculation again to be sure.
-        5 plus 3 is definitely 8. Then 8 multiplied by 2 equals 16. I need to make
-        sure there''s no confusion here. Since the user referred to \"that,\" which
-        means the previous result, I should confirm the previous answer was correct
-        before proceeding. Everything seems in order. The multiplication is straightforward.
-        The final answer should be 16."},{"type":"text","text":"The result of multiplying
-        8 (from 5 + 3) by 2 is **16**."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":26,"output_tokens":165},"tokens":{"input_tokens":1431,"output_tokens":170,"reasoning_tokens":143},"cached_tokens":1344}}'
-  recorded_at: Sun, 11 Oct 2026 21:09:01 GMT
-recorded_with: VCR 6.4.0
+        is 8. Now they''re asking to multiply that result by 2. Let me make sure I
+        understand the flow here.\n\nFirst, I need to confirm the previous answer
+        to ensure accuracy. 5 plus 3 is indeed 8. Then, multiplying 8 by 2 should
+        give 16. Since there are no tools provided for calculations, I''ll handle
+        this arithmetic operation directly. No tool calls are necessary here because
+        basic math doesn''t require external tools. I''ll proceed to compute the result
+        and present it clearly to the user."},{"type":"text","text":"The result of
+        multiplying 8 (from 5 + 3) by 2 is **16**."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":26,"output_tokens":158},"tokens":{"input_tokens":1431,"output_tokens":163,"reasoning_tokens":136},"cached_tokens":1376}}'
+  recorded_at: Tue, 10 Nov 2026 17:32:39 GMT
+recorded_with: VCR 6.4.1

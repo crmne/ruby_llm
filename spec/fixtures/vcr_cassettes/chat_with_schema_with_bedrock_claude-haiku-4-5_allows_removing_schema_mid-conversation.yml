@@ -13,7 +13,7 @@ http_interactions:
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261105T194702Z
+      - 20261110T173029Z
       X-Amz-Content-Sha256:
       - d8b33b56a805b4fb8d30b33360104e9cda9996d7fd37796c75cedf678ef5143d
       Authorization:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 05 Nov 2026 19:47:04 GMT
+      - Tue, 10 Nov 2026 17:30:30 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -37,9 +37,9 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - e5190995-43af-463d-ac3d-dda4b1e4b620
+      - 6bafd8be-4174-45dd-8110-3e21d912fad9
       X-Amzn-Bedrock-Invocation-Latency:
-      - '545'
+      - '456'
       X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
       - '0'
       X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
@@ -50,8 +50,8 @@ http_interactions:
       - '174'
     body:
       encoding: UTF-8
-      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_vmkndbsf6nwwtybckos2wm5jjswrka2ovhcelwzh5rnrvykqdteq","type":"message","role":"assistant","content":[{"type":"text","text":"{\"name\":\"Bob\",\"age\":30}"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":174,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":12,"service_tier":"standard"}}'
-  recorded_at: Thu, 05 Nov 2026 19:47:04 GMT
+      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_4hnkurc6fzgqxf7pxvuexcfmftugaomf6oogdzityy4pvyhzucrq","type":"message","role":"assistant","content":[{"type":"text","text":"{\"name\":\"Bob\",\"age\":30}"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":174,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":12,"service_tier":"standard"}}'
+  recorded_at: Tue, 10 Nov 2026 17:30:30 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/invoke
@@ -66,7 +66,7 @@ http_interactions:
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261105T194704Z
+      - 20261110T173030Z
       X-Amz-Content-Sha256:
       - 1d0a754ebebabd7bd3f5720e220524ce26db8d164fdf9ca4b45bd452803bd2ce
       Authorization:
@@ -82,43 +82,42 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 05 Nov 2026 19:47:06 GMT
+      - Tue, 10 Nov 2026 17:30:32 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1662'
+      - '1636'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 78cb160c-ec67-4d6d-ac9d-387c75721206
+      - b1a6308c-3c5e-4202-a034-7800fc4ebb8f
       X-Amzn-Bedrock-Invocation-Latency:
-      - '1909'
+      - '1658'
       X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
       - '0'
       X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
       - '0'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '255'
+      - '250'
       X-Amzn-Bedrock-Input-Token-Count:
       - '33'
     body:
       encoding: UTF-8
-      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_rcabogjl3amht6fhtov4viqchpkxbsqmpwxtlm6p5ss4zqwwm5iq","type":"message","role":"assistant","content":[{"type":"text","text":"Ruby
+      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_krcvqsbwyzgwof6wd6njs3bffjrnb4jm7m24f2bsfqofnlahachq","type":"message","role":"assistant","content":[{"type":"text","text":"Ruby
         is a dynamic, open-source programming language known for its simplicity and
-        elegance. Here are some key characteristics:\n\n**Key Features:**\n- **Readable
-        syntax** - Easy to learn and write, with a focus on developer happiness\n-
-        **Object-oriented** - Everything is an object\n- **Dynamic typing** - Types
-        are determined at runtime\n- **Interpreted** - Code is executed directly without
-        compilation\n\n**Common Uses:**\n- Web development (especially with Ruby on
-        Rails framework)\n- Scripting and automation\n- Data analysis\n- Command-line
-        tools\n\n**Popular Frameworks:**\n- **Ruby on Rails** - The most popular web
-        framework, great for rapid application development\n- Sinatra - Lightweight
-        web framework\n- Jekyll - Static site generator\n\n**Advantages:**\n- Quick
-        to develop with\n- Large, supportive community\n- Extensive libraries (gems)\n-
-        Great for startups and MVPs\n\n**Disadvantages:**\n- Slower execution speed
-        compared to compiled languages\n- Higher memory usage\n- Smaller ecosystem
-        than some alternatives like Python or JavaScript\n\nRuby remains popular for
-        web development, particularly among startups, and has a passionate community
-        behind it."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":33,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":255,"service_tier":"standard"}}'
-  recorded_at: Thu, 05 Nov 2026 19:47:06 GMT
+        productivity. Here are some key features:\n\n**Characteristics:**\n- **Easy
+        to learn** - Clean, readable syntax that resembles natural language\n- **Object-oriented**
+        - Everything in Ruby is an object\n- **Dynamically typed** - Types are determined
+        at runtime\n- **Interpreted** - Code is executed directly without compilation\n\n**Common
+        Uses:**\n- Web development (especially with Ruby on Rails framework)\n- Scripting
+        and automation\n- Data processing\n- DevOps tools\n\n**Popular Frameworks:**\n-
+        **Ruby on Rails** - The most popular web framework\n- Sinatra - Lightweight
+        web framework\n- Django alternatives\n\n**Community:**\n- Active, friendly
+        open-source community\n- Rich ecosystem of gems (libraries/packages)\n- Strong
+        convention-over-configuration philosophy\n\n**Advantages:**\n- Fast development
+        speed\n- Highly readable code\n- Great for rapid prototyping\n- Excellent
+        documentation\n\nRuby remains popular for startups and web development, though
+        it''s less commonly used for performance-critical applications compared to
+        languages like Go or Rust."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":33,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":250,"service_tier":"standard"}}'
+  recorded_at: Tue, 10 Nov 2026 17:30:32 GMT
 recorded_with: VCR 6.4.1

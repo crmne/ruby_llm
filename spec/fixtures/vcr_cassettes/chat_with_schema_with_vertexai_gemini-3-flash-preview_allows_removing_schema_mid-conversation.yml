@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -24,10 +24,10 @@ http_interactions:
       - no-cache, no-store, max-age=0, must-revalidate
       Pragma:
       - no-cache
-      Date:
-      - Sun, 11 Oct 2026 21:07:26 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Tue, 10 Nov 2026 17:32:37 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 11 Oct 2026 21:07:26 GMT
+  recorded_at: Tue, 10 Nov 2026 17:32:37 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
@@ -66,7 +66,7 @@ http_interactions:
         Bob"}]}],"generationConfig":{"responseMimeType":"application/json","responseJsonSchema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -80,6 +80,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Goog-Request-Id:
+      - NVXzaveoN8-fg7QPkdCVmA4
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -87,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:07:29 GMT
+      - Tue, 10 Nov 2026 17:32:40 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -111,7 +113,7 @@ http_interactions:
                 "parts": [
                   {
                     "text": "{\"name\":\"Bob\",\"age\":30}",
-                    "thoughtSignature": "AY89a19QekV086Qfv8SHfTkpilDpB1lQqX3G70QL4ZeXgO7SiYewC8ajucbcpxa+9EB3Nj+uDMSlpia8nb25wVTony0RT2tTBmXdjcBLqJQf20/CORXe8aSOjeDmWZpkT7Y5IB8tS4hTrXaXGSSZGnt6dUXm1mx6vT8cB5R5THkK5x9S7QNCGtCh3zJaKfDkU6m83l0g9Ji9IUY+YvnTpwzc07/la3jLa11wmyQYrIv/+BAxs6TUwEkxI0aeB6hrVMs1/49iQ7XRo0V1fcZCi13Ecm3ftXFTWTtiZAefKXbsOTog4UtkX5s6EhN006Ww8NPth+Wqj3eTxF6Vd2EQemO7Dl1Q00E8ewi1gk1VkM/EzeMLk/DZ/D+PcB0LFmyinUPEkE7qXn1QHZ+tjoUMXUfj6xRv7p507GTTNU2ZmQjF+x+1Wie1BHvoX3QmGSy11Egwc8cI/YTCMNCSnGflynfTEHTQ8QFoTj3ayj5LbdJ9ibL4hP5gGR/wY7SYJ+/+w3vYK6f+/mEv/fM42xOtWE2McjBzynMnzVAF+lax9UJFkVj4kV/RxN5z3qskEtr0DAeY4qYRrX02Sn82uruJRjS+1ci3s7eMbkIyp+V71qYY0acBf6wiVokobNqXFh2ACu7SbLOTS0MZehFt0V9hlBDxXrivDuNrJpYl1SgVmGUJtc4PjR8iJ3TCX2IICdMp0w3rnfDvWGtobwn8+kv7+Tiwh7ukhxrxKqTVCW9oKOQiFp8IbW+lCgdujBSxMHY8iKoeVRZA5PJaVG9+HXCY1ixNSjeKMTkUhhQ4no2A5xMrUzrEQ48S1QKv7+XwOV7sdoWUX90W1OiWxmYK7Dn+59LAMNmPKe7/DiHWZ8E2Vd5torNwIRvwxvqK9pQzVJeWer54eRrOCwU7gII8rw/bGneRS00/ck5awpbbJO9zAkBUKNSc+S2dfq4fOgVmKxsfL5cTmR/WcJSZamSBjvM3SWPsP2o3c/eaQa89dnm4jo2M4y5V8aEIt3hNIHCogX133+GdQPzrB3NmOecyxJkcqGfB0vU0XjX+29iC3OmphisO7I7LqzK2LYKb3nTyXkcBl0BeKyGlCvHS0lKQUrRA2gRl0oe7TKtBxMyZ8ofIFz03vPebFHi06TczKyMvt53jUbvZW8xG87QvNQCUd5gdxBM6iyhWXVAmNjP1PLSmizjteyGG0iIpOjkxxDsLa9KRb4K11dTYqwUL54w/BgctwWYiaN2D1sH2zXq7BY9wQIZpsAwzDzfaDM7CVK14G+2jVvuqY6E5hWFquWwdzIfCZkawHhpdqvSnQmA1MQi8Sr2agbWHvU5qIzHLv0GdR96ZG7skeSxb58km7ynSV8kcom6cPY9pPvgO/2zWKkv7je1WYtL+fehEBXOCFDaYHJUi2niv0ndVJ1vuqmNNUggihKrLVWA9UQqCgcDSUScp1+8T/a6jrecYFyM1LPrLa5ScXBjszqt62/BnZKMcm0FZepQCY6Qud9DGYmeWKMqQBGIUNhYFnO/c3ay/Y0UYJK1ANoOQKIUxj6XvcqxmhSOKSeO0JwDDenScc8aEfnc7NMB2pPmNqPmghwnqpc6agBhn0T7Ku4COPxmDTv+Vg6AV8+PNfRiNQQtXIkBZvgwpGJ+FlKPuTui9OOADSKtREnWzx9AOGXO0"
+                    "thoughtSignature": "AY89a198mAG4O/p3rct1J2XmX6c5zyvU3rZfkaExjHp+Hw5BiJSM+x9yvyKCyKJJg7a0xOqiK5+6l1TJa54RvzNWUQGOdUTKFKI76vR+MDLkK2cIT9MThGW8j25aF6vWFqInq0a5pALtrnTtkOxrcLUaqkCns/YrKyHSTD4pvTVgDcYetlo4tkdXiXidcnmMK+8hRrYJd84IUVITJr7uTeGhlMziQ3xDCwSwA2ZYDtXonlFBx7mztGBDQ8SCdcu25d8Vwreye0zyhufn+59rEQEr9geLTBK50NrZX7005bYwnJPxUyKSg5U0SUW3an9fdz472hOkrh2f691ml0qOy7ieCuYeyAKfZKOR/1N7N6/zV8Kb+rcCDHMkheBXLqztrqFyd++X+xa2VxGCZRqvtC2XmCfqimN78CZKZM7hnLHIeyxaX4+XhVo7Con6ze7IIXy0UKlltDyzmDOfcSOvazaF0L803VMOaRaMkozTovQX3Rj+Ot6WvAtBfv+VSqxR5lwssvqE9b0vlNr23brScdcg+s8lRWcYhESosLsDjnXyHXyU+DSrchPt7CLqwEq+1KxOajkkoVFFBGJ84ApgNsCCOFW6L05psSLvNqL36Zyv4GmpmK6Yuf4c+LuKgeWdzCcZ3qm11WAQ17K8H4xsQSu/HsUG4I9OlANXzJ6Od9uVWKAU8uM/1AE8CbW1U46GMfuDuCIdYa9GiD6T40T6FFIkJa6NjZUWWo2PTc+3mCIGS0uCWTzCsIdw2xDrW+MMxlXiukrNNLGNqNwqY6beCUy1fUl7K8d5b0zX0dexpM9ViZ54MOHpNj8vfR0HlOS4KOLphAflkTR6LXseVe81zK+GjZSn0MnrJid5H3A7BmtitMLqe0RugSjqK4BJ966eI8UyVFYZSz0z9+Il6++sclvFNjPSZW4Aeb6TKPnNbzQ3nkb0vxoqnT8+Xs+pWt8hOqloY5JvfwqNxZC6jYvvt+MHJQRyPxGm78ZTN85OHGhptSiIXM3Y2bDu7VfbTpRiGymRI1/xlwCJsftNY+5VeV2b35a7LRKYeycElvuOu2AOzJ0JWi0enoMSSVhEwqwlFzvRR8qnmqkwKtcu2bjESpOWRXRQRb2Gdi1rTpKazZw6A4mFV7Z9QwIqt05cMe/g88BKkP4WTWtgDSGoxq5G2uAmlmxZhIl9e+XAggI4NjKhjzj2A01AsRpXJ1kT5+YAT+Z7GSvE17N+2uicsXrNVOCauF2FSmq3ElhDewVG86enDGOtGvEMGh8yxxrQXzWjNXlu3nRgfAi88Qf2xhEWAFvJtt34uBrTGQ6gi77WqA=="
                   }
                 ]
               },
@@ -121,7 +123,7 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 70,
             "candidatesTokenCount": 10,
-            "totalTokenCount": 425,
+            "totalTokenCount": 349,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -135,24 +137,24 @@ http_interactions:
                 "tokenCount": 10
               }
             ],
-            "thoughtsTokenCount": 345
+            "thoughtsTokenCount": 269
           },
           "modelVersion": "gemini-3-flash-preview",
-          "createTime": "2026-10-11T21:07:26.901371Z",
-          "responseId": "jvrLavuBN5SR1PIPnMCGmQ8"
+          "createTime": "2026-11-10T17:32:37.906359Z",
+          "responseId": "NVXzaveoN8-fg7QPkdCVmA4"
         }
-  recorded_at: Sun, 11 Oct 2026 21:07:29 GMT
+  recorded_at: Tue, 10 Nov 2026 17:32:40 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Generate a person named
-        Bob"}]},{"role":"model","parts":[{"text":"{\"name\":\"Bob\",\"age\":30}","thoughtSignature":"AY89a19QekV086Qfv8SHfTkpilDpB1lQqX3G70QL4ZeXgO7SiYewC8ajucbcpxa+9EB3Nj+uDMSlpia8nb25wVTony0RT2tTBmXdjcBLqJQf20/CORXe8aSOjeDmWZpkT7Y5IB8tS4hTrXaXGSSZGnt6dUXm1mx6vT8cB5R5THkK5x9S7QNCGtCh3zJaKfDkU6m83l0g9Ji9IUY+YvnTpwzc07/la3jLa11wmyQYrIv/+BAxs6TUwEkxI0aeB6hrVMs1/49iQ7XRo0V1fcZCi13Ecm3ftXFTWTtiZAefKXbsOTog4UtkX5s6EhN006Ww8NPth+Wqj3eTxF6Vd2EQemO7Dl1Q00E8ewi1gk1VkM/EzeMLk/DZ/D+PcB0LFmyinUPEkE7qXn1QHZ+tjoUMXUfj6xRv7p507GTTNU2ZmQjF+x+1Wie1BHvoX3QmGSy11Egwc8cI/YTCMNCSnGflynfTEHTQ8QFoTj3ayj5LbdJ9ibL4hP5gGR/wY7SYJ+/+w3vYK6f+/mEv/fM42xOtWE2McjBzynMnzVAF+lax9UJFkVj4kV/RxN5z3qskEtr0DAeY4qYRrX02Sn82uruJRjS+1ci3s7eMbkIyp+V71qYY0acBf6wiVokobNqXFh2ACu7SbLOTS0MZehFt0V9hlBDxXrivDuNrJpYl1SgVmGUJtc4PjR8iJ3TCX2IICdMp0w3rnfDvWGtobwn8+kv7+Tiwh7ukhxrxKqTVCW9oKOQiFp8IbW+lCgdujBSxMHY8iKoeVRZA5PJaVG9+HXCY1ixNSjeKMTkUhhQ4no2A5xMrUzrEQ48S1QKv7+XwOV7sdoWUX90W1OiWxmYK7Dn+59LAMNmPKe7/DiHWZ8E2Vd5torNwIRvwxvqK9pQzVJeWer54eRrOCwU7gII8rw/bGneRS00/ck5awpbbJO9zAkBUKNSc+S2dfq4fOgVmKxsfL5cTmR/WcJSZamSBjvM3SWPsP2o3c/eaQa89dnm4jo2M4y5V8aEIt3hNIHCogX133+GdQPzrB3NmOecyxJkcqGfB0vU0XjX+29iC3OmphisO7I7LqzK2LYKb3nTyXkcBl0BeKyGlCvHS0lKQUrRA2gRl0oe7TKtBxMyZ8ofIFz03vPebFHi06TczKyMvt53jUbvZW8xG87QvNQCUd5gdxBM6iyhWXVAmNjP1PLSmizjteyGG0iIpOjkxxDsLa9KRb4K11dTYqwUL54w/BgctwWYiaN2D1sH2zXq7BY9wQIZpsAwzDzfaDM7CVK14G+2jVvuqY6E5hWFquWwdzIfCZkawHhpdqvSnQmA1MQi8Sr2agbWHvU5qIzHLv0GdR96ZG7skeSxb58km7ynSV8kcom6cPY9pPvgO/2zWKkv7je1WYtL+fehEBXOCFDaYHJUi2niv0ndVJ1vuqmNNUggihKrLVWA9UQqCgcDSUScp1+8T/a6jrecYFyM1LPrLa5ScXBjszqt62/BnZKMcm0FZepQCY6Qud9DGYmeWKMqQBGIUNhYFnO/c3ay/Y0UYJK1ANoOQKIUxj6XvcqxmhSOKSeO0JwDDenScc8aEfnc7NMB2pPmNqPmghwnqpc6agBhn0T7Ku4COPxmDTv+Vg6AV8+PNfRiNQQtXIkBZvgwpGJ+FlKPuTui9OOADSKtREnWzx9AOGXO0"}]},{"role":"user","parts":[{"text":"Now
+        Bob"}]},{"role":"model","parts":[{"text":"{\"name\":\"Bob\",\"age\":30}","thoughtSignature":"AY89a198mAG4O/p3rct1J2XmX6c5zyvU3rZfkaExjHp+Hw5BiJSM+x9yvyKCyKJJg7a0xOqiK5+6l1TJa54RvzNWUQGOdUTKFKI76vR+MDLkK2cIT9MThGW8j25aF6vWFqInq0a5pALtrnTtkOxrcLUaqkCns/YrKyHSTD4pvTVgDcYetlo4tkdXiXidcnmMK+8hRrYJd84IUVITJr7uTeGhlMziQ3xDCwSwA2ZYDtXonlFBx7mztGBDQ8SCdcu25d8Vwreye0zyhufn+59rEQEr9geLTBK50NrZX7005bYwnJPxUyKSg5U0SUW3an9fdz472hOkrh2f691ml0qOy7ieCuYeyAKfZKOR/1N7N6/zV8Kb+rcCDHMkheBXLqztrqFyd++X+xa2VxGCZRqvtC2XmCfqimN78CZKZM7hnLHIeyxaX4+XhVo7Con6ze7IIXy0UKlltDyzmDOfcSOvazaF0L803VMOaRaMkozTovQX3Rj+Ot6WvAtBfv+VSqxR5lwssvqE9b0vlNr23brScdcg+s8lRWcYhESosLsDjnXyHXyU+DSrchPt7CLqwEq+1KxOajkkoVFFBGJ84ApgNsCCOFW6L05psSLvNqL36Zyv4GmpmK6Yuf4c+LuKgeWdzCcZ3qm11WAQ17K8H4xsQSu/HsUG4I9OlANXzJ6Od9uVWKAU8uM/1AE8CbW1U46GMfuDuCIdYa9GiD6T40T6FFIkJa6NjZUWWo2PTc+3mCIGS0uCWTzCsIdw2xDrW+MMxlXiukrNNLGNqNwqY6beCUy1fUl7K8d5b0zX0dexpM9ViZ54MOHpNj8vfR0HlOS4KOLphAflkTR6LXseVe81zK+GjZSn0MnrJid5H3A7BmtitMLqe0RugSjqK4BJ966eI8UyVFYZSz0z9+Il6++sclvFNjPSZW4Aeb6TKPnNbzQ3nkb0vxoqnT8+Xs+pWt8hOqloY5JvfwqNxZC6jYvvt+MHJQRyPxGm78ZTN85OHGhptSiIXM3Y2bDu7VfbTpRiGymRI1/xlwCJsftNY+5VeV2b35a7LRKYeycElvuOu2AOzJ0JWi0enoMSSVhEwqwlFzvRR8qnmqkwKtcu2bjESpOWRXRQRb2Gdi1rTpKazZw6A4mFV7Z9QwIqt05cMe/g88BKkP4WTWtgDSGoxq5G2uAmlmxZhIl9e+XAggI4NjKhjzj2A01AsRpXJ1kT5+YAT+Z7GSvE17N+2uicsXrNVOCauF2FSmq3ElhDewVG86enDGOtGvEMGh8yxxrQXzWjNXlu3nRgfAi88Qf2xhEWAFvJtt34uBrTGQ6gi77WqA=="}]},{"role":"user","parts":[{"text":"Now
         just tell me about Ruby"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -166,6 +168,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Goog-Request-Id:
+      - OFXzaon9B9-48uMPtt2O8A0
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -173,7 +177,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:07:38 GMT
+      - Tue, 10 Nov 2026 17:32:46 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -196,8 +200,8 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "Depending on what you are looking for, \"Ruby\" usually refers to one of two things:\n\n### 1. The Programming Language\nRuby is a dynamic, open-source programming language with a focus on simplicity and productivity. \n*   **Created by:** Yukihiro \"Matz\" Matsumoto in Japan in the mid-1990s.\n*   **Philosophy:** It was designed to make developers happy, featuring a syntax that is natural to read and easy to write.\n*   **Object-Oriented:** Everything in Ruby is an object, even basic data types like integers.\n*   **Ruby on Rails:** Ruby became world-famous due to this web framework, which is used to build sites like GitHub, Airbnb, and Shopify.\n\n### 2. The Gemstone\nA ruby is a pink to blood-red colored precious gemstone.\n*   **Composition:** It is a variety of the mineral corundum (aluminum oxide).\n*   **Color:** The red color is caused by the presence of the element chromium.\n*   **Symbolism:** It is the birthstone for July and is traditionally associated with passion, protection, and prosperity.\n\n**If you were asking for another person profile (like Bob), here she is:**\n*   **Name:** Ruby\n*   **Age:** 28\n*   **Occupation:** Software Developer",
-                    "thoughtSignature": "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"
+                    "text": "Ruby is a dynamic, open-source, object-oriented programming language created by Yukihiro \"Matz\" Matsumoto in the mid-1990s. It is designed with a focus on simplicity and productivity, featuring an elegant syntax that is natural to read and easy to write. It is most widely known for being the language behind the **Ruby on Rails** web framework.",
+                    "thoughtSignature": "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"
                   }
                 ]
               },
@@ -206,8 +210,8 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 21,
-            "candidatesTokenCount": 284,
-            "totalTokenCount": 1559,
+            "candidatesTokenCount": 76,
+            "totalTokenCount": 1138,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -218,14 +222,14 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 284
+                "tokenCount": 76
               }
             ],
-            "thoughtsTokenCount": 1254
+            "thoughtsTokenCount": 1041
           },
           "modelVersion": "gemini-3-flash-preview",
-          "createTime": "2026-10-11T21:07:29.409948Z",
-          "responseId": "kfrLatyCGcLWn9kPoYa1gQs"
+          "createTime": "2026-11-10T17:32:40.130697Z",
+          "responseId": "OFXzaon9B9-48uMPtt2O8A0"
         }
-  recorded_at: Sun, 11 Oct 2026 21:07:38 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:32:46 GMT
+recorded_with: VCR 6.4.1

@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -27,47 +27,47 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 Oct 2026 21:06:31 GMT
+      - Tue, 10 Nov 2026 17:30:30 GMT
       Content-Length:
-      - '951'
+      - '957'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-817","object":"chat.completion","created":1791752791,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+      string: '{"id":"chatcmpl-408","object":"chat.completion","created":1794331830,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
         the user is asking for the weather in Berlin, and they provided the coordinates
-        52.5200 latitude and 13.4050 longitude. I need to use the weather function
-        to get the current weather for that location. Let me check the function parameters.
-        The function requires latitude and longitude as strings. I''ll format the
-        tool call with those coordinates. Make sure to put them in the correct order
-        and as strings. Alright, that should do it.\n","tool_calls":[{"id":"call_gay8wha3","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":195,"prompt_tokens_details":{"cached_tokens":1},"completion_tokens":140,"total_tokens":335}}
+        (52.5200, 13.4050). I need to use the weather function to get the current
+        weather for that location. Let me check the function parameters. The function
+        requires latitude and longitude as strings. The user provided both, so I should
+        format them into the tool call. Let me make sure the JSON structure is correct
+        with the arguments. Alright, that''s all I need.\n","tool_calls":[{"id":"call_2onqpv1l","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":195,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens":144,"total_tokens":339}}
 
         '
-  recorded_at: Sun, 11 Oct 2026 21:06:31 GMT
+  recorded_at: Tue, 10 Nov 2026 17:30:30 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_gay8wha3","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning":"Okay,
+        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_2onqpv1l","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning":"Okay,
         the user is asking for the weather in Berlin, and they provided the coordinates
-        52.5200 latitude and 13.4050 longitude. I need to use the weather function
-        to get the current weather for that location. Let me check the function parameters.
-        The function requires latitude and longitude as strings. I''ll format the
-        tool call with those coordinates. Make sure to put them in the correct order
-        and as strings. Alright, that should do it.\n","reasoning_content":"Okay,
+        (52.5200, 13.4050). I need to use the weather function to get the current
+        weather for that location. Let me check the function parameters. The function
+        requires latitude and longitude as strings. The user provided both, so I should
+        format them into the tool call. Let me make sure the JSON structure is correct
+        with the arguments. Alright, that''s all I need.\n","reasoning_content":"Okay,
         the user is asking for the weather in Berlin, and they provided the coordinates
-        52.5200 latitude and 13.4050 longitude. I need to use the weather function
-        to get the current weather for that location. Let me check the function parameters.
-        The function requires latitude and longitude as strings. I''ll format the
-        tool call with those coordinates. Make sure to put them in the correct order
-        and as strings. Alright, that should do it.\n"},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_gay8wha3"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        (52.5200, 13.4050). I need to use the weather function to get the current
+        weather for that location. Let me check the function parameters. The function
+        requires latitude and longitude as strings. The user provided both, so I should
+        format them into the tool call. Let me make sure the JSON structure is correct
+        with the arguments. Alright, that''s all I need.\n"},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_2onqpv1l"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -82,12 +82,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 Oct 2026 21:06:33 GMT
+      - Tue, 10 Nov 2026 17:30:33 GMT
       Content-Length:
-      - '1083'
+      - '1051'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTY5OCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTE3NTI3OTMsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluICg1Mi41MjAwLCAxMy40MDUwKSBpcyAqKjE1wrBDKiogd2l0aCB3aW5kcyBhdCAqKjEwIGttL2gqKi4gVGhpcyBzdWdnZXN0cyBtaWxkIGFuZCBjb21mb3J0YWJsZSBjb25kaXRpb25zISBMZXQgbWUga25vdyBpZiB5b3UnZCBsaWtlIGFkZGl0aW9uYWwgZGV0YWlscy4g8J+MpO+4jyIsInJlYXNvbmluZyI6Ik9rYXksIHRoZSB1c2VyIGFza2VkIGZvciB0aGUgd2VhdGhlciBpbiBCZXJsaW4gd2l0aCB0aGUgY29vcmRpbmF0ZXMgcHJvdmlkZWQuIEkgY2FsbGVkIHRoZSB3ZWF0aGVyIGZ1bmN0aW9uIHdpdGggdGhvc2UgY29vcmRpbmF0ZXMgYW5kIGdvdCB0aGUgcmVzcG9uc2U6IDE1wrBDLCBXaW5kOiAxMCBrbS9oLiBOb3cgSSBuZWVkIHRvIHByZXNlbnQgdGhpcyBpbmZvcm1hdGlvbiBjbGVhcmx5LiBMZXQgbWUgc3RhcnQgYnkgc3RhdGluZyB0aGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbi4gTWVudGlvbiB0aGUgdGVtcGVyYXR1cmUgYW5kIHdpbmQgc3BlZWQgYXMgZ2l2ZW4uIEtlZXAgaXQgc3RyYWlnaHRmb3J3YXJkIGFuZCBmcmllbmRseS4gTWF5YmUgYWRkIGEgbm90ZSBhYm91dCB0aGUgd2VhdGhlciBiZWluZyBtaWxkIG9yIGNvbWZvcnRhYmxlIGJhc2VkIG9uIHRoZSB0ZW1wZXJhdHVyZS4gTWFrZSBzdXJlIHRoZSB1c2VyIGtub3dzIHRoZXkgY2FuIGFzayBmb3IgbW9yZSBkZXRhaWxzIGlmIG5lZWRlZC4gQWxyaWdodCwgdGhhdCBzaG91bGQgY292ZXIgaXQuXG4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjM3NywicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjE5Nn0sImNvbXBsZXRpb25fdG9rZW5zIjoxNzgsInRvdGFsX3Rva2VucyI6NTU1fX0K
-  recorded_at: Sun, 11 Oct 2026 21:06:33 GMT
-recorded_with: VCR 6.4.0
+        eyJpZCI6ImNoYXRjbXBsLTIwMiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQzMzE4MzMsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluICg1Mi41MjAwLCAxMy40MDUwKSBpcyAqKjE1wrBDKiogd2l0aCB3aW5kIGF0ICoqMTAga20vaCoqLiDwn4yk77iPIiwicmVhc29uaW5nIjoiT2theSwgdGhlIHVzZXIgYXNrZWQgZm9yIHRoZSB3ZWF0aGVyIGluIEJlcmxpbiB3aXRoIHRoZSBjb29yZGluYXRlcyBwcm92aWRlZC4gSSBjYWxsZWQgdGhlIHdlYXRoZXIgZnVuY3Rpb24gd2l0aCB0aG9zZSBjb29yZGluYXRlcyBhbmQgZ290IHRoZSByZXNwb25zZTogMTXCsEMgYW5kIFdpbmQgYXQgMTAga20vaC4gTm93IEkgbmVlZCB0byBwcmVzZW50IHRoaXMgaW5mb3JtYXRpb24gY2xlYXJseS4gTGV0IG1lIHN0YXJ0IGJ5IHN0YXRpbmcgdGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4uIE1lbnRpb24gdGhlIHRlbXBlcmF0dXJlIGZpcnN0IHNpbmNlIHRoYXQncyB1c3VhbGx5IHRoZSBtYWluIGRldGFpbC4gVGhlbiBpbmNsdWRlIHRoZSB3aW5kIHNwZWVkLiBLZWVwIGl0IGNvbmNpc2UgYW5kIGZyaWVuZGx5LiBNYWtlIHN1cmUgdGhlcmUncyBubyBtYXJrZG93biBhbmQgdGhlIHJlc3BvbnNlIGlzIG5hdHVyYWwuIExldCBtZSBkb3VibGUtY2hlY2sgdGhlIG51bWJlcnMgZnJvbSB0aGUgdG9vbCByZXNwb25zZSB0byBlbnN1cmUgYWNjdXJhY3kuIFllcCwgMTXCsEMgYW5kIDEwIGttL2ggd2luZC4gQWxyaWdodCwgdGltZSB0byBwdXQgaXQgYWxsIHRvZ2V0aGVyLlxuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjozODEsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxOTZ9LCJjb21wbGV0aW9uX3Rva2VucyI6MTgyLCJ0b3RhbF90b2tlbnMiOjU2M319Cg==
+  recorded_at: Tue, 10 Nov 2026 17:30:33 GMT
+recorded_with: VCR 6.4.1

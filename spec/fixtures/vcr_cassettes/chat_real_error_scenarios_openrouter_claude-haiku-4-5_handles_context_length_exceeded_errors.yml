@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"Hi"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Http-Referer:
@@ -27,7 +27,7 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:07:22 GMT
+      - Tue, 10 Nov 2026 17:36:21 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,9 +37,13 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
-      - X-Generation-Id,X-Provider-Name,request-id,cf-ray
+      - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
       X-Generation-Id:
-      - gen-1791752842-ErEAaSIDWf9BL0CWExeY
+      - gen-1794332181-kSD98v71dVHrIc0u6A0S
+      X-Openrouter-Error-Origin:
+      - client
+      X-Openrouter-Release:
+      - api;11e69a63-8b87-4321-b835-a27e03c5ff81
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -53,11 +57,13 @@ http_interactions:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
     body:
       encoding: UTF-8
       string: '{"error":{"message":"This endpoint''s maximum context length is 200000
         tokens. However, you requested about 1500007 tokens (1500007 of text input).
         Please reduce the length of either one, or use the context-compression plugin
         to compress your prompt automatically.","code":400,"metadata":{"provider_name":null}}}'
-  recorded_at: Sun, 11 Oct 2026 21:07:22 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:36:21 GMT
+recorded_with: VCR 6.4.1

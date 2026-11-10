@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"omni-moderation-latest","input":"This is a safe message"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:07:00 GMT
+      - Tue, 10 Nov 2026 17:28:20 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -41,7 +41,7 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Openai-Processing-Ms:
-      - '147'
+      - '419'
       X-Openai-Proxy-Wasm:
       - v0.1
       Cf-Cache-Status:
@@ -62,7 +62,7 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "modr-4641",
+          "id": "modr-501",
           "model": "omni-moderation-latest",
           "results": [
             {
@@ -83,16 +83,16 @@ http_interactions:
                 "violence/graphic": false
               },
               "category_scores": {
-                "harassment": 0.000011959857805023158,
-                "harassment/threatening": 3.7636447180974406e-6,
+                "harassment": 0.000012339457598623173,
+                "harassment/threatening": 3.822911232549001e-6,
                 "sexual": 0.00006667023092435894,
-                "hate": 7.602479448313689e-6,
-                "hate/threatening": 3.2377619022355566e-7,
-                "illicit": 0.000015118199327273332,
+                "hate": 7.722191834067996e-6,
+                "hate/threatening": 3.4465788845184155e-7,
+                "illicit": 0.00001488384825728813,
                 "illicit/violent": 6.709224499600877e-6,
                 "self-harm/intent": 0.00021217710837818755,
-                "self-harm/instructions": 3.944258675190877e-6,
-                "self-harm": 0.0004544456121966584,
+                "self-harm/instructions": 3.8831109868779005e-6,
+                "self-harm": 0.0004552008131639649,
                 "sexual/minors": 5.307507822667365e-6,
                 "violence": 0.000493111798506495,
                 "violence/graphic": 2.931153855960119e-6
@@ -141,5 +141,5 @@ http_interactions:
             }
           ]
         }
-  recorded_at: Sun, 11 Oct 2026 21:07:00 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:28:20 GMT
+recorded_with: VCR 6.4.1

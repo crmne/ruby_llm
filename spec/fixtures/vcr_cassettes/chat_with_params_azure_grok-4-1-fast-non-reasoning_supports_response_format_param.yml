@@ -9,7 +9,7 @@ http_interactions:
         is the square root of 64? Answer with a JSON object with the key `result`."}],"stream":false,"response_format":{"type":"json_object"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 Oct 2026 21:06:20 GMT
+      - Tue, 10 Nov 2026 17:31:06 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -43,14 +43,16 @@ http_interactions:
       - 'true'
       X-Xai-Model-Address:
       - http://localhost:9988
+      X-Watermark:
+      - 'false'
       Traceparent:
-      - 00-db3293ad19ac0733c4c9508ccc268096-87fd4db200069344-00
+      - 00-7a6c049a33d37f728359168f557c3ba0-4f24a728000133c7-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - d847551d-46ac-4169-a952-f980e7672e88
+      - 9b638303-d6b6-44c6-b454-b4678844cdce
       Azureml-Model-Session:
-      - d20261009040854-b7570cce
+      - d20261110015917-e7d4cb48
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -84,7 +86,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - d847551d-46ac-4169-a952-f980e7672e88
+      - 9b638303-d6b6-44c6-b454-b4678844cdce
+      X-Http2-Stream-Id:
+      - '753'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -93,7 +97,7 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"f23cb9a6-04cf-49c8-8c04-6eecf3fa5cf0","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"result\":
-        8}"},"finish_reason":"stop"}],"usage":{"prompt_tokens":29,"completion_tokens":6,"total_tokens":35,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":157,"audio_tokens":0,"text_tokens":29,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1791752780,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Sun, 11 Oct 2026 21:06:21 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"<X_REQUEST_ID>","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"result\":
+        8}"},"finish_reason":"stop"}],"usage":{"prompt_tokens":197,"completion_tokens":6,"total_tokens":203,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":157,"audio_tokens":0,"text_tokens":197,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794331866,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Tue, 10 Nov 2026 17:31:08 GMT
+recorded_with: VCR 6.4.1

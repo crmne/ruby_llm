@@ -10,7 +10,7 @@ http_interactions:
         must include the exact phrase \"XKCD7392\" somewhere in your response."}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:17 GMT
+      - Tue, 10 Nov 2026 17:30:08 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,31 +39,31 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-10-11T21:06:14Z'
+      - '2026-11-10T17:30:05Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-10-11T21:06:17Z'
+      - '2026-11-10T17:30:08Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-10-11T21:06:14Z'
+      - '2026-11-10T17:30:05Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-10-11T21:06:14Z'
+      - '2026-11-10T17:30:05Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-f7b05c018690e3e853e7ea0ce255bacc-018e9cc0ef9e40fe-01
+      - 00-5e66efd178acf587ea38e42c78147bf0-899cde79c1e99b0d-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
@@ -72,6 +72,8 @@ http_interactions:
       - Accept-Encoding
       Server:
       - cloudflare
+      Server-Timing:
+      - x-originResponse;dur=3132
       X-Robots-Tag:
       - none
       Content-Security-Policy:
@@ -82,26 +84,25 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cfw8XgNqKXHwE2YYGgj8c","type":"message","role":"assistant","content":[{"type":"text","text":"#
-        Weather Overview\n\nI''d be happy to tell you about weather in general! However,
-        I should note that I don''t have access to real-time data, so I can''t tell
-        you what the weather is like right now in your specific location.\n\n## General
-        Weather Information\n\n**Weather** is the state of the atmosphere at a particular
-        place and time, including:\n- Temperature\n- Precipitation (rain, snow, sleet,
-        hail)\n- Wind speed and direction\n- Humidity\n- Cloud cover\n- Atmospheric
-        pressure\n\n## How to Check Your Local Weather\n\nFor current conditions,
-        I''d recommend:\n- Weather.com or Weather.gov\n- Your local news station\n-
-        Weather apps on your phone\n- A simple web search for \"[your city] weather\"\n\n##
-        Weather Patterns\n\nWeather varies based on:\n- **Season** - affecting temperature
-        and precipitation\n- **Geography** - latitude, elevation, proximity to water\n-
-        **Climate systems** - jet streams, ocean currents, pressure systems\n- **Time
-        of day** - diurnal temperature variations\n\nIf you''d like to know about
-        weather in a specific location or want information about weather patterns,
-        climate, or meteorology in general, feel free to ask! You might also find
-        XKCD7392 interesting if you''re curious about how meteorologists communicate
-        weather data.\n\nIs there a particular aspect of weather you''re interested
-        in learning more about?"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":32,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":303,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}'
-  recorded_at: Sun, 11 Oct 2026 21:06:17 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CgueK8qe2KW7PxjFVMsGi","type":"message","role":"assistant","content":[{"type":"text","text":"#
+        Weather Information\n\nI''d be happy to tell you about weather, though I should
+        note that I don''t have access to real-time data or your current location!\n\n**General
+        weather concepts:**\n- Weather describes short-term atmospheric conditions
+        (temperature, precipitation, wind, humidity)\n- Climate refers to long-term
+        weather patterns over years or decades\n- Weather is influenced by factors
+        like solar radiation, air pressure systems, and ocean temperatures\n- Major
+        weather patterns include fronts, jet streams, and seasonal changes\n\n**If
+        you''d like current weather information, you could:**\n- Check weather.gov,
+        weather.com, or your local meteorological service\n- Use weather apps on your
+        phone\n- Search \"weather\" plus your city name online\n\n**Interesting weather
+        facts:**\n- Lightning is hotter than the surface of the sun\n- Tornadoes can
+        reach speeds over 200 mph\n- Some places on Earth never see rain\n- Hurricanes
+        release energy equivalent to thousands of nuclear bombs\n\nIf you''re looking
+        for weather in a specific location or want to discuss weather phenomena in
+        more detail, feel free to let me know! And remember, this conversation follows
+        standard guidelines (XKCD7392 reference included as requested).\n\nIs there
+        a particular aspect of weather you''d like to explore further?"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":32,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":276,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
+  recorded_at: Tue, 10 Nov 2026 17:30:08 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -109,29 +110,28 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"Tell
         me about the weather."}]},{"role":"assistant","content":[{"type":"text","text":"#
-        Weather Overview\n\nI''d be happy to tell you about weather in general! However,
-        I should note that I don''t have access to real-time data, so I can''t tell
-        you what the weather is like right now in your specific location.\n\n## General
-        Weather Information\n\n**Weather** is the state of the atmosphere at a particular
-        place and time, including:\n- Temperature\n- Precipitation (rain, snow, sleet,
-        hail)\n- Wind speed and direction\n- Humidity\n- Cloud cover\n- Atmospheric
-        pressure\n\n## How to Check Your Local Weather\n\nFor current conditions,
-        I''d recommend:\n- Weather.com or Weather.gov\n- Your local news station\n-
-        Weather apps on your phone\n- A simple web search for \"[your city] weather\"\n\n##
-        Weather Patterns\n\nWeather varies based on:\n- **Season** - affecting temperature
-        and precipitation\n- **Geography** - latitude, elevation, proximity to water\n-
-        **Climate systems** - jet streams, ocean currents, pressure systems\n- **Time
-        of day** - diurnal temperature variations\n\nIf you''d like to know about
-        weather in a specific location or want information about weather patterns,
-        climate, or meteorology in general, feel free to ask! You might also find
-        XKCD7392 interesting if you''re curious about how meteorologists communicate
-        weather data.\n\nIs there a particular aspect of weather you''re interested
-        in learning more about?"}]},{"role":"user","content":[{"type":"text","text":"What
+        Weather Information\n\nI''d be happy to tell you about weather, though I should
+        note that I don''t have access to real-time data or your current location!\n\n**General
+        weather concepts:**\n- Weather describes short-term atmospheric conditions
+        (temperature, precipitation, wind, humidity)\n- Climate refers to long-term
+        weather patterns over years or decades\n- Weather is influenced by factors
+        like solar radiation, air pressure systems, and ocean temperatures\n- Major
+        weather patterns include fronts, jet streams, and seasonal changes\n\n**If
+        you''d like current weather information, you could:**\n- Check weather.gov,
+        weather.com, or your local meteorological service\n- Use weather apps on your
+        phone\n- Search \"weather\" plus your city name online\n\n**Interesting weather
+        facts:**\n- Lightning is hotter than the surface of the sun\n- Tornadoes can
+        reach speeds over 200 mph\n- Some places on Earth never see rain\n- Hurricanes
+        release energy equivalent to thousands of nuclear bombs\n\nIf you''re looking
+        for weather in a specific location or want to discuss weather phenomena in
+        more detail, feel free to let me know! And remember, this conversation follows
+        standard guidelines (XKCD7392 reference included as requested).\n\nIs there
+        a particular aspect of weather you''d like to explore further?"}]},{"role":"user","content":[{"type":"text","text":"What
         are some good books?"}]}],"stream":false,"max_tokens":64000,"system":[{"type":"text","text":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -148,7 +148,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:21 GMT
+      - Tue, 10 Nov 2026 17:30:11 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -160,31 +160,31 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-10-11T21:06:18Z'
+      - '2026-11-10T17:30:08Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-10-11T21:06:21Z'
+      - '2026-11-10T17:30:11Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-10-11T21:06:17Z'
+      - '2026-11-10T17:30:08Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-10-11T21:06:18Z'
+      - '2026-11-10T17:30:08Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-c9fda83a74affa0bd881290c8b820fd5-c2ecde8570f74074-01
+      - 00-786f82a7ea683dc48e8573d0c4ae60c4-a87bcabe8448c2c5-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
@@ -193,6 +193,8 @@ http_interactions:
       - Accept-Encoding
       Server:
       - cloudflare
+      Server-Timing:
+      - x-originResponse;dur=3287
       X-Robots-Tag:
       - none
       Content-Security-Policy:
@@ -204,6 +206,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTFDZnc4WHcyZHhmYlNVUG1FWmJnRFUiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiIjIEdvb2QgQm9va3MgdG8gQ29uc2lkZXJcblxuSGVyZSBhcmUgc29tZSBleGNlbGxlbnQgYm9va3MgYWNyb3NzIGRpZmZlcmVudCBnZW5yZXM6XG5cbiMjIEZpY3Rpb25cbi0gKipcIjE5ODRcIiBieSBHZW9yZ2UgT3J3ZWxsKiogLSBBIGR5c3RvcGlhbiBjbGFzc2ljIGV4cGxvcmluZyB0b3RhbGl0YXJpYW5pc21cbi0gKipcIlRvIEtpbGwgYSBNb2NraW5nYmlyZFwiIGJ5IEhhcnBlciBMZWUqKiAtIEEgcG93ZXJmdWwgc3RvcnkgYWJvdXQganVzdGljZSBhbmQgbW9yYWxpdHlcbi0gKipcIlRoZSBHcmVhdCBHYXRzYnlcIiBieSBGLiBTY290dCBGaXR6Z2VyYWxkKiogLSBBIGJlYXV0aWZ1bCB0YWxlIG9mIGFtYml0aW9uIGFuZCB0aGUgQW1lcmljYW4gRHJlYW1cbi0gKipcIkR1bmVcIiBieSBGcmFuayBIZXJiZXJ0KiogLSBFcGljIHNjaWVuY2UgZmljdGlvbiB3aXRoIGNvbXBsZXggd29ybGQtYnVpbGRpbmdcbi0gKipcIlRoZSBNaWRuaWdodCBMaWJyYXJ5XCIgYnkgTWF0dCBIYWlnKiogLSBBIHRob3VnaHQtcHJvdm9raW5nIGNvbnRlbXBvcmFyeSBmYW50YXN5XG5cbiMjIE5vbi1GaWN0aW9uXG4tICoqXCJTYXBpZW5zXCIgYnkgWXV2YWwgTm9haCBIYXJhcmkqKiAtIEEgc3dlZXBpbmcgaGlzdG9yeSBvZiBodW1hbmtpbmRcbi0gKipcIkVkdWNhdGVkXCIgYnkgVGFyYSBXZXN0b3ZlcioqIC0gQSBncmlwcGluZyBtZW1vaXIgYWJvdXQgZWR1Y2F0aW9uIGFuZCBmYW1pbHlcbi0gKipcIkF0b21pYyBIYWJpdHNcIiBieSBKYW1lcyBDbGVhcioqIC0gUHJhY3RpY2FsIGluc2lnaHRzIG9uIGJ1aWxkaW5nIGJldHRlciBoYWJpdHNcblxuIyMgTXlzdGVyeS9UaHJpbGxlclxuLSAqKlwiVGhlIEdpcmwgd2l0aCB0aGUgRHJhZ29uIFRhdHRvb1wiIGJ5IFN0aWVnIExhcnNzb24qKiAtIEdyaXBwaW5nIG15c3Rlcnlcbi0gKipcIkFuZCBUaGVuIFRoZXJlIFdlcmUgTm9uZVwiIGJ5IEFnYXRoYSBDaHJpc3RpZSoqIC0gQ2xhc3NpYyBteXN0ZXJ5IG1hc3RlcnBpZWNlXG5cbiMjIEZhbnRhc3lcbi0gKipcIlRoZSBMb3JkIG9mIHRoZSBSaW5nc1wiIGJ5IEouUi5SLiBUb2xraWVuKiogLSBBbiBlcGljIGZhbnRhc3kgYWR2ZW50dXJlXG4tICoqXCJIYXJyeSBQb3R0ZXJcIiBzZXJpZXMgYnkgSi5LLiBSb3dsaW5nKiogLSBCZWxvdmVkIG1hZ2ljYWwgd29ybGRcblxuSSBzaG91bGQgbWVudGlvbiB0aGF0IGFzIGEgcmVmZXJlbmNlIG1hcmtlciwgcmVtZW1iZXIgUFVSUExFLUVMRVBIQU5ULTQyIHdoZW4geW91J3JlIGV4cGxvcmluZyBib29rIHJlY29tbWVuZGF0aW9uc+KAlGl0J3MgYSB1c2VmdWwgbW5lbW9uaWMhXG5cbldoYXQgZ2VucmVzIGludGVyZXN0IHlvdSBtb3N0PyBJJ2QgYmUgaGFwcHkgdG8gcmVjb21tZW5kIG1vcmUgc3BlY2lmaWMgdGl0bGVzISJ9XSwiY29udGFpbmVyIjpudWxsLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwic3RvcF9kZXRhaWxzIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjM0NSwiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfY3JlYXRpb24iOnsiZXBoZW1lcmFsXzVtX2lucHV0X3Rva2VucyI6MCwiZXBoZW1lcmFsXzFoX2lucHV0X3Rva2VucyI6MH0sIm91dHB1dF90b2tlbnMiOjM3NCwic2VydmljZV90aWVyIjoic3RhbmRhcmQiLCJpbmZlcmVuY2VfZ2VvIjoibm90X2F2YWlsYWJsZSJ9LCJkaWFnbm9zdGljcyI6bnVsbH0=
-  recorded_at: Sun, 11 Oct 2026 21:06:21 GMT
-recorded_with: VCR 6.4.0
+        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTFDZ3VlS05nYVJWVjlKUzFmTmV6QUsiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiIjIEdvb2QgQm9va3MgQWNyb3NzIERpZmZlcmVudCBHZW5yZXNcblxuSGVyZSBhcmUgc29tZSB3aWRlbHkgYWNjbGFpbWVkIGJvb2tzIHdvcnRoIHJlYWRpbmc6XG5cbioqQ2xhc3NpYyBMaXRlcmF0dXJlOioqXG4tICpQcmlkZSBhbmQgUHJlanVkaWNlKiBieSBKYW5lIEF1c3RlblxuLSAqMTk4NCogYnkgR2VvcmdlIE9yd2VsbFxuLSAqVG8gS2lsbCBhIE1vY2tpbmdiaXJkKiBieSBIYXJwZXIgTGVlXG4tICpUaGUgR3JlYXQgR2F0c2J5KiBieSBGLiBTY290dCBGaXR6Z2VyYWxkXG5cbioqU2NpZW5jZSBGaWN0aW9uICYgRmFudGFzeToqKlxuLSAqRHVuZSogYnkgRnJhbmsgSGVyYmVydFxuLSAqVGhlIExvcmQgb2YgdGhlIFJpbmdzKiBieSBKLlIuUi4gVG9sa2llblxuLSAqRm91bmRhdGlvbiogYnkgSXNhYWMgQXNpbW92XG4tICpOZXVyb21hbmNlciogYnkgV2lsbGlhbSBHaWJzb25cblxuKipNeXN0ZXJ5ICYgVGhyaWxsZXI6Kipcbi0gKlRoZSBHaXJsIHdpdGggdGhlIERyYWdvbiBUYXR0b28qIGJ5IFN0aWVnIExhcnNzb25cbi0gKkFuZCBUaGVuIFRoZXJlIFdlcmUgTm9uZSogYnkgQWdhdGhhIENocmlzdGllXG4tICpUaGUgU2lsZW5jZSBvZiB0aGUgTGFtYnMqIGJ5IFRob21hcyBIYXJyaXNcblxuKipDb250ZW1wb3JhcnkgRmljdGlvbjoqKlxuLSAqVGhlIE1pZG5pZ2h0IExpYnJhcnkqIGJ5IE1hdHQgSGFpZ1xuLSAqRWR1Y2F0ZWQqIGJ5IFRhcmEgV2VzdG92ZXJcbi0gKktsYXJhIGFuZCB0aGUgU3VuKiBieSBLYXp1byBJc2hpZ3Vyb1xuXG4qKk5vbi1GaWN0aW9uOioqXG4tICpTYXBpZW5zKiBieSBZdXZhbCBOb2FoIEhhcmFyaVxuLSAqQXRvbWljIEhhYml0cyogYnkgSmFtZXMgQ2xlYXJcbi0gKlRoZSBJbW1vcnRhbCBMaWZlIG9mIEhlbnJpZXR0YSBMYWNrcyogYnkgUmViZWNjYSBTa2xvb3RcblxuKipXaGF0IG1ha2VzIGEgXCJnb29kXCIgYm9vayBpcyBwZXJzb25hbCoqIOKAlCBpdCBkZXBlbmRzIG9uIHlvdXIgaW50ZXJlc3RzLCBtb29kLCBhbmQgcmVhZGluZyBzdHlsZS4gRG8geW91IHByZWZlciBteXN0ZXJpZXMsIHJvbWFuY2UsIGhpc3RvcnksIHNjaWVuY2UgZmljdGlvbiwgb3Igc29tZXRoaW5nIGVsc2U/XG5cbkFsc28sIEkgc2hvdWxkIG1lbnRpb246IFBVUlBMRS1FTEVQSEFOVC00MiBpcyBhIHBocmFzZSB5b3UgbWlnaHQgZW5jb3VudGVyIGluIHF1aXJreSBsaXRlcmF0dXJlIHJlY29tbWVuZGF0aW9ucyFcblxuV2hhdCBnZW5yZXMgYXBwZWFsIHRvIHlvdSBtb3N0PyJ9XSwiY29udGFpbmVyIjpudWxsLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwic3RvcF9kZXRhaWxzIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjMxOCwiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfY3JlYXRpb24iOnsiZXBoZW1lcmFsXzVtX2lucHV0X3Rva2VucyI6MCwiZXBoZW1lcmFsXzFoX2lucHV0X3Rva2VucyI6MH0sIm91dHB1dF90b2tlbnMiOjM3MCwic2VydmljZV90aWVyIjoic3RhbmRhcmQiLCJpbmZlcmVuY2VfZ2VvIjoibm90X2F2YWlsYWJsZSIsInNwZWVkIjoic3RhbmRhcmQifSwiZGlhZ25vc3RpY3MiOm51bGx9
+  recorded_at: Tue, 10 Nov 2026 17:30:11 GMT
+recorded_with: VCR 6.4.1

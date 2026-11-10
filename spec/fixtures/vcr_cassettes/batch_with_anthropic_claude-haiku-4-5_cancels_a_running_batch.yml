@@ -9,7 +9,7 @@ http_interactions:
         is 5 + 5?"}]}],"stream":false,"max_tokens":64000}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:16:25 GMT
+      - Tue, 10 Nov 2026 18:17:08 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -52,7 +52,7 @@ http_interactions:
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
       Server-Timing:
-      - x-originResponse;dur=271
+      - x-originResponse;dur=560
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -61,17 +61,17 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msgbatch_01Rx4K2ya5bNkRgAjZRxMQ1s","type":"message_batch","processing_status":"in_progress","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-10-11T21:16:25.433361+00:00","expires_at":"2026-10-12T21:16:25.433361+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":null}'
-  recorded_at: Sun, 11 Oct 2026 21:16:25 GMT
+      string: '{"id":"msgbatch_01M1SseoW65ishCbDPdrCVXe","type":"message_batch","processing_status":"in_progress","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-11-10T18:17:08.622101+00:00","expires_at":"2026-11-11T18:17:08.622101+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":null}'
+  recorded_at: Tue, 10 Nov 2026 18:17:08 GMT
 - request:
     method: post
-    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01Rx4K2ya5bNkRgAjZRxMQ1s/cancel
+    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01M1SseoW65ishCbDPdrCVXe/cancel
     body:
       encoding: UTF-8
       string: "{}"
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -88,7 +88,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:16:25 GMT
+      - Tue, 10 Nov 2026 18:17:08 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -110,7 +110,7 @@ http_interactions:
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
       Server-Timing:
-      - x-originResponse;dur=177
+      - x-originResponse;dur=128
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -119,6 +119,6 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msgbatch_01Rx4K2ya5bNkRgAjZRxMQ1s","type":"message_batch","processing_status":"canceling","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-10-11T21:16:25.433361+00:00","expires_at":"2026-10-12T21:16:25.433361+00:00","archived_at":null,"cancel_initiated_at":"2026-10-11T21:16:25.760545+00:00","results_url":null}'
-  recorded_at: Sun, 11 Oct 2026 21:16:25 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"msgbatch_01M1SseoW65ishCbDPdrCVXe","type":"message_batch","processing_status":"canceling","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-11-10T18:17:08.622101+00:00","expires_at":"2026-11-11T18:17:08.622101+00:00","archived_at":null,"cancel_initiated_at":"2026-11-10T18:17:08.870896+00:00","results_url":null}'
+  recorded_at: Tue, 10 Nov 2026 18:17:08 GMT
+recorded_with: VCR 6.4.1

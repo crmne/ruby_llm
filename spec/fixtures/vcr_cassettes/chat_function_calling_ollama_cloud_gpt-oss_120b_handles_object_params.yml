@@ -13,7 +13,7 @@ http_interactions:
         window to schedule"}},"required":["window"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -30,35 +30,36 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - fb036d5c394cd0c23173b2be8d69965e24bc9914
+      - 81e02665bdd918cf59b66804d554f8e53171f5d2
       X-Build-Time:
-      - '2026-10-09T17:17:18-07:00'
+      - '2026-11-09T17:12:20-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '837'
+      - '907'
       Date:
-      - Sun, 11 Oct 2026 21:11:48 GMT
+      - Tue, 10 Nov 2026 17:42:17 GMT
       Server:
       - Google Frontend
-      Traceparent:
-      - 00-bc41c5bfe1f2317c21badab6ec2062e8-96b3b9c45a5563b3-00
       X-Cloud-Trace-Context:
-      - bc41c5bfe1f2317c21badab6ec2062e8/10859227379500671923
+      - 5dd5c6d9f8be5e5325b04daa51adf1a7/6071334636495382174
+      Traceparent:
+      - 00-5dd5c6d9f8be5e5325b04daa51adf1a7-5441b6af40d5269e-00
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-756","object":"chat.completion","created":1791753108,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"The
-        user wants to call the object params tool with window start and end dates.
-        The tool signature is functions.object_params with param window: Record\u003cstring,
-        any\u003e. So we call it with window: { start: \"2025-01-01\", end: \"2025-01-02\"
-        }. Then include the result. Need to send function call.","tool_calls":[{"id":"call_1m608tbu","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":159,"completion_tokens":124,"total_tokens":283,"prompt_tokens_details":{"cached_tokens":64}}}
+      string: '{"id":"chatcmpl-320","object":"chat.completion","created":1794332537,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"The
+        user wants to call the object params tool with window start and end dates,
+        and include the result. There''s a tool named functions.object_params. We
+        need to pass a DSL object with a field \"window\" that is a record (dictionary)
+        containing start and end. So call with {window: {start: \"2025-01-01\", end:
+        \"2025-01-02\"}}. Then include the result. We''ll call the tool.","tool_calls":[{"id":"call_r930g1e9","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":159,"completion_tokens":144,"total_tokens":303,"prompt_tokens_details":{"cached_tokens":64}}}
 
         '
-  recorded_at: Sun, 11 Oct 2026 21:11:48 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:42:18 GMT
+recorded_with: VCR 6.4.1

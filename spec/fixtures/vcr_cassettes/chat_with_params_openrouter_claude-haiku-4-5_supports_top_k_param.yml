@@ -9,7 +9,7 @@ http_interactions:
         is the square root of 64? Answer with a JSON object with the key `result`."},{"role":"assistant","content":"{"}],"stream":false,"top_k":5}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Http-Referer:
@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:41 GMT
+      - Tue, 10 Nov 2026 17:31:23 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,9 +38,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1791752800-BAAgccKP8aC3s5GQyy0o
+      - gen-1794331882-8LnHyWbqaikdAiONcHRx
       Access-Control-Expose-Headers:
-      - X-Generation-Id,X-Provider-Name,request-id,cf-ray
+      - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
+      X-Openrouter-Release:
+      - api;5510681e-1891-4ea4-8b8c-55cb0662e57e
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -54,10 +56,12 @@ http_interactions:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n{\"id\":\"gen-1791752800-BAAgccKP8aC3s5GQyy0o\",\"object\":\"chat.completion\",\"created\":1791752800,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
+      string: "\n         \n{\"id\":\"gen-1794331882-8LnHyWbqaikdAiONcHRx\",\"object\":\"chat.completion\",\"created\":1794331882,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
         Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"\\n
         \ \\\"result\\\": 8\\n}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":28,\"completion_tokens\":12,\"total_tokens\":40,\"cost\":0.000088,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.000088,\"upstream_inference_prompt_cost\":0.000028,\"upstream_inference_completions_cost\":0.00006},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Sun, 11 Oct 2026 21:06:41 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:31:23 GMT
+recorded_with: VCR 6.4.1

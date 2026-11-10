@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Tue, 10 Nov 2026 17:54:59 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Pragma:
-      - no-cache
-      Date:
-      - Sun, 11 Oct 2026 21:20:25 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Pragma:
+      - no-cache
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -56,7 +56,7 @@ http_interactions:
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 11 Oct 2026 21:20:25 GMT
+  recorded_at: Tue, 10 Nov 2026 17:54:59 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -68,7 +68,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}],"toolConfig":{"functionCallingConfig":{"mode":"any","allowedFunctionNames":["weather"]}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -82,6 +82,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Goog-Request-Id:
+      - c1rzatikMpGE2fMPlI-I0A8
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -89,7 +91,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:20:27 GMT
+      - Tue, 10 Nov 2026 17:55:00 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -115,22 +117,21 @@ http_interactions:
                     "functionCall": {
                       "name": "weather",
                       "args": {
-                        "latitude": "not applicable",
-                        "longitude": "not applicable"
+                        "latitude": "52.5200",
+                        "longitude": "13.4050"
                       }
                     },
-                    "thoughtSignature": "CsMBAY89a19av4ii5Vulk6cs1jwN/yTNabI6yDQt5RQvUFUkRJqnCP9LnW7R0b5mBHWyiCN4aJth9kpz4ORaQViN1NqNGvDxVX3u6UbbMTc7+4dBFJwox4sB1hANUA8yYlMP/1fIuchdY/LZm9sVPbYVv1ynm5Cc2CGVjmqg+PIlUwksCt9Z2pte/4xrsaekp9KiijH1oEjzsZO3efPTd2TSrMsLE5YGdG6IfWaCMrF9Zne/gbGNx9LLFPH/gSp8Mool8R6o"
+                    "thoughtSignature": "AY89a18Qe75065l2mQPU9f7P8KLpPbuTA4imFnmsYdmfMbkLLDuDDIWFEmeFDX98Az7IgHNyig2KtHw5mCpx6osSxZWhwmQ4t3IOOfrKHFmP7RMZj/Au0OELvz9c+r1+HOEQKGpWWMDK+qGnW4u/774ncQtDQZlv6+pn8+YNp1lbLnBrmZhHPHE/p+htxMtAb0V3EnrodmdVtOirxhF59TRsQdTIsIkp6CKT0Xi8NcHq+sEVZDupBpqD0+s5ncXGoKZUB+yP9SDLqDC6DpwboylkAj0aTuvMl4JKB3JiOXb7C5M84PoISwWc67zAK5ocEuPZlDokPyo2lkKbkSLtWkAptNbwlteqWPGGkYQy+hmnmMH4pGxMMYYDD+wwyxQhWfonCb5UCYkRzNRrshv/WsZiby/vsXvq1T2UiD/Qrdq8+75+M7t2Ue2Gfd37D5ABI9iSSJg="
                   }
                 ]
               },
-              "finishReason": "STOP",
-              "avgLogprobs": -1.9092311859130859
+              "finishReason": "STOP"
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 15,
-            "candidatesTokenCount": 7,
-            "totalTokenCount": 53,
+            "candidatesTokenCount": 28,
+            "totalTokenCount": 89,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -141,30 +142,29 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 7
+                "tokenCount": 28
               }
             ],
-            "thoughtsTokenCount": 31
+            "thoughtsTokenCount": 46
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-10-11T21:20:26.067140Z",
-          "responseId": "mv3LasSMBK2jhcIPvoWh6Ao"
+          "createTime": "2026-11-10T17:54:59.823896Z",
+          "responseId": "c1rzatikMpGE2fMPlI-I0A8"
         }
-  recorded_at: Sun, 11 Oct 2026 21:20:27 GMT
+  recorded_at: Tue, 10 Nov 2026 17:55:00 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"not
-        applicable","longitude":"not applicable"}},"thoughtSignature":"CsMBAY89a19av4ii5Vulk6cs1jwN/yTNabI6yDQt5RQvUFUkRJqnCP9LnW7R0b5mBHWyiCN4aJth9kpz4ORaQViN1NqNGvDxVX3u6UbbMTc7+4dBFJwox4sB1hANUA8yYlMP/1fIuchdY/LZm9sVPbYVv1ynm5Cc2CGVjmqg+PIlUwksCt9Z2pte/4xrsaekp9KiijH1oEjzsZO3efPTd2TSrMsLE5YGdG6IfWaCMrF9Zne/gbGNx9LLFPH/gSp8Mool8R6o"}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
-        weather at not applicable, not applicable: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"AY89a18Qe75065l2mQPU9f7P8KLpPbuTA4imFnmsYdmfMbkLLDuDDIWFEmeFDX98Az7IgHNyig2KtHw5mCpx6osSxZWhwmQ4t3IOOfrKHFmP7RMZj/Au0OELvz9c+r1+HOEQKGpWWMDK+qGnW4u/774ncQtDQZlv6+pn8+YNp1lbLnBrmZhHPHE/p+htxMtAb0V3EnrodmdVtOirxhF59TRsQdTIsIkp6CKT0Xi8NcHq+sEVZDupBpqD0+s5ncXGoKZUB+yP9SDLqDC6DpwboylkAj0aTuvMl4JKB3JiOXb7C5M84PoISwWc67zAK5ocEuPZlDokPyo2lkKbkSLtWkAptNbwlteqWPGGkYQy+hmnmMH4pGxMMYYDD+wwyxQhWfonCb5UCYkRzNRrshv/WsZiby/vsXvq1T2UiD/Qrdq8+75+M7t2Ue2Gfd37D5ABI9iSSJg="}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parametersJsonSchema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -178,6 +178,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Goog-Request-Id:
+      - dFrzapW5Mf63mLAPx92liA8
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -185,7 +187,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:20:27 GMT
+      - Tue, 10 Nov 2026 17:55:02 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -208,7 +210,7 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "I am sorry, I cannot answer historical questions. I can only provide current weather information."
+                    "text": "The fall of the Roman Empire is a complex historical event with no single cause or date. Historians generally refer to the decline and collapse of the Western Roman Empire, which occurred over several centuries, typically from the late 4th century to 476 CE, when the last Western Roman Emperor, Romulus Augustulus, was deposed.\n\nKey factors contributing to its fall include:\n\n*   **Economic problems:** Inflation, over-taxation, and disruptions to trade.\n*   **Military overextension and barbarian invasions:** The empire became too large to effectively defend, and constant pressure from groups like the Goths, Vandals, and Huns strained its resources.\n*   **Political instability and corruption:** Frequent changes in leadership, civil wars, and a decline in civic virtue weakened the central government.\n*   **Social decay:** A widening gap between rich and poor, decline in public health, and a loss of traditional Roman values.\n*   **Division of the Empire:** The split into Western and Eastern Roman Empires in 395 CE, with the Western half being less wealthy and more vulnerable.\n\nIt's important to note that the Eastern Roman (Byzantine) Empire continued to thrive for another thousand years, preserving much of Roman law, culture, and traditions.\n"
                   }
                 ]
               },
@@ -216,26 +218,26 @@ http_interactions:
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 81,
-            "candidatesTokenCount": 18,
-            "totalTokenCount": 99,
+            "promptTokenCount": 118,
+            "candidatesTokenCount": 264,
+            "totalTokenCount": 382,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 81
+                "tokenCount": 118
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 18
+                "tokenCount": 264
               }
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-10-11T21:20:27.202508Z",
-          "responseId": "m_3LaoyuDL_ChcIPvtzwqAY"
+          "createTime": "2026-11-10T17:55:00.810133Z",
+          "responseId": "dFrzapW5Mf63mLAPx92liA8"
         }
-  recorded_at: Sun, 11 Oct 2026 21:20:27 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:55:03 GMT
+recorded_with: VCR 6.4.1

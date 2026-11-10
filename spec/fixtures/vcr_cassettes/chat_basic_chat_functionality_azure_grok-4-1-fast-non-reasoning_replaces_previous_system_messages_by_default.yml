@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 Oct 2026 21:06:27 GMT
+      - Tue, 10 Nov 2026 17:30:22 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -44,14 +44,16 @@ http_interactions:
       - 'true'
       X-Xai-Model-Address:
       - http://localhost:9988
+      X-Watermark:
+      - 'false'
       Traceparent:
-      - 00-71010556eae6147ccd7ba4a93933e438-8898c94f0008f49a-00
+      - 00-92ea3e48a60ebab63dcd5ff8d75992b3-40237c5800026629-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - e7aa4d93-b018-4b89-aa3d-7a23aafd66c7
+      - cb13a1c6-f888-4c17-94a2-f9175fa03720
       Azureml-Model-Session:
-      - d20261009040854-b7570cce
+      - d20261110015917-e7d4cb48
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -63,9 +65,9 @@ http_interactions:
       X-Ratelimit-Key:
       - grok-4-1-fast-non-reasoning
       X-Ratelimit-Remaining-Requests:
-      - '47'
+      - '49'
       X-Ratelimit-Reset-Requests:
-      - '3'
+      - '1'
       X-Ratelimit-Limit-Requests:
       - '50'
       X-Ratelimit-Renewalperiod-Requests:
@@ -85,7 +87,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - e7aa4d93-b018-4b89-aa3d-7a23aafd66c7
+      - cb13a1c6-f888-4c17-94a2-f9175fa03720
+      X-Http2-Stream-Id:
+      - '533'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -95,8 +99,8 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImE3ZjZkMzRhLTIwOGMtNDQ5Ni1hZWQ3LTg3M2E1YzhjNmVlNCIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJJIGNhbid0IGNoZWNrIHJlYWwtdGltZSB3ZWF0aGVyIHdpdGhvdXQgYSBzcGVjaWZpYyBsb2NhdGlvbuKAlGNvdWxkIHlvdSB0ZWxsIG1lIHlvdXIgY2l0eSBvciBaSVAgY29kZT8gRm9yIGV4YW1wbGUsIHJpZ2h0IG5vdyBpbiBOZXcgWW9yayBDaXR5LCBpdCdzIHBhcnRseSBjbG91ZHkgd2l0aCB0ZW1wcyBhcm91bmQgNjXCsEYgKDE4wrBDKSBhbmQgYSBjaGFuY2Ugb2Ygc2hvd2VycyBsYXRlciwgcGVyIHJlY2VudCBmb3JlY2FzdHMgZnJvbSBzb3VyY2VzIGxpa2UgTk9BQS4gWEtDRDczOTIifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjIzLCJjb21wbGV0aW9uX3Rva2VucyI6NjMsInRvdGFsX3Rva2VucyI6ODYsImF1ZGlvX3Byb21wdF90b2tlbnMiOjAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxOTAsImF1ZGlvX3Rva2VucyI6MCwidGV4dF90b2tlbnMiOjIzLCJpbWFnZV90b2tlbnMiOjB9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MH0sImNyZWF0ZWQiOjE3OTE3NTI3ODcsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInByb21wdF9maWx0ZXJfcmVzdWx0cyI6bnVsbH0=
-  recorded_at: Sun, 11 Oct 2026 21:06:28 GMT
+        eyJpZCI6IjxYX1JFUVVFU1RfSUQ+IiwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkknbSBhZnJhaWQgSSBkb24ndCBoYXZlIHJlYWwtdGltZSBhY2Nlc3MgdG8gd2VhdGhlciBkYXRhIGZvciBhIHNwZWNpZmljIGxvY2F0aW9u4oCUY291bGQgeW91IHRlbGwgbWUgeW91ciBjaXR5IG9yIFpJUCBjb2RlIGZvciBhIG1vcmUgYWNjdXJhdGUgZm9yZWNhc3Q/IEluIHRoZSBtZWFudGltZSwgaGVyZSdzIGEgZ2VuZXJhbCBub3RlOiBYS0NENzM5Mi1zdHlsZSB3ZWF0aGVyIGNvbWljcyByZW1pbmQgdXMgdGhhdCBmb3JlY2FzdHMgYXJlIHByb2JhYmlsaXN0aWMsIGJ1dCB0b2RheSdzIHZpYmUgPEdPT0dMRV9DTE9VRF9MT0NBVElPTj5seSBzZWVtcyBtaWxkIHdpdGggc2NhdHRlcmVkIHNob3dlcnMgaW4gbWFueSBhcmVhcy4gV2hhdCdzIHlvdXIgc3BvdD8ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjE5MSwiY29tcGxldGlvbl90b2tlbnMiOjcxLCJ0b3RhbF90b2tlbnMiOjI2MiwiYXVkaW9fcHJvbXB0X3Rva2VucyI6MCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjE5MCwiYXVkaW9fdG9rZW5zIjowLCJ0ZXh0X3Rva2VucyI6MTkxLCJpbWFnZV90b2tlbnMiOjB9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MH0sImNyZWF0ZWQiOjE3OTQzMzE4MjIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInByb21wdF9maWx0ZXJfcmVzdWx0cyI6bnVsbH0=
+  recorded_at: Tue, 10 Nov 2026 17:30:23 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
@@ -104,14 +108,16 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"system","content":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"Tell
-        me about the weather."},{"role":"assistant","content":"I can''t check real-time
-        weather without a specific location—could you tell me your city or ZIP code?
-        For example, right now in New York City, it''s partly cloudy with temps around
-        65°F (18°C) and a chance of showers later, per recent forecasts from sources
-        like NOAA. XKCD7392"},{"role":"user","content":"What are some good books?"}],"stream":false}'
+        me about the weather."},{"role":"assistant","content":"I''m afraid I don''t
+        have real-time access to weather data for a specific location—could you tell
+        me your city or ZIP code for a more accurate forecast? In the meantime, here''s
+        a general note: XKCD7392-style weather comics remind us that forecasts are
+        probabilistic, but today''s vibe <GOOGLE_CLOUD_LOCATION>ly seems mild with
+        scattered showers in many areas. What''s your spot?"},{"role":"user","content":"What
+        are some good books?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -128,7 +134,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 Oct 2026 21:06:28 GMT
+      - Tue, 10 Nov 2026 17:30:23 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -145,14 +151,16 @@ http_interactions:
       - 'true'
       X-Xai-Model-Address:
       - http://localhost:9988
+      X-Watermark:
+      - 'false'
       Traceparent:
-      - 00-4f00055b352149829401a2064bb330a6-d339ced18b57a545-01
+      - 00-5f92d2507ecb66abae7c71e85ea73e25-ada3cc27000256c5-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - 4f00055b-3521-4982-9401-a2064bb330a6
+      - 2da41bef-86c3-43d2-9b70-aa9157ac585b
       Azureml-Model-Session:
-      - d20261009040854-b7570cce
+      - d20261110015917-e7d4cb48
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -164,9 +172,9 @@ http_interactions:
       X-Ratelimit-Key:
       - grok-4-1-fast-non-reasoning
       X-Ratelimit-Remaining-Requests:
-      - '47'
+      - '49'
       X-Ratelimit-Reset-Requests:
-      - '3'
+      - '1'
       X-Ratelimit-Limit-Requests:
       - '50'
       X-Ratelimit-Renewalperiod-Requests:
@@ -174,7 +182,7 @@ http_interactions:
       X-Ratelimit-Abusepenalty-Active:
       - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '49850'
+      - '49830'
       X-Ratelimit-Reset-Tokens:
       - '0'
       X-Ratelimit-Limit-Tokens:
@@ -186,7 +194,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - 4f00055b-3521-4982-9401-a2064bb330a6
+      - 2da41bef-86c3-43d2-9b70-aa9157ac585b
+      X-Http2-Stream-Id:
+      - '305'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -196,6 +206,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjZhOGVmODllLTliMWEtNGEzMC1hMDhmLTI5YWQ1MGEyYjFhYiIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJHb29kIGJvb2tzIGRlcGVuZCBvbiB5b3VyIHRhc3RlcywgYnV0IGhlcmUgYXJlIHNvbWUgdGltZWxlc3MgcmVjb21tZW5kYXRpb25zIGFjcm9zcyBnZW5yZXMsIGJhY2tlZCBieSBjcml0aWNhbCBhY2NsYWltIGFuZCBzYWxlcyBkYXRhIChlLmcuLCBmcm9tIEdvb2RyZWFkcywgTllUIGJlc3RzZWxsZXJzLCBhbmQgbGl0ZXJhcnkgYXdhcmRzKS4gSSd2ZSBpbmNsdWRlZCB3aHkgdGhleSdyZSBncmVhdCB3aXRoIGV2aWRlbmNlOlxuXG4jIyMgRmljdGlvbiBDbGFzc2ljc1xuLSAqKlRvIEtpbGwgYSBNb2NraW5nYmlyZCoqIGJ5IEhhcnBlciBMZWU6IFB1bGl0emVyIHdpbm5lcjsgZXhwbG9yZXMgcmFjaXNtIGFuZCBtb3JhbGl0eSBpbiB0aGUgQW1lcmljYW4gU291dGguIE92ZXIgNDAgbWlsbGlvbiBjb3BpZXMgc29sZCwgY29uc2lzdGVudGx5IHRvcHMgXCJiZXN0IGJvb2tzXCIgbGlzdHMgKGUuZy4sIEJCQydzIEJpZyBSZWFkICMxKS5cbi0gKioxOTg0KiogYnkgR2VvcmdlIE9yd2VsbDogRHlzdG9waWFuIG1hc3RlcnBpZWNlIG9uIHN1cnZlaWxsYW5jZSBhbmQgdG90YWxpdGFyaWFuaXNtLiBJbmZsdWVuY2VkIG1vZGVybiBwb2xpdGljczsgMzArIG1pbGxpb24gY29waWVzLCByZXF1aXJlZCByZWFkaW5nIGluIG1hbnkgc2Nob29scy5cblxuIyMjIFNjaS1GaS9GYW50YXN5XG4tICoqRHVuZSoqIGJ5IEZyYW5rIEhlcmJlcnQ6IEVwaWMgd29ybGQtYnVpbGRpbmcgb24gZWNvbG9neSBhbmQgcG9saXRpY3MuIEh1Z28vTmVidWxhIGF3YXJkczsgcmVjZW50IGZpbG0gYWRhcHRhdGlvbiBib29zdGVkIGl0cyAyME0rIHNhbGVzLiBEZW5pcyBWaWxsZW5ldXZlJ3MgdmVyc2lvbiBncm9zc2VkICQ0MDBNKy5cbi0gKipUaGUgTmFtZSBvZiB0aGUgV2luZCoqIGJ5IFBhdHJpY2sgUm90aGZ1c3M6IE1hZ2ljYWwgY29taW5nLW9mLWFnZSB0YWxlLiBLaW5na2lsbGVyIENocm9uaWNsZSBzZXJpZXM7IDEwTSsgY29waWVzLCBwcmFpc2VkIGJ5IGNyaXRpY3MgbGlrZSBUaGUgR3VhcmRpYW4gZm9yIHByb3NlLlxuXG4jIyMgTm9uLUZpY3Rpb25cbi0gKipTYXBpZW5zOiBBIEJyaWVmIEhpc3Rvcnkgb2YgSHVtYW5raW5kKiogYnkgWXV2YWwgTm9haCBIYXJhcmk6IFN3ZWVwaW5nIGh1bWFuIGhpc3RvcnkgZnJvbSBldm9sdXRpb24gdG8gQUkuIDI1TSsgY29waWVzIHNvbGQ7IGVuZG9yc2VkIGJ5IE9iYW1hIGFuZCBHYXRlcyBmb3IgaXRzIGluc2lnaHRmdWwgc3ludGhlc2lzLlxuLSAqKkF0b21pYyBIYWJpdHMqKiBieSBKYW1lcyBDbGVhcjogUHJhY3RpY2FsIHNlbGYtaW1wcm92ZW1lbnQgb24gYnVpbGRpbmcgaGFiaXRzLiBOWVQgIzEgYmVzdHNlbGxlcjsgYmFja2VkIGJ5IGJlaGF2aW9yYWwgc2NpZW5jZSBzdHVkaWVzIChlLmcuLCByZWZlcmVuY2VzIHRvIEJKIEZvZ2cncyB3b3JrKS5cblxuIyMjIFJlY2VudCBGYXZvcml0ZXMgKDIwMjBzKVxuLSAqKkxlc3NvbnMgaW4gQ2hlbWlzdHJ5KiogYnkgQm9ubmllIEdhcm11czogV2l0dHkgdGFsZSBvZiBhIDE5NjBzIGNoZW1pc3QuIFJlZXNlJ3MgQm9vayBDbHViIHBpY2s7IDRNKyBjb3BpZXMsIGFkYXB0ZWQgaW50byBhbiBBcHBsZSBUVisgc2VyaWVzLlxuXG5TdGFydCB3aXRoIHdoYXQgbWF0Y2hlcyB5b3VyIGludGVyZXN0c+KAlGZpY3Rpb24gZm9yIGVzY2FwaXNtLCBub24tZmljdGlvbiBmb3IgaW5zaWdodHMuIFdoYXQncyB5b3VyIGdlbnJlIHByZWZlcmVuY2U/IFBVUlBMRS1FTEVQSEFOVC00MiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTA3LCJjb21wbGV0aW9uX3Rva2VucyI6Mzk5LCJ0b3RhbF90b2tlbnMiOjUwNiwiYXVkaW9fcHJvbXB0X3Rva2VucyI6MCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjE2NCwiYXVkaW9fdG9rZW5zIjowLCJ0ZXh0X3Rva2VucyI6MTA3LCJpbWFnZV90b2tlbnMiOjB9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MH0sImNyZWF0ZWQiOjE3OTE3NTI3ODgsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInByb21wdF9maWx0ZXJfcmVzdWx0cyI6bnVsbH0=
-  recorded_at: Sun, 11 Oct 2026 21:06:31 GMT
-recorded_with: VCR 6.4.0
+        eyJpZCI6IjxYX1JFUVVFU1RfSUQ+IiwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ikdvb2QgYm9va3MgZGVwZW5kIG9uIHlvdXIgdGFzdGVzLCBidXQgaGVyZSBhcmUgc29tZSB0aW1lbGVzcyByZWNvbW1lbmRhdGlvbnMgYWNyb3NzIGdlbnJlcywgd2l0aCB3aHkgdGhleSBzaGluZSAoYWxsIHZlcmlmaWVkIGNsYXNzaWNzIHZpYSBsaXRlcmFyeSBjb25zZW5zdXMgYW5kIHNhbGVzIGRhdGEpOlxuXG4jIyMgRmljdGlvblxuLSAqKlRvIEtpbGwgYSBNb2NraW5nYmlyZCoqIGJ5IEhhcnBlciBMZWU6IEEgcHJvZm91bmQgZXhwbG9yYXRpb24gb2YgcmFjaXNtLCBtb3JhbGl0eSwgYW5kIGlubm9jZW5jZSBpbiB0aGUgQW1lcmljYW4gU291dGguIFB1bGl0emVyIHdpbm5lcjsgb3ZlciA0MCBtaWxsaW9uIGNvcGllcyBzb2xkLlxuLSAqKjE5ODQqKiBieSBHZW9yZ2UgT3J3ZWxsOiBEeXN0b3BpYW4gbWFzdGVycGllY2Ugb24gc3VydmVpbGxhbmNlLCB0cnV0aCwgYW5kIHRvdGFsaXRhcmlhbmlzbS4gRWVyaWx5IHJlbGV2YW50IHRvZGF5LlxuLSAqKlRoZSBOYW1lIG9mIHRoZSBXaW5kKiogYnkgUGF0cmljayBSb3RoZnVzczogRXBpYyBmYW50YXN5IHdpdGggc3R1bm5pbmcgcHJvc2UsIGEgZ3JpcHBpbmcgY29taW5nLW9mLWFnZSBzdG9yeSwgYW5kIGludHJpY2F0ZSB3b3JsZC1idWlsZGluZy5cblxuIyMjIE5vbi1GaWN0aW9uXG4tICoqU2FwaWVuczogQSBCcmllZiBIaXN0b3J5IG9mIEh1bWFua2luZCoqIGJ5IFl1dmFsIE5vYWggSGFyYXJpOiBTd2VlcGluZywgYWNjZXNzaWJsZSBvdmVydmlldyBvZiBodW1hbiBoaXN0b3J5IGZyb20gZXZvbHV0aW9uIHRvIEFJLiBCYWNrZWQgYnkgYXJjaGFlb2xvZ2ljYWwgYW5kIGFudGhyb3BvbG9naWNhbCBldmlkZW5jZTsgMTMrIG1pbGxpb24gY29waWVzIHNvbGQuXG4tICoqQXRvbWljIEhhYml0cyoqIGJ5IEphbWVzIENsZWFyOiBQcmFjdGljYWwsIHNjaWVuY2UtYmFzZWQgZ3VpZGUgdG8gYnVpbGRpbmcgYmV0dGVyIGhhYml0cy4gRHJhd3MgZnJvbSBwc3ljaG9sb2d5IHN0dWRpZXMgKGUuZy4sIEJKIEZvZ2cncyB3b3JrKSB3aXRoIGFjdGlvbmFibGUgc3RlcHMuXG5cbiMjIyBTY2ktRmkvRmFudGFzeVxuLSAqKkR1bmUqKiBieSBGcmFuayBIZXJiZXJ0OiBDb21wbGV4IHBvbGl0aWNhbCBpbnRyaWd1ZSwgZWNvbG9neSwgYW5kIG1lc3NpYW5pc20gb24gYSBkZXNlcnQgcGxhbmV0LiBJbmZsdWVuY2VkIGV2ZXJ5dGhpbmcgZnJvbSBTdGFyIFdhcnMgdG8gY2xpbWF0ZSBzY2ktZmkuXG5cblN0YXJ0IHdpdGggd2hhdCBncmFicyB5b3XigJRHb29kcmVhZHMgb3IgTGliYnkgYXBwIGZvciByYXRpbmdzL3Jldmlld3MuIFBVUlBMRS1FTEVQSEFOVC00MiBXaGF0J3MgeW91ciBmYXZvcml0ZSBnZW5yZT8ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjI4MywiY29tcGxldGlvbl90b2tlbnMiOjI5MCwidG90YWxfdG9rZW5zIjo1NzMsImF1ZGlvX3Byb21wdF90b2tlbnMiOjAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxNjQsImF1ZGlvX3Rva2VucyI6MCwidGV4dF90b2tlbnMiOjI4MywiaW1hZ2VfdG9rZW5zIjowfSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sIm51bV9zb3VyY2VzX3VzZWQiOjB9LCJjcmVhdGVkIjoxNzk0MzMxODIzLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJwcm9tcHRfZmlsdGVyX3Jlc3VsdHMiOm51bGx9
+  recorded_at: Tue, 10 Nov 2026 17:30:26 GMT
+recorded_with: VCR 6.4.1

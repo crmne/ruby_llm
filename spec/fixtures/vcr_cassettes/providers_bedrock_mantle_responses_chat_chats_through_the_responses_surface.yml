@@ -9,11 +9,11 @@ http_interactions:
         OK and nothing else."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261011T210650Z
+      - 20261110T172728Z
       X-Amz-Content-Sha256:
       - 0ec0f7ea930f1c52df60039a174fc23067e9d1df302db82f99dfd56849f38b6c
       Authorization:
@@ -29,11 +29,11 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:51 GMT
+      - Tue, 10 Nov 2026 17:27:29 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '988'
+      - '967'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
@@ -45,11 +45,10 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
-      - x-amzn-requestid,x-request-id,date,x-amzn-usage-reservation-quota,x-amzn-usage-reservation-remaining-quota,x-amzn-usage-reservation-spillover
+      - x-amzn-requestid,x-request-id,date,x-amzn-usage-reservation-quota,x-amzn-usage-reservation-remaining-quota,x-amzn-usage-reservation-spillover,x-amzn-gateway-arn,x-amzn-gateway-limit-name,x-amzn-gateway-limit-unit,x-amzn-gateway-limit,x-amzn-gateway-limit-remaining,x-amzn-gateway-limit-used-percent,x-amzn-gateway-limit-refill,x-amzn-gateway-limit-reset-at,retry-after,x-codex-primary-used-percent,x-codex-primary-window-minutes,x-codex-primary-reset-at,anthropic-ratelimit-unified-status,anthropic-ratelimit-unified-reset,anthropic-ratelimit-unified-representative-claim,anthropic-ratelimit-unified-overage-status,anthropic-ratelimit-unified-overage-reset,anthropic-ratelimit-unified-overage-utilization,anthropic-ratelimit-unified-overage-surpassed-threshold
     body:
       encoding: UTF-8
-      string: '{"background":false,"created_at":1791752811.0,"error":null,"id":"resp_g5zaltnuznje3iylajrlwlymwc4kikpugea4ezqnmtewxwedkhqq","incomplete_details":null,"instructions":null,"metadata":{},"model":"openai.gpt-oss-20b","object":"response","output":[{"content":[{"text":"The
-        user says: \"Say OK and nothing else.\" So I should respond with \"OK\". No
-        other text.","type":"reasoning_text"}],"id":"msg_8e5eb447dffa5512","status":"completed","summary":[],"type":"reasoning"},{"content":[{"annotations":[],"text":"OK","type":"output_text"}],"id":"msg_981021e1b31cf0ee","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"service_tier":"default","status":"completed","temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":73,"input_tokens_details":{"cached_tokens":0},"output_tokens":34,"output_tokens_details":{"reasoning_tokens":24},"total_tokens":107}}'
-  recorded_at: Sun, 11 Oct 2026 21:06:51 GMT
-recorded_with: VCR 6.4.0
+      string: '{"background":false,"created_at":1794331649.0,"error":null,"id":"resp_5irxwhz4ifueduf6ibiywn6nxq6lw4a7r3co6hxvvxc6km5t4xka","incomplete_details":null,"instructions":null,"metadata":{},"model":"openai.gpt-oss-20b","object":"response","output":[{"content":[{"text":"The
+        user says: \"Say OK and nothing else.\" So reply with \"OK\" only.","type":"reasoning_text"}],"id":"msg_94c718f59e2b9ed1","status":"completed","summary":[],"type":"reasoning"},{"content":[{"annotations":[],"text":"OK","type":"output_text"}],"id":"msg_9a91a87d970afd40","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"service_tier":"default","status":"completed","temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":73,"input_tokens_details":{"cached_tokens":0},"output_tokens":30,"output_tokens_details":{"reasoning_tokens":20},"total_tokens":103}}'
+  recorded_at: Tue, 10 Nov 2026 17:27:29 GMT
+recorded_with: VCR 6.4.1

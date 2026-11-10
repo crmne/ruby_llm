@@ -7,19 +7,19 @@ http_interactions:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Call best_language_to_learn
         and repeat the programming language it returns."}]}],"system":[{"text":"You
-        must use tools whenever possible."}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"best_language_to_learn","description":"Gets
+        must use tools whenever possible."}],"inferenceConfig":{"maxTokens":65535},"toolConfig":{"tools":[{"toolSpec":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","inputSchema":{"json":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}}]}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Accept:
       - application/vnd.amazon.eventstream
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261011T210747Z
+      - 20261110T173208Z
       X-Amz-Content-Sha256:
-      - 80d039e61b72931660cf3d6f2ae1869d2d74c6b80a17bfb945ec2bd1b7a812d4
+      - 9be0cf7f337c688c546837d3ff69b5f45b2fa80587f5c6ce1545cd46ba034568
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -31,7 +31,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:07:48 GMT
+      - Tue, 10 Nov 2026 17:32:10 GMT
       Content-Type:
       - application/vnd.amazon.eventstream
       Transfer-Encoding:
@@ -39,32 +39,32 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - a2c8b121-993d-4faf-9ca4-b6100877660c
+      - 6a47a4a0-7483-4624-aab2-339dcb51d2cb
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        AAAAogAAAFLqoCNHCzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSksiLCJyb2xlIjoiYXNzaXN0YW50In3Uj+t0AAABIQAAAFen0M4vCzpldmVudC10eXBlBwARY29udGVudEJsb2NrU3RhcnQNOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVowMTIzNCIsInN0YXJ0Ijp7InRvb2xVc2UiOnsibmFtZSI6ImJlc3RfbGFuZ3VhZ2VfdG9fbGVhcm4iLCJ0b29sVXNlSWQiOiJ0b29sdXNlX1JrakFCcnpBamNROW5WNGV0NTdMeDgifX19lDxyYgAAAMAAAABXeTjz5Qs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRvb2xVc2UiOnsiaW5wdXQiOiJ7fSJ9fSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eCJ9m63w/wAAALcAAABWRc3/rAs6ZXZlbnQtdHlwZQcAEGNvbnRlbnRCbG9ja1N0b3ANOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWSJ9TLHUkQAAAJ8AAABRKhgOygs6ZXZlbnQtdHlwZQcAC21lc3NhZ2VTdG9wDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDRCIsInN0b3BSZWFzb24iOiJ0b29sX3VzZSJ9aUHiZgAAAPYAAABOMzIWAws6ZXZlbnQtdHlwZQcACG1ldGFkYXRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsibWV0cmljcyI6eyJsYXRlbmN5TXMiOjc4NX0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFIiwidXNhZ2UiOnsiaW5wdXRUb2tlbnMiOjkzOSwib3V0cHV0VG9rZW5zIjoxOCwic2VydmVyVG9vbFVzYWdlIjp7fSwidG90YWxUb2tlbnMiOjk1N319nLsEQA==
-  recorded_at: Sun, 11 Oct 2026 21:07:48 GMT
+        AAAAswAAAFK3IJ11CzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVowMSIsInJvbGUiOiJhc3Npc3RhbnQifRl7p7oAAAEiAAAAV+BwtP8LOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tTdGFydA06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMjM0NSIsInN0YXJ0Ijp7InRvb2xVc2UiOnsibmFtZSI6ImJlc3RfbGFuZ3VhZ2VfdG9fbGVhcm4iLCJ0b29sVXNlSWQiOiJ0b29sdXNlX09XejJIRjM0R3hDMHZYYndCcGl5a0cifX19q+zU4AAAALIAAABX+ipASgs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRvb2xVc2UiOnsiaW5wdXQiOiJ7fSJ9fSwicCI6ImFiY2RlZmdoaWoifbdkRGYAAAC5AAAAVvr9Qc0LOmV2ZW50LXR5cGUHABBjb250ZW50QmxvY2tTdG9wDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaMCJ9iABE1AAAALMAAABRLinMzws6ZXZlbnQtdHlwZQcAC21lc3NhZ2VTdG9wDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYIiwic3RvcFJlYXNvbiI6InRvb2xfdXNlIn3UI1MLAAABBQAAAE73+u8rCzpldmVudC10eXBlBwAIbWV0YWRhdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6NDc3fSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1QiLCJ1c2FnZSI6eyJpbnB1dFRva2VucyI6OTM5LCJvdXRwdXRUb2tlbnMiOjE4LCJzZXJ2ZXJUb29sVXNhZ2UiOnt9LCJ0b3RhbFRva2VucyI6OTU3fX1ypKUy
+  recorded_at: Tue, 10 Nov 2026 17:32:10 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse-stream
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Call best_language_to_learn
-        and repeat the programming language it returns."}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_RkjABrzAjcQ9nV4et57Lx8","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_RkjABrzAjcQ9nV4et57Lx8","content":[{"text":"Ruby"}]}}]}],"system":[{"text":"You
-        must use tools whenever possible."}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"best_language_to_learn","description":"Gets
+        and repeat the programming language it returns."}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_OWz2HF34GxC0vXbwBpiykG","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_OWz2HF34GxC0vXbwBpiykG","content":[{"text":"Ruby"}]}}]}],"system":[{"text":"You
+        must use tools whenever possible."}],"inferenceConfig":{"maxTokens":65535},"toolConfig":{"tools":[{"toolSpec":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","inputSchema":{"json":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}}]}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Accept:
       - application/vnd.amazon.eventstream
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261011T210748Z
+      - 20261110T173210Z
       X-Amz-Content-Sha256:
-      - f4596bb595c65d2d68f51ecbae7a91e5dd6b967f92407f11f7f79b4f520915f1
+      - b00f969e19eb91241ead4a2e2d1e77ec9a55eeefb4fc09b9ca5105128f9a2278
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -76,7 +76,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:07:49 GMT
+      - Tue, 10 Nov 2026 17:32:12 GMT
       Content-Type:
       - application/vnd.amazon.eventstream
       Transfer-Encoding:
@@ -84,34 +84,34 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 3c1542cc-0e98-4242-ad18-6e75d1e73b4f
+      - 44b8d185-62c1-4729-bc49-36b1bebb6073
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        AAAAoQAAAFKtAFmXCzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSiIsInJvbGUiOiJhc3Npc3RhbnQifUMJiXoAAADZAAAAVxTIBhYLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiVGhlIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaMDEyMzQ1Njc4In3OYOQFAAAA6wAAAFfPKe3wCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzIFJ1YnkifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWSJ9B5OVSwAAALsAAABX9zoiOws6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIuIFRoZSJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkMifYGHUOgAAACvAAAAV2JaE3kLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIGJlc3QifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxIn3kwB4uAAAAygAAAFcziOtECzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBsYW5ndWFnZSJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTiJ9uaZn6AAAAMwAAABXvMge5As6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgdG8gbGVhcm4gaXMgUnVieS4ifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGRyJ9k0mu6gAAAKUAAABXKOoL2As6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIifSwicCI6ImFiY2RlZmdoaWprbCJ9sFAC+AAAALMAAABWsE1ZbAs6ZXZlbnQtdHlwZQcAEGNvbnRlbnRCbG9ja1N0b3ANOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVIn2cUstDAAAAiQAAAFHFuGzoCzpldmVudC10eXBlBwALbWVzc2FnZVN0b3ANOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJwIjoiYWJjZGVmZ2giLCJzdG9wUmVhc29uIjoiZW5kX3R1cm4ifWM5ry0AAADqAAAATpYibIALOmV2ZW50LXR5cGUHAAhtZXRhZGF0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7Im1ldHJpY3MiOnsibGF0ZW5jeU1zIjo0Mjl9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyIiwidXNhZ2UiOnsiaW5wdXRUb2tlbnMiOjk4Nywib3V0cHV0VG9rZW5zIjoxOSwic2VydmVyVG9vbFVzYWdlIjp7fSwidG90YWxUb2tlbnMiOjEwMDZ9fZyMhe0=
-  recorded_at: Sun, 11 Oct 2026 21:07:49 GMT
+        AAAAhgAAAFLe4aqDCzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaSIsInJvbGUiOiJhc3Npc3RhbnQifTptJB8AAACzAAAAV8dKafoLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiVGhlIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2dyJ9Lzu2XgAAAK0AAABXGJpAGQs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgYmVzdCBsYW5ndWFnZSJ9LCJwIjoiYWJjZGVmIn3TMyU2AAAAyAAAAFdJSLgkCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiB0byBsZWFybiBpcyBSdWJ5LiBUaGUifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHkifZ5HBwoAAADDAAAAVz6YiTULOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIGJlc3QifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSksifQuYhEAAAACkAAAAVxWKImgLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIGxhbmd1YWdlIn0sInAiOiJhYiJ9C2aDJgAAAN4AAABXpujaBgs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgdG8gbGVhcm4gaXMgUnVieS4ifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWSJ9drDTCAAAAMsAAABXDujC9As6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYIn3BwnKHAAAAvQAAAFYPfecNCzpldmVudC10eXBlBwAQY29udGVudEJsb2NrU3RvcA06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMjM0In1eBfhuAAAAtwAAAFHbqWoPCzpldmVudC10eXBlBwALbWVzc2FnZVN0b3ANOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxIiwic3RvcFJlYXNvbiI6ImVuZF90dXJuIn3gYYGdAAABBAAAAE7KmsabCzpldmVudC10eXBlBwAIbWV0YWRhdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6Mzc4fSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSIiwidXNhZ2UiOnsiaW5wdXRUb2tlbnMiOjk4Nywib3V0cHV0VG9rZW5zIjoxOSwic2VydmVyVG9vbFVzYWdlIjp7fSwidG90YWxUb2tlbnMiOjEwMDZ9fXZ6CCM=
+  recorded_at: Tue, 10 Nov 2026 17:32:12 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse-stream
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Call best_language_to_learn
-        and repeat the programming language it returns."}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_RkjABrzAjcQ9nV4et57Lx8","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_RkjABrzAjcQ9nV4et57Lx8","content":[{"text":"Ruby"}]}}]},{"role":"assistant","content":[{"text":"The
+        and repeat the programming language it returns."}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_OWz2HF34GxC0vXbwBpiykG","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_OWz2HF34GxC0vXbwBpiykG","content":[{"text":"Ruby"}]}}]},{"role":"assistant","content":[{"text":"The
         best language to learn is Ruby. The best language to learn is Ruby."}]},{"role":"user","content":[{"text":"Call
         best_language_to_learn again and repeat the programming language it returns."}]}],"system":[{"text":"You
-        must use tools whenever possible."}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"best_language_to_learn","description":"Gets
+        must use tools whenever possible."}],"inferenceConfig":{"maxTokens":65535},"toolConfig":{"tools":[{"toolSpec":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","inputSchema":{"json":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}}]}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Accept:
       - application/vnd.amazon.eventstream
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261011T210749Z
+      - 20261110T173212Z
       X-Amz-Content-Sha256:
-      - 409dbaa9337353d71172cf4609cf0c06597b974004aa4ac3657b0f2bb8ed651a
+      - f47895905ebf0059f1d0fcb30d1e6f3a1d4551a8c1a44019174e37dff45b3d8b
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -123,7 +123,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:07:50 GMT
+      - Tue, 10 Nov 2026 17:32:13 GMT
       Content-Type:
       - application/vnd.amazon.eventstream
       Transfer-Encoding:
@@ -131,34 +131,34 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 8b7ba0f7-7e4d-4436-931d-2c9878655ffc
+      - 52a748a8-d5d4-4de1-b8a4-78506f0e48fe
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        AAAArQAAAFJo8LSWCzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVViIsInJvbGUiOiJhc3Npc3RhbnQiff/V9LIAAAELAAAAVyyh+YoLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tTdGFydA06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSEkiLCJzdGFydCI6eyJ0b29sVXNlIjp7Im5hbWUiOiJiZXN0X2xhbmd1YWdlX3RvX2xlYXJuIiwidG9vbFVzZUlkIjoidG9vbHVzZV9ka1ZkdzFnbTkwTjFoNnNqYVVOc1gwIn19fVAlng4AAADcAAAAV9woiWYLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0b29sVXNlIjp7ImlucHV0Ijoie30ifX0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaIn2JkVZxAAAAiQAAAFZb3PlLCzpldmVudC10eXBlBwAQY29udGVudEJsb2NrU3RvcA06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJwIjoiYWJjZGUifecc8K8AAAC3AAAAUdupag8LOmV2ZW50LXR5cGUHAAttZXNzYWdlU3RvcA06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7InAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaMDEiLCJzdG9wUmVhc29uIjoidG9vbF91c2UifSIVoeAAAAD0AAAATknyRWMLOmV2ZW50LXR5cGUHAAhtZXRhZGF0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7Im1ldHJpY3MiOnsibGF0ZW5jeU1zIjo1MDZ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBIiwidXNhZ2UiOnsiaW5wdXRUb2tlbnMiOjEwMjMsIm91dHB1dFRva2VucyI6MTgsInNlcnZlclRvb2xVc2FnZSI6e30sInRvdGFsVG9rZW5zIjoxMDQxfX1p6KhG
-  recorded_at: Sun, 11 Oct 2026 21:07:50 GMT
+        AAAApAAAAFJl4NbnCzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTSIsInJvbGUiOiJhc3Npc3RhbnQifSKBqDQAAAEFAAAAV5ORR+sLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tTdGFydA06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkMiLCJzdGFydCI6eyJ0b29sVXNlIjp7Im5hbWUiOiJiZXN0X2xhbmd1YWdlX3RvX2xlYXJuIiwidG9vbFVzZUlkIjoidG9vbHVzZV9MOHExVjBoNWJ1SXVUc3l4bGViODFOIn19fcgIIncAAAC0AAAAV3VqteoLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0b29sVXNlIjp7ImlucHV0Ijoie30ifX0sInAiOiJhYmNkZWZnaGlqa2wifbZxoQoAAACkAAAAVmKNEv4LOmV2ZW50LXR5cGUHABBjb250ZW50QmxvY2tTdG9wDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRiJ9O5clOQAAAJYAAABRJwhsuws6ZXZlbnQtdHlwZQcAC21lc3NhZ2VTdG9wDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dSIsInN0b3BSZWFzb24iOiJ0b29sX3VzZSJ9wj8YxwAAAP4AAABOA0Jdwgs6ZXZlbnQtdHlwZQcACG1ldGFkYXRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsibWV0cmljcyI6eyJsYXRlbmN5TXMiOjY1NX0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLIiwidXNhZ2UiOnsiaW5wdXRUb2tlbnMiOjEwMjMsIm91dHB1dFRva2VucyI6MTgsInNlcnZlclRvb2xVc2FnZSI6e30sInRvdGFsVG9rZW5zIjoxMDQxfX2WinGI
+  recorded_at: Tue, 10 Nov 2026 17:32:13 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse-stream
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Call best_language_to_learn
-        and repeat the programming language it returns."}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_RkjABrzAjcQ9nV4et57Lx8","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_RkjABrzAjcQ9nV4et57Lx8","content":[{"text":"Ruby"}]}}]},{"role":"assistant","content":[{"text":"The
+        and repeat the programming language it returns."}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_OWz2HF34GxC0vXbwBpiykG","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_OWz2HF34GxC0vXbwBpiykG","content":[{"text":"Ruby"}]}}]},{"role":"assistant","content":[{"text":"The
         best language to learn is Ruby. The best language to learn is Ruby."}]},{"role":"user","content":[{"text":"Call
-        best_language_to_learn again and repeat the programming language it returns."}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_dkVdw1gm90N1h6sjaUNsX0","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_dkVdw1gm90N1h6sjaUNsX0","content":[{"text":"Ruby"}]}}]}],"system":[{"text":"You
-        must use tools whenever possible."}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"best_language_to_learn","description":"Gets
+        best_language_to_learn again and repeat the programming language it returns."}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_L8q1V0h5buIuTsyxleb81N","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_L8q1V0h5buIuTsyxleb81N","content":[{"text":"Ruby"}]}}]}],"system":[{"text":"You
+        must use tools whenever possible."}],"inferenceConfig":{"maxTokens":65535},"toolConfig":{"tools":[{"toolSpec":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","inputSchema":{"json":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}}]}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Accept:
       - application/vnd.amazon.eventstream
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261011T210750Z
+      - 20261110T173213Z
       X-Amz-Content-Sha256:
-      - b62f49c39f85bfcdef680361a5e70cd32c534067a87873aed72cdfd19df2a82f
+      - ea76bde462eae08266e7b2a743930ef17a10fa5112d94e7d295a1388cb4a299b
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -170,7 +170,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:07:51 GMT
+      - Tue, 10 Nov 2026 17:32:14 GMT
       Content-Type:
       - application/vnd.amazon.eventstream
       Transfer-Encoding:
@@ -178,10 +178,10 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 80355115-c5a7-404f-8456-c14e526dbf8f
+      - aba09a87-cd5d-49b1-bfc1-831fed36e2b2
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        AAAAmAAAAFIBMYNgCzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QSIsInJvbGUiOiJhc3Npc3RhbnQifRK9PwwAAADJAAAAV3QokZQLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiVGhlIGJlc3QgbGFuZ3VhZ2UifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREUifTckvBEAAADFAAAAV7HYfJULOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIHRvIGxlYXJuIGlzIFJ1YnkuIFRoZSJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1diJ97G0fqAAAAOEAAABXhZn1UQs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgYmVzdCBsYW5ndWFnZSB0byBsZWFybiBpcyBSdWJ5In0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OTyJ9RPKirAAAAKgAAABX0HrPaQs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIuIn0sInAiOiJhYmNkZWZnaGlqa2xtbiJ9/mFZCwAAAJ4AAABWiRyy2Qs6ZXZlbnQtdHlwZQcAEGNvbnRlbnRCbG9ja1N0b3ANOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6In3WEFHyAAAAtQAAAFGhaTlvCzpldmVudC10eXBlBwALbWVzc2FnZVN0b3ANOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWiIsInN0b3BSZWFzb24iOiJlbmRfdHVybiJ91e7r4QAAAPgAAABOjAKoYgs6ZXZlbnQtdHlwZQcACG1ldGFkYXRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsibWV0cmljcyI6eyJsYXRlbmN5TXMiOjUxNX0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFIiwidXNhZ2UiOnsiaW5wdXRUb2tlbnMiOjEwNzEsIm91dHB1dFRva2VucyI6MTksInNlcnZlclRvb2xVc2FnZSI6e30sInRvdGFsVG9rZW5zIjoxMDkwfX1T8H6d
-  recorded_at: Sun, 11 Oct 2026 21:07:52 GMT
-recorded_with: VCR 6.4.0
+        AAAAfwAAAFKbxZivCzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiIiwicm9sZSI6ImFzc2lzdGFudCJ9NixsGAAAALUAAABXSAqcWgs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiJUaGUgYmVzdCBsYW5ndWFnZSJ9LCJwIjoiYWJjZGVmZ2hpamsifaiVwuAAAADsAAAAV30JMeALOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIHRvIGxlYXJuIGlzIFJ1YnkuIFRoZSJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMjM0NTY3OCJ987BocQAAAOkAAABXtem+kAs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgYmVzdCBsYW5ndWFnZSB0byBsZWFybiBpcyBSdWJ5In0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXIn3XluvsAAAAnQAAAFe5u/ifCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6Ii4ifSwicCI6ImFiYyJ9sEKHgQAAAIkAAABWW9z5Sws6ZXZlbnQtdHlwZQcAEGNvbnRlbnRCbG9ja1N0b3ANOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwicCI6ImFiY2RlIn3nHPCvAAAAugAAAFEjOa6+CzpldmVudC10eXBlBwALbWVzc2FnZVN0b3ANOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMjM0Iiwic3RvcFJlYXNvbiI6ImVuZF90dXJuIn2GURinAAAA4QAAAE7h8l2RCzpldmVudC10eXBlBwAIbWV0YWRhdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MzUzfSwicCI6ImFiY2RlZmdoIiwidXNhZ2UiOnsiaW5wdXRUb2tlbnMiOjEwNzEsIm91dHB1dFRva2VucyI6MTksInNlcnZlclRvb2xVc2FnZSI6e30sInRvdGFsVG9rZW5zIjoxMDkwfX0B4zLL
+  recorded_at: Tue, 10 Nov 2026 17:32:14 GMT
+recorded_with: VCR 6.4.1

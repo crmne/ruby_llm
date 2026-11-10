@@ -3,7 +3,7 @@ name: rubyllm
 description: Build and maintain Ruby or Rails applications with the RubyLLM AI framework. Use for chats, agents, tools, MCP servers, code execution, file stores, costs, structured output, judgments, evaluations, media generation, transcription, OCR, moderation, embeddings, reranking, tracing, Rails integration, and RubyLLM upgrades; not for contributing to the framework itself.
 license: MIT
 metadata:
-  api_version: "2.1"
+  api_version: "2.2"
 ---
 
 # Build with RubyLLM

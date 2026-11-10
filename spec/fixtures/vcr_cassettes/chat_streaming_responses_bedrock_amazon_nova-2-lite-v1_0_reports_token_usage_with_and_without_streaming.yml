@@ -6,18 +6,18 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Reply with exactly:
-        1, 2, 3"}]}],"inferenceConfig":{"temperature":0.0}}'
+        1, 2, 3"}]}],"inferenceConfig":{"temperature":0.0,"maxTokens":65535}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Accept:
       - application/vnd.amazon.eventstream
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261011T210613Z
+      - 20261110T173002Z
       X-Amz-Content-Sha256:
-      - a210bad4f1be23caac7cde3599d1be9cf8b32efe76950291d789d54da33dbdd2
+      - ae7f189d542a18fcbbaf39e239c3330856d2b2bd3ce1b8764ecfd5bc5739adba
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:13 GMT
+      - Tue, 10 Nov 2026 17:30:03 GMT
       Content-Type:
       - application/vnd.amazon.eventstream
       Transfer-Encoding:
@@ -37,28 +37,28 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 88c84f76-b7b6-4e23-95bf-5c293059ac1a
+      - 70a37712-7806-4d29-bff8-8f13a3ef9109
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        AAAArAAAAFJVkJ0mCzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVIiwicm9sZSI6ImFzc2lzdGFudCJ9mBqgYwAAANkAAABXFMgGFgs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIxLCAyLCAifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVowMTIzNDUifTt3sDUAAADXAAAAV6v4uHcLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiMyJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMjM0NTY3OCJ9qmeaMAAAAKUAAABWX+07Tgs6ZXZlbnQtdHlwZQcAEGNvbnRlbnRCbG9ja1N0b3ANOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGRyJ9J8/qxAAAAKgAAABRORlqXAs6ZXZlbnQtdHlwZQcAC21lc3NhZ2VTdG9wDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTSIsInN0b3BSZWFzb24iOiJlbmRfdHVybiJ9YOx9TQAAAN4AAABOwoNyxgs6ZXZlbnQtdHlwZQcACG1ldGFkYXRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsibWV0cmljcyI6eyJsYXRlbmN5TXMiOjUwN30sInAiOiJhYmNkZWZnaGkiLCJ1c2FnZSI6eyJpbnB1dFRva2VucyI6NTgsIm91dHB1dFRva2VucyI6MTAsInNlcnZlclRvb2xVc2FnZSI6e30sInRvdGFsVG9rZW5zIjo2OH190XIFcA==
-  recorded_at: Sun, 11 Oct 2026 21:06:14 GMT
+        AAAAtQAAAFI4YGjVCzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVowMTIzIiwicm9sZSI6ImFzc2lzdGFudCJ9gnZ5VAAAALEAAABXvYo6mgs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIxIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2dyJ9m7h3RgAAAMwAAABXvMge5As6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIsIDIsIDMifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSUyJ99fRl2QAAAKcAAABWJS1oLgs6ZXZlbnQtdHlwZQcAEGNvbnRlbnRCbG9ja1N0b3ANOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJIn2xnHuWAAAAmwAAAFHfmKgKCzpldmVudC10eXBlBwALbWVzc2FnZVN0b3ANOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoiLCJzdG9wUmVhc29uIjoiZW5kX3R1cm4ifQSBgaMAAAEPAAAATr1K94oLOmV2ZW50LXR5cGUHAAhtZXRhZGF0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7Im1ldHJpY3MiOnsibGF0ZW5jeU1zIjoyOTh9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMjM0NTYiLCJ1c2FnZSI6eyJpbnB1dFRva2VucyI6NTgsIm91dHB1dFRva2VucyI6OCwic2VydmVyVG9vbFVzYWdlIjp7fSwidG90YWxUb2tlbnMiOjY2fX1D/XA2
+  recorded_at: Tue, 10 Nov 2026 17:30:03 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Reply with exactly:
-        1, 2, 3"}]}],"inferenceConfig":{"temperature":0.0}}'
+        1, 2, 3"}]}],"inferenceConfig":{"temperature":0.0,"maxTokens":65535}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261011T210614Z
+      - 20261110T173003Z
       X-Amz-Content-Sha256:
-      - a210bad4f1be23caac7cde3599d1be9cf8b32efe76950291d789d54da33dbdd2
+      - ae7f189d542a18fcbbaf39e239c3330856d2b2bd3ce1b8764ecfd5bc5739adba
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -72,18 +72,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:14 GMT
+      - Tue, 10 Nov 2026 17:30:04 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '209'
+      - '208'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 62884b1a-c71d-4f4c-8ae4-e84f00874e73
+      - c7026dbb-93ba-4295-b3bf-9dba209d318d
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":300},"output":{"message":{"content":[{"text":"1,
-        2, 3"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":58,"outputTokens":10,"serverToolUsage":{},"totalTokens":68}}'
-  recorded_at: Sun, 11 Oct 2026 21:06:15 GMT
-recorded_with: VCR 6.4.0
+      string: '{"metrics":{"latencyMs":435},"output":{"message":{"content":[{"text":"1,
+        2, 3"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":58,"outputTokens":8,"serverToolUsage":{},"totalTokens":66}}'
+  recorded_at: Tue, 10 Nov 2026 17:30:04 GMT
+recorded_with: VCR 6.4.1

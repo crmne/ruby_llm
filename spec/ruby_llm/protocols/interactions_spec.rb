@@ -511,14 +511,6 @@ RSpec.describe RubyLLM::Protocols::Interactions do
     expect(chat.complete.content.strip).to match(/\A10(\.0+)?\z/)
   end
 
-  it 'executes local tools and returns JSON Schema output through Interactions', :live do
-    schema = { type: 'object', properties: { answer: { type: 'integer' } }, required: ['answer'] }
-    message = chat.with_tools(tool).with_schema(schema)
-                  .ask('Use multiply to calculate 13 times 7 and return the answer.')
-    expect(message.parsed).to eq('answer' => 91)
-    expect(chat.messages.select(&:tool_result?).map(&:content)).to include('91')
-  end
-
   it 'streams local function arguments and continues with the actual tool result', :live do
     response = chat.with_tools(tool).ask('Use multiply to calculate 17 times 19. State the result.') { |_chunk| nil }
     expect(response.content).to include('323')

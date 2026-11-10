@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,42 +26,44 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
-      - Fri, 02 Oct 2026 22:02:41 GMT
+      - Tue, 03 Nov 2026 01:08:56 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"6ac02a01-9c6"
+      - W/"6ae93428-9c6"
       Expires:
-      - Sun, 11 Oct 2026 21:16:10 GMT
+      - Tue, 10 Nov 2026 17:41:37 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 9D9C:2F48DF:4FCDA41:508CDB6:6ACBFA41
+      - EABE:9FB17:208869:20DA2B:6AF354F8
       X-Github-Edge-Region:
       - fra
       Accept-Ranges:
       - bytes
       Date:
-      - Sun, 11 Oct 2026 21:08:26 GMT
+      - Tue, 10 Nov 2026 17:35:25 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '103'
+      - '178'
       X-Served-By:
-      - cache-ber1080038-BER
+      - cache-ber1080033-BER
       X-Cache:
       - HIT
       X-Cache-Hits:
-      - '2'
+      - '3'
       X-Timer:
-      - S1791752906.176941,VS0,VE0
+      - S1794332125.084725,VS0,VE2
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 867d7233146ef91f5f99178c2151ac2b0465303b
+      - 1edf24c14b88de2786f733f6097f643983c895fc
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +99,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Sun, 11 Oct 2026 21:08:26 GMT
+  recorded_at: Tue, 10 Nov 2026 17:35:25 GMT
 - request:
     method: post
     uri: https://oauth2.googleapis.com/token
@@ -106,7 +108,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -120,12 +122,12 @@ http_interactions:
     headers:
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
       Date:
-      - Sun, 11 Oct 2026 21:08:27 GMT
+      - Tue, 10 Nov 2026 17:35:26 GMT
       Pragma:
       - no-cache
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -150,11 +152,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 11 Oct 2026 21:08:27 GMT
+  recorded_at: Tue, 10 Nov 2026 17:35:26 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -196,7 +198,7 @@ http_interactions:
         MERCHANTABILITY AND FITNESS FOR A PARTICULAR\n     PURPOSE.\n</file>"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -210,6 +212,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Goog-Request-Id:
+      - 3lXzaqfHHcSRu_EPhLmk6AQ
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -217,7 +221,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 11 Oct 2026 21:08:30 GMT
+      - Tue, 10 Nov 2026 17:35:34 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -240,7 +244,7 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "This file (`license.txt`) contains the **license agreement for the Ruby programming language**.\n\nHere's a summary of its content:\n\n*   **Copyright Holder:** Ruby is copyrighted by Yukihiro Matsumoto (matz@netlab.jp).\n*   **Licensing Options:** You can redistribute and modify Ruby under either the terms of the 2-clause BSDL (BSD License) or the specific conditions detailed within this file.\n*   **Conditions for Use and Distribution:**\n    *   **Verbatim Copies:** Can be made and given away without restriction, provided original copyright notices and disclaimers are included.\n    *   **Modifications:** Allowed if you either place them in the Public Domain, use them only internally, give non-standard binaries non-standard names, or make other arrangements with the author.\n    *   **Binary Distribution:** Allowed if you provide instructions on where to get the original source, accompany it with the source, give non-standard binaries non-standard names, or make other arrangements with the author.\n    *   **Inclusion in Other Software:** Parts of Ruby can be modified and included in other software (even commercial), but some files in the distribution might have different copying conditions (refer to the `LEGAL` file for details).\n    *   **Generated Files:** Scripts and library files produced by the software do not automatically fall under this copyright and belong to their generator.\n*   **Disclaimer:** The software is provided \"AS IS\" without any express or implied warranties, including merchantability or fitness for a particular purpose."
+                    "text": "This file, `license.txt`, outlines the **license terms for the Ruby software**, copyrighted by Yukihiro Matsumoto (Matz).\n\nIt specifies that Ruby is **dual-licensed**: users can redistribute and/or modify it under either:\n1.  The terms of the **2-clause BSDL license**.\n2.  The **custom conditions** detailed within this document.\n\nThe custom conditions generally allow for:\n*   **Verbatim copying** with all original copyright notices.\n*   **Modifications**, provided one of several conditions is met (e.g., placing modifications in the public domain, using them internally, giving non-standard names to binaries, or making arrangements with the author).\n*   **Distribution of object code or binaries**, provided one of several conditions is met (e.g., providing instructions for obtaining the original source, accompanying it with machine-readable source, giving non-standard names, or making arrangements with the author).\n*   **Inclusion of parts of the software into other software**, including commercial applications.\n\n**Important caveats:**\n*   Some files within the Ruby distribution are *not* under these terms; users are directed to the `LEGAL` file for their specific copying conditions.\n*   Scripts and library files generated by or used with the software do not automatically fall under Ruby's copyright and belong to their creators.\n*   The software is provided **\"AS IS\" without any express or implied warranties**, including merchantability or fitness for a particular purpose."
                   }
                 ]
               },
@@ -249,8 +253,8 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 567,
-            "candidatesTokenCount": 325,
-            "totalTokenCount": 1074,
+            "candidatesTokenCount": 313,
+            "totalTokenCount": 1940,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -261,14 +265,14 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 325
+                "tokenCount": 313
               }
             ],
-            "thoughtsTokenCount": 182
+            "thoughtsTokenCount": 1060
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-10-11T21:08:27.141912Z",
-          "responseId": "y_rLatjUCIOWu_EPp579eA"
+          "createTime": "2026-11-10T17:35:26.484263Z",
+          "responseId": "3lXzaqfHHcSRu_EPhLmk6AQ"
         }
-  recorded_at: Sun, 11 Oct 2026 21:08:30 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:35:34 GMT
+recorded_with: VCR 6.4.1

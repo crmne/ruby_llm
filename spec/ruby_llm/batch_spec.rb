@@ -359,14 +359,15 @@ RSpec.describe RubyLLM::Batch, :live do
 
   # Not covered live: Azure batches need a Global-Batch deployment on the test
   # resource, and Bedrock/Vertex AI batches need real S3/GCS buckets and roles.
+  # xAI is out until its batches finish again: on November 10, 2026 they stayed
+  # pending for over 30 minutes without processing a request.
   [
     { provider: :gemini, model: model_for(:gemini) },
     { provider: :mistral, model: model_for(:mistral) },
     { provider: :openai, model: model_for(:openai) },
     { provider: :openrouter, model: model_for(:openrouter, :batch) },
     # Perplexity allows 1 request per second on its batch and file endpoints.
-    { provider: :perplexity, model: model_for(:perplexity), max_retries: 4 },
-    { provider: :xai, model: model_for(:xai) }
+    { provider: :perplexity, model: model_for(:perplexity), max_retries: 4 }
   ].each do |model_info|
     context "with #{model_info[:provider]}/#{model_info[:model]}" do
       before { RubyLLM.config.max_retries = model_info.fetch(:max_retries, 0) }

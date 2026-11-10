@@ -6,16 +6,16 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"What is 15 * 23? Answer
-        with just the number."}]}],"inferenceConfig":{},"additionalModelRequestFields":{"reasoningConfig":{"type":"enabled","maxReasoningEffort":"low"}}}'
+        with just the number."}]}],"inferenceConfig":{"maxTokens":65535},"additionalModelRequestFields":{"reasoningConfig":{"type":"enabled","maxReasoningEffort":"low"}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261011T211324Z
+      - 20261110T174259Z
       X-Amz-Content-Sha256:
-      - 8382a18201fd48d10b0414a47e3376d5e1b216f008c5ea7615c6b552b274f483
+      - 2ccd6f7b8d54edac7268e8c7270e0ee47cd29eec6fa03326175854c04fb4e20b
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:13:26 GMT
+      - Tue, 10 Nov 2026 17:43:00 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -37,9 +37,9 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 8e8a4053-d5cb-41cf-80da-c067067c4a53
+      - dcc158cb-bce6-4b2e-953b-09eee694c10a
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":1254},"output":{"message":{"content":[{"reasoningContent":{"reasoningText":{"text":"[REDACTED]."}}},{"text":"345"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":110,"outputTokens":229,"serverToolUsage":{},"totalTokens":339}}'
-  recorded_at: Sun, 11 Oct 2026 21:13:26 GMT
-recorded_with: VCR 6.4.0
+      string: '{"metrics":{"latencyMs":1242},"output":{"message":{"content":[{"reasoningContent":{"reasoningText":{"text":"[REDACTED]."}}},{"text":"345"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":110,"outputTokens":169,"serverToolUsage":{},"totalTokens":279}}'
+  recorded_at: Tue, 10 Nov 2026 17:43:00 GMT
+recorded_with: VCR 6.4.1

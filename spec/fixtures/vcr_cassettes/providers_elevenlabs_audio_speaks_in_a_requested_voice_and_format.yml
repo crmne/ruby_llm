@@ -8,7 +8,7 @@ http_interactions:
       string: '{"text":"Save this as a WAV file.","model_id":"eleven_flash_v2_5"}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Xi-Api-Key:
       - "<ELEVENLABS_API_KEY>"
       Content-Type:
@@ -23,13 +23,15 @@ http_interactions:
       message: Forbidden
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:43 GMT
+      - Tue, 10 Nov 2026 17:27:24 GMT
       Server:
       - uvicorn
+      Content-Length:
+      - '240'
       Content-Type:
       - application/json
       Vary:
-      - Accept-Language, Accept-Encoding
+      - Accept-Language
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Allow-Headers:
@@ -41,18 +43,16 @@ http_interactions:
       Strict-Transport-Security:
       - max-age=1800;
       X-Trace-Id:
-      - cc62bc6a1b24639edc06790af6478287
+      - 81f5bea5113f20ccede047d9d389bce1
       X-Region:
       - europe-west4
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
-      Transfer-Encoding:
-      - chunked
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"detail":{"type":"authorization_error","code":"subscription_required","message":"Output
-        format ''wav_44100'' is only available on the Pro tier and above.","status":"output_format_not_allowed","request_id":"cc62bc6a1b24639edc06790af6478287"}}'
-  recorded_at: Sun, 11 Oct 2026 21:06:44 GMT
-recorded_with: VCR 6.4.0
+        format ''wav_44100'' is only available on the Pro tier and above.","status":"output_format_not_allowed","request_id":"81f5bea5113f20ccede047d9d389bce1"}}'
+  recorded_at: Tue, 10 Nov 2026 17:27:25 GMT
+recorded_with: VCR 6.4.1

@@ -14,7 +14,7 @@ http_interactions:
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261105T194815Z
+      - 20261110T173245Z
       X-Amz-Content-Sha256:
       - ce787cb61331a4451aea40eb1a96feeeed8849c10ea3f502fef728798c48ac55
       Authorization:
@@ -30,38 +30,36 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 05 Nov 2026 19:48:16 GMT
+      - Tue, 10 Nov 2026 17:32:46 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '634'
+      - '564'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 24ee8bd8-5b1e-4487-bfff-c5ab64c7f925
+      - 6a643d4e-b3e3-48a3-abe4-d17cb4a601ac
       X-Amzn-Bedrock-Invocation-Latency:
-      - '556'
+      - '515'
       X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
       - '0'
       X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
       - '0'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '50'
+      - '39'
       X-Amzn-Bedrock-Input-Token-Count:
       - '577'
     body:
       encoding: UTF-8
-      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_xlmhnppm5gx4opvtdherediyb5qpbmj63ocpvoyvk4fs63nfnm7q","type":"message","role":"assistant","content":[{"type":"text","text":"I''ll
-        load the Ruby fact sheet for you first."},{"type":"tool_use","id":"toolu_bdrk_01TcS33JXzmzntFmQU7njGRc","name":"ruby_fact_sheet","input":{}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":577,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":50,"service_tier":"standard"}}'
-  recorded_at: Thu, 05 Nov 2026 19:48:16 GMT
+      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_upn4ec53cxcn7if7vkvvhivksxtzapvfljpwylrcq3yvmihdlxja","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_bdrk_011ghdLrBxf9Ungj5RSeG7RQ","name":"ruby_fact_sheet","input":{}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":577,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":39,"service_tier":"standard"}}'
+  recorded_at: Tue, 10 Nov 2026 17:32:46 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/invoke
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"type":"text","text":"Who created
-        Ruby and when? Load the fact sheet first."}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        load the Ruby fact sheet for you first."},{"type":"tool_use","id":"toolu_bdrk_01TcS33JXzmzntFmQU7njGRc","name":"ruby_fact_sheet","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_01TcS33JXzmzntFmQU7njGRc","content":[{"type":"text","text":"Loaded
+        Ruby and when? Load the fact sheet first."}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_bdrk_011ghdLrBxf9Ungj5RSeG7RQ","name":"ruby_fact_sheet","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_011ghdLrBxf9Ungj5RSeG7RQ","content":[{"type":"text","text":"Loaded
         the fact sheet"},{"type":"document","source":{"type":"text","media_type":"text/plain","data":"The
         Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby
         was designed to make programmers happy and productive. Ruby on Rails is a
@@ -74,9 +72,9 @@ http_interactions:
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261105T194816Z
+      - 20261110T173246Z
       X-Amz-Content-Sha256:
-      - 81f6b7d8640ba878a382ee5783b06ce20b835df03e6cc8a58211155ed3cbe7d3
+      - 9ef2000c8128c0bd98f8147f34e9f07cd88e2af45c174eb486f5df5315b3cd18
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -90,7 +88,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 05 Nov 2026 19:48:17 GMT
+      - Tue, 10 Nov 2026 17:32:47 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -98,9 +96,9 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 97f562f5-674c-4006-92df-670d7d9a4c41
+      - '079be105-fd20-4ba7-b05f-748b8b7bad5b'
       X-Amzn-Bedrock-Invocation-Latency:
-      - '583'
+      - '553'
       X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
       - '0'
       X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
@@ -108,11 +106,11 @@ http_interactions:
       X-Amzn-Bedrock-Output-Token-Count:
       - '36'
       X-Amzn-Bedrock-Input-Token-Count:
-      - '1320'
+      - '1309'
     body:
       encoding: UTF-8
-      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_ropxhwmbvaoiv7uwtsqfib5iwldem33qex4bqe7rhtfg2hxvybrq","type":"message","role":"assistant","content":[{"citations":[{"type":"char_location","cited_text":"The
+      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_mclfhorsbafp7j7vm2j26vyl44rhywluwuq5sss5pctd6tbswgpq","type":"message","role":"assistant","content":[{"citations":[{"type":"char_location","cited_text":"The
         Ruby programming language was created by Yukihiro Matsumoto in 1993. ","document_index":0,"document_title":"facts.txt","start_char_index":0,"end_char_index":73}],"type":"text","text":"Ruby
-        was created by Yukihiro Matsumoto in 1993."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":1320,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":36,"service_tier":"standard"}}'
-  recorded_at: Thu, 05 Nov 2026 19:48:17 GMT
+        was created by Yukihiro Matsumoto in 1993."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":1309,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":36,"service_tier":"standard"}}'
+  recorded_at: Tue, 10 Nov 2026 17:32:47 GMT
 recorded_with: VCR 6.4.1

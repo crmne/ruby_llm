@@ -145,7 +145,7 @@ chat.ask "Bill order 1042 to ACME", with: "order-1042.json"
 
 Every request lists each skill's name and description. The model loads a skill's instructions with its `load_skill` tool, and the files they mention with the same tool, one at a time. With code execution, each skill folder is mounted read-only in every run at `skills/<name>/`, so the skill's scripts run in the sandbox and the files they write come back as attachments.
 
-`with_skills` with no arguments gives every skill in `app/skills`, engines add their own folders, and agents name theirs with `skills :invoices, :refunds`. A `SKILL.md` that breaks the specification raises when you configure the chat, not in the middle of a conversation. RubyLLM ships no skills and never downloads them.
+`with_skills` with no arguments gives every skill in `app/skills`, engines add their own folders, and agents name theirs with `skills :invoices, :refunds`. A `SKILL.md` that breaks the specification raises when you configure the chat, not in the middle of a conversation. RubyLLM ships no skills and never downloads them. The [`skill` gem]({% link _tools/skills.md %}) finds and installs them, with `gem exec skill add`, and installs RubyLLM's own skill for your coding assistant.
 
 See [Skills]({% link _tools/skills.md %}).
 
@@ -374,6 +374,8 @@ A chat bills its owner, set with `chat.with_owner(current_user)`, or in Rails na
 `with_tool_options(rounds: 25)` stops a model that loops on its tools: `complete` raises `RubyLLM::ToolRoundLimitError` once that many responses asking for tools have run, with every call answered, and another `complete` continues with a fresh count. It is off by default. See [Limiting Tool Calls]({% link _tools/tool-execution.md %}#limiting-tool-calls).
 
 Vertex AI takes the `eu` and `us` multi-region locations.
+
+Three timeouts bound the waits a request can get stuck in. `config.stream_idle_timeout` ends a stream that goes that many seconds without a byte, `config.connect_timeout` limits opening a connection, and `config.vertexai_token_timeout` limits waiting for a Vertex AI access token. See [Connection Settings]({% link _reference/configuration-connection.md %}#connection-settings).
 
 The generated chat UI switches a chat's model mid-conversation. The message form has the same model picker as the new-chat form, and a message sent with another model moves the chat to it with `with_model`, so that reply and every later one use it. See [Adding a Chat UI]({% link _advanced/rails-generators.md %}#adding-a-chat-ui).
 

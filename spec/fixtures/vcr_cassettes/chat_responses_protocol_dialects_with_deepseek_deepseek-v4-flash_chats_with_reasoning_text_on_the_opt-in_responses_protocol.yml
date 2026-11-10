@@ -9,7 +9,7 @@ http_interactions:
         is 2 + 2? Just the number."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -30,32 +30,32 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Sun, 11 Oct 2026 21:07:53 GMT
+      - Tue, 10 Nov 2026 17:34:02 GMT
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - elb
       Vary:
-      - origin, access-control-request-method, access-control-request-headers
+      - accept-encoding,origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - e7abf98ba3e10c5ecca214df6a251e2d
+      - b6d1f3fe6b11e269d369776babc853a5
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 b3f288e164adbaabe632e02a62ed3088.cloudfront.net (CloudFront)
+      - 1.1 e81f744446bd52808cedb13043e0caf6.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P3
+      - TXL52-P4
       X-Amz-Cf-Id:
-      - 4T7i_DqlXh-VfBXBUT_WcpMVmVS4HDa9sgNzqteAhzq_Z3n6fWaVrw==
+      - LS5cemeX1IrFyHFoBjl46Y3uCW7xzVxuJBLZcbHL9DXmYyyGn6wvaA==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"12d05462-75c5-4a41-94dd-cea078ad49d4","object":"response","created_at":1791752873,"status":"completed","background":false,"completed_at":1791752873,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[{"type":"reasoning","id":"f0e70b33-81b3-4043-ae93-4b4d96ade5a9","status":"completed","content":[{"type":"reasoning_text","text":"We
-        need answer just number. 2+2=4. Must obey \"Just the number.\" Final 4."}],"summary":[],"encrypted_content":"12d05462-75c5-4a41-94dd-cea078ad49d4-0"},{"type":"message","id":"693b5c61-69b0-43bf-bab3-e6b309d3bc23","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"4"}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":42,"input_tokens_details":{"cached_tokens":0},"output_tokens":26,"output_tokens_details":{"reasoning_tokens":24},"total_tokens":68},"user":null,"metadata":{}}'
-  recorded_at: Sun, 11 Oct 2026 21:07:54 GMT
+      string: '{"id":"53778fb4-ea40-4dd0-a486-a6ac11c5e6e2","object":"response","created_at":1794332042,"status":"completed","background":false,"completed_at":1794332043,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[{"type":"reasoning","id":"f18ab8ca-351b-481f-a2cf-e03b089d5022","status":"completed","content":[{"type":"reasoning_text","text":"We
+        need answer just number. 4. Need comply no extra."}],"summary":[],"encrypted_content":"53778fb4-ea40-4dd0-a486-a6ac11c5e6e2-0"},{"type":"message","id":"9d624118-b5b9-4285-b0b3-307bbe98819d","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"4"}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":42,"input_tokens_details":{"cached_tokens":0},"output_tokens":16,"output_tokens_details":{"reasoning_tokens":14},"total_tokens":58},"user":null,"metadata":{}}'
+  recorded_at: Tue, 10 Nov 2026 17:34:03 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/responses
@@ -63,11 +63,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-v4-flash","input":[{"role":"user","content":"What
         is 2 + 2? Just the number."},{"type":"reasoning","content":[{"type":"reasoning_text","text":"We
-        need answer just number. 2+2=4. Must obey \"Just the number.\" Final 4."}]},{"role":"assistant","content":[{"type":"output_text","text":"4"}]},{"role":"user","content":"Multiply
+        need answer just number. 4. Need comply no extra."}]},{"role":"assistant","content":[{"type":"output_text","text":"4"}],"phase":"final_answer"},{"role":"user","content":"Multiply
         that answer by 3. Just the number."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -88,32 +88,31 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Sun, 11 Oct 2026 21:07:54 GMT
+      - Tue, 10 Nov 2026 17:34:03 GMT
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - elb
       Vary:
-      - origin, access-control-request-method, access-control-request-headers
+      - accept-encoding,origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 9f3b92e83cc1cc23af8b7cf955464b02
+      - 51f16b62d3f3136b2061bdd0bc75edb5
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 3588568928e677ce9bb8aedfd6e0ea04.cloudfront.net (CloudFront)
+      - 1.1 97d0bbf6e879b5cbfab87acc7ccd4218.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - TXL50-P2
       X-Amz-Cf-Id:
-      - LzVDK8XfHjyBozMuw8epVFlsvmVYq0w6xC1qbDE3ZO0zkUvaCVDWCw==
+      - V2pu62hFieRKp__YnbHQjIs19kXVFVXEIZq2NnrVWvnjG7UI_lzJbQ==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"dbf575d8-850a-41a6-8695-5e1ccbaa547b","object":"response","created_at":1791752874,"status":"completed","background":false,"completed_at":1791752874,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[{"type":"reasoning","id":"1472c44d-d179-4222-9422-454743eeb55b","status":"completed","content":[{"type":"reasoning_text","text":"We
-        need answer user. Need follow context. User asks \"What is 2 + 2? Just the
-        number.\" Assistant answered 4. Then user: \"Multiply that answer by 3. Just
-        the number.\" Need just number. 4*3=12. Final only 12."}],"summary":[],"encrypted_content":"dbf575d8-850a-41a6-8695-5e1ccbaa547b-0"},{"type":"message","id":"180e928a-77c5-4484-90b4-b7342b812455","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"12"}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":58,"input_tokens_details":{"cached_tokens":0},"output_tokens":62,"output_tokens_details":{"reasoning_tokens":60},"total_tokens":120},"user":null,"metadata":{}}'
-  recorded_at: Sun, 11 Oct 2026 21:07:54 GMT
-recorded_with: VCR 6.4.0
+      string: '{"id":"7502b2ad-02b9-400d-86b4-f168c23c8026","object":"response","created_at":1794332043,"status":"completed","background":false,"completed_at":1794332044,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[{"type":"reasoning","id":"087a2b0c-6e09-4939-815f-c3e51bd6ab4f","status":"completed","content":[{"type":"reasoning_text","text":"We
+        need answer just number. Need interpret \"that answer\" previous 4 times 3
+        =12. Just number."}],"summary":[],"encrypted_content":"7502b2ad-02b9-400d-86b4-f168c23c8026-0"},{"type":"message","id":"973d512d-cfe5-49cb-af3d-a84a1d0ab83d","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"12"}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":58,"input_tokens_details":{"cached_tokens":0},"output_tokens":26,"output_tokens_details":{"reasoning_tokens":24},"total_tokens":84},"user":null,"metadata":{}}'
+  recorded_at: Tue, 10 Nov 2026 17:34:04 GMT
+recorded_with: VCR 6.4.1

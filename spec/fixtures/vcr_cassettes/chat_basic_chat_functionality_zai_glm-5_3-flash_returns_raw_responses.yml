@@ -9,7 +9,7 @@ http_interactions:
         is the capital of France?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.15.0
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,11 +24,11 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 20 Oct 2026 15:34:34 GMT
+      - Tue, 10 Nov 2026 17:38:18 GMT
       Content-Type:
       - application/json; charset=UTF-8
-      Content-Length:
-      - '1040'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
       Alt-Svc:
@@ -36,8 +36,9 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - efd1e78cb5dad927cb4addce39ff15c2
+      - b394b341892b3b0994e8e5165132e6dc
       Vary:
+      - Accept-Encoding
       - Access-Control-Request-Headers
       - Access-Control-Request-Headers
       - Access-Control-Request-Method
@@ -46,19 +47,21 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 20261020233430ced7a87dce634304
+      - 20261111013815b161b8fde5504c68
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
-      encoding: UTF-8
+      encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"The
-        capital of France is **Paris**.","reasoning_content":"The user is asking a
-        simple factual question: \"What is the capital of France?\"\n\nThis is one
-        of the most basic factual questions. The answer is Paris.\n\nThe format guidance
-        says to keep responses appropriate to the question. A simple factual question
-        like this deserves a concise, direct answer. No need for headers, bullet points,
-        or lengthy explanation.\n\nThe answer is simply: Paris.\n\nI should just answer
-        directly and concisely. Maybe one sentence, or even just \"Paris.\" A very
-        brief answer is appropriate here since there''s nothing complex to explain.","role":"assistant"}}],"created":1792510474,"id":"20261020233430ced7a87dce634304","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261020233430ced7a87dce634304","usage":{"completion_tokens":122,"completion_tokens_details":{"reasoning_tokens":111},"prompt_tokens":19,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":141}}'
-  recorded_at: Tue, 20 Oct 2026 15:34:34 GMT
-recorded_with: VCR 6.4.0
+        capital of France is Paris.","reasoning_content":"The user is asking a simple
+        factual question: \"What is the capital of France?\"\n\nThis is a very basic
+        geography question. The answer is Paris.\n\nThe question is straightforward,
+        so my answer should be concise and direct. No need for headers, bullet points,
+        or lengthy explanations. A simple, direct answer is appropriate here.\n\nThe
+        format should be:\n- Very short\n- Direct\n- No unnecessary elaboration unless
+        it adds value\n\nFor a simple factual question like this, one or two sentences
+        is ideal. I could optionally add a tiny bit of context, but honestly, just
+        answering \"Paris\" with perhaps a brief sentence is the best approach. Adding
+        too much would be over-formatting for such a simple query.","role":"assistant"}}],"created":1794332298,"id":"20261111013815b161b8fde5504c68","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261111013815b161b8fde5504c68","usage":{"completion_tokens":153,"completion_tokens_details":{"reasoning_tokens":144},"prompt_tokens":19,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":172}}'
+  recorded_at: Tue, 10 Nov 2026 17:38:18 GMT
+recorded_with: VCR 6.4.1

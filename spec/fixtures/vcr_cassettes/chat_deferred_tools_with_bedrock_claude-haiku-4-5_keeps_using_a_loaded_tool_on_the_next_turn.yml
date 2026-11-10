@@ -17,7 +17,7 @@ http_interactions:
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261105T194726Z
+      - 20261110T172931Z
       X-Amz-Content-Sha256:
       - 3856be3cdcfe6f32ad72304087cdbfac047b8aa6d284298ec2c77186884ee553
       Authorization:
@@ -33,33 +33,33 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 05 Nov 2026 19:47:28 GMT
+      - Tue, 10 Nov 2026 17:29:32 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1264'
+      - '1248'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 8b16d4b7-5c4d-445d-b90c-14e185aa7593
+      - '01287bdb-72bb-40a8-a9be-68d14e1297bc'
       X-Amzn-Bedrock-Invocation-Latency:
-      - '1217'
+      - '1095'
       X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
       - '0'
       X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
       - '0'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '155'
+      - '150'
       X-Amzn-Bedrock-Input-Token-Count:
-      - '1663'
+      - '1658'
     body:
       encoding: UTF-8
-      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_mjxbvpuprv54qxfebwpok5gega2yc2bbqsf33boukuvyh7zw3ceq","type":"message","role":"assistant","content":[{"type":"text","text":"I''ll
-        search for a weather tool that can help you get the current weather in Berlin."},{"type":"server_tool_use","id":"srvtoolu_bdrk_012kV1BzWrwTuCy15b77Enpj","name":"tool_search_tool_bm25","input":{"query":"weather
-        Berlin current"}},{"type":"tool_search_tool_result","tool_use_id":"srvtoolu_bdrk_012kV1BzWrwTuCy15b77Enpj","content":{"type":"tool_search_tool_search_result","tool_references":[{"type":"tool_reference","tool_name":"weather_lookup"},{"type":"tool_reference","tool_name":"stock_price"}]}},{"type":"text","text":"Great!
+      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_psmv5r4qfxc2osgono2yv6skinpauv77xqn2apqtdg6ysj6qajja","type":"message","role":"assistant","content":[{"type":"text","text":"I''ll
+        search for a tool that can get weather information."},{"type":"server_tool_use","id":"srvtoolu_bdrk_01SyXgMCGgh3fhoP4QrURgC4","name":"tool_search_tool_bm25","input":{"query":"weather
+        Berlin current conditions"}},{"type":"tool_search_tool_result","tool_use_id":"srvtoolu_bdrk_01SyXgMCGgh3fhoP4QrURgC4","content":{"type":"tool_search_tool_search_result","tool_references":[{"type":"tool_reference","tool_name":"weather_lookup"},{"type":"tool_reference","tool_name":"stock_price"}]}},{"type":"text","text":"Great!
         I found a weather lookup tool. Let me use it to get the current weather in
-        Berlin."},{"type":"tool_use","id":"toolu_bdrk_01NLQ7kigwSvCUy1eaiN5Doa","name":"weather_lookup","input":{"city":"Berlin"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":1663,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":155,"server_tool_use":{"web_search_requests":0},"service_tier":"standard"}}'
-  recorded_at: Thu, 05 Nov 2026 19:47:28 GMT
+        Berlin."},{"type":"tool_use","id":"toolu_bdrk_0142z3Btn9WpkhCNpWSKJF3o","name":"weather_lookup","input":{"city":"Berlin"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":1658,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":150,"server_tool_use":{"web_search_requests":0},"service_tier":"standard"}}'
+  recorded_at: Tue, 10 Nov 2026 17:29:33 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/invoke
@@ -67,10 +67,10 @@ http_interactions:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"type":"text","text":"What
         is the weather in Berlin right now? Use your tools."}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        search for a weather tool that can help you get the current weather in Berlin."},{"type":"server_tool_use","id":"srvtoolu_bdrk_012kV1BzWrwTuCy15b77Enpj","name":"tool_search_tool_bm25","input":{"query":"weather
-        Berlin current"}},{"type":"tool_search_tool_result","tool_use_id":"srvtoolu_bdrk_012kV1BzWrwTuCy15b77Enpj","content":{"type":"tool_search_tool_search_result","tool_references":[{"type":"tool_reference","tool_name":"weather_lookup"},{"type":"tool_reference","tool_name":"stock_price"}]}},{"type":"text","text":"Great!
+        search for a tool that can get weather information."},{"type":"server_tool_use","id":"srvtoolu_bdrk_01SyXgMCGgh3fhoP4QrURgC4","name":"tool_search_tool_bm25","input":{"query":"weather
+        Berlin current conditions"}},{"type":"tool_search_tool_result","tool_use_id":"srvtoolu_bdrk_01SyXgMCGgh3fhoP4QrURgC4","content":{"type":"tool_search_tool_search_result","tool_references":[{"type":"tool_reference","tool_name":"weather_lookup"},{"type":"tool_reference","tool_name":"stock_price"}]}},{"type":"text","text":"Great!
         I found a weather lookup tool. Let me use it to get the current weather in
-        Berlin."},{"type":"tool_use","id":"toolu_bdrk_01NLQ7kigwSvCUy1eaiN5Doa","name":"weather_lookup","input":{"city":"Berlin"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_01NLQ7kigwSvCUy1eaiN5Doa","content":[{"type":"text","text":"Sunny
+        Berlin."},{"type":"tool_use","id":"toolu_bdrk_0142z3Btn9WpkhCNpWSKJF3o","name":"weather_lookup","input":{"city":"Berlin"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_0142z3Btn9WpkhCNpWSKJF3o","content":[{"type":"text","text":"Sunny
         and 22°C in Berlin"}]}]}],"max_tokens":64000,"tools":[{"name":"weather_lookup","description":"Looks
         up the current weather for a city","input_schema":{"type":"object","properties":{"city":{"type":"string","description":"City
         name"}},"required":["city"],"additionalProperties":false,"strict":true},"defer_loading":true},{"name":"stock_price","description":"Looks
@@ -82,9 +82,9 @@ http_interactions:
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261105T194728Z
+      - 20261110T172933Z
       X-Amz-Content-Sha256:
-      - e37fe23d2d31ef0f6c1c6c89991fd95877efd6c2502b769e4280a75f1caae4fb
+      - 902cd22837930e087a6dba6c1f432538009b8d8f62adb1c191ddb1bfdf668ffb
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -98,17 +98,17 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 05 Nov 2026 19:47:29 GMT
+      - Tue, 10 Nov 2026 17:29:34 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '594'
+      - '602'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - c7510c5e-4b05-42ab-be16-6160937982e9
+      - 26edd1f2-d46c-4277-8e99-655ff398398e
       X-Amzn-Bedrock-Invocation-Latency:
-      - '652'
+      - '640'
       X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
       - '0'
       X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
@@ -116,12 +116,12 @@ http_interactions:
       X-Amzn-Bedrock-Output-Token-Count:
       - '33'
       X-Amzn-Bedrock-Input-Token-Count:
-      - '1055'
+      - '1050'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtb2RlbCI6ImFudGhyb3BpYy5jbGF1ZGUtaGFpa3UtNC01LTIwMjUxMDAxLXYxOjAiLCJpZCI6Im1zZ19iZHJrX2xmNTZpNWJ1cXVyZWh0bWdwZnRvcHZ0am9odmZhMzJxcm8zajJvNHpveXJ5dzRmeHd0aGEiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiBpcyAqKnN1bm55IHdpdGggYSB0ZW1wZXJhdHVyZSBvZiAyMsKwQyAoYWJvdXQgNzLCsEYpKiouIEl0J3MgYSBuaWNlIGRheSEifV0sImNvbnRhaW5lciI6bnVsbCwic3RvcF9yZWFzb24iOiJlbmRfdHVybiIsInN0b3Bfc2VxdWVuY2UiOm51bGwsInN0b3BfZGV0YWlscyI6bnVsbCwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjoxMDU1LCJjYWNoZV9jcmVhdGlvbl9pbnB1dF90b2tlbnMiOjAsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjowLCJjYWNoZV9jcmVhdGlvbiI6eyJlcGhlbWVyYWxfNW1faW5wdXRfdG9rZW5zIjowLCJlcGhlbWVyYWxfMWhfaW5wdXRfdG9rZW5zIjowfSwib3V0cHV0X3Rva2VucyI6MzMsInNlcnZpY2VfdGllciI6InN0YW5kYXJkIn19
-  recorded_at: Thu, 05 Nov 2026 19:47:29 GMT
+        eyJtb2RlbCI6ImFudGhyb3BpYy5jbGF1ZGUtaGFpa3UtNC01LTIwMjUxMDAxLXYxOjAiLCJpZCI6Im1zZ19iZHJrX2hjdGVscnQyZW40cWlxYmt3cGNqaW5wdWFsYXdlbXNpM3Nqa3J3aXdjdW1wNnR1dzRoZ2EiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiBpcyAqKnN1bm55IHdpdGggYSB0ZW1wZXJhdHVyZSBvZiAyMsKwQyoqIChhcHByb3hpbWF0ZWx5IDcywrBGKS4gSXQncyBhIG5pY2UgZGF5ISJ9XSwiY29udGFpbmVyIjpudWxsLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwic3RvcF9kZXRhaWxzIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjEwNTAsImNhY2hlX2NyZWF0aW9uX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfcmVhZF9pbnB1dF90b2tlbnMiOjAsImNhY2hlX2NyZWF0aW9uIjp7ImVwaGVtZXJhbF81bV9pbnB1dF90b2tlbnMiOjAsImVwaGVtZXJhbF8xaF9pbnB1dF90b2tlbnMiOjB9LCJvdXRwdXRfdG9rZW5zIjozMywic2VydmljZV90aWVyIjoic3RhbmRhcmQifX0=
+  recorded_at: Tue, 10 Nov 2026 17:29:34 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/invoke
@@ -129,13 +129,13 @@ http_interactions:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"type":"text","text":"What
         is the weather in Berlin right now? Use your tools."}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        search for a weather tool that can help you get the current weather in Berlin."},{"type":"server_tool_use","id":"srvtoolu_bdrk_012kV1BzWrwTuCy15b77Enpj","name":"tool_search_tool_bm25","input":{"query":"weather
-        Berlin current"}},{"type":"tool_search_tool_result","tool_use_id":"srvtoolu_bdrk_012kV1BzWrwTuCy15b77Enpj","content":{"type":"tool_search_tool_search_result","tool_references":[{"type":"tool_reference","tool_name":"weather_lookup"},{"type":"tool_reference","tool_name":"stock_price"}]}},{"type":"text","text":"Great!
+        search for a tool that can get weather information."},{"type":"server_tool_use","id":"srvtoolu_bdrk_01SyXgMCGgh3fhoP4QrURgC4","name":"tool_search_tool_bm25","input":{"query":"weather
+        Berlin current conditions"}},{"type":"tool_search_tool_result","tool_use_id":"srvtoolu_bdrk_01SyXgMCGgh3fhoP4QrURgC4","content":{"type":"tool_search_tool_search_result","tool_references":[{"type":"tool_reference","tool_name":"weather_lookup"},{"type":"tool_reference","tool_name":"stock_price"}]}},{"type":"text","text":"Great!
         I found a weather lookup tool. Let me use it to get the current weather in
-        Berlin."},{"type":"tool_use","id":"toolu_bdrk_01NLQ7kigwSvCUy1eaiN5Doa","name":"weather_lookup","input":{"city":"Berlin"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_01NLQ7kigwSvCUy1eaiN5Doa","content":[{"type":"text","text":"Sunny
+        Berlin."},{"type":"tool_use","id":"toolu_bdrk_0142z3Btn9WpkhCNpWSKJF3o","name":"weather_lookup","input":{"city":"Berlin"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_0142z3Btn9WpkhCNpWSKJF3o","content":[{"type":"text","text":"Sunny
         and 22°C in Berlin"}]}]},{"role":"assistant","content":[{"type":"text","text":"The
-        current weather in Berlin is **sunny with a temperature of 22°C (about 72°F)**.
-        It''s a nice day!"}]},{"role":"user","content":[{"type":"text","text":"And
+        current weather in Berlin is **sunny with a temperature of 22°C** (approximately
+        72°F). It''s a nice day!"}]},{"role":"user","content":[{"type":"text","text":"And
         in Paris?"}]}],"max_tokens":64000,"tools":[{"name":"weather_lookup","description":"Looks
         up the current weather for a city","input_schema":{"type":"object","properties":{"city":{"type":"string","description":"City
         name"}},"required":["city"],"additionalProperties":false,"strict":true},"defer_loading":true},{"name":"stock_price","description":"Looks
@@ -147,9 +147,9 @@ http_interactions:
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261105T194729Z
+      - 20261110T172934Z
       X-Amz-Content-Sha256:
-      - 6265b0f089bffb09ffd40476c002dbf08f24e70e3bce5877ef3d21cf0bf8c016
+      - 87ae9e551afa92002609f183de0033aa5e1d85ecae2b85fef39923c5303fb4f4
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -163,7 +163,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 05 Nov 2026 19:47:30 GMT
+      - Tue, 10 Nov 2026 17:29:35 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -171,9 +171,9 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 82f3fcc5-0c8d-4c86-bb47-4b0b999425ea
+      - df071b85-b196-4d36-b049-f2c1c35e95aa
       X-Amzn-Bedrock-Invocation-Latency:
-      - '611'
+      - '571'
       X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
       - '0'
       X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
@@ -181,11 +181,11 @@ http_interactions:
       X-Amzn-Bedrock-Output-Token-Count:
       - '54'
       X-Amzn-Bedrock-Input-Token-Count:
-      - '1095'
+      - '1090'
     body:
       encoding: UTF-8
-      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_67ugqinrtujcffmo7ju2xy4zl2mxhh5iqohdhdqyzuldmtga4zxq","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_bdrk_01KKDp8CGqrRbA3C5aqwmcV8","name":"weather_lookup","input":{"city":"Paris"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":1095,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":54,"service_tier":"standard"}}'
-  recorded_at: Thu, 05 Nov 2026 19:47:30 GMT
+      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_4ewatgmrzzyu4k7p73dlez5umovmzmlc5ndvwzr7o3gkm737qx7a","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_bdrk_01HkGL7HXggVR455fUxzXrDZ","name":"weather_lookup","input":{"city":"Paris"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":1090,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":54,"service_tier":"standard"}}'
+  recorded_at: Tue, 10 Nov 2026 17:29:35 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/invoke
@@ -193,14 +193,14 @@ http_interactions:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"type":"text","text":"What
         is the weather in Berlin right now? Use your tools."}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        search for a weather tool that can help you get the current weather in Berlin."},{"type":"server_tool_use","id":"srvtoolu_bdrk_012kV1BzWrwTuCy15b77Enpj","name":"tool_search_tool_bm25","input":{"query":"weather
-        Berlin current"}},{"type":"tool_search_tool_result","tool_use_id":"srvtoolu_bdrk_012kV1BzWrwTuCy15b77Enpj","content":{"type":"tool_search_tool_search_result","tool_references":[{"type":"tool_reference","tool_name":"weather_lookup"},{"type":"tool_reference","tool_name":"stock_price"}]}},{"type":"text","text":"Great!
+        search for a tool that can get weather information."},{"type":"server_tool_use","id":"srvtoolu_bdrk_01SyXgMCGgh3fhoP4QrURgC4","name":"tool_search_tool_bm25","input":{"query":"weather
+        Berlin current conditions"}},{"type":"tool_search_tool_result","tool_use_id":"srvtoolu_bdrk_01SyXgMCGgh3fhoP4QrURgC4","content":{"type":"tool_search_tool_search_result","tool_references":[{"type":"tool_reference","tool_name":"weather_lookup"},{"type":"tool_reference","tool_name":"stock_price"}]}},{"type":"text","text":"Great!
         I found a weather lookup tool. Let me use it to get the current weather in
-        Berlin."},{"type":"tool_use","id":"toolu_bdrk_01NLQ7kigwSvCUy1eaiN5Doa","name":"weather_lookup","input":{"city":"Berlin"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_01NLQ7kigwSvCUy1eaiN5Doa","content":[{"type":"text","text":"Sunny
+        Berlin."},{"type":"tool_use","id":"toolu_bdrk_0142z3Btn9WpkhCNpWSKJF3o","name":"weather_lookup","input":{"city":"Berlin"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_0142z3Btn9WpkhCNpWSKJF3o","content":[{"type":"text","text":"Sunny
         and 22°C in Berlin"}]}]},{"role":"assistant","content":[{"type":"text","text":"The
-        current weather in Berlin is **sunny with a temperature of 22°C (about 72°F)**.
-        It''s a nice day!"}]},{"role":"user","content":[{"type":"text","text":"And
-        in Paris?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_bdrk_01KKDp8CGqrRbA3C5aqwmcV8","name":"weather_lookup","input":{"city":"Paris"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_01KKDp8CGqrRbA3C5aqwmcV8","content":[{"type":"text","text":"Sunny
+        current weather in Berlin is **sunny with a temperature of 22°C** (approximately
+        72°F). It''s a nice day!"}]},{"role":"user","content":[{"type":"text","text":"And
+        in Paris?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_bdrk_01HkGL7HXggVR455fUxzXrDZ","name":"weather_lookup","input":{"city":"Paris"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_01HkGL7HXggVR455fUxzXrDZ","content":[{"type":"text","text":"Sunny
         and 22°C in Paris"}]}]}],"max_tokens":64000,"tools":[{"name":"weather_lookup","description":"Looks
         up the current weather for a city","input_schema":{"type":"object","properties":{"city":{"type":"string","description":"City
         name"}},"required":["city"],"additionalProperties":false,"strict":true},"defer_loading":true},{"name":"stock_price","description":"Looks
@@ -212,9 +212,9 @@ http_interactions:
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261105T194730Z
+      - 20261110T172935Z
       X-Amz-Content-Sha256:
-      - db2126a7f455b1318d3473b0b626f160f58dae27e9660c62434a69cb446af091
+      - 6ce3184ccb511eb3e6933ef89c3cdd66a0547f8759aed41a44b750b8ee1623d2
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -228,28 +228,28 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 05 Nov 2026 19:47:31 GMT
+      - Tue, 10 Nov 2026 17:29:36 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '636'
+      - '631'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - aea54ed0-6982-46c2-9f1d-4cf427928c95
+      - bf2d30de-e75d-41fc-869b-72431810d806
       X-Amzn-Bedrock-Invocation-Latency:
-      - '653'
+      - '599'
       X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
       - '0'
       X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
       - '0'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '39'
+      - '37'
       X-Amzn-Bedrock-Input-Token-Count:
-      - '1170'
+      - '1165'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtb2RlbCI6ImFudGhyb3BpYy5jbGF1ZGUtaGFpa3UtNC01LTIwMjUxMDAxLXYxOjAiLCJpZCI6Im1zZ19iZHJrX2Zoam52M2E3Zm92c3VmM3RjNWdkYXplc3NwemFmdnE3anJqNmozNng0anFyYmZ0N3lhZ3EiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIFBhcmlzIGlzICoqc3Vubnkgd2l0aCBhIHRlbXBlcmF0dXJlIG9mIDIywrBDIChhYm91dCA3MsKwRikqKiBhcyB3ZWxsLiBCb3RoIGNpdGllcyBhcmUgZW5qb3lpbmcgdGhlIHNhbWUgcGxlYXNhbnQgd2VhdGhlciEifV0sImNvbnRhaW5lciI6bnVsbCwic3RvcF9yZWFzb24iOiJlbmRfdHVybiIsInN0b3Bfc2VxdWVuY2UiOm51bGwsInN0b3BfZGV0YWlscyI6bnVsbCwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjoxMTcwLCJjYWNoZV9jcmVhdGlvbl9pbnB1dF90b2tlbnMiOjAsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjowLCJjYWNoZV9jcmVhdGlvbiI6eyJlcGhlbWVyYWxfNW1faW5wdXRfdG9rZW5zIjowLCJlcGhlbWVyYWxfMWhfaW5wdXRfdG9rZW5zIjowfSwib3V0cHV0X3Rva2VucyI6MzksInNlcnZpY2VfdGllciI6InN0YW5kYXJkIn19
-  recorded_at: Thu, 05 Nov 2026 19:47:32 GMT
+        eyJtb2RlbCI6ImFudGhyb3BpYy5jbGF1ZGUtaGFpa3UtNC01LTIwMjUxMDAxLXYxOjAiLCJpZCI6Im1zZ19iZHJrX3NiYWtpbXp1bm5tdHZvbm9sYXhxcHJ6ZDNrNTVvczV5aXAzYWp1NWlzMmw0bXB6dml2a2EiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIFBhcmlzIGlzICoqc3Vubnkgd2l0aCBhIHRlbXBlcmF0dXJlIG9mIDIywrBDKiogKGFwcHJveGltYXRlbHkgNzLCsEYpLiBJdCdzIHRoZSBzYW1lIG5pY2Ugc3VubnkgY29uZGl0aW9ucyBhcyBCZXJsaW4hIn1dLCJjb250YWluZXIiOm51bGwsInN0b3BfcmVhc29uIjoiZW5kX3R1cm4iLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJzdG9wX2RldGFpbHMiOm51bGwsInVzYWdlIjp7ImlucHV0X3Rva2VucyI6MTE2NSwiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfY3JlYXRpb24iOnsiZXBoZW1lcmFsXzVtX2lucHV0X3Rva2VucyI6MCwiZXBoZW1lcmFsXzFoX2lucHV0X3Rva2VucyI6MH0sIm91dHB1dF90b2tlbnMiOjM3LCJzZXJ2aWNlX3RpZXIiOiJzdGFuZGFyZCJ9fQ==
+  recorded_at: Tue, 10 Nov 2026 17:29:36 GMT
 recorded_with: VCR 6.4.1

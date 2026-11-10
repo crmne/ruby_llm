@@ -11,7 +11,7 @@ http_interactions:
         of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,20 +25,20 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Req-Arrive-Time:
-      - '1791752959174'
+      Req-Cost-Time:
+      - '971'
       Resp-Start-Time:
-      - '1791752960148'
+      - '1794332211845'
+      Date:
+      - Tue, 10 Nov 2026 17:36:50 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
       - ''
-      Req-Cost-Time:
-      - '974'
+      Req-Arrive-Time:
+      - '1794332210873'
       X-Envoy-Upstream-Service-Time:
-      - '965'
-      Date:
-      - Sun, 11 Oct 2026 21:09:18 GMT
+      - '968'
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -54,6 +54,6 @@ http_interactions:
         with those tags. I''ll make sure the arguments are a JSON object with the
         tags array. The required parameter is tags, and there are no additional properties
         allowed. Alright, that''s straightforward. Just pass the array as is.\n","tool_calls":[{"type":"function","function":{"name":"array_params","arguments":"{\"tags\":
-        [\"red\", \"blue\"]}"},"id":"qwrdkRemNNZz2HXHp4TnWjmfoFfC1KoA"}]}}],"created":1791752960,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":124,"prompt_tokens":189,"total_tokens":313,"prompt_tokens_details":{"cached_tokens":188}},"id":"chatcmpl-6s8Tx8ORDa56ucR7q78ZiH42QFF0aOCZ","timings":{"cache_n":188,"prompt_n":1,"prompt_ms":8.243,"prompt_per_token_ms":8.243,"prompt_per_second":121.31505519835011,"predicted_n":124,"predicted_ms":910.937,"predicted_per_token_ms":7.405991869918699,"predicted_per_second":135.0258031016415}}'
-  recorded_at: Sun, 11 Oct 2026 21:09:20 GMT
-recorded_with: VCR 6.4.0
+        [\"red\", \"blue\"]}"},"id":"Nhp5ean4ujMzqRIm8d9zfGAiBjKDyfeO"}]}}],"created":1794332211,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":124,"prompt_tokens":189,"total_tokens":313,"prompt_tokens_details":{"cached_tokens":3}},"id":"chatcmpl-Em95Uy6OBVLqO0VmiUkLojnO8MbHrymw","timings":{"cache_n":3,"prompt_n":186,"prompt_ms":44.871,"prompt_per_token_ms":0.241241935483871,"prompt_per_second":4145.216286688507,"predicted_n":124,"predicted_ms":898.266,"predicted_per_token_ms":7.302975609756097,"predicted_per_second":136.93048606982788}}'
+  recorded_at: Tue, 10 Nov 2026 17:36:51 GMT
+recorded_with: VCR 6.4.1

@@ -59,6 +59,9 @@ RSpec.describe RubyLLM::Chat, :live do
         it 'handles context length exceeded errors' do
           skip('Ollama truncates conversation history to fit its context window') if provider == :ollama
           skip('xAI models do not reliably error on context length exceeded') if provider == :xai
+          if provider == :gemini
+            skip('Gemini checks the Tier 1 tokens-per-minute quota first, so overflowing the window answers 429')
+          end
           if provider == :mistral
             skip('Mistral currently returns generic 429 rate_limited instead of deterministic context-length errors')
           end

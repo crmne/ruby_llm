@@ -6,16 +6,16 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"What is the square
-        root of 64? Answer with a JSON object with the key `result`."}]},{"role":"assistant","content":[{"text":"{"}]}],"inferenceConfig":{},"additionalModelRequestFields":{"inferenceConfig":{"topK":5}}}'
+        root of 64? Answer with a JSON object with the key `result`."}]},{"role":"assistant","content":[{"text":"{"}]}],"inferenceConfig":{"maxTokens":65535},"additionalModelRequestFields":{"inferenceConfig":{"topK":5}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261011T210639Z
+      - 20261110T173121Z
       X-Amz-Content-Sha256:
-      - 853ef830b358b0bc6e27e877a4c0319d69f5cb0021cee1adc54e4312a4fca7f0
+      - 022a6925a10e6ff387d67833f1103efb1746f49bf80783eba3e71fa31f6d195b
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:40 GMT
+      - Tue, 10 Nov 2026 17:31:22 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -37,10 +37,10 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 1e19db69-5749-4a11-adef-deb55e113b0f
+      - 66761865-ef93-4899-a650-c38b133b0166
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":677},"output":{"message":{"content":[{"text":"
+      string: '{"metrics":{"latencyMs":318},"output":{"message":{"content":[{"text":"
         \"result\": 8 }"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":68,"outputTokens":8,"serverToolUsage":{},"totalTokens":76}}'
-  recorded_at: Sun, 11 Oct 2026 21:06:40 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:31:22 GMT
+recorded_with: VCR 6.4.1

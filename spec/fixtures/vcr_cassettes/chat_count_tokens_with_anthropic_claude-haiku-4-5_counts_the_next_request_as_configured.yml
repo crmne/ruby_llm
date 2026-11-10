@@ -9,7 +9,7 @@ http_interactions:
         is the capital of France?"}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -26,11 +26,11 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:23 GMT
+      - Tue, 10 Nov 2026 17:31:32 GMT
       Content-Type:
       - application/json
-      Transfer-Encoding:
-      - chunked
+      Content-Length:
+      - '19'
       Connection:
       - keep-alive
       Request-Id:
@@ -39,24 +39,22 @@ http_interactions:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
       - "<ANTHROPIC_WORKSPACE_ID>"
-      Vary:
-      - Accept-Encoding
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
+      X-Robots-Tag:
+      - none
       Server:
       - cloudflare
       Server-Timing:
-      - x-originResponse;dur=36
+      - x-originResponse;dur=20
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
       Cf-Cache-Status:
       - DYNAMIC
-      X-Robots-Tag:
-      - none
       Cf-Ray:
       - "<CF_RAY>"
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"input_tokens":14}'
-  recorded_at: Sun, 11 Oct 2026 21:06:23 GMT
+  recorded_at: Tue, 10 Nov 2026 17:31:32 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages/count_tokens
@@ -68,7 +66,7 @@ http_interactions:
         name"}},"required":["city"],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.3
+      - Faraday v2.15.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -85,11 +83,11 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 11 Oct 2026 21:06:23 GMT
+      - Tue, 10 Nov 2026 17:31:32 GMT
       Content-Type:
       - application/json
-      Transfer-Encoding:
-      - chunked
+      Content-Length:
+      - '20'
       Connection:
       - keep-alive
       Request-Id:
@@ -98,22 +96,20 @@ http_interactions:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
       - "<ANTHROPIC_WORKSPACE_ID>"
-      Vary:
-      - Accept-Encoding
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
       Server:
       - cloudflare
       Server-Timing:
-      - x-originResponse;dur=43
+      - x-originResponse;dur=28
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
       - none
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
       Cf-Ray:
       - "<CF_RAY>"
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"input_tokens":588}'
-  recorded_at: Sun, 11 Oct 2026 21:06:23 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Tue, 10 Nov 2026 17:31:32 GMT
+recorded_with: VCR 6.4.1
