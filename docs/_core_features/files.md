@@ -38,7 +38,7 @@ file.byte_size  # => 1234
 file.mime_type  # => "application/jsonl"
 ```
 
-OpenAI, Azure, DeepSeek, and xAI do not report a MIME type for stored files. After an upload, `mime_type` is the content type RubyLLM sent. When you [find the file later](#finding-and-downloading), it is `nil`.
+OpenAI, Azure, DeepSeek, Meta, and xAI do not report a MIME type for stored files. After an upload, `mime_type` is the content type RubyLLM sent. When you [find the file later](#finding-and-downloading), it is `nil`.
 
 When `provider:` is omitted, RubyLLM uses the provider of `config.default_model`. Select another provider explicitly:
 
@@ -53,7 +53,7 @@ io = StringIO.new(jsonl)
 file = RubyLLM.upload(io, provider: :openai, purpose: "batch", filename: "batch.jsonl")
 ```
 
-OpenAI and Azure require `purpose:`. Use `"batch"` for batch inputs, `"user_data"` for OpenAI documents, and `"assistants"` for Azure documents. Providers with no such field, including Anthropic, Gemini, OpenRouter, Vertex AI, and Bedrock, raise `ArgumentError`.
+OpenAI, Meta, and Azure require `purpose:`. Use `"batch"` for batch inputs, `"user_data"` for OpenAI and Meta documents, and `"assistants"` for Azure documents. Providers with no such field, including Anthropic, Gemini, OpenRouter, Vertex AI, and Bedrock, raise `ArgumentError`.
 
 Pass `content_type:` when the MIME type RubyLLM detects is not the one you want. Vertex AI and Bedrock store files in a bucket rather than behind a file id, so pass `uri:` to choose the object. Other providers pick their own storage and raise `ArgumentError` for `uri:`:
 
@@ -73,7 +73,7 @@ file = RubyLLM.upload("batch.jsonl", purpose: "batch", expires_in: 24 * 60 * 60)
 file.expires_at # => 2026-07-05 12:00:00 +0000
 ```
 
-OpenAI and xAI accept 1 hour to 30 days, and Anthropic 1 hour to 90 days. Mistral rounds up to whole hours. Providers without a retention setting raise `ArgumentError`. Gemini files always expire after 48 hours.
+OpenAI, Meta, and xAI accept 1 hour to 30 days, and Anthropic 1 hour to 90 days. Mistral rounds up to whole hours. Providers without a retention setting raise `ArgumentError`. Gemini files always expire after 48 hours.
 
 ## Using Files in Chat
 

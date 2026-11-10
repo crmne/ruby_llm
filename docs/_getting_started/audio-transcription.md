@@ -133,7 +133,7 @@ transcription = RubyLLM.transcribe(
 )
 ```
 
-References accept file paths, URLs, IO objects, `RubyLLM::Attachment` objects, or Active Storage attachments. Other diarization providers assign speaker labels without matching known identities, so pass `speaker_names: []` to them. Names raise `ArgumentError` on those providers: xAI, Mistral, Deepgram, Azure AI Speech, OpenRouter, and Vertex AI and Gemini dedicated transcription. ElevenLabs uses the number of supplied names as a speaker-count limit.
+References accept file paths, URLs, IO objects, `RubyLLM::Attachment` objects, or Active Storage attachments. Other diarization providers assign speaker labels without matching known identities, so pass `speaker_names: []` to them. Names raise `ArgumentError` on those providers: xAI, Mistral, Meta, Deepgram, Azure AI Speech, OpenRouter, and Vertex AI and Gemini dedicated transcription. ElevenLabs uses the number of supplied names as a speaker-count limit.
 
 ## Segments and Timestamps
 
@@ -153,7 +153,7 @@ transcription.words.each do |word|
 end
 ```
 
-Available granularities depend on the model. Whisper accepts word and segment timestamps without streaming; Mistral accepts segment timestamps, including streaming. Deepgram, xAI, Azure AI Speech, and ElevenLabs return word timing by default. ElevenLabs also accepts `timestamps: :character`.
+Available granularities depend on the model. Whisper accepts word and segment timestamps without streaming; Mistral and Meta accept segment timestamps, including streaming. Deepgram, xAI, Azure AI Speech, and ElevenLabs return word timing by default. ElevenLabs also accepts `timestamps: :character`.
 
 ## Output Formats
 

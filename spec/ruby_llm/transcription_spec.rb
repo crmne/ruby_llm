@@ -4,6 +4,7 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Transcription, :live do
   let(:audio_path) { File.expand_path('../fixtures/ruby.wav', __dir__) }
+  let(:speakers_path) { File.expand_path('../fixtures/google-speakers.wav', __dir__) }
 
   describe '#cost', live: false do
     it 'prices a Vertex AI transcription from the Vertex AI registry entry' do
@@ -158,6 +159,40 @@ RSpec.describe RubyLLM::Transcription, :live do
       expect(transcription.segments.first).to have_key('speaker_id')
       expect(transcription.tokens.input).to be_positive
       expect(transcription.duration).to be_positive
+    end
+
+    it "meta/#{model_for(:meta, :transcription)} labels turns with speakers when speaker names are given" do
+      transcription = RubyLLM.transcribe(speakers_path, model: model_for(:meta, :transcription), provider: :meta,
+                                                        speaker_names: [])
+
+      expect(transcription.text).not_to be_empty
+      expect(transcription.segments.first.speaker).to be_present
+      expect(transcription.segments.first.start).to be_a(Numeric)
+    end
+
+    it "meta/#{model_for(:meta, :transcription)} streams turns labelled with speakers" do
+      chunks = []
+
+      transcription = RubyLLM.transcribe(speakers_path, model: model_for(:meta, :transcription), provider: :meta,
+                                                        speaker_names: []) do |chunk|
+        chunks << chunk
+      end
+
+      expect(chunks.find(&:segment?).segment.speaker).to be_present
+      expect(chunks.last).to be_done
+      expect(transcription.text).not_to be_empty
+      expect(transcription.duration).to be_positive
+    end
+
+    it "meta/#{model_for(:meta, :transcription)} streams a transcript with no turns" do
+      chunks = []
+
+      transcription = RubyLLM.transcribe(audio_path, model: model_for(:meta, :transcription),
+                                                     provider: :meta) { |chunk| chunks << chunk }
+
+      expect(chunks.filter_map(&:delta).join).to match(/ruby/i)
+      expect(chunks.last).to be_done
+      expect(transcription.text).to match(/ruby/i)
     end
 
     it 'raises for providers that do not stream transcriptions' do
