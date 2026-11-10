@@ -11,9 +11,9 @@ module RubyLLM
 
         # rubocop:disable-next Lint/UnusedMethodArgument
         def embed(text, model:, dimensions:, task_type: nil, title: nil, with: nil, provider_options: {})
-          ensure_no_embedding_media!(with)
+          attachments = embedding_attachments(text, with)
           track_usage(:embedding) do
-            payload = render_embedding_payload(text, model:, dimensions:, task_type:, provider_options:)
+            payload = render_embedding_payload(text, model:, dimensions:, task_type:, attachments:, provider_options:)
             response = signed_post(embedding_url(model:), payload)
 
             parse_embedding_response(response, model:, text:)
@@ -22,15 +22,22 @@ module RubyLLM
 
         private
 
-        def render_embedding_payload(text, dimensions:, provider_options:, task_type: nil, **)
-          payload = {
-            input_type: task_type || 'search_document'
-          }
-          texts = text.is_a?(Array) ? text.map(&:to_s) : [text.to_s].reject(&:empty?)
-          payload[:texts] = texts unless texts.empty?
+        def render_embedding_payload(text, dimensions:, provider_options:, task_type: nil, attachments: [], **)
+          payload = { input_type: task_type || 'search_document' }
+          payload.merge!(attachments.any? ? media_embedding_inputs(text, attachments) : text_embedding_inputs(text))
           payload[:output_dimension] = dimensions if dimensions
 
           deep_merge_provider_options(payload, provider_options)
+        end
+
+        def text_embedding_inputs(text)
+          texts = text.is_a?(Array) ? text.map(&:to_s) : [text.to_s].reject(&:empty?)
+          texts.empty? ? {} : { texts: }
+        end
+
+        def media_embedding_inputs(text, attachments)
+          content = Cohere::Media.render_content(text.to_s.empty? ? nil : text, attachments)
+          { inputs: [{ content: }], embedding_types: ['float'] }
         end
 
         def parse_embedding_response(response, model:, text:)

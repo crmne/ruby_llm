@@ -119,6 +119,8 @@ Pass `nil` as the text to embed only the attachment. Combine attachments with on
 
 Cohere Embed v3 accepts one image per request without text. RubyLLM selects the image input type when you pass `nil` and `with:`. Embed v4 can combine text and images. The same calls work on Cohere and Azure deployments; see [Azure configuration]({% link _reference/configuration-providers.md %}#azure-deployments).
 
+On Bedrock, Titan Multimodal combines one image with text and Cohere Embed v4 combines text and images. Nova Multimodal embeds one image, audio clip, or video per request, so pass `nil` as the text. Ollama combines text with one image and one audio clip.
+
 ## Provider Options
 
 Use `provider_options:` for settings specific to one provider. For example, prevent Vertex AI from truncating long inputs:

@@ -7,6 +7,7 @@ module RubyLLM
       # Ollama's dialect of the Chat Completions API.
       class ChatCompletions < Protocols::ChatCompletions
         include Ollama::Chat
+        include Ollama::Embeddings
         include Ollama::Media
         include Ollama::Models
         include Ollama::Speech

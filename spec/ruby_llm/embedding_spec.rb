@@ -100,6 +100,43 @@ RSpec.describe RubyLLM::Embedding, :live do
       expect(embedding.vectors.first).to be_a(Float)
     end
 
+    it "bedrock/#{model_for(:bedrock, :titan_multimodal_embedding)} embeds an image alongside text" do
+      embedding = RubyLLM.embed('The Ruby logo', model: model_for(:bedrock, :titan_multimodal_embedding),
+                                                 provider: :bedrock, with: image_path, dimensions: 256)
+
+      expect(embedding.vectors.length).to eq(256)
+      expect(embedding.vectors).to all(be_a(Float))
+    end
+
+    it "bedrock/#{model_for(:bedrock, :multimodal_embedding)} embeds an image alongside text" do
+      embedding = RubyLLM.embed('The Ruby logo', model: model_for(:bedrock, :multimodal_embedding), provider: :bedrock,
+                                                 with: image_path, dimensions: 256)
+
+      expect(embedding.vectors.length).to eq(256)
+      expect(embedding.vectors).to all(be_a(Float))
+    end
+
+    # Nova multimodal embeddings are not served in us-west-2 yet.
+    %w[ruby.png ruby.wav ruby_clip.mp4].each do |filename|
+      it "bedrock/#{model_for(:bedrock, :document_embedding)} embeds #{filename}" do
+        context = RubyLLM.context { |config| config.bedrock_region = 'us-east-1' }
+        embedding = context.embed(nil, model: model_for(:bedrock, :document_embedding), provider: :bedrock,
+                                       assume_model_exists: true, dimensions: 256,
+                                       with: File.expand_path("../fixtures/#{filename}", __dir__))
+
+        expect(embedding.vectors.length).to eq(256)
+        expect(embedding.vectors).to all(be_a(Float))
+      end
+    end
+
+    it "ollama/#{model_for(:ollama, :local_multimodal_embedding)} embeds an image alongside text" do
+      embedding = RubyLLM.embed('The Ruby logo', model: model_for(:ollama, :local_multimodal_embedding),
+                                                 provider: :ollama, assume_model_exists: true, with: image_path)
+
+      expect(embedding.vectors).not_to be_empty
+      expect(embedding.vectors).to all(be_a(Float))
+    end
+
     it 'raises UnsupportedAttachmentError on providers without multimodal embeddings' do
       expect do
         RubyLLM.embed(test_text, model: model_for(:openai, :embedding), provider: :openai, with: image_path)
