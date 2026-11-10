@@ -11,6 +11,9 @@ module RubyLLM
           web_search: { tool: { type: 'web_search_20250305', name: 'web_search' } }
         }.freeze
 
+        RESPONSES_ITEMS = %w[reasoning web_search_call message function_call].freeze
+        private_constant :RESPONSES_ITEMS
+
         def render_payload(messages, tools:, schema: nil, tool_prefs: nil, **)
           raise ArgumentError, "MiniMax's Messages API has no structured output" if schema
           raise ArgumentError, 'MiniMax does not accept calls: :one' if tools.any? && tool_prefs&.dig(:calls) == :one
@@ -73,6 +76,18 @@ module RubyLLM
 
           media_type = video.mime_type == 'video/quicktime' ? 'video/mov' : video.mime_type
           { type: 'base64', media_type:, data: video.encoded }
+        end
+
+        # A web search turn answered on Responses keeps that route's output
+        # items, which a Messages request cannot carry.
+        def foreign_native_content?(message)
+          super || (message.role == :assistant && responses_output?(message.raw_content))
+        end
+
+        def responses_output?(raw_content)
+          raw_content.is_a?(Array) && raw_content.any? do |item|
+            item.is_a?(Hash) && RESPONSES_ITEMS.include?(item['type'])
+          end
         end
       end
     end
