@@ -85,6 +85,91 @@ RSpec.describe RubyLLM::Providers::OllamaCloud do
     end
   end
 
+  describe 'operations ollama.com does not serve' do
+    let(:audio_path) { File.expand_path('../../fixtures/ruby.wav', __dir__) }
+    let!(:route) do
+      stub_request(:post, %r{\Ahttps://ollama\.com/v1/}).to_return(
+        status: 404, headers: { 'Content-Type' => 'application/json' }, body: { error: 'path not found' }.to_json
+      )
+    end
+    let!(:remote_input) { stub_request(:get, %r{\Ahttps://assets\.example\.com/}).to_return(status: 500) }
+    let(:model) { { model: 'gemma4:31b', provider: :ollama_cloud, assume_model_exists: true } }
+
+    before do
+      RubyLLM.configure { |config| config.ollama_cloud_api_key = 'test' }
+    end
+
+    def expect_unsupported(label, &)
+      expect(&).to raise_error(RubyLLM::Error, "OllamaCloud doesn't support #{label}")
+      expect(route).not_to have_been_requested
+      expect(remote_input).not_to have_been_requested
+    end
+
+    it 'raises for embeddings without a request' do
+      expect_unsupported('embeddings') { RubyLLM.embed('Hello', **model) }
+    end
+
+    it 'raises for speech without a request' do
+      expect_unsupported('speech generation') { RubyLLM.speak('Hello', **model) }
+    end
+
+    it 'raises for streamed speech without a request' do
+      expect_unsupported('speech generation') { RubyLLM.speak('Hello', **model) { |_chunk| nil } }
+    end
+
+    it 'raises for transcription without a request' do
+      expect_unsupported('transcription') { RubyLLM.transcribe(audio_path, **model) }
+    end
+
+    it 'raises for streamed transcription without a request' do
+      expect_unsupported('transcription') { RubyLLM.transcribe(audio_path, **model) { |_chunk| nil } }
+    end
+
+    it 'raises for image generation without a request' do
+      expect_unsupported('image generation') { RubyLLM.paint('A red ruby', **model) }
+    end
+
+    it 'raises for moderation without a request' do
+      expect_unsupported('moderation') { RubyLLM.moderate('Hello', **model) }
+    end
+
+    it 'raises for remote audio without downloading it' do
+      expect_unsupported('transcription') { RubyLLM.transcribe('https://assets.example.com/ruby.wav', **model) }
+    end
+
+    it 'raises for streamed remote audio without downloading it' do
+      expect_unsupported('transcription') do
+        RubyLLM.transcribe('https://assets.example.com/ruby.wav', **model) { |_chunk| nil }
+      end
+    end
+
+    it 'raises for a remote image to edit without downloading it' do
+      expect_unsupported('image generation') do
+        RubyLLM.paint('Make it blue', with: 'https://assets.example.com/ruby.png', **model)
+      end
+    end
+
+    it 'raises for an image to embed before looking at it' do
+      expect_unsupported('embeddings') do
+        RubyLLM.embed('Hello', with: 'https://assets.example.com/ruby.png', **model)
+      end
+    end
+
+    it 'raises for a local image to moderate without reading it' do
+      image_path = File.expand_path('../../fixtures/ruby.png', __dir__)
+      allow(File).to receive(:binread).and_call_original
+
+      expect_unsupported('moderation') { RubyLLM.moderate('Hello', with: image_path, **model) }
+      expect(File).not_to have_received(:binread).with(Pathname.new(image_path))
+    end
+
+    it 'raises for a remote image to moderate without downloading it' do
+      expect_unsupported('moderation') do
+        RubyLLM.moderate('Hello', with: 'https://assets.example.com/ruby.png', **model)
+      end
+    end
+  end
+
   describe 'judgments' do
     let(:model) { RubyLLM::Model.default('clef:27b', 'ollama_cloud') }
     let(:question) { { urgent: { type: :probability, instructions: 'Is this urgent?' } } }

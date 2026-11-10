@@ -195,6 +195,8 @@ RubyLLM.models.by_provider(:ollama_cloud).map(&:id)
 
 Ollama Cloud does not support [structured output]({% link _core_features/structured-output.md %}); use local Ollama or another provider when you need a schema.
 
+Ollama Cloud does not serve embeddings, speech, transcription, image generation, or moderation, so those operations raise an error on `:ollama_cloud`. Use another provider, or local Ollama with a model that offers them.
+
 [Judgments]({% link _advanced/judgments.md %}) on `clef:27b` need a paid Ollama plan or usage credits.
 
 ## Hetzner
