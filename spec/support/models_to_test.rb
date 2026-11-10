@@ -133,6 +133,7 @@ PDF_MODELS = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
   { provider: :bedrock, model: 'claude-sonnet-4-5' },
   { provider: :gemini, model: 'gemini-2.5-flash' },
+  { provider: :moonshot, model: 'kimi-k3' },
   { provider: :openai, model: 'gpt-5.6-luna' },
   { provider: :openrouter, model: 'gemini-2.5-flash' },
   { provider: :perplexity, model: 'openai/gpt-5.4-mini' },

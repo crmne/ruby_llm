@@ -43,6 +43,29 @@ RSpec.describe RubyLLM::Chat, :live do
       end
     end
 
+    context "with moonshot/#{model_for(:moonshot)}" do
+      let(:chat) { RubyLLM.chat(model: model_for(:moonshot), provider: :moonshot) }
+
+      it 'counts a staged message without mutating the chat' do
+        count = chat.count_tokens('What is the capital of France?')
+
+        expect(count).to be_a(Integer)
+        expect(count).to be_positive
+        expect(chat.messages).to be_empty
+      end
+
+      it 'counts instructions, tools and structured output' do
+        chat.ask_later('What is the weather in Berlin?')
+        base = chat.count_tokens
+        schema = { type: 'object', properties: { weather: { type: 'string' } },
+                   required: ['weather'], additionalProperties: false }
+
+        configured = chat.with_instructions('Be terse.').with_tools(CountingWeather).with_schema(schema).count_tokens
+
+        expect(configured).to be > base
+      end
+    end
+
     context "with anthropic/#{model_for(:anthropic)}" do
       let(:chat) { RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic) }
 

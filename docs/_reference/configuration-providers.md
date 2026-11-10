@@ -298,7 +298,17 @@ RubyLLM.configure do |config|
 end
 ```
 
-Kimi models read images only from the request itself, so RubyLLM sends remote images inline. Documents and audio raise `RubyLLM::UnsupportedAttachmentError` before the request is sent. Kimi models fix their own temperature and reject any other, so leave `with_temperature` unset. Kimi K2.6 ignores a schema while it thinks, so turn thinking off with `with_thinking(false)` to get structured output from it; Kimi K3 follows a schema either way.
+Kimi models read images only from the request itself, so RubyLLM sends remote images inline. Kimi models can't read an attached document either, so RubyLLM uploads PDFs, Word files and spreadsheets to Kimi's Files API and sends the extracted text in the message. Kimi keeps those uploads in your account's file storage, 10 GiB by default. Audio raises `RubyLLM::UnsupportedAttachmentError` before the request is sent. Kimi models fix their own temperature and reject any other, so leave `with_temperature` unset. Kimi K2.6 ignores a schema while it thinks, so turn thinking off with `with_thinking(false)` to get structured output from it; Kimi K3 follows a schema either way.
+
+Hosted web search runs on Kimi's Responses API, so select that protocol. Kimi bills each search it runs:
+
+```ruby
+RubyLLM.chat(model: "kimi-k3", provider: :moonshot, protocol: :responses)
+       .with_provider_tools(:web_search)
+       .ask "What changed in Ruby this week?"
+```
+
+`RubyLLM.ocr` reads a document through the same Files API and removes the upload afterward. Kimi's extraction takes no model, so pass any Kimi model to name the provider. It returns the whole document as one page, so `pages:` raises `ArgumentError`, and images are not supported.
 
 ## Z.ai
 

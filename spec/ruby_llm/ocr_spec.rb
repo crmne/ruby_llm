@@ -36,6 +36,14 @@ RSpec.describe RubyLLM::OCR, :live do
       expect(ocr.model).to eq(model_for(:mistral, :ocr))
     end
 
+    it "moonshot/#{model_for(:moonshot)} extracts markdown from a PDF" do
+      ocr = RubyLLM.ocr(pdf_path, model: model_for(:moonshot), provider: :moonshot)
+
+      expect(ocr.pages.length).to eq(1)
+      expect(ocr.markdown).to match(/sample pdf/i)
+      expect(ocr.model).to eq(model_for(:moonshot))
+    end
+
     it "mistral/#{model_for(:mistral, :ocr)} extracts markdown from a CSV file" do
       ocr = RubyLLM.ocr(csv_path, model: model_for(:mistral, :ocr), provider: :mistral)
 
