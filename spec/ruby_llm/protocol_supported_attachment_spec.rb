@@ -28,7 +28,7 @@ RSpec.describe RubyLLM::Protocol, '#supported_attachment?' do
     [RubyLLM::Providers::MiniMax::Anthropic, :minimax, %w[png mov pdf txt]],
     [RubyLLM::Providers::Moonshot::ChatCompletions, :moonshot, %w[png mov txt]],
     [RubyLLM::Providers::XAI::ChatCompletions, :xai, %w[png txt]],
-    [RubyLLM::Providers::ZAI::ChatCompletions, :zai, %w[png mov pdf txt]]
+    [RubyLLM::Providers::ZAI::ChatCompletions, :zai, %w[png mov txt]]
   ]
 
   protocols.each do |protocol_class, provider_name, supported_extensions|

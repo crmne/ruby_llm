@@ -129,13 +129,177 @@ RSpec.describe RubyLLM::Providers::Deepgram do
     end
   end
 
-  describe 'operations Deepgram has no endpoint for' do
-    it 'refuses to chat' do
-      chat = RubyLLM.chat(model: 'nova-3', provider: :deepgram)
-
-      expect { chat.ask('Hello') }.to raise_error(RubyLLM::Error, "Deepgram doesn't support chat")
+  describe 'chat on the Think endpoint' do
+    let(:think_url) { 'https://agent.deepgram.com/v1/think' }
+    let(:long_instructions) do
+      "You are a terse assistant for a fictional bakery. #{(1..300).map { |n| "Rule #{n}: be brief." }.join(' ')}"
     end
 
+    def think_chat(model = 'think-fast')
+      RubyLLM.chat(model: model, provider: :deepgram, assume_model_exists: true)
+    end
+
+    def weather_tool
+      stub_const('Weather', Class.new(RubyLLM::Tool) do
+        description 'Gets the current weather for one city'
+        parameter :city, description: 'The city name'
+
+        def execute(city:) = "#{city}: 15 degrees"
+      end)
+    end
+
+    def stub_think
+      stub_request(:post, think_url).to_return(
+        status: 200,
+        body: { id: 'chatcmpl-1', object: 'chat.completion', model: 'think-fast',
+                choices: [{ index: 0, message: { role: 'assistant', content: 'Hi' }, finish_reason: 'stop' }],
+                usage: { prompt_tokens: 12, completion_tokens: 3, total_tokens: 15,
+                         prompt_tokens_details: { cached_tokens: 5 } } }.to_json,
+        headers: { 'Content-Type' => 'application/json' }
+      )
+    end
+
+    def sent_body
+      body = nil
+      expect(a_request(:post, think_url).with { |request| body = JSON.parse(request.body) }).to have_been_made
+      body
+    end
+
+    it 'posts to the Think host with Token authentication' do
+      RubyLLM.config.deepgram_api_key = 'deepgram-key'
+      stub = stub_think.with(headers: { 'Authorization' => 'Token deepgram-key' })
+
+      think_chat.ask('Hello')
+
+      expect(stub).to have_been_requested
+    end
+
+    it 'sends a configured base the Think path too' do
+      RubyLLM.config.deepgram_api_base = 'https://deepgram.example.com/'
+      stub = stub_request(:post, 'https://deepgram.example.com/v1/think').to_return(
+        status: 200, headers: { 'Content-Type' => 'application/json' },
+        body: { choices: [{ message: { role: 'assistant', content: 'Hi' }, finish_reason: 'stop' }] }.to_json
+      )
+
+      think_chat.ask('Hello')
+
+      expect(stub).to have_been_requested
+    ensure
+      RubyLLM.config.deepgram_api_base = nil
+    end
+
+    it 'refuses a base that already ends in the Think path' do
+      RubyLLM.config.deepgram_api_base = 'https://deepgram.example.com/v1/think'
+
+      expect { provider.api_base }.to raise_error(RubyLLM::ConfigurationError, %r{without /v1/think})
+    ensure
+      RubyLLM.config.deepgram_api_base = nil
+    end
+
+    it 'sends instructions as a system message' do
+      stub_think
+
+      think_chat.with_instructions('Be brief.').ask('Hello')
+
+      expect(sent_body['messages'].first).to eq('role' => 'system', 'content' => 'Be brief.')
+    end
+
+    it 'sends no prompt cache fields, which the endpoint would reject' do
+      stub_think
+
+      think_chat.with_caching(key: 'bakery').ask('Hello')
+
+      expect(sent_body.keys).not_to include('prompt_cache_key', 'prompt_cache_options')
+    end
+
+    it 'bills cached tokens as cache reads' do
+      stub_think
+
+      expect(think_chat.ask('Hello').tokens.cache_read).to eq(5)
+    end
+
+    it 'keeps speech and transcription on the Deepgram protocol' do
+      model = RubyLLM::Model.default('nova-3', 'deepgram')
+
+      expect(provider.protocol_for(model, operation: :transcribe)).to eq(RubyLLM::Protocols::Deepgram)
+      expect(provider.protocol_for(model, operation: :speak)).to eq(RubyLLM::Protocols::Deepgram)
+    end
+
+    it 'answers from the history the application holds', :live do
+      chat = think_chat
+
+      chat.ask('My name is Ada. Reply with just OK.')
+      response = chat.ask('What is my name? Reply with just the name.')
+
+      expect(response.content).to include('Ada')
+      expect(response.tokens.input).to be_positive
+    end
+
+    it 'streams chunks and reports usage', :live do
+      chunks = []
+
+      response = think_chat.ask('Count from 1 to 3.') { |chunk| chunks << chunk }
+
+      expect(chunks.filter_map(&:content).join).to eq(response.content)
+      expect(response.tokens.output).to be_positive
+    end
+
+    it 'runs a tool and sends the result back', :live do
+      response = think_chat.with_tools(weather_tool).ask('What is the weather in Berlin? Use the tool.')
+
+      expect(response.content).to match(/15|fifteen/i)
+    end
+
+    it 'runs a tool from a streamed response', :live do
+      chat = think_chat.with_tools(weather_tool)
+
+      response = chat.ask('What is the weather in Berlin? Use the tool.') { |_chunk| nil }
+
+      expect(response.content).to match(/15|fifteen/i)
+    end
+
+    it 'takes several tool calls in one response', :live do
+      chat = think_chat.with_tools(weather_tool)
+
+      chat.ask('What is the weather in Berlin and in Paris? Call the tool once per city, both at the same time.')
+
+      expect(chat.messages.select(&:tool_call?).map { |message| message.tool_calls.size }.max).to be >= 2
+    end
+
+    it 'sends a thinking effort as reasoning_effort' do
+      stub_think
+
+      think_chat.with_thinking(effort: :low).ask('Hello')
+
+      expect(sent_body['reasoning_effort']).to eq('low')
+    end
+
+    it 'accepts a thinking effort on phoneLLM mini', :live do
+      response = think_chat('phonellm-mini-alpha-2-fp8').with_thinking(effort: :low).ask('What is 2+2?')
+
+      expect(response.content).to include('4')
+    end
+
+    it 'thinks when asked to and not when told not to', :live do
+      question = 'A shop sells pens at 3 for 4 euros. How many euros do 27 pens cost?'
+
+      thought = think_chat.with_thinking(effort: :low).ask(question)
+      direct = think_chat.with_thinking(effort: :none).ask(question)
+
+      expect(thought.tokens.thinking).to be_positive
+      expect(direct.tokens.thinking).to eq(0)
+    end
+
+    it 'reports the cached part of a repeated prompt', :live do
+      reads = Array.new(6) do
+        think_chat.with_instructions(long_instructions).ask('Say hello.').tokens.cache_read
+      end
+
+      expect(reads.max).to be_positive
+    end
+  end
+
+  describe 'operations Deepgram has no endpoint for' do
     it 'refuses to embed' do
       expect do
         RubyLLM.embed('Hello', model: 'nova-3', provider: :deepgram)

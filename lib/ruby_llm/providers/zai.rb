@@ -14,6 +14,23 @@ module RubyLLM
         def server_tool_aliases
           ZAI::Chat::SERVER_TOOL_ALIASES
         end
+
+        private
+
+        def provider_file_references?
+          true
+        end
+
+        # Z.ai reads a PDF only through its Files API, so any inline PDF is
+        # uploaded, not just a large one.
+        def default_large_file_upload_threshold
+          0
+        end
+
+        # Only the GLM-5.3-Flash series accepts a file_id.
+        def provider_file_attachable?(attachment)
+          attachment.pdf? && ZAI::Chat.reads_files?(@model)
+        end
       end
 
       protocol :chat_completions, ChatCompletions

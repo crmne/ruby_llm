@@ -17,6 +17,7 @@ module RubyLLM
       protocol :responses, Azure::Responses
       protocol :files, Protocols::Azure::Files
       protocol :cohere, Azure::Cohere
+      protocol :mistral, Azure::Mistral
       protocol :decisions, Azure::Decisions
       protocol :speech, Protocols::Azure::Speech
 
@@ -50,6 +51,7 @@ module RubyLLM
       # protocol: or the azure_protocol configuration option overrides it.
       def protocol_for(model, operation: nil, **)
         return protocols[:cohere] if operation == :rerank
+        return protocols[:mistral] if operation == :ocr
         if operation == :embed &&
            %w[Cohere-embed-v3-english Cohere-embed-v3-multilingual embed-v-4-0].include?(model.id)
           return protocols[:cohere]

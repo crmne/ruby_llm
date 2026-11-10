@@ -401,6 +401,8 @@ Pass your Azure deployment name as `model:`. It can differ from the underlying m
 
 Set `azure_api_base` to your resource URL, deployment URL, or `/openai/v1` base. Use a deployment that supports the operation you call.
 
+`RubyLLM.ocr` on Foundry's Mistral document models needs `azure_api_base` to be the resource's `services.ai.azure.com` endpoint, and `azure_api_key` or `azure_ai_auth_token`.
+
 `RubyLLM.moderate` raises `RubyLLM::Error` for `:azure`. Live requests to Foundry's moderations route returned 404 on resource and project endpoints, and the model catalog holds no moderation model. Azure AI Content Safety is a separate product.
 
 When a deployment name differs from the model it deploys, declare it so RubyLLM uses that model's registry entry for pricing, limits, and capabilities:
@@ -471,7 +473,7 @@ For Bedrock, your credentials need permission to submit jobs, pass the role, and
 
 Configure `gpustack_api_base` and `gpustack_api_key` for your GPUStack installation. The available operations depend on its deployed models and backends.
 
-For [tokenization]({% link _core_features/tokenization.md %}#tokenizing-text) or [video generation]({% link _advanced/video-generation.md %}), enable the model proxy and set `gpustack_api_base` to its `/model/proxy/ROUTE_ID/v1` URL, including any installation path prefix. The route ID identifies the deployment; pass its model name separately as `model:`. These operations require a vLLM tokenizer or vLLM-Omni video model respectively. The standard `/v1` gateway does not expose them.
+For [tokenization]({% link _core_features/tokenization.md %}#tokenizing-text), [token counting]({% link _core_features/tokenization.md %}#counting-a-chat-request) or [video generation]({% link _advanced/video-generation.md %}), enable the model proxy and set `gpustack_api_base` to its `/model/proxy/ROUTE_ID/v1` URL, including any installation path prefix. The route ID identifies the deployment; pass its model name separately as `model:`. These operations require a vLLM tokenizer or vLLM-Omni video model respectively. The standard `/v1` gateway does not expose them.
 
 For [provider tools]({% link _tools/provider-tools.md %}), configure MCP servers on the vLLM deployment. Web search and web fetch use the `web_search_preview` label; code execution uses `code_interpreter`. The backend controls which tools are available and permitted.
 
@@ -585,7 +587,7 @@ RubyLLM uses each base URL as you give it and adds each request's path to it, so
 | `bedrock_api_base` | `https://bedrock-runtime.REGION.amazonaws.com` |
 | `bedrock_mantle_api_base` | `https://bedrock-mantle.REGION.api.aws` |
 | `cohere_api_base` | `https://api.cohere.com` |
-| `deepgram_api_base` | `https://api.deepgram.com` |
+| `deepgram_api_base` | `https://api.deepgram.com`; without a custom base, chat goes to `https://agent.deepgram.com` |
 | `deepseek_api_base` | `https://api.deepseek.com` |
 | `elevenlabs_api_base` | `https://api.elevenlabs.io` |
 | `gemini_api_base` | `https://generativelanguage.googleapis.com/v1beta` |

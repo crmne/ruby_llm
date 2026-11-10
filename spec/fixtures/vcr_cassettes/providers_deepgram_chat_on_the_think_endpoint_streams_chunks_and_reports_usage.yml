@@ -1,0 +1,71 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://agent.deepgram.com/v1/think
+    body:
+      encoding: UTF-8
+      string: '{"model":"think-fast","messages":[{"role":"user","content":"Count from
+        1 to 3."}],"stream":true,"stream_options":{"include_usage":true}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Token <DEEPGRAM_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/event-stream
+      Cache-Control:
+      - no-cache
+      Dg-Project-Id:
+      - <DEEPGRAM_PROJECT_ID>
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings
+      Dg-Request-Id:
+      - 01a1c5fa-ef94-7611-8387-5816353d0cb0
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Tue, 10 Nov 2026 15:01:59 GMT
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"id":"chatcmpl-a30e452d-ab20-41a1-8fb9-432f2140b78b","choices":[{"index":0,"delta":{"content":"1","role":"assistant"},"finish_reason":null,"logprobs":null}],"created":1794322919,"model":"think-fast","object":"chat.completion.chunk"}
+
+        data: {"id":"chatcmpl-a30e452d-ab20-41a1-8fb9-432f2140b78b","choices":[{"index":0,"delta":{"content":","},"finish_reason":null,"logprobs":null}],"created":1794322919,"model":"think-fast","object":"chat.completion.chunk"}
+
+        data: {"id":"chatcmpl-a30e452d-ab20-41a1-8fb9-432f2140b78b","choices":[{"index":0,"delta":{"content":" "},"finish_reason":null,"logprobs":null}],"created":1794322919,"model":"think-fast","object":"chat.completion.chunk"}
+
+        data: {"id":"chatcmpl-a30e452d-ab20-41a1-8fb9-432f2140b78b","choices":[{"index":0,"delta":{"content":"2"},"finish_reason":null,"logprobs":null}],"created":1794322919,"model":"think-fast","object":"chat.completion.chunk"}
+
+        data: {"id":"chatcmpl-a30e452d-ab20-41a1-8fb9-432f2140b78b","choices":[{"index":0,"delta":{"content":","},"finish_reason":null,"logprobs":null}],"created":1794322919,"model":"think-fast","object":"chat.completion.chunk"}
+
+        data: {"id":"chatcmpl-a30e452d-ab20-41a1-8fb9-432f2140b78b","choices":[{"index":0,"delta":{"content":" "},"finish_reason":null,"logprobs":null}],"created":1794322919,"model":"think-fast","object":"chat.completion.chunk"}
+
+        data: {"id":"chatcmpl-a30e452d-ab20-41a1-8fb9-432f2140b78b","choices":[{"index":0,"delta":{"content":"3"},"finish_reason":null,"logprobs":null}],"created":1794322919,"model":"think-fast","object":"chat.completion.chunk"}
+
+        data: {"id":"chatcmpl-a30e452d-ab20-41a1-8fb9-432f2140b78b","choices":[{"index":0,"delta":{"content":"."},"finish_reason":null,"logprobs":null}],"created":1794322919,"model":"think-fast","object":"chat.completion.chunk"}
+
+        data: {"id":"chatcmpl-a30e452d-ab20-41a1-8fb9-432f2140b78b","choices":[{"index":0,"delta":{},"finish_reason":"stop","logprobs":null}],"created":1794322919,"model":"think-fast","object":"chat.completion.chunk"}
+
+        data: {"id":"chatcmpl-a30e452d-ab20-41a1-8fb9-432f2140b78b","choices":[],"created":1794322919,"model":"think-fast","object":"chat.completion.chunk","usage":{"prompt_tokens":20,"completion_tokens":9,"total_tokens":29,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}
+
+        data: [DONE]
+
+  recorded_at: Tue, 10 Nov 2026 15:01:59 GMT
+recorded_with: VCR 6.4.1
+...

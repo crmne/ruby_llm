@@ -90,6 +90,7 @@ chat.with_compaction(false)
 | Anthropic and Bedrock Mantle | Summarizes earlier turns; supports all three options, with a minimum threshold of 50,000 tokens |
 | OpenAI and Azure Responses | Summarizes earlier turns; supports `at:` |
 | OpenRouter | Drops messages from the middle at the model's context limit; ignores these options |
+| GPUStack (vLLM) | Keeps the last `at:` tokens of the prompt. Without `at:`, keeps as many as the model allows when an output limit is set, and otherwise does nothing. Summarizes nothing, can cut the system prompt, and ignores the other options |
 
 Use a model that supports compaction. Unsupported providers ignore the setting. Summarization can incur additional usage and charges, which are included in the response's tokens and cost.
 

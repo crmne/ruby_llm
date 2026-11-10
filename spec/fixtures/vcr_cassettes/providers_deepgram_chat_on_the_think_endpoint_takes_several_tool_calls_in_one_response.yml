@@ -1,0 +1,101 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://agent.deepgram.com/v1/think
+    body:
+      encoding: UTF-8
+      string: '{"model":"think-fast","messages":[{"role":"user","content":"What is
+        the weather in Berlin and in Paris? Call the tool once per city, both at the
+        same time."}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the current weather for one city","parameters":{"type":"object","properties":{"city":{"type":"string","description":"The
+        city name"}},"required":["city"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Token <DEEPGRAM_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Dg-Project-Id:
+      - <DEEPGRAM_PROJECT_ID>
+      Vary:
+      - accept-encoding
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings
+      Dg-Request-Id:
+      - 01a1c5fc-51b1-7eb1-bb5d-26729b4d164e
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Tue, 10 Nov 2026 15:03:30 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-1ac04f51-e025-423d-9f37-4298a7aa4505","choices":[{"index":0,"message":{"content":"Checking
+        both cities now.\n\n\n","refusal":null,"tool_calls":[{"id":"call-6d16a482-7ff9-4c86-9fea-5c288ce9e257","type":"function","function":{"name":"weather","arguments":"{\"city\":\"Berlin\"}"}},{"id":"call-5d3f81c6-b365-45c7-906a-7abf226b390d","type":"function","function":{"name":"weather","arguments":"{\"city\":\"Paris\"}"}}],"role":"assistant"},"finish_reason":"tool_calls","logprobs":null}],"created":1794323009,"model":"think-fast","object":"chat.completion","usage":{"prompt_tokens":312,"completion_tokens":58,"total_tokens":370,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}'
+  recorded_at: Tue, 10 Nov 2026 15:03:30 GMT
+- request:
+    method: post
+    uri: https://agent.deepgram.com/v1/think
+    body:
+      encoding: UTF-8
+      string: '{"model":"think-fast","messages":[{"role":"user","content":"What is
+        the weather in Berlin and in Paris? Call the tool once per city, both at the
+        same time."},{"role":"assistant","content":"Checking both cities now.\n\n\n","tool_calls":[{"id":"call-6d16a482-7ff9-4c86-9fea-5c288ce9e257","type":"function","function":{"name":"weather","arguments":"{\"city\":\"Berlin\"}"}},{"id":"call-5d3f81c6-b365-45c7-906a-7abf226b390d","type":"function","function":{"name":"weather","arguments":"{\"city\":\"Paris\"}"}}]},{"role":"tool","content":"Berlin:
+        15 degrees","tool_call_id":"call-6d16a482-7ff9-4c86-9fea-5c288ce9e257"},{"role":"tool","content":"Paris:
+        15 degrees","tool_call_id":"call-5d3f81c6-b365-45c7-906a-7abf226b390d"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the current weather for one city","parameters":{"type":"object","properties":{"city":{"type":"string","description":"The
+        city name"}},"required":["city"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Token <DEEPGRAM_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Dg-Project-Id:
+      - <DEEPGRAM_PROJECT_ID>
+      Vary:
+      - accept-encoding
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings
+      Dg-Request-Id:
+      - 01a1c5fc-5500-72f1-bd83-e0a3ee05820d
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Tue, 10 Nov 2026 15:03:30 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-99527bf3-291b-4fa1-bed2-bc399ac1f90a","choices":[{"index":0,"message":{"content":"Berlin
+        is at fifteen degrees, and Paris is also at fifteen degrees.","refusal":null,"role":"assistant"},"finish_reason":"stop","logprobs":null}],"created":1794323010,"model":"think-fast","object":"chat.completion","usage":{"prompt_tokens":404,"completion_tokens":15,"total_tokens":419,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}'
+  recorded_at: Tue, 10 Nov 2026 15:03:31 GMT
+recorded_with: VCR 6.4.1

@@ -118,6 +118,9 @@ VCR.configure do |config|
     'Msh-Project-Id' => '<MOONSHOT_PROJECT_ID>' }.each do |header, placeholder|
     config.filter_sensitive_data(placeholder) { |interaction| interaction.response.headers[header]&.first }
   end
+  config.filter_sensitive_data('<DEEPGRAM_PROJECT_ID>') do |interaction|
+    interaction.response.headers['Dg-Project-Id']&.first
+  end
   config.filter_sensitive_data('<X_REQUEST_ID>') { |interaction| interaction.response.headers['X-Request-Id']&.first }
   config.filter_sensitive_data('<REQUEST_ID>') { |interaction| interaction.response.headers['Request-Id']&.first }
   config.filter_sensitive_data('<CF_RAY>') { |interaction| interaction.response.headers['Cf-Ray']&.first }
