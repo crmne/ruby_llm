@@ -448,15 +448,23 @@ RSpec.describe RubyLLM::MCP::OAuth do
         answer.pop
         { body: { access_token: 'access-2', refresh_token: 'refresh-2', expires_in: 3600 }.to_json }
       end
+      locking = Queue.new
+      allow(described_class).to receive(:refreshing).and_wrap_original do |original, *arguments, &block|
+        locking << Thread.current
+        original.call(*arguments, &block)
+      end
       refreshing = Thread.new { linear_class.new(user: 'ada').send(:oauth).access_token }
       Timeout.timeout(5) { requested.pop }
       starting = Thread.new { linear.authorization_url(redirect_uri:) }
+      Timeout.timeout(5) { nil until locking.pop == starting }
       Timeout.timeout(5) { Thread.pass until starting.stop? }
       answer << true
       Timeout.timeout(5) { [refreshing, starting].each(&:join) }
 
       expect(store.read(key)).to include('access_token' => 'access-2', 'refresh_token' => 'refresh-2',
                                          'pending' => a_hash_including('redirect_uri' => redirect_uri))
+    ensure
+      [refreshing, starting].compact.each { |thread| thread.kill.join }
     end
 
     it 'raises UnauthorizedError when its token expires after another instance forgets the credentials' do
