@@ -267,6 +267,8 @@ This comes from Rails partial rendering: `render @chat.messages` calls `to_parti
 
 For compatibility with model broadcasts (`broadcasts_to`), generated message partials also accept a `message` local as a fallback.
 
+A reply that also calls a tool renders as `messages/_tool_calls.html.erb`, which renders `messages/_assistant.html.erb` for its text with `nested: true`, so a change to the assistant card shows on those replies too.
+
 Shared partials take explicit locals: `messages/_attachments.html.erb` gets `message`, `chats/_questions.html.erb` gets `chat`, and `questions/_question.html.erb` gets `question` and `chat`.
 
 ### Tool Call and Tool Result Partials
