@@ -73,7 +73,7 @@ module RubyLLM
         end
 
         def supported_attachment?(attachment)
-          return true if remote_pdf?(attachment)
+          return true if remote_pdf?(attachment) || inline_video?(attachment)
 
           Protocols::ChatCompletions::Media.supported_attachment?(
             attachment, document_attachments: document_attachments(attachment), audio_attachments: false
@@ -83,12 +83,21 @@ module RubyLLM
         def render_content(content, attachments = [])
           Protocols::ChatCompletions::Media.render_parts(content, attachments) do |attachment|
             next { type: 'file', file: { file_url: attachment.source.to_s } } if remote_pdf?(attachment)
+            next render_video(attachment) if inline_video?(attachment)
 
             Protocols::ChatCompletions::Media.render_attachment(
               attachment, document_attachments: document_attachments(attachment),
                           image_attachments: true, audio_attachments: false
             )
           end
+        end
+
+        def inline_video?(attachment)
+          attachment.video? && !attachment.provider_file?
+        end
+
+        def render_video(video)
+          { type: 'video_url', video_url: { url: video.url_or_data_uri } }
         end
 
         # The API fetches a remote PDF itself.

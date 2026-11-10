@@ -24,11 +24,11 @@ RSpec.describe RubyLLM::Protocol, '#supported_attachment?' do
     [RubyLLM::Providers::DeepSeek::ChatCompletions, :deepseek, %w[png txt]],
     [RubyLLM::Providers::DeepSeek::Responses, :deepseek, %w[png txt]],
     [RubyLLM::Providers::Hetzner::ChatCompletions, :hetzner, %w[png txt]],
-    [RubyLLM::Providers::Meta::Responses, :meta, %w[png pdf docx pptx txt]],
-    [RubyLLM::Providers::MiniMax::Anthropic, :minimax, %w[png pdf txt]],
-    [RubyLLM::Providers::Moonshot::ChatCompletions, :moonshot, %w[png txt]],
+    [RubyLLM::Providers::Meta::Responses, :meta, %w[png wav mov pdf docx pptx txt]],
+    [RubyLLM::Providers::MiniMax::Anthropic, :minimax, %w[png mov pdf txt]],
+    [RubyLLM::Providers::Moonshot::ChatCompletions, :moonshot, %w[png mov txt]],
     [RubyLLM::Providers::XAI::ChatCompletions, :xai, %w[png txt]],
-    [RubyLLM::Providers::ZAI::ChatCompletions, :zai, %w[png txt]]
+    [RubyLLM::Providers::ZAI::ChatCompletions, :zai, %w[png mov txt]]
   ]
 
   protocols.each do |protocol_class, provider_name, supported_extensions|

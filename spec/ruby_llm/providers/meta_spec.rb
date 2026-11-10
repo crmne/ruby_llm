@@ -165,6 +165,46 @@ RSpec.describe RubyLLM::Providers::Meta do
     expect(context.chat(model: model_id, provider: :meta).count_tokens('Hello')).to eq(7)
   end
 
+  describe 'attachments' do
+    let(:protocol) { described_class::Responses.new(provider, RubyLLM.models.find('muse-spark-1.2', provider: :meta)) }
+
+    it 'sends local and remote videos inline as data URLs' do
+      stub_request(:get, 'https://example.com/clip.mp4')
+        .to_return(status: 200, body: 'mp4 bytes', headers: { 'Content-Type' => 'video/mp4' })
+      remote = RubyLLM::Attachment.new('https://example.com/clip.mp4')
+      local = RubyLLM::Attachment.new(File.expand_path('../../fixtures/ruby_clip.mp4', __dir__))
+
+      expect(protocol.send(:render_content, 'Watch this', [remote, local]).drop(1)).to eq(
+        [
+          { type: 'input_video', video_url: "data:video/mp4;base64,#{Base64.strict_encode64('mp4 bytes')}" },
+          { type: 'input_video', video_url: local.for_llm }
+        ]
+      )
+    end
+
+    it 'sends audio inline with its format' do
+      audio = RubyLLM::Attachment.new(File.expand_path('../../fixtures/ruby.mp3', __dir__))
+
+      expect(protocol.send(:render_content, 'Hear this', [audio]).last)
+        .to eq(type: 'input_audio', input_audio: { data: audio.encoded, format: 'mp3' })
+    end
+
+    it 'leaves audio formats Meta does not take to the converter, or raises' do
+      audio = RubyLLM::Attachment.new(StringIO.new('ogg'), filename: 'clip.ogg', mime_type: 'audio/ogg')
+
+      expect(protocol.send(:supported_attachment?, audio)).to be(false)
+      expect { protocol.send(:render_content, 'Hear this', [audio]) }
+        .to raise_error(RubyLLM::UnsupportedAttachmentError)
+    end
+
+    it 'keeps rendering uploaded video as a file reference' do
+      file = RubyLLM::UploadedFile.new(id: 'file-1', provider: 'meta', mime_type: 'video/mp4')
+
+      expect(protocol.send(:render_content, 'Watch this', [RubyLLM::Attachment.new(file)]).last)
+        .to eq(type: 'input_file', file_id: 'file-1')
+    end
+  end
+
   describe 'transcription' do
     let(:audio_path) { File.expand_path('../../fixtures/ruby.wav', __dir__) }
     let(:transcription_model) { model_for(:meta, :transcription) }

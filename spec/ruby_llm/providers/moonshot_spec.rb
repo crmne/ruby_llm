@@ -208,6 +208,42 @@ RSpec.describe RubyLLM::Providers::Moonshot do
       expect { protocol.render_content('Hear this', [audio]) }.to raise_error(RubyLLM::UnsupportedAttachmentError)
     end
 
+    it 'sends remote videos inline, because Moonshot reads only data URIs' do
+      video = RubyLLM::Attachment.new('https://example.com/clip.mp4')
+      stub_request(:get, 'https://example.com/clip.mp4')
+        .to_return(status: 200, body: 'mp4 bytes', headers: { 'Content-Type' => 'video/mp4' })
+
+      data_uri = "data:video/mp4;base64,#{Base64.strict_encode64('mp4 bytes')}"
+      expect(protocol.render_content('What is this?', [video]).last)
+        .to eq(type: 'video_url', video_url: { url: data_uri })
+    end
+
+    it 'refers to an uploaded video by its Moonshot file reference' do
+      file = RubyLLM::UploadedFile.new(id: 'file-1', provider: 'moonshot', mime_type: 'video/mp4', purpose: 'video')
+      attachment = RubyLLM::Attachment.new(file)
+
+      expect(protocol.supported_attachment?(attachment)).to be(true)
+      expect(protocol.render_content('What is this?', [attachment]).last)
+        .to eq(type: 'video_url', video_url: { url: 'ms://file-1' })
+    end
+
+    it 'accepts uploaded images and videos, and refuses other uploaded files' do
+      upload = ->(mime_type) { RubyLLM::Attachment.new(RubyLLM::UploadedFile.new(id: 'f', provider: 'moonshot', mime_type:)) }
+
+      expect(protocol.supported_attachment?(upload.call('image/png'))).to be(true)
+      expect(protocol.supported_attachment?(upload.call('video/mp4'))).to be(true)
+      expect(protocol.supported_attachment?(upload.call('application/pdf'))).to be(false)
+    end
+
+    it 'refuses a video uploaded to another provider' do
+      file = RubyLLM::UploadedFile.new(id: 'file-1', provider: 'openai', mime_type: 'video/mp4')
+      attachment = RubyLLM::Attachment.new(file)
+
+      expect(protocol.supported_attachment?(attachment)).to be(false)
+      expect { protocol.render_content('What is this?', [attachment]) }
+        .to raise_error(RubyLLM::UnsupportedAttachmentError)
+    end
+
     it 'refers to an uploaded image by its Moonshot file reference' do
       file = RubyLLM::UploadedFile.new(id: 'file-1', provider: 'moonshot', mime_type: 'image/png', purpose: 'image')
 

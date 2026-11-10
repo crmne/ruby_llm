@@ -33,7 +33,50 @@ module RubyLLM
           false
         end
 
+        def supported_attachment?(attachment)
+          return attachment.source.provider == 'minimax' if attachment.provider_file? && attachment.video?
+
+          attachment.video? || super
+        end
+
         private
+
+        # A video block is documented for user messages only; tool results
+        # and system prompts take the attachments Anthropic's format does.
+        def supported_message_attachment?(message, attachment)
+          return false if attachment.video? && message.role != :user
+
+          super
+        end
+
+        def render_content(content, attachments = [], citations: false)
+          blocks = super(content, [], citations:)
+          attachments.each do |attachment|
+            blocks.concat(attachment.video? ? [render_video(attachment)] : super(nil, [attachment], citations:))
+          end
+          blocks
+        end
+
+        def append_formatted_content(content_blocks, msg, citations: false)
+          video = msg.attachments.find(&:video?) unless msg.role == :user
+          raise UnsupportedAttachmentError, video.mime_type if video
+
+          content_blocks.concat(render_content(msg.content, msg.attachments, citations:))
+        end
+
+        def render_video(video)
+          raise UnsupportedAttachmentError, video.mime_type unless supported_attachment?(video)
+
+          { type: 'video', source: video_source(video) }
+        end
+
+        # MiniMax's fetcher is refused by many hosts, so remote videos travel inline.
+        def video_source(video)
+          return { type: 'url', url: "mm_file://#{video.provider_file_id}" } if video.provider_file?
+
+          media_type = video.mime_type == 'video/quicktime' ? 'video/mov' : video.mime_type
+          { type: 'base64', media_type:, data: video.encoded }
+        end
 
         # A web search turn answered on Responses keeps that route's output
         # items, which a Messages request cannot carry.

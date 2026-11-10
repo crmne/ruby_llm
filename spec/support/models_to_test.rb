@@ -183,13 +183,18 @@ VISION_MODELS = filter_local_providers(vision_models).freeze
 VIDEO_MODELS = [
   { provider: :bedrock, model: 'amazon.nova-2-lite-v1:0' },
   { provider: :gemini, model: 'gemini-2.5-flash' },
-  { provider: :vertexai, model: 'gemini-2.5-flash' }
+  { provider: :meta, model: 'muse-spark-1.2' },
+  { provider: :minimax, model: 'MiniMax-M3.1-Flash' },
+  { provider: :moonshot, model: 'kimi-k2.6' },
+  { provider: :vertexai, model: 'gemini-2.5-flash' },
+  { provider: :zai, model: 'glm-5.3-flash' }
 ].freeze
 
 AUDIO_MODELS = [
   { provider: :bedrock, model: 'mistral.voxtral-mini-3b-2507' },
   { provider: :openai, model: 'gpt-audio-mini' },
   { provider: :gemini, model: 'gemini-2.5-flash' },
+  { provider: :meta, model: 'muse-spark-1.2' },
   { provider: :mistral, model: 'voxtral-small-latest' }
 ].freeze
 

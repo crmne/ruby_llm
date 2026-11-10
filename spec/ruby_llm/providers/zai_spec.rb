@@ -273,6 +273,18 @@ RSpec.describe RubyLLM::Providers::ZAI do
       expect(other.send(:supported_attachment?, pdf)).to be(false)
     end
 
+    it 'sends videos by URL or as data URIs' do
+      remote = RubyLLM::Attachment.new('https://example.com/clip.mp4', mime_type: 'video/mp4')
+      local = RubyLLM::Attachment.new(File.expand_path('../../fixtures/ruby_clip.mp4', __dir__))
+
+      expect(protocol.render_content('Watch this', [remote, local]).drop(1)).to eq(
+        [
+          { type: 'video_url', video_url: { url: 'https://example.com/clip.mp4' } },
+          { type: 'video_url', video_url: { url: local.for_llm } }
+        ]
+      )
+    end
+
     it 'rejects documents and audio' do
       pdf = RubyLLM::Attachment.new(File.expand_path('../../fixtures/sample.pdf', __dir__))
       audio = RubyLLM::Attachment.new(File.expand_path('../../fixtures/ruby.wav', __dir__))

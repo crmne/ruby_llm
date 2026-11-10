@@ -15,6 +15,7 @@ module RubyLLM
         }.freeze
 
         PROMPT_CACHE_OPTIONS = %i[key ttl].freeze
+        AUDIO_FORMATS = %w[mp3 wav].freeze
 
         def server_tool_aliases
           SERVER_TOOL_ALIASES
@@ -50,6 +51,24 @@ module RubyLLM
 
         def inject_cache_breakpoint(item)
           item
+        end
+
+        def supported_attachment?(attachment)
+          return super if attachment.provider_file?
+          return AUDIO_FORMATS.include?(attachment.format) if attachment.audio?
+
+          attachment.video? || super
+        end
+
+        # Meta's fetcher is refused by many hosts, so remote media travels inline.
+        def render_attachment(attachment)
+          return super if attachment.provider_file? || !supported_attachment?(attachment)
+
+          case attachment.type
+          when :video then { type: 'input_video', video_url: attachment.for_llm }
+          when :audio then { type: 'input_audio', input_audio: { data: attachment.encoded, format: attachment.format } }
+          else super
+          end
         end
 
         # Meta refuses to fetch many remote images, so images travel inline.
