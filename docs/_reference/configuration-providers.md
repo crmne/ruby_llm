@@ -471,7 +471,7 @@ For Bedrock, your credentials need permission to submit jobs, pass the role, and
 
 Configure `gpustack_api_base` and `gpustack_api_key` for your GPUStack installation. The available operations depend on its deployed models and backends.
 
-For [tokenization]({% link _core_features/tokenization.md %}#tokenizing-text) or [video generation]({% link _advanced/video-generation.md %}), enable the model proxy and set `gpustack_api_base` to its `/model/proxy/ROUTE_ID/v1` URL, including any installation path prefix. The route ID identifies the deployment; pass its model name separately as `model:`. These operations require a vLLM tokenizer or vLLM-Omni video model respectively. The standard `/v1` gateway does not expose them.
+For [tokenization]({% link _core_features/tokenization.md %}#tokenizing-text), [token counting]({% link _core_features/tokenization.md %}#counting-a-chat-request) or [video generation]({% link _advanced/video-generation.md %}), enable the model proxy and set `gpustack_api_base` to its `/model/proxy/ROUTE_ID/v1` URL, including any installation path prefix. The route ID identifies the deployment; pass its model name separately as `model:`. These operations require a vLLM tokenizer or vLLM-Omni video model respectively. The standard `/v1` gateway does not expose them.
 
 For [provider tools]({% link _tools/provider-tools.md %}), configure MCP servers on the vLLM deployment. Web search and web fetch use the `web_search_preview` label; code execution uses `code_interpreter`. The backend controls which tools are available and permitted.
 
