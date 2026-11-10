@@ -9,7 +9,7 @@ http_interactions:
         a person named John who is 30 years old"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.15.0
+      - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,11 +24,11 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 20 Oct 2026 15:33:11 GMT
+      - Tue, 10 Nov 2026 20:06:35 GMT
       Content-Type:
       - application/json; charset=UTF-8
-      Content-Length:
-      - '2373'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
       Alt-Svc:
@@ -36,8 +36,9 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - b2795ca8454c59aac255c05715242b1d
+      - 531d289491720e6522ca1f9cf0bd0699
       Vary:
+      - Accept-Encoding
       - Access-Control-Request-Headers
       - Access-Control-Request-Headers
       - Access-Control-Request-Method
@@ -46,36 +47,33 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 202610202333045221d4a5df6846b6
+      - 20261111040628401d93e873b34911
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
-      encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"{\"name\":
-        \"John\", \"age\": 30}","reasoning_content":"The user wants me to generate
-        a person named John who is 30 years old. This is a simple creative request
-        - they want me to create a fictional character profile. This is harmless and
-        straightforward. I should create a character with the name John and age 30,
-        and flesh out some details to make the person feel real and complete.\n\nLet
-        me think about what makes a good character profile:\n- Name: John (given)\n-
-        Age: 30 (given)\n- I can add: occupation, location, personality traits, hobbies,
-        background, physical description, etc.\n\nI should make this a nice, fleshed-out
-        character. The format could be a profile-style layout with headers or a bulleted
-        list, or a paragraph description. Given the request is to \"generate a person,\"
-        a structured profile format seems appropriate - it''s like creating a character
-        sheet. I could use headers or bold labels with details.\n\nLet me create something
-        with reasonable depth but not overwhelming. A character profile with key categories
-        would be ideal:\n\n- Basic info (name, age, maybe birthday)\n- Occupation\n-
-        Location\n- Appearance\n- Personality\n- Hobbies/interests\n- Background\n\nLet
-        me draft this:\n\n**John**\n- Age: 30\n- Occupation: Software engineer (or
-        something else - let me pick something interesting, maybe a graphic designer
-        or teacher or something)\n- Location: Portland, Oregon or somewhere\n- Birthday:
-        March 15 (making him a Pisces, or I could pick another)\n\nPersonality: friendly,
-        a bit introverted but warm with close friends, curious\nHobbies: hiking, cooking,
-        board games, photography\nBackground: grew up in a small town, went to college,
-        etc.\n\nLet me write it out nicely. I''ll use markdown formatting since this
-        is a conversational AI context where markdown renders. A profile format with
-        bold labels and a few sections works well. Length should be moderate - enough
-        detail to be a fleshed-out character but not a novel.","role":"assistant"}}],"created":1792510391,"id":"202610202333045221d4a5df6846b6","model":"glm-5.3-flash","object":"chat.completion","request_id":"202610202333045221d4a5df6846b6","usage":{"completion_tokens":418,"completion_tokens_details":{"reasoning_tokens":404},"prompt_tokens":23,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":441}}'
-  recorded_at: Tue, 20 Oct 2026 15:33:11 GMT
-recorded_with: VCR 6.4.0
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"{\n  \"name\":
+        \"John\",\n  \"age\": 30\n}","reasoning_content":"The user wants me to generate
+        a person named John who is 30 years old. This is a simple creative/character
+        generation request. I should create a fictional character profile for John,
+        age 30.\n\nThis is likely for creative writing, role-playing, testing, or
+        some other purpose. I should create a well-rounded character with some details.
+        Let me think about what makes a good character profile:\n\n- Name: John (given)\n-
+        Age: 30 (given)\n- I can add: occupation, personality, background, hobbies,
+        appearance, etc.\n\nI should make this useful and creative. Let me create
+        a character profile with reasonable details. I shouldn''t make it too long,
+        but a nice character sketch would be good.\n\nFormat considerations: A structured
+        profile with headers or a brief narrative could work. Given the simplicity
+        of the request, I''ll create a character profile with some organized details.
+        Maybe use a mix of structured info and a brief description. Keep it moderate
+        length - not too short (that would be lazy) but not excessively long either.\n\nLet
+        me create John:\n\n**John** - 30 years old\n\nBasic details:\n- Full name:
+        John Michael Carter (or just keep it simple as John)\n- Occupation: Software
+        developer? Teacher? Let me pick something interesting - maybe a graphic designer
+        or an engineer\n- Location: somewhere generic like Chicago or Portland\n-
+        Personality traits\n- Hobbies\n- Background\n- Appearance\n\nI''ll present
+        this in a clean format. Maybe with a brief intro, key details, and a short
+        descriptive paragraph. I could use headers or bold labels. Given it''s a character
+        generation task, a profile-style format makes sense.","role":"assistant"}}],"created":1794341195,"id":"20261111040628401d93e873b34911","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261111040628401d93e873b34911","usage":{"completion_tokens":356,"completion_tokens_details":{"reasoning_tokens":338},"prompt_tokens":23,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":379}}'
+  recorded_at: Tue, 10 Nov 2026 20:06:35 GMT
+recorded_with: VCR 6.4.1
