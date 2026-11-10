@@ -31,6 +31,8 @@ module RubyLLM
         end
 
         def supported_attachment?(attachment)
+          return attachment.source.provider == 'minimax' if attachment.provider_file? && attachment.video?
+
           attachment.video? || super
         end
 
@@ -51,10 +53,15 @@ module RubyLLM
         end
 
         def append_formatted_content(content_blocks, msg, citations: false)
+          video = msg.attachments.find(&:video?) unless msg.role == :user
+          raise UnsupportedAttachmentError, video.mime_type if video
+
           content_blocks.concat(render_content(msg.content, msg.attachments, citations:))
         end
 
         def render_video(video)
+          raise UnsupportedAttachmentError, video.mime_type unless supported_attachment?(video)
+
           { type: 'video', source: video_source(video) }
         end
 

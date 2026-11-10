@@ -225,6 +225,15 @@ RSpec.describe RubyLLM::Providers::Moonshot do
       expect(protocol.supported_attachment?(upload.call('application/pdf'))).to be(false)
     end
 
+    it 'refuses a video uploaded to another provider' do
+      file = RubyLLM::UploadedFile.new(id: 'file-1', provider: 'openai', mime_type: 'video/mp4')
+      attachment = RubyLLM::Attachment.new(file)
+
+      expect(protocol.supported_attachment?(attachment)).to be(false)
+      expect { protocol.render_content('What is this?', [attachment]) }
+        .to raise_error(RubyLLM::UnsupportedAttachmentError)
+    end
+
     it 'refers to an uploaded image by its Moonshot file reference' do
       file = RubyLLM::UploadedFile.new(id: 'file-1', provider: 'moonshot', mime_type: 'image/png', purpose: 'image')
 

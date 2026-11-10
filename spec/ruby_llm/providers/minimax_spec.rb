@@ -224,6 +224,21 @@ RSpec.describe RubyLLM::Providers::MiniMax do
       expect(supported.call(:system)).to be(false)
     end
 
+    it 'refuses a video uploaded to another provider' do
+      video = RubyLLM::Attachment.new(RubyLLM::UploadedFile.new(id: '42', provider: 'openai', mime_type: 'video/mp4'))
+
+      expect(protocol.supported_attachment?(video)).to be(false)
+      expect { rendered_blocks(video) }.to raise_error(RubyLLM::UnsupportedAttachmentError)
+    end
+
+    it 'raises for a video on an assistant message instead of sending it' do
+      video = RubyLLM::Attachment.new('https://example.com/clip.mp4', mime_type: 'video/mp4')
+      message = RubyLLM::Message.new(role: :assistant, content: 'Here', attachments: [video])
+
+      expect { protocol.send(:append_formatted_content, [], message) }
+        .to raise_error(RubyLLM::UnsupportedAttachmentError)
+    end
+
     it 'accepts video attachments' do
       video = RubyLLM::Attachment.new('https://example.com/clip.mp4', mime_type: 'video/mp4')
 

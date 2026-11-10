@@ -54,7 +54,7 @@ module RubyLLM
         end
 
         def supported_attachment?(attachment)
-          return attachment.image? || attachment.video? if attachment.provider_file?
+          return attachment.image? || own_video?(attachment) if attachment.provider_file?
 
           attachment.video? || Protocols::ChatCompletions::Media.supported_attachment?(
             attachment, document_attachments: :none, audio_attachments: false
@@ -79,7 +79,13 @@ module RubyLLM
           { type: 'image_url', image_url: { url: inline_url(image) } }
         end
 
+        def own_video?(attachment)
+          attachment.video? && attachment.source.provider == 'moonshot'
+        end
+
         def render_inline_video(video)
+          raise UnsupportedAttachmentError, video.mime_type unless supported_attachment?(video)
+
           { type: 'video_url', video_url: { url: inline_url(video) } }
         end
 
