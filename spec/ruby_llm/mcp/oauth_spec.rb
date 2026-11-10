@@ -146,6 +146,16 @@ RSpec.describe RubyLLM::MCP::OAuth do
       expect(store.read(key)).to be_nil
     end
 
+    it 'starts an authorization without the tokens another instance forgot' do
+      linear.authorize(callback(linear.authorization_url(redirect_uri:)))
+      linear_class.new(user: 'ada').deauthorize
+
+      linear.authorization_url(redirect_uri:)
+
+      expect(store.read(key).keys).to eq(['pending'])
+      expect(linear_class.new(user: 'ada')).not_to be_authorized
+    end
+
     it 'authorizes again with a new authorization after forgetting one' do
       linear.authorization_url(redirect_uri:)
       linear_class.new(user: 'ada').deauthorize
@@ -427,6 +437,45 @@ RSpec.describe RubyLLM::MCP::OAuth do
 
       expect(store.read(key)).to be_nil
       expect(linear_class.new(user: 'ada')).not_to be_authorized
+    end
+
+    it 'starts an authorization with the token another thread is refreshing' do
+      store.write(key, store.read(key).merge('expires_at' => 0))
+      requested = Queue.new
+      answer = Queue.new
+      stub_request(:post, 'https://auth.example.com/token').to_return do
+        requested << true
+        answer.pop
+        { body: { access_token: 'access-2', refresh_token: 'refresh-2', expires_in: 3600 }.to_json }
+      end
+      locking = Queue.new
+      allow(described_class).to receive(:refreshing).and_wrap_original do |original, *arguments, &block|
+        locking << Thread.current
+        original.call(*arguments, &block)
+      end
+      refreshing = Thread.new { linear_class.new(user: 'ada').send(:oauth).access_token }
+      Timeout.timeout(5) { requested.pop }
+      starting = Thread.new { linear.authorization_url(redirect_uri:) }
+      Timeout.timeout(5) { nil until locking.pop == starting }
+      Timeout.timeout(5) { Thread.pass until starting.stop? }
+      answer << true
+      Timeout.timeout(5) { [refreshing, starting].each(&:join) }
+
+      expect(store.read(key)).to include('access_token' => 'access-2', 'refresh_token' => 'refresh-2',
+                                         'pending' => a_hash_including('redirect_uri' => redirect_uri))
+    ensure
+      [refreshing, starting].compact.each { |thread| thread.kill.join }
+    end
+
+    it 'completes an authorization started before a refresh' do
+      store.write(key, store.read(key).merge('expires_at' => 0))
+      url = linear.authorization_url(redirect_uri:)
+      expect(linear_class.new(user: 'ada').send(:oauth).access_token).to eq('access-2')
+
+      linear.authorize(callback(url))
+
+      expect(store.read(key)).to include('access_token' => 'access-1')
+      expect(store.read(key)).not_to have_key('pending')
     end
 
     it 'raises UnauthorizedError when its token expires after another instance forgets the credentials' do
