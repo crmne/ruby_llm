@@ -1,0 +1,56 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-mantle.<AWS_REGION>.api.aws/openai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"openai.gpt-5.6-luna","input":[{"role":"user","content":"Open
+        https://rubyllm.com/ and tell me in one short sentence what that page says
+        RubyLLM is."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"web_search","external_web_access":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Content-Type:
+      - application/json
+      X-Amz-Date:
+      - 20261110T173330Z
+      X-Amz-Content-Sha256:
+      - 0f2f18bd2ac4aeac5c5e8412e4afa9d13f6423a522a1eb82e338eaf414262747
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock-mantle/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Nov 2026 17:33:32 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '5182'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - "<X_REQUEST_ID>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - x-amzn-requestid,x-request-id,date,x-amzn-usage-reservation-quota,x-amzn-usage-reservation-remaining-quota,x-amzn-usage-reservation-spillover,x-amzn-gateway-arn,x-amzn-gateway-limit-name,x-amzn-gateway-limit-unit,x-amzn-gateway-limit,x-amzn-gateway-limit-remaining,x-amzn-gateway-limit-used-percent,x-amzn-gateway-limit-refill,x-amzn-gateway-limit-reset-at,retry-after,x-codex-primary-used-percent,x-codex-primary-window-minutes,x-codex-primary-reset-at,anthropic-ratelimit-unified-status,anthropic-ratelimit-unified-reset,anthropic-ratelimit-unified-representative-claim,anthropic-ratelimit-unified-overage-status,anthropic-ratelimit-unified-overage-reset,anthropic-ratelimit-unified-overage-utilization,anthropic-ratelimit-unified-overage-surpassed-threshold
+    body:
+      encoding: UTF-8
+      string: '{"background":false,"billing":{"payer":"developer"},"completed_at":1794332012,"created_at":1794332011,"error":null,"frequency_penalty":0.0,"id":"resp_224h2n6rhg4ehhimiebr3ykb5sxeitly5ojvcmpbbgg6fn5chsdq","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai.gpt-5.6-luna","object":"response","output":[{"content":[],"encrypted_content":"rsn_eyJhbGciOiJFUzI1NiIsInR5cCI6ImFyY2grandzIiwicHJvZmlsZSI6ImFyY2gtMSIsImlzcyI6ImF3cyIsImtpZCI6Ilk5N0ZyeXFSVFFGV0pyWGROV1dYR2FpeWpKaS03VWhVNndMNFZBa1dZYnMiLCJjZXJ0aWZpY2F0ZSI6ImV5SmhiR2NpT2lKRlV6STFOaUlzSW5SNWNDSTZJbUZ5WTJndGMybG5ibVZ5SzJwM2N5SXNJbkJ5YjJacGJHVWlPaUpoY21Ob0xURWlMQ0pwYzNNaU9pSmhkM01pTENKcmFXUWlPaUpzY0MxblEyNUdVemh0UzB0WVMzUjZWbTFPY2poaFdWbDBjMUIyT1dWQk1rUTBVWGhRWnpCa2MyMDRJbjAuZXlKcWQyc2lPbnNpYTNSNUlqb2lSVU1pTENKamNuWWlPaUpRTFRJMU5pSXNJbmdpT2lKc1pFUnpaWHBJZWpVemRsRlJaVmM1TkVSdFFtbE5ja0pFZDBsMFFtTk9lRGxqVkVabE0yMXFhMUJySWl3aWVTSTZJa3A0T0VOa1VXSkNSelJpYTJSNFZsOU5lSHBOT1dkWlZUVkxTRXBGYTJRMVdYRlhielp2UkRkaU9VRWlMQ0oxYzJVaU9pSnphV2NpTENKaGJHY2lPaUpGVXpJMU5pSXNJbXRwWkNJNklsazVOMFp5ZVhGU1ZGRkdWMHB5V0dST1YxZFlSMkZwZVdwS2FTMDNWV2hWTm5kTU5GWkJhMWRaWW5NaWZTd2ljSEp2ZG1sa1pYSnpJanBiSW05aGFTSmRMQ0ozY21sMFpWOW1jbTl0SWpveE56azBNekk0TWpVM0xDSjNjbWwwWlY5MWJuUnBiQ0k2TVRjNU5EUXhORFkxTnl3aWNtVmhaRjkxYm5ScGJDSTZNVGc0T1RjME1EZ3dNSDAuNDRkVmxJV0VUZHNVNEZiSWhhYnJ0ZHI2Rk1weFJOWkJYZExYWFZaQnU5TV9RLUN0d2pMLTlQUEhGdlMtX3lfNTdxVHlGMXoyN2FVb1ljVVBRWDJQa0EiLCJpc3NfbWV0YSI6eyJyb3V0aW5nIjoiUERYOCJ9fQ.eyJwcm90ZWN0ZWQiOiJleUppY21GdVkyaGZhV1FpT2lKdGRHRm5UbU0zZUZkbFVIUkxVMjl4UkdoalpGWm5JaXdpYzJGc2RDSTZJbTUzTkdsWlRXNWZNMlJJUjFWQlQycFNYek51TFRodFlWZFlURjkwTWtsdmRIaGxjRUpRWnpscVFVRWlMQ0pqYjI1MFpXNTBYMjV2Ym1ObElqb2lSRXhwYm5ad1pFNUpiSEZYWHpsNlN5SXNJbkpsWTJsd2FXVnVkSE1pT2x0N0luQnNZWFJtYjNKdElqb2lZWGR6SWl3aWEybGtJam9pVGtSR1FrWnNhRUpsYlcwek9DMW1UekJJVUhKRWQwc3ROVFZNZWtWUk5XVnBVM0Z6VUZaTGJFUkVheUlzSW1WdVkzSjVjSFJsWkY5aWNtRnVZMmdpT2lKUlMzWjJhSHB0YWpZMFFqVnJabVJCVnpkbVRITkpibVpWVEdRNVYwSm9XbmRVWDJ4UVZHbGZMV2swZGxKaFFVZDFjREZHUW5kbVZWUmZTVlJ4U25SV04wMTBaV0ZqY1dSSmQxcG9WVmd6WldaQ2VVTmlXbmszTkRKbk9IcFROR3R2TlVoSFlXVnpjVEpEYm5OTmRHZG5NMWhxZUhWR1NYWnBVbmwxV25BMmJtVllWRWszYUd0aGJUSm9Za1F3VWxNemFWZDBNbFJqWVMxWGJ6Skxha1JtTlZsU2NUZGpPVTQyZUZKT1pscHFOWEZNTW5vME1ERXpMVXRpV0dWSVZVbDVTVEk0YlRWR00zaGZSRWxCZVRFeldsbElhakZ1YmpCWVVrbzJWRlExZUZCMVZubEdWMmh2VEZORmVWUmlZVWRzV0dOMk9XbHhPWGN4UlVJMmRIZGhUMDgxVUdkWGFIRkpNR3BHVlV0RGJFWTRaWHBNUmxBMWQzVndhekZhZVRaT09HWmlXSFJJYlVwWmRVOVZiak01TFY5VlJFeG1hVkZHVUhCNVRFWTFiRWsyZFdSZk5VVnBMVE5RYzBsaGVYZ3RWR2cwTm1kZlVWbE5RMHRtVkVweFFsVkdZMmxFY0hCcGJrcDZWVFZFU0ZaYVpYUnlRM05EYjNOVlgzVndia0ZzVERBeVYya3hMVWRSWkRScVZUbFFjSFJtVUhBNGNHRlRTbmR3VGs5d2VUWk5Na3RoVkRabmRGUjRXSFJmY2t0VFkxQkhjRXRRZGpSb1ZFUTJSVWRHTVZsNWRFMXdjbXBoVWtvNGRtWkhZMVJVVjBobVRtUkxZVEU0WmpGb09UazNaREo0YnpsRmJHVTFZVWxCTm1SSlZsRkRkalIxU1hkRVRFZGhRalEyTFNKOVhYMCIsImNpcGhlcnRleHQiOiJCOGgtRHc3X1NORjNtVWJvNnlCMlVSSFNOaUlmX3dIV3lfWVlzVEpWa01EeGxTTXc1cFBaQ2dRT3BEd29JRlJnQzg5b2t6bTh0anhZcENSUUlSTElrVllpMks4MjVDdkl0TmtCTmQ2cUlRdm9tTVNSQ2gzcEs4ZHZwYnpXbnAxeXFRZm5Wak9VRm9iTU0xSFlzT3hkY2c0VjhkNnhtS045N0lzdFU2dE1PNGlWNlcxX292dVJfcXFWWXRudzZZaGt2RmdjWnc0NkluQVplZEdDQUl4N0p5VXpuSnJFVmRyN0tkWDJoaHVaN3lldk0zTHAwcXhUNTV4bWZFM0hjWVhCMlg1QlR3YjIwa216TzB1YmkwUF94RVNydk9lVlg5Wlk5LURYdmdlYy16SjFoMFA4M0tqaHNEYkZ2SE1IdFAyTU1xcG1rY2ZjMXQ2TUc3NHQxbERlYzhvcGkyVEdlZC1IMWt5ekpDMnVLRWtQLUtWdWtvaUNzUnkxWUhXMVA4UGpNQzBQbkhUeDMwbndVaUFIS1g4U29pT21YMnNJUVdfUUI1Tko2U3RndE91ck9TQ2dmOUp2Q0l3WkVUZTltSUlkNWU5bXlVQ0xtemMwZGE3UFZLVEpIa0pPVEY5bzZLY0ZGRjBlTGw0MHh0ejhPQjBUTVN2MHZURFJvSnljaE10alZvN19wczk3ZFhjY0g0akNabVpmLTZPNGQwM3ptcTdBdERRckcxS1dULXlpTzNpaXdZeTRIYWV1bUlMYjUwb01uMGFOOGc5S2pEQW1aV1RKSEJIRVp2d2RVdU9oNFpNcWU3NUZZdVZqTFdXbG1BSGFiMVJtLV9tRVQ3TXI2NWNwdVFhYkdpVGF5Mk9ub3dEUU96czRweWJlUWdoeWg5dHdBZkZUODRZX183Ym5pUk5aRFgyY0FxNkdPNDNjNGowZEFUNTMtSTByOVQzdkw4ZzdGM1g3cTNNN09PVDh4RElya0I4ZyJ9.PuSDesn6aHFOXNsX8AZZpR-TvumYJS1b5uLVQiH8HL0r8jCiN_JeC7oDR6tSGM73zAE5otuFfbYwoDh_jkuQfw","id":"rs_248fc51603fd51428f653beace203260","summary":[],"type":"reasoning"},{"action":{"type":"open_page","url":"https://rubyllm.com/"},"id":"ws_87a27c834d4353e5ab3b189592700e24","status":"completed","type":"web_search_call"},{"content":[{"annotations":[],"logprobs":[],"text":"RubyLLM
+        is a Ruby-native AI framework providing one consistent API for models, tools,
+        and agents in Ruby or Rails.","type":"output_text"}],"id":"msg_5c4d8926daa85e488a31050f4bcd614a","phase":"final_answer","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"in_memory","reasoning":{"summary":null,"effort":"medium","context":"all_turns"},"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tools":[{"type":"web_search"}],"top_logprobs":0,"top_p":0.98,"truncation":"disabled","usage":{"input_tokens":5483,"input_tokens_details":{"cache_write_tokens":0,"cached_tokens":2895},"output_tokens":72,"output_tokens_details":{"reasoning_tokens":42},"total_tokens":5555},"user":null,"moderation":null}'
+  recorded_at: Tue, 10 Nov 2026 17:33:32 GMT
+recorded_with: VCR 6.4.1
