@@ -41,7 +41,9 @@ module RubyLLM
         # A video block is documented for user messages only; tool results
         # and system prompts take the attachments Anthropic's format does.
         def supported_message_attachment?(message, attachment)
-          attachment.video? ? message.role == :user : super
+          return false if attachment.video? && message.role != :user
+
+          super
         end
 
         def render_content(content, attachments = [], citations: false)

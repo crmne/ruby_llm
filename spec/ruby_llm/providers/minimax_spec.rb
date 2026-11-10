@@ -293,6 +293,13 @@ RSpec.describe RubyLLM::Providers::MiniMax do
       expect { rendered_blocks(video) }.to raise_error(RubyLLM::UnsupportedAttachmentError)
     end
 
+    it 'lets a converter replace a foreign video on a user message' do
+      video = RubyLLM::Attachment.new(RubyLLM::UploadedFile.new(id: '42', provider: 'openai', mime_type: 'video/mp4'))
+      message = RubyLLM::Message.new(role: :user, content: 'x')
+
+      expect(protocol.send(:supported_message_attachment?, message, video)).to be(false)
+    end
+
     it 'raises for a video on an assistant message instead of sending it' do
       video = RubyLLM::Attachment.new('https://example.com/clip.mp4', mime_type: 'video/mp4')
       message = RubyLLM::Message.new(role: :assistant, content: 'Here', attachments: [video])

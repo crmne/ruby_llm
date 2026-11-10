@@ -189,6 +189,14 @@ RSpec.describe RubyLLM::Providers::Meta do
         .to eq(type: 'input_audio', input_audio: { data: audio.encoded, format: 'mp3' })
     end
 
+    it 'leaves audio formats Meta does not take to the converter, or raises' do
+      audio = RubyLLM::Attachment.new(StringIO.new('ogg'), filename: 'clip.ogg', mime_type: 'audio/ogg')
+
+      expect(protocol.send(:supported_attachment?, audio)).to be(false)
+      expect { protocol.send(:render_content, 'Hear this', [audio]) }
+        .to raise_error(RubyLLM::UnsupportedAttachmentError)
+    end
+
     it 'keeps rendering uploaded video as a file reference' do
       file = RubyLLM::UploadedFile.new(id: 'file-1', provider: 'meta', mime_type: 'video/mp4')
 
