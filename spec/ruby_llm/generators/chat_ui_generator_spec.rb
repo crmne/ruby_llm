@@ -405,7 +405,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         "Checking the docs first.", "notes/summary.md" ].each do |text|
         abort "show page lacks \#{text}" unless html.include?(text)
       end
-      duplicates = html.scan(/\bid="(#{message_key}_\d+)"/).flatten.tally.select { |_id, count| count > 1 }
+      duplicates = html.scan(/\\bid="(#{message_key}_\\d+)"/).flatten.tally.select { |_id, count| count > 1 }
       abort "show page repeats a message's id: \#{duplicates.keys}" if duplicates.any?
       abort "show page offers the message form" if html.include?('name="#{message_key}[content]"')
       abort "show page hides the call that asked" if html.include?('_tool_call_call_seat"] { display: none; }')
