@@ -467,6 +467,17 @@ RSpec.describe RubyLLM::MCP::OAuth do
       [refreshing, starting].compact.each { |thread| thread.kill.join }
     end
 
+    it 'completes an authorization started before a refresh' do
+      store.write(key, store.read(key).merge('expires_at' => 0))
+      url = linear.authorization_url(redirect_uri:)
+      expect(linear_class.new(user: 'ada').send(:oauth).access_token).to eq('access-2')
+
+      linear.authorize(callback(url))
+
+      expect(store.read(key)).to include('access_token' => 'access-1')
+      expect(store.read(key)).not_to have_key('pending')
+    end
+
     it 'raises UnauthorizedError when its token expires after another instance forgets the credentials' do
       store.write(key, store.read(key).merge('expires_at' => 0))
       live = linear_class.new(user: 'ada')
