@@ -50,7 +50,8 @@
                   <%%= form.select "answer[#{field.name}]", field.choices, { selected: field.default, include_blank: !field.required? && !list },
                     id: field_id, multiple: list, required: list && field.required? %>
                 <%% else %>
-                  <%%= form.text_field "answer[#{field.name}]", value: field.default, required: field.required?, id: field_id,
+                  <%%= form.text_field "answer[#{field.name}]#{"[]" if list}", value: (field.default unless list),
+                    required: field.required? && !(list && field.default), id: field_id,
                     type: steps.key?(field.type) ? "number" : "text", step: steps[field.type] %>
                 <%% end %>
               <%% end %>
