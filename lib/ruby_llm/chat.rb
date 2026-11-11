@@ -2647,11 +2647,8 @@ module RubyLLM
       id = tool_call.respond_to?(:id) ? tool_call.id : tool_call
       call = tool_call.respond_to?(:name) ? tool_call : find_tool_call(id)
       raise ArgumentError, "Unknown tool call: #{id.inspect}" unless call
-      if call.name == CodeExecution.tool_name && call.namespace.nil?
-        raise ArgumentError, "#{call.name} calls are approved one at a time and cannot be remembered"
-      end
 
-      [call.namespace, call.name.to_s]
+      ToolCallState.remembered_identity(call)
     end
 
     def tool_call_answered?(tool_call)

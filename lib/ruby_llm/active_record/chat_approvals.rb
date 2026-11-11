@@ -54,6 +54,9 @@ module RubyLLM
 
       def record_tool_call_decision(tool_call, decision)
         record = tool_call_record(tool_call)
+        if decision == 'remembered' && record.result_id.nil?
+          RubyLLM::Chat::ToolCallState.remembered_identity(record.to_llm)
+        end
         decide_persisted_tool_call(record, decision)
         record
       end
