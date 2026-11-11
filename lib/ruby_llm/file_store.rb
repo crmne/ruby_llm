@@ -265,7 +265,8 @@ module RubyLLM
     # Raises FileNotFoundError when there is none.
     def attachment(path, file: nil)
       file ||= find(path)
-      Attachment.new(StringIO.new(read(file.path)), filename: file.filename)
+      mime_type = file.content_type unless file.content_type == 'application/octet-stream'
+      Attachment.new(StringIO.new(read(file.path)), filename: file.filename, mime_type:)
     end
 
     # Returns the converted text kept for +file+, or +nil+, from memory.
