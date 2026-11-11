@@ -21,6 +21,18 @@ RSpec.describe RubyLLM::FileStore::Directory do
     expect(store.root).to eq(File.realpath(folder))
   end
 
+  it 'converts new contents even when the size and modification time are unchanged' do
+    path = File.join(root, 'report.txt')
+    stamp = Time.at(1_700_000_000)
+    File.write(path, 'old')
+    File.utime(stamp, stamp, path)
+    expect(store.text('report.txt')).to eq('old')
+
+    File.write(path, 'new')
+    File.utime(stamp, stamp, path)
+    expect(store.text('report.txt')).to eq('new')
+  end
+
   it 'writes binary content whatever the default encoding' do
     before = Encoding.default_internal
     Encoding.default_internal = Encoding::UTF_8
