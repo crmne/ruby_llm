@@ -252,13 +252,19 @@ module RubyLLM
     #
     # See Configuration#file_converters for adding converters.
     def text(path, config: nil)
-      file = find(path)
-      cached = cached_text(file)
-      return cached if cached
+      convert_text(find(path), config:).first
+    end
 
-      Converters.convert(attachment(file.path, file:), config: config || RubyLLM.config).tap do |text|
-        cache_text(file, text) if text
-      end
+    # Returns the converted text and the digest of the bytes it came from.
+    def text_with_digest(file, config:) # :nodoc:
+      return [nil, file.digest || FileStore.digest('')] if file.byte_size.zero?
+      return [text(file.path, config:), file.digest] if file.digest
+
+      convert_text(file, config:)
+    end
+
+    def extract_text(file, config:) # :nodoc:
+      convert_text(file, config:, local: true).first
     end
 
     # Returns the file at +path+ as an Attachment, to send it to a model.
@@ -270,14 +276,18 @@ module RubyLLM
 
     # Returns the converted text kept for +file+, or +nil+, from memory.
     def cached_text(file) # :nodoc:
-      @texts_lock.synchronize { @texts[text_key(file)] }
+      return unless file.digest || cached_path?(file)
+
+      key = text_key(file)
+      @texts_lock.synchronize { @texts[key] }
     end
 
     # Keeps +text+ as the conversion of +file+, in memory.
     def cache_text(file, text) # :nodoc:
+      key = text_key(file)
       @texts_lock.synchronize do
         @texts.delete(@texts.keys.first) if @texts.size >= CACHED_TEXTS
-        @texts[text_key(file)] = text
+        @texts[key] = text
       end
     end
 
@@ -331,8 +341,29 @@ module RubyLLM
       file.digest ? file.digest == digest : read(file.path).b == content
     end
 
+    def convert_text(file, config:, local: false)
+      unless file.digest
+        content = read(file.path)
+        file = StoredFile.new(**file.to_h, digest: FileStore.digest(content))
+        source = Attachment.new(StringIO.new(content), filename: file.filename)
+      end
+      text = cached_text(file)
+      unless text
+        source ||= attachment(file.path, file:)
+        text = Converters.convert(source, config: config || RubyLLM.config, local:)
+        cache_text(file, text) if text
+      end
+      [text, file.digest]
+    end
+
+    def cached_path?(file)
+      @texts_lock.synchronize do
+        @texts.each_key.any? { |path, type| path == file.path && type == file.content_type }
+      end
+    end
+
     def text_key(file)
-      file.digest || [file.path, file.byte_size, file.updated_at]
+      [file.path, file.content_type, file.digest || FileStore.digest(read(file.path))]
     end
   end
 end

@@ -44,12 +44,12 @@ module RubyLLM
           seen = nil
           result = guarded do
             file = file_at(path)
-            seen = [file.path, digest_of(file)]
             unit = (unit || 'lines').to_s
             raise ToolError, "unit is lines or characters, not #{unit}." unless UNITS.include?(unit)
-            next "#{file.path} is empty." if file.byte_size.zero?
 
-            text = store.text(file.path, config:)
+            text, digest = store.text_with_digest(file, config:)
+            seen = [file.path, digest]
+            next "#{file.path} is empty." if file.byte_size.zero?
             next unreadable(file) if text.nil?
 
             unit == 'characters' ? characters(file, text, offset, limit) : lines(file, text, offset, limit)
