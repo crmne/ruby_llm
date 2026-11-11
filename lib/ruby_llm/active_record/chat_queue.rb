@@ -18,6 +18,18 @@ module RubyLLM
         @chat = chat
       end
 
+      def stage(message, attachments:)
+        chat = @chat.to_llm
+        chat.raise_if_pending_tool_calls!
+        chat.raise_if_prompt_attachments!(message, attachments)
+        chat.take_queued_messages
+        if message.is_a?(RubyLLM::MCP::Prompt)
+          message.messages.each { |prompt_message| @chat.add_message(prompt_message) }
+        else
+          @chat.add_message(role: :user, content: message, attachments:)
+        end
+      end
+
       def push(content:, attachments:, steer:, sender:)
         QueuedMessage.transaction do
           @chat.forget_stale_cancellation

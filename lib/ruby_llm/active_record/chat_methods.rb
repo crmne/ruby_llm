@@ -839,15 +839,11 @@ module RubyLLM
       # Raises PendingToolCallsError while the last response has tool calls
       # waiting for their results and no run holds the chat.
       def ask_later(message = nil, with: nil)
-        return tap { queue(message, with:) } if running? && !message.is_a?(RubyLLM::MCP::Prompt)
-
-        to_llm.raise_if_pending_tool_calls!
-        to_llm.raise_if_prompt_attachments!(message, with)
-        to_llm.take_queued_messages
-        if message.is_a?(RubyLLM::MCP::Prompt)
-          message.messages.each { |prompt_message| add_message(prompt_message) }
-        else
-          add_message(role: :user, content: message, attachments: with)
+        staging = ChatQueue.new(self)
+        if !run_claims? || message.is_a?(RubyLLM::MCP::Prompt)
+          staging.stage(message, attachments: with)
+        elsif running? || !stage_while_idle { staging.stage(message, attachments: with) }
+          queue(message, with:)
         end
         self
       end

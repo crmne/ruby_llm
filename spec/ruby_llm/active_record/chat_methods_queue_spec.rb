@@ -133,6 +133,39 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(chat.queued_messages).to be_empty
     end
 
+    it 'queues a message when another job claims the chat after the busy check' do
+      job = job_for(chat)
+      job.ask_later('First')
+      submission = elsewhere(chat)
+      checked = Queue.new
+      can_submit = Queue.new
+      allow(submission).to receive(:running?).and_wrap_original do |running|
+        running.call.tap do |busy|
+          checked << busy
+          raise 'Timed out waiting for the request' unless can_submit.pop(timeout: 10)
+        end
+      end
+
+      sender = Thread.new { submission.ask_later('Second', with: image_path) }
+      expect(checked.pop(timeout: 10)).to be(false)
+      during_request << lambda {
+        can_submit << true
+        raise 'Timed out waiting for the submission' unless sender.join(10)
+
+        expect(chat.queued_messages.pluck(:content)).to eq(['Second'])
+      }
+
+      job.complete
+      job_for(chat).complete
+
+      expect(requests).to eq([[[:user, 'First']], [[:user, 'First'], [:assistant, 'Done'], [:user, 'Second']]])
+      expect(chat.messages_association.find_by!(content: 'Second').attachments.sole.filename.to_s).to eq('ruby.png')
+      expect(chat.queued_messages).to be_empty
+    ensure
+      sender&.kill if sender&.alive?
+      sender&.join
+    end
+
     it 'joins after the tool round it was sent during' do
       responses.push(tool_call, answer('Echoed'))
       job = job_for(chat, tool: sending_tool('Use the EU file'))
@@ -193,6 +226,39 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
     expect(transcript(chat)).to eq([[:user, 'Summarize Q3'], [:assistant, 'Done']])
     expect(chat.queued_messages.map(&:content)).to eq(['Then email it'])
+  end
+
+  it 'checks for pending calls with the transcript another job just saved' do
+    submission = elsewhere(chat)
+    submission.to_llm
+    job = job_for(chat)
+    job.ask_later('Echo hello')
+    responses << tool_call
+    job.generate
+
+    expect { submission.ask_later('Another question') }.to raise_error(RubyLLM::PendingToolCallsError)
+    expect(transcript(chat).map(&:first)).to eq(%i[user assistant])
+  end
+
+  it 'leaves an interrupted run discoverable when staging fails' do
+    chat.ask_later('Echo hello')
+    chat.add_message(tool_call)
+    Chat.where(id: chat.id).update_all(claim_token: 'died', claimed_until: 1.minute.ago)
+
+    expect { chat.ask_later('Another question') }.to raise_error(RubyLLM::PendingToolCallsError)
+    expect(Chat.interrupted).to include(chat)
+  end
+
+  it 'restores the transcript and queue when staging fails after a queued message joins' do
+    chat.queue('First')
+    job = job_for(chat)
+    allow(job).to receive(:add_message).with(role: :user, content: 'Second', attachments: nil)
+                                       .and_raise(IOError, 'storage is down')
+
+    expect { job.ask_later('Second') }.to raise_error(IOError, 'storage is down')
+    expect(transcript(chat)).to be_empty
+    expect(job.to_llm.messages).to be_empty
+    expect(chat.queued_messages.pluck(:content)).to eq(['First'])
   end
 
   it 'takes every queued message at the next complete, waiting ones included' do
