@@ -47,10 +47,10 @@ module RubyLLM
             unit = (unit || 'lines').to_s
             raise ToolError, "unit is lines or characters, not #{unit}." unless UNITS.include?(unit)
 
-            text, digest = store.text_with_digest(file, config:)
+            text, digest = contents(file)
             seen = [file.path, digest]
-            next "#{file.path} is empty." if file.byte_size.zero?
             next unreadable(file) if text.nil?
+            next "#{file.path} is empty." if text.empty?
 
             unit == 'characters' ? characters(file, text, offset, limit) : lines(file, text, offset, limit)
           end
@@ -59,6 +59,12 @@ module RubyLLM
         end
 
         private
+
+        def contents(file)
+          return ['', file.digest || FileStore.digest('')] if file.byte_size.zero?
+
+          store.text_with_digest(file, config:)
+        end
 
         def lines(file, text, offset, limit)
           all = text.lines

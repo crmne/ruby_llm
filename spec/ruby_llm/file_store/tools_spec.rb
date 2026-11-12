@@ -633,14 +633,24 @@ RSpec.describe RubyLLM::FileStore::Tools do
       expect(call(:search_files, query: 'new')).to eq('report.txt:1: new')
     end
 
-    it 'does not read unrelated binary contents to check for cached search text' do
-      files.write('report.txt', 'Search me')
-      files.write('raw.bin', "\x00".b)
-      call(:read_file, path: 'report.txt')
+    it 'lets the model write a file it read while empty' do
+      File.write(File.join(root, 'notes.txt'), '')
+
+      expect(call(:read_file, path: 'notes.txt')).to eq('notes.txt is empty.')
+      expect(call(:write_file, path: 'notes.txt', content: 'Hello')).to eq('Wrote notes.txt (5 bytes).')
+    end
+
+    it 'does not read unconverted files to check for cached search text' do
+      converter = ->(attachment) { "Converted #{attachment.content}" }
+      converter.define_singleton_method(:local?) { true }
+      RubyLLM.config.file_converters['application/pdf'] = converter
+      files.write('report.pdf', 'report')
+      files.write('other.pdf', 'other')
+      call(:read_file, path: 'report.pdf')
       allow(files).to receive(:read).and_call_original
 
-      expect(call(:search_files, query: 'Search')).to include('report.txt:1: Search me')
-      expect(files).not_to have_received(:read).with('raw.bin')
+      expect(call(:search_files, query: 'Converted')).to include('report.pdf:1: Converted report')
+      expect(files).not_to have_received(:read).with('other.pdf')
     end
 
     it 'keeps eager conversions paired with the bytes they read' do
@@ -654,6 +664,16 @@ RSpec.describe RubyLLM::FileStore::Tools do
       chat.render
 
       expect(files.text('report.pdf')).to eq('new')
+    end
+
+    it 'leaves conversions that may cost money until the model reads the file' do
+      converted = []
+      RubyLLM.config.file_converters['application/pdf'] = ->(attachment) { converted << attachment.filename }
+      attached = RubyLLM::Attachment.new(StringIO.new('report'), filename: 'report.pdf', mime_type: 'application/pdf')
+      chat.ask_later('Read the report', with: attached)
+      chat.render
+
+      expect(converted).to be_empty
     end
 
     it 'answers the model when it reaches for a hidden path' do
