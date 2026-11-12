@@ -66,7 +66,8 @@ module RubyLLM
 
       def take_one(queued)
         taken = nil
-        QueuedMessage.transaction do
+        QueuedMessage.transaction(requires_new: true) do
+          @chat.forget_stale_cancellation
           next unless QueuedMessage.where(id: queued.id).delete_all == 1
 
           taken = [@chat.to_llm.run_around_join(queued) { |**attributes| join(queued, attributes) }]

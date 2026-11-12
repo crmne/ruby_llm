@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 require 'active_support/testing/time_helpers'
+require_relative '../../support/query_helpers'
 
 RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   include_context 'with configured RubyLLM'
@@ -277,6 +278,29 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
     expect(transcript(chat)).to be_empty
     expect(chat.queued_messages.pluck(:content)).to eq(['First'])
+  end
+
+  it 'keeps a queued message queued when its around_join rolls back as ask_later stages' do
+    chat.queue('First')
+    job = job_for(chat)
+    job.around_join { |_queued, _join| raise ActiveRecord::Rollback }
+
+    job.ask_later('Second')
+
+    expect(chat.queued_messages.pluck(:content)).to eq(['First'])
+    expect(transcript(chat)).to eq([[:user, 'Second']])
+  end
+
+  it 'takes the chat row before a queued row when joining, in the order staging takes them' do
+    chat.queue('First')
+    Chat.where(id: chat.id).update_all(cancelled: true)
+
+    writes = QueryHelpers.matching(/\A\s*(UPDATE "chats"|DELETE FROM "ruby_llm_queued_messages")/) do
+      elsewhere(chat).join_queued_messages
+    end
+
+    expect(writes.first).to start_with('UPDATE "chats"')
+    expect(writes).to include(start_with('DELETE FROM "ruby_llm_queued_messages"'))
   end
 
   it 'refuses attachments with an MCP prompt before saving anything' do
