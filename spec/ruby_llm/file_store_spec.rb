@@ -57,9 +57,12 @@ RSpec.describe RubyLLM::FileStore do
   it 'detects the attachment type when the stored type is generic' do
     store = RubyLLM::FileStore::Memory.new
     png = File.binread(File.expand_path('../fixtures/ruby.png', __dir__))
-    store.write('logo', png, content_type: 'application/octet-stream')
 
-    expect(store.attachment('logo').mime_type).to eq('image/png')
+    ['application/octet-stream', 'Application/Octet-Stream', 'application/octet-stream; charset=binary'].each do |type|
+      store.write('logo', png, content_type: type)
+
+      expect(store.attachment('logo').mime_type).to eq('image/png'), type
+    end
   end
 
   it 'deletes a folder file by file unless a subclass does better' do
@@ -89,6 +92,16 @@ RSpec.describe RubyLLM::FileStore do
 
     it_behaves_like 'a file store'
     it_behaves_like 'a file store that writes under its lock'
+
+    it 'converts the same bytes again once they are stored with another type' do
+      config = RubyLLM::Configuration.new
+      config.file_converters['application/x-subrip'] = ->(attachment) { "Converted: #{attachment.content}" }
+      store.write('captions', 'Hello', content_type: 'text/plain')
+      expect(store.text('captions', config:)).to eq('Hello')
+
+      store.write('captions', 'Hello', content_type: 'application/x-subrip')
+      expect(store.text('captions', config:)).to eq('Converted: Hello')
+    end
 
     it 'uses an explicitly stored type when converting an extensionless file' do
       config = RubyLLM::Configuration.new
