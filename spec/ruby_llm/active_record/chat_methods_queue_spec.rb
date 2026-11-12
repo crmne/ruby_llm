@@ -261,6 +261,30 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(chat.queued_messages.pluck(:content)).to eq(['First'])
   end
 
+  it 'restores the queue when a caller rescues a failed staging inside its own transaction' do
+    chat.queue('First')
+    job = job_for(chat)
+    allow(job).to receive(:add_message).with(role: :user, content: 'Second', attachments: nil)
+                                       .and_raise(IOError, 'storage is down')
+
+    Chat.transaction do
+      job.ask_later('Second')
+    rescue IOError
+      nil
+    end
+
+    expect(transcript(chat)).to be_empty
+    expect(chat.queued_messages.pluck(:content)).to eq(['First'])
+  end
+
+  it 'refuses attachments with an MCP prompt before saving anything' do
+    prompt = RubyLLM::MCP::Prompt.new(nil, { 'name' => 'review' },
+                                      messages: [RubyLLM::Message.new(role: :user, content: 'Review')])
+
+    expect { chat.ask_later(prompt, with: image_path) }.to raise_error(ArgumentError, /takes no attachments/)
+    expect(transcript(chat)).to be_empty
+  end
+
   it 'takes every queued message at the next complete, waiting ones included' do
     chat.queue('Wait', steer: false)
     chat.queue('Steer')
