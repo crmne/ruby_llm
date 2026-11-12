@@ -241,8 +241,10 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   end
 
   it 'leaves an interrupted run discoverable when staging fails' do
-    chat.ask_later('Echo hello')
-    chat.add_message(tool_call)
+    job = job_for(chat)
+    job.ask_later('Echo hello')
+    responses << tool_call
+    job.generate
     Chat.where(id: chat.id).update_all(claim_token: 'died', claimed_until: 1.minute.ago)
 
     expect { chat.ask_later('Another question') }.to raise_error(RubyLLM::PendingToolCallsError)
