@@ -676,7 +676,9 @@ RSpec.describe RubyLLM::FileStore::Tools do
       allow(files).to receive(:read).and_call_original
       allow(files).to receive(:read).with('report.pdf').and_raise(RubyLLM::FileNotFoundError, 'No file at report.pdf')
 
-      expect(call(:search_files, query: 'Converted')).to include('notes.txt:1: Converted notes')
+      expect(call(:search_files, query: 'Converted')).to eq(
+        "notes.txt:1: Converted notes\n[Not searched, text not extracted yet: report.pdf. read_file extracts it.]"
+      )
     end
 
     it 'leaves conversions that may cost money until the model reads the file' do
