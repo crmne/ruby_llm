@@ -156,7 +156,7 @@ module RubyLLM
       end
 
       def extract(file)
-        store.extract_text(file, config: @config.call) unless file.text?
+        store.text_with_digest(file, config: @config.call, local: true) unless file.text?
       rescue StandardError => e
         RubyLLM.logger.warn { "Could not extract the text of #{file.path}: #{e.class}" }
       end

@@ -252,19 +252,25 @@ module RubyLLM
     #
     # See Configuration#file_converters for adding converters.
     def text(path, config: nil)
-      convert_text(find(path), config:).first
+      text_with_digest(find(path), config:).first
     end
 
-    # Returns the converted text and the digest of the bytes it came from.
-    def text_with_digest(file, config:) # :nodoc:
-      return [nil, file.digest || FileStore.digest('')] if file.byte_size.zero?
-      return [text(file.path, config:), file.digest] if file.digest
-
-      convert_text(file, config:)
-    end
-
-    def extract_text(file, config:) # :nodoc:
-      convert_text(file, config:, local: true).first
+    # Returns the converted text of +file+ and the digest of the bytes it
+    # came from. With <tt>local: true</tt>, only converters that run on
+    # this machine for free are tried.
+    def text_with_digest(file, config:, local: false) # :nodoc:
+      unless file.digest
+        content = read(file.path)
+        file = StoredFile.new(**file.to_h, digest: FileStore.digest(content))
+        source = Attachment.new(StringIO.new(content), filename: file.filename)
+      end
+      text = cached_text(file)
+      unless text
+        source ||= attachment(file.path, file:)
+        text = Converters.convert(source, config: config || RubyLLM.config, local:)
+        cache_text(file, text) if text
+      end
+      [text, file.digest]
     end
 
     # Returns the file at +path+ as an Attachment, to send it to a model.
@@ -341,21 +347,6 @@ module RubyLLM
 
     def same_content?(file, content, digest)
       file.digest ? file.digest == digest : read(file.path).b == content
-    end
-
-    def convert_text(file, config:, local: false)
-      unless file.digest
-        content = read(file.path)
-        file = StoredFile.new(**file.to_h, digest: FileStore.digest(content))
-        source = Attachment.new(StringIO.new(content), filename: file.filename)
-      end
-      text = cached_text(file)
-      unless text
-        source ||= attachment(file.path, file:)
-        text = Converters.convert(source, config: config || RubyLLM.config, local:)
-        cache_text(file, text) if text
-      end
-      [text, file.digest]
     end
 
     def cached_path?(file)
