@@ -666,6 +666,19 @@ RSpec.describe RubyLLM::FileStore::Tools do
       expect(files.text('report.pdf')).to eq('new')
     end
 
+    it 'searches the other files when a converted one disappears during the search' do
+      converter = ->(attachment) { "Converted #{attachment.content}" }
+      converter.define_singleton_method(:local?) { true }
+      RubyLLM.config.file_converters['application/pdf'] = converter
+      files.write('report.pdf', 'report')
+      files.write('notes.txt', 'Converted notes')
+      call(:read_file, path: 'report.pdf')
+      allow(files).to receive(:read).and_call_original
+      allow(files).to receive(:read).with('report.pdf').and_raise(RubyLLM::FileNotFoundError, 'No file at report.pdf')
+
+      expect(call(:search_files, query: 'Converted')).to include('notes.txt:1: Converted notes')
+    end
+
     it 'leaves conversions that may cost money until the model reads the file' do
       converted = []
       RubyLLM.config.file_converters['application/pdf'] = ->(attachment) { converted << attachment.filename }

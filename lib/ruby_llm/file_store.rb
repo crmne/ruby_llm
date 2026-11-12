@@ -283,11 +283,14 @@ module RubyLLM
     end
 
     # Returns the converted text kept for +file+, or +nil+, from memory.
+    # A file that can no longer be read has none.
     def cached_text(file) # :nodoc:
       return unless file.digest || cached_path?(file)
 
       key = text_key(file)
       @texts_lock.synchronize { @texts[key] }
+    rescue FileNotFoundError
+      nil
     end
 
     # Keeps +text+ as the conversion of +file+, in memory.
