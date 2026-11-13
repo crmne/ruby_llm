@@ -51,6 +51,23 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Judgments do
     expect(stub).to have_been_requested.once
   end
 
+  it 'keeps the reported cost of a judgment it cannot parse' do
+    instrumenter = CaptureInstrumenter.new
+    context = RubyLLM.context { |config| config.instrumenter = instrumenter }
+    stub_request(:post, 'https://openrouter.ai/api/alpha/decisions').to_return(
+      status: 200, headers: { 'Content-Type' => 'application/json' },
+      body: { model: model_id, answers: {}, usage: { input_tokens: 40, output_tokens: 1, cost: 0.00001 } }.to_json
+    )
+
+    expect do
+      context.judge('Help', model: model_id, provider: :openrouter, assume_model_exists: true, questions:)
+    end.to raise_error(RubyLLM::Error, /System One returned an invalid judgment/)
+    usage = instrumenter.events.filter_map { |name, payload| payload if name == 'usage.ruby_llm' }.sole
+    expect(usage).to include(operation: :judgment, status: :failed)
+    expect(usage[:tokens].to_h).to include(input_tokens: 40, output_tokens: 1)
+    expect(usage[:cost].to_h[:total]).to eq(0.00001)
+  end
+
   it 'puts media in the state array as content parts' do
     image = RubyLLM::Attachment.new(File.join(fixtures, 'ruby.png'), resolution: :low)
     audio = RubyLLM::Attachment.new(File.join(fixtures, 'ruby.mp3'))

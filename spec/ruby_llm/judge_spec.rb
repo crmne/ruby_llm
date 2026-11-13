@@ -309,6 +309,44 @@ RSpec.describe RubyLLM::Judge do
     end.to raise_error(RubyLLM::Error, /doesn't support judgments/)
   end
 
+  context 'when the provider bills a judgment it cannot parse' do
+    def usage_events(instrumenter)
+      instrumenter.events.filter_map { |name, payload| payload if name == 'usage.ruby_llm' }
+    end
+
+    it 'records the usage System One reported on the failed attempt' do
+      instrumenter = CaptureInstrumenter.new
+      context = RubyLLM.context { |config| config.instrumenter = instrumenter }
+      stub_request(:post, 'https://api.typesafe.ai/v1/systemone').to_return(
+        status: 200, headers: { 'Content-Type' => 'application/json' },
+        body: { model: model_id,
+                answers: { urgent: { type: 'choice', choice: 'Salary', probabilities: { Salary: 0.9 } } },
+                usage: { input_tokens: 120, output_tokens: 0 } }.to_json
+      )
+
+      expect { judge_class.judge('Help', context:) }
+        .to raise_error(RubyLLM::Error, /System One returned an invalid judgment/)
+      expect(usage_events(instrumenter).sole).to include(operation: :judgment, status: :failed)
+      expect(usage_events(instrumenter).sole[:tokens].to_h).to eq(input_tokens: 120, output_tokens: 0)
+    end
+
+    it 'records the usage OpenAI Decisions reported on the failed attempt' do
+      instrumenter = CaptureInstrumenter.new
+      context = RubyLLM.context { |config| config.instrumenter = instrumenter }
+      stub_request(:post, 'https://api.openai.com/v1/decisions').to_return(
+        status: 200, headers: { 'Content-Type' => 'application/json' },
+        body: { model: model_for(:openai), answers: [{ name: 'other' }],
+                usage: { input_tokens: 80, output_tokens: 2 } }.to_json
+      )
+
+      expect do
+        judge_class.judge('Help', model: model_for(:openai), provider: :openai, assume_model_exists: true, context:)
+      end.to raise_error(RubyLLM::Error, /OpenAI Decisions returned an invalid judgment/)
+      expect(usage_events(instrumenter).sole).to include(operation: :judgment, status: :failed)
+      expect(usage_events(instrumenter).sole[:tokens].to_h).to include(input_tokens: 80, output_tokens: 2)
+    end
+  end
+
   it 'lets OpenAI reject chat models through Decisions' do
     model = model_for(:openai)
     stub = stub_request(:post, 'https://api.openai.com/v1/decisions').to_return(

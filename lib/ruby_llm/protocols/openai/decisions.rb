@@ -27,12 +27,14 @@ module RubyLLM
 
         def parse_judgment_response(response, questions:)
           body = response.body
+          tokens = parse_tokens(body['usage'])
+          # The provider billed this attempt even if its answers don't parse.
+          @usage_tracker&.observe_tokens(tokens)
           named = body.fetch('answers').to_h { |answer| [answer.fetch('name'), answer] }
           answers = questions.values.to_h do |question|
             [question.name, parse_answer(named.fetch(question.name.to_s), question)]
           end
-          RubyLLM::Judgment.new(answers:, model: body.fetch('model'), raw: response, model_info: @model,
-                                tokens: parse_tokens(body['usage']))
+          RubyLLM::Judgment.new(answers:, model: body.fetch('model'), raw: response, model_info: @model, tokens:)
         rescue KeyError, NoMethodError, TypeError => e
           raise Error.new('OpenAI Decisions returned an invalid judgment', provider_message: e.message, response:,
                                                                            redact: @config&.redact_error_messages)
