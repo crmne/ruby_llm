@@ -26,6 +26,15 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
     expect(row.to_stored_file).to have_attributes(path: 'notes/plan.md', updated_at: row.updated_at)
   end
 
+  it 'uses an explicitly stored type when converting an extensionless file' do
+    config = RubyLLM::Configuration.new
+    config.file_converters['application/x-subrip'] = ->(attachment) { "Converted: #{attachment.content}" }
+    store.write('captions', 'Hello', content_type: 'application/x-subrip')
+
+    expect(store.attachment('captions').mime_type).to eq('application/x-subrip')
+    expect(store.text('captions', config:)).to eq('Converted: Hello')
+  end
+
   it 'keeps the digest of an IO it streams, wherever the IO stands' do
     png = File.binread(image_path)
     reader, writer = IO.pipe.each(&:binmode)
