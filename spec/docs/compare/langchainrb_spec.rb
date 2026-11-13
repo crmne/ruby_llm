@@ -104,12 +104,12 @@ RSpec.describe 'RubyLLM and Langchain.rb guide', type: :task do
     end
 
     it 'answers from the catalog through the search tool' do
-      stub_openai(tool_turn('search_products', query: 'shoes in stock'), 'Acme has shoes in stock.')
+      stub_openai(tool_turn('search_products', query: 'running shoes in stock'), 'The Acme Trail runner is in stock.')
 
-      expect { evaluate('class SearchProducts') }.to output("Acme has shoes in stock.\n").to_stdout
+      expect { evaluate('class SearchProducts') }.to output("The Acme Trail runner is in stock.\n").to_stdout
 
       expect(searches).to eq([[[0.1, 0.2], :cosine]])
-      expect(embedded.last).to eq('shoes in stock')
+      expect(embedded.last).to eq('running shoes in stock')
       expect(provider_requests.last['input'].to_s).to include('Acme', 'Trail runner')
     end
   end

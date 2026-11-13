@@ -304,7 +304,7 @@ class ShopAssistant < RubyLLM::Agent
   tools SearchProducts
 end
 
-puts ShopAssistant.new.ask("List the brands of shoes that are in stock").content
+puts ShopAssistant.new.ask("Which running shoes do you have in stock?").content
 ```
 
 The model decides when to search and what to search for, so it can search twice for a broad question. For a fixed pipeline like `Product.ask`, call `similarity_search` yourself and pass the results to `ask`. See [RAG]({% link _advanced/rag.md %}), [Embeddings]({% link _getting_started/embeddings.md %}), and [Reranking]({% link _getting_started/rerank.md %}).
