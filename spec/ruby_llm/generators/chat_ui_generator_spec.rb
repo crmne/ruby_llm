@@ -242,10 +242,24 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         def execute = "Seat \#{ask("Window or aisle?", choices: %w[window aisle])}"
       end
     RUBY
+    File.write('app/tools/release_tags_tool.rb', <<~RUBY)
+      class ReleaseTagsTool < RubyLLM::Tool
+        description "Asks for release metadata"
+
+        def execute
+          ask("Which release?") do
+            string :title
+            array :tags, of: :string
+            array :extras, of: :string, required: false
+            array :sections, of: :string, default: %w[changes]
+          end
+        end
+      end
+    RUBY
     agent = File.read(agent_path)
     return if agent.include?('SendMailTool')
 
-    File.write(agent_path, agent.sub(/^end\n\z/, "  tools SendMailTool, PickSeatTool\nend\n"))
+    File.write(agent_path, agent.sub(/^end\n\z/, "  tools SendMailTool, PickSeatTool, ReleaseTagsTool\nend\n"))
   end
 
   def broadcast_order_script(agent:, **)
@@ -441,6 +455,42 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       abort "answer \#{answer}" unless answer == { "action" => "accept", "content" => { "answer" => "window" } }
       jobs = ActiveJob::Base.queue_adapter.enqueued_jobs.select { |job| job["job_class"] == "#{job}" }
       abort "jobs \#{jobs}" unless jobs.map { |job| job["arguments"] } == [ [ chat.id ] ] * 3
+
+    RUBY
+  end
+
+  def array_answer_script(agent:, chats_path:, **)
+    <<~RUBY
+      ActiveJob::Base.queue_adapter = :test
+      ActionController::Base.allow_forgery_protection = false
+      session = ActionDispatch::Integration::Session.new(Rails.application)
+      session.host! "localhost"
+      release = #{agent}.create!
+      call = RubyLLM::ToolCall.new(id: "call_release", name: "release_tags", arguments: {})
+      release.add_message(role: :assistant, content: "", tool_calls: { call.id => call })
+      release.run_tools
+
+      path = "#{chats_path}/\#{release.id}"
+      session.get path
+      page = Nokogiri::HTML(session.response.body)
+      form = page.css("form").find { |node| node["action"] == "#{chats_path}/\#{release.id}/answers" }
+      inputs = form.css("input[type=text]").map do |node|
+        name = node["name"]
+        value = name.include?("[title]") ? "November" : (name.include?("[tags]") ? "ruby" : node["value"].to_s)
+        abort "required blank input \#{name}" if node.key?("required") && value.empty?
+        [name, value]
+      end
+      params = URI.encode_www_form([["question_id", release.pending_questions.sole.id], *inputs])
+      session.post "#{chats_path}/\#{release.id}/answers", params: params,
+        headers: { "Accept" => "text/vnd.turbo-stream.html", "Content-Type" => "application/x-www-form-urlencoded" }
+      abort "array answer returned \#{session.response.status}: \#{session.flash[:notice]}" unless session.response.status == 200
+
+      answered = RubyLLM::ActiveRecord::ToolCall.find_by!(tool_call_id: "call_release").mcp_state["requests"].sole["response"]
+      expected = { "title" => "November", "tags" => ["ruby"], "sections" => ["changes"] }
+      abort "array answer saved \#{answered}" unless answered["content"] == expected
+      #{agent}.find(release.id).run_tools
+      result = RubyLLM::ActiveRecord::ToolCall.find_by!(tool_call_id: "call_release").result
+      abort "tool received \#{result.content}" unless JSON.parse(result.content) == expected
     RUBY
   end
 
@@ -1259,6 +1309,21 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
           end
         end
 
+        it 'submits array answers with the Tailwind question card' do
+          Dir.mktmpdir do |destination|
+            FileUtils.cp_r("#{app_path}/.", destination)
+            within_test_app(destination) do
+              output, status = run_rails_generate('ruby_llm:chat_ui', '--ui=tailwind', '--force', chdir: destination)
+              expect(status.success?).to be(true), output
+
+              flow = config[:approval_flow]
+              give_chat_agent_tools_that_ask(flow[:agent_path])
+              output, status = run_rails_runner_outside_executor(array_answer_script(**flow))
+              expect(status.success?).to be(true), output
+            end
+          end
+        end
+
         it 'generates a system test that uses the test helper' do
           within_test_app(app_path) do
             test_file = File.read('test/system/chats_test.rb')
@@ -1733,7 +1798,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       it 'renders questions, approvals, and attachments, and records answers' do
         within_test_app(app_path) do
           give_chat_agent_tools_that_ask(config[:approval_flow][:agent_path])
-          output, status = run_rails_runner_outside_executor(question_flow_script(**config[:approval_flow]))
+          flow = config[:approval_flow]
+          output, status = run_rails_runner_outside_executor(question_flow_script(**flow) + array_answer_script(**flow))
           expect(status.success?).to be(true), output
         end
       end

@@ -66,7 +66,8 @@
                   <%%= form.select "answer[#{field.name}]", field.choices, { selected: field.default, include_blank: !field.required? && !list },
                     id: field_id, multiple: list, required: list && field.required?, class: "block shadow-sm rounded-md border border-gray-400 px-3 py-2 mt-1 w-full" %>
                 <%% else %>
-                  <%%= form.text_field "answer[#{field.name}]", value: field.default, required: field.required?, id: field_id,
+                  <%%= form.text_field "answer[#{field.name}]#{"[]" if list}", value: (field.default unless list),
+                    required: field.required? && !(list && field.default), id: field_id,
                     type: steps.key?(field.type) ? "number" : "text", step: steps[field.type],
                     class: "block shadow-sm rounded-md border border-gray-400 px-3 py-2 mt-1 w-full" %>
                 <%% end %>
