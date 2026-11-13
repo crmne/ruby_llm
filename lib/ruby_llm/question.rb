@@ -117,8 +117,20 @@ module RubyLLM
       def answer_schema(choices)
         raise ArgumentError, 'choices: needs at least one choice.' if choices && Array(choices).empty?
 
-        answer = { 'type' => 'string', 'enum' => choices&.map(&:to_s) }.compact
+        answer = { 'type' => 'string', **choice_schema(choices) }
         { 'type' => 'object', 'properties' => { 'answer' => answer }, 'required' => ['answer'] }
+      end
+
+      def choice_schema(choices)
+        case choices
+        when nil then {}
+        when Hash then { 'oneOf' => choices.map { |value, title| choice(value, title) } }
+        else { 'enum' => choices.map(&:to_s) }
+        end
+      end
+
+      def choice(value, title)
+        { 'const' => value.to_s, 'title' => (title || value).to_s }
       end
     end
 
