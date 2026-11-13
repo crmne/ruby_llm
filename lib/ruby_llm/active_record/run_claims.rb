@@ -554,15 +554,28 @@ module RubyLLM
       end
 
       # Renewing inside the transaction holds the chat row until the result
-      # commits, so no other process can take the chat over in between.
+      # commits, so no other process can take the chat over in between. A
+      # message that touches its chat touches it after the commit: on
+      # Postgres, a second write to the row the claim renewed rechecks every
+      # foreign key on it and locks each row the chat references until the
+      # commit, which can deadlock with the application's own locks.
       def fenced_by_run_claim(&)
-        transaction do
+        reflection, columns = message_chat_touch if @run_claim_token
+        committed = transaction do
           renew_run_claim(force: true)
-          yield
+          reflection ? reflection.klass.no_touching(&) : yield
         end
+        @message.public_send(reflection.name)&.touch(*columns) if reflection && committed
+        committed
       rescue ClaimLost
         @message.destroy
         raise
+      end
+
+      def message_chat_touch
+        reflection = @message.class.reflect_on_association(@message.class.chat_association_name)
+        touch = reflection&.options&.dig(:touch)
+        [reflection, touch == true ? [] : Array(touch)] if touch
       end
 
       def tool_call_rows(tool_call_ids)
