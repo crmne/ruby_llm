@@ -114,6 +114,47 @@ RSpec.describe 'Versioned documentation site', type: :task do
       )
     end
 
+    it 'keeps main out of search: no sitemap, and noindex on every page' do
+      config = { 'url' => 'https://rubyllm.com', 'baseurl' => '/next',
+                 'vitepress_version' => { 'id' => 'next', 'kind' => 'next', 'title' => 'Next (unreleased)' },
+                 'jekyll_vitepress' => { 'seo' => { 'page_type' => 'TechArticle' } } }
+      VersionedDocs.prepare(double(config:))
+      page = rendered_page(<<~HTML, channel: 'next', theme: 'jekyll-vitepress-theme')
+        <html><head><title>Chat | RubyLLM Next</title>
+        <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+        <link rel="canonical" href="https://rubyllm.com/next/chat/">
+        </head><body><p>name="robots"</p></body></html>
+      HTML
+      page.site.config['docs_unreleased'] = config['docs_unreleased']
+      redirect = rendered_page('<html><head><title>Redirecting</title></head><body></body></html>',
+                               channel: 'next', theme: 'jekyll-vitepress-theme')
+      redirect.site.config['docs_unreleased'] = true
+
+      VersionedDocs.keep_out_of_search(page)
+      VersionedDocs.keep_out_of_search(redirect)
+
+      expect(config.dig('jekyll_vitepress', 'seo')).to eq('page_type' => 'TechArticle', 'sitemap' => false)
+      head = Nokogiri::HTML(page.output)
+      expect(head.css('meta[name="robots"]').map { |meta| meta['content'] }).to eq(['noindex,follow'])
+      expect(head.at_css('link[rel=canonical]')['href']).to eq('https://rubyllm.com/next/chat/')
+      expect(Nokogiri::HTML(redirect.output).at_css('head meta[name="robots"]')['content']).to eq('noindex,follow')
+    end
+
+    it 'leaves the stable docs indexed, with their sitemap' do
+      config = { 'url' => 'https://rubyllm.com',
+                 'vitepress_version' => { 'id' => 'stable', 'kind' => 'stable', 'title' => '2.2' },
+                 'jekyll_vitepress' => { 'seo' => { 'page_type' => 'TechArticle' } } }
+      VersionedDocs.prepare(double(config:))
+      output = '<html><head><meta name="robots" content="index,follow"></head><body></body></html>'
+      page = rendered_page(output.dup, channel: 'stable', theme: 'jekyll-vitepress-theme')
+      page.site.config['docs_unreleased'] = config['docs_unreleased']
+
+      VersionedDocs.keep_out_of_search(page)
+
+      expect(config.dig('jekyll_vitepress', 'seo')).to eq('page_type' => 'TechArticle')
+      expect(page.output).to eq(output)
+    end
+
     it 'leaves a plain build without a version alone' do
       llms = { 'description' => 'Developer documentation.', 'details' => '' }
       config = { 'url' => 'https://rubyllm.com', 'jekyll_vitepress' => { 'llms' => llms } }
@@ -244,6 +285,42 @@ RSpec.describe 'Versioned documentation site', type: :task do
       expect(html('next/api/RubyLLM/Chat.html').at_css('meta[property="og:title"]')['content'])
         .to eq('class RubyLLM::Chat - RubyLLM Next')
       expect(html('api/RubyLLM/Chat.html').at_css('title').text).to eq('class RubyLLM::Chat - RubyLLM')
+    end
+  end
+
+  describe 'API pages in search' do
+    def api_page(relative)
+      write_page(relative, '<html><head><title>class RubyLLM::Chat - RubyLLM</title></head><body></body></html>')
+    end
+
+    def robots(relative)
+      html(relative).at_css('meta[name="robots"]')['content']
+    end
+
+    it 'keeps main\'s API pages out of search and indexes the stable ones' do
+      api_page('next/api/RubyLLM/Chat.html')
+      api_page('api/RubyLLM/Chat.html')
+      write_page('sitemap.xml', "<urlset>\n</urlset>\n")
+      run_script('postprocess_api_seo.rb', File.join(site, 'next/api'), 'https://rubyllm.com/next')
+      run_script('postprocess_api_seo.rb', File.join(site, 'api'), 'https://rubyllm.com')
+
+      expect(robots('next/api/RubyLLM/Chat.html')).to eq('noindex,follow')
+      expect(robots('api/RubyLLM/Chat.html')).to start_with('index,follow')
+      expect(File.read(File.join(site, 'sitemap.xml'))).to include('https://rubyllm.com/api/RubyLLM/Chat.html')
+    end
+
+    it 'keeps RDoc\'s pages for generator templates out of search and the sitemap' do
+      template = 'v1/api/lib/generators/ruby_llm/agent/templates/agent_rb_tt.html'
+      api_page(template)
+      api_page('v1/api/RubyLLM/Chat.html')
+      write_page('v1/sitemap.xml', "<urlset>\n</urlset>\n")
+      run_script('postprocess_api_seo.rb', File.join(site, 'v1/api'), 'https://rubyllm.com/v1')
+
+      sitemap = File.read(File.join(site, 'v1/sitemap.xml'))
+      expect(robots(template)).to eq('noindex,follow')
+      expect(robots('v1/api/RubyLLM/Chat.html')).to start_with('index,follow')
+      expect(sitemap).to include('https://rubyllm.com/v1/api/RubyLLM/Chat.html')
+      expect(sitemap).not_to include('templates')
     end
   end
 
