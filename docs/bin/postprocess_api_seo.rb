@@ -10,7 +10,12 @@ image_url = "#{site_root}/assets/images/social/index.png"
 default_robots = 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1'
 api_urls = []
 index_pages = %w[index.html RubyLLM.html]
-version_label = { 'next' => 'RubyLLM Next', 'v1' => 'RubyLLM v1' }[site_root[%r{/([^/]+)\z}, 1]]
+channel = site_root[%r{/([^/]+)\z}, 1]
+version_label = { 'next' => 'RubyLLM Next', 'v1' => 'RubyLLM v1' }[channel]
+# Main's API pages describe unreleased code, and RDoc's renderings of the
+# generators' template files are not API docs: both stay out of search.
+unreleased = channel == 'next'
+GENERATOR_TEMPLATE = %r{\Alib/generators/.*/templates/}
 
 def tag(name, attributes)
   rendered = attributes.map { |key, value| %(#{key}="#{CGI.escapeHTML(value)}") }.join(' ')
@@ -39,7 +44,8 @@ output_dir.glob('**/*.html').sort.each do |path|
               else
                 "#{site_root}/api/#{relative_path}"
               end
-  robots = redirect ? 'noindex,follow' : default_robots
+  indexed = !redirect && !unreleased && !relative_path.match?(GENERATOR_TEMPLATE)
+  robots = indexed ? default_robots : 'noindex,follow'
   title = CGI.unescapeHTML(html[%r{<title>(.*?)</title>}mi, 1].to_s).strip
   if version_label && !redirect
     title = "#{title.delete_suffix(' - RubyLLM')} - #{version_label}"
@@ -86,7 +92,7 @@ output_dir.glob('**/*.html').sort.each do |path|
       ]
     }
     metadata << %(<script type="application/ld+json">#{json_ld(graph)}</script>)
-    api_urls << canonical
+    api_urls << canonical if indexed
   end
 
   html = inject_head(html, metadata.join("\n"))

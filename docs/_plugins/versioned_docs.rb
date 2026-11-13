@@ -8,17 +8,26 @@ require 'cgi'
 # plugin names the version in templates (`site.docs_channel`), llms.txt, and
 # branded titles, and labels the titles of the 1.x docs, which keep their
 # Just the Docs layout.
+#
+# Main at /next/ documents features that are not released yet, so search
+# engines should send people to the stable docs instead. Its pages say
+# noindex,follow and it publishes no sitemap. Each page keeps its own
+# canonical (a /next/ page may have no stable counterpart), and llms.txt keeps
+# listing them for agents working against main.
 module VersionedDocs
   module_function
 
   TITLE_LABELS = { 'next' => 'RubyLLM Next', 'v1' => 'RubyLLM v1' }.freeze
   HEAD_TITLE = %r{<title>(.*?)</title>}m
   SHARED_TITLE = /(<meta\s+(?:property|name)="(?:og|twitter):title"\s+content=")[^"]*(")/
+  ROBOTS_META = %r{<meta\s+name="robots"\s+content="[^"]*"\s*/?>}i
+  UNRELEASED_ROBOTS = '<meta name="robots" content="noindex,follow">'
 
   def prepare(site)
     version = site.config['vitepress_version'] || {}
     site.config['docs_channel'] = version['id']
     site.config['docs_unreleased'] = version['kind'] == 'next'
+    leave_out_of_sitemaps(site) if site.config['docs_unreleased']
 
     llms = site.config.dig('jekyll_vitepress', 'llms')
     return unless llms && version['title']
@@ -27,6 +36,26 @@ module VersionedDocs
     base = site.config.fetch('baseurl', '').delete_suffix('/')
     llms['description'] = "Developer documentation for RubyLLM #{version['title']}."
     llms['details'] = llms['details'].to_s.gsub("#{origin}/api/", "#{origin}#{base}/api/")
+  end
+
+  def leave_out_of_sitemaps(site)
+    theme = site.config['jekyll_vitepress'] ||= {}
+    seo = theme['seo']
+    return if seo == false
+
+    theme['seo'] = (seo.is_a?(Hash) ? seo : {}).merge('sitemap' => false)
+  end
+
+  # Rewrites the rendered robots tag rather than the theme's page metadata,
+  # which llms.txt also reads and would then drop every page from.
+  def keep_out_of_search(page)
+    return unless page.site.config['docs_unreleased'] && page.output_ext == '.html' && page.output
+
+    head, closing, body = page.output.partition(%r{</head>}i)
+    return if closing.empty?
+
+    head = head.match?(ROBOTS_META) ? head.gsub(ROBOTS_META, UNRELEASED_ROBOTS) : "#{head}#{UNRELEASED_ROBOTS}\n"
+    page.output = "#{head}#{closing}#{body}"
   end
 
   # A page whose title already begins with the site name, such as the
@@ -79,4 +108,5 @@ end
 
 Jekyll::Hooks.register %i[pages documents], :post_render do |page|
   VersionedDocs.label_titles(page)
+  VersionedDocs.keep_out_of_search(page)
 end
