@@ -175,6 +175,21 @@ module RubyLLM
         self[:cancelled] = false if has_attribute?(:cancelled)
       end
 
+      # Hold the same row a run claims without replacing its token, so a
+      # failed submission leaves an interrupted run discoverable.
+      def stage_while_idle
+        transaction(requires_new: true) do
+          next false unless unclaimed(chat_row, Time.current).update_all('claim_token = claim_token') == 1
+
+          resync_messages if @chat && run_finished_elsewhere?
+          yield
+          true
+        end
+      rescue StandardError
+        resync_messages if @chat
+        raise
+      end
+
       def exclusively(busy, &)
         return yield if @run_claim_token
 
