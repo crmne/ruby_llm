@@ -2,9 +2,9 @@
 layout: default
 title: ruby-openai
 seo:
-  title: Migrating from ruby-openai
+  title: Migrate from the ruby-openai Gem
 nav_order: 8
-description: Move a ruby-openai application to RubyLLM one call site at a time, with before and after code for chat, streaming, and tools.
+description: Move a ruby-openai application to RubyLLM one call site at a time, with before and after code for OpenAI chat, streaming, and tools.
 permalink: /migrate/ruby-openai/
 ---
 

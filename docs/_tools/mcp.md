@@ -2,9 +2,9 @@
 layout: default
 title: MCP Client
 seo:
-  title: MCP Client for Ruby
+  title: Ruby MCP Client for Chats, Agents and Rails
 nav_order: 3
-description: Connect your chats and agents to Model Context Protocol servers and use their tools, resources, and prompts
+description: Connect Ruby chats, agents, and Rails records to Model Context Protocol (MCP) servers and use their tools, resources, and prompts.
 ---
 
 # {{ page.title }}
