@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require_relative '../../support/query_helpers'
 
 RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   include_context 'with configured RubyLLM'
@@ -68,6 +69,21 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
           expect(chat.pending_questions).to eq([])
         end
       end
+    end
+  end
+
+  [false, true].each do |remember|
+    it "approves a call without loading the messages (remember: #{remember})" do
+      chat = process(Chat.create!(model: model_for(:openai)))
+      pending = park(chat, call('refund'))
+
+      queries = QueryHelpers.matching(/SELECT ["`]messages["`]\.\*/) do
+        Chat.find(chat.id).approve(pending.id, remember:)
+      end
+
+      expect(queries).to be_empty
+      expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: pending.id).approval)
+        .to eq(remember ? 'remembered' : 'approved')
     end
   end
 

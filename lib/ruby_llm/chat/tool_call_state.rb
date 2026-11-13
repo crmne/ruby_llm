@@ -72,6 +72,17 @@ module RubyLLM
         decision(tool_call) == false
       end
 
+      # Returns the identity a remembered approval of +call+ applies to:
+      # later calls to the same tool. A run_code call outside a namespace
+      # is approved one call at a time.
+      def self.remembered_identity(call)
+        if call.name == CodeExecution.tool_name && call.namespace.nil?
+          raise ArgumentError, "#{call.name} calls are approved one at a time and cannot be remembered"
+        end
+
+        [call.namespace, call.name.to_s]
+      end
+
       def remember(identity)
         @remembered |= [identity]
       end
