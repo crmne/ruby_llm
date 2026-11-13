@@ -25,37 +25,37 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 10 Nov 2026 17:41:38 GMT
+      - Fri, 13 Nov 2026 21:28:52 GMT
       Content-Length:
-      - '865'
+      - '877'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-969","object":"chat.completion","created":1794332498,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
-        the user wants to know which programming language they should learn using
-        the best_language_to_learn tool. Let me check the tools provided. The available
-        function is best_language_to_learn, which takes no arguments. Since there''s
-        no specific input needed, I just need to call that function. I''ll make sure
-        to structure the tool call correctly in JSON within the specified XML tags.\n","tool_calls":[{"id":"call_g9gxohp0","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":139,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":98,"total_tokens":237}}
+      string: '{"id":"chatcmpl-326","object":"chat.completion","created":1794605332,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+        the user is asking which language to learn, and they want me to use the best_language_to_learn
+        tool. Let me check the tools provided. The tool is called best_language_to_learn,
+        and it doesn''t require any arguments. The function''s parameters are empty.
+        So I just need to call that function without any arguments. I''ll make sure
+        to structure the tool call correctly in JSON inside the XML tags.\n","tool_calls":[{"id":"call_4leildzg","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":139,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":106,"total_tokens":245}}
 
         '
-  recorded_at: Tue, 10 Nov 2026 17:41:38 GMT
+  recorded_at: Fri, 13 Nov 2026 21:28:52 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"Use the best_language_to_learn
-        tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"call_g9gxohp0","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
-        the user wants to know which programming language they should learn using
-        the best_language_to_learn tool. Let me check the tools provided. The available
-        function is best_language_to_learn, which takes no arguments. Since there''s
-        no specific input needed, I just need to call that function. I''ll make sure
-        to structure the tool call correctly in JSON within the specified XML tags.\n","reasoning_content":"Okay,
-        the user wants to know which programming language they should learn using
-        the best_language_to_learn tool. Let me check the tools provided. The available
-        function is best_language_to_learn, which takes no arguments. Since there''s
-        no specific input needed, I just need to call that function. I''ll make sure
-        to structure the tool call correctly in JSON within the specified XML tags.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call_g9gxohp0"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"call_4leildzg","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
+        the user is asking which language to learn, and they want me to use the best_language_to_learn
+        tool. Let me check the tools provided. The tool is called best_language_to_learn,
+        and it doesn''t require any arguments. The function''s parameters are empty.
+        So I just need to call that function without any arguments. I''ll make sure
+        to structure the tool call correctly in JSON inside the XML tags.\n","reasoning_content":"Okay,
+        the user is asking which language to learn, and they want me to use the best_language_to_learn
+        tool. Let me check the tools provided. The tool is called best_language_to_learn,
+        and it doesn''t require any arguments. The function''s parameters are empty.
+        So I just need to call that function without any arguments. I''ll make sure
+        to structure the tool call correctly in JSON inside the XML tags.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call_4leildzg"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
@@ -74,12 +74,25 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 10 Nov 2026 17:41:40 GMT
+      - Fri, 13 Nov 2026 21:28:53 GMT
       Content-Length:
-      - '1352'
+      - '1206'
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTIxOSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQzMzI1MDAsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzICoqUnVieSoqLiBJdCBpcyBrbm93biBmb3IgaXRzIHNpbXBsaWNpdHksIHJlYWRhYmlsaXR5LCBhbmQgcHJvZHVjdGl2aXR5LCBtYWtpbmcgaXQgYW4gZXhjZWxsZW50IGNob2ljZSBmb3IgYmVnaW5uZXJzIGFuZCBleHBlcmllbmNlZCBkZXZlbG9wZXJzIGFsaWtlLiBSdWJ5J3Mgc3ludGF4IGVtcGhhc2l6ZXMgbmF0dXJhbCwgaHVtYW4tcmVhZGFibGUgY29kZSwgYW5kIGl04oCZcyB3aWRlbHkgdXNlZCBpbiB3ZWIgZGV2ZWxvcG1lbnQgKGUuZy4sIHdpdGggdGhlIFJ1Ynkgb24gUmFpbHMgZnJhbWV3b3JrKS4gSXRzIGZsZXhpYmlsaXR5IGFuZCB2aWJyYW50IGNvbW11bml0eSBhbHNvIG1ha2UgaXQgYSBncmVhdCBvcHRpb24gZm9yIGxlYXJuaW5nIHByb2dyYW1taW5nIGNvbmNlcHRzLiDwn46JIiwicmVhc29uaW5nIjoiT2theSwgdGhlIHVzZXIgYXNrZWQgZm9yIHRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuLCBhbmQgdGhlIHRvb2wgcmV0dXJuZWQgXCJSdWJ5XCIuIE5vdyBJIG5lZWQgdG8gcHJlc2VudCB0aGlzIGFuc3dlciBjbGVhcmx5LiBMZXQgbWUgdGhpbmsgYWJvdXQgaG93IHRvIHJlc3BvbmQuXG5cbkZpcnN0LCBJIHNob3VsZCBzdGF0ZSB0aGF0IFJ1YnkgaXMgdGhlIHJlY29tbWVuZGVkIGxhbmd1YWdlLiBUaGVuLCBtYXliZSBleHBsYWluIHdoeSBSdWJ5IGlzIGEgZ29vZCBjaG9pY2UuIEl0J3Mga25vd24gZm9yIGl0cyBzaW1wbGljaXR5IGFuZCBwcm9kdWN0aXZpdHksIGVzcGVjaWFsbHkgaW4gd2ViIGRldmVsb3BtZW50IHdpdGggZnJhbWV3b3JrcyBsaWtlIFJhaWxzLiBBbHNvLCBSdWJ5J3Mgc3ludGF4IGlzIGVhc3kgdG8gcmVhZCwgd2hpY2ggbWFrZXMgaXQgZ3JlYXQgZm9yIGJlZ2lubmVycy4gSSBzaG91bGQgbWVudGlvbiB0aGVzZSBwb2ludHMgdG8gZ2l2ZSB0aGUgdXNlciBhIHdlbGwtcm91bmRlZCBhbnN3ZXIuIExldCBtZSBtYWtlIHN1cmUgdGhlIHJlc3BvbnNlIGlzIGZyaWVuZGx5IGFuZCBpbmZvcm1hdGl2ZS5cbiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MjUwLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MTQwfSwiY29tcGxldGlvbl90b2tlbnMiOjIwNiwidG90YWxfdG9rZW5zIjo0NTZ9fQo=
-  recorded_at: Tue, 10 Nov 2026 17:41:40 GMT
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-873","object":"chat.completion","created":1794605333,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        best language to learn is **Ruby**. It is known for its simplicity, readability,
+        and versatility in web development and scripting.","reasoning":"Okay, the
+        user asked which language to learn, and I used the best_language_to_learn
+        tool. The response from the tool was \"Ruby\". Now I need to present this
+        answer clearly. Let me make sure to mention that Ruby is the recommended language.
+        Maybe add a brief reason why Ruby is a good choice, like its simplicity and
+        versatility. But wait, the tool''s response was just \"Ruby\", so maybe I
+        shouldn''t add extra info unless necessary. The user might just want the answer
+        directly. Let me check the instructions again. The user said to use the tool
+        and tell them which language to learn. Since the tool''s answer is Ruby, I
+        should state that clearly. Maybe format it as a sentence. Alright, the response
+        should be straightforward.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":258,"prompt_tokens_details":{"cached_tokens":140},"completion_tokens":184,"total_tokens":442}}
+
+        '
+  recorded_at: Fri, 13 Nov 2026 21:28:53 GMT
 recorded_with: VCR 6.4.1

@@ -28,27 +28,27 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
-      - '806'
+      - '798'
       Trace-Id:
-      - '07428c9c6826974288260c868eed7e98'
+      - 0746b6269d8293341c1246036692f25b
       X-Session-Id:
       - 3432a588321cfbca2858a09fe80c6d0c
       X-Mm-Request-Id:
-      - 2092934004998157135_1794333084mlcban
+      - 2092934004998157135_1794605862c5cd0p
       Minimax-Request-Id:
-      - ade2b92c69a3da0ffa75aa0e27fc00ed
+      - f190d48dbea151d21efa0612652c1e73
       Alb-Receive-Time:
-      - '1794333084.203'
+      - '1794605862.016'
       Alb-Request-Id:
-      - b770f3c4a4d1362dc370481cff0bfd0ec900a046
+      - 112e02dc26672342dae4c2b5d93b9f91e84ac419
       Expires:
-      - Tue, 10 Nov 2026 17:51:25 GMT
+      - Fri, 13 Nov 2026 21:37:42 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Tue, 10 Nov 2026 17:51:25 GMT
+      - Fri, 13 Nov 2026 21:37:42 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -57,12 +57,12 @@ http_interactions:
       - ak
     body:
       encoding: UTF-8
-      string: '{"id":"07428c9c6826974288260c868eed7e98","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"thinking":"The
-        user says \"Process this query: test data\". There''s a tool available: CompatContentReturningdfd0e9,
-        described as \"Returns a processed string result\" with a required \"query\"
-        parameter.\n\nI should call the tool withthe query.","signature":"878387215d80987467d9c4d84f56065613b20666d04e52ea7050cff13b14a891","type":"thinking"},{"type":"tool_use","id":"call_01a1c6960e1c772f8f6f1183","name":"content_returning","input":{"query":"test
-        data"}}],"usage":{"input_tokens":263,"output_tokens":82,"cache_creation_input_tokens":0,"cache_read_input_tokens":189,"output_tokens_details":{"thinking_tokens":51}},"stop_reason":"tool_use","base_resp":{"status_code":0,"status_msg":""}}'
-  recorded_at: Tue, 10 Nov 2026 17:51:25 GMT
+      string: '{"id":"0746b6269d8293341c1246036692f25b","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"thinking":"The
+        user says \"Process this query: test data\". I have a tool `content_returning`
+        that takes a query and returns a processed string result. Let me call it with
+        the query.\n\nThe query is \"test data\". Let me pass it through.","signature":"353fff34ecd10fde5b465d0890814101e237206bd4702976280d595caf433271","type":"thinking"},{"type":"tool_use","id":"call_function_ek3620z2d1sn_1","name":"content_returning","input":{"query":"test
+        data"}}],"usage":{"input_tokens":329,"output_tokens":82,"cache_creation_input_tokens":0,"cache_read_input_tokens":128,"output_tokens_details":{"thinking_tokens":54}},"stop_reason":"tool_use","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Fri, 13 Nov 2026 21:37:42 GMT
 - request:
     method: post
     uri: https://api.minimax.io/anthropic/v1/messages
@@ -70,10 +70,10 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"Process
         this query: test data"}]},{"role":"assistant","content":[{"thinking":"The
-        user says \"Process this query: test data\". There''s a tool available: CompatContentReturningdfd0e9,
-        described as \"Returns a processed string result\" with a required \"query\"
-        parameter.\n\nI should call the tool withthe query.","signature":"878387215d80987467d9c4d84f56065613b20666d04e52ea7050cff13b14a891","type":"thinking"},{"type":"tool_use","id":"call_01a1c6960e1c772f8f6f1183","name":"content_returning","input":{"query":"test
-        data"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"call_01a1c6960e1c772f8f6f1183","content":[{"type":"text","text":"Processed:
+        user says \"Process this query: test data\". I have a tool `content_returning`
+        that takes a query and returns a processed string result. Let me call it with
+        the query.\n\nThe query is \"test data\". Let me pass it through.","signature":"353fff34ecd10fde5b465d0890814101e237206bd4702976280d595caf433271","type":"thinking"},{"type":"tool_use","id":"call_function_ek3620z2d1sn_1","name":"content_returning","input":{"query":"test
+        data"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"call_function_ek3620z2d1sn_1","content":[{"type":"text","text":"Processed:
         test data"}]}]}],"stream":false,"max_tokens":524288,"tools":[{"name":"content_returning","description":"Returns
         a processed string result","input_schema":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}]}'
@@ -96,27 +96,27 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
-      - '460'
+      - '543'
       Trace-Id:
-      - '07428c9e8642bd6f98dfc09a8f944e96'
+      - 0746b62736a6d4aaa90bf0bd173683f1
       X-Session-Id:
       - 3432a588321cfbca2858a09fe80c6d0c
       X-Mm-Request-Id:
-      - 2092934004998157135_17943330862bqpp6
+      - 2092934004998157135_1794605863rxsz2c
       Minimax-Request-Id:
-      - 5fb83d9fbc3258924265f656f0c691cd
+      - 036fbe2f0743dc72a86e9e4c8db4ba0d
       Alb-Receive-Time:
-      - '1794333086.652'
+      - '1794605863.318'
       Alb-Request-Id:
-      - 7e2d8f08c68355ea7dbf2c008f585e0c74859270
+      - 70f3ab5430cca75973d6e822abbea10e6ac54c7f
       Expires:
-      - Tue, 10 Nov 2026 17:51:27 GMT
+      - Fri, 13 Nov 2026 21:37:43 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Tue, 10 Nov 2026 17:51:27 GMT
+      - Fri, 13 Nov 2026 21:37:43 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -125,8 +125,9 @@ http_interactions:
       - ak
     body:
       encoding: UTF-8
-      string: '{"id":"07428c9e8642bd6f98dfc09a8f944e96","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"Processed:
-        test data\n\nThe query \"test data\" was submitted to the processing tool,
-        which returned the result `Processed: test data`.","type":"text"}],"usage":{"input_tokens":101,"output_tokens":30,"cache_creation_input_tokens":0,"cache_read_input_tokens":452},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
-  recorded_at: Tue, 10 Nov 2026 17:51:27 GMT
+      string: '{"id":"0746b62736a6d4aaa90bf0bd173683f1","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"The
+        query has been processed successfully.\n\n**Result:** `Processed: test data`\n\nThe
+        input \"test data\" was passed through the processing tool and returned with
+        the `Processed: ` prefix applied. No errors occurred.","type":"text"}],"usage":{"input_tokens":365,"output_tokens":45,"cache_creation_input_tokens":0,"cache_read_input_tokens":189},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Fri, 13 Nov 2026 21:37:43 GMT
 recorded_with: VCR 6.4.1

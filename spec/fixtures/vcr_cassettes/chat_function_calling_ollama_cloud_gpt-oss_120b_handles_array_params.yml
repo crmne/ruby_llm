@@ -29,36 +29,35 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - 81e02665bdd918cf59b66804d554f8e53171f5d2
+      - be2a079e0a02b03cf1b3d1cab78f88a8b6c055b8
       X-Build-Time:
-      - '2026-11-09T17:12:20-08:00'
+      - '2026-11-13T11:19:30-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '880'
+      - '786'
       Date:
-      - Tue, 10 Nov 2026 17:42:16 GMT
+      - Fri, 13 Nov 2026 21:29:25 GMT
       Server:
       - Google Frontend
       Traceparent:
-      - 00-0e0c1045d4d3da7fc18eb37c6a5315f2-bbdefcbf81dae769-00
+      - 00-6856ecb0fea96bf0c48541d6d0795d6b-f57c78813003d6d8-00
       X-Cloud-Trace-Context:
-      - 0e0c1045d4d3da7fc18eb37c6a5315f2/13537535429369849705
+      - 6856ecb0fea96bf0c48541d6d0795d6b/17689145932656137944
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-571","object":"chat.completion","created":1794332536,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"The
-        user wants to \"Call the array params tool with tags [\"red\",\"blue\"] and
-        tell me the combined tags.\"\n\nWe have a tool function: functions.array_params
-        which takes tags: any[]. It probably returns something like combined tags?
-        There''s no description, but we can call it. Then we need to return the result
-        to the user.\n\nLet''s call function with tags: [\"red\",\"blue\"].","tool_calls":[{"id":"call_4ci1vbp9","index":0,"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":147,"completion_tokens":115,"total_tokens":262,"prompt_tokens_details":{"cached_tokens":64}}}
+      string: '{"id":"chatcmpl-156","object":"chat.completion","created":1794605365,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"The
+        user wants to call the tool functions.array_params with tags [\"red\",\"blue\"]
+        and then tell the combined tags. The tool likely combines tags? Not sure what
+        the function does. The DSL says uses params DSL array support. Probably returns
+        something combined. We''ll call the function.","tool_calls":[{"id":"call_y2uueycg","index":0,"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":147,"completion_tokens":92,"total_tokens":239,"prompt_tokens_details":{"cached_tokens":64}}}
 
         '
-  recorded_at: Tue, 10 Nov 2026 17:42:16 GMT
+  recorded_at: Fri, 13 Nov 2026 21:29:25 GMT
 recorded_with: VCR 6.4.1

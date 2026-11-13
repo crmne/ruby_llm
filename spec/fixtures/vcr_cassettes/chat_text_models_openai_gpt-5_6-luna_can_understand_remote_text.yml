@@ -35,35 +35,35 @@ http_interactions:
       Etag:
       - W/"6ae93428-9c6"
       Expires:
-      - Tue, 10 Nov 2026 17:41:37 GMT
+      - Fri, 13 Nov 2026 21:31:46 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - EABE:9FB17:208869:20DA2B:6AF354F8
+      - 75D8:818BB:BA3482:BB39B0:6AF77F6A
       X-Github-Edge-Region:
       - fra
       Accept-Ranges:
       - bytes
       Date:
-      - Tue, 10 Nov 2026 17:35:04 GMT
+      - Fri, 13 Nov 2026 21:24:20 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '158'
+      - '122'
       X-Served-By:
       - cache-ber1080041-BER
       X-Cache:
       - HIT
       X-Cache-Hits:
-      - '2'
+      - '1'
       X-Timer:
-      - S1794332104.399145,VS0,VE1
+      - S1794605061.811946,VS0,VE2
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 11d0cea28f882591645db98b89b74c055ddcb6b1
+      - 4db139a4bd69d92f13ca36158bcffd89afdae30c
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -99,7 +99,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Tue, 10 Nov 2026 17:35:04 GMT
+  recorded_at: Fri, 13 Nov 2026 21:24:20 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
@@ -157,7 +157,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:35:08 GMT
+      - Fri, 13 Nov 2026 21:24:23 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -177,11 +177,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '4304'
+      - '2626'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -193,11 +193,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999751'
+      - '1999924'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 7ms
+      - 2ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Set-Cookie:
@@ -208,22 +208,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0a8125795f30467e016af355c87dc087d2acd9020f75efe5af",
+          "id": "resp_08b5f28e4c3c0418016af78004ece887d2816234d0864fc890",
           "object": "response",
-          "created_at": 1794332104,
+          "created_at": 1794605060,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794332108,
+          "completed_at": 1794605063,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -231,14 +232,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "rs_0a8125795f30467e016af355c9036887d2b7467f8b03ea2a73",
-              "type": "reasoning",
-              "content": [],
-              "encrypted_content": "gAAAAABq81XME2Lk9booMdJpi4QE0xQbynf7iQGr5cBs-e5cZ-unzGifxp2z0aekyxa2RdQrkNNlf37Ii8EAOQ2yQkmCYL1plJQC2zDSqW-LI7RfkOz1VpoU7v8Nu7gpqu1E8najlryb1H6XSQspAj7XJpAc2BvTct7ysCpEw-aQayk5xmdua7H_4kXTNuebhK6TujoA103kuipwT1npNG7xNzx9b_isS0jLwvSMWEDibGMYrvK5A-ci93qtqdhgsSX_eG20u_-zd6io48IU2ln3PYFL3_zZ__a3c0vWXiD8d19pCGIzPoOhN29nDlbEcQGFO_B410vkXYe7DGa0wL68a6Ch-I2mOQFbLxQiYRLSEcUkt0IcSQ7ACGDozU0p1t3bkq8zb30vm9p-Hi8-Nd38uDcdiYhFFWdsTEu-hr7PRKtkMlSuIWzP0dvCZKTEhkZlSdbRsuYp1lEuJqIWFh8KJzyPObbr90WzxclPSbEyRFTnfE2OEZEbrc7OtESSmnj3PorqJcaGNuxpr2XKgl3X7iPGEhygI4Qv85N88IEHiu6UeIMizSb-UnyDSGmtPOVrMnS8ilxMbMsg2q7DFBx8_IQ2K9DMLjWdVPuvVOpu9gosdBlZcVqoSEQ0K_tDGPYyrWJyKG_DG7S3JMGdZ2kGqcKnB2vfhS0Sc_LMYOM8BojkEaw0ESUkzeclVfGNJrGFSounWeKohzrSPd4OFmmF-Hs3_6_rbox4Gk8vfgPcRsOM67EAIQFW4mMZryEJHzOUHRnumErg6eY8w-igyCWOAHjTd_uNyGPtqoNSPWobmifAgXLjwKY54OkSJ5TlA2JkO7U2JmbVpU-VscagqACRVdXJqzEhdLjRve_2EJ9mVti8y7OYN_zXhOrnU9rjg8eDmTTc_kUMZkUFZFwsIe86FKOp8l6pSSAAHdFjGxoXuvLhS9KDpWMaTGE7KyxNUUgliacuDMMPnnAj0kfVKMnV_sGhByLfOK0M7N_VFPs95UEEmNC_ymcIHlsLs7wBU9wrC73QlCdoXmzHwUTTBKsBQpWFpNz1fOnpByieMDRwAy6pXbSfSh98tNsdS00yBcBkoqSWDpI2EQAL7cGbJFjDLj4CQq_Rti-mvUMKIWJGoW08kzLR6wyCI8oA4RpiwaFBtOgaWEJz5WK_6MvtoxJcn2RxStwwZAHolGLzAy0N2Zj5SR-KuGnS6yQcsvYDfcMwprvjG4sblWx8kRabsDw32anqIwJwZS7BhZ5SYYS38BG_XIMiBVxXNWNk4rYp66S4CHVJ-J0p8DdsmpFPNNpzlKqbBW8z8XpD1xajAXTYnbav3I8byqLLGV6dz-YDTC0RtYqUt_fMpqHN14XXUe8mwodtJFmA7gNpVPDIDgCcqSKRIux9ipGFjSaMzt7gHSAoCLmI1oK7N6QYCPvXFAF0IRonNHtZyrdY5GUf7MYto_3BfgUC60olk_85OgFVn7l5b53QGlAXJyd6CKm3Zg6eZGWefmAhRXQAhCCQK4OJ5MSLvWCUr6yILagEXpHTXxvkkx5z4dS46AxbCuu1TbY0yzrygjeysWIapErZWRUhhKzwXAKr-5Amo9WlggL691KFRD2tj00WBzZ7_DFHFNcw9ZCZ_irmvbK_NS7v_qE_cKokFEfSnxZsAGTc9hYini6FHjwVwtbdEhjNSmFoPrn_HCrGFGVcpnGxH2IjPed6cHYnsXBptnM0ZVgNyb5Qp0Cu2E_skRL1MPoQCejjsI4aROMuQ3s0CRaBnRlVWMqP4-yYjM1ZLaJuOwjOahtbORvm2czTRUivq18-j88f3XRhcx1CAstuWy8_ZdrAxh-Ojm3CU3cn3Cbt4xhyZ7KOYfkLuz_MEML7IgBH-Je44rQCS1fORBja7ml1AC-l4da2czmmEcfbAvNPfgm6iiYCtYVIXRJ65qOHYHxi_M51ffCeb9nIC-6rTAQ4AQ8qjaN76-T9IWKYEQR6VsBXAbSygmSZZ55W-sfyGlzFYMiuZL8Zb19zVjJ2PFkv1aRlH1H2pDHtvVzH-lZPupgj_t_DN-NBXXnPGQX_n9l3WgQKj3AZ3LavfvqE8DGlTmexHhA6yUwMPnwucf2Z_XSzlDOnzYrQfKNJZdmY3WOKy1OeehCvPqB55i9gE24ucRfqCA6G7YDGFeU4_PdZDFPrgJXGxAWEcKF6T9yw0L70x7ypuldMwBb5Dxw3Zg6tZywTgpw_bpm1j5pOVFhgqh7vDtjp6F6nSXsiMTDin6aeQ5f2geHTKv-GAf1oEJ_d-cNJmunaIgw-aUCNw8qpR7r-8JOrAHjl4xbAfRsPHZ-h5GBTpoyfrOUR2W78xQ==",
-              "summary": []
-            },
-            {
-              "id": "msg_0a8125795f30467e016af355c98c0887d2bf0b048518fdcde5",
+              "id": "msg_08b5f28e4c3c0418016af780058ba887d281d01dab81ce64c9",
               "type": "message",
               "status": "completed",
               "content": [
@@ -246,7 +240,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "This is a license for the Ruby programming language, copyrighted by Yukihiro Matsumoto (\u201cMatz\u201d).\n\nKey points:\n\n- **Dual licensing:** You may use and redistribute Ruby either under:\n  - The **2-clause BSD license** found in the `BSDL` file, or\n  - The custom conditions listed in this file.\n\n- **Source redistribution:** You may distribute unmodified source code freely, as long as you retain the original copyright notices and disclaimers.\n\n- **Modified source:** You may modify the source if you either:\n  - Make the changes freely available or place them in the public domain;\n  - Use the modified version only within your organization;\n  - Give modified binaries distinct names and explain where to obtain the original;\n  - Or make another arrangement with the author.\n\n- **Binary distribution:** You may distribute compiled or object-code versions if you meet one of similar conditions, such as providing source, instructions for obtaining the original source, or using distinct names for modified binaries.\n\n- **Third-party files:** Some files may not be covered by this license. Their terms are listed in the `LEGAL` file.\n\n- **Scripts and libraries:** Scripts and library files supplied to or generated by Ruby generally remain the property of their creators and may be sold or bundled with Ruby.\n\n- **Warranty disclaimer:** Ruby is provided **\u201cas is,\u201d without warranties**, including implied warranties of merchantability or fitness for a particular purpose.\n\nIn practice, the included 2-clause BSD license is generally the simpler permissive option, but the exact applicable terms depend on the accompanying `BSDL` and `LEGAL` files."
+                  "text": "This is the **license for the Ruby programming language**, attributed to Yukihiro \u201cMatz\u201d Matsumoto.\n\nIn summary:\n\n- Ruby may be redistributed and modified under either:\n  - The **2-clause BSD License** (referenced in the separate `BSDL` file), or\n  - The conditions listed in this file.\n- Source-code redistribution is allowed if copyright notices and disclaimers are preserved.\n- Modified source may be distributed if the modifications are:\n  - Released publicly,\n  - Kept within an organization,\n  - Distributed under a distinct binary name with instructions for obtaining the original, or\n  - Covered by another arrangement with the author.\n- Binary/object-code distribution requires accompanying source, instructions for obtaining the source, distinct naming, or another arrangement.\n- Some files may have different licenses; the separate `LEGAL` file identifies them.\n- Programs and libraries supplied to or generated by Ruby are not automatically covered by Ruby\u2019s copyright and may be used or sold commercially.\n- The software is provided **\u201cas is,\u201d without warranties**."
                 }
               ],
               "phase": "final_answer",
@@ -303,14 +297,14 @@ http_interactions:
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 392,
+            "output_tokens": 219,
             "output_tokens_details": {
-              "reasoning_tokens": 57
+              "reasoning_tokens": 0
             },
-            "total_tokens": 931
+            "total_tokens": 758
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:35:08 GMT
+  recorded_at: Fri, 13 Nov 2026 21:24:23 GMT
 recorded_with: VCR 6.4.1

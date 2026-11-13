@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:52:04 GMT
+      - Fri, 13 Nov 2026 21:38:09 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -54,11 +54,11 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '540.0'
+      - '266.8'
       X-Metrics-E2e-Ms:
-      - '2587.7'
+      - '3422.8'
       Traceparent:
-      - 00-3505b4f49acb0cb24cd1e9f689bbc8b4-8a3262a400040f7c-01
+      - 00-2b42dcce78f1e43b4af7c8027828abed-aa1a79710001146f-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -73,13 +73,13 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794333121,"completed_at":1794333124,"id":"<X_REQUEST_ID>","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_<X_REQUEST_ID>","summary":[{"text":"The
-        user''s query is \"Process this query: test data\".\n\nI will call the \"content_returning\"
-        tool with \"test data\" as the query.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"h3Pej8qYipq/sdm0/vUym3UakypESR65ewkQQb7Y2Vq8sMcsFU3nS3n6MCBemWyB34LVej0t2fng369jLYnbv2ZYr1mRGllGgazWPakemnNVInEOS6UNANEYLno+O+qg9C8raMJm1pXoh0plphDXBCKz91sULC9DMRy12JnkAjbyFze5dgfRmj12GXpStF8LQ3TuScrcdT/ICViltVWzH4GV6YoUsdSWSYsWI83J0T+EmY7n7+EgQSK64BY9Tr5hKrEiuWgomd3yiqxhVpwhDs9nMrENz6FzmSKbAFzvW1c20xADfgDyXhBMkdZEyEnKlomGejVO6St+bK+IcuaSeV6VxbTN7TFaBnk1UiSCsvkN21sv8Sb0omrO00UC4zqfhZ/Hk67vIthL3W4l5KknrkIeCfOmFjDSKMgdUt0OZXITYmOiuVojrJqv/aj+6OD98ziv7qDAjRkVfBoKsnbPHI5RCBDD2A71w0YhQP/txANKDyefRIYWZl1K7Jlj/tDjm6f3MShkp1dB3/LnXAelydYgNRfwO3qhRmg7LR6c2N1EWmKxvGcz/5bRBGRTWtSmE/e9rkwuW8zEQuYpMvChStcVdvW9UTwHsg"},{"arguments":"{\"query\":\"test
-        data\"}","call_id":"call-5e155c93-aeb0-49ac-8390-bc8e42e7489e-0","name":"content_returning","type":"function_call","id":"fc_<X_REQUEST_ID>_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Returns
+      string: '{"created_at":1794605885,"completed_at":1794605888,"id":"334fde9b-ee90-9f64-99c1-eea6affea587","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_334fde9b-ee90-9f64-99c1-eea6affea587","summary":[{"text":"The
+        user provided test data for processing.\n\nI will use the content_returning
+        tool to process the query.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"YW/LKtUFzBvZxIen8MaYt0UgoZwF6RrklAEif6gx+xvCB46cJBQGwVc7As7dC/8Zr9QmOVmlGT5i9CZfVzJCUz5fQmysBk/gyceiX7oMZkWgfMWK/2W4fjvH+oNQRH0Sd+LPzcQWVrhSB+xQINFhT52fQgqRkMvgUJNOy+Pl1k3XuEG5p6z5F9N2CI0/5Y74CKqRNMHss4QiIx3sGOJ+f6/GlFwQP9Y2HlA1PyaO2LbviSGHY8tlSELYkYNO+eGBldKURHo9RDMu+ODPGKN5pAOZ+w31v2+0pjdTHoYhmKSIGMKtXiVUGFvgmbbcH2r34fSunaPoZZYw2FNTYYzwo2VXhZu3HIN5W1Xd7aZJk2MxmnXffabS5ijfC0Vq4HTM0mBLdEaYReERcfnZs9xnI5jLGUFznUBjI3ky57KX0I80VIc4x6wSBwmi5WHM1A/CZymH18EwJDlIqiZN9rdM8sMJDw2qxPACF1F63cxfOb/aSAfCH0gqB5GW1Kf8lPN6HPvU6QDrQYp+/Lxr8hDHBuQo+UPL+WL1RH4xPHUxWiVT8NLz3bb2xW7MQlj+F4YMVmo81glFKvN8kw3YnRAx1bMMQfOD6L9F/trhXmi130Di/rkSd2RrVtKg+EMJy+yKEsBJDpAglc0"},{"arguments":"{\"query\":\"test
+        data\"}","call_id":"call-9eb2facb-30de-455c-a98a-4df3a0ab3aba-0","name":"content_returning","type":"function_call","id":"fc_334fde9b-ee90-9f64-99c1-eea6affea587_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Returns
         a processed string result","name":"content_returning","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
-        to process"}},"required":["query"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":293,"input_tokens_details":{"cached_tokens":128},"output_tokens":209,"output_tokens_details":{"reasoning_tokens":197},"total_tokens":502,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":7543500,"context_details":{"input_tokens":293,"output_tokens":212}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Tue, 10 Nov 2026 17:52:04 GMT
+        to process"}},"required":["query"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":293,"input_tokens_details":{"cached_tokens":128},"output_tokens":243,"output_tokens_details":{"reasoning_tokens":231},"total_tokens":536,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":8393500,"context_details":{"input_tokens":293,"output_tokens":247}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Fri, 13 Nov 2026 21:38:09 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/responses
@@ -87,9 +87,9 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4.3","input":[{"role":"user","content":"Process this
         query: test data"},{"type":"reasoning","summary":[{"type":"summary_text","text":"The
-        user''s query is \"Process this query: test data\".\n\nI will call the \"content_returning\"
-        tool with \"test data\" as the query."}],"encrypted_content":"h3Pej8qYipq/sdm0/vUym3UakypESR65ewkQQb7Y2Vq8sMcsFU3nS3n6MCBemWyB34LVej0t2fng369jLYnbv2ZYr1mRGllGgazWPakemnNVInEOS6UNANEYLno+O+qg9C8raMJm1pXoh0plphDXBCKz91sULC9DMRy12JnkAjbyFze5dgfRmj12GXpStF8LQ3TuScrcdT/ICViltVWzH4GV6YoUsdSWSYsWI83J0T+EmY7n7+EgQSK64BY9Tr5hKrEiuWgomd3yiqxhVpwhDs9nMrENz6FzmSKbAFzvW1c20xADfgDyXhBMkdZEyEnKlomGejVO6St+bK+IcuaSeV6VxbTN7TFaBnk1UiSCsvkN21sv8Sb0omrO00UC4zqfhZ/Hk67vIthL3W4l5KknrkIeCfOmFjDSKMgdUt0OZXITYmOiuVojrJqv/aj+6OD98ziv7qDAjRkVfBoKsnbPHI5RCBDD2A71w0YhQP/txANKDyefRIYWZl1K7Jlj/tDjm6f3MShkp1dB3/LnXAelydYgNRfwO3qhRmg7LR6c2N1EWmKxvGcz/5bRBGRTWtSmE/e9rkwuW8zEQuYpMvChStcVdvW9UTwHsg"},{"type":"function_call","call_id":"call-5e155c93-aeb0-49ac-8390-bc8e42e7489e-0","name":"content_returning","arguments":"{\"query\":\"test
-        data\"}"},{"type":"function_call_output","call_id":"call-5e155c93-aeb0-49ac-8390-bc8e42e7489e-0","output":"Processed:
+        user provided test data for processing.\n\nI will use the content_returning
+        tool to process the query."}],"encrypted_content":"YW/LKtUFzBvZxIen8MaYt0UgoZwF6RrklAEif6gx+xvCB46cJBQGwVc7As7dC/8Zr9QmOVmlGT5i9CZfVzJCUz5fQmysBk/gyceiX7oMZkWgfMWK/2W4fjvH+oNQRH0Sd+LPzcQWVrhSB+xQINFhT52fQgqRkMvgUJNOy+Pl1k3XuEG5p6z5F9N2CI0/5Y74CKqRNMHss4QiIx3sGOJ+f6/GlFwQP9Y2HlA1PyaO2LbviSGHY8tlSELYkYNO+eGBldKURHo9RDMu+ODPGKN5pAOZ+w31v2+0pjdTHoYhmKSIGMKtXiVUGFvgmbbcH2r34fSunaPoZZYw2FNTYYzwo2VXhZu3HIN5W1Xd7aZJk2MxmnXffabS5ijfC0Vq4HTM0mBLdEaYReERcfnZs9xnI5jLGUFznUBjI3ky57KX0I80VIc4x6wSBwmi5WHM1A/CZymH18EwJDlIqiZN9rdM8sMJDw2qxPACF1F63cxfOb/aSAfCH0gqB5GW1Kf8lPN6HPvU6QDrQYp+/Lxr8hDHBuQo+UPL+WL1RH4xPHUxWiVT8NLz3bb2xW7MQlj+F4YMVmo81glFKvN8kw3YnRAx1bMMQfOD6L9F/trhXmi130Di/rkSd2RrVtKg+EMJy+yKEsBJDpAglc0"},{"type":"function_call","call_id":"call-9eb2facb-30de-455c-a98a-4df3a0ab3aba-0","name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"},{"type":"function_call_output","call_id":"call-9eb2facb-30de-455c-a98a-4df3a0ab3aba-0","output":"Processed:
         test data"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"content_returning","description":"Returns
         a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true},"strict":false}]}'
@@ -110,7 +110,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:52:06 GMT
+      - Fri, 13 Nov 2026 21:38:10 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -138,11 +138,11 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '360.3'
+      - '197.9'
       X-Metrics-E2e-Ms:
-      - '2172.5'
+      - '1675.8'
       Traceparent:
-      - 00-646f10478832436334aa5a7ac69ef346-3a1cbb820003b56f-01
+      - 00-b19ec533bb0325c98f69d55161ea0e61-3997aae30000e745-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -157,9 +157,10 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794333124,"completed_at":1794333126,"id":"<X_REQUEST_ID>","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_<X_REQUEST_ID>","summary":[],"type":"reasoning","status":"completed","encrypted_content":"csjfy1WD9L69+XbdT6/Dl5G+Nnty0ukAx0P6NYYv4T6lIntBHUW3E/rJzTt16Z426NZaAu+zuG+7Bc05c6RborW7gO+Ur5dHDnM/f1xmefqzd3IKpktf1GzszOhftlokElpNjX1oT1uutfPMB2UnY7I4virS3Bj481Sd/3ALTscKyBoOubN2MXWl0D+UGvXsZf5HBKsmDIVbeoh+AN+VTzVAL0NABtZ3HAmU9+TSy66oOOpoe4r3Vilr/BqjAekNln1PkJToNGIBvkDmJkSOE9c5O+75yJVnNDfTYe0CEdk8IWS5x4ZsdXp2R49wYpo3eBJaO33tUiSV3wmZm7fuh0RVPRPXg1oWt0QlvUJc6vXRm3GKPnKKAoaf8QjIPlAZdC9RxhI"},{"content":[{"type":"output_text","text":"Processed:
-        test data","logprobs":[],"annotations":[]}],"id":"msg_<X_REQUEST_ID>","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Returns
+      string: '{"created_at":1794605889,"completed_at":1794605890,"id":"b488fabd-026d-9590-bf0f-977c4587f895","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_b488fabd-026d-9590-bf0f-977c4587f895","summary":[{"text":"The
+        tool processed the test data.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"m38C1F4xvNgftzf+nfBZUO68rTmwFoVOPiyHuNOrfqZ8TQ08Am0fc4J0NEOGVrgLOS3qAsvn+uBBpjnFLAecV+ddsW7hEFFZRdok/3xtDfFwIm50WWca/5PhLCzHExm3CieUUfMHceMvRuOCgS+NSh131418Q2RUDr0JmRK82bsoK6THZFLfLIN7MsFvCnqyDF0v7bMQpD5YYK33n+aHqWGQDcf+fP+LdkI8gqBzgP/HsfkMrj42k3NpRUkmapOz8v5EnSOLRFVKp0F3WItfZ/UpSw6iaoa3jSNWXyngTAQG8s9poG9BkJqZxNzHwnty9zfpnO5d2NSfualcZ2I"},{"content":[{"type":"output_text","text":"Processed:
+        test data","logprobs":[],"annotations":[]}],"id":"msg_b488fabd-026d-9590-bf0f-977c4587f895","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Returns
         a processed string result","name":"content_returning","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
-        to process"}},"required":["query"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":514,"input_tokens_details":{"cached_tokens":128},"output_tokens":95,"output_tokens_details":{"reasoning_tokens":91},"total_tokens":609,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":7456000,"context_details":{"input_tokens":514,"output_tokens":102}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Tue, 10 Nov 2026 17:52:06 GMT
+        to process"}},"required":["query"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":548,"input_tokens_details":{"cached_tokens":128},"output_tokens":90,"output_tokens_details":{"reasoning_tokens":86},"total_tokens":638,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":7756000,"context_details":{"input_tokens":548,"output_tokens":98}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Fri, 13 Nov 2026 21:38:10 GMT
 recorded_with: VCR 6.4.1

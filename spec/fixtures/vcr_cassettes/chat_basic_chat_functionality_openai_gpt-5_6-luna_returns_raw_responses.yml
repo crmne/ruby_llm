@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:36:50 GMT
+      - Fri, 13 Nov 2026 21:26:05 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -44,11 +44,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1024'
+      - '1202'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -75,22 +75,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_09239bfe0245985d016af35631955487d292109a94984fcf24",
+          "id": "resp_01b322b13e7512cb016af7806c057087d2bd260c38dc9db460",
           "object": "response",
-          "created_at": 1794332209,
+          "created_at": 1794605164,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794332210,
+          "completed_at": 1794605165,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -98,7 +99,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_09239bfe0245985d016af35632461887d289b9fa00db569672",
+              "id": "msg_01b322b13e7512cb016af7806cbf1087d2b9bdd3fa9539a7e1",
               "type": "message",
               "status": "completed",
               "content": [
@@ -172,5 +173,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:36:50 GMT
+  recorded_at: Fri, 13 Nov 2026 21:26:05 GMT
 recorded_with: VCR 6.4.1

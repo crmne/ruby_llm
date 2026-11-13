@@ -27,36 +27,28 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 10 Nov 2026 17:41:59 GMT
-      Transfer-Encoding:
-      - chunked
+      - Fri, 13 Nov 2026 21:29:08 GMT
+      Content-Length:
+      - '1524'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-724","object":"chat.completion","created":1794332519,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
-        let me try to figure out how to handle this user''s request. The user wants
-        me to call the any-of params tool for the task \"Review PR\" with status \"pending\"
-        and report the result.\n\nFirst, I need to understand the available tools.
-        The tool provided has a function that uses the anyOf parameters. The parameters
-        include a status which can be either a string from the enum [\"pending\",
-        \"done\"] or null, and a task which is a string. The anyOf means that the
-        status can be one of those options, but it''s optional. \n\nThe user specified
-        the task as \"Review PR\" and the status as \"pending\". Since \"pending\"
-        is one of the allowed enum values, that''s valid. So I need to structure the
-        function call with these parameters. \n\nWait, the function''s parameters
-        are part of a JSON schema. The anyOf for status allows either a string in
-        the enum or null. Since the user provided \"pending\", which is valid, I should
-        include that. The task is required, so I need to include \"Review PR\" there.
-        \n\nSo the function call should have the name as the tool''s function, which
-        in the provided tools is the any_of_params function. The arguments should
-        be a JSON object with task and status. Let me check the tool''s definition
-        again. The tool''s function is any_of_params, and the parameters are status
-        (anyOf) and task (string). \n\nSo the correct tool call would be to use the
-        any_of_params function with arguments {\"task\": \"Review PR\", \"status\":
-        \"pending\"}. That should satisfy the user''s request. I need to make sure
-        there are no typos and that the JSON is correctly formatted. Alright, that
-        should do it.\n","tool_calls":[{"id":"call_1w9uxk8p","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
-        PR\",\"status\":\"pending\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":186,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":391,"total_tokens":577}}
+      string: '{"id":"chatcmpl-33","object":"chat.completion","created":1794605348,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+        let me see. The user wants me to call the any-of params tool for the task
+        \"Review PR\" with status \"pending\" and report the result.\n\nFirst, I need
+        to understand the tool''s structure. The function provided has parameters
+        where status uses anyOf, which includes a string enum with \"pending\" and
+        \"done\", or null. The task is a string. Since the user specified status as
+        \"pending\", that''s valid. \n\nSo, I should construct the arguments as a
+        JSON object with \"task\" set to \"Review PR\" and \"status\" set to \"pending\".
+        The function name is \"any_of_params\". \n\nWait, the function''s parameters
+        are part of the anyOf DSL. The user mentioned using the any-of params tool,
+        so the function name is correct. I just need to make sure the arguments match
+        the required structure. \n\nNo other parameters are needed. The task is required,
+        and status is optional but provided here. So the tool call should include
+        both. \n\nI think that''s all. Just format the JSON correctly within the tool_call
+        tags.\n","tool_calls":[{"id":"call_xvx72g4d","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
+        PR\",\"status\":\"pending\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":186,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":254,"total_tokens":440}}
 
         '
-  recorded_at: Tue, 10 Nov 2026 17:41:59 GMT
+  recorded_at: Fri, 13 Nov 2026 21:29:08 GMT
 recorded_with: VCR 6.4.1

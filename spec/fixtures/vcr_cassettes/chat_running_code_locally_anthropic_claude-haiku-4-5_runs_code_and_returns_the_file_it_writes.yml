@@ -34,7 +34,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:32:23 GMT
+      - Fri, 13 Nov 2026 21:21:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -46,57 +46,58 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-11-10T17:32:22Z'
+      - '2026-11-13T21:21:50Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-11-10T17:32:23Z'
+      - '2026-11-13T21:21:52Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-11-10T17:32:22Z'
+      - '2026-11-13T21:21:50Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-11-10T17:32:22Z'
+      - '2026-11-13T21:21:50Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-d12990ef2ed895cdeafd478c3e6cd15f-9b1711bede5d6aa4-01
+      - 00-f133fa950c1ae7fd43be6c7f3eaf5353-90fa7eba3ffbd07e-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
       - "<ANTHROPIC_WORKSPACE_ID>"
       Vary:
       - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
       Server:
       - cloudflare
       Server-Timing:
-      - x-originResponse;dur=1724
-      X-Robots-Tag:
-      - none
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
+      - x-originResponse;dur=1679
       Cf-Cache-Status:
       - DYNAMIC
+      X-Robots-Tag:
+      - none
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CgueVEQXgsQzSf853LBK9","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01Ggp7D4ZF72SCyVNcJgk9ek","name":"run_code","input":{"language":"ruby","code":"\n#
-        Compute sum of squares from 1 to 100\nsum_of_squares = (1..100).sum { |n|
-        n * n }\n\n# Write squares.csv with n and square for n from 1 to 10\nFile.open(''squares.csv'',
-        ''w'') do |f|\n  f.puts \"n,square\"\n  (1..10).each do |n|\n    f.puts \"#{n},#{n
-        * n}\"\n  end\nend\n\nputs \"Sum of squares from 1 to 100: #{sum_of_squares}\"\n"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":734,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":204,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
-  recorded_at: Tue, 10 Nov 2026 17:32:23 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch1dQtx3bbk9unojcDmYa","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01MaSpaLEY9cq1zhhvYr1QJv","name":"run_code","input":{"language":"ruby","code":"\n#
+        Compute the sum of squares from 1 to 100\nsum_of_squares = (1..100).sum {
+        |n| n * n }\n\n# Create CSV with n and square for n from 1 to 10\nrequire
+        ''csv''\n\nCSV.open(''squares.csv'', ''w'') do |csv|\n  csv << [''n'', ''square'']\n  (1..10).each
+        do |n|\n    csv << [n, n * n]\n  end\nend\n\nputs \"Sum of squares from 1
+        to 100: #{sum_of_squares}\"\n"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":734,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":207,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
+  recorded_at: Fri, 13 Nov 2026 21:21:52 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -104,11 +105,12 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"Use
         run_code once to compute the sum of the squares of 1 to 100, and write squares.csv
-        with the columns n and square for n from 1 to 10. Then tell me the sum."}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01Ggp7D4ZF72SCyVNcJgk9ek","name":"run_code","input":{"code":"\n#
-        Compute sum of squares from 1 to 100\nsum_of_squares = (1..100).sum { |n|
-        n * n }\n\n# Write squares.csv with n and square for n from 1 to 10\nFile.open(''squares.csv'',
-        ''w'') do |f|\n  f.puts \"n,square\"\n  (1..10).each do |n|\n    f.puts \"#{n},#{n
-        * n}\"\n  end\nend\n\nputs \"Sum of squares from 1 to 100: #{sum_of_squares}\"\n","language":"ruby"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01Ggp7D4ZF72SCyVNcJgk9ek","content":[{"type":"text","text":"{\"exit_code\":0,\"stdout\":\"Sum
+        with the columns n and square for n from 1 to 10. Then tell me the sum."}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01MaSpaLEY9cq1zhhvYr1QJv","name":"run_code","input":{"code":"\n#
+        Compute the sum of squares from 1 to 100\nsum_of_squares = (1..100).sum {
+        |n| n * n }\n\n# Create CSV with n and square for n from 1 to 10\nrequire
+        ''csv''\n\nCSV.open(''squares.csv'', ''w'') do |csv|\n  csv << [''n'', ''square'']\n  (1..10).each
+        do |n|\n    csv << [n, n * n]\n  end\nend\n\nputs \"Sum of squares from 1
+        to 100: #{sum_of_squares}\"\n","language":"ruby"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01MaSpaLEY9cq1zhhvYr1QJv","content":[{"type":"text","text":"{\"exit_code\":0,\"stdout\":\"Sum
         of squares from 1 to 100: 338350\\n\",\"stderr\":\"\",\"files\":[\"squares.csv\"]}"},{"type":"text","text":"<file
         name=''squares.csv'' mime_type=''text/csv''>n,square\n1,1\n2,4\n3,9\n4,16\n5,25\n6,36\n7,49\n8,64\n9,81\n10,100\n</file>"}]}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"run_code","description":"Runs
         Ruby code in a sandbox and returns its exit code, output, and the files it
@@ -137,7 +139,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:32:24 GMT
+      - Fri, 13 Nov 2026 21:21:53 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -149,54 +151,54 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '9999000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-11-10T17:32:24Z'
+      - '2026-11-13T21:21:52Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-11-10T17:32:24Z'
+      - '2026-11-13T21:21:53Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-11-10T17:32:24Z'
+      - '2026-11-13T21:21:52Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '11999000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-11-10T17:32:24Z'
+      - '2026-11-13T21:21:52Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-1e8193dc02ecff6a1565ca387d150d0c-acd152fa52b2f4b6-01
+      - 00-b719ac04f2ee32787ac0bc6b0230577b-55ba76900a134b89-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
       - "<ANTHROPIC_WORKSPACE_ID>"
       Vary:
       - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
       Server:
       - cloudflare
       Server-Timing:
-      - x-originResponse;dur=858
-      X-Robots-Tag:
-      - none
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
+      - x-originResponse;dur=776
       Cf-Cache-Status:
       - DYNAMIC
+      X-Robots-Tag:
+      - none
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CgueVNXC9kG46W1TfT88Z","type":"message","role":"assistant","content":[{"type":"text","text":"Perfect!
-        The **sum of the squares from 1 to 100 is 338,350**.\n\nI''ve also created
-        the `squares.csv` file with the columns `n` and `square` for n from 1 to 10,
-        which you can see above."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":1048,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":63,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
-  recorded_at: Tue, 10 Nov 2026 17:32:24 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch1dR38f8cJeZWraLRqZV","type":"message","role":"assistant","content":[{"type":"text","text":"Perfect!
+        The sum of the squares of 1 to 100 is **338,350**.\n\nI''ve also created the
+        `squares.csv` file with the n and square columns for n from 1 to 10, which
+        is shown above."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":1051,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":57,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
+  recorded_at: Fri, 13 Nov 2026 21:21:53 GMT
 recorded_with: VCR 6.4.1

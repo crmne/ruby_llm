@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:29:54 GMT
+      - Fri, 13 Nov 2026 21:21:53 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,11 +48,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1253'
+      - '1014'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -79,22 +79,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_04d9e2e58e3ca17e016af35491210887d290d4a594f3747151",
+          "id": "resp_0ad57bdac5242168016af77f706cb487d28f68f65724caa55f",
           "object": "response",
-          "created_at": 1794331793,
+          "created_at": 1794604912,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794331794,
+          "completed_at": 1794604913,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": "Always call evaluation_policy before assessing policy compliance. Judge only against the policy returned by that tool.\n\nAssess these criteria independently:\n{\"policy\":\"The answer complies with the store return policy\"}",
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -102,18 +103,18 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "rs_04d9e2e58e3ca17e016af35491b1c087d2b8d6f3995ecee5ae",
+              "id": "rs_0ad57bdac5242168016af77f71143487d2855b867b05a9665b",
               "type": "reasoning",
               "content": [],
-              "encrypted_content": "gAAAAABq81SSH685BXr1uXf7K51Gllto5MNvOlZreIWxdozTOto6KdbWbLqJcqmZPOrA0DuTTmQJUvAHDz8RUxVCWQfhs8Ml7KyvnkGej2Q_X7a0m0PImykgpy7iWMSN-MZgIsKU4PMvX1RqYMGnSVGPAdJ3BQ9vpXCN5CNee3cwWMetBRrp6VD16rrvcOIPVq2uUrtrM1cqaNQEBMczv2EZ2eqg8lOYMdiIHiyNHAEBr3XN8oS5tAfiNZIkwxvxOxagKZCqjXslEqGQCsorya95lm2ME67b3SZwdAM6Qzuc5VjaWynJQie4ggUyapuOSSZY_Yi2vSc6yJgHAn_VraFEhAHk68oDjyUFu44jsanRKmfy8TG_VF_I5OOTLFW8XBAWuiefxBi-E_wpn6K8ZFjuyeIxmME2tlAAVG1zmgCAyDLy8aOoQzPdQj2FocbEZ8i_sMk9Z2bxWWw6EVZBLz5IowbBfpDJwgv8eMmTUTQ6DlwMCvdukpVvDBgi5Jw6ozS8FfwDKe_I9TmyECP2kx9g_ftG-GCDws46XEceqC_dx2maFE5dJf5POq-YnRsCC0mIRa2JyKVODCJEoVs2aFW6zkDqoD62MGXPWNWUHLxiBUQzcvMXVH-iQbOunzKS6B-apoK_12Abblslvz7uPI3A_V7Yz0d7XTYhjovb3Oi5QYHilDQn2AjRl0eAcu5Q_QDtChhQBjN6mdMzzXsPhJrYvka5f-EVMvoCfgcqEy_thv3Y6CFsZQ_jQtAtNBafwjGDdKPIPtq7OpQT_60eHRjQWND70eYRK9dc2Az5xWH4wVudgwbfWkB9vsTo5ZOIF9TxS220wcvOuScdJzn7D5T0w5rLv7DnVWJnuANUhSuL9b2JTQDTnyslSfk2hkPLqn2TE-ZEiS3jamMqHd0ezZ2BRodUDCDbLc_gf5Sw4MSxaoyRKpls2Yu8C1eRA1Jh0UtIeQT6znaZa7gzZGNk5t0WeGLQMPex_YvMPt0X3w3IIm82kmriHBlCc_B2fhcBGNniyunGBiYp6ddEESLDVovL3hxcPNPKHgkeKvPhWYm8NLe_Ny-DI0Xgri4Eueil-mXL7AR9p5qSEkgPJUn5C3kQ-mcDAIWcjILtiCDWJRIa11jfdlfF_RoHbKyWBcTTtY08n6ypWSpzXaGpVbuEW0NXC4oSQ20qEmzXjSXfKBY4kejzQGtfZd_povsJ4hXxByXB979k1GpdwV0MJ0eNs6QAFB2OIn5vpG9NPfXKRQ6nQU-zOTUFqsKOXWcAIQ9hzuAI6vMGopqHqCaVRq7HBWqlDrLgU0iMAA4jWiZU7LDQ36yzk4CR0nTTmI27HnnbSqMEslXPH3wYuj8LAk4eiLHmE4sriLq9JTFaVPbY24Yjw0UwnswJsZB-3U9DYnL6sU3QsroqQiIcxVqnDFkGcx8ZHF51V_Ch90CT2XVD1eE0Z8Sojmbi3fR0o5WQzLzMJbLMrbOYtP6xxxB1B4dLikxgA593aX29oR9HC7oO1Cn9Lcm6cml-LEEXo-g9YR7NM-C5wqJrHPZjY843kUgV8t6GSBODt0u-Mtzp4759aDV0ivtUxMOsgT2NxKayIcKxFGw8hkqSiVnr_so5IBfszVMoVHLWWBc1SFmhx2WEfs_TbzCm-DJvOlKwMCB3cTsjIofs7BG_gzrSXtyJwkus8-gsD088UlqWRHhUMPV8u5xXL31yIAAsYA0=",
+              "encrypted_content": "gAAAAABq939x-6Dly1b4cifl16dWF4XOt01hYbpGzEGBeRJu_FMzIi5fg0mjPy8BWlsvOehg3AsCk5JnoF3AMylwSC0mrRUW-HGTzQ7wG9lfud0tHuI1g4iT0-pagA2xY_ulQcE_bhapSqAB6qp_DJk4LocRtIqfYpLAJtjFqqBkvbcDW_2cXOyZiKybk0aZIFT_5nSzBxb5IObQiNu5E7rAYgMt1utzJl6IbxRDzZ1AvbHbpvw08ltgGNZfgm-axjJIOZIJnEjYwHbroa_PlvRsrhGYWATQSWqGO3q7e8FDyiWMl-Qx7oILq39sHnZJh9LgwtUfsZyMIQGzG3lx-JUG4Os5I3v7YvaLEbc3malGhfy4EB0X7irVi6vkBc6d9dQLhQTUARn4dppedNav68Q8l6X2fHecsY6bUmeZ1tLmvXstvHB8tC5K25gAonTUmHmoA-CAKGSkpPYrsV_tQOkJR9jaqjO2DyzrTc4hTOaJ1QFmVWRNfvVikZ8DqY7qNRJpaZa7zB6D48xMM_CGH9Naod5CRZ9SxJcqQMZcloTUxh7IesbeZiF4VTA_dbTSBt7Dp6LhWN-Lh_AEnG1EX8W8yt-cj0q_n-sgJ6q46ODQWuJz1sNUC16ONSUTpqchaAec5pc2CF_193WjV4oDkkLBnfc23CoL6QsqwfuZhXsHZ2SZOMhbWNr74agqkh9dqKy51fXCpHe3cOWlXFEc7pQRHS3xMPl0wEp8u4pJzg6LyDpFWtUKYkFpy16RZE1V4cYJMkJtG8D-gw_uCKpEQXQtx7HqOF3XWhAV7b2F7ndHYJ9Zz5qt2QcacxExa8D5ov01TG6MH8GBTuRxUs81U6ldpR84b-o1r8U9DwkiYMxC69RPhF2HbJRLEays3ynekbjCt6Bqazep0iw0xNBFq8qjbFk7sr4nDQSveKuh-2Y9J5CS-mGV6Qeqde5G6brUADPLd6VA7F8XcV1GzM9p_aFAGsplg_cQHcO48WHX7PSkL8TAyIbr00dWpHQ3gWYMxk721IQ7Rxn5fK5wez6-WhKzFAHs-0_b8_xBlFqL-LVouioVhif3U31c7kuD4hWlu4TYCmE0Zd6vOZQ1a7PxVfkA0QGstc2w045LWP-l4lNiOJAsIU6ol1o2S7kkSatUowpnHYUy3jUTFKoFP9QpPcbDBe2_5XY7Fh1EqHNCi9k7QepRXUaX5MtSHFwaOlQo9REjLhiIWC0B27nhPpYobOICcbhOVrKeUVjOqrsoVX1cWwnc5ZcysDTrKrp1Bn6B78QryThWcVek9vPboNy_nn_A3XPPivkYbe_Q65O3gUqJkdHau-6XDEsN7Av052tf8GexFZsPufmQ1c5hljATSoj8nROjXgESS8DXHjIU_njDyRQqw2fNQtqwHmR3pTTtWOBkkOCjLwYdwtwQQ-2sfqokWvt8L7qNINbmsE_Qawl7wZHBbgIiVinfdHgbmF4lmDjouIFxmC4-fK44aZtxyIBjPaJyXUYM6erz7dMwPhkU_UW7UkgHbeUForjYw97cU8-mpegcIrms0d0Ov-1Kj77e7Xs1cbdAIsDKYbQ0VXpjUGqnTPXyuIpP7sjpEBR8Nd6WuKxCDqH57eD47DEyhxY0kj_EPBqpdV5IdqBZTiaDRv2wHa9hIK_GUFa-fnQs1tR0iPISKHIudTeg4uS52OND_hHUDtwF0qRp4BQLIO0MpkyJLvCTKAoYXHGpmLATSVIeDrVxK7nIcbGnMzcbu5xRPJtoQ6zwsg==",
               "summary": []
             },
             {
-              "id": "fc_04d9e2e58e3ca17e016af35491ea0c87d2800071cc9f423628",
+              "id": "fc_0ad57bdac5242168016af77f7141dc87d28d63b13383e913fb",
               "type": "function_call",
               "status": "completed",
               "arguments": "{}",
-              "call_id": "call_QL9ySWnkpT1DHUGjXRYnjaSO",
+              "call_id": "call_DqrKcYAH7cHSfDKH4wDnKkwc",
               "name": "evaluation_policy"
             }
           ],
@@ -215,23 +216,23 @@ http_interactions:
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 26,
+            "output_tokens": 27,
             "output_tokens_details": {
-              "reasoning_tokens": 9
+              "reasoning_tokens": 10
             },
-            "total_tokens": 170
+            "total_tokens": 171
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:29:54 GMT
+  recorded_at: Fri, 13 Nov 2026 21:21:53 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"{\"inputs\":\"Sale
-        items are refundable.\",\"metadata\":{},\"actual\":\"Sale items are refundable.\"}"},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABq81SSH685BXr1uXf7K51Gllto5MNvOlZreIWxdozTOto6KdbWbLqJcqmZPOrA0DuTTmQJUvAHDz8RUxVCWQfhs8Ml7KyvnkGej2Q_X7a0m0PImykgpy7iWMSN-MZgIsKU4PMvX1RqYMGnSVGPAdJ3BQ9vpXCN5CNee3cwWMetBRrp6VD16rrvcOIPVq2uUrtrM1cqaNQEBMczv2EZ2eqg8lOYMdiIHiyNHAEBr3XN8oS5tAfiNZIkwxvxOxagKZCqjXslEqGQCsorya95lm2ME67b3SZwdAM6Qzuc5VjaWynJQie4ggUyapuOSSZY_Yi2vSc6yJgHAn_VraFEhAHk68oDjyUFu44jsanRKmfy8TG_VF_I5OOTLFW8XBAWuiefxBi-E_wpn6K8ZFjuyeIxmME2tlAAVG1zmgCAyDLy8aOoQzPdQj2FocbEZ8i_sMk9Z2bxWWw6EVZBLz5IowbBfpDJwgv8eMmTUTQ6DlwMCvdukpVvDBgi5Jw6ozS8FfwDKe_I9TmyECP2kx9g_ftG-GCDws46XEceqC_dx2maFE5dJf5POq-YnRsCC0mIRa2JyKVODCJEoVs2aFW6zkDqoD62MGXPWNWUHLxiBUQzcvMXVH-iQbOunzKS6B-apoK_12Abblslvz7uPI3A_V7Yz0d7XTYhjovb3Oi5QYHilDQn2AjRl0eAcu5Q_QDtChhQBjN6mdMzzXsPhJrYvka5f-EVMvoCfgcqEy_thv3Y6CFsZQ_jQtAtNBafwjGDdKPIPtq7OpQT_60eHRjQWND70eYRK9dc2Az5xWH4wVudgwbfWkB9vsTo5ZOIF9TxS220wcvOuScdJzn7D5T0w5rLv7DnVWJnuANUhSuL9b2JTQDTnyslSfk2hkPLqn2TE-ZEiS3jamMqHd0ezZ2BRodUDCDbLc_gf5Sw4MSxaoyRKpls2Yu8C1eRA1Jh0UtIeQT6znaZa7gzZGNk5t0WeGLQMPex_YvMPt0X3w3IIm82kmriHBlCc_B2fhcBGNniyunGBiYp6ddEESLDVovL3hxcPNPKHgkeKvPhWYm8NLe_Ny-DI0Xgri4Eueil-mXL7AR9p5qSEkgPJUn5C3kQ-mcDAIWcjILtiCDWJRIa11jfdlfF_RoHbKyWBcTTtY08n6ypWSpzXaGpVbuEW0NXC4oSQ20qEmzXjSXfKBY4kejzQGtfZd_povsJ4hXxByXB979k1GpdwV0MJ0eNs6QAFB2OIn5vpG9NPfXKRQ6nQU-zOTUFqsKOXWcAIQ9hzuAI6vMGopqHqCaVRq7HBWqlDrLgU0iMAA4jWiZU7LDQ36yzk4CR0nTTmI27HnnbSqMEslXPH3wYuj8LAk4eiLHmE4sriLq9JTFaVPbY24Yjw0UwnswJsZB-3U9DYnL6sU3QsroqQiIcxVqnDFkGcx8ZHF51V_Ch90CT2XVD1eE0Z8Sojmbi3fR0o5WQzLzMJbLMrbOYtP6xxxB1B4dLikxgA593aX29oR9HC7oO1Cn9Lcm6cml-LEEXo-g9YR7NM-C5wqJrHPZjY843kUgV8t6GSBODt0u-Mtzp4759aDV0ivtUxMOsgT2NxKayIcKxFGw8hkqSiVnr_so5IBfszVMoVHLWWBc1SFmhx2WEfs_TbzCm-DJvOlKwMCB3cTsjIofs7BG_gzrSXtyJwkus8-gsD088UlqWRHhUMPV8u5xXL31yIAAsYA0="},{"type":"function_call","call_id":"call_QL9ySWnkpT1DHUGjXRYnjaSO","name":"evaluation_policy","arguments":"{}"},{"type":"function_call_output","call_id":"call_QL9ySWnkpT1DHUGjXRYnjaSO","output":"Sale
+        items are refundable.\",\"metadata\":{},\"actual\":\"Sale items are refundable.\"}"},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABq939x-6Dly1b4cifl16dWF4XOt01hYbpGzEGBeRJu_FMzIi5fg0mjPy8BWlsvOehg3AsCk5JnoF3AMylwSC0mrRUW-HGTzQ7wG9lfud0tHuI1g4iT0-pagA2xY_ulQcE_bhapSqAB6qp_DJk4LocRtIqfYpLAJtjFqqBkvbcDW_2cXOyZiKybk0aZIFT_5nSzBxb5IObQiNu5E7rAYgMt1utzJl6IbxRDzZ1AvbHbpvw08ltgGNZfgm-axjJIOZIJnEjYwHbroa_PlvRsrhGYWATQSWqGO3q7e8FDyiWMl-Qx7oILq39sHnZJh9LgwtUfsZyMIQGzG3lx-JUG4Os5I3v7YvaLEbc3malGhfy4EB0X7irVi6vkBc6d9dQLhQTUARn4dppedNav68Q8l6X2fHecsY6bUmeZ1tLmvXstvHB8tC5K25gAonTUmHmoA-CAKGSkpPYrsV_tQOkJR9jaqjO2DyzrTc4hTOaJ1QFmVWRNfvVikZ8DqY7qNRJpaZa7zB6D48xMM_CGH9Naod5CRZ9SxJcqQMZcloTUxh7IesbeZiF4VTA_dbTSBt7Dp6LhWN-Lh_AEnG1EX8W8yt-cj0q_n-sgJ6q46ODQWuJz1sNUC16ONSUTpqchaAec5pc2CF_193WjV4oDkkLBnfc23CoL6QsqwfuZhXsHZ2SZOMhbWNr74agqkh9dqKy51fXCpHe3cOWlXFEc7pQRHS3xMPl0wEp8u4pJzg6LyDpFWtUKYkFpy16RZE1V4cYJMkJtG8D-gw_uCKpEQXQtx7HqOF3XWhAV7b2F7ndHYJ9Zz5qt2QcacxExa8D5ov01TG6MH8GBTuRxUs81U6ldpR84b-o1r8U9DwkiYMxC69RPhF2HbJRLEays3ynekbjCt6Bqazep0iw0xNBFq8qjbFk7sr4nDQSveKuh-2Y9J5CS-mGV6Qeqde5G6brUADPLd6VA7F8XcV1GzM9p_aFAGsplg_cQHcO48WHX7PSkL8TAyIbr00dWpHQ3gWYMxk721IQ7Rxn5fK5wez6-WhKzFAHs-0_b8_xBlFqL-LVouioVhif3U31c7kuD4hWlu4TYCmE0Zd6vOZQ1a7PxVfkA0QGstc2w045LWP-l4lNiOJAsIU6ol1o2S7kkSatUowpnHYUy3jUTFKoFP9QpPcbDBe2_5XY7Fh1EqHNCi9k7QepRXUaX5MtSHFwaOlQo9REjLhiIWC0B27nhPpYobOICcbhOVrKeUVjOqrsoVX1cWwnc5ZcysDTrKrp1Bn6B78QryThWcVek9vPboNy_nn_A3XPPivkYbe_Q65O3gUqJkdHau-6XDEsN7Av052tf8GexFZsPufmQ1c5hljATSoj8nROjXgESS8DXHjIU_njDyRQqw2fNQtqwHmR3pTTtWOBkkOCjLwYdwtwQQ-2sfqokWvt8L7qNINbmsE_Qawl7wZHBbgIiVinfdHgbmF4lmDjouIFxmC4-fK44aZtxyIBjPaJyXUYM6erz7dMwPhkU_UW7UkgHbeUForjYw97cU8-mpegcIrms0d0Ov-1Kj77e7Xs1cbdAIsDKYbQ0VXpjUGqnTPXyuIpP7sjpEBR8Nd6WuKxCDqH57eD47DEyhxY0kj_EPBqpdV5IdqBZTiaDRv2wHa9hIK_GUFa-fnQs1tR0iPISKHIudTeg4uS52OND_hHUDtwF0qRp4BQLIO0MpkyJLvCTKAoYXHGpmLATSVIeDrVxK7nIcbGnMzcbu5xRPJtoQ6zwsg=="},{"type":"function_call","call_id":"call_DqrKcYAH7cHSfDKH4wDnKkwc","name":"evaluation_policy","arguments":"{}"},{"type":"function_call_output","call_id":"call_DqrKcYAH7cHSfDKH4wDnKkwc","output":"Sale
         items cannot be returned. Unopened full-price items can be returned within
         30 days."}],"instructions":"Always call evaluation_policy before assessing
         policy compliance. Judge only against the policy returned by that tool.\n\nAssess
@@ -255,7 +256,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:29:56 GMT
+      - Fri, 13 Nov 2026 21:21:55 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -275,11 +276,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1602'
+      - '1511'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -306,22 +307,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0ba5c6a00e55bc8b016af354926ff887d2a2a78d16d169b5b9",
+          "id": "resp_0217159f4263aa84016af77f71ab8487d282a74a47036150a1",
           "object": "response",
-          "created_at": 1794331794,
+          "created_at": 1794604913,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794331795,
+          "completed_at": 1794604915,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": "Always call evaluation_policy before assessing policy compliance. Judge only against the policy returned by that tool.\n\nAssess these criteria independently:\n{\"policy\":\"The answer complies with the store return policy\"}",
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -329,14 +331,14 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "rs_0ba5c6a00e55bc8b016af35492ff8087d2b233c6499ba19344",
+              "id": "rs_0217159f4263aa84016af77f72488887d2b1a42b25c7044b68",
               "type": "reasoning",
               "content": [],
-              "encrypted_content": "gAAAAABq81SUHJfyBbXgAmJg5_IuVisENu1Ngu3b6yl7o9cBzj5W3pgKXW6w_k5Q-T_HVtAaBm_8Ng5SGPTm6_PrJJkDNbFA84ZR9g33idNzqmK4PS88rgKP9HI1GJ51p0YzShyvBjmh-Qf7skOSs89q3QJl9_eF6_t8IKA7I-gVswk3HMbeTdCOm92gti_NnGogodtqyJZZhpNHHFBYIVwNHogQlrQ2ODVevUOrt0wCRYK7EU5L9FxqHTsJrElmzBCi03imOyxhx2v6cDxfPcFVdyqSfgv2RCn0keidTHNpBXQRrRU6qlvjWDWgMak2O-QlIrQAWOfiFbki7-q2fDir-BqqHsY3cOOiX7h0-zufCTwRq1frE5HRKD7EX3VpOZJNmLsqNdiSyszvblFrXGXj8legHRQQXTORzGE3BJP7WGJULoMHrSy-JrCj1P_SaSlG8i9w9bXhru2VhAtzPyZ4P7g1PN_o4clx7vWjJt3C2cY3Cayj2tLR-ay3Al1r7RHawBJrb4vg0jlRRbSg1zAYwhEb9A9Dklua4rh6EdoqjZw5_UtgbUfXpJ6VBQDxlkLjlI4txp0_1Gv7M9BjCR7_btC8chhGrC2-RK5boS8LMrWn8XLBhhAHgbDCd8_-pUt4WyNn6UCmq1SFF8vAkr0B5HXALvOgpS7GXjo3WW7cpQYbIuRMzuq11w0vlEGTDvz4GxF1h672HhM-2_49AIlQPbQp-31kMfx0ekD9tmTTXTW5B3PK1bITAKvI2oKOvqpA6QHeRxE8f3TdusYq8F_vJEWBub7x8Ua3ACt2ZnjlpzqYYRD3_gIaBVreQGn7zRgvSLg9BZbOz2aIDoMKKIHQy0LhPEjN-eKNJ6_oFXqkp_JNS_h_zvijG6J6DUBppb32A4Wpy5rMz3O-3r8OEfxyQSJQE9phZF2ygW4gYtZPEaW-0dM6MQdcQ_Xa7oORAHBwxhqrr-ZjIPTZSMfd6SfWG4KaNeQPLuglYm-SIetqvPIXAwq-zet5PaWGaPbQHbEwFnijfdMGoXTZjU9yX8QqTz6F49yCw1QX_fl7q2b3qJMvfOCiDrRgYNbnhZ-2DfoOE3dCqbO4Ix9dnIDn1suItRi9S0NoWFEnmzf31-gLgfmv5u6KSnapLfbP2hD0_iBVHyPKIn0OpgMaI45HGK3p-IV-zoFg6gL_qAtSCisvRdPkXPXsu5pmZ2kqTHFXdkob7l25yKkWZAFpUtktOFCoOTPGebIGDnbMniPsdUERL7c_bVmyuKBzNppMPQxeVgP63-IX5JvsBN5XJGy34wWKNRAJPga5I7JvMWNDWL7gDqSadrGfCOgB52Is09uqPcWxFetDldlpTXMcYvV7Dyh0MVV4tD9eXVldXxRvyUc1M-d8PSJoXEW9u7P0MKi3gb0PR5vALhbloMSDkKbWRKFzzaC_L6GOYtq7AsQireg7hY4i0oduhBtDDCLJr7Od_d7eB-Dnbgnfm0tlVGCPtSG-EN_RWnDsZ9RxFEb6K9lUARWas15n3whFKucvBo0ZdyuiOvi468DrOT272j0j6TGXcmo7USJ4Rnsj42ztQHDonI6mrSnxgDuetqosJFDSpr69to_oS_Z30Mv_LUA9T48K5A57fl6ki2VEgUdJOSduNMpFpJijAjR-oGPW0D35ejiycqlgo6N3CCaFrwyraakUlLaQN-7CM00dDZIjLZ9wincI1I17SHpaKF0OwrJ1JUkvdvv0vFPc6P3F7L2k2ewLQRPOu03LwEcHcOcw6mM-XGqhKQvdi8bTcktZ6MhjPY95mQdCygPYl9MHEriSTPwazK3h8flqwA==",
+              "encrypted_content": "gAAAAABq939zADb-UsBjQb16OtXmu8J9yI9NWA7r__awd3jnOqk1JsY_aZPKbpZgrtG-xvrim9q7TOQ_MiOOZTX_F4VQoFeS4JcO6GKvREAlz4VoYU2YxpPmjFb2dv6eMGceF9NpervhMKvMNxhmfawwyBvyyOuBl8_rlavL4LxnfOEyhDBKuCKTwZQdNBETf3m7KYqkQ8xnjdAhfKUWNegJcvb-7bKpEWgZBgWuPHPEpQtCI5KPs2U3rmjlEK4X8FdGgK8rW2ILhNxhm2d2lk1wqiP-xfvvP9mOFR5NA3DNGnLOfiCUGNs4u6P1F2geVRUzFGM0sELfuGNNp-peTxlKD_f0fMV43jJTHzlRqYuLUnGeBNCFE9LqpHiQpzm_mCSy5JjEc5ahYbvND8Y3EcIIRi66eT-Ka29nCCr1Pr7rVVZzEjDQRBkOzSx-HOyG5-OfuVPGmjPST78Uyg-ewDOsOYK1ZDUA5rnIDK8E8IfW73NCEAS08s74Ju8VFHIyZdfFLZ5Rj7vZ-F2T9U1MjDeMrd9hVST7iELLyYqaPHaM-Jow0FWrHKwkmS3ypcNwz_ZUytE5X-D_C8gN9lMvkvu5chuBiIx6_FWDAYSx73h0qTpW6fDNrJSs91z1JzvmCELRvidCABrnefbIDsNcFRn4tXfei2iAdVQnR4dxXbaRBgjKxTi2zstxG0Q2tdjmeJrmomkev7tJH9kHQA3hfWgwkuiwSD4aRVAfeTqHloK6x_zSEjoH3NVgrFFSN9wrJTEMUzvOnq1-QtgMsGbeIOzEiFUmchRl69IV3xhuWznhXSzWMz5fFgtUmjwD60pP4ptG5wWmCzyQZ91lgTig9g29SVv8SyanEi0ijCyQIdGZeP6GA-MT7T8HLh386GefOOBEd9aOYWUkFHpGL6Ni2irEyuGmY8lDLtnOLieWrtR-KAWL9gOxF9n7TXAG6-2cmRnpDURYPUg6kd0lNMi1cCv2U43RvunyLFyQ4oEfO1qlsvj_Qx6k1dd_X9TdsSbcYlWk8ojW4Dimb0tNRZpOW3fqKfGwKuYDxnhJUHbGTBsqNmNwQbBEbuCYp8DYhH2D8D8fKyVyUgI4ULLRNZ00DNl4e_Ntb01I0cxMW2QFjis6TxYoWbkT793cNJHvwKIg_3WFPMiWwYMbZKYUJ3hsGMn_fMTMABp2BRxynu3MxkuQ-QiBgPvoXH8LMBffDQZNCmGKk0SddBXu7qOc7sFX77tYJk_FvkXAxLRCE3otivoERKNbuZ9qGPDAHRBQtebwJNpGLm-RegN9b9riVPUy3B5RpteCplFncS81ew4N3T6BgGkPFpRW3pL4zXL7X6gK5AL9zGewLeHDs7rNm_M3dcY4YZ_cQaBcFCTFDeDvN_v5flK5ehdpOu6ks6I0J1HqacPctsvf-BTmQWNxrzoQzmXsXvvChOlH4Oo9Saed2ZvfInauH8KZzD9ktvIBUGfECx19V-05JAgyXsXvKNNtOkObKuMLn7ZS2iv7yKqsGCT2BCcdthITKlQtDm9zL0fHkcpeJ3w9vBEL6KExGnqWBh9_0hzwkwg5RWoEAC6QXVh4wJZM7qWd_5ugqAUl3fHSLfySMR05RnHMpCTKNqfacKetXOJyDTFqSn3SpYAKzAHhqDyKppCS811P41PfNp-2YNszVbRMZV3aayGc0hkJ-wxyiqrl-NShxRYG53qjh5zLbXyIF-JEJwjK-IJ5tb4JsRmuORoKqpI5JoNKCi4bZPYAf900MMHfcRJyHuCKmLL6-js1BLrZBZoSh7fc8Jy-ZurO0dQCeUFNErmcocdl_ZA-TFF_sJ8ykUZ0vzCm_3Agh2X0thbqkUqE3wG6iyVXjyBUst_Ylpy7IVWaOnI519pcHRdWAi_gsZHNf1VxoZuvvhWRNj5bfNoan9sPrutpnLD4eY0JQn1rMjdIaiZZk1Q7oiw6hpSW0mdpsRplufpGkaTazwWoDPU=",
               "summary": []
             },
             {
-              "id": "msg_0ba5c6a00e55bc8b016af354934d4487d29caf8e4ab63a5ae2",
+              "id": "msg_0217159f4263aa84016af77f72a5c087d287a01d459e0ff04a",
               "type": "message",
               "status": "completed",
               "content": [
@@ -344,7 +346,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "{\"policy\":{\"verdict\":\"fail\",\"reason\":\"The store policy states that sale items cannot be returned, so the answer that sale items are refundable is incorrect.\"}}"
+                  "text": "{\"policy\":{\"verdict\":\"fail\",\"reason\":\"The statement says sale items are refundable, but the store policy says sale items cannot be returned.\"}}"
                 }
               ],
               "phase": "final_answer",
@@ -444,19 +446,19 @@ http_interactions:
           "top_p": 0.98,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 201,
+            "input_tokens": 202,
             "input_tokens_details": {
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 58,
+            "output_tokens": 65,
             "output_tokens_details": {
-              "reasoning_tokens": 16
+              "reasoning_tokens": 26
             },
-            "total_tokens": 259
+            "total_tokens": 267
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:29:56 GMT
+  recorded_at: Fri, 13 Nov 2026 21:21:55 GMT
 recorded_with: VCR 6.4.1

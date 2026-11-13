@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"mistral-large-latest","messages":[{"role":"system","content":"Use
+      string: '{"model":"mistral-large-2512","messages":[{"role":"system","content":"Use
         the lookup tool, then answer and cite the sources you use with reference chunks."},{"role":"user","content":"When
         was Ruby 3.4.0 released, and what parser became the default?"}],"stream":false,"tools":[{"type":"function","function":{"name":"lookup","description":"Find
         numbered sources about a topic.","parameters":{"type":"object","properties":{"topic":{"type":"string"}},"required":["topic"],"additionalProperties":false,"strict":true}}}]}'
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 13:18:30 GMT
+      - Fri, 13 Nov 2026 22:32:39 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -34,15 +34,15 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a1c59c-3105-745b-bbdc-8bd81563559b
+      - 01a1d70a-9b60-7797-882f-a07654328017
       X-Kong-Request-Id:
-      - 01a1c59c-3105-745b-bbdc-8bd81563559b
+      - 01a1d70a-9b60-7797-882f-a07654328017
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '400000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '399606'
+      - '399584'
       X-Ratelimit-Tokens-Query-Cost:
       - '130'
       X-Ratelimit-Limit-Req-Minute:
@@ -50,15 +50,15 @@ http_interactions:
       X-Ratelimit-Remaining-Req-Minute:
       - '14'
       X-Envoy-Upstream-Service-Time:
-      - '632'
+      - '636'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '633'
+      - '637'
       X-Kong-Proxy-Latency:
-      - '26'
+      - '17'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -73,22 +73,22 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"ba4867b36d2f460bb0fdf1c2b9094053","created":1794316710,"model":"mistral-large-latest","usage":{"prompt_tokens":109,"total_tokens":130,"completion_tokens":21,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"ScdPZPj1d","type":"function","function":{"name":"lookup","arguments":"{\"topic\":
+      string: '{"id":"5db18892161141a9bff058255466f02a","created":1794609159,"model":"mistral-large-2512","usage":{"prompt_tokens":109,"total_tokens":130,"completion_tokens":21,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"62yrDSHvU","type":"function","function":{"name":"lookup","arguments":"{\"topic\":
         \"Ruby 3.4.0 release date and default parser\"}"},"index":0}],"content":""}}]}'
-  recorded_at: Tue, 10 Nov 2026 13:18:30 GMT
+  recorded_at: Fri, 13 Nov 2026 22:32:39 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"mistral-large-latest","messages":[{"role":"system","content":"Use
+      string: '{"model":"mistral-large-2512","messages":[{"role":"system","content":"Use
         the lookup tool, then answer and cite the sources you use with reference chunks."},{"role":"user","content":"When
-        was Ruby 3.4.0 released, and what parser became the default?"},{"role":"assistant","content":"","tool_calls":[{"id":"ScdPZPj1d","type":"function","function":{"name":"lookup","arguments":"{\"topic\":\"Ruby
+        was Ruby 3.4.0 released, and what parser became the default?"},{"role":"assistant","content":"","tool_calls":[{"id":"62yrDSHvU","type":"function","function":{"name":"lookup","arguments":"{\"topic\":\"Ruby
         3.4.0 release date and default parser\"}"}}]},{"role":"tool","content":"{\"0\":{\"url\":\"https://example.test/a\",\"title\":\"Ruby
         releases\",\"source\":\"example\",\"snippets\":[[\"Ruby 3.4.0 was released
         on 25 December 2024.\"]],\"description\":null,\"date\":null},\"1\":{\"url\":\"https://example.test/b\",\"title\":\"Ruby
         3.4 notes\",\"source\":\"example\",\"snippets\":[[\"Prism became the default
-        parser in Ruby 3.4.\"]],\"description\":null,\"date\":null}}","tool_call_id":"ScdPZPj1d"}],"stream":false,"tools":[{"type":"function","function":{"name":"lookup","description":"Find
+        parser in Ruby 3.4.\"]],\"description\":null,\"date\":null}}","tool_call_id":"62yrDSHvU"}],"stream":false,"tools":[{"type":"function","function":{"name":"lookup","description":"Find
         numbered sources about a topic.","parameters":{"type":"object","properties":{"topic":{"type":"string"}},"required":["topic"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
@@ -107,7 +107,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 13:18:31 GMT
+      - Fri, 13 Nov 2026 22:32:41 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -115,31 +115,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a1c59c-33ce-7451-abd2-89287861ecc6
+      - 01a1d70a-9e2a-7aeb-a324-1bf5de6a3c73
       X-Kong-Request-Id:
-      - 01a1c59c-33ce-7451-abd2-89287861ecc6
+      - 01a1d70a-9e2a-7aeb-a324-1bf5de6a3c73
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '400000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '399336'
+      - '399314'
       X-Ratelimit-Tokens-Query-Cost:
-      - '277'
+      - '280'
       X-Ratelimit-Limit-Req-Minute:
       - '15'
       X-Ratelimit-Remaining-Req-Minute:
       - '13'
       X-Envoy-Upstream-Service-Time:
-      - '779'
+      - '1743'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '780'
+      - '1744'
       X-Kong-Proxy-Latency:
-      - '24'
+      - '17'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -154,8 +154,8 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"f2b2cea9c0a44eb794d91963ecadc04e","created":1794316710,"model":"mistral-large-latest","usage":{"prompt_tokens":237,"total_tokens":277,"completion_tokens":40,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"text","text":"Ruby
-        3.4.0 was released on **25 December 2024**, and the **Prism parser became
-        the default** in this version"},{"type":"reference","reference_ids":[0,1]},{"type":"text","text":"."}]}}]}'
-  recorded_at: Tue, 10 Nov 2026 13:18:31 GMT
+      string: '{"id":"4a857a4a729d455399e2785ca04c8a58","created":1794609159,"model":"mistral-large-2512","usage":{"prompt_tokens":237,"total_tokens":280,"completion_tokens":43,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"text","text":"Ruby
+        **3.4.0** was released on **25 December 2024**. Additionally, the **Prism
+        parser became the default parser** in this release"},{"type":"reference","reference_ids":[0,1]},{"type":"text","text":"."}]}}]}'
+  recorded_at: Fri, 13 Nov 2026 22:32:41 GMT
 recorded_with: VCR 6.4.1

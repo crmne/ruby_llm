@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:46:57 GMT
+      - Fri, 13 Nov 2026 21:33:52 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -38,7 +38,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - 568b27eb33240ac9691e75ce63ccb99b
+      - acb235510d53adc41a4d2c2ff4ea5e7c
       Vary:
       - Accept-Encoding
       - Access-Control-Request-Headers
@@ -49,16 +49,16 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 20261111014653b74e52f9528b483a
+      - 202611140533488ad638e9cdfa49b3
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":"I''ll
         roll the dice 3 times for you!","reasoning_content":"The user wants me to
-        roll the dice 3 times. Since each dice roll is independent of the others,
-        I can make all 3 calls in the same block.","role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"dice_roll"},"id":"call_-7086080174449491926","index":0,"type":"function"},{"function":{"arguments":"{}","name":"dice_roll"},"id":"call_-7086080174449491925","index":1,"type":"function"},{"function":{"arguments":"{}","name":"dice_roll"},"id":"call_-7086080174449491924","index":2,"type":"function"}]}}],"created":1794332817,"id":"20261111014653b74e52f9528b483a","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261111014653b74e52f9528b483a","usage":{"completion_tokens":59,"completion_tokens_details":{"reasoning_tokens":34},"prompt_tokens":186,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":245}}'
-  recorded_at: Tue, 10 Nov 2026 17:46:57 GMT
+        roll the dice 3 times. Since there are no dependencies between the rolls,
+        I can make all 3 calls in the same block.","role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"dice_roll"},"id":"call_-7080010835904422477","index":0,"type":"function"},{"function":{"arguments":"{}","name":"dice_roll"},"id":"call_-7080010835904422476","index":1,"type":"function"},{"function":{"arguments":"{}","name":"dice_roll"},"id":"call_-7080010835904422475","index":2,"type":"function"}]}}],"created":1794605632,"id":"202611140533488ad638e9cdfa49b3","model":"glm-5.3-flash","object":"chat.completion","request_id":"202611140533488ad638e9cdfa49b3","usage":{"completion_tokens":58,"completion_tokens_details":{"reasoning_tokens":33},"prompt_tokens":186,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":244}}'
+  recorded_at: Fri, 13 Nov 2026 21:33:52 GMT
 - request:
     method: post
     uri: https://api.z.ai/api/paas/v4/chat/completions
@@ -67,9 +67,9 @@ http_interactions:
       string: '{"model":"glm-5.3-flash","messages":[{"role":"system","content":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
         the dice 3 times"},{"role":"assistant","content":"I''ll roll the dice 3 times
-        for you!","tool_calls":[{"id":"call_-7086080174449491926","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_-7086080174449491925","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_-7086080174449491924","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning_content":"The
-        user wants me to roll the dice 3 times. Since each dice roll is independent
-        of the others, I can make all 3 calls in the same block."},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"call_-7086080174449491926"},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"call_-7086080174449491925"},{"role":"tool","content":"{\"roll\":3}","tool_call_id":"call_-7086080174449491924"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        for you!","tool_calls":[{"id":"call_-7080010835904422477","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_-7080010835904422476","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_-7080010835904422475","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning_content":"The
+        user wants me to roll the dice 3 times. Since there are no dependencies between
+        the rolls, I can make all 3 calls in the same block."},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"call_-7080010835904422477"},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"call_-7080010835904422476"},{"role":"tool","content":"{\"roll\":3}","tool_call_id":"call_-7080010835904422475"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
@@ -88,7 +88,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:47:07 GMT
+      - Fri, 13 Nov 2026 21:33:58 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -100,7 +100,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - 8e24665f396dab4d9d90a36bbfbb1959
+      - ed75c23e024b2e48ea4700c518cebb91
       Vary:
       - Accept-Encoding
       - Access-Control-Request-Headers
@@ -111,12 +111,12 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 202611110146588327544cc8cb4ffb
+      - 2026111405335361a4575229194ece
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJIZXJlIGFyZSB5b3VyIDMgZGljZSByb2xsczpcblxuMS4g8J+OsiAqKjEqKlxuMi4g8J+OsiAqKjIqKlxuMy4g8J+OsiAqKjMqKlxuXG5XaGF0IGEgcm9sbCDigJQgeW91IGdvdCBhIHBlcmZlY3Qgc2VxdWVuY2UhIFRoYXQncyBhIHRvdGFsIG9mICoqNioqIGFjcm9zcyBhbGwgdGhyZWUgcm9sbHMuIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3OTQzMzI4MjcsImlkIjoiMjAyNjExMTEwMTQ2NTg4MzI3NTQ0Y2M4Y2I0ZmZiIiwibW9kZWwiOiJnbG0tNS4zLWZsYXNoIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicmVxdWVzdF9pZCI6IjIwMjYxMTExMDE0NjU4ODMyNzU0NGNjOGNiNGZmYiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjo1NywiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjo1Nn0sInByb21wdF90b2tlbnMiOjI2OCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJ0b3RhbF90b2tlbnMiOjMyNX19
-  recorded_at: Tue, 10 Nov 2026 17:47:07 GMT
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJIZXJlIGFyZSB5b3VyIGRpY2Ugcm9sbCByZXN1bHRzOlxuXG4xLiAqKlJvbGwgMToqKiDwn46yIDFcbjIuICoqUm9sbCAyOioqIPCfjrIgMlxuMy4gKipSb2xsIDM6Kiog8J+OsiAzXG5cbldoYXQgYSBzZXF1ZW5jZSDigJQgeW91IHJvbGxlZCAxLCAyLCBhbmQgMyBpbiBhIHJvdyEgVGhlIHRvdGFsIHN1bSBpcyAqKjYqKi4gV291bGQgeW91IGxpa2UgdG8gcm9sbCBhZ2Fpbj8iLCJyZWFzb25pbmdfY29udGVudCI6IlRoZSByZXN1bHRzIGFyZTpcbjEuIFJvbGwgMTogMVxuMi4gUm9sbCAyOiAyXG4zLiBSb2xsIDM6IDMiLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc5NDYwNTYzOCwiaWQiOiIyMDI2MTExNDA1MzM1MzYxYTQ1NzUyMjkxOTRlY2UiLCJtb2RlbCI6ImdsbS01LjMtZmxhc2giLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJyZXF1ZXN0X2lkIjoiMjAyNjExMTQwNTMzNTM2MWE0NTc1MjI5MTk0ZWNlIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjExMiwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjozMH0sInByb21wdF90b2tlbnMiOjI2NywicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJ0b3RhbF90b2tlbnMiOjM3OX19
+  recorded_at: Fri, 13 Nov 2026 21:33:58 GMT
 recorded_with: VCR 6.4.1

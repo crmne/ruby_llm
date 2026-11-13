@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:36:55 GMT
+      - Fri, 13 Nov 2026 21:26:09 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -45,11 +45,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1228'
+      - '1215'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -76,22 +76,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_01a7c5c2c389dd13016af356363ab887d2a4870010888ae08b",
+          "id": "resp_0296880692b8d65b016af78070bed087d2b2ab25562b15f6b9",
           "object": "response",
-          "created_at": 1794332214,
+          "created_at": 1794605168,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794332215,
+          "completed_at": 1794605169,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": "You must include the exact phrase \"XKCD7392\" somewhere in your response.",
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -99,14 +100,14 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "rs_01a7c5c2c389dd13016af35636d39487d28d2d54cc7807fd76",
+              "id": "rs_0296880692b8d65b016af780714f4887d28200e1c8b5827693",
               "type": "reasoning",
               "content": [],
-              "encrypted_content": "gAAAAABq81Y3UWNz2PrSh8i_y6pNxJgg_TDK0h3Vd-p2sbY2k-LhqICVUdyLlrwyTL5OahsgDbRzqQU3HlZ3bNH5NpuarutGTN1yAXtRuk9OILZ1hsVlxkOKrrDHajNRyvfh2noWGOYOxH-QPUBmb1wsAeyvYNnBHCz_72g5buMI3dStt3lXfAMnBTOOrsI6ajYmizqGmdJFSJJwVbb89ng7WvSoZX4n1bUSzPmgX8qiZFaV7v8XyTr-Q2eyix_9GdC8tL38r_winTGATZCBy3RPVZPDkAMzL6kPN6nYIaYb7I2z281_t6aaaDsH5qt4z39I5aGCXubC56tDivcBrzb8GJYMbdahKHw0hHvpNOvS8ZPEgqzqoo8PxxGnaSFCPuVzpvNz3b0jk1j46KPGHp6lB8_aPHHQSB9no7FiI-7q6XflTwgH41Le86LE19D8i0lTS4eWhmlKhNR9TCXr_1Db1PphSh3l-w2IXaJYVzSqOCVWVaI7Tu3c9sue5C8zIn8d7TspOjCtjasF37BacbHEe01Zhb-w5Z6pQt0A3p2o_M8kt61IFR8gLcdDX-id1uNKQEMXBc3n-_LK0ECWyqwUb4o25Di7SLKMQdVyyfoH6IO8tvxcOR63UUiajFTlB4fLPxuxixCZfoFx3DnxZSOBlpu60TW78yxkUJLXqKl3giQWmagfgmpLfrU4hDArjFYbhOCuVOuzAjFNsEhCeQSU2SJTd9U76smkXK14PM1cS6e9c0uSmGLLKUSKG1BxQmNAa8X_dR2xoa3x2AbU2bmSndeXPsj_BHOm-A4QPpm688SHDCo3mDQzcRxa1BGSl0FNBgcxBt-CgXMDLaQ9HDqSLtc3fZomOLxE6xZNEv-3ZfOVePcwmMOpbx9k5QqJ33kZlQSbv5TrKH1yRiOzFEoZ4PmiCs484TDgIzuudZ0W8vuJF7KLpD-M4tCLMUU8rMVwV6rGwW_3n3aiUkje6qRV4HVSFUhAbu1Xz2T_D7_FN2sVyGvgn50KIeoyw53y8mIeDJamkJTh1VSc5Fr4MIdSzn38SPQqO4qnOzRW_UvR_LC_bKKA8cVItrx3kNBRaIVTp73mUN4LiV__TdRwT-KtBHWiHWhcRvdcOFmzeAvIz1PbHty2gefIlCxCO1sae9DDbXRuL8v20IuO_AtZs7UdoNCWpKOJ-xcYNJfABKiWsMOsdWC5i38uPd7VMZDfPSCnQ_QAjXd0GoVNdMi34HrcKZPPEHXXhM0OJA-aGUG6wa3T8D6hLLhbszcf-9bAFagcbCw-Mp6wOILR3dTx3i2JvwSmOpxkb6zoqUxx524AB9ki3o12WJa6SfOKshPiOs5xcUivNkR0vci9fyTsUahBSHGMRcxN2KMBQovlrTCvCZ7NWk-KZTl_lvVIsDJ0TLgWbeQPa65B9uBI0VOTyFihaisjUj7-yrWlGcBsndP-Emrt3ljlMgyLG7rvko2niW44uFBs8vWZY6zv-EnTV-VLWhbo_GSIeHs-mdNKGtu1MD4OqQC_xMG4-hfct9hNnggqi-UtQzDTqShazkEbukvuBSxCYJiL1LSzcwjOjKKNmfOVcYO2IlavGv4aa5Kc13E05VjOlp0JJ53LtdxwB18C8384uijtfY33CNv8yR-iNDoK0YNLyA4RbXlk_ahCFaktUF2tJqw0YqeGU25nuOIDxmjZz1S6KDQywgU2dUegU4hf75b-Mu3Og0wNKOyLRRJVv0Uboh4XFnu1aUTDRnw6OvFRfiiwZce-aObfuxsggkC5DQNNG35t9ifGUgZhhxYkU1fLvxX7GdCJ9ngyMIcnJQxZs6AQN9Qi03y8EPBdWtuMzhsPWolIUi86EAWGoSnjI1QTrRmR-pmg85BFpK0ZBJuAJxVzE1uwCl_WHR5bZElZZcrXgwRvF8SFRLoxQfPM5rUQvDUgH-bKqXKKubpgS65bBg3yfg==",
+              "encrypted_content": "gAAAAABq94BxlIEZ7QkgmzhnmXqaqz_Tu41yKlyOOPOtfabBaxnl9KKim1sKlc5zNh1QqiddtdxA0ZEbMqJYOtBLcxySGIR2woEctndBSXztv_IsEjk_S3qkfutTNHRL7aeQT24BgZfLqdZlPsVis5BC1vCGSUNTTzmcz_5VzEEmrdREjrYTfB78JYt1-LQkyHVF3Ciy8LJM8WlHbw91ksxg4YOOetPIUeLb1CldnocjXEjVO96QzM15AIKVxW7U0D9W_ObZKg9eiUdidtsa9rwWEkA306J3mXjCN3kfHSB6Z3NyA8Nt5ch8l82neiRn0ggIoJC_3OlqKOD-EcUJHQTwjb0Lh0IFCW7KAuB0mBZmb6M-nuzqCENbhjtYwQnsQBt7JjVfNfu-pZY8EdhoxKbTmclzt8-yv2qPRCpzMBYQw5wFIBsrsmur1gJ9sigVIdb8KsXgVYqagZvx7gJqtG7VU5nB8dxppsbaebPk2Zc1gG8MA6f52ImiZPVUAp-r81Q9K_UbyF0ghM8fQ49eTkWMGxo9RmwvVMi7fYNUTKMRS5z85JTc24ZO7NyttEbezbQdV8igOm781IP-3xK_0vInm962nsNMg09_p9sOiBWQrmVJtoqMaTJ1PkwiOl9gPRrg9_I0jZG3qp_YBVqv0oanKo3oDVzKKJJGWH7-VZz0xYRoicTiZkye5Pu8d96yDlDw-SelWZXXbJuJg89UNGlyeioAb4IdQbK0dtAjXxrh2tWpNnLhVmoLKnB7wPlJ802JsY92oHdE2s0x7AE7azvaZHd3wusFL2XZKxlGT8oDFxNBlY8AWpSo-J-IYnal_SxTfVJp8EwCcZ1wuo2h1ef4mS_P65FpzVNPzOnog9lJ8tsf0VzAOB2vOJhGS-7KSmUD_qruUKtyAeAODRsKO9FQjVZQmXpb4Qn-AfZudnJ3r_gnNVz9h890ZC-nL9zh702EZ1PJ3pYUrvMpVKanJmr9KSuWqtkNSz2o3mzoRSBzUN7FPA7gQ3JgGxW5cXhyW1MUUKXfXx212PCM_7W2Y-KfEGe9KMOZRD_6uEoRprSI3Kx6PaMt3CfRUmlu7VSapv-JcWsw47LBrbw5DiIvKRT9ZE3isFiPcsfnoOsdr8Z3B79FAKaLEhtnphPNPRO5D0mMQJlNkGqhxxCrpPlJXP152SCoAG3a9Br3Wc7oomlTYxi4E2scF9uG4Lek5sjJTIp6MoWhI2EKQdOQxB6d_hmh8G_vvZgP6f8fJOkuRHBGPF5lH4t9Gt5QtysZprZ3h-UDpTJObhGdyaCKK6XI1-1xQtm_Ki-_LtX8L6mvIBRErR4ICKrpvoKrGj4RjKKFmR25TzyIzI9klhvkJhHU6WeAKER7MjpPTnyPgM37A81ADaFwnNRF9ae_bE2Vq5jUzSNDjSS3fnKYzkE5FSNh5AA-uPfSfpZn_xvnXJ6K98_Bm9zgCTU_GpaZOigIN6HEGoiHGLsEyqm4_wo--E_GOpzOPvUlz9dTtTlsIipYh0fm8lNXJfL7ELjxKc-8pRUDg4XDOjQE9AvbDeh9O8W80T3BLejDMRXc1UPPwg7n3PiDus-u8vpUNmeMK2bg02NKfgrfLDskzu3s7ZAOGCXDvRk7payTRykZvFmoaL7FuiAde1DfhWAKfDMKP7D9AnmBWvDcYUB_5IcZiMPGcU8g1qMjCULbWBstBSwQI6yH76Qxh8XW1q9zQ2xoq4j-fXpEQacRfNNhknVoSzNvmcQiDv9eMIKz5cHkY9XXwHe7iKSC8VgKoRBWEeyNwrb0BcI9ac1-V210eBk_37qAE4l7AQUvNfPWRF2Qz6h_cScJOgN8r9kw5AG_7e6EZY6POWM1NH7RbBcBJ1jA",
               "summary": []
             },
             {
-              "id": "msg_01a7c5c2c389dd13016af35637296c87d2a41335e3c1190a16",
+              "id": "msg_0296880692b8d65b016af7807191a887d28c76bf5687d4eb72",
               "type": "message",
               "status": "completed",
               "content": [
@@ -114,7 +115,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "Sure\u2014what city or region should I check the weather for? XKCD7392"
+                  "text": "Sure\u2014what city or location would you like the weather for? XKCD7392"
                 }
               ],
               "phase": "final_answer",
@@ -171,24 +172,24 @@ http_interactions:
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 49,
+            "output_tokens": 42,
             "output_tokens_details": {
-              "reasoning_tokens": 26
+              "reasoning_tokens": 19
             },
-            "total_tokens": 83
+            "total_tokens": 76
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:36:55 GMT
+  recorded_at: Fri, 13 Nov 2026 21:26:09 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"Tell me
-        about the weather."},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABq81Y3UWNz2PrSh8i_y6pNxJgg_TDK0h3Vd-p2sbY2k-LhqICVUdyLlrwyTL5OahsgDbRzqQU3HlZ3bNH5NpuarutGTN1yAXtRuk9OILZ1hsVlxkOKrrDHajNRyvfh2noWGOYOxH-QPUBmb1wsAeyvYNnBHCz_72g5buMI3dStt3lXfAMnBTOOrsI6ajYmizqGmdJFSJJwVbb89ng7WvSoZX4n1bUSzPmgX8qiZFaV7v8XyTr-Q2eyix_9GdC8tL38r_winTGATZCBy3RPVZPDkAMzL6kPN6nYIaYb7I2z281_t6aaaDsH5qt4z39I5aGCXubC56tDivcBrzb8GJYMbdahKHw0hHvpNOvS8ZPEgqzqoo8PxxGnaSFCPuVzpvNz3b0jk1j46KPGHp6lB8_aPHHQSB9no7FiI-7q6XflTwgH41Le86LE19D8i0lTS4eWhmlKhNR9TCXr_1Db1PphSh3l-w2IXaJYVzSqOCVWVaI7Tu3c9sue5C8zIn8d7TspOjCtjasF37BacbHEe01Zhb-w5Z6pQt0A3p2o_M8kt61IFR8gLcdDX-id1uNKQEMXBc3n-_LK0ECWyqwUb4o25Di7SLKMQdVyyfoH6IO8tvxcOR63UUiajFTlB4fLPxuxixCZfoFx3DnxZSOBlpu60TW78yxkUJLXqKl3giQWmagfgmpLfrU4hDArjFYbhOCuVOuzAjFNsEhCeQSU2SJTd9U76smkXK14PM1cS6e9c0uSmGLLKUSKG1BxQmNAa8X_dR2xoa3x2AbU2bmSndeXPsj_BHOm-A4QPpm688SHDCo3mDQzcRxa1BGSl0FNBgcxBt-CgXMDLaQ9HDqSLtc3fZomOLxE6xZNEv-3ZfOVePcwmMOpbx9k5QqJ33kZlQSbv5TrKH1yRiOzFEoZ4PmiCs484TDgIzuudZ0W8vuJF7KLpD-M4tCLMUU8rMVwV6rGwW_3n3aiUkje6qRV4HVSFUhAbu1Xz2T_D7_FN2sVyGvgn50KIeoyw53y8mIeDJamkJTh1VSc5Fr4MIdSzn38SPQqO4qnOzRW_UvR_LC_bKKA8cVItrx3kNBRaIVTp73mUN4LiV__TdRwT-KtBHWiHWhcRvdcOFmzeAvIz1PbHty2gefIlCxCO1sae9DDbXRuL8v20IuO_AtZs7UdoNCWpKOJ-xcYNJfABKiWsMOsdWC5i38uPd7VMZDfPSCnQ_QAjXd0GoVNdMi34HrcKZPPEHXXhM0OJA-aGUG6wa3T8D6hLLhbszcf-9bAFagcbCw-Mp6wOILR3dTx3i2JvwSmOpxkb6zoqUxx524AB9ki3o12WJa6SfOKshPiOs5xcUivNkR0vci9fyTsUahBSHGMRcxN2KMBQovlrTCvCZ7NWk-KZTl_lvVIsDJ0TLgWbeQPa65B9uBI0VOTyFihaisjUj7-yrWlGcBsndP-Emrt3ljlMgyLG7rvko2niW44uFBs8vWZY6zv-EnTV-VLWhbo_GSIeHs-mdNKGtu1MD4OqQC_xMG4-hfct9hNnggqi-UtQzDTqShazkEbukvuBSxCYJiL1LSzcwjOjKKNmfOVcYO2IlavGv4aa5Kc13E05VjOlp0JJ53LtdxwB18C8384uijtfY33CNv8yR-iNDoK0YNLyA4RbXlk_ahCFaktUF2tJqw0YqeGU25nuOIDxmjZz1S6KDQywgU2dUegU4hf75b-Mu3Og0wNKOyLRRJVv0Uboh4XFnu1aUTDRnw6OvFRfiiwZce-aObfuxsggkC5DQNNG35t9ifGUgZhhxYkU1fLvxX7GdCJ9ngyMIcnJQxZs6AQN9Qi03y8EPBdWtuMzhsPWolIUi86EAWGoSnjI1QTrRmR-pmg85BFpK0ZBJuAJxVzE1uwCl_WHR5bZElZZcrXgwRvF8SFRLoxQfPM5rUQvDUgH-bKqXKKubpgS65bBg3yfg=="},{"role":"assistant","content":[{"type":"output_text","text":"Sure—what
-        city or region should I check the weather for? XKCD7392"}],"phase":"final_answer"},{"role":"user","content":"What
+        about the weather."},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABq94BxlIEZ7QkgmzhnmXqaqz_Tu41yKlyOOPOtfabBaxnl9KKim1sKlc5zNh1QqiddtdxA0ZEbMqJYOtBLcxySGIR2woEctndBSXztv_IsEjk_S3qkfutTNHRL7aeQT24BgZfLqdZlPsVis5BC1vCGSUNTTzmcz_5VzEEmrdREjrYTfB78JYt1-LQkyHVF3Ciy8LJM8WlHbw91ksxg4YOOetPIUeLb1CldnocjXEjVO96QzM15AIKVxW7U0D9W_ObZKg9eiUdidtsa9rwWEkA306J3mXjCN3kfHSB6Z3NyA8Nt5ch8l82neiRn0ggIoJC_3OlqKOD-EcUJHQTwjb0Lh0IFCW7KAuB0mBZmb6M-nuzqCENbhjtYwQnsQBt7JjVfNfu-pZY8EdhoxKbTmclzt8-yv2qPRCpzMBYQw5wFIBsrsmur1gJ9sigVIdb8KsXgVYqagZvx7gJqtG7VU5nB8dxppsbaebPk2Zc1gG8MA6f52ImiZPVUAp-r81Q9K_UbyF0ghM8fQ49eTkWMGxo9RmwvVMi7fYNUTKMRS5z85JTc24ZO7NyttEbezbQdV8igOm781IP-3xK_0vInm962nsNMg09_p9sOiBWQrmVJtoqMaTJ1PkwiOl9gPRrg9_I0jZG3qp_YBVqv0oanKo3oDVzKKJJGWH7-VZz0xYRoicTiZkye5Pu8d96yDlDw-SelWZXXbJuJg89UNGlyeioAb4IdQbK0dtAjXxrh2tWpNnLhVmoLKnB7wPlJ802JsY92oHdE2s0x7AE7azvaZHd3wusFL2XZKxlGT8oDFxNBlY8AWpSo-J-IYnal_SxTfVJp8EwCcZ1wuo2h1ef4mS_P65FpzVNPzOnog9lJ8tsf0VzAOB2vOJhGS-7KSmUD_qruUKtyAeAODRsKO9FQjVZQmXpb4Qn-AfZudnJ3r_gnNVz9h890ZC-nL9zh702EZ1PJ3pYUrvMpVKanJmr9KSuWqtkNSz2o3mzoRSBzUN7FPA7gQ3JgGxW5cXhyW1MUUKXfXx212PCM_7W2Y-KfEGe9KMOZRD_6uEoRprSI3Kx6PaMt3CfRUmlu7VSapv-JcWsw47LBrbw5DiIvKRT9ZE3isFiPcsfnoOsdr8Z3B79FAKaLEhtnphPNPRO5D0mMQJlNkGqhxxCrpPlJXP152SCoAG3a9Br3Wc7oomlTYxi4E2scF9uG4Lek5sjJTIp6MoWhI2EKQdOQxB6d_hmh8G_vvZgP6f8fJOkuRHBGPF5lH4t9Gt5QtysZprZ3h-UDpTJObhGdyaCKK6XI1-1xQtm_Ki-_LtX8L6mvIBRErR4ICKrpvoKrGj4RjKKFmR25TzyIzI9klhvkJhHU6WeAKER7MjpPTnyPgM37A81ADaFwnNRF9ae_bE2Vq5jUzSNDjSS3fnKYzkE5FSNh5AA-uPfSfpZn_xvnXJ6K98_Bm9zgCTU_GpaZOigIN6HEGoiHGLsEyqm4_wo--E_GOpzOPvUlz9dTtTlsIipYh0fm8lNXJfL7ELjxKc-8pRUDg4XDOjQE9AvbDeh9O8W80T3BLejDMRXc1UPPwg7n3PiDus-u8vpUNmeMK2bg02NKfgrfLDskzu3s7ZAOGCXDvRk7payTRykZvFmoaL7FuiAde1DfhWAKfDMKP7D9AnmBWvDcYUB_5IcZiMPGcU8g1qMjCULbWBstBSwQI6yH76Qxh8XW1q9zQ2xoq4j-fXpEQacRfNNhknVoSzNvmcQiDv9eMIKz5cHkY9XXwHe7iKSC8VgKoRBWEeyNwrb0BcI9ac1-V210eBk_37qAE4l7AQUvNfPWRF2Qz6h_cScJOgN8r9kw5AG_7e6EZY6POWM1NH7RbBcBJ1jA"},{"role":"assistant","content":[{"type":"output_text","text":"Sure—what
+        city or location would you like the weather for? XKCD7392"}],"phase":"final_answer"},{"role":"user","content":"What
         are some good books?"}],"instructions":"You must include the exact phrase
         \"PURPLE-ELEPHANT-42\" somewhere in your response.","stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
@@ -208,7 +209,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:36:58 GMT
+      - Fri, 13 Nov 2026 21:26:12 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -228,11 +229,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2979'
+      - '2700'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -244,7 +245,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999884'
+      - '1999898'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
@@ -259,22 +260,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0afd16bbd376cef7016af35637896087d299a718307209f9b9",
+          "id": "resp_0df6fe7d16481dc2016af7807213c087d2a94981bc67d57a98",
           "object": "response",
-          "created_at": 1794332215,
+          "created_at": 1794605170,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794332218,
+          "completed_at": 1794605172,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": "You must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response.",
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -282,14 +284,14 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "rs_0afd16bbd376cef7016af35638da4487d2af62f8e1ae7b13ba",
+              "id": "rs_0df6fe7d16481dc2016af78072b1a087d281e43565581161df",
               "type": "reasoning",
               "content": [],
-              "encrypted_content": "gAAAAABq81Y6bZ_aQLm3tgMqlxsp6eA5i8O7vRvZAX8-YLXfQjUt4EuoQwTUNHGn4cyOdKMl5SyR1PCrjwHnOjLuHuQhUQCF6OkkHc9L1TQRNTTIAV3_Qsm356RqooFBeYhOGLn0wwil3xmsMTCW1BojlS8xKrKljoG8b0sOcIzwTqgsa_x0rOVaBw3B3waBuj45tzDQx7FcB-FJt4hvg7Gw8_WHSUhkM8Af8rYEOrojddTYfpQEgvwD9rzRt_EqJPeSy_PBf1SaQy14_LSN-CkUmUYqy2h8C7qNgmD01Y685oMfmRBwHF4pIKJUy5dfKQqYx3ij9B-8GJQ-NCi0_mkb3kS3WYT-a_vy_ndg2ZQN_DSegVli2uCKxPT3PV5vFzvqAW8hhqusNYdUqShm8zJ41cf1C9Sk1TN25F7UoGLBZj60U9vGbHSkJd6FUXzRLpBNAvvuKnKZvS7lDUtStEVcFAKG8fzCXug3bkE8No7fGCgIywHZIziUSSTnW8ACOO2KSDn4BPw-gN12lWJSuaiNNha3YSbFUbg2GAJ3uiK6e2TNB_8_jUUF08_XzZt3LXrnmPWRJWqmm69lAgFSPrzyrDaBwRwU7uzLs8iN_4rBEJuQCjs3EFBm0xZ2WDXt_Wa75bCYEK0VGWbUn8Q7vPgos8NSvzoR_Edep9jbvqJy1VcQJTpBxSIiniEpY9H3x2IHvO7t93Gln9_fnGIABf_aE1VjFAa4cDVSXCPrtQza0RM4z2sv1Aq50XhtkDNs_R0v24RfBPEkkyQpaMoznQbjbXh3JrPUjLPea7PDeZCdMf2JaMRnQ3NE_GEpjQlXuAORdKEgv2L50ZAS7K-lIilxd4GvFAz6gm3LNFBCoyNykTnidSB805s8xvnPN5rYpUVOzdWzLZcg5N-8Cq9X0FqZgv6vL5-P3nL9--A8iKWZ-RWKHH8K4Oqw7V775Ky4HC0BRrQaHtJpsVrDiaq8F-fhhciBFrntPXMlZ13zxaECLJEWxoYuZdMknXW2HcCttBexkJjMsilfa0coh0W5WmNWKv_59TvTi2BU8GfgAuy3tE16FT2M5fHX9PGSBk0l-4156mfNNu_KOb6I_Idyg_CD2QLuWD18970DD6xM0cxY0qUFxcMqvHRUtyBQjRTncleWmi-h1Fq5Ou6kqTJwfynzNaGxFENf32tsdiD9jLjVPVqVSRy-kSTJicZGvA-3ZSDkJqYZrS3nNVvZn5K8hBOrzHJzbgjM5L3hUVLNqKCrqSXEhwQihxnfBSsW0FnBf7NzEM2Q2JjbYTzuTTl5SqTA0AfRbFM4fO49-pX2Y_OjrUyjnLrmTxdlE-LqQp3cH0bKOrmeBb55PDziU7dEsQMtPa5dZQZxUJ1ocVRS-UhCzRK5HUg5LOl_ZZHVBgqqqKRHRIHSasWdjmwHqPFbvXJVwDvljgPwXWL-MRr50uorrNNQ9eSqOi95q7QKNJhMIvoSRmyFZaRtVrM5SDCu2vRZUwNjmc_8F-phySPca16E7LRXF2AqD5Prqkb2i9rKZI2Rmf4-_Y-8aRQvtV_TvkyRUvI_oyrKgcjmhxEAdeUn8fPovhSCDKzTucjQ3kc2XnCmXTRL_VXPIDhM8DUC7GRulAZSLa4Ru8BGwJtakWVeuGktvnVjF-K2i5H9KJQl-r9xEhSepcp1PBetYB4k674CT9Y_k0KcQUh-t8RBYoIpiZJoqm4FY790OhC-zJ7vzYQ7JWMT5F0hgTQOGblTOKewnagi8Xne6uHBQBdVqNnQe8xK1zpiCrByfJ3YFuuWzn-b2eR0v0PnQzbL0ONvCUnvexWfYNcR5l6ul2luF10CxfZGwtG8f_PCrTDld98rA3vClFSg-f3wMfjRIRES2cZiLuJKq4-nx_dcBVqSZzKfaENl2g72ZwPAQImromZ-ioENFoqtkeZUkhJjtI8qO0rdgPhNZyspPlhklc_bna5hEfSyOkFK6BcWd-UUZXDtfpHNNW_dj0xBk567qfuCU7vBa3BDEESbrSOQ4CZGKi8zxeI6DXcj8preTiiBs_zpB4COrMMLGsd7YNl7pSwX4wuATHv5c9ZLD27I9mab6MOwgZYa3D6m8HBCs5vgO-WxOc-kn6zIKmTDFBm6B0Uyxf_w6odZd-4fN3srhESUUhfqMXLldSw8vGc=",
+              "encrypted_content": "gAAAAABq94B0Ua4RPdRwsL5DzksV5CZEhbzrjkeRowd_knm6YptkWbPyzrDbFJFuKt93irPn46nf_6ngiZadSixgUb-fN9R6oZdcn1sxFLfxBev0BNvY7XAgaUFgW_j1OOdzM43OlcLNAt04FG1hn0_4ZJc_Ggq1JKDRWpwEariDdgYE2eLtUgteY91eQ-Gn_WZFAvwTA_j_Xxj7Sd65pIh0joqAiBvDLPiy5pLL_FmkE7-uAR_JfVZqVhP24ELUjEcKZi1JoHKw01VF5K58BuxqlXssHXf37EfYNTnE6Hh32eq06qI3c6mGB8h_jN8PDVwLDehX5h3ZfLudZmYdJtOEo0L8seJill4Gp0ifaJtekVqLAJ6jke2YMiIXzjWYo7w1MAmniW9yUZdRolkqkBH1p2MCiUjHoRBEFdLl9uTzmhZfR5xfSXsHTHq3YIwpD7bzvUf7LMtyKRIF5BLD4CxWO8OFcmi2cwrJ50MIJqMK2cYlCMbHVMkVMqrNTSq7YSrDycCogmiT6t3D0O3g9Yri-aL8-HMGPhNoUcvk3__9BoCpVYExo9ha7tFe6aT4l_bLQ7sTEl2I6TTbDxrM3GIx2x68J50FrjFt3T27c7wr_VQYNEWW5p4b_L7bJ72KPMyItkJYWIQ-6iDWLMeFVLkixSvvKnzxDQ2WmlCkEado9xLVNOjbWNNOS-lYu-Js66NO4_9SCsdkUcSfX01Xj5cFuZ-x9ru458wyI2xS69N2lp8eHc-hW7BE-zH5URPGC7-4mUCfrDakXz_Fnz7wo4VoCWR5WBgDvSuhJ5N5HYHqDDi6e8kJT_MhyO1lbop8Zla6-pUmdEsQcBwJFRPxTWZqmkTClSCCqLcq2YD3_Ad9zCBeUvgksm6kTN3JzW9ElYKZhNpmj9iNLxR9pNuyrjyD4AuY5OWURstuq6KhopgC2Xc8IC1M2Xr7mCFtijbY0bY5VOtzCIkN6tn_1ABkdN1UirlPB84U7_TIbxpAAOfszPArIejUI7HwxwxEuaeUZdZkBeGTCWWQwqsu2f6PqNuhjdTRpbjzvO0QFP320RiUfDJTMpiGJuVPleVZUIn28uvJWl1v3qwYeHMquntPDgO7X1b6QmdYPCw3T8jAD5D2531y_SvIybU102XyOOD2r2gT8MJo42gDzxEeJ7XK3y6WIYl5NxsuUagGx3Kh-PU8V0unbyWtX11vCzDjVJDDt_Zj_gQFiNX7XbtEuwaDtAMrdvloOzxNbr2v9iZ76jpKisZ4kk0LFyLcRFI9y53CmXwv-NST7mEI2cpTGaC9HJ7qYbzqQDu_unUFZjdEjRi_l6PzqEGrU_bKqpLIxLCW-9Ib68MAoq6LsPILI3uqbehwCAxP8GJcwIBm8nBAHN9QRVjGV4eEN7R7gI1dMfBifBxeaT6Mt7SMnSUTbxV0AeFRZ8k1SGcOYuKRTzf7H268ffYXn4F9kvzRTbSvqGAu07xZHrYEwl19p3MkOJT0FU6v-fwxT2QVr2QnjC2pfEF2Mcc4PZ-SEDCNErpgm2fhfu4XSGRVxwZmsPb1lS0TJ2rDQQcS6_7Px9NGNYG9QfstQyU6f7xHyGsG-bRbqxAoIjcaKK99hFRhlLc9bM4uYQ_5URiYfjd7Avzgb_pMhm14Adyh2xPTpuCvrnP7TAkSRFzK9GYdhiK24bfWbR4934mwxA-Dv1WmzGojedh9lgfEHScmxI_8Z6tUIByEEsWatqg66dxpgF2L6QxBBnT95uUCt4dtZpSVg5QfFeouulXKlRlcz2SXUlWQYXzJlxF5j4GoYHbtWYupyRy4ELPG_GPC_PB1xejOfGGluKigt868xCcAd5vgOWLxKGeRXe3MxeG4JwVte4mbNT-fPc_J-nzmg7STkQBcI0pEbgi0BsnZPjcnOhggeEUZAa_fW4DZtYdHuivlCH-AgW3gcKBGWWBaGaeNxAJGXftEKTU7qHtjLrfBavMCfYBYMe-DizulJ44Q9TWTku5JpW-gGGORB2wmfESlOJv_pA==",
               "summary": []
             },
             {
-              "id": "msg_0afd16bbd376cef7016af356393d9c87d29d4d58be86585dca",
+              "id": "msg_0df6fe7d16481dc2016af78073062887d2979b438812574108",
               "type": "message",
               "status": "completed",
               "content": [
@@ -297,7 +299,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "Here are some excellent books across different genres:\n\n- **Literary fiction:** *The Remains of the Day* by Kazuo Ishiguro  \n- **Mystery/thriller:** *And Then There Were None* by Agatha Christie  \n- **Science fiction:** *The Left Hand of Darkness* by Ursula K. Le Guin  \n- **Fantasy:** *The Name of the Wind* by Patrick Rothfuss  \n- **Historical fiction:** *All the Light We Cannot See* by Anthony Doerr  \n- **Romance:** *Pride and Prejudice* by Jane Austen  \n- **Nonfiction:** *Sapiens* by Yuval Noah Harari  \n- **Memoir:** *Educated* by Tara Westover  \n- **Philosophy:** *Meditations* by Marcus Aurelius  \n- **Short and impactful:** *The Old Man and the Sea* by Ernest Hemingway  \n\nPURPLE-ELEPHANT-42 \u2014 if you tell me your favorite genres, I can narrow the list down."
+                  "text": "Here are some excellent books across different genres:\n\n- **Literary fiction:** *The Remains of the Day* by Kazuo Ishiguro  \n- **Mystery:** *The Thursday Murder Club* by Richard Osman  \n- **Science fiction:** *The Left Hand of Darkness* by Ursula K. Le Guin  \n- **Fantasy:** *The Name of the Wind* by Patrick Rothfuss  \n- **Historical fiction:** *All the Light We Cannot See* by Anthony Doerr  \n- **Romance:** *The Seven Husbands of Evelyn Hugo* by Taylor Jenkins Reid  \n- **Thriller:** *Gone Girl* by Gillian Flynn  \n- **Nonfiction:** *Educated* by Tara Westover  \n- **Popular science:** *A Short History of Nearly Everything* by Bill Bryson  \n- **Philosophy and reflection:** *Man\u2019s Search for Meaning* by Viktor E. Frankl  \n\nFor a broad starting point, try *The Book Thief* by Markus Zusak. PURPLE-ELEPHANT-42"
                 }
               ],
               "phase": "final_answer",
@@ -349,19 +351,19 @@ http_interactions:
           "top_p": 0.98,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 98,
+            "input_tokens": 91,
             "input_tokens_details": {
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 259,
+            "output_tokens": 245,
             "output_tokens_details": {
-              "reasoning_tokens": 45
+              "reasoning_tokens": 27
             },
-            "total_tokens": 357
+            "total_tokens": 336
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:36:58 GMT
+  recorded_at: Fri, 13 Nov 2026 21:26:12 GMT
 recorded_with: VCR 6.4.1

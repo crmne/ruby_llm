@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Pragma:
-      - no-cache
-      Date:
-      - Tue, 10 Nov 2026 17:31:49 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Fri, 13 Nov 2026 21:22:49 GMT
+      Pragma:
+      - no-cache
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Tue, 10 Nov 2026 17:31:49 GMT
+  recorded_at: Fri, 13 Nov 2026 21:22:49 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:streamGenerateContent?alt=sse
@@ -91,7 +91,7 @@ http_interactions:
       Transfer-Encoding:
       - chunked
       Date:
-      - Tue, 10 Nov 2026 17:31:50 GMT
+      - Fri, 13 Nov 2026 21:22:50 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -105,20 +105,17 @@ http_interactions:
     body:
       encoding: UTF-8
       string: "data: {\"candidates\": [{\"content\": {\"role\": \"model\",\"parts\":
-        [{\"text\": \"1,\"}]}}],\"usageMetadata\": {\"trafficType\": \"ON_DEMAND\"},\"modelVersion\":
-        \"gemini-2.5-flash\",\"createTime\": \"2026-11-10T17:31:49.384334Z\",\"responseId\":
-        \"BVXzas66F7rCtfAPy5SMsQ4\"}\r\n\r\ndata: {\"candidates\": [{\"content\":
-        {\"role\": \"model\",\"parts\": [{\"text\": \" 2, 3\"}]}}],\"usageMetadata\":
-        {\"trafficType\": \"ON_DEMAND\"},\"modelVersion\": \"gemini-2.5-flash\",\"createTime\":
-        \"2026-11-10T17:31:49.384334Z\",\"responseId\": \"BVXzas66F7rCtfAPy5SMsQ4\"}\r\n\r\ndata:
-        {\"candidates\": [{\"content\": {\"role\": \"model\",\"parts\": [{\"text\":
-        \"\"}]},\"finishReason\": \"STOP\"}],\"usageMetadata\": {\"promptTokenCount\":
-        12,\"candidatesTokenCount\": 7,\"totalTokenCount\": 57,\"trafficType\": \"ON_DEMAND\",\"promptTokensDetails\":
-        [{\"modality\": \"TEXT\",\"tokenCount\": 12}],\"candidatesTokensDetails\":
-        [{\"modality\": \"TEXT\",\"tokenCount\": 7}],\"thoughtsTokenCount\": 38},\"modelVersion\":
-        \"gemini-2.5-flash\",\"createTime\": \"2026-11-10T17:31:49.384334Z\",\"responseId\":
-        \"BVXzas66F7rCtfAPy5SMsQ4\"}\r\n\r\n"
-  recorded_at: Tue, 10 Nov 2026 17:31:50 GMT
+        [{\"text\": \"1, 2, 3\"}]}}],\"usageMetadata\": {\"trafficType\": \"ON_DEMAND\"},\"modelVersion\":
+        \"gemini-2.5-flash\",\"createTime\": \"2026-11-13T21:22:49.705701Z\",\"responseId\":
+        \"qX_3aqWJK_-B-eQP9IH74AQ\"}\r\n\r\ndata: {\"candidates\": [{\"content\":
+        {\"role\": \"model\",\"parts\": [{\"text\": \"\"}]},\"finishReason\": \"STOP\"}],\"usageMetadata\":
+        {\"promptTokenCount\": 12,\"candidatesTokenCount\": 7,\"totalTokenCount\":
+        57,\"trafficType\": \"ON_DEMAND\",\"promptTokensDetails\": [{\"modality\":
+        \"TEXT\",\"tokenCount\": 12}],\"candidatesTokensDetails\": [{\"modality\":
+        \"TEXT\",\"tokenCount\": 7}],\"thoughtsTokenCount\": 38},\"modelVersion\":
+        \"gemini-2.5-flash\",\"createTime\": \"2026-11-13T21:22:49.705701Z\",\"responseId\":
+        \"qX_3aqWJK_-B-eQP9IH74AQ\"}\r\n\r\n"
+  recorded_at: Fri, 13 Nov 2026 21:22:50 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -143,7 +140,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - BlXzapPXIKPntfAPitqJsQg
+      - qn_3arqPGKqP7bQPq5-yiAQ
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -151,7 +148,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 10 Nov 2026 17:31:51 GMT
+      - Fri, 13 Nov 2026 21:22:51 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -184,7 +181,7 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 12,
             "candidatesTokenCount": 7,
-            "totalTokenCount": 46,
+            "totalTokenCount": 57,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -198,11 +195,11 @@ http_interactions:
                 "tokenCount": 7
               }
             ],
-            "thoughtsTokenCount": 27
+            "thoughtsTokenCount": 38
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-11-10T17:31:50.535443Z",
-          "responseId": "BlXzapPXIKPntfAPitqJsQg"
+          "createTime": "2026-11-13T21:22:50.395194Z",
+          "responseId": "qn_3arqPGKqP7bQPq5-yiAQ"
         }
-  recorded_at: Tue, 10 Nov 2026 17:31:51 GMT
+  recorded_at: Fri, 13 Nov 2026 21:22:51 GMT
 recorded_with: VCR 6.4.1

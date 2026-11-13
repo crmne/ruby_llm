@@ -31,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 10 Nov 2026 19:34:31 GMT
+      - Fri, 13 Nov 2026 21:21:28 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -41,7 +41,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=2193
+      - gfet4t7; dur=1959
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -59,34 +59,34 @@ http_interactions:
         data: {"index":0,"step":{"type":"thought"},"event_type":"step.start"}
 
         event: step.delta
-        data: {"index":0,"delta":{"signature":"EvEBCu4BAWkUfRNEw1ARgMCg6bm2UOyhpu8Ah0iBLTLmq7Xp1K6LOBeLNpJaS5tEOCY4ISoDraFPgzYHpXoTg+bm48qSUFlhKHJNxjRidauJrtJj5mID3Kwtf4rqEOmyd5HkDGt3eg4rs5w3oAvtTmf5e1Wrqc8mxN8aVt89tQRI47Ejw+TG8OyMrCWpZrb4oIKYDuQh6Iw8FiW7s7SQWLwP4vQwNHuPy6jHfiniA76EIKRS4qaKuNmQOrOC+2H0uwQjK6Ydg0Ox2gGWCB8SfO2DESLeX0RA5LjoEBk8etTUAzQ2YGA7YNRDDR5SthFWiMYuew==","type":"thought_signature"},"event_type":"step.delta"}
+        data: {"index":0,"delta":{"signature":"EoUCCoICAWkUfRMomkcQHcbwMqoyb5Jw27PumIQTSVDgq7459RzTdbE43PGsOml5IX1G14xcvm2umAJWiUCgsgYU+qKIEMlHBW46wg3Tb1g7KiHs2pV4AXOVodIpmnUdPbUf3toz1kvy2x2CVuN2rUtcVM/MTyE4cjIJJFhfUntRhLwqvmcJgxX+evWmHkk9L2P7wfaasaJCrKFUh9oeBEIWp9RIEtWbUe6nnc4vNh+cIMpQenZzLa9hg63MUsNvXweX1RFeQakc6ml2TlB6VPgzTJwK4+D/lOUmx4PswouvbVhoTxzyNycg3i3qGHH1pVFSXd2+XMBwbqhBcQ2j8c5Y7Gzx/0SG","type":"thought_signature"},"event_type":"step.delta"}
 
         event: step.stop
         data: {"index":0,"event_type":"step.stop"}
 
         event: step.start
-        data: {"index":1,"step":{"id":"call_2411880688222982649","type":"function_call","name":"multiply","arguments":{}},"event_type":"step.start"}
+        data: {"index":1,"step":{"id":"call_1543230561620237167","type":"function_call","name":"multiply","arguments":{}},"event_type":"step.start"}
 
         event: step.delta
-        data: {"index":1,"delta":{"arguments":"{\"right\":19,\"left\":17}","type":"arguments_delta"},"event_type":"step.delta"}
+        data: {"index":1,"delta":{"arguments":"{\"left\":17,\"right\":19}","type":"arguments_delta"},"event_type":"step.delta"}
 
         event: step.stop
         data: {"index":1,"event_type":"step.stop"}
 
         event: interaction.completed
-        data: {"interaction":{"status":"requires_action","usage":{"total_tokens":119,"total_input_tokens":67,"input_tokens_by_modality":[{"modality":"text","tokens":67}],"total_cached_tokens":0,"total_output_tokens":18,"total_tool_use_tokens":0,"total_thought_tokens":34,"initial_input_tokens":67},"created":"2026-11-10T19:34:31Z","updated":"2026-11-10T19:34:31Z","service_tier":"standard","object":"interaction","model":"gemini-3.8-flash"},"event_type":"interaction.completed"}
+        data: {"interaction":{"status":"requires_action","usage":{"total_tokens":127,"total_input_tokens":67,"input_tokens_by_modality":[{"modality":"text","tokens":67}],"total_cached_tokens":0,"total_output_tokens":18,"total_tool_use_tokens":0,"total_thought_tokens":42,"initial_input_tokens":67},"created":"2026-11-13T21:21:28Z","updated":"2026-11-13T21:21:28Z","service_tier":"standard","object":"interaction","model":"gemini-3.8-flash"},"event_type":"interaction.completed"}
 
         event: done
         data: [DONE]
 
-  recorded_at: Tue, 10 Nov 2026 19:34:32 GMT
+  recorded_at: Fri, 13 Nov 2026 21:21:28 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/interactions
     body:
       encoding: UTF-8
       string: '{"model":"gemini-3.8-flash","input":[{"type":"user_input","content":[{"type":"text","text":"Use
-        multiply to calculate 17 times 19. State the result."}]},{"type":"thought","signature":"EvEBCu4BAWkUfRNEw1ARgMCg6bm2UOyhpu8Ah0iBLTLmq7Xp1K6LOBeLNpJaS5tEOCY4ISoDraFPgzYHpXoTg+bm48qSUFlhKHJNxjRidauJrtJj5mID3Kwtf4rqEOmyd5HkDGt3eg4rs5w3oAvtTmf5e1Wrqc8mxN8aVt89tQRI47Ejw+TG8OyMrCWpZrb4oIKYDuQh6Iw8FiW7s7SQWLwP4vQwNHuPy6jHfiniA76EIKRS4qaKuNmQOrOC+2H0uwQjK6Ydg0Ox2gGWCB8SfO2DESLeX0RA5LjoEBk8etTUAzQ2YGA7YNRDDR5SthFWiMYuew=="},{"id":"call_2411880688222982649","type":"function_call","name":"multiply","arguments":{"right":19,"left":17}},{"type":"function_result","call_id":"call_2411880688222982649","name":"multiply","result":[{"type":"text","text":"323"}]}],"stream":true,"store":false,"system_instruction":"","generation_config":{},"tools":[{"type":"function","name":"multiply","description":"Multiply
+        multiply to calculate 17 times 19. State the result."}]},{"type":"thought","signature":"EoUCCoICAWkUfRMomkcQHcbwMqoyb5Jw27PumIQTSVDgq7459RzTdbE43PGsOml5IX1G14xcvm2umAJWiUCgsgYU+qKIEMlHBW46wg3Tb1g7KiHs2pV4AXOVodIpmnUdPbUf3toz1kvy2x2CVuN2rUtcVM/MTyE4cjIJJFhfUntRhLwqvmcJgxX+evWmHkk9L2P7wfaasaJCrKFUh9oeBEIWp9RIEtWbUe6nnc4vNh+cIMpQenZzLa9hg63MUsNvXweX1RFeQakc6ml2TlB6VPgzTJwK4+D/lOUmx4PswouvbVhoTxzyNycg3i3qGHH1pVFSXd2+XMBwbqhBcQ2j8c5Y7Gzx/0SG"},{"id":"call_1543230561620237167","type":"function_call","name":"multiply","arguments":{"left":17,"right":19}},{"type":"function_result","call_id":"call_1543230561620237167","name":"multiply","result":[{"type":"text","text":"323"}]}],"stream":true,"store":false,"system_instruction":"","generation_config":{},"tools":[{"type":"function","name":"multiply","description":"Multiply
         two numbers","parameters":{"type":"object","properties":{"left":{"type":"integer"},"right":{"type":"integer"}},"required":["left","right"],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
@@ -111,7 +111,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 10 Nov 2026 19:34:34 GMT
+      - Fri, 13 Nov 2026 21:21:31 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -121,7 +121,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=2148
+      - gfet4t7; dur=2284
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -139,7 +139,7 @@ http_interactions:
         data: {"index":0,"step":{"type":"thought"},"event_type":"step.start"}
 
         event: step.delta
-        data: {"index":0,"delta":{"signature":"EqcBCqQBAWkUfRMIyoD1kNHNm3jHGTQ2E+n7X7FlAVrmanE8t9dTVeZgB4aQdOjpNGJDOxlKzABmdd6cZ+SA6TdfPiNrYzdKBE7+nTbzA6QCR52M6RipXmol14st2P53XkO7c6GZAO2i/QVrqZ/9oH1YKe4kL3gYvHcK5h5Hp67eudC6dUCwk+4u4qvx4E5gMejHZ3PM0p3mED5cOs5ZJByhG33NvKu7xEY=","type":"thought_signature"},"event_type":"step.delta"}
+        data: {"index":0,"delta":{"signature":"EqsBCqgBAWkUfRNYeKyq5/e60c75xYeXrfNbAkHrFmtOKOl+sGU+ewvp4eTh7UIFj027DqrNTD5isqPmcO6WKPG3cN0upwZJHmL47tJnnuPF+ZnAFvWSEOUCkT2ia9z6pHQQAQs/IUE/vd+pPJr7OxEMfASAJBolrx47Fmct1hK2tlKk7YNcGOhbEYjJgsDlkQmaA/93D39RzquEhpQGEOr+d7jMxSpn7aQb23IQ","type":"thought_signature"},"event_type":"step.delta"}
 
         event: step.stop
         data: {"index":0,"event_type":"step.stop"}
@@ -148,20 +148,20 @@ http_interactions:
         data: {"index":1,"step":{"type":"model_output"},"event_type":"step.start"}
 
         event: step.delta
-        data: {"index":1,"delta":{"text":"17 times 19 is","type":"text"},"event_type":"step.delta"}
+        data: {"index":1,"delta":{"text":"The result of 17 multiplied by 1","type":"text"},"event_type":"step.delta"}
 
         event: step.delta
-        data: {"index":1,"delta":{"text":" 323.","type":"text"},"event_type":"step.delta"}
+        data: {"index":1,"delta":{"text":"9 is 323.","type":"text"},"event_type":"step.delta"}
 
         event: step.stop
         data: {"index":1,"event_type":"step.stop"}
 
         event: interaction.completed
-        data: {"interaction":{"status":"completed","usage":{"total_tokens":153,"total_input_tokens":128,"input_tokens_by_modality":[{"modality":"text","tokens":128}],"total_cached_tokens":0,"total_output_tokens":12,"total_tool_use_tokens":0,"total_thought_tokens":13,"initial_input_tokens":128},"created":"2026-11-10T19:34:34Z","updated":"2026-11-10T19:34:34Z","service_tier":"standard","object":"interaction","model":"gemini-3.8-flash"},"event_type":"interaction.completed"}
+        data: {"interaction":{"status":"completed","usage":{"total_tokens":166,"total_input_tokens":136,"input_tokens_by_modality":[{"modality":"text","tokens":136}],"total_cached_tokens":0,"total_output_tokens":17,"total_tool_use_tokens":0,"total_thought_tokens":13,"initial_input_tokens":136},"created":"2026-11-13T21:21:31Z","updated":"2026-11-13T21:21:31Z","service_tier":"standard","object":"interaction","model":"gemini-3.8-flash"},"event_type":"interaction.completed"}
 
         event: done
         data: [DONE]
 
-  recorded_at: Tue, 10 Nov 2026 19:34:34 GMT
+  recorded_at: Fri, 13 Nov 2026 21:21:31 GMT
 recorded_with: VCR 6.4.1
 ...

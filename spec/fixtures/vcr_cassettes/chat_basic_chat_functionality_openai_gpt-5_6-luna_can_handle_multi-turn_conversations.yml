@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:36:51 GMT
+      - Fri, 13 Nov 2026 21:26:06 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -44,11 +44,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '896'
+      - '1009'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -75,22 +75,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0ea54a88d10453db016af35632b97c87d299c05b8bb95f187e",
+          "id": "resp_06fade535fd2e4cb016af7806d50fc87d2869be4d2d67e6e21",
           "object": "response",
-          "created_at": 1794332210,
+          "created_at": 1794605165,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794332211,
+          "completed_at": 1794605166,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -98,7 +99,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0ea54a88d10453db016af356333b8487d2a4a1f0e017228679",
+              "id": "msg_06fade535fd2e4cb016af7806ddd7087d294d238ee48ec8b30",
               "type": "message",
               "status": "completed",
               "content": [
@@ -106,7 +107,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "Ruby was created by **Yukihiro \u201cMatz\u201d Matsumoto**, a Japanese computer scientist."
+                  "text": "Ruby was created by **Yukihiro \u201cMatz\u201d Matsumoto**, a Japanese programmer."
                 }
               ],
               "phase": "final_answer",
@@ -163,16 +164,16 @@ http_interactions:
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 26,
+            "output_tokens": 25,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 42
+            "total_tokens": 41
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:36:51 GMT
+  recorded_at: Fri, 13 Nov 2026 21:26:06 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
@@ -180,7 +181,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"Who is the
         creator of the programming language Ruby?"},{"role":"assistant","content":[{"type":"output_text","text":"Ruby
-        was created by **Yukihiro “Matz” Matsumoto**, a Japanese computer scientist."}],"phase":"final_answer"},{"role":"user","content":"What
+        was created by **Yukihiro “Matz” Matsumoto**, a Japanese programmer."}],"phase":"final_answer"},{"role":"user","content":"What
         year did he create Ruby?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
@@ -199,7 +200,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:36:52 GMT
+      - Fri, 13 Nov 2026 21:26:07 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -219,11 +220,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1065'
+      - '847'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -250,22 +251,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_06ca991f45ac6321016af35633b84c87d292b271d6945683ff",
+          "id": "resp_074cc5c9c90c1866016af7806e682487d2be0566068ec05a1b",
           "object": "response",
-          "created_at": 1794332211,
+          "created_at": 1794605166,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794332212,
+          "completed_at": 1794605167,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -273,7 +275,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_06ca991f45ac6321016af3563458ac87d2bb17cf3ce4ccecde",
+              "id": "msg_074cc5c9c90c1866016af7806ee02c87d290d7afaad54a7a7e",
               "type": "message",
               "status": "completed",
               "content": [
@@ -281,7 +283,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "Yukihiro Matsumoto began creating Ruby in **1993**. The first public release was in **1995**."
+                  "text": "Yukihiro \u201cMatz\u201d Matsumoto began creating Ruby in **1993**. The first public release came in **1995**."
                 }
               ],
               "phase": "final_answer",
@@ -333,19 +335,19 @@ http_interactions:
           "top_p": 0.98,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 55,
+            "input_tokens": 54,
             "input_tokens_details": {
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 31,
+            "output_tokens": 35,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 86
+            "total_tokens": 89
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:36:52 GMT
+  recorded_at: Fri, 13 Nov 2026 21:26:07 GMT
 recorded_with: VCR 6.4.1

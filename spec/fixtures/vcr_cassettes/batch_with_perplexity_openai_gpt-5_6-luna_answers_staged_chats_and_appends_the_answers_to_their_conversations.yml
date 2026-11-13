@@ -5,19 +5,19 @@ http_interactions:
     uri: https://api.perplexity.ai/v1/files
     body:
       encoding: UTF-8
-      string: "-------------RubyMultipartPost-e2843bab46602656fcc1901284084f13\r\nContent-Disposition:
-        form-data; name=\"purpose\"\r\n\r\nbatch\r\n-------------RubyMultipartPost-e2843bab46602656fcc1901284084f13\r\nContent-Disposition:
+      string: "-------------RubyMultipartPost-88906b6d07be2720c732a3f300cf049e\r\nContent-Disposition:
+        form-data; name=\"purpose\"\r\n\r\nbatch\r\n-------------RubyMultipartPost-88906b6d07be2720c732a3f300cf049e\r\nContent-Disposition:
         form-data; name=\"file\"; filename=\"ruby_llm_batch.jsonl\"\r\nContent-Length:
         464\r\nContent-Type: application/jsonl\r\nContent-Transfer-Encoding: binary\r\n\r\n{\"custom_id\":\"0\",\"method\":\"POST\",\"url\":\"/v1/responses\",\"body\":{\"model\":\"openai/gpt-5.6-luna\",\"input\":[{\"role\":\"user\",\"content\":\"What
         is 2 + 2? Just the number.\"}],\"store\":false,\"include\":[\"reasoning.encrypted_content\"]}}\n{\"custom_id\":\"1\",\"method\":\"POST\",\"url\":\"/v1/responses\",\"body\":{\"model\":\"openai/gpt-5.6-luna\",\"input\":[{\"role\":\"user\",\"content\":\"Name
-        the largest planet in our solar system. One word.\"}],\"store\":false,\"include\":[\"reasoning.encrypted_content\"]}}\r\n-------------RubyMultipartPost-e2843bab46602656fcc1901284084f13--\r\n"
+        the largest planet in our solar system. One word.\"}],\"store\":false,\"include\":[\"reasoning.encrypted_content\"]}}\r\n-------------RubyMultipartPost-88906b6d07be2720c732a3f300cf049e--\r\n"
     headers:
       User-Agent:
       - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
-      - multipart/form-data; boundary=-----------RubyMultipartPost-e2843bab46602656fcc1901284084f13
+      - multipart/form-data; boundary=-----------RubyMultipartPost-88906b6d07be2720c732a3f300cf049e
       Content-Length:
       - '889'
       Accept-Encoding:
@@ -30,7 +30,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:40:04 GMT
+      - Fri, 13 Nov 2026 21:42:27 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -46,7 +46,7 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1794332405'
+      - '1794606148'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
@@ -66,16 +66,16 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"bytes":464,"created_at":1794332404,"expires_at":1796924404,"filename":"ruby_llm_batch.jsonl","id":"file_01M738QA7QSP9XRESVQG7TZ42N","object":"file","purpose":"batch"}
+      string: '{"bytes":464,"created_at":1794606147,"expires_at":1797198147,"filename":"ruby_llm_batch.jsonl","id":"file_01M7BDS9WPCFQA22HF8KD7WNYX","object":"file","purpose":"batch"}
 
         '
-  recorded_at: Tue, 10 Nov 2026 17:40:04 GMT
+  recorded_at: Fri, 13 Nov 2026 21:42:27 GMT
 - request:
     method: post
     uri: https://api.perplexity.ai/v1/batches
     body:
       encoding: UTF-8
-      string: '{"input_file_id":"file_01M738QA7QSP9XRESVQG7TZ42N","endpoint":"/v1/responses","completion_window":"24h"}'
+      string: '{"input_file_id":"file_01M7BDS9WPCFQA22HF8KD7WNYX","endpoint":"/v1/responses","completion_window":"24h"}'
     headers:
       User-Agent:
       - Faraday v2.15.1
@@ -84,7 +84,7 @@ http_interactions:
       Content-Type:
       - application/json
       Idempotency-Key:
-      - 358a144d-9a0f-4aa5-86c9-ae4dfd063573
+      - d47b3a3a-9318-46fe-9928-4a70a238e302
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -95,7 +95,7 @@ http_interactions:
       message: Too Many Requests
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:40:04 GMT
+      - Fri, 13 Nov 2026 21:42:27 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -126,13 +126,13 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"error":{"message":"Rate limit exceeded, please try again later.","type":"request_rate_limit_exceeded","code":429}}'
-  recorded_at: Tue, 10 Nov 2026 17:40:04 GMT
+  recorded_at: Fri, 13 Nov 2026 21:42:27 GMT
 - request:
     method: post
     uri: https://api.perplexity.ai/v1/batches
     body:
       encoding: UTF-8
-      string: '{"input_file_id":"file_01M738QA7QSP9XRESVQG7TZ42N","endpoint":"/v1/responses","completion_window":"24h"}'
+      string: '{"input_file_id":"file_01M7BDS9WPCFQA22HF8KD7WNYX","endpoint":"/v1/responses","completion_window":"24h"}'
     headers:
       User-Agent:
       - Faraday v2.15.1
@@ -141,7 +141,7 @@ http_interactions:
       Content-Type:
       - application/json
       Idempotency-Key:
-      - 358a144d-9a0f-4aa5-86c9-ae4dfd063573
+      - d47b3a3a-9318-46fe-9928-4a70a238e302
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -152,7 +152,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:40:05 GMT
+      - Fri, 13 Nov 2026 21:42:29 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -168,7 +168,7 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1794332406'
+      - '1794606150'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
@@ -188,13 +188,13 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"cancelled_at":null,"cancelling_at":null,"completed_at":null,"completion_window":"24h","created_at":1794332405,"endpoint":"/v1/responses","error_file_id":null,"errors":null,"expired_at":null,"expires_at":1794505205,"failed_at":null,"finalizing_at":null,"id":"batch_01M738QBP46SDEKSX08P8Q88GA","in_progress_at":null,"input_file_id":"file_01M738QA7QSP9XRESVQG7TZ42N","metadata":null,"object":"batch","output_file_id":null,"request_counts":{"completed":0,"failed":0,"total":2},"status":"validating","usage":{"input_tokens":0,"input_tokens_details":{"cached_tokens":0},"output_tokens":0,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":0}}
+      string: '{"cancelled_at":null,"cancelling_at":null,"completed_at":null,"completion_window":"24h","created_at":1794606148,"endpoint":"/v1/responses","error_file_id":null,"errors":null,"expired_at":null,"expires_at":1794778948,"failed_at":null,"finalizing_at":null,"id":"batch_01M7BDSB9EATDGPEGSKGVW1Y29","in_progress_at":null,"input_file_id":"file_01M7BDS9WPCFQA22HF8KD7WNYX","metadata":null,"object":"batch","output_file_id":null,"request_counts":{"completed":0,"failed":0,"total":2},"status":"validating","usage":{"input_tokens":0,"input_tokens_details":{"cached_tokens":0},"output_tokens":0,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":0}}
 
         '
-  recorded_at: Tue, 10 Nov 2026 17:40:05 GMT
+  recorded_at: Fri, 13 Nov 2026 21:42:29 GMT
 - request:
     method: get
-    uri: https://api.perplexity.ai/v1/batches/batch_01M738QBP46SDEKSX08P8Q88GA
+    uri: https://api.perplexity.ai/v1/batches/batch_01M7BDSB9EATDGPEGSKGVW1Y29
     body:
       encoding: US-ASCII
       string: ''
@@ -215,7 +215,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:40:20 GMT
+      - Fri, 13 Nov 2026 21:42:44 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -234,7 +234,7 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1794332421'
+      - '1794606165'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
@@ -251,13 +251,13 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"cancelled_at":null,"cancelling_at":null,"completed_at":1794332416,"completion_window":"24h","created_at":1794332405,"endpoint":"/v1/responses","error_file_id":null,"errors":null,"expired_at":null,"expires_at":1794505205,"failed_at":null,"finalizing_at":1794332416,"id":"batch_01M738QBP46SDEKSX08P8Q88GA","in_progress_at":1794332405,"input_file_id":"file_01M738QA7QSP9XRESVQG7TZ42N","metadata":null,"object":"batch","output_file_id":"file_01M738QPH18S6YVFKCYEM7T7P2","request_counts":{"completed":2,"failed":0,"total":2},"status":"completed","usage":{"input_tokens":74,"input_tokens_details":{"cached_tokens":0},"output_tokens":11,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":85}}
+      string: '{"cancelled_at":null,"cancelling_at":null,"completed_at":1794606162,"completion_window":"24h","created_at":1794606148,"endpoint":"/v1/responses","error_file_id":null,"errors":null,"expired_at":null,"expires_at":1794778948,"failed_at":null,"finalizing_at":1794606162,"id":"batch_01M7BDSB9EATDGPEGSKGVW1Y29","in_progress_at":1794606149,"input_file_id":"file_01M7BDS9WPCFQA22HF8KD7WNYX","metadata":null,"object":"batch","output_file_id":"file_01M7BDSRQ9J437Z5KR1CNGHP4D","request_counts":{"completed":2,"failed":0,"total":2},"status":"completed","usage":{"input_tokens":74,"input_tokens_details":{"cached_tokens":0},"output_tokens":11,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":85}}
 
         '
-  recorded_at: Tue, 10 Nov 2026 17:40:20 GMT
+  recorded_at: Fri, 13 Nov 2026 21:42:44 GMT
 - request:
     method: get
-    uri: https://api.perplexity.ai/v1/batches/batch_01M738QBP46SDEKSX08P8Q88GA
+    uri: https://api.perplexity.ai/v1/batches/batch_01M7BDSB9EATDGPEGSKGVW1Y29
     body:
       encoding: US-ASCII
       string: ''
@@ -278,7 +278,7 @@ http_interactions:
       message: Too Many Requests
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:40:21 GMT
+      - Fri, 13 Nov 2026 21:42:44 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -309,10 +309,10 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"error":{"message":"Rate limit exceeded, please try again later.","type":"request_rate_limit_exceeded","code":429}}'
-  recorded_at: Tue, 10 Nov 2026 17:40:21 GMT
+  recorded_at: Fri, 13 Nov 2026 21:42:44 GMT
 - request:
     method: get
-    uri: https://api.perplexity.ai/v1/batches/batch_01M738QBP46SDEKSX08P8Q88GA
+    uri: https://api.perplexity.ai/v1/batches/batch_01M7BDSB9EATDGPEGSKGVW1Y29
     body:
       encoding: US-ASCII
       string: ''
@@ -333,7 +333,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:40:22 GMT
+      - Fri, 13 Nov 2026 21:42:45 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -352,7 +352,7 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1794332423'
+      - '1794606166'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
@@ -369,13 +369,13 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"cancelled_at":null,"cancelling_at":null,"completed_at":1794332416,"completion_window":"24h","created_at":1794332405,"endpoint":"/v1/responses","error_file_id":null,"errors":null,"expired_at":null,"expires_at":1794505205,"failed_at":null,"finalizing_at":1794332416,"id":"batch_01M738QBP46SDEKSX08P8Q88GA","in_progress_at":1794332405,"input_file_id":"file_01M738QA7QSP9XRESVQG7TZ42N","metadata":null,"object":"batch","output_file_id":"file_01M738QPH18S6YVFKCYEM7T7P2","request_counts":{"completed":2,"failed":0,"total":2},"status":"completed","usage":{"input_tokens":74,"input_tokens_details":{"cached_tokens":0},"output_tokens":11,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":85}}
+      string: '{"cancelled_at":null,"cancelling_at":null,"completed_at":1794606162,"completion_window":"24h","created_at":1794606148,"endpoint":"/v1/responses","error_file_id":null,"errors":null,"expired_at":null,"expires_at":1794778948,"failed_at":null,"finalizing_at":1794606162,"id":"batch_01M7BDSB9EATDGPEGSKGVW1Y29","in_progress_at":1794606149,"input_file_id":"file_01M7BDS9WPCFQA22HF8KD7WNYX","metadata":null,"object":"batch","output_file_id":"file_01M7BDSRQ9J437Z5KR1CNGHP4D","request_counts":{"completed":2,"failed":0,"total":2},"status":"completed","usage":{"input_tokens":74,"input_tokens_details":{"cached_tokens":0},"output_tokens":11,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":85}}
 
         '
-  recorded_at: Tue, 10 Nov 2026 17:40:22 GMT
+  recorded_at: Fri, 13 Nov 2026 21:42:45 GMT
 - request:
     method: get
-    uri: https://api.perplexity.ai/v1/files/file_01M738QPH18S6YVFKCYEM7T7P2/content
+    uri: https://api.perplexity.ai/v1/files/file_01M7BDSRQ9J437Z5KR1CNGHP4D/content
     body:
       encoding: US-ASCII
       string: ''
@@ -396,7 +396,7 @@ http_interactions:
       message: Too Many Requests
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:40:22 GMT
+      - Fri, 13 Nov 2026 21:42:45 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -427,10 +427,10 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"error":{"message":"Rate limit exceeded, please try again later.","type":"request_rate_limit_exceeded","code":429}}'
-  recorded_at: Tue, 10 Nov 2026 17:40:22 GMT
+  recorded_at: Fri, 13 Nov 2026 21:42:45 GMT
 - request:
     method: get
-    uri: https://api.perplexity.ai/v1/files/file_01M738QPH18S6YVFKCYEM7T7P2/content
+    uri: https://api.perplexity.ai/v1/files/file_01M7BDSRQ9J437Z5KR1CNGHP4D/content
     body:
       encoding: US-ASCII
       string: ''
@@ -451,7 +451,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:40:23 GMT
+      - Fri, 13 Nov 2026 21:42:47 GMT
       Content-Type:
       - application/octet-stream
       Transfer-Encoding:
@@ -469,7 +469,7 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1794332424'
+      - '1794606168'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
@@ -490,7 +490,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {"id":"batch_req_01M738QBW9Z53YQ9AR2S2DSD6Y","custom_id":"0","response":{"status_code":200,"request_id":"01M738QBW9Z53YQ9AR2S2DSD6Y","body":{"background":true,"completed_at":1794332412,"created_at":1794332412,"error":null,"frequency_penalty":0,"id":"resp_01M738QBW9Z53YQ9AR2S2DSD6Y","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"content":[{"annotations":[],"text":"4","type":"output_text"}],"id":"msg_b25fa4f9-83c4-4050-bd61-9637da87b40f","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"flex","status":"completed","store":true,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0,"output_cost":0,"total_cost":0},"input_tokens":37,"input_tokens_details":{"cached_tokens":0},"output_tokens":5,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":42},"user":null}},"error":null}
-        {"id":"batch_req_01M738QBW95DZB352VJV2W8FPY","custom_id":"1","response":{"status_code":200,"request_id":"01M738QBW95DZB352VJV2W8FPY","body":{"background":true,"completed_at":1794332411,"created_at":1794332411,"error":null,"frequency_penalty":0,"id":"resp_01M738QBW95DZB352VJV2W8FPY","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"content":[{"annotations":[],"text":"Jupiter","type":"output_text"}],"id":"msg_07346e7f-581f-4b22-b464-d25beebe1fe0","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"flex","status":"completed","store":true,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0,"output_cost":0,"total_cost":0},"input_tokens":37,"input_tokens_details":{"cached_tokens":0},"output_tokens":6,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":43},"user":null}},"error":null}
-  recorded_at: Tue, 10 Nov 2026 17:40:23 GMT
+        {"id":"batch_req_01M7BDSBEH09W2CPJQ974WA17B","custom_id":"0","response":{"status_code":200,"request_id":"01M7BDSBEH09W2CPJQ974WA17B","body":{"background":true,"completed_at":1794606160,"created_at":1794606160,"error":null,"frequency_penalty":0,"id":"resp_01M7BDSBEH09W2CPJQ974WA17B","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"content":[{"annotations":[],"text":"4","type":"output_text"}],"id":"msg_13bf590c-1456-40c9-8107-29c332c526f0","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"flex","status":"completed","store":true,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0,"output_cost":0,"total_cost":0},"input_tokens":37,"input_tokens_details":{"cached_tokens":0},"output_tokens":5,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":42},"user":null}},"error":null}
+        {"id":"batch_req_01M7BDSBEHKG34PSABT9PB8JGM","custom_id":"1","response":{"status_code":200,"request_id":"01M7BDSBEHKG34PSABT9PB8JGM","body":{"background":true,"completed_at":1794606153,"created_at":1794606153,"error":null,"frequency_penalty":0,"id":"resp_01M7BDSBEHKG34PSABT9PB8JGM","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"content":[{"annotations":[],"text":"Jupiter","type":"output_text"}],"id":"msg_36abe068-366c-4645-8715-546f8dd178eb","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"flex","status":"completed","store":true,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0,"output_cost":0,"total_cost":0},"input_tokens":37,"input_tokens_details":{"cached_tokens":0},"output_tokens":6,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":43},"user":null}},"error":null}
+  recorded_at: Fri, 13 Nov 2026 21:42:47 GMT
 recorded_with: VCR 6.4.1

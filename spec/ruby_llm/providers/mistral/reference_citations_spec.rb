@@ -20,7 +20,7 @@ RSpec.describe 'Mistral reference citations', :live do # rubocop:disable RSpec/D
     end
   end
   let(:chat) do
-    RubyLLM.chat(model: 'mistral-large-latest', provider: :mistral)
+    RubyLLM.chat(model: 'mistral-large-2512', provider: :mistral)
            .with_tools(lookup)
            .with_instructions('Use the lookup tool, then answer and cite the sources you use with reference chunks.')
   end

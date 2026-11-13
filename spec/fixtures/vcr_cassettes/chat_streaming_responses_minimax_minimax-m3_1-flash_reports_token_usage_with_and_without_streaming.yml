@@ -28,25 +28,25 @@ http_interactions:
       Vary:
       - Accept-Encoding
       Trace-Id:
-      - '074287ced170e1d482681d4527c5f3c3'
+      - 0746c17bff3309fb8fbab2be25773ee8
       X-Session-Id:
       - 6e1177fb8882217923c9bbd113dbe3d6
       X-Mm-Request-Id:
-      - 2092934004998157135_1794331854yt6lix
+      - 2092934004998157135_1794608763v1srbc
       Minimax-Request-Id:
-      - 4e71451545fcd5774d230d696b4b103f
+      - cf8d9c00bbd3bedad58c21721fcdb2af
       Alb-Receive-Time:
-      - '1794331854.644'
+      - '1794608763.374'
       Alb-Request-Id:
-      - 2a925d35d7cda1780ada0a35ac6a1e6f69835696
+      - 53a4112ab066992ce70a42b1a0be397b2ccef091
       Expires:
-      - Tue, 10 Nov 2026 17:30:55 GMT
+      - Fri, 13 Nov 2026 22:26:04 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Tue, 10 Nov 2026 17:30:55 GMT
+      - Fri, 13 Nov 2026 22:26:04 GMT
       Transfer-Encoding:
       - chunked
       Connection:
@@ -60,7 +60,7 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message_start
-        data: {"type":"message_start","message":{"id":"074287ced170e1d482681d4527c5f3c3","type":"message","role":"assistant","content":[],"model":"MiniMax-M3.1-Flash","stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":0,"output_tokens":0}}}
+        data: {"type":"message_start","message":{"id":"0746c17bff3309fb8fbab2be25773ee8","type":"message","role":"assistant","content":[],"model":"MiniMax-M3.1-Flash","stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":0,"output_tokens":0,"cache_creation_input_tokens":0,"cache_read_input_tokens":214}}}
 
         event: ping
         data: {"type":"ping"}
@@ -69,25 +69,13 @@ http_interactions:
         data: {"type":"content_block_start","index":0,"content_block":{"type":"thinking","thinking":""}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"We"}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"We need answer"}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" need answer"}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" exactly \"1, 2, 3\". Need comply."}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" exactly \"1, 2, "}}
-
-        event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"3\". Need ensure"}}
-
-        event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" no extra"}}
-
-        event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"."}}
-
-        event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"signature_delta","signature":"cb7d4dc622abd786e479209a7762977e4c1844dbd192461fa84265983aa9fc10"}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"signature_delta","signature":"1dd5269782499dd3c031792d8e88f60c135ba4dab7d0453e7fa3f34f581dea10"}}
 
         event: content_block_stop
         data: {"type":"content_block_stop","index":0}
@@ -96,21 +84,18 @@ http_interactions:
         data: {"type":"content_block_start","index":1,"content_block":{"type":"text","text":""}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"text_delta","text":"1"}}
-
-        event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"text_delta","text":", 2, 3"}}
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"text_delta","text":"1, 2, 3"}}
 
         event: content_block_stop
         data: {"type":"content_block_stop","index":1}
 
         event: message_delta
-        data: {"type":"message_delta","delta":{"stop_reason":"end_turn"},"usage":{"input_tokens":17,"output_tokens":28,"cache_read_input_tokens":197,"output_tokens_details":{"thinking_tokens":18}}}
+        data: {"type":"message_delta","delta":{"stop_reason":"end_turn"},"usage":{"input_tokens":15,"output_tokens":25,"cache_read_input_tokens":199,"output_tokens_details":{"thinking_tokens":18}}}
 
         event: message_stop
         data: {"type":"message_stop"}
 
-  recorded_at: Tue, 10 Nov 2026 17:30:55 GMT
+  recorded_at: Fri, 13 Nov 2026 22:26:04 GMT
 - request:
     method: post
     uri: https://api.minimax.io/anthropic/v1/messages
@@ -137,27 +122,27 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
-      - '540'
+      - '539'
       Trace-Id:
-      - '074287cfa98751da2e5ac67543c644cf'
+      - 0746c17c6ad4d302d16474e8ea074089
       X-Session-Id:
       - 6e1177fb8882217923c9bbd113dbe3d6
       X-Mm-Request-Id:
-      - 2092934004998157135_1794331855rn9skj
+      - 2092934004998157135_1794608764ozyr8b
       Minimax-Request-Id:
-      - bb0041172bd133fa3750a4c112c92642
+      - 7a32b12553f438b755c64ba2fc2fb672
       Alb-Receive-Time:
-      - '1794331855.437'
+      - '1794608764.313'
       Alb-Request-Id:
-      - 2bb770f19fc1ad3f5da4e1beb59a1dcc1d217d23
+      - c057cfec578046c68758dba326c35c125eb23499
       Expires:
-      - Tue, 10 Nov 2026 17:30:56 GMT
+      - Fri, 13 Nov 2026 22:26:05 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Tue, 10 Nov 2026 17:30:56 GMT
+      - Fri, 13 Nov 2026 22:26:05 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -166,9 +151,9 @@ http_interactions:
       - ak
     body:
       encoding: UTF-8
-      string: '{"id":"074287cfa98751da2e5ac67543c644cf","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"thinking":"We
-        need answer exactly \"1, 2, 3\". Need no extra.","signature":"c036a12f66920af0d4bb726ab64a5200ee52025df8db882292fe18d2b55c0cb2","type":"thinking"},{"text":"1,
-        2, 3","type":"text"}],"usage":{"input_tokens":1,"output_tokens":27,"cache_creation_input_tokens":0,"cache_read_input_tokens":213,"output_tokens_details":{"thinking_tokens":17}},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
-  recorded_at: Tue, 10 Nov 2026 17:30:56 GMT
+      string: '{"id":"0746c17c6ad4d302d16474e8ea074089","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"thinking":"We
+        need answer exactly \"1, 2, 3\". Need comply.","signature":"1dd5269782499dd3c031792d8e88f60c135ba4dab7d0453e7fa3f34f581dea10","type":"thinking"},{"text":"1,
+        2, 3","type":"text"}],"usage":{"input_tokens":17,"output_tokens":25,"cache_creation_input_tokens":0,"cache_read_input_tokens":197,"output_tokens_details":{"thinking_tokens":18}},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Fri, 13 Nov 2026 22:26:05 GMT
 recorded_with: VCR 6.4.1
 ...

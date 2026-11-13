@@ -13,7 +13,7 @@ http_interactions:
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261110T173335Z
+      - 20261113T212402Z
       X-Amz-Content-Sha256:
       - f578e390438ad8efc48a215c32b1870d5711c48b86afb3bbd9cbef2ddaf81490
       Authorization:
@@ -29,26 +29,22 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:33:38 GMT
+      - Fri, 13 Nov 2026 21:24:04 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1658'
+      - '1066'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 2c66e924-215b-4abe-9862-ceea9b041a4d
+      - b3fe86ca-4ea9-45ab-810a-603632745ede
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":2381},"output":{"message":{"content":[{"toolUse":{"input":{"query":"latest
-        stable Ruby version"},"name":"nova_grounding","toolUseId":"tooluse_5dnQlRwiGE-1niuzLBtJ1w","type":"server_tool_use"}},{"toolResult":{"content":[{"text":"[HIDDEN]"}],"status":"success","toolUseId":"tooluse_5dnQlRwiGE-1niuzLBtJ1w","type":"nova_grounding_result"}},{"text":"The
-        latest stable Ruby version is 4.0.9, released on October 23, 2026. This version
-        includes fixes for several CVEs related to Ruby''s Onigmo regex engine that
-        could potentially be exploited for remote code execution"},{"citationsContent":{"citations":[{"location":{"web":{"domain":"ruby-lang.org","url":"https://www.ruby-lang.org/en/downloads/releases/"}}}]}},{"citationsContent":{"citations":[{"location":{"web":{"domain":"ruby-lang.org","url":"https://www.ruby-lang.org/en/news/2025/07/15/ruby-3-4-5-released/"}}}]}},{"text":".\n\nRuby
-        follows a bi-monthly release schedule, with the next scheduled release expected
-        in November 2026"},{"citationsContent":{"citations":[{"location":{"web":{"domain":"ruby-lang.org","url":"https://www.ruby-lang.org/en/downloads/releases/"}}}]}},{"text":".
-        Ruby 4.0 introduced significant features like Ruby Box for definition isolation
-        and ZJIT, a next-generation JIT compiler, building upon the improvements of
-        Ruby 3.x series"},{"citationsContent":{"citations":[{"location":{"web":{"domain":"copyprogramming.com","url":"https://copyprogramming.com/howto/shell-check-latest-ruby-version-from-terminal"}}}]}},{"text":"."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":141,"outputTokens":160,"serverToolUsage":{},"totalTokens":301}}'
-  recorded_at: Tue, 10 Nov 2026 17:33:38 GMT
+      string: '{"metrics":{"latencyMs":2020},"output":{"message":{"content":[{"toolUse":{"input":{"query":"latest
+        stable Ruby version"},"name":"nova_grounding","toolUseId":"tooluse_mWimBoFN6ZGrriGP54kDmw","type":"server_tool_use"}},{"toolResult":{"content":[{"text":"[HIDDEN]"}],"status":"success","toolUseId":"tooluse_mWimBoFN6ZGrriGP54kDmw","type":"nova_grounding_result"}},{"text":"The
+        latest stable Ruby version is **4.0.9**"},{"citationsContent":{"citations":[{"location":{"web":{"domain":"ruby-lang.org","url":"https://www.ruby-lang.org/en/downloads/releases/"}}}]}},{"citationsContent":{"citations":[{"location":{"web":{"domain":"ruby-lang.org","url":"https://www.ruby-lang.org/en/news/2025/07/15/ruby-3-4-5-released/"}}}]}},{"text":".
+        This version was released on **October 23, 2026**, and it includes important
+        security fixes for vulnerabilities in Ruby''s Onigmo regex engine that could
+        potentially be exploited for remote code execution."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":141,"outputTokens":92,"serverToolUsage":{},"totalTokens":233}}'
+  recorded_at: Fri, 13 Nov 2026 21:24:04 GMT
 recorded_with: VCR 6.4.1

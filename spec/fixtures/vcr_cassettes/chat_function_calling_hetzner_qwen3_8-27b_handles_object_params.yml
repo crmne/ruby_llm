@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:37:25 GMT
+      - Fri, 13 Nov 2026 21:25:29 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
@@ -39,9 +39,14 @@ http_interactions:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":407,"completion_tokens":103,"total_tokens":510,"completion_tokens_details":{"reasoning_tokens":45},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-8f618618957c7b2c","type":"function","function":{"name":"object_params","arguments":"{\"window\":
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":407,"completion_tokens":231,"total_tokens":638,"completion_tokens_details":{"reasoning_tokens":173},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-ad748c1ec96bfb0a","type":"function","function":{"name":"object_params","arguments":"{\"window\":
         {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}"}}],"reasoning":"The
-        user is asking to call the object_params tool with window start 2025-01-01
-        and end 2025-01-02, and to include the result.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-d51dfc9b-ed92-4d07-9c2e-c729c32a6fc5","object":"chat.completion","created":1794332245,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Tue, 10 Nov 2026 17:37:26 GMT
+        user is asking to call the object_params tool with a window whose start is
+        2025-01-01 and end is 2025-01-02, and to include the result.\n\nThe schema
+        requires window.start and window.end as ISO strings. The user provided dates
+        without a time, so I''ll use \"2025-01-01\" and \"2025-01-02\" as-is, or possibly
+        ISO format with a time like \"2025-01-01T00:00:00Z\". The description says
+        \"ISO start\" and \"ISO end\". Plain dates are valid ISO 8601, so I''ll use
+        the given values as they are.\n\nI''ll make the call.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-e8f7e0ec-ccbb-4b42-b3a9-eb6b607a03dc","object":"chat.completion","created":1794605130,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Fri, 13 Nov 2026 21:25:32 GMT
 recorded_with: VCR 6.4.1

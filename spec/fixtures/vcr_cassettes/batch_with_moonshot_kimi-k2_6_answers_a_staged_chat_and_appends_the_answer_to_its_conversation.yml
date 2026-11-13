@@ -5,18 +5,18 @@ http_interactions:
     uri: https://api.moonshot.ai/v1/files
     body:
       encoding: UTF-8
-      string: "-------------RubyMultipartPost-ff2be0c6e5ffe646c73e125df5ab7190\r\nContent-Disposition:
-        form-data; name=\"purpose\"\r\n\r\nbatch\r\n-------------RubyMultipartPost-ff2be0c6e5ffe646c73e125df5ab7190\r\nContent-Disposition:
+      string: "-------------RubyMultipartPost-4b6c4f924e9cc8544b8874bfa6a12e2e\r\nContent-Disposition:
+        form-data; name=\"purpose\"\r\n\r\nbatch\r\n-------------RubyMultipartPost-4b6c4f924e9cc8544b8874bfa6a12e2e\r\nContent-Disposition:
         form-data; name=\"file\"; filename=\"ruby_llm_batch.jsonl\"\r\nContent-Length:
         164\r\nContent-Type: application/jsonl\r\nContent-Transfer-Encoding: binary\r\n\r\n{\"custom_id\":\"0\",\"method\":\"POST\",\"url\":\"/v1/chat/completions\",\"body\":{\"model\":\"kimi-k2.6\",\"messages\":[{\"role\":\"user\",\"content\":\"What
-        is 2 + 2? Just the number.\"}]}}\r\n-------------RubyMultipartPost-ff2be0c6e5ffe646c73e125df5ab7190--\r\n"
+        is 2 + 2? Just the number.\"}]}}\r\n-------------RubyMultipartPost-4b6c4f924e9cc8544b8874bfa6a12e2e--\r\n"
     headers:
       User-Agent:
       - Faraday v2.15.1
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
-      - multipart/form-data; boundary=-----------RubyMultipartPost-ff2be0c6e5ffe646c73e125df5ab7190
+      - multipart/form-data; boundary=-----------RubyMultipartPost-4b6c4f924e9cc8544b8874bfa6a12e2e
       Content-Length:
       - '589'
       Accept-Encoding:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 15:00:12 GMT
+      - Fri, 13 Nov 2026 21:42:47 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -47,7 +47,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - 6dc7b08d-dd17-11f1-bca3-00163e603a82
+      - 2ab3407f-dfab-11f1-8f08-00163e59531e
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -55,7 +55,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - 832b19bf0d7fef9627bdaf87a2b01687
+      - feb3707df6c572b6ec7e5998a943d10b
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -66,14 +66,14 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"batch-6af3317c90c3fa000ccdbd32","object":"file","bytes":164,"created_at":1794322812,"filename":"ruby_llm_batch.jsonl","purpose":"batch","status":"created","status_details":""}'
-  recorded_at: Tue, 10 Nov 2026 15:00:12 GMT
+      string: '{"id":"batch-6af7845790c3fa000ccf981f","object":"file","bytes":164,"created_at":1794606167,"filename":"ruby_llm_batch.jsonl","purpose":"batch","status":"created","status_details":""}'
+  recorded_at: Fri, 13 Nov 2026 21:42:47 GMT
 - request:
     method: post
     uri: https://api.moonshot.ai/v1/batches
     body:
       encoding: UTF-8
-      string: '{"input_file_id":"batch-6af3317c90c3fa000ccdbd32","endpoint":"/v1/chat/completions","completion_window":"24h"}'
+      string: '{"input_file_id":"batch-6af7845790c3fa000ccf981f","endpoint":"/v1/chat/completions","completion_window":"24h"}'
     headers:
       User-Agent:
       - Faraday v2.15.1
@@ -91,7 +91,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 15:00:12 GMT
+      - Fri, 13 Nov 2026 21:42:48 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -109,7 +109,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - 6deb38cb-dd17-11f1-b86c-00163e7a3687
+      - 2aed6fc1-dfab-11f1-af97-00163e0a4aa2
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -117,7 +117,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - b89304df0b4d642f83ef69ea68da4f65
+      - f012e39f17373605a30da2a2a136f06e
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -128,11 +128,11 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"batch_6af3317c90c3fa000ccdbd34","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af3317c90c3fa000ccdbd32","completion_window":"24h","status":"validating","created_at":1794322812,"expires_at":1794409212,"request_counts":{"completed":0,"failed":0,"total":1}}'
-  recorded_at: Tue, 10 Nov 2026 15:00:12 GMT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"validating","created_at":1794606167,"expires_at":1794692567,"request_counts":{"completed":0,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:42:48 GMT
 - request:
     method: get
-    uri: https://api.moonshot.ai/v1/batches/batch_6af3317c90c3fa000ccdbd34
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
     body:
       encoding: US-ASCII
       string: ''
@@ -151,7 +151,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 15:02:12 GMT
+      - Fri, 13 Nov 2026 21:43:03 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -169,7 +169,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - b5a38422-dd17-11f1-bca3-00163e603a82
+      - 34180684-dfab-11f1-8971-00163e4c88ae
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -177,7 +177,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - 1fc3ded832cabc9f0bc63abafaf3d8cb
+      - e77229f6b18ec34c3ffbeef2203978a6
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -188,11 +188,11 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"batch_6af3317c90c3fa000ccdbd34","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af3317c90c3fa000ccdbd32","completion_window":"24h","status":"completed","output_file_id":"batch-6af3319737f19400013908ab","created_at":1794322812,"in_progress_at":1794322831,"finalizing_at":1794322839,"completed_at":1794322868,"expires_at":1794409212,"request_counts":{"completed":1,"failed":0,"total":1}}'
-  recorded_at: Tue, 10 Nov 2026 15:02:12 GMT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"validating","created_at":1794606167,"expires_at":1794692567,"request_counts":{"completed":0,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:43:03 GMT
 - request:
     method: get
-    uri: https://api.moonshot.ai/v1/batches/batch_6af3317c90c3fa000ccdbd34
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
     body:
       encoding: US-ASCII
       string: ''
@@ -211,7 +211,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 15:02:12 GMT
+      - Fri, 13 Nov 2026 21:43:18 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -229,7 +229,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - b5c8d9ca-dd17-11f1-b649-00163e4c88ae
+      - 3d3aea2b-dfab-11f1-8b83-00163e789b79
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -237,7 +237,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - 84917fcf32142c377479596407bc5e37
+      - 6afaad9a23fe40b0e7520ceea5d4f873
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -248,11 +248,2891 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"batch_6af3317c90c3fa000ccdbd34","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af3317c90c3fa000ccdbd32","completion_window":"24h","status":"completed","output_file_id":"batch-6af3319737f19400013908ab","created_at":1794322812,"in_progress_at":1794322831,"finalizing_at":1794322839,"completed_at":1794322868,"expires_at":1794409212,"request_counts":{"completed":1,"failed":0,"total":1}}'
-  recorded_at: Tue, 10 Nov 2026 15:02:13 GMT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"in_progress","created_at":1794606167,"in_progress_at":1794606195,"expires_at":1794692567,"request_counts":{"completed":0,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:43:18 GMT
 - request:
     method: get
-    uri: https://api.moonshot.ai/v1/files/batch-6af3319737f19400013908ab/content
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:43:33 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 465b31e6-dfab-11f1-a7be-00163e3fc041
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 563983dad536587316833e141f275453
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"in_progress","created_at":1794606167,"in_progress_at":1794606195,"expires_at":1794692567,"request_counts":{"completed":0,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:43:33 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:43:49 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 4f7ca872-dfab-11f1-bec7-00163e5443c0
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 67f09086e3192536f439e8c802eced21
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:43:49 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:44:04 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 589c5cf3-dfab-11f1-8f08-00163e59531e
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - e04a13a08d4b1771fd371cd20ff73d6f
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:44:04 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:44:19 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 61bc8401-dfab-11f1-b81f-00163e2c78de
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 58abcd29fc918816a1bf82ab17636db2
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:44:19 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:44:35 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 6ae6f53a-dfab-11f1-b803-00163e05d0f4
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 5e056adb83fcaaba992a0c1738f40ef0
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:44:35 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:44:50 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 740626e7-dfab-11f1-8c7e-00163e3c375f
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 8c9385dd5befcd9aa11c993caeae23c6
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:44:50 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:45:05 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 7d29b526-dfab-11f1-8b83-00163e789b79
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 9c1760bd210f5592328d7bb3e5c494de
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:45:05 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:45:21 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 864c073c-dfab-11f1-918a-00163e2b0d23
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 03456372b1ed9e24c4bcd808b1bb845a
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:45:21 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:45:36 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 8f6e46ce-dfab-11f1-af97-00163e0a4aa2
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 6a4939680e97a3a01015a59db0639d08
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:45:36 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:45:51 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 988ef17d-dfab-11f1-bec7-00163e5443c0
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 349e45d157c5e3c8b5548e630ba7323a
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:45:51 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:46:07 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - a1acecb7-dfab-11f1-8f08-00163e59531e
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 8e9163a5831c8a5e5b002d6272869688
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:46:07 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:46:22 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - aad0c4fd-dfab-11f1-b888-00163e11f3af
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 2ef9e67111480e8e818ee508b70f3fad
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:46:22 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:46:37 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - b3f120e7-dfab-11f1-af97-00163e0a4aa2
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 5558e0974a2664ae343b126d508bc2bf
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:46:37 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:46:53 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - bd1418b0-dfab-11f1-8971-00163e4c88ae
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - ba35b5190b1feebb1ec3a27469674697
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:46:53 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:47:08 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - c63a085f-dfab-11f1-b9b4-00163e6b9249
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - cbb335b17e073d2728c7c7ae5605ccb5
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:47:08 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:47:23 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - cf5a6525-dfab-11f1-8f08-00163e59531e
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - '068f0440ca271f6a695cdf0f89689c81'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:47:23 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:47:39 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - d87f98c5-dfab-11f1-9540-00163e0f23f2
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - c3b065c207898e72a41993299540b957
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:47:39 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:47:54 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - e1a0105e-dfab-11f1-8c7e-00163e3c375f
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - d1457d68995bf44f0c2aecb916be8932
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:47:54 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:48:09 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - eac56b01-dfab-11f1-b803-00163e05d0f4
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 25b21ece374aee8b6c2b99a92b438349
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:48:09 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:48:25 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - f3e76ebe-dfab-11f1-918a-00163e2b0d23
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 1e0d787d87cfc3eee4bb7959c3826bc3
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:48:25 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:48:40 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - fd09efab-dfab-11f1-918a-00163e2b0d23
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 35895c8206e34f3789641d6e01317d39
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:48:40 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:48:55 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 062b7e1b-dfac-11f1-b888-00163e11f3af
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 7857007f4d33c0955a70458b64316331
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:48:55 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:49:11 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 0f4be635-dfac-11f1-8f08-00163e59531e
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - b75fecffaf1ce753595926ac15b89ea3
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:49:11 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:49:26 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 186ca838-dfac-11f1-b943-00163e4d6e71
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - f99efab0e76bf703e5c1e6c7788e65d5
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:49:26 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:49:41 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 218f8ff8-dfac-11f1-b81f-00163e2c78de
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - bccddc9bb044b3f66cec546ba08b379b
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:49:41 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:49:57 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 2ab45835-dfac-11f1-bec7-00163e5443c0
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 54638aa50fc3d8ba7092be93b97d1870
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:49:57 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:50:12 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 33d348a2-dfac-11f1-bec7-00163e5443c0
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - ac316227652a8d4c5f5ca7b588d0460e
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:50:12 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:50:27 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 3cffaa79-dfac-11f1-963b-00163e49fa2f
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - daf9de6783318deabc81d7bab71ca65d
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:50:27 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:50:43 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 4621e8f5-dfac-11f1-af97-00163e0a4aa2
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 97a45c9eee6ccf41e7c8b94fb6302384
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:50:43 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:50:58 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 4f4228f7-dfac-11f1-8c7e-00163e3c375f
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 5b102ac39fac35ce0ceb667906798fbf
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:50:58 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:51:13 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 5863c75c-dfac-11f1-978b-00163e09d8c2
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 052ca7f3f105bf772a8fa84a0e700755
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:51:13 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:51:29 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 6183e693-dfac-11f1-84b9-00163e62e412
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - b67677f94324d54e34746e6643b1c03a
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:51:29 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:51:44 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 6aa50980-dfac-11f1-b803-00163e05d0f4
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 58765ce03759fa01d5ff62af979612d0
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:51:44 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:51:59 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 73c4571c-dfac-11f1-978b-00163e09d8c2
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - a3554452bb506af497af8b0ffa08291e
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:51:59 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:52:14 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 7ce7a5a5-dfac-11f1-84b9-00163e62e412
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - a018a10734c06b150d04c1bf642819ef
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:52:15 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:52:30 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 860b664e-dfac-11f1-a7be-00163e3fc041
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 96273eb1268cbc2a226b7588028c9fa8
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:52:30 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:52:45 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 8f2cf941-dfac-11f1-bec7-00163e5443c0
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - eec2fde419d547f3c79e4f8ea3ea0282
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:52:45 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:53:00 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - 984c0117-dfac-11f1-918a-00163e2b0d23
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - '04861b4cdc2222c3c8918e9bd2fd3b5d'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:53:00 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:53:16 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - a16c3df1-dfac-11f1-9540-00163e0f23f2
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - d9c173a4bf0379e8d06e45cbcd461d35
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:53:16 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:53:31 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - aa8d794b-dfac-11f1-8971-00163e4c88ae
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 043e02e5df742c74ac7918763266943d
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:53:31 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:53:46 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - b3ac75bc-dfac-11f1-b803-00163e05d0f4
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 905cd038b2fbc4d8a2ba176d9a9257aa
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:53:46 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:54:02 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - bcd1f49d-dfac-11f1-8f8b-00163e7a3687
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 7f64964eea80dcd05e62fcfaf3443db2
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:54:02 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:54:17 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - c5f3f085-dfac-11f1-918a-00163e2b0d23
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 680342d5809e83b9ba46d2751c40a946
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:54:17 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:54:32 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - cf122a62-dfac-11f1-b81f-00163e2c78de
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - b17eef1d5e829846770d8dd115cf3b98
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:54:32 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:54:48 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - d836e05d-dfac-11f1-8971-00163e4c88ae
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 1a6190c923be081c7b95f3a5c2eed72b
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:54:48 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:55:03 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - e16d4750-dfac-11f1-af97-00163e0a4aa2
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 3fe9adb1b49a08523741903ed252ec08
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"finalizing","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:55:03 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:55:18 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - ea8cf15c-dfac-11f1-8f08-00163e59531e
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 945fa26bad25e6a6bcfac106b9958b73
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"completed","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"completed_at":1794606905,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:55:18 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/batches/batch_6af7845790c3fa000ccf9821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.15.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Nov 2026 21:55:19 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '2666295442'
+      Msh-Gid:
+      - "<MOONSHOT_GROUP_ID>"
+      Msh-Org-Id:
+      - "<MOONSHOT_ORGANIZATION_ID>"
+      Msh-Project-Id:
+      - "<MOONSHOT_PROJECT_ID>"
+      Msh-Request-Id:
+      - eabc31b5-dfac-11f1-b943-00163e4d6e71
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 69de76006d7e4b91e9cc4ce30880f4af
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"batch_6af7845790c3fa000ccf9821","object":"batch","endpoint":"/v1/chat/completions","input_file_id":"batch-6af7845790c3fa000ccf981f","completion_window":"24h","status":"completed","output_file_id":"batch-6af7849437f1940001065ab7","created_at":1794606167,"in_progress_at":1794606195,"finalizing_at":1794606228,"completed_at":1794606905,"expires_at":1794692567,"request_counts":{"completed":1,"failed":0,"total":1}}'
+  recorded_at: Fri, 13 Nov 2026 21:55:19 GMT
+- request:
+    method: get
+    uri: https://api.moonshot.ai/v1/files/batch-6af7849437f1940001065ab7/content
     body:
       encoding: US-ASCII
       string: ''
@@ -271,7 +3151,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 15:02:13 GMT
+      - Fri, 13 Nov 2026 21:55:19 GMT
       Content-Type:
       - text/plain
       Transfer-Encoding:
@@ -280,9 +3160,6 @@ http_interactions:
       - keep-alive
       Set-Cookie:
       - "<COOKIE>"
-      Vary:
-      - Accept-Encoding
-      - Origin
       X-Internal-Adhoc-Canary:
       - '2666295442'
       Msh-Gid:
@@ -292,13 +3169,15 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - b5ec88a5-dd17-11f1-a3c5-00163e63708b
+      - eae8d354-dfac-11f1-b9b4-00163e6b9249
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
       - "<MOONSHOT_USER_ID>"
+      Vary:
+      - Origin
       X-Msh-Trace-Id:
-      - d5495bfaa1782972a3d184bdbeee4321
+      - ab19ef6549aa0e60ff3e539cb453a279
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -309,15 +3188,13 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"0","custom_id":"0","error":null,"response":{"request_id":"chatcmpl-6af331929d1d7bb286ab9ad8","status_code":200,"body":{"id":"chatcmpl-6af331929d1d7bb286ab9ad8","object":"chat.completion","created":1794322834,"model":"kimi-k2.6","choices":[{"index":0,"message":{"role":"assistant","content":"4","reasoning_content":"The
-        user is asking for the answer to 2 + 2, and specifically requests \"Just the
-        number.\" This is a straightforward mathematical question. The answer is 4.
-        I should provide only the number without any additional text or explanation
-        to comply with the user''s request.\n\nWait, let me check if there are any
-        tricks or alternative interpretations. Sometimes people joke about 2 + 2 being
-        5 in some contexts (like Orwell''s 1984, or rounding in certain mathematical
-        contexts), but the literal arithmetic answer is 4. The user asked for \"just
-        the number,\" so I should literally output:\n\n4\n\nNo punctuation, no explanation,
-        just the digit."},"finish_reason":"stop"}],"usage":{"prompt_tokens":19,"completion_tokens":139,"total_tokens":158,"completion_tokens_details":{"reasoning_tokens":136}}}}}'
-  recorded_at: Tue, 10 Nov 2026 15:02:13 GMT
+      string: '{"id":"0","custom_id":"0","error":null,"response":{"request_id":"chatcmpl-6af78490a326a83f4f09e412","status_code":200,"body":{"id":"chatcmpl-6af78490a326a83f4f09e412","object":"chat.completion","created":1794606225,"model":"kimi-k2.6","choices":[{"index":0,"message":{"role":"assistant","content":"4","reasoning_content":"The
+        user is asking for the answer to \"2 + 2\" and specifically requests \"Just
+        the number.\" This is a straightforward mathematical question. The answer
+        is 4. I should provide only the number without any additional text, explanations,
+        or punctuation to strictly follow the instruction.\n\nWait, let me reconsider.
+        The user said \"Just the number.\" Does that mean I should output literally
+        just \"4\" with no punctuation? Yes, that seems to be the most literal interpretation
+        of the request. I''ll output just the digit 4."},"finish_reason":"stop"}],"usage":{"prompt_tokens":19,"completion_tokens":111,"total_tokens":130,"completion_tokens_details":{"reasoning_tokens":108}}}}}'
+  recorded_at: Fri, 13 Nov 2026 21:55:19 GMT
 recorded_with: VCR 6.4.1

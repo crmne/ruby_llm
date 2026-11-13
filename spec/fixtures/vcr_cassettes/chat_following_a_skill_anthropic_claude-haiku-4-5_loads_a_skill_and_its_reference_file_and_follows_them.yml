@@ -40,7 +40,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:30:17 GMT
+      - Fri, 13 Nov 2026 21:21:30 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -52,60 +52,60 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-11-10T17:30:16Z'
+      - '2026-11-13T21:21:30Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-11-10T17:30:17Z'
+      - '2026-11-13T21:21:30Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-11-10T17:30:16Z'
+      - '2026-11-13T21:21:30Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-11-10T17:30:16Z'
+      - '2026-11-13T21:21:30Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-fa6f6c34988a271715770f4eb48370f5-4f891bca9f36a248-01
+      - 00-f9051b3674b261797790f07857946b76-75046cddd9409b88-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
       - "<ANTHROPIC_WORKSPACE_ID>"
       Vary:
       - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
       Server:
       - cloudflare
       Server-Timing:
-      - x-originResponse;dur=685
-      X-Robots-Tag:
-      - none
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
+      - x-originResponse;dur=492
       Cf-Cache-Status:
       - DYNAMIC
+      X-Robots-Tag:
+      - none
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CgueKy82MY1DBvVsGCSHy","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01R95P4S3tNtSTaRTKGyM7n4","name":"load_skill","input":{"skill":"ticket-codes"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":800,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":56,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
-  recorded_at: Tue, 10 Nov 2026 17:30:17 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch1dPRKc1xWsx3s1wTN9W","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01TYMMw6nwT8L1xoY1inodGT","name":"load_skill","input":{"skill":"ticket-codes"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":800,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":56,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
+  recorded_at: Fri, 13 Nov 2026 21:21:30 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What
-        is the ticket code for ticket 6?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01R95P4S3tNtSTaRTKGyM7n4","name":"load_skill","input":{"skill":"ticket-codes"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01R95P4S3tNtSTaRTKGyM7n4","content":[{"type":"text","text":"#
+        is the ticket code for ticket 6?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01TYMMw6nwT8L1xoY1inodGT","name":"load_skill","input":{"skill":"ticket-codes"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01TYMMw6nwT8L1xoY1inodGT","content":[{"type":"text","text":"#
         Skill: ticket-codes\n\nPaths in these instructions are relative to the skill
         folder. This conversation cannot run code, so the skill''s scripts cannot
         run: follow the rest of the instructions, and say so when a step needs a script.\n\n#
@@ -145,7 +145,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:30:18 GMT
+      - Fri, 13 Nov 2026 21:21:31 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -157,68 +157,68 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '9999000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-11-10T17:30:17Z'
+      - '2026-11-13T21:21:31Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-11-10T17:30:18Z'
+      - '2026-11-13T21:21:31Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-11-10T17:30:17Z'
+      - '2026-11-13T21:21:31Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '11999000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-11-10T17:30:17Z'
+      - '2026-11-13T21:21:31Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-e05636ff2a0ef8ebeb1422d7e948f03c-f07fee8f35be5599-01
+      - 00-91dacfc6d700af6786255e62a3f6b183-a385367810adb14f-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
       - "<ANTHROPIC_WORKSPACE_ID>"
       Vary:
       - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
       Server:
       - cloudflare
       Server-Timing:
-      - x-originResponse;dur=936
-      X-Robots-Tag:
-      - none
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
+      - x-originResponse;dur=834
       Cf-Cache-Status:
       - DYNAMIC
+      X-Robots-Tag:
+      - none
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CgueL2QU6oP1KcnijDBe3","type":"message","role":"assistant","content":[{"type":"text","text":"Now
-        let me load the format file:"},{"type":"tool_use","id":"toolu_01NycLxwQ2MegtVgWs8M6tTQ","name":"load_skill","input":{"skill":"ticket-codes","file":"references/FORMAT.md"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":964,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":85,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
-  recorded_at: Tue, 10 Nov 2026 17:30:18 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch1dPU3ZmXrjcJjMee6nM","type":"message","role":"assistant","content":[{"type":"text","text":"Let
+        me load the format file to see how to build the ticket code."},{"type":"tool_use","id":"toolu_01NKi5LGGcqZbuNZRu93ur75","name":"load_skill","input":{"skill":"ticket-codes","file":"references/FORMAT.md"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":964,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":92,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
+  recorded_at: Fri, 13 Nov 2026 21:21:31 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What
-        is the ticket code for ticket 6?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01R95P4S3tNtSTaRTKGyM7n4","name":"load_skill","input":{"skill":"ticket-codes"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01R95P4S3tNtSTaRTKGyM7n4","content":[{"type":"text","text":"#
+        is the ticket code for ticket 6?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01TYMMw6nwT8L1xoY1inodGT","name":"load_skill","input":{"skill":"ticket-codes"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01TYMMw6nwT8L1xoY1inodGT","content":[{"type":"text","text":"#
         Skill: ticket-codes\n\nPaths in these instructions are relative to the skill
         folder. This conversation cannot run code, so the skill''s scripts cannot
         run: follow the rest of the instructions, and say so when a step needs a script.\n\n#
         Ticket codes\n\n1. Read references/FORMAT.md for the format of a ticket code.\n2.
         Build the code for the ticket number you were given.\n3. Answer with the code
-        and nothing else."}]}]},{"role":"assistant","content":[{"type":"text","text":"Now
-        let me load the format file:"},{"type":"tool_use","id":"toolu_01NycLxwQ2MegtVgWs8M6tTQ","name":"load_skill","input":{"file":"references/FORMAT.md","skill":"ticket-codes"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01NycLxwQ2MegtVgWs8M6tTQ","content":[{"type":"text","text":"#
+        and nothing else."}]}]},{"role":"assistant","content":[{"type":"text","text":"Let
+        me load the format file to see how to build the ticket code."},{"type":"tool_use","id":"toolu_01NKi5LGGcqZbuNZRu93ur75","name":"load_skill","input":{"file":"references/FORMAT.md","skill":"ticket-codes"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01NKi5LGGcqZbuNZRu93ur75","content":[{"type":"text","text":"#
         Ticket code format\n\nA ticket code is `TKT-`, then the ticket number multiplied
         by 7, then `-ZX`.\n\nFor ticket 3, the code is TKT-21-ZX.\n"}]}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"load_skill","description":"Loads
         a skill''s instructions, or a file inside a skill''s folder that its instructions
@@ -254,7 +254,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:30:19 GMT
+      - Fri, 13 Nov 2026 21:21:32 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -266,52 +266,52 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '9999000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-11-10T17:30:18Z'
+      - '2026-11-13T21:21:32Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-11-10T17:30:19Z'
+      - '2026-11-13T21:21:32Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-11-10T17:30:18Z'
+      - '2026-11-13T21:21:32Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '11999000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-11-10T17:30:18Z'
+      - '2026-11-13T21:21:32Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-e78cf6c35febc4115b1e74e2842c9af5-7704a1a383744611-01
+      - 00-4605886e208273ada527e3c14c22e142-fe7563990258d795-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
       - "<ANTHROPIC_WORKSPACE_ID>"
       Vary:
       - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
       Server:
       - cloudflare
       Server-Timing:
-      - x-originResponse;dur=829
-      X-Robots-Tag:
-      - none
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
+      - x-originResponse;dur=553
       Cf-Cache-Status:
       - DYNAMIC
+      X-Robots-Tag:
+      - none
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTFDZ3VlTDcxWU1KblVLYWt3Y05iQU0iLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJCYXNlZCBvbiB0aGUgdGlja2V0IGNvZGUgZm9ybWF0LCBmb3IgdGlja2V0IDY6XG4tIFRpY2tldCBudW1iZXI6IDZcbi0gTXVsdGlwbGllZCBieSA3OiA2IMOXIDcgPSA0MlxuLSBGb3JtYXQ6IFRLVC1bbnVtYmVyXS1aWFxuXG4qKlRLVC00Mi1aWCoqIn1dLCJjb250YWluZXIiOm51bGwsInN0b3BfcmVhc29uIjoiZW5kX3R1cm4iLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJzdG9wX2RldGFpbHMiOm51bGwsInVzYWdlIjp7ImlucHV0X3Rva2VucyI6MTExMCwiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfY3JlYXRpb24iOnsiZXBoZW1lcmFsXzVtX2lucHV0X3Rva2VucyI6MCwiZXBoZW1lcmFsXzFoX2lucHV0X3Rva2VucyI6MH0sIm91dHB1dF90b2tlbnMiOjY2LCJzZXJ2aWNlX3RpZXIiOiJzdGFuZGFyZCIsImluZmVyZW5jZV9nZW8iOiJub3RfYXZhaWxhYmxlIiwic3BlZWQiOiJzdGFuZGFyZCJ9LCJkaWFnbm9zdGljcyI6bnVsbH0=
-  recorded_at: Tue, 10 Nov 2026 17:30:19 GMT
+        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTFDaDFkUFlFS3l0OThnSmZmVHZwUHAiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJCYXNlZCBvbiB0aGUgZm9ybWF0LCB0aGUgdGlja2V0IGNvZGUgZm9yIHRpY2tldCA2IGlzOlxuXG5US1QtNDItWlhcblxuKDYgw5cgNyA9IDQyKSJ9XSwiY29udGFpbmVyIjpudWxsLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwic3RvcF9kZXRhaWxzIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjExMTcsImNhY2hlX2NyZWF0aW9uX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfcmVhZF9pbnB1dF90b2tlbnMiOjAsImNhY2hlX2NyZWF0aW9uIjp7ImVwaGVtZXJhbF81bV9pbnB1dF90b2tlbnMiOjAsImVwaGVtZXJhbF8xaF9pbnB1dF90b2tlbnMiOjB9LCJvdXRwdXRfdG9rZW5zIjozOSwic2VydmljZV90aWVyIjoic3RhbmRhcmQiLCJpbmZlcmVuY2VfZ2VvIjoibm90X2F2YWlsYWJsZSIsInNwZWVkIjoic3RhbmRhcmQifSwiZGlhZ25vc3RpY3MiOm51bGx9
+  recorded_at: Fri, 13 Nov 2026 21:21:32 GMT
 recorded_with: VCR 6.4.1

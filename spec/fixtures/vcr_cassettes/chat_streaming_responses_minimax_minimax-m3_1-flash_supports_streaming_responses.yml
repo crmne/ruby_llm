@@ -28,25 +28,25 @@ http_interactions:
       Vary:
       - Accept-Encoding
       Trace-Id:
-      - '074287cbe6d523c1f61367d5e2a6bd7a'
+      - 0746b282b93a578c456f3ff889d7d6ed
       X-Session-Id:
       - cdf8143f9fdeea1e518ed8e45fe7b8db
       X-Mm-Request-Id:
-      - 2092934004998157135_1794331851lx1ogn
+      - 2092934004998157135_1794604930ewo7hk
       Minimax-Request-Id:
-      - 10cda987e643cb54c971f10de8e74f0a
+      - f697c76867b577c0d6bb59ed0df88595
       Alb-Receive-Time:
-      - '1794331851.301'
+      - '1794604930.002'
       Alb-Request-Id:
-      - 7884ec4ebc2cbb8102a6c5bc2dacb7d635ab94d4
+      - 1453901cb6a143c1a2277c15d8f9e65f6f89d6b7
       Expires:
-      - Tue, 10 Nov 2026 17:30:54 GMT
+      - Fri, 13 Nov 2026 21:22:10 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Tue, 10 Nov 2026 17:30:54 GMT
+      - Fri, 13 Nov 2026 21:22:10 GMT
       Transfer-Encoding:
       - chunked
       Connection:
@@ -60,7 +60,7 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message_start
-        data: {"type":"message_start","message":{"id":"074287cbe6d523c1f61367d5e2a6bd7a","type":"message","role":"assistant","content":[],"model":"MiniMax-M3.1-Flash","stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":0,"output_tokens":0}}}
+        data: {"type":"message_start","message":{"id":"0746b282b93a578c456f3ff889d7d6ed","type":"message","role":"assistant","content":[],"model":"MiniMax-M3.1-Flash","stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":0,"output_tokens":0}}}
 
         event: ping
         data: {"type":"ping"}
@@ -69,25 +69,25 @@ http_interactions:
         data: {"type":"content_block_start","index":0,"content_block":{"type":"thinking","thinking":""}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"We need answer si"}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"We need answer"}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"mple. Need count "}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" simply count"}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"1 to 3 likely \"1, 2, 3.\""}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" 1 to 3. Need maybe \"1, "}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":" Could say 1, 2, 3"}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"2, 3.\" Ensure n"}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":". Ensure no ove"}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"o complication"}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"rcomplication."}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"thinking_delta","thinking":"."}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"signature_delta","signature":"1a65721690929a61e4465ce20ce3aad52a32ec143a61177dea927d4b4afc7b4d"}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"signature_delta","signature":"353495d9897f28fbcbe6133d6e3ce91edfd5a2bdea85680c0f070c648b94a406"}}
 
         event: content_block_stop
         data: {"type":"content_block_stop","index":0}
@@ -96,17 +96,20 @@ http_interactions:
         data: {"type":"content_block_start","index":1,"content_block":{"type":"text","text":""}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"text_delta","text":"1, 2, 3."}}
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"text_delta","text":"1, 2, "}}
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"text_delta","text":"3."}}
 
         event: content_block_stop
         data: {"type":"content_block_stop","index":1}
 
         event: message_delta
-        data: {"type":"message_delta","delta":{"stop_reason":"end_turn"},"usage":{"input_tokens":81,"output_tokens":50,"cache_read_input_tokens":128,"output_tokens_details":{"thinking_tokens":41}}}
+        data: {"type":"message_delta","delta":{"stop_reason":"end_turn"},"usage":{"input_tokens":81,"output_tokens":37,"cache_read_input_tokens":128,"output_tokens_details":{"thinking_tokens":28}}}
 
         event: message_stop
         data: {"type":"message_stop"}
 
-  recorded_at: Tue, 10 Nov 2026 17:30:54 GMT
+  recorded_at: Fri, 13 Nov 2026 21:22:11 GMT
 recorded_with: VCR 6.4.1
 ...

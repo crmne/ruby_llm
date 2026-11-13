@@ -27,7 +27,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 10 Nov 2026 17:48:01 GMT
+      - Fri, 13 Nov 2026 21:34:45 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -47,11 +47,11 @@ http_interactions:
       X-Watermark:
       - 'false'
       Traceparent:
-      - 00-dc8920da4c943330fa06bcd1ee46560d-162878a8000266c8-00
+      - 00-75dc0452b6d9aa79c27c213ea6e522f7-4f24a72800084431-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - c6c73e9f-ebe0-4595-a1e2-a891a7463f8a
+      - ced49e2d-8c12-497e-a3e8-ddd71105fb3f
       Azureml-Model-Session:
       - d20261110015917-e7d4cb48
       X-Ms-Inference-Retry-History:
@@ -87,9 +87,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - c6c73e9f-ebe0-4595-a1e2-a891a7463f8a
+      - ced49e2d-8c12-497e-a3e8-ddd71105fb3f
       X-Http2-Stream-Id:
-      - '251'
+      - '607'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -98,17 +98,17 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"<X_REQUEST_ID>","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_38638806","index":0,"type":"function","function":{"name":"file_fetch","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":376,"completion_tokens":15,"total_tokens":391,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":314,"audio_tokens":0,"text_tokens":376,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794332882,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Tue, 10 Nov 2026 17:48:02 GMT
+      string: '{"id":"3ff38858-b2d4-4aa2-9e52-a077e9af0c50","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_29633652","index":0,"type":"function","function":{"name":"file_fetch","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":376,"completion_tokens":15,"total_tokens":391,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":158,"audio_tokens":0,"text_tokens":376,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794605686,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Fri, 13 Nov 2026 21:34:46 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
     body:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"Call
-        file_fetch to get ruby.txt, then repeat the contents of the attached file."},{"role":"assistant","content":"","tool_calls":[{"id":"call_38638806","type":"function","function":{"name":"file_fetch","arguments":"{}"}}]},{"role":"tool","content":"Fetched
-        the file.","tool_call_id":"call_38638806"},{"role":"user","content":[{"type":"text","text":"Attachments
-        from tool call call_38638806:"},{"type":"text","text":"<file name=''ruby.txt''
+        file_fetch to get ruby.txt, then repeat the contents of the attached file."},{"role":"assistant","content":"","tool_calls":[{"id":"call_29633652","type":"function","function":{"name":"file_fetch","arguments":"{}"}}]},{"role":"tool","content":"Fetched
+        the file.","tool_call_id":"call_29633652"},{"role":"user","content":[{"type":"text","text":"Attachments
+        from tool call call_29633652:"},{"type":"text","text":"<file name=''ruby.txt''
         mime_type=''text/plain''>Ruby is the best.</file>"}]}],"stream":false,"tools":[{"type":"function","function":{"name":"file_fetch","description":"Fetches
         a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
@@ -130,7 +130,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 10 Nov 2026 17:48:02 GMT
+      - Fri, 13 Nov 2026 21:34:46 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -150,11 +150,11 @@ http_interactions:
       X-Watermark:
       - 'false'
       Traceparent:
-      - 00-b2867b15a04c5787f7f99594da8323ea-40237c580002753b-00
+      - 00-467fd8be8adc590defb6b5417df99551-8d40a30a000618f1-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - 6eeb5538-ae31-4bf2-a47f-f28a5d675afb
+      - 12d84c48-6dfa-486b-8b68-e32b77f4c34b
       Azureml-Model-Session:
       - d20261110015917-e7d4cb48
       X-Ms-Inference-Retry-History:
@@ -190,9 +190,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - 6eeb5538-ae31-4bf2-a47f-f28a5d675afb
+      - 12d84c48-6dfa-486b-8b68-e32b77f4c34b
       X-Http2-Stream-Id:
-      - '643'
+      - '979'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -201,7 +201,7 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"<X_REQUEST_ID>","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"Ruby
-        is the best."},"finish_reason":"stop"}],"usage":{"prompt_tokens":440,"completion_tokens":5,"total_tokens":445,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":376,"audio_tokens":0,"text_tokens":440,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794332882,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Tue, 10 Nov 2026 17:48:03 GMT
+      string: '{"id":"65fd5993-dfcd-4dd1-b76f-3c80bf635eb6","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"Ruby
+        is the best."},"finish_reason":"stop"}],"usage":{"prompt_tokens":440,"completion_tokens":5,"total_tokens":445,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":376,"audio_tokens":0,"text_tokens":440,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794605686,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Fri, 13 Nov 2026 21:34:46 GMT
 recorded_with: VCR 6.4.1

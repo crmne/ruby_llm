@@ -33,7 +33,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:42:44 GMT
+      - Fri, 13 Nov 2026 21:29:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -43,11 +43,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1794332562-tgm03ck3TQmLhxJWYlZF
+      - gen-1794605387-I9vhJgnKlZRrUXZ2Wqfn
       Access-Control-Expose-Headers:
       - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
       X-Openrouter-Release:
-      - api;11e69a63-8b87-4321-b835-a27e03c5ff81
+      - api;5aabd7be-4cf5-42b7-8ab7-78ac788284a0
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -65,10 +65,10 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n{\"id\":\"gen-1794332562-tgm03ck3TQmLhxJWYlZF\",\"object\":\"chat.completion\",\"created\":1794332562,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
-        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_use\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_012rBRj6NxGiQMjXun5E8vff\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
-        \\\"52.5200\\\", \\\"longitude\\\": \\\"13.4050\\\"}\"}},{\"type\":\"function\",\"index\":1,\"id\":\"toolu_bdrk_01Lt66HpuNvNtPdLAVeS8Zew\",\"function\":{\"name\":\"best_language_to_learn\",\"arguments\":\"{}\"}}]}}],\"usage\":{\"prompt_tokens\":701,\"completion_tokens\":98,\"total_tokens\":799,\"cost\":0.001191,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.001191,\"upstream_inference_prompt_cost\":0.000701,\"upstream_inference_completions_cost\":0.00049},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Tue, 10 Nov 2026 17:42:46 GMT
+      string: "\n         \n{\"id\":\"gen-1794605387-I9vhJgnKlZRrUXZ2Wqfn\",\"object\":\"chat.completion\",\"created\":1794605387,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
+        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_use\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_01FyAUnm3HCZo3jyqdqVWtkQ\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
+        \\\"52.5200\\\", \\\"longitude\\\": \\\"13.4050\\\"}\"}},{\"type\":\"function\",\"index\":1,\"id\":\"toolu_bdrk_01JNaaWGNX3zRixjP9iGhWLC\",\"function\":{\"name\":\"best_language_to_learn\",\"arguments\":\"{}\"}}]}}],\"usage\":{\"prompt_tokens\":701,\"completion_tokens\":98,\"total_tokens\":799,\"cost\":0.001191,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.001191,\"upstream_inference_prompt_cost\":0.000701,\"upstream_inference_completions_cost\":0.00049},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Fri, 13 Nov 2026 21:29:48 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -76,8 +76,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"What''s
         the weather in Berlin (52.5200, 13.4050) and what''s the best language to
-        learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_012rBRj6NxGiQMjXun5E8vff","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"toolu_bdrk_01Lt66HpuNvNtPdLAVeS8Zew","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_012rBRj6NxGiQMjXun5E8vff"},{"role":"tool","content":"Ruby","tool_call_id":"toolu_bdrk_01Lt66HpuNvNtPdLAVeS8Zew"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01FyAUnm3HCZo3jyqdqVWtkQ","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"toolu_bdrk_01JNaaWGNX3zRixjP9iGhWLC","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_01FyAUnm3HCZo3jyqdqVWtkQ"},{"role":"tool","content":"Ruby","tool_call_id":"toolu_bdrk_01JNaaWGNX3zRixjP9iGhWLC"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
@@ -103,7 +103,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:42:46 GMT
+      - Fri, 13 Nov 2026 21:29:49 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -113,11 +113,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1794332566-IIqKCVdl6p5P50mxyZLT
+      - gen-1794605388-u4jcEz3UsRhRFTON3vst
       Access-Control-Expose-Headers:
       - WWW-Authenticate,PAYMENT-REQUIRED,Payment-Receipt,PAYMENT-RESPONSE,Location,X-Generation-Id,x-openrouter-error-origin,x-openrouter-error-tool,X-Provider-Name,request-id,cf-ray
       X-Openrouter-Release:
-      - api;11e69a63-8b87-4321-b835-a27e03c5ff81
+      - api;5aabd7be-4cf5-42b7-8ab7-78ac788284a0
       Set-Cookie:
       - "<COOKIE>"
       Permissions-Policy:
@@ -136,6 +136,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        CiAgICAgICAgIAp7ImlkIjoiZ2VuLTE3OTQzMzI1NjYtSUlxS0NWZGw2cDVQNTBteHlaTFQiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzk0MzMyNTY2LCJtb2RlbCI6ImFudGhyb3BpYy9jbGF1ZGUtaGFpa3UtNC41IiwicHJvdmlkZXIiOiJBbWF6b24gQmVkcm9jayIsInN5c3RlbV9maW5nZXJwcmludCI6bnVsbCwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJuYXRpdmVfZmluaXNoX3JlYXNvbiI6ImVuZF90dXJuIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkhlcmUncyB0aGUgaW5mb3JtYXRpb24geW91IHJlcXVlc3RlZDpcblxuKipXZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCk6Kipcbi0gVGVtcGVyYXR1cmU6IDE1wrBDXG4tIFdpbmQ6IDEwIGttL2hcblxuKipCZXN0IExhbmd1YWdlIHRvIExlYXJuOioqXG5SdWJ5XG5cblJ1YnkgaXMgYSBwb3B1bGFyIHByb2dyYW1taW5nIGxhbmd1YWdlIGtub3duIGZvciBpdHMgZWxlZ2FudCBzeW50YXggYW5kIHJlYWRhYmlsaXR5LCBtYWtpbmcgaXQgZ3JlYXQgZm9yIGJvdGggYmVnaW5uZXJzIGFuZCBleHBlcmllbmNlZCBkZXZlbG9wZXJzISIsInJlZnVzYWwiOm51bGwsInJlYXNvbmluZyI6bnVsbH19XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6ODkzLCJjb21wbGV0aW9uX3Rva2VucyI6ODIsInRvdGFsX3Rva2VucyI6OTc1LCJjb3N0IjowLjAwMTMwMywiaXNfYnlvayI6ZmFsc2UsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowLCJjYWNoZV93cml0ZV90b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwidmlkZW9fdG9rZW5zIjowfSwiY29zdF9kZXRhaWxzIjp7InVwc3RyZWFtX2luZmVyZW5jZV9jb3N0IjowLjAwMTMwMywidXBzdHJlYW1faW5mZXJlbmNlX3Byb21wdF9jb3N0IjowLjAwMDg5MywidXBzdHJlYW1faW5mZXJlbmNlX2NvbXBsZXRpb25zX2Nvc3QiOjAuMDAwNDF9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImltYWdlX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowfX19
-  recorded_at: Tue, 10 Nov 2026 17:42:47 GMT
+        CiAgICAgICAgIAp7ImlkIjoiZ2VuLTE3OTQ2MDUzODgtdTRqY0V6M1VzUmhSRlRPTjN2c3QiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzk0NjA1Mzg4LCJtb2RlbCI6ImFudGhyb3BpYy9jbGF1ZGUtaGFpa3UtNC41IiwicHJvdmlkZXIiOiJBbWF6b24gQmVkcm9jayIsInN5c3RlbV9maW5nZXJwcmludCI6bnVsbCwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJuYXRpdmVfZmluaXNoX3JlYXNvbiI6ImVuZF90dXJuIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkhlcmUncyB0aGUgaW5mb3JtYXRpb24geW91IHJlcXVlc3RlZDpcblxuKipXZWF0aGVyIGluIEJlcmxpbjoqKlxuLSBUZW1wZXJhdHVyZTogMTXCsENcbi0gV2luZDogMTAga20vaFxuXG4qKkJlc3QgTGFuZ3VhZ2UgdG8gTGVhcm46KipcblJ1YnlcblxuSW50ZXJlc3Rpbmcgbm90ZTogUnVieSBpcyBhIHByb2dyYW1taW5nIGxhbmd1YWdlIGtub3duIGZvciBpdHMgZWxlZ2FudCBhbmQgcmVhZGFibGUgc3ludGF4LCBtYWtpbmcgaXQgYSBncmVhdCBjaG9pY2UgZm9yIHRob3NlIGludGVyZXN0ZWQgaW4gbGVhcm5pbmcgdG8gY29kZSEiLCJyZWZ1c2FsIjpudWxsLCJyZWFzb25pbmciOm51bGx9fV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjg5MywiY29tcGxldGlvbl90b2tlbnMiOjc0LCJ0b3RhbF90b2tlbnMiOjk2NywiY29zdCI6MC4wMDEyNjMsImlzX2J5b2siOmZhbHNlLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiY2FjaGVfd3JpdGVfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsInZpZGVvX3Rva2VucyI6MH0sImNvc3RfZGV0YWlscyI6eyJ1cHN0cmVhbV9pbmZlcmVuY2VfY29zdCI6MC4wMDEyNjMsInVwc3RyZWFtX2luZmVyZW5jZV9wcm9tcHRfY29zdCI6MC4wMDA4OTMsInVwc3RyZWFtX2luZmVyZW5jZV9jb21wbGV0aW9uc19jb3N0IjowLjAwMDM3fSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowLCJpbWFnZV90b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MH19fQ==
+  recorded_at: Fri, 13 Nov 2026 21:29:49 GMT
 recorded_with: VCR 6.4.1

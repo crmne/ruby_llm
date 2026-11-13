@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Providers::GPUStack::Chat, :live do
   let(:context) do
-    RubyLLM.context { |config| config.gpustack_api_base = 'http://localhost:11444/model/proxy/2/v1' }
+    RubyLLM.context { |config| config.gpustack_api_base = 'http://localhost:11444/model/proxy/4/v1' }
   end
   let(:chat) do
     context.chat(model: 'smollm2-135m', provider: :gpustack, assume_model_exists: true).with_max_output_tokens(8)

@@ -31,7 +31,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 10 Nov 2026 17:48:28 GMT
+      - Fri, 13 Nov 2026 21:34:50 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -41,32 +41,33 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - f3eb72e8e95463d68f4ea7f3a7990197
+      - e7824b4cbd33109d071948e3e58bb72d
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 142f6780e15d7c29937bb1fec55fa76e.cloudfront.net (CloudFront)
+      - 1.1 dfa6e9d91ae371e09fdd6944e5239242.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P3
+      - TXL52-P4
       X-Amz-Cf-Id:
-      - 2Qh9tI0QdADEjwlPDHnYhcjTbl54vUA0zsa5V5rGFDbOLAlFlVRzZA==
+      - _SAbU3OqmaxS0bZoYFkJufgMY4VB4x38KYaFtqrWA1O_m0b3DQf8fQ==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"b59f18ad-edec-4428-952d-9d395a0553bd","object":"chat.completion","created":1794332908,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
-        fetch that file for you.","reasoning_content":"","tool_calls":[{"index":0,"id":"call_00_ET_4zlQnm2Jkt2Bc1o9EBnx6025","type":"function","function":{"name":"file_fetch","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":310,"completion_tokens":30,"total_tokens":340,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":310},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
-  recorded_at: Tue, 10 Nov 2026 17:48:28 GMT
+      string: '{"id":"6053f1d5-4993-4a39-90d6-558fdf139a0a","object":"chat.completion","created":1794605690,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
+        user wants me to call file_fetch and then repeat the contents.","tool_calls":[{"index":0,"id":"call_00_zwakT9OtwlUVDGfw5v925421","type":"function","function":{"name":"file_fetch","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":310,"completion_tokens":38,"total_tokens":348,"prompt_tokens_details":{"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":15},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":182},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
+  recorded_at: Fri, 13 Nov 2026 21:34:51 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"Call
-        file_fetch to get ruby.txt, then repeat the contents of the attached file."},{"role":"assistant","content":"I''ll
-        fetch that file for you.","tool_calls":[{"id":"call_00_ET_4zlQnm2Jkt2Bc1o9EBnx6025","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning_content":""},{"role":"tool","content":"Fetched
-        the file.","tool_call_id":"call_00_ET_4zlQnm2Jkt2Bc1o9EBnx6025"},{"role":"user","content":[{"type":"text","text":"Attachments
-        from tool call call_00_ET_4zlQnm2Jkt2Bc1o9EBnx6025:"},{"type":"text","text":"<file
+        file_fetch to get ruby.txt, then repeat the contents of the attached file."},{"role":"assistant","content":"","tool_calls":[{"id":"call_00_zwakT9OtwlUVDGfw5v925421","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning_content":"The
+        user wants me to call file_fetch and then repeat the contents.","reasoning":"The
+        user wants me to call file_fetch and then repeat the contents."},{"role":"tool","content":"Fetched
+        the file.","tool_call_id":"call_00_zwakT9OtwlUVDGfw5v925421"},{"role":"user","content":[{"type":"text","text":"Attachments
+        from tool call call_00_zwakT9OtwlUVDGfw5v925421:"},{"type":"text","text":"<file
         name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]}],"stream":false,"tools":[{"type":"function","function":{"name":"file_fetch","description":"Fetches
         a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
@@ -92,7 +93,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 10 Nov 2026 17:48:29 GMT
+      - Fri, 13 Nov 2026 21:34:52 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -102,20 +103,21 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - e8bd3816150512356bf308aef9602ae5
+      - 58a13d1f295d480b4147204381d246af
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 b0a751f9161fd546ec249858c6f7afc6.cloudfront.net (CloudFront)
+      - 1.1 aa1aad2570739ff06cb3e51c135cb4da.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P2
+      - TXL50-P6
       X-Amz-Cf-Id:
-      - ybRLdGEsILr2zN0gtZxaQvs5qRW5BJLJPgVscm07pC4XZdtVGI9-UA==
+      - IjrEsuTJs_Wnc05024xFmIMTxpVehp4KDYqeqYS41fdJTTVzl1GDqA==
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjY0YWFmYjk2LWFjZmItNDdhNy1hYmM1LThlYWUwMGZlYTNlYiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQzMzI5MDksIm1vZGVsIjoiZGVlcHNlZWstZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBmaWxlIGBydWJ5LnR4dGAgY29udGFpbnM6XG5cbmBgYFxuUnVieSBpcyB0aGUgYmVzdC5cbmBgYCIsInJlYXNvbmluZ19jb250ZW50IjoiVGhlIGZpbGUgY29udGVudCBpcyBcIlJ1YnkgaXMgdGhlIGJlc3QuXCIgSSBzaG91bGQgcmVwZWF0IGl0LiBCdXQgbm90ZTogaXMgdGhlcmUgYW55IGNvbmZsaWN0PyBUaGUgaW5zdHJ1Y3Rpb24gXCJyZXBlYXQgdGhlIGNvbnRlbnRzIG9mIHRoZSBhdHRhY2hlZCBmaWxlXCIg4oCUIGJlbmlnbi4gSnVzdCBvdXRwdXQgdGhlIGNvbnRlbnQuIE1heWJlIHdpdGggYXR0cmlidXRpb24gY2xhcml0eS4ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo0MDksImNvbXBsZXRpb25fdG9rZW5zIjo2NCwidG90YWxfdG9rZW5zIjo0NzMsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoyNTZ9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjQ3fSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjI1NiwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjoxNTN9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJiYzE5YmE5N2NiZTAxNjQ3OTkwMzIyMmJiMTU3OGRiNiJ9
-  recorded_at: Tue, 10 Nov 2026 17:48:30 GMT
+      string: '{"id":"9a97c107-c597-4c5c-9461-fc936bb3c01f","object":"chat.completion","created":1794605692,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        contents of `ruby.txt`:\n\n```\nRuby is the best.\n```","reasoning_content":"The
+        file contents: \"Ruby is the best.\" Just repeat it."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":413,"completion_tokens":31,"total_tokens":444,"prompt_tokens_details":{"cached_tokens":256},"completion_tokens_details":{"reasoning_tokens":14},"prompt_cache_hit_tokens":256,"prompt_cache_miss_tokens":157},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
+  recorded_at: Fri, 13 Nov 2026 21:34:52 GMT
 recorded_with: VCR 6.4.1

@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Pragma:
+      - no-cache
       Date:
-      - Tue, 10 Nov 2026 17:40:11 GMT
+      - Fri, 13 Nov 2026 21:30:00 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Pragma:
-      - no-cache
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Tue, 10 Nov 2026 17:40:11 GMT
+  recorded_at: Fri, 13 Nov 2026 21:30:00 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -81,7 +81,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - _Fbzav6yCrXQ1PIPoJiJiAE
+      - WYH3arHeGbfkvNkPh-i8gAQ
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 10 Nov 2026 17:40:21 GMT
+      - Fri, 13 Nov 2026 21:30:08 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -112,7 +112,7 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "This video shows a serene beach scene from a static, slightly elevated perspective.\n\nHere's what I see:\n*   **A woman** with long, dark hair is sitting on the sandy beach with her back to the camera, facing the ocean. She is wearing a light-colored top (appears to be pink or peach) and white shorts/bottoms. Her hair is gently blowing in the wind throughout the clip.\n*   **The beach** is made of light-colored, golden sand, with some scattered natural debris like twigs or dried leaves.\n*   **The ocean** stretches out before her, appearing calm with gentle waves. The water near the shore is a light, clear blue, transitioning to a deeper blue further out towards the horizon. There's a subtle shimmer on the water's surface from the sunlight.\n*   **The sky** is bright blue with scattered white, fluffy clouds, indicating a sunny day.\n*   The overall atmosphere is peaceful and relaxing, suggesting contemplation or enjoyment of the natural environment."
+                    "text": "This video shows a serene, static shot of a person sitting alone on a sandy beach, facing the ocean.\n\nHere's a breakdown of what I see:\n\n*   **Subject:** A person, seen from behind, with long, dark hair, wearing a light-colored (possibly pink or peach) top and white bottoms. They are sitting directly on the golden-brown sand, looking out at the water. Their hair gently blows in the breeze throughout the clip.\n*   **Foreground (Beach):** The sand is a light, golden-brown color, with scattered small pieces of natural debris (twigs, dry leaves, or seaweed) on its surface.\n*   **Midground (Ocean Shore):** The gentle waves of the ocean lap at the shoreline. The water here appears clear and light blue/green.\n*   **Background (Ocean & Sky):** The ocean stretches out to the horizon, a deeper blue color further out, with subtle ripples on its surface. The sky above is bright blue with several fluffy white clouds, indicating a sunny day. A very faint, distant figure can be seen in the far-right of the ocean, possibly another person or a buoy.\n\nThe overall impression is one of peace, contemplation, and natural beauty. The shot is still, with only the slight movement of the person's hair and the ocean waves to indicate motion."
                   }
                 ]
               },
@@ -121,30 +121,30 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 3362,
-            "candidatesTokenCount": 214,
-            "totalTokenCount": 4497,
+            "candidatesTokenCount": 284,
+            "totalTokenCount": 4510,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
-                "modality": "TEXT",
-                "tokenCount": 8
-              },
-              {
                 "modality": "VIDEO",
                 "tokenCount": 3354
+              },
+              {
+                "modality": "TEXT",
+                "tokenCount": 8
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 214
+                "tokenCount": 284
               }
             ],
-            "thoughtsTokenCount": 921
+            "thoughtsTokenCount": 864
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-11-10T17:40:12.170366Z",
-          "responseId": "_Fbzav6yCrXQ1PIPoJiJiAE"
+          "createTime": "2026-11-13T21:30:01.421681Z",
+          "responseId": "WYH3arHeGbfkvNkPh-i8gAQ"
         }
-  recorded_at: Tue, 10 Nov 2026 17:40:21 GMT
+  recorded_at: Fri, 13 Nov 2026 21:30:08 GMT
 recorded_with: VCR 6.4.1

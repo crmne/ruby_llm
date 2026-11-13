@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:41:26 GMT
+      - Fri, 13 Nov 2026 21:28:42 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -37,6 +37,9 @@ http_interactions:
       - keep-alive
       Set-Cookie:
       - "<COOKIE>"
+      Vary:
+      - Accept-Encoding
+      - Origin
       X-Internal-Adhoc-Canary:
       - '2666295442'
       Msh-Gid:
@@ -46,7 +49,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - ee7f8d6a-dd2d-11f1-b768-00163e05d0f4
+      - 2f7f47fc-dfa9-11f1-b943-00163e4d6e71
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -55,10 +58,8 @@ http_interactions:
       - '0'
       Msh-Usage-Cache-Write-Tokens-5m:
       - '0'
-      Vary:
-      - Origin
       X-Msh-Trace-Id:
-      - 195749417d5d6c79ebbe7b886ce65cf8
+      - 4a2aed927c74d315a7535bbab5dd9a05
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -69,9 +70,16 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-1842ac19-386d-9466-b538-911cae8c54c4","object":"chat.completion","created":1794332477,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
-        call the `object_params` tool with the specified window.","tool_calls":[{"index":0,"id":"object_params_0_58b80eed","type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}],"reasoning_content":"The
-        user wants me to call the object_params tool with a window that has start
-        \"2025-01-01\" and end \"2025-01-02\", and include the result in my response."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":238,"completion_tokens":125,"total_tokens":363,"completion_tokens_details":{"reasoning_tokens":42},"prompt_tokens_details":{"cache_write_tokens":0}}}'
-  recorded_at: Tue, 10 Nov 2026 17:41:26 GMT
+      string: '{"id":"chatcmpl-ec76d3e9-3a90-91f1-9498-405cd5a18b03","object":"chat.completion","created":1794605316,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"object_params_0_9936a0bc","type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}],"reasoning_content":"The
+        user wants me to call the object_params tool with window start 2025-01-01
+        and end 2025-01-02, and include the result.\n\nI need to provide ISO format
+        dates. The user gave \"2025-01-01\" and \"2025-01-02\". ISO start/end. I''ll
+        interpret these as ISO dates. The schema says \"ISO end\" and \"ISO start\".
+        I can use \"2025-01-01\" and \"2025-01-02\" directly, or add time. To be safe,
+        I''ll use the date strings as provided since they''re valid ISO dates. Actually,
+        let me use full ISO with time to be safe? The user said start 2025-01-01 and
+        end 2025-01-02. I''ll pass them as given. But ISO start/end might expect datetime.
+        Let me just pass the dates as provided; they are ISO 8601 dates.\n\nLet me
+        make the call and then include the result."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":238,"completion_tokens":275,"total_tokens":513,"completion_tokens_details":{"reasoning_tokens":205},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Fri, 13 Nov 2026 21:28:42 GMT
 recorded_with: VCR 6.4.1

@@ -25,7 +25,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Date:
-      - Tue, 10 Nov 2026 17:46:39 GMT
+      - Fri, 13 Nov 2026 21:34:03 GMT
       Pragma:
       - no-cache
       Content-Type:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Tue, 10 Nov 2026 17:46:39 GMT
+  recorded_at: Fri, 13 Nov 2026 21:34:03 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -81,7 +81,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - f1jzatmfF7XQ1PIPoJiJiAE
+      - S4L3apfsFMLcvNkPqLbgkAw
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 10 Nov 2026 17:46:47 GMT
+      - Fri, 13 Nov 2026 21:34:08 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -112,7 +112,7 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "Here's a description of the image and a summary of the PDF, covered separately:\n\n---\n\n### Image Description\n\nThe image displays a stylized, three-dimensional representation of a red gemstone, resembling a ruby. It features a vibrant, deep red color with prominent, bright white and lighter red reflective highlights on its faceted surfaces, indicating a polished and glossy finish. The gem is cut with multiple geometric facets, giving it an angular and sparkling appearance. Its overall shape is a rounded oval, viewed from a slight angle, which adds to its dimensionality and depth. This particular design is widely recognized as the logo for the Ruby programming language.\n\n---\n\n### PDF Summary\n\nThe PDF document is titled \"Sample PDF\" and includes the playful tagline \"This is a simple PDF file. Fun fun fun.\" The entire content of the PDF consists of several paragraphs of Latin-like placeholder text, commonly known as \"Lorem ipsum.\" There is no discernible meaningful or coherent information, story, or data within the document. It serves purely as an example document to demonstrate text layout, typography, or the general appearance of a PDF file, rather than to convey actual content."
+                    "text": "Here are the descriptions for both files:\n\n---\n\n### Image Description\n\nThe image displays a stylized, three-dimensional rendering of a red ruby gemstone. It has a rounded, almost squarish outline, but the central element is clearly a faceted gem. The dominant color is a deep, rich red, with lighter red and white highlights and gradients across its many triangular facets, giving it a glossy, reflective appearance. These highlights suggest light catching its surfaces, creating a sense of depth and shine. The overall design is clean and modern, commonly recognized as the logo for the Ruby programming language.\n\n---\n\n### PDF Summary\n\nThe PDF is titled \"Sample PDF\" with the subtitle \"This is a simple PDF file. Fun fun fun.\" The main body of the document consists entirely of placeholder text, commonly known as Lorem ipsum. This text is spread across several paragraphs and does not convey any meaningful information or specific content. Its purpose is solely to demonstrate the layout and appearance of a PDF document with text, rather than to deliver actual informative content."
                   }
                 ]
               },
@@ -121,12 +121,12 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 530,
-            "candidatesTokenCount": 232,
-            "totalTokenCount": 1599,
+            "candidatesTokenCount": 210,
+            "totalTokenCount": 1356,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
-                "modality": "IMAGE",
+                "modality": "DOCUMENT",
                 "tokenCount": 258
               },
               {
@@ -134,21 +134,21 @@ http_interactions:
                 "tokenCount": 14
               },
               {
-                "modality": "DOCUMENT",
+                "modality": "IMAGE",
                 "tokenCount": 258
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 232
+                "tokenCount": 210
               }
             ],
-            "thoughtsTokenCount": 837
+            "thoughtsTokenCount": 616
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-11-10T17:46:39.380889Z",
-          "responseId": "f1jzatmfF7XQ1PIPoJiJiAE"
+          "createTime": "2026-11-13T21:34:03.341527Z",
+          "responseId": "S4L3apfsFMLcvNkPqLbgkAw"
         }
-  recorded_at: Tue, 10 Nov 2026 17:46:47 GMT
+  recorded_at: Fri, 13 Nov 2026 21:34:08 GMT
 recorded_with: VCR 6.4.1

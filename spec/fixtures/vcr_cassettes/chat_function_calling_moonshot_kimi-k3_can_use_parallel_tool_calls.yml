@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:39:41 GMT
+      - Fri, 13 Nov 2026 21:27:30 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -46,7 +46,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - b33bed0c-dd2d-11f1-b0b3-00163e0dec08
+      - 05607eaf-dfa9-11f1-8f8b-00163e7a3687
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -58,7 +58,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - e3c0868949f75b6902083a47caf32b27
+      - 72ede6c5b51ec44cde7b42cd4f6e86a8
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -69,13 +69,12 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-5b7cf330-2547-953c-9aee-763446a2e042","object":"chat.completion","created":1794332377,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
-        grab both pieces of information for you at once.","tool_calls":[{"index":0,"id":"weather_0_10abbaf1","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"index":1,"id":"best_language_to_learn_1_008281f6","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
-        user is asking two independent things:\n1. Weather in Berlin at coordinates
-        (52.5200, 13.4050)\n2. What''s the best language to learn\n\nBoth tools are
-        available and independent of each other, so I should call them in parallel
-        in the same block."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":274,"completion_tokens":159,"total_tokens":433,"completion_tokens_details":{"reasoning_tokens":58},"prompt_tokens_details":{"cache_write_tokens":256}}}'
-  recorded_at: Tue, 10 Nov 2026 17:39:41 GMT
+      string: '{"id":"chatcmpl-dc3f1557-afdf-9946-9a3c-14200580779e","object":"chat.completion","created":1794605246,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        get both pieces of information for you right away.","tool_calls":[{"index":0,"id":"weather_0_e9477468","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"index":1,"id":"best_language_to_learn_1_571718cb","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
+        user is asking two independent questions:\n1. Weather in Berlin at coordinates
+        (52.5200, 13.4050)\n2. Best language to learn\n\nThese are independent calls,
+        so I should make both in the same block."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":274,"completion_tokens":150,"total_tokens":424,"completion_tokens_details":{"reasoning_tokens":49},"prompt_tokens_details":{"cache_write_tokens":256}}}'
+  recorded_at: Fri, 13 Nov 2026 21:27:30 GMT
 - request:
     method: post
     uri: https://api.moonshot.ai/v1/chat/completions
@@ -83,12 +82,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"kimi-k3","messages":[{"role":"user","content":"What''s the
         weather in Berlin (52.5200, 13.4050) and what''s the best language to learn?"},{"role":"assistant","content":"I''ll
-        grab both pieces of information for you at once.","tool_calls":[{"id":"weather_0_10abbaf1","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"best_language_to_learn_1_008281f6","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
-        user is asking two independent things:\n1. Weather in Berlin at coordinates
-        (52.5200, 13.4050)\n2. What''s the best language to learn\n\nBoth tools are
-        available and independent of each other, so I should call them in parallel
-        in the same block."},{"role":"tool","content":"Current weather at 52.5200,
-        13.4050: 15°C, Wind: 10 km/h","tool_call_id":"weather_0_10abbaf1"},{"role":"tool","content":"Ruby","tool_call_id":"best_language_to_learn_1_008281f6"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        get both pieces of information for you right away.","tool_calls":[{"id":"weather_0_e9477468","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"best_language_to_learn_1_571718cb","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
+        user is asking two independent questions:\n1. Weather in Berlin at coordinates
+        (52.5200, 13.4050)\n2. Best language to learn\n\nThese are independent calls,
+        so I should make both in the same block."},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"weather_0_e9477468"},{"role":"tool","content":"Ruby","tool_call_id":"best_language_to_learn_1_571718cb"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
@@ -110,7 +108,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:39:47 GMT
+      - Fri, 13 Nov 2026 21:27:34 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -130,7 +128,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - b5c3c558-dd2d-11f1-a68f-00163e62e412
+      - '080cc91a-dfa9-11f1-9540-00163e0f23f2'
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -142,7 +140,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - 0a069825bf52ae6eebd546bed8d380d3
+      - e858eccd209afede16b19c8f34fcbc5f
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -154,6 +152,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLWE5YWJmMjRjLWE0NjQtOWFhYS05YjAzLTkyZWZjYjA5Zjc5OSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQzMzIzODEsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSGVyZSdzIHdoYXQgSSBmb3VuZDpcblxuKipXZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCk6Kipcbi0gVGVtcGVyYXR1cmU6IDE1wrBDXG4tIFdpbmQ6IDEwIGttL2hcblxuKipCZXN0IGxhbmd1YWdlIHRvIGxlYXJuOioqIFJ1YnlcblxuTWlsZCB3ZWF0aGVyIGluIEJlcmxpbiByaWdodCBub3cg4oCUIGEgbGlnaHQgamFja2V0IGtpbmQgb2YgZGF5LiBBbmQgaWYgeW91J3JlIHRoaW5raW5nIGFib3V0IHBpY2tpbmcgdXAgYSBuZXcgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UsIFJ1YnkgaXMgdGhlIHJlY29tbWVuZGF0aW9uISBMZXQgbWUga25vdyBpZiB5b3UnZCBsaWtlIGFueXRoaW5nIGVsc2UuIiwicmVhc29uaW5nX2NvbnRlbnQiOiJUaGUgcmVzdWx0cyBhcmUgaW46XG4xLiBXZWF0aGVyIGluIEJlcmxpbjogMTXCsEMsIFdpbmQ6IDEwIGttL2hcbjIuIEJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm46IFJ1YnlcblxuTGV0IG1lIHByZXNlbnQgdGhlc2UgY2xlYXJseSB0byB0aGUgdXNlci4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjUwOCwiY29tcGxldGlvbl90b2tlbnMiOjE0MiwidG90YWxfdG9rZW5zIjo2NTAsImNhY2hlZF90b2tlbnMiOjI1NiwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjo0MH0sInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoyNTYsImNhY2hlX3dyaXRlX3Rva2VucyI6MH19fQ==
-  recorded_at: Tue, 10 Nov 2026 17:39:47 GMT
+        eyJpZCI6ImNoYXRjbXBsLTYwMTQ0ZDg1LTBmNmItOWQyNy1hMzM0LTM4YzAxZjkyZTRlNiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ2MDUyNTAsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSGVyZSdzIHdoYXQgSSBmb3VuZDpcblxuKirwn4yk77iPIFdlYXRoZXIgaW4gQmVybGluOioqXG4tICoqVGVtcGVyYXR1cmU6KiogMTXCsENcbi0gKipXaW5kOioqIDEwIGttL2hcblxuQSBtaWxkIGRheSBpbiBCZXJsaW4g4oCUIHBsZWFzYW50IHdpdGgganVzdCBhIGxpZ2h0IGJyZWV6ZS5cblxuKirwn5K7IEJlc3QgTGFuZ3VhZ2UgdG8gTGVhcm46Kipcbi0gKipSdWJ5KipcblxuUnVieSBpcyBrbm93biBmb3IgaXRzIGVsZWdhbnQsIHJlYWRhYmxlIHN5bnRheCBhbmQgaXMgZmFtb3VzbHkgdXNlZCB3aXRoIHRoZSBSdWJ5IG9uIFJhaWxzIGZyYW1ld29yayBmb3Igd2ViIGRldmVsb3BtZW50LiBJdCdzIG9mdGVuIHByYWlzZWQgZm9yIG1ha2luZyBwcm9ncmFtbWluZyBlbmpveWFibGUgYW5kIGJlZ2lubmVyLWZyaWVuZGx5LlxuXG5JcyB0aGVyZSBhbnl0aGluZyBlbHNlIHlvdSdkIGxpa2UgdG8ga25vdz8iLCJyZWFzb25pbmdfY29udGVudCI6IkJvdGggcmVzdWx0cyBhcmUgaW4uIExldCBtZSBwcmVzZW50IHRoZW0gY2xlYXJseS4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjQ5OSwiY29tcGxldGlvbl90b2tlbnMiOjEyNiwidG90YWxfdG9rZW5zIjo2MjUsImNhY2hlZF90b2tlbnMiOjI1NiwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjoxMX0sInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoyNTYsImNhY2hlX3dyaXRlX3Rva2VucyI6MH19fQ==
+  recorded_at: Fri, 13 Nov 2026 21:27:34 GMT
 recorded_with: VCR 6.4.1

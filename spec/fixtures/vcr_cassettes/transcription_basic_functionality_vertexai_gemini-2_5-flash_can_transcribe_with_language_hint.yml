@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Tue, 10 Nov 2026 17:27:01 GMT
-      Pragma:
-      - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Fri, 13 Nov 2026 21:21:14 GMT
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Tue, 10 Nov 2026 17:27:01 GMT
+  recorded_at: Fri, 13 Nov 2026 21:21:14 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -81,7 +81,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - 5VPzar-BIqPntfAPitqJsQg
+      - Sn_3aqmEJrqFg7QPgvDv8QM
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 10 Nov 2026 17:27:02 GMT
+      - Fri, 13 Nov 2026 21:21:15 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -143,8 +143,8 @@ http_interactions:
             "thoughtsTokenCount": 25
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-11-10T17:27:01.557247Z",
-          "responseId": "5VPzar-BIqPntfAPitqJsQg"
+          "createTime": "2026-11-13T21:21:14.623145Z",
+          "responseId": "Sn_3aqmEJrqFg7QPgvDv8QM"
         }
-  recorded_at: Tue, 10 Nov 2026 17:27:02 GMT
+  recorded_at: Fri, 13 Nov 2026 21:21:15 GMT
 recorded_with: VCR 6.4.1

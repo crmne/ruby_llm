@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:34:18 GMT
+      - Fri, 13 Nov 2026 21:20:45 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -44,11 +44,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1340'
+      - '1641'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -75,22 +75,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_00eea3261670f77c016af355998a4887d29c9cf380a786c4fa",
+          "id": "resp_0c33fb7c4e6d657e016af77f2bbc7c87d2b3a18941e43894ca",
           "object": "response",
-          "created_at": 1794332057,
+          "created_at": 1794604843,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794332058,
+          "completed_at": 1794604845,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -98,7 +99,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_00eea3261670f77c016af3559a0fb487d2b1177ea8770f5157",
+              "id": "msg_0c33fb7c4e6d657e016af77f2c740c87d28ac1b7989715153a",
               "type": "message",
               "status": "completed",
               "content": [
@@ -106,7 +107,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "My favorite Ruby feature is **blocks with iterators**\u2014especially how naturally they let you inject behavior into methods.\n\nFor example, `map`, `select`, `each`, and friends make it feel like you\u2019re defining *what* you want done rather than *how* to loop:\n\n```ruby\nnums = [1, 2, 3, 4]\nsquares = nums.map { |n| n * n }\n```\n\nIt\u2019s concise, expressive, and shows off Ruby\u2019s \u201cmake the common case easy\u201d philosophy."
+                  "text": "My favorite Ruby feature is **blocks + iterators** (the `do...end` / `{ ... }` syntax).\n\nIt makes code like this feel really expressive and \u201cRuby-ish\u201d:\n\n```ruby\nitems.each do |item|\n  puts item\nend\n```\n\nAnd it extends nicely into things like custom DSL-style APIs, e.g. `File.open(...){ |f| ... }` or `retry`-style patterns\u2014Ruby can be surprisingly elegant just by leaning on blocks."
                 }
               ],
               "phase": "final_answer",
@@ -163,14 +164,14 @@ http_interactions:
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 114,
+            "output_tokens": 105,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 126
+            "total_tokens": 117
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:34:18 GMT
+  recorded_at: Fri, 13 Nov 2026 21:20:45 GMT
 recorded_with: VCR 6.4.1

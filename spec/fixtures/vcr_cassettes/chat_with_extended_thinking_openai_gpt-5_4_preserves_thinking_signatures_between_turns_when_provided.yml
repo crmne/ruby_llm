@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:40:32 GMT
+      - Fri, 13 Nov 2026 21:28:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -43,11 +43,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '781'
+      - '934'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -74,22 +74,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_00ef03d7008fd6fc016af357101a0087d2ab431c8df75cb1b2",
+          "id": "resp_0d5b42c0ba13f22b016af7810f851887d293b2de6c0dfea216",
           "object": "response",
-          "created_at": 1794332432,
+          "created_at": 1794605327,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794332432,
+          "completed_at": 1794605328,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -97,7 +98,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_00ef03d7008fd6fc016af35710c9f087d2bb888fa832cd3d8a",
+              "id": "msg_0d5b42c0ba13f22b016af781104f9c87d2aef991b42b377bb5",
               "type": "message",
               "status": "completed",
               "content": [
@@ -171,7 +172,7 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:40:32 GMT
+  recorded_at: Fri, 13 Nov 2026 21:28:48 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
@@ -196,7 +197,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:40:34 GMT
+      - Fri, 13 Nov 2026 21:28:49 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -216,11 +217,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1087'
+      - '822'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -247,22 +248,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0e0b6b753262e197016af35710f45487d2ad10d862afe269b6",
+          "id": "resp_01ba42993e48e874016af781108b1087d2aad7abf141b7a3a1",
           "object": "response",
-          "created_at": 1794332433,
+          "created_at": 1794605328,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794332433,
+          "completed_at": 1794605329,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -270,14 +272,14 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "rs_0e0b6b753262e197016af357119bb887d2bb70f18421027b5a",
+              "id": "rs_01ba42993e48e874016af78111256487d28393017a956730de",
               "type": "reasoning",
               "content": [],
-              "encrypted_content": "gAAAAABq81cSA7mQg9j08Xu_R3I2enlO7zSs4JgmrifnryAgGMfnL7LR4Y8NgCrKnlU-v9Iw3xyrRVTUO9l9yjAwbuIGWQ8LOWEWxwYen0XjXgAhmLNdx8bzdhmf1LHwdc1GLJb8v21sz102TdFv3pi1ctEuTEzHJ9LP8ezawlUqZiJwBsE1g_R_Y5J5eNEl3GcZ5FiatI0qb6gMlcZH_Z9LnOuLYsdtDyS_SBo8SZMKXIRRNNDH2UzPtjj2_9VWWHAo4IzXkEA08FGrojXyDjJKTS3wzEZp_ZokAi_lR50pZrb6JHqtj2WxP2YbCV40muryNPrYWmWsWI8UE7dcub2OEhtYbv9Y3QVDpus3YDCRxI8sr0N9V-g0V60kZ-knDO768q4l88_abIjForGIO5AypCAIZwviEs_TQPKOhoVz68Eh2ecWbFqwneckZN5qH3rv8702Re_34T3yhx55DPRw7Ii5vl79gXQ9tpiAisav2idWtw_cItpGpIPlqBVkrGJJqhEOLLfQybwgDNHwr35qXm49fzXWILAzCPwNfYvCe93O-hti8VpgR19CiqgIidSbzBT-dbEIpQA1IyF0B6kn-uriJoLN_4SOGfSzZHP6ztg3OdSMc3SiMwfs8DvHVO6UcXsQs7B6Gspu3K54I95QIv_n2QX_wdN5B3hK9TKcJs6vwSiTsEVPMJ2kNe029vmNe6Wa4aLAsAZpVKt7bYDq6TzdGFSpjbcw3Zhvt6QpXACDOTL7zWDMOOBBsM5Aaql9pX-kNVn9miXx_IyckqqGkrEfQoBUyU6-DcISvaRTZFr54XMK3UERtMm9Wt2k7ms5l-DmTcLl5rfnmEOGAJhiOcDRzZtId-EcAf72uEk_GfiSA7udr2A2Vh9O36TQ8yUKSSqxDQhNCoskQrstxekQpZ_cp1nPZFzWipXa6A66YVKHo_Wg86MJ7fhfFTBK7zBlc2nI8QinB-TMTYvz4zy2ojU4BxngDA3u01wM4STKdRk4ylQNe84onD7ViA7csQ6FYrwEoOZEUFV6OcL0aGIGNN80Ql14SAeLObvuFko_xjJ5xACznVaY2KAsJEJ5ZDL-JGlaYvq0KM8GTYhmN7-a2xJVlxdc05DHA7o8pC-W_vPBiBt1WQLkjF5tuvZ4O-8qP83fvVZ8FdNCuR0iRF8aI2rf4A7sRqlSUtYTH2Eol7Cy4d4b6BZgskwWOEAsSrUqiNLn_UShglFyfniC6BrM25rcVoSlro_E_qkq13pkZ3ZThpXhz0p8P0qCKHVWzwBroLcR1shm-mYUO6O7fZI-BAC4pG_aYz85RvYt8-aULjx6ClIFVKakWkv7V2TTJY9XTkIqGdCkAQpoPXiTT7yDpkDfQM-uZp9ZX9Kx9BQ75KyPTgyGzQ-1GZqKqBpoQojaQKYrjhf0vsw2s_LRpJiHQY-bWqZDYJ48M0Q_eY3QwvUdrdd-2qsYXcjG1w_nBfB2YrJJVSiK3zzvFwFruT4CHYxpPn0tAPX6F2k2TeFBNb59Z8ENMb4x8lumc8MKG0bO1ukkrYftYWfNnOS3cp7_OP7OMLXVwaq3pzi8TM7JgCdmK6mpdejjJv35VkZ_E01hC3aOOGMSGPrdQdZte-oNqCiNZCSDdtFGeM3243OpCqhLsI6clsdYbL9d93pmzKKPIMbgdpK9iRNz-rvB-IMwAXhoWVODrqEelnozv9twnPjpGqCDLkY=",
+              "encrypted_content": "gAAAAABq94ERAWK_JL5-_4QXgFCd5WAVK0WtEbh111A5OQW7-3qj5-qnCAmVs9CM_X8--nIXM7BSXUSf9gVpQMw7sYaC3tsEaMWt757VPkCcTYFeMblt6q76_PfIxKbXi5A4MX05WmPRorpxaFTl5pZDWbQATKzaTI77wSrVPHTpR6Ikm7yCPALxMojl2a_lNwNWyyHCiLos-jeQBDaf1hVxLS8pKk5cmo1csYQBDWNNDniIbbuBscOJ50Qeoq1NIHtYRKQGps5qdq1NhyOfzmoCQOolI0qXviIZuvxJRtqJdJJ8VqFydAMTX3lU_a-AhYHSDRp1i8xVPsa7WkmhhXZBvkUv6zqCr8JphrCgn1A6djmQk7RSl2WXM8cXo9Vb1Q_XNWpFk-VS9fKLbghspcU6Otu_Q3nK1cGzo8kkaQPuX0AzWAvgVTHAthwE3_P4LhXDRxc_ccumS9u-PNwJ4SVtl-Oc6Ls3dO5p8CbTjaNDY_4NDVfrx60KvxGWgXQuZrTQK0PTjLbZKB9QQJ9ESrEyFa3JQMr548dyXV-Z2YWwCys82bduSm8YxAEHSkQ5PhNHLwWbGXdJZIlSCXH5C9h5YLB-NJFI5Mgw7wGSSaqR4CNVgrhMpWxH0RjhLyPmySAR-mnhW2wIVT1A5O6AAeWpmuG6fCB5YN4G0pdsFR5_gcph6YyHwey8ByIWPmr_e1PYfDhD0Rrm3W0SfmuPdUmjpYxIISIRDVY8H90UIKI-zWNm42alplo2AMWWIh3GC1bAkkHpn-5WE3OtQMGNqzo-nkBb0XjOWIlf8Z2C7lXe_F3OGUpHHLL1LPA3K9p7-z1Y1gGFolLhtzK4oWh-siXGsT58OASAQg0haNRf5qYYANGZmR96uValNBYM2CDLf73-Yx90bW_9rXA3qztchAE0p0vxgEdaVK_lweJKR1OjSCStCWYEVS6rVwUeujuVJQN5wfkbXG48-qJWu9ZQ7C2o8-4ybtt2woIKxYOursolvWhU9SmeDf3uMrbi3EMthUs8Jc79kZjzxllMZ1jdfJbqhbXoRHu9B6tg22WzoqITNf0XCvHPXCi6VkStpLVc2i73UdjhB5JloEuxjQDGpiik3bPeMASbTg1_CAYEw2Glc2bIlmVed3nR2NxXhIx_QN80zdJ1gUP2yEQ2nmgjrXjruYVjmlhNapq6LWqT3Kw_oRtOGtMcyREtUCuBxq4IWixbXiPcZxDu0Uiwvb6Jg-i4enZO-6Jgsd5YkUTQxFZmA7UZjVyv5xjQZ7bvKhQCgkD5xeef6avdVivSOZNO-C2WFUur3D9dDxKE2GTHdhKlB4XYhkjZClBQILDpJ3dqbrKRU_DXCE6JJGxBJQR_5K8220l5p29X942hwbdcprhkyEyU8jOxP9S_KGpy0SU_UYWZ8tQd23uAQdzd4dGs1QefhvH9eLKvM1V-Q7KMJt6x4K62srq9XVagdeeDRlwc8Y48HZwZUxI4VS0zwO8IIUPa2BIjyfhSv9D9ssXBN-8jMUFrJW7QAh07BumXQzs-XzkALkjzpPxLpHoyDMYClZc2TxNcKIo7QMwmpg2BkH6_qeJ7kqWPyfyrtVcXwKn1HPiPlKxCwYhN4L5qU8Y3RimS8DAtO-Non-Yq9AH-ZODK34AZDThttV1LEXqUk2lhJWwoo--mvUgIadTVYBPdhNhOoA0TWyeszSsSRYG9yjqagfAgVC5qGbsRDkoflqnoID9NsnQYDl4Z",
               "summary": []
             },
             {
-              "id": "msg_0e0b6b753262e197016af35711d62087d2bf3e1fe7e6662fab",
+              "id": "msg_01ba42993e48e874016af78111374087d2968270fa44da5c9e",
               "type": "message",
               "status": "completed",
               "content": [
@@ -351,5 +353,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:40:34 GMT
+  recorded_at: Fri, 13 Nov 2026 21:28:49 GMT
 recorded_with: VCR 6.4.1

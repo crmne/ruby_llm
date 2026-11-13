@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:27:22 GMT
+      - Fri, 13 Nov 2026 21:20:48 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
@@ -35,8 +35,8 @@ http_interactions:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":67,"completion_tokens":60,"total_tokens":127,"completion_tokens_details":{"reasoning_tokens":54},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\n391","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"We
-        need answer simple multiplication. 17*23 = 17*20 + 17*3 = 340+51=391. User
-        requests reply with number only likely. Final: 391.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-b714fdaa-cf7a-4dcb-8167-ed81305ff17a","object":"chat.completion","created":1794331642,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Tue, 10 Nov 2026 17:27:23 GMT
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":67,"completion_tokens":47,"total_tokens":114,"completion_tokens_details":{"reasoning_tokens":41},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\n391","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"We
+        need answer user: \"What is 17 times 23? Reply with the number.\" Simple multiplication
+        17*23 = 391. Need final only number.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-e6511b0d-019a-476e-b8c3-a1e097f49317","object":"chat.completion","created":1794604849,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Fri, 13 Nov 2026 21:20:50 GMT
 recorded_with: VCR 6.4.1

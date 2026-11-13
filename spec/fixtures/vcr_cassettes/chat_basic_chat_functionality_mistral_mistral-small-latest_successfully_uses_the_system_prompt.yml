@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:34:45 GMT
+      - Fri, 13 Nov 2026 21:24:15 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,31 +33,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a1c686-cab2-7f96-b108-c6829f14c8c5
+      - 01a1d6cb-fbf8-747b-87d9-4e3878d8264f
       X-Kong-Request-Id:
-      - 01a1c686-cab2-7f96-b108-c6829f14c8c5
+      - 01a1d6cb-fbf8-747b-87d9-4e3878d8264f
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99334'
+      - '98728'
       X-Ratelimit-Tokens-Query-Cost:
-      - '132'
+      - '120'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
       - '95'
       X-Envoy-Upstream-Service-Time:
-      - '815'
+      - '730'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '816'
+      - '732'
       X-Kong-Proxy-Latency:
-      - '16'
+      - '18'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -72,7 +72,11 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjJiYTk4ZTUxZWMxODRhZGE5YjU0NDA3OTAzMWI1YjliIiwiY3JlYXRlZCI6MTc5NDMzMjA4NCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjQzLCJ0b3RhbF90b2tlbnMiOjEzMiwiY29tcGxldGlvbl90b2tlbnMiOjg5LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MH0sInNlcnZpY2VfdGllciI6InN0YW5kYXJkIn0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGwsImNvbnRlbnQiOiJJJ20gYWZyYWlkIEkgY2FuJ3QgcHJvdmlkZSByZWFsLXRpbWUgd2VhdGhlciB1cGRhdGVzLCBidXQgSSBjYW4gdGVsbCB5b3UgdGhhdCB0aGUgd2VhdGhlciBpcyBhIGNvbXBsZXggc3lzdGVtIGluZmx1ZW5jZWQgYnkgdmFyaW91cyBmYWN0b3JzIGxpa2UgdGVtcGVyYXR1cmUsIGh1bWlkaXR5LCBhbmQgYXRtb3NwaGVyaWMgcHJlc3N1cmUuIEZvciB0aGUgbW9zdCBhY2N1cmF0ZSBhbmQgdXAtdG8tZGF0ZSBpbmZvcm1hdGlvbiwgSSByZWNvbW1lbmQgY2hlY2tpbmcgYSByZWxpYWJsZSB3ZWF0aGVyIHNlcnZpY2Ugb3IgYXBwLiBBbmQgcmVtZW1iZXIsIGV2ZW4gdGhlIGJlc3Qgd2VhdGhlciBmb3JlY2FzdHMgY2FuIGJlIGFzIHVucHJlZGljdGFibGUgYXMgYSBwbG90IHR3aXN0IGluIGFuIFhLQ0QgY29taWPigJRYS0NENzM5MiEifX1dfQ==
-  recorded_at: Tue, 10 Nov 2026 17:34:45 GMT
+      string: '{"id":"6f027cc59aba41e0bf83c957bb5d7001","created":1794605055,"model":"mistral-small-latest","usage":{"prompt_tokens":43,"total_tokens":120,"completion_tokens":77,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        weather today is quite pleasant, with a mix of sun and clouds. The temperature
+        is moderate, and there''s a light breeze. It''s a good day to be outdoors,
+        but don''t forget your sunscreen! XKCD7392 reminds us that weather is one
+        of those things that''s always changing, and it''s best to be prepared for
+        anything."}}]}'
+  recorded_at: Fri, 13 Nov 2026 21:24:15 GMT
 recorded_with: VCR 6.4.1

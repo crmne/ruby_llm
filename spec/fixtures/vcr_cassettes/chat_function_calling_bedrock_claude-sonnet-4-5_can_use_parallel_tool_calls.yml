@@ -18,7 +18,7 @@ http_interactions:
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261110T173155Z
+      - 20261113T212303Z
       X-Amz-Content-Sha256:
       - dd8349e5f2517f82ad17a2b4cfe44a160e1dfc97b1f9427a1c4dfc2ca66704b1
       Authorization:
@@ -34,7 +34,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:31:58 GMT
+      - Fri, 13 Nov 2026 21:23:05 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -42,9 +42,9 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - f0ffa406-7a84-4bfb-a796-395ed230e754
+      - 97f7d1df-5a31-4a73-a7ca-3f39eb02f6ab
       X-Amzn-Bedrock-Invocation-Latency:
-      - '2174'
+      - '1836'
       X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
       - '0'
       X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
@@ -55,8 +55,8 @@ http_interactions:
       - '701'
     body:
       encoding: UTF-8
-      string: '{"model":"claude-sonnet-4-5-20250929","id":"msg_bdrk_011CgueTLAVi7BygXKUpAQs7","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_bdrk_01DkM5W6fNVp87EfBSsPbUWE","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}},{"type":"tool_use","id":"toolu_bdrk_01D82SGC8Lvg7FccH3AX52xk","name":"best_language_to_learn","input":{}}],"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":701,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":97}}'
-  recorded_at: Tue, 10 Nov 2026 17:31:58 GMT
+      string: '{"model":"claude-sonnet-4-5-20250929","id":"msg_bdrk_011Ch1dWK1n1PABgx5WnZszK","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_bdrk_0195YTWV8KkeP4tDeFSsFmwR","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}},{"type":"tool_use","id":"toolu_bdrk_01WDjwaMuf6ep8LwgyRYCDXd","name":"best_language_to_learn","input":{}}],"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":701,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":97}}'
+  recorded_at: Fri, 13 Nov 2026 21:23:05 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-sonnet-4-5-20250929-v1:0/invoke
@@ -64,8 +64,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"type":"text","text":"What''s
         the weather in Berlin (52.5200, 13.4050) and what''s the best language to
-        learn?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_bdrk_01DkM5W6fNVp87EfBSsPbUWE","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}},{"type":"tool_use","id":"toolu_bdrk_01D82SGC8Lvg7FccH3AX52xk","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_01DkM5W6fNVp87EfBSsPbUWE","content":[{"type":"text","text":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]},{"type":"tool_result","tool_use_id":"toolu_bdrk_01D82SGC8Lvg7FccH3AX52xk","content":[{"type":"text","text":"Ruby"}]}]}],"max_tokens":64000,"tools":[{"name":"weather","description":"Gets
+        learn?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_bdrk_0195YTWV8KkeP4tDeFSsFmwR","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}},{"type":"tool_use","id":"toolu_bdrk_01WDjwaMuf6ep8LwgyRYCDXd","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_0195YTWV8KkeP4tDeFSsFmwR","content":[{"type":"text","text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]},{"type":"tool_result","tool_use_id":"toolu_bdrk_01WDjwaMuf6ep8LwgyRYCDXd","content":[{"type":"text","text":"Ruby"}]}]}],"max_tokens":64000,"tools":[{"name":"weather","description":"Gets
         current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}},{"name":"best_language_to_learn","description":"Gets
@@ -76,9 +76,9 @@ http_interactions:
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261110T173158Z
+      - 20261113T212305Z
       X-Amz-Content-Sha256:
-      - 3bd17bd234e070b8fb3e06177987b7546ca7d4e57067438edb389e3254f4b080
+      - 165bef094c7972b0cc44f618c649037574fc2727bf9815d691fc17ff894b6930
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -92,28 +92,28 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:32:00 GMT
+      - Fri, 13 Nov 2026 21:23:07 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '541'
+      - '551'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - f2b56bff-4a22-43e6-b537-fefdd1c8de27
+      - 86bb32d7-fc46-44a1-aa06-af6c1fd26126
       X-Amzn-Bedrock-Invocation-Latency:
-      - '1894'
+      - '1860'
       X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
       - '0'
       X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
       - '0'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '40'
+      - '51'
       X-Amzn-Bedrock-Input-Token-Count:
       - '893'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtb2RlbCI6ImNsYXVkZS1zb25uZXQtNC01LTIwMjUwOTI5IiwiaWQiOiJtc2dfYmRya18wMTFDZ3VlVFk3YWs1VGhzOUR1QUduOU4iLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJCYXNlZCBvbiB0aGUgcmVzdWx0czpcblxuKipXZWF0aGVyIGluIEJlcmxpbjoqKiBUaGUgY3VycmVudCB3ZWF0aGVyIGlzIDE1wrBDIHdpdGggd2luZHMgYXQgMTAga20vaC5cblxuKipCZXN0IGxhbmd1YWdlIHRvIGxlYXJuOioqIFJ1YnkifV0sInN0b3BfcmVhc29uIjoiZW5kX3R1cm4iLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJzdG9wX2RldGFpbHMiOm51bGwsInVzYWdlIjp7ImlucHV0X3Rva2VucyI6ODkzLCJjYWNoZV9jcmVhdGlvbl9pbnB1dF90b2tlbnMiOjAsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjowLCJjYWNoZV9jcmVhdGlvbiI6eyJlcGhlbWVyYWxfNW1faW5wdXRfdG9rZW5zIjowLCJlcGhlbWVyYWxfMWhfaW5wdXRfdG9rZW5zIjowfSwib3V0cHV0X3Rva2VucyI6NDB9fQ==
-  recorded_at: Tue, 10 Nov 2026 17:32:01 GMT
+        eyJtb2RlbCI6ImNsYXVkZS1zb25uZXQtNC01LTIwMjUwOTI5IiwiaWQiOiJtc2dfYmRya18wMTFDaDFkV1ZBaXRWdTQ5NmpZV2o4dXoiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCkgaXMgKioxNcKwQyB3aXRoIHdpbmQgYXQgMTAga20vaCoqLlxuXG5BcyBmb3IgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4sIHRoZSBhbnN3ZXIgaXMgKipSdWJ5KiohIn1dLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwic3RvcF9kZXRhaWxzIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjg5MywiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfY3JlYXRpb24iOnsiZXBoZW1lcmFsXzVtX2lucHV0X3Rva2VucyI6MCwiZXBoZW1lcmFsXzFoX2lucHV0X3Rva2VucyI6MH0sIm91dHB1dF90b2tlbnMiOjUxfX0=
+  recorded_at: Fri, 13 Nov 2026 21:23:08 GMT
 recorded_with: VCR 6.4.1

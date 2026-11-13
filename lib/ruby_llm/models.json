@@ -1017,6 +1017,7 @@
       "attachment": true,
       "temperature": true,
       "last_updated": "2025-09-29",
+      "status": "deprecated",
       "tool_call": true,
       "structured_output": true,
       "reasoning": true,
@@ -1085,6 +1086,7 @@
       "attachment": true,
       "temperature": true,
       "last_updated": "2025-09-29",
+      "status": "deprecated",
       "tool_call": true,
       "structured_output": true,
       "reasoning": true,
@@ -1982,7 +1984,7 @@
     "metadata": {
       "object": "model",
       "lifecycle_status": "generally-available",
-      "inference_retires_at": 4102358400
+      "inference_retires_at": 4084128000
     }
   },
   {
@@ -2007,7 +2009,7 @@
     "metadata": {
       "object": "model",
       "lifecycle_status": "generally-available",
-      "inference_retires_at": 4102358400
+      "inference_retires_at": 4084128000
     }
   },
   {
@@ -3391,6 +3393,9 @@
       }
     },
     "metadata": {
+      "object": "model",
+      "lifecycle_status": "generally-available",
+      "inference_retires_at": 1828137600,
       "source": "models.dev",
       "provider_id": "azure",
       "open_weights": false,
@@ -3422,6 +3427,31 @@
         "output": 128000
       },
       "knowledge": "2026-06"
+    }
+  },
+  {
+    "id": "claude-fable-5-2-fast",
+    "name": "claude-fable-5-2-fast",
+    "provider": "azure",
+    "family": null,
+    "created_at": "2026-10-12 00:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "lifecycle_status": "generally-available",
+      "inference_retires_at": 1799971200
     }
   },
   {
@@ -8011,7 +8041,7 @@
       "provider_id": "azure",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-04-24",
       "tool_call": true,
       "structured_output": true,
@@ -8132,7 +8162,7 @@
       "provider_id": "azure",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-07-09",
       "tool_call": true,
       "structured_output": true,
@@ -8257,7 +8287,7 @@
       "provider_id": "azure",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-07-09",
       "tool_call": true,
       "structured_output": true,
@@ -8382,7 +8412,7 @@
       "provider_id": "azure",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-07-09",
       "tool_call": true,
       "structured_output": true,
@@ -8583,31 +8613,6 @@
     }
   },
   {
-    "id": "gpt-6-astra-2026-09-03-private",
-    "name": "gpt-6-astra-2026-09-03-private",
-    "provider": "azure",
-    "family": null,
-    "created_at": "2026-09-03 00:00:00 UTC",
-    "context_window": null,
-    "max_output_tokens": null,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [],
-    "pricing": {},
-    "metadata": {
-      "object": "model",
-      "lifecycle_status": "generally-available",
-      "inference_retires_at": 1831161600
-    }
-  },
-  {
     "id": "gpt-6-luna",
     "name": "GPT-6 Luna",
     "provider": "azure",
@@ -8657,7 +8662,7 @@
       "provider_id": "azure",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-09-22",
       "tool_call": true,
       "structured_output": true,
@@ -8782,7 +8787,7 @@
       "provider_id": "azure",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-09-22",
       "tool_call": true,
       "structured_output": true,
@@ -9031,7 +9036,7 @@
       "provider_id": "azure",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-10-26",
       "tool_call": true,
       "structured_output": true,
@@ -9601,7 +9606,7 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 5,
-          "output_per_million": 32,
+          "output_per_million": 10,
           "cache_read_input_per_million": 1.25
         }
       }
@@ -9620,7 +9625,7 @@
       "reasoning": false,
       "cost": {
         "input": 5,
-        "output": 32,
+        "output": 10,
         "cache_read": 1.25
       },
       "limit": {
@@ -11448,7 +11453,32 @@
     "metadata": {
       "object": "model",
       "lifecycle_status": "generally-available",
-      "inference_retires_at": 4102358400
+      "inference_retires_at": 4084128000
+    }
+  },
+  {
+    "id": "mistral-large-4-latest",
+    "name": "mistral-large-4-latest",
+    "provider": "azure",
+    "family": null,
+    "created_at": "2026-10-19 00:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "lifecycle_status": "preview",
+      "inference_retires_at": 1824595200
     }
   },
   {
@@ -11550,7 +11580,7 @@
     "pricing": {},
     "metadata": {
       "object": "model",
-      "lifecycle_status": "preview",
+      "lifecycle_status": "generally-available",
       "inference_retires_at": 1822348800
     }
   },
@@ -18802,7 +18832,7 @@
       "provider_id": "amazon-bedrock",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-07-09",
       "tool_call": true,
       "structured_output": true,
@@ -18898,7 +18928,7 @@
       "provider_id": "amazon-bedrock",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-07-09",
       "tool_call": true,
       "structured_output": true,
@@ -18994,7 +19024,7 @@
       "provider_id": "amazon-bedrock",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-07-09",
       "tool_call": true,
       "structured_output": true,
@@ -19185,7 +19215,7 @@
       "provider_id": "amazon-bedrock",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-09-22",
       "tool_call": true,
       "structured_output": true,
@@ -19281,7 +19311,7 @@
       "provider_id": "amazon-bedrock",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-09-22",
       "tool_call": true,
       "structured_output": true,
@@ -19472,7 +19502,7 @@
       "provider_id": "amazon-bedrock",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-10-26",
       "tool_call": true,
       "structured_output": true,
@@ -20399,7 +20429,7 @@
       "provider_id": "amazon-bedrock",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-07-09",
       "tool_call": true,
       "structured_output": true,
@@ -20496,7 +20526,7 @@
       "provider_id": "amazon-bedrock",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-07-09",
       "tool_call": true,
       "structured_output": true,
@@ -23388,7 +23418,7 @@
       "provider_id": "amazon-bedrock",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-06-01",
       "tool_call": true,
       "structured_output": true,
@@ -23466,7 +23496,7 @@
       "provider_id": "amazon-bedrock",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-07-09",
       "tool_call": true,
       "structured_output": true,
@@ -23563,7 +23593,7 @@
       "provider_id": "amazon-bedrock",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-07-09",
       "tool_call": true,
       "structured_output": true,
@@ -23662,7 +23692,7 @@
       "provider_id": "amazon-bedrock",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-07-09",
       "tool_call": true,
       "structured_output": true,
@@ -23857,7 +23887,7 @@
       "provider_id": "amazon-bedrock",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-09-22",
       "tool_call": true,
       "structured_output": true,
@@ -23954,7 +23984,7 @@
       "provider_id": "amazon-bedrock",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-09-22",
       "tool_call": true,
       "structured_output": true,
@@ -24147,7 +24177,7 @@
       "provider_id": "amazon-bedrock",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-10-26",
       "tool_call": true,
       "structured_output": true,
@@ -28248,7 +28278,7 @@
       "provider_id": "amazon-bedrock",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-06-01",
       "tool_call": true,
       "structured_output": true,
@@ -28347,7 +28377,7 @@
       "provider_id": "amazon-bedrock",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-07-09",
       "tool_call": true,
       "structured_output": true,
@@ -28467,7 +28497,7 @@
       "provider_id": "amazon-bedrock",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-07-09",
       "tool_call": true,
       "structured_output": true,
@@ -28587,7 +28617,7 @@
       "provider_id": "amazon-bedrock",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-07-09",
       "tool_call": true,
       "structured_output": true,
@@ -28826,7 +28856,7 @@
       "provider_id": "amazon-bedrock",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-09-22",
       "tool_call": true,
       "structured_output": true,
@@ -28946,7 +28976,7 @@
       "provider_id": "amazon-bedrock",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-09-22",
       "tool_call": true,
       "structured_output": true,
@@ -29185,7 +29215,7 @@
       "provider_id": "amazon-bedrock",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-10-26",
       "tool_call": true,
       "structured_output": true,
@@ -32429,7 +32459,7 @@
         "es",
         "es-ES"
       ],
-      "version": "2025-10-07.3",
+      "version": "2025-10-07.2",
       "voice": "agustina",
       "accent": "Peninsular",
       "age": "Adult",
@@ -32476,7 +32506,7 @@
         "es",
         "es-ES"
       ],
-      "version": "2025-10-07.3",
+      "version": "2025-10-07.2",
       "voice": "alvaro",
       "accent": "Peninsular",
       "age": "Adult",
@@ -32570,12 +32600,12 @@
         "en",
         "en-PH"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "amalthea",
       "accent": "Filipino",
       "age": "Young Adult",
       "color": "#a1d7fd",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/2501a14752716e00c7d7366c1b52715636ea083b-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/d7d54f530c7bac91731633f690a9c9222db4505f-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/e5f50690fb8e1e2bcdd367290b7d268c495db202.wav",
       "tags": [
         "feminine",
@@ -32613,7 +32643,7 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "andromeda",
       "accent": "American",
       "age": "Adult",
@@ -32657,7 +32687,7 @@
         "es",
         "es-AR"
       ],
-      "version": "2025-10-07.3",
+      "version": "2025-10-07.2",
       "voice": "antonia",
       "accent": "Argentine",
       "age": "Adult",
@@ -32705,12 +32735,12 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "apollo",
       "accent": "American",
       "age": "Adult",
       "color": "#a1d7fd",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/dac82e323fd948f209b9246708efe296fbf30b2d-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/f0ea146234f3ca389a5afd386ed2ad52283ba173-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/2281ed81ae31472f9a5dbd0accdcb0dd828b273e.wav",
       "tags": [
         "masculine",
@@ -32748,7 +32778,7 @@
         "es",
         "es-419"
       ],
-      "version": "2025-10-07.3",
+      "version": "2025-10-07.2",
       "voice": "aquila",
       "accent": "Latin American",
       "age": "Adult",
@@ -32794,7 +32824,7 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "arcas",
       "accent": "American",
       "age": "Adult",
@@ -32839,7 +32869,7 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "aries",
       "accent": "American",
       "age": "Adult",
@@ -32882,12 +32912,12 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "asteria",
       "accent": "American",
       "age": "Adult",
       "color": "#7800ed",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/21c9b2777b8226c2bdd15314defc7cfd684b5ed8-144x144.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/17c32bb6a8e61d3d139ab6218635aaaba2d2ec14-144x144.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/4a2382e03800ba300b891be8f4b749b2f0935c4c.wav",
       "tags": [
         "feminine",
@@ -32926,12 +32956,12 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "athena",
       "accent": "American",
       "age": "Mature",
       "color": "#f04438",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/136e18c23cd62e24ca03ee8f9727131c5d902d0e-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/46d4fb3f1b5a25b3df02a83a0faa09e800d62ef7-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/64fed899c97ab8e5ddcfef5bef9e8adaef04c1f7.wav",
       "tags": [
         "feminine",
@@ -32969,12 +32999,12 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "atlas",
       "accent": "American",
       "age": "Mature",
       "color": "#7800ed",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/072239868ad1e3883ef4da0070e954aac67e438d-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/9420667cb7345309f042458335d3b65569d18cd2-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/4bc77f049399b72b11971cee63efe17a0942e4e3.wav",
       "tags": [
         "masculine",
@@ -33060,12 +33090,12 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "aurora",
       "accent": "American",
       "age": "Adult",
       "color": "#949498",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/b2db5f86c41e7d494302df5f79dd40f910d0b02e-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/636dbfd851f1eb994a7b6b0ebf4b02d12f2c6bb6-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/813332a569d18bd1041fb26d1f503fe4b9042451.wav",
       "tags": [
         "feminine",
@@ -33152,12 +33182,12 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "callista",
       "accent": "American",
       "age": "Adult",
       "color": "#027a48",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/ab46682aa2737f2085d0ef4357557dbd2d2e632e-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/8226123033ee6d30221c430e019bc12365cde885-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/6708b97fc33706293499bd65d7d43e6404674a3c.wav",
       "tags": [
         "feminine",
@@ -33196,7 +33226,7 @@
         "es",
         "es-ES"
       ],
-      "version": "2025-10-07.3",
+      "version": "2025-10-07.2",
       "voice": "carina",
       "accent": "Peninsular",
       "age": "Adult",
@@ -33243,7 +33273,7 @@
         "es",
         "es-CO"
       ],
-      "version": "2025-10-07.3",
+      "version": "2025-10-07.2",
       "voice": "celeste",
       "accent": "Colombian",
       "age": "Young Adult",
@@ -33387,12 +33417,12 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "cora",
       "accent": "American",
       "age": "Adult",
       "color": "#ffadd8",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/af5498befa05d79d1ac03020fb768a89e954582f-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/fff93e95efe92f1ba15d7469912c0d95aff65248-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/9d480fe946b8c4995db1fe60058432f122772f8e.wav",
       "tags": [
         "feminine",
@@ -33430,12 +33460,12 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "cordelia",
       "accent": "American",
       "age": "Young Adult",
       "color": "#ee028c",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/2746caeb4b625065cc9d55c7b65d90e2576ec836-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/0b1b95f047db77007b5e710334bdbd94be01d022-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/48debe704e6432fd88904f7e59651ec16311ec83.wav",
       "tags": [
         "feminine",
@@ -33571,7 +33601,7 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "delia",
       "accent": "American",
       "age": "Young Adult",
@@ -33661,7 +33691,7 @@
         "es",
         "es-ES"
       ],
-      "version": "2025-10-07.3",
+      "version": "2025-10-07.2",
       "voice": "diana",
       "accent": "Peninsular",
       "age": "Adult",
@@ -33754,12 +33784,12 @@
         "en",
         "en-GB"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "draco",
       "accent": "British",
       "age": "Adult",
       "color": "#ee028c",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/7cb3da9a6f4e882e6a7da4f88960e90a2d0c938f-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/8461ec4849b48fc570fa3e47e690326979b0e64c-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/02f3523c47f49521c37ce03b78d166aeaf703bde.wav",
       "tags": [
         "masculine",
@@ -33893,12 +33923,12 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "electra",
       "accent": "American",
       "age": "Adult",
       "color": "#fec84b",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/1ce23b918b03e810f19d23a0e0644c9d7d7467c6-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/402189d6ecb0dff90a838d60a9dbcd143210ffbf-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/4ed83539b158003878f12c7b748258d89d3a87ef.wav",
       "tags": [
         "feminine",
@@ -33985,7 +34015,7 @@
         "es",
         "es-MX"
       ],
-      "version": "2025-10-07.3",
+      "version": "2025-10-07.2",
       "voice": "estrella",
       "accent": "Mexican",
       "age": "Mature",
@@ -34174,7 +34204,7 @@
         "es",
         "es-CO"
       ],
-      "version": "2025-10-07.3",
+      "version": "2025-10-07.2",
       "voice": "gloria",
       "accent": "Colombian",
       "age": "Young Adult",
@@ -34222,7 +34252,7 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "harmonia",
       "accent": "American",
       "age": "Adult",
@@ -34313,12 +34343,12 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "helena",
       "accent": "American",
       "age": "Adult",
       "color": "#7800ed",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/0147bf2ed7e137beba83d495ba1a8cdbabf6d881-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/aa59623f5b4703bcc30bc7a9a01c9f054cca8de7-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/de806ec0ef7c09d838d6eabe8b47886a39ba2f53.wav",
       "tags": [
         "feminine",
@@ -34359,7 +34389,7 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "hera",
       "accent": "American",
       "age": "Adult",
@@ -34402,12 +34432,12 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "hermes",
       "accent": "American",
       "age": "Adult",
       "color": "#c58dff",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/a3c42d81863d4e605748928ade21e3e0df96d58d-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/b34a7c0b0afa6025e80f28efb0cbe7a124e045e0-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/45b252379088fa62c9de50fe57bd9b2aec5eb5ce.wav",
       "tags": [
         "masculine",
@@ -34494,12 +34524,12 @@
         "en",
         "en-AU"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "hyperion",
       "accent": "Australian",
       "age": "Adult",
       "color": "#79affa",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/02b6636cd4954a669de684a9ec9c1ca6c94290fa-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/8d1415d9e4f78072348b9c404234dbb1efe2e7da-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/997c4cabfe0f2bd6fe09fa3b8aaafe05bb815c38.wav",
       "tags": [
         "masculine",
@@ -34537,12 +34567,12 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "iris",
       "accent": "American",
       "age": "Young Adult",
       "color": "#949498",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/ce69c2590b74c79c87e58472daf2fa8967bbd70f-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/1b13e455fbd848a974089e900478a32e4fe503c2-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/53f993f1f3ec020f5e1e0fd2c3faaa199beed152.wav",
       "tags": [
         "feminine",
@@ -34629,12 +34659,12 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "janus",
       "accent": "American",
       "age": "Adult",
       "color": "#075433",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/cc3a204ca2421a37fb4747b8b1843c3360a19500-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/5798be9883a8addf45a0a8b5546d8ce5036e18bc-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/e3dd69021b81be052384f5ce96c76fa1cab0c0b6.wav",
       "tags": [
         "feminine",
@@ -34672,7 +34702,7 @@
         "es",
         "es-MX"
       ],
-      "version": "2025-10-07.3",
+      "version": "2025-10-07.2",
       "voice": "javier",
       "accent": "Latin American",
       "age": "Adult",
@@ -34767,12 +34797,12 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "juno",
       "accent": "American",
       "age": "Adult",
       "color": "#c58dff",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/60221782c27342aa43eafd331bfd1b2f46226628-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/9ecc9522397f5f6d3653c6cb7217f494c6cb29d0-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/13edcfcc1339af95c4bf054f7e2dd3be17fde576.wav",
       "tags": [
         "feminine",
@@ -34811,12 +34841,12 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "jupiter",
       "accent": "American",
       "age": "Adult",
       "color": "#fec84b",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/10042990cfd37c40b963cd803eeb11d32b3ffc82-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/27dbfa932f3178753c094b7859396ea0ec8658f6-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/17e56b3681e258325818b13b1c0b67cd4dc26d58.wav",
       "tags": [
         "masculine",
@@ -35094,7 +35124,7 @@
         "es",
         "es-MX"
       ],
-      "version": "2025-10-07.3",
+      "version": "2025-10-07.2",
       "voice": "luciano",
       "accent": "Mexican",
       "age": "Adult",
@@ -35142,7 +35172,7 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "luna",
       "accent": "American",
       "age": "Young Adult",
@@ -35233,12 +35263,12 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "mars",
       "accent": "American",
       "age": "Adult",
       "color": "#ffadd8",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/9b12f723b55c2797c08782aca2025fedae49943b-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/079a99e89c4b363c92ed1bcc22dd5ecc7268c47b-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/308470b81526c7271123f13e7a13ae055ce3d4ae.wav",
       "tags": [
         "masculine",
@@ -35325,12 +35355,12 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "minerva",
       "accent": "American",
       "age": "Adult",
       "color": "#a1d7fd",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/41b1caed8b379af089c782ab19bd822c4e332ebb-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/ede98967145333411a910dfd6e44e1ab88ad5117-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/ae741031efa09c570b7f45feef55615bcf5ddf75.wav",
       "tags": [
         "feminine",
@@ -35368,12 +35398,12 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "neptune",
       "accent": "American",
       "age": "Adult",
       "color": "#f04438",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/f3288e4e1f017a0b6608159bdf32699580fb28b3-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/b185efaec9ab9a05414dfef4ef3ee3773157a233-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/66dfdf6b13be2c5d45878f70937c8dcdab698e96.wav",
       "tags": [
         "masculine",
@@ -35411,7 +35441,7 @@
         "es",
         "es-ES"
       ],
-      "version": "2025-10-07.3",
+      "version": "2025-10-07.2",
       "voice": "nestor",
       "accent": "Peninsular",
       "age": "Adult",
@@ -35458,7 +35488,7 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "odysseus",
       "accent": "American",
       "age": "Adult",
@@ -35502,7 +35532,7 @@
         "es",
         "es-MX"
       ],
-      "version": "2025-10-07.3",
+      "version": "2025-10-07.2",
       "voice": "olivia",
       "accent": "Mexican",
       "age": "Adult",
@@ -35550,12 +35580,12 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "ophelia",
       "accent": "American",
       "age": "Adult",
       "color": "#ffadd8",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/1f8d7401d2f36b8c4483e798c606a527b0808f69-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/ee18fe82ef7b71835e5c3cbc15ee23fcd4287448-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/5ab5a5436fd3c668b8f88f964feb26f3f35f1731.wav",
       "tags": [
         "feminine",
@@ -35593,7 +35623,7 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "orion",
       "accent": "American",
       "age": "Adult",
@@ -35637,7 +35667,7 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "orpheus",
       "accent": "American",
       "age": "Adult",
@@ -35682,12 +35712,12 @@
         "en",
         "en-GB"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "pandora",
       "accent": "British",
       "age": "Adult",
       "color": "#fedf89",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/bee5dccf37b6d02d9c276f5b41e6405de18868b9-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/75e174fc9a0655427f4cd3b49b58ce4bd20d13e1-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/0d2396968e2e73a7ff85e843fa4061f03c43e9a4.wav",
       "tags": [
         "feminine",
@@ -35726,12 +35756,12 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "phoebe",
       "accent": "American",
       "age": "Adult",
       "color": "#ee028c",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/2dad9fb0dfd6d89a04cd9088b7b1292d69e219df-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/5a3b1e5ca4c74f87b4c4b3f786d84a7d91797386-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/61c34319bf73072046d927f5863eb117c5c293de.wav",
       "tags": [
         "feminine",
@@ -35769,7 +35799,7 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "pluto",
       "accent": "American",
       "age": "Adult",
@@ -35960,12 +35990,12 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "saturn",
       "accent": "American",
       "age": "Adult",
       "color": "#fec84b",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/b65dd4ee2e5def65608d3429e295c77df1e131a6-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/af7255f710ffa4983a3121c131f1e7eb0b116c55-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/22afa7dbf220c2c782fdedb250eebf1f7ceb013c.wav",
       "tags": [
         "masculine",
@@ -36003,7 +36033,7 @@
         "es",
         "es-419"
       ],
-      "version": "2025-10-07.3",
+      "version": "2025-10-07.2",
       "voice": "selena",
       "accent": "Latin American",
       "age": "Young Adult",
@@ -36049,12 +36079,12 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "selene",
       "accent": "American",
       "age": "Adult",
       "color": "#f04438",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/80c7fbb7a985a1a0b82e700a0fcd25516d838c34-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/494e64aff59485254fa76ccd8b46675668d22d4b-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/cebe72725a11e7c576de3f851b53d71616371f2a.wav",
       "tags": [
         "feminine",
@@ -36092,7 +36122,7 @@
         "es",
         "es-ES"
       ],
-      "version": "2025-10-07.3",
+      "version": "2025-10-07.2",
       "voice": "silvia",
       "accent": "Peninsular",
       "age": "Adult",
@@ -36140,7 +36170,7 @@
         "es",
         "es-MX"
       ],
-      "version": "2025-10-07.3",
+      "version": "2025-10-07.2",
       "voice": "sirio",
       "accent": "Mexican",
       "age": "Adult",
@@ -36186,12 +36216,12 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "thalia",
       "accent": "American",
       "age": "Adult",
       "color": "#ffe699",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/390b20137b92f0f4dc29073e7466636482b72b4d-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/d4880116146588ab7b9f2c5923cb308a93c3eca9-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/e8725b8d3ec0a0bd924c13c84aaeb3acaa0adaac.wav",
       "tags": [
         "feminine",
@@ -36232,12 +36262,12 @@
         "en",
         "en-AU"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "theia",
       "accent": "Australian",
       "age": "Adult",
       "color": "#fec84b",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/3e776f0d789f828ce94a3e1401c7a4a23207ecd7-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/b6187bc49c01092830490966ecdc7bde260de642-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/662085e396fa53bb888e492ec5453dde9bb22674.wav",
       "tags": [
         "feminine",
@@ -36300,6 +36330,52 @@
     }
   },
   {
+    "id": "aura-2-valentina-es",
+    "name": "aura-2-valentina-es",
+    "provider": "deepgram",
+    "family": "aura-2",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "audio"
+      ]
+    },
+    "capabilities": [],
+    "pricing": {},
+    "metadata": {
+      "architecture": "aura-2",
+      "languages": [
+        "es",
+        "es-419"
+      ],
+      "version": "2025-05-23.1",
+      "voice": "valentina",
+      "accent": "Latin American",
+      "age": "Adult",
+      "color": "#c58dff",
+      "display_name": "valentina",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/f083687f93934459b0b3252403070f9cce67001f-372x372.png",
+      "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/0f756aabc2bea303f44404e5389fe557498aa59e.wav",
+      "tags": [
+        "feminine",
+        "approachable",
+        "friendly",
+        "casual",
+        "natural",
+        "cheerful"
+      ],
+      "use_cases": [
+        "casual chat"
+      ]
+    }
+  },
+  {
     "id": "aura-2-valerio-es",
     "name": "aura-2-valerio-es",
     "provider": "deepgram",
@@ -36324,7 +36400,7 @@
         "es",
         "es-MX"
       ],
-      "version": "2025-10-07.3",
+      "version": "2025-10-07.2",
       "voice": "valerio",
       "accent": "Mexican",
       "age": "Adult",
@@ -36372,12 +36448,12 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "vesta",
       "accent": "American",
       "age": "Adult",
       "color": "#149afb",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/a15067c800a1a4a4480b4204b0dcca5bc92d605e-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/b8b613efccfc11954a8abeb4cdf712c0d1c82429-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/8595c997fb3aa8bdd4b0de085f7f5f68422dc1be.wav",
       "tags": [
         "feminine",
@@ -36466,12 +36542,12 @@
         "en",
         "en-US"
       ],
-      "version": "2025-04-15.3",
+      "version": "2025-04-15.4",
       "voice": "zeus",
       "accent": "American",
       "age": "Adult",
       "color": "#c58dff",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/30dfc599f8d9146f9118e30e6da995a4e4bcec37-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/ff2ec9fd577de53944b6a7b1ed7bd276513926c5-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/b744984f936b70c1af8998911e1c166a843b4711.wav",
       "tags": [
         "masculine",
@@ -36514,7 +36590,7 @@
       "accent": "Irish",
       "age": "Adult",
       "color": "#ba80f5",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/19913bbdcd733ae808303ea8faae8e8e43ee369c-144x144.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/f57abb749b177d33761f80ae9fba5ac54345f72a-144x144.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/f45d7dd5526a1661929f39943dbf3771e2203855.wav",
       "tags": [
         "masculine",
@@ -36602,7 +36678,7 @@
       "accent": "American",
       "age": "Adult",
       "color": "#7800ed",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/21c9b2777b8226c2bdd15314defc7cfd684b5ed8-144x144.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/17c32bb6a8e61d3d139ab6218635aaaba2d2ec14-144x144.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/fcd00b53e0482cdd7cde043c94c84adccab223a3.wav",
       "tags": [
         "feminine",
@@ -36645,7 +36721,7 @@
       "accent": "British",
       "age": "Adult",
       "color": "#ffe699",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/136e18c23cd62e24ca03ee8f9727131c5d902d0e-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/46d4fb3f1b5a25b3df02a83a0faa09e800d62ef7-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/94246ae78f333423442edf8c4c93566e836a12f1.wav",
       "tags": [
         "feminine",
@@ -36688,7 +36764,7 @@
       "accent": "British",
       "age": "Adult",
       "color": "#f185be",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/9682830014919fbdfb6cc2bc96d629920b4078b8-144x144.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/82ae45e14c7f6ab776de643f4da5779fff93252c-144x144.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/9b0c74e03153b7b9efce7b1ae9694d4842c1e647.wav",
       "tags": [
         "masculine",
@@ -36947,7 +37023,7 @@
       "accent": "American",
       "age": "Adult",
       "color": "#00cf56",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/41fc4efd1710da7aa78c2ab2dfe927231c2b3e16-144x144.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/708d358fbab2e16c6c7b81edb024d2e7071ad349-144x144.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/66f5f09b4447c2e1502004976fbe2582b7319d70.wav",
       "tags": [
         "feminine",
@@ -36990,7 +37066,7 @@
       "accent": "American",
       "age": "Adult",
       "color": "#949498",
-      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/30dfc599f8d9146f9118e30e6da995a4e4bcec37-1024x1024.png",
+      "image": "https://cdn.sanity.io/images/0dsbfl6j/production/ff2ec9fd577de53944b6a7b1ed7bd276513926c5-1024x1024.png",
       "sample": "https://cdn.sanity.io/files/0dsbfl6j/production/28f2b55e04a419bcc2d0237ee655913d8509be62.wav",
       "tags": [
         "masculine",
@@ -37916,8 +37992,12 @@
     "metadata": {
       "architecture": "nova-3",
       "languages": [
+        "ab",
+        "ady",
         "af",
         "af-ZA",
+        "ak",
+        "am",
         "ar",
         "ar-AE",
         "ar-DZ",
@@ -37937,23 +38017,29 @@
         "ar-TN",
         "as",
         "as-IN",
+        "az",
         "be",
         "be-BY",
         "bg",
         "bg-BG",
         "bn",
         "bn-IN",
+        "brx",
         "bs",
         "bs-BA",
         "ca",
+        "ckb",
         "cs",
         "cs-CZ",
+        "cy",
         "da",
         "da-DK",
+        "dav",
         "de",
         "de-AT",
         "de-CH",
         "de-DE",
+        "dv",
         "el",
         "en",
         "en-AU",
@@ -37981,6 +38067,7 @@
         "gl",
         "gu",
         "gu-IN",
+        "ha",
         "he",
         "hi",
         "hr",
@@ -37991,22 +38078,34 @@
         "hy-AM",
         "id",
         "id-ID",
+        "is",
+        "is-IS",
         "it",
         "it-IT",
         "ja",
         "ja-JP",
         "ka",
         "ka-GE",
+        "kab",
+        "kbd",
         "kk",
         "kk-KZ",
+        "kln",
+        "kmr",
         "kn",
         "kn-IN",
         "ko",
         "ko-KR",
+        "kok",
+        "ks",
+        "ky",
+        "lg",
         "lt",
         "lt-LT",
+        "luo",
         "lv",
         "lv-LV",
+        "mhr",
         "mk",
         "mk-MK",
         "ml",
@@ -38014,6 +38113,8 @@
         "mr",
         "mr-IN",
         "ms",
+        "ms-MY",
+        "ms-SG",
         "nb",
         "ne",
         "nl",
@@ -38034,11 +38135,15 @@
         "ru",
         "ru-Latn",
         "ru-RU",
+        "rw",
+        "sd",
+        "si",
         "sk",
         "sk-SK",
         "sl",
         "sl-SI",
         "sl-SL",
+        "sq",
         "sr",
         "sr-RS",
         "sv",
@@ -38051,14 +38156,20 @@
         "th",
         "th-TH",
         "tl",
+        "tn",
         "tr",
         "tr-TR",
+        "ug",
         "uk",
         "ur",
         "ur-PK",
+        "uz",
+        "uz-UZ",
+        "ve",
         "vi",
         "vi-VN",
         "xh",
+        "yo",
         "zh",
         "zh-CN",
         "zh-HK",
@@ -38095,6 +38206,8 @@
       "architecture": "nova-3",
       "languages": [
         "de",
+        "de-AT",
+        "de-DE",
         "en",
         "en-AU",
         "en-CA",
@@ -40253,12 +40366,7 @@
         "standard": {
           "input_per_million": 1.25,
           "output_per_million": 10
-        },
-        "long_context": {
-          "input_per_million": 2.5,
-          "output_per_million": 15
-        },
-        "long_context_threshold": 200000
+        }
       }
     },
     "metadata": {
@@ -40279,21 +40387,7 @@
       "reasoning_options": [],
       "cost": {
         "input": 1.25,
-        "output": 10,
-        "tiers": [
-          {
-            "input": 2.5,
-            "output": 15,
-            "tier": {
-              "type": "context",
-              "size": 200000
-            }
-          }
-        ],
-        "context_over_200k": {
-          "input": 2.5,
-          "output": 15
-        }
+        "output": 10
       },
       "limit": {
         "context": 128000,
@@ -42523,6 +42617,115 @@
     }
   },
   {
+    "id": "gemini-4-hydrogen",
+    "name": "Gemini 4 Hydrogen",
+    "provider": "gemini",
+    "family": "gemini",
+    "created_at": "2026-11-12 00:00:00 UTC",
+    "context_window": 1048576,
+    "max_output_tokens": 65536,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video",
+        "audio",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision",
+      "video",
+      "tool_choice",
+      "transcription",
+      "batch"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.5,
+          "output_per_million": 7.5,
+          "cache_read_input_per_million": 0.075
+        }
+      },
+      "audio_tokens": {
+        "standard": {
+          "input_per_million": 1.5
+        }
+      }
+    },
+    "metadata": {
+      "version": "3.0",
+      "description": "Gemini 4 Hydrogen",
+      "supported_generation_methods": [
+        "generateContent",
+        "countTokens",
+        "batchGenerateContent"
+      ],
+      "source": "models.dev",
+      "provider_id": "google",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-11-12",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "low",
+            "medium",
+            "high",
+            "xhigh"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 1.5,
+        "output": 7.5,
+        "cache_read": 0.075,
+        "input_audio": 1.5
+      },
+      "limit": {
+        "context": 1048576,
+        "output": 65536
+      },
+      "knowledge": "2026-03"
+    }
+  },
+  {
+    "id": "gemini-decision-1",
+    "name": "Gemini Decision 1",
+    "provider": "gemini",
+    "family": null,
+    "created_at": null,
+    "context_window": 262144,
+    "max_output_tokens": 1,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [],
+      "output": []
+    },
+    "capabilities": [],
+    "pricing": {},
+    "metadata": {
+      "version": "gemini-decision-1",
+      "description": "Gemini Decision 1",
+      "supported_generation_methods": [
+        "createDecision"
+      ]
+    }
+  },
+  {
     "id": "gemini-embedding-001",
     "name": "Gemini Embedding 001",
     "provider": "gemini",
@@ -43163,7 +43366,14 @@
       "vision",
       "tool_choice"
     ],
-    "pricing": {},
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0,
+          "output_per_million": 0
+        }
+      }
+    },
     "metadata": {
       "version": "001",
       "description": "Gemma 4 26B A4B IT",
@@ -43185,6 +43395,10 @@
           "type": "toggle"
         }
       ],
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
       "limit": {
         "context": 262144,
         "output": 32768
@@ -43216,7 +43430,14 @@
       "vision",
       "tool_choice"
     ],
-    "pricing": {},
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0,
+          "output_per_million": 0
+        }
+      }
+    },
     "metadata": {
       "version": "001",
       "description": "Gemma 4 31B IT",
@@ -43238,6 +43459,10 @@
           "type": "toggle"
         }
       ],
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
       "limit": {
         "context": 262144,
         "output": 32768
@@ -44854,7 +45079,8 @@
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
-        "text"
+        "text",
+        "image"
       ],
       "output": [
         "text"
@@ -44864,6 +45090,7 @@
       "function_calling",
       "structured_output",
       "reasoning",
+      "vision",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -44883,7 +45110,7 @@
       "source": "models.dev",
       "provider_id": "mistral",
       "open_weights": true,
-      "attachment": false,
+      "attachment": true,
       "temperature": true,
       "last_updated": "2026-10-17",
       "tool_call": true,
@@ -46128,9 +46355,6 @@
       "object": "model",
       "owned_by": "mistralai",
       "description": "Release candidate for ml3.",
-      "aliases": [
-        "mistral-large-latest"
-      ],
       "source": "models.dev",
       "provider_id": "mistral",
       "open_weights": true,
@@ -46193,7 +46417,8 @@
       "owned_by": "mistralai",
       "description": "Mistral Large 4.0",
       "aliases": [
-        "mistral-large-4-0"
+        "mistral-large-4-0",
+        "mistral-large-latest"
       ],
       "source": "models.dev",
       "provider_id": "mistral",
@@ -46267,7 +46492,8 @@
       "owned_by": "mistralai",
       "description": "Mistral Large 4.0",
       "aliases": [
-        "mistral-large-4"
+        "mistral-large-4",
+        "mistral-large-latest"
       ],
       "source": "models.dev",
       "provider_id": "mistral",
@@ -46373,8 +46599,8 @@
     "name": "Mistral Large (latest)",
     "provider": "mistral",
     "family": "mistral-large",
-    "created_at": "2024-11-01 00:00:00 UTC",
-    "context_window": 262144,
+    "created_at": "2026-10-06 00:00:00 UTC",
+    "context_window": 1048576,
     "max_output_tokens": 262144,
     "knowledge_cutoff": null,
     "modalities": {
@@ -46390,46 +46616,57 @@
     "capabilities": [
       "function_calling",
       "structured_output",
+      "reasoning",
       "vision",
       "tool_choice",
-      "parallel_tool_calls",
-      "fine_tuning"
+      "parallel_tool_calls"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.5,
-          "output_per_million": 1.5,
-          "cache_read_input_per_million": 0.05
+          "input_per_million": 0.7,
+          "output_per_million": 2.1,
+          "cache_read_input_per_million": 0.07
         }
       }
     },
     "metadata": {
       "object": "model",
       "owned_by": "mistralai",
-      "description": "Release candidate for ml3.",
+      "description": "Mistral Large 4.0",
       "aliases": [
-        "mistral-large-2512"
+        "mistral-large-4",
+        "mistral-large-4-0"
       ],
       "source": "models.dev",
       "provider_id": "mistral",
-      "open_weights": true,
+      "open_weights": false,
       "attachment": true,
       "temperature": true,
-      "last_updated": "2025-12-02",
+      "last_updated": "2026-10-06",
+      "status": "beta",
       "tool_call": true,
       "structured_output": true,
-      "reasoning": false,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "low",
+            "medium",
+            "high"
+          ]
+        }
+      ],
       "cost": {
-        "input": 0.5,
-        "output": 1.5,
-        "cache_read": 0.05
+        "input": 0.7,
+        "output": 2.1,
+        "cache_read": 0.07
       },
       "limit": {
-        "context": 262144,
+        "context": 1048576,
         "output": 262144
-      },
-      "knowledge": "2024-11"
+      }
     }
   },
   {
@@ -49935,6 +50172,35 @@
     }
   },
   {
+    "id": "inkling-2-small",
+    "name": "inkling-2-small",
+    "provider": "ollama_cloud",
+    "family": "ollama",
+    "created_at": "2026-11-12 17:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "vision",
+      "reasoning"
+    ],
+    "pricing": {},
+    "metadata": {
+      "owned_by": "ollama"
+    }
+  },
+  {
     "id": "kimi-k2.6",
     "name": "kimi-k2.6",
     "provider": "ollama_cloud",
@@ -50906,7 +51172,15 @@
     "capabilities": [
       "vision"
     ],
-    "pricing": {},
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 5,
+          "output_per_million": 10,
+          "cache_read_input_per_million": 1.25
+        }
+      }
+    },
     "metadata": {
       "object": "model",
       "owned_by": "system",
@@ -50920,6 +51194,11 @@
       "status": "deprecated",
       "tool_call": false,
       "reasoning": false,
+      "cost": {
+        "input": 5,
+        "output": 10,
+        "cache_read": 1.25
+      },
       "limit": {
         "context": 0,
         "input": 0,
@@ -53791,7 +54070,7 @@
       "provider_id": "openai",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-04-23",
       "tool_call": true,
       "structured_output": true,
@@ -53886,7 +54165,7 @@
       "provider_id": "openai",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-04-23",
       "tool_call": true,
       "structured_output": true,
@@ -54157,7 +54436,7 @@
       "provider_id": "openai",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-07-09",
       "tool_call": true,
       "structured_output": true,
@@ -54258,7 +54537,7 @@
       "provider_id": "openai",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-07-09",
       "tool_call": true,
       "structured_output": true,
@@ -54359,7 +54638,7 @@
       "provider_id": "openai",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-07-09",
       "tool_call": true,
       "structured_output": true,
@@ -54460,7 +54739,7 @@
       "provider_id": "openai",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-07-09",
       "tool_call": true,
       "structured_output": true,
@@ -54662,7 +54941,7 @@
       "provider_id": "openai",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-09-22",
       "tool_call": true,
       "structured_output": true,
@@ -54763,7 +55042,7 @@
       "provider_id": "openai",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-09-22",
       "tool_call": true,
       "structured_output": true,
@@ -54964,7 +55243,7 @@
       "provider_id": "openai",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-10-26",
       "tool_call": true,
       "structured_output": true,
@@ -55167,7 +55446,7 @@
       "provider_id": "openai",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-08-07",
       "tool_call": true,
       "structured_output": true,
@@ -55355,7 +55634,15 @@
     "capabilities": [
       "vision"
     ],
-    "pricing": {},
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 5,
+          "output_per_million": 10,
+          "cache_read_input_per_million": 1.25
+        }
+      }
+    },
     "metadata": {
       "object": "model",
       "owned_by": "system",
@@ -55369,6 +55656,11 @@
       "status": "deprecated",
       "tool_call": false,
       "reasoning": false,
+      "cost": {
+        "input": 5,
+        "output": 10,
+        "cache_read": 1.25
+      },
       "limit": {
         "context": 0,
         "input": 0,
@@ -55409,6 +55701,7 @@
     "metadata": {
       "object": "model",
       "owned_by": "system",
+      "shutdown_date": "2027-02-10",
       "source": "models.dev",
       "provider_id": "openai",
       "open_weights": false,
@@ -55462,6 +55755,7 @@
     "metadata": {
       "object": "model",
       "owned_by": "system",
+      "shutdown_date": "2027-02-10",
       "source": "models.dev",
       "provider_id": "openai",
       "open_weights": false,
@@ -60493,6 +60787,193 @@
     }
   },
   {
+    "id": "baidu/ernie-5.5-flash-preview:free",
+    "name": "ERNIE-5.5-Flash-Preview (free)",
+    "provider": "openrouter",
+    "family": "ernie",
+    "created_at": "2026-11-10 00:00:00 UTC",
+    "context_window": 1024000,
+    "max_output_tokens": 921600,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "streaming",
+      "tool_choice"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0,
+          "output_per_million": 0
+        }
+      }
+    },
+    "metadata": {
+      "description": "ERNIE 5.5 Flash Preview is the latest foundation model in the ERNIE family, with comprehensive improvements in coding, agentic capabilities, knowledge work, and deep research. It has 280 billion total...",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 1024000,
+        "max_completion_tokens": 921600,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "include_reasoning",
+        "max_tokens",
+        "reasoning",
+        "reasoning_effort",
+        "response_format",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_p"
+      ],
+      "expiration_date": null,
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2026-11-10",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "high"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "limit": {
+        "context": 1024000,
+        "output": 921600
+      }
+    }
+  },
+  {
+    "id": "baidu/ernie-light-dt-1.0-intl",
+    "name": "ERNIE-Light-DT-1.0",
+    "provider": "openrouter",
+    "family": "ernie",
+    "created_at": "2026-11-10 00:00:00 UTC",
+    "context_window": 1024000,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "streaming",
+      "tool_choice"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.13,
+          "output_per_million": 3.94,
+          "cache_read_input_per_million": 0.113
+        }
+      }
+    },
+    "metadata": {
+      "description": "ERNIE-Light-DT-1.0 is based on open-source GLM models and includes research findings from Baidu Search's Lightning large model. It features Baidu Sparse Attention (BSA), a unique sparse attention mechanism developed by...",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 1024000,
+        "max_completion_tokens": 131072,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "include_reasoning",
+        "max_tokens",
+        "reasoning",
+        "reasoning_effort",
+        "response_format",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_p"
+      ],
+      "expiration_date": null,
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2026-11-10",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "none",
+            "low",
+            "high",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 1.13,
+        "output": 3.94,
+        "cache_read": 0.113
+      },
+      "limit": {
+        "context": 1024000,
+        "output": 131072
+      }
+    }
+  },
+  {
     "id": "baseten/elephant-1",
     "name": "Baseten: Elephant 1",
     "provider": "openrouter",
@@ -61132,228 +61613,6 @@
     }
   },
   {
-    "id": "bytedance-seed/seed-1.6",
-    "name": "Seed 1.6",
-    "provider": "openrouter",
-    "family": "seed",
-    "created_at": "2025-10-15 00:00:00 UTC",
-    "context_window": 262144,
-    "max_output_tokens": 32768,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text",
-        "image",
-        "video"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling",
-      "structured_output",
-      "reasoning",
-      "vision",
-      "video",
-      "streaming",
-      "tool_choice"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.25,
-          "output_per_million": 2
-        },
-        "long_context": {
-          "input_per_million": 0.5,
-          "output_per_million": 4
-        },
-        "long_context_threshold": 128000
-      }
-    },
-    "metadata": {
-      "description": "Seed 1.6 is a general-purpose model released by the ByteDance Seed team. It incorporates multimodal capabilities and adaptive deep thinking with a 256K context window.",
-      "architecture": {
-        "modality": "text+image+video->text",
-        "input_modalities": [
-          "image",
-          "text",
-          "video"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Other",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 262144,
-        "max_completion_tokens": 32768,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "frequency_penalty",
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "response_format",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_p"
-      ],
-      "expiration_date": "2026-11-11",
-      "source": "models.dev",
-      "provider_id": "openrouter",
-      "open_weights": false,
-      "attachment": true,
-      "temperature": true,
-      "last_updated": "2025-10-15",
-      "status": "deprecated",
-      "tool_call": true,
-      "structured_output": true,
-      "reasoning": true,
-      "reasoning_options": [
-        {
-          "type": "toggle"
-        }
-      ],
-      "cost": {
-        "input": 0.25,
-        "output": 2,
-        "tiers": [
-          {
-            "input": 0.5,
-            "output": 4,
-            "tier": {
-              "type": "context",
-              "size": 128000
-            }
-          }
-        ]
-      },
-      "limit": {
-        "context": 262144,
-        "output": 32768
-      }
-    }
-  },
-  {
-    "id": "bytedance-seed/seed-1.6-flash",
-    "name": "Seed 1.6 Flash",
-    "provider": "openrouter",
-    "family": "seed",
-    "created_at": "2025-08-28 00:00:00 UTC",
-    "context_window": 262144,
-    "max_output_tokens": 32768,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text",
-        "image",
-        "video"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling",
-      "structured_output",
-      "reasoning",
-      "vision",
-      "video",
-      "streaming",
-      "tool_choice"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.075,
-          "output_per_million": 0.3
-        },
-        "long_context": {
-          "input_per_million": 0.1,
-          "output_per_million": 0.8
-        },
-        "long_context_threshold": 128000
-      }
-    },
-    "metadata": {
-      "description": "Seed 1.6 Flash is an ultra-fast multimodal deep thinking model by ByteDance Seed, supporting both text and visual understanding. It features a 256k context window and can generate outputs of...",
-      "architecture": {
-        "modality": "text+image+video->text",
-        "input_modalities": [
-          "image",
-          "text",
-          "video"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Other",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 262144,
-        "max_completion_tokens": 32768,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "frequency_penalty",
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "response_format",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_p"
-      ],
-      "expiration_date": "2026-11-11",
-      "source": "models.dev",
-      "provider_id": "openrouter",
-      "open_weights": false,
-      "attachment": true,
-      "temperature": true,
-      "last_updated": "2025-08-28",
-      "status": "deprecated",
-      "tool_call": true,
-      "structured_output": true,
-      "reasoning": true,
-      "reasoning_options": [
-        {
-          "type": "toggle"
-        }
-      ],
-      "cost": {
-        "input": 0.075,
-        "output": 0.3,
-        "tiers": [
-          {
-            "input": 0.1,
-            "output": 0.8,
-            "tier": {
-              "type": "context",
-              "size": 128000
-            }
-          }
-        ]
-      },
-      "limit": {
-        "context": 262144,
-        "output": 32768
-      }
-    }
-  },
-  {
     "id": "bytedance-seed/seed-2-1-turbo",
     "name": "Seed 2.1 Turbo",
     "provider": "openrouter",
@@ -61445,124 +61704,6 @@
       "limit": {
         "context": 262144,
         "output": 235929
-      }
-    }
-  },
-  {
-    "id": "bytedance-seed/seed-2.0-code",
-    "name": "Seed 2.0 Code",
-    "provider": "openrouter",
-    "family": "seed",
-    "created_at": "2026-02-14 00:00:00 UTC",
-    "context_window": 262144,
-    "max_output_tokens": 131072,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text",
-        "image",
-        "video"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling",
-      "structured_output",
-      "reasoning",
-      "vision",
-      "video",
-      "streaming",
-      "tool_choice"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.5,
-          "output_per_million": 3
-        },
-        "long_context": {
-          "input_per_million": 1,
-          "output_per_million": 6
-        },
-        "long_context_threshold": 128000
-      }
-    },
-    "metadata": {
-      "description": "Seed 2.0 Code is a model from ByteDance Seed optimized for agentic coding. It is suited for frontend development, multilingual programming tasks, and coding-agent workflows in tools such as Claude...",
-      "architecture": {
-        "modality": "text+image+video->text",
-        "input_modalities": [
-          "text",
-          "image",
-          "video"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Other",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 262144,
-        "max_completion_tokens": 131072,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "frequency_penalty",
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_p"
-      ],
-      "expiration_date": "2026-11-11",
-      "source": "models.dev",
-      "provider_id": "openrouter",
-      "open_weights": false,
-      "attachment": true,
-      "temperature": true,
-      "last_updated": "2026-02-14",
-      "status": "deprecated",
-      "tool_call": true,
-      "structured_output": true,
-      "reasoning": true,
-      "reasoning_options": [
-        {
-          "type": "effort",
-          "values": [
-            "none",
-            "low",
-            "medium",
-            "high"
-          ]
-        }
-      ],
-      "cost": {
-        "input": 0.5,
-        "output": 3,
-        "tiers": [
-          {
-            "input": 1,
-            "output": 6,
-            "tier": {
-              "type": "context",
-              "size": 128000
-            }
-          }
-        ]
-      },
-      "limit": {
-        "context": 262144,
-        "output": 131072
       }
     }
   },
@@ -62007,6 +62148,21 @@
             "auto"
           ]
         },
+        "output_format": {
+          "type": "enum",
+          "values": [
+            "png",
+            "jpeg"
+          ]
+        },
+        "background": {
+          "type": "enum",
+          "values": [
+            "auto",
+            "transparent",
+            "opaque"
+          ]
+        },
         "n": {
           "type": "range",
           "min": 1,
@@ -62090,6 +62246,13 @@
             "9:21",
             "21:9",
             "auto"
+          ]
+        },
+        "output_format": {
+          "type": "enum",
+          "values": [
+            "png",
+            "jpeg"
           ]
         },
         "n": {
@@ -62177,6 +62340,21 @@
             "auto"
           ]
         },
+        "output_format": {
+          "type": "enum",
+          "values": [
+            "png",
+            "jpeg"
+          ]
+        },
+        "background": {
+          "type": "enum",
+          "values": [
+            "auto",
+            "transparent",
+            "opaque"
+          ]
+        },
         "n": {
           "type": "range",
           "min": 1,
@@ -62186,6 +62364,107 @@
           "type": "range",
           "min": 0,
           "max": 14
+        },
+        "seed": {
+          "type": "boolean"
+        }
+      },
+      "expiration_date": null
+    }
+  },
+  {
+    "id": "bytedance-seed/seedream-5-5",
+    "name": "ByteDance Seed: Seedream 5.5",
+    "provider": "openrouter",
+    "family": "bytedance-seed",
+    "created_at": "2026-11-12 21:06:41 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "vision",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Seedream 5.5 is an image generation and editing model from ByteDance Seed. It is suited for creating images from text prompts and for editing or combining existing images, using up...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "resolution": {
+          "type": "enum",
+          "values": [
+            "1K",
+            "1.5K",
+            "2K"
+          ]
+        },
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "1:2",
+            "2:1",
+            "2:3",
+            "3:2",
+            "3:4",
+            "4:3",
+            "4:5",
+            "5:4",
+            "9:16",
+            "16:9",
+            "9:19.5",
+            "19.5:9",
+            "9:20",
+            "20:9",
+            "9:21",
+            "21:9",
+            "auto"
+          ]
+        },
+        "output_format": {
+          "type": "enum",
+          "values": [
+            "png",
+            "jpeg"
+          ]
+        },
+        "background": {
+          "type": "enum",
+          "values": [
+            "auto",
+            "transparent",
+            "opaque"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 1
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 10
         },
         "seed": {
           "type": "boolean"
@@ -62394,7 +62673,7 @@
     "family": "cloudflare",
     "created_at": "2026-10-01 16:09:32 UTC",
     "context_window": 65537,
-    "max_output_tokens": 58982,
+    "max_output_tokens": 58983,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -62412,7 +62691,7 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.24
+          "input_per_million": 0.192
         }
       }
     },
@@ -62431,8 +62710,8 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 65536,
-        "max_completion_tokens": 58982,
+        "context_length": 65537,
+        "max_completion_tokens": 58983,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -62465,7 +62744,7 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.038000000000000006
+          "input_per_million": 0.019000000000000003
         }
       }
     },
@@ -63681,8 +63960,8 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 163840,
-        "max_completion_tokens": 16384,
+        "context_length": 128000,
+        "max_completion_tokens": 16000,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -64293,7 +64572,7 @@
     "family": "deepseek-flash",
     "created_at": "2026-04-24 00:00:00 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 943717,
+    "max_output_tokens": 393216,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -64313,9 +64592,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.091,
-          "output_per_million": 0.182,
-          "cache_read_input_per_million": 0.0182
+          "input_per_million": 0.09,
+          "output_per_million": 0.18,
+          "cache_read_input_per_million": 0.018
         }
       }
     },
@@ -64333,8 +64612,8 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 1048575,
-        "max_completion_tokens": 943717,
+        "context_length": 1048576,
+        "max_completion_tokens": 393216,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -64386,13 +64665,13 @@
         }
       ],
       "cost": {
-        "input": 0.091,
-        "output": 0.182,
-        "cache_read": 0.0182
+        "input": 0.09,
+        "output": 0.18,
+        "cache_read": 0.018
       },
       "limit": {
         "context": 1048576,
-        "output": 943717
+        "output": 393216
       },
       "knowledge": "2025-05"
     }
@@ -64697,7 +64976,7 @@
     "family": "deepseek-thinking",
     "created_at": "2026-04-24 00:00:00 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 384000,
+    "max_output_tokens": 393216,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -64717,9 +64996,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.95526,
-          "output_per_million": 1.91052,
-          "cache_read_input_per_million": 0.079605
+          "input_per_million": 0.9,
+          "output_per_million": 1.5,
+          "cache_read_input_per_million": 0.25
         }
       }
     },
@@ -64737,8 +65016,8 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 1024000,
-        "max_completion_tokens": 384000,
+        "context_length": 1048576,
+        "max_completion_tokens": 393216,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -64789,13 +65068,13 @@
         }
       ],
       "cost": {
-        "input": 0.95526,
-        "output": 1.91052,
-        "cache_read": 0.079605
+        "input": 0.9,
+        "output": 1.5,
+        "cache_read": 0.25
       },
       "limit": {
         "context": 1048576,
-        "output": 384000
+        "output": 393216
       },
       "knowledge": "2025-05"
     }
@@ -65049,9 +65328,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.006,
+          "input_per_million": 0.038,
           "output_per_million": 0.5,
-          "cache_read_input_per_million": 0.005
+          "cache_read_input_per_million": 0.01
         }
       }
     },
@@ -65121,9 +65400,9 @@
         }
       ],
       "cost": {
-        "input": 0.006,
+        "input": 0.038,
         "output": 0.5,
-        "cache_read": 0.005
+        "cache_read": 0.01
       },
       "limit": {
         "context": 1048576,
@@ -65139,7 +65418,7 @@
     "family": "deepseek",
     "created_at": "2026-10-17 08:27:04 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 943718,
+    "max_output_tokens": 384000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -65152,17 +65431,14 @@
     },
     "capabilities": [
       "streaming",
-      "function_calling",
-      "tool_choice",
-      "structured_output",
       "vision"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.011,
-          "output_per_million": 0.19999999999999998,
-          "cache_read_input_per_million": 0.002
+          "input_per_million": 0.049999999999999996,
+          "output_per_million": 0.15,
+          "cache_read_input_per_million": 0.004
         }
       }
     },
@@ -65182,26 +65458,20 @@
       },
       "top_provider": {
         "context_length": 1048576,
-        "max_completion_tokens": 943718,
+        "max_completion_tokens": 384000,
         "is_moderated": false
       },
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "reasoning_effort",
-        "repetition_penalty",
         "seed",
         "stop",
-        "structured_outputs",
         "temperature",
-        "tool_choice",
-        "tools",
         "top_k",
         "top_p"
       ],
@@ -65353,7 +65623,7 @@
       "expiration_date": "2026-12-31",
       "source": "models.dev",
       "provider_id": "openrouter",
-      "open_weights": false,
+      "open_weights": true,
       "attachment": true,
       "temperature": true,
       "last_updated": "2026-08-14",
@@ -70102,6 +70372,265 @@
     }
   },
   {
+    "id": "google/gemini-4-hydrogen",
+    "name": "Gemini 4 Hydrogen",
+    "provider": "openrouter",
+    "family": "gemini",
+    "created_at": "2026-11-12 00:00:00 UTC",
+    "context_window": 1048576,
+    "max_output_tokens": 943718,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video",
+        "audio",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision",
+      "video",
+      "streaming",
+      "tool_choice"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.5,
+          "output_per_million": 7.5,
+          "cache_read_input_per_million": 0.075,
+          "cache_write_input_per_million": 0.083333,
+          "reasoning_output_per_million": 7.5
+        }
+      },
+      "audio_tokens": {
+        "standard": {
+          "input_per_million": 1.5
+        }
+      }
+    },
+    "metadata": {
+      "description": "Gemini 4 Hydrogen is the high-efficiency workhorse model of the Gemini 4 family from Google, built for high-throughput agentic workflows, coding and multi-model routing at lower cost and latency than...",
+      "architecture": {
+        "modality": "text+image+file+audio+video->text",
+        "input_modalities": [
+          "audio",
+          "file",
+          "image",
+          "text",
+          "video"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Gemini",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 1048576,
+        "max_completion_tokens": 943718,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "include_reasoning",
+        "max_tokens",
+        "reasoning",
+        "reasoning_effort",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_p"
+      ],
+      "expiration_date": null,
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-11-12",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "low",
+            "medium",
+            "high",
+            "xhigh"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 1.5,
+        "output": 7.5,
+        "reasoning": 7.5,
+        "cache_read": 0.075,
+        "cache_write": 0.083333,
+        "input_audio": 1.5
+      },
+      "limit": {
+        "context": 1048576,
+        "output": 943718
+      },
+      "knowledge": "2026-03"
+    }
+  },
+  {
+    "id": "google/gemini-4-hydrogen:batch",
+    "name": "Google: Gemini 4 Hydrogen (batch)",
+    "provider": "openrouter",
+    "family": "google",
+    "created_at": "2026-11-12 18:01:00 UTC",
+    "context_window": 1048576,
+    "max_output_tokens": 943718,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "audio",
+        "file",
+        "image",
+        "text",
+        "video"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "tool_choice",
+      "structured_output",
+      "vision",
+      "video"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.75,
+          "output_per_million": 3.75,
+          "cache_read_input_per_million": 0.0375,
+          "cache_write_input_per_million": 0.0833333333333333,
+          "reasoning_output_per_million": 3.75
+        }
+      }
+    },
+    "metadata": {
+      "description": "Gemini 4 Hydrogen is the high-efficiency workhorse model of the Gemini 4 family from Google, built for high-throughput agentic workflows, coding and multi-model routing at lower cost and latency than...",
+      "architecture": {
+        "modality": "text+image+file+audio+video->text",
+        "input_modalities": [
+          "audio",
+          "file",
+          "image",
+          "text",
+          "video"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Gemini",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 1048576,
+        "max_completion_tokens": 943718,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "include_reasoning",
+        "max_tokens",
+        "reasoning",
+        "reasoning_effort",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_p"
+      ],
+      "expiration_date": null
+    }
+  },
+  {
+    "id": "google/gemini-decision-1",
+    "name": "Google: Gemini Decision 1",
+    "provider": "openrouter",
+    "family": "google",
+    "created_at": "2026-11-11 13:11:26 UTC",
+    "context_window": 262144,
+    "max_output_tokens": 235929,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "audio",
+        "video",
+        "file"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "vision",
+      "video",
+      "judgment"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.09999999999999999
+        }
+      }
+    },
+    "metadata": {
+      "description": "Gemini Decision 1 is Google's model for the Decisions API. It answers structured questions about an input state (true/false, multiple choice with up to 255 options, and score with up...",
+      "architecture": {
+        "modality": "text+image+file+audio+video->decisions",
+        "input_modalities": [
+          "text",
+          "image",
+          "audio",
+          "video",
+          "file"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Gemini",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 262144,
+        "max_completion_tokens": 235929,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
+    }
+  },
+  {
     "id": "google/gemini-embedding-001",
     "name": "Google: Gemini Embedding 001",
     "provider": "openrouter",
@@ -70760,7 +71289,7 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.08,
-          "output_per_million": 0.45,
+          "output_per_million": 0.35,
           "cache_read_input_per_million": 0.04
         }
       }
@@ -70816,7 +71345,7 @@
       "reasoning": false,
       "cost": {
         "input": 0.08,
-        "output": 0.45,
+        "output": 0.35,
         "cache_read": 0.04
       },
       "limit": {
@@ -70922,7 +71451,7 @@
     "family": "gemma",
     "created_at": "2026-04-02 00:00:00 UTC",
     "context_window": 262144,
-    "max_output_tokens": 128000,
+    "max_output_tokens": 235929,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -70946,9 +71475,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.08,
-          "output_per_million": 0.1,
-          "cache_read_input_per_million": 0.046
+          "input_per_million": 0.09,
+          "output_per_million": 0.3,
+          "cache_read_input_per_million": 0.05
         }
       }
     },
@@ -70968,8 +71497,8 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 256000,
-        "max_completion_tokens": 128000,
+        "context_length": 262144,
+        "max_completion_tokens": 235929,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -71011,13 +71540,13 @@
         }
       ],
       "cost": {
-        "input": 0.08,
-        "output": 0.1,
-        "cache_read": 0.046
+        "input": 0.09,
+        "output": 0.3,
+        "cache_read": 0.05
       },
       "limit": {
         "context": 262144,
-        "output": 128000
+        "output": 235929
       }
     }
   },
@@ -71607,6 +72136,112 @@
     }
   },
   {
+    "id": "heygen/heygen-decision-1",
+    "name": "HeyGen: HeyGen Decision",
+    "provider": "openrouter",
+    "family": "heygen",
+    "created_at": "2026-11-13 00:41:48 UTC",
+    "context_window": 131072,
+    "max_output_tokens": 117964,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "vision",
+      "judgment"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.14
+        }
+      }
+    },
+    "metadata": {
+      "description": "HeyGen Decision 1 is a decision model from HeyGen. It reads text and images and answers a set of named questions in one request, returning typed answers with probabilities: a...",
+      "architecture": {
+        "modality": "text+image->decisions",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 131072,
+        "max_completion_tokens": 117964,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
+    }
+  },
+  {
+    "id": "heygen/heygen-decision-1-turbo",
+    "name": "HeyGen: HeyGen Decision Turbo",
+    "provider": "openrouter",
+    "family": "heygen",
+    "created_at": "2026-11-13 00:41:53 UTC",
+    "context_window": 262144,
+    "max_output_tokens": 235929,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "vision",
+      "judgment"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.09
+        }
+      }
+    },
+    "metadata": {
+      "description": "HeyGen Decision 1 Turbo is a lower-cost variant of [HeyGen Decision 1](/heygen/heygen-decision-1) from HeyGen, with the same question types (`noul`, `choice`, and `score`) over text and images. It suits high-volume...",
+      "architecture": {
+        "modality": "text+image->decisions",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 262144,
+        "max_completion_tokens": 235929,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
+    }
+  },
+  {
     "id": "heygen/heygen-voice-1",
     "name": "HeyGen: HeyGen Voice",
     "provider": "openrouter",
@@ -72172,7 +72807,6 @@
     },
     "capabilities": [
       "function_calling",
-      "structured_output",
       "reasoning",
       "streaming",
       "tool_choice"
@@ -72208,17 +72842,13 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
         "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
-        "response_format",
         "seed",
         "stop",
-        "structured_outputs",
         "temperature",
         "tool_choice",
         "tools",
@@ -72234,7 +72864,7 @@
       "temperature": true,
       "last_updated": "2026-09-29",
       "tool_call": true,
-      "structured_output": true,
+      "structured_output": false,
       "reasoning": true,
       "reasoning_options": [
         {
@@ -72250,6 +72880,71 @@
         "context": 1000000,
         "output": 262144
       }
+    }
+  },
+  {
+    "id": "inclusionai/ling-3.2-flash:free",
+    "name": "inclusionAI: Ling 3.2 Flash (free)",
+    "provider": "openrouter",
+    "family": "inclusionai",
+    "created_at": "2026-11-13 17:45:58 UTC",
+    "context_window": 1048576,
+    "max_output_tokens": 262144,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "tool_choice",
+      "structured_output",
+      "vision"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Ling 3.2 Flash is a hybrid reasoning model from inclusionAI that accepts text and image input, with a 1M-token context window and up to 200 images per request. Thinking can...",
+      "architecture": {
+        "modality": "text+image->text",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 1048576,
+        "max_completion_tokens": 262144,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "include_reasoning",
+        "max_tokens",
+        "presence_penalty",
+        "reasoning",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_k",
+        "top_p"
+      ],
+      "expiration_date": null
     }
   },
   {
@@ -72896,6 +73591,101 @@
     }
   },
   {
+    "id": "kt/midm-k-3.0-pro",
+    "name": "Mi:dm K 3.0 Pro",
+    "provider": "openrouter",
+    "family": "kt",
+    "created_at": "2026-11-05 00:00:00 UTC",
+    "context_window": 261795,
+    "max_output_tokens": 235615,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "streaming",
+      "tool_choice"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.2,
+          "output_per_million": 0.8,
+          "cache_read_input_per_million": 0.04
+        }
+      }
+    },
+    "metadata": {
+      "description": "Mi:dm K 3.0 Pro is a Mixture-of-Experts reasoning model from KT, with 120B total and 12B active parameters. It uses a hybrid architecture that mixes Mamba, MoE and attention layers.",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 261795,
+        "max_completion_tokens": 235615,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "include_reasoning",
+        "logprobs",
+        "max_tokens",
+        "presence_penalty",
+        "reasoning",
+        "repetition_penalty",
+        "response_format",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_k",
+        "top_logprobs",
+        "top_p"
+      ],
+      "expiration_date": null,
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2026-11-05",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "toggle"
+        }
+      ],
+      "cost": {
+        "input": 0.2,
+        "output": 0.8,
+        "cache_read": 0.04
+      },
+      "limit": {
+        "context": 261795,
+        "output": 235615
+      }
+    }
+  },
+  {
     "id": "liquid/d1",
     "name": "LiquidAI: d1",
     "provider": "openrouter",
@@ -73058,152 +73848,6 @@
     }
   },
   {
-    "id": "liquid/lfm-2.5-2.6b",
-    "name": "LFM2.5-2.6B",
-    "provider": "openrouter",
-    "family": "liquid",
-    "created_at": "2026-08-11 00:00:00 UTC",
-    "context_window": 128000,
-    "max_output_tokens": 8192,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling",
-      "structured_output",
-      "reasoning"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.35,
-          "output_per_million": 0.5,
-          "cache_read_input_per_million": 0.04
-        }
-      }
-    },
-    "metadata": {
-      "source": "models.dev",
-      "provider_id": "openrouter",
-      "open_weights": true,
-      "attachment": false,
-      "temperature": true,
-      "last_updated": "2026-08-11",
-      "tool_call": true,
-      "structured_output": true,
-      "reasoning": true,
-      "reasoning_options": [],
-      "cost": {
-        "input": 0.35,
-        "output": 0.5,
-        "cache_read": 0.04
-      },
-      "limit": {
-        "context": 128000,
-        "output": 8192
-      }
-    }
-  },
-  {
-    "id": "liquid/lfm-2.5-2.6b:free",
-    "name": "LFM2.5-2.6B (free)",
-    "provider": "openrouter",
-    "family": "liquid",
-    "created_at": "2026-08-11 00:00:00 UTC",
-    "context_window": 65536,
-    "max_output_tokens": 8192,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling",
-      "structured_output",
-      "reasoning",
-      "streaming",
-      "tool_choice"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0,
-          "output_per_million": 0
-        }
-      }
-    },
-    "metadata": {
-      "description": "LFM2.5-2.6B is a compact reasoning model from Liquid AI. It is suited for agent workflows, data extraction, RAG, and long-context processing. Liquid advises against using it for agentic coding or...",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Other",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 65536,
-        "max_completion_tokens": 8192,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "frequency_penalty",
-        "include_reasoning",
-        "logprobs",
-        "max_completion_tokens",
-        "max_tokens",
-        "min_p",
-        "presence_penalty",
-        "reasoning",
-        "repetition_penalty",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_k",
-        "top_logprobs",
-        "top_p"
-      ],
-      "expiration_date": "2026-11-13",
-      "source": "models.dev",
-      "provider_id": "openrouter",
-      "open_weights": true,
-      "attachment": false,
-      "temperature": true,
-      "last_updated": "2026-08-11",
-      "tool_call": true,
-      "structured_output": true,
-      "reasoning": true,
-      "reasoning_options": [],
-      "cost": {
-        "input": 0,
-        "output": 0
-      },
-      "limit": {
-        "context": 65536,
-        "output": 8192
-      }
-    }
-  },
-  {
     "id": "liquid/lfm-2.5-24b-a2b",
     "name": "LFM2.5-24B-A2B",
     "provider": "openrouter",
@@ -73296,50 +73940,6 @@
         "context": 128000,
         "output": 8192
       }
-    }
-  },
-  {
-    "id": "liquid/lfm-2.5-embedding-350m:free",
-    "name": "LiquidAI: LFM2.5-Embedding-350M (free)",
-    "provider": "openrouter",
-    "family": "liquid",
-    "created_at": "2026-08-18 18:31:48 UTC",
-    "context_window": 512,
-    "max_output_tokens": null,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "embeddings"
-      ]
-    },
-    "capabilities": [
-      "streaming"
-    ],
-    "pricing": {},
-    "metadata": {
-      "description": "LFM2.5-Embedding-350M is a text embedding model from Liquid AI. It produces 1,024-dimensional embeddings for retrieval and semantic search. Successful OpenRouter requests and embeddings may be retained and used to train...",
-      "architecture": {
-        "modality": "text->embeddings",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "embeddings"
-        ],
-        "tokenizer": "Other",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 512,
-        "max_completion_tokens": null,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [],
-      "expiration_date": "2026-11-13"
     }
   },
   {
@@ -73553,9 +74153,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.4,
-          "output_per_million": 0.75,
-          "cache_read_input_per_million": 0.4
+          "input_per_million": 0.3,
+          "output_per_million": 0.5,
+          "cache_read_input_per_million": 0.3
         }
       }
     },
@@ -73606,9 +74206,9 @@
       "structured_output": false,
       "reasoning": false,
       "cost": {
-        "input": 0.4,
-        "output": 0.75,
-        "cache_read": 0.4
+        "input": 0.3,
+        "output": 0.5,
+        "cache_read": 0.3
       },
       "limit": {
         "context": 8000,
@@ -73732,7 +74332,9 @@
       ]
     },
     "capabilities": [
-      "streaming"
+      "function_calling",
+      "streaming",
+      "tool_choice"
     ],
     "pricing": {
       "text_tokens": {
@@ -73765,6 +74367,8 @@
         "max_tokens",
         "stop",
         "temperature",
+        "tool_choice",
+        "tools",
         "top_k",
         "top_p"
       ],
@@ -73775,7 +74379,7 @@
       "attachment": false,
       "temperature": true,
       "last_updated": "2024-07-23",
-      "tool_call": false,
+      "tool_call": true,
       "structured_output": false,
       "reasoning": false,
       "cost": {
@@ -74003,8 +74607,8 @@
         "instruct_type": "llama3"
       },
       "top_provider": {
-        "context_length": 131072,
-        "max_completion_tokens": 117964,
+        "context_length": 80000,
+        "max_completion_tokens": 72000,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -74024,7 +74628,7 @@
         "top_logprobs",
         "top_p"
       ],
-      "expiration_date": null,
+      "expiration_date": "2026-11-20",
       "source": "models.dev",
       "provider_id": "openrouter",
       "open_weights": true,
@@ -74474,6 +75078,7 @@
         "reasoning_effort",
         "repetition_penalty",
         "response_format",
+        "seed",
         "structured_outputs",
         "temperature",
         "tool_choice",
@@ -75092,6 +75697,7 @@
         "reasoning_effort",
         "repetition_penalty",
         "response_format",
+        "seed",
         "structured_outputs",
         "temperature",
         "tool_choice",
@@ -75210,7 +75816,7 @@
     "family": "muse",
     "created_at": "2026-10-15 00:00:00 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 262144,
+    "max_output_tokens": 943718,
     "knowledge_cutoff": "2026-01-04",
     "modalities": {
       "input": [
@@ -75260,8 +75866,8 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 1000000,
-        "max_completion_tokens": 262144,
+        "context_length": 1048576,
+        "max_completion_tokens": 943718,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -75315,7 +75921,7 @@
       },
       "limit": {
         "context": 1048576,
-        "output": 262144
+        "output": 943718
       },
       "knowledge": "2026-01-04"
     }
@@ -75440,6 +76046,7 @@
         "reasoning_effort",
         "repetition_penalty",
         "response_format",
+        "seed",
         "structured_outputs",
         "temperature",
         "tool_choice",
@@ -76182,13 +76789,213 @@
     }
   },
   {
+    "id": "minimax/minimax-h3-image",
+    "name": "MiniMax: MiniMax H3 Image",
+    "provider": "openrouter",
+    "family": "minimax",
+    "created_at": "2026-11-10 19:49:03 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "vision",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "MiniMax H3 Image is MiniMax's image generation and editing model. It creates images from text prompts and edits or composes images from 1 to 16 reference images, with output up...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "resolution": {
+          "type": "enum",
+          "values": [
+            "1K",
+            "2K",
+            "4K"
+          ]
+        },
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "1:2",
+            "1:3",
+            "2:1",
+            "2:3",
+            "3:1",
+            "2.35:1",
+            "3:2",
+            "3:4",
+            "4:3",
+            "4:5",
+            "5:2",
+            "5:4",
+            "5:7",
+            "7:5",
+            "9:16",
+            "16:9",
+            "9:19.5",
+            "19.5:9",
+            "9:20",
+            "20:9",
+            "9:21",
+            "21:9",
+            "auto"
+          ]
+        },
+        "output_format": {
+          "type": "enum",
+          "values": [
+            "jpeg",
+            "png",
+            "webp"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 10
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 16
+        },
+        "size": {
+          "type": "boolean"
+        }
+      },
+      "expiration_date": null
+    }
+  },
+  {
+    "id": "minimax/minimax-h3-image-highspeed",
+    "name": "MiniMax: MiniMax H3 Image Highspeed",
+    "provider": "openrouter",
+    "family": "minimax",
+    "created_at": "2026-11-11 02:17:27 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "vision",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "MiniMax H3 Image Highspeed is the faster version of MiniMax's H3 Image model. It takes the same inputs and limits as MiniMax H3 Image: it creates images from text prompts...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "resolution": {
+          "type": "enum",
+          "values": [
+            "1K",
+            "2K",
+            "4K"
+          ]
+        },
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "1:2",
+            "1:3",
+            "2:1",
+            "2:3",
+            "3:1",
+            "2.35:1",
+            "3:2",
+            "3:4",
+            "4:3",
+            "4:5",
+            "5:2",
+            "5:4",
+            "5:7",
+            "7:5",
+            "9:16",
+            "16:9",
+            "9:19.5",
+            "19.5:9",
+            "9:20",
+            "20:9",
+            "9:21",
+            "21:9",
+            "auto"
+          ]
+        },
+        "output_format": {
+          "type": "enum",
+          "values": [
+            "jpeg",
+            "png",
+            "webp"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 10
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 16
+        },
+        "size": {
+          "type": "boolean"
+        }
+      },
+      "expiration_date": null
+    }
+  },
+  {
     "id": "minimax/minimax-m2.5",
     "name": "MiniMax-M2.5",
     "provider": "openrouter",
     "family": "minimax",
     "created_at": "2026-02-12 00:00:00 UTC",
-    "context_window": 200000,
-    "max_output_tokens": 58982,
+    "context_window": 198000,
+    "max_output_tokens": 32768,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -76208,9 +77015,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.3,
-          "output_per_million": 1.2,
-          "cache_read_input_per_million": 0.06
+          "input_per_million": 0.27,
+          "output_per_million": 0.95,
+          "cache_read_input_per_million": 0.03
         }
       }
     },
@@ -76228,8 +77035,8 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 65536,
-        "max_completion_tokens": 58982,
+        "context_length": 198000,
+        "max_completion_tokens": 32768,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -76269,13 +77076,13 @@
       "reasoning": true,
       "reasoning_options": [],
       "cost": {
-        "input": 0.3,
-        "output": 1.2,
-        "cache_read": 0.06
+        "input": 0.27,
+        "output": 0.95,
+        "cache_read": 0.03
       },
       "limit": {
-        "context": 200000,
-        "output": 58982
+        "context": 198000,
+        "output": 32768
       }
     }
   },
@@ -80042,7 +80849,7 @@
     "family": "kimi-k2",
     "created_at": "2026-01-27 00:00:00 UTC",
     "context_window": 262144,
-    "max_output_tokens": 65536,
+    "max_output_tokens": 235929,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -80064,9 +80871,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.532,
-          "output_per_million": 3.325,
-          "cache_read_input_per_million": 0.209
+          "input_per_million": 0.5,
+          "output_per_million": 2.5,
+          "cache_read_input_per_million": 0.15
         }
       }
     },
@@ -80085,8 +80892,8 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 256000,
-        "max_completion_tokens": 65536,
+        "context_length": 262144,
+        "max_completion_tokens": 235929,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -80111,7 +80918,7 @@
         "top_logprobs",
         "top_p"
       ],
-      "expiration_date": "2026-11-18",
+      "expiration_date": null,
       "source": "models.dev",
       "provider_id": "openrouter",
       "open_weights": true,
@@ -80130,13 +80937,13 @@
         }
       ],
       "cost": {
-        "input": 0.532,
-        "output": 3.325,
-        "cache_read": 0.209
+        "input": 0.5,
+        "output": 2.5,
+        "cache_read": 0.15
       },
       "limit": {
         "context": 262144,
-        "output": 65536
+        "output": 235929
       },
       "knowledge": "2025-01"
     }
@@ -80376,8 +81183,7 @@
       "vision",
       "video",
       "streaming",
-      "tool_choice",
-      "parallel_tool_calls"
+      "tool_choice"
     ],
     "pricing": {
       "text_tokens": {
@@ -80414,10 +81220,8 @@
         "include_reasoning",
         "logit_bias",
         "logprobs",
-        "max_completion_tokens",
         "max_tokens",
         "min_p",
-        "parallel_tool_calls",
         "presence_penalty",
         "reasoning",
         "reasoning_effort",
@@ -80575,6 +81379,75 @@
         "context": 1048576,
         "output": 943718
       }
+    }
+  },
+  {
+    "id": "moonshotai/kimi-k3.1-pro:batch",
+    "name": "MoonshotAI: Kimi K3.1 Pro (batch)",
+    "provider": "openrouter",
+    "family": "moonshotai",
+    "created_at": "2026-10-23 17:56:28 UTC",
+    "context_window": 1048576,
+    "max_output_tokens": 943718,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "vision",
+      "video"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.7,
+          "output_per_million": 6.0,
+          "cache_read_input_per_million": 0.09999999999999999
+        }
+      }
+    },
+    "metadata": {
+      "description": "Kimi K3.1 Pro is Moonshot AI's flagship open-weight multimodal reasoning model and a post-trained successor to Kimi K3, with a 1M-token context window. It is built for long-horizon coding, 3D...",
+      "architecture": {
+        "modality": "text+image+video->text",
+        "input_modalities": [
+          "text",
+          "image",
+          "video"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 1048576,
+        "max_completion_tokens": 943718,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "include_reasoning",
+        "max_tokens",
+        "presence_penalty",
+        "reasoning",
+        "reasoning_effort",
+        "seed",
+        "stop",
+        "temperature",
+        "top_k"
+      ],
+      "expiration_date": null
     }
   },
   {
@@ -80978,6 +81851,101 @@
       "per_request_limits": null,
       "supported_parameters": [],
       "expiration_date": null
+    }
+  },
+  {
+    "id": "motif-technologies/motif-3",
+    "name": "Motif 3",
+    "provider": "openrouter",
+    "family": "motif",
+    "created_at": "2026-11-02 00:00:00 UTC",
+    "context_window": 262144,
+    "max_output_tokens": 235929,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "streaming",
+      "tool_choice"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.3,
+          "output_per_million": 1.2,
+          "cache_read_input_per_million": 0.06
+        }
+      }
+    },
+    "metadata": {
+      "description": "Motif 3 is a Mixture-of-Experts language model from Motif Technologies, with 314B total and 13.2B active parameters. It is a general-purpose multilingual model for English and Korean, particularly strong at...",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 262144,
+        "max_completion_tokens": 235929,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "include_reasoning",
+        "logprobs",
+        "max_tokens",
+        "presence_penalty",
+        "reasoning",
+        "repetition_penalty",
+        "response_format",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_k",
+        "top_logprobs",
+        "top_p"
+      ],
+      "expiration_date": null,
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2026-11-02",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "toggle"
+        }
+      ],
+      "cost": {
+        "input": 0.3,
+        "output": 1.2,
+        "cache_read": 0.06
+      },
+      "limit": {
+        "context": 262144,
+        "output": 235929
+      }
     }
   },
   {
@@ -81916,7 +82884,7 @@
     "provider": "openrouter",
     "family": "nemotron",
     "created_at": "2026-03-11 00:00:00 UTC",
-    "context_window": 1048576,
+    "context_window": 262144,
     "max_output_tokens": 16384,
     "knowledge_cutoff": null,
     "modalities": {
@@ -82011,7 +82979,7 @@
         "output": 0.4
       },
       "limit": {
-        "context": 1048576,
+        "context": 262144,
         "output": 16384
       },
       "knowledge": "2025-06"
@@ -82073,6 +83041,7 @@
         "frequency_penalty",
         "include_reasoning",
         "logit_bias",
+        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -82087,6 +83056,7 @@
         "tool_choice",
         "tools",
         "top_k",
+        "top_logprobs",
         "top_p"
       ],
       "expiration_date": null,
@@ -84308,7 +85278,7 @@
         "tools",
         "verbosity"
       ],
-      "expiration_date": null,
+      "expiration_date": "2026-12-11",
       "source": "models.dev",
       "provider_id": "openrouter",
       "open_weights": false,
@@ -84413,7 +85383,7 @@
         "top_p",
         "verbosity"
       ],
-      "expiration_date": null,
+      "expiration_date": "2026-12-11",
       "source": "models.dev",
       "provider_id": "openrouter",
       "open_weights": false,
@@ -84599,7 +85569,7 @@
         "tools",
         "verbosity"
       ],
-      "expiration_date": null,
+      "expiration_date": "2026-12-11",
       "source": "models.dev",
       "provider_id": "openrouter",
       "open_weights": false,
@@ -84703,7 +85673,7 @@
         "tools",
         "verbosity"
       ],
-      "expiration_date": null,
+      "expiration_date": "2026-12-11",
       "source": "models.dev",
       "provider_id": "openrouter",
       "open_weights": false,
@@ -84805,7 +85775,7 @@
         "tools",
         "verbosity"
       ],
-      "expiration_date": null
+      "expiration_date": "2026-12-11"
     }
   },
   {
@@ -84876,7 +85846,7 @@
         "tools",
         "verbosity"
       ],
-      "expiration_date": null,
+      "expiration_date": "2026-12-11",
       "source": "models.dev",
       "provider_id": "openrouter",
       "open_weights": false,
@@ -86998,7 +87968,7 @@
       "top_provider": {
         "context_length": 1050000,
         "max_completion_tokens": 128000,
-        "is_moderated": true
+        "is_moderated": false
       },
       "per_request_limits": null,
       "supported_parameters": [
@@ -87131,7 +88101,7 @@
       "top_provider": {
         "context_length": 1050000,
         "max_completion_tokens": 128000,
-        "is_moderated": false
+        "is_moderated": true
       },
       "per_request_limits": null,
       "supported_parameters": [
@@ -91361,7 +92331,7 @@
         "tool_choice",
         "tools"
       ],
-      "expiration_date": null,
+      "expiration_date": "2026-12-11",
       "source": "models.dev",
       "provider_id": "openrouter",
       "open_weights": false,
@@ -91454,7 +92424,7 @@
         "tool_choice",
         "tools"
       ],
-      "expiration_date": null,
+      "expiration_date": "2026-12-11",
       "source": "models.dev",
       "provider_id": "openrouter",
       "open_weights": false,
@@ -92506,6 +93476,115 @@
     }
   },
   {
+    "id": "particle-ai/particle-1:free",
+    "name": "Particle-1 (free)",
+    "provider": "openrouter",
+    "family": "particle-ai",
+    "created_at": "2026-10-28 00:00:00 UTC",
+    "context_window": 1048576,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision",
+      "streaming",
+      "tool_choice"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0,
+          "output_per_million": 0
+        }
+      }
+    },
+    "metadata": {
+      "description": "Particle-1 is a token-efficient agentic coding model from Particle AI, post-trained on DeepSeek V4.1 Flash. It is suited for software engineering work such as terminal workflows, codebase changes, and data...",
+      "architecture": {
+        "modality": "text+image->text",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 1048576,
+        "max_completion_tokens": 131072,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "include_reasoning",
+        "logprobs",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "reasoning",
+        "reasoning_effort",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_k",
+        "top_logprobs",
+        "top_p"
+      ],
+      "expiration_date": null,
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-10-28",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "none",
+            "minimal",
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "limit": {
+        "context": 1048576,
+        "output": 131072
+      }
+    }
+  },
+  {
     "id": "perceptron/perceptron-mk1",
     "name": "Perceptron Mk1",
     "provider": "openrouter",
@@ -92755,6 +93834,53 @@
     }
   },
   {
+    "id": "perplexity/pplx-decider-flash-v1.3:free",
+    "name": "Perplexity: Decider Flash V1.3 (free)",
+    "provider": "openrouter",
+    "family": "perplexity",
+    "created_at": "2026-11-12 18:17:46 UTC",
+    "context_window": 262144,
+    "max_output_tokens": 235929,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "vision",
+      "judgment"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Decider Flash V1.3 is a decision model from Perplexity, a smaller, lower-cost sibling of [Decider V1.3](/perplexity/pplx-decider-v1.3) with the same API contract. Instead of generating text, it reads content passed as...",
+      "architecture": {
+        "modality": "text+image->decisions",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 262144,
+        "max_completion_tokens": 235929,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
+    }
+  },
+  {
     "id": "perplexity/pplx-decider-v1.2",
     "name": "Perplexity: Decider V1.2",
     "provider": "openrouter",
@@ -92785,6 +93911,53 @@
     },
     "metadata": {
       "description": "Decider V1.2 is a new 27B checkpoint of Perplexity's decision model, succeeding [Decider V1.1 27B](/perplexity/pplx-decider-v1.1-27b) with the same API contract. Instead of generating text, it reads content passed as `state`...",
+      "architecture": {
+        "modality": "text+image->decisions",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "decisions"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 262144,
+        "max_completion_tokens": 235929,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
+    }
+  },
+  {
+    "id": "perplexity/pplx-decider-v1.3:free",
+    "name": "Perplexity: Decider V1.3 (free)",
+    "provider": "openrouter",
+    "family": "perplexity",
+    "created_at": "2026-11-12 18:17:42 UTC",
+    "context_window": 262144,
+    "max_output_tokens": 235929,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "judgment"
+      ]
+    },
+    "capabilities": [
+      "vision",
+      "judgment"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Decider V1.3 is a decision model from Perplexity, succeeding [Decider V1.2](/perplexity/pplx-decider-v1.2). Instead of generating text, it reads content passed as `state` (text, JSON, or images) and returns typed, probabilistic answers...",
       "architecture": {
         "modality": "text+image->decisions",
         "input_modalities": [
@@ -93618,93 +94791,6 @@
     }
   },
   {
-    "id": "qwen/qwen-2.5-7b-instruct",
-    "name": "Qwen2.5 7B Instruct",
-    "provider": "openrouter",
-    "family": "qwen",
-    "created_at": "2024-10-16 00:00:00 UTC",
-    "context_window": 32768,
-    "max_output_tokens": 29491,
-    "knowledge_cutoff": "2024-06-30",
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling",
-      "structured_output",
-      "streaming",
-      "tool_choice"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.1,
-          "output_per_million": 0.2
-        }
-      }
-    },
-    "metadata": {
-      "description": "Qwen2.5 7B is the latest series of Qwen large language models. Qwen2.5 brings the following improvements upon Qwen2: - Significantly more knowledge and has greatly improved capabilities in coding and...",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Qwen",
-        "instruct_type": "chatml"
-      },
-      "top_provider": {
-        "context_length": 32768,
-        "max_completion_tokens": 29491,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "frequency_penalty",
-        "max_tokens",
-        "min_p",
-        "presence_penalty",
-        "repetition_penalty",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_k",
-        "top_p"
-      ],
-      "expiration_date": null,
-      "source": "models.dev",
-      "provider_id": "openrouter",
-      "open_weights": true,
-      "attachment": false,
-      "temperature": true,
-      "last_updated": "2024-10-16",
-      "tool_call": true,
-      "structured_output": true,
-      "reasoning": false,
-      "cost": {
-        "input": 0.1,
-        "output": 0.2
-      },
-      "limit": {
-        "context": 32768,
-        "output": 29491
-      },
-      "knowledge": "2024-06-30"
-    }
-  },
-  {
     "id": "qwen/qwen-2.5-coder-32b-instruct",
     "name": "Qwen2.5-Coder-32B-Instruct",
     "provider": "openrouter",
@@ -94420,7 +95506,7 @@
     "family": "qwen",
     "created_at": "2025-04-28 00:00:00 UTC",
     "context_window": 40960,
-    "max_output_tokens": 36864,
+    "max_output_tokens": 16384,
     "knowledge_cutoff": "2025-03-31",
     "modalities": {
       "input": [
@@ -94440,8 +95526,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.1,
-          "output_per_million": 0.22
+          "input_per_million": 0.12,
+          "output_per_million": 0.24
         }
       }
     },
@@ -94460,7 +95546,7 @@
       },
       "top_provider": {
         "context_length": 40960,
-        "max_completion_tokens": 36864,
+        "max_completion_tokens": 16384,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -94501,12 +95587,12 @@
         }
       ],
       "cost": {
-        "input": 0.1,
-        "output": 0.22
+        "input": 0.12,
+        "output": 0.24
       },
       "limit": {
         "context": 40960,
-        "output": 36864
+        "output": 16384
       },
       "knowledge": "2025-03-31"
     }
@@ -95986,7 +97072,7 @@
         "top_k",
         "top_p"
       ],
-      "expiration_date": null,
+      "expiration_date": "2026-11-15",
       "source": "models.dev",
       "provider_id": "openrouter",
       "open_weights": true,
@@ -96524,7 +97610,7 @@
     "family": "qwen",
     "created_at": "2026-02-23 00:00:00 UTC",
     "context_window": 262144,
-    "max_output_tokens": 235929,
+    "max_output_tokens": 40960,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -96548,8 +97634,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.17,
-          "output_per_million": 0.25
+          "input_per_million": 0.141,
+          "output_per_million": 0.208,
+          "cache_read_input_per_million": 0.127
         }
       }
     },
@@ -96570,7 +97657,7 @@
       },
       "top_provider": {
         "context_length": 262144,
-        "max_completion_tokens": 235929,
+        "max_completion_tokens": 40960,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -96613,12 +97700,13 @@
         }
       ],
       "cost": {
-        "input": 0.17,
-        "output": 0.25
+        "input": 0.141,
+        "output": 0.208,
+        "cache_read": 0.127
       },
       "limit": {
         "context": 262144,
-        "output": 235929
+        "output": 40960
       }
     }
   },
@@ -97899,7 +98987,7 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 1048576,
+        "context_length": 1000000,
         "max_completion_tokens": 131072,
         "is_moderated": false
       },
@@ -99392,6 +100480,61 @@
     }
   },
   {
+    "id": "recraft/recraft-v4.1-flash-v2",
+    "name": "Recraft: Recraft V4.1 Flash V2",
+    "provider": "openrouter",
+    "family": "recraft",
+    "created_at": "2026-11-13 22:19:45 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Recraft V4.1 Flash V2 is a text-to-image model from Recraft, an updated version of [Recraft V4.1 Flash](/recraft/recraft-v4.1-flash) in the speed tier of the V4.1 family. It is suited for rapid...",
+      "architecture": {
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "4:3",
+            "3:4",
+            "16:9",
+            "9:16",
+            "auto"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 6
+        }
+      },
+      "expiration_date": null
+    }
+  },
+  {
     "id": "recraft/recraft-v4.1-pro",
     "name": "Recraft: Recraft V4.1 Pro",
     "provider": "openrouter",
@@ -100455,9 +101598,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.2,
-          "output_per_million": 0.6,
-          "cache_read_input_per_million": 0.05
+          "input_per_million": 0.1,
+          "output_per_million": 0.3,
+          "cache_read_input_per_million": 0.025
         }
       }
     },
@@ -100517,9 +101660,9 @@
         }
       ],
       "cost": {
-        "input": 0.2,
-        "output": 0.6,
-        "cache_read": 0.05
+        "input": 0.1,
+        "output": 0.3,
+        "cache_read": 0.025
       },
       "limit": {
         "context": 1048576,
@@ -102021,6 +103164,57 @@
     }
   },
   {
+    "id": "speechify/simba-3.5",
+    "name": "Speechify: Simba 3.5",
+    "provider": "openrouter",
+    "family": "speechify",
+    "created_at": "2026-11-11 18:29:00 UTC",
+    "context_window": 0,
+    "max_output_tokens": 0,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "audio"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "speech_generation"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 15.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "Speechify's recommended streaming text-to-speech model, covering 48 languages including English under one model, with the language chosen per request.",
+      "architecture": {
+        "modality": "text->speech",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "speech"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 0,
+        "max_completion_tokens": 0,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [],
+      "expiration_date": null
+    }
+  },
+  {
     "id": "stepfun/step-3.5-flash",
     "name": "Step 3.5 Flash",
     "provider": "openrouter",
@@ -102081,7 +103275,7 @@
         "top_k",
         "top_p"
       ],
-      "expiration_date": null,
+      "expiration_date": "2026-11-15",
       "source": "models.dev",
       "provider_id": "openrouter",
       "open_weights": true,
@@ -102385,7 +103579,7 @@
         "top_k",
         "top_p"
       ],
-      "expiration_date": null,
+      "expiration_date": "2026-11-15",
       "source": "models.dev",
       "provider_id": "openrouter",
       "open_weights": true,
@@ -102719,6 +103913,50 @@
         "context": 8192,
         "output": 4096
       }
+    }
+  },
+  {
+    "id": "tencent/hy-world-2.1-panorama",
+    "name": "Tencent: HY-World 2.1 Panorama",
+    "provider": "openrouter",
+    "family": "tencent",
+    "created_at": "2026-11-13 22:17:25 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "HY-World 2.1 Panorama is a 360-degree panorama generation model from Tencent, part of the Hunyuan World family. It turns a single text prompt into one high-resolution equirectangular panorama suitable for...",
+      "architecture": {
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 1
+        }
+      },
+      "expiration_date": null
     }
   },
   {
@@ -103591,6 +104829,116 @@
     }
   },
   {
+    "id": "thinkingmachines/inkling-2-small",
+    "name": "Inkling 2 Small",
+    "provider": "openrouter",
+    "family": "ling",
+    "created_at": "2026-11-05 00:00:00 UTC",
+    "context_window": 1048576,
+    "max_output_tokens": 943718,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision",
+      "streaming",
+      "tool_choice"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.3,
+          "output_per_million": 1,
+          "cache_read_input_per_million": 0.03
+        }
+      }
+    },
+    "metadata": {
+      "description": "Inkling 2 Small is an open-weight multimodal mixture-of-experts reasoning model from Thinking Machines Lab, with 17B active parameters out of 594B total. It is the first model in the second...",
+      "architecture": {
+        "modality": "text+image->text",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 1048576,
+        "max_completion_tokens": 943718,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "include_reasoning",
+        "logit_bias",
+        "logprobs",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "reasoning",
+        "reasoning_effort",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_k",
+        "top_logprobs",
+        "top_p"
+      ],
+      "expiration_date": null,
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-11-05",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "minimal",
+            "low",
+            "medium",
+            "high",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 0.3,
+        "output": 1,
+        "cache_read": 0.03
+      },
+      "limit": {
+        "context": 1048576,
+        "output": 943718
+      }
+    }
+  },
+  {
     "id": "thinkingmachines/inkling-2-small:free",
     "name": "Inkling 2 Small (free)",
     "provider": "openrouter",
@@ -103623,7 +104971,7 @@
       }
     },
     "metadata": {
-      "description": "Inkling 2 Small is a multimodal mixture-of-experts reasoning model from Thinking Machines Lab, with 17B active parameters out of 594B total. It is the first model in the second Inkling...",
+      "description": "Inkling 2 Small is an open-weight multimodal mixture-of-experts reasoning model from Thinking Machines Lab, with 17B active parameters out of 594B total. It is the first model in the second...",
       "architecture": {
         "modality": "text+image->text",
         "input_modalities": [
@@ -104190,6 +105538,88 @@
     }
   },
   {
+    "id": "unbiased/pareto-26.10-preview",
+    "name": "Pareto 26.10 Preview",
+    "provider": "openrouter",
+    "family": "unbiased",
+    "created_at": "2026-10-01 00:00:00 UTC",
+    "context_window": 1048576,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "vision",
+      "streaming",
+      "tool_choice"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.8,
+          "output_per_million": 3.2,
+          "cache_read_input_per_million": 0.03
+        }
+      }
+    },
+    "metadata": {
+      "description": "Pareto is a multimodal composite model built for research, coding, and agentic workflows, while delivering frontier-level performance across a broad range of general-purpose tasks. This is a preview of the...",
+      "architecture": {
+        "modality": "text+image->text",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 1048576,
+        "max_completion_tokens": 131072,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "response_format",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_p"
+      ],
+      "expiration_date": null,
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-10-01",
+      "tool_call": true,
+      "structured_output": false,
+      "reasoning": false,
+      "cost": {
+        "input": 0.8,
+        "output": 3.2,
+        "cache_read": 0.03
+      },
+      "limit": {
+        "context": 1048576,
+        "output": 131072
+      }
+    }
+  },
+  {
     "id": "unbiased/pareto-26.9",
     "name": "Pareto 26.9",
     "provider": "openrouter",
@@ -104295,9 +105725,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.35,
-          "output_per_million": 0.65,
-          "cache_read_input_per_million": 0.35
+          "input_per_million": 0.3,
+          "output_per_million": 0.5,
+          "cache_read_input_per_million": 0.2
         }
       }
     },
@@ -104349,9 +105779,9 @@
       "structured_output": true,
       "reasoning": false,
       "cost": {
-        "input": 0.35,
-        "output": 0.65,
-        "cache_read": 0.35
+        "input": 0.3,
+        "output": 0.5,
+        "cache_read": 0.2
       },
       "limit": {
         "context": 6144,
@@ -104622,16 +106052,20 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
+        "logprobs",
         "max_tokens",
         "parallel_tool_calls",
         "presence_penalty",
         "reasoning",
         "reasoning_effort",
+        "repetition_penalty",
         "response_format",
         "structured_outputs",
         "temperature",
         "tool_choice",
         "tools",
+        "top_k",
+        "top_logprobs",
         "top_p"
       ],
       "expiration_date": null,
@@ -106182,7 +107616,7 @@
     "family": "mimo",
     "created_at": "2026-04-22 00:00:00 UTC",
     "context_window": 1024000,
-    "max_output_tokens": 235929,
+    "max_output_tokens": 131072,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -106202,9 +107636,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.48,
-          "output_per_million": 1.8,
-          "cache_read_input_per_million": 0.096
+          "input_per_million": 0.435,
+          "output_per_million": 0.87,
+          "cache_read_input_per_million": 0.0036
         }
       }
     },
@@ -106222,8 +107656,8 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 262144,
-        "max_completion_tokens": 235929,
+        "context_length": 1024000,
+        "max_completion_tokens": 131072,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -106260,13 +107694,13 @@
         }
       ],
       "cost": {
-        "input": 0.48,
-        "output": 1.8,
-        "cache_read": 0.096
+        "input": 0.435,
+        "output": 0.87,
+        "cache_read": 0.0036
       },
       "limit": {
         "context": 1024000,
-        "output": 235929
+        "output": 131072
       },
       "knowledge": "2024-12"
     }
@@ -106584,100 +108018,6 @@
       "limit": {
         "context": 1048576,
         "output": 131072
-      }
-    }
-  },
-  {
-    "id": "xingchen-agi/xing4.0-29b-a4b:free",
-    "name": "Xing4.0 29B A4B (free)",
-    "provider": "openrouter",
-    "family": "agi",
-    "created_at": "2026-10-16 00:00:00 UTC",
-    "context_window": 262144,
-    "max_output_tokens": 235929,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling",
-      "structured_output",
-      "reasoning",
-      "streaming",
-      "tool_choice"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0,
-          "output_per_million": 0
-        }
-      }
-    },
-    "metadata": {
-      "description": "Xing4.0-29B-A4B is an open-weight mixture-of-experts language model from China Telecom's AI team (TeleAI) and the successor to the TeleChat series. It has 29B total parameters with 4B active per token...",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Other",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 262144,
-        "max_completion_tokens": 235929,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "frequency_penalty",
-        "include_reasoning",
-        "max_tokens",
-        "min_p",
-        "presence_penalty",
-        "reasoning",
-        "repetition_penalty",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_k",
-        "top_p"
-      ],
-      "expiration_date": null,
-      "source": "models.dev",
-      "provider_id": "openrouter",
-      "open_weights": true,
-      "attachment": false,
-      "temperature": true,
-      "last_updated": "2026-10-16",
-      "tool_call": true,
-      "structured_output": true,
-      "reasoning": true,
-      "reasoning_options": [
-        {
-          "type": "toggle"
-        }
-      ],
-      "cost": {
-        "input": 0,
-        "output": 0
-      },
-      "limit": {
-        "context": 262144,
-        "output": 235929
       }
     }
   },
@@ -107791,9 +109131,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.527,
-          "output_per_million": 1.0750000000000002,
-          "cache_read_input_per_million": 0.17800000000000002
+          "input_per_million": 0.34700000000000003,
+          "output_per_million": 1.068,
+          "cache_read_input_per_million": 0.117
         }
       }
     },
@@ -107869,9 +109209,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.0699,
-          "output_per_million": 1.4,
-          "cache_read_input_per_million": 0.0689
+          "input_per_million": 0.084,
+          "output_per_million": 3.6,
+          "cache_read_input_per_million": 0.079
         }
       }
     },
@@ -107938,9 +109278,9 @@
         }
       ],
       "cost": {
-        "input": 0.0699,
-        "output": 1.4,
-        "cache_read": 0.0689
+        "input": 0.084,
+        "output": 3.6,
+        "cache_read": 0.079
       },
       "limit": {
         "context": 1048576,
@@ -108068,7 +109408,7 @@
     "family": "z-ai",
     "created_at": "2026-08-26 13:59:01 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 943718,
+    "max_output_tokens": 131072,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -108091,9 +109431,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.032999999999999995,
-          "output_per_million": 0.061000000000000006,
-          "cache_read_input_per_million": 0.014
+          "input_per_million": 0.049999999999999996,
+          "output_per_million": 0.18,
+          "cache_read_input_per_million": 0.01
         }
       }
     },
@@ -108114,7 +109454,7 @@
       },
       "top_provider": {
         "context_length": 1048576,
-        "max_completion_tokens": 943718,
+        "max_completion_tokens": 131072,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -108164,6 +109504,7 @@
     },
     "capabilities": [
       "function_calling",
+      "structured_output",
       "reasoning",
       "vision",
       "video",
@@ -108206,6 +109547,7 @@
         "reasoning",
         "reasoning_effort",
         "response_format",
+        "structured_outputs",
         "temperature",
         "tool_choice",
         "tools",
@@ -108220,7 +109562,7 @@
       "temperature": true,
       "last_updated": "2026-09-18",
       "tool_call": true,
-      "structured_output": false,
+      "structured_output": true,
       "reasoning": true,
       "reasoning_options": [
         {
@@ -108500,7 +109842,6 @@
         "frequency_penalty",
         "include_reasoning",
         "logit_bias",
-        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -108515,7 +109856,6 @@
         "tool_choice",
         "tools",
         "top_k",
-        "top_logprobs",
         "top_p"
       ],
       "expiration_date": null
@@ -109086,9 +110426,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.006,
+          "input_per_million": 0.038,
           "output_per_million": 0.5,
-          "cache_read_input_per_million": 0.005
+          "cache_read_input_per_million": 0.01
         }
       }
     },
@@ -109158,9 +110498,9 @@
         }
       ],
       "cost": {
-        "input": 0.006,
+        "input": 0.038,
         "output": 0.5,
-        "cache_read": 0.005
+        "cache_read": 0.01
       },
       "limit": {
         "context": 1048576,
@@ -109390,15 +110730,15 @@
     "family": "gemini-flash",
     "created_at": "2026-04-27 00:00:00 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 65536,
+    "max_output_tokens": 943718,
     "knowledge_cutoff": "2025-01-01",
     "modalities": {
       "input": [
-        "text",
-        "image",
-        "video",
+        "audio",
         "pdf",
-        "audio"
+        "image",
+        "text",
+        "video"
       ],
       "output": [
         "text"
@@ -109416,16 +110756,16 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.75,
-          "output_per_million": 3.75,
+          "input_per_million": 1.5,
+          "output_per_million": 7.5,
           "cache_read_input_per_million": 0.075,
-          "cache_write_input_per_million": 0.041667,
-          "reasoning_output_per_million": 3.75
+          "cache_write_input_per_million": 0.083333,
+          "reasoning_output_per_million": 7.5
         }
       },
       "audio_tokens": {
         "standard": {
-          "input_per_million": 0.75
+          "input_per_million": 1.5
         }
       }
     },
@@ -109434,11 +110774,11 @@
       "architecture": {
         "modality": "text+image+file+audio+video->text",
         "input_modalities": [
-          "text",
-          "image",
-          "video",
+          "audio",
           "file",
-          "audio"
+          "image",
+          "text",
+          "video"
         ],
         "output_modalities": [
           "text"
@@ -109448,7 +110788,7 @@
       },
       "top_provider": {
         "context_length": 1048576,
-        "max_completion_tokens": 65536,
+        "max_completion_tokens": 943718,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -109482,21 +110822,22 @@
           "values": [
             "low",
             "medium",
-            "high"
+            "high",
+            "xhigh"
           ]
         }
       ],
       "cost": {
-        "input": 0.75,
-        "output": 3.75,
-        "reasoning": 3.75,
+        "input": 1.5,
+        "output": 7.5,
+        "reasoning": 7.5,
         "cache_read": 0.075,
-        "cache_write": 0.041667,
-        "input_audio": 0.75
+        "cache_write": 0.083333,
+        "input_audio": 1.5
       },
       "limit": {
         "context": 1048576,
-        "output": 65536
+        "output": 943718
       },
       "knowledge": "2025-01-01"
     }
@@ -109775,14 +111116,13 @@
       "vision",
       "video",
       "streaming",
-      "tool_choice",
-      "parallel_tool_calls"
+      "tool_choice"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
           "input_per_million": 0.1824,
-          "output_per_million": 9.3388,
+          "output_per_million": 11.0055,
           "cache_read_input_per_million": 0.18
         }
       }
@@ -109813,10 +111153,8 @@
         "include_reasoning",
         "logit_bias",
         "logprobs",
-        "max_completion_tokens",
         "max_tokens",
         "min_p",
-        "parallel_tool_calls",
         "presence_penalty",
         "reasoning",
         "reasoning_effort",
@@ -109855,7 +111193,7 @@
       ],
       "cost": {
         "input": 0.1824,
-        "output": 9.3388,
+        "output": 11.0055,
         "cache_read": 0.18
       },
       "limit": {
@@ -110571,7 +111909,7 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.019000000000000003
+          "input_per_million": 0.02
         }
       }
     },
@@ -111225,6 +112563,32 @@
       },
       "knowledge": "2026-06"
     }
+  },
+  {
+    "id": "anthropic/claude-fable-5-2",
+    "name": "anthropic/claude-fable-5-2",
+    "provider": "perplexity",
+    "family": null,
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [],
+      "output": []
+    },
+    "capabilities": [],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 8,
+          "output_per_million": 40,
+          "cache_read_input_per_million": 0.2,
+          "cache_write_input_per_million": 10
+        }
+      }
+    },
+    "metadata": {}
   },
   {
     "id": "anthropic/claude-haiku-4-5",
@@ -112635,6 +113999,56 @@
     }
   },
   {
+    "id": "google/gemini-4-carbon",
+    "name": "google/gemini-4-carbon",
+    "provider": "perplexity",
+    "family": null,
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [],
+      "output": []
+    },
+    "capabilities": [],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2,
+          "output_per_million": 10,
+          "cache_read_input_per_million": 0.1
+        }
+      }
+    },
+    "metadata": {}
+  },
+  {
+    "id": "google/gemini-4-hydrogen",
+    "name": "google/gemini-4-hydrogen",
+    "provider": "perplexity",
+    "family": null,
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [],
+      "output": []
+    },
+    "capabilities": [],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.5,
+          "output_per_million": 7.5,
+          "cache_read_input_per_million": 0.075
+        }
+      }
+    },
+    "metadata": {}
+  },
+  {
     "id": "high",
     "name": "high",
     "provider": "perplexity",
@@ -113322,7 +114736,7 @@
       "provider_id": "perplexity-agent",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-04-23",
       "tool_call": true,
       "reasoning": true,
@@ -113397,7 +114811,7 @@
       "provider_id": "perplexity-agent",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-07-09",
       "tool_call": true,
       "structured_output": true,
@@ -113490,7 +114904,7 @@
       "provider_id": "perplexity-agent",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-07-09",
       "tool_call": true,
       "structured_output": true,
@@ -113583,7 +114997,7 @@
       "provider_id": "perplexity-agent",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-07-09",
       "tool_call": true,
       "structured_output": true,
@@ -113769,7 +115183,7 @@
       "provider_id": "perplexity-agent",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-09-22",
       "tool_call": true,
       "structured_output": true,
@@ -113862,7 +115276,7 @@
       "provider_id": "perplexity-agent",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-09-22",
       "tool_call": true,
       "structured_output": true,
@@ -115500,6 +116914,13 @@
             }
           },
           "title": "Open Notebook"
+        },
+        "openGenerationAiStudio": {
+          "references": {
+            "global": {
+              "uri": "https://console.cloud.google.com/vertex-ai/generative/multimodal/create/text?model=claude-fable-5-2"
+            }
+          }
         },
         "requestAccess": {
           "references": {
@@ -117472,12 +118893,7 @@
         "standard": {
           "input_per_million": 1.25,
           "output_per_million": 10
-        },
-        "long_context": {
-          "input_per_million": 2.5,
-          "output_per_million": 15
-        },
-        "long_context_threshold": 200000
+        }
       }
     },
     "metadata": {
@@ -117522,21 +118938,7 @@
       "reasoning_options": [],
       "cost": {
         "input": 1.25,
-        "output": 10,
-        "tiers": [
-          {
-            "input": 2.5,
-            "output": 15,
-            "tier": {
-              "type": "context",
-              "size": 200000
-            }
-          }
-        ],
-        "context_over_200k": {
-          "input": 2.5,
-          "output": 15
-        }
+        "output": 10
       },
       "limit": {
         "context": 128000,
@@ -119577,6 +120979,89 @@
     }
   },
   {
+    "id": "gemini-4-hydrogen",
+    "name": "Gemini 4 Hydrogen",
+    "provider": "vertexai",
+    "family": "gemini",
+    "created_at": "2026-11-12 00:00:00 UTC",
+    "context_window": 1048576,
+    "max_output_tokens": 65536,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video",
+        "audio",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision",
+      "video",
+      "transcription",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.5,
+          "output_per_million": 7.5,
+          "cache_read_input_per_million": 0.075
+        }
+      },
+      "audio_tokens": {
+        "standard": {
+          "input_per_million": 1.5
+        }
+      }
+    },
+    "metadata": {
+      "version_id": "default",
+      "open_source_category": null,
+      "launch_stage": "GA",
+      "supported_actions": null,
+      "publisher_model_template": "projects/{project}/locations/{location}/publishers/google/models/gemini-4-hydrogen@default",
+      "source": "models.dev",
+      "provider_id": "google-vertex",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": false,
+      "last_updated": "2026-11-12",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "low",
+            "medium",
+            "high",
+            "xhigh"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 1.5,
+        "output": 7.5,
+        "cache_read": 0.075,
+        "input_audio": 1.5
+      },
+      "limit": {
+        "context": 1048576,
+        "output": 65536
+      },
+      "knowledge": "2026-03"
+    }
+  },
+  {
     "id": "gemini-embedding-001",
     "name": "Gemini Embedding 001",
     "provider": "vertexai",
@@ -121150,13 +122635,7 @@
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "cache_read_input_per_million": 0.2
-        },
-        "long_context": {
-          "input_per_million": 2.5,
-          "output_per_million": 5,
-          "cache_read_input_per_million": 0.4
-        },
-        "long_context_threshold": 200000
+        }
       }
     },
     "metadata": {
@@ -121174,23 +122653,7 @@
       "cost": {
         "input": 1.25,
         "output": 2.5,
-        "cache_read": 0.2,
-        "tiers": [
-          {
-            "input": 2.5,
-            "output": 5,
-            "cache_read": 0.4,
-            "tier": {
-              "type": "context",
-              "size": 200000
-            }
-          }
-        ],
-        "context_over_200k": {
-          "input": 2.5,
-          "output": 5,
-          "cache_read": 0.4
-        }
+        "cache_read": 0.2
       },
       "limit": {
         "context": 200000,

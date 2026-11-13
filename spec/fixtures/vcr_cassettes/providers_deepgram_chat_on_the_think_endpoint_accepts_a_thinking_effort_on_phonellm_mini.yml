@@ -26,23 +26,36 @@ http_interactions:
       Content-Type:
       - application/json
       Dg-Project-Id:
-      - <DEEPGRAM_PROJECT_ID>
+      - "<DEEPGRAM_PROJECT_ID>"
       Vary:
       - accept-encoding
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       Access-Control-Expose-Headers:
-      - dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings
+      - dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings,dg-engine-instance
       Dg-Request-Id:
-      - 01a1c5fd-9a3f-7e00-ba03-6f6f5cede207
+      - 01a1d705-7c60-7209-9b72-5ebdf0940357
       Transfer-Encoding:
       - chunked
       Date:
-      - Tue, 10 Nov 2026 15:04:55 GMT
+      - Fri, 13 Nov 2026 22:27:05 GMT
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTA2ZTFmNjBjLTRjM2MtNGQ0OS1iOTFjLTU5NmQ5NWZhM2NkNyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJPa2F5LCB0aGUgdXNlciBhc2tlZCBcIldoYXQgaXMgMisyP1wiIFRoYXQncyBhIHByZXR0eSBiYXNpYyBtYXRoIHF1ZXN0aW9uLiBMZXQgbWUgdGhpbmsgYWJvdXQgdGhpcyBjYXJlZnVsbHkuXG5cbkZpcnN0LCBJIHNob3VsZCBjb25maXJtIHRoYXQgMisyIGlzIGEgc2ltcGxlIGFkZGl0aW9uIHByb2JsZW0uIEluIHN0YW5kYXJkIGFyaXRobWV0aWMsIDIgcGx1cyAyIGVxdWFscyA0LiBCdXQgSSByZWNhbGwgdGhhdCBzb21ldGltZXMgcGVvcGxlIGFzayB0aGlzIHRvIHRlc3QgaWYgc29tZW9uZSBpcyBiZWluZyB0b28gbGl0ZXJhbCBvciBpZiB0aGV5J3JlIGluIGEgc3BlY2lmaWMgY29udGV4dCBsaWtlIGEgZGlmZmVyZW50IG51bWJlciBiYXNlLiBcblxuSG1tLCB0aGUgdXNlciBkaWRuJ3QgbWVudGlvbiBhbnkgc3BlY2lhbCBjb250ZXh0LCBzbyBJIHNob3VsZCBwcm9iYWJseSBzdGljayB0byB0aGUgc3RhbmRhcmQgYmFzZSAxMCBhbnN3ZXIuIEkgd29uZGVyIGlmIHRoZXkncmUganVzdCBjaGVja2luZyBpZiBJIGNhbiBkbyBiYXNpYyBtYXRoLCBvciBpZiB0aGV5J3JlIHNldHRpbmcgdXAgZm9yIGEgdHJpY2sgcXVlc3Rpb24uIFxuXG5JIHNob3VsZCBhbHNvIGNvbnNpZGVyIHdoeSBzb21lb25lIHdvdWxkIGFzayB0aGlzLiBNYXliZSB0aGV5J3JlIGEgY2hpbGQgbGVhcm5pbmcgbWF0aCwgb3Igc29tZW9uZSB0ZXN0aW5nIEFJIGNhcGFiaWxpdGllcy4gQ291bGQgYWxzbyBiZSBhIHJlZmVyZW5jZSB0byB0aGF0IGZhbW91cyBcIjIrMj01XCIgcHJvcGFnYW5kYSBmcm9tIE9yd2VsbCdzIDE5ODQsIGJ1dCB0aGF0IHNlZW1zIHVubGlrZWx5IGZvciBzdWNoIGEgc2ltcGxlIHF1ZXN0aW9uLiBcblxuU2luY2UgdGhlIHF1ZXN0aW9uIGlzIHNvIHN0cmFpZ2h0Zm9yd2FyZCwgSSdsbCBnaXZlIHRoZSBzdGFuZGFyZCBhbnN3ZXIgYnV0IEknbGwga2VlcCBpdCBzaW1wbGUgYW5kIGNsZWFyLiBObyBuZWVkIHRvIG92ZXJjb21wbGljYXRlIGl0IHVubGVzcyB0aGUgdXNlciBmb2xsb3dzIHVwIHdpdGggbW9yZSBjb250ZXh0LiBcblxuVGhlIGFuc3dlciBpcyBkZWZpbml0ZWx5IDQuIEknbGwgbWFrZSBzdXJlIHRvIHN0YXRlIGl0IGNvbmZpZGVudGx5IGJ1dCB3aXRob3V0IGJlaW5nIGNvbmRlc2NlbmRpbmcuIElmIHRoZXkgd2FudCB0byBrbm93IGFib3V0IG90aGVyIG51bWJlciBiYXNlcyBvciBwaGlsb3NvcGhpY2FsIGludGVycHJldGF0aW9ucywgdGhleSBjYW4gYXNrIGEgZm9sbG93LXVwIHF1ZXN0aW9uLiBcblxuSSBzaG91bGQgYWxzbyBiZSBjYXJlZnVsIG5vdCB0byBhZGQgdW5uZWNlc3NhcnkgaW5mb3JtYXRpb24gdGhhdCBtaWdodCBjb25mdXNlIGEgYmVnaW5uZXIuIEp1c3QgdGhlIGNsZWFuIGFuc3dlcjogMisyPTQuXG48L3RoaW5rPlxuVGhlIGFuc3dlciBpcyAqKjQqKi4gSW4gc3RhbmRhcmQgYXJpdGhtZXRpYyAoYmFzZSAxMCksIDIgKyAyIGVxdWFscyA0LiBcblxuSWYgeW91J3JlIGFza2luZyBmb3IgY29udGV4dDogIFxuLSBJbiBhbnkgc3RhbmRhcmQgbnVtYmVyIHN5c3RlbSAobGlrZSBiaW5hcnksIGhleGFkZWNpbWFsLCBldGMuKSwgMiArIDIgd2lsbCBzdGlsbCBlcXVhbCA0IGluIGJhc2UgMTAsIG9yIGl0cyBlcXVpdmFsZW50IGluIHRoYXQgYmFzZSAoZS5nLiwgMTAgaW4gYmFzZSAyLCBidXQgdGhhdCdzIG5vdCB0aGUgcXVlc3Rpb24gaGVyZSkuICBcbi0gVGhpcyBpcyBhIGZ1bmRhbWVudGFsIGFyaXRobWV0aWMgZmFjdCwgc28gbm8gYWR2YW5jZWQgbWF0aCBvciBwaGlsb3NvcGh5IGlzIG5lZWRlZC4g8J+YiiIsInJlZnVzYWwiOm51bGwsInJvbGUiOiJhc3Npc3RhbnQifSwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJsb2dwcm9icyI6bnVsbH1dLCJjcmVhdGVkIjoxNzk0MzIzMDk0LCJtb2RlbCI6InBob25lbGxtLW1pbmktYWxwaGEtMi1mcDgiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyMywiY29tcGxldGlvbl90b2tlbnMiOjQzNiwidG90YWxfdG9rZW5zIjo0NTksInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfX19
-  recorded_at: Tue, 10 Nov 2026 15:04:56 GMT
+      string: '{"id":"chatcmpl-23de265a-da37-415a-bd8f-4ec03af204b9","choices":[{"index":0,"message":{"content":"Okay,
+        the user is asking \"What is 2+2?\" That seems like a very basic math question.
+        Let me think about how to approach this.\n\nFirst, I should confirm that this
+        is indeed a simple arithmetic question. The user might be testing me, or perhaps
+        they''re genuinely checking if I can handle simple calculations. Given that
+        it''s such a fundamental question, I should answer clearly and directly.\n\nI
+        know that 2+2 equals 4. That''s a basic fact from elementary mathematics.
+        I don''t need to overcomplicate it. The answer is straightforward. \n\nI should
+        also consider why someone would ask this. Maybe they''re a child learning
+        math, or someone verifying that the AI can perform basic calculations. It''s
+        possible they''re making sure I''m not giving wrong information. \n\nI''ll
+        just give the direct answer: 4. No need for extra explanation unless they
+        ask for it. Since it''s such a simple question, a concise response is appropriate
+        here. \n\nI''ll make sure my answer is clear and correct. No tricks here,
+        just 2 plus 2 is 4.\n</think>\nThe answer is **4**.","refusal":null,"role":"assistant"},"finish_reason":"stop","logprobs":null}],"created":1794608824,"model":"phonellm-mini-alpha-2-fp8","object":"chat.completion","usage":{"prompt_tokens":23,"completion_tokens":237,"total_tokens":260,"prompt_tokens_details":{"cached_tokens":0}}}'
+  recorded_at: Fri, 13 Nov 2026 22:27:05 GMT
 recorded_with: VCR 6.4.1

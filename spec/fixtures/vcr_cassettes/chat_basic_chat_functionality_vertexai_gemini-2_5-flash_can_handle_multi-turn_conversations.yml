@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Tue, 10 Nov 2026 17:37:30 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Pragma:
       - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Fri, 13 Nov 2026 21:26:46 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -56,7 +56,7 @@ http_interactions:
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Tue, 10 Nov 2026 17:37:30 GMT
+  recorded_at: Fri, 13 Nov 2026 21:26:46 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -81,7 +81,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - WlbzaoGEEYGPu_EP_vaKgAI
+      - loD3apOmEOvltfAP0quAiQE
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 10 Nov 2026 17:37:31 GMT
+      - Fri, 13 Nov 2026 21:26:47 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -112,7 +112,7 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "The creator of the programming language Ruby is **Yukihiro Matsumoto** (often referred to as **Matz**)."
+                    "text": "The creator of the programming language Ruby is **Yukihiro Matsumoto**, often referred to by his nickname **\"Matz\"**."
                   }
                 ]
               },
@@ -121,8 +121,8 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 10,
-            "candidatesTokenCount": 24,
-            "totalTokenCount": 140,
+            "candidatesTokenCount": 26,
+            "totalTokenCount": 138,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -133,16 +133,16 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 24
+                "tokenCount": 26
               }
             ],
-            "thoughtsTokenCount": 106
+            "thoughtsTokenCount": 102
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-11-10T17:37:30.279041Z",
-          "responseId": "WlbzaoGEEYGPu_EP_vaKgAI"
+          "createTime": "2026-11-13T21:26:46.267027Z",
+          "responseId": "loD3apOmEOvltfAP0quAiQE"
         }
-  recorded_at: Tue, 10 Nov 2026 17:37:31 GMT
+  recorded_at: Fri, 13 Nov 2026 21:26:47 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -150,9 +150,9 @@ http_interactions:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Who is the creator of
         the programming language Ruby?"}]},{"role":"model","parts":[{"text":"The creator
-        of the programming language Ruby is **Yukihiro Matsumoto** (often referred
-        to as **Matz**)."}]},{"role":"user","parts":[{"text":"What year did he create
-        Ruby?"}]}],"generationConfig":{}}'
+        of the programming language Ruby is **Yukihiro Matsumoto**, often referred
+        to by his nickname **\"Matz\"**."}]},{"role":"user","parts":[{"text":"What
+        year did he create Ruby?"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
       - Faraday v2.15.1
@@ -170,7 +170,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - W1bzaubMNtmVu_EP_omloQQ
+      - l4D3auW-HOznvNkPqr_82AE
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -178,7 +178,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 10 Nov 2026 17:37:33 GMT
+      - Fri, 13 Nov 2026 21:26:49 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -201,7 +201,7 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "Yukihiro Matsumoto (Matz) started designing Ruby in **1993**.\n\nThe first public release of Ruby (version 0.95) was on **December 21, 1995**."
+                    "text": "Yukihiro Matsumoto (Matz) started working on Ruby in **1993**.\n\nHe released the first public version of Ruby, Ruby 0.95, on **December 21, 1995**. So, while the initial development began in 1993, the language was publicly launched in 1995."
                   }
                 ]
               },
@@ -209,27 +209,27 @@ http_interactions:
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 41,
-            "candidatesTokenCount": 47,
-            "totalTokenCount": 247,
+            "promptTokenCount": 43,
+            "candidatesTokenCount": 75,
+            "totalTokenCount": 318,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 41
+                "tokenCount": 43
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 47
+                "tokenCount": 75
               }
             ],
-            "thoughtsTokenCount": 159
+            "thoughtsTokenCount": 200
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-11-10T17:37:31.894566Z",
-          "responseId": "W1bzaubMNtmVu_EP_omloQQ"
+          "createTime": "2026-11-13T21:26:47.466789Z",
+          "responseId": "l4D3auW-HOznvNkPqr_82AE"
         }
-  recorded_at: Tue, 10 Nov 2026 17:37:33 GMT
+  recorded_at: Fri, 13 Nov 2026 21:26:49 GMT
 recorded_with: VCR 6.4.1

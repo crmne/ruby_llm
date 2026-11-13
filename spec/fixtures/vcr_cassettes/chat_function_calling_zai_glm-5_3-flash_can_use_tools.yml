@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:30:56 GMT
+      - Fri, 13 Nov 2026 21:22:22 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -39,7 +39,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - 986cc3c7df9d2d4be56a5358e01f251d
+      - 62b65f42e56c5c6a284a5abd05ae09b8
       Vary:
       - Accept-Encoding
       - Access-Control-Request-Headers
@@ -50,25 +50,27 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 202611110130516eb8c7a563eb4db0
+      - 20261114052217d559b7c4e22b4cfd
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":"","reasoning_content":"The
-        user wants to know the weather in Berlin. They''ve provided the coordinates:
-        52.5200, 13.4050. I''ll call the weather function with these coordinates.","role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","name":"weather"},"id":"call_-7086077700548326954","index":0,"type":"function"}]}}],"created":1794331856,"id":"202611110130516eb8c7a563eb4db0","model":"glm-5.3-flash","object":"chat.completion","request_id":"202611110130516eb8c7a563eb4db0","usage":{"completion_tokens":63,"completion_tokens_details":{"reasoning_tokens":39},"prompt_tokens":229,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":292}}'
-  recorded_at: Tue, 10 Nov 2026 17:30:56 GMT
+        user wants to know the weather in Berlin. They''ve provided the coordinates
+        directly: latitude 52.5200, longitude 13.4050. I can call the weather function
+        with these coordinates.","role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","name":"weather"},"id":"call_-7080010251788877690","index":0,"type":"function"}]}}],"created":1794604942,"id":"20261114052217d559b7c4e22b4cfd","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261114052217d559b7c4e22b4cfd","usage":{"completion_tokens":66,"completion_tokens_details":{"reasoning_tokens":42},"prompt_tokens":229,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":295}}'
+  recorded_at: Fri, 13 Nov 2026 21:22:22 GMT
 - request:
     method: post
     uri: https://api.z.ai/api/paas/v4/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"glm-5.3-flash","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_-7086077700548326954","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning_content":"The
-        user wants to know the weather in Berlin. They''ve provided the coordinates:
-        52.5200, 13.4050. I''ll call the weather function with these coordinates."},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_-7086077700548326954"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_-7080010251788877690","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning_content":"The
+        user wants to know the weather in Berlin. They''ve provided the coordinates
+        directly: latitude 52.5200, longitude 13.4050. I can call the weather function
+        with these coordinates."},{"role":"tool","content":"Current weather at 52.5200,
+        13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_-7080010251788877690"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -89,7 +91,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:31:01 GMT
+      - Fri, 13 Nov 2026 21:22:27 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -101,7 +103,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - 8a36a96f69e1b1bfe0c012beabb682a8
+      - 61555ecab371263bb69139fe91d22a39
       Vary:
       - Accept-Encoding
       - Access-Control-Request-Headers
@@ -112,12 +114,12 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 20261111013056011d797a9e0d4022
+      - 20261114052222228bc7390085456d
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJIZXJlJ3MgdGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW46XG5cbi0gKipUZW1wZXJhdHVyZToqKiAxNcKwQ1xuLSAqKldpbmQ6KiogMTAga20vaFxuXG5JdCdzIGEgbWlsZCBkYXkgd2l0aCBhIGxpZ2h0IGJyZWV6ZSDigJQgYSBsaWdodCBqYWNrZXQgbWlnaHQgYmUgYSBnb29kIGlkZWEgaWYgeW91J3JlIGhlYWRpbmcgb3V0ISIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzk0MzMxODYxLCJpZCI6IjIwMjYxMTExMDEzMDU2MDExZDc5N2E5ZTBkNDAyMiIsIm1vZGVsIjoiZ2xtLTUuMy1mbGFzaCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInJlcXVlc3RfaWQiOiIyMDI2MTExMTAxMzA1NjAxMWQ3OTdhOWUwZDQwMjIiLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6NTEsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MH0sInByb21wdF90b2tlbnMiOjMyMiwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJ0b3RhbF90b2tlbnMiOjM3M319
-  recorded_at: Tue, 10 Nov 2026 17:31:01 GMT
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJIZXJlJ3MgdGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW46XG5cbi0gKipUZW1wZXJhdHVyZToqKiAxNcKwQ1xuLSAqKldpbmQ6KiogMTAga20vaFxuXG5JdCdzIGEgbWlsZCBkYXkgd2l0aCBhIGxpZ2h0IGJyZWV6ZSDigJQgYSBsaWdodCBqYWNrZXQgbWlnaHQgYmUgYSBnb29kIGlkZWEgaWYgeW91J3JlIGhlYWRpbmcgb3V0ISDwn4yk77iPIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3OTQ2MDQ5NDcsImlkIjoiMjAyNjExMTQwNTIyMjIyMjhiYzczOTAwODU0NTZkIiwibW9kZWwiOiJnbG0tNS4zLWZsYXNoIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicmVxdWVzdF9pZCI6IjIwMjYxMTE0MDUyMjIyMjI4YmM3MzkwMDg1NDU2ZCIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjo1NSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowfSwicHJvbXB0X3Rva2VucyI6MzI1LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInRvdGFsX3Rva2VucyI6MzgwfX0=
+  recorded_at: Fri, 13 Nov 2026 21:22:27 GMT
 recorded_with: VCR 6.4.1

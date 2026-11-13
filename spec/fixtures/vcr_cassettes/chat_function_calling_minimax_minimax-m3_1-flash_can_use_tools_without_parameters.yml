@@ -27,27 +27,27 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
-      - '449'
+      - '448'
       Trace-Id:
-      - '074289af95d3667c145a3676b7d66dfd'
+      - 0746b39ba71c337b52b94b36376d0d76
       X-Session-Id:
       - 2d0af558050409753676d45251536c2f
       X-Mm-Request-Id:
-      - 2092934004998157135_1794332335zvxoy6
+      - 2092934004998157135_1794605211kwvm8k
       Minimax-Request-Id:
-      - 35d90a53c63c5587ac067725ec49d26b
+      - 4948dadc9c7d6d2b31e74597747bf11c
       Alb-Receive-Time:
-      - '1794332335.68'
+      - '1794605211.83'
       Alb-Request-Id:
-      - d0ae9e3c858f4cf3af02c8d54addfef01a964629
+      - 72fe14c488e4ef566e53545384ca9c87125718f8
       Expires:
-      - Tue, 10 Nov 2026 17:38:56 GMT
+      - Fri, 13 Nov 2026 21:26:52 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Tue, 10 Nov 2026 17:38:56 GMT
+      - Fri, 13 Nov 2026 21:26:52 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -56,9 +56,9 @@ http_interactions:
       - ak
     body:
       encoding: UTF-8
-      string: '{"id":"074289af95d3667c145a3676b7d66dfd","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"I''ll
-        check that for you.","type":"text"},{"type":"tool_use","id":"call_01a1c68aa0b475068574cbba","name":"best_language_to_learn","input":{}}],"usage":{"input_tokens":255,"output_tokens":28,"cache_creation_input_tokens":0,"cache_read_input_tokens":191},"stop_reason":"tool_use","base_resp":{"status_code":0,"status_msg":""}}'
-  recorded_at: Tue, 10 Nov 2026 17:38:56 GMT
+      string: '{"id":"0746b39ba71c337b52b94b36376d0d76","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"I''ll
+        check that for you.","type":"text"},{"type":"tool_use","id":"call_function_v1l4wgb18e0z_1","name":"best_language_to_learn","input":{}}],"usage":{"input_tokens":323,"output_tokens":27,"cache_creation_input_tokens":0,"cache_read_input_tokens":128},"stop_reason":"tool_use","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Fri, 13 Nov 2026 21:26:52 GMT
 - request:
     method: post
     uri: https://api.minimax.io/anthropic/v1/messages
@@ -66,7 +66,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"Use
         the best_language_to_learn tool to tell me which language to learn."}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        check that for you."},{"type":"tool_use","id":"call_01a1c68aa0b475068574cbba","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"call_01a1c68aa0b475068574cbba","content":[{"type":"text","text":"Ruby"}]}]}],"stream":false,"max_tokens":524288,"tools":[{"name":"best_language_to_learn","description":"Gets
+        check that for you."},{"type":"tool_use","id":"call_function_v1l4wgb18e0z_1","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"call_function_v1l4wgb18e0z_1","content":[{"type":"text","text":"Ruby"}]}]}],"stream":false,"max_tokens":524288,"tools":[{"name":"best_language_to_learn","description":"Gets
         the best language to learn","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
@@ -87,27 +87,27 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
-      - '943'
+      - '532'
       Trace-Id:
-      - '074289b054c3ea73e0f18391a1d0f06e'
+      - 0746b39d6d9bbf01b3d2ab4913a8b43d
       X-Session-Id:
       - 2d0af558050409753676d45251536c2f
       X-Mm-Request-Id:
-      - 2092934004998157135_1794332336w9tmdq
+      - 2092934004998157135_1794605213gkw6rz
       Minimax-Request-Id:
-      - 4185cad6f926c4170257f7524ab504d6
+      - f8544bed02fe34fd93707d6c53ce07e9
       Alb-Receive-Time:
-      - '1794332336.686'
+      - '1794605213.05'
       Alb-Request-Id:
-      - edaabe72f934523f0068fe306e37b20a959cb523
+      - a71cb69593cf99af687cd8694f32c6c0ab03d6c2
       Expires:
-      - Tue, 10 Nov 2026 17:39:02 GMT
+      - Fri, 13 Nov 2026 21:26:53 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Tue, 10 Nov 2026 17:39:02 GMT
+      - Fri, 13 Nov 2026 21:26:53 GMT
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -115,8 +115,10 @@ http_interactions:
       X-From:
       - ak
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjA3NDI4OWIwNTRjM2VhNzNlMGYxODM5MWExZDBmMDZlIiwidHlwZSI6Im1lc3NhZ2UiLCJyb2xlIjoiYXNzaXN0YW50IiwibW9kZWwiOiJNaW5pTWF4LU0zLjEtRmxhc2giLCJjb250ZW50IjpbeyJ0ZXh0IjoiVGhlIHRvb2wgcmVjb21tZW5kcyAqKlJ1YnkqKi5cblxuQSBmZXcgbm90ZXMgb24gdGhhdCwgc2luY2UgdGhlIG5hbWUgY2FuIGJlIGFtYmlndW91czpcblxuLSAqKlJ1YnkgKHRoZSBwcm9ncmFtbWluZyBsYW5ndWFnZSkqKiDigJQgYSBkeW5hbWljLCBvYmplY3Qtb3JpZW50ZWQgbGFuZ3VhZ2UgZm9jdXNlZCBvbiBkZXZlbG9wZXIgaGFwcGluZXNzIGFuZCBleHByZXNzaXZlbmVzcy4gSXQgcG93ZXJzIFJ1Ynkgb24gUmFpbHMsIEpla3lsbCwgR2l0SHViJ3MgY29kZSByZXZpZXcgdG9vbGluZywgYW5kIGlzIHBvcHVsYXIgZm9yIHNjcmlwdGluZywgcHJvdG90eXBpbmcsIGFuZCBiYWNrZW5kIHdlYiBkZXZlbG9wbWVudC5cbi0gKipSdWJ5ICh0aGUgZ2Vtc3RvbmUpKiog4oCUIGNvcnVuZHVtIGluIGl0cyByZWQgZm9ybSwgcHJpemVkIGZvciBoYXJkbmVzcyAoTW9ocyA5KSBhbmQgdXNlZCBpbiBqZXdlbHJ5IGFuZCBhYnJhc2l2ZXMuXG5cbkdpdmVuIHRoZSB0b29sJ3MgbmFtZSwgdGhlIHByb2dyYW1taW5nIGxhbmd1YWdlIGlzIHRoZSBsaWtlbHkgaW50ZW50LiBXYW50IG1lIHRvIGdvIGludG8gbGVhcm5pbmcgcmVzb3VyY2VzIG9yIGhvdyB0byBnZXQgc3RhcnRlZCB3aXRoIFJ1Ynk/IiwidHlwZSI6InRleHQifV0sInVzYWdlIjp7ImlucHV0X3Rva2VucyI6NDQsIm91dHB1dF90b2tlbnMiOjEzNCwiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6NDQ2fSwic3RvcF9yZWFzb24iOiJlbmRfdHVybiIsImJhc2VfcmVzcCI6eyJzdGF0dXNfY29kZSI6MCwic3RhdHVzX21zZyI6IiJ9fQ==
-  recorded_at: Tue, 10 Nov 2026 17:39:02 GMT
+      encoding: UTF-8
+      string: '{"id":"0746b39d6d9bbf01b3d2ab4913a8b43d","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"**Ruby**
+        is the language recommended to learn.\n\nIf you''d like, I can tell you a
+        bit more about why Ruby is a great choice, suggest resources for getting started,
+        or help you set up your first Ruby project.","type":"text"}],"usage":{"input_tokens":301,"output_tokens":47,"cache_creation_input_tokens":0,"cache_read_input_tokens":189},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Fri, 13 Nov 2026 21:26:53 GMT
 recorded_with: VCR 6.4.1

@@ -32,7 +32,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 10 Nov 2026 17:51:12 GMT
+      - Fri, 13 Nov 2026 21:37:27 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -42,34 +42,34 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - f1bbfcc8c7200b309f19e517b9e49843
+      - 7a3b011281c065473f55a6a2b16410d8
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 fb0cb77e4731cc14e3aed97e0db416a0.cloudfront.net (CloudFront)
+      - 1.1 053f364bce5ed5da28d7531f0fc704d6.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P4
+      - TXL52-P2
       X-Amz-Cf-Id:
-      - 3mEkQ7M1nhd1H4MHyqb2cnG4y0ENsmob-ox4CKpZEcNBktVoPDwEfw==
+      - JraKQI4uhB8axyCr3rc9PcyGZKrvJTDG7XqDgnXJ__3D9nGHhT-M4A==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"be47f360-19d4-42a7-aac6-297a06f07598","object":"chat.completion","created":1794333072,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
-        user wants me to process \"test data\" through the content_returning tool.","tool_calls":[{"index":0,"id":"call_00_E1nqCZ3IqaTQZP2lPxxf1080","type":"function","function":{"name":"content_returning","arguments":"{\"query\":
-        \"test data\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":312,"completion_tokens":57,"total_tokens":369,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":17},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":312},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
-  recorded_at: Tue, 10 Nov 2026 17:51:13 GMT
+      string: '{"id":"b14a1309-8617-4e5f-8343-80fe65a82288","object":"chat.completion","created":1794605846,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
+        user wants me to process \"test data\" using the content_returning tool.","tool_calls":[{"index":0,"id":"call_00_6FPq7XKyGP3YbPmhsOx55246","type":"function","function":{"name":"content_returning","arguments":"{\"query\":
+        \"test data\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":312,"completion_tokens":57,"total_tokens":369,"prompt_tokens_details":{"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":17},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":184},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
+  recorded_at: Fri, 13 Nov 2026 21:37:27 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"Process
-        this query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"call_00_E1nqCZ3IqaTQZP2lPxxf1080","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        this query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"call_00_6FPq7XKyGP3YbPmhsOx55246","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
         data\"}"}}],"reasoning_content":"The user wants me to process \"test data\"
-        through the content_returning tool.","reasoning":"The user wants me to process
-        \"test data\" through the content_returning tool."},{"role":"tool","content":"Processed:
-        test data","tool_call_id":"call_00_E1nqCZ3IqaTQZP2lPxxf1080"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        using the content_returning tool.","reasoning":"The user wants me to process
+        \"test data\" using the content_returning tool."},{"role":"tool","content":"Processed:
+        test data","tool_call_id":"call_00_6FPq7XKyGP3YbPmhsOx55246"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
         a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
     headers:
@@ -95,7 +95,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 10 Nov 2026 17:51:13 GMT
+      - Fri, 13 Nov 2026 21:37:28 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -105,7 +105,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 72c0178d76b7570ff00541b2bfd3dec4
+      - 5d20a8ffe5724be50a864bee656b9a89
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
@@ -115,13 +115,11 @@ http_interactions:
       X-Amz-Cf-Pop:
       - TXL52-P3
       X-Amz-Cf-Id:
-      - Xau52_T2hKWJ10_aBsSmqawE5StD-LxSnjJmsa3_LAS8ZCKz_H3NHA==
+      - oD7KJA0h2QJWXMke2lCjJRBd2bLViEnb77isQO7pFAwf_Ls-jyi8Xw==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"f1d7aa6b-fab5-4497-9c2c-ab3a987af5c6","object":"chat.completion","created":1794333073,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"The
+      string: '{"id":"5a5a3a89-54ff-48a8-912e-95b357ad03bd","object":"chat.completion","created":1794605847,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"The
         query was processed successfully. Result:\n\n**Processed: test data**\n\nLet
-        me know if you''d like to do anything else with this data.","reasoning_content":"The
-        tool returned \"Processed: test data\". I should report the result to the
-        user."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":386,"completion_tokens":50,"total_tokens":436,"prompt_tokens_details":{"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":19},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":258},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
-  recorded_at: Tue, 10 Nov 2026 17:51:14 GMT
+        me know if you''d like me to do anything further with this.","reasoning_content":""},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":386,"completion_tokens":31,"total_tokens":417,"prompt_tokens_details":{"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":0},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":258},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
+  recorded_at: Fri, 13 Nov 2026 21:37:28 GMT
 recorded_with: VCR 6.4.1

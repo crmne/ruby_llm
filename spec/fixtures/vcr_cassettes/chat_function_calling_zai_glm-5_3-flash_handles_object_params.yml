@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:47:24 GMT
+      - Fri, 13 Nov 2026 21:34:14 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -40,7 +40,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - b19c4656901ed77ac2c1f3839fdca7f2
+      - 1fef12220eb515e27212229888110ce4
       Vary:
       - Accept-Encoding
       - Access-Control-Request-Headers
@@ -51,15 +51,17 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 202611110147176e9d1dfd9d4049db
+      - 20261114053408da9d7fe90fc341d3
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":"","reasoning_content":"The
-        user wants me to call the object_params tool with window start 2025-01-01
-        and end 2025-01-02. The window parameter expects ISO strings. I''ll call it
-        with the ISO format dates: \"2025-01-01\" and \"2025-01-02\".","role":"assistant","tool_calls":[{"function":{"arguments":"{\"window\":{\"end\":
-        \"2025-01-02\", \"start\": \"2025-01-01\"}}","name":"object_params"},"id":"call_-7086078765700212791","index":0,"type":"function"}]}}],"created":1794332844,"id":"202611110147176e9d1dfd9d4049db","model":"glm-5.3-flash","object":"chat.completion","request_id":"202611110147176e9d1dfd9d4049db","usage":{"completion_tokens":97,"completion_tokens_details":{"reasoning_tokens":64},"prompt_tokens":248,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":345}}'
-  recorded_at: Tue, 10 Nov 2026 17:47:24 GMT
+        user wants me to call the object_params tool with a window start of 2025-01-01
+        and end of 2025-01-02, and include the result. The window requires ISO strings
+        - I''ll use \"2025-01-01\" and \"2025-01-02\" as given, though technically
+        full ISO might include time. The user specified dates, so I''ll pass them
+        as given.","role":"assistant","tool_calls":[{"function":{"arguments":"{\"window\":{\"end\":
+        \"2025-01-02\", \"start\": \"2025-01-01\"}}","name":"object_params"},"id":"call_-7080015233950938964","index":0,"type":"function"}]}}],"created":1794605654,"id":"20261114053408da9d7fe90fc341d3","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261114053408da9d7fe90fc341d3","usage":{"completion_tokens":121,"completion_tokens_details":{"reasoning_tokens":88},"prompt_tokens":248,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":369}}'
+  recorded_at: Fri, 13 Nov 2026 21:34:14 GMT
 recorded_with: VCR 6.4.1

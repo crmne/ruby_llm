@@ -27,22 +27,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Envoy-Upstream-Service-Time:
+      - '1652'
       Req-Cost-Time:
-      - '1495'
+      - '1656'
+      Req-Arrive-Time:
+      - '1794605095525'
       Resp-Start-Time:
-      - '1794332216089'
+      - '1794605097181'
       Date:
-      - Tue, 10 Nov 2026 17:36:54 GMT
+      - Fri, 13 Nov 2026 21:24:54 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
       - ''
-      Content-Type:
-      - application/json; charset=utf-8
-      Req-Arrive-Time:
-      - '1794332214594'
-      X-Envoy-Upstream-Service-Time:
-      - '1490'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -51,13 +51,15 @@ http_interactions:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"role":"assistant","content":"","reasoning_content":"Okay,
         the user wants me to call the object_params function with a window starting
-        on 2025-01-01 and ending on 2025-01-02. Let me check the function''s parameters.
-        The function requires a \"window\" object with \"start\" and \"end\" as required
-        fields. Both should be ISO strings. The user provided the dates in the correct
-        format, so I just need to structure them into the parameters. I''ll make sure
-        the JSON is correctly formatted with the window object containing start and
-        end. No additional properties are allowed, so I''ll keep it simple. Let me
-        put that into the tool_call.\n","tool_calls":[{"type":"function","function":{"name":"object_params","arguments":"{\"window\":
-        {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}"},"id":"E9QTw1uXgCu5XUFFwUWDuBI78F7RmW05"}]}}],"created":1794332216,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":190,"prompt_tokens":248,"total_tokens":438,"prompt_tokens_details":{"cached_tokens":51}},"id":"chatcmpl-cP5kGsZcqBc245Fojtlzi7JKnfLm5JAq","timings":{"cache_n":51,"prompt_n":197,"prompt_ms":44.98,"prompt_per_token_ms":0.2283248730964467,"prompt_per_second":4379.724321920854,"predicted_n":190,"predicted_ms":1414.248,"predicted_per_token_ms":7.482793650793651,"predicted_per_second":133.63992736776012}}'
-  recorded_at: Tue, 10 Nov 2026 17:36:56 GMT
+        on 2025-01-01 and ending on 2025-01-02. Let me check the function definition
+        again to make sure I get the parameters right.\n\nThe function requires a
+        \"window\" object with \"start\" and \"end\" as required fields. Both are
+        strings in ISO format. The user provided exactly those dates, so I just need
+        to structure the JSON correctly. \n\nI should format the arguments as a JSON
+        object inside the tool_call tags. Let me verify that there are no additional
+        properties allowed. The function''s window object has additionalProperties
+        set to false, so only start and end are permitted. \n\nEverything looks good.
+        I''ll construct the tool_call with the specified dates.\n","tool_calls":[{"type":"function","function":{"name":"object_params","arguments":"{\"window\":
+        {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}"},"id":"CcKnCQgoht7e9IdQFMcyhBd5AbhffRQl"}]}}],"created":1794605097,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":218,"prompt_tokens":248,"total_tokens":466,"prompt_tokens_details":{"cached_tokens":247}},"id":"chatcmpl-aUu4B1j7KyTx3Rnus6v0vAER1ZEFLQXS","timings":{"cache_n":247,"prompt_n":1,"prompt_ms":8.242,"prompt_per_token_ms":8.242,"prompt_per_second":121.32977432661974,"predicted_n":218,"predicted_ms":1595.975,"predicted_per_token_ms":7.354723502304147,"predicted_per_second":135.9670420902583}}'
+  recorded_at: Fri, 13 Nov 2026 21:24:57 GMT
 recorded_with: VCR 6.4.1

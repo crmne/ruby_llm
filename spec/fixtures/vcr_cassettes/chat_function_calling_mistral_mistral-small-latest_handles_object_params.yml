@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:39:37 GMT
+      - Fri, 13 Nov 2026 21:27:25 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,15 +36,15 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a1c68b-3f00-7c79-998e-eaed11ca2981
+      - 01a1d6ce-e342-718a-8cd1-d2d045c1e238
       X-Kong-Request-Id:
-      - 01a1c68b-3f00-7c79-998e-eaed11ca2981
+      - 01a1d6ce-e342-718a-8cd1-d2d045c1e238
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '97009'
+      - '94982'
       X-Ratelimit-Tokens-Query-Cost:
       - '215'
       X-Ratelimit-Limit-Req-Minute:
@@ -52,15 +52,15 @@ http_interactions:
       X-Ratelimit-Remaining-Req-Minute:
       - '79'
       X-Envoy-Upstream-Service-Time:
-      - '461'
+      - '344'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '462'
+      - '346'
       X-Kong-Proxy-Latency:
-      - '12'
+      - '13'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -75,7 +75,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"68a14c544705430c93bdf1d948c1360d","created":1794332376,"model":"mistral-small-latest","usage":{"prompt_tokens":177,"total_tokens":215,"completion_tokens":38,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"oFrcWpSCV","type":"function","function":{"name":"object_params","arguments":"{\"window\":
+      string: '{"id":"ef85d304a44043ceb312648c22ed2e61","created":1794605245,"model":"mistral-small-latest","usage":{"prompt_tokens":177,"total_tokens":215,"completion_tokens":38,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"KPykOkmpa","type":"function","function":{"name":"object_params","arguments":"{\"window\":
         {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}"},"index":0}],"content":""}}]}'
-  recorded_at: Tue, 10 Nov 2026 17:39:37 GMT
+  recorded_at: Fri, 13 Nov 2026 21:27:25 GMT
 recorded_with: VCR 6.4.1

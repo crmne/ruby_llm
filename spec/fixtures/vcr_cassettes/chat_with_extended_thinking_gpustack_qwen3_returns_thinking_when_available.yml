@@ -28,30 +28,32 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Req-Cost-Time:
-      - '3963'
+      - '1874'
       Req-Arrive-Time:
-      - '1794331984130'
+      - '1794605027517'
+      Resp-Start-Time:
+      - '1794605029392'
       X-Envoy-Upstream-Service-Time:
-      - '3958'
+      - '1870'
       Date:
-      - Tue, 10 Nov 2026 17:33:03 GMT
+      - Fri, 13 Nov 2026 21:23:46 GMT
       Server:
       - istio-envoy
-      Resp-Start-Time:
-      - '1794331988093'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"5
-        + 3 = 8.","reasoning_content":"Okay, the user is asking 5 plus 3. Let me make
-        sure I do this right. So, 5 and 3. Adding them together. 5 + 3... Hmm, 5 plus
-        2 is 7, so adding one more makes it 8. Wait, is that correct? Let me count
-        again. 5 + 3. Starting at 5, count 3 more: 6, 7, 8. Yes, that''s 8. I think
-        that''s right. Maybe I should double-check by using another method. If I split
-        3 into 2 and 1, then 5 + 2 is 7, then add 1 more to get 8. Yep, same result.
-        Alright, I''m confident the answer is 8.\n"}}],"created":1794331988,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":179,"prompt_tokens":21,"total_tokens":200,"prompt_tokens_details":{"cached_tokens":4}},"id":"chatcmpl-PRVy3NJqMtptNr4hiAMWAXghLaKdfI7B","timings":{"cache_n":4,"prompt_n":17,"prompt_ms":14.325,"prompt_per_token_ms":0.8426470588235294,"prompt_per_second":1186.73647469459,"predicted_n":179,"predicted_ms":1304.165,"predicted_per_token_ms":7.326769662921348,"predicted_per_second":136.4857974259392}}'
-  recorded_at: Tue, 10 Nov 2026 17:33:08 GMT
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"The
+        sum of 5 and 3 is **8**.","reasoning_content":"Okay, let''s see. The user
+        is asking what 5 plus 3 is. Hmm, basic arithmetic. I need to make sure I add
+        them correctly. 5 and 3... adding them together. Let me count: 5 + 1 is 6,
+        then +2 is 7, and +1 more would be 8? Wait, no. Wait, 5 + 3 is the same as
+        5 + 2 + 1, which is 7 + 1 = 8? Wait, no, that''s not right. Wait, 5 + 3 is
+        8? Let me check again. 5 + 3: 5 plus 3. 5 + 2 is 7, so 5 + 3 is 7 + 1 = 8.
+        Yeah, that''s correct. Or maybe I can think of it as 5 + 3 = 8. Yeah, that''s
+        the answer. I should just confirm once more. If I have 5 objects and add 3
+        more, I have 8 in total. So the answer is 8.\n"}}],"created":1794605029,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":250,"prompt_tokens":21,"total_tokens":271,"prompt_tokens_details":{"cached_tokens":1}},"id":"chatcmpl-Znrz63D9nuisxmn57bRjFagvj2YkHIic","timings":{"cache_n":1,"prompt_n":20,"prompt_ms":14.833,"prompt_per_token_ms":0.74165,"prompt_per_second":1348.344906627115,"predicted_n":250,"predicted_ms":1800.769,"predicted_per_token_ms":7.232004016064257,"predicted_per_second":138.27425949691494}}'
+  recorded_at: Fri, 13 Nov 2026 21:23:49 GMT
 recorded_with: VCR 6.4.1

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:11444/model/proxy/2/tokenize
+    uri: http://localhost:11444/model/proxy/4/tokenize
     body:
       encoding: UTF-8
       string: '{"model":"smollm2-135m","messages":[{"role":"system","content":"Be
@@ -23,20 +23,20 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Tue, 10 Nov 2026 16:24:24 GMT
       Server:
       - istio-envoy
-      Req-Cost-Time:
-      - '34'
       Req-Arrive-Time:
-      - '1794327864663'
+      - '1794608797593'
       Resp-Start-Time:
-      - '1794327864698'
-      X-Envoy-Upstream-Service-Time:
-      - '3'
+      - '1794608797602'
       Content-Type:
       - application/json
+      Req-Cost-Time:
+      - '9'
+      X-Envoy-Upstream-Service-Time:
+      - '3'
+      Date:
+      - Fri, 13 Nov 2026 22:26:37 GMT
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -44,10 +44,10 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"count":22,"max_model_len":2048,"tokens":[1,9690,198,6077,1733,313,30,2,198,1,4093,198,5820,582,7302,30,2,198,1,520,9531,198],"token_strs":null}'
-  recorded_at: Tue, 10 Nov 2026 16:24:24 GMT
+  recorded_at: Fri, 13 Nov 2026 22:26:37 GMT
 - request:
     method: post
-    uri: http://localhost:11444/model/proxy/2/v1/chat/completions
+    uri: http://localhost:11444/model/proxy/4/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"smollm2-135m","messages":[{"role":"system","content":"Be
@@ -68,27 +68,27 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Req-Cost-Time:
-      - '37'
-      Resp-Start-Time:
-      - '1794327864739'
-      X-Envoy-Upstream-Service-Time:
-      - '34'
-      Server:
-      - istio-envoy
       Req-Arrive-Time:
-      - '1794327864702'
+      - '1794608797605'
+      Resp-Start-Time:
+      - '1794608797655'
       Date:
-      - Tue, 10 Nov 2026 16:24:24 GMT
+      - Fri, 13 Nov 2026 22:26:37 GMT
       Content-Type:
       - application/json
+      X-Envoy-Upstream-Service-Time:
+      - '47'
+      Server:
+      - istio-envoy
+      Req-Cost-Time:
+      - '50'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-4cf81c86-4d14-4986-abb4-67918a2dfdc2","object":"chat.completion","created":1794327864,"model":"smollm2-135m","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        one colour that evoking ''red","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":null},"logprobs":null,"finish_reason":"length","stop_reason":null,"token_ids":null,"routed_experts":null}],"service_tier":null,"system_fingerprint":"vllm-0.25.1-d87856d6","usage":{"prompt_tokens":22,"total_tokens":30,"completion_tokens":8,"prompt_tokens_details":{"cached_tokens":0,"multimodal_tokens":null}},"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"metrics":null}'
-  recorded_at: Tue, 10 Nov 2026 16:24:24 GMT
+      string: '{"id":"chatcmpl-38d6b23c-d2bf-4f73-a0e3-74f68e60d75b","object":"chat.completion","created":1794608797,"model":"smollm2-135m","choices":[{"index":0,"message":{"role":"assistant","content":"That
+        would be blue the ancients.","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":null},"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"service_tier":null,"system_fingerprint":"vllm-0.25.1-019fab29","usage":{"prompt_tokens":22,"total_tokens":30,"completion_tokens":8,"prompt_tokens_details":{"cached_tokens":0,"multimodal_tokens":null}},"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"metrics":null}'
+  recorded_at: Fri, 13 Nov 2026 22:26:37 GMT
 recorded_with: VCR 6.4.1

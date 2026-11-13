@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"mistral-large-latest","messages":[{"role":"system","content":"Use
+      string: '{"model":"mistral-large-2512","messages":[{"role":"system","content":"Use
         the lookup tool, then answer and cite the sources you use with reference chunks."},{"role":"user","content":"When
         was Ruby 3.4.0 released, and what parser became the default?"}],"stream":true,"tools":[{"type":"function","function":{"name":"lookup","description":"Find
         numbered sources about a topic.","parameters":{"type":"object","properties":{"topic":{"type":"string"}},"required":["topic"],"additionalProperties":false,"strict":true}}}]}'
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 13:18:32 GMT
+      - Fri, 13 Nov 2026 22:32:42 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -34,9 +34,9 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a1c59c-373b-74cd-bd40-1118287738b8
+      - 01a1d70a-a57e-785a-bc72-baee7489138c
       X-Kong-Request-Id:
-      - 01a1c59c-373b-74cd-bd40-1118287738b8
+      - 01a1d70a-a57e-785a-bc72-baee7489138c
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Req-Minute:
@@ -46,17 +46,17 @@ http_interactions:
       X-Ratelimit-Limit-Tokens-Minute:
       - '400000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '399344'
+      - '399619'
       X-Envoy-Upstream-Service-Time:
-      - '674'
+      - '644'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '716'
+      - '652'
       X-Kong-Proxy-Latency:
-      - '18'
+      - '20'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -72,26 +72,26 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"3de39ae74414495798bcc3f5abf296a0","object":"chat.completion.chunk","created":1794316711,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+        data: {"id":"b5d2f3aef73a4e7cbbb0da8f70352050","object":"chat.completion.chunk","created":1794609161,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
 
-        data: {"id":"3de39ae74414495798bcc3f5abf296a0","object":"chat.completion.chunk","created":1794316711,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"tool_calls":[{"id":"zyMu7Mx4T","type":"function","function":{"name":"lookup","arguments":"{\"topic\": \"Ruby 3.4.0 release date and default parser\"}"},"index":0}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":109,"total_tokens":130,"completion_tokens":21,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"p":"abcde"}
+        data: {"id":"b5d2f3aef73a4e7cbbb0da8f70352050","object":"chat.completion.chunk","created":1794609161,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"tool_calls":[{"id":"079rrltCz","type":"function","function":{"name":"lookup","arguments":"{\"topic\": \"Ruby 3.4.0 release date and default parser\"}"},"index":0}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":109,"total_tokens":130,"completion_tokens":21,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"p":"abcdefghijklmnopqrstuvwxyz01234"}
 
         data: [DONE]
 
-  recorded_at: Tue, 10 Nov 2026 13:18:32 GMT
+  recorded_at: Fri, 13 Nov 2026 22:32:42 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"mistral-large-latest","messages":[{"role":"system","content":"Use
+      string: '{"model":"mistral-large-2512","messages":[{"role":"system","content":"Use
         the lookup tool, then answer and cite the sources you use with reference chunks."},{"role":"user","content":"When
-        was Ruby 3.4.0 released, and what parser became the default?"},{"role":"assistant","content":"","tool_calls":[{"id":"zyMu7Mx4T","type":"function","function":{"name":"lookup","arguments":"{\"topic\":\"Ruby
+        was Ruby 3.4.0 released, and what parser became the default?"},{"role":"assistant","content":"","tool_calls":[{"id":"079rrltCz","type":"function","function":{"name":"lookup","arguments":"{\"topic\":\"Ruby
         3.4.0 release date and default parser\"}"}}]},{"role":"tool","content":"{\"0\":{\"url\":\"https://example.test/a\",\"title\":\"Ruby
         releases\",\"source\":\"example\",\"snippets\":[[\"Ruby 3.4.0 was released
         on 25 December 2024.\"]],\"description\":null,\"date\":null},\"1\":{\"url\":\"https://example.test/b\",\"title\":\"Ruby
         3.4 notes\",\"source\":\"example\",\"snippets\":[[\"Prism became the default
-        parser in Ruby 3.4.\"]],\"description\":null,\"date\":null}}","tool_call_id":"zyMu7Mx4T"}],"stream":true,"tools":[{"type":"function","function":{"name":"lookup","description":"Find
+        parser in Ruby 3.4.\"]],\"description\":null,\"date\":null}}","tool_call_id":"079rrltCz"}],"stream":true,"tools":[{"type":"function","function":{"name":"lookup","description":"Find
         numbered sources about a topic.","parameters":{"type":"object","properties":{"topic":{"type":"string"}},"required":["topic"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
@@ -110,7 +110,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 13:18:33 GMT
+      - Fri, 13 Nov 2026 22:32:42 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -118,9 +118,9 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a1c59c-3a70-7ead-9b4a-a1ecbefab7b5
+      - 01a1d70a-a85a-799c-9536-e4f045dcba08
       X-Kong-Request-Id:
-      - 01a1c59c-3a70-7ead-9b4a-a1ecbefab7b5
+      - 01a1d70a-a85a-799c-9536-e4f045dcba08
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Req-Minute:
@@ -130,15 +130,15 @@ http_interactions:
       X-Ratelimit-Limit-Tokens-Minute:
       - '400000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '399221'
+      - '399219'
       X-Envoy-Upstream-Service-Time:
-      - '430'
+      - '363'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '431'
+      - '365'
       X-Kong-Proxy-Latency:
       - '16'
       Cf-Cache-Status:
@@ -156,40 +156,40 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+        data: {"id":"39e389a33c2d446fbd344b575393bb21","object":"chat.completion.chunk","created":1794609162,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
 
-        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":"Ruby"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz01234"}
+        data: {"id":"39e389a33c2d446fbd344b575393bb21","object":"chat.completion.chunk","created":1794609162,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":"Ruby"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz012345"}
 
-        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":" 3.4"},"finish_reason":null}],"p":"abcdefghijklmno"}
+        data: {"id":"39e389a33c2d446fbd344b575393bb21","object":"chat.completion.chunk","created":1794609162,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":" 3.4"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz0123456"}
 
-        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":".0 was released"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz0"}
+        data: {"id":"39e389a33c2d446fbd344b575393bb21","object":"chat.completion.chunk","created":1794609162,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":".0 was released"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz01"}
 
-        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":" on **2"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz01234"}
+        data: {"id":"39e389a33c2d446fbd344b575393bb21","object":"chat.completion.chunk","created":1794609162,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":" on **2"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvw"}
 
-        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":"5 December 2"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz0"}
+        data: {"id":"39e389a33c2d446fbd344b575393bb21","object":"chat.completion.chunk","created":1794609162,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":"5 December 2"},"finish_reason":null}],"p":"abcdef"}
 
-        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":"024**."},"finish_reason":null}],"p":"abcdefghij"}
+        data: {"id":"39e389a33c2d446fbd344b575393bb21","object":"chat.completion.chunk","created":1794609162,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":"024**."},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz"}
 
-        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":" Additionally, the **"},"finish_reason":null}],"p":"abcde"}
+        data: {"id":"39e389a33c2d446fbd344b575393bb21","object":"chat.completion.chunk","created":1794609162,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":" Additionally, the **"},"finish_reason":null}],"p":"abcdefghijklmnopqr"}
 
-        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":"Prism parser"},"finish_reason":null}],"p":"abcdefghijkl"}
+        data: {"id":"39e389a33c2d446fbd344b575393bb21","object":"chat.completion.chunk","created":1794609162,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":"Prism parser"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz012345678"}
 
-        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":" became"},"finish_reason":null}],"p":"abcdefghijkl"}
+        data: {"id":"39e389a33c2d446fbd344b575393bb21","object":"chat.completion.chunk","created":1794609162,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":" became"},"finish_reason":null}],"p":"abcdefghijklmnopqrstu"}
 
-        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":" the default"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz"}
+        data: {"id":"39e389a33c2d446fbd344b575393bb21","object":"chat.completion.chunk","created":1794609162,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":" the default"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz0123"}
 
-        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":" parser** in this"},"finish_reason":null}],"p":"abcdefghijklmnopq"}
+        data: {"id":"39e389a33c2d446fbd344b575393bb21","object":"chat.completion.chunk","created":1794609162,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":" parser** in this"},"finish_reason":null}],"p":"abcdefghi"}
 
-        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":" release"},"finish_reason":null}],"p":"abcdef"}
+        data: {"id":"39e389a33c2d446fbd344b575393bb21","object":"chat.completion.chunk","created":1794609162,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":" release"},"finish_reason":null}],"p":"abcdefghijklmnopqr"}
 
-        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":[{"type":"reference","reference_ids":[0,1]}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstu"}
+        data: {"id":"39e389a33c2d446fbd344b575393bb21","object":"chat.completion.chunk","created":1794609162,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":[{"type":"reference","reference_ids":[0,1]}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz012345678"}
 
-        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":"."},"finish_reason":null}],"p":"ab"}
+        data: {"id":"39e389a33c2d446fbd344b575393bb21","object":"chat.completion.chunk","created":1794609162,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":"."},"finish_reason":null}],"p":"abcdefghijklmn"}
 
-        data: {"id":"67763b6832464a309f57650c5f4e2003","object":"chat.completion.chunk","created":1794316712,"model":"mistral-large-latest","choices":[{"index":0,"delta":{"content":""},"finish_reason":"stop"}],"usage":{"prompt_tokens":237,"total_tokens":279,"completion_tokens":42,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"p":"abcdefghijklmnopqrs"}
+        data: {"id":"39e389a33c2d446fbd344b575393bb21","object":"chat.completion.chunk","created":1794609162,"model":"mistral-large-2512","choices":[{"index":0,"delta":{"content":""},"finish_reason":"stop"}],"usage":{"prompt_tokens":237,"total_tokens":279,"completion_tokens":42,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"p":"abcdefghijklmnopqrstuvwxyz0123456"}
 
         data: [DONE]
 
-  recorded_at: Tue, 10 Nov 2026 13:18:33 GMT
+  recorded_at: Fri, 13 Nov 2026 22:32:43 GMT
 recorded_with: VCR 6.4.1
 ...

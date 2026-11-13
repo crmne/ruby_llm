@@ -61,7 +61,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:31:20 GMT
+      - Fri, 13 Nov 2026 21:21:38 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -81,11 +81,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1855'
+      - '1129'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -112,22 +112,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_04d147719d60c40b016af354e681a087d29fee2e2b1288a33d",
+          "id": "resp_00b7645b10238a54016af77f60dffc87d2807f8f688710040d",
           "object": "response",
-          "created_at": 1794331878,
+          "created_at": 1794604896,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794331880,
+          "completed_at": 1794604897,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -135,18 +136,18 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "rs_04d147719d60c40b016af354e7aac887d28a006d1056c2510c",
+              "id": "rs_00b7645b10238a54016af77f61646887d2bbdea8bb78d8fa11",
               "type": "reasoning",
               "content": [],
-              "encrypted_content": "gAAAAABq81ToPFo8b-sYChCOjZXo6GvXM2QkyIP0k_THndK_JZghTma92patHsyllCvzOsvs8LYEAeYZJGnu-yDHdLepWpL6dCpV9czHYYZ6-97g6-VteVUNwfFk8CY-PA7CSc1g7N8xLOW0P8I3rOYmIj0Y4k29wluH-SIQWHyCC9r2EBROOGJj8XKaMJGnHtW2MVj0b5ORvgZegiEuixUYHC2rMOtofeM3BNpzJPMhneJNB4z4Vs5XfHyj835z5c1LvruYH-bLiIvKFzUwLWqA-lCtPLmDVF_yaRLRZDuTwy9KU0VtpaECYnKDVviFV3sTgoQY0mF6oZTU-QIQI4Hh-nwIskwRTfOxpEXFX-FGFgR7hosTkrFgPFxCkG_mJPoZSzaEK1PQ_xP7QBpYyy3u3iQWdfbfe5YQoxDyM1UqmAaORtzzeKQl13ueszbIPdqmPgbhwrU-Y036WecIjxi2Htb25NfKPLJkTRM0dtchWv8SLDKZZaq7o3cLSPe_q1ab_mkkgifTvFj7FXkplnjW4iarCkxpNYKbRQ8q9EmXNNxRyjVB9WxkYM31xcs4D4zdt-DDt2LZ71Vb3oUqKv-3riCnm8MLKBqYlNsxqEoQlkJfsyB8kKpCoWRzEUuHAh5t8iuPgz5PNR_t8CddCJZ_IDIEJteGrtkdTIbj9G-2zVtLMKPXKogfc546XF6p8NTKwaeSjOtBFmuIaX3HNww1JVs6JGjMtd5iugBG23yxpw2FYFDu1w9OtJFscxj_aPMX82SO5h6Hj94msBdCMy7L9cZ3kFJ9eFILOBUo4iL7AeUNksz4F0i_VbqJ8qX7SaIChsHfPTa4b4xom4K-JJ07RpCxYM0b8xzmtx5J0YTE-ZWwpJZtx_ohEI4QS4xZxWkpbWOJadB8IfiHe3yw8Vj8juEIr5IpIzGecC9zWZHqf12T9Eaw-uF9k6D_wwMUV12_SYaqYv_GLYYbLIcauFx9NaTU0bduO7zkJretAkc1HzcFVkBqM4peFPJAGCIeZFlt_IoLcGPw1KcULnL4WRs222M07hu5iWUZ_NAUSqfxz0GxMl1bpRHNGQC6ItKDVt9Uwh4lmuriMsB0-nYSId_-gAlKxPjxZZFOQaDqVSkHYAARtuSqH4hcTIxKGvp36j0YPRD7v5RCI5TbsApTW__GqjciOQYzAulSsERsx8w4cjXWCCMVYtitd1hHwI5coids5vLVNNLzfH4ed4SC35n4tuJvquyBBmwZb8O2KxM_2kl0-ZV37LEispSOq27MdKhTsSX6PiXLPA-seaoCV7yN9VWhEzsKtXi7ptWl0JfuWbXZlOHfzqEVEfGtgMIprKRdJJheI3jcWnpFJoW4G8FyypJX8t-yByw_P9n3Bt6D2UWaRswq_sIcQ3HwYBTLQ5m__0vWCvmAty0RHx7zPeIyfdk8nwoo4Fwjb3IKoFxJn8en7-a4Bv7c0GJ1-Nl5PK8gVWdCB06ckljAzVvj1dvJpn-O9VQvuoBN4ZIAK5Ih9ICquBYcIBYdmiHTspCnYMBRASYe5mcEIpWlrjuMrfC2XnTvTXzrKggZIq9DvHTnTFV9_gN7aqtevrvVph01_1QqR6bv1gn2Y6qVDn5DDzQOERlI56X6rGPoYaHaeSD276BMH1koITGXrF78BAulQ7QVQlS20rezQFBzjLiC7UfEyAwCZoBOvU1WW6QaYINeBGt5niH9G-GKP8GFt7GdYUNPo4sjT4y5",
+              "encrypted_content": "gAAAAABq939hL6JmLOoi3NwWUD71YofxHYXiWrYVBD5MvIBYbNpswVVTUyfPb7wGyMGTOHD6vHqBsXqh6mLbzWTPZ-wm7zWs0SJ7MLBqMMkExmj0SRrbH3C6gPOx8FqsTY5RiwTkcL2ggWktaOKW6qozpQZXT-sp426Qv6gBIXz29G5QIbZOdtaFMpxDBz2REgMw3l6Zj9K0mpioFcqiUWRf8e6wR4upIwbQZUbcs7XP-JIKsXlRzR7p01e-vMvklYHJBj7UhnmcaqCi3ZME2Lg2k1hdRP9vFECglE7rdJcXR7y4vOE7mMWU-hTqo1LmmmW46x5LjB2IbxJ9qxTy-3855YnEc2Nuxy0Ndq3ypo3tJVf96bwyGFX_ZhTopjni2o_zCr2ekLxx4ToRmESAavrk6u_UGonECSGykL1yVqOdau4HV2-fMNpKgzKWx52bt6-YbIjx8xUyac8E9BnoKUcZ8DhV4riv3ZMYklA-ooCZ1s5q36Gp44lCFuOfl6nMpAvce4RiSwzsUc9VlcXmNaE2td-Pfw8_0TspxVpJst6lLPNAO-ChIXSlf1KR9MR8O3YaKHlqhDt2U4h8pIdH102uMCDvbGbbXavPoV68-vxgjrhz28nSsiWD9k1rPcfPYW6_npWpxOm73MKdTzpO5IcXjIUCC6dcY6r-Xuzc_YegKhP4i9gEHUvGnigPFZ1sxGboV19XZWGSPw6FYVbdUVNKMu2BVl9C5egXIyUHMxUX0oEZ-n-1JXwIRaia4EWLOd3dwuDVZrn4WNl8OgKv2k6NrAiNqPFE3Y1a0S45PusYSlaxRvMnblE-AIiqx5ssLPEwddUCtXnRzJJYxo4reTqNqaKK5SacuhuD32RHkXSS_Zt7BJEcPpDnKxGj9CC6KUP7ALPwzXtaLBgEWMBfumAT8PajcjEzsoJ39p2uyA2uo1Q9tBtn0GRO67RJlQnyEI9NmweVP18y4KHeBgPmaaIHShK4P49UkmTwGrncp-ysyK_aUR0oQdep35x6a4Xn-gxrrNHV80vT0Hb9EtgoK74w8pzVz4OpeV7BPXQa8jfvApdZGiBfYeuiRNaGMJJSQdWr9HQ7E9lIFK0oeIUgNIVZljy-f7TN8dGXQUgUm2KPvJxrIir-SKbrt3CrSR5yUA_IxrBHW0krvLo7gFKYhs4ts7_f_D70MfsZTuPHsL4C7seikgnzHNopmc4XFtqLQ4-TM5PfjHgZ9CLUoqTdXkfgLgJ_NZqZO7mw_7VTUY-LLS-3IxHXeX7ojoL_GTRQ78cST4M8Uh4AHWsMJOiDW8Ah-SibfZkcpWQPJkieF9Axl88WEoG9KEgKe2Wrsr3TJMpY26-W3CRrS4I9k1mp0kumgXWFoWyt4pBFUxywh2C0otqeeavmCpY_n4Uhwf-rRx4fUiuWn90VBusyrlk5-HcfiZGfRcZr4nCBwgk0YrtmvCuAH3fFzatt-T5F0amXqeGv5NBnA5JDmf00aQARuae0IANiu-ohlQ2jt0V5pYdHv4-0XqFSPpH_x0q00hZ8eIqkuOwPGoU3BF0NDl-mEx8HopQeVAHjkea3XBAFi4r-0E_PbQ0cO2EV9CLjnhCAs2N9Nwry74oaZjtVpq_ErggYC4N4ZsKFVUGifynirEZnibqVJQwoqRpmq_3hKv4ppCdZRIqSSJunAn1Ql1tMdb_P0JiaYypgluahhIQhiod2h2t2ONgQGpXDAXDjLCj0hS1_-Z_qHccoqPOEZhoJVpd9pM6h-SiPZA==",
               "summary": []
             },
             {
-              "id": "fc_04d147719d60c40b016af354e7eb3c87d2a381f3e3dfb6bfe2",
+              "id": "fc_00b7645b10238a54016af77f61998c87d2a8caf78bc290f5d1",
               "type": "function_call",
               "status": "completed",
-              "arguments": "{\"path\":null,\"pattern\":\"handbook.md\"}",
-              "call_id": "call_agsq2IVmHI14AZnA8OkuiZCD",
+              "arguments": "{\"pattern\":\"handbook.md\",\"path\":null}",
+              "call_id": "call_D5TM4JJAHg3Prq2cnHEpuot1",
               "name": "list_files"
             }
           ],
@@ -439,14 +440,14 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:31:20 GMT
+  recorded_at: Fri, 13 Nov 2026 21:21:38 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"What is
-        the parking garage door code? It is in handbook.md in your files."},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABq81ToPFo8b-sYChCOjZXo6GvXM2QkyIP0k_THndK_JZghTma92patHsyllCvzOsvs8LYEAeYZJGnu-yDHdLepWpL6dCpV9czHYYZ6-97g6-VteVUNwfFk8CY-PA7CSc1g7N8xLOW0P8I3rOYmIj0Y4k29wluH-SIQWHyCC9r2EBROOGJj8XKaMJGnHtW2MVj0b5ORvgZegiEuixUYHC2rMOtofeM3BNpzJPMhneJNB4z4Vs5XfHyj835z5c1LvruYH-bLiIvKFzUwLWqA-lCtPLmDVF_yaRLRZDuTwy9KU0VtpaECYnKDVviFV3sTgoQY0mF6oZTU-QIQI4Hh-nwIskwRTfOxpEXFX-FGFgR7hosTkrFgPFxCkG_mJPoZSzaEK1PQ_xP7QBpYyy3u3iQWdfbfe5YQoxDyM1UqmAaORtzzeKQl13ueszbIPdqmPgbhwrU-Y036WecIjxi2Htb25NfKPLJkTRM0dtchWv8SLDKZZaq7o3cLSPe_q1ab_mkkgifTvFj7FXkplnjW4iarCkxpNYKbRQ8q9EmXNNxRyjVB9WxkYM31xcs4D4zdt-DDt2LZ71Vb3oUqKv-3riCnm8MLKBqYlNsxqEoQlkJfsyB8kKpCoWRzEUuHAh5t8iuPgz5PNR_t8CddCJZ_IDIEJteGrtkdTIbj9G-2zVtLMKPXKogfc546XF6p8NTKwaeSjOtBFmuIaX3HNww1JVs6JGjMtd5iugBG23yxpw2FYFDu1w9OtJFscxj_aPMX82SO5h6Hj94msBdCMy7L9cZ3kFJ9eFILOBUo4iL7AeUNksz4F0i_VbqJ8qX7SaIChsHfPTa4b4xom4K-JJ07RpCxYM0b8xzmtx5J0YTE-ZWwpJZtx_ohEI4QS4xZxWkpbWOJadB8IfiHe3yw8Vj8juEIr5IpIzGecC9zWZHqf12T9Eaw-uF9k6D_wwMUV12_SYaqYv_GLYYbLIcauFx9NaTU0bduO7zkJretAkc1HzcFVkBqM4peFPJAGCIeZFlt_IoLcGPw1KcULnL4WRs222M07hu5iWUZ_NAUSqfxz0GxMl1bpRHNGQC6ItKDVt9Uwh4lmuriMsB0-nYSId_-gAlKxPjxZZFOQaDqVSkHYAARtuSqH4hcTIxKGvp36j0YPRD7v5RCI5TbsApTW__GqjciOQYzAulSsERsx8w4cjXWCCMVYtitd1hHwI5coids5vLVNNLzfH4ed4SC35n4tuJvquyBBmwZb8O2KxM_2kl0-ZV37LEispSOq27MdKhTsSX6PiXLPA-seaoCV7yN9VWhEzsKtXi7ptWl0JfuWbXZlOHfzqEVEfGtgMIprKRdJJheI3jcWnpFJoW4G8FyypJX8t-yByw_P9n3Bt6D2UWaRswq_sIcQ3HwYBTLQ5m__0vWCvmAty0RHx7zPeIyfdk8nwoo4Fwjb3IKoFxJn8en7-a4Bv7c0GJ1-Nl5PK8gVWdCB06ckljAzVvj1dvJpn-O9VQvuoBN4ZIAK5Ih9ICquBYcIBYdmiHTspCnYMBRASYe5mcEIpWlrjuMrfC2XnTvTXzrKggZIq9DvHTnTFV9_gN7aqtevrvVph01_1QqR6bv1gn2Y6qVDn5DDzQOERlI56X6rGPoYaHaeSD276BMH1koITGXrF78BAulQ7QVQlS20rezQFBzjLiC7UfEyAwCZoBOvU1WW6QaYINeBGt5niH9G-GKP8GFt7GdYUNPo4sjT4y5"},{"type":"function_call","call_id":"call_agsq2IVmHI14AZnA8OkuiZCD","name":"list_files","arguments":"{\"path\":null,\"pattern\":\"handbook.md\"}"},{"type":"function_call_output","call_id":"call_agsq2IVmHI14AZnA8OkuiZCD","output":"handbook.md\t19.3
+        the parking garage door code? It is in handbook.md in your files."},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABq939hL6JmLOoi3NwWUD71YofxHYXiWrYVBD5MvIBYbNpswVVTUyfPb7wGyMGTOHD6vHqBsXqh6mLbzWTPZ-wm7zWs0SJ7MLBqMMkExmj0SRrbH3C6gPOx8FqsTY5RiwTkcL2ggWktaOKW6qozpQZXT-sp426Qv6gBIXz29G5QIbZOdtaFMpxDBz2REgMw3l6Zj9K0mpioFcqiUWRf8e6wR4upIwbQZUbcs7XP-JIKsXlRzR7p01e-vMvklYHJBj7UhnmcaqCi3ZME2Lg2k1hdRP9vFECglE7rdJcXR7y4vOE7mMWU-hTqo1LmmmW46x5LjB2IbxJ9qxTy-3855YnEc2Nuxy0Ndq3ypo3tJVf96bwyGFX_ZhTopjni2o_zCr2ekLxx4ToRmESAavrk6u_UGonECSGykL1yVqOdau4HV2-fMNpKgzKWx52bt6-YbIjx8xUyac8E9BnoKUcZ8DhV4riv3ZMYklA-ooCZ1s5q36Gp44lCFuOfl6nMpAvce4RiSwzsUc9VlcXmNaE2td-Pfw8_0TspxVpJst6lLPNAO-ChIXSlf1KR9MR8O3YaKHlqhDt2U4h8pIdH102uMCDvbGbbXavPoV68-vxgjrhz28nSsiWD9k1rPcfPYW6_npWpxOm73MKdTzpO5IcXjIUCC6dcY6r-Xuzc_YegKhP4i9gEHUvGnigPFZ1sxGboV19XZWGSPw6FYVbdUVNKMu2BVl9C5egXIyUHMxUX0oEZ-n-1JXwIRaia4EWLOd3dwuDVZrn4WNl8OgKv2k6NrAiNqPFE3Y1a0S45PusYSlaxRvMnblE-AIiqx5ssLPEwddUCtXnRzJJYxo4reTqNqaKK5SacuhuD32RHkXSS_Zt7BJEcPpDnKxGj9CC6KUP7ALPwzXtaLBgEWMBfumAT8PajcjEzsoJ39p2uyA2uo1Q9tBtn0GRO67RJlQnyEI9NmweVP18y4KHeBgPmaaIHShK4P49UkmTwGrncp-ysyK_aUR0oQdep35x6a4Xn-gxrrNHV80vT0Hb9EtgoK74w8pzVz4OpeV7BPXQa8jfvApdZGiBfYeuiRNaGMJJSQdWr9HQ7E9lIFK0oeIUgNIVZljy-f7TN8dGXQUgUm2KPvJxrIir-SKbrt3CrSR5yUA_IxrBHW0krvLo7gFKYhs4ts7_f_D70MfsZTuPHsL4C7seikgnzHNopmc4XFtqLQ4-TM5PfjHgZ9CLUoqTdXkfgLgJ_NZqZO7mw_7VTUY-LLS-3IxHXeX7ojoL_GTRQ78cST4M8Uh4AHWsMJOiDW8Ah-SibfZkcpWQPJkieF9Axl88WEoG9KEgKe2Wrsr3TJMpY26-W3CRrS4I9k1mp0kumgXWFoWyt4pBFUxywh2C0otqeeavmCpY_n4Uhwf-rRx4fUiuWn90VBusyrlk5-HcfiZGfRcZr4nCBwgk0YrtmvCuAH3fFzatt-T5F0amXqeGv5NBnA5JDmf00aQARuae0IANiu-ohlQ2jt0V5pYdHv4-0XqFSPpH_x0q00hZ8eIqkuOwPGoU3BF0NDl-mEx8HopQeVAHjkea3XBAFi4r-0E_PbQ0cO2EV9CLjnhCAs2N9Nwry74oaZjtVpq_ErggYC4N4ZsKFVUGifynirEZnibqVJQwoqRpmq_3hKv4ppCdZRIqSSJunAn1Ql1tMdb_P0JiaYypgluahhIQhiod2h2t2ONgQGpXDAXDjLCj0hS1_-Z_qHccoqPOEZhoJVpd9pM6h-SiPZA=="},{"type":"function_call","call_id":"call_D5TM4JJAHg3Prq2cnHEpuot1","name":"list_files","arguments":"{\"path\":null,\"pattern\":\"handbook.md\"}"},{"type":"function_call_output","call_id":"call_D5TM4JJAHg3Prq2cnHEpuot1","output":"handbook.md\t19.3
         KB\ttext/markdown"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"list_files","description":"Lists
         the files, with sizes and types. Pass path for one folder, and pattern for
         a glob: *.csv matches names in any folder, reports/**/*.csv matches paths.","parameters":{"type":"object","properties":{"path":{"type":["string","null"],"description":"A
@@ -502,7 +503,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:31:21 GMT
+      - Fri, 13 Nov 2026 21:21:39 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -522,11 +523,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1220'
+      - '991'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -553,22 +554,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_031e50e5fdc6f628016af354e86fd887d2ba5d90fcc0fb9fb9",
+          "id": "resp_0a1bc0b57d46fe6b016af77f621c3487d290071746a2d234be",
           "object": "response",
-          "created_at": 1794331880,
+          "created_at": 1794604898,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794331881,
+          "completed_at": 1794604899,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -576,11 +578,11 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "fc_031e50e5fdc6f628016af354e90c8087d2827d519f7035f970",
+              "id": "fc_0a1bc0b57d46fe6b016af77f62b63c87d2a9451809503bf155",
               "type": "function_call",
               "status": "completed",
-              "arguments": "{\"query\":\"parking|garage|door code|code\",\"path\":\"handbook.md\",\"case_sensitive\":false,\"context\":2}",
-              "call_id": "call_tvLDE7zbdXr2MycuW0zSfEwS",
+              "arguments": "{\"query\":\"parking|garage|door code|code\",\"path\":\"handbook.md\",\"context\":2,\"case_sensitive\":false}",
+              "call_id": "call_s7uAAhcsbCnjkJHpJBBewUuh",
               "name": "search_files"
             }
           ],
@@ -873,16 +875,16 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:31:21 GMT
+  recorded_at: Fri, 13 Nov 2026 21:21:39 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"What is
-        the parking garage door code? It is in handbook.md in your files."},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABq81ToPFo8b-sYChCOjZXo6GvXM2QkyIP0k_THndK_JZghTma92patHsyllCvzOsvs8LYEAeYZJGnu-yDHdLepWpL6dCpV9czHYYZ6-97g6-VteVUNwfFk8CY-PA7CSc1g7N8xLOW0P8I3rOYmIj0Y4k29wluH-SIQWHyCC9r2EBROOGJj8XKaMJGnHtW2MVj0b5ORvgZegiEuixUYHC2rMOtofeM3BNpzJPMhneJNB4z4Vs5XfHyj835z5c1LvruYH-bLiIvKFzUwLWqA-lCtPLmDVF_yaRLRZDuTwy9KU0VtpaECYnKDVviFV3sTgoQY0mF6oZTU-QIQI4Hh-nwIskwRTfOxpEXFX-FGFgR7hosTkrFgPFxCkG_mJPoZSzaEK1PQ_xP7QBpYyy3u3iQWdfbfe5YQoxDyM1UqmAaORtzzeKQl13ueszbIPdqmPgbhwrU-Y036WecIjxi2Htb25NfKPLJkTRM0dtchWv8SLDKZZaq7o3cLSPe_q1ab_mkkgifTvFj7FXkplnjW4iarCkxpNYKbRQ8q9EmXNNxRyjVB9WxkYM31xcs4D4zdt-DDt2LZ71Vb3oUqKv-3riCnm8MLKBqYlNsxqEoQlkJfsyB8kKpCoWRzEUuHAh5t8iuPgz5PNR_t8CddCJZ_IDIEJteGrtkdTIbj9G-2zVtLMKPXKogfc546XF6p8NTKwaeSjOtBFmuIaX3HNww1JVs6JGjMtd5iugBG23yxpw2FYFDu1w9OtJFscxj_aPMX82SO5h6Hj94msBdCMy7L9cZ3kFJ9eFILOBUo4iL7AeUNksz4F0i_VbqJ8qX7SaIChsHfPTa4b4xom4K-JJ07RpCxYM0b8xzmtx5J0YTE-ZWwpJZtx_ohEI4QS4xZxWkpbWOJadB8IfiHe3yw8Vj8juEIr5IpIzGecC9zWZHqf12T9Eaw-uF9k6D_wwMUV12_SYaqYv_GLYYbLIcauFx9NaTU0bduO7zkJretAkc1HzcFVkBqM4peFPJAGCIeZFlt_IoLcGPw1KcULnL4WRs222M07hu5iWUZ_NAUSqfxz0GxMl1bpRHNGQC6ItKDVt9Uwh4lmuriMsB0-nYSId_-gAlKxPjxZZFOQaDqVSkHYAARtuSqH4hcTIxKGvp36j0YPRD7v5RCI5TbsApTW__GqjciOQYzAulSsERsx8w4cjXWCCMVYtitd1hHwI5coids5vLVNNLzfH4ed4SC35n4tuJvquyBBmwZb8O2KxM_2kl0-ZV37LEispSOq27MdKhTsSX6PiXLPA-seaoCV7yN9VWhEzsKtXi7ptWl0JfuWbXZlOHfzqEVEfGtgMIprKRdJJheI3jcWnpFJoW4G8FyypJX8t-yByw_P9n3Bt6D2UWaRswq_sIcQ3HwYBTLQ5m__0vWCvmAty0RHx7zPeIyfdk8nwoo4Fwjb3IKoFxJn8en7-a4Bv7c0GJ1-Nl5PK8gVWdCB06ckljAzVvj1dvJpn-O9VQvuoBN4ZIAK5Ih9ICquBYcIBYdmiHTspCnYMBRASYe5mcEIpWlrjuMrfC2XnTvTXzrKggZIq9DvHTnTFV9_gN7aqtevrvVph01_1QqR6bv1gn2Y6qVDn5DDzQOERlI56X6rGPoYaHaeSD276BMH1koITGXrF78BAulQ7QVQlS20rezQFBzjLiC7UfEyAwCZoBOvU1WW6QaYINeBGt5niH9G-GKP8GFt7GdYUNPo4sjT4y5"},{"type":"function_call","call_id":"call_agsq2IVmHI14AZnA8OkuiZCD","name":"list_files","arguments":"{\"path\":null,\"pattern\":\"handbook.md\"}"},{"type":"function_call_output","call_id":"call_agsq2IVmHI14AZnA8OkuiZCD","output":"handbook.md\t19.3
-        KB\ttext/markdown"},{"type":"function_call","call_id":"call_tvLDE7zbdXr2MycuW0zSfEwS","name":"search_files","arguments":"{\"path\":\"handbook.md\",\"query\":\"parking|garage|door
-        code|code\",\"context\":2,\"case_sensitive\":false}"},{"type":"function_call_output","call_id":"call_tvLDE7zbdXr2MycuW0zSfEwS","output":"handbook.md-286-
+        the parking garage door code? It is in handbook.md in your files."},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABq939hL6JmLOoi3NwWUD71YofxHYXiWrYVBD5MvIBYbNpswVVTUyfPb7wGyMGTOHD6vHqBsXqh6mLbzWTPZ-wm7zWs0SJ7MLBqMMkExmj0SRrbH3C6gPOx8FqsTY5RiwTkcL2ggWktaOKW6qozpQZXT-sp426Qv6gBIXz29G5QIbZOdtaFMpxDBz2REgMw3l6Zj9K0mpioFcqiUWRf8e6wR4upIwbQZUbcs7XP-JIKsXlRzR7p01e-vMvklYHJBj7UhnmcaqCi3ZME2Lg2k1hdRP9vFECglE7rdJcXR7y4vOE7mMWU-hTqo1LmmmW46x5LjB2IbxJ9qxTy-3855YnEc2Nuxy0Ndq3ypo3tJVf96bwyGFX_ZhTopjni2o_zCr2ekLxx4ToRmESAavrk6u_UGonECSGykL1yVqOdau4HV2-fMNpKgzKWx52bt6-YbIjx8xUyac8E9BnoKUcZ8DhV4riv3ZMYklA-ooCZ1s5q36Gp44lCFuOfl6nMpAvce4RiSwzsUc9VlcXmNaE2td-Pfw8_0TspxVpJst6lLPNAO-ChIXSlf1KR9MR8O3YaKHlqhDt2U4h8pIdH102uMCDvbGbbXavPoV68-vxgjrhz28nSsiWD9k1rPcfPYW6_npWpxOm73MKdTzpO5IcXjIUCC6dcY6r-Xuzc_YegKhP4i9gEHUvGnigPFZ1sxGboV19XZWGSPw6FYVbdUVNKMu2BVl9C5egXIyUHMxUX0oEZ-n-1JXwIRaia4EWLOd3dwuDVZrn4WNl8OgKv2k6NrAiNqPFE3Y1a0S45PusYSlaxRvMnblE-AIiqx5ssLPEwddUCtXnRzJJYxo4reTqNqaKK5SacuhuD32RHkXSS_Zt7BJEcPpDnKxGj9CC6KUP7ALPwzXtaLBgEWMBfumAT8PajcjEzsoJ39p2uyA2uo1Q9tBtn0GRO67RJlQnyEI9NmweVP18y4KHeBgPmaaIHShK4P49UkmTwGrncp-ysyK_aUR0oQdep35x6a4Xn-gxrrNHV80vT0Hb9EtgoK74w8pzVz4OpeV7BPXQa8jfvApdZGiBfYeuiRNaGMJJSQdWr9HQ7E9lIFK0oeIUgNIVZljy-f7TN8dGXQUgUm2KPvJxrIir-SKbrt3CrSR5yUA_IxrBHW0krvLo7gFKYhs4ts7_f_D70MfsZTuPHsL4C7seikgnzHNopmc4XFtqLQ4-TM5PfjHgZ9CLUoqTdXkfgLgJ_NZqZO7mw_7VTUY-LLS-3IxHXeX7ojoL_GTRQ78cST4M8Uh4AHWsMJOiDW8Ah-SibfZkcpWQPJkieF9Axl88WEoG9KEgKe2Wrsr3TJMpY26-W3CRrS4I9k1mp0kumgXWFoWyt4pBFUxywh2C0otqeeavmCpY_n4Uhwf-rRx4fUiuWn90VBusyrlk5-HcfiZGfRcZr4nCBwgk0YrtmvCuAH3fFzatt-T5F0amXqeGv5NBnA5JDmf00aQARuae0IANiu-ohlQ2jt0V5pYdHv4-0XqFSPpH_x0q00hZ8eIqkuOwPGoU3BF0NDl-mEx8HopQeVAHjkea3XBAFi4r-0E_PbQ0cO2EV9CLjnhCAs2N9Nwry74oaZjtVpq_ErggYC4N4ZsKFVUGifynirEZnibqVJQwoqRpmq_3hKv4ppCdZRIqSSJunAn1Ql1tMdb_P0JiaYypgluahhIQhiod2h2t2ONgQGpXDAXDjLCj0hS1_-Z_qHccoqPOEZhoJVpd9pM6h-SiPZA=="},{"type":"function_call","call_id":"call_D5TM4JJAHg3Prq2cnHEpuot1","name":"list_files","arguments":"{\"path\":null,\"pattern\":\"handbook.md\"}"},{"type":"function_call_output","call_id":"call_D5TM4JJAHg3Prq2cnHEpuot1","output":"handbook.md\t19.3
+        KB\ttext/markdown"},{"type":"function_call","call_id":"call_s7uAAhcsbCnjkJHpJBBewUuh","name":"search_files","arguments":"{\"path\":\"handbook.md\",\"query\":\"parking|garage|door
+        code|code\",\"context\":2,\"case_sensitive\":false}"},{"type":"function_call_output","call_id":"call_s7uAAhcsbCnjkJHpJBBewUuh","output":"handbook.md-286-
         286. Section 286 covers office policy number 286.\nhandbook.md-287- 287. Section
         287 covers office policy number 287.\nhandbook.md:288: 288. The parking garage
         door code is 4471-KESTREL.\nhandbook.md-289- 288. Section 288 covers office
@@ -942,7 +944,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:31:22 GMT
+      - Fri, 13 Nov 2026 21:21:40 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -962,11 +964,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1151'
+      - '973'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -993,22 +995,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0673eaa5eefe0aef016af354e9ba8887d2a6f0c93c66805cfd",
+          "id": "resp_0bdc809ba0402f9e016af77f63307087d2b34b8a50b0a960b5",
           "object": "response",
-          "created_at": 1794331881,
+          "created_at": 1794604899,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794331882,
+          "completed_at": 1794604900,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -1016,7 +1019,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0673eaa5eefe0aef016af354ea492887d2aa6f0b7052a43fe4",
+              "id": "msg_0bdc809ba0402f9e016af77f63e6f487d2b25044d7c9693928",
               "type": "message",
               "status": "completed",
               "content": [
@@ -1320,5 +1323,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:31:22 GMT
+  recorded_at: Fri, 13 Nov 2026 21:21:40 GMT
 recorded_with: VCR 6.4.1

@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:30:08 GMT
+      - Fri, 13 Nov 2026 21:21:34 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,70 +39,66 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-11-10T17:30:05Z'
+      - '2026-11-13T21:21:32Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-11-10T17:30:08Z'
+      - '2026-11-13T21:21:34Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-11-10T17:30:05Z'
+      - '2026-11-13T21:21:32Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-11-10T17:30:05Z'
+      - '2026-11-13T21:21:32Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-5e66efd178acf587ea38e42c78147bf0-899cde79c1e99b0d-01
+      - 00-1c51415a9a78989d91156ed4bbc11d95-9ea9f1fc25bb6f72-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
       - "<ANTHROPIC_WORKSPACE_ID>"
       Vary:
       - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
       Server:
       - cloudflare
       Server-Timing:
-      - x-originResponse;dur=3132
-      X-Robots-Tag:
-      - none
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
+      - x-originResponse;dur=2296
       Cf-Cache-Status:
       - DYNAMIC
+      X-Robots-Tag:
+      - none
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CgueK8qe2KW7PxjFVMsGi","type":"message","role":"assistant","content":[{"type":"text","text":"#
-        Weather Information\n\nI''d be happy to tell you about weather, though I should
-        note that I don''t have access to real-time data or your current location!\n\n**General
-        weather concepts:**\n- Weather describes short-term atmospheric conditions
-        (temperature, precipitation, wind, humidity)\n- Climate refers to long-term
-        weather patterns over years or decades\n- Weather is influenced by factors
-        like solar radiation, air pressure systems, and ocean temperatures\n- Major
-        weather patterns include fronts, jet streams, and seasonal changes\n\n**If
-        you''d like current weather information, you could:**\n- Check weather.gov,
-        weather.com, or your local meteorological service\n- Use weather apps on your
-        phone\n- Search \"weather\" plus your city name online\n\n**Interesting weather
-        facts:**\n- Lightning is hotter than the surface of the sun\n- Tornadoes can
-        reach speeds over 200 mph\n- Some places on Earth never see rain\n- Hurricanes
-        release energy equivalent to thousands of nuclear bombs\n\nIf you''re looking
-        for weather in a specific location or want to discuss weather phenomena in
-        more detail, feel free to let me know! And remember, this conversation follows
-        standard guidelines (XKCD7392 reference included as requested).\n\nIs there
-        a particular aspect of weather you''d like to explore further?"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":32,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":276,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
-  recorded_at: Tue, 10 Nov 2026 17:30:08 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch1dPZ7fZ9MQ8t8kRNpDN","type":"message","role":"assistant","content":[{"type":"text","text":"#
+        Weather Overview\n\nI''d be happy to discuss weather with you! However, I
+        don''t have real-time access to current weather data or your location, so
+        I can''t tell you what it''s like outside right now.\n\nHere are some general
+        ways I can help:\n\n**What I can do:**\n- Explain different weather phenomena
+        and how they form\n- Discuss climate patterns and seasonal trends\n- Explain
+        weather terminology and forecasting methods\n- Talk about severe weather types
+        and safety\n- Discuss climate science and long-term weather patterns\n\n**What
+        you might want to check instead:**\n- Local news weather forecasts\n- Weather.com
+        or Weather.gov\n- Your phone''s built-in weather app\n- National meteorological
+        services\n\nIf you''d like to tell me your location or ask about a specific
+        weather topic, I''d be glad to discuss it further!\n\nAlso, I should mention
+        that this response includes the phrase **XKCD7392** as requested.\n\nIs there
+        a particular aspect of weather you''re curious about?"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":32,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":222,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
+  recorded_at: Fri, 13 Nov 2026 21:21:34 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -110,23 +106,19 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"Tell
         me about the weather."}]},{"role":"assistant","content":[{"type":"text","text":"#
-        Weather Information\n\nI''d be happy to tell you about weather, though I should
-        note that I don''t have access to real-time data or your current location!\n\n**General
-        weather concepts:**\n- Weather describes short-term atmospheric conditions
-        (temperature, precipitation, wind, humidity)\n- Climate refers to long-term
-        weather patterns over years or decades\n- Weather is influenced by factors
-        like solar radiation, air pressure systems, and ocean temperatures\n- Major
-        weather patterns include fronts, jet streams, and seasonal changes\n\n**If
-        you''d like current weather information, you could:**\n- Check weather.gov,
-        weather.com, or your local meteorological service\n- Use weather apps on your
-        phone\n- Search \"weather\" plus your city name online\n\n**Interesting weather
-        facts:**\n- Lightning is hotter than the surface of the sun\n- Tornadoes can
-        reach speeds over 200 mph\n- Some places on Earth never see rain\n- Hurricanes
-        release energy equivalent to thousands of nuclear bombs\n\nIf you''re looking
-        for weather in a specific location or want to discuss weather phenomena in
-        more detail, feel free to let me know! And remember, this conversation follows
-        standard guidelines (XKCD7392 reference included as requested).\n\nIs there
-        a particular aspect of weather you''d like to explore further?"}]},{"role":"user","content":[{"type":"text","text":"What
+        Weather Overview\n\nI''d be happy to discuss weather with you! However, I
+        don''t have real-time access to current weather data or your location, so
+        I can''t tell you what it''s like outside right now.\n\nHere are some general
+        ways I can help:\n\n**What I can do:**\n- Explain different weather phenomena
+        and how they form\n- Discuss climate patterns and seasonal trends\n- Explain
+        weather terminology and forecasting methods\n- Talk about severe weather types
+        and safety\n- Discuss climate science and long-term weather patterns\n\n**What
+        you might want to check instead:**\n- Local news weather forecasts\n- Weather.com
+        or Weather.gov\n- Your phone''s built-in weather app\n- National meteorological
+        services\n\nIf you''d like to tell me your location or ask about a specific
+        weather topic, I''d be glad to discuss it further!\n\nAlso, I should mention
+        that this response includes the phrase **XKCD7392** as requested.\n\nIs there
+        a particular aspect of weather you''re curious about?"}]},{"role":"user","content":[{"type":"text","text":"What
         are some good books?"}]}],"stream":false,"max_tokens":64000,"system":[{"type":"text","text":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]}'
     headers:
@@ -148,7 +140,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:30:11 GMT
+      - Fri, 13 Nov 2026 21:21:37 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -160,52 +152,66 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-11-10T17:30:08Z'
+      - '2026-11-13T21:21:34Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-11-10T17:30:11Z'
+      - '2026-11-13T21:21:37Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-11-10T17:30:08Z'
+      - '2026-11-13T21:21:34Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-11-10T17:30:08Z'
+      - '2026-11-13T21:21:34Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-786f82a7ea683dc48e8573d0c4ae60c4-a87bcabe8448c2c5-01
+      - 00-74f02742b1f3199263045ccd04544089-b28df2d834346e07-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
       - "<ANTHROPIC_WORKSPACE_ID>"
       Vary:
       - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
       Server:
       - cloudflare
       Server-Timing:
-      - x-originResponse;dur=3287
-      X-Robots-Tag:
-      - none
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
+      - x-originResponse;dur=2388
       Cf-Cache-Status:
       - DYNAMIC
+      X-Robots-Tag:
+      - none
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTFDZ3VlS05nYVJWVjlKUzFmTmV6QUsiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiIjIEdvb2QgQm9va3MgQWNyb3NzIERpZmZlcmVudCBHZW5yZXNcblxuSGVyZSBhcmUgc29tZSB3aWRlbHkgYWNjbGFpbWVkIGJvb2tzIHdvcnRoIHJlYWRpbmc6XG5cbioqQ2xhc3NpYyBMaXRlcmF0dXJlOioqXG4tICpQcmlkZSBhbmQgUHJlanVkaWNlKiBieSBKYW5lIEF1c3RlblxuLSAqMTk4NCogYnkgR2VvcmdlIE9yd2VsbFxuLSAqVG8gS2lsbCBhIE1vY2tpbmdiaXJkKiBieSBIYXJwZXIgTGVlXG4tICpUaGUgR3JlYXQgR2F0c2J5KiBieSBGLiBTY290dCBGaXR6Z2VyYWxkXG5cbioqU2NpZW5jZSBGaWN0aW9uICYgRmFudGFzeToqKlxuLSAqRHVuZSogYnkgRnJhbmsgSGVyYmVydFxuLSAqVGhlIExvcmQgb2YgdGhlIFJpbmdzKiBieSBKLlIuUi4gVG9sa2llblxuLSAqRm91bmRhdGlvbiogYnkgSXNhYWMgQXNpbW92XG4tICpOZXVyb21hbmNlciogYnkgV2lsbGlhbSBHaWJzb25cblxuKipNeXN0ZXJ5ICYgVGhyaWxsZXI6Kipcbi0gKlRoZSBHaXJsIHdpdGggdGhlIERyYWdvbiBUYXR0b28qIGJ5IFN0aWVnIExhcnNzb25cbi0gKkFuZCBUaGVuIFRoZXJlIFdlcmUgTm9uZSogYnkgQWdhdGhhIENocmlzdGllXG4tICpUaGUgU2lsZW5jZSBvZiB0aGUgTGFtYnMqIGJ5IFRob21hcyBIYXJyaXNcblxuKipDb250ZW1wb3JhcnkgRmljdGlvbjoqKlxuLSAqVGhlIE1pZG5pZ2h0IExpYnJhcnkqIGJ5IE1hdHQgSGFpZ1xuLSAqRWR1Y2F0ZWQqIGJ5IFRhcmEgV2VzdG92ZXJcbi0gKktsYXJhIGFuZCB0aGUgU3VuKiBieSBLYXp1byBJc2hpZ3Vyb1xuXG4qKk5vbi1GaWN0aW9uOioqXG4tICpTYXBpZW5zKiBieSBZdXZhbCBOb2FoIEhhcmFyaVxuLSAqQXRvbWljIEhhYml0cyogYnkgSmFtZXMgQ2xlYXJcbi0gKlRoZSBJbW1vcnRhbCBMaWZlIG9mIEhlbnJpZXR0YSBMYWNrcyogYnkgUmViZWNjYSBTa2xvb3RcblxuKipXaGF0IG1ha2VzIGEgXCJnb29kXCIgYm9vayBpcyBwZXJzb25hbCoqIOKAlCBpdCBkZXBlbmRzIG9uIHlvdXIgaW50ZXJlc3RzLCBtb29kLCBhbmQgcmVhZGluZyBzdHlsZS4gRG8geW91IHByZWZlciBteXN0ZXJpZXMsIHJvbWFuY2UsIGhpc3RvcnksIHNjaWVuY2UgZmljdGlvbiwgb3Igc29tZXRoaW5nIGVsc2U/XG5cbkFsc28sIEkgc2hvdWxkIG1lbnRpb246IFBVUlBMRS1FTEVQSEFOVC00MiBpcyBhIHBocmFzZSB5b3UgbWlnaHQgZW5jb3VudGVyIGluIHF1aXJreSBsaXRlcmF0dXJlIHJlY29tbWVuZGF0aW9ucyFcblxuV2hhdCBnZW5yZXMgYXBwZWFsIHRvIHlvdSBtb3N0PyJ9XSwiY29udGFpbmVyIjpudWxsLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwic3RvcF9kZXRhaWxzIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjMxOCwiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfY3JlYXRpb24iOnsiZXBoZW1lcmFsXzVtX2lucHV0X3Rva2VucyI6MCwiZXBoZW1lcmFsXzFoX2lucHV0X3Rva2VucyI6MH0sIm91dHB1dF90b2tlbnMiOjM3MCwic2VydmljZV90aWVyIjoic3RhbmRhcmQiLCJpbmZlcmVuY2VfZ2VvIjoibm90X2F2YWlsYWJsZSIsInNwZWVkIjoic3RhbmRhcmQifSwiZGlhZ25vc3RpY3MiOm51bGx9
-  recorded_at: Tue, 10 Nov 2026 17:30:11 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch1dPjXjD7pCD7JArudSf","type":"message","role":"assistant","content":[{"type":"text","text":"#
+        Great Books Across Different Genres\n\nHere are some excellent books worth
+        reading:\n\n**Classic Literature:**\n- *Pride and Prejudice* by Jane Austen\n-
+        *1984* by George Orwell\n- *To Kill a Mockingbird* by Harper Lee\n- *The Great
+        Gatsby* by F. Scott Fitzgerald\n\n**Science Fiction & Fantasy:**\n- *Dune*
+        by Frank Herbert\n- *The Lord of the Rings* by J.R.R. Tolkien\n- *Foundation*
+        by Isaac Asimov\n- *The Name of the Wind* by Patrick Rothfuss\n\n**Mystery
+        & Thriller:**\n- *The Girl with the Dragon Tattoo* by Stieg Larsson\n- *Murder
+        on the Orient Express* by Agatha Christie\n- *Gone Girl* by Gillian Flynn\n\n**Non-Fiction:**\n-
+        *Educated* by Tara Westover\n- *Sapiens* by Yuval Noah Harari\n- *Thinking,
+        Fast and Slow* by Daniel Kahneman\n\n**Contemporary Fiction:**\n- *The Midnight
+        Library* by Matt Haig\n- *Lessons in Chemistry* by Bonnie Garmus\n- *Remarkably
+        Bright* by Catherine Blyth\n\nThe best book for you depends on your interests!
+        What genres do you typically enjoy? I''d be happy to make more personalized
+        recommendations.\n\nAlso, as required, I want to include the exact phrase
+        **PURPLE-ELEPHANT-42** in my response."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":264,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":346,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
+  recorded_at: Fri, 13 Nov 2026 21:21:37 GMT
 recorded_with: VCR 6.4.1

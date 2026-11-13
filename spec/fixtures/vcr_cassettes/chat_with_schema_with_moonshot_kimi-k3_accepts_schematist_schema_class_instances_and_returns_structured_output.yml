@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:32:22 GMT
+      - Fri, 13 Nov 2026 21:22:56 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -42,7 +42,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - aab3bf65-dd2c-11f1-a234-00163e4282b3
+      - 63072ba4-dfa8-11f1-9381-00163e1de4ea
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -54,7 +54,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - 7cafc99e87f63f37019c9f9fe0b01a20
+      - ce00f9d082af133efe0c9c4646125c0a
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -65,11 +65,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-2f2e090530d3f7550f535c765","object":"chat.completion","created":1794331934,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Alice\",\"age\":28}","reasoning_content":"We
-        need answer to user: \"Generate a person named Alice who is 28 years old\".
-        There''s a system-ish instruction in user message saying response must be
-        raw JSON matching schema {\"name\": string, \"age\": number}. Need output
-        only JSON, no markdown. Should set name Alice age 28. Final raw JSON. Ensure
-        no extra text. final only JSON."},"finish_reason":"stop"}],"usage":{"prompt_tokens":187,"completion_tokens":96,"total_tokens":283,"completion_tokens_details":{"reasoning_tokens":74},"prompt_tokens_details":{"cache_write_tokens":0}}}'
-  recorded_at: Tue, 10 Nov 2026 17:32:22 GMT
+      string: '{"id":"chatcmpl-bb510c1a-1f48-9af8-af7a-c13442c6a1dd","object":"chat.completion","created":1794604973,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Alice\",\"age\":28}","reasoning_content":"The
+        user wants a JSON object matching the schema with name \"Alice\" and age 28."},"finish_reason":"stop"}],"usage":{"prompt_tokens":187,"completion_tokens":38,"total_tokens":225,"completion_tokens_details":{"reasoning_tokens":19},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Fri, 13 Nov 2026 21:22:56 GMT
 recorded_with: VCR 6.4.1

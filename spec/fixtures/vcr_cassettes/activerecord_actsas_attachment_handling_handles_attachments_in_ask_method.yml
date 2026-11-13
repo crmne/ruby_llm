@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:34:31 GMT
+      - Fri, 13 Nov 2026 21:20:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -44,11 +44,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1114'
+      - '1007'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -81,22 +81,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_02a4958814f63d62016af355a6814c87d29821c443ea44c014",
+          "id": "resp_0b9fa849bf1f915a016af77f2f316c87d2a0f6408a37a7a12b",
           "object": "response",
-          "created_at": 1794332070,
+          "created_at": 1794604847,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794332071,
+          "completed_at": 1794604848,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -104,7 +105,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_02a4958814f63d62016af355a7285887d28db1e931f90f00cc",
+              "id": "msg_0b9fa849bf1f915a016af77f2fa12c87d28d50df5e60dcdf0b",
               "type": "message",
               "status": "completed",
               "content": [
@@ -112,7 +113,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "I see an abstract red, faceted gemstone or crystal shape\u2014like a polygonal gem with sharp highlights and darker red shadows, forming a heart/diamond-like form."
+                  "text": "I see a glossy, red gemstone (like a faceted ruby) with bright highlights and sharp geometric facets."
                 }
               ],
               "phase": "final_answer",
@@ -169,14 +170,14 @@ http_interactions:
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 38,
+            "output_tokens": 26,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 69
+            "total_tokens": 57
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:34:31 GMT
+  recorded_at: Fri, 13 Nov 2026 21:20:48 GMT
 recorded_with: VCR 6.4.1

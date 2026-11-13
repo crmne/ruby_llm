@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:45:46 GMT
+      - Fri, 13 Nov 2026 21:33:09 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -44,11 +44,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '3048'
+      - '3213'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -64,13 +64,13 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999957'
+      - '1999929'
       X-Ratelimit-Reset-Input-Images:
       - 1ms
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 1ms
+      - 2ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Set-Cookie:
@@ -81,22 +81,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0ffab1a7a974187b016af35847200887d29e6fc3bd247a1713",
+          "id": "resp_0298d9ca7cc6b3f6016af782128ae887d2a1ed82fdae20776c",
           "object": "response",
-          "created_at": 1794332743,
+          "created_at": 1794605587,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794332746,
+          "completed_at": 1794605589,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -104,14 +105,14 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "rs_0ffab1a7a974187b016af35848149887d295948fb6e68b2b6f",
+              "id": "rs_0298d9ca7cc6b3f6016af78213d03087d2b7fe0db4b1686be9",
               "type": "reasoning",
               "content": [],
-              "encrypted_content": "gAAAAABq81hKqUaO96D11o5wAwX_SdemYy_xxMJxv4RJrm0t-Na7FwE09t929ZAUjC0MtiQdGvqh95cmWh3MRHj9XX8_trgxs8RVbQi5-4XEdYE0dYUiRX-AnPz1vW8DrduM150YsDq97OrgRhkdZkhHmWPH5u_4F3X-fP0tD6xgHVZU4lpVzzDCOjq1qOLYu3behAMglkC0Y5dlQPLYmNFsx04N1Jcvna2XEbsP9TOZ_2JawCvtdr52lJlLcuKK6s4Tru4irX7Tml6-E1BY4dZnWjeBtKaj68iRDcVU9cpTDoy8Q0Uw06GxD4ZvDBz74IFu1pUiF19MlNUEXF_T3qi72Jvgo24MBRzXbQZf-3MY8chkwr_rB5We0QxodLK47K6vk0FgRNlw8lj33m2Yig7iQGi8z8vNmP2x6kgPmI0PSPGIJ5l2M9qLkl-6ISPGAJAZig-L4Phv9pvMWNQh3RWlLlQ5nd9MgYJ7IBI4af3aANF60FhZftwPNipG2Ku8J-VZzihl4AdYT8VtOdzrHzghN4Y8SqkK0pCKMOMs8OqvPnUl9Z2MUJhnA8qE8zb5hSiTm97m79vjyYq5GOj66tXqctzrBdSjtdzeEeBdwt6sc4XmNifsl7FKPV4zzErMVnvLb76tCfWr35l1VHsVciD9YnBgcil0bhazfCewXPa2d-rDYTy0ptw4sRXlnY0dfbPYpjdrXXJFIbwipBkGfss7h0U59MJ2Gz2tdzeQC07Dd78DczKLLhN1aBZRoOIFUihP5-UQFcXEq43tRD-4EatPXoi4ysDKyYey3heszCycSC2YorX8eIPz_beEhTtDGgZjmFTNZD9Ec26chQ3PiOnPIokwrVWvKP6NJrbcrfK6rk_RObyF8Jmsjihu8mZhD9gxbpIvJXL-6iy_d2x4dtEdSM9uqWcbew1f-jTaW_5hFPlKbSwo8DVgBhhyyUkJwdrhYGDnjGTtJdkMS1exLfSBQpdB-ElAgSa4WzeJgmyf3sDHz0tp1BK2HpLbWO9YqfM-LUGibF-ESw-VJeIVie46d5u6t9-MYaz3BjYHFSwJ6_mCPgCBallZtP7EDGD4FjIb9Z2RCGDKV1jMbYxjX9NcvkHtNG3nwOmG2hUxC44jNWv43yJ56D5TdWxf59rJNf6hAuivFVJvDHCqcHUH2vFTiUb0HeJIpjkQRuMwPI_KL-vzxM08Ix67sqeB2nzqVVKfGPqKDanXRp3Zn4ONv_mk4TvjMKQfYDithPOOclNK4IlqngrALgw-gODlJsYn0EuwUXN8Hb7vKztCgA5NnIsSGWAHB_SHSLf5EAnbiO52HLDoe6WnqjLsnrqzOKihixNNV7IhuvmzuIA7BsofiUGzIdCaHEDXo4wKcH4-exu6cxsLmKGb3v1fz8cnmXgq3tOaobU_1eg8ggU1aApTPfpX_lQOFRwf49RKuzQpO2nkTQIczXrIraeOj7GQUe-UCt2IebPat4ywGLfXr6dwX-yiUjXlNyAbEqCau3iG3CTdTPyCOzKuBMVwYt52PumhWXF9d2UFojraXszimXNaXiGOEUyPj2mHnqJj4i8h-vRBZ2YYcMjF-TWqmu4xfgSet7blHoiZSvOVUr7nVvrxUSOvLuiujN0AOLWDeKRen4edTmQJiq1b2K6GBrdz_W_dg19VD8dsUKAcLMcbE0Lk96W_p-UBwQ_SdZdtIv2Abo1n6PWurABejfyx5-50tdlcLETE7JNK3WfSbDikQ9pYxGNTFcJOigq21ApRIS_2PFZ7XEhhxUW4a8G0EDQfD6P_hDuoTs_xqt5rqV2WQzzfQpl62uJQtcLFt8FIMqoEQdcbNEYQpLSKzwx9HbDcZQfi49X9IMvTPvzM4LVVgRi0pxbUL8U-hoyvaKCH3dCwVRyCrjHYA7WCdKLw8V845wvTuZeJcRY14JevH5OCpw9l6yENJ9MOp7MMN7wLy75JSBb64xBi8HX9vpysnGwLw6MvwNcBgLfTGNB5300KvdZ954dwc1iRBkAyUshNHmENzaTo1INdVNteKNNDWy2WZmrY5ftIzkr9WxUzK0St_lIKDdWyhs5AKnmOM3uGZRjJnEoyK1L8DIGo1IindgV8SU5RVrWGhNpXmwGqf_-JpgQ1NA1qkarhYVBXQFIAaZK0hHzfb0kcOKhAX1CkUaTr5rFlrD41KmyQzHM1LACbL0NCUEvRFgp4ZcHfODU-v5hEk9aKeMwBS4qOv5tqn2Zf4qlvBcowSN3eVZUwYx0Iruf5OQnw_CCKs_EM8UYMrMXA0rfjM7mQ7rV6ZAUPm-dy8eERo60B0vEl5IqpHsfGmKw-SW8FLS8O0az4qEmApaf1MjIskAgNJ-WI5ze_KtRBuEh2xFzuCKfac2fm",
+              "encrypted_content": "gAAAAABq94IVGD_ibzzGw4MWhkc3qpi0Qq46LErkTBZJEbxhk5iMsKu6KSDw1DLWJP-js9ktaYFmz754wTTNdANzC5FMjUxayn1k8XqSGi0sSWCYRN7CyU61yOLT0FBa6rNyV9aQZRi-W1mb8UehWt6GBc2_bkJ7OLErJxGJPaCao2isIS8MDQ9nxlMGXfKgIn1EoNSiTMhE0xAl7xjQt3Mz5Mnx10P0Yn5j4cFvom7kOUtwJtyAno1IuJJ38PIfESVO6qKAdMXOPcdRHDz7hgvZYjcyS9sdtIRFV7ICPnws1RuSFObUtUa6F4SbfZ9kDx7rwEt-AnQaFztG6Av6nvWUEGsXVco3HU6Ui6ifd7Zo2GqfWJjxWDr2I1cdsNSMP4R-0P0yx3G8clXCeOixNiPXmLHJzIhdTQcvfonZialOgLFAT5fR-yUoG2ndsW7u1a82MxWsn653STv_j2AwuIahvF_D4HReeYN-ZK8HuUXNdDaftZTy7g967FrxqhcQSIib3_lLfCfyIiMfmWSxU-gUCZ0rVxAB1zkTsaxTo9aWwSnTEaimV2CIVjeQEFYJtMYREwy_qX_Vy0iurcnRDhOmpFy465ju9jqr8AzeBPTDB7gHSQFvTEG2Q49eQ7qYPA1efJQMY3m2_RCTsjL8Z6u-OeNHvwVmU32jvTzZlXCvQ66LIFyPBn1n0SYWwTXYwchCqmOsNfw0Ix9cH1nZr7SL0r8SzPpGvzyr1_S2Pk4C_e3jze6Q0y6eljbRO-QJgnSWFBY2yx-1H4UduWN95cNHNxakDDhY1valk-0vZpXlCOCmBD24GJJuCHuyVNi3_Hg5S1eT0KMF8sWYaqFm3Bcj8gP2263jFp6rrCWzyJRY6hjY-w5uKqyd4DB8FUUEzy3_AolXX343xNOw0eZKUiCns9ri02GPB9l-5QJR3yYlPRg0yXWaiUaFVYHHiq0Tl_SPiRJUTPZ-kztymTLriiIRtO2-L-0b3SjdsUH2XLU9H-mGLx_MBU7pGUvu6FQiOG9jTwcWYZ0zSU87TUyZYkdz4Eq4P4652d_hSmJyNWIcw7cyLiikj3oova30O6MXrAj0L3U2Pb8XJK2Yo5lyFZczbilbGbJoMnCBX3MhrlcMJjILxzg-Udd8yeFgOKwFlLXR8eZyZH86tq3L8tZaxpUT8c0ZAvcc1PTSSty8EhGOj7p1gb4v9G7ZTQP-6j9ItTDInA3Nys4rgjXBEuc3oe0xbadgQWD4nKoheY2DqCO0FP4cUJcNSivRU_p5VfsrkslbtHtcQzES1MvjrNQNmyi0xFUBKXWGoryhv2g-TRm137J6FAljr3nfS7vBvtm0t2BOi1FZR1cqTViHlzDWjGQ_NqwyAR1P4Q626-cpztuHQQxgU0flQRaN_MiTIhUUQ1J3w8iRSz8hQlL_1m7tktgHnSelADLh9V5O6xrDzGFP7OG8GVwgT0GB_bE0fQ9UAkugkxq2gMgqiGvuuXpEicLgpTanQfo5V3xapWR9evK1vHumXsOxmUsEe6Hq-79kyqXmQmYk8rd3UEDGFTp5lq3n8m820D65wOnqZ6Pk1KodUfU-zZKM4n7OfPmcs-dLmTVQpzK7hDx2CMp6oDaJEG69aFY9MuAeKm1pKTC6Q7xTNqZf4n4mQvgOywChjZjM3zKcgxvzSnR_YOEX9TZNtH7xfh7NV_ECDKmOFbJHDJfKdF9KaaDi04BI1STYm5Fg6jLEoJLiK3Gj59cCMsW5S491yPQoaoslenMC06wJto_Ic3GN789tunuTjr6lHURXGCPNwZshD18lMTLeWn_N9ys0AhYQuyc2SCNsMSlDvP0aRSfrLrAP17ft5Z_5xffE11X_O7k-UIyfa1zK7WTNdS2bWXU0tMl--ZkiFVHl_i0kIiQRIl8VD3dpQxMWQUZkWm8z5Q4weDVYL9LvL_Cj2mKb7DCWkFYhoSqd-yHQoar4Zs12j9SE_oGs0USVoq5dp9fL_rUW9tgyojjf5euzYcQbF_jqYEr-eMwDfgtpqSH1JqL7CbF3kinmY8vae3qalN3Pk4O66ga5H1dU_1bVu-qQ8D8rS8c9pqIp18mvr7ML-5HAxcDhvIlE73rOOlTD14HDH4DP7ia3uiEfpvmRtMOKzbv5MdbYMhuwiLL4o5OO15SEQa1OGRTjCGJu1vMuuSSWWMYtqKcx4a9x2xDMctWVkX7HpGWtuzwm51XDNLSoVVoyoWkrJGKBzPn099i-7XK5NhC6jN1-jYpCUZrJQSfORICxCe_-9f8j6PFSy_huvT34iVPgodQNYlzyexGpW7HiXsb6Ns9MyukSumwwB5angTVRZGqoE9-GkXSjDAs3jCGb5oL13fj7ZGfLKJbXeUcq2sEp-A1Ymy2zWswlUJbL7m9csK6vaepK18sJ44euTRm0VQ0XAbKeLzI3sFeb93lbj7Ma0BSxBPpwdBG7Jpu7d0nZ8IoSEn6sg-1daJ68qfpAHqrPcDAkHPa6PS8lgaF5wkpJvcJjf3l5otKiyrhaaerV6lVV-q2RfMYzf1UHbHwU_BcAQck=",
               "summary": []
             },
             {
-              "id": "msg_0ffab1a7a974187b016af35848b01487d2982cc417efc819b2",
+              "id": "msg_0298d9ca7cc6b3f6016af78214735887d2a4af85a6832b351b",
               "type": "message",
               "status": "completed",
               "content": [
@@ -119,7 +120,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "## Image description\nThe image is a square icon featuring a stylized, faceted red gemstone or ruby. It has dark and bright red geometric facets, with a prominent white oval-shaped highlight along the upper-left edge. The design appears to resemble the Ruby programming language logo.\n\n## PDF summary\nThe PDF is a one-page document titled **\u201cSample PDF.\u201d** It begins with the playful sentence, \u201cThis is a simple PDF file. Fun fun fun.\u201d The remainder consists of several paragraphs of **Lorem ipsum placeholder text**, with no identifiable argument, topic, data, or meaningful narrative."
+                  "text": "### Image description\nThe image shows a stylized, faceted red gemstone resembling a ruby. It has angular geometric facets in varying shades of red and dark crimson, with a prominent white oval highlight near the upper-left area that suggests shine. The gem is centered on a white background.\n\n### PDF summary\nThe PDF is a one-page document titled **\u201cSample PDF.\u201d** It begins with the sentence, \u201cThis is a simple PDF file. Fun fun fun.\u201d The remainder consists of several paragraphs of **Lorem ipsum** placeholder text. It does not present a clear topic, argument, instructions, or meaningful factual information; its apparent purpose is to serve as sample or test content."
                 }
               ],
               "phase": "final_answer",
@@ -176,14 +177,14 @@ http_interactions:
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 182,
+            "output_tokens": 210,
             "output_tokens_details": {
-              "reasoning_tokens": 58
+              "reasoning_tokens": 68
             },
-            "total_tokens": 969
+            "total_tokens": 997
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:45:46 GMT
+  recorded_at: Fri, 13 Nov 2026 21:33:09 GMT
 recorded_with: VCR 6.4.1

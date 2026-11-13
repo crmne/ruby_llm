@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:37:22 GMT
+      - Fri, 13 Nov 2026 21:25:28 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
@@ -38,11 +38,9 @@ http_interactions:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":382,"completion_tokens":108,"total_tokens":490,"completion_tokens_details":{"reasoning_tokens":66},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-83c45c18448587eb","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
-        \"Review PR\", \"status\": \"pending\"}"}}],"reasoning":"The user is asking
-        to invoke a tool with the task \"Review PR\" and status \"pending\". The tool''s
-        schema requires both \"task\" and \"status\" (status is anyOf string|null,
-        and since it''s included in the required array, it needs to be explicitly
-        specified).\n\nLet me make the call.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-d461a66e-1de6-4ec0-8283-79c8087db39e","object":"chat.completion","created":1794332243,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Tue, 10 Nov 2026 17:37:25 GMT
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":382,"completion_tokens":69,"total_tokens":451,"completion_tokens_details":{"reasoning_tokens":27},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-928cc96b0d3f762e","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
+        \"Review PR\", \"status\": \"pending\"}"}}],"reasoning":"The user wants to
+        call the any_of_params tool with task \"Review PR\" and status \"pending\".
+        Let''s call it.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-e51db049-c313-406b-a1de-4d29f8f6565d","object":"chat.completion","created":1794605129,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Fri, 13 Nov 2026 21:25:29 GMT
 recorded_with: VCR 6.4.1

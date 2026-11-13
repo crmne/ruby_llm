@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:44:58 GMT
+      - Fri, 13 Nov 2026 21:32:14 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -47,8 +47,6 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
-      Cf-Cache-Status:
-      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -56,28 +54,29 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '456.0'
+      - '219.8'
       X-Metrics-E2e-Ms:
-      - '4997.6'
+      - '4780.9'
       Traceparent:
-      - 00-54a0728718bc957ccafbf136e3db6dfe-78112c9a0004fa5a-01
+      - 00-cefd3df568f0b4bfc738eb5ec3bad75f-2b7031a8000113f4-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794332693,"completed_at":1794332698,"id":"<X_REQUEST_ID>","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_<X_REQUEST_ID>","summary":[{"text":"The
-        user wants to call the array params tool with tags [\"red\",\"blue\"] and
-        get the combined tags.\n\nThe array_params tool accepts a tags array. I will
-        call it with tags [\"red\",\"blue\"] using the standard function call format.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"nOLh0/WI7jZeIUbQZbR/LSN/rwEMSeZxggmmtn9rXAIMtHKyPvBsuWZEL+lP9QiPmMnJHpSQ4Zup2hri4X2pA7O+Jh94uunJ9ffP1DxayR3MyNuWZzCk3Ht21vEYbF4jaPDGPuHA69kRveiEx4QwFCCiac/iTmQJ0tabBCZRnNX2VfRGK8arbiYNgRTOZfSHlIhNsYgEPZnEdCUCutuXREn3QhTL7biHswZtTbWswtsCekFuH0piaJLiQ0BOh8KltCz7yiNG/JhrjGWJ3Sv1f786fQa2LT/pqeTrr3WcZFwjTZQ3eoEjPWHIzvWAQB3XJUgWWOrTfLQURFh81WlmQpVX99Cv9Ik+WwHYmy4lEC+OgAjr9YeeOchNV231yhf5IHGBUOW62jvCkc4RrZC0PnJwcz1jE7hmZ28t+shmBKq07plMFgyBN4EzuQ3bBNOe9+BKTBsqK9ZUS0NLEubXD4NdbH8kmmf4nSp9O24E5RrNs/jgroxKyQg4DLygPjA66Q2JbmhQtTUj1F9MKpND3exYkf8hpPsQYz9wRX8NRorhade6kuVNAnE+NkdZVx4ZlV+JM0AzulrMVCaUJ3SmJylZGse/p/2Mwaeokr9w33kXcM46DnfYZtcU/ZLsWIMijz7vUJXUGCGsMIlo6W6xIXeagr7f1Dnbty9cPQ4v5BPJN3ovd4Vqp6kBS329CU7P6GqNgxkQPrw9vOe1qPf09NPBoz1qEG7RDqAN1A+/DYGAZiKx16NhNvinRInuobG0NFkGGAj1aXv3sWGI8zos0Vm+lO8T3j0vsGc+N45oAr547dQKhOOpz+ttWsnwJNT6/IOLyngX+pU8GcX8zYdP+lZLE52RPjLetfG7CpvUhXL877JIVuqWB3fmEO9g0uRUtUBb67K095TdkqVRhsQcYg"},{"arguments":"{\"tags\":[\"red\",\"blue\"]}","call_id":"call-1d51d57e-8ee5-4243-8b26-4c990fd13ceb-0","name":"array_params","type":"function_call","id":"fc_<X_REQUEST_ID>_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Uses
+      string: '{"created_at":1794605529,"completed_at":1794605533,"id":"f725c1d5-5a80-985d-9546-8a050c6cddef","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_f725c1d5-5a80-985d-9546-8a050c6cddef","summary":[{"text":"I
+        need to call the array params tool with tags [\"red\",\"blue\"] and report
+        the combined tags.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"2lKDwnN4Jfs8UA+DaRRdzLvT/zDjZsk+NrEUlOGeDuFFt/QiVoMcYMT0pwysXjZJhU+g3BTyxd6K03fw0RV1NG1ZZMN9clpMd0Wtk1sD3m9flxg4yFPULKwUNHlzNJClbAy5o6wP8zX8Q7jmC83EmE1bzS+wxilO9COB4W3TgawhcC+ggjvbifnxoOxH/XGXhVfUqlmPKaabjFKQfFd4JAUF9wOWO9hwsjnFd4eoq4vEdmJZpMetVnTS2ymHVzIppulk2BjHs7y6tDwY+cR0re4KZTVExjfZBVIhAmIOfFvWXVxyRWyyjc731pV9jnvSlmJ/P/0KKRrAmbceCBAYILn1UTwvFQlrHo6sQtx5O7irjN7sf5UoH6KqPBBuq4enR3r6aOymcyfAYKjJNYqCAMAvhsDqzGwInS+L8k2V5Jq+RVNzi7MJ3ChlWPfDQsdbEIbLJZuQ3m2I2YZrT/EPm/Mqvxys3bUJDNj7vB1VIngiDQsveEvapmMB8gmVyAuOChtSeE0pKpSWA9f9TuwDq2BvUXBBnSy9yOgtPlZheFAisTYkX0aBzVI7GVoIAL07tLaSGlrpmpn0jFBvWKRJPQePt0E6sOHhs9BP4taV0H8Mx2DBI30AqefvZpoNHJlKhjS5HJm2NEp/3Cuc93+I5rIajKlfmngDyvBBgY4q9Qdc18WB0yfCkT4PY5fwClxG0i358NwepGH2PpxyYXyMCqK86aK2kf4ddXgedNknzxyi0LSjfTPTlK7wHOPBZ7VbI3xPx/HPGozWmR9BDOVy6sTT7aSZhrhP+d2nzLOs+XWTMCHq+TmlqyWxu4N2JQAAA9XVpgrQSjE6S75FKbYQc0Yv"},{"arguments":"{\"tags\":[\"red\",\"blue\"]}","call_id":"call-cbdd1986-ed63-4fbb-bfcb-169e2650216f-0","name":"array_params","type":"function_call","id":"fc_f725c1d5-5a80-985d-9546-8a050c6cddef_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Uses
         params DSL array support","name":"array_params","parameters":{"type":"object","properties":{"tags":{"type":"array","description":"List
-        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false},"strict":false}],"top_p":0.95,"usage":{"input_tokens":311,"input_tokens_details":{"cached_tokens":128},"output_tokens":350,"output_tokens_details":{"reasoning_tokens":336},"total_tokens":661,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":11293500,"context_details":{"input_tokens":311,"output_tokens":353}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Tue, 10 Nov 2026 17:44:58 GMT
+        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false},"strict":false}],"top_p":0.95,"usage":{"input_tokens":311,"input_tokens_details":{"cached_tokens":128},"output_tokens":317,"output_tokens_details":{"reasoning_tokens":303},"total_tokens":628,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":10468500,"context_details":{"input_tokens":311,"output_tokens":321}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Fri, 13 Nov 2026 21:32:14 GMT
 recorded_with: VCR 6.4.1

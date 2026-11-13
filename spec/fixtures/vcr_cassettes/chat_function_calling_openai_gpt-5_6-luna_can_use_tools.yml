@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:30:35 GMT
+      - Fri, 13 Nov 2026 21:22:04 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -47,11 +47,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1179'
+      - '879'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -78,22 +78,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0fff6e53bc712f30016af354baa11487d2a093c6968628c6e0",
+          "id": "resp_0d32431b11507f83016af77f7bec0087d2b2d4d7d65c0dff10",
           "object": "response",
-          "created_at": 1794331834,
+          "created_at": 1794604923,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794331835,
+          "completed_at": 1794604924,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -101,11 +102,11 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "fc_0fff6e53bc712f30016af354bb6ffc87d29fcb93f3cc623217",
+              "id": "fc_0d32431b11507f83016af77f7c699c87d298ac1f08628c1b82",
               "type": "function_call",
               "status": "completed",
               "arguments": "{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}",
-              "call_id": "call_Qw39dJbZKUuUS3bRmYuKzPbQ",
+              "call_id": "call_nvf5hsZPQh4vjcCVPL798lXf",
               "name": "weather"
             }
           ],
@@ -195,14 +196,14 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:30:35 GMT
+  recorded_at: Fri, 13 Nov 2026 21:22:04 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"type":"function_call","call_id":"call_Qw39dJbZKUuUS3bRmYuKzPbQ","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call_Qw39dJbZKUuUS3bRmYuKzPbQ","output":"Current
+        the weather in Berlin? (52.5200, 13.4050)"},{"type":"function_call","call_id":"call_nvf5hsZPQh4vjcCVPL798lXf","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call_nvf5hsZPQh4vjcCVPL798lXf","output":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -224,7 +225,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:30:37 GMT
+      - Fri, 13 Nov 2026 21:22:05 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -244,11 +245,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1149'
+      - '835'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -275,22 +276,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_035a144a89704954016af354bbe6cc87d287012d5bbb81cfea",
+          "id": "resp_02d7fee874b1b2fb016af77f7ce34087d2a5c619eb01d20e50",
           "object": "response",
-          "created_at": 1794331835,
+          "created_at": 1794604924,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794331836,
+          "completed_at": 1794604925,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -298,7 +300,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_035a144a89704954016af354bcb2a887d2a8a81261bfa3c8c5",
+              "id": "msg_02d7fee874b1b2fb016af77f7d660487d29b1db923d3e3e442",
               "type": "message",
               "status": "completed",
               "content": [
@@ -399,5 +401,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:30:37 GMT
+  recorded_at: Fri, 13 Nov 2026 21:22:05 GMT
 recorded_with: VCR 6.4.1

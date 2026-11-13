@@ -26,22 +26,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Req-Cost-Time:
-      - '2623'
       Resp-Start-Time:
-      - '1794332214480'
-      Date:
-      - Tue, 10 Nov 2026 17:36:51 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Req-Arrive-Time:
-      - '1794332211856'
+      - '1794605095512'
       X-Envoy-Upstream-Service-Time:
-      - '2620'
+      - '1438'
       Server:
       - istio-envoy
+      Content-Type:
+      - application/json; charset=utf-8
+      Req-Cost-Time:
+      - '1442'
+      Date:
+      - Fri, 13 Nov 2026 21:24:53 GMT
       Access-Control-Allow-Origin:
       - ''
+      Req-Arrive-Time:
+      - '1794605094070'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -49,25 +49,16 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"role":"assistant","content":"","reasoning_content":"Okay,
-        let''s see. The user wants me to call the any_of_params function for a task
-        called \"Review PR\" with status \"pending\" and then report the result.\n\nFirst,
-        I need to check the function definition. The function is named any_of_params
-        and it takes two parameters: task and status. The task is a string, and the
-        status is an optional parameter that can be either \"pending\", \"done\",
-        or null. The anyOf in the status parameter means that it can be one of those
-        three options.\n\nThe user specified the task as \"Review PR\" and the status
-        as \"pending\". Both are required parameters according to the schema. Since
-        \"pending\" is one of the allowed enum values, this should be valid. \n\nI
-        need to structure the tool call correctly. The function name is any_of_params,
-        and the arguments should include both task and status. The status here is
-        a string, so I don''t need to use null. \n\nWait, the user said \"with status
-        ''pending''\". So the arguments should be {\"task\": \"Review PR\", \"status\":
-        \"pending\"}. That''s straightforward. \n\nI don''t see any issues here. The
-        parameters match the required fields, and the status is a valid enum value.
-        So the tool call should be correct. Let me make sure I''m not missing any
-        additional properties. The additionalProperties is set to false, so only task
-        and status are allowed. \n\nYes, that''s all. So the JSON object for the tool
-        call will be properly formatted with those arguments.\n","tool_calls":[{"type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
-        \"Review PR\", \"status\": \"pending\"}"},"id":"c7qHYR3stEj9vSeWw4Zzcac9e0nY4yEQ"}]}}],"created":1794332214,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":346,"prompt_tokens":223,"total_tokens":569,"prompt_tokens_details":{"cached_tokens":51}},"id":"chatcmpl-K6pw7NwHBQvtbQfBKM3HhjPRi8MwtUGh","timings":{"cache_n":51,"prompt_n":172,"prompt_ms":42.305,"prompt_per_token_ms":0.24595930232558139,"prompt_per_second":4065.713272662806,"predicted_n":346,"predicted_ms":2558.098,"predicted_per_token_ms":7.414776811594203,"predicted_per_second":134.86582609423095}}'
-  recorded_at: Tue, 10 Nov 2026 17:36:54 GMT
+        the user wants me to call the any_of_params function for a task called \"Review
+        PR\" with status \"pending\". Let me check the function definition again.
+        The function requires ''task'' and ''status'' parameters. The status can be
+        either \"pending\", \"done\", or null. Since the user specified \"pending\",
+        that''s valid. I need to structure the JSON arguments correctly. The task
+        is \"Review PR\", status is \"pending\". So the tool call should have name
+        \"any_of_params\" and the arguments as a JSON object with those values. Let
+        me make sure there are no additional properties allowed. The function''s additionalProperties
+        is set to false, so only task and status are allowed. Everything looks good.
+        I''ll format the tool call accordingly.\n","tool_calls":[{"type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
+        \"Review PR\", \"status\": \"pending\"}"},"id":"NVSFR1H0hnfFH2YdiE8dRrSztgLtGV7Y"}]}}],"created":1794605095,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":188,"prompt_tokens":223,"total_tokens":411,"prompt_tokens_details":{"cached_tokens":222}},"id":"chatcmpl-GyWdtZhvl1kNSXlZw2RMtOetOLjMJfU2","timings":{"cache_n":222,"prompt_n":1,"prompt_ms":8.194,"prompt_per_token_ms":8.194,"prompt_per_second":122.04051745179399,"predicted_n":188,"predicted_ms":1375.646,"predicted_per_token_ms":7.356395721925133,"predicted_per_second":135.93613473233665}}'
+  recorded_at: Fri, 13 Nov 2026 21:24:55 GMT
 recorded_with: VCR 6.4.1

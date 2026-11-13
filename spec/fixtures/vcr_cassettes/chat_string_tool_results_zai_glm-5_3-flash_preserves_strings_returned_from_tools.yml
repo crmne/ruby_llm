@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:52:11 GMT
+      - Fri, 13 Nov 2026 21:38:15 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -38,7 +38,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - 60895b95efa652a699eb6e35340c040e
+      - c8039ee944f1b5a422ab5d54ad50a0be
       Vary:
       - Accept-Encoding
       - Access-Control-Request-Headers
@@ -49,26 +49,26 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 20261111015207a334155a4ce94d8f
+      - 20261114053811b93a17b16f1d44b6
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":"","reasoning_content":"The
         user wants me to process the query \"test data\" using the content_returning
-        function. This is a simple, single tool call with no dependencies.","role":"assistant","tool_calls":[{"function":{"arguments":"{\"query\":\"test
-        data\"}","name":"content_returning"},"id":"call_-7086079143657334551","index":0,"type":"function"}]}}],"created":1794333131,"id":"20261111015207a334155a4ce94d8f","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261111015207a334155a4ce94d8f","usage":{"completion_tokens":45,"completion_tokens_details":{"reasoning_tokens":31},"prompt_tokens":179,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":224}}'
-  recorded_at: Tue, 10 Nov 2026 17:52:11 GMT
+        tool. Let me call it.","role":"assistant","tool_calls":[{"function":{"arguments":"{\"query\":\"test
+        data\"}","name":"content_returning"},"id":"call_-7080014649835381666","index":0,"type":"function"}]}}],"created":1794605895,"id":"20261114053811b93a17b16f1d44b6","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261114053811b93a17b16f1d44b6","usage":{"completion_tokens":38,"completion_tokens_details":{"reasoning_tokens":24},"prompt_tokens":179,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":217}}'
+  recorded_at: Fri, 13 Nov 2026 21:38:15 GMT
 - request:
     method: post
     uri: https://api.z.ai/api/paas/v4/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"glm-5.3-flash","messages":[{"role":"user","content":"Process
-        this query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"call_-7086079143657334551","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        this query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"call_-7080014649835381666","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
         data\"}"}}],"reasoning_content":"The user wants me to process the query \"test
-        data\" using the content_returning function. This is a simple, single tool
-        call with no dependencies."},{"role":"tool","content":"Processed: test data","tool_call_id":"call_-7086079143657334551"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        data\" using the content_returning tool. Let me call it."},{"role":"tool","content":"Processed:
+        test data","tool_call_id":"call_-7080014649835381666"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
         a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
     headers:
@@ -88,7 +88,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:52:16 GMT
+      - Fri, 13 Nov 2026 21:38:20 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -100,7 +100,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - 5c5675b63e3ed4f6ab37144f9671164b
+      - ed85560a7e14292c5417ce36f58786d4
       Vary:
       - Accept-Encoding
       - Access-Control-Request-Headers
@@ -111,14 +111,16 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 202611110152116f421daf46414312
+      - 202611140538158815fd483ee544f4
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"The
         query has been processed successfully. Here''s the result:\n\n**Input:** `test
-        data`\n**Output:** `Processed: test data`\n\nIs there anything else you''d
-        like me to process?","role":"assistant"}}],"created":1794333136,"id":"202611110152116f421daf46414312","model":"glm-5.3-flash","object":"chat.completion","request_id":"202611110152116f421daf46414312","usage":{"completion_tokens":41,"completion_tokens_details":{"reasoning_tokens":0},"prompt_tokens":232,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":273}}'
-  recorded_at: Tue, 10 Nov 2026 17:52:16 GMT
+        data`\n**Output:** `Processed: test data`\n\nThe content_returning tool processed
+        the query as expected. Is there anything else you''d like me to process?","reasoning_content":"The
+        tool returned the processed result: \"Processed: test data\". Let me report
+        this back to the user.","role":"assistant"}}],"created":1794605900,"id":"202611140538158815fd483ee544f4","model":"glm-5.3-flash","object":"chat.completion","request_id":"202611140538158815fd483ee544f4","usage":{"completion_tokens":74,"completion_tokens_details":{"reasoning_tokens":22},"prompt_tokens":225,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":299}}'
+  recorded_at: Fri, 13 Nov 2026 21:38:20 GMT
 recorded_with: VCR 6.4.1

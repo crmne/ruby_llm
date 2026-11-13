@@ -30,7 +30,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 10 Nov 2026 17:34:02 GMT
+      - Fri, 13 Nov 2026 21:24:23 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -40,22 +40,22 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - b6d1f3fe6b11e269d369776babc853a5
+      - 9ed6e49c50d99104fbdddc614f2a7f7d
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 e81f744446bd52808cedb13043e0caf6.cloudfront.net (CloudFront)
+      - 1.1 507b6d92cb49353a8492fe5cda598abe.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P4
+      - TXL52-P2
       X-Amz-Cf-Id:
-      - LS5cemeX1IrFyHFoBjl46Y3uCW7xzVxuJBLZcbHL9DXmYyyGn6wvaA==
+      - "-eTr3yspakB-OC6ST6HGfBAHo600lWevbVu5taU7njvdusPIzztQEA=="
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"53778fb4-ea40-4dd0-a486-a6ac11c5e6e2","object":"response","created_at":1794332042,"status":"completed","background":false,"completed_at":1794332043,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[{"type":"reasoning","id":"f18ab8ca-351b-481f-a2cf-e03b089d5022","status":"completed","content":[{"type":"reasoning_text","text":"We
-        need answer just number. 4. Need comply no extra."}],"summary":[],"encrypted_content":"53778fb4-ea40-4dd0-a486-a6ac11c5e6e2-0"},{"type":"message","id":"9d624118-b5b9-4285-b0b3-307bbe98819d","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"4"}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":42,"input_tokens_details":{"cached_tokens":0},"output_tokens":16,"output_tokens_details":{"reasoning_tokens":14},"total_tokens":58},"user":null,"metadata":{}}'
-  recorded_at: Tue, 10 Nov 2026 17:34:03 GMT
+      string: '{"id":"586645f4-a1aa-4b2e-9bcb-33f1a904b5f8","object":"response","created_at":1794605063,"status":"completed","background":false,"completed_at":1794605063,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[{"type":"reasoning","id":"5a18cd88-441e-43f8-98c6-314ef08e1d23","status":"completed","content":[{"type":"reasoning_text","text":"We
+        need answer just number. 4. Need obey. \n"}],"summary":[],"encrypted_content":"586645f4-a1aa-4b2e-9bcb-33f1a904b5f8-0"},{"type":"message","id":"4e036d7e-c5a0-4b0d-83f7-d3b67e19ba24","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"4"}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":42,"input_tokens_details":{"cached_tokens":0},"output_tokens":15,"output_tokens_details":{"reasoning_tokens":13},"total_tokens":57},"user":null,"metadata":{}}'
+  recorded_at: Fri, 13 Nov 2026 21:24:23 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/responses
@@ -63,7 +63,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-v4-flash","input":[{"role":"user","content":"What
         is 2 + 2? Just the number."},{"type":"reasoning","content":[{"type":"reasoning_text","text":"We
-        need answer just number. 4. Need comply no extra."}]},{"role":"assistant","content":[{"type":"output_text","text":"4"}],"phase":"final_answer"},{"role":"user","content":"Multiply
+        need answer just number. 4. Need obey. \n"}]},{"role":"assistant","content":[{"type":"output_text","text":"4"}],"phase":"final_answer"},{"role":"user","content":"Multiply
         that answer by 3. Just the number."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
@@ -88,7 +88,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 10 Nov 2026 17:34:03 GMT
+      - Fri, 13 Nov 2026 21:24:24 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -98,21 +98,21 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 51f16b62d3f3136b2061bdd0bc75edb5
+      - 89f23bc76758d1dca3d87b94db65e1f5
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 97d0bbf6e879b5cbfab87acc7ccd4218.cloudfront.net (CloudFront)
+      - 1.1 218d97cc6a3d6809eda80d653d8870c8.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P2
+      - TXL52-P3
       X-Amz-Cf-Id:
-      - V2pu62hFieRKp__YnbHQjIs19kXVFVXEIZq2NnrVWvnjG7UI_lzJbQ==
+      - PibBM5BECgG3BoS2Ol6B4ja0yFnDLesfn8veVpHcjg9u0iI_jpADww==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"7502b2ad-02b9-400d-86b4-f168c23c8026","object":"response","created_at":1794332043,"status":"completed","background":false,"completed_at":1794332044,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[{"type":"reasoning","id":"087a2b0c-6e09-4939-815f-c3e51bd6ab4f","status":"completed","content":[{"type":"reasoning_text","text":"We
-        need answer just number. Need interpret \"that answer\" previous 4 times 3
-        =12. Just number."}],"summary":[],"encrypted_content":"7502b2ad-02b9-400d-86b4-f168c23c8026-0"},{"type":"message","id":"973d512d-cfe5-49cb-af3d-a84a1d0ab83d","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"12"}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":58,"input_tokens_details":{"cached_tokens":0},"output_tokens":26,"output_tokens_details":{"reasoning_tokens":24},"total_tokens":84},"user":null,"metadata":{}}'
-  recorded_at: Tue, 10 Nov 2026 17:34:04 GMT
+      string: '{"id":"e67b3eaf-c96e-406a-be08-5f6d2b6ec143","object":"response","created_at":1794605064,"status":"completed","background":false,"completed_at":1794605064,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[{"type":"reasoning","id":"fde31d0e-a6e6-4de3-bcb8-f5844ec9c3e4","status":"completed","content":[{"type":"reasoning_text","text":"We
+        need answer just number. Need parse: previous answer 4. Multiply by 3 =12.
+        Just number."}],"summary":[],"encrypted_content":"e67b3eaf-c96e-406a-be08-5f6d2b6ec143-0"},{"type":"message","id":"97162d5b-bc99-435d-9eb1-cd8229d4b2e4","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"12"}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":58,"input_tokens_details":{"cached_tokens":0},"output_tokens":26,"output_tokens_details":{"reasoning_tokens":24},"total_tokens":84},"user":null,"metadata":{}}'
+  recorded_at: Fri, 13 Nov 2026 21:24:24 GMT
 recorded_with: VCR 6.4.1

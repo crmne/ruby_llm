@@ -27,16 +27,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:43:41 GMT
+      - Fri, 13 Nov 2026 21:30:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
       Server:
       - cloudflare
       X-Ratelimit-Limit:
@@ -44,28 +41,31 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1794332622'
+      - '1794605449'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Access-Control-Allow-Origin:
       - "*"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"background":false,"completed_at":1794332620,"created_at":1794332620,"error":null,"frequency_penalty":0,"id":"resp_<X_REQUEST_ID>","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"arguments":"{\"task\":\"Review
-        PR\",\"status\":\"pending\"}","call_id":"call_lH1R6Laxvsi2HnEG13yff7fj","id":"fc_ef25ba86-d2dd-4a41-af75-e2002ef29c4f","name":"any_of_params","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"any_of_params","description":"Uses
+      string: '{"background":false,"completed_at":1794605447,"created_at":1794605447,"error":null,"frequency_penalty":0,"id":"resp_d2610911-261a-40b7-b0dc-4db745381102","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"arguments":"{\"task\":\"Review
+        PR\",\"status\":\"pending\"}","call_id":"call_OzstTTUcajBrV2UHzDe9zb6z","id":"fc_229d7dce-86e2-460a-a2d3-2fd9674ae6dd","name":"any_of_params","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"any_of_params","description":"Uses
         params DSL any_of support","parameters":{"additionalProperties":false,"properties":{"status":{"anyOf":[{"enum":["pending","done"],"type":"string"},{"type":"null"}],"description":"Optional
         task status"},"task":{"description":"Task description","type":"string"}},"required":["task","status"],"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00002,"output_cost":0.00003,"total_cost":0.00005},"input_tokens":111,"input_tokens_details":{"cached_tokens":0},"output_tokens":24,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":135},"user":null}
 
         '
-  recorded_at: Tue, 10 Nov 2026 17:43:41 GMT
+  recorded_at: Fri, 13 Nov 2026 21:30:48 GMT
 recorded_with: VCR 6.4.1

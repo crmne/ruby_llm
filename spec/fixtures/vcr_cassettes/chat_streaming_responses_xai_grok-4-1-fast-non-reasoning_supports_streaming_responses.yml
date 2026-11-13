@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:31:51 GMT
+      - Fri, 13 Nov 2026 21:22:51 GMT
       Content-Type:
       - text/event-stream
       Transfer-Encoding:
@@ -54,7 +54,7 @@ http_interactions:
       X-Watermark:
       - 'false'
       Traceparent:
-      - 00-9705932ed0499715524ce5133ac2b835-7a3d06cd00041912-01
+      - 00-68e72a1edbcb42e71cac8786bfb6e948-ff5c23790000fde8-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -71,74 +71,71 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: response.created
-        data: {"sequence_number":0,"type":"response.created","response":{"created_at":1794331911,"completed_at":null,"id":"<X_REQUEST_ID>","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":null,"summary":null},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":null,"user":null,"incomplete_details":null,"status":"in_progress","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}}
+        data: {"sequence_number":0,"type":"response.created","response":{"created_at":1794604971,"completed_at":null,"id":"0b1972a2-0777-9308-98e6-822b52539406","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":null,"summary":null},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":null,"user":null,"incomplete_details":null,"status":"in_progress","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}}
 
         event: response.in_progress
-        data: {"sequence_number":1,"type":"response.in_progress","response":{"created_at":1794331911,"completed_at":null,"id":"<X_REQUEST_ID>","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":null,"summary":null},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":null,"user":null,"incomplete_details":null,"status":"in_progress","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}}
+        data: {"sequence_number":1,"type":"response.in_progress","response":{"created_at":1794604971,"completed_at":null,"id":"0b1972a2-0777-9308-98e6-822b52539406","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":null,"summary":null},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":null,"user":null,"incomplete_details":null,"status":"in_progress","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}}
 
         event: response.output_item.added
-        data: {"sequence_number":2,"type":"response.output_item.added","item":{"id":"rs_<X_REQUEST_ID>","summary":[],"type":"reasoning","status":"in_progress"},"output_index":0}
+        data: {"sequence_number":2,"type":"response.output_item.added","item":{"id":"rs_0b1972a2-0777-9308-98e6-822b52539406","summary":[],"type":"reasoning","status":"in_progress"},"output_index":0}
 
         event: response.reasoning_summary_part.added
-        data: {"sequence_number":3,"type":"response.reasoning_summary_part.added","item_id":"rs_<X_REQUEST_ID>","output_index":0,"part":{"text":"","type":"summary_text"},"summary_index":0}
+        data: {"sequence_number":3,"type":"response.reasoning_summary_part.added","item_id":"rs_0b1972a2-0777-9308-98e6-822b52539406","output_index":0,"part":{"text":"","type":"summary_text"},"summary_index":0}
 
         event: response.reasoning_summary_text.delta
-        data: {"sequence_number":4,"type":"response.reasoning_summary_text.delta","delta":"The user asked me to","item_id":"rs_<X_REQUEST_ID>","output_index":0,"summary_index":0}
+        data: {"sequence_number":4,"type":"response.reasoning_summary_text.delta","delta":"The user wants me to","item_id":"rs_0b1972a2-0777-9308-98e6-822b52539406","output_index":0,"summary_index":0}
 
         event: response.reasoning_summary_text.delta
-        data: {"sequence_number":5,"type":"response.reasoning_summary_text.delta","delta":" count from 1 to 3.","item_id":"rs_<X_REQUEST_ID>","output_index":0,"summary_index":0}
+        data: {"sequence_number":5,"type":"response.reasoning_summary_text.delta","delta":" count from 1 to 3.","item_id":"rs_0b1972a2-0777-9308-98e6-822b52539406","output_index":0,"summary_index":0}
 
         event: response.reasoning_summary_text.done
-        data: {"sequence_number":6,"type":"response.reasoning_summary_text.done","item_id":"rs_<X_REQUEST_ID>","output_index":0,"summary_index":0,"text":"The user asked me to count from 1 to 3."}
+        data: {"sequence_number":6,"type":"response.reasoning_summary_text.done","item_id":"rs_0b1972a2-0777-9308-98e6-822b52539406","output_index":0,"summary_index":0,"text":"The user wants me to count from 1 to 3."}
 
         event: response.reasoning_summary_part.done
-        data: {"sequence_number":7,"type":"response.reasoning_summary_part.done","item_id":"rs_<X_REQUEST_ID>","output_index":0,"part":{"text":"The user asked me to count from 1 to 3.","type":"summary_text"},"summary_index":0}
+        data: {"sequence_number":7,"type":"response.reasoning_summary_part.done","item_id":"rs_0b1972a2-0777-9308-98e6-822b52539406","output_index":0,"part":{"text":"The user wants me to count from 1 to 3.","type":"summary_text"},"summary_index":0}
 
         event: response.output_item.done
-        data: {"sequence_number":8,"type":"response.output_item.done","item":{"id":"rs_<X_REQUEST_ID>","summary":[{"text":"The user asked me to count from 1 to 3.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"YlBMM9umQsRg5IOT3+ajC/d44DACcvR+aUNtrkpZOf1+lwXotY0ZH4ujvmkIbuug5xLUePp/fKDl24//ZScwcDTLWKv9iNyI1P8cPDaKQhLJ1bGLM7rMI6NiWh/PRsoeuso0kcklQD7L8uML0+lyp14oGD8jn3qYLDt+MQlVjmq5C5cRxsMfksWVesRiuiSVdmcRVMSFlQAAeRCVx977O5hAHmvogLQw4iP/OC80neUWyIl4rCaPPBb1Q/LKj5pvkz02fAXg73RJMPrLTuFFooXWpff8oUCHMd26GXgsIdBw/h/Ua17V8hS8w1bZvydJxY+zrX5uAPm8zwyt8xg6wFeWlRdGO0yeeEnaOsOQrEeyqgW4yRoSk0KvS96ld4tvWg3RU8/ALWRnJVnDQasKyGtRIZoCpj9MeIpyK9CDrOs5as9eWENE31wFEkHBJHhJJjNcPbs8t47k2AYpwshhHDKb5VE5DJJpvX0y6iPnXOYPnUUIr1HOffzAJ4Mrxr0imQrG7I9/kUsg+20tegFSmd4mCvaP"},"output_index":0}
+        data: {"sequence_number":8,"type":"response.output_item.done","item":{"id":"rs_0b1972a2-0777-9308-98e6-822b52539406","summary":[{"text":"The user wants me to count from 1 to 3.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"u5cCWvfEScU0IR0tXSHJpGpgaYp6jzBmXzKI4OPwbbwztp9TuB+Yw6p1WvOJEARkAYiT21eN+Fw98RQtprbPSGJilztuN2Mor0MzZa5WA5cpVyVrzE/2rxN4g4v1bCJ3Hjptdz5SfNSZOlP1oOGdzkm8q4VvgdZwr8zE7s9qYG4d1FMEOuOh5UOCzLrTPHvAGZ8GXxnLhYzsah6TA6RscP1Eew3rWz7QoMdxgZaTi2WHziCgmojNJvbYl5W1R81erRmMyl89Cctok+6wwwfTeQs70/nuf9eO/AGQEL/AnrTTnAlC45DK17Jb8QzZS1+tlctzgb4nPDb5LN0ELwHnW87mGw17VCvO5gYom35OGJaQkER2Zx1M7bV+d8AZ1UmKC9AypLMjGlbL2XUP1VHB1CIhX76dzNm5waib3tMMLH0iDJwbi5bGuJp8JtvRntNxeYMe3oJaJFyWTc211UARmzO5H3qRcRHJIdd7Ze6Tmg"},"output_index":0}
 
         event: response.output_item.added
-        data: {"sequence_number":9,"type":"response.output_item.added","item":{"content":[],"id":"msg_<X_REQUEST_ID>","role":"assistant","type":"message","status":"in_progress"},"output_index":1}
+        data: {"sequence_number":9,"type":"response.output_item.added","item":{"content":[],"id":"msg_0b1972a2-0777-9308-98e6-822b52539406","role":"assistant","type":"message","status":"in_progress"},"output_index":1}
 
         event: response.content_part.added
-        data: {"sequence_number":10,"type":"response.content_part.added","content_index":0,"item_id":"msg_<X_REQUEST_ID>","output_index":1,"part":{"type":"output_text","text":"","logprobs":[],"annotations":[]}}
+        data: {"sequence_number":10,"type":"response.content_part.added","content_index":0,"item_id":"msg_0b1972a2-0777-9308-98e6-822b52539406","output_index":1,"part":{"type":"output_text","text":"","logprobs":[],"annotations":[]}}
 
         event: response.output_text.delta
-        data: {"sequence_number":11,"type":"response.output_text.delta","content_index":0,"delta":"1","item_id":"msg_<X_REQUEST_ID>","output_index":1,"logprobs":[]}
+        data: {"sequence_number":11,"type":"response.output_text.delta","content_index":0,"delta":"1","item_id":"msg_0b1972a2-0777-9308-98e6-822b52539406","output_index":1,"logprobs":[]}
 
         event: response.output_text.delta
-        data: {"sequence_number":12,"type":"response.output_text.delta","content_index":0,"delta":",","item_id":"msg_<X_REQUEST_ID>","output_index":1,"logprobs":[]}
+        data: {"sequence_number":12,"type":"response.output_text.delta","content_index":0,"delta":",","item_id":"msg_0b1972a2-0777-9308-98e6-822b52539406","output_index":1,"logprobs":[]}
 
         event: response.output_text.delta
-        data: {"sequence_number":13,"type":"response.output_text.delta","content_index":0,"delta":" ","item_id":"msg_<X_REQUEST_ID>","output_index":1,"logprobs":[]}
+        data: {"sequence_number":13,"type":"response.output_text.delta","content_index":0,"delta":" ","item_id":"msg_0b1972a2-0777-9308-98e6-822b52539406","output_index":1,"logprobs":[]}
 
         event: response.output_text.delta
-        data: {"sequence_number":14,"type":"response.output_text.delta","content_index":0,"delta":"2","item_id":"msg_<X_REQUEST_ID>","output_index":1,"logprobs":[]}
+        data: {"sequence_number":14,"type":"response.output_text.delta","content_index":0,"delta":"2","item_id":"msg_0b1972a2-0777-9308-98e6-822b52539406","output_index":1,"logprobs":[]}
 
         event: response.output_text.delta
-        data: {"sequence_number":15,"type":"response.output_text.delta","content_index":0,"delta":",","item_id":"msg_<X_REQUEST_ID>","output_index":1,"logprobs":[]}
+        data: {"sequence_number":15,"type":"response.output_text.delta","content_index":0,"delta":",","item_id":"msg_0b1972a2-0777-9308-98e6-822b52539406","output_index":1,"logprobs":[]}
 
         event: response.output_text.delta
-        data: {"sequence_number":16,"type":"response.output_text.delta","content_index":0,"delta":" ","item_id":"msg_<X_REQUEST_ID>","output_index":1,"logprobs":[]}
+        data: {"sequence_number":16,"type":"response.output_text.delta","content_index":0,"delta":" ","item_id":"msg_0b1972a2-0777-9308-98e6-822b52539406","output_index":1,"logprobs":[]}
 
         event: response.output_text.delta
-        data: {"sequence_number":17,"type":"response.output_text.delta","content_index":0,"delta":"3","item_id":"msg_<X_REQUEST_ID>","output_index":1,"logprobs":[]}
-
-        event: response.output_text.delta
-        data: {"sequence_number":18,"type":"response.output_text.delta","content_index":0,"delta":".","item_id":"msg_<X_REQUEST_ID>","output_index":1,"logprobs":[]}
+        data: {"sequence_number":17,"type":"response.output_text.delta","content_index":0,"delta":"3","item_id":"msg_0b1972a2-0777-9308-98e6-822b52539406","output_index":1,"logprobs":[]}
 
         event: response.output_text.done
-        data: {"sequence_number":19,"type":"response.output_text.done","content_index":0,"item_id":"msg_<X_REQUEST_ID>","output_index":1,"text":"1, 2, 3.","logprobs":[]}
+        data: {"sequence_number":18,"type":"response.output_text.done","content_index":0,"item_id":"msg_0b1972a2-0777-9308-98e6-822b52539406","output_index":1,"text":"1, 2, 3","logprobs":[]}
 
         event: response.content_part.done
-        data: {"sequence_number":20,"type":"response.content_part.done","content_index":0,"item_id":"msg_<X_REQUEST_ID>","output_index":1,"part":{"type":"output_text","text":"1, 2, 3.","logprobs":[],"annotations":[]}}
+        data: {"sequence_number":19,"type":"response.content_part.done","content_index":0,"item_id":"msg_0b1972a2-0777-9308-98e6-822b52539406","output_index":1,"part":{"type":"output_text","text":"1, 2, 3","logprobs":[],"annotations":[]}}
 
         event: response.output_item.done
-        data: {"sequence_number":21,"type":"response.output_item.done","item":{"content":[{"type":"output_text","text":"1, 2, 3.","logprobs":[],"annotations":[]}],"id":"msg_<X_REQUEST_ID>","role":"assistant","type":"message","status":"completed"},"output_index":1}
+        data: {"sequence_number":20,"type":"response.output_item.done","item":{"content":[{"type":"output_text","text":"1, 2, 3","logprobs":[],"annotations":[]}],"id":"msg_0b1972a2-0777-9308-98e6-822b52539406","role":"assistant","type":"message","status":"completed"},"output_index":1}
 
         event: response.completed
-        data: {"sequence_number":22,"type":"response.completed","response":{"created_at":1794331911,"completed_at":1794331914,"id":"<X_REQUEST_ID>","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_<X_REQUEST_ID>","summary":[{"text":"The user asked me to count from 1 to 3.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"YlBMM9umQsRg5IOT3+ajC/d44DACcvR+aUNtrkpZOf1+lwXotY0ZH4ujvmkIbuug5xLUePp/fKDl24//ZScwcDTLWKv9iNyI1P8cPDaKQhLJ1bGLM7rMI6NiWh/PRsoeuso0kcklQD7L8uML0+lyp14oGD8jn3qYLDt+MQlVjmq5C5cRxsMfksWVesRiuiSVdmcRVMSFlQAAeRCVx977O5hAHmvogLQw4iP/OC80neUWyIl4rCaPPBb1Q/LKj5pvkz02fAXg73RJMPrLTuFFooXWpff8oUCHMd26GXgsIdBw/h/Ua17V8hS8w1bZvydJxY+zrX5uAPm8zwyt8xg6wFeWlRdGO0yeeEnaOsOQrEeyqgW4yRoSk0KvS96ld4tvWg3RU8/ALWRnJVnDQasKyGtRIZoCpj9MeIpyK9CDrOs5as9eWENE31wFEkHBJHhJJjNcPbs8t47k2AYpwshhHDKb5VE5DJJpvX0y6iPnXOYPnUUIr1HOffzAJ4Mrxr0imQrG7I9/kUsg+20tegFSmd4mCvaP"},{"content":[{"type":"output_text","text":"1, 2, 3.","logprobs":[],"annotations":[]}],"id":"msg_<X_REQUEST_ID>","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":null,"summary":null},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":199,"input_tokens_details":{"cached_tokens":128},"output_tokens":165,"output_tokens_details":{"reasoning_tokens":157},"total_tokens":364,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":5268500,"context_details":{"input_tokens":199,"output_tokens":173}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}}
+        data: {"sequence_number":21,"type":"response.completed","response":{"created_at":1794604971,"completed_at":1794604973,"id":"0b1972a2-0777-9308-98e6-822b52539406","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_0b1972a2-0777-9308-98e6-822b52539406","summary":[{"text":"The user wants me to count from 1 to 3.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"u5cCWvfEScU0IR0tXSHJpGpgaYp6jzBmXzKI4OPwbbwztp9TuB+Yw6p1WvOJEARkAYiT21eN+Fw98RQtprbPSGJilztuN2Mor0MzZa5WA5cpVyVrzE/2rxN4g4v1bCJ3Hjptdz5SfNSZOlP1oOGdzkm8q4VvgdZwr8zE7s9qYG4d1FMEOuOh5UOCzLrTPHvAGZ8GXxnLhYzsah6TA6RscP1Eew3rWz7QoMdxgZaTi2WHziCgmojNJvbYl5W1R81erRmMyl89Cctok+6wwwfTeQs70/nuf9eO/AGQEL/AnrTTnAlC45DK17Jb8QzZS1+tlctzgb4nPDb5LN0ELwHnW87mGw17VCvO5gYom35OGJaQkER2Zx1M7bV+d8AZ1UmKC9AypLMjGlbL2XUP1VHB1CIhX76dzNm5waib3tMMLH0iDJwbi5bGuJp8JtvRntNxeYMe3oJaJFyWTc211UARmzO5H3qRcRHJIdd7Ze6Tmg"},{"content":[{"type":"output_text","text":"1, 2, 3","logprobs":[],"annotations":[]}],"id":"msg_0b1972a2-0777-9308-98e6-822b52539406","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":null,"summary":null},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":199,"input_tokens_details":{"cached_tokens":128},"output_tokens":150,"output_tokens_details":{"reasoning_tokens":143},"total_tokens":349,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":4893500,"context_details":{"input_tokens":199,"output_tokens":158}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}}
 
-  recorded_at: Tue, 10 Nov 2026 17:31:54 GMT
+  recorded_at: Fri, 13 Nov 2026 21:22:53 GMT
 recorded_with: VCR 6.4.1
 ...

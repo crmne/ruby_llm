@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:29:32 GMT
+      - Fri, 13 Nov 2026 21:21:44 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -47,11 +47,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1474'
+      - '1661'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -78,22 +78,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0ab2a1871e9b8b1c016af3547b57b887d2ac214276eb457317",
+          "id": "resp_0d2baf1147b02093016af77f66bf7087d2ab68fc3324809451",
           "object": "response",
-          "created_at": 1794331771,
+          "created_at": 1794604902,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794331772,
+          "completed_at": 1794604904,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -101,7 +102,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "tsc_0ab2a1871e9b8b1c016af3547bf23887d2bc69820f4026f457",
+              "id": "tsc_0d2baf1147b02093016af77f67915087d28b541188d5637d7e",
               "type": "tool_search_call",
               "status": "completed",
               "arguments": {
@@ -113,7 +114,7 @@ http_interactions:
               "execution": "server"
             },
             {
-              "id": "tso_0ab2a1871e9b8b1c016af3547c1f6887d283e68871520ad460",
+              "id": "tso_0d2baf1147b02093016af77f67ae9c87d2b99bb0c4bd0974c4",
               "type": "tool_search_output",
               "status": "completed",
               "call_id": null,
@@ -151,11 +152,11 @@ http_interactions:
               ]
             },
             {
-              "id": "fc_0ab2a1871e9b8b1c016af3547ca8c087d2890ad07c234bde6e",
+              "id": "fc_0d2baf1147b02093016af77f68348c87d28f3c10cf287f098c",
               "type": "function_call",
               "status": "completed",
               "arguments": "{\"email\":\"ada@example.com\"}",
-              "call_id": "call_hS5ol3Rb4LOr23v094nNNKdC",
+              "call_id": "call_Kc8wpyV6wmeccT026ZGjB1qW",
               "name": "customer_lookup",
               "namespace": "crm"
             }
@@ -254,17 +255,17 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:29:32 GMT
+  recorded_at: Fri, 13 Nov 2026 21:21:44 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.4","input":[{"role":"user","content":"Which plan is
-        the customer ada@example.com on? Use your tools."},{"id":"tsc_0ab2a1871e9b8b1c016af3547bf23887d2bc69820f4026f457","type":"tool_search_call","status":"completed","arguments":{"paths":["crm"]},"call_id":null,"execution":"server"},{"id":"tso_0ab2a1871e9b8b1c016af3547c1f6887d283e68871520ad460","type":"tool_search_output","status":"completed","call_id":null,"execution":"server","tools":[{"type":"namespace","description":"Customer
+        the customer ada@example.com on? Use your tools."},{"id":"tsc_0d2baf1147b02093016af77f67915087d28b541188d5637d7e","type":"tool_search_call","status":"completed","arguments":{"paths":["crm"]},"call_id":null,"execution":"server"},{"id":"tso_0d2baf1147b02093016af77f67ae9c87d2b99bb0c4bd0974c4","type":"tool_search_output","status":"completed","call_id":null,"execution":"server","tools":[{"type":"namespace","description":"Customer
         records","name":"crm","tools":[{"type":"function","defer_loading":true,"description":"Finds
         a customer by email","name":"customer_lookup","output_schema":null,"parameters":{"type":"object","properties":{"email":{"type":"string","description":"Customer
-        email"}},"required":["email"],"additionalProperties":false,"strict":true},"strict":false}]}]},{"id":"fc_0ab2a1871e9b8b1c016af3547ca8c087d2890ad07c234bde6e","type":"function_call","status":"completed","arguments":"{\"email\":\"ada@example.com\"}","call_id":"call_hS5ol3Rb4LOr23v094nNNKdC","name":"customer_lookup","namespace":"crm"},{"type":"function_call_output","call_id":"call_hS5ol3Rb4LOr23v094nNNKdC","output":"{\"email\":\"ada@example.com\",\"name\":\"Ada
+        email"}},"required":["email"],"additionalProperties":false,"strict":true},"strict":false}]}]},{"id":"fc_0d2baf1147b02093016af77f68348c87d28f3c10cf287f098c","type":"function_call","status":"completed","arguments":"{\"email\":\"ada@example.com\"}","call_id":"call_Kc8wpyV6wmeccT026ZGjB1qW","name":"customer_lookup","namespace":"crm"},{"type":"function_call_output","call_id":"call_Kc8wpyV6wmeccT026ZGjB1qW","output":"{\"email\":\"ada@example.com\",\"name\":\"Ada
         Lovelace\",\"plan\":\"Pro\"}"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"namespace","name":"crm","description":"Customer
         records","tools":[{"type":"function","name":"customer_lookup","description":"Finds
         a customer by email","parameters":{"type":"object","properties":{"email":{"type":"string","description":"Customer
@@ -286,7 +287,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:29:34 GMT
+      - Fri, 13 Nov 2026 21:21:45 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -306,11 +307,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1328'
+      - '723'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -337,22 +338,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0ab2a1871e9b8b1c016af3547ce6f487d2b79906aa05565619",
+          "id": "resp_0d2baf1147b02093016af77f687b8c87d28ffeca473cfe1a39",
           "object": "response",
-          "created_at": 1794331772,
+          "created_at": 1794604904,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794331773,
+          "completed_at": 1794604905,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -360,7 +362,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0ab2a1871e9b8b1c016af3547d8e9087d2819e64255287d1d6",
+              "id": "msg_0d2baf1147b02093016af77f69097487d2ae304eeb1acfea8d",
               "type": "message",
               "status": "completed",
               "content": [
@@ -468,5 +470,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:29:34 GMT
+  recorded_at: Fri, 13 Nov 2026 21:21:45 GMT
 recorded_with: VCR 6.4.1

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:11444/model/proxy/2/v1/chat/completions
+    uri: http://localhost:11444/model/proxy/4/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"smollm2-135m","messages":[{"role":"user","content":"filler
@@ -295,27 +295,27 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Resp-Start-Time:
+      - '1794608797748'
       Server:
       - istio-envoy
+      Req-Cost-Time:
+      - '37'
+      Req-Arrive-Time:
+      - '1794608797711'
+      X-Envoy-Upstream-Service-Time:
+      - '33'
+      Date:
+      - Fri, 13 Nov 2026 22:26:37 GMT
       Content-Type:
       - application/json
-      Req-Cost-Time:
-      - '41'
-      Req-Arrive-Time:
-      - '1794327864809'
-      Resp-Start-Time:
-      - '1794327864850'
-      X-Envoy-Upstream-Service-Time:
-      - '37'
-      Date:
-      - Tue, 10 Nov 2026 16:24:24 GMT
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-6ddb212a-eacf-47b3-bf16-5ca4c8e91720","object":"chat.completion","created":1794327864,"model":"smollm2-135m","choices":[{"index":0,"message":{"role":"assistant","content":"\nA
-        guest from strifeful, and","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":null},"logprobs":null,"finish_reason":"length","stop_reason":null,"token_ids":null,"routed_experts":null}],"service_tier":null,"system_fingerprint":"vllm-0.25.1-d87856d6","usage":{"prompt_tokens":2040,"total_tokens":2048,"completion_tokens":8,"prompt_tokens_details":{"cached_tokens":2032,"multimodal_tokens":null}},"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"metrics":null}'
-  recorded_at: Tue, 10 Nov 2026 16:24:24 GMT
+      string: '{"id":"chatcmpl-8d717277-7327-4e75-8435-d926b08b977d","object":"chat.completion","created":1794608797,"model":"smollm2-135m","choices":[{"index":0,"message":{"role":"assistant","content":"is
+        a jewelry?ker A speaks the","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":null},"logprobs":null,"finish_reason":"length","stop_reason":null,"token_ids":null,"routed_experts":null}],"service_tier":null,"system_fingerprint":"vllm-0.25.1-019fab29","usage":{"prompt_tokens":2040,"total_tokens":2048,"completion_tokens":8,"prompt_tokens_details":{"cached_tokens":16,"multimodal_tokens":null}},"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"metrics":null}'
+  recorded_at: Fri, 13 Nov 2026 22:26:37 GMT
 recorded_with: VCR 6.4.1

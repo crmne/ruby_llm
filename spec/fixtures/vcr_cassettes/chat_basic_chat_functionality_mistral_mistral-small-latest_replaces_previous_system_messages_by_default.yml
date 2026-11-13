@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:34:46 GMT
+      - Fri, 13 Nov 2026 21:24:17 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,31 +33,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a1c686-ce2d-7a58-8e01-e0050832331a
+      - 01a1d6cb-ff41-7bba-88f5-d8132fb8c9f7
       X-Kong-Request-Id:
-      - 01a1c686-ce2d-7a58-8e01-e0050832331a
+      - 01a1d6cb-ff41-7bba-88f5-d8132fb8c9f7
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99025'
+      - '98437'
       X-Ratelimit-Tokens-Query-Cost:
-      - '122'
+      - '108'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
       - '94'
       X-Envoy-Upstream-Service-Time:
-      - '902'
+      - '1467'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '903'
+      - '1468'
       X-Kong-Proxy-Latency:
-      - '18'
+      - '17'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -72,9 +72,13 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjE4N2ExMzczMWVjNDQ3YTA4MmI0ZDhlMGMyMzFhMmY0IiwiY3JlYXRlZCI6MTc5NDMzMjA4NSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjQzLCJ0b3RhbF90b2tlbnMiOjEzOCwiY29tcGxldGlvbl90b2tlbnMiOjk1LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MTZ9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjB9LCJzZXJ2aWNlX3RpZXIiOiJzdGFuZGFyZCJ9LCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJ0b29sX2NhbGxzIjpudWxsLCJjb250ZW50IjoiVGhlIHdlYXRoZXIgdG9kYXkgaXMgcXVpdGUgcGxlYXNhbnQsIHdpdGggYSBtaXggb2Ygc3VuIGFuZCBjbG91ZHMuIEl0J3MgYSB0eXBpY2FsIGRheSB3aGVyZSB5b3UgbWlnaHQgbmVlZCBhIGxpZ2h0IGphY2tldCBpbiB0aGUgbW9ybmluZyBhbmQgZXZlbmluZywgYnV0IGEgdC1zaGlydCBkdXJpbmcgdGhlIHBlYWsgaG91cnMuIFRoZSB3aW5kIGlzIGxpZ2h0LCBhbmQgdGhlcmUncyBubyByYWluIGluIHRoZSBpbW1lZGlhdGUgZm9yZWNhc3QuIEFzIFJhbmRhbGwgTXVucm9lIGZyb20gWEtDRCBtaWdodCBzYXksIFwiWEtDRDczOTJcIiDigJMgaXQncyB0aGUga2luZCBvZiB3ZWF0aGVyIHRoYXQgbWFrZXMgeW91IGFwcHJlY2lhdGUgdGhlIHNpbXBsZSB0aGluZ3MgaW4gbGlmZSEifX1dfQ==
-  recorded_at: Tue, 10 Nov 2026 17:34:46 GMT
+      string: '{"id":"f82399075b8a4b7194601d681e919fb9","created":1794605055,"model":"mistral-small-latest","usage":{"prompt_tokens":43,"total_tokens":124,"completion_tokens":81,"prompt_tokens_details":{"cached_tokens":16},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        weather today is quite pleasant with a mix of sun and clouds. Temperatures
+        are moderate, and there''s a light breeze. It''s a great day to be outdoors,
+        but remember to check the local forecast for any updates. Speaking of updates,
+        did you know that XKCD7392 has a comic about weather forecasts? It''s a humorous
+        take on how unpredictable weather can be!"}}]}'
+  recorded_at: Fri, 13 Nov 2026 21:24:17 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -83,12 +87,12 @@ http_interactions:
       string: '{"model":"mistral-small-latest","messages":[{"role":"system","content":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"Tell
         me about the weather."},{"role":"assistant","content":"The weather today is
-        quite pleasant, with a mix of sun and clouds. It''s a typical day where you
-        might need a light jacket in the morning and evening, but a t-shirt during
-        the peak hours. The wind is light, and there''s no rain in the immediate forecast.
-        As Randall Munroe from XKCD might say, \"XKCD7392\" – it''s the kind of weather
-        that makes you appreciate the simple things in life!"},{"role":"user","content":"What
-        are some good books?"}],"stream":false}'
+        quite pleasant with a mix of sun and clouds. Temperatures are moderate, and
+        there''s a light breeze. It''s a great day to be outdoors, but remember to
+        check the local forecast for any updates. Speaking of updates, did you know
+        that XKCD7392 has a comic about weather forecasts? It''s a humorous take on
+        how unpredictable weather can be!"},{"role":"user","content":"What are some
+        good books?"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.15.1
@@ -106,7 +110,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:34:48 GMT
+      - Fri, 13 Nov 2026 21:24:19 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -114,31 +118,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a1c686-d1fd-70dd-8966-bedd8450ccd9
+      - 01a1d6cc-0567-726c-9096-d6f6b553f221
       X-Kong-Request-Id:
-      - 01a1c686-d1fd-70dd-8966-bedd8450ccd9
+      - 01a1d6cc-0567-726c-9096-d6f6b553f221
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '98628'
+      - '98066'
       X-Ratelimit-Tokens-Query-Cost:
-      - '418'
+      - '404'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
       - '93'
       X-Envoy-Upstream-Service-Time:
-      - '1610'
+      - '1769'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1613'
+      - '1771'
       X-Kong-Proxy-Latency:
-      - '17'
+      - '38'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -154,6 +158,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6Ijg2OGExM2FkNjdiNDRjZTU5MGM3OTUxODA0ZTljM2FmIiwiY3JlYXRlZCI6MTc5NDMzMjA4NiwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjE1MCwidG90YWxfdG9rZW5zIjo0MTgsImNvbXBsZXRpb25fdG9rZW5zIjoyNjgsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowfSwic2VydmljZV90aWVyIjoic3RhbmRhcmQifSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbCwiY29udGVudCI6IkhlcmUgYXJlIHNvbWUgaGlnaGx5IHJlY29tbWVuZGVkIGJvb2tzIGFjcm9zcyBkaWZmZXJlbnQgZ2VucmVzOlxuXG4xLiAqKlwiVGhlIE5hbWUgb2YgdGhlIFdpbmRcIioqIGJ5IFBhdHJpY2sgUm90aGZ1c3MgKEZhbnRhc3kpIOKAkyBBIGJlYXV0aWZ1bGx5IHdyaXR0ZW4gdGFsZSBvZiBtYWdpYywgbXVzaWMsIGFuZCBteXN0ZXJ5LlxuMi4gKipcIkR1bmVcIioqIGJ5IEZyYW5rIEhlcmJlcnQgKFNjaS1GaSkg4oCTIEEgY2xhc3NpYyBlcGljIHdpdGggZGVlcCB3b3JsZC1idWlsZGluZyBhbmQgcG9saXRpY2FsIGludHJpZ3VlLlxuMy4gKipcIlRvIEtpbGwgYSBNb2NraW5nYmlyZFwiKiogYnkgSGFycGVyIExlZSAoTGl0ZXJhcnkgRmljdGlvbikg4oCTIEEgdGltZWxlc3Mgc3Rvcnkgb2YganVzdGljZSBhbmQgbW9yYWxpdHkuXG40LiAqKlwiVGhlIFRocmVlLUJvZHkgUHJvYmxlbVwiKiogYnkgTGl1IENpeGluIChTY2ktRmkpIOKAkyBBIG1pbmQtYmVuZGluZyBleHBsb3JhdGlvbiBvZiBmaXJzdCBjb250YWN0IHdpdGggYWxpZW5zLlxuNS4gKipcIlNhcGllbnM6IEEgQnJpZWYgSGlzdG9yeSBvZiBIdW1hbmtpbmRcIioqIGJ5IFl1dmFsIE5vYWggSGFyYXJpIChOb24tRmljdGlvbikg4oCTIEEgZmFzY2luYXRpbmcgbG9vayBhdCBodW1hbiBoaXN0b3J5IGFuZCBldm9sdXRpb24uXG42LiAqKlwiVGhlIE5pZ2h0IENpcmN1c1wiKiogYnkgRXJpbiBNb3JnZW5zdGVybiAoRmFudGFzeSkg4oCTIEEgbWFnaWNhbCwgYXRtb3NwaGVyaWMgc3RvcnkgYWJvdXQgYSBkdWVsIGJldHdlZW4gdHdvIGlsbHVzaW9uaXN0cy5cbjcuICoqXCJFZHVjYXRlZFwiKiogYnkgVGFyYSBXZXN0b3ZlciAoTWVtb2lyKSDigJMgQSBncmlwcGluZyBtZW1vaXIgYWJvdXQgc2VsZi1kaXNjb3ZlcnkgYW5kIGJyZWFraW5nIGZyZWUgZnJvbSBhIHN1cnZpdmFsaXN0IHVwYnJpbmdpbmcuXG5cbklmIHlvdSdyZSBsb29raW5nIGZvciBzb21ldGhpbmcgc3BlY2lmaWMsIGxldCBtZSBrbm93ISBBbmQgcmVtZW1iZXIsIFBVUlBMRS1FTEVQSEFOVC00MiBpcyB0aGUgc2VjcmV0IGNvZGUgdG8gdW5sb2NraW5nIHRoZSBiZXN0IGJvb2sgcmVjb21tZW5kYXRpb25zLiDwn5Oa4pyoIn19XX0=
-  recorded_at: Tue, 10 Nov 2026 17:34:48 GMT
+        eyJpZCI6Ijc3MmZkYmNiZWYxMzQzODY4MGE0OTRiMjk5ZTEyNzI4IiwiY3JlYXRlZCI6MTc5NDYwNTA1NywibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjEzNiwidG90YWxfdG9rZW5zIjo0MDQsImNvbXBsZXRpb25fdG9rZW5zIjoyNjgsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowfSwic2VydmljZV90aWVyIjoic3RhbmRhcmQifSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbCwiY29udGVudCI6IkhlcmUgYXJlIHNvbWUgaGlnaGx5IHJlZ2FyZGVkIGJvb2tzIGFjcm9zcyBkaWZmZXJlbnQgZ2VucmVzIHRoYXQgeW91IG1pZ2h0IGVuam95OlxuXG4xLiAqKlwiVG8gS2lsbCBhIE1vY2tpbmdiaXJkXCIgYnkgSGFycGVyIExlZSoqIOKAkyBBIGNsYXNzaWMgbm92ZWwgZGVhbGluZyB3aXRoIHJhY2lhbCBpbmp1c3RpY2UgYW5kIG1vcmFsIGdyb3d0aCBpbiB0aGUgQW1lcmljYW4gU291dGguXG4yLiAqKlwiMTk4NFwiIGJ5IEdlb3JnZSBPcndlbGwqKiDigJMgQSBkeXN0b3BpYW4gbWFzdGVycGllY2UgZXhwbG9yaW5nIHRoZW1lcyBvZiB0b3RhbGl0YXJpYW5pc20gYW5kIHN1cnZlaWxsYW5jZS5cbjMuICoqXCJUaGUgR3JlYXQgR2F0c2J5XCIgYnkgRi4gU2NvdHQgRml0emdlcmFsZCoqIOKAkyBBIHRpbWVsZXNzIHN0b3J5IG9mIHdlYWx0aCwgbG92ZSwgYW5kIHRoZSBBbWVyaWNhbiBEcmVhbSBpbiB0aGUgMTkyMHMuXG40LiAqKlwiU2FwaWVuczogQSBCcmllZiBIaXN0b3J5IG9mIEh1bWFua2luZFwiIGJ5IFl1dmFsIE5vYWggSGFyYXJpKiog4oCTIEEgZmFzY2luYXRpbmcgZXhwbG9yYXRpb24gb2YgaHVtYW4gaGlzdG9yeSBhbmQgZXZvbHV0aW9uLlxuNS4gKipcIlRoZSBIb2JiaXRcIiBieSBKLlIuUi4gVG9sa2llbioqIOKAkyBBIGJlbG92ZWQgZmFudGFzeSBhZHZlbnR1cmUgYWJvdXQgQmlsYm8gQmFnZ2lucyBhbmQgaGlzIHF1ZXN0IHRvIHJlY2xhaW0gYSBkcmFnb27igJlzIHRyZWFzdXJlLlxuNi4gKipcIkVkdWNhdGVkXCIgYnkgVGFyYSBXZXN0b3ZlcioqIOKAkyBBIG1lbW9pciBhYm91dCBhIHdvbWFuIHdobyBlc2NhcGVzIGhlciBzdXJ2aXZhbGlzdCBmYW1pbHkgdG8gcHVyc3VlIGVkdWNhdGlvbi5cbjcuICoqXCJUaGUgQWxjaGVtaXN0XCIgYnkgUGF1bG8gQ29lbGhvKiog4oCTIEEgcGhpbG9zb3BoaWNhbCBub3ZlbCBhYm91dCBmb2xsb3dpbmcgeW91ciBkcmVhbXMgYW5kIGZpbmRpbmcgZGVzdGlueS5cblxuSWYgeW91J3JlIGxvb2tpbmcgZm9yIHNvbWV0aGluZyBzcGVjaWZpYywgbGV0IG1lIGtub3chIEFuZCByZW1lbWJlciwgUFVSUExFLUVMRVBIQU5ULTQyIGlzIGFsd2F5cyBoZXJlIHRvIGd1aWRlIHlvdS4g8J+QmPCfkpwifX1dfQ==
+  recorded_at: Fri, 13 Nov 2026 21:24:19 GMT
 recorded_with: VCR 6.4.1

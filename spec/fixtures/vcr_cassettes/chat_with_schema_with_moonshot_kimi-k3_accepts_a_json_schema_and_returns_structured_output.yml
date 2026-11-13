@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:31:57 GMT
+      - Fri, 13 Nov 2026 21:22:30 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -42,7 +42,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - 9cb104c6-dd2c-11f1-bafc-00163e789b79
+      - 53b666bc-dfa8-11f1-a7be-00163e3fc041
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -54,7 +54,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - bdc18577269b0ae92820a22ce62f9139
+      - 665b66d6c588bf9ce15acd9a924b58d2
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -65,9 +65,8 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-2f2e0eb5cb682358bfa9489b3","object":"chat.completion","created":1794331911,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":
-        \"John\", \"age\": 30}","reasoning_content":"The user wants me to generate
-        a person named John who is 30 years old, and the response must be in JSON
-        format matching the schema with \"name\" and \"age\" properties."},"finish_reason":"stop"}],"usage":{"prompt_tokens":187,"completion_tokens":63,"total_tokens":250,"completion_tokens_details":{"reasoning_tokens":38},"prompt_tokens_details":{"cache_write_tokens":0}}}'
-  recorded_at: Tue, 10 Nov 2026 17:31:57 GMT
+      string: '{"id":"chatcmpl-32aa20f8-e527-917c-982f-af6a7e15ebdd","object":"chat.completion","created":1794604948,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"John\",\"age\":30}","reasoning_content":"The
+        user wants a JSON object with a person named John who is 30 years old. Simple
+        task."},"finish_reason":"stop"}],"usage":{"prompt_tokens":187,"completion_tokens":40,"total_tokens":227,"completion_tokens_details":{"reasoning_tokens":21},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Fri, 13 Nov 2026 21:22:30 GMT
 recorded_with: VCR 6.4.1
