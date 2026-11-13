@@ -201,6 +201,17 @@ passenger                                              # => {name: "Ada Lovelace
 ask("Connect your calendar", url: calendar.authorization_url)
 ```
 
+When the value to return is not what the person should read, such as a record's id, pass a Hash that gives each value its title. `ask` returns the value, and the question keeps the titles for whatever shows it:
+
+```ruby
+card = ask("Which card?", choices: { "17" => "River bank", "42" => "Money bank" }) # => "42"
+
+question.fields.first.choices       # => ["17", "42"]
+question.fields.first.choice_titles # => {"17" => "River bank", "42" => "Money bank"}
+```
+
+A value whose title is `nil` is shown as itself.
+
 `ask` returns `nil` when the person declines with `question.decline`. A note they give, `question.decline("I'll choose at the gate")`, follows the tool's result to the model, and a Hash follows it as JSON. A call can ask several questions, one after another, and each run asks them in the same order. Outside a chat, nothing can pause the call, so `ask` raises `RubyLLM::InputRequiredError`.
 
 [MCP servers]({% link _tools/mcp.md %}#questions-from-servers) ask their questions the same way, and you answer them the same way.

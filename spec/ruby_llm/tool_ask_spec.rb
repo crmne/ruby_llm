@@ -139,9 +139,33 @@ RSpec.describe RubyLLM::Tool do
     expect(result).to eq('Not connected')
   end
 
+  it 'offers choices under their titles, and returns the value of the one picked' do
+    asking(tool { "Card #{ask('Which card?', choices: { 17 => 'River bank', '42' => :'Money bank' })}" })
+
+    question = chat.pending_questions.sole
+    expect(question.fields.sole).to have_attributes(
+      type: 'string', choices: %w[17 42], choice_titles: { '17' => 'River bank', '42' => 'Money bank' }
+    )
+    expect { question.answer('Money bank') }
+      .to raise_error(ArgumentError, /"Money bank" is not one of the choices: 17 or 42/)
+
+    question.answer '42'
+    chat.complete
+
+    expect(result).to eq('Card 42')
+  end
+
+  it 'offers a choice without a title under its value' do
+    asking(tool { ask('Which card?', choices: { '17' => 'River bank', '42' => nil }) })
+
+    expect(chat.pending_questions.sole.fields.sole.choice_titles).to eq('17' => 'River bank', '42' => '42')
+  end
+
   it 'refuses choices with nothing to choose' do
-    expect { tool { ask('Pick one', choices: []) }.new.call }
-      .to raise_error(ArgumentError, 'choices: needs at least one choice.')
+    [[], {}].each do |choices|
+      expect { tool { ask('Pick one', choices:) }.new.call }
+        .to raise_error(ArgumentError, 'choices: needs at least one choice.')
+    end
   end
 
   it 'asks several questions one after another' do
