@@ -67,6 +67,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     statements = []
     allow(job).to receive(:fenced_by_run_claim).and_wrap_original do |original, &block|
       result = nil
+      touches.clear
       pattern = /\A(BEGIN|UPDATE "touched_chats")/i
       statements.concat(QueryHelpers.matching(pattern) { result = original.call(&block) })
       result
@@ -91,7 +92,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
     expect(writes).to eq([1, 1])
     expect(chat.reload.updated_at).to eq(answered_at)
-    expect(touches).to include(chat.id)
+    expect(touches).to eq([chat.id])
   end
 
   context 'when the message touches a column of its chat' do
