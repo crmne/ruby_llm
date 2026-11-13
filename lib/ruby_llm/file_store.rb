@@ -259,15 +259,16 @@ module RubyLLM
     # came from. With <tt>local: true</tt>, only converters that run on
     # this machine for free are tried.
     def text_with_digest(file, config:, local: false) # :nodoc:
-      unless file.digest
-        content = read(file.path)
-        file = StoredFile.new(**file.to_h, digest: FileStore.digest(content))
-        source = Attachment.new(StringIO.new(content), filename: file.filename)
-      end
+      text = cached_text(file) if file.digest
+      return [text, file.digest] if text
+
+      # Convert the bytes read here, and key the conversion by their own
+      # digest, so text never pairs with a version it didn't come from.
+      content = read(file.path)
+      file = StoredFile.new(**file.to_h, digest: FileStore.digest(content))
       text = cached_text(file)
       unless text
-        source ||= attachment(file.path, file:)
-        text = Converters.convert(source, config: config || RubyLLM.config, local:)
+        text = Converters.convert(attachment_of(file, content), config: config || RubyLLM.config, local:)
         cache_text(file, text) if text
       end
       [text, file.digest]
@@ -277,9 +278,7 @@ module RubyLLM
     # Raises FileNotFoundError when there is none.
     def attachment(path, file: nil)
       file ||= find(path)
-      generic = file.content_type.to_s.split(';').first.to_s.strip.casecmp?('application/octet-stream')
-      mime_type = file.content_type unless generic
-      Attachment.new(StringIO.new(read(file.path)), filename: file.filename, mime_type:)
+      attachment_of(file, read(file.path))
     end
 
     # Returns the converted text kept for +file+, or +nil+, from memory.
@@ -350,6 +349,14 @@ module RubyLLM
 
     def same_content?(file, content, digest)
       file.digest ? file.digest == digest : read(file.path).b == content
+    end
+
+    # A stored type is kept, unless it is the generic
+    # application/octet-stream, which leaves detection to the bytes.
+    def attachment_of(file, content)
+      generic = file.content_type.to_s.split(';').first.to_s.strip.casecmp?('application/octet-stream')
+      mime_type = file.content_type unless generic
+      Attachment.new(StringIO.new(content), filename: file.filename, mime_type:)
     end
 
     def cached_path?(file)
