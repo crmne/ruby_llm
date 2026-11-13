@@ -252,34 +252,52 @@ module RubyLLM
     #
     # See Configuration#file_converters for adding converters.
     def text(path, config: nil)
-      file = find(path)
-      cached = cached_text(file)
-      return cached if cached
+      text_with_digest(find(path), config:).first
+    end
 
-      Converters.convert(attachment(file.path, file:), config: config || RubyLLM.config).tap do |text|
+    # Returns the converted text of +file+ and the digest of the bytes it
+    # came from. With <tt>local: true</tt>, only converters that run on
+    # this machine for free are tried.
+    def text_with_digest(file, config:, local: false) # :nodoc:
+      text = cached_text(file) if file.digest
+      return [text, file.digest] if text
+
+      # Convert the bytes read here, and key the conversion by their own
+      # digest, so text never pairs with a version it didn't come from.
+      content = read(file.path)
+      file = StoredFile.new(**file.to_h, digest: FileStore.digest(content))
+      text = cached_text(file)
+      unless text
+        text = Converters.convert(attachment_of(file, content), config: config || RubyLLM.config, local:)
         cache_text(file, text) if text
       end
+      [text, file.digest]
     end
 
     # Returns the file at +path+ as an Attachment, to send it to a model.
     # Raises FileNotFoundError when there is none.
     def attachment(path, file: nil)
       file ||= find(path)
-      generic = file.content_type.to_s.split(';').first.to_s.strip.casecmp?('application/octet-stream')
-      mime_type = file.content_type unless generic
-      Attachment.new(StringIO.new(read(file.path)), filename: file.filename, mime_type:)
+      attachment_of(file, read(file.path))
     end
 
     # Returns the converted text kept for +file+, or +nil+, from memory.
+    # A file that can no longer be read has none.
     def cached_text(file) # :nodoc:
-      @texts_lock.synchronize { @texts[text_key(file)] }
+      return unless file.digest || cached_path?(file)
+
+      key = text_key(file)
+      @texts_lock.synchronize { @texts[key] }
+    rescue FileNotFoundError
+      nil
     end
 
     # Keeps +text+ as the conversion of +file+, in memory.
     def cache_text(file, text) # :nodoc:
+      key = text_key(file)
       @texts_lock.synchronize do
         @texts.delete(@texts.keys.first) if @texts.size >= CACHED_TEXTS
-        @texts[text_key(file)] = text
+        @texts[key] = text
       end
     end
 
@@ -333,8 +351,22 @@ module RubyLLM
       file.digest ? file.digest == digest : read(file.path).b == content
     end
 
+    # A stored type is kept, unless it is the generic
+    # application/octet-stream, which leaves detection to the bytes.
+    def attachment_of(file, content)
+      generic = file.content_type.to_s.split(';').first.to_s.strip.casecmp?('application/octet-stream')
+      mime_type = file.content_type unless generic
+      Attachment.new(StringIO.new(content), filename: file.filename, mime_type:)
+    end
+
+    def cached_path?(file)
+      @texts_lock.synchronize do
+        @texts.each_key.any? { |path, type| path == file.path && type == file.content_type }
+      end
+    end
+
     def text_key(file)
-      [file.content_type, file.digest || [file.path, file.byte_size, file.updated_at]]
+      [file.path, file.content_type, file.digest || FileStore.digest(read(file.path))]
     end
   end
 end

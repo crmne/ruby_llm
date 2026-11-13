@@ -93,6 +93,25 @@ RSpec.describe RubyLLM::FileStore do
     it_behaves_like 'a file store'
     it_behaves_like 'a file store that writes under its lock'
 
+    it 'keeps a stored type when converting a file that has no digest yet' do
+      config = RubyLLM::Configuration.new
+      config.file_converters['application/x-subrip'] = ->(attachment) { "Converted: #{attachment.content}" }
+      stored = store.write('captions', 'Hello', content_type: 'application/x-subrip')
+      undigested = RubyLLM::StoredFile.new(**stored.to_h, digest: nil)
+
+      expect(store.text_with_digest(undigested, config:)).to eq(['Converted: Hello', RubyLLM::FileStore.digest('Hello')])
+    end
+
+    it 'pairs a conversion with the bytes it read, not the digest it was handed' do
+      config = RubyLLM::Configuration.new
+      config.file_converters['application/x-subrip'] = ->(attachment) { "Converted: #{attachment.content}" }
+      old = store.write('captions', 'Old', content_type: 'application/x-subrip')
+      store.write('captions', 'New', content_type: 'application/x-subrip')
+
+      expect(store.text_with_digest(old, config:)).to eq(['Converted: New', RubyLLM::FileStore.digest('New')])
+      expect(store.cached_text(old)).to be_nil
+    end
+
     it 'converts the same bytes again once they are stored with another type' do
       config = RubyLLM::Configuration.new
       config.file_converters['application/x-subrip'] = ->(attachment) { "Converted: #{attachment.content}" }

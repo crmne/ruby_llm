@@ -585,6 +585,112 @@ RSpec.describe RubyLLM::FileStore::Tools do
 
     after { FileUtils.remove_entry(root) }
 
+    it 'shows the current version and marks only those bytes as read' do
+      path = File.join(root, 'report.txt')
+      stamp = Time.at(1_700_000_000)
+      File.write(path, 'old')
+      File.utime(stamp, stamp, path)
+      expect(call(:read_file, path: 'report.txt')).to include("1\told")
+
+      File.write(path, 'new')
+      File.utime(stamp, stamp, path)
+      expect(call(:read_file, path: 'report.txt')).to include("1\tnew")
+
+      File.write(path, 'now')
+      File.utime(stamp, stamp, path)
+      expect(call(:write_file, path: 'report.txt', content: 'new')).to eq(
+        error: 'report.txt changed since you read it. Read it again.'
+      )
+      expect(File.read(path)).to eq('now')
+    end
+
+    it 'rejects a write when the file changes just after the read takes its bytes' do
+      path = File.join(root, 'report.txt')
+      File.write(path, 'old')
+      allow(files).to receive(:read).with('report.txt').and_wrap_original do |read, name|
+        read.call(name).tap { File.write(path, 'new') }
+      end
+
+      expect(call(:read_file, path: 'report.txt')).to include("1\told")
+      expect(call(:write_file, path: 'report.txt', content: 'old')).to eq(
+        error: 'report.txt changed since you read it. Read it again.'
+      )
+      expect(File.read(path)).to eq('new')
+    end
+
+    it 'does not search a conversion of old contents with the same size and modification time' do
+      path = File.join(root, 'report.txt')
+      stamp = Time.at(1_700_000_000)
+      RubyLLM.config.file_converters['text/plain'] = ->(attachment) { "Converted #{attachment.content}" }
+      File.write(path, 'old')
+      File.utime(stamp, stamp, path)
+      expect(call(:read_file, path: 'report.txt')).to include('Converted old')
+      expect(call(:search_files, query: 'Converted old')).to eq('report.txt:1: Converted old')
+
+      File.write(path, 'new')
+      File.utime(stamp, stamp, path)
+      expect(call(:search_files, query: 'Converted old')).to eq('No lines match Converted old.')
+      expect(call(:search_files, query: 'new')).to eq('report.txt:1: new')
+    end
+
+    it 'lets the model write a file it read while empty' do
+      File.write(File.join(root, 'notes.txt'), '')
+
+      expect(call(:read_file, path: 'notes.txt')).to eq('notes.txt is empty.')
+      expect(call(:write_file, path: 'notes.txt', content: 'Hello')).to eq('Wrote notes.txt (5 bytes).')
+    end
+
+    it 'does not read unconverted files to check for cached search text' do
+      converter = ->(attachment) { "Converted #{attachment.content}" }
+      converter.define_singleton_method(:local?) { true }
+      RubyLLM.config.file_converters['application/pdf'] = converter
+      files.write('report.pdf', 'report')
+      files.write('other.pdf', 'other')
+      call(:read_file, path: 'report.pdf')
+      allow(files).to receive(:read).and_call_original
+
+      expect(call(:search_files, query: 'Converted')).to include('report.pdf:1: Converted report')
+      expect(files).not_to have_received(:read).with('other.pdf')
+    end
+
+    it 'keeps eager conversions paired with the bytes they read' do
+      converter = lambda do |attachment|
+        attachment.content.tap { File.write(File.join(root, 'report.pdf'), 'new') }
+      end
+      converter.define_singleton_method(:local?) { true }
+      RubyLLM.config.file_converters['application/pdf'] = converter
+      attached = RubyLLM::Attachment.new(StringIO.new('old'), filename: 'report.pdf', mime_type: 'application/pdf')
+      chat.ask_later('Read the report', with: attached)
+      chat.render
+
+      expect(files.text('report.pdf')).to eq('new')
+    end
+
+    it 'searches the other files when a converted one disappears during the search' do
+      converter = ->(attachment) { "Converted #{attachment.content}" }
+      converter.define_singleton_method(:local?) { true }
+      RubyLLM.config.file_converters['application/pdf'] = converter
+      files.write('report.pdf', 'report')
+      files.write('notes.txt', 'Converted notes')
+      call(:read_file, path: 'report.pdf')
+      allow(files).to receive(:read).and_call_original
+      allow(files).to receive(:read).with('report.pdf').and_raise(RubyLLM::FileNotFoundError, 'No file at report.pdf')
+
+      expect(call(:search_files, query: 'Converted')).to eq(
+        "notes.txt:1: Converted notes\n[Not searched, text not extracted yet: report.pdf. read_file extracts it.]"
+      )
+    end
+
+    it 'leaves conversions that may cost money until the model reads the file' do
+      converted = []
+      RubyLLM.config.file_converters['application/pdf'] = ->(attachment) { converted << attachment.filename }
+      attached = RubyLLM::Attachment.new(StringIO.new('report'), filename: 'report.pdf', mime_type: 'application/pdf')
+      chat.ask_later('Read the report', with: attached)
+      chat.render
+
+      expect(converted).to be_empty
+    end
+
     it 'answers the model when it reaches for a hidden path' do
       expect(call(:read_file, path: '.gitignore')[:error]).to eq(".gitignore is not inside the chat's files")
       expect(call(:write_file, path: '.notes', content: 'x')[:error]).to eq(".notes is not inside the chat's files")

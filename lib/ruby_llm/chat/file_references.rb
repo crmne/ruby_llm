@@ -156,10 +156,7 @@ module RubyLLM
       end
 
       def extract(file)
-        return if file.text? || store.cached_text(file)
-
-        text = FileStore::Converters.convert(store.attachment(file.path, file:), config: @config.call, local: true)
-        store.cache_text(file, text) if text
+        store.text_with_digest(file, config: @config.call, local: true) unless file.text?
       rescue StandardError => e
         RubyLLM.logger.warn { "Could not extract the text of #{file.path}: #{e.class}" }
       end
