@@ -1,7 +1,7 @@
 <%% answers_path = <%= chat_variable_name %>_answers_path(<%= chat_model_name.demodulize.underscore %>) %>
 <%% card = "question_#{question.id.parameterize}" %>
 <%% single = question.fields.first if question.fields.one? %>
-<%% choices = single&.choices&.to_h { |choice| [choice, choice] } %>
+<%% choices = single&.choice_titles&.map(&:reverse) %>
 <%% choices = { "Yes" => true, "No" => false } if single&.type == "boolean" %>
 <%% steps = { "integer" => 1, "number" => "any" } %>
 <%% primary = "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium cursor-pointer" %>
@@ -63,7 +63,7 @@
               <%% else %>
                 <%%= label_tag field_id, caption, class: "block text-sm font-medium" %>
                 <%% if field.choices %>
-                  <%%= form.select "answer[#{field.name}]", field.choices, { selected: field.default, include_blank: !field.required? && !list },
+                  <%%= form.select "answer[#{field.name}]", field.choice_titles.map(&:reverse), { selected: field.default, include_blank: !field.required? && !list },
                     id: field_id, multiple: list, required: list && field.required?, class: "block shadow-sm rounded-md border border-gray-400 px-3 py-2 mt-1 w-full" %>
                 <%% else %>
                   <%%= form.text_field "answer[#{field.name}]#{"[]" if list}", value: (field.default unless list),

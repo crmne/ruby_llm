@@ -99,7 +99,8 @@ ENVIRONMENT_FORM = {
     requestedSchema: {
       type: 'object', required: ['environment'],
       properties: {
-        environment: { type: 'string', title: 'Environment', enum: %w[staging production], default: 'staging' }
+        environment: { type: 'string', title: 'Environment', default: 'staging',
+                       oneOf: [{ const: 'staging', title: 'Staging' }, { const: 'production', title: 'Production' }] }
       }
     }
   }
