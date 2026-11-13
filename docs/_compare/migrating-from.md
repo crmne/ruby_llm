@@ -9,7 +9,6 @@ permalink: /migrating-from/
 redirect_from:
   - /migrate/
   - /compare/
-  - /migrate/langchainrb/
 ---
 
 # Migrating to RubyLLM
@@ -37,6 +36,7 @@ Each guide puts the same task side by side, with the other project's code taken 
 | LlamaIndex | Python | [LlamaIndex]({% link _compare/llamaindex.md %}) |
 | The official `openai` and `anthropic` gems | Ruby | [Official Ruby SDKs]({% link _compare/official-sdks.md %}) |
 | `ruby-openai` | Ruby | [ruby-openai]({% link _compare/migrate-ruby-openai.md %}) |
+| Langchain.rb | Ruby | [Langchain.rb]({% link _compare/langchainrb.md %}) |
 
 The guides for other languages are about the framework as much as the language. If your application is already in Ruby, the Ruby guides move it one call site at a time.
 
