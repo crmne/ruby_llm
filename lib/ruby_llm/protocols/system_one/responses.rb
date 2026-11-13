@@ -9,14 +9,14 @@ module RubyLLM
         def parse_judgment_response(response, questions:)
           body = response.body
           usage = body['usage'] || {}
+          tokens = Tokens.new(input: usage['input_tokens'], output: usage['output_tokens'],
+                              reported_cost: reported_cost(usage))
+          # The provider billed this attempt even if its answers don't parse.
+          @usage_tracker&.observe_tokens(tokens)
           answers = questions.values.to_h do |question|
             [question.name, parse_answer(body.fetch('answers').fetch(question.name.to_s), question)]
           end
-          RubyLLM::Judgment.new(
-            answers:, model: body['model'], raw: response, model_info: @model,
-            tokens: Tokens.new(input: usage['input_tokens'], output: usage['output_tokens'],
-                               reported_cost: reported_cost(usage))
-          )
+          RubyLLM::Judgment.new(answers:, model: body['model'], raw: response, model_info: @model, tokens:)
         rescue KeyError, NoMethodError, TypeError => e
           raise Error.new('System One returned an invalid judgment', provider_message: e.message, response:,
                                                                      redact: @config&.redact_error_messages)
