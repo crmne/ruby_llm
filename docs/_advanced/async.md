@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Scale with Async
+seo:
+  title: Async Ruby for AI Jobs and Concurrent Calls
 nav_order: 11
 description: Run AI jobs with Solid Queue fiber workers, use Async for concurrent Ruby calls, and choose Async::Job for higher throughput.
 redirect_from:

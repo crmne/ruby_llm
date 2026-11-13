@@ -3,7 +3,7 @@ layout: default
 title: What's New in 2.2
 parent: "Release History"
 nav_order: 0
-description: Let models run Ruby, Python, JavaScript, and shell code in sandboxes on your own servers, let them ask for a wider sandbox one call at a time, teach them your workflows with skills, and run each persisted chat in one process at a time, in RubyLLM 2.2.
+description: RubyLLM 2.2 runs models' Ruby, Python, JavaScript, and shell code in sandboxes on your own servers, teaches them your workflows with skills, and runs each persisted chat in one process at a time.
 ---
 
 # {{ page.title }}

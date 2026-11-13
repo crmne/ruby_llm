@@ -1,9 +1,11 @@
 ---
 layout: default
 title: Rails Integration
+seo:
+  title: Rails AI Integration
 nav_order: 14
 has_children: true
-description: Use the RubyLLM API with Active Record, Active Storage, Hotwire, and your existing Rails jobs.
+description: "Add AI to a Rails app: use the RubyLLM API with Active Record, Active Storage, Hotwire, and your existing Rails jobs."
 redirect_from:
   - /guides/rails
 ---
