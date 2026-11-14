@@ -1264,7 +1264,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
     it 'classifies every method defined on Chat' do
       integration_methods = %i[
-        approval_pending? continue_turn fallback_errors
+        approval_pending? close_unfinished_tool_calls continue_turn fallback_errors
         message_queue= prepare_message raise_if_pending_tool_calls!
         raise_if_prompt_attachments! run= run_around_join take_queued_messages tool_call_state= tool_prefs
         add_usage_entry usage_entries usage_entries= agent_class agent_class= running_agent
@@ -1311,6 +1311,14 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect { chat.complete { |_chunk| nil } }.to raise_error(RubyLLM::ConfigurationError)
       expect(chat.messages.reload.pluck(:role)).to eq(['user'])
       expect(RubyLLM.logger).to have_received(:warn).with(/API call failed/)
+    end
+
+    it 'raises a configuration error that stops the chat from being built' do
+      chat = Chat.find(Chat.create!(model: model_id).ask_later('Hello').id)
+      allow(RubyLLM).to receive(:chat).and_raise(RubyLLM::ConfigurationError, 'Missing API key')
+
+      expect { chat.complete }.to raise_error(RubyLLM::ConfigurationError, 'Missing API key')
+      expect(chat.messages.reload.pluck(:role)).to eq(['user'])
     end
 
     it 'raises a missing streaming gem instead of falling back' do
@@ -1365,18 +1373,147 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     end
   end
 
-  describe 'orphaned tool result cleanup' do
-    it 'destroys a trailing tool-call message' do
+  describe 'a tool that raises' do
+    let(:notes) { [] }
+    let(:requests) { [] }
+
+    def note_tool(notes)
+      Class.new(RubyLLM::Tool) do
+        def self.name = 'CreateNote'
+
+        description 'Creates a note'
+        define_method(:execute) { (notes << :created) && 'Note 1' }
+      end
+    end
+
+    def lookup_tool(&failure)
+      Class.new(RubyLLM::Tool) do
+        def self.name = 'LookUpOrder'
+
+        description 'Looks up an order'
+        define_method(:execute) { raise Faraday::ConnectionFailed, 'ERP unreachable' }
+        rescue_from(Faraday::ConnectionFailed, &failure) if failure
+      end
+    end
+
+    def unfinished = { error: 'The tool call did not finish.' }.to_json
+
+    def round(*names)
+      calls = names.map { |name| RubyLLM::ToolCall.new(id: "call_#{SecureRandom.hex(4)}", name:) }
+      RubyLLM::Message.new(role: :assistant, content: '', tool_calls: calls.index_by(&:id),
+                           input_tokens: 1, output_tokens: 1)
+    end
+
+    def replying(chat, *responses)
+      allow(chat.to_llm.provider).to receive(:complete) do |messages, **|
+        requests << messages.map { |message| [message.role, message.content] }
+        responses.shift || RubyLLM::Message.new(role: :assistant, content: 'Done', input_tokens: 1, output_tokens: 1)
+      end
+      chat
+    end
+
+    it 'keeps the finished results of its round, so a tool that already acted does not run again' do
+      chat = Chat.create!(model: model_id).with_tools(note_tool(notes), lookup_tool)
+      replying(chat, round('create_note', 'look_up_order'))
+
+      expect { chat.ask('Write a note and check order 42') }
+        .to raise_error(Faraday::ConnectionFailed, 'ERP unreachable')
+      expect(chat.messages.reload.pluck(:role, :content)).to eq(
+        [['user', 'Write a note and check order 42'], ['assistant', ''], ['tool', 'Note 1'],
+         ['tool', unfinished]]
+      )
+
+      resumed = replying(Chat.find(chat.id).with_tools(note_tool(notes), lookup_tool))
+      expect(resumed.complete.content).to eq('Done')
+      expect(notes).to eq([:created])
+      expect(requests.last.last(2)).to eq([[:tool, 'Note 1'], [:tool, unfinished]])
+    end
+
+    it 'closes the calls of its round that never started' do
+      chat = Chat.create!(model: model_id).with_tools(note_tool(notes), lookup_tool)
+      replying(chat, round('look_up_order', 'create_note'))
+
+      expect { chat.ask('Check order 42 and write a note') }.to raise_error(Faraday::ConnectionFailed)
+
+      expect(notes).to be_empty
+      expect(chat.messages.reload.where(role: :tool).pluck(:content))
+        .to eq([unfinished] * 2)
+      expect(replying(Chat.find(chat.id)).ask('Go on').content).to eq('Done')
+    end
+
+    it 'closes a call that raises once its question is answered, so the answer does not run it again' do
+      runs = []
+      booking = Class.new(RubyLLM::Tool) do
+        def self.name = 'BookSeat'
+
+        description 'Books a seat'
+        define_method(:execute) do
+          seat = ask('Window or aisle?', choices: %w[window aisle])
+          runs << seat
+          raise Faraday::ConnectionFailed, 'Booking system unreachable'
+        end
+      end
+      chat = replying(Chat.create!(model: model_id).with_tools(booking), round('book_seat'))
+      chat.ask('Book me a seat')
+      chat.answer(chat.pending_questions.sole, 'window')
+
+      expect { chat.complete }.to raise_error(Faraday::ConnectionFailed)
+      expect(chat.messages.reload.where(role: :tool).pluck(:content)).to eq([unfinished])
+      expect(RubyLLM::ActiveRecord::ToolCall.where(message_id: chat.messages.select(:id)).sole).not_to be_paused
+
+      resumed = replying(Chat.find(chat.id).with_tools(booking))
+      expect(resumed.complete.content).to eq('Done')
+      expect(runs).to eq(['window'])
+    end
+
+    it 'lets the model answer in text after a forced tool call raised' do
+      chat = Chat.create!(model: model_id).with_tools(note_tool(notes), lookup_tool)
+                 .with_tool_options(choice: :required)
+      responses = [round('look_up_order')]
+      choices = []
+      allow(chat.to_llm.provider).to receive(:complete) do
+        choices << chat.to_llm.tool_prefs[:choice]
+        responses.shift || RubyLLM::Message.new(role: :assistant, content: 'Done', input_tokens: 1, output_tokens: 1)
+      end
+
+      expect { chat.ask('Check order 42') }.to raise_error(Faraday::ConnectionFailed)
+      expect(chat.complete.content).to eq('Done')
+      expect(choices).to eq([:required, nil])
+    end
+
+    it 'keeps a tool choice of none after a tool call raised' do
+      chat = replying(Chat.create!(model: model_id).with_tools(lookup_tool).with_tool_options(choice: :none),
+                      round('look_up_order'))
+
+      expect { chat.ask('Check order 42') }.to raise_error(Faraday::ConnectionFailed)
+      expect(chat.to_llm.tool_prefs[:choice]).to eq(:none)
+    end
+
+    it 'leaves a round alone when the tool rescues the error into its result' do
+      lookup = lookup_tool { |error| "Lookup failed: #{error.message}" }
+      chat = replying(Chat.create!(model: model_id).with_tools(note_tool(notes), lookup),
+                      round('create_note', 'look_up_order'))
+
+      expect(chat.ask('Write a note and check order 42').content).to eq('Done')
+      expect(chat.messages.reload.where(role: :tool).pluck(:content))
+        .to eq(['Note 1', 'Lookup failed: ERP unreachable'])
+    end
+  end
+
+  describe 'tool calls left without a result after a failure' do
+    it 'closes the calls of a trailing tool-call message as unfinished' do
       call = tool_call
       chat = Chat.create!(model: model_id)
       chat.add_message(RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { call.id => call }))
 
-      chat.send(:cleanup_orphaned_tool_results)
+      chat.send(:cleanup_after_failure, RubyLLM::Error.new('Failed'))
 
-      expect(chat.messages.reload).to be_empty
+      expect(chat.messages.reload.pluck(:role)).to eq(%w[assistant tool])
+      expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call.id).result.content)
+        .to eq({ error: 'The tool call did not finish.' }.to_json)
     end
 
-    it 'destroys the whole round when a tool call is still unanswered' do
+    it 'keeps the finished results of a round and closes the rest as unfinished' do
       answered = tool_call(name: 'answered')
       unanswered = tool_call(name: 'unanswered')
       chat = Chat.create!(model: model_id)
@@ -1388,9 +1525,28 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       )
       chat.add_message(RubyLLM::Message.new(role: :tool, content: 'done', tool_call_id: answered.id))
 
-      chat.send(:cleanup_orphaned_tool_results)
+      chat.send(:cleanup_after_failure, RubyLLM::Error.new('Failed'))
 
-      expect(chat.messages.reload).to be_empty
+      expect(chat.messages.reload.pluck(:role, :content)).to eq(
+        [['assistant', ''], %w[tool done], ['tool', { error: 'The tool call did not finish.' }.to_json]]
+      )
+      expect(chat.to_llm.complete?).to be(false)
+    end
+
+    it 'leaves a call that waits for approval pending' do
+      approve = Class.new(RubyLLM::Tool) do
+        requires_approval
+        define_method(:name) { 'charge_card' }
+        define_method(:execute) { 'charged' }
+      end
+      call = tool_call(name: 'charge_card')
+      chat = Chat.create!(model: model_id).with_tools(approve)
+      chat.add_message(RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { call.id => call }))
+
+      chat.send(:cleanup_after_failure, RubyLLM::Error.new('Failed'))
+
+      expect(chat.messages.reload.pluck(:role)).to eq(['assistant'])
+      expect(chat.pending_questions.sole).to be_approval
     end
 
     it 'keeps a trailing tool call paused on an MCP task' do
@@ -1400,7 +1556,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       state = { 'task' => { 'taskId' => 'task-1', 'status' => 'working' } }
       RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call.id).update!(mcp_state: state)
 
-      chat.send(:cleanup_orphaned_tool_results)
+      chat.send(:cleanup_after_failure, RubyLLM::Error.new('Failed'))
 
       expect(chat.messages.reload.count).to eq(1)
       expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call.id).mcp_state).to eq(state)
@@ -1420,7 +1576,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       state = { 'task' => { 'taskId' => 'task-1', 'status' => 'working' } }
       RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: paused.id).update!(mcp_state: state)
 
-      chat.send(:cleanup_orphaned_tool_results)
+      chat.send(:cleanup_after_failure, RubyLLM::Error.new('Failed'))
 
       expect(chat.messages.reload.count).to eq(2)
       expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: paused.id).mcp_state).to eq(state)
@@ -1432,7 +1588,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       chat.add_message(RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { call.id => call }))
       chat.add_message(RubyLLM::Message.new(role: :tool, content: 'done', tool_call_id: call.id))
 
-      chat.send(:cleanup_orphaned_tool_results)
+      chat.send(:cleanup_after_failure, RubyLLM::Error.new('Failed'))
 
       expect(chat.messages.reload.count).to eq(2)
     end
@@ -1441,7 +1597,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       chat = Chat.create!(model: model_id)
       chat.add_message(role: :user, content: 'hello')
 
-      chat.send(:cleanup_orphaned_tool_results)
+      chat.send(:cleanup_after_failure, RubyLLM::Error.new('Failed'))
 
       expect(chat.messages.reload.count).to eq(1)
     end

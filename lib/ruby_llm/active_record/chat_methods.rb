@@ -894,11 +894,13 @@ module RubyLLM
 
       # Runs the completion loop on the underlying chat, persisting each
       # message, and returns the latest RubyLLM::Message. Pauses while a call
-      # waits on a person (see #pending_questions). When the API call fails,
-      # destroys the empty assistant message and any orphaned tool results,
-      # then re-raises the error. When the block raises, destroys the empty
-      # assistant message and re-raises. Tool calls paused on a task or a
-      # question stay, so the next #complete picks them up.
+      # waits on a person (see #pending_questions). When the API call or a
+      # tool fails, destroys the empty assistant message, closes the tool
+      # calls of the round left without a result as unfinished, and
+      # re-raises the error. A tool call that finished keeps its result.
+      # When the block raises, destroys the empty assistant message and
+      # re-raises. Tool calls paused on a task or a question stay, so the
+      # next #complete picks them up.
       #
       # Only one process runs a chat at a time. While another process is
       # #running? it, returns the latest message without calling the model
@@ -1121,7 +1123,7 @@ module RubyLLM
       def cleanup_after_failure(error)
         reason = error.is_a?(RubyLLM::CancelledError) ? 'chat cancelled' : 'API call failed'
         cleanup_failed_messages(reason:) if blank_placeholder?
-        cleanup_orphaned_tool_results
+        @chat&.close_unfinished_tool_calls
         resync_messages if @chat
       end
 
@@ -1132,26 +1134,6 @@ module RubyLLM
       def cleanup_failed_messages(reason:)
         RubyLLM.logger.warn "RubyLLM: #{reason}, destroying message: #{@message.id}"
         @message.destroy
-      end
-
-      def cleanup_orphaned_tool_results # rubocop:disable Metrics/PerceivedComplexity
-        messages_association.reload
-        last = eager_load_messages.last
-
-        return unless last&.tool_call? || last&.tool_result?
-
-        if last.tool_call?
-          last.destroy unless last.ruby_llm_tool_calls.any?(&:paused?)
-        else
-          parent = last.ruby_llm_parent_tool_call
-          tool_call_message = parent.message
-          calls = tool_call_message.ruby_llm_tool_calls
-
-          if calls.any? { |call| call.result.nil? } && calls.none?(&:paused?)
-            calls.filter_map(&:result).each(&:destroy)
-            tool_call_message.destroy
-          end
-        end
       end
 
       def eager_load_messages
