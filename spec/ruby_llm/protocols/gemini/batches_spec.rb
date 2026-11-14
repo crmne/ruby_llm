@@ -64,6 +64,100 @@ RSpec.describe RubyLLM::Protocols::Gemini::Batches do
         required: %w[title tags]
       )
     end
+
+    def batch_response_schema(property)
+      request = {
+        custom_id: '0',
+        payload: {
+          generationConfig: {
+            responseJsonSchema: { type: 'object', properties: { value: property }, required: ['value'] }
+          }
+        }
+      }
+
+      protocol.send(:gemini_batch_request, request, 'gemini-2.5-flash')
+              .dig(:request, :generationConfig, :responseSchema, :properties, :value)
+    end
+
+    it 'keeps every type of a nullable union, whatever their order' do
+      expect(batch_response_schema(type: %w[string integer null])).to eq(
+        nullable: true, anyOf: [{ type: 'string' }, { type: 'integer' }]
+      )
+      expect(batch_response_schema(type: %w[integer string null])).to eq(
+        nullable: true, anyOf: [{ type: 'integer' }, { type: 'string' }]
+      )
+    end
+
+    it 'sends a union without null as anyOf instead of a type array' do
+      expect(batch_response_schema(type: %w[string integer])).to eq(
+        anyOf: [{ type: 'string' }, { type: 'integer' }]
+      )
+    end
+
+    it 'sends a one-type array as a single type' do
+      expect(batch_response_schema(type: %w[string])).to eq(type: 'string')
+      expect(batch_response_schema('type' => %w[null])).to eq('type' => 'null')
+    end
+
+    it 'gives each union member only the keywords that apply to its type' do
+      property = {
+        'type' => %w[string array null],
+        'description' => 'Tag or tags',
+        'maxLength' => 20,
+        'items' => { 'type' => %w[string integer] },
+        'minItems' => 1
+      }
+
+      expect(batch_response_schema(property)).to eq(
+        nullable: true,
+        anyOf: [
+          { type: 'string', 'description' => 'Tag or tags', 'maxLength' => 20 },
+          { type: 'array', 'description' => 'Tag or tags',
+            'items' => { anyOf: [{ type: 'string' }, { type: 'integer' }] }, 'minItems' => 1 }
+        ]
+      )
+    end
+
+    it 'writes integer and number enum values as the strings Gemini takes' do
+      expect(batch_response_schema(type: 'integer', enum: [1, 2])).to eq(type: 'integer', enum: %w[1 2])
+      expect(batch_response_schema('type' => 'number', 'enum' => [1.5])).to eq('type' => 'number', 'enum' => ['1.5'])
+    end
+
+    it 'keeps an enum on every member and drops the members no value can match' do
+      expect(batch_response_schema(type: %w[string integer array null], enum: ['a', 1])).to eq(
+        anyOf: [{ type: 'string', enum: ['a'] }, { type: 'integer', enum: ['1'] }]
+      )
+      expect(batch_response_schema(type: %w[string array null], enum: ['a', nil], items: { type: 'string' })).to eq(
+        type: 'string', enum: ['a'], nullable: true
+      )
+    end
+  end
+
+  describe 'batching a chat with a schema' do
+    let(:context) { RubyLLM.context { |config| config.gemini_api_key = 'test' } }
+
+    it 'carries every type of a union through RubyLLM.batch' do
+      sent = []
+      stub_request(:post, %r{/models/gemini-2\.5-flash:batchGenerateContent}).to_return do |request|
+        sent << JSON.parse(request.body).dig('batch', 'inputConfig', 'requests', 'requests', 0, 'request',
+                                             'generationConfig', 'responseSchema', 'properties', 'value')
+        { headers: { 'Content-Type' => 'application/json' },
+          body: '{"name":"batches/test","metadata":{"state":"BATCH_STATE_PENDING"}}' }
+      end
+
+      [%w[string integer null], %w[string integer]].each do |types|
+        schema = { type: 'object', properties: { value: { type: types } }, required: ['value'] }
+        RubyLLM.batch(context.chat(model: 'gemini-2.5-flash', provider: :gemini)
+                             .with_schema(schema).ask_later('Return a sample value.'))
+      end
+
+      expect(sent).to eq(
+        [
+          { 'nullable' => true, 'anyOf' => [{ 'type' => 'string' }, { 'type' => 'integer' }] },
+          { 'anyOf' => [{ 'type' => 'string' }, { 'type' => 'integer' }] }
+        ]
+      )
+    end
   end
 
   describe '#create_batch' do

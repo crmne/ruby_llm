@@ -106,15 +106,84 @@ module RubyLLM
                                response_schema(value)
                              end
           end
-          nullable_type(schema)
+          numeric_enum(type_union(schema))
         end
 
-        def nullable_type(schema)
-          key = schema.key?(:type) ? :type : 'type'
-          types = Array(schema[key])
-          return schema unless types.length > 1 && types.include?('null')
+        TYPE_KEYWORDS = {
+          'string' => %w[format maxLength minLength pattern],
+          'number' => %w[format maximum minimum exclusiveMaximum exclusiveMinimum multipleOf],
+          'integer' => %w[format maximum minimum exclusiveMaximum exclusiveMinimum multipleOf],
+          'object' => %w[properties required maxProperties minProperties propertyOrdering],
+          'array' => %w[items maxItems minItems prefixItems uniqueItems]
+        }.freeze
+        TYPED_KEYWORDS = TYPE_KEYWORDS.values.flatten.uniq.freeze
+        ENUM_VALUE_TYPES = {
+          'string' => ->(value) { value.is_a?(String) },
+          'number' => ->(value) { value.is_a?(Numeric) },
+          'integer' => ->(value) { value.is_a?(Integer) },
+          'boolean' => ->(value) { [true, false].include?(value) },
+          'object' => ->(value) { value.is_a?(Hash) },
+          'array' => ->(value) { value.is_a?(Array) },
+          'null' => lambda(&:nil?)
+        }.freeze
+        private_constant :TYPE_KEYWORDS, :TYPED_KEYWORDS, :ENUM_VALUE_TYPES
 
-          schema.merge(key => (types - ['null']).first, nullable: true)
+        # Gemini's Schema takes one type, so a JSON Schema type array becomes
+        # nullable plus anyOf, each member keeping the keywords and enum
+        # values of its type.
+        def type_union(schema)
+          key = schema.key?(:type) ? :type : 'type'
+          return schema unless schema[key].is_a?(Array)
+
+          types = schema[key].map(&:to_s).uniq
+          return schema.merge(key => types.first) if types.one?
+
+          types = enum_types(schema, types)
+          others = types - ['null']
+          return schema.merge(key => 'null') if others.empty?
+
+          union = type_union_members(schema.except(key), others)
+          types.include?('null') ? union.merge(nullable: true) : union
+        end
+
+        def type_union_members(schema, types)
+          return union_member(schema, types.first) if types.one?
+
+          { anyOf: types.map { |type| union_member(schema, type) } }
+        end
+
+        def union_member(schema, type)
+          own = TYPE_KEYWORDS.fetch(type, [])
+          member = schema.reject { |name, _| TYPED_KEYWORDS.include?(name.to_s) && !own.include?(name.to_s) }
+          values = member[enum_key(member)]
+          member = member.merge(enum_key(member) => values.select(&enum_value_of(type))) if values.is_a?(Array)
+          numeric_enum({ type: }.merge(member))
+        end
+
+        # Gemini's Schema.enum is a list of strings; it constrains an integer
+        # or number schema to those values written as strings.
+        def numeric_enum(schema)
+          type = schema[:type] || schema['type']
+          values = schema[enum_key(schema)]
+          return schema unless %w[integer number].include?(type.to_s) && values.is_a?(Array)
+
+          schema.merge(enum_key(schema) => values.map { |value| value.is_a?(Numeric) ? value.to_s : value })
+        end
+
+        def enum_types(schema, types)
+          values = schema[enum_key(schema)]
+          return types unless values.is_a?(Array)
+
+          matching = types.select { |type| values.any?(&enum_value_of(type)) }
+          matching.empty? ? types : matching
+        end
+
+        def enum_key(schema)
+          schema.key?(:enum) ? :enum : 'enum'
+        end
+
+        def enum_value_of(type)
+          ENUM_VALUE_TYPES.fetch(type) { ->(_) { true } }
         end
 
         def batch_name(id)
