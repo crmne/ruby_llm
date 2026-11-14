@@ -170,7 +170,7 @@ end
 
 For a chat that should survive on its own, configure fallbacks so the request moves to the next model instead of raising. See [Model Fallbacks]({% link _advanced/error-handling.md %}#model-fallbacks).
 
-In Rails, a refresh deletes the rows for the models the provider no longer lists. A row one of your chats points at cannot go: the chat's foreign key holds it there. RubyLLM keeps that row, stamps it with `unlisted_at`, and logs one warning per refresh naming the models it kept.
+In Rails, a refresh deletes the rows for the models the provider no longer lists. A row one of your chats points at is the exception, with or without a foreign key to `ruby_llm_models`: RubyLLM keeps that row, stamps it with `unlisted_at`, and logs one warning per refresh naming the models it kept.
 
 RubyLLM calls those models unlisted, not retired, because a refresh only tells it what the provider listed. A provider that dropped a model and a provider that serves a different catalog in your configured region look the same from here. Vertex AI lists `gemini-embedding-001` in `us-central1` but not in `global`, and `gemini-2.0-flash-001` the other way around.
 

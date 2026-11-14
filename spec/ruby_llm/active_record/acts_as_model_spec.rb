@@ -261,6 +261,41 @@ RSpec.describe RubyLLM::ActiveRecord::Model do # rubocop:disable RSpec/SpecFileP
         RubyLLM.models.load_from_json
       end
     end
+
+    context 'when the database enforces no foreign keys' do
+      let(:gone) { RubyLLM::Model.new(id: 'gone-model', name: 'Gone Model', provider: 'openai') }
+
+      around do |example|
+        ActiveRecord::Base.connection.disable_referential_integrity { example.run }
+      end
+
+      before do
+        allow(RubyLLM.logger).to receive(:warn)
+        described_class.write(RubyLLM::Models.new([model_info, dropped, gone]))
+      end
+
+      it 'keeps the row a chat points at and drops the rest' do
+        chat = Chat.create!(model: dropped_record)
+
+        described_class.write(RubyLLM::Models.new([model_info]))
+
+        expect(dropped_record.unlisted_at).to be_present
+        expect(chat.reload.model).to eq(dropped_record)
+        expect(record_class.where(model_id: 'gone-model')).to be_empty
+      end
+
+      it 'keeps a row any table points at through ruby_llm_model_id' do
+        ActiveRecord::Base.connection.insert(
+          'INSERT INTO document_chats (ruby_llm_model_id, created_at, updated_at) ' \
+          "VALUES (#{dropped_record.id}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)"
+        )
+
+        described_class.write(RubyLLM::Models.new([model_info]))
+
+        expect(dropped_record.unlisted_at).to be_present
+        expect(record_class.where(model_id: 'gone-model')).to be_empty
+      end
+    end
   end
 
   it 'defaults the JSON columns when the row leaves them null' do
