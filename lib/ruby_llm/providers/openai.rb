@@ -4,13 +4,12 @@ module RubyLLM
   module Providers
     # OpenAI API integration.
     class OpenAI < Provider
-      protocol :responses, OpenAI::Responses, batches: Protocols::Responses::Batches
-      protocol :chat_completions, Protocols::ChatCompletions, batches: Protocols::ChatCompletions::Batches
-      protocol :embeddings, Protocols::ChatCompletions,
-               batches: Protocols::ChatCompletions::EmbeddingBatches
-      protocol :files, Protocols::OpenAI::Files
-      protocol :decisions, Protocols::OpenAI::Decisions
-      protocol :rerank, OpenAI::Rerank
+      protocol :responses, 'RubyLLM::Providers::OpenAI::Responses', batches: 'RubyLLM::Protocols::Responses::Batches'
+      protocol :chat_completions, 'RubyLLM::Protocols::ChatCompletions', batches: 'RubyLLM::Protocols::ChatCompletions::Batches'
+      protocol :embeddings, 'RubyLLM::Protocols::ChatCompletions', batches: 'RubyLLM::Protocols::ChatCompletions::EmbeddingBatches'
+      protocol :files, 'RubyLLM::Protocols::OpenAI::Files'
+      protocol :decisions, 'RubyLLM::Protocols::OpenAI::Decisions'
+      protocol :rerank, 'RubyLLM::Providers::OpenAI::Rerank'
 
       RATE_LIMIT_RESET_HEADERS = %w[x-ratelimit-reset-requests x-ratelimit-reset-tokens].freeze
       RESET_DURATION_UNITS = { 'h' => 3600, 'm' => 60, 's' => 1, 'ms' => 0.001 }.freeze

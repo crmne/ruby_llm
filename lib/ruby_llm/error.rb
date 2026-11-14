@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'timeout'
+
 module RubyLLM
   # Error is the base class for provider-operation errors raised by
   # RubyLLM, including API, network, capability, and provider response-shape

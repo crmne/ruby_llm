@@ -9,8 +9,8 @@ module RubyLLM
       CACHE_WRITE_INPUT_MULTIPLIERS = { '1h' => 2 }.freeze
       private_constant :CACHE_WRITE_INPUT_MULTIPLIERS
 
-      protocol :anthropic, Protocols::Anthropic, batches: Protocols::Anthropic::Batches
-      protocol :files, Protocols::Anthropic::Files
+      protocol :anthropic, 'RubyLLM::Protocols::Anthropic', batches: 'RubyLLM::Protocols::Anthropic::Batches'
+      protocol :files, 'RubyLLM::Protocols::Anthropic::Files'
 
       def api_base
         configured_api_base(:anthropic_api_base, 'https://api.anthropic.com', endpoints: %r{/v1/messages\z})

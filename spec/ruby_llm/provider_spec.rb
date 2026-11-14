@@ -433,7 +433,8 @@ RSpec.describe RubyLLM::Provider do
           expect(config).to respond_to("#{key}=")
         end
       ensure
-        described_class.providers.replace(original_providers)
+        described_class.unregister(provider_key)
+        described_class.resolved.replace(original_providers)
         option_keys.each do |key|
           RubyLLM::Configuration.send(:option_keys).delete(key)
           RubyLLM::Configuration.send(:defaults).delete(key)

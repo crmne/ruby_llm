@@ -4,8 +4,8 @@ module RubyLLM
   module Providers
     # Cohere API integration.
     class Cohere < Provider
-      protocol :cohere, Protocols::Cohere
-      protocol :files, Protocols::Cohere::Datasets
+      protocol :cohere, 'RubyLLM::Protocols::Cohere'
+      protocol :files, 'RubyLLM::Protocols::Cohere::Datasets'
 
       def api_base
         configured_api_base(:cohere_api_base, 'https://api.cohere.com', endpoints: %r{/v2/(?:chat|embed|rerank)\z})

@@ -605,7 +605,7 @@ RSpec.describe RubyLLM::Models do
     end
 
     after do
-      RubyLLM::Provider.providers.delete(:remote_dynamic)
+      RubyLLM::Provider.unregister(:remote_dynamic)
     end
 
     it 'delegates to the class method when called on instance' do

@@ -34,6 +34,7 @@ module RubyLLM
   # See the custom providers guide for the full walkthrough.
   class Provider
     include Support::Inspectable
+    extend Registration
 
     BATCH_RATE_BY_COMPONENT = {
       input: :input_per_million,
@@ -527,7 +528,6 @@ module RubyLLM
     end
 
     class << self
-      attr_reader :default_protocol # :nodoc:
       attr_writer :slug # :nodoc:
 
       # Returns the provider slug, a short lowercase string that
@@ -636,67 +636,6 @@ module RubyLLM
         configuration_requirements.all? { |req| config.send(req) }
       end
 
-      # Registers +protocol_class+ under +name+. The first registered
-      # protocol becomes the provider's default. Pass +batches:+ to compose
-      # batch operations into the registered protocol.
-      #
-      #   protocol :chat_completions, ChatCompletions
-      #   protocol :responses, Protocols::Responses, batches: Protocols::Responses::Batches
-      #
-      def protocol(name, protocol_class, batches: nil)
-        @default_protocol = name.to_sym if protocols.empty?
-        protocols[name.to_sym] = batches ? Class.new(protocol_class) { include batches } : protocol_class
-      end
-
-      def protocols # :nodoc:
-        @protocols ||= {}
-      end
-
-      # Returns the part of +message+ that holds its answer, as read by the
-      # first of the provider's protocols that marks parts of a turn as
-      # intermediate, or +nil+ when none does. Such a protocol defines
-      # +parse_answer_text(message)+ as a class method.
-      def answer_text(message) # :nodoc:
-        protocols.each_value.lazy.filter_map do |protocol|
-          protocol.parse_answer_text(message) if protocol.respond_to?(:parse_answer_text)
-        end.first
-      end
-
-      # Returns the pages hosted web searches used for +message+, as read by
-      # each of the provider's protocols that reports them. Such a protocol
-      # defines +parse_web_sources(message)+ as a class method.
-      def web_sources(message) # :nodoc:
-        protocols.each_value.flat_map do |protocol|
-          protocol.respond_to?(:parse_web_sources) ? protocol.parse_web_sources(message) : []
-        end
-      end
-
-      # Registers +provider_class+ under the slug +name+, making it
-      # available to RubyLLM.chat and the other top-level helpers.
-      # Stamps the class's slug, adds it to ::providers, and defines a
-      # Configuration accessor for each of its configuration options. A
-      # provider gem may pass the path to its bundled model catalog.
-      #
-      #   RubyLLM::Provider.register :acme, RubyLLM::Providers::Acme
-      #   RubyLLM::Provider.register :acme, RubyLLM::Providers::Acme,
-      #                              models: File.expand_path('../../../models.json', __dir__)
-      #
-      def register(name, provider_class, models: nil)
-        provider_class.slug = name.to_s
-        providers[name.to_sym] = provider_class
-        models ? model_registry_files[name.to_sym] = models : model_registry_files.delete(name.to_sym)
-        RubyLLM::Configuration.register_provider_options(provider_class.configuration_options + [:"#{name}_protocol"])
-      end
-
-      def resolve(name) # :nodoc:
-        providers[name.to_sym]
-      end
-
-      def resolve!(name) # :nodoc:
-        providers[name.to_sym] ||
-          raise(Error, "Unknown provider: #{name.inspect}. Available providers: #{providers.keys.join(', ')}")
-      end
-
       # Resolves +model_id+ to the id the registry stores it under for this
       # provider. Defaults to the id unchanged; providers whose catalog ids
       # differ from their request ids (Bedrock's region prefixes) override it.
@@ -709,28 +648,6 @@ module RubyLLM
       # Providers whose requests name deployments override it.
       def deployed_model_id(_model_id, _config = nil) # :nodoc:
         nil
-      end
-
-      # Returns the global registry of providers, a hash mapping slug
-      # symbols to provider classes.
-      def providers
-        @providers ||= {}
-      end
-
-      def model_registry_files # :nodoc:
-        @model_registry_files ||= {}
-      end
-
-      def configured_providers(config) # :nodoc:
-        providers.select do |_slug, provider_class|
-          provider_class.configured?(config)
-        end.values
-      end
-
-      def configured_remote_providers(config) # :nodoc:
-        providers.select do |_slug, provider_class|
-          provider_class.remote? && provider_class.configured?(config)
-        end.values
       end
     end
 

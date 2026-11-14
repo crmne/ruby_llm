@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'faraday'
+
 module RubyLLM
   # A Fallback is a fallback model target configured with Chat#with_fallbacks.
   # When the active model fails with a matching error, the chat retries the

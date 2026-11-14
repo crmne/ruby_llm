@@ -97,6 +97,25 @@ RSpec.describe RubyLLM::Configuration do
     end
   end
 
+  describe '#initialize' do
+    it 'tolerates another option being declared while defaults run' do
+      klass = Class.new(described_class) do
+        option(:early, lambda {
+          self.class.send(:option, :late, 'late-value')
+          'early-value'
+        })
+      end
+
+      instance = klass.new
+
+      expect(instance.early).to eq('early-value')
+      # A provider resolved while this ran registers its options with a nil
+      # default (::register_provider_options), the same as one not loaded
+      # yet, so leaving :late unset here matches an already-running process.
+      expect(instance.late).to be_nil
+    end
+  end
+
   describe 'an option with a block' do
     it 'stores what the block returns for the value' do
       options = Class.new(described_class) { option(:greeting) { |value| value&.upcase } }.new

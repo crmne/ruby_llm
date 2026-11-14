@@ -17,8 +17,8 @@ module RubyLLM
         include Protocols::GPUStack::Videos
       end
 
-      protocol :chat_completions, ChatCompletions
-      protocol :responses, Protocols::GPUStack::Responses
+      protocol :chat_completions, 'RubyLLM::Providers::GPUStack::ChatCompletions'
+      protocol :responses, 'RubyLLM::Protocols::GPUStack::Responses'
 
       def resolve_protocol(name, model, **request)
         return fetch_protocol(:chat_completions) if !name && request[:operation]

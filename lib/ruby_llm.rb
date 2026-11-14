@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 require 'base64'
-require 'faraday'
-require 'faraday/multipart'
-require 'faraday/retry'
 require 'json'
 require 'logger'
 require 'schematist'
@@ -603,28 +600,28 @@ module RubyLLM
   end
 end
 
-RubyLLM::Provider.register :anthropic, RubyLLM::Providers::Anthropic
-RubyLLM::Provider.register :azure, RubyLLM::Providers::Azure
-RubyLLM::Provider.register :bedrock, RubyLLM::Providers::Bedrock
-RubyLLM::Provider.register :cohere, RubyLLM::Providers::Cohere
-RubyLLM::Provider.register :deepgram, RubyLLM::Providers::Deepgram
-RubyLLM::Provider.register :deepseek, RubyLLM::Providers::DeepSeek
-RubyLLM::Provider.register :elevenlabs, RubyLLM::Providers::ElevenLabs
-RubyLLM::Provider.register :gemini, RubyLLM::Providers::Gemini
-RubyLLM::Provider.register :gpustack, RubyLLM::Providers::GPUStack
-RubyLLM::Provider.register :hetzner, RubyLLM::Providers::Hetzner
-RubyLLM::Provider.register :meta, RubyLLM::Providers::Meta
-RubyLLM::Provider.register :minimax, RubyLLM::Providers::MiniMax
-RubyLLM::Provider.register :mistral, RubyLLM::Providers::Mistral
-RubyLLM::Provider.register :moonshot, RubyLLM::Providers::Moonshot
-RubyLLM::Provider.register :ollama, RubyLLM::Providers::Ollama
-RubyLLM::Provider.register :ollama_cloud, RubyLLM::Providers::OllamaCloud
-RubyLLM::Provider.register :openai, RubyLLM::Providers::OpenAI
-RubyLLM::Provider.register :openrouter, RubyLLM::Providers::OpenRouter
-RubyLLM::Provider.register :perplexity, RubyLLM::Providers::Perplexity
-RubyLLM::Provider.register :typesafe, RubyLLM::Providers::TypeSafe
-RubyLLM::Provider.register :vertexai, RubyLLM::Providers::VertexAI
-RubyLLM::Provider.register :xai, RubyLLM::Providers::XAI
-RubyLLM::Provider.register :zai, RubyLLM::Providers::ZAI
+RubyLLM::Provider.register :anthropic, 'RubyLLM::Providers::Anthropic'
+RubyLLM::Provider.register :azure, 'RubyLLM::Providers::Azure'
+RubyLLM::Provider.register :bedrock, 'RubyLLM::Providers::Bedrock'
+RubyLLM::Provider.register :cohere, 'RubyLLM::Providers::Cohere'
+RubyLLM::Provider.register :deepgram, 'RubyLLM::Providers::Deepgram'
+RubyLLM::Provider.register :deepseek, 'RubyLLM::Providers::DeepSeek'
+RubyLLM::Provider.register :elevenlabs, 'RubyLLM::Providers::ElevenLabs'
+RubyLLM::Provider.register :gemini, 'RubyLLM::Providers::Gemini'
+RubyLLM::Provider.register :gpustack, 'RubyLLM::Providers::GPUStack'
+RubyLLM::Provider.register :hetzner, 'RubyLLM::Providers::Hetzner'
+RubyLLM::Provider.register :meta, 'RubyLLM::Providers::Meta'
+RubyLLM::Provider.register :minimax, 'RubyLLM::Providers::MiniMax'
+RubyLLM::Provider.register :mistral, 'RubyLLM::Providers::Mistral'
+RubyLLM::Provider.register :moonshot, 'RubyLLM::Providers::Moonshot'
+RubyLLM::Provider.register :ollama, 'RubyLLM::Providers::Ollama'
+RubyLLM::Provider.register :ollama_cloud, 'RubyLLM::Providers::OllamaCloud'
+RubyLLM::Provider.register :openai, 'RubyLLM::Providers::OpenAI'
+RubyLLM::Provider.register :openrouter, 'RubyLLM::Providers::OpenRouter'
+RubyLLM::Provider.register :perplexity, 'RubyLLM::Providers::Perplexity'
+RubyLLM::Provider.register :typesafe, 'RubyLLM::Providers::TypeSafe'
+RubyLLM::Provider.register :vertexai, 'RubyLLM::Providers::VertexAI'
+RubyLLM::Provider.register :xai, 'RubyLLM::Providers::XAI'
+RubyLLM::Provider.register :zai, 'RubyLLM::Providers::ZAI'
 
 require 'ruby_llm/railtie' if defined?(Rails::Railtie)

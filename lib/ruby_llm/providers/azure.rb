@@ -13,13 +13,13 @@ module RubyLLM
       # RubyLLM names it after the API.
       FAST_TRANSCRIPTION_MODEL = 'fast-transcription'
 
-      protocol :chat_completions, Azure::ChatCompletions, batches: Azure::ChatCompletions::Batches
-      protocol :responses, Azure::Responses
-      protocol :files, Protocols::Azure::Files
-      protocol :cohere, Azure::Cohere
-      protocol :mistral, Azure::Mistral
-      protocol :decisions, Azure::Decisions
-      protocol :speech, Protocols::Azure::Speech
+      protocol :chat_completions, 'RubyLLM::Providers::Azure::ChatCompletions', batches: 'RubyLLM::Providers::Azure::ChatCompletions::Batches'
+      protocol :responses, 'RubyLLM::Providers::Azure::Responses'
+      protocol :files, 'RubyLLM::Protocols::Azure::Files'
+      protocol :cohere, 'RubyLLM::Providers::Azure::Cohere'
+      protocol :mistral, 'RubyLLM::Providers::Azure::Mistral'
+      protocol :decisions, 'RubyLLM::Providers::Azure::Decisions'
+      protocol :speech, 'RubyLLM::Protocols::Azure::Speech'
 
       def original_image_detail? # :nodoc:
         true

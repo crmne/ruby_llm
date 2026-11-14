@@ -37,10 +37,10 @@ module RubyLLM
         include OpenRouter::Judgments
       end
 
-      protocol :chat_completions, ChatCompletions, batches: Protocols::OpenRouter::Batches
-      protocol :responses, Protocols::OpenRouter::Responses
-      protocol :files, Protocols::OpenRouter::Files
-      protocol :system_one, SystemOne
+      protocol :chat_completions, 'RubyLLM::Providers::OpenRouter::ChatCompletions', batches: 'RubyLLM::Protocols::OpenRouter::Batches'
+      protocol :responses, 'RubyLLM::Protocols::OpenRouter::Responses'
+      protocol :files, 'RubyLLM::Protocols::OpenRouter::Files'
+      protocol :system_one, 'RubyLLM::Providers::OpenRouter::SystemOne'
 
       def resolve_protocol(name, model, operation: nil, **options)
         name ||= (operation == :judge ? :system_one : :chat_completions) if operation

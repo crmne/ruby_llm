@@ -9,9 +9,9 @@ module RubyLLM
         include DeepSeek::Chat
       end
 
-      protocol :chat_completions, ChatCompletions
-      protocol :responses, DeepSeek::Responses
-      protocol :files, Protocols::DeepSeek::Files
+      protocol :chat_completions, 'RubyLLM::Providers::DeepSeek::ChatCompletions'
+      protocol :responses, 'RubyLLM::Providers::DeepSeek::Responses'
+      protocol :files, 'RubyLLM::Protocols::DeepSeek::Files'
 
       def api_base
         configured_api_base(:deepseek_api_base, 'https://api.deepseek.com', endpoints: Protocols::ChatCompletions::ENDPOINT_PATHS)

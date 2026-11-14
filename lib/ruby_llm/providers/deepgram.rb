@@ -12,8 +12,8 @@ module RubyLLM
       THINK_BASE = 'https://agent.deepgram.com'
       private_constant :THINK_BASE
 
-      protocol :deepgram, Protocols::Deepgram
-      protocol :chat_completions, ChatCompletions
+      protocol :deepgram, 'RubyLLM::Protocols::Deepgram'
+      protocol :chat_completions, 'RubyLLM::Providers::Deepgram::ChatCompletions'
 
       def api_base
         configured_api_base(:deepgram_api_base, 'https://api.deepgram.com', endpoints: %r{/v1/(?:listen|speak|think)\z})

@@ -3,6 +3,7 @@
 require 'digest'
 require 'openssl'
 require 'strscan'
+require 'uri'
 
 module RubyLLM
   class MCP

@@ -7,23 +7,21 @@ module RubyLLM
       include Bedrock::Auth
       include Bedrock::Models
 
-      protocol :converse, Protocols::Converse, batches: Protocols::Converse::Batches
-      protocol :anthropic, Bedrock::Anthropic, batches: Bedrock::Anthropic::Batches
-      protocol :mantle_anthropic, Bedrock::Mantle::Anthropic
-      protocol :mantle_responses, Bedrock::Mantle::Responses
-      protocol :mantle_chat_completions, Bedrock::Mantle::ChatCompletions
-      protocol :voxtral_transcription, Bedrock::Mantle::Voxtral
-      protocol :titan_text_embeddings, Protocols::InvokeModel::TitanTextEmbeddings,
-               batches: Protocols::InvokeModel::EmbeddingBatches
-      protocol :titan_multimodal_embeddings, Protocols::InvokeModel::TitanMultimodalEmbeddings,
-               batches: Protocols::InvokeModel::EmbeddingBatches
-      protocol :cohere_embeddings, Protocols::InvokeModel::CohereEmbeddings
-      protocol :nova_embeddings, Protocols::InvokeModel::NovaEmbeddings
-      protocol :stability_images, Protocols::InvokeModel::StabilityImages
-      protocol :rerank, Protocols::Bedrock::Rerank
-      protocol :guardrails, Protocols::Bedrock::Guardrails
-      protocol :async_videos, Protocols::Bedrock::AsyncVideos
-      protocol :files, Protocols::Bedrock::Files
+      protocol :converse, 'RubyLLM::Protocols::Converse', batches: 'RubyLLM::Protocols::Converse::Batches'
+      protocol :anthropic, 'RubyLLM::Providers::Bedrock::Anthropic', batches: 'RubyLLM::Providers::Bedrock::Anthropic::Batches'
+      protocol :mantle_anthropic, 'RubyLLM::Providers::Bedrock::Mantle::Anthropic'
+      protocol :mantle_responses, 'RubyLLM::Providers::Bedrock::Mantle::Responses'
+      protocol :mantle_chat_completions, 'RubyLLM::Providers::Bedrock::Mantle::ChatCompletions'
+      protocol :voxtral_transcription, 'RubyLLM::Providers::Bedrock::Mantle::Voxtral'
+      protocol :titan_text_embeddings, 'RubyLLM::Protocols::InvokeModel::TitanTextEmbeddings', batches: 'RubyLLM::Protocols::InvokeModel::EmbeddingBatches'
+      protocol :titan_multimodal_embeddings, 'RubyLLM::Protocols::InvokeModel::TitanMultimodalEmbeddings', batches: 'RubyLLM::Protocols::InvokeModel::EmbeddingBatches'
+      protocol :cohere_embeddings, 'RubyLLM::Protocols::InvokeModel::CohereEmbeddings'
+      protocol :nova_embeddings, 'RubyLLM::Protocols::InvokeModel::NovaEmbeddings'
+      protocol :stability_images, 'RubyLLM::Protocols::InvokeModel::StabilityImages'
+      protocol :rerank, 'RubyLLM::Protocols::Bedrock::Rerank'
+      protocol :guardrails, 'RubyLLM::Protocols::Bedrock::Guardrails'
+      protocol :async_videos, 'RubyLLM::Protocols::Bedrock::AsyncVideos'
+      protocol :files, 'RubyLLM::Protocols::Bedrock::Files'
 
       def self.capabilities
         Bedrock::Capabilities

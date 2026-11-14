@@ -26,10 +26,16 @@ module RubyLLM
   class Configuration
     SECRET_OPTION = /_(key|secret|token)\z/ # :nodoc:
 
+    # Ruby probes these through method_missing for implicit conversions
+    # (Array(), Hash(), String(), Integer(), block coercion); no provider
+    # option is named like one, so they are never worth resolving a
+    # provider to check.
+    CONVERSION_PROBES = %i[to_ary to_str to_hash to_int to_a to_proc].freeze # :nodoc:
+
     class << self
       def option(key, default = nil, &normalize) # :nodoc:
         key = key.to_sym
-        return if options.include?(key)
+        return if option_keys.include?(key)
 
         attr_reader key
 
@@ -47,9 +53,31 @@ module RubyLLM
         Array(options).each { |key| option(key, nil) }
       end
 
+      # Returns whether +key+ is a declared option, declaring it first when
+      # it belongs to a provider that has not been loaded yet. A provider
+      # whose options are named after its slug is found without loading the
+      # others; anything else falls back to loading them all, which happens
+      # at most once.
+      def provider_option?(key) # :nodoc:
+        return true if option_keys.include?(key)
+        return false if CONVERSION_PROBES.include?(key)
+
+        slug = Provider.slug_for_option(key)
+        if slug
+          Provider.resolve(slug)
+          return true if option_keys.include?(key)
+        end
+
+        Provider.resolve_all
+        option_keys.include?(key)
+      end
+
       # Returns the names of all declared options as an array of symbols,
-      # including options registered by providers.
+      # including options registered by providers. Loads every provider,
+      # the same as ::providers; a lazy check that only needs to know
+      # whether one option is declared uses #provider_option? instead.
       def options
+        Provider.resolve_all
         option_keys.dup
       end
 
@@ -59,6 +87,21 @@ module RubyLLM
       def defaults = @defaults ||= {}
       private :option
     end
+
+    def method_missing(name, ...) # :nodoc:
+      return super unless self.class.provider_option?(option_name(name))
+
+      public_send(name, ...)
+    end
+
+    def respond_to_missing?(name, include_private = nil) # :nodoc:
+      self.class.provider_option?(option_name(name)) || super
+    end
+
+    def option_name(name)
+      name.to_s.delete_suffix('=').to_sym
+    end
+    private :option_name
 
     # System-level options are declared here.
     # Provider-specific options are declared in each provider class via
@@ -474,7 +517,9 @@ module RubyLLM
     option :log_regexp_timeout, -> { Regexp.timeout || 1.0 }
 
     def initialize # :nodoc:
-      self.class.send(:defaults).each do |key, default|
+      # Dup first: another thread resolving a lazy provider can add a
+      # default here while this one iterates, and Ruby raises on that.
+      self.class.send(:defaults).dup.each do |key, default|
         value = default.respond_to?(:call) ? instance_exec(&default) : default
         public_send("#{key}=", value)
       end
@@ -490,9 +535,10 @@ module RubyLLM
     end
 
     # The values of the credential options set on this configuration, which
-    # logging replaces before writing a line.
+    # logging replaces before writing a line. Only options already declared
+    # carry a value worth redacting, so this does not load every provider.
     def secret_values # :nodoc:
-      self.class.options.grep(SECRET_OPTION).filter_map do |key|
+      self.class.send(:option_keys).grep(SECRET_OPTION).filter_map do |key|
         value = public_send(key)
         value if value.is_a?(String)
       end

@@ -6,10 +6,10 @@ module RubyLLM
     class Gemini < Provider
       include Protocols::Gemini::RetryInfo
 
-      protocol :gemini, Protocols::Gemini, batches: Protocols::Gemini::Batches
-      protocol :interactions, Protocols::Interactions
-      protocol :live_transcription, Protocols::Gemini::LiveTranscription
-      protocol :files, Protocols::Gemini::Files
+      protocol :gemini, 'RubyLLM::Protocols::Gemini', batches: 'RubyLLM::Protocols::Gemini::Batches'
+      protocol :interactions, 'RubyLLM::Protocols::Interactions'
+      protocol :live_transcription, 'RubyLLM::Protocols::Gemini::LiveTranscription'
+      protocol :files, 'RubyLLM::Protocols::Gemini::Files'
 
       def protocol_for(model, operation: nil, **)
         return protocols[:interactions] if operation == :animate

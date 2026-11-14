@@ -6,18 +6,18 @@ module RubyLLM
     class VertexAI < Provider
       include Protocols::Gemini::RetryInfo
 
-      protocol :gemini, VertexAI::Gemini, batches: VertexAI::Gemini::Batches
-      protocol :anthropic, VertexAI::Anthropic, batches: VertexAI::Anthropic::Batches
-      protocol :mistral, VertexAI::Mistral
-      protocol :chat_completions, VertexAI::ChatCompletions, batches: VertexAI::ChatCompletions::Batches
-      protocol :embed_content, VertexAI::EmbedContent
-      protocol :embedding_prediction, Protocols::VertexAI::EmbeddingPrediction
-      protocol :transcription, VertexAI::Transcription
-      protocol :live_transcription, VertexAI::LiveTranscription
-      protocol :ranking, Protocols::VertexAI::Ranking
-      protocol :text_to_speech, Protocols::VertexAI::TextToSpeech
-      protocol :research, Protocols::VertexAI::Research
-      protocol :files, Protocols::VertexAI::Files
+      protocol :gemini, 'RubyLLM::Providers::VertexAI::Gemini', batches: 'RubyLLM::Providers::VertexAI::Gemini::Batches'
+      protocol :anthropic, 'RubyLLM::Providers::VertexAI::Anthropic', batches: 'RubyLLM::Providers::VertexAI::Anthropic::Batches'
+      protocol :mistral, 'RubyLLM::Providers::VertexAI::Mistral'
+      protocol :chat_completions, 'RubyLLM::Providers::VertexAI::ChatCompletions', batches: 'RubyLLM::Providers::VertexAI::ChatCompletions::Batches'
+      protocol :embed_content, 'RubyLLM::Providers::VertexAI::EmbedContent'
+      protocol :embedding_prediction, 'RubyLLM::Protocols::VertexAI::EmbeddingPrediction'
+      protocol :transcription, 'RubyLLM::Providers::VertexAI::Transcription'
+      protocol :live_transcription, 'RubyLLM::Providers::VertexAI::LiveTranscription'
+      protocol :ranking, 'RubyLLM::Protocols::VertexAI::Ranking'
+      protocol :text_to_speech, 'RubyLLM::Protocols::VertexAI::TextToSpeech'
+      protocol :research, 'RubyLLM::Protocols::VertexAI::Research'
+      protocol :files, 'RubyLLM::Protocols::VertexAI::Files'
 
       SCOPES = [
         'https://www.googleapis.com/auth/cloud-platform',

@@ -4,9 +4,9 @@ module RubyLLM
   module Providers
     # Mistral API integration.
     class Mistral < Provider
-      protocol :chat_completions, ChatCompletions, batches: Mistral::ChatCompletions::Batches
-      protocol :conversations, Conversations
-      protocol :files, Protocols::Mistral::Files
+      protocol :chat_completions, 'RubyLLM::Providers::Mistral::ChatCompletions', batches: 'RubyLLM::Providers::Mistral::ChatCompletions::Batches'
+      protocol :conversations, 'RubyLLM::Providers::Mistral::Conversations'
+      protocol :files, 'RubyLLM::Protocols::Mistral::Files'
 
       def protocol_for(model, operation: nil, **)
         return Conversations if operation == :paint

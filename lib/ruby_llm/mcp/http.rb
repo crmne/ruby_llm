@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'uri'
+
 module RubyLLM
   class MCP
     # Streamable HTTP. Every message is its own POST, answered with a JSON

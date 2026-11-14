@@ -93,7 +93,7 @@ end
 
 That is the real shape of a RubyLLM provider - DeepSeek, Perplexity, and Mistral are all variations on it. Each piece earns its place:
 
-* **`protocol :chat_completions, ChatCompletions`** registers a named protocol. The first protocol you declare becomes the provider's default. Here you subclass the built-in `Protocols::ChatCompletions` so you can later override wire-format seams; if the service is a perfect match you can register `Protocols::ChatCompletions` directly.
+* **`protocol :chat_completions, ChatCompletions`** registers a named protocol. The first protocol you declare becomes the provider's default. Here you subclass the built-in `Protocols::ChatCompletions` so you can later override wire-format seams; if the service is a perfect match you can register `Protocols::ChatCompletions` directly. You can pass the class by name (a String) instead, but that only defers the constant lookup, not loading whatever file defines it - nested in `acme.rb` as `ChatCompletions` is here, it still loads with the provider. The String form pays off once the protocol lives in its own autoloaded file, the way RubyLLM's own bundled providers register, for example, `'RubyLLM::Protocols::ChatCompletions'` defined in `lib/ruby_llm/protocols/chat_completions.rb`.
 * **`api_base`** is the host. RubyLLM hands it straight to Faraday, so a relative endpoint path like `chat/completions` is resolved against it. Reading `@config.acme_api_base` first lets users point at a proxy or self-hosted instance, with a default for the public API.
 * **`headers`** supplies authentication. The base returns `{}`, so this is optional - but nearly every remote service needs it. The hash is merged into every request.
 * **`models_url`** names the model-listing endpoint. Change it when the provider does not expose models at `/models`.
@@ -114,7 +114,7 @@ class Ollama < Provider
     include Ollama::Models
   end
 
-  protocol :chat_completions, ChatCompletions
+  protocol :chat_completions, 'RubyLLM::Providers::Ollama::ChatCompletions'
 
   def api_base
     @config.ollama_api_base
@@ -213,9 +213,9 @@ When one service speaks several APIs, register each under a name and override `p
 
 ```ruby
 # lib/ruby_llm/providers/openai.rb (excerpt)
-protocol :responses, Protocols::Responses, batches: Protocols::Responses::Batches
-protocol :chat_completions, Protocols::ChatCompletions, batches: Protocols::ChatCompletions::Batches
-protocol :files, Protocols::OpenAI::Files
+protocol :responses, 'RubyLLM::Providers::OpenAI::Responses', batches: 'RubyLLM::Protocols::Responses::Batches'
+protocol :chat_completions, 'RubyLLM::Protocols::ChatCompletions', batches: 'RubyLLM::Protocols::ChatCompletions::Batches'
+protocol :files, 'RubyLLM::Protocols::OpenAI::Files'
 
 # Audio, realtime, and search-preview models only exist on Chat Completions.
 def protocol_for(model, **)
@@ -231,7 +231,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-The optional `batches:` argument adds batch operations to a protocol. Register a provider-wide Files API as `protocol :files`; file upload, lookup, and download resolve that entry directly rather than routing through `protocol_for`.
+The optional `batches:` argument adds batch operations to a protocol; pass it by name, the same as the protocol class itself, to defer loading it too. Register a provider-wide Files API as `protocol :files`; file upload, lookup, and download resolve that entry directly rather than routing through `protocol_for`.
 
 ### Reusing Uploaded Files
 
@@ -268,6 +268,14 @@ Pass `assume_model_exists: true` for models that aren't in the registry, or have
 
 The slug RubyLLM uses everywhere comes from the symbol you pass to `register`, not from the class name. Register as `:acme` and your config keys are `acme_api_key`, `acme_api_base`, and `acme_protocol`. Keep the symbol, the `configuration_options` prefix, and the keys you read off `@config` in agreement, or configuration silently returns `nil`.
 {: .warning }
+
+Undo a registration with `RubyLLM::Provider.unregister`, such as when a test swaps in a fake provider for the length of one example:
+
+```ruby
+RubyLLM::Provider.unregister :acme
+```
+
+This drops `:acme` from `RubyLLM::Provider.providers` and its bundled model catalog; the `acme_api_key` and other accessors `register` defined on `Configuration` stay, so re-registering the slug later finds them already there.
 
 ## Packaging as a Gem
 

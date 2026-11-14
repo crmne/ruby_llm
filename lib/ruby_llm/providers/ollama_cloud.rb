@@ -16,8 +16,8 @@ module RubyLLM
       class SystemOne < Ollama::SystemOne
       end
 
-      protocol :chat_completions, ChatCompletions
-      protocol :system_one, SystemOne
+      protocol :chat_completions, 'RubyLLM::Providers::OllamaCloud::ChatCompletions'
+      protocol :system_one, 'RubyLLM::Providers::OllamaCloud::SystemOne'
 
       def api_base
         configured_api_base(:ollama_cloud_api_base, 'https://ollama.com/v1', endpoints: Protocols::ChatCompletions::ENDPOINT_PATHS)

@@ -4,12 +4,11 @@ module RubyLLM
   module Providers
     # MiniMax API integration, through its Anthropic-compatible endpoint.
     class MiniMax < Provider
-      protocol :anthropic, MiniMax::Anthropic
-      protocol :media, Protocols::MiniMax
-      protocol :files, Protocols::MiniMax::Files
-      protocol :chat_completions, MiniMax::ChatCompletions
-      protocol :responses, MiniMax::Responses
-
+      protocol :anthropic, 'RubyLLM::Providers::MiniMax::Anthropic'
+      protocol :media, 'RubyLLM::Protocols::MiniMax'
+      protocol :files, 'RubyLLM::Protocols::MiniMax::Files'
+      protocol :chat_completions, 'RubyLLM::Providers::MiniMax::ChatCompletions'
+      protocol :responses, 'RubyLLM::Providers::MiniMax::Responses'
       MEDIA_OPERATIONS = %i[paint animate speak transcribe].freeze
 
       # The one MiniMax model that applies a response_format, on Chat

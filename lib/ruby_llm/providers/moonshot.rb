@@ -10,10 +10,9 @@ module RubyLLM
         include Moonshot::Documents
       end
 
-      protocol :chat_completions, ChatCompletions, batches: Protocols::ChatCompletions::Batches
-      protocol :responses, Moonshot::Responses
-      protocol :files, Protocols::Moonshot::Files
-
+      protocol :chat_completions, 'RubyLLM::Providers::Moonshot::ChatCompletions', batches: 'RubyLLM::Protocols::ChatCompletions::Batches'
+      protocol :responses, 'RubyLLM::Providers::Moonshot::Responses'
+      protocol :files, 'RubyLLM::Protocols::Moonshot::Files'
       def api_base
         configured_api_base(:moonshot_api_base, 'https://api.moonshot.ai/v1', endpoints: Protocols::ChatCompletions::ENDPOINT_PATHS)
       end

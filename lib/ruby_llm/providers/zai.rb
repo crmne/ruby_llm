@@ -33,9 +33,8 @@ module RubyLLM
         end
       end
 
-      protocol :chat_completions, ChatCompletions
-      protocol :files, Protocols::ZAI::Files
-
+      protocol :chat_completions, 'RubyLLM::Providers::ZAI::ChatCompletions'
+      protocol :files, 'RubyLLM::Protocols::ZAI::Files'
       def api_base
         configured_api_base(:zai_api_base, 'https://api.z.ai/api/paas/v4', endpoints: Protocols::ChatCompletions::ENDPOINT_PATHS)
       end

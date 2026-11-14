@@ -1212,6 +1212,7 @@ RubyLLM::Protocol#connection (attr_reader)
 RubyLLM::Protocol#model (attr_reader)
 RubyLLM::Protocol#provider (attr_reader)
 RubyLLM::Provider (class)
+RubyLLM::Provider extend RubyLLM::Provider::Registration
 RubyLLM::Provider include Support::Inspectable
 RubyLLM::Provider#account_identity
 RubyLLM::Provider#api_base
@@ -1226,10 +1227,12 @@ RubyLLM::Provider.configuration_options
 RubyLLM::Provider.configuration_requirements
 RubyLLM::Provider.display_name
 RubyLLM::Provider.local?
-RubyLLM::Provider.protocol(name, protocol_class, batches: nil)
-RubyLLM::Provider.providers
-RubyLLM::Provider.register(name, provider_class, models: nil)
 RubyLLM::Provider.slug
+RubyLLM::Provider::Registration (module)
+RubyLLM::Provider::Registration#protocol(name, protocol_class, batches: nil)
+RubyLLM::Provider::Registration#providers
+RubyLLM::Provider::Registration#register(name, provider_class, models: nil)
+RubyLLM::Provider::Registration#unregister(name)
 RubyLLM::Question (class)
 RubyLLM::Question include Support::Inspectable
 RubyLLM::Question#answer(value = nil, **values)

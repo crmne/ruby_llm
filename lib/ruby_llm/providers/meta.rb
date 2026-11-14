@@ -4,9 +4,8 @@ module RubyLLM
   module Providers
     # Meta Model API integration for the Muse models.
     class Meta < Provider
-      protocol :responses, Meta::Responses
-      protocol :files, Protocols::OpenAI::Files
-
+      protocol :responses, 'RubyLLM::Providers::Meta::Responses'
+      protocol :files, 'RubyLLM::Protocols::OpenAI::Files'
       def api_base
         configured_api_base(:meta_api_base, 'https://api.meta.ai/v1', endpoints: Protocols::ChatCompletions::ENDPOINT_PATHS)
       end

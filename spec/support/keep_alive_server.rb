@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'faraday'
+
 require 'socket'
 
 module KeepAlive

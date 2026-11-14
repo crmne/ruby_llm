@@ -26,9 +26,12 @@ RSpec.describe RubyLLM::Chat do
   end
 
   before do
-    providers = RubyLLM::Provider.providers.merge(custom: provider_class)
-    allow(RubyLLM::Provider).to receive(:providers).and_return(providers)
+    RubyLLM::Provider.register(:custom, provider_class)
     allow(RubyLLM::Models).to receive(:instance).and_return(RubyLLM::Models.new([model, other_model]))
+  end
+
+  after do
+    RubyLLM::Provider.unregister(:custom)
   end
 
   [false, true].each do |streaming|

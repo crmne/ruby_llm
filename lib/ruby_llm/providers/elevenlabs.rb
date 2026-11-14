@@ -4,9 +4,9 @@ module RubyLLM
   module Providers
     # Integrates ElevenLabs speech, transcription, ElevenAgents, and Image & Video APIs.
     class ElevenLabs < Provider
-      protocol :elevenlabs, Protocols::ElevenLabs
-      protocol :flows, Protocols::ElevenLabs::Flows
-      protocol :files, Protocols::ElevenLabs::Assets
+      protocol :elevenlabs, 'RubyLLM::Protocols::ElevenLabs'
+      protocol :flows, 'RubyLLM::Protocols::ElevenLabs::Flows'
+      protocol :files, 'RubyLLM::Protocols::ElevenLabs::Assets'
 
       def resolve_protocol(name, model, operation: nil, **options)
         name ||= :flows if %i[paint animate].include?(operation)

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'marcel'
+require 'uri'
 
 module RubyLLM
   class MCP
