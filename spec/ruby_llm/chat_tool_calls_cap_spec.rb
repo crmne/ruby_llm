@@ -348,6 +348,20 @@ RSpec.describe RubyLLM::Chat do
       expect(events.sole).to include(capped: 2)
     end
 
+    it 'fires when a callback raises on the last capped result' do
+      events = recorded_events('tool_calls_capped.ruby_llm')
+      chat.with_tool_options(calls: 2).after_message do |message|
+        raise 'boom' if message.tool_result? && message.content.include?("didn't run") && events.empty?
+      end
+      allow(chat.provider).to receive(:complete).and_return(calls('lookup', 'lookup', 'lookup'), answer)
+
+      expect { chat.ask('Go') }.to raise_error('boom')
+      chat.complete
+
+      expect(events.size).to eq(1)
+      expect(events.sole).to include(capped: 1)
+    end
+
     it 'does not fire within the cap' do
       events = recorded_events('tool_calls_capped.ruby_llm')
       chat.with_tool_options(calls: 2)

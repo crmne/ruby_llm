@@ -2531,15 +2531,18 @@ module RubyLLM
     end
 
     def answer_capped_tool_calls(response)
-      capped = pending_tool_calls(response).to_h.slice(*capped_tool_call_ids(response))
-      return if capped.empty?
-
+      capped = unanswered_capped_tool_calls(response)
       capped.each_value do |tool_call|
         raise_if_cancelled!
         run_callbacks(:before_message)
         add_tool_result_message(tool_call, { error: capped_tool_call_error })
       end
-      instrument_capped_tool_calls(response)
+    ensure
+      instrument_capped_tool_calls(response) if capped&.any? && unanswered_capped_tool_calls(response).empty?
+    end
+
+    def unanswered_capped_tool_calls(response)
+      pending_tool_calls(response).to_h.slice(*capped_tool_call_ids(response))
     end
 
     def capped_tool_call_ids(response)
