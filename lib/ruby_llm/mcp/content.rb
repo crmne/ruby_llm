@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'marcel'
+
 module RubyLLM
   class MCP
     # Reads MCP content blocks into text and attachments. Tool results and
