@@ -71,6 +71,7 @@ overcommit --install   # required: installs the git hooks that gate every commit
 | `overcommit --run` | Everything the pre-commit hook runs: RuboCop, Flay, archspec, the API list, RSpec. |
 | `bundle exec rubocop` | Lint (auto-corrects on commit). |
 | `bundle exec archspec check` | Architecture rules from `Archspec.rb`. |
+| `bundle exec undercover` | Untested methods and blocks in your changes, compared with `origin/main`. Add `--include-files` after a partial run. |
 | `bundle exec rake api:dump` | Rewrites `api.txt`, the public API list; `rake api:check` fails when it is stale. |
 | `bundle exec rake conformance:mcp` | The official MCP client conformance suite against `RubyLLM::MCP` (needs Node). |
 | `bundle exec rake conformance:opentelemetry` | Checks traces against the official OpenTelemetry GenAI conventions (needs Weaver). |
@@ -130,6 +131,7 @@ When you find provider vocabulary in the wrong layer, move it and add the rule t
 ## Testing
 
 - Specs tagged `:live` talk to provider APIs through VCR cassettes in `spec/fixtures/vcr_cassettes`. Everything else is a plain unit test. Every bug fix ships with a unit spec that fails before the fix.
+- After a spec run, run `bundle exec undercover --format json` and add specs until it exits 0. Each warning names a method or block you changed, with its uncovered lines and the branches that never ran. After a partial run, pass the files those specs load, such as `--include-files 'lib/ruby_llm/cost.rb'`, or every other changed file reports as uncovered. Claude Code runs this loop with the undercover plugin (github.com/grodowski/undercover-claude).
 - Cassette names derive from the example's full description. A failing `:live` example deletes its cassette on purpose, so the next run hits the real API instead of replaying a recording that may be hiding the bug.
 - Re-record cassettes with `rake vcr:record[openai,anthropic]` or `rake vcr:record[all]` (needs real API keys: `.env` is committed and holds only `op-cache read` 1Password lookups, never values; there is no `.env.example`). An empty key counts as unset (`spec/support/blank_keys.rb`), so a failed lookup replays cassettes instead of deleting them. Check cassettes for leaked keys before committing. `bin/gitleaks-staged` runs in the pre-commit hook and CI runs gitleaks again.
 - Protocol chat modules use `module_function`. To unit-test a render or parse method, extend the module (plus `Tools` and `Media` when the method needs them) onto a bare Object, the way the existing protocol specs do.
