@@ -1757,6 +1757,23 @@ module RubyLLM
             'their tasks, before asking again.'
     end
 
+    # Closes the calls of the latest round that a raising tool left without
+    # a result, as unfinished, the way #cancel does, so the next request is
+    # valid and no finished call runs again. Unlike a cancel, the turn goes
+    # on: the next #complete asks the model. A call that waits on a person
+    # or a task, or that another process runs, stays pending.
+    def close_unfinished_tool_calls # :nodoc:
+      response = pending_tool_response
+      return unless response
+
+      pending_tool_calls(response).each do |tool_call|
+        next if running_elsewhere?(tool_call) || tool_call_input(tool_call) || approval_pending?(tool_call)
+
+        run_callbacks(:before_message)
+        run_callbacks(:after_message, add_message(unfinished_result(tool_call)))
+      end
+    end
+
     private
 
     def agent_run_chat = self

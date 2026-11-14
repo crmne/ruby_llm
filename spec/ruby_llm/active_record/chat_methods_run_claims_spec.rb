@@ -116,7 +116,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(cached.compact).to be_empty
   end
 
-  it 'drops what the failed round destroyed from the transcript in memory' do
+  it 'keeps the transcript in memory in step with the round a failure closed' do
     first = RubyLLM::ToolCall.new(id: "call_#{SecureRandom.hex(4)}", name: 'charge_card', arguments: {})
     second = RubyLLM::ToolCall.new(id: "call_#{SecureRandom.hex(4)}", name: 'charge_card', arguments: {})
     chat = Chat.create!(model: model_for(:openai)).with_tools(charge_tool)
@@ -128,8 +128,9 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     during_run << -> { raise RubyLLM::ServerError, 'boom' }
 
     expect { chat.complete }.to raise_error(RubyLLM::ServerError)
-    expect(chat.messages_association.reload.map(&:role)).to eq(['user'])
-    expect(chat.to_llm.messages.map(&:role)).to eq([:user])
+    expect(chat.messages_association.reload.map(&:content)).to eq(chat.to_llm.messages.map(&:content))
+    expect(chat.to_llm.messages.map(&:role)).to eq(%i[user assistant tool tool])
+    expect(chat.to_llm.messages.last.content).to eq({ error: 'The tool call did not finish.' }.to_json)
   end
 
   def job_for(chat, tool = charge_tool, &during_request)
@@ -831,6 +832,21 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(executions).to be_empty
     expect(job).to be_waiting
     expect(job).not_to be_running
+  end
+
+  it 'leaves a call another process runs open when a tool of its round raises' do
+    chat = approved_chat
+    refund_id = "call_#{SecureRandom.hex(4)}"
+    tool_calls = chat.messages_association.where(role: :assistant).sole.ruby_llm_tool_calls
+    tool_calls.create!(tool_call_id: refund_id, name: 'charge_card', arguments: {})
+    chat.approve(refund_id)
+    tool_call_record.update!(claimed_until: 10.minutes.from_now)
+    during_run << -> { raise RubyLLM::ServerError, 'boom' }
+
+    expect { job_for(chat).complete }.to raise_error(RubyLLM::ServerError)
+    expect(tool_call_record.result).to be_nil
+    expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: refund_id).result.content)
+      .to eq({ error: 'The tool call did not finish.' }.to_json)
   end
 
   it 'runs without claims on a schema that has no claim columns' do

@@ -99,7 +99,7 @@ RSpec.describe RubyLLM::Agent do
 
   it 'classifies every method defined on Chat' do
     expected_missing_methods = %i[
-      approval_pending? continue_turn fallback_errors
+      approval_pending? close_unfinished_tool_calls continue_turn fallback_errors
       message_queue= messages= prepare_message raise_if_pending_tool_calls!
       raise_if_prompt_attachments! run= run_around_join take_queued_messages tool_call_state= tool_prefs
       add_usage_entry usage_entries usage_entries= agent_class agent_class= running_agent
