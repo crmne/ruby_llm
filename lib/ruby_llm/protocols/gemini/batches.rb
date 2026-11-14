@@ -86,7 +86,19 @@ module RubyLLM
         end
 
         JSON_SCHEMA_ONLY_KEYS = %w[$schema $id additionalProperties strict].freeze
-        private_constant :JSON_SCHEMA_ONLY_KEYS
+        SCHEMA_LITERAL_KEYS = %w[const default enum example examples].freeze
+        NUMERIC_KEYS = %w[enum format minimum maximum].freeze
+        TYPE_CONSTRAINTS = {
+          'array' => %w[items minItems maxItems],
+          'boolean' => [],
+          'integer' => NUMERIC_KEYS,
+          'number' => NUMERIC_KEYS,
+          'object' => %w[properties required propertyOrdering minProperties maxProperties],
+          'string' => %w[enum format minLength maxLength pattern]
+        }.transform_values { |keys| (%w[description title] + keys).freeze }.freeze
+        CONSTRAINED_KEYS = TYPE_CONSTRAINTS.values.flatten.uniq.freeze
+        private_constant :JSON_SCHEMA_ONLY_KEYS, :SCHEMA_LITERAL_KEYS, :NUMERIC_KEYS, :TYPE_CONSTRAINTS,
+                         :CONSTRAINED_KEYS
 
         def response_schema(node)
           case node
@@ -100,21 +112,44 @@ module RubyLLM
           schema = node.each_with_object({}) do |(key, value), converted|
             next if JSON_SCHEMA_ONLY_KEYS.include?(key.to_s)
 
-            converted[key] = if key.to_s == 'properties' && value.is_a?(Hash)
-                               value.transform_values { |property| response_schema(property) }
-                             else
-                               response_schema(value)
-                             end
+            converted[key] = response_schema_value(key.to_s, value)
           end
-          nullable_type(schema)
+          render_type_union(schema)
         end
 
-        def nullable_type(schema)
-          key = schema.key?(:type) ? :type : 'type'
-          types = Array(schema[key])
-          return schema unless types.length > 1 && types.include?('null')
+        def response_schema_value(key, value)
+          return value if SCHEMA_LITERAL_KEYS.include?(key)
+          if key == 'properties' && value.is_a?(Hash)
+            return value.transform_values { |property| response_schema(property) }
+          end
 
-          schema.merge(key => (types - ['null']).first, nullable: true)
+          response_schema(value)
+        end
+
+        def render_type_union(schema)
+          key = schema.key?(:type) ? :type : 'type'
+          types = schema[key]
+          return schema unless types.is_a?(Array) && !types.empty?
+          return schema.merge(key => types.first) if types.size == 1
+
+          members = types - ['null']
+          schema = schema.except('nullable').merge(nullable: true) if members.size < types.size
+          return schema.merge(key => members.first) if members.size == 1
+
+          render_union_members(schema, key, members)
+        end
+
+        def render_union_members(schema, type_key, members)
+          if schema.key?(:anyOf) || schema.key?('anyOf')
+            raise ArgumentError, 'Gemini Batch responseSchema cannot combine a type union and anyOf'
+          end
+
+          constraints, common = schema.except(type_key).partition { |key, _| CONSTRAINED_KEYS.include?(key.to_s) }
+          branches = members.map do |member|
+            keys = TYPE_CONSTRAINTS.fetch(member, [])
+            constraints.select { |key, _| keys.include?(key.to_s) }.to_h.merge(type_key => member)
+          end
+          common.to_h.merge(anyOf: branches)
         end
 
         def batch_name(id)

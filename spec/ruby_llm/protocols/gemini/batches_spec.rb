@@ -64,9 +64,114 @@ RSpec.describe RubyLLM::Protocols::Gemini::Batches do
         required: %w[title tags]
       )
     end
+
+    it 'keeps each non-null member of a nullable type union regardless of order' do
+      [%w[string integer null], %w[null integer string]].each do |types|
+        schema = { 'type' => types, 'description' => 'An identifier', 'nullable' => false }
+
+        expect(render_batch_schema(schema)).to match(
+          anyOf: contain_exactly(
+            { 'type' => 'string', 'description' => 'An identifier' },
+            { 'type' => 'integer', 'description' => 'An identifier' }
+          ),
+          nullable: true
+        )
+      end
+    end
+
+    it 'puts annotations and enums only on the branches that can carry them' do
+      schema = { type: %w[string number boolean], title: 'Value', enum: ['a', 1], format: 'float' }
+
+      expect(render_batch_schema(schema)).to eq(
+        anyOf: [
+          { type: 'string', title: 'Value', enum: ['a', 1], format: 'float' },
+          { type: 'number', title: 'Value', enum: ['a', 1], format: 'float' },
+          { type: 'boolean', title: 'Value' }
+        ]
+      )
+    end
+
+    it 'puts type-specific constraints on the corresponding branches of a union' do
+      schema = {
+        type: %w[integer array],
+        minimum: 1,
+        items: { type: %w[string null] },
+        minItems: 2
+      }
+
+      expect(render_batch_schema(schema)).to eq(
+        anyOf: [
+          { type: 'integer', minimum: 1 },
+          { type: 'array', items: { type: 'string', nullable: true }, minItems: 2 }
+        ]
+      )
+    end
+
+    it 'renders a single-element type array as a scalar type' do
+      %w[string null].each do |type|
+        expect(render_batch_schema(type: [type])).to eq(type:)
+      end
+    end
+
+    it 'preserves an explicit anyOf' do
+      schema = { anyOf: [{ type: 'string' }, { type: 'integer' }] }
+
+      expect(render_batch_schema(schema)).to eq(schema)
+    end
+
+    it 'does not rewrite literal objects that look like schema nodes' do
+      example = { type: %w[string integer] }
+      schema = { type: %w[string object], example: }
+
+      expect(render_batch_schema(schema)).to eq(example:, anyOf: [{ type: 'string' }, { type: 'object' }])
+    end
+
+    it 'converts properties whose names match schema keywords' do
+      schema = { type: 'object', properties: { strict: { type: 'boolean' }, example: { type: %w[string null] } } }
+
+      expect(render_batch_schema(schema)).to eq(
+        type: 'object',
+        properties: { strict: { type: 'boolean' }, example: { type: 'string', nullable: true } }
+      )
+    end
+
+    it 'rejects a type union combined with an explicit anyOf' do
+      schema = { 'type' => %w[string integer], 'anyOf' => [{ 'type' => 'string' }] }
+
+      expect { render_batch_schema(schema) }.to raise_error(ArgumentError, /type union and anyOf/)
+    end
+
+    def render_batch_schema(schema)
+      request = {
+        custom_id: '0',
+        payload: { generationConfig: { responseJsonSchema: schema } }
+      }
+      protocol.send(:gemini_batch_request, request, 'gemini-2.5-flash')
+              .dig(:request, :generationConfig, :responseSchema)
+    end
   end
 
   describe '#create_batch' do
+    it 'sends the converted union through the public batch API' do
+      context = RubyLLM.context { |config| config.gemini_api_key = 'test-key' }
+      chat = context.chat(model: 'gemini-2.5-flash', provider: :gemini)
+      chat.with_schema(type: 'object', properties: { value: { type: %w[string integer null] } })
+      chat.ask_later('Return an identifier.')
+      request = stub_request(:post, %r{/v1beta/models/gemini-2\.5-flash:batchGenerateContent})
+                .with do |http|
+        config = JSON.parse(http.body).dig('batch', 'inputConfig', 'requests', 'requests', 0, 'request',
+                                           'generationConfig')
+        expect(config).not_to have_key('responseJsonSchema')
+        expect(config.dig('responseSchema', 'properties', 'value')).to eq(
+          'anyOf' => [{ 'type' => 'string' }, { 'type' => 'integer' }], 'nullable' => true
+        )
+      end.to_return_json(body: { name: 'batches/test', metadata: { state: 'BATCH_STATE_PENDING' } })
+
+      RubyLLM.batch(chat)
+
+      expect(request).to have_been_requested.once
+    end
+
     it 'rejects mixed-model jobs' do
       requests = [
         { model: 'gemini-2.5-flash', payload: {} },
