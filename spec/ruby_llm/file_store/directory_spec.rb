@@ -89,6 +89,46 @@ RSpec.describe RubyLLM::FileStore::Directory do
     expect(store.list('in/a.txt').map(&:path)).to eq(['in/a.txt'])
   end
 
+  context 'when the folder changes while it is listed' do
+    def change_before_lstat(path)
+      full = File.join(store.root, path)
+      changed = false
+      allow(File).to receive(:lstat).and_call_original
+      allow(File).to receive(:lstat).with(full).and_wrap_original do |original, *arguments|
+        unless changed
+          changed = true
+          yield full
+        end
+        original.call(*arguments)
+      end
+    end
+
+    it 'lists the other files when one is deleted' do
+      %w[a.txt b.txt c.txt].each { |name| store.write(name, name) }
+      change_before_lstat('b.txt') { |full| File.delete(full) }
+
+      expect(store.list.map(&:path)).to eq(%w[a.txt c.txt])
+    end
+
+    it 'lists the other files when a write moves its temporary file into place' do
+      %w[a.txt c.txt].each { |name| store.write(name, name) }
+      File.write(File.join(store.root, '.b.txt.tmp'), 'b')
+      change_before_lstat('.b.txt.tmp') { |full| File.rename(full, File.join(store.root, 'b.txt')) }
+
+      expect(store.list.map(&:path)).to include('a.txt', 'c.txt')
+    end
+
+    it 'lists the other files when a folder is replaced by a file' do
+      %w[a.txt notes/plan.md].each { |name| store.write(name, name) }
+      change_before_lstat('notes/plan.md') do
+        FileUtils.rm_r(File.join(store.root, 'notes'))
+        File.write(File.join(store.root, 'notes'), 'now a file')
+      end
+
+      expect(store.list.map(&:path)).to eq(['a.txt'])
+    end
+  end
+
   it 'identifies extensionless media put in the folder after reopening the store' do
     content = File.binread(File.expand_path('../../fixtures/ruby.png', __dir__))
     File.binwrite(File.join(root, 'logo'), content)
