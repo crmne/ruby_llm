@@ -109,41 +109,71 @@ module RubyLLM
           type_union(schema)
         end
 
-        NUMBER_KEYWORDS = %w[enum format maximum minimum exclusiveMaximum exclusiveMinimum multipleOf].freeze
         TYPE_KEYWORDS = {
-          'string' => %w[enum format maxLength minLength pattern],
-          'number' => NUMBER_KEYWORDS,
-          'integer' => NUMBER_KEYWORDS,
+          'string' => %w[format maxLength minLength pattern],
+          'number' => %w[format maximum minimum exclusiveMaximum exclusiveMinimum multipleOf],
+          'integer' => %w[format maximum minimum exclusiveMaximum exclusiveMinimum multipleOf],
           'object' => %w[properties required maxProperties minProperties propertyOrdering],
-          'array' => %w[items maxItems minItems prefixItems uniqueItems],
-          'boolean' => []
+          'array' => %w[items maxItems minItems prefixItems uniqueItems]
         }.freeze
         TYPED_KEYWORDS = TYPE_KEYWORDS.values.flatten.uniq.freeze
-        private_constant :NUMBER_KEYWORDS, :TYPE_KEYWORDS, :TYPED_KEYWORDS
+        ENUM_VALUE_TYPES = {
+          'string' => ->(value) { value.is_a?(String) },
+          'number' => ->(value) { value.is_a?(Numeric) },
+          'integer' => ->(value) { value.is_a?(Integer) },
+          'boolean' => ->(value) { [true, false].include?(value) },
+          'object' => ->(value) { value.is_a?(Hash) },
+          'array' => ->(value) { value.is_a?(Array) },
+          'null' => lambda(&:nil?)
+        }.freeze
+        private_constant :TYPE_KEYWORDS, :TYPED_KEYWORDS, :ENUM_VALUE_TYPES
 
         # Gemini's Schema takes one type, so a JSON Schema type array becomes
-        # nullable plus anyOf, each member keeping the keywords of its type.
+        # nullable plus anyOf, each member keeping the keywords and enum
+        # values of its type.
         def type_union(schema)
           key = schema.key?(:type) ? :type : 'type'
           return schema unless schema[key].is_a?(Array)
 
-          types = schema[key].map(&:to_s)
-          others = types - ['null']
+          types = schema[key].map(&:to_s).uniq
           return schema.merge(key => types.first) if types.one?
 
-          union = type_union_members(schema.except(key), key, others)
-          others.length == types.length ? union : union.merge(nullable: true)
+          types = enum_types(schema, types)
+          others = types - ['null']
+          return schema.merge(key => 'null') if others.empty?
+
+          union = type_union_members(schema.except(key), others)
+          types.include?('null') ? union.merge(nullable: true) : union
         end
 
-        def type_union_members(schema, key, types)
-          return schema.merge(key => types.first) if types.one?
+        def type_union_members(schema, types)
+          return union_member(schema, types.first) if types.one?
 
           { anyOf: types.map { |type| union_member(schema, type) } }
         end
 
         def union_member(schema, type)
           own = TYPE_KEYWORDS.fetch(type, [])
-          { type: }.merge(schema.reject { |name, _| TYPED_KEYWORDS.include?(name.to_s) && !own.include?(name.to_s) })
+          member = schema.reject { |name, _| TYPED_KEYWORDS.include?(name.to_s) && !own.include?(name.to_s) }
+          values = member[enum_key(member)]
+          member = member.merge(enum_key(member) => values.select(&enum_value_of(type))) if values.is_a?(Array)
+          { type: }.merge(member)
+        end
+
+        def enum_types(schema, types)
+          values = schema[enum_key(schema)]
+          return types unless values.is_a?(Array)
+
+          matching = types.select { |type| values.any?(&enum_value_of(type)) }
+          matching.empty? ? types : matching
+        end
+
+        def enum_key(schema)
+          schema.key?(:enum) ? :enum : 'enum'
+        end
+
+        def enum_value_of(type)
+          ENUM_VALUE_TYPES.fetch(type) { ->(_) { true } }
         end
 
         def batch_name(id)

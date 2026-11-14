@@ -104,7 +104,6 @@ RSpec.describe RubyLLM::Protocols::Gemini::Batches do
         'type' => %w[string array null],
         'description' => 'Tag or tags',
         'maxLength' => 20,
-        'enum' => %w[a b],
         'items' => { 'type' => %w[string integer] },
         'minItems' => 1
       }
@@ -112,10 +111,19 @@ RSpec.describe RubyLLM::Protocols::Gemini::Batches do
       expect(batch_response_schema(property)).to eq(
         nullable: true,
         anyOf: [
-          { type: 'string', 'description' => 'Tag or tags', 'maxLength' => 20, 'enum' => %w[a b] },
+          { type: 'string', 'description' => 'Tag or tags', 'maxLength' => 20 },
           { type: 'array', 'description' => 'Tag or tags',
             'items' => { anyOf: [{ type: 'string' }, { type: 'integer' }] }, 'minItems' => 1 }
         ]
+      )
+    end
+
+    it 'keeps an enum on every member and drops the members no value can match' do
+      expect(batch_response_schema(type: %w[string integer array null], enum: ['a', 1])).to eq(
+        anyOf: [{ type: 'string', enum: ['a'] }, { type: 'integer', enum: [1] }]
+      )
+      expect(batch_response_schema(type: %w[string array null], enum: ['a', nil], items: { type: 'string' })).to eq(
+        type: 'string', enum: ['a'], nullable: true
       )
     end
   end
