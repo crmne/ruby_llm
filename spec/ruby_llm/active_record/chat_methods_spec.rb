@@ -1441,6 +1441,54 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(replying(Chat.find(chat.id)).ask('Go on').content).to eq('Done')
     end
 
+    it 'closes a call that raises once its question is answered, so the answer does not run it again' do
+      runs = []
+      booking = Class.new(RubyLLM::Tool) do
+        def self.name = 'BookSeat'
+
+        description 'Books a seat'
+        define_method(:execute) do
+          seat = ask('Window or aisle?', choices: %w[window aisle])
+          runs << seat
+          raise Faraday::ConnectionFailed, 'Booking system unreachable'
+        end
+      end
+      chat = replying(Chat.create!(model: model_id).with_tools(booking), round('book_seat'))
+      chat.ask('Book me a seat')
+      chat.answer(chat.pending_questions.sole, 'window')
+
+      expect { chat.complete }.to raise_error(Faraday::ConnectionFailed)
+      expect(chat.messages.reload.where(role: :tool).pluck(:content)).to eq([unfinished])
+      expect(RubyLLM::ActiveRecord::ToolCall.where(message_id: chat.messages.select(:id)).sole).not_to be_paused
+
+      resumed = replying(Chat.find(chat.id).with_tools(booking))
+      expect(resumed.complete.content).to eq('Done')
+      expect(runs).to eq(['window'])
+    end
+
+    it 'lets the model answer in text after a forced tool call raised' do
+      chat = Chat.create!(model: model_id).with_tools(note_tool(notes), lookup_tool)
+                 .with_tool_options(choice: :required)
+      responses = [round('look_up_order')]
+      choices = []
+      allow(chat.to_llm.provider).to receive(:complete) do
+        choices << chat.to_llm.tool_prefs[:choice]
+        responses.shift || RubyLLM::Message.new(role: :assistant, content: 'Done', input_tokens: 1, output_tokens: 1)
+      end
+
+      expect { chat.ask('Check order 42') }.to raise_error(Faraday::ConnectionFailed)
+      expect(chat.complete.content).to eq('Done')
+      expect(choices).to eq([:required, nil])
+    end
+
+    it 'keeps a tool choice of none after a tool call raised' do
+      chat = replying(Chat.create!(model: model_id).with_tools(lookup_tool).with_tool_options(choice: :none),
+                      round('look_up_order'))
+
+      expect { chat.ask('Check order 42') }.to raise_error(Faraday::ConnectionFailed)
+      expect(chat.to_llm.tool_prefs[:choice]).to eq(:none)
+    end
+
     it 'leaves a round alone when the tool rescues the error into its result' do
       lookup = lookup_tool { |error| "Lookup failed: #{error.message}" }
       chat = replying(Chat.create!(model: model_id).with_tools(note_tool(notes), lookup),
