@@ -281,7 +281,30 @@ module RubyLLM
                            .flatten
 
         provider_models = provider_fetch[:models] + preserved_models
-        merge_models(provider_models, models_dev_fetch[:models])
+        models_dev_models = models_dev_fetch[:models]
+        if models_dev_fetch[:fetched]
+          models_dev_models += models_dev_gaps(existing_models, provider_fetch[:models], models_dev_models)
+        end
+        merge_models(provider_models, models_dev_models)
+      end
+
+      # models.dev sometimes drops a model its provider still serves. Until it
+      # lists the model again, keep the pricing, modalities and limits it last
+      # gave, and say so, so the gap gets reported upstream.
+      def models_dev_gaps(existing_models, listed_models, models_dev_models) # :nodoc:
+        models_dev_by_key = index_by_key(models_dev_models)
+        listed_by_key = index_by_key(listed_models)
+
+        existing_models.select do |model|
+          next false unless model.metadata[:source] == 'models.dev'
+
+          key = "#{model.provider}:#{model.id}"
+          listed = listed_by_key[key]
+          next false if listed.nil? || find_models_dev_model(key, models_dev_by_key, listed)
+
+          RubyLLM.logger.warn("kept from the previous registry: #{key} (missing from models.dev)")
+          true
+        end
       end
 
       def merge_models(provider_models, models_dev_models) # :nodoc:

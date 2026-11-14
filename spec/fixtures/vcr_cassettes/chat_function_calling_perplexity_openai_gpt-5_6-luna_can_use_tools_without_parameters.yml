@@ -25,16 +25,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:43:19 GMT
+      - Fri, 13 Nov 2026 21:30:26 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
       Server:
       - cloudflare
       X-Ratelimit-Limit:
@@ -42,35 +39,38 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1794332600'
+      - '1794605427'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Access-Control-Allow-Origin:
       - "*"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"background":false,"completed_at":1794332598,"created_at":1794332598,"error":null,"frequency_penalty":0,"id":"resp_<X_REQUEST_ID>","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"arguments":"{}","call_id":"call_Sm5oDISydsPjixO4EX9h1nMQ","id":"fc_028ff699-aaf8-41bc-aa6e-0256c0d9f58e","name":"best_language_to_learn","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00001,"output_cost":0.00002,"total_cost":0.00003},"input_tokens":75,"input_tokens_details":{"cached_tokens":0},"output_tokens":17,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":92},"user":null}
+      string: '{"background":false,"completed_at":1794605425,"created_at":1794605425,"error":null,"frequency_penalty":0,"id":"resp_59c7946d-10da-4efd-8049-dd38d0277d15","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"arguments":"{}","call_id":"call_FzQtszd7DPjy7eOJY4JD5VHi","id":"fc_889894fa-cbf1-4671-94db-5a9e6d7e3423","name":"best_language_to_learn","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00001,"output_cost":0.00003,"total_cost":0.00004},"input_tokens":75,"input_tokens_details":{"cached_tokens":0},"output_tokens":28,"output_tokens_details":{"reasoning_tokens":9},"total_tokens":103},"user":null}
 
         '
-  recorded_at: Tue, 10 Nov 2026 17:43:19 GMT
+  recorded_at: Fri, 13 Nov 2026 21:30:26 GMT
 - request:
     method: post
     uri: https://api.perplexity.ai/v1/agent
     body:
       encoding: UTF-8
       string: '{"model":"openai/gpt-5.6-luna","input":[{"role":"user","content":"Use
-        the best_language_to_learn tool to tell me which language to learn."},{"type":"function_call","call_id":"call_Sm5oDISydsPjixO4EX9h1nMQ","name":"best_language_to_learn","arguments":"{}"},{"type":"function_call_output","call_id":"call_Sm5oDISydsPjixO4EX9h1nMQ","output":"Ruby"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"best_language_to_learn","description":"Gets
+        the best_language_to_learn tool to tell me which language to learn."},{"type":"function_call","call_id":"call_FzQtszd7DPjy7eOJY4JD5VHi","name":"best_language_to_learn","arguments":"{}"},{"type":"function_call_output","call_id":"call_FzQtszd7DPjy7eOJY4JD5VHi","output":"Ruby"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
@@ -89,7 +89,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:43:21 GMT
+      - Fri, 13 Nov 2026 21:30:28 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -103,7 +103,7 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1794332602'
+      - '1794605429'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
@@ -123,9 +123,10 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"background":false,"completed_at":1794332599,"created_at":1794332599,"error":null,"frequency_penalty":0,"id":"resp_<X_REQUEST_ID>","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"content":[{"annotations":[],"text":"Ruby","type":"output_text"}],"id":"msg_5a94768e-dff5-4e39-9f3b-d91c137d2060","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00002,"output_cost":0.00001,"total_cost":0.00003},"input_tokens":107,"input_tokens_details":{"cached_tokens":0},"output_tokens":5,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":112},"user":null}
+      string: '{"background":false,"completed_at":1794605426,"created_at":1794605426,"error":null,"frequency_penalty":0,"id":"resp_04b0cf47-2556-4fae-b941-8fc618fa97a3","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5.6-luna","object":"response","output":[{"content":[{"annotations":[],"text":"You
+        should learn **Ruby**.","type":"output_text"}],"id":"msg_b077a073-6cff-4077-9371-4b4274950241","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00002,"output_cost":0.00001,"total_cost":0.00003},"input_tokens":107,"input_tokens_details":{"cached_tokens":0},"output_tokens":11,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":118},"user":null}
 
         '
-  recorded_at: Tue, 10 Nov 2026 17:43:21 GMT
+  recorded_at: Fri, 13 Nov 2026 21:30:28 GMT
 recorded_with: VCR 6.4.1

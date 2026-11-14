@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:36:49 GMT
+      - Fri, 13 Nov 2026 21:26:03 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -44,11 +44,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '961'
+      - '877'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -75,22 +75,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0bf44de84a0693ce016af35630832887d29ed857886510e110",
+          "id": "resp_009fe53354802f27016af7806afe5487d29fd5131f221e8927",
           "object": "response",
-          "created_at": 1794332208,
+          "created_at": 1794605163,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794332209,
+          "completed_at": 1794605163,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -98,7 +99,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0bf44de84a0693ce016af3563119c087d28544eceaeb97f0ad",
+              "id": "msg_009fe53354802f27016af7806bb73087d2a3518a4a39166043",
               "type": "message",
               "status": "completed",
               "content": [
@@ -106,7 +107,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "4"
+                  "text": "2 + 2 = 4."
                 }
               ],
               "phase": "final_answer",
@@ -163,14 +164,14 @@ http_interactions:
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 5,
+            "output_tokens": 12,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 18
+            "total_tokens": 25
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:36:49 GMT
+  recorded_at: Fri, 13 Nov 2026 21:26:03 GMT
 recorded_with: VCR 6.4.1

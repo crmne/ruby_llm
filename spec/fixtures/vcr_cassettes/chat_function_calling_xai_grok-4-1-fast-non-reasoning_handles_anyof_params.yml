@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:45:01 GMT
+      - Fri, 13 Nov 2026 21:32:18 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,8 +48,6 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
-      Cf-Cache-Status:
-      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -57,28 +55,30 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '319.4'
+      - '277.2'
       X-Metrics-E2e-Ms:
-      - '3035.2'
+      - '3958.0'
       Traceparent:
-      - 00-2f42ef418b5d578c72ec18a39d449a5e-2eef0f610004cba3-01
+      - 00-baefdbbf33fb76704106d11da248a877-d0c39d050000ef28-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794332699,"completed_at":1794332701,"id":"<X_REQUEST_ID>","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_<X_REQUEST_ID>","summary":[{"text":"Calling
-        the any-of params tool for task \"Review PR\" with status \"pending\" and
-        reporting the result.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"/LRx2OMS6Irdv0fJYcRAFkpINnVFLjduh2yfr3kDL/zbAGk/BedFPrXZPBlu8PJlx5ItJANRubvtMLBFtQYWom/TXsG/1wKI8QH3/n4KJiVfUhD65xwsApoTPeQC0ZaiY7KoCPceiSdJnyU5+Wdcjr2BIzg3CJmUC4HJVHa1oGED88tRLu0eOvws4F7f5FkqMaUTAuru413mNgG4GpZ8g+Oe6PUB+vVHqKIiJXl9ylDYkLUgLUv+xJuUHUQiBvcP0bSBB+UPa7Zdl1G0WrUJevEQNcANLzEI9IwdKrrEwheMq2dxVAcMHIP105Hv0o0WRyqrLcP4i7ysbg1Hqu6CU4bUXZKCw0h5HHmg1lzb8IKwpBDZAE6ZeS1w2WR31RfnmWLM9c715lshPuz1wQHfT3hOFZAg8IJ3ciJdOom0MaFEE1HzHHKwSli/Toet/DvwHth6QQqggteW6NYmDDAmOb3QR5gJyWk9zOZ5ZgStJIqA+2TkHkvaFEvbuXqe4k9QCJdQNrXN44jXEPSGrJCikUZfQFiMg3xzGofFMp9x50C3GmnfedWAJFmZaJtwrdIiYRpD/eCP22BL/aA1zX18udPVx/HyOeVzqYCUwxr6atqcYHacba9wvkzRzoIEdLkqXuTSQYlYKWeBCcoLNnexvKnRVCB9ghWt2Mc5Y4Px38Nyxw"},{"arguments":"{\"task\":\"Review
-        PR\",\"status\":\"pending\"}","call_id":"call-ac81dd1a-c3c8-4f46-8f49-200837e4d3a9-0","name":"any_of_params","type":"function_call","id":"fc_<X_REQUEST_ID>_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Uses
+      string: '{"created_at":1794605534,"completed_at":1794605538,"id":"0d29712e-d746-9eef-b770-9667ca63ce9f","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_0d29712e-d746-9eef-b770-9667ca63ce9f","summary":[{"text":"Calling
+        the any-of params tool for the \"Review PR\" task with status \"pending\"
+        and reporting the result.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"/ntQTOesaHb9GD3pjOvuEU4lSYFUf6e4dHxzAfEEQ7hARhZ3od/hHnMVYw1u3CGjYQW3d8OkQZXLnns2BWaCTrN1B/fvicxOJoe4nnVKx7hQ11hI8EmEB/CYA02E66xtytp6J6/zaL45dAUNO415Qlkavc5ivdiLDDnIQjVZovl39zsM6pEQ48rzvzvVhkRN/Yag/B1mHE+Ul3nYcKxVD+jHmtB4xXKo7fIXXKg3nwUz3C6rpwWX8bkyxzzLggStXYwbF30E74mnnwFqfYckq1lElVuxYJgDC+RRAU22dNOaOurAp4MV0uOAelOolP8pIwzGbnDhVYACRhCexUGFDu4BnTWK8Ifzz6xv7Tjkfh7CabbUFsj61w96hC2XdP7er5OTYnPopMFap+xIK4f9eV61YQL9dkoCysHV2CutIx2ireD6/bKykE4AzUBLnMYisv41uE9p8aeqIex6b8EBk6oekQgb3LTjh6POTdyp9cW4TvFqC2XVl9zIHY1sIJy7p7fZAFv/5FG4LKzKYcZEMfasn0re2vmw8YmDgetzJV37V2JdnP7TIIPG25KS5HIBVywnd2iUG32fVmazYXDcKC9hSB10swT5eaoaR5+dq/Je3MwvRAF11sNEEQa1phRpvZ+XGBeAGGo"},{"arguments":"{\"task\":\"Review
+        PR\",\"status\":\"pending\"}","call_id":"call-b825a09a-22c6-4d1a-8a0f-d23add887d95-0","name":"any_of_params","type":"function_call","id":"fc_0d29712e-d746-9eef-b770-9667ca63ce9f_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Uses
         params DSL any_of support","name":"any_of_params","parameters":{"type":"object","properties":{"task":{"type":"string","description":"Task
-        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false},"strict":false}],"top_p":0.95,"usage":{"input_tokens":337,"input_tokens_details":{"cached_tokens":128},"output_tokens":222,"output_tokens_details":{"reasoning_tokens":206},"total_tokens":559,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":8418500,"context_details":{"input_tokens":337,"output_tokens":226}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Tue, 10 Nov 2026 17:45:01 GMT
+        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false},"strict":false}],"top_p":0.95,"usage":{"input_tokens":337,"input_tokens_details":{"cached_tokens":128},"output_tokens":216,"output_tokens_details":{"reasoning_tokens":200},"total_tokens":553,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":8268500,"context_details":{"input_tokens":337,"output_tokens":220}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Fri, 13 Nov 2026 21:32:18 GMT
 recorded_with: VCR 6.4.1

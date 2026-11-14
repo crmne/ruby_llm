@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:49:22 GMT
+      - Fri, 13 Nov 2026 21:35:40 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -53,11 +53,11 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '326.1'
+      - '258.4'
       X-Metrics-E2e-Ms:
-      - '3137.5'
+      - '2876.4'
       Traceparent:
-      - 00-61f0c1730922faa07875b97e18f074ba-b9cbfc030004230e-01
+      - 00-60ccd886f3b87fe0bdeb63ac76f485a7-b17bcc770000f33f-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -66,33 +66,26 @@ http_interactions:
       - "*"
       Cf-Cache-Status:
       - DYNAMIC
-      Report-To:
-      - '{"group":"cf-csp-endpoint","max_age":86400,"endpoints":[{"url":"https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=siL7n.olX8KeSyHqSNlM9SI9MrCU_l4IC0bBl12t3zE-1794332959.602386-1.0.1.1-y7V335tn_.1r7ErU8KgzcYrDOpL6cV6yPyhpRprGqFs7C5c1raQq3S3qTPn9.VMTRV9fQkFZffFAWcdbxN70TwDySbM6pVRqEIMIgGvJvU7p6Fisy6jP5ok3ddXgU7e6DwR0b2zXD18wr7XRzmNNeVRAi0WpN7SP6Y4cFC4l2Xg"}]}'
-      Reporting-Endpoints:
-      - cf-csp-endpoint="https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=siL7n.olX8KeSyHqSNlM9SI9MrCU_l4IC0bBl12t3zE-1794332959.602386-1.0.1.1-y7V335tn_.1r7ErU8KgzcYrDOpL6cV6yPyhpRprGqFs7C5c1raQq3S3qTPn9.VMTRV9fQkFZffFAWcdbxN70TwDySbM6pVRqEIMIgGvJvU7p6Fisy6jP5ok3ddXgU7e6DwR0b2zXD18wr7XRzmNNeVRAi0WpN7SP6Y4cFC4l2Xg"
-      Content-Security-Policy-Report-Only:
-      - script-src 'unsafe-inline' 'unsafe-eval'; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=siL7n.olX8KeSyHqSNlM9SI9MrCU_l4IC0bBl12t3zE-1794332959.602386-1.0.1.1-y7V335tn_.1r7ErU8KgzcYrDOpL6cV6yPyhpRprGqFs7C5c1raQq3S3qTPn9.VMTRV9fQkFZffFAWcdbxN70TwDySbM6pVRqEIMIgGvJvU7p6Fisy6jP5ok3ddXgU7e6DwR0b2zXD18wr7XRzmNNeVRAi0WpN7SP6Y4cFC4l2Xg;
-        report-to cf-csp-endpoint
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794332959,"completed_at":1794332962,"id":"<X_REQUEST_ID>","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_<X_REQUEST_ID>","summary":[{"text":"I
-        will fetch ruby.txt and repeat its contents.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"fC+XmN+Th/6Heic+Gf6gxPbWk6Rdes5b5+wHH2Tt4JMy1RIXWUpq44VCliDY3wC9PXGYCuDG11YbVawk0e4dANl2kf2GNXg8JSHvhAeaA5KV+qXe/toJTZd3gz1Dxzz4xc4BNlx4wgnZlxfxv/UfAuPAexBRKrY+beOc2Q33NVxMV1VvtXMb3fwOj1YfU162mcJ5mypWXbcwFbLkk99CSDSpbohDfwKtsq+7Zz99luQA0iXLr+pBWF3OPsIrYvVTCjlyPwC1CaP6gsebj5WacF7oERowIYRtbyQfAhKirxPBKFw2eO+71DIu61eLOHkKS2UGOduTHMRMW5Y/AP0IxgTEWXP+aYaWO9B7RhU/seW6iSFREsz97Yr/YqOGNR8tLrl3EflImjQrF2hbUPdaaUMjzLuO+XTZmTVQylEsCNsVHGJfvnWSDwdRjqCbFBW0LDmI3pdGAzD9mM/G+fcAVZs3qKS9j+DziB4NiazGD5Kbj9rKznTl/CSRzpSvZRbEsZnzBwzagXzcvmOIadtcc2fxj9rnHmOB63gTKpbB1abazHaJ1CTnLmV+YoHZfYBIpKfOAQyjVt6cte6JrHGFfU986GF9DRI7X1v93KQoFtgKQhrzDT1p5yDYf//nKNxlwy+Je3Z+DF1qxfcelD1ylxBeOdNsceWT1B+BpDsp6CR97SmVbQiJDbEoFnPuRWqiQPMPQxpUWZ49"},{"arguments":"{}","call_id":"call-c540e69d-5abb-4723-ad60-68c9061812fa-0","name":"file_fetch","type":"function_call","id":"fc_<X_REQUEST_ID>_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Fetches
-        a sample text file named ruby.txt","name":"file_fetch","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":289,"input_tokens_details":{"cached_tokens":128},"output_tokens":239,"output_tokens_details":{"reasoning_tokens":233},"total_tokens":528,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":8243500,"context_details":{"input_tokens":289,"output_tokens":242}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Tue, 10 Nov 2026 17:49:22 GMT
+      string: '{"created_at":1794605738,"completed_at":1794605740,"id":"b8fefc61-be4c-9d50-90eb-4d1907d3eb34","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_b8fefc61-be4c-9d50-90eb-4d1907d3eb34","summary":[{"text":"Fetching
+        ruby.txt via file_fetch, then repeating its contents.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"Qixs2Iy/Pf9nMlk5wBvy/QiXd2nr0Jbg0yV7BZCiY6Cg3qKZzG6ntHb2a5OrvP/N2tzBhXIUJs/HY4lI/3S+rav/+mgMD3QtD0BWVwWJBhI0WmIPzZFi90QsMJ0hI1+2xPocnJtdkgmNnoCATTn33idwyWEI8zQk+HC4/06Un8p1ufDG105U03ijr8rhQ9/9qdhdAIMJ5SpnF10LhQfL1Ioki0tVwysIIJzt8oZSY4O6arRC4DZLKqvWGiEEboOzUoflh5ttamVoW5Vqod+yJ5wlvK8S2BKvReR5pcm7950HEWXCVABzA1hthF1BA0Blf1rKxwYdfgGXcbInHevq04KIiZl7I5pysfgubiRgKYrbiO1xKyT92MwhSnYNG7FR4tRAEE8bn9QZxdKVi0JJcRhuNHdo016sf87xJBpsXiqyYO6y/poIUWgbB/gFKZ+ne78SKJ/ZVPG82fXX4Atby2dV2Rp4G2rqaDAdaUIfJlAHZmOu+cP65/AstCOglQUdAG0KPUcotEASRFiJYQcQW8G7c7UgLwmSZvKUTW5E0jZuTCSBkjS+dp8CxbV8qCuG5UgKBFGvgJwt8SCO+LfTXMqXZ4gP6RMGaxmdvGQYwcul/FAm9mzmsqAXWYfMWV2ZeC19"},{"arguments":"{}","call_id":"call-1f2e73e9-4c39-46ed-8c48-adf9509c264e-0","name":"file_fetch","type":"function_call","id":"fc_b8fefc61-be4c-9d50-90eb-4d1907d3eb34_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Fetches
+        a sample text file named ruby.txt","name":"file_fetch","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":289,"input_tokens_details":{"cached_tokens":128},"output_tokens":191,"output_tokens_details":{"reasoning_tokens":185},"total_tokens":480,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":7043500,"context_details":{"input_tokens":289,"output_tokens":194}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Fri, 13 Nov 2026 21:35:40 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"grok-4.3","input":[{"role":"user","content":"Call file_fetch
-        to get ruby.txt, then repeat the contents of the attached file."},{"type":"reasoning","summary":[{"type":"summary_text","text":"I
-        will fetch ruby.txt and repeat its contents."}],"encrypted_content":"fC+XmN+Th/6Heic+Gf6gxPbWk6Rdes5b5+wHH2Tt4JMy1RIXWUpq44VCliDY3wC9PXGYCuDG11YbVawk0e4dANl2kf2GNXg8JSHvhAeaA5KV+qXe/toJTZd3gz1Dxzz4xc4BNlx4wgnZlxfxv/UfAuPAexBRKrY+beOc2Q33NVxMV1VvtXMb3fwOj1YfU162mcJ5mypWXbcwFbLkk99CSDSpbohDfwKtsq+7Zz99luQA0iXLr+pBWF3OPsIrYvVTCjlyPwC1CaP6gsebj5WacF7oERowIYRtbyQfAhKirxPBKFw2eO+71DIu61eLOHkKS2UGOduTHMRMW5Y/AP0IxgTEWXP+aYaWO9B7RhU/seW6iSFREsz97Yr/YqOGNR8tLrl3EflImjQrF2hbUPdaaUMjzLuO+XTZmTVQylEsCNsVHGJfvnWSDwdRjqCbFBW0LDmI3pdGAzD9mM/G+fcAVZs3qKS9j+DziB4NiazGD5Kbj9rKznTl/CSRzpSvZRbEsZnzBwzagXzcvmOIadtcc2fxj9rnHmOB63gTKpbB1abazHaJ1CTnLmV+YoHZfYBIpKfOAQyjVt6cte6JrHGFfU986GF9DRI7X1v93KQoFtgKQhrzDT1p5yDYf//nKNxlwy+Je3Z+DF1qxfcelD1ylxBeOdNsceWT1B+BpDsp6CR97SmVbQiJDbEoFnPuRWqiQPMPQxpUWZ49"},{"type":"function_call","call_id":"call-c540e69d-5abb-4723-ad60-68c9061812fa-0","name":"file_fetch","arguments":"{}"},{"type":"function_call_output","call_id":"call-c540e69d-5abb-4723-ad60-68c9061812fa-0","output":"Fetched
+        to get ruby.txt, then repeat the contents of the attached file."},{"type":"reasoning","summary":[{"type":"summary_text","text":"Fetching
+        ruby.txt via file_fetch, then repeating its contents."}],"encrypted_content":"Qixs2Iy/Pf9nMlk5wBvy/QiXd2nr0Jbg0yV7BZCiY6Cg3qKZzG6ntHb2a5OrvP/N2tzBhXIUJs/HY4lI/3S+rav/+mgMD3QtD0BWVwWJBhI0WmIPzZFi90QsMJ0hI1+2xPocnJtdkgmNnoCATTn33idwyWEI8zQk+HC4/06Un8p1ufDG105U03ijr8rhQ9/9qdhdAIMJ5SpnF10LhQfL1Ioki0tVwysIIJzt8oZSY4O6arRC4DZLKqvWGiEEboOzUoflh5ttamVoW5Vqod+yJ5wlvK8S2BKvReR5pcm7950HEWXCVABzA1hthF1BA0Blf1rKxwYdfgGXcbInHevq04KIiZl7I5pysfgubiRgKYrbiO1xKyT92MwhSnYNG7FR4tRAEE8bn9QZxdKVi0JJcRhuNHdo016sf87xJBpsXiqyYO6y/poIUWgbB/gFKZ+ne78SKJ/ZVPG82fXX4Atby2dV2Rp4G2rqaDAdaUIfJlAHZmOu+cP65/AstCOglQUdAG0KPUcotEASRFiJYQcQW8G7c7UgLwmSZvKUTW5E0jZuTCSBkjS+dp8CxbV8qCuG5UgKBFGvgJwt8SCO+LfTXMqXZ4gP6RMGaxmdvGQYwcul/FAm9mzmsqAXWYfMWV2ZeC19"},{"type":"function_call","call_id":"call-1f2e73e9-4c39-46ed-8c48-adf9509c264e-0","name":"file_fetch","arguments":"{}"},{"type":"function_call_output","call_id":"call-1f2e73e9-4c39-46ed-8c48-adf9509c264e-0","output":"Fetched
         the file."},{"role":"user","content":[{"type":"input_text","text":"Attachments
-        from tool call call-c540e69d-5abb-4723-ad60-68c9061812fa-0:"},{"type":"input_text","text":"<file
+        from tool call call-1f2e73e9-4c39-46ed-8c48-adf9509c264e-0:"},{"type":"input_text","text":"<file
         name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"file_fetch","description":"Fetches
         a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
@@ -112,7 +105,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:49:24 GMT
+      - Fri, 13 Nov 2026 21:35:42 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -133,6 +126,8 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -140,29 +135,26 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '702.8'
+      - '248.7'
       X-Metrics-E2e-Ms:
-      - '1731.3'
+      - '1657.5'
       Traceparent:
-      - 00-70c617b4df9ed7a3df76c43a6a60acbe-aef8c1f0000436b5-01
+      - 00-885b6eb75fcbacb8d826c59866d652ed-13ebbde600023c20-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794332963,"completed_at":1794332964,"id":"<X_REQUEST_ID>","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_<X_REQUEST_ID>","summary":[{"text":"The
-        tool call returned an attachment named ruby.txt containing the text \"Ruby
-        is the best.\"","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"8KRgaYp+2a+rS/U+vQMuDw+e4AD6WVv31nMfpf/hR2LA7XGifYbR7GYPqxRN/yBnv3/BeOoieRBb6fQWa3e5A4OwNIVUEiIK4Ei68KDE5u5JqnN3/ybh3oExoc61gnc5d/vIkh0P/Ib5RQPYs7z1RGPrIrlvwq7kVdS7irGo+0cpE27KSJSKdWnVXqhADQyqauacnMZXgwJUoLmRqVFd0aWrhZuVChgzFOZFQfSJZPBzKUSAaujatnRnD1ruT8gZ0O71CKOg7uWdt24W0aTrn3dxx62/di9yRyKD5tphoUDtArx8xZcVR5bINqD7h/RTzmQGuKq7QoXHcTUCesvP03P52DuxwTUSrnJAkODLeQYfIMIuV0QX0RYl"},{"content":[{"type":"output_text","text":"Ruby
-        is the best.","logprobs":[],"annotations":[]}],"id":"msg_<X_REQUEST_ID>","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Fetches
-        a sample text file named ruby.txt","name":"file_fetch","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":590,"input_tokens_details":{"cached_tokens":128},"output_tokens":113,"output_tokens_details":{"reasoning_tokens":108},"total_tokens":703,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":8856000,"context_details":{"input_tokens":590,"output_tokens":121}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Tue, 10 Nov 2026 17:49:24 GMT
+      string: '{"created_at":1794605741,"completed_at":1794605742,"id":"c8dbff8a-62ed-9f6e-95ec-3bae40a528b8","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_c8dbff8a-62ed-9f6e-95ec-3bae40a528b8","summary":[{"text":"The
+        tool fetched the file, and the user attached its contents.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"R/dkf2gLfzGOLl4xZtTWQAKhSlghrP6gHrdX6jMaKIZButaBuryuKm09AHifKyyL9tz0Yu6BIgZ9+tznIUU0RTJZPp207u7CGsVhBjPhHkakqPnYbCoZXqZ+/jh+rjgmD166VpJtjOx6eDlJU5MKDoHtXMkwn9ykDYmEXogilYQgwMRzIF5SXNUsPVAkxkwq0RkiG1N+u5Jh3pTD4kye6scqj+QmWdMdFjNrnHq+QoucbC6LM6IlqLT9fU9QbpSOPeJaeBZUiIYtbPQezdE0zd5he5201KCYZY/sg3SvQi3xsksp/CAbahrJdW8QsY3Ww0RTdwqlAXAYpLweKPxIpqWXuAq7O60/Tk5+wn0BSWl00TlAOIGG2Xg"},{"content":[{"type":"output_text","text":"Ruby
+        is the best.","logprobs":[],"annotations":[]}],"id":"msg_c8dbff8a-62ed-9f6e-95ec-3bae40a528b8","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Fetches
+        a sample text file named ruby.txt","name":"file_fetch","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":548,"input_tokens_details":{"cached_tokens":128},"output_tokens":103,"output_tokens_details":{"reasoning_tokens":98},"total_tokens":651,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":8081000,"context_details":{"input_tokens":548,"output_tokens":111}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Fri, 13 Nov 2026 21:35:42 GMT
 recorded_with: VCR 6.4.1

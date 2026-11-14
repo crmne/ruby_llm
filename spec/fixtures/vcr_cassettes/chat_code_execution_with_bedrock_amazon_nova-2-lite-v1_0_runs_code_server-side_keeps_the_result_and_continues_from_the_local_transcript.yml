@@ -13,7 +13,7 @@ http_interactions:
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261110T130554Z
+      - 20261113T212438Z
       X-Amz-Content-Sha256:
       - 8d8f1f083a2bca0bedd5606344753f4c9124c9858bc947d1308ddb9cc37ae2a7
       Authorization:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 13:05:56 GMT
+      - Fri, 13 Nov 2026 21:24:41 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -37,12 +37,12 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 622b5e20-f21d-428d-b1ca-ac447397ea04
+      - a524640a-24bc-451f-a9c1-f651602a9073
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":1499},"output":{"message":{"content":[{"toolUse":{"input":{"snippet":"print(123456789
-        * 987654321)"},"name":"nova_code_interpreter","toolUseId":"tooluse_V8LwfxHJk_3TGP8tSQKnAg","type":"server_tool_use"}},{"toolResult":{"content":[{"json":{"stdOut":"121932631112635269","stdErr":"","exitCode":0,"isError":false}}],"status":"success","toolUseId":"tooluse_V8LwfxHJk_3TGP8tSQKnAg","type":"nova_code_interpreter_result"}},{"text":"121932631112635269"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":970,"outputTokens":45,"serverToolUsage":{},"totalTokens":1015}}'
-  recorded_at: Tue, 10 Nov 2026 13:05:56 GMT
+      string: '{"metrics":{"latencyMs":1555},"output":{"message":{"content":[{"toolUse":{"input":{"snippet":"print(123456789
+        * 987654321)"},"name":"nova_code_interpreter","toolUseId":"tooluse_9QbPpVZjBC-OdTpdl7esPg","type":"server_tool_use"}},{"toolResult":{"content":[{"json":{"stdOut":"121932631112635269","stdErr":"","exitCode":0,"isError":false}}],"status":"success","toolUseId":"tooluse_9QbPpVZjBC-OdTpdl7esPg","type":"nova_code_interpreter_result"}},{"text":"121932631112635269"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":970,"outputTokens":45,"serverToolUsage":{},"totalTokens":1015}}'
+  recorded_at: Fri, 13 Nov 2026 21:24:41 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
@@ -57,7 +57,7 @@ http_interactions:
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261110T130556Z
+      - 20261113T212441Z
       X-Amz-Content-Sha256:
       - 941e12d57481533616d4b3033ecf5e7911537bb55d0973d6c71a5a6f6a138abc
       Authorization:
@@ -73,21 +73,21 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 13:05:57 GMT
+      - Fri, 13 Nov 2026 21:24:42 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '489'
+      - '543'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 86ded72b-3f3a-4b90-ac1a-405e018bcfa0
+      - d4716520-bec0-48ce-849b-d9a920a2ffc3
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":592},"output":{"message":{"content":[{"text":"The
-        result of computing \\(123456789 \\times 987654321\\) is **121,932,631,112,635,269**.
-        \n\nThis can be verified by direct multiplication or by recognizing patterns
-        in large digit multiplications, but the exact product as computed earlier
-        is **121932631112635269** (without commas)."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":990,"outputTokens":70,"serverToolUsage":{},"totalTokens":1060}}'
-  recorded_at: Tue, 10 Nov 2026 13:05:57 GMT
+      string: '{"metrics":{"latencyMs":652},"output":{"message":{"content":[{"text":"The
+        product of \\(123456789 \\times 987654321\\) is **121,932,631,112,635,269**.\n\n**Explanation**:  \nMultiplying
+        these two large numbers yields:\n\n\\[\n123456789 \\times 987654321 = 121932631112635269\n\\]\n\nThis
+        can be verified by direct multiplication or using computational tools, and
+        matches the result from the code interpreter."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":990,"outputTokens":83,"serverToolUsage":{},"totalTokens":1073}}'
+  recorded_at: Fri, 13 Nov 2026 21:24:42 GMT
 recorded_with: VCR 6.4.1

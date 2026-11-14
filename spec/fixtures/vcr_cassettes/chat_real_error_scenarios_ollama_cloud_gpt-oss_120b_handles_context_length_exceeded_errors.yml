@@ -25,32 +25,33 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - 81e02665bdd918cf59b66804d554f8e53171f5d2
+      - be2a079e0a02b03cf1b3d1cab78f88a8b6c055b8
       X-Build-Time:
-      - '2026-11-09T17:12:20-08:00'
+      - '2026-11-13T11:19:30-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '194'
+      - '249'
       Date:
-      - Tue, 10 Nov 2026 17:36:15 GMT
+      - Fri, 13 Nov 2026 21:26:33 GMT
       Server:
       - Google Frontend
       Traceparent:
-      - 00-d779a506a93ce29b50a83c3a03b46267-a6d49aac5d960cf3-00
+      - 00-d4ac666890d40ccfd9994f627b2cc71a-af6204553828dcbe-00
       X-Cloud-Trace-Context:
-      - d779a506a93ce29b50a83c3a03b46267/12021403370453863667
+      - d4ac666890d40ccfd9994f627b2cc71a/12637668268415966398
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"error":{"message":"The prompt is too long: 1250128, model maximum
-        context length: 131072 (ref: <X_REQUEST_ID>)","type":"invalid_request_error","param":null,"code":null}}
+      string: '{"error":{"message":"prompt plus max_tokens (131072) exceeds the model''s
+        context length of 131072 tokens; reduce max_tokens or shorten the prompt (ref:
+        cbed9f87-0c86-4c4f-afee-69de00c885c4)","type":"invalid_request_error","param":null,"code":null}}
 
         '
-  recorded_at: Tue, 10 Nov 2026 17:36:15 GMT
+  recorded_at: Fri, 13 Nov 2026 21:26:34 GMT
 recorded_with: VCR 6.4.1

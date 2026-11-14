@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:42:39 GMT
+      - Fri, 13 Nov 2026 21:29:45 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -46,11 +46,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1141'
+      - '1199'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -77,22 +77,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_052813fdb50eec9a016af3578e8d5c87d2ae1c04127d56953b",
+          "id": "resp_0f80d8845e0cd8e3016af78147f55487d28ed73dd8fe68901f",
           "object": "response",
-          "created_at": 1794332558,
+          "created_at": 1794605383,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794332559,
+          "completed_at": 1794605385,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -100,11 +101,11 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "fc_052813fdb50eec9a016af3578f6ec087d2ada2d9c372bc5b02",
+              "id": "fc_0f80d8845e0cd8e3016af78148ad0487d2ac8f13e727adf3e4",
               "type": "function_call",
               "status": "completed",
               "arguments": "{\"tags\":[\"red\",\"blue\"]}",
-              "call_id": "call_eFePyQiCvXEkbKRvYvzuNQPM",
+              "call_id": "call_VktNqU033592ue2R6PAvCOpq",
               "name": "array_params"
             }
           ],
@@ -191,5 +192,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:42:39 GMT
+  recorded_at: Fri, 13 Nov 2026 21:29:45 GMT
 recorded_with: VCR 6.4.1

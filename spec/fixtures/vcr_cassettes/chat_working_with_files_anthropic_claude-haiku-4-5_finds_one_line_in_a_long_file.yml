@@ -63,7 +63,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:31:23 GMT
+      - Fri, 13 Nov 2026 21:21:41 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -75,54 +75,54 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '9999000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-11-10T17:31:23Z'
+      - '2026-11-13T21:21:40Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-11-10T17:31:23Z'
+      - '2026-11-13T21:21:40Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-11-10T17:31:23Z'
+      - '2026-11-13T21:21:40Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '11999000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-11-10T17:31:23Z'
+      - '2026-11-13T21:21:40Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-e8b6ca9f50e72b9b829cc344e8cd9cc2-3bec72f5c0a14184-01
+      - 00-75749b5d9c5b9ec289c9ece4087f4a19-735fa4115e245328-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
       - "<ANTHROPIC_WORKSPACE_ID>"
       Vary:
       - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
       Server:
       - cloudflare
       Server-Timing:
-      - x-originResponse;dur=733
-      X-Robots-Tag:
-      - none
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
+      - x-originResponse;dur=691
       Cf-Cache-Status:
       - DYNAMIC
+      X-Robots-Tag:
+      - none
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CgueQsWZuoVzT5kT51Hp9","type":"message","role":"assistant","content":[{"type":"text","text":"I''ll
-        search for the parking garage door code in handbook.md."},{"type":"tool_use","id":"toolu_01JhNRyD6FtwYNUdEJCyQcCK","name":"read_file","input":{"path":"handbook.md"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":1599,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":70,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
-  recorded_at: Tue, 10 Nov 2026 17:31:23 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch1dQ9oimwsyhHmmip4jx","type":"message","role":"assistant","content":[{"type":"text","text":"I''ll
+        search for the parking garage door code in the handbook.md file."},{"type":"tool_use","id":"toolu_01N8EtwyZp3cUPE2K2MpADaP","name":"read_file","input":{"path":"handbook.md"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":1599,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":72,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
+  recorded_at: Fri, 13 Nov 2026 21:21:41 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -130,7 +130,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What
         is the parking garage door code? It is in handbook.md in your files."}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        search for the parking garage door code in handbook.md."},{"type":"tool_use","id":"toolu_01JhNRyD6FtwYNUdEJCyQcCK","name":"read_file","input":{"path":"handbook.md"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01JhNRyD6FtwYNUdEJCyQcCK","content":[{"type":"text","text":"handbook.md,
+        search for the parking garage door code in the handbook.md file."},{"type":"tool_use","id":"toolu_01N8EtwyZp3cUPE2K2MpADaP","name":"read_file","input":{"path":"handbook.md"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01N8EtwyZp3cUPE2K2MpADaP","content":[{"type":"text","text":"handbook.md,
         lines 1-401 of 401:\n     1\t1. Section 1 covers office policy number 1.\n     2\t2.
         Section 2 covers office policy number 2.\n     3\t3. Section 3 covers office
         policy number 3.\n     4\t4. Section 4 covers office policy number 4.\n     5\t5.
@@ -484,7 +484,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:31:24 GMT
+      - Fri, 13 Nov 2026 21:21:41 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -496,53 +496,53 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '9992000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-11-10T17:31:24Z'
+      - '2026-11-13T21:21:41Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-11-10T17:31:24Z'
+      - '2026-11-13T21:21:41Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-11-10T17:31:23Z'
+      - '2026-11-13T21:21:41Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '11992000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-11-10T17:31:24Z'
+      - '2026-11-13T21:21:41Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-0214c35dcd7e6fa32992157e66abb3d0-5bc69865352165d5-01
+      - 00-e4694a961977a7fd6bdb3d578e7407a2-9ef6e35f7702e5a8-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
       - "<ANTHROPIC_WORKSPACE_ID>"
       Vary:
       - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
       Server:
       - cloudflare
       Server-Timing:
-      - x-originResponse;dur=929
-      X-Robots-Tag:
-      - none
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
+      - x-originResponse;dur=810
       Cf-Cache-Status:
       - DYNAMIC
+      X-Robots-Tag:
+      - none
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CgueQwEJzu5W7FxobPWgq","type":"message","role":"assistant","content":[{"type":"text","text":"Perfect!
-        I found it. According to the handbook.md file, the parking garage door code
-        is:\n\n**4471-KESTREL**\n\nThis is listed on line 288 of the document."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":8515,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":47,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
-  recorded_at: Tue, 10 Nov 2026 17:31:24 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch1dQDP3HXTAhWYYv6kxa","type":"message","role":"assistant","content":[{"type":"text","text":"Found
+        it! The parking garage door code is **4471-KESTREL** (located on line 288
+        of the handbook.md file)."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":8517,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":35,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
+  recorded_at: Fri, 13 Nov 2026 21:21:42 GMT
 recorded_with: VCR 6.4.1

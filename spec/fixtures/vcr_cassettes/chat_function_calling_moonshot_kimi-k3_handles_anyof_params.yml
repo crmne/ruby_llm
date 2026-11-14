@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:41:16 GMT
+      - Fri, 13 Nov 2026 21:28:36 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -45,7 +45,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - ea7a58f4-dd2d-11f1-ada2-00163e5adade
+      - 2da1816a-dfa9-11f1-bec7-00163e5443c0
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -57,7 +57,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - 0f148dcd4afa8c218ff145af51691488
+      - a83716ec745152a72cdeb92d11433ad0
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -68,9 +68,10 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-57705e95-60e2-9249-bbfd-d76fbfc97ea1","object":"chat.completion","created":1794332470,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
-        call the `any_of_params` tool with the specified parameters.","tool_calls":[{"index":0,"id":"any_of_params_0_ded5a80f","type":"function","function":{"name":"any_of_params","arguments":"{\"status\":\"pending\",\"task\":\"Review
-        PR\"}"}}],"reasoning_content":"The user wants me to call the `any_of_params`
-        tool with task \"Review PR\" and status \"pending\". Let me do that."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":223,"completion_tokens":112,"total_tokens":335,"completion_tokens_details":{"reasoning_tokens":29},"prompt_tokens_details":{"cache_write_tokens":0}}}'
-  recorded_at: Tue, 10 Nov 2026 17:41:16 GMT
+      string: '{"id":"chatcmpl-1b2cd2c2-e314-9c9e-a16e-fa0f8a718d2d","object":"chat.completion","created":1794605313,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        call the tool with the specified parameters.","tool_calls":[{"index":0,"id":"any_of_params_0_a4df9054","type":"function","function":{"name":"any_of_params","arguments":"{\"status\":\"pending\",\"task\":\"Review
+        PR\"}"}}],"reasoning_content":"The user wants me to call the any_of_params
+        tool with task \"Review PR\" and status \"pending\". Let me make that call
+        and report the result."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":223,"completion_tokens":110,"total_tokens":333,"completion_tokens_details":{"reasoning_tokens":32},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Fri, 13 Nov 2026 21:28:36 GMT
 recorded_with: VCR 6.4.1

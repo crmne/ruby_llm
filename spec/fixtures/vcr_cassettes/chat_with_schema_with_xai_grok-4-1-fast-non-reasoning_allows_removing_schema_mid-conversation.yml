@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:32:56 GMT
+      - Fri, 13 Nov 2026 21:23:38 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -45,6 +45,8 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -52,29 +54,27 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '426.4'
+      - '291.1'
       X-Metrics-E2e-Ms:
-      - '3745.3'
+      - '3359.1'
       Traceparent:
-      - 00-24746aac914ebb9af40bc16034eb1274-2b2c7dd60003ec76-01
+      - 00-2513e23eebe635b2fad830d95446b063-d4507d600001f1d1-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794331972,"completed_at":1794331976,"id":"<X_REQUEST_ID>","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_<X_REQUEST_ID>","summary":[{"text":"Generating
-        a person named Bob.\n\nThe schema requires both name and age. Age will be
-        30.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"4Q14aEpwbHaChakoF+3kGGVONxnnbe/+jzwiJNrYwaglPdXDKL/MtV2tUN2pBHoKMjCtpsJToLZ9Md6VMitdeQjb3UUT4Zj6B97shBYTW9mPbikLC9VQVD9JlumLoa11PKq01Q5pF9CaKR2D5Tg0fUGFOsKnE0AUtc3HCBYfhbSGx9jSkKL96/BdtO3QJHJ8YA02pT+AZjPJ6KuS6kIHBesp2C46pP3tYullAQB9C0WK97kU/Gsm27F8SHek82UYc+wrlMEoyB5X2JQwyyzz1bCIBIhVCDtelCTAQ8cAhg7IUJdWcou6MfbbQzctKET5Y1kVXF1J+alD+j5+uD26qJdtR2XO29DCgMy2Gaqm5KbV+QCay4Cx13Th0jsHJ0KB1/J93Z9uJpktgyY/o6lzfTNb7+jyX40Q5ZJoEBnOTXIfOiIptUcaboWoM/Iaae6/D8BEJoBDfmFKqMrmnScXg02sJscne2OQzO7Cljpgd+M2pBG2RRxKlIqoNqa5gELb2roTYXmTiTrBhGq1WYlhcOzO+UQX29VgBD6quvvwXiGXpXiVRwZEs4goIKYhpHbh+ifSH4JM5lhkp30PkU7TAqhMbbqLgEIdzNJhVAbP2/yZ0RdFYEisASCsYfG7TSvyt2zu1dX0RQAF0wJPsAGdAsNDvOyAvXkP1Zt6QAXrBkQq+XdLwc2xJ2HI5km2UpjPq8RISc2B9FZR37zRn7g2x9pq356ZM1Rgk6Kpm51tdlzCMy2zb7K2RGYxfw9TSh0xXaVa"},{"content":[{"type":"output_text","text":"{\"name\":\"Bob\",\"age\":30}","logprobs":[],"annotations":[]}],"id":"msg_<X_REQUEST_ID>","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"json_schema","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false}}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":248,"input_tokens_details":{"cached_tokens":128},"output_tokens":238,"output_tokens_details":{"reasoning_tokens":229},"total_tokens":486,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":7706000,"context_details":{"input_tokens":248,"output_tokens":246}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Tue, 10 Nov 2026 17:32:56 GMT
+      string: '{"created_at":1794605015,"completed_at":1794605018,"id":"ded1995c-db3e-98ed-a8cb-52fa0a78d191","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_ded1995c-db3e-98ed-a8cb-52fa0a78d191","summary":[{"text":"Generating
+        a person named Bob.\n\nThe response will be JSON with name and age fields
+        only, no surrounding text.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"bR1uKuzc3l+BnmtF86w62iRNl0QDKtGuWBYeV/BnWXKy+eoduhTGtxazCFSY/jjseXwpuBkoUgcl1GIvYbxRFZtiXOhwR84RJSyVXhyfkRShHSUJ7djdS3yLhmsxhyycDd6+Qsy2C7Cu/adAypbClOWmJxDngjZpJlIBs2SghhS/YAj7resQFPIHHe7uE8SzPDPvB7PzN0WbTrUm6TGELphmof5ex4tRjmRWR4gUDNE2LlIMZJe/sHu+ZjhoiIClhDq2Z44LZIVxTB7nLUiDtnwthAzELglirsIxrZXHjF9utPzypAa2b+0cndn6iqOPPvJlFkG9rOLhcHl9L0EGXAYMkohCMt4QyPw19WjKyQ0Vfy9KsMZT6s+mnWmt3EDswWUnPq4CWX9NT/Z4/35ea/5mDq5mACBFBZxhir4xVvf2kQyyoQ8ljFPDDDcSiPYd3+ZBT9dMSsilQn2CJ+8Kw7ReyMMUnJmAG/c59QzxT0HjeuFM+uPqiFlZXlbMwHYk6lWw8DfZb7nfBmuJ+miBKtZQQVN/nhz69Q3Wzi1rhdumliW2Avw29pNnH0tBc/V7EAw4qaGsHnANXV4Oaox4J3DcmM9T8ISGaM3zcmKhrfZTT9gC05bB24YtuSl38qKuf3FjB++yp84o2lBvHmRoDAf0HRlf8h8xuZJy0ebUHFW7vGzxFKMlOkLQSNrv592wk2Lbd9KCMPxEeZChM2OSEULYaTLgEILhKhlG3m8rbooc6yiPX/9gHZCiyOHvOIRiRj2VskCJaRZyz34C58k1l8PAogHZ45vQmBow/rdg8E+h1BreHEK0Mdk"},{"content":[{"type":"output_text","text":"{\"name\":\"Bob\",\"age\":30}","logprobs":[],"annotations":[]}],"id":"msg_ded1995c-db3e-98ed-a8cb-52fa0a78d191","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"json_schema","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false}}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":248,"input_tokens_details":{"cached_tokens":128},"output_tokens":269,"output_tokens_details":{"reasoning_tokens":260},"total_tokens":517,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":8481000,"context_details":{"input_tokens":248,"output_tokens":277}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Fri, 13 Nov 2026 21:23:38 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/responses
@@ -82,8 +82,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4.3","input":[{"role":"user","content":"Generate a person
         named Bob"},{"type":"reasoning","summary":[{"type":"summary_text","text":"Generating
-        a person named Bob.\n\nThe schema requires both name and age. Age will be
-        30."}],"encrypted_content":"4Q14aEpwbHaChakoF+3kGGVONxnnbe/+jzwiJNrYwaglPdXDKL/MtV2tUN2pBHoKMjCtpsJToLZ9Md6VMitdeQjb3UUT4Zj6B97shBYTW9mPbikLC9VQVD9JlumLoa11PKq01Q5pF9CaKR2D5Tg0fUGFOsKnE0AUtc3HCBYfhbSGx9jSkKL96/BdtO3QJHJ8YA02pT+AZjPJ6KuS6kIHBesp2C46pP3tYullAQB9C0WK97kU/Gsm27F8SHek82UYc+wrlMEoyB5X2JQwyyzz1bCIBIhVCDtelCTAQ8cAhg7IUJdWcou6MfbbQzctKET5Y1kVXF1J+alD+j5+uD26qJdtR2XO29DCgMy2Gaqm5KbV+QCay4Cx13Th0jsHJ0KB1/J93Z9uJpktgyY/o6lzfTNb7+jyX40Q5ZJoEBnOTXIfOiIptUcaboWoM/Iaae6/D8BEJoBDfmFKqMrmnScXg02sJscne2OQzO7Cljpgd+M2pBG2RRxKlIqoNqa5gELb2roTYXmTiTrBhGq1WYlhcOzO+UQX29VgBD6quvvwXiGXpXiVRwZEs4goIKYhpHbh+ifSH4JM5lhkp30PkU7TAqhMbbqLgEIdzNJhVAbP2/yZ0RdFYEisASCsYfG7TSvyt2zu1dX0RQAF0wJPsAGdAsNDvOyAvXkP1Zt6QAXrBkQq+XdLwc2xJ2HI5km2UpjPq8RISc2B9FZR37zRn7g2x9pq356ZM1Rgk6Kpm51tdlzCMy2zb7K2RGYxfw9TSh0xXaVa"},{"role":"assistant","content":[{"type":"output_text","text":"{\"name\":\"Bob\",\"age\":30}"}]},{"role":"user","content":"Now
+        a person named Bob.\n\nThe response will be JSON with name and age fields
+        only, no surrounding text."}],"encrypted_content":"bR1uKuzc3l+BnmtF86w62iRNl0QDKtGuWBYeV/BnWXKy+eoduhTGtxazCFSY/jjseXwpuBkoUgcl1GIvYbxRFZtiXOhwR84RJSyVXhyfkRShHSUJ7djdS3yLhmsxhyycDd6+Qsy2C7Cu/adAypbClOWmJxDngjZpJlIBs2SghhS/YAj7resQFPIHHe7uE8SzPDPvB7PzN0WbTrUm6TGELphmof5ex4tRjmRWR4gUDNE2LlIMZJe/sHu+ZjhoiIClhDq2Z44LZIVxTB7nLUiDtnwthAzELglirsIxrZXHjF9utPzypAa2b+0cndn6iqOPPvJlFkG9rOLhcHl9L0EGXAYMkohCMt4QyPw19WjKyQ0Vfy9KsMZT6s+mnWmt3EDswWUnPq4CWX9NT/Z4/35ea/5mDq5mACBFBZxhir4xVvf2kQyyoQ8ljFPDDDcSiPYd3+ZBT9dMSsilQn2CJ+8Kw7ReyMMUnJmAG/c59QzxT0HjeuFM+uPqiFlZXlbMwHYk6lWw8DfZb7nfBmuJ+miBKtZQQVN/nhz69Q3Wzi1rhdumliW2Avw29pNnH0tBc/V7EAw4qaGsHnANXV4Oaox4J3DcmM9T8ISGaM3zcmKhrfZTT9gC05bB24YtuSl38qKuf3FjB++yp84o2lBvHmRoDAf0HRlf8h8xuZJy0ebUHFW7vGzxFKMlOkLQSNrv592wk2Lbd9KCMPxEeZChM2OSEULYaTLgEILhKhlG3m8rbooc6yiPX/9gHZCiyOHvOIRiRj2VskCJaRZyz34C58k1l8PAogHZ45vQmBow/rdg8E+h1BreHEK0Mdk"},{"role":"assistant","content":[{"type":"output_text","text":"{\"name\":\"Bob\",\"age\":30}"}]},{"role":"user","content":"Now
         just tell me about Ruby"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
@@ -102,7 +102,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:33:02 GMT
+      - Fri, 13 Nov 2026 21:23:49 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -130,11 +130,11 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '217.8'
+      - '277.6'
       X-Metrics-E2e-Ms:
-      - '6210.0'
+      - '11093.4'
       Traceparent:
-      - 00-499745d580d3b8ab23be80d8478191b6-c576a7de00040d03-01
+      - 00-a2aa8353eeb5b2c571e14da9e6a7a1b1-4065cccb0000e259-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -149,8 +149,9 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794331976,"completed_at":1794331982,"id":"<X_REQUEST_ID>","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_<X_REQUEST_ID>","summary":[{"text":"I''ll
-        explain Ruby.\n\nThe system prompt requires JSON output. I''ll provide a JSON
-        response about Ruby.\n\nI''ll map \"Ruby\" to the name field and pick an age.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"0YeOEMk68Utp3bbCZX6U/KuqKBGMJKsEtyK5DdYzR7vwiZm8bTf25KS0gySo0T2r7qpoZ+WXd0s25Fbb0YWtp1dYaGgJBH+jLSBIY9qMpYBpD8W0LyxRrqdUdLc5gNcqJ1e9y8mrMseiB5p3a/aZqaIgJAQnd9Fvyf4Wwq5t15l6U8N5YcUQGfyhH1QqpNc1e7NfqV5ojBuKRQQvB1gF5cHL9ua7vXVIuTL0cBq+VPYiOiZ1M+/REYIXX5zX5+w+KABKVxbhQUlItaGmrDI95FYt2xCDTLRm2eon8nTCJJwDXBNo3twh8SwlOAOmQJ/64hBNoWgR/ier50/13pkjPY/sa6IDskjAmU5A99cF6ZmpXVBZJpRimYDFRXOD0fYMjasqbh+UDdGP0Pd/lrRAOlgKzRLfFcyag6yVYYDc1E4Ye1KZoGQEj0PwVrKkjXgdUK4VcVV/xVEZLUOWfwqxcmLB1RzAO1lq+4bx/zvy4WX+Z2JFxdHA6KzStsEwaTreziTo1EEyDj3eMzGllDm4RSqNcYOkh9DWEm3sgtPwaWHl5I0qQiMXvLaWpBIB5VxCYnFlWDD2bB92dstIuI2i5v3tHR6rdFNtTqFIWVlwEeM8LcR23midseashn6ub8kkPSDV6dp3dcBF4dFMOetrGJdBniYzwh8cq3MfZn1K8mJfiMqDjSMmlRCrFrIV6l2khjEhIcuG17HOyAyZvgOoe0t0gknnh5zG9jcFb9aQ+mrfy1q7/XX6ayDW0wLbxg2TZyKRoGeCfLh41nATVzoqLMa6NRRfy163FtQjdSHLNE0mc5qqZUw7AJ0bxAZpdF5RcMeJC0E4jYsHjWO0Iyl/jc+VrDgn/X9APAUJVmuaHREAyqPwioyYAFcIJ8+3v2OijOSpnxgAv2+DmZ4q7M0E4ns+H3lDTBk/YbRcSAploH/Mavgm4nb8agPSP7A2LWXDXQ5SYtpBGYAP+GxEL6879Axr/9JAEPHsrex2Iq380FCG7qlR70AN+BNHI1aXWatmimIKWq69SQ129b4H0YoHsnYL/R1F3EzoWJ+JakcK853w6EABdmxJnwoEzHFIAaRloPV6pxj9+Qmh2B14yWHLX9VC9T7z4koBfNmzc0DgP03s+ZGAYcx6Uwdtu7olp75XLijttgMcR/WgvKYeWnYYPCOJWKiEeE87PU53Ybn4JdnyCBUCdIlS+O/c8YyuA06T9y6WMgP01ZfHRk7nXK5M1vNurY19S1fKisDwjCDvtfz33i0bitpR2nu0l8xwL1h+hiTxD9oDZuP+gp8QaFTWbYdQuBmVUdmDpThXaBSIzeRvAuPxiopNzvKNg7RBW0toUwtXy09576Tf38W/oXEm0FvxeM0Mf+YC3BMvrGASqT+6zwZsMOeBWT+yhS4bAstNvsrQtp4sINW3B8M90KFRyc8dewr3+vZnTM8/LJyouY8"},{"content":[{"type":"output_text","text":"{\"name\":\"Ruby\",\"age\":28}","logprobs":[],"annotations":[]}],"id":"msg_<X_REQUEST_ID>","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":452,"input_tokens_details":{"cached_tokens":128},"output_tokens":514,"output_tokens_details":{"reasoning_tokens":505},"total_tokens":966,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":17156000,"context_details":{"input_tokens":452,"output_tokens":522}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Tue, 10 Nov 2026 17:33:02 GMT
+      string: '{"created_at":1794605018,"completed_at":1794605029,"id":"fe908529-54f7-9cb6-94e7-3946adc4e0f9","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_fe908529-54f7-9cb6-94e7-3946adc4e0f9","summary":[{"text":"About
+        to explain Ruby.\n\nThe system prompt requires JSON with name and age. I will
+        provide Ruby information in that format.\n\nThe JSON schema conflicts with
+        explaining Ruby. I will generate a person named Ruby to satisfy the format.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"B8cu7fAu/nrElyBiHXL8wVSbZqjb/pNr5YwHYRD8zQstkBtNfQ74VaAeGCzQFfishDP+DXDqP7p4g6V6lqYXn9cOcVS9YROXDvhhbk7AtffGRqva/YT5WgTv2wweABMxJ1lWS76nkuy9klQIVPVLZfX3qyqWJN9PbOlCbjacQ/HNsOY/ZyCtM+mcsNLtPJcWLM/rnh9qayEM8Vm+gji/2p+YxFsMXQFw9fZiaozDhAnrOx8AJ/Oa6puhPzGUbwzEcz/DsbL5VF45DI74KFaNaCDeq2WtEiOt4wvNBA+o3VJI8fhc0h7rFNH3p/1yfAGUa5o0s6+Rj593pfTF5nEaETCpd8C4Xd7WYVm06UEAx8OCzr2E4orsCAU08SxBKtQ9LtqBBEjIu+1GdKbEGlkzvsnl+2PXqpaeHoLC00ZzMliobxsRLQyoD6/bw4GHokrdHsmGJoVaZxCwJc3gXYQIuAQB/+Uq1fbhuVuQE3DDIfS5aPJfL82KzIPNOHYavVNr7tISgcY0BwgjELqQrgJhoL4Gnz1n4yO1oX8oupG9tO4ZGy8LGiookVMthJj2ScsLYK/hNlPXYZIfxTpiGrvb9wn8rdTYuJT79DnjY2ftJI3ZhdIVCLjSSoBOfg8LHk0fte0YcxLr9ub+5TG8cPbogaxtiSYmTT1Lrt7sCROJ2XsupTEmTaBcCQU38YmYdrjQOBGKCsioPqFUYD8AT7epPzI0xXO8J1hgpckNPJUCGDMpnrQf+IWLfaTASD8E0LVfahOEnaejAUj+6N2Tg5OXlwCGnSelNzXSPvG93LGL+4drplHqTsfQF0g1M0ITaoKvIZlNQ1x7JZZ2L+zv94Hk/fOClGBfM3Av2Hy0Xg8WJxWnZ/2YSik9ZUcRcpPgzAk4n5jT0ncsYZDvM1+AVhjwolJJWq0/F1IUzXocwYV9S7EQB3MEfZ2HgmjfDGi1C4/HhmcWnymlwMPO7vBa0ffq0xef98n2eYExBcgSRFGtIfz51O/0tXuxgwghU1IQTvNyt/b0QlFDZz+rDIMPTUanLMKfK+PTkzkZIdT/tI/ZPFpg6rlv4CQeN8IpZFQAJmwyPnpa965it04mS1MVY2jItwvTW3gZwS3Ys3tbba7AoDCtBD25gkNBps6FX1Pn1iK3kJOR0VPgvfj9jVHyZttlE+OLJlogRc44T/ieCpaT/7/PYLyJKWBDd0o++ZcR1yrQYH5eEHCp7egLxVPqLjIEFNRgP4cKIh1vnOS9U39MvrkKzclFUI2v1H3oXiClqReInm9pDgrsc09FSFqPgwU5musgMoyR3BWjBKuiFCPmjL73EoZ0A8fMrR+6peQ0YTzyU8EI9AhasVoOLcPteQ91mA2HludU29jLRaUqSJ4+mArAHpQ6Dvo9qJeG1qDJ9Kj5FXHJBq16t1PBNVuFT0TX5z8rybRBkSCDeXYQEgEyPNbvaWAPSKymTqxni3ybM2Ns1bHve4gXplI2mMOoCi8gRnUM4Ux0UQVq3pVFz6662sSyxTJqg51VkanRLKZZD4bCeZ9lfKjoD5ifecx1Hba2ZOOKX/ThBIvvJCW7Yu1HEmVyUxHA77u01iNUhQI/9mRX4GM4MGKg1YNfiWfLATelau/5xGr03tg6sSDYbnd7FAu4MaaRO3U7097KqpBbiPD5J0OS4phAK/LQ+tnuc75gKUQ73rKAg52msEjApl2gzsgiXfK3PdpSzvYvcp/6LKv5X4yjFlzS3JvIOFCBRznLq8J5rM/OlwtdPGKsoVEhlSn7Wk2F8dIKsnzvWk5+Z15S88wuywC4rOwu1b6dwu7XKhDRFNzyNrz9lmpV"},{"content":[{"type":"output_text","text":"{\"name\":\"Ruby\",\"age\":28}","logprobs":[],"annotations":[]}],"id":"msg_fe908529-54f7-9cb6-94e7-3946adc4e0f9","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":483,"input_tokens_details":{"cached_tokens":128},"output_tokens":730,"output_tokens_details":{"reasoning_tokens":721},"total_tokens":1213,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":22943500,"context_details":{"input_tokens":483,"output_tokens":738}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Fri, 13 Nov 2026 21:23:49 GMT
 recorded_with: VCR 6.4.1

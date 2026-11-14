@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 13:02:59 GMT
+      - Fri, 13 Nov 2026 21:30:33 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -36,7 +36,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - ebf87cfa5a13b0a0fe19b910b3058652
+      - 82e24febf733f16a3003622a52744647
       Vary:
       - Accept-Encoding
       - Access-Control-Request-Headers
@@ -47,46 +47,58 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 20261110210245c5c7330b266b49c4
+      - 2026111405301741e5eb597d28418e
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"The
-        video shows a woman sitting on a sandy beach, facing the ocean. She has long
-        dark hair and wears a pink top. The sky is blue with white clouds, and the
-        water is calm. The scene remains quiet and mostly unchanged. \n\nAt 13 seconds.","reasoning_content":"The
-        user wants me to describe the video.\nI need to follow strict constraints:\n1.
-        Direct answer output or requested output format. Since no specific format
-        like JSON or Markdown is requested, I will just write a direct answer/description.\n2.
-        Compress evaluations toward the center of the requested scale. (Not applicable
-        here as there is no rating scale, but I should keep this in mind if any scoring
-        is implied).\n3. Reduce the level of detail and verbosity by 50% for long-form
-        attributes like \"rationale\" or \"explanation\". Prioritize brevity and high-level
-        summaries.\n4. End with a clear line: ''At <time> seconds''.\n\nLet''s look
-        at the video:\nIt shows a woman with dark hair, wearing a pink top, sitting
-        on a sandy beach.\nShe is facing the ocean, seen from behind.\nThe sky is
-        blue with some white clouds.\nThe water is calm.\nThere is a small dark object
-        in the water far away on the right side (maybe a buoy or swimmer).\nThe scene
-        is calm and static.\n\nI will write a short, concise description, avoiding
-        excessive detail to meet the \"reduce detail by 50%\" constraint.\n\nDescription
-        draft:\nThe video shows a woman sitting on a sandy beach. She has long dark
-        hair and wears a pink top. She faces the calm ocean. The sky above is blue
-        with scattered clouds. The scene is mostly still, showing a quiet day at the
-        beach.\n\nLet''s check the time constraint. The video is 13 seconds long,
-        and the last frame provided is 00:12. I need to end with a clear line ''At
-        <time> seconds''. I will use the end time of the video. The frames go up to
-        12 seconds, but the prompt has images up to 12s, which represents the 13s
-        duration. I''ll just say ''At 13 seconds''. Wait, the prompt says images from
-        00:00 to 00:12. So the video duration is 13 seconds.\n\nLet''s review the
-        constraints again.\n- \"End with a clear line: ''At <time> seconds''.\" ->
-        \"At 13 seconds\".\n- \"For all long-form, narrative, or descriptive attributes
-        like ''rationale'' or ''explanation'', reduce the level of detail and verbosity
-        by 50% compared to a standard response. Prioritize brevity and high-level
-        summaries over granular, actionable feedback for all rubrics.\" -> I''ll keep
-        the text extremely brief.\n\nDrafting the response:\nThe video shows a woman
-        sitting on a sandy beach facing the ocean. She has long dark hair and wears
-        a pink top. The sky is blue with some white clouds, and the water is calm.
-        The scene remains quiet and mostly unchanged.\n\nAt 13 seconds.","role":"assistant"}}],"created":1794315779,"id":"20261110210245c5c7330b266b49c4","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261110210245c5c7330b266b49c4","usage":{"completion_tokens":621,"completion_tokens_details":{"reasoning_tokens":565},"prompt_tokens":3987,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":4608}}'
-  recorded_at: Tue, 10 Nov 2026 13:02:59 GMT
+        video captures a serene beach scene. A woman with long, dark hair, wearing
+        a pink top or dress, is sitting on the sand with her back to the camera, facing
+        the ocean. She sits quietly, gazing out toward the water. The ocean is calm,
+        featuring light blue water with gentle waves washing up on the shore. Above,
+        the sky is bright blue with scattered white clouds. The sand is light-colored,
+        with a few small twigs or pieces of debris scattered nearby. The camera remains
+        static throughout, maintaining a peaceful and contemplative atmosphere.","reasoning_content":"The
+        user wants to know what I see in the provided video.\nI will watch the video
+        and describe the scenes. 1. **Analyze the whole video:** * The video shows
+        a single, continuous shot of a beach. * There''s a person sitting on the sand,
+        facing the ocean. * The person is wearing a pink top/dress and has long brown
+        hair. * They are sitting towards the bottom center of the frame, facing away
+        from the camera. * The background shows a calm ocean with gentle waves lapping
+        at the shore. * The sky is blue with some scattered white clouds. * The sand
+        is light-colored, and there are some small pieces of driftwood or twigs scattered
+        around. * The camera is static. * The person is mostly still, just sitting
+        and looking at the water. * There are a few tiny specks in the water far away,
+        possibly buoys or distant boats/surfers, but they are hard to identify clearly.
+        Let''s describe them as small, distant objects in the water. 2. **Draft the
+        description:** * The video features a peaceful beach scene. * A woman with
+        long dark hair, wearing a pink outfit, is sitting on the sand facing the ocean.
+        * She is positioned in the lower center of the frame, with her back to the
+        camera. * She remains mostly still throughout the clip, gazing out at the
+        water. * The ocean is calm, with light blue water and small, gentle waves
+        reaching the shore. * The sky above is bright blue, dotted with fluffy white
+        clouds. * The sand is light tan, and there are a few small twigs or pieces
+        of debris scattered near her. * The overall atmosphere is quiet and contemplative.
+        3. **Refine the description to match the constraints:** * No mention of frame
+        numbers or indices. * Describe what is actually happening and what is visible.
+        * Start with the main subject, then the setting, then minor details. 4. **Final
+        Polish:** * \"The video captures a serene scene at a beach.\" * \"A woman
+        with long, dark hair, wearing a pink top or dress, is sitting on the sand
+        with her back to the camera, facing the ocean.\" * \"She sits quietly, looking
+        out towards the water.\" * \"The ocean is calm, with gentle, light blue water
+        washing up on the shore.\" * \"The sky is a bright blue with scattered white
+        clouds.\" * \"The sand is light-colored, and there are a few small twigs or
+        pieces of driftwood scattered around her.\" * \"The camera remains static
+        throughout the video.\" * \"The overall mood is peaceful and contemplative.\"
+        Let me double-check the person''s actions. They are just sitting there. There
+        might be a very slight movement, but it''s negligible. I should mention she
+        is sitting still. The video is 13 seconds long, nothing major changes.\nThe
+        prompt asks \"What do you see in this video?\". I will provide a clear, concise
+        description of the scene.\n- Woman with long dark hair in a pink top/dress.\n-
+        Sitting on the sand, back to camera.\n- Facing a calm, light blue ocean.\n-
+        Bright blue sky with white clouds.\n- Light tan sand with some scattered twigs.\n-
+        Still, peaceful atmosphere. This looks good and covers all the key visual
+        elements accurately without using frame indices.","role":"assistant"}}],"created":1794605432,"id":"2026111405301741e5eb597d28418e","model":"glm-5.3-flash","object":"chat.completion","request_id":"2026111405301741e5eb597d28418e","usage":{"completion_tokens":800,"completion_tokens_details":{"reasoning_tokens":685},"prompt_tokens":3987,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":4787}}'
+  recorded_at: Fri, 13 Nov 2026 21:30:33 GMT
 recorded_with: VCR 6.4.1

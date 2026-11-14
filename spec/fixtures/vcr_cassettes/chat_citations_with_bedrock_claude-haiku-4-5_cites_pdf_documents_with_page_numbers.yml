@@ -13,7 +13,7 @@ http_interactions:
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261110T173240Z
+      - 20261113T212155Z
       X-Amz-Content-Sha256:
       - c21cd3ced12ab593ebcdf8ab0be88d3c5ada36aab7dbe7b0a73f140e9165c398
       Authorization:
@@ -29,37 +29,38 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:32:42 GMT
+      - Fri, 13 Nov 2026 21:21:57 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1520'
+      - '1578'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - '088cef7e-a9a1-465f-a1a9-2117762c1af2'
+      - 67c444dc-295a-4d77-8230-ca8e09b6bb90
       X-Amzn-Bedrock-Invocation-Latency:
-      - '1134'
+      - '1300'
       X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
       - '0'
       X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
       - '0'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '122'
+      - '133'
       X-Amzn-Bedrock-Input-Token-Count:
       - '4250'
     body:
       encoding: UTF-8
-      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_oxxxczhbj7i4wmhjemfwqpbvj7u234zo46ojsfecj7ecgwgr6hhq","type":"message","role":"assistant","content":[{"citations":[{"type":"page_location","cited_text":"Sample
+      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_jlm26hxmdzh7b2dxtoxnmhnartu5kvobijpiqlfs7op3pbhubayq","type":"message","role":"assistant","content":[{"citations":[{"type":"page_location","cited_text":"Sample
         PDF\r\nThis is a simple PDF file. ","document_index":0,"document_title":"sample.pdf","start_page_number":1,"end_page_number":2}],"type":"text","text":"The
-        document is a simple PDF file titled \"Sample PDF\""},{"type":"text","text":".
-        "},{"citations":[{"type":"page_location","cited_text":"Sample PDF\r\nThis
-        is a simple PDF file. Fun fun fun.\r\n","document_index":0,"document_title":"sample.pdf","start_page_number":1,"end_page_number":2}],"type":"text","text":"It
-        contains the text \"This is a simple PDF file. Fun fun fun.\""},{"type":"text","text":"
-        followed by "},{"citations":[{"type":"page_location","cited_text":"Lorem ipsum
-        dolor sit amet, consectetuer adipiscing elit. ","document_index":0,"document_title":"sample.pdf","start_page_number":1,"end_page_number":2}],"type":"text","text":"Lorem
-        ipsum text beginning with \"Lorem ipsum dolor sit amet, consectetuer adipiscing
-        elit.\""},{"type":"text","text":" The rest of the document consists of extended
-        Lorem ipsum placeholder text."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":4250,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":122,"service_tier":"standard"}}'
-  recorded_at: Tue, 10 Nov 2026 17:32:42 GMT
+        document is a simple PDF file"},{"type":"text","text":" with "},{"citations":[{"type":"page_location","cited_text":"Fun
+        fun fun.\r\n","document_index":0,"document_title":"sample.pdf","start_page_number":1,"end_page_number":2}],"type":"text","text":"the
+        phrase \"Fun fun fun\""},{"type":"text","text":" followed by "},{"citations":[{"type":"page_location","cited_text":"Lorem
+        ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus facilisis odio
+        sed mi. \r\nCurabitur suscipit. Nullam vel nisi. Etiam semper ipsum ut lectus.
+        ","document_index":0,"document_title":"sample.pdf","start_page_number":1,"end_page_number":2}],"type":"text","text":"Lorem
+        ipsum placeholder text, including passages about adipiscing, facilisis odio,
+        suscipit, nisi, and semper ipsum"},{"type":"text","text":". The rest of the
+        document consists of extended Lorem ipsum passages with various Latin placeholder
+        text."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":4250,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":133,"service_tier":"standard"}}'
+  recorded_at: Fri, 13 Nov 2026 21:21:57 GMT
 recorded_with: VCR 6.4.1

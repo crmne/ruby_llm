@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:45:13 GMT
+      - Fri, 13 Nov 2026 21:32:32 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -41,7 +41,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - 425e7613dc23cc3f483faa4933adf479
+      - b80584660544d8f73f92ac8628cbbbc1
       Vary:
       - Accept-Encoding
       - Access-Control-Request-Headers
@@ -52,16 +52,16 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 20261111014507e8356e4b96164b4b
+      - 202611140532265482ae445cec4156
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":"","reasoning_content":"The
-        user wants two things: weather in Berlin (52.5200, 13.4050) and the best language
-        to learn. These are independent calls, so I can make them both in the same
-        block.","role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","name":"weather"},"id":"call_-7086084228898611739","index":0,"type":"function"},{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call_-7086084228898611738","index":1,"type":"function"}]}}],"created":1794332713,"id":"20261111014507e8356e4b96164b4b","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261111014507e8356e4b96164b4b","usage":{"completion_tokens":75,"completion_tokens_details":{"reasoning_tokens":45},"prompt_tokens":285,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":360}}'
-  recorded_at: Tue, 10 Nov 2026 17:45:13 GMT
+        user is asking for two things:\n1. Weather in Berlin (52.5200, 13.4050)\n2.
+        Best language to learn\n\nThese are independent calls, so I can make them
+        both in the same block.","role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","name":"weather"},"id":"call_-7080016196023613082","index":0,"type":"function"},{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call_-7080016196023613081","index":1,"type":"function"}]}}],"created":1794605551,"id":"202611140532265482ae445cec4156","model":"glm-5.3-flash","object":"chat.completion","request_id":"202611140532265482ae445cec4156","usage":{"completion_tokens":79,"completion_tokens_details":{"reasoning_tokens":49},"prompt_tokens":285,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":364}}'
+  recorded_at: Fri, 13 Nov 2026 21:32:32 GMT
 - request:
     method: post
     uri: https://api.z.ai/api/paas/v4/chat/completions
@@ -69,11 +69,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"glm-5.3-flash","messages":[{"role":"user","content":"What''s
         the weather in Berlin (52.5200, 13.4050) and what''s the best language to
-        learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_-7086084228898611739","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"call_-7086084228898611738","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
-        user wants two things: weather in Berlin (52.5200, 13.4050) and the best language
-        to learn. These are independent calls, so I can make them both in the same
-        block."},{"role":"tool","content":"Current weather at 52.5200, 13.4050: 15°C,
-        Wind: 10 km/h","tool_call_id":"call_-7086084228898611739"},{"role":"tool","content":"Ruby","tool_call_id":"call_-7086084228898611738"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_-7080016196023613082","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"call_-7080016196023613081","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
+        user is asking for two things:\n1. Weather in Berlin (52.5200, 13.4050)\n2.
+        Best language to learn\n\nThese are independent calls, so I can make them
+        both in the same block."},{"role":"tool","content":"Current weather at 52.5200,
+        13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_-7080016196023613082"},{"role":"tool","content":"Ruby","tool_call_id":"call_-7080016196023613081"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
@@ -95,7 +95,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:45:19 GMT
+      - Fri, 13 Nov 2026 21:32:38 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -107,7 +107,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - 97470c2715682c1ebda18f7ad97a737a
+      - d7b46d0a4f035ffee7a258c10cd63373
       Vary:
       - Accept-Encoding
       - Access-Control-Request-Headers
@@ -118,12 +118,12 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 2026111101451397f6c64e370a4e03
+      - 2026111405323235febc17ff7c45e3
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJIZXJlJ3Mgd2hhdCBJIGZvdW5kOlxuXG4qKvCfjKTvuI8gV2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApOioqXG4tIFRlbXBlcmF0dXJlOiAxNcKwQ1xuLSBXaW5kOiAxMCBrbS9oXG5cbioq8J+SuyBCZXN0IExhbmd1YWdlIHRvIExlYXJuOioqXG4tIFJ1YnlcblxuU28gaXQncyBhIG1pbGQsIHNsaWdodGx5IGJyZWV6eSBkYXkgaW4gQmVybGluIOKAlCBhIG5pY2UgZGF5IHRvIGN1cmwgdXAgYW5kIHN0YXJ0IGxlYXJuaW5nIFJ1YnkhIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3OTQzMzI3MTksImlkIjoiMjAyNjExMTEwMTQ1MTM5N2Y2YzY0ZTM3MGE0ZTAzIiwibW9kZWwiOiJnbG0tNS4zLWZsYXNoIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicmVxdWVzdF9pZCI6IjIwMjYxMTExMDE0NTEzOTdmNmM2NGUzNzBhNGUwMyIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjo3OCwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjo3N30sInByb21wdF90b2tlbnMiOjM5MywicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJ0b3RhbF90b2tlbnMiOjQ3MX19
-  recorded_at: Tue, 10 Nov 2026 17:45:20 GMT
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJIZXJlJ3Mgd2hhdCBJIGZvdW5kOlxuXG4qKldlYXRoZXIgaW4gQmVybGluOioqXG4tIFRlbXBlcmF0dXJlOiAxNcKwQ1xuLSBXaW5kOiAxMCBrbS9oXG5cbioqQmVzdCBsYW5ndWFnZSB0byBsZWFybjoqKiBSdWJ5IPCfkoBcblxuUnVieSBpcyBhIGdyZWF0IGNob2ljZSDigJQgaXQncyBrbm93biBmb3IgaXRzIGVsZWdhbnQsIHJlYWRhYmxlIHN5bnRheCBhbmQgaXMgd2lkZWx5IHVzZWQgaW4gd2ViIGRldmVsb3BtZW50IChlc3BlY2lhbGx5IHdpdGggdGhlIFJ1Ynkgb24gUmFpbHMgZnJhbWV3b3JrKS4gSXQncyBhIGJlZ2lubmVyLWZyaWVuZGx5IGxhbmd1YWdlIHdpdGggYSB3ZWxjb21pbmcgY29tbXVuaXR5LCB0b28hIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3OTQ2MDU1NTgsImlkIjoiMjAyNjExMTQwNTMyMzIzNWZlYmMxN2ZmN2M0NWUzIiwibW9kZWwiOiJnbG0tNS4zLWZsYXNoIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicmVxdWVzdF9pZCI6IjIwMjYxMTE0MDUzMjMyMzVmZWJjMTdmZjdjNDVlMyIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjo4NCwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowfSwicHJvbXB0X3Rva2VucyI6Mzk3LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInRvdGFsX3Rva2VucyI6NDgxfX0=
+  recorded_at: Fri, 13 Nov 2026 21:32:38 GMT
 recorded_with: VCR 6.4.1

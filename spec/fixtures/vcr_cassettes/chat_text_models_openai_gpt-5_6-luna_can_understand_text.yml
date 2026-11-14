@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:35:02 GMT
+      - Fri, 13 Nov 2026 21:24:19 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -45,11 +45,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '980'
+      - '1255'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -76,22 +76,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_06c5e64c92721ee3016af355c5e0a087d280a52d3ce9c4af95",
+          "id": "resp_07e7aa4c09601d4d016af78002818887d291a30c49e8ed80ba",
           "object": "response",
-          "created_at": 1794332101,
+          "created_at": 1794605058,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794332102,
+          "completed_at": 1794605059,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -99,7 +100,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_06c5e64c92721ee3016af355c6765c87d2bee4cd5cfb51beb8",
+              "id": "msg_07e7aa4c09601d4d016af7800356c887d28e8e324c62877d5f",
               "type": "message",
               "status": "completed",
               "content": [
@@ -173,7 +174,7 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:35:02 GMT
+  recorded_at: Fri, 13 Nov 2026 21:24:19 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
@@ -202,7 +203,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:35:04 GMT
+      - Fri, 13 Nov 2026 21:24:20 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -222,11 +223,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1406'
+      - '912'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -253,22 +254,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_084ef196f12dd1b7016af355c6ee7887d283e099faa06eee4e",
+          "id": "resp_04acf88d1ec2fddb016af78003d53487d29492c1feb1293faa",
           "object": "response",
-          "created_at": 1794332102,
+          "created_at": 1794605059,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794332104,
+          "completed_at": 1794605060,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -276,7 +278,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_084ef196f12dd1b7016af355c7b19087d2bdd2e19a92547c3b",
+              "id": "msg_04acf88d1ec2fddb016af78004704087d2b2013d4d1cb369c1",
               "type": "message",
               "status": "completed",
               "content": [
@@ -284,7 +286,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "The file contains an XML element:\n\n```xml\n<truism>Ruby is the best</truism>\n```\n\nIts text content is: **\u201cRuby is the best\u201d**."
+                  "text": "The XML file contains a `<truism>` element stating:\n\n> Ruby is the best"
                 }
               ],
               "phase": "final_answer",
@@ -341,14 +343,14 @@ http_interactions:
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 42,
+            "output_tokens": 21,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 122
+            "total_tokens": 101
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:35:04 GMT
+  recorded_at: Fri, 13 Nov 2026 21:24:20 GMT
 recorded_with: VCR 6.4.1

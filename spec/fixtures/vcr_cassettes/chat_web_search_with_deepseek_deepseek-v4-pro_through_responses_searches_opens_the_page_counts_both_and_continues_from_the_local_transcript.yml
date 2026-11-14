@@ -31,7 +31,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 10 Nov 2026 13:02:05 GMT
+      - Fri, 13 Nov 2026 21:22:07 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -41,26 +41,26 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - da8fd980318cdcec6b3a930e92d81bc6
+      - f025b6f79b868d1a2c8b45e7be0670cc
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 82fa23c5b1d6a7a82bcbabb01779fdac.cloudfront.net (CloudFront)
+      - 1.1 cd3dcd861336f875b918b4feb519ddca.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P6
+      - TXL52-P4
       X-Amz-Cf-Id:
-      - Ot_38jsTOExU-wZdTMX_uATmy0qZCp-y1LBk9zIPDFQz0gKa5Cd7Tw==
+      - axC8o17Dr_Cqnjca7mMbsh_JjqYho1hu9N3zE753hwfwNrAwNRrNIA==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"7f045fa8-de85-49e1-a150-498db31ce21b","object":"response","created_at":1794315725,"status":"completed","background":false,"completed_at":1794315729,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-v4-pro","moderation":null,"output":[{"type":"reasoning","id":"9958c34a-b75e-4870-beb1-29a5d0f96242","status":"completed","content":[{"type":"reasoning_text","text":"We
-        need answer: which parser became default in Ruby 3.4.0. Need search web and
-        open specified page. Let''s do search plus open."}],"summary":[],"encrypted_content":"7f045fa8-de85-49e1-a150-498db31ce21b-0"},{"type":"web_search_call","id":"call_00_o5aSJMZlIoxfNnkuea9J5363","status":"completed","action":{"type":"open_page","url":"https://www.ruby-lang.org/en/news/2024/12/25/ruby-3-4-0-released/#ws_call_id=call_00_o5aSJMZlIoxfNnkuea9J5363"}},{"type":"web_search_call","id":"call_01_IHFTFSbOncYfax4Ev44U2444","status":"completed","action":{"type":"search","queries":["Ruby
-        3.4.0 default parser Prism","ws_call_id=call_01_IHFTFSbOncYfax4Ev44U2444"]}},{"type":"reasoning","id":"5bae0df9-e1d2-4c89-8c98-eaf1adccce91","status":"completed","content":[{"type":"reasoning_text","text":"We
-        have answer. Prism became the default parser. Need one sentence."}],"summary":[],"encrypted_content":"7f045fa8-de85-49e1-a150-498db31ce21b-1"},{"type":"message","id":"b2141b8a-7773-4120-9195-40a9a0e78c24","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"Prism
-        became the default parser in Ruby 3.4.0, replacing parse.y."}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[{"type":"web_search","search_context_size":null,"user_location":null}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":6429,"input_tokens_details":{"cached_tokens":1152},"output_tokens":180,"output_tokens_details":{"reasoning_tokens":47},"total_tokens":6609,"server_tool_use":{"tool_search":1,"tool_fetch":1}},"user":null,"metadata":{}}'
-  recorded_at: Tue, 10 Nov 2026 13:02:09 GMT
+      string: '{"id":"0f826f4b-5965-4259-813b-a6d3b8bf3834","object":"response","created_at":1794604927,"status":"completed","background":false,"completed_at":1794604933,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-v4-pro","moderation":null,"output":[{"type":"reasoning","id":"f8f68d45-eda4-4be8-bd89-8a1be6a28ac8","status":"completed","content":[{"type":"reasoning_text","text":"We
+        need answer: which parser became default in Ruby 3.4.0. Need search web then
+        open URL. Let''s do search maybe and open page."}],"summary":[],"encrypted_content":"0f826f4b-5965-4259-813b-a6d3b8bf3834-0"},{"type":"web_search_call","id":"call_00_lpDjt7RssCC18SMAZg2j2118","status":"completed","action":{"type":"search","queries":["Ruby
+        3.4.0 released default parser","ws_call_id=call_00_lpDjt7RssCC18SMAZg2j2118"]}},{"type":"web_search_call","id":"call_01_8F7ncqr1YEptCb0i1tzt0850","status":"completed","action":{"type":"open_page","url":"https://www.ruby-lang.org/en/news/2024/12/25/ruby-3-4-0-released/#ws_call_id=call_01_8F7ncqr1YEptCb0i1tzt0850"}},{"type":"reasoning","id":"27a34d14-989e-49a1-aeda-06aa8c20c37d","status":"completed","content":[{"type":"reasoning_text","text":"We
+        have page content. Answer one sentence: Prism became the default parser."}],"summary":[],"encrypted_content":"0f826f4b-5965-4259-813b-a6d3b8bf3834-1"},{"type":"message","id":"4d8aecb0-4865-4f15-98b1-04745c1d2371","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"Prism
+        became the default parser in Ruby 3.4.0."}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[{"type":"web_search","search_context_size":null,"user_location":null}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":6561,"input_tokens_details":{"cached_tokens":1152},"output_tokens":177,"output_tokens_details":{"reasoning_tokens":49},"total_tokens":6738,"server_tool_use":{"tool_search":1,"tool_fetch":1,"tool_image_search":0}},"user":null,"metadata":{}}'
+  recorded_at: Fri, 13 Nov 2026 21:22:13 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/responses
@@ -68,12 +68,12 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-v4-pro","input":[{"role":"user","content":"Search
         the web, then open https://www.ruby-lang.org/en/news/2024/12/25/ruby-3-4-0-released/
-        and tell me which parser became the default. One sentence."},{"type":"reasoning","id":"9958c34a-b75e-4870-beb1-29a5d0f96242","status":"completed","content":[{"type":"reasoning_text","text":"We
-        need answer: which parser became default in Ruby 3.4.0. Need search web and
-        open specified page. Let''s do search plus open."}],"summary":[],"encrypted_content":"7f045fa8-de85-49e1-a150-498db31ce21b-0"},{"type":"web_search_call","id":"call_00_o5aSJMZlIoxfNnkuea9J5363","status":"completed","action":{"type":"open_page","url":"https://www.ruby-lang.org/en/news/2024/12/25/ruby-3-4-0-released/#ws_call_id=call_00_o5aSJMZlIoxfNnkuea9J5363"}},{"type":"web_search_call","id":"call_01_IHFTFSbOncYfax4Ev44U2444","status":"completed","action":{"type":"search","queries":["Ruby
-        3.4.0 default parser Prism","ws_call_id=call_01_IHFTFSbOncYfax4Ev44U2444"]}},{"type":"reasoning","id":"5bae0df9-e1d2-4c89-8c98-eaf1adccce91","status":"completed","content":[{"type":"reasoning_text","text":"We
-        have answer. Prism became the default parser. Need one sentence."}],"summary":[],"encrypted_content":"7f045fa8-de85-49e1-a150-498db31ce21b-1"},{"type":"message","id":"b2141b8a-7773-4120-9195-40a9a0e78c24","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"Prism
-        became the default parser in Ruby 3.4.0, replacing parse.y."}],"phase":"final_answer","role":"assistant"},{"role":"user","content":"Which
+        and tell me which parser became the default. One sentence."},{"type":"reasoning","id":"f8f68d45-eda4-4be8-bd89-8a1be6a28ac8","status":"completed","content":[{"type":"reasoning_text","text":"We
+        need answer: which parser became default in Ruby 3.4.0. Need search web then
+        open URL. Let''s do search maybe and open page."}],"summary":[],"encrypted_content":"0f826f4b-5965-4259-813b-a6d3b8bf3834-0"},{"type":"web_search_call","id":"call_00_lpDjt7RssCC18SMAZg2j2118","status":"completed","action":{"type":"search","queries":["Ruby
+        3.4.0 released default parser","ws_call_id=call_00_lpDjt7RssCC18SMAZg2j2118"]}},{"type":"web_search_call","id":"call_01_8F7ncqr1YEptCb0i1tzt0850","status":"completed","action":{"type":"open_page","url":"https://www.ruby-lang.org/en/news/2024/12/25/ruby-3-4-0-released/#ws_call_id=call_01_8F7ncqr1YEptCb0i1tzt0850"}},{"type":"reasoning","id":"27a34d14-989e-49a1-aeda-06aa8c20c37d","status":"completed","content":[{"type":"reasoning_text","text":"We
+        have page content. Answer one sentence: Prism became the default parser."}],"summary":[],"encrypted_content":"0f826f4b-5965-4259-813b-a6d3b8bf3834-1"},{"type":"message","id":"4d8aecb0-4865-4f15-98b1-04745c1d2371","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"Prism
+        became the default parser in Ruby 3.4.0."}],"phase":"final_answer","role":"assistant"},{"role":"user","content":"Which
         Ruby version was that? Reply with the version only."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"web_search"}]}'
     headers:
       User-Agent:
@@ -98,7 +98,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 10 Nov 2026 13:02:09 GMT
+      - Fri, 13 Nov 2026 21:22:13 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -108,21 +108,21 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 79a5a4f925834bc76744f6f6c9921643
+      - 151edd125d5f347dc41d059dcbef6f25
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 021c91d44a38f0cb503f6ea370465ace.cloudfront.net (CloudFront)
+      - 1.1 9d82637a2d5a2030baf2d4c024ad4c56.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P1
+      - TXL52-P2
       X-Amz-Cf-Id:
-      - k_BvUc6JonJG9BXEi9dH94NlSKP4TQ01hxAkOfr14Qy8cK7KKY2ZrQ==
+      - W5Dtxo2Ua1_JwP6tplljxQL7kfYejPb4edtqASr4-c1sQ2rfGPlZyg==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"f0624b15-9de1-4359-9f5a-5095279065a3","object":"response","created_at":1794315729,"status":"completed","background":false,"completed_at":1794315731,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-v4-pro","moderation":null,"output":[{"type":"reasoning","id":"05b787c7-60b6-4f77-83ce-aa09d6dbcd4a","status":"completed","content":[{"type":"reasoning_text","text":"User
-        asks which Ruby version was that. We just discussed Ruby 3.4.0. Reply version
-        only: 3.4.0."}],"summary":[],"encrypted_content":"f0624b15-9de1-4359-9f5a-5095279065a3-0"},{"type":"message","id":"00a18165-b935-42b4-9694-1c2875fed68b","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"3.4.0"}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[{"type":"web_search","search_context_size":null,"user_location":null}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":5864,"input_tokens_details":{"cached_tokens":5760},"output_tokens":36,"output_tokens_details":{"reasoning_tokens":30},"total_tokens":5900},"user":null,"metadata":{}}'
-  recorded_at: Tue, 10 Nov 2026 13:02:11 GMT
+      string: '{"id":"76f14c14-8064-47db-a249-62309c0ded48","object":"response","created_at":1794604933,"status":"completed","background":false,"completed_at":1794604934,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-v4-pro","moderation":null,"output":[{"type":"reasoning","id":"3253b5df-ce08-45bf-a84e-b0b4f29dae4c","status":"completed","content":[{"type":"reasoning_text","text":"User
+        asks \"Which Ruby version was that? Reply with the version only.\" Referring
+        to Ruby version where Prism became default. We know 3.4.0. Reply version only."}],"summary":[],"encrypted_content":"76f14c14-8064-47db-a249-62309c0ded48-0"},{"type":"message","id":"3bd4cba5-8706-42f3-a67f-b4e2075b67ac","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"3.4.0"}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[{"type":"web_search","search_context_size":null,"user_location":null}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":5993,"input_tokens_details":{"cached_tokens":5888},"output_tokens":44,"output_tokens_details":{"reasoning_tokens":38},"total_tokens":6037},"user":null,"metadata":{}}'
+  recorded_at: Fri, 13 Nov 2026 21:22:14 GMT
 recorded_with: VCR 6.4.1

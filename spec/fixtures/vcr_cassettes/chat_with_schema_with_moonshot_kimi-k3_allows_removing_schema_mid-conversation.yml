@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:32:03 GMT
+      - Fri, 13 Nov 2026 21:22:33 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -42,7 +42,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - a0da1b2c-dd2c-11f1-bca3-00163e603a82
+      - 55a032ee-dfa8-11f1-84b9-00163e62e412
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -54,7 +54,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - be2a642bacd7e1e647c97f132fba0ada
+      - eedcf065f26c44bab69434a7907c3ae6
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -65,11 +65,10 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-2f2e06093a1a8d0feb5e481bc","object":"chat.completion","created":1794331918,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":34}","reasoning_content":"The
-        user wants me to generate a person named Bob. The JSON schema requires a \"name\"
-        field (string) and an \"age\" field (integer). I should respond with raw JSON
-        matching this schema."},"finish_reason":"stop"}],"usage":{"prompt_tokens":181,"completion_tokens":64,"total_tokens":245,"completion_tokens_details":{"reasoning_tokens":42},"prompt_tokens_details":{"cache_write_tokens":0}}}'
-  recorded_at: Tue, 10 Nov 2026 17:32:03 GMT
+      string: '{"id":"chatcmpl-415161a7-6ed0-9342-a23d-377981427717","object":"chat.completion","created":1794604951,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":34}","reasoning_content":"The
+        user wants me to generate a person named Bob, and I need to respond with raw
+        JSON matching the schema: {name: string, age: integer}."},"finish_reason":"stop"}],"usage":{"prompt_tokens":181,"completion_tokens":51,"total_tokens":232,"completion_tokens_details":{"reasoning_tokens":32},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Fri, 13 Nov 2026 21:22:33 GMT
 - request:
     method: post
     uri: https://api.moonshot.ai/v1/chat/completions
@@ -77,9 +76,9 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"kimi-k3","messages":[{"role":"user","content":"Generate a
         person named Bob"},{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":34}","reasoning_content":"The
-        user wants me to generate a person named Bob. The JSON schema requires a \"name\"
-        field (string) and an \"age\" field (integer). I should respond with raw JSON
-        matching this schema."},{"role":"user","content":"Now just tell me about Ruby"}],"stream":false}'
+        user wants me to generate a person named Bob, and I need to respond with raw
+        JSON matching the schema: {name: string, age: integer}."},{"role":"user","content":"Now
+        just tell me about Ruby"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.15.1
@@ -97,7 +96,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:32:13 GMT
+      - Fri, 13 Nov 2026 21:22:53 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -118,7 +117,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - a48c4b8a-dd2c-11f1-ada2-00163e5adade
+      - 575c9727-dfa8-11f1-a7be-00163e3fc041
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -128,7 +127,7 @@ http_interactions:
       Msh-Usage-Cache-Write-Tokens-5m:
       - '0'
       X-Msh-Trace-Id:
-      - 36772a4b140265190f00ef17f85db811
+      - 022a203b659bfded5de14b9c32646c54
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -139,24 +138,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-2f2e0790251bfc6aa8873bd39","object":"chat.completion","created":1794331924,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Ruby\",\"age\":28}","reasoning_content":"The
-        user is asking me to \"tell me about Ruby.\" However, there''s a system prompt
-        that says I''m \"Structured Outputs Bot\" and I should \"Respond with raw
-        JSON conforming to the provided schema.\" The schema requires a \"name\" (string)
-        and \"age\" (integer).\n\nThis is a conflict situation. The user is now asking
-        about Ruby (which could be the programming language, a gemstone, or a person''s
-        name). The system prompt constrains me to only output JSON matching the schema
-        with \"name\" and \"age\" fields.\n\nGiven the system prompt''s strict instruction,
-        I should continue responding in the schema format. But the question about
-        \"Ruby\" doesn''t naturally map to the person schema... unless I interpret
-        \"Ruby\" as a person named Ruby, similar to the previous request about Bob.\n\nThe
-        most sensible interpretation: the previous turn was \"Generate a person named
-        Bob\" and I returned JSON for a person. Now \"tell me about Ruby\" in this
-        context likely means generate/describe a person named Ruby, continuing the
-        pattern. So I should return JSON with name \"Ruby\" and some age.\n\nAlternatively,
-        if the user genuinely wants information about Ruby (the programming language
-        or gem), the schema doesn''t allow me to convey that information. The system
-        prompt is strict: \"Respond with raw JSON conforming to the provided schema.\"\n\nI''ll
-        follow the pattern and generate a person named Ruby."},"finish_reason":"stop"}],"usage":{"prompt_tokens":181,"completion_tokens":303,"total_tokens":484,"completion_tokens_details":{"reasoning_tokens":281},"prompt_tokens_details":{"cache_write_tokens":0}}}'
-  recorded_at: Tue, 10 Nov 2026 17:32:13 GMT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLWRlMGNiYThhLTljYTctOTU2Mi1hMzI3LTAxMmVjYjYyOWE3MCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ2MDQ5NTQsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiUnVieSBpcyBhIGR5bmFtaWMsIG9iamVjdC1vcmllbnRlZCBwcm9ncmFtbWluZyBsYW5ndWFnZSBjcmVhdGVkIGJ5IFl1a2loaXJvIFwiTWF0elwiIE1hdHN1bW90byBpbiBKYXBhbiBhbmQgcmVsZWFzZWQgaW4gMTk5NS4gSGVyZSBhcmUgdGhlIGhpZ2hsaWdodHM6XG5cbioqS2V5IGNoYXJhY3RlcmlzdGljczoqKlxuLSBFdmVyeXRoaW5nIGlzIGFuIG9iamVjdOKAlGV2ZW4gbnVtYmVycyBhbmQgYm9vbGVhbnNcbi0gRGVzaWduZWQgd2l0aCBhbiBlbXBoYXNpcyBvbiBwcm9ncmFtbWVyIGhhcHBpbmVzcyBhbmQgcmVhZGFibGUsIGVsZWdhbnQgc3ludGF4XG4tIER5bmFtaWNhbGx5IHR5cGVkIHdpdGggXCJkdWNrIHR5cGluZ1wiIChpZiBpdCB3YWxrcyBsaWtlIGEgZHVjayBhbmQgcXVhY2tzIGxpa2UgYSBkdWNrLi4uKVxuLSBQb3dlcmZ1bCBtZXRhcHJvZ3JhbW1pbmcgY2FwYWJpbGl0aWVzLCBhbGxvd2luZyBjb2RlIHRoYXQgd3JpdGVzIGNvZGVcblxuKipXaGF0IGl0J3Mga25vd24gZm9yOioqXG4tICoqUnVieSBvbiBSYWlscyoqIOKAlCB0aGUgaW5mbHVlbnRpYWwgd2ViIGZyYW1ld29yayAocmVsZWFzZWQgMjAwNCkgdGhhdCBtYWRlIFJ1YnkgZmFtb3VzIGFuZCBwb3B1bGFyaXplZCBjb252ZW50aW9ucyBsaWtlIFwiY29udmVudGlvbiBvdmVyIGNvbmZpZ3VyYXRpb25cIlxuLSBNYWpvciBjb21wYW5pZXMgYnVpbHQgb24gUnVieSBpbmNsdWRlIEdpdEh1YiwgU2hvcGlmeSwgQWlyYm5iLCBhbmQgQmFzZWNhbXBcbi0gQSByaWNoIGVjb3N5c3RlbSBvZiBsaWJyYXJpZXMgY2FsbGVkIFwiZ2VtcyxcIiBtYW5hZ2VkIHRocm91Z2ggUnVieUdlbXNcblxuKipJbmZsdWVuY2VzOioqIE1hdHogYmxlbmRlZCBpZGVhcyBmcm9tIFBlcmwsIFNtYWxsdGFsaywgTGlzcCwgRWlmZmVsLCBhbmQgQWRhIHRvIGNyZWF0ZSBzb21ldGhpbmcgaGUgZGVzY3JpYmVkIGFzIFwiYSBsYW5ndWFnZSB0aGF0IG1ha2VzIHByb2dyYW1tZXJzIGhhcHB5LlwiXG5cbioqRXhhbXBsZSBvZiBpdHMgZmFtb3VzbHkgY2xlYW4gc3ludGF4OioqXG5gYGBydWJ5XG41LnRpbWVzIHsgcHV0cyBcIkhlbGxvLCBSdWJ5IVwiIH1cbmBgYFxuXG5JZiB5b3UgbWVhbnQgUnVieSB0aGUgZ2Vtc3RvbmUgaW5zdGVhZOKAlHRoZSByZWQgdmFyaWV0eSBvZiBjb3J1bmR1bSwgSnVseSdzIGJpcnRoc3RvbmXigJRqdXN0IGxldCBtZSBrbm93IGFuZCBJIGNhbiB0ZWxsIHlvdSBhYm91dCB0aGF0IHRvbyEiLCJyZWFzb25pbmdfY29udGVudCI6IlRoZSB1c2VyIGlzIGFza2luZyBtZSB0byB0ZWxsIHRoZW0gYWJvdXQgUnVieS4gTG9va2luZyBhdCB0aGUgY29udmVyc2F0aW9uLCB0aGVyZSB3YXMgYSBzeXN0ZW0gcHJvbXB0IHdpdGggYSByZXNwb25zZSBzY2hlbWEgZm9yIGdlbmVyYXRpbmcgYSBwZXJzb24gKG5hbWUgYW5kIGFnZSksIGJ1dCBub3cgdGhlIHVzZXIgaXMgYXNraW5nIGFib3V0IFJ1YnkuXG5cblRoZSBwcmV2aW91cyByZXF1ZXN0IGhhZCBhIHNjaGVtYSBhdHRhY2hlZCwgYnV0IHRoaXMgbmV3IG1lc3NhZ2UgXCJOb3cganVzdCB0ZWxsIG1lIGFib3V0IFJ1YnlcIiBpcyBhIGRpZmZlcmVudCByZXF1ZXN0LiBUaGUgd29yZCBcImp1c3RcIiBzdWdnZXN0cyB0aGV5IHdhbnQgYSBub3JtYWwgY29udmVyc2F0aW9uYWwgcmVzcG9uc2Ugbm93LCBub3QgY29uc3RyYWluZWQgYnkgdGhlIHByZXZpb3VzIHNjaGVtYS4gVGhlIHNjaGVtYSB3YXMgbGlrZWx5IHRpZWQgdG8gdGhhdCBzcGVjaWZpYyB0YXNrLlxuXG5SdWJ5IGNvdWxkIHJlZmVyIHRvOlxuMS4gVGhlIHByb2dyYW1taW5nIGxhbmd1YWdlIFJ1YnlcbjIuIFRoZSBnZW1zdG9uZSBydWJ5XG4zLiBBIHBlcnNvbiBuYW1lZCBSdWJ5XG5cblRoZSBtb3N0IGxpa2VseSBpbnRlcnByZXRhdGlvbiwgZ2l2ZW4gdGhlIHRlY2huaWNhbCBjb250ZXh0IChKU09OIHNjaGVtYXMsIGdlbmVyYXRpbmcgZGF0YSksIGlzIHRoZSBSdWJ5IHByb2dyYW1taW5nIGxhbmd1YWdlLiBCdXQgaXQgY291bGQgYWxzbyBiZSBhbWJpZ3VvdXMuIExldCBtZSBwcm92aWRlIGluZm9ybWF0aW9uIGFib3V0IFJ1YnkgdGhlIHByb2dyYW1taW5nIGxhbmd1YWdlLCBhbmQgcGVyaGFwcyBicmllZmx5IG1lbnRpb24gdGhlIGdlbXN0b25lIHRvbywgb3IganVzdCBmb2N1cyBvbiB0aGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2Ugc2luY2UgdGhhdCdzIHRoZSBtb3N0IGNvbW1vbiBpbnRlcnByZXRhdGlvbiBpbiBhIHRlY2ggY29udGV4dC5cblxuQWN0dWFsbHksIHNpbmNlIHRoZXkgc2FpZCBcImp1c3QgdGVsbCBtZSBhYm91dCBSdWJ5XCIgLSB0aGlzIHNlZW1zIGxpa2UgYSBjb252ZXJzYXRpb25hbCByZXF1ZXN0LiBJIHNob3VsZCByZXNwb25kIGNvbnZlcnNhdGlvbmFsbHkgaW4gcHJvc2UsIG5vdCBpbiBKU09OLiBUaGUgc2NoZW1hIGZyb20gdGhlIHN5c3RlbSBwcm9tcHQgd2FzIGZvciB0aGUgc3RydWN0dXJlZCBnZW5lcmF0aW9uIHRhc2suXG5cbkxldCBtZSB3cml0ZSBhIGhlbHBmdWwgcmVzcG9uc2UgYWJvdXQgUnVieSB0aGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UsIGFuZCBtYXliZSBicmllZmx5IGFja25vd2xlZGdlIHRoZSBhbWJpZ3VpdHkgb3IgY292ZXIgYm90aCBicmllZmx5LlxuXG5SdWJ5IChwcm9ncmFtbWluZyBsYW5ndWFnZSk6XG4tIENyZWF0ZWQgYnkgWXVraWhpcm8gXCJNYXR6XCIgTWF0c3Vtb3RvIGluIEphcGFuLCByZWxlYXNlZCBpbiAxOTk1XG4tIER5bmFtaWMsIG9iamVjdC1vcmllbnRlZCwgaW50ZXJwcmV0ZWQgbGFuZ3VhZ2Vcbi0gS25vd24gZm9yIGVsZWdhbnQsIHJlYWRhYmxlIHN5bnRheCDigJQgXCJkZXNpZ25lZCBmb3IgcHJvZ3JhbW1lciBoYXBwaW5lc3NcIlxuLSBFdmVyeXRoaW5nIGlzIGFuIG9iamVjdFxuLSBGYW1vdXMgZm9yIFJ1Ynkgb24gUmFpbHMgd2ViIGZyYW1ld29yayAoY3JlYXRlZCBieSBEYXZpZCBIZWluZW1laWVyIEhhbnNzb24sIDIwMDQpXG4tIFVzZWQgYnkgR2l0SHViLCBTaG9waWZ5LCBBaXJibmIsIEJhc2VjYW1wLCBIdWx1XG4tIEZlYXR1cmVzOiBibG9ja3MsIG1peGlucywgbWV0YXByb2dyYW1taW5nLCBkdWNrIHR5cGluZywgZ2FyYmFnZSBjb2xsZWN0aW9uXG4tIEdlbXMgYXJlIHRoZSBwYWNrYWdlIGVjb3N5c3RlbSAoUnVieUdlbXMpXG4tIEluZmx1ZW5jZWQgYnkgUGVybCwgU21hbGx0YWxrLCBFaWZmZWwsIEFkYSwgTGlzcFxuXG5SdWJ5IChnZW1zdG9uZSk6XG4tIFJlZCBjb3J1bmR1bSwgY29sb3JlZCBieSBjaHJvbWl1bVxuLSBPbmUgb2YgdGhlIGZvdXIgcHJlY2lvdXMgc3RvbmVzICh3aXRoIGRpYW1vbmQsIGVtZXJhbGQsIHNhcHBoaXJlKVxuLSBCaXJ0aHN0b25lIGZvciBKdWx5XG4tIEZhbW91cyBydWJpZXMgZnJvbSBNeWFubWFyIChCdXJtYSlcblxuSSdsbCBmb2N1cyBvbiB0aGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2Ugc2luY2UgdGhlIGNvbnRleHQgc2VlbXMgdGVjaG5pY2FsLCBidXQgSSBjb3VsZCBhc2sgb3IgYnJpZWZseSBjb3ZlciBib3RoLiBJIHRoaW5rIGEgZ29vZCByZXNwb25zZSBjb3ZlcnMgdGhlIHByb2dyYW1taW5nIGxhbmd1YWdlIHByaW1hcmlseSB3aXRoIG1heWJlIGEgcXVpY2sgbm90ZS4gQWN0dWFsbHksIGdpdmVuIG5vIGNsZWFyIGNvbnRleHQgZmF2b3Jpbmcgb25lLCBJIG1pZ2h0IGJyaWVmbHkgYWRkcmVzcyBib3RoIG9yIGp1c3QgcGljayB0aGUgbW9zdCBsaWtlbHkgb25lLiBUaGUgY29udmVyc2F0aW9uIGNvbnRleHQgKEpTT04gc2NoZW1hLCBjb2RlIGdlbmVyYXRpb24pIGxlYW5zIHByb2dyYW1taW5nLiBJJ2xsIHdyaXRlIGFib3V0IHRoZSBsYW5ndWFnZSBhbmQgb2ZmZXIgdG8gZGlzY3VzcyB0aGUgZ2Vtc3RvbmUgaWYgdGhhdCdzIHdoYXQgdGhleSBtZWFudC5cblxuRm9ybWF0OiBjb252ZXJzYXRpb25hbCBwcm9zZSB3aXRoIG1heWJlIHNvbWUgbGlnaHQgc3RydWN0dXJlLiBNZWRpdW0gbGVuZ3RoIC0gaW5mb3JtYXRpdmUgYnV0IG5vdCBleGhhdXN0aXZlLiBIZWFkZXJzIG1pZ2h0IGJlIG92ZXJraWxsOyBhIGZldyBzaG9ydCBwYXJhZ3JhcGhzIG9yIGEgYnJpZWYgcGFyYWdyYXBoIHBsdXMgYnVsbGV0IHBvaW50cyBvZiBrZXkgZmFjdHMgd291bGQgd29yayB3ZWxsLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTcxLCJjb21wbGV0aW9uX3Rva2VucyI6ODU2LCJ0b3RhbF90b2tlbnMiOjEwMjcsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6NTc3fSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlX3dyaXRlX3Rva2VucyI6MH19fQ==
+  recorded_at: Fri, 13 Nov 2026 21:22:53 GMT
 recorded_with: VCR 6.4.1

@@ -34,7 +34,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 10 Nov 2026 17:36:14 GMT
+      - Fri, 13 Nov 2026 21:24:12 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -44,23 +44,22 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 01e1c3319225b874fde9390ff4a396b7
+      - b217a03c7dfc27c9429207af0902522d
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 1667b9130b1f76b620cc4be89be16f74.cloudfront.net (CloudFront)
+      - 1.1 71d177535996ee6cf1c84e4e8863bb84.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P1
+      - TXL52-P4
       X-Amz-Cf-Id:
-      - g9TBlWy_uJiWGlTYXMUAjuKRhVxHGl5GRn0OSJ0rqii0BrA2PUacJA==
+      - 3MrO6aOnKECF57caFRvZ7Ju-qGTXhijme_qidAbJXMP4ULd0sonvsg==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"0b590a1e-e3db-49b3-a687-e0dc9d9132ae","object":"chat.completion","created":1794332174,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"We
-        need answer user asks call tool with window start/end and include result.
-        Need invoke object_params. Params DSL object support; parameters are nested
-        object with window object. Let''s call.","tool_calls":[{"index":0,"id":"call_00_kRCch60HkK1Z4hfQkMHc1113","type":"function","function":{"name":"object_params","arguments":"{\"window\":
-        {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":382,"completion_tokens":98,"total_tokens":480,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":39},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":382},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
-  recorded_at: Tue, 10 Nov 2026 17:36:16 GMT
+      string: '{"id":"b72dd8e0-0c7b-4f8f-9536-1e264718799e","object":"chat.completion","created":1794605052,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"We
+        need answer. Need call tool. Must use commentary tool. Arguments object window
+        start ISO, end ISO. Need include result. Let''s call.","tool_calls":[{"index":0,"id":"call_00_MoBa2VVm6wa99iHFlR8J6050","type":"function","function":{"name":"object_params","arguments":"{\"window\":
+        {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":382,"completion_tokens":89,"total_tokens":471,"prompt_tokens_details":{"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":30},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":254},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
+  recorded_at: Fri, 13 Nov 2026 21:24:13 GMT
 recorded_with: VCR 6.4.1

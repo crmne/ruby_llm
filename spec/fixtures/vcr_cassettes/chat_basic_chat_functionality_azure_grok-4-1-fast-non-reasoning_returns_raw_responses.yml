@@ -26,7 +26,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 10 Nov 2026 17:30:13 GMT
+      - Fri, 13 Nov 2026 21:21:38 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -46,11 +46,11 @@ http_interactions:
       X-Watermark:
       - 'false'
       Traceparent:
-      - 00-de65af5cb23c3aebbec940af7aceb61c-989605ba0001d820-00
+      - 00-45f616da5cb0d5b27abb839fa9d4190f-d5531952000b228f-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - a8b60dbc-bd8e-418c-a443-3a76f42c7ae1
+      - ebadfadd-61c4-4762-9e73-1c68643cbe8d
       Azureml-Model-Session:
       - d20261110015917-e7d4cb48
       X-Ms-Inference-Retry-History:
@@ -86,9 +86,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - a8b60dbc-bd8e-418c-a443-3a76f42c7ae1
+      - ebadfadd-61c4-4762-9e73-1c68643cbe8d
       X-Http2-Stream-Id:
-      - '647'
+      - '195'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -97,6 +97,12 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"<X_REQUEST_ID>","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"Paris"},"finish_reason":"stop"}],"usage":{"prompt_tokens":175,"completion_tokens":1,"total_tokens":176,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":161,"audio_tokens":0,"text_tokens":175,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794331813,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Tue, 10 Nov 2026 17:30:15 GMT
+      string: '{"id":"2aa72f20-074d-4ca8-9868-b0b9610342d7","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"**Paris**
+        is the capital of France. \n\nThis is a well-established fact: Paris has served
+        as the political, cultural, and economic center of France since the early
+        Middle Ages, officially recognized as the capital under the French monarchy
+        and reaffirmed through the French Revolution and subsequent republics. You
+        can verify this via official sources like the French government''s website
+        (e.g., diplomatie.gouv.fr) or encyclopedias like Britannica."},"finish_reason":"stop"}],"usage":{"prompt_tokens":175,"completion_tokens":85,"total_tokens":260,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":161,"audio_tokens":0,"text_tokens":175,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794604898,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Fri, 13 Nov 2026 21:21:39 GMT
 recorded_with: VCR 6.4.1

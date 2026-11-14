@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:36:58 GMT
+      - Fri, 13 Nov 2026 21:26:42 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,31 +32,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a1c688-d3b5-7beb-a037-4ace91a45d4b
+      - 01a1d6ce-3bb9-73b3-8850-2cea450c7f71
       X-Kong-Request-Id:
-      - 01a1c688-d3b5-7beb-a037-4ace91a45d4b
+      - 01a1d6ce-3bb9-73b3-8850-2cea450c7f71
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '95089'
+      - '95874'
       X-Ratelimit-Tokens-Query-Cost:
-      - '67'
+      - '70'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
       - '97'
       X-Envoy-Upstream-Service-Time:
-      - '389'
+      - '399'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '390'
+      - '401'
       X-Kong-Proxy-Latency:
-      - '51'
+      - '19'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -71,11 +71,11 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"463ad3008ae546cfa258e8e855e5dfb9","created":1794332218,"model":"mistral-small-latest","usage":{"prompt_tokens":23,"total_tokens":67,"completion_tokens":44,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":33},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"The
-        user is asking for the sum of 5 and 3. This is a basic arithmetic operation.
-        I know that 5 + 3 equals 8."}],"closed":true},{"type":"text","text":"5 + 3
-        equals 8."}]}}]}'
-  recorded_at: Tue, 10 Nov 2026 17:36:58 GMT
+      string: '{"id":"c6e970fb072a4be1b62093ed85d4b56d","created":1794605202,"model":"mistral-small-latest","usage":{"prompt_tokens":23,"total_tokens":70,"completion_tokens":47,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":36},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"The
+        user is asking for the result of the addition of 5 and 3. This is a straightforward
+        arithmetic operation. I know that 5 + 3 equals 8."}],"closed":true},{"type":"text","text":"5
+        + 3 equals 8."}]}}]}'
+  recorded_at: Fri, 13 Nov 2026 21:26:42 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -83,9 +83,9 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What
         is 5 + 3?"},{"role":"assistant","content":[{"type":"thinking","thinking":[{"type":"text","text":"The
-        user is asking for the sum of 5 and 3. This is a basic arithmetic operation.
-        I know that 5 + 3 equals 8."}]},{"type":"text","text":"5 + 3 equals 8."}]},{"role":"user","content":"Now
-        multiply that by 2"}],"stream":false,"reasoning_effort":"high"}'
+        user is asking for the result of the addition of 5 and 3. This is a straightforward
+        arithmetic operation. I know that 5 + 3 equals 8."}]},{"type":"text","text":"5
+        + 3 equals 8."}]},{"role":"user","content":"Now multiply that by 2"}],"stream":false,"reasoning_effort":"high"}'
     headers:
       User-Agent:
       - Faraday v2.15.1
@@ -103,7 +103,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:36:59 GMT
+      - Fri, 13 Nov 2026 21:26:43 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -111,31 +111,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a1c688-d5a6-750e-b885-c3b9fd485241
+      - 01a1d6ce-3d9d-7cde-8a1a-aff337e539bb
       X-Kong-Request-Id:
-      - 01a1c688-d5a6-750e-b885-c3b9fd485241
+      - 01a1d6ce-3d9d-7cde-8a1a-aff337e539bb
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '94969'
+      - '95751'
       X-Ratelimit-Tokens-Query-Cost:
-      - '120'
+      - '123'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
       - '96'
       X-Envoy-Upstream-Service-Time:
-      - '656'
+      - '575'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '658'
+      - '576'
       X-Kong-Proxy-Latency:
-      - '17'
+      - '16'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -150,9 +150,9 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"b6ff6fc3404d4fdfa6ddb1169be4ada8","created":1794332218,"model":"mistral-small-latest","usage":{"prompt_tokens":75,"total_tokens":120,"completion_tokens":45,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":32},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"The
+      string: '{"id":"9cf4b02717bc460ab7447e0024150ab9","created":1794605202,"model":"mistral-small-latest","usage":{"prompt_tokens":78,"total_tokens":123,"completion_tokens":45,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":32},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"The
         user wants me to multiply the previous result (which was 8) by 2. So, 8 multiplied
         by 2 is 16."}],"closed":true},{"type":"text","text":"8 multiplied by 2 equals
         16."}]}}]}'
-  recorded_at: Tue, 10 Nov 2026 17:36:59 GMT
+  recorded_at: Fri, 13 Nov 2026 21:26:43 GMT
 recorded_with: VCR 6.4.1

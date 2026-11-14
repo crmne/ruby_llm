@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:42:25 GMT
+      - Fri, 13 Nov 2026 21:29:33 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -45,11 +45,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '652'
+      - '533'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -76,22 +76,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_00969d97ff3464e6016af35781560c87d29cbdce91e13cb5e0",
+          "id": "resp_0b4c33b3d94a44e3016af7813d6b9c87d28230e3bf7d916273",
           "object": "response",
-          "created_at": 1794332545,
+          "created_at": 1794605373,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794332545,
+          "completed_at": 1794605373,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -99,11 +100,11 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "fc_00969d97ff3464e6016af35781d9b887d29381b5fc3ae7d3f8",
+              "id": "fc_0b4c33b3d94a44e3016af7813dde2887d2886c38b3337a13bf",
               "type": "function_call",
               "status": "completed",
               "arguments": "{}",
-              "call_id": "call_JTWs7GwnXIyfBDJmpSNZhoij",
+              "call_id": "call_7zVYpPHAIyoEobQO78LU0soj",
               "name": "best_language_to_learn"
             }
           ],
@@ -181,14 +182,14 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:42:25 GMT
+  recorded_at: Fri, 13 Nov 2026 21:29:33 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"Use the
-        best_language_to_learn tool to tell me which language to learn."},{"type":"function_call","call_id":"call_JTWs7GwnXIyfBDJmpSNZhoij","name":"best_language_to_learn","arguments":"{}"},{"type":"function_call_output","call_id":"call_JTWs7GwnXIyfBDJmpSNZhoij","output":"Ruby"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"best_language_to_learn","description":"Gets
+        best_language_to_learn tool to tell me which language to learn."},{"type":"function_call","call_id":"call_7zVYpPHAIyoEobQO78LU0soj","name":"best_language_to_learn","arguments":"{}"},{"type":"function_call_output","call_id":"call_7zVYpPHAIyoEobQO78LU0soj","output":"Ruby"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
@@ -207,7 +208,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:42:27 GMT
+      - Fri, 13 Nov 2026 21:29:34 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -227,11 +228,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1237'
+      - '630'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -258,22 +259,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0718d26f7a79d5a0016af357820fd487d29d2e0807eab98f49",
+          "id": "resp_0d82895f9d2ec05d016af7813e0e9487d2b36d4b2aa876fa9b",
           "object": "response",
-          "created_at": 1794332546,
+          "created_at": 1794605374,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794332547,
+          "completed_at": 1794605374,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -281,7 +283,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0718d26f7a79d5a0016af35782b53c87d28b8fded7cd7e38dc",
+              "id": "msg_0d82895f9d2ec05d016af7813e75e487d2acc899f9dea24e87",
               "type": "message",
               "status": "completed",
               "content": [
@@ -289,7 +291,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "You should learn **Ruby**."
+                  "text": "Ruby"
                 }
               ],
               "phase": "final_answer",
@@ -361,14 +363,14 @@ http_interactions:
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 11,
+            "output_tokens": 5,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 99
+            "total_tokens": 93
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:42:27 GMT
+  recorded_at: Fri, 13 Nov 2026 21:29:34 GMT
 recorded_with: VCR 6.4.1

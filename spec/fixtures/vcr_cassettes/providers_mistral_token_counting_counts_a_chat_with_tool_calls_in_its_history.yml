@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:27:10 GMT
+      - Fri, 13 Nov 2026 21:20:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -34,9 +34,9 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a1c67f-db55-7af4-b769-f09a554ea019
+      - 01a1d6c8-d34f-7ce4-a63c-c439a7743395
       X-Kong-Request-Id:
-      - 01a1c67f-db55-7af4-b769-f09a554ea019
+      - 01a1d6c8-d34f-7ce4-a63c-c439a7743395
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
@@ -50,15 +50,15 @@ http_interactions:
       X-Ratelimit-Remaining-Req-Minute:
       - '99'
       X-Envoy-Upstream-Service-Time:
-      - '467'
+      - '260'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '470'
+      - '261'
       X-Kong-Proxy-Latency:
-      - '26'
+      - '18'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -73,17 +73,17 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"3a132ef3035c42c19491b8ad94a7722c","created":1794331630,"model":"mistral-small-latest","usage":{"prompt_tokens":108,"total_tokens":123,"completion_tokens":15,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"CAvGiHlqY","type":"function","function":{"name":"mistral_counting_weather","arguments":"{\"city\":
+      string: '{"id":"a9eefefa0a6a451c8c4b08f9b7bc8d73","created":1794604848,"model":"mistral-small-latest","usage":{"prompt_tokens":108,"total_tokens":123,"completion_tokens":15,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"WKAZAKA8x","type":"function","function":{"name":"mistral_counting_weather","arguments":"{\"city\":
         \"Berlin\"}"},"index":0}],"content":""}}]}'
-  recorded_at: Tue, 10 Nov 2026 17:27:10 GMT
+  recorded_at: Fri, 13 Nov 2026 21:20:48 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What
-        is the weather in Berlin? Use the tool."},{"role":"assistant","content":"","tool_calls":[{"id":"CAvGiHlqY","type":"function","function":{"name":"mistral_counting_weather","arguments":"{\"city\":\"Berlin\"}"}}]},{"role":"tool","content":"It''s
-        sunny in Berlin.","tool_call_id":"CAvGiHlqY"}],"stream":false,"tools":[{"type":"function","function":{"name":"mistral_counting_weather","description":"Gets
+        is the weather in Berlin? Use the tool."},{"role":"assistant","content":"","tool_calls":[{"id":"WKAZAKA8x","type":"function","function":{"name":"mistral_counting_weather","arguments":"{\"city\":\"Berlin\"}"}}]},{"role":"tool","content":"It''s
+        sunny in Berlin.","tool_call_id":"WKAZAKA8x"}],"stream":false,"tools":[{"type":"function","function":{"name":"mistral_counting_weather","description":"Gets
         current weather for a city","parameters":{"type":"object","properties":{"city":{"type":"string","description":"City
         name"}},"required":["city"],"additionalProperties":false,"strict":true}}}]}'
     headers:
@@ -103,7 +103,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:27:11 GMT
+      - Fri, 13 Nov 2026 21:20:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -111,31 +111,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a1c67f-dd7a-789b-b858-a76131111bad
+      - 01a1d6c8-d4a6-78f8-a122-721da7f02653
       X-Kong-Request-Id:
-      - 01a1c67f-dd7a-789b-b858-a76131111bad
+      - 01a1d6c8-d4a6-78f8-a122-721da7f02653
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99793'
+      - '99714'
       X-Ratelimit-Tokens-Query-Cost:
-      - '60'
+      - '139'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
       - '98'
       X-Envoy-Upstream-Service-Time:
-      - '262'
+      - '339'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '263'
+      - '340'
       X-Kong-Proxy-Latency:
-      - '21'
+      - '11'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -150,18 +150,18 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"d82062f677d94e2db72b2d039f0a0140","created":1794331631,"model":"mistral-small-latest","usage":{"prompt_tokens":131,"total_tokens":140,"completion_tokens":9,"prompt_tokens_details":{"cached_tokens":80},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
-        weather in Berlin is currently sunny."}}]}'
-  recorded_at: Tue, 10 Nov 2026 17:27:11 GMT
+      string: '{"id":"86d462e0086945afba20d1c116e8167b","created":1794604848,"model":"mistral-small-latest","usage":{"prompt_tokens":131,"total_tokens":139,"completion_tokens":8,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        weather in Berlin is sunny."}}]}'
+  recorded_at: Fri, 13 Nov 2026 21:20:48 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/responses/input_tokens
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","input":[{"type":"message","role":"user","content":"What
-        is the weather in Berlin? Use the tool."},{"type":"function_call","call_id":"CAvGiHlqY","name":"mistral_counting_weather","arguments":"{\"city\":\"Berlin\"}"},{"type":"function_call_output","call_id":"CAvGiHlqY","output":"It''s
+        is the weather in Berlin? Use the tool."},{"type":"function_call","call_id":"WKAZAKA8x","name":"mistral_counting_weather","arguments":"{\"city\":\"Berlin\"}"},{"type":"function_call_output","call_id":"WKAZAKA8x","output":"It''s
         sunny in Berlin."},{"type":"message","role":"assistant","content":[{"type":"output_text","text":"The
-        weather in Berlin is currently sunny."}]},{"type":"message","role":"user","content":"And
+        weather in Berlin is sunny."}]},{"type":"message","role":"user","content":"And
         in Paris?"}],"tools":[{"type":"function","name":"mistral_counting_weather","description":"Gets
         current weather for a city","parameters":{"type":"object","properties":{"city":{"type":"string","description":"City
         name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false}]}'
@@ -182,7 +182,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:27:11 GMT
+      - Fri, 13 Nov 2026 21:20:49 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -190,19 +190,19 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a1c67f-ded1-74b5-b42c-90693a1ae2b9
+      - 01a1d6c8-d63f-7133-a825-5b2c7947b49a
       X-Kong-Request-Id:
-      - 01a1c67f-ded1-74b5-b42c-90693a1ae2b9
+      - 01a1d6c8-d63f-7133-a825-5b2c7947b49a
       X-Envoy-Upstream-Service-Time:
-      - '72'
+      - '624'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '84'
+      - '625'
       X-Kong-Proxy-Latency:
-      - '25'
+      - '14'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -217,6 +217,6 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"input_tokens":146,"object":"response.input_tokens"}'
-  recorded_at: Tue, 10 Nov 2026 17:27:11 GMT
+      string: '{"input_tokens":145,"object":"response.input_tokens"}'
+  recorded_at: Fri, 13 Nov 2026 21:20:49 GMT
 recorded_with: VCR 6.4.1

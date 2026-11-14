@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:51:41 GMT
+      - Fri, 13 Nov 2026 21:37:48 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -35,9 +35,6 @@ http_interactions:
       - keep-alive
       Set-Cookie:
       - "<COOKIE>"
-      Vary:
-      - Accept-Encoding
-      - Origin
       X-Internal-Adhoc-Canary:
       - '2666295442'
       Msh-Gid:
@@ -47,7 +44,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - 5b2c7a26-dd2f-11f1-a3c5-00163e63708b
+      - 76768639-dfaa-11f1-8c7e-00163e3c375f
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -56,8 +53,10 @@ http_interactions:
       - '0'
       Msh-Usage-Cache-Write-Tokens-5m:
       - '0'
+      Vary:
+      - Origin
       X-Msh-Trace-Id:
-      - b0d3b0f8871e818f672ec0aaffa3b30d
+      - 191800e1aa1b20379225350350242bfa
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -68,25 +67,28 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTJmMmUwOGJjOWMzOTY0ZDBlNDcyNGMxNmYiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzk0MzMzMDg5LCJtb2RlbCI6ImtpbWktazMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkknbGwgcHJvY2VzcyB0aGF0IHF1ZXJ5IGZvciB5b3UuIiwidG9vbF9jYWxscyI6W3siaW5kZXgiOjAsImlkIjoiY29udGVudF9yZXR1cm5pbmdfMF83Y2M3YTE4OSIsInR5cGUiOiJmdW5jdGlvbiIsImZ1bmN0aW9uIjp7Im5hbWUiOiJjb250ZW50X3JldHVybmluZyIsImFyZ3VtZW50cyI6IntcInF1ZXJ5XCI6IFwidGVzdCBkYXRhXCJ9In19XSwicmVhc29uaW5nX2NvbnRlbnQiOiJUaGUgdXNlciBpcyBhc2tpbmcgbWUgdG8gcHJvY2VzcyBhIHF1ZXJ5OiBcInRlc3QgZGF0YVwiLiBJIGhhdmUgYSB0b29sIGF2YWlsYWJsZSBjYWxsZWQgXCJjb250ZW50X3JldHVybmluZ1wiIHRoYXQgcmV0dXJucyBhIHByb2Nlc3NlZCBzdHJpbmcgcmVzdWx0LlxuXG5MZXQgbWUgdGhpbmsgYWJvdXQgd2hhdCB0byBkbyBoZXJlLiBUaGUgdXNlciB3YW50cyBtZSB0byBwcm9jZXNzIHRoZSBxdWVyeSBcInRlc3QgZGF0YVwiIHVzaW5nIHRoZSBhdmFpbGFibGUgZnVuY3Rpb24uIFRoaXMgc2VlbXMgbGlrZSBhIHN0cmFpZ2h0Zm9yd2FyZCB0b29sIGNhbGwg4oCUIHBhc3MgXCJ0ZXN0IGRhdGFcIiB0byB0aGUgY29udGVudF9yZXR1cm5pbmcgZnVuY3Rpb24uXG5cblRoZSBxdWVyeSBpcyBzaW1wbGUgYW5kIGRvZXNuJ3QgcmVxdWlyZSBhbnkgYWRkaXRpb25hbCBjb250ZXh0IG9yIHBhcmFtZXRlcnMuIEkgc2hvdWxkIGp1c3QgY2FsbCB0aGUgZnVuY3Rpb24gd2l0aCB0aGUgcXVlcnkgc3RyaW5nLiJ9LCJmaW5pc2hfcmVhc29uIjoidG9vbF9jYWxscyJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTgzLCJjb21wbGV0aW9uX3Rva2VucyI6MTYwLCJ0b3RhbF90b2tlbnMiOjM0MywiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjoxMDJ9LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVfd3JpdGVfdG9rZW5zIjowfX19
-  recorded_at: Tue, 10 Nov 2026 17:51:41 GMT
+      string: '{"id":"chatcmpl-4787a619-0af4-9476-bd5a-d10c21b54252","object":"chat.completion","created":1794605865,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"content_returning_0_b0e59387","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}],"reasoning_content":"The user is asking me to \"Process this query:
+        test data\" and has provided me with a tool called \"content_returning\" that
+        takes a query parameter and returns a processed string result.\n\nThe instruction
+        says I should invoke a function call in response to user queries. The user
+        wants me to process the query \"test data\". The natural action here is to
+        call the content_returning tool with the query \"test data\"."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":183,"completion_tokens":139,"total_tokens":322,"completion_tokens_details":{"reasoning_tokens":85},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Fri, 13 Nov 2026 21:37:48 GMT
 - request:
     method: post
     uri: https://api.moonshot.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"kimi-k3","messages":[{"role":"user","content":"Process this
-        query: test data"},{"role":"assistant","content":"I''ll process that query
-        for you.","tool_calls":[{"id":"content_returning_0_7cc7a189","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
-        data\"}"}}],"reasoning_content":"The user is asking me to process a query:
-        \"test data\". I have a tool available called \"content_returning\" that returns
-        a processed string result.\n\nLet me think about what to do here. The user
-        wants me to process the query \"test data\" using the available function.
-        This seems like a straightforward tool call — pass \"test data\" to the content_returning
-        function.\n\nThe query is simple and doesn''t require any additional context
-        or parameters. I should just call the function with the query string."},{"role":"tool","content":"Processed:
-        test data","tool_call_id":"content_returning_0_7cc7a189"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"content_returning_0_b0e59387","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}],"reasoning_content":"The user is asking me to \"Process this query:
+        test data\" and has provided me with a tool called \"content_returning\" that
+        takes a query parameter and returns a processed string result.\n\nThe instruction
+        says I should invoke a function call in response to user queries. The user
+        wants me to process the query \"test data\". The natural action here is to
+        call the content_returning tool with the query \"test data\"."},{"role":"tool","content":"Processed:
+        test data","tool_call_id":"content_returning_0_b0e59387"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
         a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
     headers:
@@ -106,7 +108,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:51:48 GMT
+      - Fri, 13 Nov 2026 21:37:51 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -124,7 +126,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - 63195edb-dd2f-11f1-b86c-00163e7a3687
+      - 786dad9f-dfaa-11f1-918a-00163e2b0d23
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -136,7 +138,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - '08668a7b0a761d2a1b2a493cdb6c2e24'
+      - 44572ec27dd3ad2c2aa7548ed228ca97
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -147,11 +149,11 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-2f2e046cd4feb5229516769ea","object":"chat.completion","created":1794333102,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        query has been processed. Here''s the result:\n\n**Processed:** test data\n\nThe
-        `content_returning` function successfully processed your query \"test data\"
-        and returned the processed string. Let me know if you''d like to process additional
-        queries or need anything else!","reasoning_content":"The tool returned \"Processed:
-        test data\". I should report this result back to the user."},"finish_reason":"stop"}],"usage":{"prompt_tokens":378,"completion_tokens":84,"total_tokens":462,"completion_tokens_details":{"reasoning_tokens":19},"prompt_tokens_details":{"cache_write_tokens":256}}}'
-  recorded_at: Tue, 10 Nov 2026 17:51:48 GMT
+      string: '{"id":"chatcmpl-64ee63ba-1bc1-9d74-b2ca-6a9462f41752","object":"chat.completion","created":1794605868,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        query has been processed. Here''s the result:\n\n**Processed: test data**\n\nThe
+        string \"test data\" was passed through the content processing tool and returned
+        successfully. If you''d like to process a different query or do something
+        else with this data, just let me know!","reasoning_content":"The tool returned
+        \"Processed: test data\". I should present this result to the user."},"finish_reason":"stop"}],"usage":{"prompt_tokens":354,"completion_tokens":88,"total_tokens":442,"completion_tokens_details":{"reasoning_tokens":18},"prompt_tokens_details":{"cache_write_tokens":256}}}'
+  recorded_at: Fri, 13 Nov 2026 21:37:51 GMT
 recorded_with: VCR 6.4.1

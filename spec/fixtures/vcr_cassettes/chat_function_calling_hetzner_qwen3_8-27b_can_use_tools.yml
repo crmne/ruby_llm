@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:29:54 GMT
+      - Fri, 13 Nov 2026 21:21:39 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
@@ -38,23 +38,24 @@ http_interactions:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":390,"completion_tokens":95,"total_tokens":485,"completion_tokens_details":{"reasoning_tokens":43},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-8323601c8e83312d","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":390,"completion_tokens":101,"total_tokens":491,"completion_tokens_details":{"reasoning_tokens":49},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-98548831a8e2ce69","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
         \"52.5200\", \"longitude\": \"13.4050\"}"}}],"reasoning":"The user is asking
-        about the weather in Berlin and has provided the coordinates (52.5200, 13.4050).
-        I should use the weather function with these coordinates.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-8486ae2f-c11a-4bad-a263-e3182a1879b3","object":"chat.completion","created":1794331795,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Tue, 10 Nov 2026 17:29:56 GMT
+        for the weather in Berlin at coordinates 52.5200, 13.4050. There''s a weather
+        tool available that takes latitude and longitude as strings. Let me call it.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-bcc346cc-3821-43df-802c-7a2af2e5ab9c","object":"chat.completion","created":1794604900,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Fri, 13 Nov 2026 21:21:41 GMT
 - request:
     method: post
     uri: https://inference.hetzner.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"Qwen3.8-27B","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"chatcmpl-tool-8323601c8e83312d","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning":"The
-        user is asking about the weather in Berlin and has provided the coordinates
-        (52.5200, 13.4050). I should use the weather function with these coordinates.\n","reasoning_content":"The
-        user is asking about the weather in Berlin and has provided the coordinates
-        (52.5200, 13.4050). I should use the weather function with these coordinates.\n"},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"chatcmpl-tool-8323601c8e83312d"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"chatcmpl-tool-98548831a8e2ce69","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning":"The
+        user is asking for the weather in Berlin at coordinates 52.5200, 13.4050.
+        There''s a weather tool available that takes latitude and longitude as strings.
+        Let me call it.\n","reasoning_content":"The user is asking for the weather
+        in Berlin at coordinates 52.5200, 13.4050. There''s a weather tool available
+        that takes latitude and longitude as strings. Let me call it.\n"},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"chatcmpl-tool-98548831a8e2ce69"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -75,7 +76,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:29:56 GMT
+      - Fri, 13 Nov 2026 21:21:41 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
@@ -87,6 +88,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtb2RlbCI6IlF3ZW4vUXdlbjMuOC0yN0IiLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo1MzMsImNvbXBsZXRpb25fdG9rZW5zIjo3NCwidG90YWxfdG9rZW5zIjo2MDcsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MzJ9LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiY3JlYXRlZF9jYWNoZV90b2tlbnMiOjAsIm11bHRpbW9kYWxfdG9rZW5zIjpudWxsfX0sImNob2ljZXMiOlt7Im1lc3NhZ2UiOnsiY29udGVudCI6IlxuXG5IZXJlJ3MgdGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW46XG4tICoqVGVtcGVyYXR1cmU6KiogMTXCsENcbi0gKipXaW5kOioqIDEwIGttL2hcblxuQSBtaWxkLCBicmVlenkgZGF5ISDwn4yk77iPIiwicm9sZSI6ImFzc2lzdGFudCIsInJlZnVzYWwiOm51bGwsImFubm90YXRpb25zIjpudWxsLCJhdWRpbyI6bnVsbCwiZnVuY3Rpb25fY2FsbCI6bnVsbCwicmVhc29uaW5nIjoiVGhlIHdlYXRoZXIgaW4gQmVybGluIGlzIDE1wrBDLCB3aXRoIGEgd2luZCBzcGVlZCBvZiAxMCBrbS9oLiBMZXQgbWUgcHJlc2VudCB0aGlzIGluZm9ybWF0aW9uIGNsZWFybHkgdG8gdGhlIHVzZXIuXG4ifSwiaW5kZXgiOjAsImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsInN0b3BfcmVhc29uIjpudWxsLCJ0b2tlbl9pZHMiOm51bGwsInJvdXRlZF9leHBlcnRzIjpudWxsfV0sImlkIjoiY2hhdGNtcGwtYzQxYmU2MTYtY2EyNy00YzQ4LTlkZjUtNDUzMzkzNmE3ZDUzIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc5NDMzMTc5Niwic3lzdGVtX2ZpbmdlcnByaW50IjpudWxsLCJwcm9tcHRfbG9ncHJvYnMiOm51bGwsInByb21wdF90b2tlbl9pZHMiOm51bGwsInByb21wdF90ZXh0IjpudWxsLCJrdl90cmFuc2Zlcl9wYXJhbXMiOm51bGwsImVjX3RyYW5zZmVyX3BhcmFtcyI6bnVsbCwibWV0cmljcyI6bnVsbH0=
-  recorded_at: Tue, 10 Nov 2026 17:29:57 GMT
+        eyJtb2RlbCI6IlF3ZW4vUXdlbjMuOC0yN0IiLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo1MzksImNvbXBsZXRpb25fdG9rZW5zIjo3OCwidG90YWxfdG9rZW5zIjo2MTcsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MzN9LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiY3JlYXRlZF9jYWNoZV90b2tlbnMiOjAsIm11bHRpbW9kYWxfdG9rZW5zIjpudWxsfX0sImNob2ljZXMiOlt7Im1lc3NhZ2UiOnsiY29udGVudCI6IlxuXG5DdXJyZW50IHdlYXRoZXIgaW4gQmVybGluICg1Mi41MjAwLCAxMy40MDUwKTogKioxNcKwQyoqIHdpdGggYSB3aW5kIHNwZWVkIG9mICoqMTAga20vaCoqLiBBIG1pbGQgZGF5ISIsInJvbGUiOiJhc3Npc3RhbnQiLCJyZWZ1c2FsIjpudWxsLCJhbm5vdGF0aW9ucyI6bnVsbCwiYXVkaW8iOm51bGwsImZ1bmN0aW9uX2NhbGwiOm51bGwsInJlYXNvbmluZyI6IlRoZSB3ZWF0aGVyIHRvb2wgcmV0dXJuZWQ6IDE1wrBDLCB3aW5kOiAxMCBrbS9oLiBMZXQgbWUgcmVwb3J0IHRoaXMgdG8gdGhlIHVzZXIgaW4gYSBjb25jaXNlLCBmcmllbmRseSB3YXkuXG4ifSwiaW5kZXgiOjAsImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsInN0b3BfcmVhc29uIjpudWxsLCJ0b2tlbl9pZHMiOm51bGwsInJvdXRlZF9leHBlcnRzIjpudWxsfV0sImlkIjoiY2hhdGNtcGwtNTNhNjgyMjAtNzVlYi00ZTg1LWE0ODgtN2E2ZTI4NzEzYTEyIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc5NDYwNDkwMiwic3lzdGVtX2ZpbmdlcnByaW50IjpudWxsLCJwcm9tcHRfbG9ncHJvYnMiOm51bGwsInByb21wdF90b2tlbl9pZHMiOm51bGwsInByb21wdF90ZXh0IjpudWxsLCJrdl90cmFuc2Zlcl9wYXJhbXMiOm51bGwsImVjX3RyYW5zZmVyX3BhcmFtcyI6bnVsbCwibWV0cmljcyI6bnVsbH0=
+  recorded_at: Fri, 13 Nov 2026 21:21:43 GMT
 recorded_with: VCR 6.4.1

@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Fri, 13 Nov 2026 21:22:00 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Pragma:
       - no-cache
-      Date:
-      - Tue, 10 Nov 2026 17:33:18 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Tue, 10 Nov 2026 17:33:18 GMT
+  recorded_at: Fri, 13 Nov 2026 21:22:00 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/cachedContents
@@ -887,7 +887,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 10 Nov 2026 17:33:20 GMT
+      - Fri, 13 Nov 2026 21:22:02 GMT
       Server:
       - ESF
       X-Xss-Protection:
@@ -904,23 +904,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "name": "projects/56641835022/locations/<GOOGLE_CLOUD_LOCATION>/cachedContents/5168877292583124992",
+          "name": "projects/56641835022/locations/<GOOGLE_CLOUD_LOCATION>/cachedContents/1310458031691005952",
           "model": "projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash",
-          "createTime": "2026-11-10T17:33:19.128012Z",
-          "updateTime": "2026-11-10T17:33:19.128012Z",
-          "expireTime": "2026-11-10T17:38:19.030897Z",
+          "createTime": "2026-11-13T21:22:01.243165Z",
+          "updateTime": "2026-11-13T21:22:01.243165Z",
+          "expireTime": "2026-11-13T21:27:01.185132Z",
           "usageMetadata": {
             "totalTokenCount": 9601
           }
         }
-  recorded_at: Tue, 10 Nov 2026 17:33:20 GMT
+  recorded_at: Fri, 13 Nov 2026 21:22:02 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"In one short sentence,
-        what does the cached handbook describe?"}]}],"generationConfig":{},"cachedContent":"projects/56641835022/locations/<GOOGLE_CLOUD_LOCATION>/cachedContents/5168877292583124992"}'
+        what does the cached handbook describe?"}]}],"generationConfig":{},"cachedContent":"projects/56641835022/locations/<GOOGLE_CLOUD_LOCATION>/cachedContents/1310458031691005952"}'
     headers:
       User-Agent:
       - Faraday v2.15.1
@@ -938,7 +938,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - YFXzaqeGFe7ntfAP-_nT8Q8
+      - en_3atr0HYqOu_EP0frq8Ag
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -946,7 +946,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 10 Nov 2026 17:33:21 GMT
+      - Fri, 13 Nov 2026 21:22:03 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -969,7 +969,7 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "The RubyLLM release engineering handbook describes a set of required checks that every change must pass before release, including cassette hygiene, provider wire format drift, backwards compatibility, and documentation accuracy reviews."
+                    "text": "The cached handbook describes the mandatory checks every change must pass before release, including cassette hygiene, provider wire format drift, backwards compatibility, and documentation accuracy reviews."
                   }
                 ]
               },
@@ -978,8 +978,8 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 9612,
-            "candidatesTokenCount": 38,
-            "totalTokenCount": 9737,
+            "candidatesTokenCount": 31,
+            "totalTokenCount": 9693,
             "cachedContentTokenCount": 9601,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
@@ -997,19 +997,19 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 38
+                "tokenCount": 31
               }
             ],
-            "thoughtsTokenCount": 87
+            "thoughtsTokenCount": 50
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-11-10T17:33:20.344871Z",
-          "responseId": "YFXzaqeGFe7ntfAP-_nT8Q8"
+          "createTime": "2026-11-13T21:22:02.490074Z",
+          "responseId": "en_3atr0HYqOu_EP0frq8Ag"
         }
-  recorded_at: Tue, 10 Nov 2026 17:33:21 GMT
+  recorded_at: Fri, 13 Nov 2026 21:22:03 GMT
 - request:
     method: delete
-    uri: https://aiplatform.googleapis.com/v1beta1/projects/56641835022/locations/<GOOGLE_CLOUD_LOCATION>/cachedContents/5168877292583124992
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/56641835022/locations/<GOOGLE_CLOUD_LOCATION>/cachedContents/1310458031691005952
     body:
       encoding: US-ASCII
       string: ''
@@ -1034,7 +1034,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 10 Nov 2026 17:33:21 GMT
+      - Fri, 13 Nov 2026 21:22:04 GMT
       Server:
       - ESF
       X-Xss-Protection:
@@ -1050,5 +1050,5 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: "{}\n"
-  recorded_at: Tue, 10 Nov 2026 17:33:22 GMT
+  recorded_at: Fri, 13 Nov 2026 21:22:04 GMT
 recorded_with: VCR 6.4.1

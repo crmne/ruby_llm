@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
       - no-cache
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
       Date:
-      - Tue, 10 Nov 2026 17:38:56 GMT
+      - Fri, 13 Nov 2026 21:27:58 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Tue, 10 Nov 2026 17:38:56 GMT
+  recorded_at: Fri, 13 Nov 2026 21:27:58 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -81,7 +81,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - sFbzaoe0Nd2XzPsPpcvpwQ4
+      - 3oD3aqj8KeT-tfAPjYbl0Q0
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 10 Nov 2026 17:39:02 GMT
+      - Fri, 13 Nov 2026 21:28:04 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -112,7 +112,7 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "I see a stylized, faceted **red gemstone**, specifically resembling a **ruby**.\n\nHere's a more detailed breakdown:\n\n*   **Color:** It's a deep, rich red, with variations in shade that give it depth. There are lighter red and white highlights, and darker red shadows.\n*   **Shape:** It's cut with multiple geometric facets, typical of a polished jewel. These facets create sharp angles and reflective surfaces.\n*   **Texture/Lighting:** The image conveys a glossy, polished, and reflective surface. The bright white highlights on certain edges and surfaces suggest light bouncing off its facets, giving it a three-dimensional and luminous appearance.\n*   **Overall Impression:** It looks like a sparkling, precious stone.\n\nThis image is widely recognized as the **logo for the Ruby programming language**."
+                    "text": "The image displays a stylized, faceted **red gem**.\n\nHere's a breakdown of what I see:\n\n*   **Shape:** It's cut like a polished gemstone, with multiple sharp facets and edges, creating a three-dimensional and angular appearance. The overall shape is somewhat irregular but evokes a classic gem cut.\n*   **Color:** It's predominantly a rich, deep red.\n*   **Lighting and Shading:** There are bright white highlights on various facets, indicating a glossy, reflective surface and suggesting light hitting it from above and the front. Subtle gradients of red, from darker crimson in shaded areas to brighter, almost orange-red where light is strongly reflected, give it depth and luminescence.\n*   **Overall Impression:** The design is clean, iconic, and immediately recognizable as the **logo for the Ruby programming language**."
                   }
                 ]
               },
@@ -121,8 +121,8 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 266,
-            "candidatesTokenCount": 170,
-            "totalTokenCount": 1192,
+            "candidatesTokenCount": 174,
+            "totalTokenCount": 1196,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -137,14 +137,14 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 170
+                "tokenCount": 174
               }
             ],
             "thoughtsTokenCount": 756
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-11-10T17:38:56.875015Z",
-          "responseId": "sFbzaoe0Nd2XzPsPpcvpwQ4"
+          "createTime": "2026-11-13T21:27:58.687656Z",
+          "responseId": "3oD3aqj8KeT-tfAPjYbl0Q0"
         }
-  recorded_at: Tue, 10 Nov 2026 17:39:02 GMT
+  recorded_at: Fri, 13 Nov 2026 21:28:04 GMT
 recorded_with: VCR 6.4.1

@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:48:57 GMT
+      - Fri, 13 Nov 2026 21:35:18 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -43,7 +43,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - fdd272bb-dd2e-11f1-bfbe-00163e1de4ea
+      - 1d10aceb-dfaa-11f1-b9b4-00163e6b9249
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -55,7 +55,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - c82c094b5e001d61499aa4b6f9acab6f
+      - 168db73908ef97389eeb8a4ef8598e4b
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -66,20 +66,25 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-2f2e0b216419b5315aa4197d4","object":"chat.completion","created":1794332933,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"file_fetch_0_5d000a86","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning_content":"The
-        user wants me to call file_fetch to get ruby.txt, then repeat its contents.
-        Let me call the tool first."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":184,"completion_tokens":59,"total_tokens":243,"completion_tokens_details":{"reasoning_tokens":25},"prompt_tokens_details":{"cache_write_tokens":0}}}'
-  recorded_at: Tue, 10 Nov 2026 17:48:57 GMT
+      string: '{"id":"chatcmpl-2f2e0f8af76ef7ec7ca102c65","object":"chat.completion","created":1794605715,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        fetch the ruby.txt file for you.","tool_calls":[{"index":0,"id":"file_fetch_0_c6273d39","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning_content":"The
+        user is asking me to call the file_fetch tool to get ruby.txt, then repeat
+        the contents. This seems like a straightforward request - they want me to
+        fetch a file and display its contents. Let me call the tool."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":184,"completion_tokens":89,"total_tokens":273,"completion_tokens_details":{"reasoning_tokens":46},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Fri, 13 Nov 2026 21:35:18 GMT
 - request:
     method: post
     uri: https://api.moonshot.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"kimi-k3","messages":[{"role":"user","content":"Call file_fetch
-        to get ruby.txt, then repeat the contents of the attached file."},{"role":"assistant","content":"","tool_calls":[{"id":"file_fetch_0_5d000a86","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning_content":"The
-        user wants me to call file_fetch to get ruby.txt, then repeat its contents.
-        Let me call the tool first."},{"role":"tool","content":"Fetched the file.","tool_call_id":"file_fetch_0_5d000a86"},{"role":"user","content":[{"type":"text","text":"Attachments
-        from tool call file_fetch_0_5d000a86:"},{"type":"text","text":"<file name=''ruby.txt''
+        to get ruby.txt, then repeat the contents of the attached file."},{"role":"assistant","content":"I''ll
+        fetch the ruby.txt file for you.","tool_calls":[{"id":"file_fetch_0_c6273d39","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning_content":"The
+        user is asking me to call the file_fetch tool to get ruby.txt, then repeat
+        the contents. This seems like a straightforward request - they want me to
+        fetch a file and display its contents. Let me call the tool."},{"role":"tool","content":"Fetched
+        the file.","tool_call_id":"file_fetch_0_c6273d39"},{"role":"user","content":[{"type":"text","text":"Attachments
+        from tool call file_fetch_0_c6273d39:"},{"type":"text","text":"<file name=''ruby.txt''
         mime_type=''text/plain''>Ruby is the best.</file>"}]}],"stream":false,"tools":[{"type":"function","function":{"name":"file_fetch","description":"Fetches
         a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
@@ -99,7 +104,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:49:02 GMT
+      - Fri, 13 Nov 2026 21:35:21 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -117,7 +122,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - 015d2717-dd2f-11f1-a68f-00163e62e412
+      - 1f3e45c3-dfaa-11f1-9381-00163e1de4ea
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -129,7 +134,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - a86815d138c9ac4d13f61e17c4e6a9c8
+      - 1aae24e557ec27a93436de03832c4b58
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -140,9 +145,10 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-2f2e02f87496343d60aef10fe","object":"chat.completion","created":1794332938,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        contents of ruby.txt:\n\n\u003e Ruby is the best.","reasoning_content":"The
-        file content is: \"Ruby is the best.\"\n\nThe user asked me to repeat the
-        contents of the attached file. Simple task."},"finish_reason":"stop"}],"usage":{"prompt_tokens":322,"completion_tokens":52,"total_tokens":374,"completion_tokens_details":{"reasoning_tokens":27},"prompt_tokens_details":{"cache_write_tokens":256}}}'
-  recorded_at: Tue, 10 Nov 2026 17:49:02 GMT
+      string: '{"id":"chatcmpl-2f2e00de3d09b41c44de7c2da","object":"chat.completion","created":1794605719,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        contents of ruby.txt are:\n\n\u003e Ruby is the best.","reasoning_content":"The
+        file contains the text \"Ruby is the best.\" The user asked me to repeat the
+        contents of the attached file. This is a simple, benign request - just repeating
+        a short text file''s contents."},"finish_reason":"stop"}],"usage":{"prompt_tokens":351,"completion_tokens":67,"total_tokens":418,"completion_tokens_details":{"reasoning_tokens":41},"prompt_tokens_details":{"cache_write_tokens":256}}}'
+  recorded_at: Fri, 13 Nov 2026 21:35:21 GMT
 recorded_with: VCR 6.4.1

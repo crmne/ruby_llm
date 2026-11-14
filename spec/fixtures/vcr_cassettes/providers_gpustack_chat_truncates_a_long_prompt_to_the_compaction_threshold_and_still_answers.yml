@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:11444/model/proxy/2/v1/chat/completions
+    uri: http://localhost:11444/model/proxy/4/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"smollm2-135m","messages":[{"role":"user","content":"filler
@@ -295,27 +295,27 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Req-Cost-Time:
-      - '39'
-      Req-Arrive-Time:
-      - '1794327864758'
-      Resp-Start-Time:
-      - '1794327864798'
-      X-Envoy-Upstream-Service-Time:
-      - '36'
-      Date:
-      - Tue, 10 Nov 2026 16:24:24 GMT
-      Server:
-      - istio-envoy
       Content-Type:
       - application/json
+      Req-Cost-Time:
+      - '24'
+      Resp-Start-Time:
+      - '1794608797698'
+      Date:
+      - Fri, 13 Nov 2026 22:26:37 GMT
+      Req-Arrive-Time:
+      - '1794608797673'
+      X-Envoy-Upstream-Service-Time:
+      - '20'
+      Server:
+      - istio-envoy
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-e9fc4a67-940f-4cfd-96d4-b61a8cccf04b","object":"chat.completion","created":1794327864,"model":"smollm2-135m","choices":[{"index":0,"message":{"role":"assistant","content":"A
-        castle on the symptom, or parab","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":null},"logprobs":null,"finish_reason":"length","stop_reason":null,"token_ids":null,"routed_experts":null}],"service_tier":null,"system_fingerprint":"vllm-0.25.1-d87856d6","usage":{"prompt_tokens":40,"total_tokens":48,"completion_tokens":8,"prompt_tokens_details":{"cached_tokens":32,"multimodal_tokens":null}},"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"metrics":null}'
-  recorded_at: Tue, 10 Nov 2026 16:24:24 GMT
+      string: '{"id":"chatcmpl-a3ea740a-24f7-40f7-b3d3-e5b1d8b87852","object":"chat.completion","created":1794608797,"model":"smollm2-135m","choices":[{"index":0,"message":{"role":"assistant","content":"Petlk:
+        furry critters. So","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":null},"logprobs":null,"finish_reason":"length","stop_reason":null,"token_ids":null,"routed_experts":null}],"service_tier":null,"system_fingerprint":"vllm-0.25.1-019fab29","usage":{"prompt_tokens":40,"total_tokens":48,"completion_tokens":8,"prompt_tokens_details":{"cached_tokens":0,"multimodal_tokens":null}},"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"metrics":null}'
+  recorded_at: Fri, 13 Nov 2026 22:26:37 GMT
 recorded_with: VCR 6.4.1

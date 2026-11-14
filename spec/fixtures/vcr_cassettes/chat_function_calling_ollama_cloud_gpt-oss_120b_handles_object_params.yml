@@ -30,36 +30,36 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - 81e02665bdd918cf59b66804d554f8e53171f5d2
+      - be2a079e0a02b03cf1b3d1cab78f88a8b6c055b8
       X-Build-Time:
-      - '2026-11-09T17:12:20-08:00'
+      - '2026-11-13T11:19:30-08:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '907'
+      - '856'
       Date:
-      - Tue, 10 Nov 2026 17:42:17 GMT
+      - Fri, 13 Nov 2026 21:29:26 GMT
       Server:
       - Google Frontend
-      X-Cloud-Trace-Context:
-      - 5dd5c6d9f8be5e5325b04daa51adf1a7/6071334636495382174
       Traceparent:
-      - 00-5dd5c6d9f8be5e5325b04daa51adf1a7-5441b6af40d5269e-00
+      - 00-1236b50009e5a534a12d081f4d16ebd0-26e830a4aa088ae2-00
+      X-Cloud-Trace-Context:
+      - 1236b50009e5a534a12d081f4d16ebd0/2803544251823590114
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-320","object":"chat.completion","created":1794332537,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"The
-        user wants to call the object params tool with window start and end dates,
-        and include the result. There''s a tool named functions.object_params. We
-        need to pass a DSL object with a field \"window\" that is a record (dictionary)
-        containing start and end. So call with {window: {start: \"2025-01-01\", end:
-        \"2025-01-02\"}}. Then include the result. We''ll call the tool.","tool_calls":[{"id":"call_r930g1e9","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":159,"completion_tokens":144,"total_tokens":303,"prompt_tokens_details":{"cached_tokens":64}}}
+      string: '{"id":"chatcmpl-595","object":"chat.completion","created":1794605366,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"The
+        user wants to call the object_params tool with specific window start and end
+        dates. We need to use the functions.object_params tool. The tool takes param
+        object with window: Record\u003cstring, any\u003e. So we pass window: {start:
+        \"2025-01-01\", end: \"2025-01-02\"}.\n\nWe should call it in the commentary
+        channel.","tool_calls":[{"id":"call_t76ai8bv","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":159,"completion_tokens":128,"total_tokens":287,"prompt_tokens_details":{"cached_tokens":64}}}
 
         '
-  recorded_at: Tue, 10 Nov 2026 17:42:18 GMT
+  recorded_at: Fri, 13 Nov 2026 21:29:26 GMT
 recorded_with: VCR 6.4.1

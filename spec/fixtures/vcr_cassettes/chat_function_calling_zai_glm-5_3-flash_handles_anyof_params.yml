@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:47:17 GMT
+      - Fri, 13 Nov 2026 21:34:08 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -39,7 +39,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - 3188162e5b97eb94e6cec2d91f7421e9
+      - 5b63800c9b30618404e2493e325542df
       Vary:
       - Accept-Encoding
       - Access-Control-Request-Headers
@@ -50,14 +50,15 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 202611110147125f749530f20f43fa
+      - 20261114053403d0969b5f1ba445e6
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":"","reasoning_content":"The
         user wants me to call the any_of_params tool with task \"Review PR\" and status
-        \"pending\", then report the result.","role":"assistant","tool_calls":[{"function":{"arguments":"{\"status\":\"pending\",\"task\":\"Review
-        PR\"}","name":"any_of_params"},"id":"call_-7086080586766344773","index":0,"type":"function"}]}}],"created":1794332837,"id":"202611110147125f749530f20f43fa","model":"glm-5.3-flash","object":"chat.completion","request_id":"202611110147125f749530f20f43fa","usage":{"completion_tokens":47,"completion_tokens_details":{"reasoning_tokens":27},"prompt_tokens":231,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":278}}'
-  recorded_at: Tue, 10 Nov 2026 17:47:17 GMT
+        \"pending\". The status parameter uses anyOf support in the schema. Let me
+        make the call.","role":"assistant","tool_calls":[{"function":{"arguments":"{\"status\":\"pending\",\"task\":\"Review
+        PR\"}","name":"any_of_params"},"id":"call_-7080010148709659364","index":0,"type":"function"}]}}],"created":1794605648,"id":"20261114053403d0969b5f1ba445e6","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261114053403d0969b5f1ba445e6","usage":{"completion_tokens":59,"completion_tokens_details":{"reasoning_tokens":39},"prompt_tokens":231,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":290}}'
+  recorded_at: Fri, 13 Nov 2026 21:34:08 GMT
 recorded_with: VCR 6.4.1

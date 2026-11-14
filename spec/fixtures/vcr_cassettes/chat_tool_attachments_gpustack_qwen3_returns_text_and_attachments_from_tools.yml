@@ -24,22 +24,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Tue, 10 Nov 2026 17:48:31 GMT
       Server:
       - istio-envoy
-      Access-Control-Allow-Origin:
-      - ''
       Content-Type:
       - application/json; charset=utf-8
-      Resp-Start-Time:
-      - '1794332915606'
       Req-Cost-Time:
-      - '3803'
-      Req-Arrive-Time:
-      - '1794332911803'
+      - '3847'
+      Resp-Start-Time:
+      - '1794605698235'
       X-Envoy-Upstream-Service-Time:
-      - '3792'
+      - '3823'
+      Access-Control-Allow-Origin:
+      - ''
+      Req-Arrive-Time:
+      - '1794605694387'
+      Date:
+      - Fri, 13 Nov 2026 21:34:53 GMT
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -77,15 +77,15 @@ http_interactions:
         the tool_call for file_fetch, and then once the file content is obtained,
         output the content as the final answer. Therefore, the initial response should
         be the tool call, and then the subsequent step would be to present the file''s
-        contents.\n","tool_calls":[{"type":"function","function":{"name":"file_fetch","arguments":"{}"},"id":"SM1BrOMlDRvnnOBcFBSBA0F5FsSA5xpP"}]}}],"created":1794332915,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":509,"prompt_tokens":166,"total_tokens":675,"prompt_tokens_details":{"cached_tokens":51}},"id":"chatcmpl-PP1cZL4XcGFUUtVW2NjZiswVNWOIXrDT","timings":{"cache_n":51,"prompt_n":115,"prompt_ms":33.014,"prompt_per_token_ms":0.2870782608695652,"prompt_per_second":3483.370691221906,"predicted_n":509,"predicted_ms":3722.195,"predicted_per_token_ms":7.327155511811024,"predicted_per_second":136.47861006744677}}'
-  recorded_at: Tue, 10 Nov 2026 17:48:35 GMT
+        contents.\n","tool_calls":[{"type":"function","function":{"name":"file_fetch","arguments":"{}"},"id":"CZf0SOV10T0icWfUh6wELZi5Ff4eVkJ0"}]}}],"created":1794605698,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":509,"prompt_tokens":166,"total_tokens":675,"prompt_tokens_details":{"cached_tokens":51}},"id":"chatcmpl-w93DoochK5OvQ5IQTVRWu25fgtXIkknl","timings":{"cache_n":51,"prompt_n":115,"prompt_ms":41.983,"prompt_per_token_ms":0.36506956521739126,"prompt_per_second":2739.2039635090396,"predicted_n":509,"predicted_ms":3743.305,"predicted_per_token_ms":7.368710629921259,"predicted_per_second":135.70895238298775}}'
+  recorded_at: Fri, 13 Nov 2026 21:34:58 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"Call file_fetch
-        to get ruby.txt, then repeat the contents of the attached file."},{"role":"assistant","content":"","tool_calls":[{"id":"SM1BrOMlDRvnnOBcFBSBA0F5FsSA5xpP","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning":"Okay,
+        to get ruby.txt, then repeat the contents of the attached file."},{"role":"assistant","content":"","tool_calls":[{"id":"CZf0SOV10T0icWfUh6wELZi5Ff4eVkJ0","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning":"Okay,
         the user wants me to call the file_fetch function to get ruby.txt and then
         repeat the contents of the file. Let me start by checking the available tools.
         The tools section says there''s a function called file_fetch that fetches
@@ -146,8 +146,8 @@ http_interactions:
         generate the tool_call for file_fetch, and then once the file content is obtained,
         output the content as the final answer. Therefore, the initial response should
         be the tool call, and then the subsequent step would be to present the file''s
-        contents.\n"},{"role":"tool","content":"Fetched the file.","tool_call_id":"SM1BrOMlDRvnnOBcFBSBA0F5FsSA5xpP"},{"role":"user","content":[{"type":"text","text":"Attachments
-        from tool call SM1BrOMlDRvnnOBcFBSBA0F5FsSA5xpP:"},{"type":"text","text":"<file
+        contents.\n"},{"role":"tool","content":"Fetched the file.","tool_call_id":"CZf0SOV10T0icWfUh6wELZi5Ff4eVkJ0"},{"role":"user","content":[{"type":"text","text":"Attachments
+        from tool call CZf0SOV10T0icWfUh6wELZi5Ff4eVkJ0:"},{"type":"text","text":"<file
         name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]}],"stream":false,"temperature":0,"tools":[{"type":"function","function":{"name":"file_fetch","description":"Fetches
         a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
@@ -166,22 +166,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Server:
-      - istio-envoy
+      Date:
+      - Fri, 13 Nov 2026 21:34:57 GMT
       Access-Control-Allow-Origin:
       - ''
-      Req-Arrive-Time:
-      - '1794332915612'
+      Req-Cost-Time:
+      - '2190'
+      Resp-Start-Time:
+      - '1794605700432'
       X-Envoy-Upstream-Service-Time:
-      - '3352'
-      Date:
-      - Tue, 10 Nov 2026 17:48:35 GMT
+      - '2166'
+      Server:
+      - istio-envoy
       Content-Type:
       - application/json; charset=utf-8
-      Req-Cost-Time:
-      - '3355'
-      Resp-Start-Time:
-      - '1794332918968'
+      Req-Arrive-Time:
+      - '1794605698242'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -189,34 +189,23 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"The
-        contents of ruby.txt are: Ruby is the best.","reasoning_content":"Okay, so
-        the user asked me to call the file_fetch function to get ruby.txt and then
+        contents of ruby.txt are:  \n**Ruby is the best.**","reasoning_content":"Okay,
+        so the user asked me to call the file_fetch function to get ruby.txt and then
         repeat the contents of the attached file. Let me break this down step by step.\n\nFirst,
-        I need to check the tools provided. There''s a function called file_fetch
-        that fetches a text file named ruby.txt. The parameters for this function
-        are empty, meaning it doesn''t require any arguments. So, when the user says
-        \"Call file_fetch to get ruby.txt,\" I just need to invoke that function without
-        any parameters.\n\nOnce the file is fetched, the next part of the user''s
-        request is to repeat the contents of the attached file. The tool response
-        shows that the file was successfully fetched, and the content is \"Ruby is
-        the best.\" So, after retrieving the file, I should read its contents and
-        then output that text back to the user.\n\nI need to make sure that after
-        calling the file_fetch function, I correctly handle the response. The tool_response
-        indicates that the file was fetched, and the attachment is provided. The MIME
-        type is text/plain, which means it''s a plain text file. The content inside
-        the file is straightforward, so I can directly take that string and present
-        it to the user.\n\nWait, but how does the system handle the attachment? The
-        user mentioned \"Attachments from tool call...\" which includes the file.
-        So, after the function call, the system provides the file''s content. My job
-        is to take that content and repeat it. Therefore, the final answer should
-        just be the text \"Ruby is the best.\" without any additional formatting or
-        explanation, as per the user''s request to \"repeat the contents.\"\n\nI should
-        also check if there are any other steps or potential errors. For example,
-        if the file wasn''t fetched successfully, but the tool response says it was.
-        So, no error handling is needed here. The user''s instruction is straightforward:
-        call the function and then output the file''s content.\n\nSo, putting it all
-        together, after invoking file_fetch, the system returns the file''s content.
-        I then simply echo that content back to the user. The final answer is just
-        the text from the file.\n"}}],"created":1794332918,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":450,"prompt_tokens":250,"total_tokens":700,"prompt_tokens_details":{"cached_tokens":166}},"id":"chatcmpl-VBR6XtgBS2fRvLRCJn30HczCiMsG2Leb","timings":{"cache_n":166,"prompt_n":84,"prompt_ms":25.375,"prompt_per_token_ms":0.3020833333333333,"prompt_per_second":3310.344827586207,"predicted_n":450,"predicted_ms":3297.031,"predicted_per_token_ms":7.343053452115813,"predicted_per_second":136.1831296096397}}'
-  recorded_at: Tue, 10 Nov 2026 17:48:38 GMT
+        I need to check the available tools. The provided tool is file_fetch, which
+        fetches a sample text file named ruby.txt. The function doesn''t require any
+        parameters, so when I call it, I just need to use the name \"file_fetch\"
+        with empty arguments.\n\nOnce the file is fetched, the response from the tool
+        indicates that the file was successfully retrieved. The attachment provided
+        is a file named ruby.txt with the content \"Ruby is the best.\" My next task
+        is to repeat the contents of this file. Since the file is already fetched,
+        I can directly access its content from the tool''s response.\n\nI should make
+        sure that the content is correctly extracted and presented to the user. The
+        user probably wants the exact text from the file, so I need to output \"Ruby
+        is the best.\" without any modifications. There''s no need for additional
+        processing since the file is straightforward and the content is short.\n\nI
+        should also verify that there are no errors in the file fetching process.
+        The tool response mentions \"Fetched the file,\" which suggests success. Therefore,
+        I can safely assume the content is accurate and proceed to display it.\n"}}],"created":1794605700,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":286,"prompt_tokens":255,"total_tokens":541,"prompt_tokens_details":{"cached_tokens":203}},"id":"chatcmpl-g57twtw2E3Xdfw7AEIMk0tbUakwNeUzN","timings":{"cache_n":203,"prompt_n":52,"prompt_ms":22.913,"prompt_per_token_ms":0.4406346153846154,"prompt_per_second":2269.4540217343865,"predicted_n":286,"predicted_ms":2096.736,"predicted_per_token_ms":7.356968421052631,"predicted_per_second":135.92555285930132}}'
+  recorded_at: Fri, 13 Nov 2026 21:35:00 GMT
 recorded_with: VCR 6.4.1

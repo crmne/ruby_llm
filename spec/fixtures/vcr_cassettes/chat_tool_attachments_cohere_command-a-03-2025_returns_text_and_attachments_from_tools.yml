@@ -35,7 +35,7 @@ http_interactions:
       Num-Chars:
       - '6807'
       Num-Tokens:
-      - '69'
+      - '77'
       Pragma:
       - no-cache
       Vary:
@@ -43,31 +43,32 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - cfc2fda3fd768456560e910fdf5626ab
+      - 1d2afd259d926277cb482031b1ae1119
       Date:
-      - Tue, 10 Nov 2026 17:48:27 GMT
+      - Fri, 13 Nov 2026 21:34:49 GMT
       X-Envoy-Upstream-Service-Time:
-      - '21695'
+      - '963'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"0a46ccb3-40f9-4815-a973-7d5b800c8ba7","message":{"role":"assistant","tool_plan":"I
-        will use the file_fetch tool to get the contents of ruby.txt.","tool_calls":[{"id":"file_fetch_f98p7bkp93g6","type":"function","function":{"name":"file_fetch","arguments":"{}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":48,"output_tokens":21},"tokens":{"input_tokens":1446,"output_tokens":51},"cached_tokens":128}}'
-  recorded_at: Tue, 10 Nov 2026 17:48:27 GMT
+      string: '{"id":"2e0e60a3-4918-4532-a8dc-4b57bb835e34","message":{"role":"assistant","tool_plan":"I
+        will use the file_fetch tool to get the contents of ruby.txt and then repeat
+        the contents of the file.","tool_calls":[{"id":"file_fetch_p8zhfzejrka4","type":"function","function":{"name":"file_fetch","arguments":"{}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":48,"output_tokens":29},"tokens":{"input_tokens":1446,"output_tokens":59},"cached_tokens":1008}}'
+  recorded_at: Fri, 13 Nov 2026 21:34:50 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
     body:
       encoding: UTF-8
       string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"Call
-        file_fetch to get ruby.txt, then repeat the contents of the attached file."}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"file_fetch_f98p7bkp93g6","type":"function","function":{"name":"file_fetch","arguments":"{}"}}]},{"role":"tool","tool_call_id":"file_fetch_f98p7bkp93g6","content":[{"type":"text","text":"Fetched
+        file_fetch to get ruby.txt, then repeat the contents of the attached file."}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"file_fetch_p8zhfzejrka4","type":"function","function":{"name":"file_fetch","arguments":"{}"}}]},{"role":"tool","tool_call_id":"file_fetch_p8zhfzejrka4","content":[{"type":"text","text":"Fetched
         the file."},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]}],"stream":false,"tools":[{"type":"function","function":{"name":"file_fetch","description":"Fetches
         a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false}}}]}'
@@ -106,11 +107,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - afca0c25c73e6e803f86af865a2961f3
+      - dc6550651f9afae873335b3556590c52
       Date:
-      - Tue, 10 Nov 2026 17:48:27 GMT
+      - Fri, 13 Nov 2026 21:34:50 GMT
       X-Envoy-Upstream-Service-Time:
-      - '465'
+      - '361'
       Server:
       - envoy
       Via:
@@ -121,8 +122,8 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"605cf064-74b8-49ec-a97e-2d042336b4be","message":{"role":"assistant","content":[{"type":"text","text":"Ruby
-        is the best."}],"citations":[{"start":0,"end":17,"text":"Ruby is the best.","sources":[{"type":"tool","id":"file_fetch_f98p7bkp93g6:1","tool_output":{"content":"\u003cfile
-        name=''ruby.txt'' mime_type=''text/plain''\u003eRuby is the best.\u003c/file\u003e"}}],"type":"TEXT_CONTENT"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":80,"output_tokens":5},"tokens":{"input_tokens":1562,"output_tokens":18},"cached_tokens":128}}'
-  recorded_at: Tue, 10 Nov 2026 17:48:27 GMT
+      string: '{"id":"de89eaae-676b-466f-8a93-eb3e7125c75b","message":{"role":"assistant","content":[{"type":"text","text":"Ruby
+        is the best."}],"citations":[{"start":0,"end":17,"text":"Ruby is the best.","sources":[{"type":"tool","id":"file_fetch_p8zhfzejrka4:1","tool_output":{"content":"\u003cfile
+        name=''ruby.txt'' mime_type=''text/plain''\u003eRuby is the best.\u003c/file\u003e"}}],"type":"TEXT_CONTENT"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":80,"output_tokens":5},"tokens":{"input_tokens":1562,"output_tokens":18},"cached_tokens":1008}}'
+  recorded_at: Fri, 13 Nov 2026 21:34:50 GMT
 recorded_with: VCR 6.4.1

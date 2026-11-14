@@ -30,7 +30,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 10 Nov 2026 17:52:30 GMT
+      - Fri, 13 Nov 2026 21:38:32 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -50,11 +50,11 @@ http_interactions:
       X-Watermark:
       - 'false'
       Traceparent:
-      - 00-2f41f58599803adc508e220ba8a4278f-865251ad00023b7f-00
+      - 00-733887c3e08c5c0e3f716f53461c08da-162878a8000a9d3c-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - b0f90072-f1a7-4b14-953c-95a73087d095
+      - f7477016-b168-42b8-8d69-ac2ba21c12c0
       Azureml-Model-Session:
       - d20261110015917-e7d4cb48
       X-Ms-Inference-Retry-History:
@@ -90,9 +90,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - b0f90072-f1a7-4b14-953c-95a73087d095
+      - f7477016-b168-42b8-8d69-ac2ba21c12c0
       X-Http2-Stream-Id:
-      - '919'
+      - '683'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -101,8 +101,8 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"<X_REQUEST_ID>","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_21403226","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":427,"completion_tokens":40,"total_tokens":467,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":157,"audio_tokens":0,"text_tokens":427,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794333151,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Tue, 10 Nov 2026 17:52:31 GMT
+      string: '{"id":"c2991e2e-1dc5-4952-abd2-72333a7c3889","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_37220157","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":427,"completion_tokens":40,"total_tokens":467,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":158,"audio_tokens":0,"text_tokens":427,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794605913,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Fri, 13 Nov 2026 21:38:33 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
@@ -110,8 +110,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"system","content":"Your
         location is Berlin, at latitude 52.5200 and longitude 13.4050."},{"role":"user","content":"When
-        was the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_21403226","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
-        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"call_21403226"}],"stream":false,"max_completion_tokens":4096,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        was the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_37220157","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"call_37220157"}],"stream":false,"max_completion_tokens":4096,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -134,7 +134,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 10 Nov 2026 17:52:32 GMT
+      - Fri, 13 Nov 2026 21:38:34 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -154,11 +154,11 @@ http_interactions:
       X-Watermark:
       - 'false'
       Traceparent:
-      - 00-4f12173f39f28bd4b835d4fbaabbbacd-00688f8d0002905d-00
+      - 00-5e8f23220e764b281303a5b49c309c5e-4f24a72800084a14-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - edf59ecb-daab-4f75-8264-c8d182a748b1
+      - aaa9997f-fdd1-40c1-8623-94305d0a5eaa
       Azureml-Model-Session:
       - d20261110015917-e7d4cb48
       X-Ms-Inference-Retry-History:
@@ -194,9 +194,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - edf59ecb-daab-4f75-8264-c8d182a748b1
+      - aaa9997f-fdd1-40c1-8623-94305d0a5eaa
       X-Http2-Stream-Id:
-      - '111'
+      - '711'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -205,15 +205,17 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"<X_REQUEST_ID>","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
+      string: '{"id":"eea3e5d5-e231-4bdf-8c6f-8527d04162ce","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
         \"fall of Rome\" is traditionally dated to **September 4, 476 CE**, when the
         Germanic chieftain Odoacer deposed Romulus Augustulus, the last Western Roman
-        emperor, in the city of Ravenna (the Western Empire''s capital by then). This
-        event symbolically marked the end of the Western Roman Empire, though the
-        Eastern (Byzantine) Empire continued for another millennium until 1453.\n\nHistorians
-        debate the exact \"fall,\" viewing it as a gradual process over centuries
-        involving barbarian invasions, economic decline, military overstretch, and
-        internal decay, rather than a single moment. Key precursors include the Visigoths''
-        sack of Rome in 410 CE and the Vandals'' sack in 455 CE."},"finish_reason":"stop"}],"usage":{"prompt_tokens":502,"completion_tokens":147,"total_tokens":649,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":312,"audio_tokens":0,"text_tokens":502,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794333152,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Tue, 10 Nov 2026 17:52:34 GMT
+        emperor, in Ravenna (the effective capital). This marked the conventional
+        end of the Western Roman Empire.\n\nKey context:\n- The Eastern Roman (Byzantine)
+        Empire continued for nearly another millennium until 1453.\n- Historians debate
+        the \"fall\" as a gradual process over centuries, involving economic decline,
+        barbarian invasions, military overstretch, and internal corruption, rather
+        than a single event.\n- Earlier sackings include the Visigoths in 410 CE and
+        Vandals in 455 CE.\n\nThis view is supported by primary sources like the 6th-century
+        chronicler Marcellinus Comes and modern scholarship (e.g., Edward Gibbon''s
+        *The History of the Decline and Fall of the Roman Empire*)."},"finish_reason":"stop"}],"usage":{"prompt_tokens":502,"completion_tokens":180,"total_tokens":682,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":312,"audio_tokens":0,"text_tokens":502,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794605914,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Fri, 13 Nov 2026 21:38:35 GMT
 recorded_with: VCR 6.4.1

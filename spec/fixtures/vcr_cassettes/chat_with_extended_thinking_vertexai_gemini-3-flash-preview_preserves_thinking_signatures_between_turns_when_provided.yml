@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Tue, 10 Nov 2026 17:41:16 GMT
-      Pragma:
-      - no-cache
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Pragma:
+      - no-cache
+      Date:
+      - Fri, 13 Nov 2026 21:29:42 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -56,7 +56,7 @@ http_interactions:
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Tue, 10 Nov 2026 17:41:16 GMT
+  recorded_at: Fri, 13 Nov 2026 21:29:42 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
@@ -80,7 +80,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - PFfzat6iH-DfmLAPyPGBwA4
+      - R4H3auKEAvfDhcIPwpHMEQ
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -88,7 +88,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 10 Nov 2026 17:41:17 GMT
+      - Fri, 13 Nov 2026 21:29:51 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -111,12 +111,12 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "**My Reasoning Process**\n\nAh, I see the user has presented a straightforward arithmetic problem. My initial observation is that they've asked for the sum of two specific integers: 5 and 3. This is a fundamental operation, and my internal processing immediately identifies it as addition.\n\nTo arrive at the solution, I perform the calculation: 5 plus 3. The result, as my core computational functions confirm, is 8.\n\nMy next step is to ensure clarity and directness in my response, as is appropriate when addressing an expert user who needs a precise answer without unnecessary elaboration. Therefore, I will directly state the numerical outcome of this addition.\n\n",
+                    "text": "**My Cognitive Process for Calculating 5 + 3**\n\nAs an expert in processing information and executing operations, my initial analysis of the user's request immediately identified the core task: a simple arithmetic summation. I parsed the input and recognized the operands as \"5\" and \"3,\" and crucially, the explicit instruction to perform an \"addition.\"\n\nMy internal representation of this operation was thus: $5 + 3$.\n\nLeveraging my deeply ingrained computational capabilities, I then executed the addition. This is a fundamental operation, and the result is immediately accessible.\n\nThe outcome of this calculation is unequivocally 8.\n\nTherefore, my final output is a clear and direct statement of this result.\n\n",
                     "thought": true
                   },
                   {
                     "text": "5 + 3 = 8",
-                    "thoughtSignature": "AY89a1/jdR9Z3JgCbKK33SOJvPuqnVgc23tl1TQcsOU0kr7ZkGfp/SgltebV7uDQ4j8LlcPqxOB+eTc8xjHUUihIEylFKUWMocP5+pYwv2MiMuLU3RxXZ0y8PxtTg8HS5BS6KNQ/Ikzoh+1yQR5+wxwUPN9qqwVpdGdeiVTVdZW12DKPCo14bA2nfLC9VwOA8PK7Ocr287GDqEo7zeB7wGiUfs3kiuzakPRm"
+                    "thoughtSignature": "AY89a18OWCt8R7PskthTzXNtwSKaG5CdE2uLQJ8F61JlXt40Zza0Yv++8kQyFCgKfcH5siBJ3PoXnrtuZ+WY8DTS5mL7ZKRZSglWnHF6m6jsEzyq4Tk3G7Xte2WSRXs+0Z0s3/I9uaQMImrZd/To0XFr954Y+MwwjB2mvzvyrK38nVK3Mv3kSpYLoon5WQE5Yscv01A87Ei6K2S6oBPGGedJ+PNA7bu2PwDk8gWFS1IypmSSSBf81XZ/Kg2AK2gFbSzBscqfnrmCtt9x56IQCTXF"
                   }
                 ]
               },
@@ -126,7 +126,7 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 8,
             "candidatesTokenCount": 7,
-            "totalTokenCount": 44,
+            "totalTokenCount": 57,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -140,29 +140,29 @@ http_interactions:
                 "tokenCount": 7
               }
             ],
-            "thoughtsTokenCount": 29
+            "thoughtsTokenCount": 42
           },
           "modelVersion": "gemini-3-flash-preview",
-          "createTime": "2026-11-10T17:41:16.512350Z",
-          "responseId": "PFfzat6iH-DfmLAPyPGBwA4"
+          "createTime": "2026-11-13T21:29:43.033378Z",
+          "responseId": "R4H3auKEAvfDhcIPwpHMEQ"
         }
-  recorded_at: Tue, 10 Nov 2026 17:41:17 GMT
+  recorded_at: Fri, 13 Nov 2026 21:29:51 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]},{"role":"model","parts":[{"thought":true,"text":"**My
-        Reasoning Process**\n\nAh, I see the user has presented a straightforward
-        arithmetic problem. My initial observation is that they''ve asked for the
-        sum of two specific integers: 5 and 3. This is a fundamental operation, and
-        my internal processing immediately identifies it as addition.\n\nTo arrive
-        at the solution, I perform the calculation: 5 plus 3. The result, as my core
-        computational functions confirm, is 8.\n\nMy next step is to ensure clarity
-        and directness in my response, as is appropriate when addressing an expert
-        user who needs a precise answer without unnecessary elaboration. Therefore,
-        I will directly state the numerical outcome of this addition.\n\n"},{"text":"5
-        + 3 = 8","thoughtSignature":"AY89a1/jdR9Z3JgCbKK33SOJvPuqnVgc23tl1TQcsOU0kr7ZkGfp/SgltebV7uDQ4j8LlcPqxOB+eTc8xjHUUihIEylFKUWMocP5+pYwv2MiMuLU3RxXZ0y8PxtTg8HS5BS6KNQ/Ikzoh+1yQR5+wxwUPN9qqwVpdGdeiVTVdZW12DKPCo14bA2nfLC9VwOA8PK7Ocr287GDqEo7zeB7wGiUfs3kiuzakPRm"}]},{"role":"user","parts":[{"text":"Now
+        Cognitive Process for Calculating 5 + 3**\n\nAs an expert in processing information
+        and executing operations, my initial analysis of the user''s request immediately
+        identified the core task: a simple arithmetic summation. I parsed the input
+        and recognized the operands as \"5\" and \"3,\" and crucially, the explicit
+        instruction to perform an \"addition.\"\n\nMy internal representation of this
+        operation was thus: $5 + 3$.\n\nLeveraging my deeply ingrained computational
+        capabilities, I then executed the addition. This is a fundamental operation,
+        and the result is immediately accessible.\n\nThe outcome of this calculation
+        is unequivocally 8.\n\nTherefore, my final output is a clear and direct statement
+        of this result.\n\n"},{"text":"5 + 3 = 8","thoughtSignature":"AY89a18OWCt8R7PskthTzXNtwSKaG5CdE2uLQJ8F61JlXt40Zza0Yv++8kQyFCgKfcH5siBJ3PoXnrtuZ+WY8DTS5mL7ZKRZSglWnHF6m6jsEzyq4Tk3G7Xte2WSRXs+0Z0s3/I9uaQMImrZd/To0XFr954Y+MwwjB2mvzvyrK38nVK3Mv3kSpYLoon5WQE5Yscv01A87Ei6K2S6oBPGGedJ+PNA7bu2PwDk8gWFS1IypmSSSBf81XZ/Kg2AK2gFbSzBscqfnrmCtt9x56IQCTXF"}]},{"role":"user","parts":[{"text":"Now
         multiply that by 2"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"medium"}}}'
     headers:
       User-Agent:
@@ -181,7 +181,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - PVfzavncOeDfmLAPyPGBwA4
+      - T4H3atyiGOvltfAP0quAiQE
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -189,7 +189,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 10 Nov 2026 17:41:19 GMT
+      - Fri, 13 Nov 2026 21:29:54 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -204,7 +204,48 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICIqKk15IENvbXB1dGF0aW9uYWwgSm91cm5leTogVGhlIE5leHQgU3RlcCoqXG5cbkFoLCBJIHNlZSB3aGVyZSB0aGlzIGlzIGdvaW5nLiBUaGUgbGFzdCBvcGVyYXRpb24geWllbGRlZCB0aGUgdmFsdWUgb2YgOC4gTXkgY3VycmVudCBkaXJlY3RpdmUgaXMgdG8gdGFrZSB0aGF0IHJlc3VsdCwgdGhhdCA4LCBhbmQgZW5nYWdlIGluIGEgbXVsdGlwbGljYXRpb24uIFRoZSBzcGVjaWZpYyBtdWx0aXBsaWVyIGlzIGNsZWFyOiAyLiBUaGVyZWZvcmUsIHRoZSBsb2dpY2FsIHByb2dyZXNzaW9uIGlzIHRvIGV4ZWN1dGUgOCBtdWx0aXBsaWVkIGJ5IDIuIFRoZSBvdXRjb21lIG9mIHRoaXMgY2FsY3VsYXRpb24sIGFzIG15IGludGVybmFsIHByb2Nlc3NvcnMgY29uZmlybSwgaXMgMTYuIFRoaXMgaXMgYSBzdHJhaWdodGZvcndhcmQgYXJpdGhtZXRpYyBzdGVwLCBidWlsZGluZyBkaXJlY3RseSB1cG9uIHRoZSBwcmVjZWRpbmcgb3V0Y29tZS5cblxuIiwKICAgICAgICAgICAgInRob3VnaHQiOiB0cnVlCiAgICAgICAgICB9LAogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICI4IMOXIDIgPSAxNiIsCiAgICAgICAgICAgICJ0aG91Z2h0U2lnbmF0dXJlIjogIkFZODlhMTgvM3F1ZStYaFpCa3BTQkM2V29kSFpLWmZYbks4SjB1eCtKS1FwOE9wQkVVeU5iSU5aSkEwNWRmRURRUGIwdVBmakFIMmx3RzhwUW5YWUxTeGJuVmc0ZUp3a3cxUGlaUnRxUHlUZkdwOUJkWWEraTZ4RDl0QkN4OGQ0bnd1Lzhlbkl3K2RnSkpKWmI2T0FTeldXQzZUVWk2ait5VmFnMUdFbXRpSEFvQk5kcGYxY0YzSW80Z095UDNZZW1Ia0Y3RkVxR0tUOTdPUXBwdEpTZ1Q5SGhUa1lBQjNyWngwSWNNNlFyK2VSbTZZSW9vUHJhVXdxdUxEaEJkeDBoRlZCRDl1VUlWNlUwM2hhdSttRXpuS1poM1NoRkVGWHZOSmt2M05QaGhndDI1Y3gxNitOTmtZM3loazFxZXArS0haV2taazZjUDJiSTFnMzZUdFcwcnIvbkUwTjhJb0l2V3FFdlE9PSIKICAgICAgICAgIH0KICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiAyMSwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDgsCiAgICAidG90YWxUb2tlbkNvdW50IjogODQsCiAgICAidHJhZmZpY1R5cGUiOiAiT05fREVNQU5EIiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMjEKICAgICAgfQogICAgXSwKICAgICJjYW5kaWRhdGVzVG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDgKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiA1NQogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMy1mbGFzaC1wcmV2aWV3IiwKICAiY3JlYXRlVGltZSI6ICIyMDI2LTExLTEwVDE3OjQxOjE3Ljk0NTc4NVoiLAogICJyZXNwb25zZUlkIjogIlBWZnphdm5jT2VEZm1MQVB5UEdCd0E0Igp9Cg==
-  recorded_at: Tue, 10 Nov 2026 17:41:19 GMT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "text": "**My Mental Arithmetic Walkthrough**\n\nAlright, so I'm looking back at where I was just a moment ago. My prior result, the number I had landed on, was an 8. Now, the current instruction is to take that 8 and multiply it by 2. This is a straightforward operation, really. I simply perform the multiplication: 8 multiplied by 2. The outcome of that calculation, my next figure, is 16.\n\n",
+                    "thought": true
+                  },
+                  {
+                    "text": "8 * 2 = 16",
+                    "thoughtSignature": "AY89a19OhRNP2apbnM0QyJ9izAXtpIDLtfAK4zj8eQqLJJykHQewufpM6TSmAyWjcoWODCwiZwvxP+2wJnSt/48izgb4s21cvNMbGKfC5IpONHr5Tr0LE+CKn0++T9l13NtQjMKO9Z9/IJRDCOUlbbCKkEnoOyFnXsHfSF2jkZJJhLtPiOdjkW+Sn7nrRGhn4577qmLXryxVNRNe/oJyuJ6H8010GXK/BT+0oRS48go9Dyd6rXHN4I8SvhJi"
+                  }
+                ]
+              },
+              "finishReason": "STOP"
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 21,
+            "candidatesTokenCount": 8,
+            "totalTokenCount": 64,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 21
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 8
+              }
+            ],
+            "thoughtsTokenCount": 35
+          },
+          "modelVersion": "gemini-3-flash-preview",
+          "createTime": "2026-11-13T21:29:51.397660Z",
+          "responseId": "T4H3atyiGOvltfAP0quAiQE"
+        }
+  recorded_at: Fri, 13 Nov 2026 21:29:54 GMT
 recorded_with: VCR 6.4.1

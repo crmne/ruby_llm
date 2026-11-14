@@ -25,22 +25,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Req-Cost-Time:
-      - '971'
-      Resp-Start-Time:
-      - '1794332211845'
+      X-Envoy-Upstream-Service-Time:
+      - '1181'
       Date:
-      - Tue, 10 Nov 2026 17:36:50 GMT
+      - Fri, 13 Nov 2026 21:24:52 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Req-Cost-Time:
+      - '1184'
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
       - ''
       Req-Arrive-Time:
-      - '1794332210873'
-      X-Envoy-Upstream-Service-Time:
-      - '968'
-      Content-Type:
-      - application/json; charset=utf-8
+      - '1794605092873'
+      Resp-Start-Time:
+      - '1794605094058'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -48,12 +48,14 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"role":"assistant","content":"","reasoning_content":"Okay,
-        the user wants me to call the array_params function with the tags [\"red\",
-        \"blue\"] and combine them. Let me check the function definition. The function
+        the user wants me to call the array_params tool with the tags [\"red\", \"blue\"]
+        and then combine them. Let me check the function definition. The function
         takes an array of strings called tags. So I need to structure the tool call
-        with those tags. I''ll make sure the arguments are a JSON object with the
-        tags array. The required parameter is tags, and there are no additional properties
-        allowed. Alright, that''s straightforward. Just pass the array as is.\n","tool_calls":[{"type":"function","function":{"name":"array_params","arguments":"{\"tags\":
-        [\"red\", \"blue\"]}"},"id":"Nhp5ean4ujMzqRIm8d9zfGAiBjKDyfeO"}]}}],"created":1794332211,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":124,"prompt_tokens":189,"total_tokens":313,"prompt_tokens_details":{"cached_tokens":3}},"id":"chatcmpl-Em95Uy6OBVLqO0VmiUkLojnO8MbHrymw","timings":{"cache_n":3,"prompt_n":186,"prompt_ms":44.871,"prompt_per_token_ms":0.241241935483871,"prompt_per_second":4145.216286688507,"predicted_n":124,"predicted_ms":898.266,"predicted_per_token_ms":7.302975609756097,"predicted_per_second":136.93048606982788}}'
-  recorded_at: Tue, 10 Nov 2026 17:36:51 GMT
+        with those tags. I''ll make sure the arguments are correctly formatted as
+        a JSON object with the tags array. Then, after calling the tool, I should
+        present the combined tags as the response. Let me verify that the parameters
+        are required and there are no additional properties. Yep, the required field
+        is tags, and additionalProperties is false. So the tool call should be straightforward.\n","tool_calls":[{"type":"function","function":{"name":"array_params","arguments":"{\"tags\":
+        [\"red\", \"blue\"]}"},"id":"jzusp2dwqoBbmWbuFOOOo0gZLfHWyHr5"}]}}],"created":1794605094,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":155,"prompt_tokens":189,"total_tokens":344,"prompt_tokens_details":{"cached_tokens":188}},"id":"chatcmpl-MQRBcwkQfb2Cimuthtr50NlhGXrsggDJ","timings":{"cache_n":188,"prompt_n":1,"prompt_ms":8.095,"prompt_per_token_ms":8.095,"prompt_per_second":123.53304508956145,"predicted_n":155,"predicted_ms":1127.886,"predicted_per_token_ms":7.323935064935065,"predicted_per_second":136.53862181106956}}'
+  recorded_at: Fri, 13 Nov 2026 21:24:54 GMT
 recorded_with: VCR 6.4.1

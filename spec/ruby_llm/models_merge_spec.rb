@@ -577,6 +577,48 @@ RSpec.describe RubyLLM::Models do
 
       expect(merged.map(&:id)).to eq(['kept'])
     end
+
+    context 'when models.dev drops a model its provider still lists' do
+      let(:previous) do
+        model(id: 'omni', provider: 'gemini', name: 'Omni',
+              modalities: { input: %w[text image], output: %w[video] },
+              pricing: { text_tokens: { standard: { input_per_million: 1.0, output_per_million: 9.0 } } },
+              metadata: { source: 'models.dev' })
+      end
+      let(:listed) { model(id: 'omni', provider: 'gemini', metadata: { object: 'model' }) }
+      let(:provider_fetch) { { models: [listed], fetched_providers: ['gemini'] } }
+
+      before { allow(RubyLLM.logger).to receive(:warn) }
+
+      it 'keeps its last models.dev metadata and reports it' do
+        merged = described_class.merge_with_existing([previous], provider_fetch, { models: [], fetched: true })
+
+        omni = merged.find { |m| m.id == 'omni' }
+        expect(omni.modalities.output).to eq(%w[video])
+        expect(omni.pricing.text_tokens.standard.output_per_million).to eq(9.0)
+        expect(omni.metadata).to include(source: 'models.dev', object: 'model')
+        expect(RubyLLM.logger).to have_received(:warn)
+          .with('kept from the previous registry: gemini:omni (missing from models.dev)')
+      end
+
+      it 'lets models.dev win whenever it has the model' do
+        current = model(id: 'omni', provider: 'gemini', modalities: { input: %w[text], output: %w[text] },
+                        metadata: { source: 'models.dev' })
+
+        merged = described_class.merge_with_existing([previous], provider_fetch, { models: [current], fetched: true })
+
+        expect(merged.find { |m| m.id == 'omni' }.modalities.output).to eq(%w[text])
+        expect(RubyLLM.logger).not_to have_received(:warn)
+      end
+
+      it 'drops it once its provider no longer lists it either' do
+        gone = { models: [model(id: 'other', provider: 'gemini')], fetched_providers: ['gemini'] }
+
+        merged = described_class.merge_with_existing([previous], gone, { models: [], fetched: true })
+
+        expect(merged.map(&:id)).to eq(['other'])
+      end
+    end
   end
 
   describe '.read_existing_models' do

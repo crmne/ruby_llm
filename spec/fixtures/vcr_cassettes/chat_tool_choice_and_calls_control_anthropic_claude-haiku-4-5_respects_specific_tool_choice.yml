@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:52:21 GMT
+      - Fri, 13 Nov 2026 21:38:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -41,60 +41,60 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-11-10T17:52:21Z'
+      - '2026-11-13T21:38:24Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-11-10T17:52:21Z'
+      - '2026-11-13T21:38:24Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-11-10T17:52:20Z'
+      - '2026-11-13T21:38:24Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-11-10T17:52:21Z'
+      - '2026-11-13T21:38:24Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-a7ed936fe86839f040a69e462d617e24-70e3c0849a61ed5d-01
+      - 00-e997d842df555fd7b4bccfb3b75d0965-3d4c82bbe8a21da3-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
       - "<ANTHROPIC_WORKSPACE_ID>"
       Vary:
       - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
       Server:
       - cloudflare
       Server-Timing:
-      - x-originResponse;dur=602
-      X-Robots-Tag:
-      - none
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
+      - x-originResponse;dur=572
       Cf-Cache-Status:
       - DYNAMIC
+      X-Robots-Tag:
+      - none
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cgug1bGM996hfm2ptidSm","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01KHcxbr3mC3mZ2d5za1XGCy","name":"weather","input":{"latitude":"41.9028","longitude":"12.4964"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":716,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":56,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
-  recorded_at: Tue, 10 Nov 2026 17:52:21 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch1eg9ZuMxeyrDTTHwC7b","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01UxWyfh3cnHUZEh5EaQWf2A","name":"weather","input":{"latitude":"41.9028","longitude":"12.4964"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":716,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":56,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
+  recorded_at: Fri, 13 Nov 2026 21:38:24 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        the fall of Rome?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01KHcxbr3mC3mZ2d5za1XGCy","name":"weather","input":{"latitude":"41.9028","longitude":"12.4964"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01KHcxbr3mC3mZ2d5za1XGCy","content":[{"type":"text","text":"Current
+        the fall of Rome?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01UxWyfh3cnHUZEh5EaQWf2A","name":"weather","input":{"latitude":"41.9028","longitude":"12.4964"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01UxWyfh3cnHUZEh5EaQWf2A","content":[{"type":"text","text":"Current
         weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h"}]}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"weather","description":"Gets
         current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -118,7 +118,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:52:25 GMT
+      - Fri, 13 Nov 2026 21:38:28 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -130,71 +130,71 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '9999000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-11-10T17:52:21Z'
+      - '2026-11-13T21:38:25Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-11-10T17:52:25Z'
+      - '2026-11-13T21:38:28Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-11-10T17:52:21Z'
+      - '2026-11-13T21:38:24Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '11999000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-11-10T17:52:21Z'
+      - '2026-11-13T21:38:25Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-1c53c22780401298fbf8a9aff4972900-da38e7170469d4da-01
+      - 00-5984c3b5dd35204891da3c1f8ac5cbbe-9291776d3cc7aa64-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
       - "<ANTHROPIC_WORKSPACE_ID>"
       Vary:
       - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
       Server:
       - cloudflare
       Server-Timing:
-      - x-originResponse;dur=4029
-      X-Robots-Tag:
-      - none
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
+      - x-originResponse;dur=3246
       Cf-Cache-Status:
       - DYNAMIC
+      X-Robots-Tag:
+      - none
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cgug1eTr2D79Kcoz4iBDS","type":"message","role":"assistant","content":[{"type":"text","text":"I
-        realize I called the weather function by mistake! Let me answer your actual
-        question about the Fall of Rome.\n\n**The Fall of Rome** refers to the collapse
-        of the Western Roman Empire, traditionally dated to **476 CE** when the last
-        Western Roman Emperor, Romulus Augustulus, was deposed by the Germanic chieftain
-        Odoacer.\n\nHere are the key aspects:\n\n## Main Causes:\n- **Political Instability**:
-        Frequent civil wars, weak emperors, and military coups destabilized the empire\n-
-        **Economic Decline**: Inflation, tax collection problems, trade disruptions,
-        and debasement of currency weakened the economy\n- **Military Pressure**:
-        Invasions by Germanic tribes (Visigoths, Vandals, Ostrogoths) and other barbarian
-        groups\n- **Overexpansion**: The empire was too large to govern and defend
-        effectively\n- **Division of the Empire**: Splitting into Eastern (Byzantine)
-        and Western halves weakened central authority\n- **Social Decline**: Declining
-        population, urban decline, and loss of civic institutions\n- **Religious Changes**:
-        The rise of Christianity and shift in values affected traditional Roman culture\n\n##
-        Key Events:\n- **410 CE**: Alaric and the Visigoths sacked Rome\n- **439 CE**:
-        Vandals took North Africa, cutting off grain supplies\n- **452 CE**: Attila
-        and the Huns invaded Italy\n- **476 CE**: Romulus Augustulus was deposed,
-        marking the traditional end\n\n## Important Note:\nThe **Eastern Roman Empire
-        (Byzantine Empire)** continued for another 1,000 years until 1453 CE. The
-        \"fall\" primarily refers to the Western Empire''s collapse."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":736,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":385,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
-  recorded_at: Tue, 10 Nov 2026 17:52:25 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch1egCdCwMQAc938swRK3","type":"message","role":"assistant","content":[{"type":"text","text":"The
+        **Fall of Rome** refers to the collapse of the Roman Empire, particularly
+        the Western Roman Empire, which occurred gradually over several centuries,
+        culminating around **476 CE**.\n\n## Key Causes:\n\n1. **Political Instability**
+        - Frequent civil wars, corruption, and weak leadership undermined the empire''s
+        stability\n2. **Economic Decline** - Inflation, tax burdens, and disruption
+        of trade weakened the economy\n3. **Military Pressure** - Barbarian invasions
+        from Germanic tribes (Goths, Vandals, Franks, etc.) constantly threatened
+        borders\n4. **Overexpansion** - The empire was too large to defend effectively\n5.
+        **Social Issues** - Declining population, loss of civic virtue, and social
+        fragmentation\n6. **Religious Changes** - The rise of Christianity altered
+        Roman values and military priorities\n\n## Key Events:\n\n- **410 CE** - Visigoths
+        led by Alaric sacked Rome\n- **439 CE** - Vandals captured North Africa, cutting
+        off grain supplies\n- **476 CE** - The last Western Roman Emperor, Romulus
+        Augustulus, was deposed by the Germanic chieftain Odoacer, marking the traditional
+        date of the Western Empire''s fall\n\n## Aftermath:\n\n- The **Eastern Roman
+        Empire** (Byzantine Empire) continued for another 1,000 years\n- Western Europe
+        fragmented into various Germanic kingdoms\n- Classical civilization declined;
+        the period is often called the \"Dark Ages\"\n\nThe fall was a gradual process
+        rather than a sudden collapse, influenced by both internal weaknesses and
+        external pressures."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":736,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":356,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
+  recorded_at: Fri, 13 Nov 2026 21:38:28 GMT
 recorded_with: VCR 6.4.1

@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:54:27 GMT
+      - Fri, 13 Nov 2026 21:40:07 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -47,11 +47,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '939'
+      - '789'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -78,22 +78,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_05f395d5d8e878e6016af35a520f3887d291321c38bb704070",
+          "id": "resp_06291ecdea3e7982016af783b6cd7887d2b000065a0a37fa11",
           "object": "response",
-          "created_at": 1794333266,
+          "created_at": 1794606006,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794333266,
+          "completed_at": 1794606007,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -101,11 +102,11 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "fc_05f395d5d8e878e6016af35a52b99087d2b2903266716912cc",
+              "id": "fc_06291ecdea3e7982016af783b74d8087d2ab49f20b334a6a9a",
               "type": "function_call",
               "status": "completed",
               "arguments": "{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}",
-              "call_id": "call_OjkSlzQ1u8SZ2rSIehPY3oET",
+              "call_id": "call_PjwhXqfPgQkxUO4vYmulOcIl",
               "name": "weather"
             }
           ],
@@ -198,14 +199,14 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:54:27 GMT
+  recorded_at: Fri, 13 Nov 2026 21:40:07 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"What''s
-        the fall of Rome?"},{"type":"function_call","call_id":"call_OjkSlzQ1u8SZ2rSIehPY3oET","name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"},{"type":"function_call_output","call_id":"call_OjkSlzQ1u8SZ2rSIehPY3oET","output":"Current
+        the fall of Rome?"},{"type":"function_call","call_id":"call_PjwhXqfPgQkxUO4vYmulOcIl","name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"},{"type":"function_call_output","call_id":"call_PjwhXqfPgQkxUO4vYmulOcIl","output":"Current
         weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -227,7 +228,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:54:29 GMT
+      - Fri, 13 Nov 2026 21:40:10 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -247,11 +248,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2634'
+      - '2754'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -278,22 +279,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0d52bb10e88d8340016af35a53153887d2b14677df8ebd099c",
+          "id": "resp_0e4b57039cf88e14016af783b7aa7487d283e6475b0e92eb47",
           "object": "response",
-          "created_at": 1794333267,
+          "created_at": 1794606007,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794333269,
+          "completed_at": 1794606010,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -301,14 +303,14 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "rs_0d52bb10e88d8340016af35a53b33c87d2966e149cdf3b275e",
+              "id": "rs_0e4b57039cf88e14016af783b816bc87d28a02926137dbc55b",
               "type": "reasoning",
               "content": [],
-              "encrypted_content": "gAAAAABq81pVjQuP2bpHlGNSoKi_xoEviOat01T_dFJUMe1ULexzCXI3qrClnbaU24-4wOUNq0IZWak-BiJNFnjlaJYDUhKQUh70ZOYEGQz3OAw1dSjVY6gLuWgLDEcK9XG2t_ofWN_PTayuy5ueyhpX_YMxTrVWU8hDxBrtCAPS3QG9J5JXLM_tQmt0qSlLREeXV2El7VYxOsKRpJziB7Rp7dFHbEzcoB2IzFyJfBK8ltecb6ZZN6CB1w10HAel8F6SCk1VvdEiTv6nmQ963LMJ8aVGHNep9OUR5uWL_AItddZy8g6hpwPA-DUXzVBgnNKe7QTpl0AV9wPYyNgYbcJjS_eX-HavQzw7ZxIRI9-KLWMEzSq5BevGH6MxwsmFmLFTGh8UvYRlcc_pSAwUWMxhUPLSBQ_lF0AZ_7gYfIey_AexXfmgPoHYjQDTl6pa9myN6QhLILyjghTGBfs0MkNfQpefdQfEsIaWsFRSUwYrjDcwnxfvcq3FNaMdpwbnkLm22fU2Bi8IWM1ZQfvsvlhU_DMX_FqBaxD5-RDYovwcGI4FqJXGjH-tRp8UcRlibEbpyaM3u2yNe72PUdBlzX1_yXT9nQN1t-xLoEbcgIgOzQNg4YKe0Pvd5CyqiLeNbV470UtcS5Ms8J2WTcDAZIAwVaSrWxK4MEQs1WsMQbXLvwIljtSduWo47-pDLB-Wn-pasbop_vUWMgldedRQmCpBXq90IzK7UIc5HPzBN3SZZhZaF9nTdhay-RjUMmxidRnDpajR-x7HDohfgXlJhQd4R33jZZRwl7S5Y5Bpb-cERtdhaKg7li5HTSe8y7whHf36_SZ1rk5vpsBkfGzYXsc0B31WuwYZIwlmGccpt7MwXVdZNccVSL0ktWHp99HAUTRaZ5fKP5kz5FgeqzvkU3Hy0b7aImPShF6ABVULozHscshV6t8zWYUl5TW5-azGmIa2UJuzZ_VhdaSBRDCCbD1EfU5zOZfI1YU0epn9p_2Q5EIFTynEVuIXGtPhgFqA384ayOji2d5IMVHPxukkiQZwqMvCWbI-45aRBvuFk3TUodEn8dN6ZXkPKMn8m-ID6vuqrtRt1QYPJFlGwzVfXBM1CPaCZoSMIGTDc7V2l-i_8297EeSJcSVEAxriaa1vgfHe50Zi3x1ykHrX0W7Q6uEXGiO37YcxqN9vfxYqkTDcllk78C9KALS4--qpJHgBeELNFMvm-Puq96Xf37uLY8DIOoe9DrpkT4yITJvr_D9qCzeWf-nkgerMi3Jbh934zqcrSBFYnqSptZiHOqKyJ5cXQ9uQB1XfIZ654EOVHaXlf7CEzMmVD1wRRTSwvSTnNPFB-CIwAx1Z-e9CULALBAmXHmIubp1L1EWkYDpfWFjjToAEA19Z7SuNYgXvNXyTrk2OI3N1bLJm4-6eToWWDo8aIWspbJWAMvpwL_67vZ3FRowRwW-ntjbmxKYuopIBBYEDiGwP-_vYr9gJWlCKh0VfH8534ehpwPFTtpQbbuuZD6_RQQP-zz0RMBZxNodpNkW7gXVIV0Z6wrvhFaP_P3jCyJq5zMDyLdAqmfmJkojMNnlbE_yd92fvvu2dfwAvj8OBcXI7k4AelMsfGa8DSSl5utIUUvQgOt2Hl8l76oBrwPXeHpxKDjdbIvZiDp7ZBts1eJJaS0hOimSdaKozusGM1n4_jBQeESopBsb49IJkdg9lPw9zOqW8b2Rg6-dxs0NtJKTyvCQw3PYrSz8ZT-JQQWYZkvoiSzCWWK676lppup7LotCPBJ1DE92oW74bYtmDpZvshfd5A5oBF_WChIAp9VsUMg8OEMRmKz-zbbZrVdB0VLZgoDPXFAWfTGlgxa1H6XIXUcTKpSfik6jPjNQNlVlyZGVpPmRNt3Afc3rCDNVCPK9dlTOtFg6ZfPMaehHft5peGczyj1N5EYGw0Bwz12YVXvi0WmStD6gT-70WnJQf7o_5QblfWzNsGEKkQQsFoDS76h4iHkKhEt_0vazIOLnH7dlxT6Un2-UMxZHrv5s7IT6TEL2R_UnFB1T2I49udSTsMFM1jjEcCxoY3qt9-l8yTyyS5GYnXlGEbfpm7MWdJi4Zn2M6E4FVVCnA7xpC9uD58cHYuSdhu3yG86BGiHhVuRRh32bcKex5hVT2mxjatFY9MgLrRIfypn3Lii9il1VK23Rcg0d6HCkz7mrEEQto4Nmz-M3UmLwaciqg-UHftTXlyd3RT24dNvc3TukLYegHLFENyQEfREgYAFkvQX4xtqLeVbj8xJK81qi-gFKViSs7-WTuNYqckRvgoFChmTKz8cAOLXfvXcQqhh_pELDe6Qr1Tt5jBJJW53-7bRszVzFLw5HhC-Wo59lci8b2a4p2PRYU",
+              "encrypted_content": "gAAAAABq94O6AboyF_Qca3VmbGltfIlX9rfnnEk1n-rZnDj9oPeApKy117L5fHwp1JSPu3n0HPWBbHUr5TwsJVs5jJMH5k0R7Kxc-bbD3IGDMxPOpnWXEYLiEFvlgCHWO8iQ5hGt1zlJkBU1BobKU29sjPYE0R1xoV6P_HjVKzSUU3D7kZ9Ml5WU7PKRsBX0AmN-P85JWFiEGDgIB7GhO6Agt1ynlkX7yPNCMFyRTQIPMIfHW_hUNLFfWtzBf5ccXnemdKfFRsLa3XE-L9vLaXWA9gIDK81psme6lAzfieDRAYvDv5F_eur0L-W6TkiMSudc34VwjdS1A_aZRI5I5MLB3vDEtn8gvb2oYsMm8MxWwbkwleTM-8ptanN0J_USYDlfqejseT_Ob1iL3x3GfrjgDTnGI-7WSG_HvwclmnhAiYLFxc_XdVbAjRXfsZV0Bs31TEiHIS061hx9twPex4XglLvqYao77uQQvi8ej3LP3f_2FUySF072ZzqGPFqKdLpWWc9wHbQnP-n5rDmdMG9WpmA3G99e3CPaScTPBfjzS8Fu6xbC5O8OBiULILkfRoWmY5CcWXMWABE6QvrPCPuiFi_nhcZ58r_6mqmpQe4XGIj7R0shQ4oe_l8oNE_s6YiLtlrdlovOJah8CoiesL9QsayR2kjjfY73guMCtIBOv1eW5JTZDG0R4LGpaezuM1MzK55G8VDq7qmsh5CjEcbws5HqKEj6JNAYnoC4hlBpfBXcvzVwXMqVmjGWv1HvEVzMFTdA1JV0BWL-Bt45H7Ul18_SYYWm7bz12LBQ88BYVPhCTP8zVPFtNsTn3XvIIDKNK4O7wSgnp8ZeuZD0lU-9iERQV6ljOMLe5fxhGWNT0ueEhuZhf0U_a-qU_5li0ifqQ0VhByy1zGPOIeqReeUnzNJFeqVpifa-E7zPp2TdaWSm144pDKkeBr1ijE9kJr5BHDMm28hSa2exXECYH5wf85-3eJKIa4u0A-9ein-E5Pv84FOCKuwIUUVFRAHJpAaOk429ZmX6yLVGnJ8wLr4ApU-REqKlzUET2t3QVS_X3NBXm0L7jyi-zLz5ReO99ZRii36RxUa_yw725OSPrFJmMxFyEc0z3KWTIWtAiowVUosYrSymVcdhEVEO-ERoiMbhMOHsCABf87CzPnkg4aoAH2Y39lWxOCIqNQyW4cTklmDyDTRvqiz3a4vUkyHBFg87VLG8LI7ymR1vafR4xg6G8XHVdoHDqgpUw9D4kGrf3hhqrkhmblDXepCW9oa4s_Ar95zyFZCA14kjSD3G4CuwHkzLO2acC0l_OBw1mW9zfOH6Kd_zbkSgcoetej6XnqWDEAVujzabWbGrhURRl53uX6DVozwbXZqUIp1wH-zrryrjHXr06IZOM3qZrIYCUp5YNsb4W9Yb4SBzhWPTiWKGNH3CztFeAXKDsElQaZxgg8VBGhQqygIi6r-UagjPGEkYri88f651HTFJANyZaJfdRdQitbFLFzu4ULV1qcgC20F3Gq0E991sEZcvrxxmkRVv-pCt-VWb_QY7JnJEsbeblzs1Sjl79PzaUdcTVPWYm7iCsIapa0vFwc8pMadyNKxQqYjo3IWRzBqHY8s5ir4Is5_HnkkAWOubpkVZjxxu2dndFVFYZpPor4ci20EYArUsG2gVqJIZ7JRxynlSTR-BvyiRNhLreGpkhQrMSVDexkR5wSe9K8uz1l1ecHRvMcCB-CBf11sCsr5PTd9WSvLeHmExthlycte9KY7JMMcs4NCuxYdHd9Id_7ASkSloTmS-Qoi5Attb1PAmx52huMxeBbEzkwprlzM7db4-3q3c84W018Bxn7wnLWPeq7_J3en187vhI-7B0W9kkhGeKWsq4QfxmAhf85pRlqNZzXuN5VLU8JYEXRT7ywN6PAvtA_PhuRwS-ZMw2db4wIWF8inJS5Dty4LEXnCg3zOq9H79CJqv-FX-YXjYBANts8BUvolI-2E1PREOd-neBhALFA6Mq-35-KUGHItUC20w3nkkH3lb1PIukYzXONATnE7lgi00Gk70gcuxyRT6HPk57Ta9FcrFlx05nNrx-0zTaFEXf-9D3E_RlspCPZPFIHrn3qXmWboo7Tqf2E2unyaHmcp_UzAqqVVrplcTY0AYARoC70qnw9HxhiYLYuz0xnTnOz6qdjw29VIq",
               "summary": []
             },
             {
-              "id": "msg_0d52bb10e88d8340016af35a543f8487d29e6189751bdd8925",
+              "id": "msg_0e4b57039cf88e14016af783b88c7487d284d3d21cc2d2d19b",
               "type": "message",
               "status": "completed",
               "content": [
@@ -316,7 +318,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "The **Fall of Rome** usually refers to the collapse of the **Western Roman Empire**, conventionally dated to **476 CE**, when the Germanic leader **Odoacer deposed the last Western emperor, Romulus Augustulus**.\n\nIt wasn\u2019t a single event but a long decline caused by several factors:\n\n- Political instability and civil wars  \n- Economic troubles, heavy taxation, and inflation  \n- Declining military strength and reliance on foreign troops  \n- Invasions and migrations by Germanic peoples  \n- Administrative division between the Eastern and Western Empires  \n- Epidemics and population decline  \n\nThe **Eastern Roman Empire**, later called the **Byzantine Empire**, continued for nearly another thousand years until Constantinople fell in **1453**."
+                  "text": "The **fall of Rome** usually refers to the collapse of the **Western Roman Empire**, traditionally dated to **476 CE**, when the Germanic leader **Odoacer deposed Emperor Romulus Augustulus**.\n\nIt was not a single sudden event but a long decline, especially from the 3rd to 5th centuries. Major contributing factors included:\n\n- Political instability and civil wars  \n- Economic problems, heavy taxation, and inflation  \n- Military pressures from Germanic tribes and the Huns  \n- Dependence on non-Roman soldiers  \n- Difficulty governing and defending a huge empire  \n- Epidemics and population decline  \n- The division of the empire into eastern and western halves  \n\nThe **Eastern Roman Empire**, later called the Byzantine Empire, survived until **1453**, when Constantinople fell to the Ottoman Turks."
                 }
               ],
               "phase": "final_answer",
@@ -400,14 +402,14 @@ http_interactions:
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 218,
+            "output_tokens": 212,
             "output_tokens_details": {
-              "reasoning_tokens": 60
+              "reasoning_tokens": 40
             },
-            "total_tokens": 355
+            "total_tokens": 349
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:54:29 GMT
+  recorded_at: Fri, 13 Nov 2026 21:40:10 GMT
 recorded_with: VCR 6.4.1

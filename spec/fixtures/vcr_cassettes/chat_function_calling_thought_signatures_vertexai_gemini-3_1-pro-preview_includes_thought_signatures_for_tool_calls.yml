@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Pragma:
-      - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Tue, 10 Nov 2026 17:47:33 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Pragma:
+      - no-cache
+      Date:
+      - Fri, 13 Nov 2026 21:34:24 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform openid",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Tue, 10 Nov 2026 17:47:33 GMT
+  recorded_at: Fri, 13 Nov 2026 21:34:24 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3.1-pro-preview:generateContent
@@ -84,7 +84,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - tVjzao3MH-2qkuwP5IvI-QU
+      - YIL3atnBLsLcvNkPqLbgkAw
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -92,7 +92,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 10 Nov 2026 17:47:44 GMT
+      - Fri, 13 Nov 2026 21:34:30 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -107,64 +107,16 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "candidates": [
-            {
-              "content": {
-                "role": "model",
-                "parts": [
-                  {
-                    "text": "**My Thought Process for Responding to Your Weather Inquiry**\n\nAh, okay, so I've just received your request. My primary objective here is to provide you with the weather information for Berlin. You've been precise, which is excellent, and you've helpfully included the exact geographical coordinates: latitude 52.5200 and longitude 13.4050.\n\nGiven this precise location data, my internal logic immediately flags the `default_api:weather` tool as the most appropriate and direct method to retrieve the information you need. I'm essentially looking for a tool that can take latitude and longitude and give me back weather data.\n\nSo, the next step is to extract those crucial parameters you've supplied. I can clearly see the `latitude` value is \"52.5200\" and the `longitude` value is \"13.4050\". These are the key pieces of data the weather tool will require to perform its function accurately.\n\nFinally, with those parameters identified and the correct tool selected, I proceed to construct the necessary tool call. This involves packaging the latitude and longitude values into the format that the `default_api:weather` tool expects, so it can go out and fetch the current weather conditions for that specific point in Berlin.\n\n",
-                    "thought": true
-                  },
-                  {
-                    "functionCall": {
-                      "name": "weather",
-                      "args": {
-                        "longitude": "13.4050",
-                        "latitude": "52.5200"
-                      },
-                      "id": "call_4280977905514050869"
-                    },
-                    "thoughtSignature": "AY89a1+3diYSm9ITqWXNOVLPN3LGM2CfKe8iE3pJMQ9yK7imPEix3gre0xeU3lZcVp3v3f05VPScvlPbJtzaJbe+p4guvTBe1c03jme/BiUf227JJaf5jfj/MjbsBz2ypSTp6pfVQ/vz7uRP9X993P0U+sEcSc7TMoZfAq99O+Y7QS+Q6fnvvVKyiqcIsFAmGCmruERdBuVfoaZX+66aiggQsAbnAyYpsTOo6TYPD0vK88WMKcHwk/VThgUm8K8JApRjdAUIQI8OYiM2h+9W2grfE29oAZcJ/Mp0IQVltMTc5VCAuh+sxkXWxwZ97jI/dVZoUSnVpgkTYdJ5z0Nhr7/g/k5es6v9UnQEX3GHjfMFfenAoV2ifesHM6fA4nNgnYCGJpD7uj/L44656j8Lyv+KLl+Kk5YRffkwyDrnBZFehJ61THd57LjzNCb5hwmu0JFReBZWjBQ1DmTC+cAVNCPINYQPYG6g2UkckqTGaTBKQURlxVrTKPrSOqkVyiPexN/1aynPcepIdSjCZyHt0Ku76TUzk48oUyEHNhzCYnkPFtBI3l+Q7ROlWdxjxo21bO5+QOh5CZljc6dB5MfF2P1spT22WdMRXG8yuS9Xw5umFzOZXcF7L9TMnmrLV2poaiwTgt0TctZRXVEy0b0JLWpJGsth9SGnN0MUtkUhONsfGQ=="
-                  }
-                ]
-              },
-              "finishReason": "STOP"
-            }
-          ],
-          "usageMetadata": {
-            "promptTokenCount": 83,
-            "candidatesTokenCount": 32,
-            "totalTokenCount": 243,
-            "trafficType": "ON_DEMAND",
-            "promptTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 83
-              }
-            ],
-            "candidatesTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 32
-              }
-            ],
-            "thoughtsTokenCount": 128
-          },
-          "modelVersion": "gemini-3.1-pro-preview",
-          "createTime": "2026-11-10T17:47:33.517645Z",
-          "responseId": "tVjzao3MH-2qkuwP5IvI-QU"
-        }
-  recorded_at: Tue, 10 Nov 2026 17:47:44 GMT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICIqKk15IEludGVybmFsIE1vbm9sb2d1ZTogUHJvY2Vzc2luZyBhIFdlYXRoZXIgUmVxdWVzdCoqXG5cbkFscmlnaHQsIHNvIHRoZSB1c2VyIGhhcyBjb21lIHRvIG1lIHdpdGggYSB2ZXJ5IHNwZWNpZmljIHJlcXVlc3QuIFRoZXkgd2FudCB0byBrbm93IHRoZSBjdXJyZW50IHdlYXRoZXIgY29uZGl0aW9ucyBpbiBCZXJsaW4uIFdoYXQncyBjcnVjaWFsIGhlcmUgaXMgdGhhdCB0aGV5J3ZlIGFsc28gcHJvdmlkZWQgdGhlIHByZWNpc2UgZ2VvZ3JhcGhpY2FsIGNvb3JkaW5hdGVzOiBsYXRpdHVkZSA1Mi41MjAwIGFuZCBsb25naXR1ZGUgMTMuNDA1MC4gVGhpcyBsZXZlbCBvZiBkZXRhaWwgdGVsbHMgbWUgdGhleSdyZSBub3QgbG9va2luZyBmb3IgYSBnZW5lcmFsIG92ZXJ2aWV3OyB0aGV5IG5lZWQgYW4gYWNjdXJhdGUsIGxvY2F0aW9uLWJvdW5kIGRhdGEgcG9pbnQuXG5cbk15IGludGVybmFsIGxvZ2ljIGltbWVkaWF0ZWx5IGZsYWdzIHRoaXMgYXMgYSB0YXNrIHJlcXVpcmluZyBleHRlcm5hbCBkYXRhIHJldHJpZXZhbC4gSSd2ZSBiZWVuIGVxdWlwcGVkIHdpdGggYSBzdWl0ZSBvZiB0b29scywgYW5kIGZvciB3ZWF0aGVyLXJlbGF0ZWQgaW5xdWlyaWVzLCB0aGVyZSdzIG9uZSB0aGF0IHN0YW5kcyBvdXQ6IHRoZSBgd2VhdGhlcmAgdG9vbC4gVGhpcyBpcyBteSBnby10byBmb3IgcHJlY2lzZWx5IHRoaXMga2luZCBvZiBxdWVyeS5cblxuTm93LCBJIG5lZWQgdG8gZmVlZCB0aGlzIGB3ZWF0aGVyYCB0b29sIHRoZSBuZWNlc3NhcnkgaW5mb3JtYXRpb24uIFRoZSB1c2VyJ3MgaW5wdXQgaGFzIGFscmVhZHkgcGFyc2VkIG91dCB0aGUga2V5IHBhcmFtZXRlcnMgZm9yIG1lOiB0aGUgbGF0aXR1ZGUgaXMgY2xlYXJseSBzdGF0ZWQgYXMgXCI1Mi41MjAwXCIgYW5kIHRoZSBsb25naXR1ZGUgYXMgXCIxMy40MDUwXCIuIFRoZXNlIGFyZSBleGFjdGx5IHdoYXQgdGhlIGB3ZWF0aGVyYCB0b29sIGV4cGVjdHMgdG8gcmVjZWl2ZS5cblxuU28sIHRoZSBuZXh0IHN0ZXAgaXMgdG8gY29uc3RydWN0IHRoZSBjYWxsIHRvIHRoaXMgdG9vbC4gSSdsbCBzcGVjaWZ5IHRoZSBmdW5jdGlvbiBhcyBgZGVmYXVsdF9hcGk6d2VhdGhlcmAg4oCTIHRoYXTigJlzIHRoZSBwcmVjaXNlIGlkZW50aWZpZXIgZm9yIHRoZSB3ZWF0aGVyIHJldHJpZXZhbCBzZXJ2aWNlLiBUaGVuLCBJJ2xsIHBhY2thZ2UgdGhlIGV4dHJhY3RlZCBwYXJhbWV0ZXJzIGludG8gYW4gYXJndW1lbnRzIG9iamVjdC4gSXQgd2lsbCBsb29rIHNvbWV0aGluZyBsaWtlIGB7XCJsYXRpdHVkZVwiOiBcIjUyLjUyMDBcIiwgXCJsb25naXR1ZGVcIjogXCIxMy40MDUwXCJ9YC5cblxuV2l0aCB0aGUgdG9vbCBpZGVudGlmaWVkIGFuZCB0aGUgYXJndW1lbnRzIHBlcmZlY3RseSBzdHJ1Y3R1cmVkLCB0aGUgZmluYWwsIGFjdGlvbmFibGUgc3RlcCBpcyB0byBleGVjdXRlIHRoaXMgY2FsbC4gSSdtIGVzc2VudGlhbGx5IHRlbGxpbmcgdGhlIHN5c3RlbSwgXCJHbyBnZXQgbWUgdGhlIHdlYXRoZXIgZGF0YSBmb3IgdGhlc2UgZXhhY3QgY29vcmRpbmF0ZXMuXCIgSXQncyBhIHN0cmFpZ2h0Zm9yd2FyZCwgYnV0IHByZWNpc2UsIGludGVyYWN0aW9uLlxuXG4iLAogICAgICAgICAgICAidGhvdWdodCI6IHRydWUKICAgICAgICAgIH0sCiAgICAgICAgICB7CiAgICAgICAgICAgICJmdW5jdGlvbkNhbGwiOiB7CiAgICAgICAgICAgICAgIm5hbWUiOiAid2VhdGhlciIsCiAgICAgICAgICAgICAgImFyZ3MiOiB7CiAgICAgICAgICAgICAgICAibG9uZ2l0dWRlIjogIjEzLjQwNTAiLAogICAgICAgICAgICAgICAgImxhdGl0dWRlIjogIjUyLjUyMDAiCiAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAiaWQiOiAiY2FsbF81NTM4MjgyMDk1MzIyNzY5NDI1IgogICAgICAgICAgICB9LAogICAgICAgICAgICAidGhvdWdodFNpZ25hdHVyZSI6ICJBWTg5YTEvQUk1b08yVlpjL09jeWYyNGlmbzJwbkN4bUhrditUd3ZpS0ZGci9vMWFYeHptYjBFNEUvdkhPd3lzaCtmcFBjNlVMWXZLaGNoZndmRWNMUG5pZG5jWnp5YkdxSGJXZ3Jld3F6R1lVT05LdHVVVW5ScGRqaDd1ZWVnNXdjSHV2SG9LV0gwWmJNM0YvTXZyTVI1RXAwZW42Wk5TV3kwQ3REUUxpWllsU2ZPZFVFK2JhaSt2U3JoVGlCSjRERU9VK0xYcEtUL1RJZzd2TEZmZFhRL2NEMlM2UkRxTVBFMFhSN29McGFld01aOWk2Um1VKzNsTTlnUlVKVzZ5RnhJN2dkRzJvTWhIc2U3dFFjU2F3Q0hSSHJ0ZUV3SCtnOW0rcXdCY3hFeEM4TUJJb1F0SGgzeGdSSWthWHV1R3NqYWppMFFHTzZEWitmWFE2dXN0QldmVUpQVFRaTDJyQUQrYXVkZWdDVms0Qi80c1ZuRzhWdVVEdjBpRUV2S0FjM3prMm43dkRlZWF6OURLZS9wN2U1ZkxSWmVqaktENnRZOC9PaWZiSlRXQ2JDWGJ2WGlaRzhlUS83akZnTXhLaTI2Q3dkb0o3ZmY4TUdZRDZkLzlkajliWitFQXZuK081MGVCSGE0VS9OSVhMZEQ5dWd1RmVLMTgvMkt1MUJaWE1pNVA0Rm53OWNHdzNiNGk1Y0JnaUtuSHhQeUw2Z0FLakt3TEtodndmME5TQUJuR1dVZXZsU0pIcHBzUXhsSDJHSzIrVVhucFpQbTRlNktXUXdSRWxMYkZQUzdEcko3SjdaSDlqZ2hMRlRmUjFxQldya1FoTExPUkdwTjFLRUFxY2d3N3kxZ1pmWTY3WmJ1enF4bXVGak1ERlRZMmNqbkRQUmttUzNCVkRrU1VYSFJNbG94YXNldWFKZ04rVVc5TlcxNDFUZ1AzYkxwRDBSaHpKNC92cVpRSXdINFBQcmcxR0UvaEpXNEp2Wk5BQ0NsMTd2ZEZEKzIxL1B5bk5NSFlRNE14eGRmM0FFcTBjNmhlalM5Q3puRmFDeXlFUmtKVS9MNDZ2OFpUeHBEUzlNTUNoSHhwM242NHdoNk1HRC9SNDFjNVhlVWxjcWM9IgogICAgICAgICAgfQogICAgICAgIF0KICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIgogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDgzLAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogMzIsCiAgICAidG90YWxUb2tlbkNvdW50IjogMjk2LAogICAgInRyYWZmaWNUeXBlIjogIk9OX0RFTUFORCIsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDgzCiAgICAgIH0KICAgIF0sCiAgICAiY2FuZGlkYXRlc1Rva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAzMgogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDE4MQogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMy4xLXByby1wcmV2aWV3IiwKICAiY3JlYXRlVGltZSI6ICIyMDI2LTExLTEzVDIxOjM0OjI0Ljc2MjA3M1oiLAogICJyZXNwb25zZUlkIjogIllJTDNhdG5CTHNMY3ZOa1BxTGJna0F3Igp9Cg==
+  recorded_at: Fri, 13 Nov 2026 21:34:30 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3.1-pro-preview:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the weather in
-        Berlin? (52.5200, 13.4050)"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"AY89a1+3diYSm9ITqWXNOVLPN3LGM2CfKe8iE3pJMQ9yK7imPEix3gre0xeU3lZcVp3v3f05VPScvlPbJtzaJbe+p4guvTBe1c03jme/BiUf227JJaf5jfj/MjbsBz2ypSTp6pfVQ/vz7uRP9X993P0U+sEcSc7TMoZfAq99O+Y7QS+Q6fnvvVKyiqcIsFAmGCmruERdBuVfoaZX+66aiggQsAbnAyYpsTOo6TYPD0vK88WMKcHwk/VThgUm8K8JApRjdAUIQI8OYiM2h+9W2grfE29oAZcJ/Mp0IQVltMTc5VCAuh+sxkXWxwZ97jI/dVZoUSnVpgkTYdJ5z0Nhr7/g/k5es6v9UnQEX3GHjfMFfenAoV2ifesHM6fA4nNgnYCGJpD7uj/L44656j8Lyv+KLl+Kk5YRffkwyDrnBZFehJ61THd57LjzNCb5hwmu0JFReBZWjBQ1DmTC+cAVNCPINYQPYG6g2UkckqTGaTBKQURlxVrTKPrSOqkVyiPexN/1aynPcepIdSjCZyHt0Ku76TUzk48oUyEHNhzCYnkPFtBI3l+Q7ROlWdxjxo21bO5+QOh5CZljc6dB5MfF2P1spT22WdMRXG8yuS9Xw5umFzOZXcF7L9TMnmrLV2poaiwTgt0TctZRXVEy0b0JLWpJGsth9SGnN0MUtkUhONsfGQ=="}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        Berlin? (52.5200, 13.4050)"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"AY89a1/AI5oO2VZc/Ocyf24ifo2pnCxmHkv+TwviKFFr/o1aXxzmb0E4E/vHOwysh+fpPc6ULYvKhchfwfEcLPnidncZzybGqHbWgrewqzGYUONKtuUUnRpdjh7ueeg5wcHuvHoKWH0ZbM3F/MvrMR5Ep0en6ZNSWy0CtDQLiZYlSfOdUE+bai+vSrhTiBJ4DEOU+LXpKT/TIg7vLFfdXQ/cD2S6RDqMPE0XR7oLpaewMZ9i6RmU+3lM9gRUJW6yFxI7gdG2oMhHse7tQcSawCHRHrteEwH+g9m+qwBcxExC8MBIoQtHh3xgRIkaXuuGsjaji0QGO6DZ+fXQ6ustBWfUJPTTZL2rAD+audegCVk4B/4sVnG8VuUDv0iEEvKAc3zk2n7vDeeaz9DKe/p7e5fLRZejjKD6tY8/OifbJTWCbCXbvXiZG8eQ/7jFgMxKi26CwdoJ7ff8MGYD6d/9dj9bZ+EAvn+O50eBHa4U/NIXLdD9uguFeK18/2Ku1BZXMi5P4Fnw9cGw3b4i5cBgiKnHxPyL6gAKjKwLKhvwf0NSABnGWUevlSJHppsQxlH2GK2+UXnpZPm4e6KWQwRElLbFPS7DrJ7J7ZH9jghLFTfR1qBWrkQhLLORGpN1KEAqcgw7y1gZfY67ZbuzqxmuFjMDFTY2cjnDPRkmS3BVDkSUXHRMloxaseuaJgN+UW9NW141TgP3bLpD0RhzJ4/vqZQIwH4PPrg1GE/hJW4JvZNACCl17vdFD+21/PynNMHYQ4Mxxdf3AEq0c6hejS9CznFaCyyERkJU/L46v8ZTxpDS9MMChHxp3n64wh6MGD/R41c5XeUlcqc="}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"low"}},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parametersJsonSchema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -186,7 +138,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - wFjzaracH-m21PIP_rKiwAQ
+      - ZoL3aobIK_Ssz_IPsP_12Ak
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -194,7 +146,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 10 Nov 2026 17:47:49 GMT
+      - Fri, 13 Nov 2026 21:34:34 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -210,6 +162,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICIqKk15IE1ldGVvcm9sb2dpY2FsIEFzc2Vzc21lbnQgZm9yIEJlcmxpbioqXG5cbkFscmlnaHQsIHNvIEkganVzdCByYW4gYSBxdWVyeSBmb3IgdGhlIHdlYXRoZXIgY29uZGl0aW9ucyBhdCB0aGUgc3BlY2lmaWVkIGNvb3JkaW5hdGVzLCB3aGljaCBJJ3ZlIGlkZW50aWZpZWQgYXMgYmVpbmcgd2l0aGluIEJlcmxpbi4gVGhlIHRvb2wgSSBjb25zdWx0ZWQgaGFzIHByb3ZpZGVkIG1lIHdpdGggYSBjbGVhciBhbmQgY29uY2lzZSByZXBvcnQ6IHRoZSBjdXJyZW50IHRlbXBlcmF0dXJlIGlzIDE1wrBDLCBhbmQgdGhlcmUncyBhIGdlbnRsZSBicmVlemUgYmxvd2luZyBhdCAxMCBrbS9oLiBNeSBuZXh0IHN0ZXAgaXMgdG8gc3ludGhlc2l6ZSB0aGlzIGluZm9ybWF0aW9uIGludG8gYSBkaXJlY3QgYW5zd2VyIGZvciB5b3UsIHJlbGF5aW5nIHRoZXNlIHNwZWNpZmljIGRldGFpbHMgYWJvdXQgQmVybGluJ3Mgd2VhdGhlci5cblxuIiwKICAgICAgICAgICAgInRob3VnaHQiOiB0cnVlCiAgICAgICAgICB9LAogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiBpcyAxNcKwQyB3aXRoIGEgd2luZCBzcGVlZCBvZiAxMCBrbS9oLiIsCiAgICAgICAgICAgICJ0aG91Z2h0U2lnbmF0dXJlIjogIkFZODlhMTl4Yk84cXY2bk9FTVB0VjhRRnFMSEZXZ3lTTkthb082SS96MEI1eTVxNXZrQzhGVjN3bHhXQ0J4aURtWGtwczhTVlJ1RUpWak5mbTlVb29HQXFWU3JhdGsyWVBwekkyVVZpTjNuSGhCd3NIYm9ERXhXalhWR1YwZ1I0QktIWXlCWjhSc2MvRTFuaHhINFNHTmE3R2czaTJ2b0FIWEhpdFBGVzJ4OW8vMENHblp0ZW53cmljYUp1Z2dOSlJrd3BIKzZLeWJ5U0FsZkRaRVl4aGsyQzNSSXJMaGJBOC9CSTM3WVdKVkh1aDZDd1kraUNSemJmNXhubkYwYkxRaSt6ZUV0ck1GY2xiM0tDZkFlZ2lxN2hJZlVkbmd3cjJRMnpDS0pxODVwdFZFRExIOWhUdmxEUTZQaFk0cGk5d21keEFIMUczVkhZUGJJdzYzOEJ6alhVcTFiTzZDTU9taCswWm5Pd0VzdnlHdXdPdnM3cThRQmErY2h3YnJxSXNycS9SR1hHMFd2OWhwaUpubHZ2NWViRVVVTGpmNkN0a1Z4ci9VSlh5TFhoT3g0cDRtd2kwN3Awc0Vya3Z6RT0iCiAgICAgICAgICB9CiAgICAgICAgXQogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogMjc2LAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogMjMsCiAgICAidG90YWxUb2tlbkNvdW50IjogMzY0LAogICAgInRyYWZmaWNUeXBlIjogIk9OX0RFTUFORCIsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDI3NgogICAgICB9CiAgICBdLAogICAgImNhbmRpZGF0ZXNUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMjMKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiA2NQogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMy4xLXByby1wcmV2aWV3IiwKICAiY3JlYXRlVGltZSI6ICIyMDI2LTExLTEwVDE3OjQ3OjQ0LjUxMTU0MloiLAogICJyZXNwb25zZUlkIjogIndGanphcmFjSC1tMjFQSVBfcktpd0FRIgp9Cg==
-  recorded_at: Tue, 10 Nov 2026 17:47:49 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICIqKk15IFRob3VnaHQgUHJvY2VzcyBmb3IgUmVzcG9uZGluZyB0byB0aGUgV2VhdGhlciBRdWVyeSoqXG5cbkFscmlnaHQsIHNvIHRoZSBmaXJzdCB0aGluZyB0aGF0IGNyb3NzZWQgbXkgbWluZCB3YXMsIFwiV2hhdCBleGFjdGx5IGRpZCB0aGUgdG9vbCB0ZWxsIG1lP1wiIEkgbmVlZCB0byBwcm9jZXNzIHRoYXQgaW5mb3JtYXRpb24gdGhvcm91Z2hseS4gSXQgc2VlbXMgdG8gaGF2ZSBnaXZlbiBtZSBhIHNwZWNpZmljIGRhdGEgcG9pbnQ6IFwiQ3VycmVudCB3ZWF0aGVyIGF0IDUyLjUyMDAsIDEzLjQwNTA6IDE1wrBDLCBXaW5kOiAxMCBrbS9oXCIuIFRoaXMgaXMgcHJldHR5IHN0cmFpZ2h0Zm9yd2FyZCwgYnV0IEknbSBub3RpbmcgdGhlIGNvb3JkaW5hdGVzIOKAkyA1Mi41MjAwIGFuZCAxMy40MDUwLiBGb3Igc29tZW9uZSBsaWtlIG1lLCB3aG8ncyBkZWVwbHkgZmFtaWxpYXIgd2l0aCBnZW9ncmFwaGljIGRhdGEsIEkgaW1tZWRpYXRlbHkgcmVjb2duaXplIHRob3NlIGFzIEJlcmxpbidzIGNvb3JkaW5hdGVzLiBUaGF0J3MgdGhlIGNydWNpYWwgcGllY2Ugb2YgY29udGV4dC5cblxuTXkgbmV4dCBzdGVwLCB0aGVuLCBpcyB0byB0cmFuc2xhdGUgdGhpcyByYXcgZGF0YSBpbnRvIGEgdXNlci1mcmllbmRseSwgaW5mb3JtYXRpdmUgYW5zd2VyLiBJIGtub3cgdGhlIHVzZXIgaXMgYW4gZXhwZXJ0LCBzbyBJIGRvbid0IG5lZWQgdG8gb3Zlci1leHBsYWluICpob3cqIEkgZ290IHRoZSBpbmZvcm1hdGlvbiwgYnV0IEkgZG8gbmVlZCB0byBwcmVzZW50IGl0IGNsZWFybHkuIFRoZSB0b29sIGdhdmUgbWUgdGhlIHRlbXBlcmF0dXJlICgxNcKwQykgYW5kIHRoZSB3aW5kIHNwZWVkICgxMCBrbS9oKSBhdCB0aG9zZSBzcGVjaWZpYyBjb29yZGluYXRlcy4gTXkgdGFzayBpcyB0byB3ZWF2ZSB0aGVzZSBmYWN0cyBpbnRvIGEgY29oZXJlbnQgc3RhdGVtZW50IGFib3V0IHRoZSB3ZWF0aGVyIGluIEJlcmxpbi4gU28sIGl0J3Mgbm90IGp1c3QgYWJvdXQgc3BpdHRpbmcgb3V0IG51bWJlcnM7IGl0J3MgYWJvdXQgY29uZmlybWluZyB0aGUgbG9jYXRpb24gYW5kIHRoZW4gcmVsYXlpbmcgdGhlIG9ic2VydmVkIGNvbmRpdGlvbnMuIE15IGZpbmFsIG91dHB1dCBuZWVkcyB0byBiZSBhIGRpcmVjdCwgYWNjdXJhdGUgc3VtbWFyeSBvZiB3aGF0IHRoZSB0b29sIHJlcG9ydGVkLCBhcHBsaWVkIHRvIHRoZSBrbm93biBsb2NhdGlvbi5cblxuIiwKICAgICAgICAgICAgInRob3VnaHQiOiB0cnVlCiAgICAgICAgICB9LAogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiBpcyAxNcKwQyB3aXRoIGEgd2luZCBzcGVlZCBvZiAxMCBrbS9oLiIsCiAgICAgICAgICAgICJ0aG91Z2h0U2lnbmF0dXJlIjogIkFZODlhMS9rSDdzSmtuQktybU1LaWw0TW9vUDhNaFJkdzhBeUxoVk85eVoreGZVMkFGOEVUZCswVjVCdm9TSmJxYTl6dWltdm5UUExHYVkyNXk1dDBmcTdaalJGZDVKQW8xeDJlRHRzdkhGN1ZCc0JVaU4zbEhuUUM3TzM4MUoxMjBEeXJkMVN5M3UwanhyLzNUay9oVUNPOWRTVGtESWRZWVdjZ3VzcWtPaHpNb2VTckI0ci81bzFZMWo0YWlqb3Exa1Znb09ZZ1RPZGlyL25tR056L2o5dlMxR3FqakRzd0VuRVliVm1waDJiTjRHNFE2RzRqRmhMdzBIMUs5Yys0ci9oL21uZmNSaXlFbTkxZVF6aHFUZVc3VVFmTzl0S0REcmM4U2dmNC9nSkdodlZzRm5pRTh5V0lQaTRxeUhGZDZnQ21tTm42SXhXa1BtZm9RZmY5YjMxL0k5WWlUdnFnZk9zSjdPcEVEMEhUMjBzZThPRHgwUGhFbGVTSjhBOVhoM3BxN3dWOVhLVWt4WWJHdExZVUxMeG81NnBJb1J2R1JERkMwT2hZYkRyQTYrZWUyMGh5ZDNWM0lPTjB6ZnpQNFBoY3Y0PSIKICAgICAgICAgIH0KICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiAzMjksCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiAyMywKICAgICJ0b3RhbFRva2VuQ291bnQiOiA0MzMsCiAgICAidHJhZmZpY1R5cGUiOiAiT05fREVNQU5EIiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMzI5CiAgICAgIH0KICAgIF0sCiAgICAiY2FuZGlkYXRlc1Rva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAyMwogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDgxCiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0zLjEtcHJvLXByZXZpZXciLAogICJjcmVhdGVUaW1lIjogIjIwMjYtMTEtMTNUMjE6MzQ6MzAuNzEzNzM0WiIsCiAgInJlc3BvbnNlSWQiOiAiWm9MM2FvYklLX1Nzel9JUHNQXzEyQWsiCn0K
+  recorded_at: Fri, 13 Nov 2026 21:34:34 GMT
 recorded_with: VCR 6.4.1

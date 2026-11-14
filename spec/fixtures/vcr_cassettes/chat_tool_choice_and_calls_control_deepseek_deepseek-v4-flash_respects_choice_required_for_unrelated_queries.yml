@@ -34,7 +34,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 10 Nov 2026 17:53:18 GMT
+      - Fri, 13 Nov 2026 21:38:59 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -44,22 +44,22 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - ae92d97edfda183c3a200cf49e4f9b28
+      - 0d161a89671eca792061b784fee08e23
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 c8ee4ae446730c2bdc2c0e71085ce05a.cloudfront.net (CloudFront)
+      - 1.1 caf908c8115c6f7c9e78ce96ceb41e5a.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P2
+      - TXL52-P4
       X-Amz-Cf-Id:
-      - 4paOfyCSSboG-1998oTUw8LvL7p3CeULKM-y6NGG6mgjxD56DcJ6kg==
+      - tTcZ8FJ7yEub1SkPWtt2vByFS0iwaX0DTOAj_GAMN0jF8tGfjONHjw==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"35f4b149-40d5-43f7-8ffc-77aab9f4b4cc","object":"chat.completion","created":1794333197,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"call_00_x0l1zYaNAVMf8ADXHOZj0557","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
-        \"52.5200\", \"longitude\": \"13.4050\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":352,"completion_tokens":54,"total_tokens":406,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":352},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
-  recorded_at: Tue, 10 Nov 2026 17:53:18 GMT
+      string: '{"id":"807d1162-93a4-4a25-8246-6d08be8ae757","object":"chat.completion","created":1794605939,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"call_00_Q9Zw2Pr4LF4LKWcgCYQ71451","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
+        \"52.5200\", \"longitude\": \"13.4050\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":352,"completion_tokens":54,"total_tokens":406,"prompt_tokens_details":{"cached_tokens":128},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":224},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
+  recorded_at: Fri, 13 Nov 2026 21:39:00 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -67,8 +67,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-v4-flash","messages":[{"role":"system","content":"Your
         location is Berlin, at latitude 52.5200 and longitude 13.4050."},{"role":"user","content":"When
-        was the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_00_x0l1zYaNAVMf8ADXHOZj0557","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning_content":""},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_00_x0l1zYaNAVMf8ADXHOZj0557"}],"stream":false,"max_tokens":4096,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        was the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_00_Q9Zw2Pr4LF4LKWcgCYQ71451","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning_content":""},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_00_Q9Zw2Pr4LF4LKWcgCYQ71451"}],"stream":false,"max_tokens":4096,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"thinking":{"type":"disabled"}}'
@@ -95,7 +95,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 10 Nov 2026 17:53:19 GMT
+      - Fri, 13 Nov 2026 21:39:00 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -105,20 +105,20 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 51f822c54b96ada7b1b7b060b955dbd1
+      - ec884edeffd16d906bb2e297b6172c43
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 9fdf43157f1a2a932e4a439c0af3dcd2.cloudfront.net (CloudFront)
+      - 1.1 3ee0a52a6fdc977d833d7647d462c266.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P6
+      - TXL52-P2
       X-Amz-Cf-Id:
-      - RK49rw_VuU-fZ2arZsjSfv13HzC7YiGmJoXCdS9-dD4DSLhnWmSPzg==
+      - 00p40X7qO4nqwaSEaKjuoPdipa8IAWrn-rIjkLIEGV8FmcLypn1mXg==
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjA4OTFmNGQ4LTU1OWQtNGFhNC04YmIwLTYwN2UyNWY5YmJhMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQzMzMxOTksIm1vZGVsIjoiZGVlcHNlZWstZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IihUaGF0IHdlYXRoZXIgbG9va3VwIHdhc24ndCByZWxldmFudCB0byB5b3VyIHF1ZXN0aW9uIOKAlCBqdXN0IG5vdGluZyBpdCBpbiBjYXNlIGl0IHdhcyB1bmV4cGVjdGVkLilcblxuVGhlIFwiZmFsbCBvZiBSb21lXCIgZGVwZW5kcyBvbiB3aGljaCBSb21lIHlvdSBtZWFuOlxuXG4tICoqV2VzdGVybiBSb21hbiBFbXBpcmU6KiogVHJhZGl0aW9uYWxseSBkYXRlZCB0byAqKjQ3NiBBRCoqLCB3aGVuIHRoZSBHZXJtYW5pYyBjaGllZnRhaW4gT2RvYWNlciBkZXBvc2VkIFJvbXVsdXMgQXVndXN0dWx1cywgdGhlIGxhc3QgV2VzdGVybiBlbXBlcm9yLiBNYW55IGhpc3RvcmlhbnMgbm93IHRyZWF0IGl0IGFzIGEgZ3JhZHVhbCBwcm9jZXNzIHN0cmV0Y2hpbmcgZnJvbSB0aGUgQ3Jpc2lzIG9mIHRoZSBUaGlyZCBDZW50dXJ5IHRocm91Z2ggdGhlIGxvc3Mgb2YgTm9ydGggQWZyaWNhICg0MzkpIGFuZCB0aGUgVmFuZGFsIHNhY2sgb2YgUm9tZSAoNDU1KS5cbi0gKipFYXN0ZXJuIFJvbWFuIChCeXphbnRpbmUpIEVtcGlyZToqKiBGZWxsIGluICoqMTQ1MyBBRCoqIHdpdGggdGhlIE90dG9tYW4gY29ucXVlc3Qgb2YgQ29uc3RhbnRpbm9wbGUuXG4tICoqVGhlIGNpdHkgb2YgUm9tZSBpdHNlbGY6KiogU2Fja2VkIGJ5IHRoZSBWaXNpZ290aHMgaW4gKio0MTAgQUQqKiBhbmQgYnkgdGhlIFZhbmRhbHMgaW4gKio0NTUgQUQqKiwgdGhvdWdoIHRoZSBjaXR5IGNvbnRpbnVlZCB0byBleGlzdC5cblxuU28gaWYgc29tZW9uZSBzYXlzIFwidGhlIGZhbGwgb2YgUm9tZVwiIHdpdGhvdXQgcXVhbGlmaWNhdGlvbiwgKio0NzYgQUQqKiBpcyB0aGUgY29udmVudGlvbmFsIGFuc3dlciBmb3IgdGhlIFdlc3Rlcm4gRW1waXJlLiJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjQ0NCwiY29tcGxldGlvbl90b2tlbnMiOjE5MiwidG90YWxfdG9rZW5zIjo2MzYsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoyNTZ9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6MjU2LCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjE4OH0sInN5c3RlbV9maW5nZXJwcmludCI6ImJjMTliYTk3Y2JlMDE2NDc5OTAzMjIyYmIxNTc4ZGI2In0=
-  recorded_at: Tue, 10 Nov 2026 17:53:21 GMT
+        eyJpZCI6ImY1YWFjNDAwLTljNDEtNGYzMS04Zjc2LTgwODY3YTRiOWNmOSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ2MDU5NDAsIm1vZGVsIjoiZGVlcHNlZWstZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IihUaGF0IHdlYXRoZXIgbG9va3VwIHdhc24ndCBuZWVkZWQgZm9yIHRoaXMg4oCUIGJ1dCBzaW5jZSBJIHJhbiBpdDogaXQncyBjdXJyZW50bHkgMTXCsEMgd2l0aCAxMCBrbS9oIHdpbmRzIGF0IHlvdXIgY29vcmRpbmF0ZXMgaW4gQmVybGluLilcblxuQXMgZm9yIHRoZSBmYWxsIG9mIFJvbWUsIHRoZXJlJ3Mgbm8gc2luZ2xlIGRhdGUg4oCUIGl0IGRlcGVuZHMgb24gd2hpY2ggXCJSb21lXCIgeW91IG1lYW46XG5cbioqV2VzdGVybiBSb21hbiBFbXBpcmUgKHRoZSB1c3VhbCBhbnN3ZXIpOiA0NzYgQUQqKlxuLSBUaGUgR2VybWFuaWMgY2hpZWZ0YWluIE9kb2FjZXIgZGVwb3NlZCBSb211bHVzIEF1Z3VzdHVsdXMsIHRoZSBsYXN0IHdlc3Rlcm4gZW1wZXJvci4gSGlzdG9yaWFucyB0cmFkaXRpb25hbGx5IG1hcmsgdGhpcyBhcyB0aGUgZW5kIG9mIHRoZSBXZXN0ZXJuIEVtcGlyZSDigJQgYW5kIG9mIGNsYXNzaWNhbCBhbnRpcXVpdHkgaW4gdGhlIFdlc3QuXG4tIFNvbWUgcHVzaCB0aGUgZGF0ZSB0byAqKjQ4MCBBRCoqLCB3aGVuIEp1bGl1cyBOZXBvcyAodGhlIGxhc3QgbGVnaXRpbWF0ZSB3ZXN0ZXJuIGVtcGVyb3IsIHJ1bGluZyBmcm9tIERhbG1hdGlhKSB3YXMgbXVyZGVyZWQuXG5cbioqT3RoZXIgbWlsZXN0b25lcyBvZnRlbiBjaXRlZDoqKlxuLSAqKjQxMCBBRCoqIOKAlCBBbGFyaWMgdGhlIFZpc2lnb3RoIHNhY2tzIFJvbWUgaXRzZWxmLCBhIGh1Z2UgcHN5Y2hvbG9naWNhbCBzaG9jay5cbi0gKiozOTUgQUQqKiDigJQgRGVhdGggb2YgVGhlb2Rvc2l1cyBJIGFuZCB0aGUgcGVybWFuZW50IGRpdmlzaW9uIGludG8gRWFzdCBhbmQgV2VzdC5cbi0gKioxNDUzIEFEKiog4oCUIEZhbGwgb2YgQ29uc3RhbnRpbm9wbGUsIHRoZSBlbmQgb2YgdGhlIEVhc3Rlcm4gKEJ5emFudGluZSkgUm9tYW4gRW1waXJlLiBNYW55IEJ5emFudGluZXMgc3RpbGwgY2FsbGVkIHRoZW1zZWx2ZXMgUm9tYW5zLCBzbyB0aGlzIGlzIFwidGhlIGZhbGwgb2YgUm9tZVwiIGluIHRoZSBlYXN0ZXJuIHNlbnNlLlxuXG4qKk1vZGVybiBzY2hvbGFybHkgdmlldzoqKiBUaGUgXCJmYWxsXCIgd2FzIGxlc3MgYSBzaW5nbGUgZXZlbnQgdGhhbiBhIGxvbmcsIGdyYWR1YWwgdHJhbnNmb3JtYXRpb24g4oCUIGEgcHJvY2VzcyBvZiBwb2xpdGljYWwgZnJhZ21lbnRhdGlvbiwgZWNvbm9taWMgY2hhbmdlLCBhbmQgYmFyYmFyaWFuIHNldHRsZW1lbnQgc3RyZXRjaGluZyBhY3Jvc3MgdGhlIDR0aCBhbmQgNXRoIGNlbnR1cmllcywgd2hpY2ggaXMgd2h5IG1hbnkgaGlzdG9yaWFucyBwcmVmZXIgdG8gc3BlYWsgb2YgYSBcInRyYW5zZm9ybWF0aW9uIG9mIHRoZSBSb21hbiB3b3JsZFwiIHJhdGhlciB0aGFuIGEgZmFsbC5cblxuU286ICoqNDc2IEFEKiogaXMgdGhlIHN0YW5kYXJkIHRleHRib29rIGFuc3dlciwgYnV0IDE0NTMgaXMgZXF1YWxseSB2YWxpZCBpZiB5b3UncmUgY291bnRpbmcgdGhlIGVhc3Rlcm4gaGFsZi4ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo0NDQsImNvbXBsZXRpb25fdG9rZW5zIjozMzYsInRvdGFsX3Rva2VucyI6NzgwLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MjU2fSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjI1NiwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjoxODh9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJiYzE5YmE5N2NiZTAxNjQ3OTkwMzIyMmJiMTU3OGRiNiJ9
+  recorded_at: Fri, 13 Nov 2026 21:39:03 GMT
 recorded_with: VCR 6.4.1

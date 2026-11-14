@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:42:37 GMT
+      - Fri, 13 Nov 2026 21:29:42 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -46,11 +46,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1881'
+      - '1328'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -77,22 +77,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0eed66dd150e08c7016af3578bc57887d29f752d9e33453ec3",
+          "id": "resp_0403f4dea5ca9273016af7814573a887d2b68c5c84f402faca",
           "object": "response",
-          "created_at": 1794332555,
+          "created_at": 1794605381,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794332557,
+          "completed_at": 1794605382,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": "You must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.",
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -100,34 +101,34 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "rs_0eed66dd150e08c7016af3578c6df887d2b0d3d319b57cbd2e",
+              "id": "rs_0403f4dea5ca9273016af78145e4c087d2a98d9fc725b8ab2a",
               "type": "reasoning",
               "content": [],
-              "encrypted_content": "gAAAAABq81eNBzf0xLpNjnprD5ZLlu5mcKyKCZZDqiLkiSOUrwrZjSuRTEgScZ5hJla8qxUGU3BQrz2CWNS_L7tuvXqDO8jkchZFHVD5kF-JJKcTEP1F9wAYeQ3Z6YmXnroxxb_1AXOK1tmj5qrE2cAaVvx3C96P1N86KNWZoBf1rJ5YhA2PG-V1QCptA2LAKNDS18ZNrswznOo8KIEIQ5pV_yvAUJ0NOP2AghvQMLNHpl0ey4whvwVKbblmX6DQNVjzpnVtSNWjdCT_U14KJVfMdlo5kt6qgqUMs8f0bUs6SNW6JYzOouBjkt_VHY66UppUBdOBx1kdSL3Gb8obHFbo3MijCKeBFbgj5bm5jW4JKUnvpRMnYfqndQDcq43YMS8xiEwqTG6h0YApQp7MZAVjTxOWeROuzzfrrtABSf-FFSuyDdY4YLwW8YI1m9Cu6oHtOX0wXmkNW5pCTfZ2H6JDDGpIVj96RYpLtqUX62TiRjr8XPNU6oGPLC3lX-kNXcOI5BZ0U3u7BbuaNJNoS0XfbEespJKRx3J2EWj3da84UUGsP3LUnNvt-oVXUoQxChrRSar2gvJ2mA9QAaWHKh0Wv7UqBmOuiSXZAy2cA7uXLoKB3FX3qFdrNk-RzQ7Q1LiRApavyIqHZbKrwXNXdQSNbbLtF4mtoSYdU0AkFxIoz9enOQMdblf4lrGsMb9dnamTtoSYXSASnF3nCicJX-LdVPTlNUJnBjih4R2b1vDnyvm31Z_wxRGs_xh-ARKKPDTWOUgEHxhu8oyGVigduxa3kpvgGLyrztLDwj2Vz9B0a8QIS3NjuERXdNNnptP7RJvftlBHLaE8cnbBqjrZbYS2_y9diw78BlZC12Qxc7MPXnqYlvYu_lUtf_3fkvFpQOeLL1cxx4HHe9HWhul0J3nuL3YeoriEdnBh101ut_diQ4qRQKsIXhK05z8XWXqPkt1Wk4cgXyJWqcrWiWJ1-z-EeBhJzstanddSSYdNSay5iMTu80eVkIsOsJnmzln3CDuFekJvkmkiS41_3NxJqFIk-GRgA6IxAe6rEA2OEN7I3bSJWKmbqAKyxMAX04m77tV_baVdem4INqQN8R0DK0P3Gje29jk1tgDUsMnDjo5OKyYd4oc-HKTCE1VYwCkcld0MziOCLofVXs5w3NBC0499QXeEQR0bOnA-9twFss0ezxEzlZWCsgQsT2plprhMyrKsui10CxfaukNcVBZuE5RUXO8VCT9BDGvCw3D9tZ3YaPUdv0riUtaxddAt23PoI_jllNrFYDQBsDQi_tYFBQO6v6t4y0cZD_71E8iYXb-S2MYz0o4V6NlyP9zAfYDypqHOlIO2Pcf4fWTlNRIOPAAF0SrXUHbWCfebWqTvg9j2fJ1VGjYzn6TfKwwdWkl_41gzEdo3OzsktO1OQgKI1TQ3flFgJu5tUe-eHNk4SLAl4BpzjWIrJnOVyKFouiICEeCk-yYzp55VnjHGMWbyUAGMw_hrZsM4Gu0ogwkTYEwu72DqC_jV1aZ0Hc25VklKnsehBh9wr2Lr-VThakxvCraA7Biz87tD9nGSZhJT1KcAQayA3RDUL32ji42Cc31oLuyqVywfvWkbg0pGCSQJIRb4tyRagrpmGJ_u9AU1RAq6t9-ZDg8gUAIpjpU-rfL9VAXn8zDLl3JW6qmBZ1yK_wH-VqTOKqbhp-THo-UIdQKZ7FXBlXWVmZaQPo3EwPt_jTDVWmc_UXtO767ewyVuZ5NSIzd-2kAqkOQ18KMaMcbYDudYlGWbHh4C3rb_n3RUIUVcThY4KdKp",
+              "encrypted_content": "gAAAAABq94FGynak5AjLJule4A9KnGls2x7GcVbILGzeWPxBWgHW3HU9ZNmhVWLUagueRoYAiDEo4yXAy2mA4K_uMyHX0y9I-MAqJMIHAkNQlo1s9NiL671vJ54IsvnIce4X2YB0hloc5w-MSs7CN3TQeKfZqZ-dgyM72IhxC1Pm1KKn1ISiW9Ilpna--Yio9BuCgW5UaZI8tElHiBkWD3FC_fJxmySljyW12mB1SnjrSX-iKHGM4lMgVWb09v4KHVTIxqYh_e17ZsCCwMFB3iDm2FAlG_XlCC-h3sA6Rmzz3lW15ig42VRKI61ZN55qn1f02UZPPmwKDV87QNbMapNFKGVpIu4OzwNM-JkvfQnXg9RmyF95HakvpuIAiDRWxBsffd7qlCbqm_XfdxDTFeYex2u-n9FvlF8yj16rldin0UDNHEmHWmJDwxPUCQj5AjVHM-M-upVvh3IS34mJ9SqDr89L8_KivQh7kS55GkOtuYmjdkjHwNWtd1EH7YT2xyEnSZZBUYyElVhcODkVlXaIxvXWABx3ApVoCPQmI4uxm_75sRFTUXSnVxpWXEvN5JSVqK6ziI2OH4moVsJy1_oxESZJc6fqablUrB82wqsj96o92e-XkckiSVrNebwIfn97SPPGCWCRrRRkz6zYtVEotu5peSzHstYZJthmzkp_QkJ2xVbmv7_R1gGB8o0hgJz_30NgJA7l1PLeRnHFm3jph9FiPubGnveJnI31xPr2HqblOwAZ7CbK263BoytC-YDSAV3k-QjjlEJO_AVIGO0QEuX8cQTbfUB3L579qvNmHf7di4SKBQJh5stdl_1TxHxA1rDIIxSBp-6-kSGxfYva2Hus2Qu_SndlmBIoj2G7K6ngzGv5Uyw6JEJgrlK8dN7DSErbUSH9YEowQHEqQnEGdtybHojqYNTW-sz93bRzPwNHnumhf2WeJdDTVNZx6_nNnhNgzUJtQhlfMD-8iFMiXw5cQNKYQHRAEb3l5FWSxF4hlqpvUlnMawKTifVmK2Y9eVj7e3ntl76rNnEcgUjVqgV6gRHHRDbFzJjlsRBcrgN1mLjkzNcCrm9A7r5GWZYbnV7zCGHvtSSUC4DzEk5uEWEzIWvCpOCiLCo_89FBJQxxVuMjMFO0vpBBEBx61Mvv23nMdMXnkQzxx5kXkJmFhgg-Zy7PH4dpvJAPI48A62Chomn9tcYngV0JTkFEESXXUNPBfHfdibRX6yQomEaKj-HHIwgjElpKoipENzYqbx6Ypb6o6s7dT9k8KzAMTJ4nfftVHAisqe-Bfj4p6itGi0iWO9DdF4xk3Ft7KkldtVzkWTS8rtQ1JAsF75llItxvSSAvXl1WRvK4bNwTpK7IbLPyuOVrH5DPxyc_OMDFWD5HFFjG1_0j1fQpjqmKot009xGJSjl9thaAAmlU9ytd2dY9LlLAPDj8GNlammSTibMsp-LGbaOQdOd5Dqe5GAqgsnmNMGmc20cia5kObdiCz-XNMUfzx7R1bWSybwsYVAv82tIZsO4J4mgkCmx2hxIKvnAdjoVeSK0GydsVWh1W1D8T4-utwe8m6NqzuB1Ea2OBWY5ZXP18BdsgEuAnsyKAqDgo13PU6tpxWK_mpK8y_7y3M95rnZmK0bzs1HROl70U0fkL138qESibuF2B9JKD7-CUisy_6rnUZv6ZeY5nJcHA_u6f8VXxPFDo3Ash45QZKQH8obMKc2wwl6BvL31ll4RSm-QyKY-rt46GWjpkDXtQeK8pwdqbBEZhekTrZ3FAYthl_jkuf74ReA3QMu57xKbH5M_MSv8g4Ki4_yF4wshZmVPtbKTQdzvwd89JJN53V8UWk3BCpCVmU8QyvBFrLvYCQZ6-d6qJB8DWjDlWC4sqIt2CTfSZa_rm3gwQ6NLwVO_urKMlAL1oc9KNg0bHUA8mdnnwb1RZ5thBw_cKMux6E3UduA==",
               "summary": []
             },
             {
-              "id": "fc_0eed66dd150e08c7016af3578d2a6887d2b15a840845a9eacb",
+              "id": "fc_0403f4dea5ca9273016af781469e8487d29eb3c44ee8c94cfb",
               "type": "function_call",
               "status": "completed",
               "arguments": "{}",
-              "call_id": "call_32Mvv0Z80sUFnIDBha7zjAvK",
+              "call_id": "call_FerjUGSfoZMGKqT18MKDnWGv",
               "name": "dice_roll"
             },
             {
-              "id": "fc_0eed66dd150e08c7016af3578d2a7c87d29b3395ad3c28588e",
+              "id": "fc_0403f4dea5ca9273016af781469e9487d2bf7a59c22a9aea22",
               "type": "function_call",
               "status": "completed",
               "arguments": "{}",
-              "call_id": "call_WezzRJ3KsiseC5x05BaZl5J9",
+              "call_id": "call_mydJtJXOa1hAuXjBHtmPqqax",
               "name": "dice_roll"
             },
             {
-              "id": "fc_0eed66dd150e08c7016af3578d2a8887d2afac5cf8ec9ca8ed",
+              "id": "fc_0403f4dea5ca9273016af781469ea087d2808e7ec10e0c7449",
               "type": "function_call",
               "status": "completed",
               "arguments": "{}",
-              "call_id": "call_fCQvG9XE1w2eLosvcfoENGgR",
+              "call_id": "call_jxmKICQ9PALtC2cb5r2XGqHP",
               "name": "dice_roll"
             }
           ],
@@ -196,23 +197,23 @@ http_interactions:
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 76,
+            "output_tokens": 85,
             "output_tokens_details": {
-              "reasoning_tokens": 17
+              "reasoning_tokens": 26
             },
-            "total_tokens": 147
+            "total_tokens": 156
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:42:37 GMT
+  recorded_at: Fri, 13 Nov 2026 21:29:42 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"Roll the
-        dice 3 times"},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABq81eNBzf0xLpNjnprD5ZLlu5mcKyKCZZDqiLkiSOUrwrZjSuRTEgScZ5hJla8qxUGU3BQrz2CWNS_L7tuvXqDO8jkchZFHVD5kF-JJKcTEP1F9wAYeQ3Z6YmXnroxxb_1AXOK1tmj5qrE2cAaVvx3C96P1N86KNWZoBf1rJ5YhA2PG-V1QCptA2LAKNDS18ZNrswznOo8KIEIQ5pV_yvAUJ0NOP2AghvQMLNHpl0ey4whvwVKbblmX6DQNVjzpnVtSNWjdCT_U14KJVfMdlo5kt6qgqUMs8f0bUs6SNW6JYzOouBjkt_VHY66UppUBdOBx1kdSL3Gb8obHFbo3MijCKeBFbgj5bm5jW4JKUnvpRMnYfqndQDcq43YMS8xiEwqTG6h0YApQp7MZAVjTxOWeROuzzfrrtABSf-FFSuyDdY4YLwW8YI1m9Cu6oHtOX0wXmkNW5pCTfZ2H6JDDGpIVj96RYpLtqUX62TiRjr8XPNU6oGPLC3lX-kNXcOI5BZ0U3u7BbuaNJNoS0XfbEespJKRx3J2EWj3da84UUGsP3LUnNvt-oVXUoQxChrRSar2gvJ2mA9QAaWHKh0Wv7UqBmOuiSXZAy2cA7uXLoKB3FX3qFdrNk-RzQ7Q1LiRApavyIqHZbKrwXNXdQSNbbLtF4mtoSYdU0AkFxIoz9enOQMdblf4lrGsMb9dnamTtoSYXSASnF3nCicJX-LdVPTlNUJnBjih4R2b1vDnyvm31Z_wxRGs_xh-ARKKPDTWOUgEHxhu8oyGVigduxa3kpvgGLyrztLDwj2Vz9B0a8QIS3NjuERXdNNnptP7RJvftlBHLaE8cnbBqjrZbYS2_y9diw78BlZC12Qxc7MPXnqYlvYu_lUtf_3fkvFpQOeLL1cxx4HHe9HWhul0J3nuL3YeoriEdnBh101ut_diQ4qRQKsIXhK05z8XWXqPkt1Wk4cgXyJWqcrWiWJ1-z-EeBhJzstanddSSYdNSay5iMTu80eVkIsOsJnmzln3CDuFekJvkmkiS41_3NxJqFIk-GRgA6IxAe6rEA2OEN7I3bSJWKmbqAKyxMAX04m77tV_baVdem4INqQN8R0DK0P3Gje29jk1tgDUsMnDjo5OKyYd4oc-HKTCE1VYwCkcld0MziOCLofVXs5w3NBC0499QXeEQR0bOnA-9twFss0ezxEzlZWCsgQsT2plprhMyrKsui10CxfaukNcVBZuE5RUXO8VCT9BDGvCw3D9tZ3YaPUdv0riUtaxddAt23PoI_jllNrFYDQBsDQi_tYFBQO6v6t4y0cZD_71E8iYXb-S2MYz0o4V6NlyP9zAfYDypqHOlIO2Pcf4fWTlNRIOPAAF0SrXUHbWCfebWqTvg9j2fJ1VGjYzn6TfKwwdWkl_41gzEdo3OzsktO1OQgKI1TQ3flFgJu5tUe-eHNk4SLAl4BpzjWIrJnOVyKFouiICEeCk-yYzp55VnjHGMWbyUAGMw_hrZsM4Gu0ogwkTYEwu72DqC_jV1aZ0Hc25VklKnsehBh9wr2Lr-VThakxvCraA7Biz87tD9nGSZhJT1KcAQayA3RDUL32ji42Cc31oLuyqVywfvWkbg0pGCSQJIRb4tyRagrpmGJ_u9AU1RAq6t9-ZDg8gUAIpjpU-rfL9VAXn8zDLl3JW6qmBZ1yK_wH-VqTOKqbhp-THo-UIdQKZ7FXBlXWVmZaQPo3EwPt_jTDVWmc_UXtO767ewyVuZ5NSIzd-2kAqkOQ18KMaMcbYDudYlGWbHh4C3rb_n3RUIUVcThY4KdKp"},{"type":"function_call","call_id":"call_32Mvv0Z80sUFnIDBha7zjAvK","name":"dice_roll","arguments":"{}"},{"type":"function_call","call_id":"call_WezzRJ3KsiseC5x05BaZl5J9","name":"dice_roll","arguments":"{}"},{"type":"function_call","call_id":"call_fCQvG9XE1w2eLosvcfoENGgR","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_32Mvv0Z80sUFnIDBha7zjAvK","output":"{\"roll\":1}"},{"type":"function_call_output","call_id":"call_WezzRJ3KsiseC5x05BaZl5J9","output":"{\"roll\":2}"},{"type":"function_call_output","call_id":"call_fCQvG9XE1w2eLosvcfoENGgR","output":"{\"roll\":3}"}],"instructions":"You
+        dice 3 times"},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABq94FGynak5AjLJule4A9KnGls2x7GcVbILGzeWPxBWgHW3HU9ZNmhVWLUagueRoYAiDEo4yXAy2mA4K_uMyHX0y9I-MAqJMIHAkNQlo1s9NiL671vJ54IsvnIce4X2YB0hloc5w-MSs7CN3TQeKfZqZ-dgyM72IhxC1Pm1KKn1ISiW9Ilpna--Yio9BuCgW5UaZI8tElHiBkWD3FC_fJxmySljyW12mB1SnjrSX-iKHGM4lMgVWb09v4KHVTIxqYh_e17ZsCCwMFB3iDm2FAlG_XlCC-h3sA6Rmzz3lW15ig42VRKI61ZN55qn1f02UZPPmwKDV87QNbMapNFKGVpIu4OzwNM-JkvfQnXg9RmyF95HakvpuIAiDRWxBsffd7qlCbqm_XfdxDTFeYex2u-n9FvlF8yj16rldin0UDNHEmHWmJDwxPUCQj5AjVHM-M-upVvh3IS34mJ9SqDr89L8_KivQh7kS55GkOtuYmjdkjHwNWtd1EH7YT2xyEnSZZBUYyElVhcODkVlXaIxvXWABx3ApVoCPQmI4uxm_75sRFTUXSnVxpWXEvN5JSVqK6ziI2OH4moVsJy1_oxESZJc6fqablUrB82wqsj96o92e-XkckiSVrNebwIfn97SPPGCWCRrRRkz6zYtVEotu5peSzHstYZJthmzkp_QkJ2xVbmv7_R1gGB8o0hgJz_30NgJA7l1PLeRnHFm3jph9FiPubGnveJnI31xPr2HqblOwAZ7CbK263BoytC-YDSAV3k-QjjlEJO_AVIGO0QEuX8cQTbfUB3L579qvNmHf7di4SKBQJh5stdl_1TxHxA1rDIIxSBp-6-kSGxfYva2Hus2Qu_SndlmBIoj2G7K6ngzGv5Uyw6JEJgrlK8dN7DSErbUSH9YEowQHEqQnEGdtybHojqYNTW-sz93bRzPwNHnumhf2WeJdDTVNZx6_nNnhNgzUJtQhlfMD-8iFMiXw5cQNKYQHRAEb3l5FWSxF4hlqpvUlnMawKTifVmK2Y9eVj7e3ntl76rNnEcgUjVqgV6gRHHRDbFzJjlsRBcrgN1mLjkzNcCrm9A7r5GWZYbnV7zCGHvtSSUC4DzEk5uEWEzIWvCpOCiLCo_89FBJQxxVuMjMFO0vpBBEBx61Mvv23nMdMXnkQzxx5kXkJmFhgg-Zy7PH4dpvJAPI48A62Chomn9tcYngV0JTkFEESXXUNPBfHfdibRX6yQomEaKj-HHIwgjElpKoipENzYqbx6Ypb6o6s7dT9k8KzAMTJ4nfftVHAisqe-Bfj4p6itGi0iWO9DdF4xk3Ft7KkldtVzkWTS8rtQ1JAsF75llItxvSSAvXl1WRvK4bNwTpK7IbLPyuOVrH5DPxyc_OMDFWD5HFFjG1_0j1fQpjqmKot009xGJSjl9thaAAmlU9ytd2dY9LlLAPDj8GNlammSTibMsp-LGbaOQdOd5Dqe5GAqgsnmNMGmc20cia5kObdiCz-XNMUfzx7R1bWSybwsYVAv82tIZsO4J4mgkCmx2hxIKvnAdjoVeSK0GydsVWh1W1D8T4-utwe8m6NqzuB1Ea2OBWY5ZXP18BdsgEuAnsyKAqDgo13PU6tpxWK_mpK8y_7y3M95rnZmK0bzs1HROl70U0fkL138qESibuF2B9JKD7-CUisy_6rnUZv6ZeY5nJcHA_u6f8VXxPFDo3Ash45QZKQH8obMKc2wwl6BvL31ll4RSm-QyKY-rt46GWjpkDXtQeK8pwdqbBEZhekTrZ3FAYthl_jkuf74ReA3QMu57xKbH5M_MSv8g4Ki4_yF4wshZmVPtbKTQdzvwd89JJN53V8UWk3BCpCVmU8QyvBFrLvYCQZ6-d6qJB8DWjDlWC4sqIt2CTfSZa_rm3gwQ6NLwVO_urKMlAL1oc9KNg0bHUA8mdnnwb1RZ5thBw_cKMux6E3UduA=="},{"type":"function_call","call_id":"call_FerjUGSfoZMGKqT18MKDnWGv","name":"dice_roll","arguments":"{}"},{"type":"function_call","call_id":"call_mydJtJXOa1hAuXjBHtmPqqax","name":"dice_roll","arguments":"{}"},{"type":"function_call","call_id":"call_jxmKICQ9PALtC2cb5r2XGqHP","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_FerjUGSfoZMGKqT18MKDnWGv","output":"{\"roll\":1}"},{"type":"function_call_output","call_id":"call_mydJtJXOa1hAuXjBHtmPqqax","output":"{\"roll\":2}"},{"type":"function_call_output","call_id":"call_jxmKICQ9PALtC2cb5r2XGqHP","output":"{\"roll\":3}"}],"instructions":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
@@ -232,7 +233,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:42:38 GMT
+      - Fri, 13 Nov 2026 21:29:43 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -252,11 +253,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '802'
+      - '954'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -283,22 +284,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0f760eabd4377502016af3578da74c87d2b61c3fe5c4f00cbc",
+          "id": "resp_032efba7385815de016af78146e00087d2be2a35a71bdfbb6e",
           "object": "response",
-          "created_at": 1794332557,
+          "created_at": 1794605382,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794332558,
+          "completed_at": 1794605383,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": "You must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.",
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -306,7 +308,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0f760eabd4377502016af3578e299087d28e8463fa055ecde9",
+              "id": "msg_032efba7385815de016af781478ef487d2a91a960dd521a6cd",
               "type": "message",
               "status": "completed",
               "content": [
@@ -314,7 +316,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "Rolls: **1, 2, 3**"
+                  "text": "You rolled: **1, 2, 3**."
                 }
               ],
               "phase": "final_answer",
@@ -381,19 +383,19 @@ http_interactions:
           "top_p": 0.98,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 194,
+            "input_tokens": 203,
             "input_tokens_details": {
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 16,
+            "output_tokens": 17,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 210
+            "total_tokens": 220
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:42:38 GMT
+  recorded_at: Fri, 13 Nov 2026 21:29:43 GMT
 recorded_with: VCR 6.4.1

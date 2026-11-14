@@ -30,7 +30,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 10 Nov 2026 17:31:08 GMT
+      - Fri, 13 Nov 2026 21:21:32 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -40,21 +40,22 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 61ea338fbc8e16cf0f56b998ae7bd42f
+      - e7eb0fbc1e2657ec2f0f6e09dfaa1dc6
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 dcd4e62bcdb6b3788f609084cff8d9b0.cloudfront.net (CloudFront)
+      - 1.1 07612651e03eef4292eed033ad965d0e.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P2
+      - TXL52-P4
       X-Amz-Cf-Id:
-      - zMUV7wpWwNSoxxqngWAKWJ8XXrpjQJfxFZs5Rpk5gpTSZzwJgvDe6A==
+      - 3L0Rn-sAovNeO6IO09eHPIRmq3KA0nQMBtNRDHLvjTSKZ2VJDdZbpw==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"f93e4c40-9748-4260-a2c9-416e4c99647e","object":"chat.completion","created":1794331868,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"{\"result\":8}","reasoning_content":"We
-        need answer JSON object key result. Need likely {\"result\":8} or \"8\"? Question
-        what is sqrt 64. Usually principal square root 8. Need strictly JSON. No markdown."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":72,"completion_tokens":47,"total_tokens":119,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":41},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":72},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
-  recorded_at: Tue, 10 Nov 2026 17:31:09 GMT
+      string: '{"id":"e15d7298-ded1-44ba-839b-c60c0e6f17b8","object":"chat.completion","created":1794604892,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"{\"result\":8}","reasoning_content":"We
+        need answer JSON object key result. Square root 64 principal 8. Must output
+        valid JSON. {\"result\":8}. Ensure no markdown? User says answer with JSON
+        object. Final only."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":72,"completion_tokens":47,"total_tokens":119,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":41},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":72},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
+  recorded_at: Fri, 13 Nov 2026 21:21:32 GMT
 recorded_with: VCR 6.4.1

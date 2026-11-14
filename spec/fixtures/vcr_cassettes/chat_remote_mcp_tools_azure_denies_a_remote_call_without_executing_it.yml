@@ -26,11 +26,11 @@ http_interactions:
       message: OK
     headers:
       Content-Length:
-      - '3751'
+      - '4466'
       Content-Type:
       - application/json
       Date:
-      - Tue, 10 Nov 2026 17:31:39 GMT
+      - Fri, 13 Nov 2026 21:22:11 GMT
       Server:
       - istio-envoy
       Vary:
@@ -70,9 +70,9 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Apim-Request-Id:
-      - 5c347fe0-8afe-48ef-8e8f-c7e7cf556651
+      - 924429e7-2ed4-4d39-a89b-1468369554aa
       X-Http2-Stream-Id:
-      - '821'
+      - '1019'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -83,14 +83,47 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "resp_00b5ce913529b1be016af354fc1fd88196921f8d18eef3a015",
+          "id": "resp_0a220074fb0a6d68016af77f83fda08194b89676655aa69bb5",
           "object": "response",
-          "created_at": 1794331900,
+          "created_at": 1794604932,
           "status": "completed",
           "access_programs": null,
           "background": false,
-          "completed_at": 1794331907,
-          "content_filters": null,
+          "completed_at": 1794604933,
+          "content_filters": [
+            {
+              "blocked": false,
+              "source_type": "prompt",
+              "content_filter_raw": [],
+              "content_filter_results": {
+                "hate": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "sexual": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "violence": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "self_harm": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "jailbreak": {
+                  "detected": false,
+                  "filtered": false
+                }
+              },
+              "content_filter_offsets": {
+                "start_offset": 0,
+                "end_offset": 971,
+                "check_offset": 0
+              }
+            }
+          ],
           "error": null,
           "frequency_penalty": 0.0,
           "incomplete_details": null,
@@ -101,7 +134,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "mcpl_00b5ce913529b1be016af354fc35dc8196a5f75f3f214fe1ea",
+              "id": "mcpl_0a220074fb0a6d68016af77f841f108194bed01382df2a3705",
               "type": "mcp_list_tools",
               "server_label": "docs",
               "tools": [
@@ -125,9 +158,9 @@ http_interactions:
               ]
             },
             {
-              "id": "mcpr_00b5ce913529b1be016af3550194e48196aa35c058e624a9ca",
+              "id": "mcpr_0a220074fb0a6d68016af77f85bc308194845456535e54659a",
               "type": "mcp_approval_request",
-              "arguments": "{\"query\":\"Azure Blob Storage Microsoft documentation overview\"}",
+              "arguments": "{\"query\":\"site:learn.microsoft.com Azure Blob Storage overview\"}",
               "name": "microsoft_docs_search",
               "server_label": "docs"
             }
@@ -194,23 +227,23 @@ http_interactions:
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 25,
+            "output_tokens": 28,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 338
+            "total_tokens": 341
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:31:47 GMT
+  recorded_at: Fri, 13 Nov 2026 21:22:13 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/openai/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"Search Microsoft
-        documentation for Azure Blob Storage, then give one short sentence about it."},{"id":"mcpl_00b5ce913529b1be016af354fc35dc8196a5f75f3f214fe1ea","type":"mcp_list_tools","server_label":"docs","tools":[{"annotations":{"read_only":true},"description":"Search
+        documentation for Azure Blob Storage, then give one short sentence about it."},{"id":"mcpl_0a220074fb0a6d68016af77f841f108194bed01382df2a3705","type":"mcp_list_tools","server_label":"docs","tools":[{"annotations":{"read_only":true},"description":"Search
         official Microsoft/Azure documentation to find the most relevant and trustworthy
         content for a user''s query. This tool returns up to 10 high-quality content
         chunks (each max 500 tokens), extracted from Microsoft Learn and other official
@@ -222,8 +255,8 @@ http_interactions:
         search by providing the full detail. This is a required step for comprehensive
         results.","input_schema":{"type":"object","properties":{"query":{"description":"a
         query or topic about Microsoft/Azure products, services, platforms, developer
-        tools, frameworks, or APIs","type":"string","default":null}}},"name":"microsoft_docs_search"}]},{"id":"mcpr_00b5ce913529b1be016af3550194e48196aa35c058e624a9ca","type":"mcp_approval_request","arguments":"{\"query\":\"Azure
-        Blob Storage Microsoft documentation overview\"}","name":"microsoft_docs_search","server_label":"docs"},{"type":"mcp_approval_response","approval_request_id":"mcpr_00b5ce913529b1be016af3550194e48196aa35c058e624a9ca","approve":false}],"instructions":"Use
+        tools, frameworks, or APIs","type":"string","default":null}}},"name":"microsoft_docs_search"}]},{"id":"mcpr_0a220074fb0a6d68016af77f85bc308194845456535e54659a","type":"mcp_approval_request","arguments":"{\"query\":\"site:learn.microsoft.com
+        Azure Blob Storage overview\"}","name":"microsoft_docs_search","server_label":"docs"},{"type":"mcp_approval_response","approval_request_id":"mcpr_0a220074fb0a6d68016af77f85bc308194845456535e54659a","approve":false}],"instructions":"Use
         microsoft_docs_search exactly once when asked for documentation. Do not retry
         a denied call.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"mcp","allowed_tools":["microsoft_docs_search"],"require_approval":"always","server_url":"https://learn.microsoft.com/api/mcp","server_label":"docs"}]}'
     headers:
@@ -243,11 +276,11 @@ http_interactions:
       message: OK
     headers:
       Content-Length:
-      - '5141'
+      - '4134'
       Content-Type:
       - application/json
       Date:
-      - Tue, 10 Nov 2026 17:31:47 GMT
+      - Fri, 13 Nov 2026 21:22:13 GMT
       Server:
       - istio-envoy
       Vary:
@@ -287,9 +320,9 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Apim-Request-Id:
-      - 260e8f56-e338-4067-bba5-fbbc095d3c78
+      - 16e0bc9c-ac2b-4649-bc0b-c24d70954afa
       X-Http2-Stream-Id:
-      - '739'
+      - '7'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -300,14 +333,83 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "resp_00b5ce913529b1be016af35503559c8196b7f9812d69f9d861",
+          "id": "resp_0a220074fb0a6d68016af77f86365c8194859d34736295260b",
           "object": "response",
-          "created_at": 1794331907,
+          "created_at": 1794604934,
           "status": "completed",
           "access_programs": null,
           "background": false,
-          "completed_at": 1794331909,
-          "content_filters": null,
+          "completed_at": 1794604935,
+          "content_filters": [
+            {
+              "blocked": false,
+              "source_type": "prompt",
+              "content_filter_raw": [],
+              "content_filter_results": {
+                "hate": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "sexual": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "violence": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "self_harm": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "jailbreak": {
+                  "detected": false,
+                  "filtered": false
+                }
+              },
+              "content_filter_offsets": {
+                "start_offset": 0,
+                "end_offset": 1048,
+                "check_offset": 0
+              }
+            },
+            {
+              "blocked": false,
+              "source_type": "completion",
+              "content_filter_raw": [],
+              "content_filter_results": {
+                "protected_material_code": {
+                  "detected": false,
+                  "filtered": false
+                },
+                "protected_material_text": {
+                  "detected": false,
+                  "filtered": false
+                },
+                "hate": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "sexual": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "violence": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "self_harm": {
+                  "filtered": false,
+                  "severity": "safe"
+                }
+              },
+              "content_filter_offsets": {
+                "start_offset": 0,
+                "end_offset": 167,
+                "check_offset": 0
+              }
+            }
+          ],
           "error": null,
           "frequency_penalty": 0.0,
           "incomplete_details": null,
@@ -318,14 +420,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "rs_00b5ce913529b1be016af35503edd88196a166d034ec5bac25",
-              "type": "reasoning",
-              "content": [],
-              "encrypted_content": "gAAAAABq81UFF5uiMB3XP54X_nzEvFPD5Hp6EoCd3mlxbKxxBlsn7lSkLkyiKn6mSnDXw8UxM0w3FOlohXhf_ju-XOgLBW85EbcAEz4ofdhPlpQmleOf47pO6AbjozC8VdL6Z1_o6RksX3FJMtyeIaEmzWZT-vVYf8PGH2S665SHegUuVGk1xa8OjINypoTOkWRN_EtFEqa9P1l5FGA8Wovl78BoBRIqdy0q8TKfFHZarxs9bMDivxAeK8Mbo4SnVgzYeDrHjPWlkR-gYtAMuE8znmYEtFZSE-cS2HVCPrnIzTKhZ6iXZlSQsGtYMTgkaDNvtK204QmXDOTT2Or77mlwjprQZ-lQOvorX5Dpaylh75lgoAi1Khixdf1UYa858M-k8tE8x09MpKCxmyxfeWcoamKO3Yu9uEy1Ic1Pm-JGurmlFTyEcdzxaGL51WNWNN1Aj2WXYXILq_CKhjUvqM0ITce0UUkyPay2GtEDDeqT-EXzvd8ovNo1pbd590cYMtRsoQ80BDsHailE9LjC61sERMu752zgI5si9P3Yt8JZXmzemSNMBSNy0DT9GT7ukjozqtXzxCzN7f17e3hQ4CKuXnh_RGQHlOb8N1XvsMRTPsFEm6fFk5MT8PlPwQkOxeMqc9KtoqA-gJUb3O1YdKHF9mToqvFsw_JuUTPRtSShGxc3lMEqLFcBtCPP8NWsDGpyMMyCYl0qEBGCiR57RCjEXfdY3uD9Lg-LMJevXeNPOOi-Ni3uuBQaG--oYiJcgMaKoVK_sHAVeL46dAuKDEME4IU1b4UXIBzwkp8KpvzKmCrvtrRxGm2L0jK5kc-G88NHVtLxhLwPF1Z8SugGXrmdZEbhnNtkMae_ww6qAfp5F_EDaaURqQ_f6ZTGsmVDV4K_WIIrqeVQQsJG4KoLAJ1Ed0QQ3O43gArzqM12n-a7KmzCvPD4-EDDjm6TKVuGtpQk2aGkVI_-ApVO_hdu1VjK1H9Y3VuQtMF3f43XK77md5sQ_AT5NKmlgRU-0fQ_rK5JWs53O44pBW_FeMjlpr3J3aZT-_UVl1Mkh4mHJGZX5fAR1LGMsImNLy9FbD3KFNPt-j8YFyOkR5tqBRz0srkw2diPOiDdKh74Qr1ywVZH-29_FUAPAetimMcohJq80RWxlbEDmkpjsFOcf949mVaz1HA2tHMUNN24PNVZ7-buRuaRSjqwLamfPpI7Rgv-lo1Lp29REF-ZefFnqNrZFOpFvxuyqK46VLlm4HWB95v_kXz9sFwYfIJSwB5xaBWoll7GZIFLU0Aiz3q6v4BtkziObSdHR-YSFqYFWwHF7qM2Dj4fTEPzrNj9HfLxwEQdcPS474W4yzGO5LIMB4D4uFbB-9ArOtC5qGKEznmFNq0LPWdi457-CQl_qAwnb2dwHZYORoh3ZqAefzkVTEry-3II71SiwOfbWgIXuwdPo6C-pvKG2rRDkb0ggBPNnA2SnqQC_6cROilM1qwqa2a5Am5Oelmr_yH15Cxs0Lm6zNbBNP9usp25cEajl5jeN7UeSxR8xCnQl1iaN1--W0fz7fxVx0vBPBLw4G0A0QOQFvW_XKhfGWg9QWMtB0m835so6YnEnl0mUl7z5RGNp8PysiAexLZfGSbP2pzTAarJF_txt8-CJUTQGWqn_fqnPlmmveZH38rzXNs4FIwF1laqadtV4D_ixsqQ0M-DEA8QCFS8c9bnoRoUxV7gDmeyBILSwwW_F5pvtF2kMylQi0U8t4yqF24sTrTeGtjOvkEE02OpVEnIWycuae8wR9BRqLKeb24UnpeBHOxuceaVdfr71UY3pFmEXiJbU12l3L72AWEDlmJG21tT8coI_Gqq7IoJoIT-f8UUS9iyCsDOKpPCIRG7U7jE5xtjhHS5RWzRmR0oIuUtJuVl9EzOsoPAqXWAOGb1XEd1_pi0A0Sazfm3gxGLxNh1FzNruIcHp5r5WNjCmhMyo-yP8gNpfgwklvWgZB46jj3Ib_WXnN1RnLzVYQdSX8QyEFgWTa8b2AF-QlTjbHMrFgzL46VRMKc3XjBUSYZID5L1Bx9017rAqty2ol1zqL01IdtvLo5dGRhiuoZR7u5iC2JR6RNt4r6xKWB7bfJoZXHt9arL36fSHGCjc8Yzl1fTYUZT4rvSv5ukqT3XiUAQcT4xdfVelM2gEW0kk5RYfiukAGm1KasEOpP5flCZntA3PFMxmbMgHAT2R2EFTxcMOUURkrqLQRif1dDUZ11gimKI1qNfqVH9g_dah9k4t1GvDFJitUJkCsA8ifasIDNcDgmsCM2FtjE-JhrVnQ-i4q0zGZ3wGd_F8DhKdCuwWgyfAeppKP17gQaSPsY-O3UrJXuo__-LZORiNUiv1RLrh0QZpQGJOAdLbF1qb2S8Eew52gTNrQ==",
-              "summary": []
-            },
-            {
-              "id": "msg_00b5ce913529b1be016af35504af888196ba41cdfbbf383462",
+              "id": "msg_0a220074fb0a6d68016af77f86a8608194b3c862735164d55d",
               "type": "message",
               "status": "completed",
               "content": [
@@ -333,7 +428,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "Azure Blob Storage is Microsoft\u2019s scalable object-storage service for storing unstructured data such as files, images, videos, and backups."
+                  "text": "Azure Blob Storage is Microsoft Azure\u2019s object storage service for storing and accessing large amounts of unstructured data, such as text, images, videos, and backups."
                 }
               ],
               "phase": "final_answer",
@@ -397,19 +492,19 @@ http_interactions:
           "top_p": 0.98,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 359,
+            "input_tokens": 362,
             "input_tokens_details": {
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 107,
+            "output_tokens": 36,
             "output_tokens_details": {
-              "reasoning_tokens": 75
+              "reasoning_tokens": 0
             },
-            "total_tokens": 466
+            "total_tokens": 398
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:31:49 GMT
+  recorded_at: Fri, 13 Nov 2026 21:22:15 GMT
 recorded_with: VCR 6.4.1

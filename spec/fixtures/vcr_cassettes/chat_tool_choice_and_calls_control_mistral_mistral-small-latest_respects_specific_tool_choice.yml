@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:53:36 GMT
+      - Fri, 13 Nov 2026 21:39:22 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,15 +35,15 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a1c698-0d63-700f-97fd-4e83785a932e
+      - 01a1d6d9-d557-70f0-8f0c-cfc3855a1071
       X-Kong-Request-Id:
-      - 01a1c698-0d63-700f-97fd-4e83785a932e
+      - 01a1d6d9-d557-70f0-8f0c-cfc3855a1071
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99146'
+      - '99088'
       X-Ratelimit-Tokens-Query-Cost:
       - '169'
       X-Ratelimit-Limit-Req-Minute:
@@ -51,15 +51,15 @@ http_interactions:
       X-Ratelimit-Remaining-Req-Minute:
       - '96'
       X-Envoy-Upstream-Service-Time:
-      - '491'
+      - '387'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '493'
+      - '389'
       X-Kong-Proxy-Latency:
-      - '19'
+      - '14'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -74,17 +74,17 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"31c85a571def4b96bca6909e7d39b96c","created":1794333216,"model":"mistral-small-latest","usage":{"prompt_tokens":141,"total_tokens":169,"completion_tokens":28,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"EWUtaS5dS","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
+      string: '{"id":"3d879467f60b49fda04e248d67654214","created":1794605962,"model":"mistral-small-latest","usage":{"prompt_tokens":141,"total_tokens":169,"completion_tokens":28,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"DoL1rdHqq","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
         \"41.9028\", \"longitude\": \"12.4964\"}"},"index":0}],"content":""}}]}'
-  recorded_at: Tue, 10 Nov 2026 17:53:36 GMT
+  recorded_at: Fri, 13 Nov 2026 21:39:23 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
-        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"EWUtaS5dS","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
-        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"EWUtaS5dS"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"DoL1rdHqq","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"DoL1rdHqq"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -105,7 +105,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:53:38 GMT
+      - Fri, 13 Nov 2026 21:39:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -113,31 +113,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a1c698-0fa0-72ef-bddd-8e8484cfc0a8
+      - 01a1d6d9-d733-7469-bc4c-e22ede34282a
       X-Kong-Request-Id:
-      - 01a1c698-0fa0-72ef-bddd-8e8484cfc0a8
+      - 01a1d6d9-d733-7469-bc4c-e22ede34282a
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '98823'
+      - '98774'
       X-Ratelimit-Tokens-Query-Cost:
-      - '323'
+      - '314'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
       - '95'
       X-Envoy-Upstream-Service-Time:
-      - '1945'
+      - '963'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1947'
+      - '964'
       X-Kong-Proxy-Latency:
-      - '16'
+      - '30'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -153,6 +153,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjA0ODNmZDZkZjkwODRiNGE5Y2Q2MGE4YTdlOWE2OWRmIiwiY3JlYXRlZCI6MTc5NDMzMzIxNiwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjIwNCwidG90YWxfdG9rZW5zIjo0MzUsImNvbXBsZXRpb25fdG9rZW5zIjoyMzEsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxMTJ9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjB9LCJzZXJ2aWNlX3RpZXIiOiJzdGFuZGFyZCJ9LCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJ0b29sX2NhbGxzIjpudWxsLCJjb250ZW50IjoiVGhlIOKAnEZhbGwgb2YgUm9tZeKAnSBpcyBhIHNob3J0aGFuZCBmb3IgdGhlIGdyYWR1YWwgY29sbGFwc2Ugb2YgdGhlIFdlc3Rlcm4gUm9tYW4gRW1waXJlIGJldHdlZW4gcm91Z2hseSB0aGUgM3JkIGFuZCA1dGggY2VudHVyaWVzIEFELiBIaXN0b3JpYW5zIHVzdWFsbHkgbWFyayB0aGUgZW5kIHdpdGggdGhlIGFiZGljYXRpb24gb2YgdGhlIGxhc3QgV2VzdGVybiBlbXBlcm9yLCBSb211bHVzIEF1Z3VzdHVsdXMsIGluIDQ3NiBBRCwgd2hlbiB0aGUgR2VybWFuaWMgY2hpZWZ0YWluIE9kb2FjZXIgZGVjbGFyZWQgaGltc2VsZiBLaW5nIG9mIEl0YWx5IGFuZCBzZW50IHRoZSBpbXBlcmlhbCBpbnNpZ25pYSB0byBDb25zdGFudGlub3BsZS5cblxuS2V5IGZhY3RvcnMgb2Z0ZW4gY2l0ZWQgaW5jbHVkZTpcblxuLSBJbnRlcm5hbCBkZWNheTogcG9saXRpY2FsIGluc3RhYmlsaXR5LCBjaXZpbCB3YXJzLCBhbmQgYSB3ZWFrZW5pbmcgY2VudHJhbCBnb3Zlcm5tZW50LlxuLSBFY29ub21pYyB0cm91YmxlczogaGVhdnkgdGF4YXRpb24sIGluZmxhdGlvbiwgcmVsaWFuY2Ugb24gc2xhdmUgbGFib3IsIGFuZCBzaHJpbmtpbmcgdHJhZGUuXG4tIE1pbGl0YXJ5IHByZXNzdXJlczogY29uc3RhbnQgaW52YXNpb25zIGJ5IEdlcm1hbmljIHRyaWJlcywgSHVucywgYW5kIG90aGVycyBhbG9uZyB0aGUgUmhpbmUgYW5kIERhbnViZSBmcm9udGllcnMuXG4tIEFkbWluaXN0cmF0aXZlIGZyYWdtZW50YXRpb246IHRoZSBzcGxpdCBpbnRvIEVhc3Rlcm4gYW5kIFdlc3Rlcm4gRW1waXJlcyBhZnRlciBEaW9jbGV0aWFuLCB3aXRoIHRoZSBFYXN0IChCeXphbnRpdW0pIGZhcmluZyBiZXR0ZXIuXG4tIEN1bHR1cmFsIHNoaWZ0czogdGhlIHJpc2Ugb2YgQ2hyaXN0aWFuaXR5IGFsdGVyZWQgdHJhZGl0aW9uYWwgUm9tYW4gdmFsdWVzLCBhbmQgdGhlIGVsaXRl4oCZcyBmb2N1cyBzaGlmdGVkIGF3YXkgZnJvbSBjaXZpYyBkdXR5LlxuXG5UaGUgRWFzdGVybiBSb21hbiAoQnl6YW50aW5lKSBFbXBpcmUgY29udGludWVkIGZvciBhbm90aGVyIHRob3VzYW5kIHllYXJzIHVudGlsIHRoZSBPdHRvbWFuIGNvbnF1ZXN0IG9mIENvbnN0YW50aW5vcGxlIGluIDE0NTMuIn19XX0=
-  recorded_at: Tue, 10 Nov 2026 17:53:38 GMT
+        eyJpZCI6Ijg0MmFkNzY1NjM4NDRhNzlhNGI3MzNlZmUxNTMwN2RlIiwiY3JlYXRlZCI6MTc5NDYwNTk2MywibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjIwNCwidG90YWxfdG9rZW5zIjozMTQsImNvbXBsZXRpb25fdG9rZW5zIjoxMTAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowfSwic2VydmljZV90aWVyIjoic3RhbmRhcmQifSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbCwiY29udGVudCI6IlRoZSDigJxGYWxsIG9mIFJvbWXigJ0gaXMgdGhlIGNvbW1vbiBuYW1lIGZvciB0aGUgY29sbGFwc2Ugb2YgdGhlIFdlc3Rlcm4gUm9tYW4gRW1waXJlIGluIHRoZSA1dGggY2VudHVyeSBBRC4gSGlzdG9yaWFucyB1c3VhbGx5IGRhdGUgaXQgdG8gNCBTZXB0ZW1iZXIgNDc2LCB3aGVuIHRoZSBHZXJtYW5pYyBjaGllZnRhaW4gT2RvYWNlciBkZXBvc2VkIHRoZSBsYXN0IFdlc3Rlcm4gUm9tYW4gRW1wZXJvciwgUm9tdWx1cyBBdWd1c3R1bHVzLCBhbmQgZGVjbGFyZWQgaGltc2VsZiBLaW5nIG9mIEl0YWx5LiBUaGUgRWFzdGVybiBSb21hbiAoQnl6YW50aW5lKSBFbXBpcmUgY29udGludWVkIGZvciBhbm90aGVyIHRob3VzYW5kIHllYXJzIHVudGlsIHRoZSBmYWxsIG9mIENvbnN0YW50aW5vcGxlIGluIDE0NTMsIHNvIHRoZSDigJxmYWxs4oCdIHJlZmVycyBzcGVjaWZpY2FsbHkgdG8gdGhlIFdlc3Rlcm4gaGFsZi4ifX1dfQ==
+  recorded_at: Fri, 13 Nov 2026 21:39:24 GMT
 recorded_with: VCR 6.4.1

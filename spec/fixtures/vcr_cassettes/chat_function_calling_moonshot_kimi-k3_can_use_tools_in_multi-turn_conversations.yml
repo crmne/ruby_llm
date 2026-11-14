@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:39:50 GMT
+      - Fri, 13 Nov 2026 21:27:37 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -45,7 +45,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - b989d1de-dd2d-11f1-bca3-00163e603a82
+      - 0a8b5cf7-dfa9-11f1-a7be-00163e3fc041
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -57,7 +57,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - 5fa5bb057bfad72954a51f5c45e7e12f
+      - c4bee1aebd30adb4961d8fd54971bf7e
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -68,11 +68,12 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-4b93f817-136d-936c-a5c1-a5ea78608635","object":"chat.completion","created":1794332388,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
-        check the current weather in Berlin for you.","tool_calls":[{"index":0,"id":"weather_0_47ddf817","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning_content":"The
-        user is asking about the weather in Berlin and has provided coordinates (52.5200,
-        13.4050). I have a weather tool available. Let me call it with those coordinates."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":222,"completion_tokens":122,"total_tokens":344,"completion_tokens_details":{"reasoning_tokens":40},"prompt_tokens_details":{"cache_write_tokens":0}}}'
-  recorded_at: Tue, 10 Nov 2026 17:39:50 GMT
+      string: '{"id":"chatcmpl-ae22b15c-447b-9561-af4d-c45d5b9fbc4a","object":"chat.completion","created":1794605254,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        check the current weather in Berlin for you.","tool_calls":[{"index":0,"id":"weather_0_bec06f19","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning_content":"The
+        user is asking for the weather in Berlin, and they''ve provided the coordinates:
+        latitude 52.5200, longitude 13.4050. I should call the weather function with
+        these coordinates."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":222,"completion_tokens":122,"total_tokens":344,"completion_tokens_details":{"reasoning_tokens":40},"prompt_tokens_details":{"cache_write_tokens":0}}}'
+  recorded_at: Fri, 13 Nov 2026 21:27:37 GMT
 - request:
     method: post
     uri: https://api.moonshot.ai/v1/chat/completions
@@ -80,10 +81,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"kimi-k3","messages":[{"role":"user","content":"What''s the
         weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"I''ll
-        check the current weather in Berlin for you.","tool_calls":[{"id":"weather_0_47ddf817","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning_content":"The
-        user is asking about the weather in Berlin and has provided coordinates (52.5200,
-        13.4050). I have a weather tool available. Let me call it with those coordinates."},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"weather_0_47ddf817"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        check the current weather in Berlin for you.","tool_calls":[{"id":"weather_0_bec06f19","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning_content":"The
+        user is asking for the weather in Berlin, and they''ve provided the coordinates:
+        latitude 52.5200, longitude 13.4050. I should call the weather function with
+        these coordinates."},{"role":"tool","content":"Current weather at 52.5200,
+        13.4050: 15°C, Wind: 10 km/h","tool_call_id":"weather_0_bec06f19"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -104,7 +106,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:39:53 GMT
+      - Fri, 13 Nov 2026 21:27:40 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -122,7 +124,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - bb3aa987-dd2d-11f1-b94d-00163e6b9249
+      - 0c724d5f-dfa9-11f1-84b9-00163e62e412
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -134,7 +136,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - 172b156066d2513195168a50e0f27f5e
+      - 57011bbb2f23df5a5a73aa2ad912229a
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -146,8 +148,8 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLWE5YWQ4MjhhLWMyYTUtOTJjZi04OGVkLWUyZGQ2NDdkNTYzNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQzMzIzOTEsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSGVyZSdzIHRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluOlxuXG4tICoqVGVtcGVyYXR1cmU6KiogMTXCsENcbi0gKipXaW5kOioqIDEwIGttL2hcblxuQSBtaWxkIGRheSB3aXRoIGEgbGlnaHQgYnJlZXplISBMZXQgbWUga25vdyBpZiB5b3UnZCBsaWtlIHRoZSB3ZWF0aGVyIGZvciBhbnl3aGVyZSBlbHNlLiDwn4yk77iPIiwicmVhc29uaW5nX2NvbnRlbnQiOiJUaGUgd2VhdGhlciB0b29sIHJldHVybmVkOiAxNcKwQywgV2luZDogMTAga20vaCBmb3IgdGhlIGNvb3JkaW5hdGVzIGluIEJlcmxpbi4gTGV0IG1lIHNoYXJlIHRoaXMgd2l0aCB0aGUgdXNlciBpbiBhIGZyaWVuZGx5IHdheS4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjM5NSwiY29tcGxldGlvbl90b2tlbnMiOjk3LCJ0b3RhbF90b2tlbnMiOjQ5MiwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjozM30sInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZV93cml0ZV90b2tlbnMiOjI1Nn19fQ==
-  recorded_at: Tue, 10 Nov 2026 17:39:53 GMT
+        eyJpZCI6ImNoYXRjbXBsLTNkODhjMDEzLWJiMmEtOWVlYy04NmM2LTA4ZDY2ODdkYjlmOCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ2MDUyNTcsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSGVyZSdzIHRoZSBjdXJyZW50IHdlYXRoZXIgaW4gKipCZXJsaW4qKiAoNTIuNTIwMCwgMTMuNDA1MCk6XG5cbi0g8J+Moe+4jyAqKlRlbXBlcmF0dXJlOioqIDE1wrBDXG4tIPCfkqggKipXaW5kOioqIDEwIGttL2hcblxuQSBtaWxkIGRheSB3aXRoIGEgbGlnaHQgYnJlZXplIOKAlCBwbGVhc2FudCBjb25kaXRpb25zIGZvciB0aGUgR2VybWFuIGNhcGl0YWwhIExldCBtZSBrbm93IGlmIHlvdSdkIGxpa2Ugd2VhdGhlciBpbmZvcm1hdGlvbiBmb3IgYW55IG90aGVyIGxvY2F0aW9uLiIsInJlYXNvbmluZ19jb250ZW50IjoiVGhlIHdlYXRoZXIgdG9vbCByZXR1cm5lZDogMTXCsEMsIFdpbmQ6IDEwIGttL2ggZm9yIEJlcmxpbiBhdCB0aG9zZSBjb29yZGluYXRlcy4gSSdsbCBwcmVzZW50IHRoaXMgdG8gdGhlIHVzZXIgaW4gYSBmcmllbmRseSBmb3JtYXQuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjozOTUsImNvbXBsZXRpb25fdG9rZW5zIjoxMjAsInRvdGFsX3Rva2VucyI6NTE1LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjMyfSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlX3dyaXRlX3Rva2VucyI6MjU2fX19
+  recorded_at: Fri, 13 Nov 2026 21:27:40 GMT
 - request:
     method: post
     uri: https://api.moonshot.ai/v1/chat/completions
@@ -155,15 +157,17 @@ http_interactions:
       encoding: UTF-8
       string: "{\"model\":\"kimi-k3\",\"messages\":[{\"role\":\"user\",\"content\":\"What's
         the weather in Berlin? (52.5200, 13.4050)\"},{\"role\":\"assistant\",\"content\":\"I'll
-        check the current weather in Berlin for you.\",\"tool_calls\":[{\"id\":\"weather_0_47ddf817\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"52.5200\\\",\\\"longitude\\\":\\\"13.4050\\\"}\"}}],\"reasoning_content\":\"The
-        user is asking about the weather in Berlin and has provided coordinates (52.5200,
-        13.4050). I have a weather tool available. Let me call it with those coordinates.\"},{\"role\":\"tool\",\"content\":\"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"weather_0_47ddf817\"},{\"role\":\"assistant\",\"content\":\"Here's
-        the current weather in Berlin:\\n\\n- **Temperature:** 15°C\\n- **Wind:**
-        10 km/h\\n\\nA mild day with a light breeze! Let me know if you'd like the
-        weather for anywhere else. \U0001F324️\",\"reasoning_content\":\"The weather
-        tool returned: 15°C, Wind: 10 km/h for the coordinates in Berlin. Let me share
-        this with the user in a friendly way.\"},{\"role\":\"user\",\"content\":\"What's
+        check the current weather in Berlin for you.\",\"tool_calls\":[{\"id\":\"weather_0_bec06f19\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"52.5200\\\",\\\"longitude\\\":\\\"13.4050\\\"}\"}}],\"reasoning_content\":\"The
+        user is asking for the weather in Berlin, and they've provided the coordinates:
+        latitude 52.5200, longitude 13.4050. I should call the weather function with
+        these coordinates.\"},{\"role\":\"tool\",\"content\":\"Current weather at
+        52.5200, 13.4050: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"weather_0_bec06f19\"},{\"role\":\"assistant\",\"content\":\"Here's
+        the current weather in **Berlin** (52.5200, 13.4050):\\n\\n- \U0001F321️ **Temperature:**
+        15°C\\n- \U0001F4A8 **Wind:** 10 km/h\\n\\nA mild day with a light breeze
+        — pleasant conditions for the German capital! Let me know if you'd like weather
+        information for any other location.\",\"reasoning_content\":\"The weather
+        tool returned: 15°C, Wind: 10 km/h for Berlin at those coordinates. I'll present
+        this to the user in a friendly format.\"},{\"role\":\"user\",\"content\":\"What's
         the weather in Paris? (48.8575, 2.3514)\"}],\"stream\":false,\"tools\":[{\"type\":\"function\",\"function\":{\"name\":\"weather\",\"description\":\"Gets
         current weather for a location\",\"parameters\":{\"type\":\"object\",\"properties\":{\"latitude\":{\"type\":\"string\",\"description\":\"Latitude
         (e.g., 52.5200)\"},\"longitude\":{\"type\":\"string\",\"description\":\"Longitude
@@ -185,7 +189,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:39:57 GMT
+      - Fri, 13 Nov 2026 21:27:43 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -205,7 +209,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - bd3b4fd8-dd2d-11f1-bafc-00163e789b79
+      - 0e7d1ca8-dfa9-11f1-8971-00163e4c88ae
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -217,7 +221,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - 31f9852c313a05b6ff94a74316995956
+      - 6f9c7e17eb71ce11226a30fd4dab390e
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -228,11 +232,11 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-947ab6fd-b0b5-9f26-a047-5e598c823b2e","object":"chat.completion","created":1794332394,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
-        check the current weather in Paris for you.","tool_calls":[{"index":0,"id":"weather_1_a9a71261","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}],"reasoning_content":"The
-        user is asking for the weather in Paris with coordinates (48.8575, 2.3514).
-        I''ll call the weather tool with these coordinates."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":528,"completion_tokens":114,"total_tokens":642,"cached_tokens":256,"completion_tokens_details":{"reasoning_tokens":32},"prompt_tokens_details":{"cached_tokens":256,"cache_write_tokens":256}}}'
-  recorded_at: Tue, 10 Nov 2026 17:39:57 GMT
+      string: '{"id":"chatcmpl-f610fe89-3b1e-96e1-bfce-80f6b8655193","object":"chat.completion","created":1794605261,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        check the current weather in Paris for you.","tool_calls":[{"index":0,"id":"weather_1_407d0c2c","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}],"reasoning_content":"The
+        user is asking for the weather in Paris with coordinates 48.8575, 2.3514.
+        I should call the weather function with these coordinates."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":551,"completion_tokens":115,"total_tokens":666,"cached_tokens":256,"completion_tokens_details":{"reasoning_tokens":33},"prompt_tokens_details":{"cached_tokens":256,"cache_write_tokens":256}}}'
+  recorded_at: Fri, 13 Nov 2026 21:27:43 GMT
 - request:
     method: post
     uri: https://api.moonshot.ai/v1/chat/completions
@@ -240,20 +244,22 @@ http_interactions:
       encoding: UTF-8
       string: "{\"model\":\"kimi-k3\",\"messages\":[{\"role\":\"user\",\"content\":\"What's
         the weather in Berlin? (52.5200, 13.4050)\"},{\"role\":\"assistant\",\"content\":\"I'll
-        check the current weather in Berlin for you.\",\"tool_calls\":[{\"id\":\"weather_0_47ddf817\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"52.5200\\\",\\\"longitude\\\":\\\"13.4050\\\"}\"}}],\"reasoning_content\":\"The
-        user is asking about the weather in Berlin and has provided coordinates (52.5200,
-        13.4050). I have a weather tool available. Let me call it with those coordinates.\"},{\"role\":\"tool\",\"content\":\"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"weather_0_47ddf817\"},{\"role\":\"assistant\",\"content\":\"Here's
-        the current weather in Berlin:\\n\\n- **Temperature:** 15°C\\n- **Wind:**
-        10 km/h\\n\\nA mild day with a light breeze! Let me know if you'd like the
-        weather for anywhere else. \U0001F324️\",\"reasoning_content\":\"The weather
-        tool returned: 15°C, Wind: 10 km/h for the coordinates in Berlin. Let me share
-        this with the user in a friendly way.\"},{\"role\":\"user\",\"content\":\"What's
+        check the current weather in Berlin for you.\",\"tool_calls\":[{\"id\":\"weather_0_bec06f19\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"52.5200\\\",\\\"longitude\\\":\\\"13.4050\\\"}\"}}],\"reasoning_content\":\"The
+        user is asking for the weather in Berlin, and they've provided the coordinates:
+        latitude 52.5200, longitude 13.4050. I should call the weather function with
+        these coordinates.\"},{\"role\":\"tool\",\"content\":\"Current weather at
+        52.5200, 13.4050: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"weather_0_bec06f19\"},{\"role\":\"assistant\",\"content\":\"Here's
+        the current weather in **Berlin** (52.5200, 13.4050):\\n\\n- \U0001F321️ **Temperature:**
+        15°C\\n- \U0001F4A8 **Wind:** 10 km/h\\n\\nA mild day with a light breeze
+        — pleasant conditions for the German capital! Let me know if you'd like weather
+        information for any other location.\",\"reasoning_content\":\"The weather
+        tool returned: 15°C, Wind: 10 km/h for Berlin at those coordinates. I'll present
+        this to the user in a friendly format.\"},{\"role\":\"user\",\"content\":\"What's
         the weather in Paris? (48.8575, 2.3514)\"},{\"role\":\"assistant\",\"content\":\"I'll
-        check the current weather in Paris for you.\",\"tool_calls\":[{\"id\":\"weather_1_a9a71261\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"48.8575\\\",\\\"longitude\\\":\\\"2.3514\\\"}\"}}],\"reasoning_content\":\"The
-        user is asking for the weather in Paris with coordinates (48.8575, 2.3514).
-        I'll call the weather tool with these coordinates.\"},{\"role\":\"tool\",\"content\":\"Current
-        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"weather_1_a9a71261\"}],\"stream\":false,\"tools\":[{\"type\":\"function\",\"function\":{\"name\":\"weather\",\"description\":\"Gets
+        check the current weather in Paris for you.\",\"tool_calls\":[{\"id\":\"weather_1_407d0c2c\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"48.8575\\\",\\\"longitude\\\":\\\"2.3514\\\"}\"}}],\"reasoning_content\":\"The
+        user is asking for the weather in Paris with coordinates 48.8575, 2.3514.
+        I should call the weather function with these coordinates.\"},{\"role\":\"tool\",\"content\":\"Current
+        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"weather_1_407d0c2c\"}],\"stream\":false,\"tools\":[{\"type\":\"function\",\"function\":{\"name\":\"weather\",\"description\":\"Gets
         current weather for a location\",\"parameters\":{\"type\":\"object\",\"properties\":{\"latitude\":{\"type\":\"string\",\"description\":\"Latitude
         (e.g., 52.5200)\"},\"longitude\":{\"type\":\"string\",\"description\":\"Longitude
         (e.g., 13.4050)\"}},\"required\":[\"latitude\",\"longitude\"],\"additionalProperties\":false,\"strict\":true}}}]}"
@@ -274,7 +280,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:40:00 GMT
+      - Fri, 13 Nov 2026 21:27:46 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -294,7 +300,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - bf19a23c-dd2d-11f1-ada2-00163e5adade
+      - 10113169-dfa9-11f1-b803-00163e05d0f4
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -306,7 +312,7 @@ http_interactions:
       Vary:
       - Origin
       X-Msh-Trace-Id:
-      - ca7d0ead7e63efdc9343072d847b2f5b
+      - fbd4e08d757d47ec3b9f08e3c3454501
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -318,6 +324,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTg4NDBlODExLTgyNGItOWMxNi1iMDA5LTFiNDViZWEyZjM2NiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQzMzIzOTcsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSGVyZSdzIHRoZSBjdXJyZW50IHdlYXRoZXIgaW4gUGFyaXM6XG5cbi0gKipUZW1wZXJhdHVyZToqKiAxNcKwQ1xuLSAqKldpbmQ6KiogMTAga20vaFxuXG5JbnRlcmVzdGluZ2x5LCBpdCdzIHRoZSBzYW1lIG1pbGQgY29uZGl0aW9ucyBhcyBCZXJsaW4gcmlnaHQgbm93ISBMZXQgbWUga25vdyBpZiB5b3UnZCBsaWtlIHRvIGNoZWNrIGFueXdoZXJlIGVsc2UuIPCfl7wiLCJyZWFzb25pbmdfY29udGVudCI6IlRoZSB3ZWF0aGVyIGluIFBhcmlzIGlzIDE1wrBDIHdpdGggd2luZCBhdCAxMCBrbS9oLiBTYW1lIGFzIEJlcmxpbiBhcHBhcmVudGx5LiBMZXQgbWUgcmVwb3J0IHRoaXMgdG8gdGhlIHVzZXIuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo2OTMsImNvbXBsZXRpb25fdG9rZW5zIjo5NSwidG90YWxfdG9rZW5zIjo3ODgsImNhY2hlZF90b2tlbnMiOjUxMiwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjoyOX0sInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjo1MTIsImNhY2hlX3dyaXRlX3Rva2VucyI6MH19fQ==
-  recorded_at: Tue, 10 Nov 2026 17:40:00 GMT
+        eyJpZCI6ImNoYXRjbXBsLTI2OWE1MGJlLWMwMDgtOWY1OC04YTU0LTlmMTJjOGEwMGYyMCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ2MDUyNjQsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSGVyZSdzIHRoZSBjdXJyZW50IHdlYXRoZXIgaW4gKipQYXJpcyoqICg0OC44NTc1LCAyLjM1MTQpOlxuXG4tIPCfjKHvuI8gKipUZW1wZXJhdHVyZToqKiAxNcKwQ1xuLSDwn5KoICoqV2luZDoqKiAxMCBrbS9oXG5cbkludGVyZXN0aW5nbHksIFBhcmlzIGlzIGV4cGVyaWVuY2luZyB0aGUgc2FtZSBjb25kaXRpb25zIGFzIEJlcmxpbiByaWdodCBub3cg4oCUIDE1wrBDIHdpdGggYSBsaWdodCAxMCBrbS9oIGJyZWV6ZS4gTWlsZCB3ZWF0aGVyIGFjcm9zcyBib3RoIGNhcGl0YWxzIHRvZGF5ISBGZWVsIGZyZWUgdG8gYXNrIGFib3V0IGFueSBvdGhlciBsb2NhdGlvbnMuIiwicmVhc29uaW5nX2NvbnRlbnQiOiJUaGUgd2VhdGhlciBpbiBQYXJpcyBpcyB0aGUgc2FtZSBhcyBCZXJsaW46IDE1wrBDLCBXaW5kOiAxMCBrbS9oLiBJJ2xsIHByZXNlbnQgdGhpcyB0byB0aGUgdXNlciBpbiBhIGZyaWVuZGx5IGZvcm1hdCwgc2ltaWxhciB0byB0aGUgcHJldmlvdXMgcmVzcG9uc2UuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo3MTcsImNvbXBsZXRpb25fdG9rZW5zIjoxMzksInRvdGFsX3Rva2VucyI6ODU2LCJjYWNoZWRfdG9rZW5zIjo1MTIsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6Mzh9LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6NTEyLCJjYWNoZV93cml0ZV90b2tlbnMiOjB9fX0=
+  recorded_at: Fri, 13 Nov 2026 21:27:46 GMT
 recorded_with: VCR 6.4.1

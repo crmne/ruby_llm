@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:38:43 GMT
+      - Fri, 13 Nov 2026 21:27:37 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -44,11 +44,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2200'
+      - '1748'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -81,22 +81,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0f988a45c966cc01016af356a1666887d291c274bda66914e6",
+          "id": "resp_0f9cb0414c9d4214016af780c7a37487d2a55c880a9b9b9ab0",
           "object": "response",
-          "created_at": 1794332321,
+          "created_at": 1794605255,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794332323,
+          "completed_at": 1794605257,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -104,14 +105,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "rs_0f988a45c966cc01016af356a28e5487d287b69696c87c41dc",
-              "type": "reasoning",
-              "content": [],
-              "encrypted_content": "gAAAAABq81ajXHQKttjTENrFKIIAouWzjoDt2Mtl9Tpza-5BUWW0BoKUNEnVC_OKsf3RUSNiXLou74lLyKcw11aDVTlrhKI6PQnHCKDrcJHXgr-BCgQ1BQ1dh0yuj6Pg8hnrk6oT6cf6qegRewicwBpFCVbwQ-5GxAGflu4IFZoxIeix1uaDdkkniET-jSzTF8i4Mgbbdvcgg_nPkYrDIWxoUhiBdX_4CTP7DeCZdffD75kcihwQrYTAv-aWtYvsB4VHeTa5dk3B-qBkKj2W9LS7F2hQZlvIhFGzpxAzwJClmoDdmIMflFkTIyXn9iaRgptumYitoaYwdxJnYRMELvOIyrojVEzCSsye9sqwEPESj41HpHwrT7CAhbxNMfGqdau3-9ZtXCyA320YibLAyVKmTH7mD_AyxDGuE2eFJ-4lypZU5-2b4bcVaLk6tU2g1ETaoLY0F_gIB7bJBECSOV_FXjs8d-Y2kDpy_dgeKkjonurQCB9jwG04H4h0E2ojthfBvxMyx4NvKOqJgY0lBgJ69bKklffnfWBvCe5GtAJE3lxOnyQ84f5amCEJirMBdiO-8piTLF0ziZ2kjufqkvmmJxUXYpn2hbiISSIbbbFino9GKVpFTwTn9JJ04fpF9O1k48Fnrg2SThU3ZiZflibYA4MTIpPVUn1HNn6v-Uatl-J9TFLoY_vWb5Zvwb0UOfGZs1otSlfPj-HSQaw9ypxQ07thfmgRB9Tz560Z4VXgsFRhP07d7rdxZ1yLdiBxyhWioQ3254ocj5lr2rRM6Swq6CkX9Gk_eIeimTWT0Megtcr6gExJdubJ2h5Br9fsM-Eu8xJnDUMmMg-NnruvhjLfyOMCeEpSHt3HAqstdKm_v9v-MgAaRhmlE43IiLl76Rl5OOaaX6jo4ZkiZ7N_-ygdmRtsCwHr5s8GxIB3obqEe6v9VkYV4ZL44QYpKulQ0DgtGgGDEx6LbZEWxBW6ay8X53toWsFeVqmTHKDg8-muUei9x_6cjLGBtrUq3fpQBesW6RSE0j1PTCeoLWAjGV3E-Xt2EKBSL3J4BFfZsZPQbPVOexk5De6vcGPCiJ86RxIyGN3u7fsVvnabHl_uth3Vg0t06J8ue-vTjcnaVtC-NNo32lCz03FD-c68mmS8gWZxoko3pBdQOBzUVN7GyvVYm_moVr3i8kjYtZKVbPX_X8PGWwASuix6OrRjXKwUzmh0fw37rlSuhIi9W3bnzYbq6QAQDPNr5IBJiSph7jSVTcQf40y4wU4mtym5moCYEVePyuWK69E78r1-mskws4Fion-13Vz9SZ2i_kEePRAX950UjBLQ0hCVmuCkWHfpCZLp_tIUccppw-1Ok6Dxx5yjKsc3bc5rfnmuYumeCohe_FIB7Fes9Oo2wEGzbJeiY_0taaKreRQpyDh94pKaXQ5EuOIQKtaFrXfS7rSOwAQcyOVRK4ijqRRYfIDmToXLpa1kNWYca7RIZ6SWsePlkZ4xMUcpUpFK08NRK3IIM6DVZ_RK_8F_BY--Hjo07XXrVoGg3mQ0juTxr52hUv8OWujX3SY07kH2NRkr_a8y1qVh1XqM89bxU5qYBg8kEit3KOC0ehY8saJVfBtvPonsUcTaYT2jz5uaYD3xHUaZUpD7j-yNJWd696lqwo0qyyLNE04j2pZ3juLkFogne89SUQ25_EpNLWFHouNyd-50SvPNg7hvwzRdQtditAi_i41XEIMJc5VKM1o2rdm0akfovZAA-vr6WPGzDQCvc4CbQ4OFdS9KQ6LHlcWVFqeLrqofhjxB3zSaLbVZ2GhEQPwcGJICfhGo5uQItKyLzJi1CQDC28eoYAPBi_HJedyddYGCLUSlC4GoqDy87_nzlfVKd7Uj3H8F_gjn_fRFUHCKKqLnTEBNXXIc1T8s5cd5oBgxLxmNwDrTbwmYIpEFbsj8SqaVnfgkRV3B95atpw53n7dvZXzs57uE5mrTn3gGta-E5477JTQ_BGmdtdykNcy2QreyyoH_5HwusR8XrBiJGB3I3fQqijEMtuiVNYB3Af0VLYfwo8Rabak-qTJs9jON0UXJjsmPtAeI9Q==",
-              "summary": []
-            },
-            {
-              "id": "msg_0f988a45c966cc01016af356a3211c87d28d4d5caced6c55e6",
+              "id": "msg_0f9cb0414c9d4214016af780c8a47087d2a10f4beb0887caee",
               "type": "message",
               "status": "completed",
               "content": [
@@ -119,7 +113,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "A stylized, faceted red gemstone or 3D polygonal shape, with a bright white curved highlight along its upper-left edge."
+                  "text": "I see a stylized red, faceted 3D shape resembling a gemstone or geometric oval, with a white curved opening or highlight along its upper-left side."
                 }
               ],
               "phase": "final_answer",
@@ -176,14 +170,14 @@ http_interactions:
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 71,
+            "output_tokens": 37,
             "output_tokens_details": {
-              "reasoning_tokens": 37
+              "reasoning_tokens": 0
             },
-            "total_tokens": 105
+            "total_tokens": 71
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:38:43 GMT
+  recorded_at: Fri, 13 Nov 2026 21:27:37 GMT
 recorded_with: VCR 6.4.1

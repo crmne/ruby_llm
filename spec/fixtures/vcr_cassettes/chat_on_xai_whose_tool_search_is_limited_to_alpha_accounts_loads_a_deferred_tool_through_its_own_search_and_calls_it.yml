@@ -31,7 +31,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:32:31 GMT
+      - Fri, 13 Nov 2026 21:21:51 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -59,11 +59,11 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '226.9'
+      - '177.3'
       X-Metrics-E2e-Ms:
-      - '6264.3'
+      - '2999.1'
       Traceparent:
-      - 00-f242aa8cbce631487b64f3a637839fcc-a8f7d9060003edce-01
+      - 00-d980e396080cfcabf51c1627d58e79d9-6ecb68a80000d136-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -78,28 +78,26 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794331945,"completed_at":1794331951,"id":"<X_REQUEST_ID>","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_<X_REQUEST_ID>","summary":[{"text":"I
-        need to check the current weather in Berlin.\n\nI''ll use the tool_search
-        tool to load weather_lookup and fetch the current weather in Berlin.\n\nThe
-        query should be \"select:weather_lookup\" to load the weather tool.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"XfoT1SXlv02DPuF4pqzzPGsV+Skuu1wK0yyJKbOy23vpPggBiPqdioTCSvX3fK2lsPP0xdYtew4XlNo5Ge42xTdcvdoEwrsuPoNX5uky5ldh7kyrdx6pGWCd6+QNyDEAtrraXK5HTWMW3y87LLKKPnPL/Xeje5HtWe3lVekTzlxAJmHD9/FuEe8+PsYeAq+fjz5gmbMM7bjtCBeMd6r5ewfMJ6UZtJ13yokDYtOwOu17uiwdL69yJajsPGmudntBJwufCl6nQ/4gUicYCigWe7fci5EPe61yORJs2hw3SIy6l+LDWAk4QGLnsA56Sq6xIu1/y9PT1n+9kLhE26tP/ZAmuM1J3egev+CeGTm5Vd4LXukCbWWZPaTij94wVtUqxJ4+VXqeHfsv/y7R2PrFMJMTRVMXvmBdGjJfGj9EcuXF96Bp5fuiB2AEyT4IOe/i/KVdMSCdcQaNtjSG1tHiUyMGvi05jSIOxavaAda8RoKaxcwm4Fyvlgp+OYNZDIcHOXUB2GwvDMfEEj+lbEz/Af+kNywculzql48Lg0vdlCeC+7VN00on6DAvbF6DfAErgeGLfonrETdwTT4lu3ak+TFzGBJQR1Bntn3BaPvrG0nhBFGsZ8KCnOQscIQwhOrjjcKWR9v02LfnRJc+H5BVZzrdM4a5nYdMBZzPqHlzifTZsJeq/V1RZ64abrqzs3cRo0GZefVXPjWtdU54sCsSlHl6qN9lywYOglRjdGPdUdQaJ0ieu5Tz62cgcTNf+yJG0j1UG79fo+6PHO/ZQve883CBMnws28OY/NwO9qBE8Sabpj8bsylJyjdHo5AD/soxlvk1C66a+Ss0phxht043MzJcBjFb1iV7huKCEW/xcT+1K1q0vHybfLLBu0w8pGnyBwofm0Pgw3/3xPIlMZWZUNDsPGOWV4rCOn7Mken7iEBBqz2W8R/X9eByxW6i9xfd7Z6/AZlmoZO2sE2UHRIaInajh/+bfCbevK+jbzRLDHui1t9GnlpPrT+kNSrw4UlSS95F+HaYrGsKyXhVwYoexGaofpjgbLrL3/7rG5X6kyC1LB1Y/26OEZs0ajTci4GdGjNRKOA6WeNu7aXfGw+lP/ntnPJteVQ"},{"arguments":"{\"query\":\"select:weather_lookup\",\"limit\":5}","call_id":"call-693e3872-065d-468d-b97f-b04e682c277a-0","name":"tool_search","type":"function_call","id":"fc_<X_REQUEST_ID>_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Loads
+      string: '{"created_at":1794604908,"completed_at":1794604911,"id":"24ac6898-df00-9c74-8104-c2abf4d64b62","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_24ac6898-df00-9c74-8104-c2abf4d64b62","summary":[{"text":"Checking
+        the current weather in Berlin.\n\nI need to load the weather tool first using
+        tool_search.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"FeePeDsnffid1AT9OuXT4PNb3G7NEoUVNi/GOX0JhpbiJ63F3zAznbFFlqv76JHKwptHy65ilQ7Zk/sqEY8VYJPG50xzsPWWbxSfQxl4XN09GfydvukKIn4bNYlfePB3Rbb+zposhbHy0JXZCvXlaCizWDVXZ7JFFwCma8PFrF1aL6id/MzGB0cXtsXsKi/RnFm0sZOmAs/kikmG3mpF7+xKBJ48BF8hcRQByTy2lS4HGL86NztlpdoCc8AfaAdfnVO1eDjDlUk5JZqhnM1UixbMjUFHS3Y4TGoByp7JAMZlFjeVBd9B/zN6uI3JpT3NMEQ4cpphX1gWoEgNPWfkmk1BSYX6l9lFaGmepbklz9H5Hl2MrWZ6qdIhmRxvC5Xz92fAu91ZSqFQxtlhzVPWodB5elDah5Z4OEXOx6rQnJ66CYLcuU4YMydFYT8cTwgujHeyEdu045KKlbPk+Lcf4cExZ9ewlcvavZgXnHNFxwjXBWdF0Hq1zRGg2fELXE9ttHgll+rAUP+JqER9ADZJlvszQ4hFw7/8EGGKPymmbQe/saK/YQIOyHqw/adgt3eJvvGmd15WY1DweaUILMkvo+s2+iv11HI3b/ZOipSF/pZ18hd8O80hXNjAQ4E03H8c5Htkz+7gEnPJVI6X/ZZ3NnWrn9fqnU7Ly9Bahm6ApGRVyfzjc8To/F8vqpL7oYZuxfLfd6zsI7dNXuJLEgOzwJPO8TPkUqb1ivjTQKC5bt4sdN+ecp4h3m7H6lx0MwwaZqQZ+9MptW8AksLShQWXWa27HUuPDbMs5OeipUiJQXcvlD5Wbl8"},{"arguments":"{\"query\":\"select:weather_lookup\",\"limit\":5}","call_id":"call-bd33fdbf-b7e2-4c88-be83-d1806b590c46-0","name":"tool_search","type":"function_call","id":"fc_24ac6898-df00-9c74-8104-c2abf4d64b62_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Loads
         tools you can call in this conversation but whose definitions are not shown
         yet. Search by what you need to do, in a few words, and the tools that match
         become callable from your next step on, for the rest of the conversation.
         Pass select:name,other_name to load tools by name. Tools you can load: weather_lookup,
         stock_price.","name":"tool_search","parameters":{"type":"object","properties":{"query":{"type":"string","description":"A
         few words about the task, or select: and tool names, comma-separated"},"limit":{"type":"integer","description":"How
-        many matching tools to load, 20 at most. select: loads every tool it names","default":5,"minimum":1,"maximum":20}},"required":["query"],"additionalProperties":false},"strict":false}],"top_p":0.95,"usage":{"input_tokens":424,"input_tokens_details":{"cached_tokens":128},"output_tokens":447,"output_tokens_details":{"reasoning_tokens":430},"total_tokens":871,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":15131000,"context_details":{"input_tokens":424,"output_tokens":451}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Tue, 10 Nov 2026 17:32:31 GMT
+        many matching tools to load, 20 at most. select: loads every tool it names","default":5,"minimum":1,"maximum":20}},"required":["query"],"additionalProperties":false},"strict":false}],"top_p":0.95,"usage":{"input_tokens":424,"input_tokens_details":{"cached_tokens":128},"output_tokens":313,"output_tokens_details":{"reasoning_tokens":296},"total_tokens":737,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":11781000,"context_details":{"input_tokens":424,"output_tokens":317}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Fri, 13 Nov 2026 21:21:51 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"grok-4.3","input":[{"role":"user","content":"What is the
-        weather in Berlin right now? Use your tools."},{"type":"reasoning","summary":[{"type":"summary_text","text":"I
-        need to check the current weather in Berlin.\n\nI''ll use the tool_search
-        tool to load weather_lookup and fetch the current weather in Berlin.\n\nThe
-        query should be \"select:weather_lookup\" to load the weather tool."}],"encrypted_content":"XfoT1SXlv02DPuF4pqzzPGsV+Skuu1wK0yyJKbOy23vpPggBiPqdioTCSvX3fK2lsPP0xdYtew4XlNo5Ge42xTdcvdoEwrsuPoNX5uky5ldh7kyrdx6pGWCd6+QNyDEAtrraXK5HTWMW3y87LLKKPnPL/Xeje5HtWe3lVekTzlxAJmHD9/FuEe8+PsYeAq+fjz5gmbMM7bjtCBeMd6r5ewfMJ6UZtJ13yokDYtOwOu17uiwdL69yJajsPGmudntBJwufCl6nQ/4gUicYCigWe7fci5EPe61yORJs2hw3SIy6l+LDWAk4QGLnsA56Sq6xIu1/y9PT1n+9kLhE26tP/ZAmuM1J3egev+CeGTm5Vd4LXukCbWWZPaTij94wVtUqxJ4+VXqeHfsv/y7R2PrFMJMTRVMXvmBdGjJfGj9EcuXF96Bp5fuiB2AEyT4IOe/i/KVdMSCdcQaNtjSG1tHiUyMGvi05jSIOxavaAda8RoKaxcwm4Fyvlgp+OYNZDIcHOXUB2GwvDMfEEj+lbEz/Af+kNywculzql48Lg0vdlCeC+7VN00on6DAvbF6DfAErgeGLfonrETdwTT4lu3ak+TFzGBJQR1Bntn3BaPvrG0nhBFGsZ8KCnOQscIQwhOrjjcKWR9v02LfnRJc+H5BVZzrdM4a5nYdMBZzPqHlzifTZsJeq/V1RZ64abrqzs3cRo0GZefVXPjWtdU54sCsSlHl6qN9lywYOglRjdGPdUdQaJ0ieu5Tz62cgcTNf+yJG0j1UG79fo+6PHO/ZQve883CBMnws28OY/NwO9qBE8Sabpj8bsylJyjdHo5AD/soxlvk1C66a+Ss0phxht043MzJcBjFb1iV7huKCEW/xcT+1K1q0vHybfLLBu0w8pGnyBwofm0Pgw3/3xPIlMZWZUNDsPGOWV4rCOn7Mken7iEBBqz2W8R/X9eByxW6i9xfd7Z6/AZlmoZO2sE2UHRIaInajh/+bfCbevK+jbzRLDHui1t9GnlpPrT+kNSrw4UlSS95F+HaYrGsKyXhVwYoexGaofpjgbLrL3/7rG5X6kyC1LB1Y/26OEZs0ajTci4GdGjNRKOA6WeNu7aXfGw+lP/ntnPJteVQ"},{"type":"function_call","call_id":"call-693e3872-065d-468d-b97f-b04e682c277a-0","name":"tool_search","arguments":"{\"limit\":5,\"query\":\"select:weather_lookup\"}"},{"type":"function_call_output","call_id":"call-693e3872-065d-468d-b97f-b04e682c277a-0","output":"{\"loaded\":[\"weather_lookup\"],\"tools\":[{\"name\":\"weather_lookup\",\"description\":\"Looks
+        weather in Berlin right now? Use your tools."},{"type":"reasoning","summary":[{"type":"summary_text","text":"Checking
+        the current weather in Berlin.\n\nI need to load the weather tool first using
+        tool_search."}],"encrypted_content":"FeePeDsnffid1AT9OuXT4PNb3G7NEoUVNi/GOX0JhpbiJ63F3zAznbFFlqv76JHKwptHy65ilQ7Zk/sqEY8VYJPG50xzsPWWbxSfQxl4XN09GfydvukKIn4bNYlfePB3Rbb+zposhbHy0JXZCvXlaCizWDVXZ7JFFwCma8PFrF1aL6id/MzGB0cXtsXsKi/RnFm0sZOmAs/kikmG3mpF7+xKBJ48BF8hcRQByTy2lS4HGL86NztlpdoCc8AfaAdfnVO1eDjDlUk5JZqhnM1UixbMjUFHS3Y4TGoByp7JAMZlFjeVBd9B/zN6uI3JpT3NMEQ4cpphX1gWoEgNPWfkmk1BSYX6l9lFaGmepbklz9H5Hl2MrWZ6qdIhmRxvC5Xz92fAu91ZSqFQxtlhzVPWodB5elDah5Z4OEXOx6rQnJ66CYLcuU4YMydFYT8cTwgujHeyEdu045KKlbPk+Lcf4cExZ9ewlcvavZgXnHNFxwjXBWdF0Hq1zRGg2fELXE9ttHgll+rAUP+JqER9ADZJlvszQ4hFw7/8EGGKPymmbQe/saK/YQIOyHqw/adgt3eJvvGmd15WY1DweaUILMkvo+s2+iv11HI3b/ZOipSF/pZ18hd8O80hXNjAQ4E03H8c5Htkz+7gEnPJVI6X/ZZ3NnWrn9fqnU7Ly9Bahm6ApGRVyfzjc8To/F8vqpL7oYZuxfLfd6zsI7dNXuJLEgOzwJPO8TPkUqb1ivjTQKC5bt4sdN+ecp4h3m7H6lx0MwwaZqQZ+9MptW8AksLShQWXWa27HUuPDbMs5OeipUiJQXcvlD5Wbl8"},{"type":"function_call","call_id":"call-bd33fdbf-b7e2-4c88-be83-d1806b590c46-0","name":"tool_search","arguments":"{\"limit\":5,\"query\":\"select:weather_lookup\"}"},{"type":"function_call_output","call_id":"call-bd33fdbf-b7e2-4c88-be83-d1806b590c46-0","output":"{\"loaded\":[\"weather_lookup\"],\"tools\":[{\"name\":\"weather_lookup\",\"description\":\"Looks
         up the current weather for a city\"}]}"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"tool_search","description":"Loads
         tools you can call in this conversation but whose definitions are not shown
         yet. Search by what you need to do, in a few words, and the tools that match
@@ -127,7 +125,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:32:32 GMT
+      - Fri, 13 Nov 2026 21:21:54 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -155,11 +153,11 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '266.8'
+      - '223.5'
       X-Metrics-E2e-Ms:
-      - '1071.9'
+      - '2266.1'
       Traceparent:
-      - 00-7d6b622006ca06043ef9c25a9bf38c66-58d63317000405dd-01
+      - 00-fb1dd12ac465fb2c125330a9825e15d5-f465a2f10000ceb3-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -174,8 +172,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794331951,"completed_at":1794331952,"id":"<X_REQUEST_ID>","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_<X_REQUEST_ID>","summary":[{"text":"The
-        weather lookup tool is ready.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"J1OVkg8WeuipvutgcnraELToU+2z04HUIgc4EDyrs3kqox/snwM2uzra6J5wW//ouTFw4YgIOoBKuB310Way56KsNqkvywfPqpVOYjDEHpMFjlDCgCleaEcRda2QlSHDwjJKnxmmPaYu1a1bt7utkxv3FPf1c/i0cvezwtfWrzQn8sBWkWHVTcDKLewgn7MjCZqzMxrdFaq18xLLyhOHC46wmm/mbMgXnUejiJNiC2O326Kne3dRCkad/SM/uWfe5Lcdm9dsPznp2H4cJs/H5Fg5FUcGHQT/ZHdGNRYwOY/LD/+QmhgDJNfUusZZnSb22TlLzLiKyugygPxJDXaNozhFVr6Pm4/m6qOVhwcm"},{"arguments":"{\"city\":\"Berlin\"}","call_id":"call-7ce00697-ae66-44be-af40-1d60c4d2149a-1","name":"weather_lookup","type":"function_call","id":"fc_<X_REQUEST_ID>_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Loads
+      string: '{"created_at":1794604912,"completed_at":1794604914,"id":"6c845b24-4f38-9133-a84b-f80222141c5d","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_6c845b24-4f38-9133-a84b-f80222141c5d","summary":[],"type":"reasoning","status":"completed","encrypted_content":"yDx52xzcr5tcodMvitAKqmo67uLK7VLil9Ke7IQo70boy0x+o9NC1/ZKzvg7WASMudeuLVJF4OX3PmZkLLi3GKEY9lcXghI0kpT57w9Rp1D8CGGXuOL3Np/Tm0of1CMa//KBTr3Ky1UydnAdoxos95EvunjXyJMsXOCnD+3dWiWhdwt3JuIlJWKFu7cf1uqlclHJM1985927u0IP2ugGrjH9hhxW3DMyhH2ttnSkG+X6zlCsCVa5wkE/gt39ZP3rmHJ5ftlehJend8KUWKwL7ldWVEtOD6Yxy/vnj/RMll2kjkCytI8PTB8HHdJhwV1aTmsYDO7URQIuRePzMRNKQ3Itjazfh2A"},{"arguments":"{\"city\":\"Berlin\"}","call_id":"call-d76f7e33-3106-4f29-8d4a-4be23ea59064-1","name":"weather_lookup","type":"function_call","id":"fc_6c845b24-4f38-9133-a84b-f80222141c5d_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Loads
         tools you can call in this conversation but whose definitions are not shown
         yet. Search by what you need to do, in a few words, and the tools that match
         become callable from your next step on, for the rest of the conversation.
@@ -184,20 +181,18 @@ http_interactions:
         few words about the task, or select: and tool names, comma-separated"},"limit":{"type":"integer","description":"How
         many matching tools to load, 20 at most. select: loads every tool it names","default":5,"minimum":1,"maximum":20}},"required":["query"],"additionalProperties":false},"strict":false},{"type":"function","description":"Looks
         up the current weather for a city","name":"weather_lookup","parameters":{"type":"object","properties":{"city":{"type":"string","description":"City
-        name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":969,"input_tokens_details":{"cached_tokens":384},"output_tokens":65,"output_tokens_details":{"reasoning_tokens":55},"total_tokens":1034,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":9705500,"context_details":{"input_tokens":969,"output_tokens":68}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Tue, 10 Nov 2026 17:32:32 GMT
+        name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":835,"input_tokens_details":{"cached_tokens":128},"output_tokens":61,"output_tokens_details":{"reasoning_tokens":51},"total_tokens":896,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":10618500,"context_details":{"input_tokens":835,"output_tokens":65}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Fri, 13 Nov 2026 21:21:54 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"grok-4.3","input":[{"role":"user","content":"What is the
-        weather in Berlin right now? Use your tools."},{"type":"reasoning","summary":[{"type":"summary_text","text":"I
-        need to check the current weather in Berlin.\n\nI''ll use the tool_search
-        tool to load weather_lookup and fetch the current weather in Berlin.\n\nThe
-        query should be \"select:weather_lookup\" to load the weather tool."}],"encrypted_content":"XfoT1SXlv02DPuF4pqzzPGsV+Skuu1wK0yyJKbOy23vpPggBiPqdioTCSvX3fK2lsPP0xdYtew4XlNo5Ge42xTdcvdoEwrsuPoNX5uky5ldh7kyrdx6pGWCd6+QNyDEAtrraXK5HTWMW3y87LLKKPnPL/Xeje5HtWe3lVekTzlxAJmHD9/FuEe8+PsYeAq+fjz5gmbMM7bjtCBeMd6r5ewfMJ6UZtJ13yokDYtOwOu17uiwdL69yJajsPGmudntBJwufCl6nQ/4gUicYCigWe7fci5EPe61yORJs2hw3SIy6l+LDWAk4QGLnsA56Sq6xIu1/y9PT1n+9kLhE26tP/ZAmuM1J3egev+CeGTm5Vd4LXukCbWWZPaTij94wVtUqxJ4+VXqeHfsv/y7R2PrFMJMTRVMXvmBdGjJfGj9EcuXF96Bp5fuiB2AEyT4IOe/i/KVdMSCdcQaNtjSG1tHiUyMGvi05jSIOxavaAda8RoKaxcwm4Fyvlgp+OYNZDIcHOXUB2GwvDMfEEj+lbEz/Af+kNywculzql48Lg0vdlCeC+7VN00on6DAvbF6DfAErgeGLfonrETdwTT4lu3ak+TFzGBJQR1Bntn3BaPvrG0nhBFGsZ8KCnOQscIQwhOrjjcKWR9v02LfnRJc+H5BVZzrdM4a5nYdMBZzPqHlzifTZsJeq/V1RZ64abrqzs3cRo0GZefVXPjWtdU54sCsSlHl6qN9lywYOglRjdGPdUdQaJ0ieu5Tz62cgcTNf+yJG0j1UG79fo+6PHO/ZQve883CBMnws28OY/NwO9qBE8Sabpj8bsylJyjdHo5AD/soxlvk1C66a+Ss0phxht043MzJcBjFb1iV7huKCEW/xcT+1K1q0vHybfLLBu0w8pGnyBwofm0Pgw3/3xPIlMZWZUNDsPGOWV4rCOn7Mken7iEBBqz2W8R/X9eByxW6i9xfd7Z6/AZlmoZO2sE2UHRIaInajh/+bfCbevK+jbzRLDHui1t9GnlpPrT+kNSrw4UlSS95F+HaYrGsKyXhVwYoexGaofpjgbLrL3/7rG5X6kyC1LB1Y/26OEZs0ajTci4GdGjNRKOA6WeNu7aXfGw+lP/ntnPJteVQ"},{"type":"function_call","call_id":"call-693e3872-065d-468d-b97f-b04e682c277a-0","name":"tool_search","arguments":"{\"limit\":5,\"query\":\"select:weather_lookup\"}"},{"type":"function_call_output","call_id":"call-693e3872-065d-468d-b97f-b04e682c277a-0","output":"{\"loaded\":[\"weather_lookup\"],\"tools\":[{\"name\":\"weather_lookup\",\"description\":\"Looks
-        up the current weather for a city\"}]}"},{"type":"reasoning","summary":[{"type":"summary_text","text":"The
-        weather lookup tool is ready."}],"encrypted_content":"J1OVkg8WeuipvutgcnraELToU+2z04HUIgc4EDyrs3kqox/snwM2uzra6J5wW//ouTFw4YgIOoBKuB310Way56KsNqkvywfPqpVOYjDEHpMFjlDCgCleaEcRda2QlSHDwjJKnxmmPaYu1a1bt7utkxv3FPf1c/i0cvezwtfWrzQn8sBWkWHVTcDKLewgn7MjCZqzMxrdFaq18xLLyhOHC46wmm/mbMgXnUejiJNiC2O326Kne3dRCkad/SM/uWfe5Lcdm9dsPznp2H4cJs/H5Fg5FUcGHQT/ZHdGNRYwOY/LD/+QmhgDJNfUusZZnSb22TlLzLiKyugygPxJDXaNozhFVr6Pm4/m6qOVhwcm"},{"type":"function_call","call_id":"call-7ce00697-ae66-44be-af40-1d60c4d2149a-1","name":"weather_lookup","arguments":"{\"city\":\"Berlin\"}"},{"type":"function_call_output","call_id":"call-7ce00697-ae66-44be-af40-1d60c4d2149a-1","output":"Sunny
+        weather in Berlin right now? Use your tools."},{"type":"reasoning","summary":[{"type":"summary_text","text":"Checking
+        the current weather in Berlin.\n\nI need to load the weather tool first using
+        tool_search."}],"encrypted_content":"FeePeDsnffid1AT9OuXT4PNb3G7NEoUVNi/GOX0JhpbiJ63F3zAznbFFlqv76JHKwptHy65ilQ7Zk/sqEY8VYJPG50xzsPWWbxSfQxl4XN09GfydvukKIn4bNYlfePB3Rbb+zposhbHy0JXZCvXlaCizWDVXZ7JFFwCma8PFrF1aL6id/MzGB0cXtsXsKi/RnFm0sZOmAs/kikmG3mpF7+xKBJ48BF8hcRQByTy2lS4HGL86NztlpdoCc8AfaAdfnVO1eDjDlUk5JZqhnM1UixbMjUFHS3Y4TGoByp7JAMZlFjeVBd9B/zN6uI3JpT3NMEQ4cpphX1gWoEgNPWfkmk1BSYX6l9lFaGmepbklz9H5Hl2MrWZ6qdIhmRxvC5Xz92fAu91ZSqFQxtlhzVPWodB5elDah5Z4OEXOx6rQnJ66CYLcuU4YMydFYT8cTwgujHeyEdu045KKlbPk+Lcf4cExZ9ewlcvavZgXnHNFxwjXBWdF0Hq1zRGg2fELXE9ttHgll+rAUP+JqER9ADZJlvszQ4hFw7/8EGGKPymmbQe/saK/YQIOyHqw/adgt3eJvvGmd15WY1DweaUILMkvo+s2+iv11HI3b/ZOipSF/pZ18hd8O80hXNjAQ4E03H8c5Htkz+7gEnPJVI6X/ZZ3NnWrn9fqnU7Ly9Bahm6ApGRVyfzjc8To/F8vqpL7oYZuxfLfd6zsI7dNXuJLEgOzwJPO8TPkUqb1ivjTQKC5bt4sdN+ecp4h3m7H6lx0MwwaZqQZ+9MptW8AksLShQWXWa27HUuPDbMs5OeipUiJQXcvlD5Wbl8"},{"type":"function_call","call_id":"call-bd33fdbf-b7e2-4c88-be83-d1806b590c46-0","name":"tool_search","arguments":"{\"limit\":5,\"query\":\"select:weather_lookup\"}"},{"type":"function_call_output","call_id":"call-bd33fdbf-b7e2-4c88-be83-d1806b590c46-0","output":"{\"loaded\":[\"weather_lookup\"],\"tools\":[{\"name\":\"weather_lookup\",\"description\":\"Looks
+        up the current weather for a city\"}]}"},{"type":"reasoning","summary":[],"encrypted_content":"yDx52xzcr5tcodMvitAKqmo67uLK7VLil9Ke7IQo70boy0x+o9NC1/ZKzvg7WASMudeuLVJF4OX3PmZkLLi3GKEY9lcXghI0kpT57w9Rp1D8CGGXuOL3Np/Tm0of1CMa//KBTr3Ky1UydnAdoxos95EvunjXyJMsXOCnD+3dWiWhdwt3JuIlJWKFu7cf1uqlclHJM1985927u0IP2ugGrjH9hhxW3DMyhH2ttnSkG+X6zlCsCVa5wkE/gt39ZP3rmHJ5ftlehJend8KUWKwL7ldWVEtOD6Yxy/vnj/RMll2kjkCytI8PTB8HHdJhwV1aTmsYDO7URQIuRePzMRNKQ3Itjazfh2A"},{"type":"function_call","call_id":"call-d76f7e33-3106-4f29-8d4a-4be23ea59064-1","name":"weather_lookup","arguments":"{\"city\":\"Berlin\"}"},{"type":"function_call_output","call_id":"call-d76f7e33-3106-4f29-8d4a-4be23ea59064-1","output":"Sunny
         in Berlin"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"tool_search","description":"Loads
         tools you can call in this conversation but whose definitions are not shown
         yet. Search by what you need to do, in a few words, and the tools that match
@@ -225,7 +220,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:32:33 GMT
+      - Fri, 13 Nov 2026 21:21:55 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -253,11 +248,11 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '384.6'
+      - '199.3'
       X-Metrics-E2e-Ms:
-      - '770.8'
+      - '553.1'
       Traceparent:
-      - 00-b4e901618d0b3dde1d7ef4bb23b173d0-a9e890050003e1c2-01
+      - 00-35a0d58f727dc5d0b829efda77cbb6a9-92c23065000109de-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -272,8 +267,8 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794331952,"completed_at":1794331953,"id":"<X_REQUEST_ID>","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_<X_REQUEST_ID>","summary":[],"type":"reasoning","status":"completed","encrypted_content":"Pcftq+K1fI+MvNQ+dE1LCzlm3WH2qdAEXfkOCmzVcRmy2MJOHNoDsvROmi/LwbJ3BPNgk+TEeoJ+7HUNI/a6Qjb+0N5cn+oxGmyAjW5yXAlriwiRB1RunkKz3crnQovRRRE"},{"content":[{"type":"output_text","text":"Sunny
-        in Berlin.","logprobs":[],"annotations":[]}],"id":"msg_<X_REQUEST_ID>","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Loads
+      string: '{"created_at":1794604914,"completed_at":1794604915,"id":"438f06f3-92fa-9c67-aa2f-665daed3a96f","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_438f06f3-92fa-9c67-aa2f-665daed3a96f","summary":[],"type":"reasoning","status":"completed","encrypted_content":"b3zzHnCoxKXCFJWc0MIto09SuG1UqDFaI0bK9QC+r07XaK/EOWJxRwoqbxOGOcI/ZjYOI7jE46QQvY8XtmE/+wq/oJa9D3uEQ5xIlTpfauDqzVDZJs6QyMZThfAkudY63LA"},{"content":[{"type":"output_text","text":"Sunny
+        in Berlin.","logprobs":[],"annotations":[]}],"id":"msg_438f06f3-92fa-9c67-aa2f-665daed3a96f","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Loads
         tools you can call in this conversation but whose definitions are not shown
         yet. Search by what you need to do, in a few words, and the tools that match
         become callable from your next step on, for the rest of the conversation.
@@ -282,6 +277,6 @@ http_interactions:
         few words about the task, or select: and tool names, comma-separated"},"limit":{"type":"integer","description":"How
         many matching tools to load, 20 at most. select: loads every tool it names","default":5,"minimum":1,"maximum":20}},"required":["query"],"additionalProperties":false},"strict":false},{"type":"function","description":"Looks
         up the current weather for a city","name":"weather_lookup","parameters":{"type":"object","properties":{"city":{"type":"string","description":"City
-        name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":1045,"input_tokens_details":{"cached_tokens":896},"output_tokens":19,"output_tokens_details":{"reasoning_tokens":15},"total_tokens":1064,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":4129500,"context_details":{"input_tokens":1045,"output_tokens":26}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Tue, 10 Nov 2026 17:32:33 GMT
+        name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":907,"input_tokens_details":{"cached_tokens":128},"output_tokens":19,"output_tokens_details":{"reasoning_tokens":15},"total_tokens":926,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":10468500,"context_details":{"input_tokens":907,"output_tokens":26}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Fri, 13 Nov 2026 21:21:55 GMT
 recorded_with: VCR 6.4.1

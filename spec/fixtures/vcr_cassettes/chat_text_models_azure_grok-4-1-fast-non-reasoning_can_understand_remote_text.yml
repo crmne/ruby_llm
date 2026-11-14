@@ -35,35 +35,35 @@ http_interactions:
       Etag:
       - W/"6ae93428-9c6"
       Expires:
-      - Tue, 10 Nov 2026 17:41:37 GMT
+      - Fri, 13 Nov 2026 21:31:46 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - EABE:9FB17:208869:20DA2B:6AF354F8
+      - 75D8:818BB:BA3482:BB39B0:6AF77F6A
       X-Github-Edge-Region:
       - fra
       Accept-Ranges:
       - bytes
       Date:
-      - Tue, 10 Nov 2026 17:31:44 GMT
+      - Fri, 13 Nov 2026 21:21:51 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '8'
+      - '5'
       X-Served-By:
-      - cache-ber1080055-BER
+      - cache-ber1080046-BER
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1794331905.994403,VS0,VE2
+      - S1794604912.505662,VS0,VE1
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 94c5516d57b03b4ec2af4d4b12d7584ec2d984fe
+      - a243e5f177c01ce12fe1318c337dada0e91c6ecd
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -99,7 +99,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Tue, 10 Nov 2026 17:31:45 GMT
+  recorded_at: Fri, 13 Nov 2026 21:21:51 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
@@ -159,7 +159,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 10 Nov 2026 17:31:45 GMT
+      - Fri, 13 Nov 2026 21:21:52 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -179,11 +179,11 @@ http_interactions:
       X-Watermark:
       - 'false'
       Traceparent:
-      - 00-f1a8c5cafa0cdf0257d6218baaf581db-a218cc4a00013f74-00
+      - 00-6b7b2da22793dbeea79c3e982bd1fc30-2af1a77a0006bf3c-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - db951b8a-3777-4d0f-95ab-0214db253b0d
+      - 3020a8a1-f126-4496-9d9c-8da6f853079f
       Azureml-Model-Session:
       - d20261110012600-4baac0fe
       X-Ms-Inference-Retry-History:
@@ -197,9 +197,9 @@ http_interactions:
       X-Ratelimit-Key:
       - grok-4-1-fast-non-reasoning
       X-Ratelimit-Remaining-Requests:
-      - '47'
+      - '48'
       X-Ratelimit-Reset-Requests:
-      - '3'
+      - '2'
       X-Ratelimit-Limit-Requests:
       - '50'
       X-Ratelimit-Renewalperiod-Requests:
@@ -219,9 +219,9 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - db951b8a-3777-4d0f-95ab-0214db253b0d
+      - 3020a8a1-f126-4496-9d9c-8da6f853079f
       X-Http2-Stream-Id:
-      - '659'
+      - '31'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -230,21 +230,20 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"<X_REQUEST_ID>","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"This
-        is the **Ruby License** (also known as the Ruby BSDL or Matsumoto''s 2-clause
-        BSD-like license), which governs the distribution and modification of the
-        Ruby programming language.\n\n### Key Points:\n- **Copyright**: Yukihiro Matsumoto
-        (matz).\n- **Permissions**:\n  - Freely redistribute **verbatim source** copies
-        (with notices intact).\n  - **Modify** the software, but must either:\n    -
-        Make mods public domain/freely available.\n    - Use only internally in your
-        org.\n    - Name non-standard binaries distinctly + point to original.\n    -
-        Arrange directly with author.\n  - Distribute **binaries** with source access
-        or original distro instructions.\n  - Embed modified parts in other (even
-        commercial) software.\n- **Exclusions**: Some files have different terms (see
-        `LEGAL` file); scripts/libs you generate are yours.\n- **No Warranty**: Provided
-        \"AS IS\".\n\nIt''s a **permissive open-source license** (similar to 2-clause
-        BSD), allowing broad commercial use while requiring attribution and source
-        availability options. Ruby''s official distros include this as `COPYING` or
-        `license.txt`."},"finish_reason":"stop"}],"usage":{"prompt_tokens":692,"completion_tokens":232,"total_tokens":924,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":161,"audio_tokens":0,"text_tokens":692,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794331905,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Tue, 10 Nov 2026 17:31:47 GMT
+      string: '{"id":"014961c3-fe57-4391-bc8a-02fcd6107064","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"This
+        is the **Ruby License** (also known as the Ruby BSDL or \"Matz''s License\"),
+        a permissive open-source license for the Ruby programming language, written
+        by Yukihiro Matsumoto (Matz).\n\n### Key Points:\n- **Permissive terms**:
+        Allows free redistribution, modification, and use in commercial software with
+        minimal restrictions.\n- **Options for modifications/distribution**:\n  -
+        Keep them public domain or freely available.\n  - Limit use to your organization.\n  -
+        Use non-standard names for binaries with pointers to originals.\n  - Other
+        arrangements with the author.\n- **Binary distribution**: Must include source
+        access or instructions to obtain it.\n- **No warranty**: Provided \"AS IS\"
+        with no guarantees.\n- **Alternatives**: Can also use the 2-clause BSD license
+        (BSDL file referenced).\n- **Exceptions**: Some files have different terms
+        (see LEGAL file); scripts/libraries generated by Ruby aren''t covered.\n\nIt''s
+        similar to the MIT or BSD licenses, making Ruby very developer-friendly. Full
+        text is in the file you provided."},"finish_reason":"stop"}],"usage":{"prompt_tokens":692,"completion_tokens":209,"total_tokens":901,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":161,"audio_tokens":0,"text_tokens":692,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1794604912,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Fri, 13 Nov 2026 21:21:54 GMT
 recorded_with: VCR 6.4.1

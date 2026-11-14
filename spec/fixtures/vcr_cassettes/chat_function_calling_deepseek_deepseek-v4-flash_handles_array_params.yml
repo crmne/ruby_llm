@@ -33,7 +33,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 10 Nov 2026 17:36:12 GMT
+      - Fri, 13 Nov 2026 21:24:09 GMT
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -43,21 +43,21 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 658cac3b8c3e8aeb351db7f0040223e6
+      - 5f389f04df0cc582e8b65e1d31fb8135
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 db3cc869e0dda88ce4fa37dee230e06e.cloudfront.net (CloudFront)
+      - 1.1 c8809e7d250b8cf39350ecdac0e4a800.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P6
+      - TXL52-P2
       X-Amz-Cf-Id:
-      - 05BS4OPVD7oDFmL_Hiia7eLLK3AZBLfv-BUvhjEekJWLM-6Pt5OVKg==
+      - 4AVcpCBI8c19fb6rwM7IjxJCQHi85eNBYEtIWLcQTfz62bUaWwU9kg==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"3f2fc0ba-0bf3-44ff-ae54-f801f7a0beb9","object":"chat.completion","created":1794332172,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
-        call the tool with those tags.","reasoning_content":"","tool_calls":[{"index":0,"id":"call_00_ET_xgsLNX32ubIMT3kuvgBO1542","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
-        [\"red\", \"blue\"]}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":332,"completion_tokens":51,"total_tokens":383,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":332},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
-  recorded_at: Tue, 10 Nov 2026 17:36:13 GMT
+      string: '{"id":"aad20758-d81a-413c-8e1b-3016336bd878","object":"chat.completion","created":1794605049,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
+        user wants me to call the array_params tool with tags [\"red\",\"blue\"].","tool_calls":[{"index":0,"id":"call_00_S2QVg2Ua8Ierne9Z3WDi0000","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
+        [\"red\", \"blue\"]}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":332,"completion_tokens":60,"total_tokens":392,"prompt_tokens_details":{"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":17},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":204},"system_fingerprint":"bc19ba97cbe016479903222bb1578db6"}'
+  recorded_at: Fri, 13 Nov 2026 21:24:10 GMT
 recorded_with: VCR 6.4.1

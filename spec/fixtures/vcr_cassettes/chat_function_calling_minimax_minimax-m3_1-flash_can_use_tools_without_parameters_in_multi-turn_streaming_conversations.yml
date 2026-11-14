@@ -30,25 +30,25 @@ http_interactions:
       Vary:
       - Accept-Encoding
       Trace-Id:
-      - '074289b61bde581e2ee1923af0cfc978'
+      - 0746b39df4ba142503086897606b9b4a
       X-Session-Id:
       - 29bbb10e2681f5e63ec64944bd4c251e
       X-Mm-Request-Id:
-      - 2092934004998157135_17943323422xdap1
+      - 2092934004998157135_1794605213w7qtn2
       Minimax-Request-Id:
-      - 75f4225cfc0a179a64b1f093bfbfb35a
+      - 6320c214e0ba21d630b36619cd262e4b
       Alb-Receive-Time:
-      - '1794332342.829'
+      - '1794605213.916'
       Alb-Request-Id:
-      - 35e4c64cd64d32ba485f4b87b57c3992447f4e02
+      - 7f4961444800b4795ee72d99c2aee380fa4f882c
       Expires:
-      - Tue, 10 Nov 2026 17:39:03 GMT
+      - Fri, 13 Nov 2026 21:26:54 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Tue, 10 Nov 2026 17:39:03 GMT
+      - Fri, 13 Nov 2026 21:26:54 GMT
       Transfer-Encoding:
       - chunked
       Connection:
@@ -62,7 +62,7 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message_start
-        data: {"type":"message_start","message":{"id":"074289b61bde581e2ee1923af0cfc978","type":"message","role":"assistant","content":[],"model":"MiniMax-M3.1-Flash","stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":0,"output_tokens":0}}}
+        data: {"type":"message_start","message":{"id":"0746b39df4ba142503086897606b9b4a","type":"message","role":"assistant","content":[],"model":"MiniMax-M3.1-Flash","stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":0,"output_tokens":0}}}
 
         event: ping
         data: {"type":"ping"}
@@ -71,30 +71,42 @@ http_interactions:
         data: {"type":"content_block_start","index":0,"content_block":{"type":"text","text":""}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"I'll call that tool now."}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"I'll"}}
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" call that"}}
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" tool now"}}
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"."}}
 
         event: content_block_stop
         data: {"type":"content_block_stop","index":0}
 
         event: content_block_start
-        data: {"type":"content_block_start","index":1,"content_block":{"type":"tool_use","id":"call_f42c6e81627446e6876c4512","name":"best_language_to_learn","input":{}}}
+        data: {"type":"content_block_start","index":1,"content_block":{"type":"tool_use","id":"call_01a1d6ce6af171f8a89da627","name":"best_language_to_learn","input":{}}}
 
         event: content_block_delta
         data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":""}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"{}"}}
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"{"}}
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"}"}}
 
         event: content_block_stop
         data: {"type":"content_block_stop","index":1}
 
         event: message_delta
-        data: {"type":"message_delta","delta":{"stop_reason":"tool_use"},"usage":{"input_tokens":445,"output_tokens":28}}
+        data: {"type":"message_delta","delta":{"stop_reason":"tool_use"},"usage":{"input_tokens":258,"output_tokens":28,"cache_read_input_tokens":187}}
 
         event: message_stop
         data: {"type":"message_stop"}
 
-  recorded_at: Tue, 10 Nov 2026 17:39:03 GMT
+  recorded_at: Fri, 13 Nov 2026 21:26:54 GMT
 - request:
     method: post
     uri: https://api.minimax.io/anthropic/v1/messages
@@ -102,7 +114,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"Call
         best_language_to_learn and repeat the programming language it returns."}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        call that tool now."},{"type":"tool_use","id":"call_f42c6e81627446e6876c4512","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"call_f42c6e81627446e6876c4512","content":[{"type":"text","text":"Ruby"}]}]}],"stream":true,"max_tokens":524288,"tools":[{"name":"best_language_to_learn","description":"Gets
+        call that tool now."},{"type":"tool_use","id":"call_01a1d6ce6af171f8a89da627","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"call_01a1d6ce6af171f8a89da627","content":[{"type":"text","text":"Ruby"}]}]}],"stream":true,"max_tokens":524288,"tools":[{"name":"best_language_to_learn","description":"Gets
         the best language to learn","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}],"system":[{"type":"text","text":"You
         must use tools whenever possible."}]}'
     headers:
@@ -126,25 +138,25 @@ http_interactions:
       Vary:
       - Accept-Encoding
       Trace-Id:
-      - '074289b70c10246fa29975229f4b4439'
+      - 0746b39eb334b3826be150b846d9924c
       X-Session-Id:
       - 29bbb10e2681f5e63ec64944bd4c251e
       X-Mm-Request-Id:
-      - 2092934004998157135_179433234300m5zn
+      - 2092934004998157135_1794605214j6i8bt
       Minimax-Request-Id:
-      - a7a957e2ace2705d7326e6d0ec0ddaf9
+      - 232bb53e029e75a05e99bb9b96094123
       Alb-Receive-Time:
-      - '1794332343.951'
+      - '1794605214.73'
       Alb-Request-Id:
-      - aed30c2e658285606ba0a7e45a19a8dec599cb3c
+      - 1f8629c05669e8dc0da388a1752220352c24efef
       Expires:
-      - Tue, 10 Nov 2026 17:39:04 GMT
+      - Fri, 13 Nov 2026 21:26:55 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Tue, 10 Nov 2026 17:39:04 GMT
+      - Fri, 13 Nov 2026 21:26:55 GMT
       Transfer-Encoding:
       - chunked
       Connection:
@@ -155,33 +167,10 @@ http_interactions:
       X-From:
       - ak
     body:
-      encoding: UTF-8
-      string: |+
-        event: message_start
-        data: {"type":"message_start","message":{"id":"074289b70c10246fa29975229f4b4439","type":"message","role":"assistant","content":[],"model":"MiniMax-M3.1-Flash","stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":0,"output_tokens":0}}}
-
-        event: ping
-        data: {"type":"ping"}
-
-        event: content_block_start
-        data: {"type":"content_block_start","index":0,"content_block":{"type":"text","text":""}}
-
-        event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"The tool returned **"}}
-
-        event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"Ruby**."}}
-
-        event: content_block_stop
-        data: {"type":"content_block_stop","index":0}
-
-        event: message_delta
-        data: {"type":"message_delta","delta":{"stop_reason":"end_turn"},"usage":{"input_tokens":233,"output_tokens":8,"cache_read_input_tokens":256}}
-
-        event: message_stop
-        data: {"type":"message_stop"}
-
-  recorded_at: Tue, 10 Nov 2026 17:39:05 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ZXZlbnQ6IG1lc3NhZ2Vfc3RhcnQKZGF0YTogeyJ0eXBlIjoibWVzc2FnZV9zdGFydCIsIm1lc3NhZ2UiOnsiaWQiOiIwNzQ2YjM5ZWIzMzRiMzgyNmJlMTUwYjg0NmQ5OTI0YyIsInR5cGUiOiJtZXNzYWdlIiwicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOltdLCJtb2RlbCI6Ik1pbmlNYXgtTTMuMS1GbGFzaCIsInN0b3BfcmVhc29uIjpudWxsLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjAsIm91dHB1dF90b2tlbnMiOjB9fX0KCmV2ZW50OiBwaW5nCmRhdGE6IHsidHlwZSI6InBpbmcifQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfc3RhcnQKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19zdGFydCIsImluZGV4IjowLCJjb250ZW50X2Jsb2NrIjp7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IiJ9fQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiJUaGUifX0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIHRvb2wgcmV0dXJuZWQgKioifX0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiUnVieSoqIn19CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IiDigJQgc28ifX0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiLCJ9fQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIgUnVieSJ9fQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIgaXMifX0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIHRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuLiJ9fQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfc3RvcApkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX3N0b3AiLCJpbmRleCI6MH0KCmV2ZW50OiBtZXNzYWdlX2RlbHRhCmRhdGE6IHsidHlwZSI6Im1lc3NhZ2VfZGVsdGEiLCJkZWx0YSI6eyJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIn0sInVzYWdlIjp7ImlucHV0X3Rva2VucyI6NDQsIm91dHB1dF90b2tlbnMiOjE5LCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6NDQ1fX0KCmV2ZW50OiBtZXNzYWdlX3N0b3AKZGF0YTogeyJ0eXBlIjoibWVzc2FnZV9zdG9wIn0KCg==
+  recorded_at: Fri, 13 Nov 2026 21:26:55 GMT
 - request:
     method: post
     uri: https://api.minimax.io/anthropic/v1/messages
@@ -189,8 +178,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"Call
         best_language_to_learn and repeat the programming language it returns."}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        call that tool now."},{"type":"tool_use","id":"call_f42c6e81627446e6876c4512","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"call_f42c6e81627446e6876c4512","content":[{"type":"text","text":"Ruby"}]}]},{"role":"assistant","content":[{"type":"text","text":"The
-        tool returned **Ruby**."}]},{"role":"user","content":[{"type":"text","text":"Call
+        call that tool now."},{"type":"tool_use","id":"call_01a1d6ce6af171f8a89da627","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"call_01a1d6ce6af171f8a89da627","content":[{"type":"text","text":"Ruby"}]}]},{"role":"assistant","content":[{"type":"text","text":"The
+        tool returned **Ruby** — so, Ruby is the best language to learn."}]},{"role":"user","content":[{"type":"text","text":"Call
         best_language_to_learn again and repeat the programming language it returns."}]}],"stream":true,"max_tokens":524288,"tools":[{"name":"best_language_to_learn","description":"Gets
         the best language to learn","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}],"system":[{"type":"text","text":"You
         must use tools whenever possible."}]}'
@@ -215,25 +204,25 @@ http_interactions:
       Vary:
       - Accept-Encoding
       Trace-Id:
-      - '074289b9a50cbca2e349a2af83866cc5'
+      - 0746b39f637e36da37a4f4844edf048d
       X-Session-Id:
       - 29bbb10e2681f5e63ec64944bd4c251e
       X-Mm-Request-Id:
-      - 2092934004998157135_1794332345b72jty
+      - 2092934004998157135_1794605215nu4ugi
       Minimax-Request-Id:
-      - b9c9167ce8c9ed5cea3c401de6d59f68
+      - 133cf1b2de566e7be70619a2150d1c12
       Alb-Receive-Time:
-      - '1794332345.123'
+      - '1794605215.495'
       Alb-Request-Id:
-      - 480bad0ac734f181a02fa15073d4efd47b7fb88b
+      - 067a487e5eed8361efa72fc5aa5c5682ef2f0966
       Expires:
-      - Tue, 10 Nov 2026 17:39:06 GMT
+      - Fri, 13 Nov 2026 21:26:56 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Tue, 10 Nov 2026 17:39:06 GMT
+      - Fri, 13 Nov 2026 21:26:56 GMT
       Transfer-Encoding:
       - chunked
       Connection:
@@ -247,30 +236,33 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message_start
-        data: {"type":"message_start","message":{"id":"074289b9a50cbca2e349a2af83866cc5","type":"message","role":"assistant","content":[],"model":"MiniMax-M3.1-Flash","stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":0,"output_tokens":0}}}
+        data: {"type":"message_start","message":{"id":"0746b39f637e36da37a4f4844edf048d","type":"message","role":"assistant","content":[],"model":"MiniMax-M3.1-Flash","stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":0,"output_tokens":0}}}
 
         event: ping
         data: {"type":"ping"}
 
         event: content_block_start
-        data: {"type":"content_block_start","index":0,"content_block":{"type":"tool_use","id":"call_b8d5a3f24c894cfd8b11d05a","name":"best_language_to_learn","input":{}}}
+        data: {"type":"content_block_start","index":0,"content_block":{"type":"tool_use","id":"call_01a1d6ce715477d6b7f06490","name":"best_language_to_learn","input":{}}}
 
         event: content_block_delta
         data: {"type":"content_block_delta","index":0,"delta":{"type":"input_json_delta","partial_json":""}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"input_json_delta","partial_json":"{}"}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"input_json_delta","partial_json":"{"}}
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"input_json_delta","partial_json":"}"}}
 
         event: content_block_stop
         data: {"type":"content_block_stop","index":0}
 
         event: message_delta
-        data: {"type":"message_delta","delta":{"stop_reason":"tool_use"},"usage":{"input_tokens":265,"output_tokens":22,"cache_read_input_tokens":256}}
+        data: {"type":"message_delta","delta":{"stop_reason":"tool_use"},"usage":{"input_tokens":43,"output_tokens":22,"cache_read_input_tokens":489}}
 
         event: message_stop
         data: {"type":"message_stop"}
 
-  recorded_at: Tue, 10 Nov 2026 17:39:06 GMT
+  recorded_at: Fri, 13 Nov 2026 21:26:56 GMT
 - request:
     method: post
     uri: https://api.minimax.io/anthropic/v1/messages
@@ -278,9 +270,9 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"Call
         best_language_to_learn and repeat the programming language it returns."}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        call that tool now."},{"type":"tool_use","id":"call_f42c6e81627446e6876c4512","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"call_f42c6e81627446e6876c4512","content":[{"type":"text","text":"Ruby"}]}]},{"role":"assistant","content":[{"type":"text","text":"The
-        tool returned **Ruby**."}]},{"role":"user","content":[{"type":"text","text":"Call
-        best_language_to_learn again and repeat the programming language it returns."}]},{"role":"assistant","content":[{"type":"tool_use","id":"call_b8d5a3f24c894cfd8b11d05a","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"call_b8d5a3f24c894cfd8b11d05a","content":[{"type":"text","text":"Ruby"}]}]}],"stream":true,"max_tokens":524288,"tools":[{"name":"best_language_to_learn","description":"Gets
+        call that tool now."},{"type":"tool_use","id":"call_01a1d6ce6af171f8a89da627","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"call_01a1d6ce6af171f8a89da627","content":[{"type":"text","text":"Ruby"}]}]},{"role":"assistant","content":[{"type":"text","text":"The
+        tool returned **Ruby** — so, Ruby is the best language to learn."}]},{"role":"user","content":[{"type":"text","text":"Call
+        best_language_to_learn again and repeat the programming language it returns."}]},{"role":"assistant","content":[{"type":"tool_use","id":"call_01a1d6ce715477d6b7f06490","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"call_01a1d6ce715477d6b7f06490","content":[{"type":"text","text":"Ruby"}]}]}],"stream":true,"max_tokens":524288,"tools":[{"name":"best_language_to_learn","description":"Gets
         the best language to learn","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}],"system":[{"type":"text","text":"You
         must use tools whenever possible."}]}'
     headers:
@@ -304,25 +296,25 @@ http_interactions:
       Vary:
       - Accept-Encoding
       Trace-Id:
-      - '074289ba06a76b69d8c16091a1100e37'
+      - 0746b3a030667511c5a48c87075a0dbc
       X-Session-Id:
       - 29bbb10e2681f5e63ec64944bd4c251e
       X-Mm-Request-Id:
-      - 2092934004998157135_17943323462ct7xw
+      - 2092934004998157135_1794605216dscegc
       Minimax-Request-Id:
-      - c752fc5f7d3267932be8089b2ddfa0da
+      - f1d002f9a849bb2c68d33b678853e9c8
       Alb-Receive-Time:
-      - '1794332346.431'
+      - '1794605216.576'
       Alb-Request-Id:
-      - 1e04d9df035f22eac43e8f0e6ea3de5fb73def63
+      - ad084a164bf3af020b50af0ba3d26810d8db317c
       Expires:
-      - Tue, 10 Nov 2026 17:39:07 GMT
+      - Fri, 13 Nov 2026 21:26:57 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Tue, 10 Nov 2026 17:39:07 GMT
+      - Fri, 13 Nov 2026 21:26:57 GMT
       Transfer-Encoding:
       - chunked
       Connection:
@@ -333,32 +325,8 @@ http_interactions:
       X-From:
       - ak
     body:
-      encoding: UTF-8
-      string: |+
-        event: message_start
-        data: {"type":"message_start","message":{"id":"074289ba06a76b69d8c16091a1100e37","type":"message","role":"assistant","content":[],"model":"MiniMax-M3.1-Flash","stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":0,"output_tokens":0}}}
-
-        event: ping
-        data: {"type":"ping"}
-
-        event: content_block_start
-        data: {"type":"content_block_start","index":0,"content_block":{"type":"text","text":""}}
-
-        event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"The tool returned **"}}
-
-        event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"Ruby** again."}}
-
-        event: content_block_stop
-        data: {"type":"content_block_stop","index":0}
-
-        event: message_delta
-        data: {"type":"message_delta","delta":{"stop_reason":"end_turn"},"usage":{"input_tokens":47,"output_tokens":10,"cache_read_input_tokens":512}}
-
-        event: message_stop
-        data: {"type":"message_stop"}
-
-  recorded_at: Tue, 10 Nov 2026 17:39:07 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ZXZlbnQ6IG1lc3NhZ2Vfc3RhcnQKZGF0YTogeyJ0eXBlIjoibWVzc2FnZV9zdGFydCIsIm1lc3NhZ2UiOnsiaWQiOiIwNzQ2YjNhMDMwNjY3NTExYzVhNDhjODcwNzVhMGRiYyIsInR5cGUiOiJtZXNzYWdlIiwicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOltdLCJtb2RlbCI6Ik1pbmlNYXgtTTMuMS1GbGFzaCIsInN0b3BfcmVhc29uIjpudWxsLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjAsIm91dHB1dF90b2tlbnMiOjB9fX0KCmV2ZW50OiBwaW5nCmRhdGE6IHsidHlwZSI6InBpbmcifQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfc3RhcnQKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19zdGFydCIsImluZGV4IjowLCJjb250ZW50X2Jsb2NrIjp7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IiJ9fQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiJUaGUifX0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIHRvb2wgcmV0dXJuZWQifX0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiICoqUnVieSoqIGFnYWluIOKAlCBSdWJ5In19CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IiBpcyB0aGUgYmVzdCBsYW5ndWFnZSB0byJ9fQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIgbGVhcm4uIn19CgpldmVudDogY29udGVudF9ibG9ja19zdG9wCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfc3RvcCIsImluZGV4IjowfQoKZXZlbnQ6IG1lc3NhZ2VfZGVsdGEKZGF0YTogeyJ0eXBlIjoibWVzc2FnZV9kZWx0YSIsImRlbHRhIjp7InN0b3BfcmVhc29uIjoiZW5kX3R1cm4ifSwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjozOCwib3V0cHV0X3Rva2VucyI6MTgsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjo1MzJ9fQoKZXZlbnQ6IG1lc3NhZ2Vfc3RvcApkYXRhOiB7InR5cGUiOiJtZXNzYWdlX3N0b3AifQoK
+  recorded_at: Fri, 13 Nov 2026 21:26:57 GMT
 recorded_with: VCR 6.4.1
-...

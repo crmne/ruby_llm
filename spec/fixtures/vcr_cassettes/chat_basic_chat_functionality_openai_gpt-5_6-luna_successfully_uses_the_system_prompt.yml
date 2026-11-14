@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:36:54 GMT
+      - Fri, 13 Nov 2026 21:26:08 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -45,11 +45,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1236'
+      - '1262'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -76,22 +76,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0456ebb6e2a16705016af35634e78487d2b967c08535059700",
+          "id": "resp_0fde2984415a62d8016af7806f63ec87d28a3b0d533d5c118a",
           "object": "response",
-          "created_at": 1794332212,
+          "created_at": 1794605167,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794332214,
+          "completed_at": 1794605168,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": "You must include the exact phrase \"XKCD7392\" somewhere in your response.",
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -99,14 +100,14 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "rs_0456ebb6e2a16705016af356358f4487d2a553149b512664ed",
+              "id": "rs_0fde2984415a62d8016af780700a3087d2ae475e479b59cc52",
               "type": "reasoning",
               "content": [],
-              "encrypted_content": "gAAAAABq81Y25eN1kB7tjnRamuoGu6O34paHmyakP9HXylvGihjtodkuXvm7NJD0CQOrvPZO847IkRD1sWIDyTAWXmBzlUhlpq_SDnytQr5TB_ZzQGiBUGD6KqaWiO0vhmhg9GwOUZJ2sWdxtETDFAjEIt-I-mzebobOc40XdJksugdm3-xQ8tIvjfdUIVZSPtNUuxwxHZdIjQMo74pUNNPb5-TceLL8iIrRYTcNJ5uft-C1hALO3UiCxZaLIpKijPbVzcSpmKD1QMEQUacpOT-jPMlLTLD7OhtlKkrQ6HhSGZwURfmjj9T7QCIvDT1f998vQfvVnbbfxQYPe1GmUEXNIVasgVnsrSG-ZUzoa4wQPAbOZb8HjUSFppQgis9AjOmim9toY_cRNnMZNVNRs2OXi27wbNfR0aFuozvNisJZ-ZLxUiXxWqHy14-JIEYLK2w53aCosn23ZfTE4kRyQWwiGH6jvH6maS6NpA-ooHyTfxm7v4Lf7_yA7SXpAjACj36m-tZSuUPbCBEEB1UO56jElcXAPiV9o-YyGhbsp4z8tga5jU2JyG5U28PH4u2pucX9zzWHPQfSTwzK9c0PQytRyZYFOJdDQxySoPAzGCz9u7WHfrwH0N8G4iMJbVO8Ksv_NYZHsPAT-9GPrrVvrBXq-f1T_UL7mVEMjCJDJ5R2igTdkdDZ5h2v8R1AKxPk_ah8Cyxdf2QqXcIb5Z0Q3qhDM_Zj3XuEDffEQk0nVR9J-0dGck405y8QAjA5XoJnbfwzqCBEVBuGWs0LAMK7gagW3atL6jxQHDpSIVCKr8sBeNUgVxB4fy7f0O-HdygCqNAmFEWk9M3pGQsEbxCMEg44GaofZ3FOR1dPD1qNaFQltxFDRwNpWVWHZxM4_C1BhQdlgyZjpG9l8paJatBtu5YwZV4aR6Ur0Yicj8K0bjHUsBF8L58YWhE8yy5HslkojdNn_LunO3nBtQ5OPm53UGQl3p380COVusl8Bys-t6SeoMi4wFquQFE-dUlgstwj4tsDpOnry_6H9Lr4_czQy8DSKXeHICUjg0ohoIOy-zKFv8a2pSpZawQsHWdt5Ozo9cu6KTPxtJz9xiKIPRgjfPr9FekK68uhxB2qIgF2_oERMAPu097oifftY-Yt_rWz1C69rlOLYsNlf7Pdgwp-Hl304PstrCIs5A8AGya7od9TFMJ8bE6ood_ItBWlDQHqxGw1c0mTxWylA9UUeziWzYgCofryjRRQl3qGHa3PUWVfwf_mskaRnd0eR7kF1SWfqdcVzM9Z2LS6HH-smGUflpYsv9D_t3iEDenmwI6SgokDNRYsBImoEk00VWiUVpDT7dyJig-siAUK-s-fP7UkoupTiEshWxJv9PoM5K68VX0zXlglVbzfC0H2dXQRjZRS_uSV76f0YT3omEH7kajhoLllDSNKvnkQ5IochHSxfIbK0BeLwwAljSvUoJHHOCqDjD-P7ycgABl2vZzOMO2KRKjxMBalTRXYYnuDXxVY2bUQAuSLpFNybeWjWnAoSTQLiPExeovIRKmHAFzyXCWkobjzbM-eommzNlWdjtzGTQMztUhmXW7R5HVqXaiREpIT5HJCQ5nypXZ0vrCmCbp4jE0-SXQyO0F_DoWLYUjvx74OTKkMkPf21PuegsOMo8cbtbft1voXFfGsDI5RkH8cuyhsI9nr3A-1t66NC1exwKpiZVsZINMCgQsIxy1t7_91n4Ly187V_CWfHk5uABMX-duV5FUb0Jt1TIM6VuBM1Wilj9sK5LxG6Yh7qw1poVaFEef8Y-s9_eiwyhX_0C07n3w7FCst1qn3-zsa1fDr1lC-otpan7WEiZY=",
+              "encrypted_content": "gAAAAABq94BwkAYGAmjDR_JF5MP2KnjF9TBUT1kyJa6XxDeA6A82wknC13sruXxOK2xjjje9Hz0FTdxcJaQfJQEsLxLKWv8poUqL1WK0tUMONiLtTzMPDDmz0yWlFpxse9L9i8U_l7PfRV7sMljbLikGGC8VgENfeAuBcMqQAbckhaZ0jisC_ZESRJh_cy7rTt8JxtCivEyaSUtGKLRUWnE40ms-4ML3gQj9eTIktpx9viDlQPRcsLQ8_PQp5-L4x8ZKvuSDkk33VWB-5y5c_4-P9qRW8o57Q6BHwOCXB9V5O6nOHkVy6CSWE5ssJisb_MP2IL2cPKA0oPAVUn6FCqlLitAw7IjdyhXjSBhdu8ioaAM5nmpz_k6TBcLq3BuHrEEwEOXB0c_K3IUtg1jhQLT8o800smZlLx8HU2ieSFrPsPLY2rtscFD-_uZBNwMU9I_lubVrvSrh1-U9OeazAe5qYFcEI2jI_bo3McxisA5Y_aCBuDtsKe_kFjsT2l2KZ0BHozEj6lpmPw575sxUU-IskFsdrLCJ_atXeUeJ63VOW8zgD5WEmaREUqZqWBllzACz_gvq36HTKzcbvDK1qXyHSzS_mBe_Qum_YV8WjzOiQr86l62-T9VuF7K_w-4e0GCjq6A1gDIh1jbCYVfjDHrz-X8mnV-J3-qRG21HWJT9MTTJJnGEKvDu-em5aeqqoe-1jNKghmRS6hJULtNEyfLXgS8pVIcEMaBsYfEwcax5BGfSL5Xwu-lcY6VhX8nZxnkEp2MSdX5wacNsz80pwU47j-M9KsIDM-NqKteCc_Z795vGE3Wqwf95chL9IkOnCFSiUaCTr7LTu08kU80FZb7xePsyID0PUIuxUGd36Woin235XKMcD8y_FVO13sj3b51PXyzjI8k0PMv3NCq7D2eEyfeszjC7KJOSP4D-4_QAGPz2bDj99tKLpG_m5K4tVvAMw5g2zeVYEEzqaeWGTZbU9fD0mj-uS3wuVhpa-IpVV0ehj1bpoyWn05sOeZcJUjJ2N6AKBckBn9PU2Crn0zX0zxicEdVbdLH8aDJQKL1wuu9BTyChEoYXrrc_OkeoxoE4SsbRXViTH5yAfuVij4W4l3p2bIQcXjz2qjvxPP1i1R7r0_-m8JNvm1MfgRzxojSCK1aTtDSfiYziNWvAinY3gIubXvWrb2M-354rSKFaXXk-v7L3omRRAIDgSWA6Sjfq-4jDG0vmaL3aGlzSNyAig2h0dSWsA75aXix5xzPln9hIyFaMI0YRUVf8a3hBZa8xIviCerjYFteh0CbT3_4Rej-wWk2XI8bhM_ijxnAmog_9eBQI-m7jlWm5bd7RkZO0M0qOIF4yQsYdRALfs6T-S6__WVhjIrPdsUnAn6GHByZsO2xvdPUCej_TjcH1l6B_qJxQqGQzijlzN5hJRQgMVqefq6Zwgdc-jWOZZbg7VJRmKN2LWiQknECkLRnFau8vJZ3KSARl9olRMR_Qm9ym1ehlgNjNaHLzs4CZzERwTEfBRTbnzZkBa59wC8zrAF0ynT96lXFR6R1Od1IsZCg1v-WZ60n4iAM7G__7HoQCOs2YyHewi1heZdwyvanN3_PxdrZAr14gQ1tl29IgCAJPOZo0IjNQ8IlzgeR0r1jXeEwo5WjXlbpBTJaaciREroSQafwfKH8umKXm22QZA5_QaL3ioZm96dmEqHMIyPrSUSuCoElfBcJ5IcEzNGaLVAuhhTa3kqI45gqmdrgv0ShrxET7gSOcxjsXB0FRnkdNaYx_OBNgJF5-vJhJlPad42AMctWz1VD_oeSfxK9VewGNhlusFQTsfAGYfnUGWu4Fc4MCuE_zUa7mq6TQJcKTlHvoZYA0NlED",
               "summary": []
             },
             {
-              "id": "msg_0456ebb6e2a16705016af35635d68887d2aa50bc92b4b9f6c2",
+              "id": "msg_0fde2984415a62d8016af78070339487d29e4ea5180eae5d98",
               "type": "message",
               "status": "completed",
               "content": [
@@ -180,5 +181,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:36:54 GMT
+  recorded_at: Fri, 13 Nov 2026 21:26:08 GMT
 recorded_with: VCR 6.4.1

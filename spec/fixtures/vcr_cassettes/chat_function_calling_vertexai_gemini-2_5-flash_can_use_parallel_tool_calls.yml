@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Tue, 10 Nov 2026 17:43:44 GMT
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
       - no-cache
+      Date:
+      - Fri, 13 Nov 2026 21:30:51 GMT
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -56,7 +56,7 @@ http_interactions:
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Tue, 10 Nov 2026 17:43:44 GMT
+  recorded_at: Fri, 13 Nov 2026 21:30:51 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -85,7 +85,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - 0FfzasWdLqPntfAPitqJsQg
+      - i4H3at7jLYnlvNkPyInH8AM
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -93,7 +93,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 10 Nov 2026 17:43:45 GMT
+      - Fri, 13 Nov 2026 21:30:53 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -119,11 +119,11 @@ http_interactions:
                     "functionCall": {
                       "name": "weather",
                       "args": {
-                        "latitude": "52.5200",
-                        "longitude": "13.4050"
+                        "longitude": "13.4050",
+                        "latitude": "52.5200"
                       }
                     },
-                    "thoughtSignature": "AY89a19DSAu9UEPh8MWZFoTvxMmUON792oZIPakQ7/6u8oxnIel/p9fYAHWDSBoJBWfjrp2Ax6qwvBvd5O+SEps0DSMwQcl7sBFc+/yqVaJwlvdgVLAkGXkVmVt3zRfvkFUnJKRXfKe28/Zv5cljUCaQ3ru76dzTPXHHhm3IDSCzB52bp2dE8gAvylXRYlv7Jw3Rs/4t0plQLZj7PKgE8asgrdLPEwoaUngKsIIMezDqQR602m4UI4ttQttZiCVQnI3sdEbR821HXD0+OhNcJKY/pp4O+JAamq7WQgXouuDtg1f8Gxyk19N2dpJQ8zZMbqsEFYLHW1FZA4nLl3I9ah51GJKQs5cZqBZq74BG56hk2j4Jei1UolnlHnSNAkIVB3+cJapUpkVoA0OjniIh0G9uQK/j39CFaZ7iDhZT/03OxpzUH0hUnqMfpom22hUTqO0IojajNaXGu6bPSg+RWcKwGfF+cSd3DZdRh/S7wv0hgQo93PZ6tuKPHL8A9V3JUXDM3U+SA2fTVFjDNc4d4rko5I5KMShaq9syf184ZR8mU6dJdtbXSpj8fr/Tg+ukPhcZ+7zV22Bf/JOwHqSQqjwB2InRU7rEtIcpVwCzBLfVqtYRHbDqXfXpq9QNErKqBAHkbsTOddhV3dGhNUvCDxPoz/L4GxU="
+                    "thoughtSignature": "AY89a19c0QOUhiz6QNmEKZISCGnZDGp0fw6N4ZZtkIWSOalC403Xy3wMmIxC8KbRsOZJM5CVTQSn2iyNg8HMPMWyU+ji6dbvrmedLlyUMCO/dYwLW3UggbW+2XcKv945nlQ+SPel02tfu1z+fcfOnLqAMUT1jq5FFkQQCwMpsAr4tLuPwGaLRmzjy9Ghr77I+hSaKKy1a3A5bYmPXxxcCq2cNmeHRpRzbA3MW43DWJEiZ5qe4kBwd7JEm261iHXCp/nko8mennmye8x3ok1ZYWu1pmGPapom+MuweAuk/nV5Hm7J9Z4I2gdSDuTrtLBQuRimlq6N2LU8Hhtyv/bxcqYri9ozDOxHEQkbZyue3HsErRpSTgwlC/dEJWegrRazypQd9sv4/tuCwwpislnAkVfu4ChLDlsTwM56uWZy8eZV3B03/x73rC6bJ7q1h3V4HkfQuXyFh5MmAb9DRHyRosh7zxY9qy+TbJt3dYeIebu1HNVXy+/PiA7cyO/QIaK/IkLOz2w7P3Hhqo7da8hCL8ibe0AZvVo6aOtlOg+0DNj7h1gcK3Uz9FB9b1XXbOWLW4n4od/QrmIb/XmqLwvTQHCI/mlewmOTq8Qxnpo7PxCnyH87+AqEqEfpj7PQjkW6AvEXQuirLt8MSJdpiAblQQq7VLAGVTPpHUWrzYrzyPrm6apUPID6z3oE490HDUB+d/cmxTan1shoUFpuy5Ap8FZEpz+71hA3oGL0s3WTkxu8dNtZob/77NGFM/9nV/Kpmr0mquQ6E+7DkiIBZ3rAbgqpUwlAaHVHmHvUYmT+rceEYxEXOdo1kMsKu3+5nGTCLrCcNdfMPDwRG7R4CPk="
                   },
                   {
                     "functionCall": {
@@ -139,7 +139,7 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 55,
             "candidatesTokenCount": 43,
-            "totalTokenCount": 196,
+            "totalTokenCount": 253,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -153,20 +153,20 @@ http_interactions:
                 "tokenCount": 43
               }
             ],
-            "thoughtsTokenCount": 98
+            "thoughtsTokenCount": 155
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-11-10T17:43:44.757445Z",
-          "responseId": "0FfzasWdLqPntfAPitqJsQg"
+          "createTime": "2026-11-13T21:30:51.750046Z",
+          "responseId": "i4H3at7jLYnlvNkPyInH8AM"
         }
-  recorded_at: Tue, 10 Nov 2026 17:43:45 GMT
+  recorded_at: Fri, 13 Nov 2026 21:30:53 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the weather in
-        Berlin (52.5200, 13.4050) and what''s the best language to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"AY89a19DSAu9UEPh8MWZFoTvxMmUON792oZIPakQ7/6u8oxnIel/p9fYAHWDSBoJBWfjrp2Ax6qwvBvd5O+SEps0DSMwQcl7sBFc+/yqVaJwlvdgVLAkGXkVmVt3zRfvkFUnJKRXfKe28/Zv5cljUCaQ3ru76dzTPXHHhm3IDSCzB52bp2dE8gAvylXRYlv7Jw3Rs/4t0plQLZj7PKgE8asgrdLPEwoaUngKsIIMezDqQR602m4UI4ttQttZiCVQnI3sdEbR821HXD0+OhNcJKY/pp4O+JAamq7WQgXouuDtg1f8Gxyk19N2dpJQ8zZMbqsEFYLHW1FZA4nLl3I9ah51GJKQs5cZqBZq74BG56hk2j4Jei1UolnlHnSNAkIVB3+cJapUpkVoA0OjniIh0G9uQK/j39CFaZ7iDhZT/03OxpzUH0hUnqMfpom22hUTqO0IojajNaXGu6bPSg+RWcKwGfF+cSd3DZdRh/S7wv0hgQo93PZ6tuKPHL8A9V3JUXDM3U+SA2fTVFjDNc4d4rko5I5KMShaq9syf184ZR8mU6dJdtbXSpj8fr/Tg+ukPhcZ+7zV22Bf/JOwHqSQqjwB2InRU7rEtIcpVwCzBLfVqtYRHbDqXfXpq9QNErKqBAHkbsTOddhV3dGhNUvCDxPoz/L4GxU="},{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        Berlin (52.5200, 13.4050) and what''s the best language to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"AY89a19c0QOUhiz6QNmEKZISCGnZDGp0fw6N4ZZtkIWSOalC403Xy3wMmIxC8KbRsOZJM5CVTQSn2iyNg8HMPMWyU+ji6dbvrmedLlyUMCO/dYwLW3UggbW+2XcKv945nlQ+SPel02tfu1z+fcfOnLqAMUT1jq5FFkQQCwMpsAr4tLuPwGaLRmzjy9Ghr77I+hSaKKy1a3A5bYmPXxxcCq2cNmeHRpRzbA3MW43DWJEiZ5qe4kBwd7JEm261iHXCp/nko8mennmye8x3ok1ZYWu1pmGPapom+MuweAuk/nV5Hm7J9Z4I2gdSDuTrtLBQuRimlq6N2LU8Hhtyv/bxcqYri9ozDOxHEQkbZyue3HsErRpSTgwlC/dEJWegrRazypQd9sv4/tuCwwpislnAkVfu4ChLDlsTwM56uWZy8eZV3B03/x73rC6bJ7q1h3V4HkfQuXyFh5MmAb9DRHyRosh7zxY9qy+TbJt3dYeIebu1HNVXy+/PiA7cyO/QIaK/IkLOz2w7P3Hhqo7da8hCL8ibe0AZvVo6aOtlOg+0DNj7h1gcK3Uz9FB9b1XXbOWLW4n4od/QrmIb/XmqLwvTQHCI/mlewmOTq8Qxnpo7PxCnyH87+AqEqEfpj7PQjkW6AvEXQuirLt8MSJdpiAblQQq7VLAGVTPpHUWrzYrzyPrm6apUPID6z3oE490HDUB+d/cmxTan1shoUFpuy5Ap8FZEpz+71hA3oGL0s3WTkxu8dNtZob/77NGFM/9nV/Kpmr0mquQ6E+7DkiIBZ3rAbgqpUwlAaHVHmHvUYmT+rceEYxEXOdo1kMsKu3+5nGTCLrCcNdfMPDwRG7R4CPk="},{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}},{"functionResponse":{"name":"best_language_to_learn","response":{"name":"best_language_to_learn","content":[{"text":"Ruby"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parametersJsonSchema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -189,7 +189,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - 0lfzapfGArrCtfAPy5SMsQ4
+      - jYH3apmdD6fNmLAPhMDwqQI
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -197,7 +197,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 10 Nov 2026 17:43:46 GMT
+      - Fri, 13 Nov 2026 21:30:53 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -213,6 +213,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJUaGUgd2VhdGhlciBpbiBCZXJsaW4gaXMgMTXCsEMgd2l0aCB3aW5kIGF0IDEwIGttL2guIFRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzIFJ1YnkuIgogICAgICAgICAgfQogICAgICAgIF0KICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIgogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDIzNSwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDI4LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDI2MywKICAgICJ0cmFmZmljVHlwZSI6ICJPTl9ERU1BTkQiLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAyMzUKICAgICAgfQogICAgXSwKICAgICJjYW5kaWRhdGVzVG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDI4CiAgICAgIH0KICAgIF0KICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuNS1mbGFzaCIsCiAgImNyZWF0ZVRpbWUiOiAiMjAyNi0xMS0xMFQxNzo0Mzo0Ni4wNDE3NTFaIiwKICAicmVzcG9uc2VJZCI6ICIwbGZ6YXBmR0FyckN0ZkFQeTVTTXNRNCIKfQo=
-  recorded_at: Tue, 10 Nov 2026 17:43:46 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJUaGUgd2VhdGhlciBpbiBCZXJsaW4gaXMgMTXCsEMsIHdpdGggd2luZCBhdCAxMCBrbS9oLiBUaGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybiBpcyBSdWJ5LiIKICAgICAgICAgIH0KICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiAyOTIsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiAyOSwKICAgICJ0b3RhbFRva2VuQ291bnQiOiAzMjEsCiAgICAidHJhZmZpY1R5cGUiOiAiT05fREVNQU5EIiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMjkyCiAgICAgIH0KICAgIF0sCiAgICAiY2FuZGlkYXRlc1Rva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAyOQogICAgICB9CiAgICBdCiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0yLjUtZmxhc2giLAogICJjcmVhdGVUaW1lIjogIjIwMjYtMTEtMTNUMjE6MzA6NTMuMjQ5NDk3WiIsCiAgInJlc3BvbnNlSWQiOiAiallIM2FwbWRENmZObUxBUGhNRHdxUUkiCn0K
+  recorded_at: Fri, 13 Nov 2026 21:30:53 GMT
 recorded_with: VCR 6.4.1

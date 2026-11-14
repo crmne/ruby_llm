@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:54:24 GMT
+      - Fri, 13 Nov 2026 21:40:04 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,11 +48,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1649'
+      - '1148'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -79,22 +79,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_001aa4723139878b016af35a4eb84087d2839e21a43f48f987",
+          "id": "resp_0cfc6f6697fa10cd016af783b3487487d2865f442c37c3a8b7",
           "object": "response",
-          "created_at": 1794333262,
+          "created_at": 1794606003,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794333264,
+          "completed_at": 1794606004,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": "Your location is Berlin, at latitude 52.5200 and longitude 13.4050.",
           "max_output_tokens": 4096,
           "max_tool_calls": null,
@@ -102,18 +103,18 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "rs_001aa4723139878b016af35a4f8d3487d29d22be96003dce9a",
+              "id": "rs_0cfc6f6697fa10cd016af783b3cdfc87d29ac68feb72533693",
               "type": "reasoning",
               "content": [],
-              "encrypted_content": "gAAAAABq81pQNdwCMCuh1sKw9L4mg9-0lz_C5hDOqUJk3zO7Ps9DqRsk4a7r_PZGbAg70sfyjYGEsBCLeUlVGnkJaP6YWNbOhFbySE9eKYkKuZcSeeD68Dmy0-xwiS1rJes62M44xTRxuCJTGR9XkCIbNc7mgW0AbEyFsN9qTVo_JVmYm8Tj1dc6BR2Ub7Z5dcABiM4xsidiU1Jgk8q36tne0RGAiTQel5bzTjeMBh3yBXHXFglCfd3VpOlXNJzCYWH_QTufDNlOLPhkJa7t4w0Fc-diHFbEKPg6kPM9CwqOcDRrtA1NqCsvIIfk_eWQJI1dqwsl8_Xx3oLp2mrnboOxswzGX9xlVH5RHO8g0iheZz_0WFhzrDnQRQKNFsDsx_Woe8hLaVOzY7R3CoovQVsXdAmo09ws_P5vMwvQgvPZdjGjwyVaFl0931z6ELCPU9nl2uEgfYWaA4WkAqkigXZmxFq3mOJiJpw296KOnjhdCxxJYyufv8at1aCuQrMTptCMb1KfKvxl31QD-vyCdOGWM57RHqN064Wgpd-hhRfQuGleCH3wd25CUO4CDhvHew0TPwAE4_j3aBsFG9j28Ro5lsmSXiTZwLIbj6Sn2GYDbfIsE2YQEMxRdvpKBJS0BKmg6kK40xF4gGO3sFuo8fzF2rr9f-yOKoNe3VqZUfl5--YKhX67I9UX2NattOvQtSFMTfOG1XaI2zu8zKrYQsRftm__5mdCH687krIQx627lLkxfTwW7IZocyJC3bRp20xhAGfDEfgniQup_RKY9ROXHd8I3X8K4gjXqv3L6uEPM9PQTuD0azVbAZCR-VMTdlUg9RK1HXsp4VAKYBBnpppNtQh2lMKPSa-yzx0KNtdkc4Fuo9OS4g3_7lYuS6FKs-FxbG-P1yYWvOcaQNE1nq17zviFHCAe3Gxoxh7ozwt7UutpemRIu3fjoKpaMacfMgYH16pTmT8HyULzOlcYEDmO1ZBa9sIQYNzXbw-UyOBNoivlJ_SZA_Sxfm3k27ggiYD_hljRtnkcauuqPgnke46ow4vVxFyU-SdgfDa7M7M8i72tUBEDy7CCPm-ZV4LxUEmY7GPFJ9_w0XzB4vh7V8sdzqs-BOjVhJMQzTdGUluzxpEN8Qeg2IQXhVkagu_LgMNFbNrd5sYXfz-kNwFWEqxR9xV_ILJHVJKW6On79bNlthfIy9wvcaJ30bbOwHhpj4TrXvwBG_hNoRXP2YO7RmkMKam5-PGqXHog7GUpB_t_QchFKULwvK-jM-wdJxlO3aSKRGT4WWR4GgLpVp9BF-ITaItdw31LFXoc73L2ICwZ06-VqH2zGaz4WA7hEmXIO3_SK3vo0vR3_8PgriO_jqdU-sNIMeZrG80u4RhW3y1dlOF9jVaRXH5GDqCJFV8CUqjJSjG9648IPXzrtl9Mi-CxNVlexLWlRNvI_eQx2a4KyNMzboDsSHFOUxFotWUD20uqh3jTRoMkbFMhZ-8zMOzAkF9DW0khMM_41SIpjPKDIGWJJLZh1_1UIb1CmETcFVmlE-ZK9-kRs970CgV6RiDiwDQ1DZ3kSzAzSsaAi1cDxrJ7TFE35dPg80sMyT7soLHgdMQoHMLVzFuJZyWT98LdXU3Eo5SYkL9mGwywBNI4VTI8fjlzsdbeQDYSIif8c4h9u9wEFFGhY3uxmmBrhNCvVIP_DKzayoc2uy4x3KRvh9D2Ju7fzG2GM2HN3Lwg1Yz_VcA0SBIipsjp6hWrfw5JfmTLj83l3aLPzrloDuFMDfDTTU5FTUDF1thXA3GTYOGU1Ucj1sE3",
+              "encrypted_content": "gAAAAABq94O0PQsymtZJkgdQlDdez9hr71uhJYdw-gHwjR4zXEB4x87i6ubvkl9MigfkXI-aYDWWRiaNS04cS8rJlgosMfTImmM6ygADeu0Fb3nplNr4t5zkw9oSK_m_VcAXmQQbUNIlESkuDaqxOa9engQrYOf4QVrqKkbfYN5y9NP4FyhQd489nA_uKZ7GHbiY1JOxx810BhBvJx2AvezYtFY32fEkl7xHy8IB9IHVsFa-qa_arJFrigfeRXgQeJgkLcPbu9KH6YADr4Z2Mf2BDcqT5HRFOTCMPOeU_wCZxjoeLkTId9E3IHVwH3v0UHn8xwqrYA8pL_SiVXXbwNMtyDpqFuSZ9NVVp-Mj7MAvJyL2uz8ea8H9gXcdemq8jg9zQWw9vKxiD06OQrXUWxDkEK6B0bThbO3E6z5YVtrEL0DGelqfu5KzW5YXBY8LyCdpnjYimqjg3GVljvmk0ZGQK7CaH76OKbsfxckBr3q-bIDiOwJjHpU-r9fTNBbYZpQphz6k3d_mPJX2KBf_qhweSisj8-VKfT3PPCHdm7EAfMVoon1iEZPqGY1rnOCglXsTn6ykXRPzkRqlo33Jg0rbn3gKyt9ukJd8x7gGe4ZEgk-ohtUOaQ553yUpBBfhfnBHTCNR86V4NMdcUwRKN7tTA44ncH-K3vM5QmtxH0gOZXRI8J0qWyz8_eKudSgcWAzzUVthApKdtHv1j_GLUz2dXg_blPGjt8gtfEyS_Ujd2BIxaQMyDhavN-fj22Km3sxEMP_Jswntj2oUMKxbsqZzYFzO3SpW09CfQE7ykE4rpEX8lK1ByD3SHaBPwGfAPi16E9n1POC18XLA4gPC008Nznhdv9ncNFRFxYmMUc4YFaaa6W9_P1z5WBEcNian5F9KXctucqoEc3Kt4R1FLsovaESr-MiEjyr4dayYpePwg7iDr2Z5XgBa8WMCYNbK0NtUBMN2a0gnYaBwZJVQDxqLOuuXCiICcq9gwZpAfReIO_w3UQJHE5BElqInv3_U9Fwa7oZiCtKwCfXZfpZF5UAB_5QAWedabkXz8hezVHum2TpgDaund3_wFOxbQ5cadRPMLp7iD9DPISVQ1b-JQBWGbtdGEBf3_tIojbaLDl9bB81yJPEAfGRTKPujZ4CHrRj3GKvgTr206NxjtYpHnE72wnj9G2AzEzHLtysyRvkOEwbVg8eyGaKKDmAvxOHlZHoR_F5fnbz4k6bdrmooQdLpy2CqCcWvMAt4by4G_DIye2ry3oliXz0RWJwo3pdBeA3yiZKrimopyS5-ztBcG088G0PKjs8a4LkibvUpj-7f6FPohPfsRwmn2CNGSZxkV46CQL0JE4iqf5Y0KyTtJ3RXVEt7JZPwjUGgzFUhiHuhspFRtkBzPUro9LuxU4Jg9LEU2v7c45jaQL0GuVzBSWEdQWk4JrSNrf7BEDFOcGh642GHMwiIzq18QLfRq41r2jgyVIltDB4lx42cTYABAImWHca1EboKBw0L3ztZIpZN5xazA669VIk36d3RdbAzR7fDh3kQzrEWU8evMtFisIw-rK8LVkcEhYUdXD-viHAAgnSzaEmeXB_LTuJD1Jgrzcd-67VEO0m1GI6McQl6WvgO56hCKoIKK-62qBEiW5G0jB2bc9r5k10u-SgGzJk4g94IVNrOd7feSFikWWTvZFFuvwLIs_GU_B3CLfcQlzz6oKMSaSd1d8gbwOPVyv-RUvIYZ7TgIb6mkESGIHZtcpYznyfZk_q36xpBAMbW4sfV-ANQsz9FkXKJ_14mU4V513ED4zDMZ85K3uxGb9L4HPwSvX0wJqTfovLtsAjrICeV3PQBQ3Li27KlZs4qklqUE_fBlhGvBL9xp1NsIPG4td8LFJRYii_mMm5JfHsnEdfP-oD1YZT149VEc3MWce-rYxYakGYj_-zXEJs0gRHCJdYd9PG1BgCW3pkuUAa9TSG0QlciHnMkuptr92bYPJXpXzuRIADZKKmvrrI3MsqoOrgm_emZtnhDfEzkOU26ceZOyB5eqnfQdOA=",
               "summary": []
             },
             {
-              "id": "fc_001aa4723139878b016af35a4fd23c87d29444a710d0df5988",
+              "id": "fc_0cfc6f6697fa10cd016af783b4234c87d28efa87430c6888d1",
               "type": "function_call",
               "status": "completed",
               "arguments": "{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}",
-              "call_id": "call_uAQ77tfLL5crq4ybB3hzxvyk",
+              "call_id": "call_Xjqo3qRUq0jvCswYdb3al0uc",
               "name": "weather"
             }
           ],
@@ -194,23 +195,23 @@ http_interactions:
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 44,
+            "output_tokens": 60,
             "output_tokens_details": {
-              "reasoning_tokens": 15
+              "reasoning_tokens": 31
             },
-            "total_tokens": 144
+            "total_tokens": 160
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:54:24 GMT
+  recorded_at: Fri, 13 Nov 2026 21:40:04 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"When was
-        the fall of Rome?"},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABq81pQNdwCMCuh1sKw9L4mg9-0lz_C5hDOqUJk3zO7Ps9DqRsk4a7r_PZGbAg70sfyjYGEsBCLeUlVGnkJaP6YWNbOhFbySE9eKYkKuZcSeeD68Dmy0-xwiS1rJes62M44xTRxuCJTGR9XkCIbNc7mgW0AbEyFsN9qTVo_JVmYm8Tj1dc6BR2Ub7Z5dcABiM4xsidiU1Jgk8q36tne0RGAiTQel5bzTjeMBh3yBXHXFglCfd3VpOlXNJzCYWH_QTufDNlOLPhkJa7t4w0Fc-diHFbEKPg6kPM9CwqOcDRrtA1NqCsvIIfk_eWQJI1dqwsl8_Xx3oLp2mrnboOxswzGX9xlVH5RHO8g0iheZz_0WFhzrDnQRQKNFsDsx_Woe8hLaVOzY7R3CoovQVsXdAmo09ws_P5vMwvQgvPZdjGjwyVaFl0931z6ELCPU9nl2uEgfYWaA4WkAqkigXZmxFq3mOJiJpw296KOnjhdCxxJYyufv8at1aCuQrMTptCMb1KfKvxl31QD-vyCdOGWM57RHqN064Wgpd-hhRfQuGleCH3wd25CUO4CDhvHew0TPwAE4_j3aBsFG9j28Ro5lsmSXiTZwLIbj6Sn2GYDbfIsE2YQEMxRdvpKBJS0BKmg6kK40xF4gGO3sFuo8fzF2rr9f-yOKoNe3VqZUfl5--YKhX67I9UX2NattOvQtSFMTfOG1XaI2zu8zKrYQsRftm__5mdCH687krIQx627lLkxfTwW7IZocyJC3bRp20xhAGfDEfgniQup_RKY9ROXHd8I3X8K4gjXqv3L6uEPM9PQTuD0azVbAZCR-VMTdlUg9RK1HXsp4VAKYBBnpppNtQh2lMKPSa-yzx0KNtdkc4Fuo9OS4g3_7lYuS6FKs-FxbG-P1yYWvOcaQNE1nq17zviFHCAe3Gxoxh7ozwt7UutpemRIu3fjoKpaMacfMgYH16pTmT8HyULzOlcYEDmO1ZBa9sIQYNzXbw-UyOBNoivlJ_SZA_Sxfm3k27ggiYD_hljRtnkcauuqPgnke46ow4vVxFyU-SdgfDa7M7M8i72tUBEDy7CCPm-ZV4LxUEmY7GPFJ9_w0XzB4vh7V8sdzqs-BOjVhJMQzTdGUluzxpEN8Qeg2IQXhVkagu_LgMNFbNrd5sYXfz-kNwFWEqxR9xV_ILJHVJKW6On79bNlthfIy9wvcaJ30bbOwHhpj4TrXvwBG_hNoRXP2YO7RmkMKam5-PGqXHog7GUpB_t_QchFKULwvK-jM-wdJxlO3aSKRGT4WWR4GgLpVp9BF-ITaItdw31LFXoc73L2ICwZ06-VqH2zGaz4WA7hEmXIO3_SK3vo0vR3_8PgriO_jqdU-sNIMeZrG80u4RhW3y1dlOF9jVaRXH5GDqCJFV8CUqjJSjG9648IPXzrtl9Mi-CxNVlexLWlRNvI_eQx2a4KyNMzboDsSHFOUxFotWUD20uqh3jTRoMkbFMhZ-8zMOzAkF9DW0khMM_41SIpjPKDIGWJJLZh1_1UIb1CmETcFVmlE-ZK9-kRs970CgV6RiDiwDQ1DZ3kSzAzSsaAi1cDxrJ7TFE35dPg80sMyT7soLHgdMQoHMLVzFuJZyWT98LdXU3Eo5SYkL9mGwywBNI4VTI8fjlzsdbeQDYSIif8c4h9u9wEFFGhY3uxmmBrhNCvVIP_DKzayoc2uy4x3KRvh9D2Ju7fzG2GM2HN3Lwg1Yz_VcA0SBIipsjp6hWrfw5JfmTLj83l3aLPzrloDuFMDfDTTU5FTUDF1thXA3GTYOGU1Ucj1sE3"},{"type":"function_call","call_id":"call_uAQ77tfLL5crq4ybB3hzxvyk","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call_uAQ77tfLL5crq4ybB3hzxvyk","output":"Current
+        the fall of Rome?"},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABq94O0PQsymtZJkgdQlDdez9hr71uhJYdw-gHwjR4zXEB4x87i6ubvkl9MigfkXI-aYDWWRiaNS04cS8rJlgosMfTImmM6ygADeu0Fb3nplNr4t5zkw9oSK_m_VcAXmQQbUNIlESkuDaqxOa9engQrYOf4QVrqKkbfYN5y9NP4FyhQd489nA_uKZ7GHbiY1JOxx810BhBvJx2AvezYtFY32fEkl7xHy8IB9IHVsFa-qa_arJFrigfeRXgQeJgkLcPbu9KH6YADr4Z2Mf2BDcqT5HRFOTCMPOeU_wCZxjoeLkTId9E3IHVwH3v0UHn8xwqrYA8pL_SiVXXbwNMtyDpqFuSZ9NVVp-Mj7MAvJyL2uz8ea8H9gXcdemq8jg9zQWw9vKxiD06OQrXUWxDkEK6B0bThbO3E6z5YVtrEL0DGelqfu5KzW5YXBY8LyCdpnjYimqjg3GVljvmk0ZGQK7CaH76OKbsfxckBr3q-bIDiOwJjHpU-r9fTNBbYZpQphz6k3d_mPJX2KBf_qhweSisj8-VKfT3PPCHdm7EAfMVoon1iEZPqGY1rnOCglXsTn6ykXRPzkRqlo33Jg0rbn3gKyt9ukJd8x7gGe4ZEgk-ohtUOaQ553yUpBBfhfnBHTCNR86V4NMdcUwRKN7tTA44ncH-K3vM5QmtxH0gOZXRI8J0qWyz8_eKudSgcWAzzUVthApKdtHv1j_GLUz2dXg_blPGjt8gtfEyS_Ujd2BIxaQMyDhavN-fj22Km3sxEMP_Jswntj2oUMKxbsqZzYFzO3SpW09CfQE7ykE4rpEX8lK1ByD3SHaBPwGfAPi16E9n1POC18XLA4gPC008Nznhdv9ncNFRFxYmMUc4YFaaa6W9_P1z5WBEcNian5F9KXctucqoEc3Kt4R1FLsovaESr-MiEjyr4dayYpePwg7iDr2Z5XgBa8WMCYNbK0NtUBMN2a0gnYaBwZJVQDxqLOuuXCiICcq9gwZpAfReIO_w3UQJHE5BElqInv3_U9Fwa7oZiCtKwCfXZfpZF5UAB_5QAWedabkXz8hezVHum2TpgDaund3_wFOxbQ5cadRPMLp7iD9DPISVQ1b-JQBWGbtdGEBf3_tIojbaLDl9bB81yJPEAfGRTKPujZ4CHrRj3GKvgTr206NxjtYpHnE72wnj9G2AzEzHLtysyRvkOEwbVg8eyGaKKDmAvxOHlZHoR_F5fnbz4k6bdrmooQdLpy2CqCcWvMAt4by4G_DIye2ry3oliXz0RWJwo3pdBeA3yiZKrimopyS5-ztBcG088G0PKjs8a4LkibvUpj-7f6FPohPfsRwmn2CNGSZxkV46CQL0JE4iqf5Y0KyTtJ3RXVEt7JZPwjUGgzFUhiHuhspFRtkBzPUro9LuxU4Jg9LEU2v7c45jaQL0GuVzBSWEdQWk4JrSNrf7BEDFOcGh642GHMwiIzq18QLfRq41r2jgyVIltDB4lx42cTYABAImWHca1EboKBw0L3ztZIpZN5xazA669VIk36d3RdbAzR7fDh3kQzrEWU8evMtFisIw-rK8LVkcEhYUdXD-viHAAgnSzaEmeXB_LTuJD1Jgrzcd-67VEO0m1GI6McQl6WvgO56hCKoIKK-62qBEiW5G0jB2bc9r5k10u-SgGzJk4g94IVNrOd7feSFikWWTvZFFuvwLIs_GU_B3CLfcQlzz6oKMSaSd1d8gbwOPVyv-RUvIYZ7TgIb6mkESGIHZtcpYznyfZk_q36xpBAMbW4sfV-ANQsz9FkXKJ_14mU4V513ED4zDMZ85K3uxGb9L4HPwSvX0wJqTfovLtsAjrICeV3PQBQ3Li27KlZs4qklqUE_fBlhGvBL9xp1NsIPG4td8LFJRYii_mMm5JfHsnEdfP-oD1YZT149VEc3MWce-rYxYakGYj_-zXEJs0gRHCJdYd9PG1BgCW3pkuUAa9TSG0QlciHnMkuptr92bYPJXpXzuRIADZKKmvrrI3MsqoOrgm_emZtnhDfEzkOU26ceZOyB5eqnfQdOA="},{"type":"function_call","call_id":"call_Xjqo3qRUq0jvCswYdb3al0uc","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call_Xjqo3qRUq0jvCswYdb3al0uc","output":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"instructions":"Your location
         is Berlin, at latitude 52.5200 and longitude 13.4050.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"max_output_tokens":4096,"tools":[{"type":"function","name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
@@ -233,7 +234,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:54:25 GMT
+      - Fri, 13 Nov 2026 21:40:06 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -253,11 +254,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1494'
+      - '2178'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -284,22 +285,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_01c56ec060d0f883016af35a507a9487d2b3aee08f2b2b1f56",
+          "id": "resp_013d9af8f4b5eabc016af783b4872c87d2bb29f7edb6a7b05d",
           "object": "response",
-          "created_at": 1794333264,
+          "created_at": 1794606004,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794333265,
+          "completed_at": 1794606006,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": "Your location is Berlin, at latitude 52.5200 and longitude 13.4050.",
           "max_output_tokens": 4096,
           "max_tool_calls": null,
@@ -307,7 +309,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_01c56ec060d0f883016af35a5114c487d2a4c23f29c350254a",
+              "id": "msg_013d9af8f4b5eabc016af783b5e8f487d2b519f7a796dc4b63",
               "type": "message",
               "status": "completed",
               "content": [
@@ -315,7 +317,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "The **fall of Rome** usually refers to the fall of the **Western Roman Empire in 476 CE**, when the Germanic leader **Odoacer deposed Emperor Romulus Augustulus**.\n\nHowever, Rome\u2019s decline was gradual rather than a single event. The **Eastern Roman Empire**\u2014often called the Byzantine Empire\u2014continued until **1453**, when Constantinople fell."
+                  "text": "The **fall of the Western Roman Empire** is traditionally dated to **476 CE**, when the Germanic leader Odoacer deposed Emperor Romulus Augustulus.\n\nHowever, Rome\u2019s decline was gradual, and the **Eastern Roman Empire (Byzantine Empire)** continued until **1453**, when Constantinople fell to the Ottoman Turks."
                 }
               ],
               "phase": "final_answer",
@@ -394,19 +396,19 @@ http_interactions:
           "top_p": 0.98,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 179,
+            "input_tokens": 195,
             "input_tokens_details": {
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 81,
+            "output_tokens": 72,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 260
+            "total_tokens": 267
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:54:25 GMT
+  recorded_at: Fri, 13 Nov 2026 21:40:06 GMT
 recorded_with: VCR 6.4.1

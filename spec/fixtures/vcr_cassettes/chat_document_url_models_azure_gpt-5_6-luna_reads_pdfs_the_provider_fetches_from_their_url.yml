@@ -24,11 +24,11 @@ http_interactions:
       message: OK
     headers:
       Content-Length:
-      - '3686'
+      - '3708'
       Content-Type:
       - application/json
       Date:
-      - Tue, 10 Nov 2026 17:46:47 GMT
+      - Fri, 13 Nov 2026 21:34:08 GMT
       Server:
       - istio-envoy
       Vary:
@@ -68,9 +68,9 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Apim-Request-Id:
-      - 9c8aed80-7c3c-40cc-9703-4a2e261a1ebf
+      - 3db9a28a-b529-4cb3-8bfe-129c1e21bda0
       X-Http2-Stream-Id:
-      - '539'
+      - '465'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -81,13 +81,13 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "resp_0df66f41f6429cae016af35887c0d48193a18af36a3242b2ea",
+          "id": "resp_0ae868493e9e2d12016af7825125588197ab4b5eac9e57e401",
           "object": "response",
-          "created_at": 1794332807,
+          "created_at": 1794605649,
           "status": "completed",
           "access_programs": null,
           "background": false,
-          "completed_at": 1794332809,
+          "completed_at": 1794605650,
           "content_filters": [
             {
               "blocked": false,
@@ -153,7 +153,7 @@ http_interactions:
               },
               "content_filter_offsets": {
                 "start_offset": 0,
-                "end_offset": 101,
+                "end_offset": 123,
                 "check_offset": 0
               }
             }
@@ -168,7 +168,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0df66f41f6429cae016af35888af448193b4400d21c69f5791",
+              "id": "msg_0ae868493e9e2d12016af78251e190819786d0e3b4bbc3af42",
               "type": "message",
               "status": "completed",
               "content": [
@@ -176,7 +176,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "A sample PDF contains several paragraphs of placeholder Lorem Ipsum text without substantive content."
+                  "text": "The document is a sample PDF containing several paragraphs of placeholder Lorem Ipsum text without substantive information."
                 }
               ],
               "phase": "final_answer",
@@ -233,14 +233,14 @@ http_interactions:
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 19,
+            "output_tokens": 22,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 781
+            "total_tokens": 784
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:46:49 GMT
+  recorded_at: Fri, 13 Nov 2026 21:34:10 GMT
 recorded_with: VCR 6.4.1

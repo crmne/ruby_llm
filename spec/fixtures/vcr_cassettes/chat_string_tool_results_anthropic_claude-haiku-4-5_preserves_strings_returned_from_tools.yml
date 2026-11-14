@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:51:00 GMT
+      - Fri, 13 Nov 2026 21:37:20 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -40,62 +40,62 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-11-10T17:51:00Z'
+      - '2026-11-13T21:37:20Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-11-10T17:51:00Z'
+      - '2026-11-13T21:37:20Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-11-10T17:50:59Z'
+      - '2026-11-13T21:37:19Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-11-10T17:51:00Z'
+      - '2026-11-13T21:37:20Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-f2da9769b533b0fe2e4ea7e767f49411-3efd9086a90db346-01
+      - 00-ceab77c5ec5808ba4faeca0972f66cab-adb6dd5492864a28-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
       - "<ANTHROPIC_WORKSPACE_ID>"
       Vary:
       - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
       Server:
       - cloudflare
       Server-Timing:
-      - x-originResponse;dur=737
-      X-Robots-Tag:
-      - none
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
+      - x-originResponse;dur=503
       Cf-Cache-Status:
       - DYNAMIC
+      X-Robots-Tag:
+      - none
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cgufuc5ZBQ35NbbWChzUb","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01CF1ShWhBRJouP16k5kpKLT","name":"content_returning","input":{"query":"test
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch1ebQddhn1RrxCTao7Tp","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_015zsgqk8r6cFDivHZKQysVo","name":"content_returning","input":{"query":"test
         data"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":582,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":55,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
-  recorded_at: Tue, 10 Nov 2026 17:51:00 GMT
+  recorded_at: Fri, 13 Nov 2026 21:37:20 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"Process
-        this query: test data"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01CF1ShWhBRJouP16k5kpKLT","name":"content_returning","input":{"query":"test
-        data"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01CF1ShWhBRJouP16k5kpKLT","content":[{"type":"text","text":"Processed:
+        this query: test data"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_015zsgqk8r6cFDivHZKQysVo","name":"content_returning","input":{"query":"test
+        data"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_015zsgqk8r6cFDivHZKQysVo","content":[{"type":"text","text":"Processed:
         test data"}]}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"content_returning","description":"Returns
         a processed string result","input_schema":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}]}'
@@ -118,7 +118,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:51:00 GMT
+      - Fri, 13 Nov 2026 21:37:20 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -130,53 +130,53 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-11-10T17:51:00Z'
+      - '2026-11-13T21:37:20Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-11-10T17:51:00Z'
+      - '2026-11-13T21:37:20Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-11-10T17:51:00Z'
+      - '2026-11-13T21:37:20Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-11-10T17:51:00Z'
+      - '2026-11-13T21:37:20Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-47a7e6d2cb88b340ef22c54d09d5fd44-3b3edcb19a2c3f90-01
+      - 00-6dc1cfbf0efa5f932a3fb4a7e83361ba-6bfa93ea0efb90b6-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
       - "<ANTHROPIC_WORKSPACE_ID>"
       Vary:
       - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
       Server:
       - cloudflare
       Server-Timing:
-      - x-originResponse;dur=541
-      X-Robots-Tag:
-      - none
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
+      - x-originResponse;dur=375
       Cf-Cache-Status:
       - DYNAMIC
+      X-Robots-Tag:
+      - none
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CgufufWBLcLhv2DPGGjGD","type":"message","role":"assistant","content":[{"type":"text","text":"Your
-        query \"test data\" has been processed successfully. The result returned is:
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Ch1ebTEPyLB43pwuZThkj","type":"message","role":"assistant","content":[{"type":"text","text":"The
+        query \"test data\" has been successfully processed. The result returned is:
         **Processed: test data**"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":654,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":26,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
-  recorded_at: Tue, 10 Nov 2026 17:51:01 GMT
+  recorded_at: Fri, 13 Nov 2026 21:37:20 GMT
 recorded_with: VCR 6.4.1

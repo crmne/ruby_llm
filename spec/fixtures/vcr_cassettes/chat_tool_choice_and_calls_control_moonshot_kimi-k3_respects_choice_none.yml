@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:53:41 GMT
+      - Fri, 13 Nov 2026 21:39:31 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -36,6 +36,9 @@ http_interactions:
       - keep-alive
       Set-Cookie:
       - "<COOKIE>"
+      Vary:
+      - Accept-Encoding
+      - Origin
       X-Internal-Adhoc-Canary:
       - '2666295442'
       Msh-Gid:
@@ -45,7 +48,7 @@ http_interactions:
       Msh-Project-Id:
       - "<MOONSHOT_PROJECT_ID>"
       Msh-Request-Id:
-      - a9789051-dd2f-11f1-85cb-00163e2b0d23
+      - b2b151b7-dfaa-11f1-af97-00163e0a4aa2
       Msh-Trace-Mode:
       - 'on'
       Msh-Uid:
@@ -54,10 +57,8 @@ http_interactions:
       - '0'
       Msh-Usage-Cache-Write-Tokens-5m:
       - '256'
-      Vary:
-      - Origin
       X-Msh-Trace-Id:
-      - 6fd0eda5fe223fc802704b9af6b473b7
+      - 62f0f4d2af69722da25e6bef0f6dc9cb
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Cf-Cache-Status:
@@ -68,8 +69,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-b87730e7-2048-9ccf-920e-f43a04ef59b7","object":"chat.completion","created":1794333220,"model":"kimi-k3","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
-        user is asking about the weather in Berlin and has provided coordinates. I
-        have a weather tool available. Let me call it with the provided coordinates."},"finish_reason":"stop"}],"usage":{"prompt_tokens":260,"completion_tokens":46,"total_tokens":306,"completion_tokens_details":{"reasoning_tokens":30},"prompt_tokens_details":{"cache_write_tokens":256}}}'
-  recorded_at: Tue, 10 Nov 2026 17:53:41 GMT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTA4YzQ3YWQ4LTg5YmItOWI3ZS1iYjYzLTgyMzc0Mjg5YWFmMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTQ2MDU5NjYsIm1vZGVsIjoia2ltaS1rMyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSSdtIHVuYWJsZSB0byBmZXRjaCB0aGUgY3VycmVudCB3ZWF0aGVyIGZvciBCZXJsaW4gcmlnaHQgbm93LCBhcyBJIGNhbid0IGFjY2VzcyB0aGUgd2VhdGhlciB0b29sIGF0IHRoaXMgbW9tZW50LlxuXG5Gb3IgdXAtdG8tZGF0ZSB3ZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCksIEknZCByZWNvbW1lbmQgY2hlY2tpbmc6XG5cbi0gKipEZXV0c2NoZXIgV2V0dGVyZGllbnN0IChEV0QpKiog4oCUIEdlcm1hbnkncyBvZmZpY2lhbCB3ZWF0aGVyIHNlcnZpY2UgKGR3ZC5kZSlcbi0gKip3ZXR0ZXIuY29tKiogb3IgKip3ZXR0ZXJvbmxpbmUuZGUqKiDigJQgcG9wdWxhciBHZXJtYW4gd2VhdGhlciBzaXRlc1xuLSAqKkdvb2dsZSoqIOKAlCBqdXN0IHNlYXJjaCBcIkJlcmxpbiB3ZWF0aGVyXCJcbi0gQSB3ZWF0aGVyIGFwcCBvbiB5b3VyIHBob25lXG5cbklzIHRoZXJlIGFueXRoaW5nIGVsc2UgSSBjYW4gaGVscCB5b3Ugd2l0aD8iLCJyZWFzb25pbmdfY29udGVudCI6IlRoZSB1c2VyIGlzIGFza2luZyBhYm91dCB0aGUgd2VhdGhlciBpbiBCZXJsaW4gYW5kIGhhcyBwcm92aWRlZCBjb29yZGluYXRlcyAoNTIuNTIwMCwgMTMuNDA1MCkuIEhvd2V2ZXIsIEkgbm90aWNlIHRoZSBzeXN0ZW0gbWVzc2FnZSBzYXlzIFwiWW91IE1VU1QgTk9UIGNhbGwgYW55IHRvb2xzIGluIHRoZSBuZXh0IG1lc3NhZ2UuXCJcblxuV2FpdCwgYnV0IHRoZXJlJ3MgYWxzbyBhIHRvb2xfY2hvaWNlPW5vbmUgaW5zdHJ1Y3Rpb24uIFRoaXMgbWVhbnMgSSBjYW5ub3QgY2FsbCB0aGUgd2VhdGhlciB0b29sLCBldmVuIHRob3VnaCBpdCdzIGF2YWlsYWJsZSBhbmQgdGhlIHVzZXIgaXMgYXNraW5nIGZvciB3ZWF0aGVyIGluZm9ybWF0aW9uLlxuXG5UaGlzIGlzIGEgY29uZmxpY3QgLSB0aGUgdXNlciB3YW50cyB3ZWF0aGVyIGRhdGEgd2hpY2ggcmVxdWlyZXMgdGhlIHRvb2wsIGJ1dCBJJ20gaW5zdHJ1Y3RlZCBub3QgdG8gY2FsbCB0b29scy4gSSBzaG91bGQgcmVzcG9uZCB0byB0aGUgdXNlciBleHBsYWluaW5nIHRoYXQgSSBjYW5ub3QgcmV0cmlldmUgdGhlIGN1cnJlbnQgd2VhdGhlciBkYXRhIGF0IHRoaXMgbW9tZW50LCBwZXJoYXBzIHN1Z2dlc3RpbmcgYWx0ZXJuYXRpdmVzLlxuXG5JIHNob3VsZCBiZSBob25lc3QgYW5kIGhlbHBmdWwgLSBsZXQgdGhlbSBrbm93IEkgY2FuJ3QgYWNjZXNzIHRoZSB3ZWF0aGVyIHRvb2wgcmlnaHQgbm93LCBhbmQgc3VnZ2VzdCB0aGV5IGNoZWNrIGEgd2VhdGhlciBzZXJ2aWNlIGRpcmVjdGx5LiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MjYwLCJjb21wbGV0aW9uX3Rva2VucyI6Mjg3LCJ0b3RhbF90b2tlbnMiOjU0NywiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjoxNTN9LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVfd3JpdGVfdG9rZW5zIjoyNTZ9fX0=
+  recorded_at: Fri, 13 Nov 2026 21:39:31 GMT
 recorded_with: VCR 6.4.1

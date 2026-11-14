@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:47:03 GMT
+      - Fri, 13 Nov 2026 21:34:26 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -45,6 +45,8 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -52,28 +54,27 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '279.9'
+      - '336.1'
       X-Metrics-E2e-Ms:
-      - '3877.1'
+      - '3822.9'
       Traceparent:
-      - 00-4e6589386ccd04b8a04d8943fa6f546d-8b390be00004e71c-01
+      - 00-c4d90d4cb3e8ec1d3aa6e4f0a9dd0ab9-f51a89f800028ac5-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1794332820,"completed_at":1794332823,"id":"<X_REQUEST_ID>","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_<X_REQUEST_ID>","summary":[{"text":"The
-        user wants a one-sentence summary of a document.\n\nThe document is a sample
-        PDF containing placeholder Lorem ipsum text.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"akRSidT1xYz81OxArGQIqFRnhE7ONjB/46ALvU445Eux6fiXHlKo+s5A46Il0L+tBIbIqMAZpU/mDIBSZtZBawjq2mE1DumA5FlHZ6wI+jwzISUqRCiREF9L106Pzd6xs3aujreUhX811jwnOCdg/A6ScKwoW13rd3+O8ie0x5K565IysJjJ1Xaj3on5zC5gJsnoQOvXAKHjOVSrakTI00gTNGTW0fxJDdYrjFuqehtTmZyBUn8b3n0MQMg6izkeXqC3aNJp5tYia5REgbMpWa3/vdR5zVQr9dq7cxJu48gqwBIWx0F2BICeG6ILuQIV0oCRiWEEJIvw4o0xkNIxEJSmCoGgll5MIUbtzgB3YG2IaY9Mc1ff291GTxy+22TsOvF7mVJ8fV6ls4ywk3r3aWa+02WbDnWwyobmq9o2UyEemGSRjTDIQeUW1CEg+6VHj2WOJpIzCxBLOaNa5OVLBz4NdOHSBSFGxFJxnvYWuwHBd2+1h41cPfLbCgCFGUUpcwC9w2f/1gCXn1FCSrp3dQJy/L+/phWq832R/M0Ov6O86Y/XVeYz3vo5kBx3Gx0T07He7LxIcp8fJjFVufYcWJNcZzkkw2UYtwrt0QOrV6ABWwpEnJPUyciRfw7+ZeXI261ssSrFCszmDWeo8MO1UwYxGO9hKRVUOprUEt84YwuPC4OJ37I4JyfKTuWygD91ZmdxpJctHviJn1j97OvV41dG99BaWUkx+AwCwwmHfmRIHkdFr0LL/PJXyNc9VmXOvfe8IgbxZmwzpsi5mbMuPa1RZQ8Bo0k"},{"content":[{"type":"output_text","text":"This
-        is a sample PDF containing placeholder \"Lorem ipsum\" text.","logprobs":[],"annotations":[]}],"id":"msg_<X_REQUEST_ID>","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":1931,"input_tokens_details":{"cached_tokens":128},"output_tokens":235,"output_tokens_details":{"reasoning_tokens":222},"total_tokens":2166,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":28668500,"context_details":{"input_tokens":1931,"output_tokens":243}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Tue, 10 Nov 2026 17:47:03 GMT
+      string: '{"created_at":1794605662,"completed_at":1794605666,"id":"6a255c2b-df16-9efc-89b8-4ef65fca8df9","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_6a255c2b-df16-9efc-89b8-4ef65fca8df9","summary":[{"text":"I
+        need to summarize the document in one sentence.\n\nThe document is a sample
+        PDF containing placeholder Lorem ipsum text.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"AvykmpyEqVpAjB6jcvqMqNdh+b0tglZGQGMJ2EwMp9k+Osz2+MvR6QwcKk/65snQNZ1rUEAU4lylKwOQYhf+nF3DA7Qri3vOtJR/p7MzOqCXH8o0bDekRu1Pcw4qkKmqTWo2a+wj2hrqWnXOjKAa2MUWAjP0FytPqzhXudJXCLi//Vx9WayJvwGFV3j3A6r4P649goL4B94ptoGsZrGyj4FaF5ZvSFRwoJk9rODWyC72JpgMDEWPj8okzKsQdOoNtJP0ZGHoLLBQWFdPa2J5AD8jMy3flPa8xwggqvnriMpea1CgM0qMzNI26KYfDkx+aqkfGud2/GhS7Mq1E5ZEvDoay1/k+5SwGQC0D4EmNPRaz9OlMiz9moh8lpjvVdhfEntRmkPv9SwrrGkXC+bnZkcr8aQ53IZqbVhNG4NYZb9rXSd4/Ra8rc/4NUtVu4cKwSNrbxRt6pd1g9BRV/Vw5QAst+QWOJLKlU0r001q/I7/qDAY2MftbtB0JikElGuKYq/i/O/Q+JSKK4o8euBxt7pd5gz67SLGRyA8gcocjlQXSQ3E10Pk67yf0eev3styuhdA7No8ke2IQD4jM+ItLETR7qfYOH52jNJkFBVj7VCciixSQ4LK6lXCdEpujRqYsvsBmF1nYgnMXbPwPFHlK4UX1dhlovsYEpuYIGbG/MLkOifVSA"},{"content":[{"type":"output_text","text":"This
+        is a sample PDF containing the title \"Sample PDF,\" a short intro sentence,
+        and several paragraphs of standard Lorem ipsum placeholder text.","logprobs":[],"annotations":[]}],"id":"msg_6a255c2b-df16-9efc-89b8-4ef65fca8df9","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":1931,"input_tokens_details":{"cached_tokens":128},"output_tokens":220,"output_tokens_details":{"reasoning_tokens":193},"total_tokens":2151,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":28293500,"context_details":{"input_tokens":1931,"output_tokens":227}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Fri, 13 Nov 2026 21:34:26 GMT
 recorded_with: VCR 6.4.1

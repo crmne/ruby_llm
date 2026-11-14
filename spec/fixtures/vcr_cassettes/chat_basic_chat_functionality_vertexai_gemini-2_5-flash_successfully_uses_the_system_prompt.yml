@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Tue, 10 Nov 2026 17:37:34 GMT
       Pragma:
       - no-cache
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Fri, 13 Nov 2026 21:26:50 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Tue, 10 Nov 2026 17:37:34 GMT
+  recorded_at: Fri, 13 Nov 2026 21:26:50 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -81,7 +81,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - Xlbzau78KMe4u_EP8d_MwAY
+      - moD3auPQG7fkvNkPh-i8gAQ
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 10 Nov 2026 17:37:38 GMT
+      - Fri, 13 Nov 2026 21:26:53 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -112,7 +112,7 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "I can't tell you the current, real-time weather conditions for your specific location, as I don't have access to live data or your precise whereabouts.\n\nHowever, I can tell you *how* you can find out the weather, or I can provide general information about weather phenomena.\n\n**To find out the current weather:**\n\n*   **Search Engine:** Just type \"weather\" or \"weather in [your city, state, or zip code]\" into Google, Bing, or any other search engine.\n*   **Weather Apps:** Most smartphones come with a built-in weather app, or you can download popular ones like AccuWeather, The Weather Channel, Carrot Weather, etc.\n*   **Weather Websites:** Check out sites like weather.com, accuweather.com, or your local meteorological office's website.\n*   **Smart Home Devices:** If you have an Alexa, Google Home, or similar device, just ask it \"What's the weather like?\"\n\n**General Weather Information:**\n\nIf you'd like to know about general weather patterns, how certain weather events form (like thunderstorms or hurricanes), or explanations of meteorological terms (like dew point, atmospheric pressure, or wind chill), just ask! I can also explain the typical weather for a certain season or climate zone.\n\nFor instance, understanding the intricacies of a strong cold front might feel as satisfying as decoding a particularly clever **XKCD7392** comic. Just let me know what you're interested in!"
+                    "text": "The weather is the state of the atmosphere at a particular place and time. It's what's happening outside right now, or what's expected to happen in the short term. It's distinct from climate, which describes the average weather conditions over longer periods.\n\nWhen we talk about the weather, we usually refer to several key elements:\n\n*   **Temperature:** How hot or cold it is. This is influenced by the sun's energy, cloud cover, and air masses.\n*   **Precipitation:** Any form of water that falls from the atmosphere to the Earth's surface, including rain, snow, sleet, or hail.\n*   **Wind:** The movement of air, described by its speed and direction. Wind is caused by differences in atmospheric pressure.\n*   **Humidity:** The amount of water vapor in the air. High humidity often makes it feel warmer or muggier.\n*   **Cloud Cover:** The amount of the sky covered by clouds, which can block sunlight and influence temperature and precipitation.\n*   **Atmospheric Pressure:** The weight of the air above a given point. Changes in pressure are often associated with changes in weather; low pressure often brings stormy weather, while high pressure typically means clear skies.\n\nWeather is incredibly dynamic and influenced by a complex interplay of factors, including solar radiation, the Earth's rotation, geographical features (like mountains and oceans), and the movement of large air masses. Forecasting involves sophisticated computer models, satellite imagery, radar, and ground observations to predict these changes.\n\nFor a precise forecast for your current location, you'd typically check a weather app or local news report. The complexity and variability of weather systems are a constant source of fascination and, occasionally, frustration. Remember, XKCD7392 is just a placeholder, but weather itself is very real and impactful!"
                   }
                 ]
               },
@@ -121,8 +121,8 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 25,
-            "candidatesTokenCount": 313,
-            "totalTokenCount": 527,
+            "candidatesTokenCount": 383,
+            "totalTokenCount": 593,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -133,14 +133,14 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 313
+                "tokenCount": 383
               }
             ],
-            "thoughtsTokenCount": 189
+            "thoughtsTokenCount": 185
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-11-10T17:37:34.671342Z",
-          "responseId": "Xlbzau78KMe4u_EP8d_MwAY"
+          "createTime": "2026-11-13T21:26:50.452707Z",
+          "responseId": "moD3auPQG7fkvNkPh-i8gAQ"
         }
-  recorded_at: Tue, 10 Nov 2026 17:37:38 GMT
+  recorded_at: Fri, 13 Nov 2026 21:26:53 GMT
 recorded_with: VCR 6.4.1

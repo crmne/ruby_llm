@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:37:22 GMT
+      - Fri, 13 Nov 2026 21:25:27 GMT
       X-Llm-D-Flow-Queue-Duration-Ms:
       - '0'
       Vary:
@@ -37,9 +37,9 @@ http_interactions:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":348,"completion_tokens":72,"total_tokens":420,"completion_tokens_details":{"reasoning_tokens":39},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-b3ad3d96de62aa02","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
-        [\"red\", \"blue\"]}"}}],"reasoning":"We need respond to user: \"Call the
-        array params tool with tags [\"red\",\"blue\"] and tell me the combined tags.\"
-        Need use tool array_params. Done maybe. Need call.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-5396f151-8318-48f1-9f22-9a23a25c53ec","object":"chat.completion","created":1794332242,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Tue, 10 Nov 2026 17:37:23 GMT
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":348,"completion_tokens":71,"total_tokens":419,"completion_tokens_details":{"reasoning_tokens":38},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-b0a4ed4f0802e941","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
+        [\"red\", \"blue\"]}"}}],"reasoning":"The user wants me to call the array_params
+        tool with tags [\"red\", \"blue\"] and report the combined tags. This is a
+        simple tool call. Let''s try calling it.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-9f0a0b8c-d553-4d50-a682-955b384477a7","object":"chat.completion","created":1794605127,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Fri, 13 Nov 2026 21:25:28 GMT
 recorded_with: VCR 6.4.1

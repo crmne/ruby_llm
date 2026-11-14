@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 15:17:20 GMT
+      - Fri, 13 Nov 2026 21:21:05 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -36,7 +36,7 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       Ga-Traceid:
-      - 695837909476f2745214590d340639aa
+      - 5b99b7441647c5290e66cc2cf2422b3e
       Vary:
       - Accept-Encoding
       - Access-Control-Request-Headers
@@ -47,20 +47,19 @@ http_interactions:
       - Origin
       - Origin
       X-Log-Id:
-      - 20261110231711427f660010684ca6
+      - 202611140521011b664799ccf54b3f
       X-Request-Id:
       - "<X_REQUEST_ID>"
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"The
-        title of this document is **\"Dummy PDF file\"**.\n\nThis is the only text
-        content on the page, appearing as a heading near the top of the document.
-        The rest of the page is blank, and the rest of the page is blank.","reasoning_content":"The
-        user is asking about the title of a document. Looking at the provided information:\n-
-        Document name: dummy.pdf\n- The image shows the text \"Dummy PDF file\" as
-        the only content on the page\n- The parse result confirms: \"Dummy PDF file\"\n\nThe
-        title of the document appears to be \"Dummy PDF file\" based on the content
-        shown in the image. The document itself contains only this single line of
-        text.","role":"assistant"}}],"created":1794323840,"id":"20261110231711427f660010684ca6","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261110231711427f660010684ca6","usage":{"completion_tokens":141,"completion_tokens_details":{"reasoning_tokens":87},"prompt_tokens":1660,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":1801}}'
-  recorded_at: Tue, 10 Nov 2026 15:17:20 GMT
+        title of this document is **\"Dummy PDF file\"**, which appears as a bold
+        heading at the top of the page. This is also consistent with the file name,
+        \"dummy.pdf\". The document contains only this title text and is otherwise
+        blank.","reasoning_content":"The user is asking about the title of a document.
+        The document name is \"dummy.pdf\" and the content shows \"Dummy PDF file\"
+        as the only text on the page.\n\nThe title of the document appears to be \"Dummy
+        PDF file\" based on the visible text on the page, which is formatted in bold
+        like a title/heading.","role":"assistant"}}],"created":1794604865,"id":"202611140521011b664799ccf54b3f","model":"glm-5.3-flash","object":"chat.completion","request_id":"202611140521011b664799ccf54b3f","usage":{"completion_tokens":122,"completion_tokens_details":{"reasoning_tokens":69},"prompt_tokens":1660,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":1782}}'
+  recorded_at: Fri, 13 Nov 2026 21:21:05 GMT
 recorded_with: VCR 6.4.1

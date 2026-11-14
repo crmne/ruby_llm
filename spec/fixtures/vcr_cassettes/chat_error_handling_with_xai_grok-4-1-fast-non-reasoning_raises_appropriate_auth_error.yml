@@ -23,7 +23,7 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:31:31 GMT
+      - Fri, 13 Nov 2026 21:21:45 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -42,6 +42,13 @@ http_interactions:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
+      Report-To:
+      - '{"group":"cf-csp-endpoint","max_age":86400,"endpoints":[{"url":"https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=Dw5bznmWDoBODQIe5Kbk.n.SRsmVIDIVyyOdH4kDJms-1794604905.3745863-1.0.1.1-xCEaouPlIibdcKCSAVrPxPy9SNCQrIvWbjSsWD71iufpQ3fynrrfK2Xriv5XzTIseb5yqYVCeRZpAoOrg58O_Tz3jWt7AX5EKZ4uKuUVn9sQCI46rEnGU0DZbxJ3quVyiHfe6XOI7ipgz.i.2Dz3ocLKOBcoC_dIG8WNK.U57r4"}]}'
+      Reporting-Endpoints:
+      - cf-csp-endpoint="https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=Dw5bznmWDoBODQIe5Kbk.n.SRsmVIDIVyyOdH4kDJms-1794604905.3745863-1.0.1.1-xCEaouPlIibdcKCSAVrPxPy9SNCQrIvWbjSsWD71iufpQ3fynrrfK2Xriv5XzTIseb5yqYVCeRZpAoOrg58O_Tz3jWt7AX5EKZ4uKuUVn9sQCI46rEnGU0DZbxJ3quVyiHfe6XOI7ipgz.i.2Dz3ocLKOBcoC_dIG8WNK.U57r4"
+      Content-Security-Policy-Report-Only:
+      - script-src 'unsafe-inline' 'unsafe-eval'; connect-src 'none'; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=Dw5bznmWDoBODQIe5Kbk.n.SRsmVIDIVyyOdH4kDJms-1794604905.3745863-1.0.1.1-xCEaouPlIibdcKCSAVrPxPy9SNCQrIvWbjSsWD71iufpQ3fynrrfK2Xriv5XzTIseb5yqYVCeRZpAoOrg58O_Tz3jWt7AX5EKZ4uKuUVn9sQCI46rEnGU0DZbxJ3quVyiHfe6XOI7ipgz.i.2Dz3ocLKOBcoC_dIG8WNK.U57r4;
+        report-to cf-csp-endpoint
       Server:
       - cloudflare
       Cf-Ray:
@@ -50,5 +57,5 @@ http_interactions:
       encoding: UTF-8
       string: '{"code":"invalid-argument","error":"Incorrect API key provided. You
         can obtain an API key from https://console.x.ai."}'
-  recorded_at: Tue, 10 Nov 2026 17:31:31 GMT
+  recorded_at: Fri, 13 Nov 2026 21:21:45 GMT
 recorded_with: VCR 6.4.1

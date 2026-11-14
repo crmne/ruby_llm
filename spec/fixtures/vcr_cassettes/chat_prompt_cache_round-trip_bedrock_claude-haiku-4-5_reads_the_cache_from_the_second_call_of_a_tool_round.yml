@@ -436,7 +436,7 @@ http_interactions:
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261110T173305Z
+      - 20261113T212154Z
       X-Amz-Content-Sha256:
       - 8dd922e5cdfb36047b620179fb0269dd919370eb590007f206d53a43b8f0cf11
       Authorization:
@@ -452,7 +452,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:33:06 GMT
+      - Fri, 13 Nov 2026 21:21:56 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -460,9 +460,9 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - cd6211c8-09bd-4095-a4e6-62aefbbc1204
+      - b88b317d-3883-4730-bdd5-2fabb5e76be1
       X-Amzn-Bedrock-Invocation-Latency:
-      - '702'
+      - '669'
       X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
       - '7961'
       X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
@@ -473,8 +473,8 @@ http_interactions:
       - '3'
     body:
       encoding: UTF-8
-      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_pvlesdyr3jmjw5puz3f7kcswv4zdlzmiid6xmrlz3ejw4fjvfpvq","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_bdrk_01A7JE4FpsNngLggVNXW4zUy","name":"release_checklist","input":{"version":"2.1.0"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":3,"cache_creation_input_tokens":7961,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":7961,"ephemeral_1h_input_tokens":0},"output_tokens":59,"service_tier":"standard"}}'
-  recorded_at: Tue, 10 Nov 2026 17:33:06 GMT
+      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_ypjup3akkt6qyv4i6n7kciiw5zrtkrzxlevzwqgzbv2hqsaxktfq","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_bdrk_01GtYkUUePMTs8yuS7sPL2Qn","name":"release_checklist","input":{"version":"2.1.0"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":3,"cache_creation_input_tokens":7961,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":7961,"ephemeral_1h_input_tokens":0},"output_tokens":59,"service_tier":"standard"}}'
+  recorded_at: Fri, 13 Nov 2026 21:21:56 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/invoke
@@ -482,7 +482,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"type":"text","text":"Fetch
         the release checklist for version 2.1.0 with the tool, then reply with its
-        first item."}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_bdrk_01A7JE4FpsNngLggVNXW4zUy","name":"release_checklist","input":{"version":"2.1.0"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_01A7JE4FpsNngLggVNXW4zUy","content":[{"type":"text","text":"Checklist
+        first item."}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_bdrk_01GtYkUUePMTs8yuS7sPL2Qn","name":"release_checklist","input":{"version":"2.1.0"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_01GtYkUUePMTs8yuS7sPL2Qn","content":[{"type":"text","text":"Checklist
         for 2.1.0: changelog written, cassettes re-recorded, docs updated."}]}]}],"max_tokens":64000,"tools":[{"name":"release_checklist","description":"Returns
         the release checklist for a version","input_schema":{"type":"object","properties":{"version":{"type":"string","description":"Version
         number, such as 2.1.0"}},"required":["version"],"additionalProperties":false,"strict":true}}],"system":[{"type":"text","text":"You
@@ -912,9 +912,9 @@ http_interactions:
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261110T173306Z
+      - 20261113T212156Z
       X-Amz-Content-Sha256:
-      - 2fd66c2a7a0e64d7ba5ccfa60c8f8f057da644a278ae0917207c30009fff16b7
+      - 7a525af722ab6a322a7ee04ce51cb1b437a8390e3279eac07b8217537c656ffb
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -928,28 +928,29 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:33:08 GMT
+      - Fri, 13 Nov 2026 21:21:57 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '577'
+      - '584'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 184e3618-1847-40cb-8f34-abfb55c868fa
+      - 32f15965-32bc-4a91-8f6c-fce51f042e42
       X-Amzn-Bedrock-Invocation-Latency:
-      - '630'
+      - '615'
       X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
       - '91'
       X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
       - '7961'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '26'
+      - '27'
       X-Amzn-Bedrock-Input-Token-Count:
       - '5'
     body:
       encoding: UTF-8
-      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_yl7avgz27mnow4mustm6oqilj2zx5fwdyxdrd7preh5efgeu5ixq","type":"message","role":"assistant","content":[{"type":"text","text":"The
-        first item on the release checklist for version 2.1.0 is: **changelog written**"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":5,"cache_creation_input_tokens":91,"cache_read_input_tokens":7961,"cache_creation":{"ephemeral_5m_input_tokens":91,"ephemeral_1h_input_tokens":0},"output_tokens":26,"service_tier":"standard"}}'
-  recorded_at: Tue, 10 Nov 2026 17:33:08 GMT
+      string: '{"model":"anthropic.claude-haiku-4-5-20251001-v1:0","id":"msg_bdrk_iezlqhzy33c3zhdkouvgnfrk2hnu34oecmv44fvue765q5riemuq","type":"message","role":"assistant","content":[{"type":"text","text":"Based
+        on the release checklist for version 2.1.0, the first item is: **changelog
+        written**"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":5,"cache_creation_input_tokens":91,"cache_read_input_tokens":7961,"cache_creation":{"ephemeral_5m_input_tokens":91,"ephemeral_1h_input_tokens":0},"output_tokens":27,"service_tier":"standard"}}'
+  recorded_at: Fri, 13 Nov 2026 21:21:57 GMT
 recorded_with: VCR 6.4.1

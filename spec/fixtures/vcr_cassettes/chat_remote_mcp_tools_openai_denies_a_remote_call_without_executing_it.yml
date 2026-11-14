@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:31:22 GMT
+      - Fri, 13 Nov 2026 21:21:59 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -46,11 +46,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2511'
+      - '1992'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -77,22 +77,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0edf1978dc581888016af354e7c56887d2a5f508870203c532",
+          "id": "resp_0a4a63cf3f4768fd016af77f757fc487d2b84e9e2a81b2f695",
           "object": "response",
-          "created_at": 1794331879,
+          "created_at": 1794604917,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794331882,
+          "completed_at": 1794604919,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": "Use microsoft_docs_search exactly once when asked for documentation. Do not retry a denied call.",
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -100,7 +101,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "mcpl_0edf1978dc581888016af354e7d24487d28c311f44dfb7c49c",
+              "id": "mcpl_0a4a63cf3f4768fd016af77f758af887d2bce80a15b1d3b4d3",
               "type": "mcp_list_tools",
               "server_label": "docs",
               "tools": [
@@ -124,9 +125,9 @@ http_interactions:
               ]
             },
             {
-              "id": "mcpr_0edf1978dc581888016af354ea08e487d29b966b7415796811",
+              "id": "mcpr_0a4a63cf3f4768fd016af77f771ca087d28edf3826df37d00d",
               "type": "mcp_approval_request",
-              "arguments": "{\"query\":\"Azure Blob Storage Microsoft documentation overview\"}",
+              "arguments": "{\"query\":\"Azure Blob Storage Microsoft Learn documentation\"}",
               "name": "microsoft_docs_search",
               "server_label": "docs"
             }
@@ -202,14 +203,14 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:31:22 GMT
+  recorded_at: Fri, 13 Nov 2026 21:21:59 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"Search Microsoft
-        documentation for Azure Blob Storage, then give one short sentence about it."},{"id":"mcpl_0edf1978dc581888016af354e7d24487d28c311f44dfb7c49c","type":"mcp_list_tools","server_label":"docs","tools":[{"annotations":{"read_only":true},"description":"Search
+        documentation for Azure Blob Storage, then give one short sentence about it."},{"id":"mcpl_0a4a63cf3f4768fd016af77f758af887d2bce80a15b1d3b4d3","type":"mcp_list_tools","server_label":"docs","tools":[{"annotations":{"read_only":true},"description":"Search
         official Microsoft/Azure documentation to find the most relevant and trustworthy
         content for a user''s query. This tool returns up to 10 high-quality content
         chunks (each max 500 tokens), extracted from Microsoft Learn and other official
@@ -221,8 +222,8 @@ http_interactions:
         search by providing the full detail. This is a required step for comprehensive
         results.","input_schema":{"type":"object","properties":{"query":{"description":"a
         query or topic about Microsoft/Azure products, services, platforms, developer
-        tools, frameworks, or APIs","type":"string","default":null}}},"name":"microsoft_docs_search"}]},{"id":"mcpr_0edf1978dc581888016af354ea08e487d29b966b7415796811","type":"mcp_approval_request","arguments":"{\"query\":\"Azure
-        Blob Storage Microsoft documentation overview\"}","name":"microsoft_docs_search","server_label":"docs"},{"type":"mcp_approval_response","approval_request_id":"mcpr_0edf1978dc581888016af354ea08e487d29b966b7415796811","approve":false}],"instructions":"Use
+        tools, frameworks, or APIs","type":"string","default":null}}},"name":"microsoft_docs_search"}]},{"id":"mcpr_0a4a63cf3f4768fd016af77f771ca087d28edf3826df37d00d","type":"mcp_approval_request","arguments":"{\"query\":\"Azure
+        Blob Storage Microsoft Learn documentation\"}","name":"microsoft_docs_search","server_label":"docs"},{"type":"mcp_approval_response","approval_request_id":"mcpr_0a4a63cf3f4768fd016af77f771ca087d28edf3826df37d00d","approve":false}],"instructions":"Use
         microsoft_docs_search exactly once when asked for documentation. Do not retry
         a denied call.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"mcp","allowed_tools":["microsoft_docs_search"],"require_approval":"always","server_url":"https://learn.microsoft.com/api/mcp","server_label":"docs"}]}'
     headers:
@@ -242,7 +243,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Nov 2026 17:31:24 GMT
+      - Fri, 13 Nov 2026 21:22:01 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -262,11 +263,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      - X-Request-ID, Server-Timing-Total
+      - X-Request-ID, Server-Timing-Total, X-OpenAI-Inference-Capacity-Reason
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1766'
+      - '1792'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -293,22 +294,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0edf1978dc581888016af354ea5f2c87d2836e178340557071",
+          "id": "resp_0a4a63cf3f4768fd016af77f7795fc87d2b205db9797cddc9b",
           "object": "response",
-          "created_at": 1794331882,
+          "created_at": 1794604919,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1794331884,
+          "completed_at": 1794604921,
           "error": null,
           "frequency_penalty": 0.0,
           "image": {
             "context_compression": "disabled"
           },
           "incomplete_details": null,
+          "input_transformations": [],
           "instructions": "Use microsoft_docs_search exactly once when asked for documentation. Do not retry a denied call.",
           "max_output_tokens": null,
           "max_tool_calls": null,
@@ -316,14 +318,14 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "rs_0edf1978dc581888016af354eb028c87d2b41229bf82028d0b",
+              "id": "rs_0a4a63cf3f4768fd016af77f78296887d2a307f50f00b3c9a3",
               "type": "reasoning",
               "content": [],
-              "encrypted_content": "gAAAAABq81Ts1If6DkS6LnpEyECRWoy6aKJ3P_1YQxhBW7q8JumqaTG_7FphUZ0zoDavwhIhYErEyz9LkGtgnwfGtacxL4C3nrJAXBkuoE0TVErTsODNHudzP4_0Fpi7JSo4FFemBHljmBORIcg6j93SMhJ9t9PqNmzmYIkVgz-Aaoi8mxUae9YXVdCKW1TOsx4oRY3KiX94F8wb-PXs4Q6xMOhJFJ7dgzJGY8KlZ62fFEZ4V3uttKZ4Ba0IrLuPdIC9k8g33NaJCisHUdGteCSBTF09lGaqCjYt-haqQuK4LXLuWLTwofLRcDYcHJkxj1rNKXw9Gt8QQXtNbgE4lwJfoln-79rrJ7tmxipFQJm79UPGyBXDHYQE7wi6drkcENCcrC9To4NXizHhK_EaWgagXDPZHhs6dalZ2UpQtSb8CTuPUucPsacvPWIzgSvbG-zKj6HJALSCLPJA2-bW_wO_Ttv_GAbwmhUHFRbuz4kBo_DuwP7R-ABIb1mzQEZNcCsUkEXPLDhYCTNeECt2g7UZktmWNFeszISaeLzQL7Y3reb0HznfXhbUqiGkpu81G0UZ1ptjC4lXgaVbRjwEqgzsI4z-Tedgmaz8koaqQt1aZ2JrRWEl5H-pM_QB0qKSymX_Akc4CUjxpxyQi3MZzqw5zaNUCYmJtmWJ5xjwngkAfww3rfwh8vMkoO8OBQzVZehhf1wh0MqB_JQHV5gKyt2fhvabzB4Le-YgkBgZ15Hbw6L6iw7bCO2vC8IyVhsJPH_PhDiPDi0r_VeK4uVcJO_94GlGEuD7oiSi9n6q8FFnyyKOKs2uubYuC5eOGn4noCc1BXNB4WqqBIqf36hpzwbwKSXuS-vxzSxvv_Kxz_Txmnk7t8xdBQ5VekaRfjfHh0oWZ54gqClqd2fB7rTbHBi_hMnP4NM9R8sBSDHFtmsl7F50xRw79bwKUc3i39QzOONM-vcOLQWNgY94JCuw9gu6wT1n0Ju2AfEMbVsbmCVBMvfa0tLHdcFheEBNe6X5NY6pS65WyJjAZtCMgu9NFBH6ZLN6uTrdsaeOovUEKqKQRXKTL-SOJCB6tdRuV3ffuyqQTnMtHwNaIENVHfcUwmjE3Q0ne3ucrCHJB5QkXk4piRlOmq6K1iR2Dd-J482ftv33J27HFmtG_zxGi_SStXyAbf1zUnQIC53nNWMJ_BpJgumXc7mNBR08nbl3HxZBjOIvetdIT8E70GgyOmvMxSdNuhVSWVmdwbHwuqy0uFIsPyD-5Qi78sRQ5fdqpOPLRUg2dDw4i9ZYCBucCf6vysGg87EBqvf8YyWoX3fL9OTDwPh5EVcXmade7tGzqmBkxziZvBt_DaYXKLiEjeuPJacdTiGNA3mQUAqTP028JbwhUxphF9bAFnz8aBkaevMRbXrP_K0hDqJDZTG4XiPA090j31-LYvl1U5AZlGJtPvZ6JrtGxe_JQjcAeT06EZ9nuLm4lbuCXlDTLl29lwe5_mqch5wGzN7-_6wcSObrX0OLL6yCa-AxgR1a1Kqrbdx3rraUqO5PRbvALbv_vnHN5R6UAdF4qg9DzxsxPteRDjPHdYbZs5vzuHd92fwRxhJy6YqlYR37_WZO9GuXSz4CiMLiEaySYB30pI9ZyqhJd1LQ9KPVVHSiSKFsB6F4nvjO9Pikbi_J2od7nu0-tkIEHRPtsx0GzKymD83ndGYISyKHbjVeTk6yVWHpdNaNwm3dpbrJ1MKpUj1ycmpqkGTTioJRAVwEOX41IrE5AUw6r12TQ1nyZZazYYO7tvF2Mub5RYmBn6mJr6dEfRCkw-i5F458pX3PvqnKnPMC_h7HfA9U2vkpZF5pXFMsS_T4tdbJ1LRVw4QYWwqFW22tZ_8xDOP1tWSSLoYJ_DpQbXSV7V8By85aQfJUD4gnOwhoKOq3wpqdEbTtk8H_FRRI06HxmT12X8gjWy87yYcT_Htv20ECVxqF2Exw0rcmjheick2zzNI_jTeeFSYR7TDuW7rl0wzmS3LBcwtvAct5Klx5wl33PEcJNTaOhRFXH5LXyKUsobFlmI7xyPcEl2doeDRslUHXK0HZZvCSESKC_BppDlPnI585TCiSdzyBH5G69gv0gcCUM87b65njv24ABG3xGJ9FZrPnl__Q0j2DW10uLqvvYvwkNBnZlRNrVMFASPg9M2czRllTuGCB",
+              "encrypted_content": "gAAAAABq9395mWTGAHibDoKhBCEdvvF2xMOYWKrU1lTrqVB7O3BKZ8DX4MqL64iPwx5_xKbu2LJFS6sJMV2h7YjIkmOVFnq0Db_1MYA_8X9A3wnht3cz8GfEZKmpHvs3dkv6vIci8kQJcAtXvVGBSy9Ejq-N9pTGVVx4zo_B9jduVS9yf4T9LCWZcHl3jvxRbjJw1ryXgybbwdO8h1HYbKIaWBL3zdZTbgw7oxFPBaTqE3owKGPPMXPKwpn-m8DdQAAHGOhGvOCD7NpZ8gvoWwlImyeTyswaqsE_6nfXkaqYmEsjB_kgVTrQE3lQoZ5eRFdwRuEsQdgvMQQtmjMn0b3oVnigtHedysCB2W4KDNfVB9l08h4wtE1tXDcZQfKJhnyl_bMN3OPMzMpiwYK81B-ht5LLzmi-o59bjjdNmNX28_bKcQtEG4lkNLToIY0LUHVxGTvzL3rrafwY6y30hKMeXTCqjeDE7a5DQUH9VY7elqtSvAhsMaibzU7J-4qXYmujiIdG-BRfCixiLKmslYgDMSb15FzeXw7pOjF2I-dBwHSvD7XPM2SmdYOHC9AyGtRdZmJN1Kaheyp9FW1yrZMACXQigQOqGrAOzrYKXpFg9LEvtTKQqDWQgAZt749Gfw2rncqzZKLXjTKOeaagDCD6zyD_CzXGA2bp1va_rOcGzCOU72G7hdAlj-h2Z0R0CcEZ80r7KYnxcHtcO0HkmF9jz3CVTexoPpen6oBxpAk13_267oT5yzGSiA0z-QesJWCNDdysozHCzxpe3TtxXY9sxkFdYgkprTQ6UqoG9Ezw1EzWEjRw-D9c7dn7gDX8XuJhWwCoIngip0ZYyvrS9ZDujG9tczjTB_9lGbztZzkOiL4tk3-Kk3-JtudQDqYRZudNhc4IXTaz_0NH2Jo6EO49_AyLybFpQRle5C4Kf0s0hMn3RwoKXVkb09nuM0PLapDW3CwFaCOHu25z5mh4WWbYwgcZsQ9NFEeVkG3-wTOLLmas2yjYdyr7G578NAYC07MayrAykqQdo3nQ5awEGJmdXsuLhxMHZXczTVZxYY99AKBk23Dogpn2vTmrm34_PplzlK4fr-vGk2cq5WLqeg93Z5UbtkXzyCyU_y07Nk7FmGAOEFqLK_Gc9SfUMj5pa7w7EX4RB-BQsYq8ADrx2n_se2M1y7Hu9OyEc5n7vaaP3r2mirVU85TMfImCh6lmu7Gwo6np_5fmItzYIQqURHED2kMiceL7uPqZLkPM8hDYcG-odIplpy-eLapzz7bjm2yFd475D8sp0po5s22mcknUKV8_X5UdOxg3yrR1u9faN8Vrn1pxrEYuUSWQ893ymRgwBhGt6oK7dWSwYpSafP2XNgFzdGFFX3T3P9T0YnPoZT33YOwAoJSBt0DZf9kkpbZ2Mzdj1SuvaalqMQdjpjyYKPq0E3uVS3FOU0WEv7V5WS4TPdTYoWxXFDE-lVcvFCOKDCy0HkhvZxjXclC2N077dQVwrKFSCi9ZZholS2Mc8p55MNliSXU9D7Hk3VdzBJI_gSKNGJ2NtzayrtZc-gHRErQoBb9MLn7LqZgjfhhJt9_QM_hSCLV0ZJhbaMlb0_sAH3NyHgcciYTDj2m4evVIb1WakMg9xRVb1COzEiguQiQLpyC3labyyDWSPOVN2Jqry_qb0eNkcaaZpKjsr6PvIrAnWwiqK-XdSUv_f989xk79NivVODSatjmjx7p5KjkWdcqsShJl6zfRgF8Vu0keQu502P1IYUzPJXLxIas4WAs6fsyod9_labAckLjBCGE10DlIfQBGZ1IT8loObnvJSqA4PWjYxqnnQUFTfRpLyknzJUDWqnKA_Uv14IaOI4y6YFkk7_KmLcQa7h8s4aSqKDJn2p3n_XNDsEI2XvyzBpgYoW48uiXf3WAPnKZFMs7E94cNraj5Qmg6LdW_pOCUXHplXqdT_TxKy_qb1faS0txWFLfhHtSaXC_X9DSrv6t0y7sbqHsx4CqpIFzslXhyoZ4ua6E4iDy4mKPT9qFhhs4XDQGrenNHb5H_3sldi0I4IHs0slXmOE8bl99Eg7mmrHfXdUmT1pGOe8P36On5SSiqX3LJFgIs9nXC71OPDnP7HMOjTjzup7Op0aClqS9yT5upnEUX3rLin9oj2sgblymqoUTlb4A48mu7WVEl0Wsd_a_KGG4hzAxsBlRBKoz4_feYZ5QcMF4r3uE_WS_Qze3gJ5eZBXHymuAMP6auRRosRptym-x7WF1_vNz8jAtEGuJf9wM322wX-ckMjW9NkycKc9DkOctnIZfTVSaWMeujPvJmEMVL-snncYOf9y_Tw4S4hrYEPXT0QsBvTInW8aAQ92R4HIuWgExEjcvv_lkqMm5J8rpHCMWsW8gdisAX4KpCVB-YnsnS9fbz8r9YJ89TCiDPHIuDv1lw8TJqUkdYELhssgGtAF4Vg0skN00_flbzuw0M2jgTFVm1ZgojEKbXBNquSjnak1I25CBrPjJK3TKTdiGUr3V4w2uqNWAz74hdLgLgM0A1LQV4O4vB0HPQ9KUtlV2VUzaXeqOvwf8x0t_9lrMJfne46lGBcFNLbxPDRiMbxHSJnXYs1xP7cC_sHpqEYaeHoE-KINR3CRa7b5Ftw0x6LspOX0DWfpumAmnQrmwndlJbBwrG-UEuJxy9XX9XloI=",
               "summary": []
             },
             {
-              "id": "msg_0edf1978dc581888016af354eb775487d2966ea87b9ed0c379",
+              "id": "msg_0a4a63cf3f4768fd016af77f78f25c87d287b034b609b13f3e",
               "type": "message",
               "status": "completed",
               "content": [
@@ -331,7 +333,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "Azure Blob Storage is Microsoft Azure\u2019s object storage service for storing large amounts of unstructured data, such as text, images, videos, and backups."
+                  "text": "Azure Blob Storage is Microsoft Azure\u2019s scalable object storage service for unstructured data such as text, images, videos, and backups."
                 }
               ],
               "phase": "final_answer",
@@ -400,14 +402,14 @@ http_interactions:
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 80,
+            "output_tokens": 107,
             "output_tokens_details": {
-              "reasoning_tokens": 44
+              "reasoning_tokens": 75
             },
-            "total_tokens": 439
+            "total_tokens": 466
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Nov 2026 17:31:24 GMT
+  recorded_at: Fri, 13 Nov 2026 21:22:01 GMT
 recorded_with: VCR 6.4.1

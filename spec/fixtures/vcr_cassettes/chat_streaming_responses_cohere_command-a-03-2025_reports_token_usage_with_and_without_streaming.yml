@@ -38,24 +38,24 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 4c3b1a3950bea8227d3643e258972c53
+      - 4da29a80628fd9a2f9e1b2791f843878
       Date:
-      - Tue, 10 Nov 2026 17:30:20 GMT
+      - Fri, 13 Nov 2026 21:21:33 GMT
       X-Envoy-Upstream-Service-Time:
-      - '6283'
+      - '169'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
       string: |+
         event: message-start
-        data: {"id":"842908c1-cd0e-42a1-9597-78952667f82e","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+        data: {"id":"5375f10c-2bf6-4614-95e2-440fd247fe6a","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
 
         event: content-start
         data: {"type":"content-start","index":0,"delta":{"message":{"content":{"type":"text","text":""}}}}
@@ -83,7 +83,7 @@ http_interactions:
 
         data: [DONE]
 
-  recorded_at: Tue, 10 Nov 2026 17:30:21 GMT
+  recorded_at: Fri, 13 Nov 2026 21:21:33 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
@@ -126,11 +126,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 348f7ebf5b5425bbca69404357a2e787
+      - d05b5d1690073ba7bb2691863da07a06
       Date:
-      - Tue, 10 Nov 2026 17:30:21 GMT
+      - Fri, 13 Nov 2026 21:21:34 GMT
       X-Envoy-Upstream-Service-Time:
-      - '314'
+      - '625'
       Server:
       - envoy
       Via:
@@ -141,8 +141,8 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"798bae38-d788-40d7-80ac-8d1f071c8d54","message":{"role":"assistant","content":[{"type":"text","text":"1,
+      string: '{"id":"d0a45a09-644a-48d3-bcdb-e31de5866481","message":{"role":"assistant","content":[{"type":"text","text":"1,
         2, 3"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":12,"output_tokens":7},"tokens":{"input_tokens":507,"output_tokens":11},"cached_tokens":464}}'
-  recorded_at: Tue, 10 Nov 2026 17:30:21 GMT
+  recorded_at: Fri, 13 Nov 2026 21:21:34 GMT
 recorded_with: VCR 6.4.1
 ...

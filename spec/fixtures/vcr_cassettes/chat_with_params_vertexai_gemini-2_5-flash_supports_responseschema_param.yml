@@ -22,10 +22,10 @@ http_interactions:
     headers:
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Fri, 13 Nov 2026 21:21:41 GMT
       Pragma:
       - no-cache
-      Date:
-      - Tue, 10 Nov 2026 17:31:18 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
@@ -56,7 +56,7 @@ http_interactions:
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Tue, 10 Nov 2026 17:31:18 GMT
+  recorded_at: Fri, 13 Nov 2026 21:21:41 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -81,7 +81,7 @@ http_interactions:
       message: OK
     headers:
       X-Goog-Request-Id:
-      - 5lTzatnGEcTohcIP-uje0Qk
+      - ZX_3aumkO4eJu_EPwK-TyAk
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 10 Nov 2026 17:31:19 GMT
+      - Fri, 13 Nov 2026 21:21:43 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -112,7 +112,7 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "{\n  \"result\": 8\n}"
+                    "text": "{\"result\": 8}"
                   }
                 ]
               },
@@ -121,8 +121,8 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 24,
-            "candidatesTokenCount": 10,
-            "totalTokenCount": 104,
+            "candidatesTokenCount": 6,
+            "totalTokenCount": 97,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -133,14 +133,14 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 10
+                "tokenCount": 6
               }
             ],
-            "thoughtsTokenCount": 70
+            "thoughtsTokenCount": 67
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-11-10T17:31:18.287577Z",
-          "responseId": "5lTzatnGEcTohcIP-uje0Qk"
+          "createTime": "2026-11-13T21:21:41.971369Z",
+          "responseId": "ZX_3aumkO4eJu_EPwK-TyAk"
         }
-  recorded_at: Tue, 10 Nov 2026 17:31:19 GMT
+  recorded_at: Fri, 13 Nov 2026 21:21:43 GMT
 recorded_with: VCR 6.4.1
