@@ -548,6 +548,12 @@ module RubyLLM
     # asks the person to visit a page, such as to connect an account, and
     # returns +true+ once they say they did.
     #
+    # A Hash of +choices:+ gives each value the title to show for it, and
+    # +ask+ returns the value. A value whose title is +nil+ is shown as
+    # itself.
+    #
+    #   ask("Which card?", choices: { "17" => "River bank", "42" => "Money bank" }) # => "42"
+    #
     #   passenger = ask("Who is flying?") do
     #     string :name, description: "As on the passport"
     #     integer :age, required: false
