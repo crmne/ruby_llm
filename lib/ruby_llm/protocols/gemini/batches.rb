@@ -106,7 +106,7 @@ module RubyLLM
                                response_schema(value)
                              end
           end
-          type_union(schema)
+          numeric_enum(type_union(schema))
         end
 
         TYPE_KEYWORDS = {
@@ -157,7 +157,17 @@ module RubyLLM
           member = schema.reject { |name, _| TYPED_KEYWORDS.include?(name.to_s) && !own.include?(name.to_s) }
           values = member[enum_key(member)]
           member = member.merge(enum_key(member) => values.select(&enum_value_of(type))) if values.is_a?(Array)
-          { type: }.merge(member)
+          numeric_enum({ type: }.merge(member))
+        end
+
+        # Gemini's Schema.enum is a list of strings; it constrains an integer
+        # or number schema to those values written as strings.
+        def numeric_enum(schema)
+          type = schema[:type] || schema['type']
+          values = schema[enum_key(schema)]
+          return schema unless %w[integer number].include?(type.to_s) && values.is_a?(Array)
+
+          schema.merge(enum_key(schema) => values.map { |value| value.is_a?(Numeric) ? value.to_s : value })
         end
 
         def enum_types(schema, types)

@@ -118,9 +118,14 @@ RSpec.describe RubyLLM::Protocols::Gemini::Batches do
       )
     end
 
+    it 'writes integer and number enum values as the strings Gemini takes' do
+      expect(batch_response_schema(type: 'integer', enum: [1, 2])).to eq(type: 'integer', enum: %w[1 2])
+      expect(batch_response_schema('type' => 'number', 'enum' => [1.5])).to eq('type' => 'number', 'enum' => ['1.5'])
+    end
+
     it 'keeps an enum on every member and drops the members no value can match' do
       expect(batch_response_schema(type: %w[string integer array null], enum: ['a', 1])).to eq(
-        anyOf: [{ type: 'string', enum: ['a'] }, { type: 'integer', enum: [1] }]
+        anyOf: [{ type: 'string', enum: ['a'] }, { type: 'integer', enum: ['1'] }]
       )
       expect(batch_response_schema(type: %w[string array null], enum: ['a', nil], items: { type: 'string' })).to eq(
         type: 'string', enum: ['a'], nullable: true
