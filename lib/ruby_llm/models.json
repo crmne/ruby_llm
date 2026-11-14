@@ -50050,7 +50050,7 @@
     "family": "gpt-oss",
     "created_at": "2025-08-05 00:00:00 UTC",
     "context_window": 131072,
-    "max_output_tokens": 32768,
+    "max_output_tokens": 131072,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -50102,7 +50102,7 @@
       },
       "limit": {
         "context": 131072,
-        "output": 32768
+        "output": 131072
       },
       "knowledge": "2024-06"
     }
@@ -50114,7 +50114,7 @@
     "family": "gpt-oss",
     "created_at": "2025-08-05 00:00:00 UTC",
     "context_window": 131072,
-    "max_output_tokens": 32768,
+    "max_output_tokens": 131072,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -50166,7 +50166,7 @@
       },
       "limit": {
         "context": 131072,
-        "output": 32768
+        "output": 131072
       },
       "knowledge": "2024-06"
     }
@@ -50329,7 +50329,7 @@
     "family": "kimi-k3",
     "created_at": "2026-07-16 00:00:00 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 131072,
+    "max_output_tokens": 1048576,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -50386,7 +50386,7 @@
       },
       "limit": {
         "context": 1048576,
-        "output": 131072
+        "output": 1048576
       }
     }
   },
@@ -50397,7 +50397,7 @@
     "family": "kimi-k3",
     "created_at": "2026-10-23 00:00:00 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 131072,
+    "max_output_tokens": 1048576,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -50455,7 +50455,7 @@
       },
       "limit": {
         "context": 1048576,
-        "output": 131072
+        "output": 1048576
       }
     }
   },
@@ -59530,7 +59530,7 @@
       "top_provider": {
         "context_length": 1000000,
         "max_completion_tokens": 128000,
-        "is_moderated": false
+        "is_moderated": true
       },
       "per_request_limits": null,
       "supported_parameters": [
@@ -64237,8 +64237,8 @@
         "instruct_type": "deepseek-r1"
       },
       "top_provider": {
-        "context_length": 163840,
-        "max_completion_tokens": 32768,
+        "context_length": 128000,
+        "max_completion_tokens": 32000,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -65237,7 +65237,7 @@
       },
       "top_provider": {
         "context_length": 1048576,
-        "max_completion_tokens": 943718,
+        "max_completion_tokens": 393216,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -65431,6 +65431,9 @@
     },
     "capabilities": [
       "streaming",
+      "function_calling",
+      "tool_choice",
+      "structured_output",
       "vision"
     ],
     "pricing": {
@@ -65465,14 +65468,23 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
+        "logit_bias",
+        "logprobs",
         "max_tokens",
+        "min_p",
         "presence_penalty",
         "reasoning",
         "reasoning_effort",
+        "repetition_penalty",
+        "response_format",
         "seed",
         "stop",
+        "structured_outputs",
         "temperature",
+        "tool_choice",
+        "tools",
         "top_k",
+        "top_logprobs",
         "top_p"
       ],
       "expiration_date": null
@@ -65536,6 +65548,7 @@
         "frequency_penalty",
         "include_reasoning",
         "logit_bias",
+        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -65550,6 +65563,7 @@
         "tool_choice",
         "tools",
         "top_k",
+        "top_logprobs",
         "top_p"
       ],
       "expiration_date": null
@@ -75180,6 +75194,7 @@
         "frequency_penalty",
         "include_reasoning",
         "logit_bias",
+        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -75194,6 +75209,7 @@
         "tool_choice",
         "tools",
         "top_k",
+        "top_logprobs",
         "top_p"
       ],
       "expiration_date": null,
@@ -87968,7 +87984,7 @@
       "top_provider": {
         "context_length": 1050000,
         "max_completion_tokens": 128000,
-        "is_moderated": false
+        "is_moderated": true
       },
       "per_request_limits": null,
       "supported_parameters": [
@@ -93321,8 +93337,8 @@
     }
   },
   {
-    "id": "parallel/decisions-fast:free",
-    "name": "Parallel: Decisions Fast (free)",
+    "id": "parallel/decisions-fast",
+    "name": "Parallel: Decisions Fast",
     "provider": "openrouter",
     "family": "parallel",
     "created_at": "2026-11-06 04:50:59 UTC",
@@ -108941,7 +108957,7 @@
       },
       "top_provider": {
         "context_length": 202752,
-        "max_completion_tokens": 131072,
+        "max_completion_tokens": 182476,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -108966,7 +108982,7 @@
         "top_logprobs",
         "top_p"
       ],
-      "expiration_date": null,
+      "expiration_date": "2026-11-20",
       "source": "models.dev",
       "provider_id": "openrouter",
       "open_weights": true,
@@ -109131,9 +109147,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.34700000000000003,
-          "output_per_million": 1.068,
-          "cache_read_input_per_million": 0.117
+          "input_per_million": 0.322,
+          "output_per_million": 0.989,
+          "cache_read_input_per_million": 0.109
         }
       }
     },
@@ -109842,6 +109858,7 @@
         "frequency_penalty",
         "include_reasoning",
         "logit_bias",
+        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -109856,6 +109873,7 @@
         "tool_choice",
         "tools",
         "top_k",
+        "top_logprobs",
         "top_p"
       ],
       "expiration_date": null
@@ -114180,7 +114198,7 @@
     "family": "kimi-k3",
     "created_at": "2026-07-16 00:00:00 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 131072,
+    "max_output_tokens": 1048576,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -114239,7 +114257,7 @@
       },
       "limit": {
         "context": 1048576,
-        "output": 131072
+        "output": 1048576
       }
     }
   },
@@ -115638,7 +115656,7 @@
     "family": "kimi-k3",
     "created_at": "2026-07-16 00:00:00 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 131072,
+    "max_output_tokens": 1048576,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -115694,7 +115712,7 @@
       },
       "limit": {
         "context": 1048576,
-        "output": 131072
+        "output": 1048576
       }
     }
   },
