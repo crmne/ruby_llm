@@ -2534,12 +2534,12 @@ module RubyLLM
       capped = pending_tool_calls(response).to_h.slice(*capped_tool_call_ids(response))
       return if capped.empty?
 
-      instrument_capped_tool_calls(response.tool_calls.count { |tool_call| !tool_call.remote? })
       capped.each_value do |tool_call|
         raise_if_cancelled!
         run_callbacks(:before_message)
         add_tool_result_message(tool_call, { error: capped_tool_call_error })
       end
+      instrument_capped_tool_calls(response)
     end
 
     def capped_tool_call_ids(response)
@@ -2560,8 +2560,9 @@ module RubyLLM
         'Continue step by step, a few calls at a time.'
     end
 
-    def instrument_capped_tool_calls(requested)
-      payload = { chat: self, provider: @provider.slug, provider_class: @provider.name, model: @model.id,
+    def instrument_capped_tool_calls(response)
+      requested = response.tool_calls.count { |tool_call| !tool_call.remote? }
+      payload = { chat: self, provider: response.provider || @provider.slug, model: response.model_id || @model.id,
                   requested:, allowed: @tool_call_cap, capped: requested - @tool_call_cap, chat_id: @run.chat_id,
                   **agent_fields }
       RubyLLM.instrument('tool_calls_capped.ruby_llm', payload.compact, config: @config)

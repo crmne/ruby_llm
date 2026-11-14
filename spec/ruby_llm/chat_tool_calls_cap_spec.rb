@@ -297,9 +297,55 @@ RSpec.describe RubyLLM::Chat do
 
       chat.ask('Go')
 
-      expect(events.sole).to include(chat:, provider: chat.provider.slug, provider_class: chat.provider.name,
-                                     model: chat.model.id, requested: 5, allowed: 2, capped: 3)
+      expect(events.sole).to include(chat:, provider: chat.provider.slug, model: chat.model.id,
+                                     requested: 5, allowed: 2, capped: 3)
       expect(events.sole).not_to include(:agent_name, :chat_id)
+    end
+
+    it 'names the fallback that wrote the response' do
+      events = recorded_events('tool_calls_capped.ruby_llm')
+      chat.with_tool_options(calls: 2)
+      response = calls('lookup', 'lookup', 'lookup').stood_in(model: 'fallback-model', provider: 'openai')
+      allow(chat.provider).to receive(:complete).and_return(response, answer)
+
+      chat.ask('Go')
+
+      expect(events.sole).to include(provider: 'openai', model: 'fallback-model')
+    end
+
+    it 'fires after every capped call has its result' do
+      results_at_event = nil
+      instrumenter = Class.new do
+        define_method(:instrument) do |name, payload = {}, &block|
+          results_at_event = payload[:chat].messages.count(&:tool_result?) if name == 'tool_calls_capped.ruby_llm'
+          block&.call(payload)
+        end
+      end.new
+      allow(RubyLLM.config).to receive(:instrumenter).and_return(instrumenter)
+      chat.with_tool_options(calls: 2)
+      allow(chat.provider).to receive(:complete).and_return(calls('lookup', 'lookup', 'lookup', 'lookup'), answer)
+
+      chat.ask('Go')
+
+      expect(results_at_event).to eq(4)
+    end
+
+    it 'fires once when a callback stopped the answers and complete finishes them' do
+      events = recorded_events('tool_calls_capped.ruby_llm')
+      raised = false
+      chat.with_tool_options(calls: 2).after_message do |message|
+        if message.tool_result? && message.content.include?("didn't run") && !raised
+          raised = true
+          raise 'boom'
+        end
+      end
+      allow(chat.provider).to receive(:complete).and_return(calls('lookup', 'lookup', 'lookup', 'lookup'), answer)
+
+      expect { chat.ask('Go') }.to raise_error('boom')
+      chat.complete
+
+      expect(events.size).to eq(1)
+      expect(events.sole).to include(capped: 2)
     end
 
     it 'does not fire within the cap' do

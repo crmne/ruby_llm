@@ -536,7 +536,7 @@ The first 50 calls of a response run as usual, approvals included. Each call aft
 
 Those calls never run and never ask for approval, so a person sees no question for them, and no denial is recorded. The model reads a result for every call it made and goes on with the turn, usually with fewer calls at a time. A persisted chat saves those results like any other tool result. Calls the provider runs itself, such as a hosted MCP server's, don't count.
 
-The cap is off by default, and `calls: nil` removes it. It applies to each response on its own, and `calls: :one` and `calls: :many` replace it, as it replaces them. Each capped response emits a `tool_calls_capped.ruby_llm` event with how many calls the model asked for, how many ran, and how many were capped. See [Instrumentation Events]({% link _reference/instrumentation-events.md %}#tool-call-cap-events).
+The cap is off by default, and `calls: nil` removes it. It applies to each response on its own, and `calls: :one` and `calls: :many` replace it, as it replaces them. Each capped response emits a `tool_calls_capped.ruby_llm` event with how many calls the model asked for, the cap, and how many calls got the error result. See [Instrumentation Events]({% link _reference/instrumentation-events.md %}#tool-call-cap-events).
 
 When you need your own budget, such as counting only the calls that failed, drive the loop yourself:
 

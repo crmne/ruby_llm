@@ -26,7 +26,7 @@ Subscribe to these events as shown in [Instrumentation and Observability]({% lin
 | `agent.ruby_llm` | Around one run of a chat an agent configured | `agent_name`, `agent_description`, `chat`, `chat_id` |
 | `chat.ruby_llm` | Around one chat completion | `chat`, `provider`, `provider_class`, `model`, `model_info`, `input_messages`, `messages_after`, `response`, `streaming`, `tokens`, `cost`, `response_tokens`, `agent_name` |
 | `tool_call.ruby_llm` | Around one tool execution | `tool_name`, `tool_arguments`, `tool_call_id`, `result`, `agent_name` |
-| `tool_calls_capped.ruby_llm` | When a response asks for more tool calls than `with_tool_options(calls:)` allows, before the calls past the cap get their error results | `chat`, `requested`, `allowed`, `capped`, `agent_name`, `chat_id` |
+| `tool_calls_capped.ruby_llm` | When a response asks for more tool calls than `with_tool_options(calls:)` allows, once the calls past the cap have their error results | `chat`, `requested`, `allowed`, `capped`, `agent_name`, `chat_id` |
 | `mcp_unreachable.ruby_llm` | When a chat finds an MCP server down, listing its tools or calling one, and goes on without it, at most once a minute per server, or once per the server's `Retry-After` | `server`, `error`, `status` |
 | `code_execution.ruby_llm` | Around one [code execution]({% link _advanced/code-execution.md %}) run | `tool_name`, `tool_call_id`, `language`, `sandbox`, `timeout`, `network`, `duration`, `exit_code`, `timed_out`, `blocked_hosts`, `files` |
 | `embedding.ruby_llm` | Around one embedding request | `input`, `dimensions`, `embedding_dimensions`, `embedding_count`, `tokens`, `cost` |
@@ -65,14 +65,14 @@ The workflow fields are added as usual. `chat.ruby_llm`, `compaction.ruby_llm`, 
 
 ## Tool Call Cap Events
 
-`tool_calls_capped.ruby_llm` fires once for each model response that asks for more calls to the chat's tools than [`with_tool_options(calls:)`]({% link _tools/tool-execution.md %}#limiting-tool-calls) allows. It fires without a block, after the calls within the cap ran, as the calls past it get their error results. A response it already capped doesn't fire again when the turn continues.
+`tool_calls_capped.ruby_llm` fires once for each model response that asks for more calls to the chat's tools than [`with_tool_options(calls:)`]({% link _tools/tool-execution.md %}#limiting-tool-calls) allows. It fires without a block, once every call past the cap has its error result. A response it already capped doesn't fire again when the turn continues.
 
 | Field | Contents |
 | --- | --- |
 | `chat` | The `RubyLLM::Chat` that received the response |
-| `provider`, `provider_class`, `model` | The provider and model that wrote the response |
+| `provider`, `model` | The provider and model that wrote the response, a fallback's when one stood in |
 | `requested` | How many calls to the chat's tools the response asked for |
-| `allowed` | The cap, which is how many of them ran |
+| `allowed` | The cap: how many of them may run. A call within it that waits for approval hasn't run yet |
 | `capped` | How many calls got the error result instead of running |
 | `agent_name` | The agent's class name, present only when a named agent class configured the chat |
 | `chat_id` | The ID of the Rails chat record, present only for a persisted chat |
