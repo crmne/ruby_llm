@@ -106,15 +106,44 @@ module RubyLLM
                                response_schema(value)
                              end
           end
-          nullable_type(schema)
+          type_union(schema)
         end
 
-        def nullable_type(schema)
-          key = schema.key?(:type) ? :type : 'type'
-          types = Array(schema[key])
-          return schema unless types.length > 1 && types.include?('null')
+        NUMBER_KEYWORDS = %w[enum format maximum minimum exclusiveMaximum exclusiveMinimum multipleOf].freeze
+        TYPE_KEYWORDS = {
+          'string' => %w[enum format maxLength minLength pattern],
+          'number' => NUMBER_KEYWORDS,
+          'integer' => NUMBER_KEYWORDS,
+          'object' => %w[properties required maxProperties minProperties propertyOrdering],
+          'array' => %w[items maxItems minItems prefixItems uniqueItems],
+          'boolean' => []
+        }.freeze
+        TYPED_KEYWORDS = TYPE_KEYWORDS.values.flatten.uniq.freeze
+        private_constant :NUMBER_KEYWORDS, :TYPE_KEYWORDS, :TYPED_KEYWORDS
 
-          schema.merge(key => (types - ['null']).first, nullable: true)
+        # Gemini's Schema takes one type, so a JSON Schema type array becomes
+        # nullable plus anyOf, each member keeping the keywords of its type.
+        def type_union(schema)
+          key = schema.key?(:type) ? :type : 'type'
+          return schema unless schema[key].is_a?(Array)
+
+          types = schema[key].map(&:to_s)
+          others = types - ['null']
+          return schema.merge(key => types.first) if types.one?
+
+          union = type_union_members(schema.except(key), key, others)
+          others.length == types.length ? union : union.merge(nullable: true)
+        end
+
+        def type_union_members(schema, key, types)
+          return schema.merge(key => types.first) if types.one?
+
+          { anyOf: types.map { |type| union_member(schema, type) } }
+        end
+
+        def union_member(schema, type)
+          own = TYPE_KEYWORDS.fetch(type, [])
+          { type: }.merge(schema.reject { |name, _| TYPED_KEYWORDS.include?(name.to_s) && !own.include?(name.to_s) })
         end
 
         def batch_name(id)
