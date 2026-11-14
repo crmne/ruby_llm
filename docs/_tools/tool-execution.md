@@ -79,6 +79,8 @@ chat.with_tools(Weather, Calculator).with_tool_options(calls: 1)
 
 Without `calls:`, the provider's default applies. OpenAI and Anthropic honor `calls: :one`; Gemini can still return several calls. MiniMax, Moonshot, and Z.ai have no such setting, so `calls: :one` raises `ArgumentError` on them. Multiple calls run sequentially unless you enable [concurrent execution](#concurrent-tool-execution).
 
+A larger number caps the calls RubyLLM runs from one response, whatever the provider sends. See [Limiting Tool Calls](#limiting-tool-calls).
+
 ### Clearing Tools and Options
 
 Call `with_tools(nil)` to clear the attached tool list. It leaves the options set with `with_tool_options` in place; pass `nil` options to reset `choice`, `calls`, `concurrency`, and `rounds`:
@@ -502,7 +504,7 @@ rescue RubyLLM::ToolRoundLimitError
 end
 ```
 
-The limit is off by default, and `rounds: nil` removes it. A round is one model response that asks for tools, however many calls it holds; `calls:` limits the calls in each response. Set the limit per chat or with the `tool_options` macro on an [agent]({% link _getting_started/agents.md %}).
+The limit is off by default, and `rounds: nil` removes it. A round is one model response that asks for tools, however many calls it holds. Set the limit per chat or with the `tool_options` macro on an [agent]({% link _getting_started/agents.md %}).
 
 `complete` raises `RubyLLM::ToolRoundLimitError` once the last round's results are saved, before asking the model again, so no tool call is left unanswered, and the model does not get to reply to that last round. The transcript stays valid. Call `complete` again and it continues with a fresh count, which is how an app offers a "Keep going" button. A pause for [an approval](#requiring-approval), a question, or [a task](#pausing-a-tool-call) starts the count again too. `step` is not limited, since you count those moves yourself.
 
@@ -517,6 +519,24 @@ class ChatResponseJob < ApplicationJob
   end
 end
 ```
+
+A model can also ask for hundreds of calls in a single response. Cap them with `calls:`:
+
+```ruby
+chat = RubyLLM.chat(model: "{{ site.models.openai_tools }}")
+              .with_tools(Weather)
+              .with_tool_options(rounds: 25, calls: 50)
+```
+
+The first 50 calls of a response run as usual, approvals included. Each call after them, in the response's order, gets a result straight away instead of running:
+
+```json
+{"error": "This call didn't run: too many tool calls in one answer (50 at most). Continue step by step, a few calls at a time."}
+```
+
+Those calls never run and never ask for approval, so a person sees no question for them, and no denial is recorded. The model reads a result for every call it made and goes on with the turn, usually with fewer calls at a time. A persisted chat saves those results like any other tool result. Calls the provider runs itself, such as a hosted MCP server's, don't count.
+
+The cap is off by default, and `calls: nil` removes it. It applies to each response on its own, and `calls: :one` and `calls: :many` replace it, as it replaces them. Each capped response emits a `tool_calls_capped.ruby_llm` event with how many calls the model asked for, the cap, and how many calls got the error result. See [Instrumentation Events]({% link _reference/instrumentation-events.md %}#tool-call-cap-events).
 
 When you need your own budget, such as counting only the calls that failed, drive the loop yourself:
 

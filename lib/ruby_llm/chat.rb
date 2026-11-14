@@ -141,7 +141,8 @@ module RubyLLM
     # Returns the +choice+, +calls+, +concurrency+, and +rounds+ set with
     # #with_tool_options, with +nil+ for anything left at the default.
     def tool_options
-      { choice: tool_prefs[:choice], calls: tool_prefs[:calls], concurrency: concurrency, rounds: @tool_rounds }
+      { choice: tool_prefs[:choice], calls: tool_prefs[:calls] || @tool_call_cap, concurrency: concurrency,
+        rounds: @tool_rounds }
     end
 
     # Creates a chat with +model:+, or with the configured default model
@@ -625,7 +626,7 @@ module RubyLLM
     # Returns whether +tool_call+ requires approval and has no recorded
     # decision.
     def approval_pending?(tool_call) # :nodoc:
-      return false if tool_call.malformed_arguments? || skipped_result(tool_call)
+      return false if tool_call.malformed_arguments? || skipped_result(tool_call) || capped_tool_call?(tool_call)
       return approval_decision(nil, tool_call).nil? if tool_call.remote?
 
       tool = tool_for(tool_call)
@@ -847,7 +848,12 @@ module RubyLLM
     # Configures how the model uses the registered tools. +choice:+
     # constrains tool use to +:auto+, +:none+, +:required+, a tool name, or
     # a Tool class. +calls:+ limits how many tool calls one response may
-    # contain (+:many+ or +:one+). +concurrency:+ runs tool calls
+    # contain: +:one+ (or +1+) and +:many+ ask the provider, and a larger
+    # Integer runs at most that many of a response's calls to the chat's
+    # tools, in the response's order. Each call past it gets an error
+    # result straight away, without running or asking for approval, and
+    # emits one +tool_calls_capped.ruby_llm+ event per response. It is off
+    # by default. +concurrency:+ runs tool calls
     # concurrently: +true+ or +:threads+ for threads, +:fibers+ for fibers.
     # +rounds:+ limits how many model responses that ask for tools one
     # #complete may run, however many calls each holds. It is off by
@@ -860,14 +866,14 @@ module RubyLLM
     #
     #   chat.with_tools(Weather, Search).with_tool_options(choice: :required)
     #   chat.with_tool_options(calls: :one, concurrency: :threads)
-    #   chat.with_tool_options(rounds: 25)
+    #   chat.with_tool_options(rounds: 25, calls: 50)
     #   chat.with_tool_options(choice: nil)
     #
     def with_tool_options(**options)
       options.each do |option, value|
         case option
         when :choice then apply_tool_choice(value)
-        when :calls then @tool_prefs[:calls] = value.nil? ? nil : normalize_calls(value)
+        when :calls then apply_tool_calls(value)
         when :concurrency then apply_tool_concurrency(value)
         when :rounds then @tool_rounds = normalize_rounds(value)
         else raise ArgumentError, "Unknown tool option: #{option}. Valid options are: #{TOOL_OPTIONS.join(', ')}"
@@ -2534,13 +2540,56 @@ module RubyLLM
     def execute_pending_tool_calls(response)
       raise_if_cancelled!
 
-      server_calls, local_calls = pending_tool_calls(response).to_h.partition { |_, call| call.remote? }.map(&:to_h)
+      pending = pending_tool_calls(response).except(*capped_tool_call_ids(response))
+      server_calls, local_calls = pending.to_h.partition { |_, call| call.remote? }.map(&:to_h)
       decisions = server_calls.transform_values { |tool_call| approval_decision(nil, tool_call) }.compact
       executable, denied = partition_pending_tool_calls(local_calls)
       executable = executable.reject { |_id, tool_call| exclusive_blocked?(tool_call, executable) }
       claimed = claim_tool_calls(executable, server_calls.slice(*decisions.keys).merge(denied))
       answer_claimed_tool_calls(claimed, server_calls, decisions, executable, denied)
+      answer_capped_tool_calls(response)
       @tool_prefs[:choice] = nil if forced_tool_choice?
+    end
+
+    def answer_capped_tool_calls(response)
+      capped = unanswered_capped_tool_calls(response)
+      capped.each_value do |tool_call|
+        raise_if_cancelled!
+        run_callbacks(:before_message)
+        add_tool_result_message(tool_call, { error: capped_tool_call_error })
+      end
+    ensure
+      instrument_capped_tool_calls(response) if capped&.any? && unanswered_capped_tool_calls(response).empty?
+    end
+
+    def unanswered_capped_tool_calls(response)
+      pending_tool_calls(response).to_h.slice(*capped_tool_call_ids(response))
+    end
+
+    def capped_tool_call_ids(response)
+      return [] unless @tool_call_cap && response
+
+      response.tool_calls.reject(&:remote?).drop(@tool_call_cap).map(&:id)
+    end
+
+    def capped_tool_call?(tool_call)
+      return false unless @tool_call_cap
+
+      response = messages.reverse_each.find { |message| message.tool_calls.key?(tool_call.id) }
+      capped_tool_call_ids(response).include?(tool_call.id)
+    end
+
+    def capped_tool_call_error
+      "This call didn't run: too many tool calls in one answer (#{@tool_call_cap} at most). " \
+        'Continue step by step, a few calls at a time.'
+    end
+
+    def instrument_capped_tool_calls(response)
+      requested = response.tool_calls.count { |tool_call| !tool_call.remote? }
+      payload = { chat: self, provider: response.provider || @provider.slug, model: response.model_id || @model.id,
+                  requested:, allowed: @tool_call_cap, capped: requested - @tool_call_cap, chat_id: @run.chat_id,
+                  **agent_fields }
+      RubyLLM.instrument('tool_calls_capped.ruby_llm', payload.compact, config: @config)
     end
 
     def answer_claimed_tool_calls(claimed, server_calls, decisions, executable, denied)
@@ -3049,6 +3098,13 @@ module RubyLLM
             "Available modes: #{ToolConcurrency::MODES.join(', ')}"
     end
 
+    def apply_tool_calls(value)
+      cap = value if value.is_a?(Integer) && value > 1
+      calls = normalize_calls(value) unless value.nil? || cap
+      @tool_call_cap = cap
+      @tool_prefs[:calls] = calls
+    end
+
     def normalize_calls(calls)
       case calls
       when :many, 'many'
@@ -3056,7 +3112,8 @@ module RubyLLM
       when :one, 'one', 1
         :one
       else
-        raise ArgumentError, "Invalid calls value: #{calls.inspect}. Valid values are: :many, :one, or 1"
+        raise ArgumentError,
+              "Invalid calls value: #{calls.inspect}. Valid values are: :many, :one, or a positive integer"
       end
     end
 

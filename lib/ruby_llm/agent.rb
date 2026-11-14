@@ -198,6 +198,7 @@ module RubyLLM
       # Called with no arguments, returns the configured options.
       #
       #   tool_options choice: :required, calls: :one
+      #   tool_options rounds: 25, calls: 50
       #
       def tool_options(**options, &block)
         return @tool_options || {} if options.empty? && !block_given?
