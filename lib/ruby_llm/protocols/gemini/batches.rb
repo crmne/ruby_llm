@@ -97,8 +97,17 @@ module RubyLLM
           'string' => %w[enum format minLength maxLength pattern]
         }.transform_values { |keys| (%w[description title] + keys).freeze }.freeze
         CONSTRAINED_KEYS = TYPE_CONSTRAINTS.values.flatten.uniq.freeze
+        ENUM_VALUE_CLASSES = {
+          'array' => [Array],
+          'boolean' => [TrueClass, FalseClass],
+          'integer' => [Integer],
+          'null' => [NilClass],
+          'number' => [Numeric],
+          'object' => [Hash],
+          'string' => [String]
+        }.freeze
         private_constant :JSON_SCHEMA_ONLY_KEYS, :SCHEMA_LITERAL_KEYS, :NUMERIC_KEYS, :TYPE_CONSTRAINTS,
-                         :CONSTRAINED_KEYS
+                         :CONSTRAINED_KEYS, :ENUM_VALUE_CLASSES
 
         def response_schema(node)
           case node
@@ -128,8 +137,9 @@ module RubyLLM
 
         def render_type_union(schema)
           key = schema.key?(:type) ? :type : 'type'
-          types = schema[key]
-          return schema unless types.is_a?(Array) && !types.empty?
+          return schema unless schema[key].is_a?(Array) && !schema[key].empty?
+
+          types = enum_types(schema, schema[key])
           return schema.merge(key => types.first) if types.size == 1
 
           members = types - ['null']
@@ -145,11 +155,36 @@ module RubyLLM
           end
 
           constraints, common = schema.except(type_key).partition { |key, _| CONSTRAINED_KEYS.include?(key.to_s) }
-          branches = members.map do |member|
-            keys = TYPE_CONSTRAINTS.fetch(member, [])
-            constraints.select { |key, _| keys.include?(key.to_s) }.to_h.merge(type_key => member)
-          end
+          branches = members.map { |member| union_branch(constraints, type_key, member) }
           common.to_h.merge(anyOf: branches)
+        end
+
+        def union_branch(constraints, type_key, member)
+          keys = TYPE_CONSTRAINTS.fetch(member, [])
+          branch = constraints.select { |key, _| keys.include?(key.to_s) }.to_h
+          enum_key = branch.keys.find { |key| key.to_s == 'enum' }
+          branch[enum_key] = enum_values(branch[enum_key], member) if enum_key
+          branch.merge(type_key => member)
+        end
+
+        def enum_types(schema, types)
+          enum = schema[:enum] || schema['enum']
+          return types unless enum.is_a?(Array)
+
+          allowed = types.select { |type| enum.any? { |value| enum_value?(value, type) } }
+          allowed.empty? ? types : allowed
+        end
+
+        def enum_values(values, type)
+          return values unless values.is_a?(Array)
+
+          matching = values.select { |value| enum_value?(value, type) }
+          matching.empty? ? values : matching
+        end
+
+        def enum_value?(value, type)
+          classes = ENUM_VALUE_CLASSES[type]
+          classes.nil? || classes.any? { |klass| value.is_a?(klass) }
         end
 
         def batch_name(id)

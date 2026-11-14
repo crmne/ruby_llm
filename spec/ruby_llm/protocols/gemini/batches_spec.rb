@@ -79,15 +79,45 @@ RSpec.describe RubyLLM::Protocols::Gemini::Batches do
       end
     end
 
-    it 'puts annotations and enums only on the branches that can carry them' do
-      schema = { type: %w[string number boolean], title: 'Value', enum: ['a', 1], format: 'float' }
+    it 'puts annotations only on the branches that can carry them' do
+      schema = { type: %w[string number boolean], title: 'Value', format: 'float' }
 
       expect(render_batch_schema(schema)).to eq(
         anyOf: [
-          { type: 'string', title: 'Value', enum: ['a', 1], format: 'float' },
-          { type: 'number', title: 'Value', enum: ['a', 1], format: 'float' },
+          { type: 'string', title: 'Value', format: 'float' },
+          { type: 'number', title: 'Value', format: 'float' },
           { type: 'boolean', title: 'Value' }
         ]
+      )
+    end
+
+    it 'keeps only the branches and enum values each type allows' do
+      schema = { type: %w[string integer boolean null], title: 'Value', enum: ['a', 1] }
+
+      expect(render_batch_schema(schema)).to eq(
+        anyOf: [
+          { type: 'string', title: 'Value', enum: ['a'] },
+          { type: 'integer', title: 'Value', enum: [1] }
+        ]
+      )
+    end
+
+    it 'keeps nullability only when the enum allows null' do
+      expect(render_batch_schema(type: %w[string boolean null], enum: ['yes'])).to eq(type: 'string', enum: ['yes'])
+      expect(render_batch_schema(type: %w[string boolean null], enum: ['yes', nil])).to eq(
+        type: 'string', enum: ['yes', nil], nullable: true
+      )
+    end
+
+    it 'leaves a union unchanged by an enum that matches none of its types' do
+      expect(render_batch_schema(type: %w[string integer], enum: [true])).to eq(
+        anyOf: [{ type: 'string', enum: [true] }, { type: 'integer', enum: [true] }]
+      )
+    end
+
+    it 'passes a malformed enum through for Gemini to reject' do
+      expect(render_batch_schema(type: %w[string integer], enum: 'a')).to eq(
+        anyOf: [{ type: 'string', enum: 'a' }, { type: 'integer', enum: 'a' }]
       )
     end
 
