@@ -96,6 +96,21 @@ RSpec.describe RubyLLM::Transport::Connection do
       expect(settings.log_bodies).to be(true)
     end
 
+    it 'filters its configured credentials from a logged response body' do
+      io = StringIO.new
+      context_config = RubyLLM::Configuration.new.tap do |real|
+        real.logger = Logger.new(io)
+        real.openai_api_key = 'sk-echoed'
+      end
+      allow(provider).to receive_messages(slug: 'openai', error_status: nil)
+      stub_request(:get, 'https://example.com/echo').to_return(status: 200, body: 'you sent sk-echoed')
+
+      described_class.new(provider, context_config).get('echo')
+
+      expect(io.string).to include('you sent [FILTERED]')
+      expect(io.string).not_to include('sk-echoed')
+    end
+
     it 'uses the configured Faraday adapter' do
       allow(config).to receive(:faraday_adapter).and_return(:test)
 

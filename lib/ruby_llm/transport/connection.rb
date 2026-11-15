@@ -186,7 +186,7 @@ module RubyLLM
 
       private
 
-      def instrument_request(method, url)
+      def instrument_request(method, url, &block)
         payload = {
           provider: @provider.slug,
           method: method,
@@ -194,7 +194,7 @@ module RubyLLM
         }
 
         RubyLLM.instrument('request.ruby_llm', payload, config: @config) do |event|
-          response = ReleaseRequest.release(yield)
+          response = ReleaseRequest.release(LogFormatter.with_config(@config, &block))
           event[:status] = response.status if response.respond_to?(:status)
           response
         rescue RubyLLM::Error => e
@@ -226,15 +226,14 @@ module RubyLLM
         ).freeze
       end
 
-      # Credentials, the signer, the provider that parses errors, and the
-      # configuration the log filters by travel with each request, because
-      # the Faraday connection is shared across contexts.
+      # Credentials, the signer, and the provider that parses errors travel
+      # with each request, because the Faraday connection is shared across
+      # contexts.
       def prepare(request)
         request.headers.merge!(@headers).merge!(@provider.headers)
         context = request.options.context ||= {}
         context[ErrorMiddleware::PROVIDER_KEY] = @provider
         context[SigningMiddleware::CONTEXT_KEY] = @signer if @signer
-        context[LogFormatter::CONFIG_KEY] = @config
       end
 
       # Adapters time each read of a response with +read_timeout+, so on a

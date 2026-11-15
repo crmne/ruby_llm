@@ -201,7 +201,8 @@ end
 `log_bodies` notes:
 - Logs request and response bodies, including the bodies of failed requests
 - Defaults to logging them whenever the logger is at debug level
-- Set it to `false` to keep an application at debug level without writing provider payloads to its log
+- Set it to `false` to keep an application at debug level without writing request and response bodies, or a streamed answer, to its log
+- Raw streaming chunks are still logged when `log_stream_debug` is on, so leave that off as well to keep payloads out
 
 `log_stream_debug` notes:
 - Shows chunk-by-chunk streaming internals (accumulator state, parsing, tool chunks)

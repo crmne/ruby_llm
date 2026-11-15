@@ -9,15 +9,23 @@ module RubyLLM
     # log filter ran out of time on a large body.
     #
     # The formatter is shared by every context that uses the connection, so
-    # the configuration whose credentials it filters arrives with each
-    # request, and its response or exception is logged on the same fiber.
+    # the configuration whose credentials it filters is set in fiber storage
+    # for the duration of each request.
     class LogFormatter < Faraday::Logging::Formatter # :nodoc:
       CONFIG_KEY = :ruby_llm_log_config
       FILTERED = '[FILTERED]'
 
+      def self.with_config(config)
+        previous = Fiber[CONFIG_KEY]
+        Fiber[CONFIG_KEY] = config
+        yield
+      ensure
+        Fiber[CONFIG_KEY] = previous
+      end
+
       # Writes a debug line to +config+'s logger with its credentials
       # replaced. The block runs only when the logger is at debug level.
-      def self.debug(config, &message)
+      def self.log_debug(config, &message)
         (config.logger || RubyLLM.logger).debug { redact(message.call, config.secret_values) }
       end
 
@@ -25,16 +33,18 @@ module RubyLLM
         secrets.reduce(text.to_s) { |output, secret| output.gsub(secret, FILTERED) }
       end
 
-      def request(env)
-        Fiber[CONFIG_KEY] = env.request.context.to_h[CONFIG_KEY]
-        super
+      # Faraday 2.12 and earlier write exception messages without
+      # apply_filters, so credentials are replaced on the way out instead.
+      # Connection.setup_logging logs every line at debug.
+      def debug(progname = nil)
+        config = Fiber[CONFIG_KEY]
+        @logger.debug(progname) { config ? self.class.redact(yield, config.secret_values) : yield }
       end
 
       private
 
       def apply_filters(output)
-        config = Fiber[CONFIG_KEY]
-        super(config ? self.class.redact(output, config.secret_values) : output)
+        super
       rescue Regexp::TimeoutError
         '[NOT LOGGED: FILTER TIMED OUT]'
       end

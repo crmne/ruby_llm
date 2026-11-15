@@ -28,7 +28,7 @@ module RubyLLM
           end
 
           message = accumulator.to_message(response)
-          log_debug { "Stream completed: #{message.content}" }
+          log_completed(message)
           message
         end
 

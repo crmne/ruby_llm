@@ -73,7 +73,7 @@ module RubyLLM
         end
 
         message = accumulator.to_message(response)
-        log_debug { "Stream completed: #{message.content}" }
+        log_completed(message)
         message
       end
 
@@ -108,7 +108,11 @@ module RubyLLM
       end
 
       def log_debug(&)
-        Transport::LogFormatter.debug(config, &)
+        Transport::LogFormatter.log_debug(config, &)
+      end
+
+      def log_completed(message)
+        log_debug { "Stream completed: #{message.content}" } unless config.log_bodies == false
       end
 
       def log_stream_debug(&)
